@@ -12,12 +12,12 @@ import ServiceFiltersCard from 'components/ServiceFiltersCard';
 import ServiceFiltersDialog from 'components/ServiceFiltersDialog';
 import ServiceMap from 'components/ServiceMap';
 
-@inject('locationsStore')
+@inject('serviceProvidersStore')
 @observer
 class ServiceMapView_Main extends React.Component {
     static propTypes = {
         initialSearch: PropTypes.object,
-        locationsStore: PropTypes.object.isRequired
+        serviceProvidersStore: PropTypes.object.isRequired
     };
 
     constructor(props) {
@@ -29,9 +29,9 @@ class ServiceMapView_Main extends React.Component {
     }
 
     componentWillMount() {
-        const {locationsStore} = this.props;
-        if (locationsStore.isEmpty()) {
-            locationsStore.fetch();
+        const {serviceProvidersStore} = this.props;
+        if (serviceProvidersStore.isEmpty()) {
+            serviceProvidersStore.fetch();
         }
     }
 
@@ -42,10 +42,10 @@ class ServiceMapView_Main extends React.Component {
     }
 
     render() {
-        const {locationsStore} = this.props;
+        const {serviceProvidersStore} = this.props;
         const {search} = this.state;
 
-        const isLoading = locationsStore.isRequest('fetching');
+        const isLoading = serviceProvidersStore.isRequest('fetching');
 
         return (
             <div className="service-map-view">

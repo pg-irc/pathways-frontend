@@ -11,20 +11,20 @@ import {PaperProgress} from 'polymer/paper-progress';
 
 import MapAttribution from 'components/MapAttribution';
 
-@inject('locationsStore')
+@inject('serviceProvidersStore')
 @observer
 export default class ServiceFiltersCard extends React.Component {
     static propTypes = {
-        locationsStore: PropTypes.object.isRequired,
+        serviceProvidersStore: PropTypes.object.isRequired,
         data: PropTypes.object,
         onDataChange: PropTypes.func,
         onEditOpen: PropTypes.func
     };
 
     render() {
-        const {locationsStore, data} = this.props;
+        const {serviceProvidersStore, data} = this.props;
 
-        const isLoading = locationsStore.isRequest('fetching');
+        const isLoading = serviceProvidersStore.isRequest('fetching');
         const loadingElem = isLoading ? <PaperProgress indeterminate /> : null;
 
         const filterElems = Object.entries(data || {}).filter(

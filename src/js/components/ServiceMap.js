@@ -8,21 +8,21 @@ import {Map, TileLayer} from 'react-leaflet';
 
 import ServiceMapMarkersGroup from 'components/ServiceMapMarkersGroup';
 
-@inject('locationsStore')
+@inject('serviceProvidersStore')
 @observer
 export default class ServiceMap extends React.Component {
     static propTypes = {
-        locationsStore: PropTypes.object.isRequired,
+        serviceProvidersStore: PropTypes.object.isRequired,
         children: PropTypes.object
     };
 
     render() {
-        const {locationsStore, children, ...other} = this.props;
+        const {serviceProvidersStore, children, ...other} = this.props;
 
         const position = [49.2827, -123.1207];
         const zoom = 13;
         const maxZoom = 15;
-        const allLocations = locationsStore.toArray();
+        const allLocations = serviceProvidersStore.toArray();
 
         return (
             <Map ref={(elem) => this._map = elem} center={position} zoom={zoom} maxZoom={maxZoom} {...other}>

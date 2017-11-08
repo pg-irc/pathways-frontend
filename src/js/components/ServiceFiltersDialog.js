@@ -12,11 +12,11 @@ import {PaperButton} from 'polymer/paper-button';
 import {PaperDialog} from 'polymer/paper-dialog';
 import {PaperDialogScrollable} from 'polymer/paper-dialog-scrollable';
 
-@inject('locationsStore')
+@inject('serviceProvidersStore')
 @observer
 export default class ServiceFiltersDialog extends React.Component {
     static propTypes = {
-        locationsStore: PropTypes.object.isRequired,
+        serviceProvidersStore: PropTypes.object.isRequired,
         data: PropTypes.object,
         isOpen: PropTypes.bool,
         onDataChange: PropTypes.func,
@@ -24,14 +24,14 @@ export default class ServiceFiltersDialog extends React.Component {
     };
 
     render() {
-        const {locationsStore, data, isOpen, onRequestClose} = this.props;
+        const {serviceProvidersStore, data, isOpen, onRequestClose} = this.props;
 
         return (
             <Portal isOpened={true}>
                 <PaperDialog opened={isOpen} with-backdrop={true} onClose={onRequestClose}>
                     <h2>Search</h2>
                     <PaperDialogScrollable>
-                        <Form schema={locationsStore.searchSchema} formData={data} onSubmit={this._onFormSubmit.bind(this)}>
+                        <Form schema={serviceProvidersStore.searchSchema} formData={data} onSubmit={this._onFormSubmit.bind(this)}>
                             <button ref={(elem) => {this._submitButton = elem}} hidden={true} />
                         </Form>
                     </PaperDialogScrollable>

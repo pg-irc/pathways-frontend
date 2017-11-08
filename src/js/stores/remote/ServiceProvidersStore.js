@@ -4,13 +4,9 @@ import {computed} from 'mobx';
 
 import apiSearchTemplate from 'util/api-mock/search/template.json';
 
-/* TODO: For now we are accessing mobx-rest directy. In the future we may want
- *       to add some additional processing via serializr.
- */
-
-export default class LocationsStore extends Collection {
-    url ()  { return '/locations' }
-    model () { return LocationModel }
+export default class ServiceProvidersStore extends Collection {
+    url()  { return '/v1/service-providers/'; }
+    model() { return ServiceProviderModel; }
 
     @computed get searchSchema() {
         return {
@@ -20,7 +16,7 @@ export default class LocationsStore extends Collection {
     }
 }
 
-class LocationModel extends Model {
+class ServiceProviderModel extends Model {
     @computed get name() {
         return this.get('name');
     }
