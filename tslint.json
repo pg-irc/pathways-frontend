@@ -3,9 +3,13 @@
         "member-access": false,
         "member-ordering": [
             true,
-            "public-before-private",
-            "static-before-instance",
-            "variables-before-functions"
+            {
+                "order": [
+                    "public-before-private",
+                    "static-before-instance",
+                    "variables-before-functions"
+                ]
+            }
         ],
         "no-any": true,
         "no-inferrable-types": [

@@ -5,8 +5,7 @@ import { store, persistor } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ErrorBoundary } from './error_boundary';
 
-
-export const Application = () => (
+export const Application = (): JSX.Element => (
     <ErrorBoundary>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>

@@ -5,7 +5,7 @@ interface OutputProp {
     value: number | string;
 }
 
-export const Output: React.SFC<OutputProp> = ({ value }) => (
+export const Output: React.SFC<OutputProp> = ({ value }: OutputProp): JSX.Element => (
     <Text>The value is {value}</Text>
 );
 
@@ -13,23 +13,23 @@ interface TwiceTheOutputProp {
     value: number;
 }
 
-export const TwiceTheOutput: React.SFC<TwiceTheOutputProp> = ({ value }) => (
+export const TwiceTheOutput: React.SFC<TwiceTheOutputProp> = ({ value }: TwiceTheOutputProp): JSX.Element => (
     <Text>The double value is {2 * value}</Text>
 );
 
 interface MyButtonProp {
-    onPress: () => void,
-    title: string,
+    onPress: () => void;
+    title: string;
 }
 
-export const MyButton: React.SFC<MyButtonProp> = ({ onPress, title }) => (
+export const MyButton: React.SFC<MyButtonProp> = ({ onPress, title }: MyButtonProp): JSX.Element => (
     <Button onPress={onPress} title={title} />
 );
 
 interface GreetingProp {
     name: string;
 }
-export const Greeting: React.SFC<GreetingProp> = ({ name }) => (
+export const Greeting: React.SFC<GreetingProp> = ({ name }: GreetingProp): JSX.Element => (
     <Text>Hello {name}!</Text>
 );
 
@@ -52,7 +52,7 @@ export class Blink extends Component<BlinkProps, BlinkState> {
         }, 100);
     }
 
-    render() {
+    render(): JSX.Element {
         let display = this.state.isShowingText ? this.props.text : ' ';
         return (
             <Text>{display}</Text>

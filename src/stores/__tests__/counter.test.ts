@@ -63,7 +63,7 @@ describe('the reducer', () => {
         const theStore = buildStore();
         const theAction = {
             type: constants.SET_COUNTER as typeof constants.SET_COUNTER,
-            payload: { value: aNumber() }
+            payload: { value: aNumber() },
         };
         const theNewStore = counter.reducer(theStore, theAction);
         expect(theNewStore.value).toBe(theAction.payload.value);
@@ -71,9 +71,7 @@ describe('the reducer', () => {
 
     it('when called with RESET_COUNTER should return store with value of zero', () => {
         const theStore = buildStore();
-        const theAction = {
-            type: constants.RESET_COUNTER as typeof constants.RESET_COUNTER
-        };
+        const theAction = { type: constants.RESET_COUNTER as typeof constants.RESET_COUNTER };
         const theNewStore = counter.reducer(theStore, theAction);
         expect(theNewStore.value).toBe(0);
     });
