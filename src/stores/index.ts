@@ -11,3 +11,5 @@ export const rootReducer = combineReducers({
     counterInStore: counter.reducer,
     messageInStore: message.reducer,
 });
+
+// bla
