@@ -8,8 +8,6 @@ interface Props {
 }
 
 interface Actions {
-    addToTaskList: () => void;
-    deleteFromTaskList: () => void;
     markTaskAsComplete: () => void;
     shareTask: () => void;
     starTask: () => void;

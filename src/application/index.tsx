@@ -36,7 +36,11 @@ export const Application = (): JSX.Element => (
         <Provider store={store}>
             <ConnectedNavigationBar>
                 <ConnectedHelloWorld />
-                <TaskList tasks={tasks} />
+                <TaskList
+                    tasks={tasks}
+                    addToTaskList={(): void => alert('Adding to task list')}
+                    removeFromTaskList={(): void => alert('Removing from task list')}
+                />
             </ConnectedNavigationBar>
         </Provider>
     </ErrorBoundary>

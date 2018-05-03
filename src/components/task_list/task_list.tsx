@@ -6,26 +6,25 @@ interface Props {
     tasks: Task[];
 }
 
-const taskDetailActions = {
-    addToTaskList: (): void => alert('Adding to list'),
-    deleteFromTaskList: (): void => alert('Deleting from list'),
-    markTaskAsComplete: (): void => alert('Marked as complete'),
-    shareTask: (): void => alert('Sharing'),
-    starTask: (): void => alert('Starring'),
-};
+interface Actions {
+    addToTaskList: () => void;
+    removeFromTaskList: () => void;
+}
 
 const renderUserTask = ({item}: any): JSX.Element => {
     return (
       <TaskDetail
           task={item}
-          {...taskDetailActions}
+          markTaskAsComplete={(): void => alert('Marking task as complete')}
+          shareTask={(): void => alert('Sharing task')}
+          starTask={(): void => alert('Starring task')}
       />
     );
 };
 
 const extractKey = (item: any): string => item.id.toString();
 
-export const TaskList: React.SFC<Props> = (props: Props): JSX.Element => (
+export const TaskList: React.SFC<Props & Actions> = (props: Props & Actions): JSX.Element => (
     <FlatList
         data={props.tasks}
         renderItem={renderUserTask}
