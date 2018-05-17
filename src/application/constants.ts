@@ -1,4 +1,4 @@
-export const SET_MAIN_TAB = 'ROUTER:SET_MAIN_TAB';
+export const SET_MAIN_PAGE = 'ROUTER:SET_MAIN_PAGE';
 
 export const SET_LOCALE = 'I18N:SET_LOCALE';
 

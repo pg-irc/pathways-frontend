@@ -9,15 +9,15 @@ const buildStore = (): pageSwitcher.Store => (
 );
 
 const buildStoreWithValue = (mainPage: pageSwitcher.Page): pageSwitcher.Store => {
-    const action = helpers.makeAction(constants.SET_MAIN_TAB, { mainPage });
+    const action = helpers.makeAction(constants.SET_MAIN_PAGE, { mainPage });
     return pageSwitcher.reducer(undefined, action);
 };
 
 describe('setting the main page', () => {
 
-    it('should create action with type SET_MAIN_TAB', () => {
+    it('should create action with type SET_MAIN_PAGE', () => {
         const theAction = pageSwitcher.setMainPage(pageSwitcher.Page.ExploreAll);
-        expect(theAction.type).toBe(constants.SET_MAIN_TAB);
+        expect(theAction.type).toBe(constants.SET_MAIN_PAGE);
     });
 
     it('should create action with page id as passed to the action creator', () => {
@@ -32,10 +32,10 @@ describe('the reducer', () => {
         expect(theStore.mainPage).toBe(pageSwitcher.Page.Questionnaire);
     });
 
-    it('when called with SET_MAIN_TAB should return store with value from action', () => {
+    it('when called with SET_MAIN_PAGE should return store with value from action', () => {
         const theStore = buildStore();
         const theAction = {
-            type: constants.SET_MAIN_TAB as typeof constants.SET_MAIN_TAB,
+            type: constants.SET_MAIN_PAGE as typeof constants.SET_MAIN_PAGE,
             payload: { mainPage: pageSwitcher.Page.MyPlan },
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
@@ -52,7 +52,7 @@ describe('the reducer', () => {
         const theStore = buildStore();
         const mainPageAsString = 'Page.MyPlan';
         const theAction = {
-            type: constants.SET_MAIN_TAB as typeof constants.SET_MAIN_TAB,
+            type: constants.SET_MAIN_PAGE as typeof constants.SET_MAIN_PAGE,
             payload: { mainPage: mainPageAsString },
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
@@ -63,7 +63,7 @@ describe('the reducer', () => {
         const theStore = buildStore();
         const invalidmainPageAsString = 'MainPage.Invalid';
         const theAction = {
-            type: constants.SET_MAIN_TAB as typeof constants.SET_MAIN_TAB,
+            type: constants.SET_MAIN_PAGE as typeof constants.SET_MAIN_PAGE,
             payload: { mainPage: invalidmainPageAsString },
         };
         expect(() => pageSwitcher.reducer(theStore, theAction)).toThrow(
