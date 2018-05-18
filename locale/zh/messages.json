@@ -1,6 +1,6 @@
 {
   "This sentence exists to demonstrate the translation functionality that exists in this application.": {
-    "translation": "This sentence exists to demonstrate the translation functionality that exists in this application.",
+    "translation": "這句話的存在是為了演示這個應用程序中存在的翻譯功能。",
     "origin": [
       [
         "lib/components/language_switcher/language_switcher.js",

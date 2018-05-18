@@ -1,0 +1,1 @@
+module.exports={languageData:{"plurals":function(n,ord){if(ord)return"other";return"other"}},messages:{"This sentence exists to demonstrate the translation functionality that exists in this application.":"\u9019\u53E5\u8A71\u7684\u5B58\u5728\u662F\u70BA\u4E86\u6F14\u793A\u9019\u500B\u61C9\u7528\u7A0B\u5E8F\u4E2D\u5B58\u5728\u7684\u7FFB\u8B6F\u529F\u80FD\u3002"}};

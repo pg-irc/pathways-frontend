@@ -1,28 +1,10 @@
 {
-  "Disable RTL": {
-    "translation": "تعطيل RTL",
-    "origin": [
-      [
-        "lib/components/language_switcher/language_switcher.js",
-        18
-      ]
-    ]
-  },
-  "Force RTL": {
-    "translation": "فرض RTL",
-    "origin": [
-      [
-        "lib/components/language_switcher/language_switcher.js",
-        18
-      ]
-    ]
-  },
   "This sentence exists to demonstrate the translation functionality that exists in this application.": {
     "translation": "هذه الجملة موجودة لإظهار وظيفة الترجمة الموجودة في هذا التطبيق.",
     "origin": [
       [
         "lib/components/language_switcher/language_switcher.js",
-        25
+        12
       ]
     ]
   }
