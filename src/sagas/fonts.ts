@@ -3,10 +3,10 @@ import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect} from 'redux-s
 import { Font } from 'expo';
 
 import * as constants from '../application/constants';
-import  * as loadFontsActions from '../stores/fonts';
+import { loadFontsActions } from '../stores/fonts';
 import { LoadFonts } from '../stores/fonts';
 
-export function* watchLoadFont(): IterableIterator<ForkEffect> {
+export function* watchLoadFonts(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_FONTS_REQUEST, loadFonts);
 }
 

@@ -4,10 +4,11 @@ import { back, canGoBack } from 'redux-first-router';
 import { Store } from '../../application/store';
 import * as main from './main';
 import * as pageSwitcher from '../../stores/page_switcher';
-import { withFontLoading } from '../helpers/with_font_loading';
-import { withI18n } from '@lingui/react';
+import { LoaderProps, withLoader } from './loader';
+import { isApplicationLoading } from '../../selectors/application_loading';
 
-const mapStateToProps = (store: Store): main.Props => ({
+const mapStateToProps = (store: Store): LoaderProps & main.Props => ({
+    loading: isApplicationLoading(store),
     mainPageInProps: store.applicationState.mainPageInStore.mainPage,
     canGoBack: canGoBack(),
 });
@@ -19,5 +20,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Store>): main.Actions => ({
     goBack: (): void => back(),
 });
 
-const I18nNavigationBar = withI18n()(withFontLoading(main.Component));
-export const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(I18nNavigationBar);
+type MainComponentProps = main.Props & main.Actions;
+const MainComponent = withLoader<LoaderProps & MainComponentProps, MainComponentProps>(main.Component);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+export const ConnectedComponent = connector(MainComponent);

@@ -2,7 +2,7 @@
 import { Font } from 'expo';
 import { call, put } from 'redux-saga/effects';
 
-import * as loadFontsActions from '../../stores/fonts';
+import { loadFontsActions } from '../../stores/fonts';
 import { loadFonts } from '../fonts';
 
 describe('the loadFonts saga', () => {

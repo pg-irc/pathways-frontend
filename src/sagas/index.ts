@@ -2,6 +2,7 @@
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 
 import { watchLoadLocale, watchSetLocale } from './locale';
+import { watchLoadFonts } from './fonts';
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -16,6 +17,7 @@ export function buildSaga(): ApplicationSaga {
 }
 
 export function runSaga(middleware: SagaMiddleware<object>): void {
+    middleware.run(watchLoadFonts);
     middleware.run(watchLoadLocale);
     middleware.run(watchSetLocale);
 }
