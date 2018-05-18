@@ -26,7 +26,7 @@ export function* watchLoadLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_CURRENT_LOCALE_REQUEST, loadCurrentLocale);
 }
 
-type LoadCurrentLocaleActions = LoadCurrentLocale.Request | LoadCurrentLocale.Result | SetLocale.Request;
+type LoadCurrentLocaleActions = LoadCurrentLocale.Request | LoadCurrentLocale.Result | SetLocale.Success;
 
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadCurrentLocaleActions>> {
     try {
@@ -34,7 +34,7 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<Lo
         if (currentLocaleCode !== null) {
             const currentLocale = LocaleManager.get(currentLocaleCode);
             yield put(loadCurrentLocaleActions.success(currentLocale));
-            yield put(setLocaleActions.request(currentLocale));
+            yield put(setLocaleActions.success(currentLocale));
         } else {
             yield put(loadCurrentLocaleActions.failure('No locale preference set'));
         }
