@@ -8,6 +8,7 @@ export namespace LoadFonts {
     export type Result = Success | Failure;
 }
 
+type ReducerActions = LoadFonts.Request | LoadFonts.Result;
 export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 
 interface Fonts {
@@ -34,7 +35,7 @@ export const loadFontsActions = {
     },
 };
 
-export const reducer = (store: Store = buildDefaultStore(), action?: LoadFonts.Request | LoadFonts.Result): Store => {
+export const reducer = (store: Store = buildDefaultStore(), action?: ReducerActions): Store => {
     if (!action) {
         return store;
     }

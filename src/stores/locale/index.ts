@@ -4,9 +4,11 @@ import * as loadCurrentLocale from './load_current_locale';
 import { SetLocale } from './set_locale';
 import { LoadCurrentLocale } from './load_current_locale';
 
-export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 export { SetLocale };
 export { LoadCurrentLocale };
+
+type ReducerActions = SetLocale.Request | SetLocale.Result | LoadCurrentLocale.Request;
+export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 
 const DEFAULT_LOCALE_CODE = 'en';
 // tslint:disable-next-line:typedef
@@ -17,8 +19,6 @@ export const buildDefaultStore = () => ({
 
 export const setLocaleActions = setLocale;
 export const loadCurrentLocaleActions = loadCurrentLocale;
-
-type ReducerActions = SetLocale.Request | SetLocale.Result | LoadCurrentLocale.Request;
 
 export const reducer = (store: Store = buildDefaultStore(), action?: ReducerActions): Store => {
     if (!action) {
