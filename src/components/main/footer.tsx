@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
+import { Footer as NativeBaseFooter, FooterTab, Button, Icon, Text } from 'native-base';
 import * as store from '../../stores/page_switcher';
 
 export interface Props {
@@ -12,10 +12,10 @@ export interface Actions {
     readonly goToExplore: () => void;
 }
 
-export const AppFooter: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
+export const Footer: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
     const { goToQuestionnaire, goToPlan, goToExplore, mainPageInProps }: Props & Actions = props;
     return (
-        <Footer>
+        <NativeBaseFooter>
             <FooterTab>
                 <Button vertical active={mainPageInProps === store.Page.Questionnaire} onPress={goToQuestionnaire}>
                     <Icon name='apps' />
@@ -30,6 +30,6 @@ export const AppFooter: React.StatelessComponent<Props & Actions> = (props: Prop
                     <Text>Explore</Text>
                 </Button>
             </FooterTab>
-        </Footer>
+        </NativeBaseFooter>
     );
 };
