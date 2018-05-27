@@ -7,7 +7,7 @@ import * as footer from './footer';
 export type Props = header.Props & mainPageSwitcher.Props & footer.Props;
 export type Actions = header.Actions & mainPageSwitcher.Actions & footer.Actions;
 
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
+export const MainComponent: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
     <Container>
         <header.Component {...props} />
         <mainPageSwitcher.Component {...props} />
