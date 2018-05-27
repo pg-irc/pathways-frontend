@@ -1,20 +1,13 @@
 import { connect } from 'react-redux';
-import { I18nProvider } from '@lingui/react';
 import { Store } from '../../application/store';
-
+import { MyI18nProvider, Props, Actions } from './i18n_provider';
 import { catalogs } from '../../application/locales';
 
-interface Props {
-    readonly catalogs: Catalogs;
-    readonly language: string;
-}
-
-interface Actions {}
-
-const mapStateToProps = ({ applicationState: { localeInStore } }: Store): Props => ({
+const mapStateToProps = (store: Store): Props => ({
     catalogs,
-    language: localeInStore.code,
+    language: store.applicationState.localeInStore.code,
 });
+
 const mapDispatchToProps = (): Actions => ({});
 
-export const ConnectedI18nProvider = connect(mapStateToProps, mapDispatchToProps)(I18nProvider);
+export const ConnectedI18nProvider = connect(mapStateToProps, mapDispatchToProps)(MyI18nProvider);
