@@ -12,7 +12,7 @@ export interface Props {
 export interface Actions {
 }
 
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
+export const PageSwitcher: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
     switch (props.mainPageInProps) {
         case store.Page.Questionnaire:
             return <ConnectedQuestionnaire />;

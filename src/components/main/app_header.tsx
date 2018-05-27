@@ -9,7 +9,7 @@ export interface Actions {
     readonly goBack: () => void;
 }
 
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
+export const AppHeader: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
     const { canGoBack, goBack }: Props & Actions = props;
     return <Header>
         <Left>
