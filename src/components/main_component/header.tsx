@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Left, Button, Icon, Title, Body } from 'native-base';
+import { Header as NativeBaseHeader, Left, Button, Icon, Title, Body } from 'native-base';
 
 export interface Props {
     readonly canGoBack: boolean;
@@ -9,9 +9,9 @@ export interface Actions {
     readonly goBack: () => void;
 }
 
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
+export const Header: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
     const { canGoBack, goBack }: Props & Actions = props;
-    return <Header>
+    return <NativeBaseHeader>
         <Left>
             <Button transparent disabled={!canGoBack} onPress={goBack}>
                 <Icon name='arrow-back' />
@@ -20,5 +20,5 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
         <Body>
             <Title>Pathways</Title>
         </Body>
-    </Header>;
+    </NativeBaseHeader>;
 };

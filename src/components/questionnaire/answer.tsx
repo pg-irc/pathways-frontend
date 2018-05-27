@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Icon, View, Text } from 'native-base';
 import * as selector from '../../selectors/questionnaire';
 import { SelectAnswerAction } from '../../stores/questionnaire';
-import { QuestionnaireActions } from './actions';
+import { QuestionnaireActions } from './questionnaire_actions';
 
 export interface Props {
     readonly answer: selector.Answer;
