@@ -11,7 +11,7 @@ export interface Props {
 
 export type Actions = QuestionnaireActions;
 
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
+export const Questionnaire: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
     <Content>
         <ConnectedLanguageSwitcher />
         <View style={{
