@@ -3,7 +3,7 @@ import { Content, View } from 'native-base';
 import { Question, Actions } from './question';
 import { ConnectedLanguageSwitcher } from '../language_switcher/connected_language_switcher';
 import * as selector from '../../selectors/questionnaire';
-import { QuestionnaireActions } from './actions';
+import { QuestionnaireActions } from './questionnaire_actions';
 
 export interface Props {
     readonly questionnaire: selector.Questionnaire;
