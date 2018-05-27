@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Store } from '../../application/store';
-import { MyI18nProvider, Props, Actions } from './i18n_provider';
+import { I18nProvider, Props, Actions } from './i18n_provider';
 import { catalogs } from '../../application/locales';
 
 const mapStateToProps = (store: Store): Props => ({
@@ -10,4 +10,4 @@ const mapStateToProps = (store: Store): Props => ({
 
 const mapDispatchToProps = (): Actions => ({});
 
-export const ConnectedI18nProvider = connect(mapStateToProps, mapDispatchToProps)(MyI18nProvider);
+export const ConnectedI18nProvider = connect(mapStateToProps, mapDispatchToProps)(I18nProvider);

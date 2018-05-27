@@ -1,4 +1,4 @@
-import { I18nProvider } from '@lingui/react';
+import { I18nProvider as LinguiI18nProvider } from '@lingui/react';
 
 export interface Props {
     readonly catalogs: Catalogs;
@@ -7,4 +7,4 @@ export interface Props {
 
 export interface Actions { }
 
-export const MyI18nProvider = I18nProvider;
+export const I18nProvider = LinguiI18nProvider;
