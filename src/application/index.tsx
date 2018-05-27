@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import * as main from '../components/main';
 import { store } from './store';
 import { ErrorBoundary } from './error_boundary';
-import { ConnectedI18nProvider } from '../components/language_switcher/connected_i18n_provider';
+import { ConnectedI18nProvider } from '../components/i18n_provider/connected_i18n_provider';
 
 export const Application = (): JSX.Element => (
     <ErrorBoundary>
