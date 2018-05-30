@@ -5,6 +5,7 @@
 import 'intl';
 import 'intl/locale-data/jsonp/en.js';
 import 'intl/locale-data/jsonp/ar.js';
+import 'intl/locale-data/jsonp/zh.js';
 // Tell OS to enable RTL support.
 import { I18nManager } from 'react-native';
 I18nManager.allowRTL(true);

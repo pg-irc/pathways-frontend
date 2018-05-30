@@ -8,10 +8,12 @@ import { ConnectedI18nProvider } from '../components/i18n_provider';
 import { LocaleManager } from './locale';
 import enMessages from '../../locale/en/messages';
 import arMessages from '../../locale/ar/messages';
+import zhMessages from '../../locale/zh/messages';
 // tslint:disable-next-line:no-expression-statement
 LocaleManager.registerLocales([
     { code: 'en', label: 'English', catalog: enMessages, isRTL: false },
     { code: 'ar', label: 'Arabic', catalog: arMessages, isRTL: true },
+    { code: 'zh', label: 'Chinese', catalog: zhMessages, isRTL: false },
 ]);
 
 export const Application = (): JSX.Element => (
