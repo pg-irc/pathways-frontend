@@ -41,7 +41,7 @@ describe('the reducer', () => {
 
     it('page parameters should have taskId property', () => {
         const theStore = pageSwitcher.reducer();
-        expect(theStore).toHaveProperty('taskId');
+        expect(theStore.pageParameters).toHaveProperty('taskId');
     });
 
     it('when called with SET_MAIN_TAB should return store with value from action', () => {
