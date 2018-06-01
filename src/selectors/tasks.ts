@@ -49,6 +49,11 @@ export const selectAllSuggestedTasks = (locale: Locale, store: stores.Store): Re
     });
 };
 
+export const selectTaskById = ({ taskMap, taskUserSettingsMap }: stores.Store, taskId: stores.Id): Task => {
+    const taskUserSettingsId = fetchTaskUserSettingsIdByTaskId(taskUserSettingsMap, taskId);
+    return denormalizeTask(taskMap[taskId], taskUserSettingsMap[taskUserSettingsId]);
+};
+
 export const fetchTaskUserSettingsIdByTaskId = (taskUserSettingsMap: stores.TaskUserSettingsMap, taskId: stores.Id): stores.Id => (
     Object.keys(taskUserSettingsMap).find((key: string) => (
         taskUserSettingsMap[key].taskId === taskId

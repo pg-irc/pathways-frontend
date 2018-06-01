@@ -1,5 +1,6 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
+import * as tasks from './tasks';
 
 export enum Page {
     Questionnaire,

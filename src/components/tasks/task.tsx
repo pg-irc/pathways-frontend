@@ -5,6 +5,7 @@ import { taskDetail as styles } from './styles';
 import { TaskActions } from './actions';
 import * as selector from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
+import { SetMainPageAction } from '../../stores/page_switcher';
 
 export interface Props {
 }
@@ -33,6 +34,7 @@ export const Task: React.StatelessComponent<selector.Task & Actions> = (props: s
             <View style={styles.sideColumn}>
                 <View style={styles.stackedItems}>
                     <Button
+                        onPress={(): SetMainPageAction => props.goToTaskDetail(props.id)}
                         dark
                         transparent
                     >
