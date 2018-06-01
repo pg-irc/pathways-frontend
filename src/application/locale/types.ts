@@ -8,3 +8,7 @@ export interface Locale {
     readonly catalog: object;
     readonly isRTL: boolean;
 }
+
+export interface LocalizedText {
+    readonly [localeCode: string]: string;
+}

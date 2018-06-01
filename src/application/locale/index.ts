@@ -10,7 +10,7 @@ import 'intl/locale-data/jsonp/zh.js';
 import { I18nManager } from 'react-native';
 I18nManager.allowRTL(true);
 
-import { CatalogsMap, Catalog, Locale } from './types';
+import { CatalogsMap, Catalog, Locale, LocalizedText } from './types';
 import { isReloadNeeded, reloadRTL, saveCurrentLocaleCode, loadCurrentLocaleCode }  from './effects';
 
 /**
@@ -20,6 +20,7 @@ export {
     CatalogsMap,
     Catalog,
     Locale,
+    LocalizedText,
 };
 
 /**
