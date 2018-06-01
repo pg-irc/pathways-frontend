@@ -9,7 +9,8 @@ const buildStore = (): pageSwitcher.Store => (
 );
 
 const buildStoreWithValue = (mainPage: pageSwitcher.Page): pageSwitcher.Store => {
-    const action = helpers.makeAction(constants.SET_MAIN_TAB, { mainPage });
+    const pageParameters = pageSwitcher.buildDefaultPageParameters();
+    const action = helpers.makeAction(constants.SET_MAIN_TAB, { mainPage, pageParameters });
     return pageSwitcher.reducer(undefined, action);
 };
 
@@ -32,11 +33,23 @@ describe('the reducer', () => {
         expect(theStore.mainPage).toBe(pageSwitcher.Page.Questionnaire);
     });
 
+    it('should default to build a store with page parameters', () => {
+        const theStore = pageSwitcher.reducer();
+        const pageParameters = pageSwitcher.buildDefaultPageParameters();
+        expect(theStore.pageParameters).toEqual(pageParameters);
+    });
+
+    it('page parameters should have taskId property', () => {
+        const theStore = pageSwitcher.reducer();
+        expect(theStore).toHaveProperty('taskId');
+    });
+
     it('when called with SET_MAIN_TAB should return store with value from action', () => {
         const theStore = buildStore();
+        const pageParameters = pageSwitcher.buildDefaultPageParameters();
         const theAction = {
             type: constants.SET_MAIN_TAB as typeof constants.SET_MAIN_TAB,
-            payload: { mainPage: pageSwitcher.Page.MyPlan },
+            payload: { mainPage: pageSwitcher.Page.MyPlan, pageParameters: pageParameters },
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
         expect(theNewStore.mainPage).toBe(theAction.payload.mainPage);
@@ -50,10 +63,11 @@ describe('the reducer', () => {
 
     it('should update the store if the payload contains a valid string', () => {
         const theStore = buildStore();
+        const pageParameters = pageSwitcher.buildDefaultPageParameters();
         const mainPageAsString = 'Page.MyPlan';
         const theAction = {
             type: constants.SET_MAIN_TAB as typeof constants.SET_MAIN_TAB,
-            payload: { mainPage: mainPageAsString },
+            payload: { mainPage: mainPageAsString, pageParameters: pageParameters },
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
         expect(theNewStore.mainPage).toBe(pageSwitcher.Page.MyPlan);
@@ -61,13 +75,14 @@ describe('the reducer', () => {
 
     it('should throw if the payload contains an invalid string', () => {
         const theStore = buildStore();
+        const pageParameters = pageSwitcher.buildDefaultPageParameters();
         const invalidmainPageAsString = 'MainPage.Invalid';
         const theAction = {
             type: constants.SET_MAIN_TAB as typeof constants.SET_MAIN_TAB,
-            payload: { mainPage: invalidmainPageAsString },
+            payload: { mainPage: invalidmainPageAsString, pageParameters: pageParameters },
         };
         expect(() => pageSwitcher.reducer(theStore, theAction)).toThrow(
-            /MainPage.Invalid: Invalid main page id, accepted values are Page.Questionnaire, Page.MyPlan or Page.ExploreAll/,
+            /MainPage.Invalid: Invalid main page id, accepted values are Page.Questionnaire, Page.MyPlan, Page.ExploreAll, or Page.TaskDetail/,
         );
     });
 });
