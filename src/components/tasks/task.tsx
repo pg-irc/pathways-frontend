@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text, Button, Icon } from 'native-base';
-import { taskDetail as styles } from './styles';
+import { task as styles } from './styles';
 import { TaskActions } from './actions';
 import * as selector from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
