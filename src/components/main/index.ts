@@ -9,6 +9,8 @@ import { withI18n } from '@lingui/react';
 
 const mapStateToProps = (store: Store): main.Props => ({
     mainPageInProps: store.applicationState.mainPageInStore.mainPage,
+    pageParameters: store.applicationState.mainPageInStore.pageParameters,
+    tasksInStore: store.applicationState.tasksInStore,
     canGoBack: canGoBack(),
 });
 
