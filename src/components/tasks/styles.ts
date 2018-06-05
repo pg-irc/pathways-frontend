@@ -44,7 +44,8 @@ export const taskDetail = StyleSheet.create({
         marginBottom: 10,
     },
     row: {
-        marginBottom: 15,
+        marginTop: 10,
+        marginBottom: 10,
     },
     separator: {
         borderWidth: 0.5,
