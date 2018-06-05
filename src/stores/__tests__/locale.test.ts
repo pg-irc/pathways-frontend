@@ -2,6 +2,7 @@
 import { Locale } from '../../application/locale';
 import * as locale from '../locale';
 import * as constants from '../../application/constants';
+import { aString } from '../../application/__tests__/helpers/random_test_values';
 import * as helpers from './helpers/locale_helpers';
 
 const aLocale = helpers.buildLocale().get();
@@ -108,6 +109,12 @@ describe('the loadCurrentLocaleAction for', () => {
 
 describe('the reducer', () => {
 
+    it('should return store unchanged if action is undefined', () => {
+        const theOriginalStore = buildStoreWithLocale(aLocale);
+        const theNewStore = locale.reducer(theOriginalStore, undefined);
+        expect(theNewStore).toBe(theOriginalStore);
+    });
+
     it('should default to build a store with default locale code `en`', () => {
         const theStore = locale.reducer();
         expect(theStore.code).toBe('en');
@@ -135,7 +142,7 @@ describe('the reducer', () => {
     });
 
     it('when called with SET_LOCALE_FAILURE should return store with loading flag set false', () => {
-        const errorMessage = '[test] Error occurred during setLocale';
+        const errorMessage = aString();
         const theStore = buildStoreLoadingLocale();
         const theAction = {
             type: constants.SET_LOCALE_FAILURE as typeof constants.SET_LOCALE_FAILURE,
@@ -154,10 +161,26 @@ describe('the reducer', () => {
         expect(theNewStore.loading).toBe(true);
     });
 
-    it('should return store unchanged if action is undefined', () => {
-        const theOriginalStore = buildStoreWithLocale(aLocale);
-        const theNewStore = locale.reducer(theOriginalStore, undefined);
-        expect(theNewStore.code).toBe(theOriginalStore.code);
+    it('when called with LOAD_CURRENTLOCALE_SUCCESS should return store with locale code from action', () => {
+        const theStore = buildStoreLoadingLocale();
+        const theAction = {
+            type: constants.LOAD_CURRENT_LOCALE_SUCCESS as typeof constants.LOAD_CURRENT_LOCALE_SUCCESS,
+            payload: { locale: aLocale },
+        };
+        const theNewStore = locale.reducer(theStore, theAction);
+        expect(theNewStore.code).toBe(theAction.payload.locale.code);
+        expect(theNewStore.loading).toBe(false);
+    });
+
+    it('when called with LOAD_CURERNT_LOCALE_FAILURE should return store with loading flag set false', () => {
+        const errorMessage = aString();
+        const theStore = buildStoreLoadingLocale();
+        const theAction = {
+            type: constants.LOAD_CURRENT_LOCALE_FAILURE as typeof constants.LOAD_CURRENT_LOCALE_FAILURE,
+            payload: { message: errorMessage, locale: aLocale },
+        };
+        const theNewStore = locale.reducer(theStore, theAction);
+        expect(theNewStore.loading).toBe(false);
     });
 
 });

@@ -34,7 +34,6 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<Lo
         if (currentLocaleCode !== null) {
             const currentLocale = LocaleManager.get(currentLocaleCode);
             yield put(loadCurrentLocaleActions.success(currentLocale));
-            yield put(setLocaleActions.success(currentLocale));
         } else {
             yield put(loadCurrentLocaleActions.failure('No locale preference set'));
         }
