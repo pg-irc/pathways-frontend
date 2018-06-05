@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import { LocaleManager } from '../';
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
-import { buildLocale } from '../../../stores/__tests__/helpers/locale_helpers';
+import { LocaleBuilder } from '../../../stores/__tests__/helpers/locale_helpers';
 
 describe('LocaleManager', () => {
 
@@ -27,7 +27,7 @@ describe('LocaleManager', () => {
 
     describe('.registerLocales()', () => {
 
-        const aLocale = buildLocale().get();
+        const aLocale = new LocaleBuilder().build();
 
         afterEach(() => {
             LocaleManager.reset();
@@ -46,7 +46,7 @@ describe('LocaleManager', () => {
 
     describe('with locales registered', () => {
 
-        const aLocale = buildLocale().get();
+        const aLocale = new LocaleBuilder().build();
 
         beforeAll(() => {
             LocaleManager.registerLocale(aLocale);

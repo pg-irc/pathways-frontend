@@ -7,14 +7,16 @@ import {
     buildNormalizedStore ,
 } from '../../stores/__tests__/helpers/tasks_helpers';
 import * as stores from '../tasks';
+import { LocaleBuilder } from './helpers/locale_helpers';
 
 describe('tasks reducer', () => {
 
     describe('task lists & settings', () => {
         let store: stores.Store;
+        let locale = new LocaleBuilder().build();
 
         beforeEach(() => {
-            const taskBuilder = new TaskBuilder();
+            const taskBuilder = new TaskBuilder(locale.code);
             const taskUserSettingsBuilder = new TaskUserSettingsBuilder(taskBuilder.build().id);
             store = buildNormalizedStore(
                 [taskBuilder],
@@ -25,13 +27,13 @@ describe('tasks reducer', () => {
         });
 
         test('can add task to saved tasks list', () => {
-            const task = new TaskBuilder().build();
+            const task = new TaskBuilder(locale.code).build();
             const finalStore = stores.reducer(store, stores.addToSavedList(task.id));
             expect(finalStore.savedTasksList).toHaveLength(2);
         });
 
         test('can add task to suggested tasks list', () => {
-            const task = new TaskBuilder().build();
+            const task = new TaskBuilder(locale.code).build();
             const finalStore = stores.reducer(store, stores.addToSuggestedList(task.id));
             expect(finalStore.suggestedTasksList).toHaveLength(2);
         });

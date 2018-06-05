@@ -6,26 +6,35 @@
 
 import * as store from '../../tasks';
 import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
+import { LocalizedText } from '../../../application/locale';
 
 export class TaskBuilder {
+
+    defaultLocaleCode: string;
     id: store.Id = aString();
-    title: string = aString();
-    description: string = aString();
+    title: LocalizedText;
+    description: LocalizedText;
     tags: ReadonlyArray<string> = [aString(), aString()];
     category: string = aString();
     importance: number = aNumber();
+
+    constructor(defaultLocaleCode: string) {
+        this.defaultLocaleCode = defaultLocaleCode;
+        this.title = { [this.defaultLocaleCode]: aString() };
+        this.description = { [this.defaultLocaleCode]: aString() };
+    }
 
     withId(id: string): TaskBuilder {
         this.id = id;
         return this;
     }
 
-    withTitle(title: string): TaskBuilder {
+    withTitle(title: LocalizedText): TaskBuilder {
         this.title = title;
         return this;
     }
 
-    withDescription(description: string): TaskBuilder {
+    withDescription(description: LocalizedText): TaskBuilder {
         this.description = description;
         return this;
     }
@@ -55,6 +64,7 @@ export class TaskBuilder {
             importance: this.importance,
         };
     }
+
 }
 
 export class TaskUserSettingsBuilder {

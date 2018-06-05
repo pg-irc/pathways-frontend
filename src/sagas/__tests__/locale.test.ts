@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let no-null-keyword
 import { call, put, PutEffect, CallEffect } from 'redux-saga/effects';
 
-import { buildLocale } from '../../stores/__tests__/helpers/locale_helpers';
+import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { loadCurrentLocaleCode, saveCurrentLocaleCode, isReloadNeeded, reloadRTL, LocaleManager } from '../../application/locale';
 import { loadCurrentLocaleActions, setLocaleActions, SetLocale } from '../../stores/locale';
 import { applyLocaleChange, loadCurrentLocale, LoadCurrentLocaleActions } from '../locale';
@@ -9,7 +9,7 @@ import { anError } from '../../application/__tests__/helpers/random_test_values'
 
 describe('the loadCurrentLocale saga', () => {
 
-    const aLocale = buildLocale().get();
+    const aLocale = new LocaleBuilder().build();
 
     beforeAll(() => {
         LocaleManager.registerLocale(aLocale);
@@ -52,7 +52,7 @@ describe('the loadCurrentLocale saga', () => {
 
 describe('the applyLocaleChange saga', () => {
 
-    const aLocale = buildLocale().get();
+    const aLocale = new LocaleBuilder().build();
     const setLocaleAction = setLocaleActions.request(aLocale);
 
     it('should dispatch a call effect with saveCurrentLocale', () => {

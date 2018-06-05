@@ -8,44 +8,46 @@ import {
 } from './helpers/tasks_helpers';
 import * as stores from '../../stores/tasks';
 import { aString, aBoolean, aNumber } from '../../application/__tests__/helpers/random_test_values';
+import { LocaleBuilder, LocalizedTextBuilder } from './helpers/locale_helpers';
 
 describe('tasks test helpers', () => {
 
     describe('building the task', () => {
+        let locale = new LocaleBuilder().build();
 
         test('id property', () => {
             const id = aString();
-            const task = new TaskBuilder().withId(id).build();
+            const task = new TaskBuilder(locale.code).withId(id).build();
             expect(task.id).toBe(id);
         });
 
         test('title property', () => {
-            const title = aString();
-            const task = new TaskBuilder().withTitle(title).build();
+            const title = new LocalizedTextBuilder(locale.code, aString()).build();
+            const task = new TaskBuilder(locale.code).withTitle(title).build();
             expect(task.title).toBe(title);
         });
 
         test('description property', () => {
-            const description = aString();
-            const task = new TaskBuilder().withDescription(description).build();
+            const description = new LocalizedTextBuilder(locale.code, aString()).build();
+            const task = new TaskBuilder(locale.code).withDescription(description).build();
             expect(task.description).toBe(description);
         });
 
         test('tags property', () => {
             const tags: ReadonlyArray<string> = [aString(), aString()];
-            const task = new TaskBuilder().withTags(tags).build();
+            const task = new TaskBuilder(locale.code).withTags(tags).build();
             expect(task.tags).toBe(tags);
         });
 
         test('category property', () => {
             const category = aString();
-            const task = new TaskBuilder().withCategory(category).build();
+            const task = new TaskBuilder(locale.code).withCategory(category).build();
             expect(task.category).toBe(category);
         });
 
         test('importance property', () => {
             const importance = aNumber();
-            const task = new TaskBuilder().withImportance(importance).build();
+            const task = new TaskBuilder(locale.code).withImportance(importance).build();
             expect(task.importance).toBe(importance);
         });
     });
@@ -87,6 +89,7 @@ describe('tasks test helpers', () => {
     describe('the store', () => {
 
         describe('building a normalized store', () => {
+            let locale = new LocaleBuilder().build();
             let firstTaskBuilder: TaskBuilder;
             let secondTaskBuilder: TaskBuilder;
             let firstTaskUserSettingsBuilder: TaskUserSettingsBuilder;
@@ -94,8 +97,8 @@ describe('tasks test helpers', () => {
             let store: stores.Store;
 
             beforeEach(() => {
-                firstTaskBuilder = new TaskBuilder();
-                secondTaskBuilder = new TaskBuilder();
+                firstTaskBuilder = new TaskBuilder(locale.code);
+                secondTaskBuilder = new TaskBuilder(locale.code);
                 firstTaskUserSettingsBuilder = new TaskUserSettingsBuilder(firstTaskBuilder.build().id);
                 secondTaskUserSettingsBuilder = new TaskUserSettingsBuilder(secondTaskBuilder.build().id);
                 store = buildNormalizedStore(
