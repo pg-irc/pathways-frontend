@@ -45,7 +45,9 @@ export class LocaleManager {
      * the provided locales. Throws a runtime error if called twice.
      * @param locales The list of locales to register with the singleton.
      */
-    static registerLocale = (locale: Locale, ...locales: Array<Locale>): typeof LocaleManager => LocaleManager.registerLocales([locale, ...locales]);
+    static registerLocale = (locale: Locale, ...locales: Array<Locale>):
+        typeof LocaleManager => LocaleManager.registerLocales([locale, ...locales])
+
     static registerLocales(locales: ReadonlyArray<Locale>): typeof LocaleManager {
         if (this.localeManagerInstance !== undefined) {
             throw new Error('Cannot register new locales after locale manager has been built');
@@ -54,8 +56,8 @@ export class LocaleManager {
         return this;
     }
 
-    static get(code: string): Locale {
-        return this.instance.locale(code);
+    static getLocale(localeCode: string): Locale {
+        return this.instance.getLocale(localeCode);
     }
 
     static getFallbackLocale(): Locale {
@@ -96,17 +98,21 @@ export class LocaleManager {
         this.catalogsMap = buildCatalogsMap(locales);
     }
 
-    private locale(code: string): Locale {
-        const locale = this.locales.find((aLocale: Locale): boolean => aLocale.code === code);
+    private getLocale(localeCode: string): Locale {
+        const locale = this.findLocale(localeCode) || this.getFallbackLocale();
         if (locale === undefined) {
-            throw new Error(`Unknown locale code: ${code}`);
+            throw new Error(`Unknown locale code: ${localeCode}`);
         }
         return locale;
     }
 
+    private findLocale(code: string): Locale {
+        return this.locales.find((aLocale: Locale): boolean => aLocale.code === code);
+    }
+
     private getFallbackLocale(): Locale {
         if (this.fallbackLocaleCode) {
-            return this.locale(this.fallbackLocaleCode);
+            return this.getLocale(this.fallbackLocaleCode);
         } else {
             const [ fallbackLocale ]: ReadonlyArray<Locale> = this.locales;
             return fallbackLocale;

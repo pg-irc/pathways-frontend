@@ -9,7 +9,7 @@ import { LocaleManager } from '../../application/locale';
 import { selectLocale } from '../../selectors/locale';
 
 const mapStateToProps = (store: Store): Props => {
-    const locale = LocaleManager.get(selectLocale(store));
+    const locale = LocaleManager.getLocale(selectLocale(store));
     return {
         tasks: selectAllSuggestedTasks(locale, store.applicationState.tasksInStore),
         taskRenderer: renderSuggestedTask,

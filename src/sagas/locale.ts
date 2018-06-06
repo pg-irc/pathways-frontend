@@ -31,7 +31,7 @@ export type LoadCurrentLocaleActions = LoadCurrentLocale.Request | LoadCurrentLo
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadCurrentLocaleActions>> {
     try {
         const code = yield call(loadCurrentLocaleCode);
-        const locale = code !== null ? LocaleManager.get(code) : LocaleManager.getFallbackLocale();
+        const locale = code !== null ? LocaleManager.getLocale(code) : LocaleManager.getFallbackLocale();
         yield put(loadCurrentLocaleActions.success(locale));
     } catch (e) {
         console.error(`Failed to load current locale (${e.message})`);

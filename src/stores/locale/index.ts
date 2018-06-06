@@ -10,7 +10,7 @@ export { LoadCurrentLocale };
 type ReducerActions = SetLocale.Request | SetLocale.Result | LoadCurrentLocale.Request | LoadCurrentLocale.Result;
 export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 
-const DEFAULT_LOCALE_CODE = 'en';
+export const DEFAULT_LOCALE_CODE = 'en';
 // tslint:disable-next-line:typedef
 export const buildDefaultStore = () => ({
     code: DEFAULT_LOCALE_CODE,

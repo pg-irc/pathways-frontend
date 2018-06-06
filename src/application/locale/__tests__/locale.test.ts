@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { LocaleManager } from '../';
-import { aString } from '../../../application/__tests__/helpers/random_test_values';
+import { aString } from '../../__tests__/helpers/random_test_values';
 import { LocaleBuilder } from '../../../stores/__tests__/helpers/locale_helpers';
 
 describe('LocaleManager', () => {
@@ -8,7 +8,7 @@ describe('LocaleManager', () => {
     describe('before .registerLocales() is called', () => {
 
         it('.get() should throw an error', () => {
-            expect(() => LocaleManager.get(aString())).toThrow();
+            expect(() => LocaleManager.getLocale(aString())).toThrow();
         });
 
         it('.getFallbackLocale() should throw an error', () => {
@@ -53,11 +53,11 @@ describe('LocaleManager', () => {
         });
 
         it('.get() should return a locale when given a known locale code', () => {
-            expect(LocaleManager.get(aLocale.code)).toBe(aLocale);
+            expect(LocaleManager.getLocale(aLocale.code)).toBe(aLocale);
         });
 
         it('.get() should throw an error if given an unknown locale code', () => {
-            expect(() => LocaleManager.get(aString())).toThrow();
+            expect(() => LocaleManager.getLocale(aString())).toThrow();
         });
 
         it('.getFallbackLocale() should return the first registered locale', () => {
