@@ -16,8 +16,6 @@ const mapStateToProps = (store: Store): Props => ({
 const mapDispatchToProps = (dispatch: Dispatch<Store>): Actions => ({
     addToSavedList: (taskId: stores.Id): stores.AddToSavedListAction => dispatch(stores.addToSavedList(taskId)),
     shareTask: (): stores.ShareAction => dispatch(stores.share()),
-    goToTaskDetail: (taskId: stores.Id): pageSwitcher.SetMainPageAction =>
-        dispatch(pageSwitcher.setMainPage(pageSwitcher.Page.TaskDetail, {taskId: taskId})),
 });
 
 export const ConnectedSuggestedTasks = connect(mapStateToProps, mapDispatchToProps)(Component);

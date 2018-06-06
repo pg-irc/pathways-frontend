@@ -47,7 +47,6 @@ export const renderSavedTask = (item: selector.Task, actions: TaskActions): JSX.
             toggleCompleted={actions.toggleCompleted}
             toggleStarred={actions.toggleStarred}
             shareTask={actions.shareTask}
-            goToTaskDetail={actions.goToTaskDetail}
         />
     );
 };
@@ -66,7 +65,6 @@ export const renderSuggestedTask = (item: selector.Task, actions: TaskActions): 
             tags={item.tags}
             addToSavedList={actions.addToSavedList}
             shareTask={actions.shareTask}
-            goToTaskDetail={actions.goToTaskDetail}
         />
     );
 };

@@ -18,8 +18,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Store>): Actions => ({
     toggleCompleted: (taskUserSettingsId: stores.Id): stores.ToggleCompletedAction => dispatch(stores.toggleCompleted(taskUserSettingsId)),
     toggleStarred: (taskUserSettingsId: stores.Id): stores.ToggleStarredAction => dispatch(stores.toggleStarred(taskUserSettingsId)),
     shareTask: (): stores.ShareAction => dispatch(stores.share()),
-    goToTaskDetail: (taskId: stores.Id): pageSwitcher.SetMainPageAction =>
-        dispatch(pageSwitcher.setMainPage(pageSwitcher.Page.TaskDetail, {taskId: taskId})),
 });
 
 export const ConnectedSavedTasks = connect(mapStateToProps, mapDispatchToProps)(Component);

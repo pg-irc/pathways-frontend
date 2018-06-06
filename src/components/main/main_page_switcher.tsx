@@ -4,9 +4,6 @@ import * as store from '../../stores/page_switcher';
 import * as exploreAll from '../explore_all/explore_all';
 import * as questionnaire from '../questionnaire';
 import * as myPlan from '../my_plan/my_plan';
-import * as taskStore from '../../stores/tasks';
-import * as taskDetail from '../tasks/task_detail';
-import { selectTaskById } from '../../selectors/tasks';
 
 export interface Props {
     readonly currentPageInProps: store.Page;
