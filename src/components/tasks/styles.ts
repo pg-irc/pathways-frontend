@@ -1,30 +1,15 @@
 import { StyleSheet } from 'react-native';
 
 export const task = StyleSheet.create({
-    wrapper: {
-        borderTopColor: 'lightgrey',
-        borderTopWidth: 2,
-        flexDirection: 'row',
-        padding: 10,
+    listItem: {
+        paddingLeft: 10,
     },
-    sideColumn: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-    },
-    centerColumn: {
-        flex: 4,
-        flexDirection: 'row',
-    },
-    stackedItems: {
-        flex: 1,
-        flexDirection: 'column',
-    },
-    inlineItems: {
+    rightColumn: {
         alignItems: 'center',
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+    },
+    starIcon: {
+        fontSize: 20,
+        paddingLeft: 10,
     },
 });
 

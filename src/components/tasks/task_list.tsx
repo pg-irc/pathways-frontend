@@ -21,7 +21,7 @@ const extractKey = (item: selector.Task): string => item.id.toString();
 
 export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
     const renderItem = ({ item }: { readonly item: selector.Task }): JSX.Element => (
-       props.taskRenderer(item, props)
+        props.taskRenderer(item, props)
     );
     return (
         <FlatList
