@@ -7,7 +7,7 @@ import * as tasks from './tasks';
 
 export interface Store {
     readonly fontsInStore: fonts.Store;
-    readonly mainPageInStore: pageSwitcher.Store;
+    readonly currentPageInStore: pageSwitcher.Store;
     readonly localeInStore: locale.Store;
     readonly questionnaireInStore: questionnaire.Store;
     readonly tasksInStore: tasks.Store;
@@ -15,7 +15,7 @@ export interface Store {
 
 export const reducer = combineReducers<Store>({
     fontsInStore: fonts.reducer,
-    mainPageInStore: pageSwitcher.reducer,
+    currentPageInStore: pageSwitcher.reducer,
     localeInStore: locale.reducer,
     questionnaireInStore: questionnaire.reducer,
     tasksInStore: tasks.reducer,

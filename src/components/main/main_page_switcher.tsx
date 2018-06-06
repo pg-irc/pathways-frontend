@@ -6,14 +6,14 @@ import * as questionnaire from '../questionnaire';
 import * as myPlan from '../my_plan/my_plan';
 
 export interface Props {
-    readonly mainPageInProps: store.Page;
+    readonly currentPageInProps: store.Page;
 }
 
 export interface Actions {
 }
 
 export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    switch (props.mainPageInProps) {
+    switch (props.currentPageInProps) {
         case store.Page.Questionnaire:
             return <questionnaire.ConnectedComponent />;
 

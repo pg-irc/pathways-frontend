@@ -2,52 +2,59 @@ import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 
 export enum Page {
-    Questionnaire, MyPlan, ExploreAll,
+    Questionnaire,
+    MyPlan,
+    ExploreAll,
 }
+
+export const initialPage = Page.Questionnaire;
+
+export type SetQuestionnairePageAction = Readonly<ReturnType<typeof setQuestionnairePage>>;
+export type SetPlanPageAction = Readonly<ReturnType<typeof setPlanPage>>;
+export type SetExplorePageAction = Readonly<ReturnType<typeof setExplorePage>>;
+type PageSwitcherAction = SetQuestionnairePageAction |
+                          SetPlanPageAction |
+                          SetExplorePageAction;
+
+// tslint:disable-next-line:typedef
+export const setQuestionnairePage = () => (
+    helpers.makeAction(constants.SET_QUESTIONNAIRE_PAGE)
+);
+
+// tslint:disable-next-line:typedef
+export const setPlanPage = () => (
+    helpers.makeAction(constants.SET_PLAN_PAGE)
+);
+
+// tslint:disable-next-line:typedef
+export const setExplorePage = () => (
+    helpers.makeAction(constants.SET_EXPLORE_PAGE)
+);
 
 export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 
-export type SetMainPageAction = Readonly<ReturnType<typeof setMainPage>>;
-
-// tslint:disable-next-line:typedef
-export const setMainPage = (mainPage: Page | string) => (
-    helpers.makeAction(constants.SET_MAIN_TAB, { mainPage })
-);
-
 // tslint:disable-next-line:typedef
 const buildDefaultStore = () => (
-    { mainPage: Page.Questionnaire }
+    { currentPage: initialPage }
 );
 
-export const reducer = (store: Store = buildDefaultStore(), action?: SetMainPageAction): Store => {
+export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitcherAction): Store => {
     if (!action) {
         return store;
     }
     switch (action.type) {
-        case constants.SET_MAIN_TAB:
-            return { ...store, mainPage: validateMainPageId(action.payload.mainPage) };
+        case constants.SET_QUESTIONNAIRE_PAGE:
+            return { ...store, currentPage: Page.Questionnaire };
+        case constants.SET_PLAN_PAGE:
+            return { ...store, currentPage: Page.MyPlan };
+        case constants.SET_EXPLORE_PAGE:
+            return { ...store, currentPage: Page.ExploreAll };
         default:
             return store;
     }
 };
 
-// Using number as a type alias for the MainPage enum, see
-// https://stackoverflow.com/questions/29706609/typescript-how-to-add-type-guards-for-enums-in-union-types/29706830#29706830
-
-const validateMainPageId = (pageId: number | string): Page => (
-    typeof pageId === 'string' ? toMainPageId(pageId) : pageId
-);
-
-const toMainPageId = (pageId: string): Page => {
-    switch (pageId) {
-        case 'Page.Questionnaire': return Page.Questionnaire;
-        case 'Page.MyPlan': return Page.MyPlan;
-        case 'Page.ExploreAll': return Page.ExploreAll;
-        default: throw invalidPageIdError(pageId);
-    }
-};
-
-const invalidPageIdError = (pageId: string): Error => {
-    const message = `${pageId}: Invalid main page id, accepted values are Page.Questionnaire, Page.MyPlan or Page.ExploreAll`;
+export const unsupportedPageError = (page: Page): Error => {
+    const message = `${page}: Unsupported Page`;
     return new Error(message);
 };
