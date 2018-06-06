@@ -3,8 +3,11 @@
 import * as selector from '../questionnaire';
 import { anInteger } from '../../application/__tests__/helpers/random_test_values';
 import * as testHelpers from '../../stores/__tests__/helpers/questionnaire_helpers';
+import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 
 describe('questionnaire selector', () => {
+
+    let locale = new LocaleBuilder().build();
 
     describe('should map properties', () => {
 
@@ -13,11 +16,11 @@ describe('questionnaire selector', () => {
         let denormalizedData: selector.Questionnaire;
 
         beforeEach(() => {
-            anAnswer = new testHelpers.AnswerBuilder();
-            aQuestion = new testHelpers.QuestionBuilder().withAnswers([anAnswer]);
+            anAnswer = new testHelpers.AnswerBuilder(locale.code);
+            aQuestion = new testHelpers.QuestionBuilder(locale.code).withAnswers([anAnswer]);
             const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
 
-            denormalizedData = selector.denormalizeQuestions(normalizedData);
+            denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
         });
 
         it('question id', () => {
@@ -25,7 +28,7 @@ describe('questionnaire selector', () => {
         });
 
         it('question text', () => {
-            expect(denormalizedData[0].text).toBe(aQuestion.text);
+            expect(denormalizedData[0].text).toBe(aQuestion.text[locale.code]);
         });
 
         it('should nest answers inside questions', () => {
@@ -33,7 +36,7 @@ describe('questionnaire selector', () => {
         });
 
         it('answer text', () => {
-            expect(denormalizedData[0].answers[0].text).toBe(anAnswer.text);
+            expect(denormalizedData[0].answers[0].text).toBe(anAnswer.text[locale.code]);
         });
 
         it('answer isSelected flag', () => {
@@ -44,11 +47,11 @@ describe('questionnaire selector', () => {
     it('should return all the questions', () => {
         const questionCount = anInteger();
         const questions = new Array(questionCount).fill(0).map(() => (
-            new testHelpers.QuestionBuilder()),
+            new testHelpers.QuestionBuilder(locale.code)),
         );
         const normalizedData = testHelpers.buildNormalizedQuestionnaire(questions);
 
-        const denormalizedData = selector.denormalizeQuestions(normalizedData);
+        const denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
 
         expect(denormalizedData).toHaveLength(questionCount);
     });
@@ -56,12 +59,12 @@ describe('questionnaire selector', () => {
     it('should return all the answers to a question', () => {
         const answerCount = anInteger();
         const answers = new Array(answerCount).fill(0).map(() => (
-            new testHelpers.AnswerBuilder()),
+            new testHelpers.AnswerBuilder(locale.code)),
         );
-        const theQuestion = new testHelpers.QuestionBuilder().withAnswers(answers);
+        const theQuestion = new testHelpers.QuestionBuilder(locale.code).withAnswers(answers);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
-        const denormalizedData = selector.denormalizeQuestions(normalizedData);
+        const denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
 
         expect(denormalizedData[0].answers).toHaveLength(answerCount);
     });

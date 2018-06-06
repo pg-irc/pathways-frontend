@@ -7,6 +7,7 @@
 
 import * as store from '../../questionnaire';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
+import { LocalizedText } from '../../../application/locale';
 
 export const buildNormalizedQuestionnaire = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
     {
@@ -38,17 +39,23 @@ interface WritableAnswersMap {
 }
 
 export class QuestionBuilder {
+    defaultLocaleCode: string;
     id: string = aString();
-    text: string = aString();
+    text: LocalizedText;
     acceptMultipleAnswers: boolean = true;
     answers: Array<AnswerBuilder> = Array<AnswerBuilder>(3);
+
+    constructor(defaultLocaleCode: string) {
+        this.defaultLocaleCode = defaultLocaleCode;
+        this.text = { [this.defaultLocaleCode]: aString() };
+    }
 
     withId(id: string): QuestionBuilder {
         this.id = id;
         return this;
     }
 
-    withText(text: string): QuestionBuilder {
+    withText(text: LocalizedText): QuestionBuilder {
         this.text = text;
         return this;
     }
@@ -73,10 +80,16 @@ export class QuestionBuilder {
 }
 
 export class AnswerBuilder {
+    defaultLocaleCode: string;
     id: string = aString();
     questionId: string = aString();
-    text: string = aString();
+    text: LocalizedText;
     isSelected: boolean = aBoolean();
+
+    constructor(defaultLocaleCode: string) {
+        this.defaultLocaleCode = defaultLocaleCode;
+        this.text = { [this.defaultLocaleCode]: aString() };
+    }
 
     withId(id: string): AnswerBuilder {
         this.id = id;
@@ -88,7 +101,7 @@ export class AnswerBuilder {
         return this;
     }
 
-    withText(text: string): AnswerBuilder {
+    withText(text: LocalizedText): AnswerBuilder {
         this.text = text;
         return this;
     }

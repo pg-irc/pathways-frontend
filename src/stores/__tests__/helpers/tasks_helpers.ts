@@ -9,7 +9,6 @@ import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpe
 import { LocalizedText } from '../../../application/locale';
 
 export class TaskBuilder {
-
     defaultLocaleCode: string;
     id: store.Id = aString();
     title: LocalizedText;
@@ -64,7 +63,6 @@ export class TaskBuilder {
             importance: this.importance,
         };
     }
-
 }
 
 export class TaskUserSettingsBuilder {

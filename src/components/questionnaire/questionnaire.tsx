@@ -20,7 +20,7 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
             flex: 1,
             padding: 10,
         }}>
-            {props.questionnaire.map((question: selector.Question) => (
+            {props.questionnaire.map((question: selector.LocalizedQuestion) => (
                 <Question key={question.id} question={question} selectAnswer={props.selectAnswer} />
             ))}
         </View>

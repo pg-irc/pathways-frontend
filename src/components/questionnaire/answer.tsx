@@ -5,7 +5,7 @@ import { SelectAnswerAction } from '../../stores/questionnaire';
 import { QuestionnaireActions } from './actions';
 
 export interface Props {
-    readonly answer: selector.Answer;
+    readonly answer: selector.LocalizedAnswer;
 }
 
 export type Actions = QuestionnaireActions;
