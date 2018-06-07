@@ -50,7 +50,7 @@ export const selectAllSuggestedTasks = (locale: Locale, store: stores.Store): Re
 export const selectTaskById = (locale: Locale, store: stores.Store, taskId: stores.Id): Task => {
     const { taskMap }: stores.Store = store;
     if (taskMap[taskId] === undefined) {
-        throw new Error(`Could not find task for task id: ${taskId}`);
+        throw new Error(`Could not find Task for task id: ${taskId}`);
     }
     const taskUserSettings = selectTaskUserSettingsByTaskId(store, taskId);
     return denormalizeTask(locale, taskMap[taskId], taskUserSettings);
@@ -63,7 +63,7 @@ export const selectTaskUserSettingsByTaskId = (store: stores.Store, taskId: stor
             taskUserSettingsMap[key].taskId === taskId
         ));
     if (id === undefined) {
-        throw new Error(`Could not find TaskUserSettings object for task id: ${taskId}`);
+        throw new Error(`Could not find TaskUserSettings for task id: ${taskId}`);
     }
     return taskUserSettingsMap[id];
 };

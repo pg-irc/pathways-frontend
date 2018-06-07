@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colors } from '../../application/styles';
 
 export const task = StyleSheet.create({
     wrapper: {
@@ -28,29 +29,23 @@ export const task = StyleSheet.create({
     },
 });
 
-export const taskDetail = StyleSheet.create({
-    wrapper: {
-        padding: 10,
-    },
-    bold: {
-        fontWeight: 'bold',
-    },
+export const taskDetailStyles = StyleSheet.create({
     title: {
-        fontWeight: 'bold',
         marginTop: 5,
     },
     actions: {
         marginTop: 15,
         marginBottom: 10,
     },
+    tabs: {
+        marginLeft: -10,
+        marginRight: -10,
+    },
+    tabContent: {
+        padding: 10,
+    },
     row: {
         marginTop: 10,
-        marginBottom: 10,
-    },
-    separator: {
-        borderWidth: 0.5,
-        borderColor: 'lightgrey',
-        marginTop: 25,
         marginBottom: 10,
     },
 });

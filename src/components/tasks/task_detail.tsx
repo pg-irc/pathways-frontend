@@ -2,7 +2,8 @@ import React from 'react';
 import { Button, Content, Text, Icon, Container, Tab, Tabs, TabHeading } from 'native-base';
 import * as selector from '../../selectors/tasks';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { taskDetail as styles } from './styles';
+import { applicationStyles } from '../../application/styles';
+import { taskDetailStyles } from './styles';
 import { Trans } from '@lingui/react';
 
 export interface Props {
@@ -14,15 +15,15 @@ export interface Actions {
 
 export const TaskDetail: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
     <Container>
-        <Content>
-            <Grid style={styles.wrapper}>
+        <Content padder>
+            <Grid>
                 <Row>
-                    <Text style={styles.bold}>COMPLETED TASK</Text>
+                    <Text style={applicationStyles.bold}>COMPLETED TASK</Text>
                 </Row>
                 <Row>
-                    <Text style={styles.title}>{props.task.title}</Text>
+                    <Text style={taskDetailStyles.title}>{props.task.title}</Text>
                 </Row>
-                <Row style={styles.actions}>
+                <Row style={taskDetailStyles.actions}>
                     <Col size={70}>
                         <Button iconLeft rounded light>
                             <Icon name='checkbox' />
@@ -41,31 +42,31 @@ export const TaskDetail: React.StatelessComponent<Props & Actions> = (props: Pro
                     </Col>
                 </Row>
             </Grid>
-            <Tabs>
+            <Tabs style={taskDetailStyles.tabs}>
                 <Tab heading={<TabHeading><Text><Trans>INFORMATION</Trans></Text></TabHeading>}>
-                    <Grid style={styles.wrapper}>
-                        <Row style={styles.row}>
+                    <Grid style={taskDetailStyles.tabContent}>
+                        <Row style={taskDetailStyles.row}>
                             <Col size={10}>
                                 <Icon type='MaterialCommunityIcons' name='star-circle' />
                             </Col>
                             <Col size={90}>
-                                <Text>This task is <Text style={styles.bold}>recommended for you</Text>.</Text>
+                                <Text>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
                             </Col>
                         </Row>
-                        <Row style={styles.row}>
+                        <Row style={taskDetailStyles.row}>
                             <Col size={10}>
                                 <Icon type='MaterialCommunityIcons' name='sign-text' />
                             </Col>
                             <Col size={90}>
-                                <Text>This task helps with <Text style={styles.bold}>settling in</Text>.</Text>
+                                <Text>This task helps with <Text style={applicationStyles.bold}>settling in</Text>.</Text>
                             </Col>
                         </Row>
-                        <Row style={styles.row}>
+                        <Row style={taskDetailStyles.row}>
                             <Text>You can get information about your community ...</Text>
                         </Row>
-                        <Row style={styles.separator} />
+                        <Row style={applicationStyles.hr} />
                         <Row>
-                            <Text style={styles.bold}><Trans>LEARN MORE</Trans></Text>
+                            <Text style={applicationStyles.bold}><Trans>LEARN MORE</Trans></Text>
                         </Row>
                     </Grid>
                 </Tab>
