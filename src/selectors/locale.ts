@@ -1,7 +1,7 @@
 import { Store as LocaleStore } from '../stores/locale';
 import * as app from '../application/store';
 import * as model from '../stores/locale';
-import { Locale, LocalizedText } from '../application/locale';
+import { Locale, LocalizedText } from '../locale';
 
 export const selectLocaleStore = (appStore: app.Store): LocaleStore => {
     return appStore.applicationState.localeInStore;

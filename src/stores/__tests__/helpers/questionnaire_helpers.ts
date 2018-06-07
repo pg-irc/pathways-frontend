@@ -7,7 +7,7 @@
 
 import * as store from '../../questionnaire';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
-import { LocalizedText } from '../../../application/locale';
+import { LocalizedText } from '../../../locale';
 
 export const buildNormalizedQuestionnaire = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
     {

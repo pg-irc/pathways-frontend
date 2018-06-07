@@ -5,7 +5,7 @@ import * as helpers from './helpers/questionnaire_helpers';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { Answer, Question } from '../questionnaire';
 import { LocaleBuilder, LocalizedTextBuilder } from './helpers/locale_helpers';
-import { LocalizedText } from '../../application/locale';
+import { LocalizedText } from '../../locale';
 
 describe('questionnaire test helper for', () => {
 

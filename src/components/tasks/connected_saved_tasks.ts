@@ -6,7 +6,7 @@ import { Store } from '../../application/store';
 import { selectAllSavedTasks } from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
 import { selectLocale } from '../../selectors/locale';
-import { LocaleManager } from '../../application/locale';
+import { LocaleManager } from '../../locale';
 
 const mapStateToProps = (store: Store): Props => {
     const locale = LocaleManager.getLocale(selectLocale(store));

@@ -1,4 +1,4 @@
-import { Locale } from '../../application/locale';
+import { Locale } from '../../locale';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 

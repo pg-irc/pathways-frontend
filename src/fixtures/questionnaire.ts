@@ -1,4 +1,4 @@
-import { LocalizedText } from '../application/locale';
+import { LocalizedText } from '../locale';
 
 export type Id = string;
 

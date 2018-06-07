@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { I18nProvider } from '@lingui/react';
 import * as app from '../../application/store';
 import { selectLocale } from '../../selectors/locale';
-import { CatalogsMap, LocaleManager } from '../../application/locale';
+import { CatalogsMap, LocaleManager } from '../../locale';
 
 interface Props {
     readonly catalogs: CatalogsMap;

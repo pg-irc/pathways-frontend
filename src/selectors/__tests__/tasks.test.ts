@@ -10,7 +10,7 @@ import {
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
-import { Locale } from '../../application/locale';
+import { Locale } from '../../locale';
 
 describe('tasks selector', () => {
 

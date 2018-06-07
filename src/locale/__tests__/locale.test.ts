@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import { LocaleManager } from '../';
-import { aString } from '../../__tests__/helpers/random_test_values';
-import { LocaleBuilder } from '../../../stores/__tests__/helpers/locale_helpers';
+import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 
 describe('LocaleManager', () => {
 

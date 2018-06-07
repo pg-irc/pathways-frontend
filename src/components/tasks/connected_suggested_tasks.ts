@@ -5,7 +5,7 @@ import { Actions } from './task';
 import { Store } from '../../application/store';
 import { selectAllSuggestedTasks } from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
-import { LocaleManager } from '../../application/locale';
+import { LocaleManager } from '../../locale';
 import { selectLocale } from '../../selectors/locale';
 
 const mapStateToProps = (store: Store): Props => {

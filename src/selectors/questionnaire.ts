@@ -1,6 +1,6 @@
 import * as model from '../stores/questionnaire';
 import * as app from '../application/store';
-import { Locale } from '../application/locale';
+import { Locale } from '../locale';
 import { selectLocalizedText } from './locale';
 
 export type Questionnaire = ReadonlyArray<LocalizedQuestion>;

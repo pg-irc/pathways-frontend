@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { Locale } from '../../application/locale';
+import { Locale } from '../../locale';
 import * as locale from '../locale';
 import * as constants from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';

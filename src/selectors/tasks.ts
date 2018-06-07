@@ -1,5 +1,5 @@
 import * as stores from '../stores/tasks';
-import { Locale } from '../application/locale';
+import { Locale } from '../locale';
 import { selectLocalizedText } from './locale';
 
 export interface LocalizedTask {

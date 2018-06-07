@@ -6,7 +6,7 @@
 
 import * as store from '../../tasks';
 import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
-import { LocalizedText } from '../../../application/locale';
+import { LocalizedText } from '../../../locale';
 
 export class TaskBuilder {
     defaultLocaleCode: string;

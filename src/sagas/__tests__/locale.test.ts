@@ -2,7 +2,7 @@
 import { call, put, PutEffect, CallEffect } from 'redux-saga/effects';
 
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import { loadCurrentLocaleCode, saveCurrentLocaleCode, isReloadNeeded, reloadRTL, LocaleManager } from '../../application/locale';
+import { loadCurrentLocaleCode, saveCurrentLocaleCode, isReloadNeeded, reloadRTL, LocaleManager } from '../../locale';
 import { loadCurrentLocaleActions, setLocaleActions, SetLocale } from '../../stores/locale';
 import { applyLocaleChange, loadCurrentLocale, LoadCurrentLocaleActions } from '../locale';
 import { anError } from '../../application/__tests__/helpers/random_test_values';

@@ -3,7 +3,7 @@
 // tslint:disable:no-expression-statement
 // tslint:disable:readonly-array
 // tslint:disable:no-class
-import { Catalog, Locale, LocalizedText } from '../../../application/locale';
+import { Catalog, Locale, LocalizedText } from '../../../locale';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 
 export class LocaleBuilder {
