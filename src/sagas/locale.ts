@@ -26,17 +26,13 @@ export function* watchLoadLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_CURRENT_LOCALE_REQUEST, loadCurrentLocale);
 }
 
-type LoadCurrentLocaleActions = LoadCurrentLocale.Request | LoadCurrentLocale.Result | SetLocale.Success;
+export type LoadCurrentLocaleActions = LoadCurrentLocale.Request | LoadCurrentLocale.Result | SetLocale.Success;
 
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadCurrentLocaleActions>> {
     try {
-        const currentLocaleCode = yield call(loadCurrentLocaleCode);
-        if (currentLocaleCode !== null) {
-            const currentLocale = LocaleManager.get(currentLocaleCode);
-            yield put(loadCurrentLocaleActions.success(currentLocale));
-        } else {
-            yield put(loadCurrentLocaleActions.failure('No locale preference set'));
-        }
+        const code = yield call(loadCurrentLocaleCode);
+        const locale = code !== null ? LocaleManager.get(code) : LocaleManager.getFallbackLocale();
+        yield put(loadCurrentLocaleActions.success(locale));
     } catch (e) {
         console.error(`Failed to load current locale (${e.message})`);
         yield put(loadCurrentLocaleActions.failure(e.message));
