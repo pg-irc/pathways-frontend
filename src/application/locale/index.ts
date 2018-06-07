@@ -99,7 +99,7 @@ export class LocaleManager {
     }
 
     private getLocale(localeCode: string): Locale {
-        const locale = this.findLocale(localeCode) || this.getFallbackLocale();
+        const locale = this.findLocale(localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
         }
