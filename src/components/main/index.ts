@@ -10,6 +10,8 @@ import * as pageSwitcher from '../../stores/page_switcher';
 const mapStateToProps = (store: Store): LoaderProps & main.Props => ({
     loading: isApplicationLoading(store),
     currentPageInProps: store.applicationState.currentPageInStore.currentPage,
+    currentPageParameters: store.applicationState.currentPageInStore.pageParameters,
+    tasksStore: store.applicationState.tasksInStore,
     canGoBack: canGoBack(),
 });
 

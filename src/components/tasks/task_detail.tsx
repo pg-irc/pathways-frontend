@@ -12,7 +12,7 @@ export interface Props {
 export interface Actions {
 }
 
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
+export const TaskDetail: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
     <Container>
         <Content>
             <Grid style={styles.wrapper}>

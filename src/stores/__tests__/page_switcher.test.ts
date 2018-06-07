@@ -2,6 +2,7 @@
 
 import * as pageSwitcher from '../page_switcher';
 import * as constants from '../../application/constants';
+import { aString } from '../../application/__tests__/helpers/random_test_values';
 
 const buildStore = (): pageSwitcher.Store => (
     pageSwitcher.reducer(undefined, undefined)
@@ -34,8 +35,25 @@ describe('setting the explore page', () => {
     });
 });
 
+describe('setting the task detail page', () => {
+    it('should create action with type SET_TASK_DETAIL_PAGE', () => {
+        const theAction = pageSwitcher.setTaskDetailPage(aString());
+        expect(theAction.type).toBe(constants.SET_TASK_DETAIL_PAGE);
+    });
+});
+
 describe('the reducer', () => {
-    it('should default to build a store with Page.Questionnaire', () => {
+    it('should default to build a store with a currentPage property', () => {
+        const theStore = pageSwitcher.reducer();
+        expect(theStore).toHaveProperty('currentPage');
+    });
+
+    it('should default to build a store with a pageParameters property', () => {
+        const theStore = pageSwitcher.reducer();
+        expect(theStore).toHaveProperty('pageParameters');
+    });
+
+    it('should default to build a store with currentPage equal to Page.Questionnaire', () => {
         const theStore = pageSwitcher.reducer();
         expect(theStore.currentPage).toBe(pageSwitcher.Page.Questionnaire);
     });
@@ -65,6 +83,16 @@ describe('the reducer', () => {
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
         expect(theNewStore.currentPage).toBe(pageSwitcher.Page.ExploreAll);
+    });
+
+    it('when called with SET_TASK_DETAIL_PAGE should return store with currentPage = Page.TaskDetail', () => {
+        const theStore = buildStore();
+        const theAction = {
+            type: constants.SET_TASK_DETAIL_PAGE as typeof constants.SET_TASK_DETAIL_PAGE,
+            payload: {taskId: aString()},
+        };
+        const theNewStore = pageSwitcher.reducer(theStore, theAction);
+        expect(theNewStore.currentPage).toBe(pageSwitcher.Page.TaskDetail);
     });
 
     it('should return store unchanged if action is undefined', () => {
