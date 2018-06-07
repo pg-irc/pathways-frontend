@@ -10,7 +10,10 @@ import {
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
+<<<<<<< HEAD
 import { Locale } from '../../locale/types';
+=======
+>>>>>>> Issue #44 Reimplement navigation to full display following newer conventions
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 
 describe('tasks selector', () => {
