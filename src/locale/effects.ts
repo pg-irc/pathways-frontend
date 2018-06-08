@@ -9,7 +9,7 @@ export function needsTextDirectionChange(localeCode: string): boolean {
 }
 
 export function toggleTextDirection(): void {
-    I18nManager.forceRTL(I18nManager.isRTL);
+    I18nManager.forceRTL(!I18nManager.isRTL);
 }
 
 export function reload(): void {
