@@ -22,15 +22,17 @@ LocaleDefinitionManager.register([
 
 export type Store = { readonly applicationState: StoreForApplicationState };
 
-type InitialState = { readonly locale: locale.Store };
+type InitialState = { readonly applicationState: { readonly localeInStore: locale.Store } };
 
 export function buildStore(router: ApplicationRouter, saga: ApplicationSaga): ReturnType<typeof createStore> {
     const middleware = applyMiddleware(router.middleware, saga.middleware);
     const reducer = combineReducers({ location: router.reducer, applicationState: reducerForApplicationState });
     const preloadedState: InitialState = {
-        locale: {
-            ...locale.buildDefaultStore(),
-            fallback: LocaleDefinitionManager.getFallback().code,
+        applicationState: {
+            localeInStore: {
+                ...locale.buildDefaultStore(),
+                fallback: LocaleDefinitionManager.getFallback().code,
+            },
         },
     };
     const enhancers = compose(router.enhancer, middleware);
