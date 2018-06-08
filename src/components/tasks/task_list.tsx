@@ -5,21 +5,21 @@ import { TaskActions } from './actions';
 import * as selector from '../../selectors/tasks';
 
 interface TaskRenderer {
-    (item: selector.LocalizedTask, actions: TaskActions): JSX.Element;
+    (item: selector.Task, actions: TaskActions): JSX.Element;
 }
 
 export interface Props {
-    readonly tasks: ReadonlyArray<selector.LocalizedTask>;
+    readonly tasks: ReadonlyArray<selector.Task>;
     readonly taskRenderer: TaskRenderer;
 }
 
 export interface Actions {
 }
 
-const extractKey = (item: selector.LocalizedTask): string => item.id.toString();
+const extractKey = (item: selector.Task): string => item.id.toString();
 
 export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    const renderItem = ({ item }: { readonly item: selector.LocalizedTask }): JSX.Element => (
+    const renderItem = ({ item }: { readonly item: selector.Task }): JSX.Element => (
        props.taskRenderer(item, props)
     );
     return (
@@ -31,7 +31,7 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
     );
 };
 
-export const renderSavedTask = (item: selector.LocalizedTask, actions: TaskActions): JSX.Element => {
+export const renderSavedTask = (item: selector.Task, actions: TaskActions): JSX.Element => {
     return (
         <Task
             id={item.id}
@@ -51,7 +51,7 @@ export const renderSavedTask = (item: selector.LocalizedTask, actions: TaskActio
     );
 };
 
-export const renderSuggestedTask = (item: selector.LocalizedTask, actions: TaskActions): JSX.Element => {
+export const renderSuggestedTask = (item: selector.Task, actions: TaskActions): JSX.Element => {
     return (
         <Task
             id={item.id}

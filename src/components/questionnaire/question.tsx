@@ -5,7 +5,7 @@ import * as selector from '../../selectors/questionnaire';
 import { QuestionnaireActions } from './actions';
 
 export interface Props {
-    readonly question: selector.LocalizedQuestion;
+    readonly question: selector.Question;
 }
 
 export type Actions = QuestionnaireActions;
@@ -20,7 +20,7 @@ export const Question: React.StatelessComponent<Props & Actions> = (props: Props
         padding: 10,
     }}>
         <Text>{question.text}</Text>
-        {question.answers.map((answer: selector.LocalizedAnswer) => (
+        {question.answers.map((answer: selector.Answer) => (
             <Answer key={answer.id} answer={answer} selectAnswer={selectAnswer} />
         ))}
         <View style={{

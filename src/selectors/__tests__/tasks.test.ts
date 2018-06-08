@@ -18,7 +18,7 @@ describe('tasks selector', () => {
         let locale: Locale;
         let task: stores.Task;
         let taskUserSettings: stores.TaskUserSettings;
-        let denormalizedTask: selector.LocalizedTask;
+        let denormalizedTask: selector.Task;
 
         beforeEach(() => {
             locale = new LocaleBuilder().build();

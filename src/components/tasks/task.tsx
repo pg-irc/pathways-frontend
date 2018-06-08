@@ -11,7 +11,7 @@ export interface Props {
 
 export type Actions = TaskActions;
 
-export const Task: React.StatelessComponent<selector.LocalizedTask & Actions> = (props: selector.LocalizedTask & Actions): JSX.Element => {
+export const Task: React.StatelessComponent<selector.Task & Actions> = (props: selector.Task & Actions): JSX.Element => {
     return (
         <View style={styles.wrapper}>
             <View style={styles.sideColumn}>
