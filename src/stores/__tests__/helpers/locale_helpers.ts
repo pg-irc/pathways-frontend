@@ -5,6 +5,7 @@
 // tslint:disable:no-class
 import { Catalog, Locale, LocalizedText } from '../../../locale';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
+import { LocaleInfo } from '../../../locale/types';
 
 export class LocaleBuilder {
 
@@ -39,6 +40,28 @@ export class LocaleBuilder {
             label: this.label,
             catalog: this.catalog,
             isRTL: this.isRTL,
+        };
+    }
+}
+
+export class LocaleInfoBuilder {
+    code: string = aString();
+    fallback: string = aString();
+
+    withCode(code: string): LocaleInfoBuilder {
+        this.code = code;
+        return this;
+    }
+
+    withFallback(fallback: string): LocaleInfoBuilder {
+        this.fallback = fallback;
+        return this;
+    }
+
+    build(): LocaleInfo {
+        return {
+            code: this.code,
+            fallback: this.fallback,
         };
     }
 }

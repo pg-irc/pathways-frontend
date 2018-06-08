@@ -5,7 +5,6 @@ import * as store from '../questionnaire';
 import * as helpers from './helpers/questionnaire_helpers';
 import { SELECT_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { LocaleBuilder } from './helpers/locale_helpers';
 
 describe('select answer action creator', () => {
     it('should create action with type SELECT_ANSWER', () => {
@@ -22,7 +21,6 @@ describe('select answer action creator', () => {
 
 describe('questionnaire reducer', () => {
 
-    let locale = new LocaleBuilder().build();
     let selectedAnswer: helpers.AnswerBuilder;
     let unselectedAnswer: helpers.AnswerBuilder;
     let secondSelectedAnswer: helpers.AnswerBuilder;
@@ -34,7 +32,7 @@ describe('questionnaire reducer', () => {
     let newStore: store.Store;
 
     it('should return original store if the action is undefined', () => {
-        theStore = helpers.buildNormalizedQuestionnaire([new helpers.QuestionBuilder(locale.code)]);
+        theStore = helpers.buildNormalizedQuestionnaire([new helpers.QuestionBuilder()]);
         const undefinedAction: store.SelectAnswerAction = undefined;
         newStore = store.reducer(theStore, undefinedAction);
         expect(newStore).toEqual(theStore);
@@ -43,17 +41,17 @@ describe('questionnaire reducer', () => {
     describe('for questions accepting at most one answer', () => {
 
         beforeEach(() => {
-            selectedAnswer = new helpers.AnswerBuilder(locale.code).withSelected(true);
-            unselectedAnswer = new helpers.AnswerBuilder(locale.code).withSelected(false);
-            secondUnselectedAnswer = new helpers.AnswerBuilder(locale.code).withSelected(false);
+            selectedAnswer = new helpers.AnswerBuilder().withSelected(true);
+            unselectedAnswer = new helpers.AnswerBuilder().withSelected(false);
+            secondUnselectedAnswer = new helpers.AnswerBuilder().withSelected(false);
 
-            question = new helpers.QuestionBuilder(locale.code).
+            question = new helpers.QuestionBuilder().
                 withAnswers([selectedAnswer, unselectedAnswer, secondUnselectedAnswer]).
                 withAcceptsMultipleAnswers(false);
 
-            selectedAnswerToSecondQuestion = new helpers.AnswerBuilder(locale.code).withSelected(true);
-            unselectedAnswerToSecondQuestion = new helpers.AnswerBuilder(locale.code).withSelected(false);
-            secondQuestion = new helpers.QuestionBuilder(locale.code).
+            selectedAnswerToSecondQuestion = new helpers.AnswerBuilder().withSelected(true);
+            unselectedAnswerToSecondQuestion = new helpers.AnswerBuilder().withSelected(false);
+            secondQuestion = new helpers.QuestionBuilder().
                 withAnswers([selectedAnswerToSecondQuestion, unselectedAnswerToSecondQuestion]).
                 withAcceptsMultipleAnswers(false);
 
@@ -100,18 +98,18 @@ describe('questionnaire reducer', () => {
 
     describe('for questions accepting more than one answer', () => {
         beforeEach(() => {
-            selectedAnswer = new helpers.AnswerBuilder(locale.code).withSelected(true);
-            unselectedAnswer = new helpers.AnswerBuilder(locale.code).withSelected(false);
-            secondSelectedAnswer = new helpers.AnswerBuilder(locale.code).withSelected(true);
-            secondUnselectedAnswer = new helpers.AnswerBuilder(locale.code).withSelected(false);
+            selectedAnswer = new helpers.AnswerBuilder().withSelected(true);
+            unselectedAnswer = new helpers.AnswerBuilder().withSelected(false);
+            secondSelectedAnswer = new helpers.AnswerBuilder().withSelected(true);
+            secondUnselectedAnswer = new helpers.AnswerBuilder().withSelected(false);
 
-            question = new helpers.QuestionBuilder(locale.code).
+            question = new helpers.QuestionBuilder().
                 withAnswers([selectedAnswer, unselectedAnswer, secondSelectedAnswer, secondUnselectedAnswer]).
                 withAcceptsMultipleAnswers(true);
 
-            selectedAnswerToSecondQuestion = new helpers.AnswerBuilder(locale.code).withSelected(true);
-            unselectedAnswerToSecondQuestion = new helpers.AnswerBuilder(locale.code).withSelected(false);
-            secondQuestion = new helpers.QuestionBuilder(locale.code).
+            selectedAnswerToSecondQuestion = new helpers.AnswerBuilder().withSelected(true);
+            unselectedAnswerToSecondQuestion = new helpers.AnswerBuilder().withSelected(false);
+            secondQuestion = new helpers.QuestionBuilder().
                 withAnswers([selectedAnswerToSecondQuestion, unselectedAnswerToSecondQuestion]).
                 withAcceptsMultipleAnswers(true);
 

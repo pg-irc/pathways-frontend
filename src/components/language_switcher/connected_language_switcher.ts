@@ -8,7 +8,7 @@ import { Locale, LocaleManager } from '../../locale';
 
 const mapStateToProps = (store: Store): Props => {
     return {
-        currentLocale: LocaleManager.getLocale(selectLocale(store)),
+        currentLocale: selectLocale(store),
         locales: LocaleManager.locales,
     };
 };

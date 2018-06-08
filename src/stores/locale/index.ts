@@ -8,12 +8,20 @@ export { SetLocale };
 export { LoadCurrentLocale };
 
 type ReducerActions = SetLocale.Request | SetLocale.Result | LoadCurrentLocale.Request | LoadCurrentLocale.Result;
-export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
+// export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 
-export const DEFAULT_LOCALE_CODE = 'en';
-// tslint:disable-next-line:typedef
-export const buildDefaultStore = () => ({
-    code: DEFAULT_LOCALE_CODE,
+// export const DEFAULT_LOCALE_CODE = 'en';
+
+export interface Store {
+    readonly code: string;
+    readonly fallback: string;
+    readonly loading: boolean;
+    readonly errorMessage: string;
+}
+
+export const buildDefaultStore = (): Store => ({
+    code: undefined,
+    fallback: undefined,
     loading: false,
     errorMessage: '',
 });

@@ -1,6 +1,6 @@
 import * as stores from '../stores/tasks';
-import { Locale } from '../locale';
 import { selectLocalizedText } from './locale';
+import { LocaleInfo } from '../locale/types';
 
 export interface LocalizedTask {
     readonly id: string;
@@ -14,7 +14,8 @@ export interface LocalizedTask {
     readonly completed: boolean;
 }
 
-export const denormalizeTask = (locale: Locale, task: stores.Task, taskUserSettings: stores.TaskUserSettings): LocalizedTask => (
+export const denormalizeTask = (locale: LocaleInfo, task: stores.Task,
+        taskUserSettings: stores.TaskUserSettings): LocalizedTask => (
     {
         id: task.id,
         title: selectLocalizedText(locale, task.title),
@@ -28,7 +29,8 @@ export const denormalizeTask = (locale: Locale, task: stores.Task, taskUserSetti
     }
 );
 
-export const selectAllSavedTasks = (locale: Locale, { savedTasksList, taskMap, taskUserSettingsMap }: stores.Store): ReadonlyArray<LocalizedTask> => (
+export const selectAllSavedTasks = (locale: LocaleInfo,
+        { savedTasksList, taskMap, taskUserSettingsMap }: stores.Store): ReadonlyArray<LocalizedTask> => (
     savedTasksList.map((id: stores.Id) => {
         const task: stores.Task = taskMap[id];
         const taskUserSettingsId = fetchTaskUserSettingsIdByTaskId(taskUserSettingsMap, task.id);
@@ -37,7 +39,7 @@ export const selectAllSavedTasks = (locale: Locale, { savedTasksList, taskMap, t
     })
 );
 
-export const selectAllSuggestedTasks = (locale: Locale, store: stores.Store): ReadonlyArray<LocalizedTask> => {
+export const selectAllSuggestedTasks = (locale: LocaleInfo, store: stores.Store): ReadonlyArray<LocalizedTask> => {
     const { suggestedTasksList, taskMap, taskUserSettingsMap }: stores.Store = store;
     return suggestedTasksList.map((id: stores.Id) => {
         const task: stores.Task = taskMap[id];

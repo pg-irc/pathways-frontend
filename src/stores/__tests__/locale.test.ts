@@ -8,11 +8,11 @@ import { LocaleBuilder } from './helpers/locale_helpers';
 const aLocale = new LocaleBuilder().build();
 
 const buildStoreWithLocale = (theLocale: Locale): locale.Store => {
-    return { code: theLocale.code, errorMessage: '', loading: false };
+    return { code: theLocale.code, fallback: theLocale.code, errorMessage: '', loading: false };
 };
 
 const buildStoreLoadingLocale = (): locale.Store => {
-    return { code: aLocale.code, errorMessage: '', loading: true };
+    return { code: aLocale.code, fallback: aLocale.code, errorMessage: '', loading: true };
 };
 
 describe('the setLocaleAction for', () => {
@@ -115,9 +115,14 @@ describe('the reducer', () => {
         expect(theNewStore).toBe(theOriginalStore);
     });
 
-    it('should default to build a store with default locale code `en`', () => {
+    it('should default to build a store with a undefined locale code', () => {
         const theStore = locale.reducer();
-        expect(theStore.code).toBe('en');
+        expect(theStore.code).toBe(undefined);
+    });
+
+    it('should default to build a store with a undefined fallback locale code', () => {
+        const theStore = locale.reducer();
+        expect(theStore.fallback).toBe(undefined);
     });
 
     it('when called with SET_LOCALE_REQUEST should return store with loading flag set', () => {

@@ -8,6 +8,7 @@
 import * as store from '../../questionnaire';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
+import { LocalizedTextBuilder } from './locale_helpers';
 
 export const buildNormalizedQuestionnaire = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
     {
@@ -39,15 +40,15 @@ interface WritableAnswersMap {
 }
 
 export class QuestionBuilder {
-    defaultLocaleCode: string;
+    localeCode: string = aString();
     id: string = aString();
-    text: LocalizedText;
+    text: string = aString();
     acceptMultipleAnswers: boolean = true;
     answers: Array<AnswerBuilder> = Array<AnswerBuilder>(3);
 
-    constructor(defaultLocaleCode: string) {
-        this.defaultLocaleCode = defaultLocaleCode;
-        this.text = { [this.defaultLocaleCode]: aString() };
+    withLocale(localeCode: string): QuestionBuilder {
+        this.localeCode = localeCode;
+        return this;
     }
 
     withId(id: string): QuestionBuilder {
@@ -55,7 +56,7 @@ export class QuestionBuilder {
         return this;
     }
 
-    withText(text: LocalizedText): QuestionBuilder {
+    withText(text: string): QuestionBuilder {
         this.text = text;
         return this;
     }
@@ -73,22 +74,26 @@ export class QuestionBuilder {
     build(): store.Question {
         return {
             id: this.id,
-            text: this.text,
+            text: this.createLocalizedText(this.text),
             acceptMultipleAnswers: this.acceptMultipleAnswers,
         };
+    }
+
+    private createLocalizedText(text: string): LocalizedText {
+        return new LocalizedTextBuilder(this.localeCode, text).build();
     }
 }
 
 export class AnswerBuilder {
-    defaultLocaleCode: string;
+    localeCode: string = aString();
     id: string = aString();
     questionId: string = aString();
-    text: LocalizedText;
+    text: string = aString();
     isSelected: boolean = aBoolean();
 
-    constructor(defaultLocaleCode: string) {
-        this.defaultLocaleCode = defaultLocaleCode;
-        this.text = { [this.defaultLocaleCode]: aString() };
+    withLocale(localeCode: string): AnswerBuilder {
+        this.localeCode = localeCode;
+        return this;
     }
 
     withId(id: string): AnswerBuilder {
@@ -101,7 +106,7 @@ export class AnswerBuilder {
         return this;
     }
 
-    withText(text: LocalizedText): AnswerBuilder {
+    withText(text: string): AnswerBuilder {
         this.text = text;
         return this;
     }
@@ -115,8 +120,12 @@ export class AnswerBuilder {
         return {
             id: this.id,
             questionId: this.questionId,
-            text: this.text,
+            text: this.createLocalizedText(this.text),
             isSelected: this.isSelected,
         };
+    }
+
+    private createLocalizedText(text: string): LocalizedText {
+        return new LocalizedTextBuilder(this.localeCode, text).build();
     }
 }

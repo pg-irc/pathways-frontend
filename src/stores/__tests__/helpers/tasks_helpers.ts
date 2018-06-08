@@ -7,20 +7,20 @@
 import * as store from '../../tasks';
 import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
+import { LocalizedTextBuilder } from './locale_helpers';
 
 export class TaskBuilder {
-    defaultLocaleCode: string;
+    localeCode: string = aString();
     id: store.Id = aString();
-    title: LocalizedText;
-    description: LocalizedText;
+    title: string = aString();
+    description: string = aString();
     tags: ReadonlyArray<string> = [aString(), aString()];
     category: string = aString();
     importance: number = aNumber();
 
-    constructor(defaultLocaleCode: string) {
-        this.defaultLocaleCode = defaultLocaleCode;
-        this.title = { [this.defaultLocaleCode]: aString() };
-        this.description = { [this.defaultLocaleCode]: aString() };
+    withLocale(localeCode: string): TaskBuilder {
+        this.localeCode = localeCode;
+        return this;
     }
 
     withId(id: string): TaskBuilder {
@@ -28,12 +28,12 @@ export class TaskBuilder {
         return this;
     }
 
-    withTitle(title: LocalizedText): TaskBuilder {
+    withTitle(title: string): TaskBuilder {
         this.title = title;
         return this;
     }
 
-    withDescription(description: LocalizedText): TaskBuilder {
+    withDescription(description: string): TaskBuilder {
         this.description = description;
         return this;
     }
@@ -56,12 +56,16 @@ export class TaskBuilder {
     build(): store.Task {
         return {
             id: this.id,
-            title: this.title,
-            description: this.description,
+            title: this.createLocalizedText(this.title),
+            description: this.createLocalizedText(this.description),
             tags: this.tags,
             category: this.category,
             importance: this.importance,
         };
+    }
+
+    private createLocalizedText(text: string): LocalizedText {
+        return new LocalizedTextBuilder(this.localeCode, text).build();
     }
 }
 

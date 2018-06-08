@@ -6,15 +6,11 @@ import { Store } from '../../application/store';
 import { selectAllSavedTasks } from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
 import { selectLocale } from '../../selectors/locale';
-import { LocaleManager } from '../../locale';
 
-const mapStateToProps = (store: Store): Props => {
-    const locale = LocaleManager.getLocale(selectLocale(store));
-    return {
-        tasks: selectAllSavedTasks(locale, store.applicationState.tasksInStore),
-        taskRenderer: renderSavedTask,
-    };
-};
+const mapStateToProps = (store: Store): Props => ({
+    tasks: selectAllSavedTasks(selectLocale(store), store.applicationState.tasksInStore),
+    taskRenderer: renderSavedTask,
+});
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): Actions => ({
     removeFromSavedList: (taskId: stores.Id): stores.RemoveFromSavedListAction => dispatch(stores.removeFromSavedList(taskId)),

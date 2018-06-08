@@ -2,9 +2,10 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { Trans } from '@lingui/react';
 import { Locale } from '../../locale';
+import { LocaleInfo } from '../../locale/types';
 
 export interface Props {
-    readonly currentLocale: Locale;
+    readonly currentLocale: LocaleInfo;
     readonly locales: ReadonlyArray<Locale>;
 }
 

@@ -9,6 +9,11 @@ export interface Locale {
     readonly isRTL: boolean;
 }
 
+export interface LocaleInfo {
+    readonly code: string;
+    readonly fallback: string;
+}
+
 export interface LocalizedText {
     readonly [localeCode: string]: string;
 }

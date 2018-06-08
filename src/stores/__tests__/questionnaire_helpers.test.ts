@@ -4,24 +4,23 @@
 import * as helpers from './helpers/questionnaire_helpers';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { Answer, Question } from '../questionnaire';
-import { LocaleBuilder, LocalizedTextBuilder } from './helpers/locale_helpers';
-import { LocalizedText } from '../../locale';
 
 describe('questionnaire test helper for', () => {
 
-    let locale = new LocaleBuilder().build();
+    let localeCode = aString();
 
     describe('building questions', () => {
 
         let id: string;
-        let text: LocalizedText;
+        let text: string;
         let question: Question;
 
         beforeEach(() => {
             id = aString();
-            text = new LocalizedTextBuilder(locale.code, aString()).build();
-            question = new helpers.QuestionBuilder(locale.code).
+            text = aString();
+            question = new helpers.QuestionBuilder().
                 withId(id).
+                withLocale(localeCode).
                 withText(text).
                 build();
         });
@@ -31,11 +30,11 @@ describe('questionnaire test helper for', () => {
         });
 
         it('with given question text', () => {
-            expect(question.text).toBe(text);
+            expect(question.text[localeCode]).toBe(text);
         });
 
         it('defaults to three answers', () => {
-            const aQuestion = new helpers.QuestionBuilder(locale.code);
+            const aQuestion = new helpers.QuestionBuilder();
             expect(aQuestion.answers).toHaveLength(3);
         });
     });
@@ -44,16 +43,17 @@ describe('questionnaire test helper for', () => {
         describe('with properties', () => {
             let id: string;
             let questionId: string;
-            let text: LocalizedText;
+            let text: string;
             let isSelected: boolean;
             let answer: Answer;
 
             beforeEach(() => {
                 id = aString();
                 questionId = aString();
-                text = new LocalizedTextBuilder(locale.code, aString()).build();
+                text = aString();
                 isSelected = aBoolean();
-                answer = new helpers.AnswerBuilder(locale.code).
+                answer = new helpers.AnswerBuilder().
+                    withLocale(localeCode).
                     withId(id).
                     withQuestionId(questionId).
                     withText(text).
@@ -66,7 +66,7 @@ describe('questionnaire test helper for', () => {
             });
 
             it('can build an answer', () => {
-                expect(answer.text).toBe(text);
+                expect(answer.text[localeCode]).toBe(text);
             });
 
             it('can build an answer', () => {
@@ -83,7 +83,7 @@ describe('questionnaire test helper for', () => {
 
         it('adds questions keyed on their ids', () => {
             const questionId = aString();
-            const builder = new helpers.QuestionBuilder(locale.code).
+            const builder = new helpers.QuestionBuilder().
                 withId(questionId);
 
             const store = helpers.buildNormalizedQuestionnaire([builder]);
@@ -93,9 +93,9 @@ describe('questionnaire test helper for', () => {
 
         it('adds answers keyed on their ids', () => {
             const answerId = aString();
-            const answerBuilder = new helpers.AnswerBuilder(locale.code).
+            const answerBuilder = new helpers.AnswerBuilder().
                 withId(answerId);
-            const questionBuilder = new helpers.QuestionBuilder(locale.code).
+            const questionBuilder = new helpers.QuestionBuilder().
                 withAnswers([answerBuilder]);
 
             const store = helpers.buildNormalizedQuestionnaire([questionBuilder]);
@@ -105,10 +105,10 @@ describe('questionnaire test helper for', () => {
 
         it('sets question id on answers', () => {
             const answerId = aString();
-            const answerBuilder = new helpers.AnswerBuilder(locale.code).
+            const answerBuilder = new helpers.AnswerBuilder().
                 withId(answerId);
             const questionId = aString();
-            const questionBuilder = new helpers.QuestionBuilder(locale.code).
+            const questionBuilder = new helpers.QuestionBuilder().
                 withId(questionId).
                 withAnswers([answerBuilder]);
 
