@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "@lingui/babel-preset-react": "2.0.1",
-    "@lingui/cli": "2.0.1",
+    "@lingui/babel-preset-react": "2.1.0",
+    "@lingui/cli": "2.1.0",
     "@types/enzyme": "^3.1.9",
     "@types/enzyme-adapter-react-16": "^1.0.2",
     "@types/expo": "^26.0.0",
@@ -75,7 +75,7 @@
     ]
   },
   "dependencies": {
-    "@lingui/react": "2.0.1",
+    "@lingui/react": "2.1.0",
     "expo": "^27.0.0",
     "history": "^4.7.2",
     "intl": "^1.2.5",
