@@ -8,7 +8,7 @@
   dependencies:
     "@babel/highlight" "7.0.0-beta.49"
 
-"@babel/core@^7.0.0-beta", "@babel/core@^7.0.0-beta.38":
+"@babel/core@^7.0.0-beta":
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.0.0-beta.49.tgz#73de2081dd652489489f0cb4aa97829a1133314e"
   dependencies:
@@ -28,7 +28,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/generator@7.0.0-beta.49", "@babel/generator@^7.0.0-beta", "@babel/generator@^7.0.0-beta.38":
+"@babel/generator@7.0.0-beta.49", "@babel/generator@^7.0.0-beta":
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.0.0-beta.49.tgz#e9cffda913996accec793bbc25ab91bc19d0bf7a"
   dependencies:
@@ -402,13 +402,6 @@
     pirates "^3.0.1"
     source-map-support "^0.4.2"
 
-"@babel/runtime@^7.0.0-beta.38":
-  version "7.0.0-beta.49"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0-beta.49.tgz#03b3bf07eb982072c8e851dd2ddd5110282e61bf"
-  dependencies:
-    core-js "^2.5.6"
-    regenerator-runtime "^0.11.1"
-
 "@babel/template@7.0.0-beta.49", "@babel/template@^7.0.0-beta":
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.0.0-beta.49.tgz#e38abe8217cb9793f461a5306d7ad745d83e1d27"
@@ -433,7 +426,7 @@
     invariant "^2.2.0"
     lodash "^4.17.5"
 
-"@babel/types@7.0.0-beta.49", "@babel/types@^7.0.0-beta", "@babel/types@^7.0.0-beta.38":
+"@babel/types@7.0.0-beta.49", "@babel/types@^7.0.0-beta":
   version "7.0.0-beta.49"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.49.tgz#b7e3b1c3f4d4cfe11bdf8c89f1efd5e1617b87a6"
   dependencies:
@@ -595,40 +588,41 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
-"@lingui/babel-plugin-extract-messages@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-extract-messages/-/babel-plugin-extract-messages-2.0.1.tgz#7d89e536c9d79086bebd86f029c11a40dd5ded52"
+"@lingui/babel-plugin-extract-messages@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-extract-messages/-/babel-plugin-extract-messages-2.1.0.tgz#9b09c4b544ab55bf5cf45654ece839a18625c6ca"
   dependencies:
-    "@babel/generator" "^7.0.0-beta.38"
-    "@lingui/conf" "2.0.1"
+    "@lingui/conf" "2.1.0"
+    babel-generator "^6.26.1"
 
-"@lingui/babel-plugin-transform-js@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-transform-js/-/babel-plugin-transform-js-2.0.1.tgz#463a44d31854d45823d8539d137382f88bb2a5df"
+"@lingui/babel-plugin-transform-js@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-transform-js/-/babel-plugin-transform-js-2.1.0.tgz#3cda87a1d84a7486c6b4328aa2bb5ef6aea460a1"
 
-"@lingui/babel-plugin-transform-react@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-transform-react/-/babel-plugin-transform-react-2.0.1.tgz#0cf0c799c5f6ba59424548fdcbfe59d9d855f722"
+"@lingui/babel-plugin-transform-react@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-transform-react/-/babel-plugin-transform-react-2.1.0.tgz#3db2be2c7176544f68bdf07b9f8293c53a4fb73e"
 
-"@lingui/babel-preset-react@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lingui/babel-preset-react/-/babel-preset-react-2.0.1.tgz#4baaff311feebd79411736f9db5aef9d1f193e32"
+"@lingui/babel-preset-react@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@lingui/babel-preset-react/-/babel-preset-react-2.1.0.tgz#9a42067db3236b4464c0b9fcdf64b54a515cef38"
   dependencies:
-    "@lingui/babel-plugin-transform-js" "2.0.1"
-    "@lingui/babel-plugin-transform-react" "2.0.1"
+    "@lingui/babel-plugin-transform-js" "2.1.0"
+    "@lingui/babel-plugin-transform-react" "2.1.0"
 
-"@lingui/cli@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lingui/cli/-/cli-2.0.1.tgz#6025551b86f6e71ba3aa76c0d0847c38dfb44bd9"
+"@lingui/cli@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@lingui/cli/-/cli-2.1.0.tgz#cbfea4c0f95dc9d1fde812a4411e1fc1110fd8c0"
   dependencies:
-    "@babel/core" "^7.0.0-beta.38"
-    "@babel/generator" "^7.0.0-beta.38"
-    "@babel/runtime" "^7.0.0-beta.38"
-    "@babel/types" "^7.0.0-beta.38"
-    "@lingui/babel-plugin-extract-messages" "2.0.1"
-    "@lingui/babel-plugin-transform-js" "2.0.1"
-    "@lingui/babel-plugin-transform-react" "2.0.1"
-    "@lingui/conf" "2.0.1"
+    "@lingui/babel-plugin-extract-messages" "2.1.0"
+    "@lingui/babel-plugin-transform-js" "2.1.0"
+    "@lingui/babel-plugin-transform-react" "2.1.0"
+    "@lingui/conf" "2.1.0"
+    babel-core "^6.26.3"
+    babel-generator "^6.26.1"
+    babel-plugin-transform-typescript "^7.0.0-alpha.19"
+    babel-runtime "^6.26.0"
+    babel-types "^6.26.0"
     babylon "^6.18.0"
     chalk "^2.3.0"
     cli-table "^0.3.1"
@@ -639,29 +633,29 @@
     mkdirp "^0.5.1"
     ramda "^0.25.0"
 
-"@lingui/conf@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lingui/conf/-/conf-2.0.1.tgz#f2f8a468a9ed540d99941cbe62062cac8764d23f"
+"@lingui/conf@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@lingui/conf/-/conf-2.1.0.tgz#08857ada6901880dcd6b88df0ca8004f4de6bdb3"
   dependencies:
     chalk "^2.3.0"
-    jest-regex-util "^22.1.0"
-    jest-validate "^22.1.2"
+    jest-regex-util "^23.0.0"
+    jest-validate "^23.0.1"
     pkg-conf "^2.1.0"
 
-"@lingui/core@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lingui/core/-/core-2.0.1.tgz#013b11194c5c7672e91d0fa6d190f377ea2a579f"
+"@lingui/core@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@lingui/core/-/core-2.1.0.tgz#69d7b2bf16888653c2156e3bdf5a614351d89a27"
   dependencies:
-    "@babel/runtime" "^7.0.0-beta.38"
+    babel-runtime "^6.26.0"
     make-plural "^4.1.1"
     messageformat-parser "^2.0.0"
 
-"@lingui/react@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lingui/react/-/react-2.0.1.tgz#ee6f82a54945979c95857a0859f2cc90e4015530"
+"@lingui/react@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@lingui/react/-/react-2.1.0.tgz#c79d3b7930ac9352aec5e82b690d4af7bd07738c"
   dependencies:
-    "@babel/runtime" "^7.0.0-beta.38"
-    "@lingui/core" "2.0.1"
+    "@lingui/core" "2.1.0"
+    babel-runtime "^6.26.0"
     hash-sum "^1.0.2"
     prop-types "^15.6.0"
 
@@ -1179,7 +1173,7 @@ babel-core@^6.0.0, babel-core@^6.24.1, babel-core@^6.26.0, babel-core@^6.26.2, b
     slash "^1.0.0"
     source-map "^0.5.7"
 
-babel-generator@^6.18.0, babel-generator@^6.26.0:
+babel-generator@^6.18.0, babel-generator@^6.26.0, babel-generator@^6.26.1:
   version "6.26.1"
   resolved "https://registry.yarnpkg.com/babel-generator/-/babel-generator-6.26.1.tgz#1844408d3b8f0d35a404ea7ac180f087a601bd90"
   dependencies:
@@ -1398,6 +1392,10 @@ babel-plugin-syntax-object-rest-spread@^6.13.0, babel-plugin-syntax-object-rest-
 babel-plugin-syntax-trailing-function-commas@^6.20.0, babel-plugin-syntax-trailing-function-commas@^6.5.0, babel-plugin-syntax-trailing-function-commas@^6.8.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-trailing-function-commas/-/babel-plugin-syntax-trailing-function-commas-6.22.0.tgz#ba0360937f8d06e40180a43fe0d5616fff532cf3"
+
+babel-plugin-syntax-typescript@7.0.0-alpha.19:
+  version "7.0.0-alpha.19"
+  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-typescript/-/babel-plugin-syntax-typescript-7.0.0-alpha.19.tgz#fc5876863db297549f5d840d248eac3310241f84"
 
 babel-plugin-transform-async-to-generator@6.16.0:
   version "6.16.0"
@@ -1635,6 +1633,12 @@ babel-plugin-transform-strict-mode@^6.24.1:
   dependencies:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
+
+babel-plugin-transform-typescript@^7.0.0-alpha.19:
+  version "7.0.0-alpha.19"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-typescript/-/babel-plugin-transform-typescript-7.0.0-alpha.19.tgz#9b06c066393d6752e6e539e8b0b5929a78feb5b1"
+  dependencies:
+    babel-plugin-syntax-typescript "7.0.0-alpha.19"
 
 babel-polyfill@^6.23.0:
   version "6.26.0"
@@ -4617,6 +4621,10 @@ jest-regex-util@^22.1.0, jest-regex-util@^22.4.3:
   version "22.4.3"
   resolved "https://registry.yarnpkg.com/jest-regex-util/-/jest-regex-util-22.4.3.tgz#a826eb191cdf22502198c5401a1fc04de9cef5af"
 
+jest-regex-util@^23.0.0:
+  version "23.0.0"
+  resolved "https://registry.yarnpkg.com/jest-regex-util/-/jest-regex-util-23.0.0.tgz#dd5c1fde0c46f4371314cf10f7a751a23f4e8f76"
+
 jest-resolve-dependencies@^22.1.0:
   version "22.4.3"
   resolved "https://registry.yarnpkg.com/jest-resolve-dependencies/-/jest-resolve-dependencies-22.4.3.tgz#e2256a5a846732dc3969cb72f3c9ad7725a8195e"
@@ -4698,7 +4706,7 @@ jest-util@^22.4.1, jest-util@^22.4.3:
     mkdirp "^0.5.1"
     source-map "^0.6.0"
 
-jest-validate@^22.1.2, jest-validate@^22.4.4:
+jest-validate@^22.4.4:
   version "22.4.4"
   resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-22.4.4.tgz#1dd0b616ef46c995de61810d85f57119dbbcec4d"
   dependencies:
@@ -4707,6 +4715,15 @@ jest-validate@^22.1.2, jest-validate@^22.4.4:
     jest-get-type "^22.1.0"
     leven "^2.1.0"
     pretty-format "^22.4.0"
+
+jest-validate@^23.0.1:
+  version "23.0.1"
+  resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-23.0.1.tgz#cd9f01a89d26bb885f12a8667715e9c865a5754f"
+  dependencies:
+    chalk "^2.0.1"
+    jest-get-type "^22.1.0"
+    leven "^2.1.0"
+    pretty-format "^23.0.1"
 
 jest-worker@22.2.2:
   version "22.2.2"
@@ -6271,6 +6288,13 @@ pretty-format@^22.4.0, pretty-format@^22.4.3:
     ansi-regex "^3.0.0"
     ansi-styles "^3.2.0"
 
+pretty-format@^23.0.1:
+  version "23.0.1"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-23.0.1.tgz#d61d065268e4c759083bccbca27a01ad7c7601f4"
+  dependencies:
+    ansi-regex "^3.0.0"
+    ansi-styles "^3.2.0"
+
 pretty-format@^4.2.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-4.3.1.tgz#530be5c42b3c05b36414a7a2a4337aa80acd0e8d"
@@ -6936,7 +6960,7 @@ regenerator-runtime@^0.10.5:
   version "0.10.5"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
 
-regenerator-runtime@^0.11.0, regenerator-runtime@^0.11.1:
+regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
