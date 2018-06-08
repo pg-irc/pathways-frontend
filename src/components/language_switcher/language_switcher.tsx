@@ -10,7 +10,7 @@ export interface Props {
 }
 
 export interface Actions {
-    setLocale(locale: LocaleDefinition): void;
+    setLocale(locale: string): void;
 }
 
 export type LanguageSwitcherProps = Props & Actions;
@@ -20,11 +20,11 @@ export const LanguageSwitcher = (props: LanguageSwitcherProps): JSX.Element => {
     return (
         <View>
             <View style={{ alignItems: 'center' }}>
-                {locales.map((locale: LocaleDefinition) => (
-                    <Button key={locale.code}
-                            title={locale.label}
-                            onPress={(): void => setLocale(locale)}
-                            disabled={locale.code === currentLocale.code} />
+                {locales.map((localeDefinition: LocaleDefinition) => (
+                    <Button key={localeDefinition.code}
+                            title={localeDefinition.label}
+                            onPress={(): void => setLocale(localeDefinition.code)}
+                            disabled={localeDefinition.code === currentLocale.code} />
                 ))}
             </View>
             <View style={{alignItems: 'flex-start'}}>

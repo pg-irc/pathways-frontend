@@ -8,13 +8,13 @@ import { ApplicationRouter } from './router';
 import { loadFontsActions } from '../stores/fonts';
 import * as locale from '../stores/locale';
 
-import { LocaleManager } from '../locale';
+import { LocaleDefinitionManager } from '../locale';
 import enMessages from '../../locale/en/messages';
 import arMessages from '../../locale/ar/messages';
 import zhMessages from '../../locale/zh/messages';
 
 // tslint:disable-next-line:no-expression-statement
-LocaleManager.registerLocales([
+LocaleDefinitionManager.register([
     { code: 'en', label: 'English', catalog: enMessages, isRTL: false },
     { code: 'ar', label: 'Arabic', catalog: arMessages, isRTL: true },
     { code: 'zh', label: 'Chinese', catalog: zhMessages, isRTL: false },
@@ -30,7 +30,7 @@ export function buildStore(router: ApplicationRouter, saga: ApplicationSaga): Re
     const preloadedState: InitialState = {
         locale: {
             ...locale.buildDefaultStore(),
-            fallback: LocaleManager.getFallbackLocale().code,
+            fallback: LocaleDefinitionManager.getFallback().code,
         },
     };
     const enhancers = compose(router.enhancer, middleware);

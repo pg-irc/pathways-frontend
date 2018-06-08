@@ -33,72 +33,73 @@ export {
     loadCurrentLocaleCode,
 };
 
-export class LocaleManager {
+export class LocaleDefinitionManager {
 
     /**
      * Singleton nstance of LocaleManager.
      */
-    private static localeManagerInstance: LocaleManager = undefined;
+    private static localeDefinitionManagerInstance: LocaleDefinitionManager = undefined;
 
     /**
      * Creates a singleton instance of LocaleManager with
      * the provided locales. Throws a runtime error if called twice.
-     * @param locales The list of locales to register with the singleton.
+     * @param localeDefinitions The list of locales to register with the singleton.
      */
-    static registerLocale = (locale: LocaleDefinition, ...locales: Array<LocaleDefinition>):
-        typeof LocaleManager => LocaleManager.registerLocales([locale, ...locales])
+    static registerSingle = (localeDefinition: LocaleDefinition, ...localeDefinitions: Array<LocaleDefinition>):
+        typeof LocaleDefinitionManager => LocaleDefinitionManager.register([localeDefinition, ...localeDefinitions])
 
-    static registerLocales(locales: ReadonlyArray<LocaleDefinition>): typeof LocaleManager {
-        if (this.localeManagerInstance !== undefined) {
+    static register(localeDefinitions: ReadonlyArray<LocaleDefinition>): typeof LocaleDefinitionManager {
+        if (this.localeDefinitionManagerInstance !== undefined) {
             throw new Error('Cannot register new locales after locale manager has been built');
         }
-        this.localeManagerInstance = new LocaleManager(locales);
+        this.localeDefinitionManagerInstance = new LocaleDefinitionManager(localeDefinitions);
         return this;
     }
 
-    static getLocale(localeCode: string): LocaleDefinition {
-        return this.instance.getLocale(localeCode);
+    static reset(): typeof LocaleDefinitionManager {
+        this.localeDefinitionManagerInstance = undefined;
+        return this;
     }
 
-    static getFallbackLocale(): LocaleDefinition {
-        return this.instance.getFallbackLocale();
+    static get(localeCode: string): LocaleDefinition {
+        return this.instance.getLocaleDefinition(localeCode);
     }
 
-    static get locales(): ReadonlyArray<LocaleDefinition> {
-        return this.instance.locales;
+    static getFallback(): LocaleDefinition {
+        return this.instance.getFallbackLocaleDefinition();
+    }
+
+    static get all(): ReadonlyArray<LocaleDefinition> {
+        return this.instance.localeDefinitions;
     }
 
     static get catalogsMap(): CatalogsMap {
         return this.instance.catalogsMap;
     }
 
-    static reset(): CatalogsMap {
-        return this.localeManagerInstance = undefined;
-    }
-
     /**
      * Returns the LocaleManager singleton instance if it exists, otherwise throws
      * a runtime error.
      */
-    private static get instance(): LocaleManager {
-        if (this.localeManagerInstance === undefined) {
+    private static get instance(): LocaleDefinitionManager {
+        if (this.localeDefinitionManagerInstance === undefined) {
             throw new Error('LocaleManager not initialized, registerLocales([Locale,...]) must be called first');
         }
-        return this.localeManagerInstance;
+        return this.localeDefinitionManagerInstance;
     }
 
     private fallbackLocaleCode: string;
 
-    private locales: ReadonlyArray<LocaleDefinition>;
+    private localeDefinitions: ReadonlyArray<LocaleDefinition>;
 
     private catalogsMap: CatalogsMap;
 
     private constructor(locales: ReadonlyArray<LocaleDefinition>) {
-        this.locales = locales;
+        this.localeDefinitions = locales;
         this.catalogsMap = buildCatalogsMap(locales);
     }
 
-    private getLocale(localeCode: string): LocaleDefinition {
+    private getLocaleDefinition(localeCode: string): LocaleDefinition {
         const locale = this.findLocale(localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
@@ -107,14 +108,14 @@ export class LocaleManager {
     }
 
     private findLocale(code: string): LocaleDefinition {
-        return this.locales.find((aLocale: LocaleDefinition): boolean => aLocale.code === code);
+        return this.localeDefinitions.find((aLocale: LocaleDefinition): boolean => aLocale.code === code);
     }
 
-    private getFallbackLocale(): LocaleDefinition {
+    private getFallbackLocaleDefinition(): LocaleDefinition {
         if (this.fallbackLocaleCode) {
-            return this.getLocale(this.fallbackLocaleCode);
+            return this.getLocaleDefinition(this.fallbackLocaleCode);
         } else {
-            const [ fallbackLocale ]: ReadonlyArray<LocaleDefinition> = this.locales;
+            const [ fallbackLocale ]: ReadonlyArray<LocaleDefinition> = this.localeDefinitions;
             return fallbackLocale;
         }
     }

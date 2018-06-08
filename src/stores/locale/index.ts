@@ -35,7 +35,7 @@ export const reducer = (store: Store = buildDefaultStore(), action?: ReducerActi
         case constants.LOAD_CURRENT_LOCALE_REQUEST:
             return { ...store, loading: true };
         case constants.LOAD_CURRENT_LOCALE_SUCCESS:
-            return { ...buildDefaultStore(), code: action.payload.locale.code };
+            return { ...buildDefaultStore(), code: action.payload.localeCode };
         case constants.LOAD_CURRENT_LOCALE_FAILURE: {
             const payload = action.payload;
             return { ...buildDefaultStore(), errorMessage: payload.message };
@@ -44,7 +44,7 @@ export const reducer = (store: Store = buildDefaultStore(), action?: ReducerActi
         case constants.SET_LOCALE_REQUEST:
             return { ...store, loading: true };
         case constants.SET_LOCALE_SUCCESS:
-            return { ...buildDefaultStore(), code: action.payload.locale.code };
+            return { ...buildDefaultStore(), code: action.payload.localeCode };
         case constants.SET_LOCALE_FAILURE: {
             const payload = action.payload;
             return { ...buildDefaultStore(), errorMessage: payload.message };
