@@ -7,22 +7,22 @@ import {
     TaskUserSettingsBuilder,
     buildNormalizedStore ,
 } from '../../stores/__tests__/helpers/tasks_helpers';
-import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
-import { LocaleInfo } from '../../locale/types';
+import { Locale } from '../../locale/types';
 
 describe('tasks selector', () => {
 
     describe ('denormalization', () => {
-        let locale: LocaleInfo;
+        let locale: Locale;
         let task: stores.Task;
         let taskUserSettings: stores.TaskUserSettings;
         let denormalizedTask: selector.LocalizedTask;
 
         beforeEach(() => {
-            locale = new LocaleInfoBuilder().build();
-            task = new TaskBuilder().withLocale(locale.code).build();
+            locale = new LocaleBuilder().build();
+            task = new TaskBuilder().withLocaleCode(locale.code).build();
             taskUserSettings = new TaskUserSettingsBuilder(task.id).build();
             denormalizedTask = selector.denormalizeTask(locale, task, taskUserSettings);
         });
@@ -62,11 +62,11 @@ describe('tasks selector', () => {
 
     describe('data retrieval', ()  => {
         let store: stores.Store;
-        let locale: LocaleInfo;
+        let locale: Locale;
 
         beforeEach(() => {
-            locale = new LocaleInfoBuilder().build();
-            const taskBuilder = new TaskBuilder().withLocale(locale.code);
+            locale = new LocaleBuilder().build();
+            const taskBuilder = new TaskBuilder().withLocaleCode(locale.code);
             const taskUserSettingsBuilder = new TaskUserSettingsBuilder(taskBuilder.build().id);
             store = buildNormalizedStore(
                 [taskBuilder],

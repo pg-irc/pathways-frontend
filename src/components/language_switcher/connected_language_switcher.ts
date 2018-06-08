@@ -4,7 +4,7 @@ import { LanguageSwitcher, Props, Actions } from './language_switcher';
 import { Store } from '../../application/store';
 import { SetLocale, setLocaleActions } from '../../stores/locale';
 import { selectLocale } from '../../selectors/locale';
-import { Locale, LocaleManager } from '../../locale';
+import { LocaleDefinition, LocaleManager } from '../../locale';
 
 const mapStateToProps = (store: Store): Props => {
     return {
@@ -14,7 +14,7 @@ const mapStateToProps = (store: Store): Props => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): Actions => ({
-    setLocale: (locale: Locale): SetLocale.Request => dispatch(setLocaleActions.request(locale)),
+    setLocale: (locale: LocaleDefinition): SetLocale.Request => dispatch(setLocaleActions.request(locale)),
 });
 
 export const ConnectedLanguageSwitcher = connect(mapStateToProps, mapDispatchToProps)(LanguageSwitcher);

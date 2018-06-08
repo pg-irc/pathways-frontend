@@ -3,11 +3,11 @@
 import * as selector from '../questionnaire';
 import { anInteger } from '../../application/__tests__/helpers/random_test_values';
 import * as testHelpers from '../../stores/__tests__/helpers/questionnaire_helpers';
-import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 
 describe('questionnaire selector', () => {
 
-    let locale = new LocaleInfoBuilder().build();
+    let locale = new LocaleBuilder().build();
 
     describe('should map properties', () => {
 
@@ -16,8 +16,8 @@ describe('questionnaire selector', () => {
         let denormalizedData: selector.Questionnaire;
 
         beforeEach(() => {
-            anAnswer = new testHelpers.AnswerBuilder().withLocale(locale.code);
-            aQuestion = new testHelpers.QuestionBuilder().withLocale(locale.code).withAnswers([anAnswer]);
+            anAnswer = new testHelpers.AnswerBuilder().withLocaleCode(locale.code);
+            aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anAnswer]);
             const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
 
             denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
@@ -47,7 +47,7 @@ describe('questionnaire selector', () => {
     it('should return all the questions', () => {
         const questionCount = anInteger();
         const questions = new Array(questionCount).fill(0).map(() => (
-            new testHelpers.QuestionBuilder().withLocale(locale.code)),
+            new testHelpers.QuestionBuilder().withLocaleCode(locale.code)),
         );
         const normalizedData = testHelpers.buildNormalizedQuestionnaire(questions);
 
@@ -59,9 +59,9 @@ describe('questionnaire selector', () => {
     it('should return all the answers to a question', () => {
         const answerCount = anInteger();
         const answers = new Array(answerCount).fill(0).map(() => (
-            new testHelpers.AnswerBuilder().withLocale(locale.code)),
+            new testHelpers.AnswerBuilder().withLocaleCode(locale.code)),
         );
-        const theQuestion = new testHelpers.QuestionBuilder().withLocale(locale.code).withAnswers(answers);
+        const theQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers(answers);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
         const denormalizedData = selector.denormalizeQuestions(locale, normalizedData);

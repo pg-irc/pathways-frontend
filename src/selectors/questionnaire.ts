@@ -1,7 +1,7 @@
 import * as model from '../stores/questionnaire';
 import * as app from '../application/store';
 import { selectLocalizedText, selectLocale } from './locale';
-import { LocaleInfo } from '../locale/types';
+import { Locale } from '../locale/types';
 
 export type Questionnaire = ReadonlyArray<LocalizedQuestion>;
 
@@ -22,7 +22,7 @@ export const selectQuestionnaire = (appStore: app.Store): Questionnaire => {
     return denormalizeQuestions(locale, appStore.applicationState.questionnaireInStore);
 };
 
-export const denormalizeQuestions = (locale: LocaleInfo, modelStore: model.Store): Questionnaire => {
+export const denormalizeQuestions = (locale: Locale, modelStore: model.Store): Questionnaire => {
     const { questions, answers }: model.Store = modelStore;
 
     return Object.keys(questions).map((key: string) => {
@@ -35,7 +35,7 @@ export const denormalizeQuestions = (locale: LocaleInfo, modelStore: model.Store
     });
 };
 
-const selectAnswersForQuestion = (locale: LocaleInfo, questionId: model.Id, answers: model.AnswersMap): ReadonlyArray<LocalizedAnswer> => {
+const selectAnswersForQuestion = (locale: Locale, questionId: model.Id, answers: model.AnswersMap): ReadonlyArray<LocalizedAnswer> => {
     const keys = answerKeysForGivenQuestion(questionId, answers);
 
     return buildViewModelForAnswers(locale, keys, answers);
@@ -47,7 +47,7 @@ const answerKeysForGivenQuestion = (questionId: model.Id, answers: model.Answers
     ));
 };
 
-const buildViewModelForAnswers = (locale: LocaleInfo, keys: ReadonlyArray<string>, answers: model.AnswersMap): ReadonlyArray<LocalizedAnswer> => (
+const buildViewModelForAnswers = (locale: Locale, keys: ReadonlyArray<string>, answers: model.AnswersMap): ReadonlyArray<LocalizedAnswer> => (
     keys.map((key: string) => {
         const { id, text, isSelected }: model.Answer = answers[key];
         return {

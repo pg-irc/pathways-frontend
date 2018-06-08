@@ -18,7 +18,7 @@ export class TaskBuilder {
     category: string = aString();
     importance: number = aNumber();
 
-    withLocale(localeCode: string): TaskBuilder {
+    withLocaleCode(localeCode: string): TaskBuilder {
         this.localeCode = localeCode;
         return this;
     }

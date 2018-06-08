@@ -1,18 +1,8 @@
-// import { Store as LocaleStore } from '../stores/locale';
 import * as app from '../application/store';
-// import * as model from '../stores/locale';
 import { LocalizedText } from '../locale';
-import { LocaleInfo } from '../locale/types';
+import { Locale } from '../locale/types';
 
-// export const selectLocaleStore = (appStore: app.Store): LocaleStore => {
-//     return appStore.applicationState.localeInStore;
-// };
-
-// export function selectLocaleCode(localeStore: model.Store): string {
-//     return localeStore.code;
-// }
-
-export const selectLocale = (appStore: app.Store): LocaleInfo => {
+export const selectLocale = (appStore: app.Store): Locale => {
     const store = appStore.applicationState.localeInStore;
     return {
         code: store.code,
@@ -20,7 +10,7 @@ export const selectLocale = (appStore: app.Store): LocaleInfo => {
     };
 };
 
-export function selectLocalizedText (locale: LocaleInfo, localizedText: LocalizedText): string {
+export function selectLocalizedText (locale: Locale, localizedText: LocalizedText): string {
     if (localizedText[locale.code]) {
         return localizedText[locale.code];
     } else if (localizedText[locale.fallback]) {

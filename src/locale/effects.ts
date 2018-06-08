@@ -1,8 +1,8 @@
 import { I18nManager, AsyncStorage } from 'react-native';
-import { Locale } from './types';
+import { LocaleDefinition } from './types';
 import { PREFERENCES_LOCALE_CODE } from '../application/constants';
 
-export function isReloadNeeded(locale: Locale): boolean {
+export function isReloadNeeded(locale: LocaleDefinition): boolean {
     return I18nManager.isRTL !== locale.isRTL;
 }
 

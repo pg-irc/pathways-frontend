@@ -46,7 +46,7 @@ export class QuestionBuilder {
     acceptMultipleAnswers: boolean = true;
     answers: Array<AnswerBuilder> = Array<AnswerBuilder>(3);
 
-    withLocale(localeCode: string): QuestionBuilder {
+    withLocaleCode(localeCode: string): QuestionBuilder {
         this.localeCode = localeCode;
         return this;
     }
@@ -91,7 +91,7 @@ export class AnswerBuilder {
     text: string = aString();
     isSelected: boolean = aBoolean();
 
-    withLocale(localeCode: string): AnswerBuilder {
+    withLocaleCode(localeCode: string): AnswerBuilder {
         this.localeCode = localeCode;
         return this;
     }

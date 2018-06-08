@@ -20,7 +20,7 @@ describe('questionnaire test helper for', () => {
             text = aString();
             question = new helpers.QuestionBuilder().
                 withId(id).
-                withLocale(localeCode).
+                withLocaleCode(localeCode).
                 withText(text).
                 build();
         });
@@ -53,7 +53,7 @@ describe('questionnaire test helper for', () => {
                 text = aString();
                 isSelected = aBoolean();
                 answer = new helpers.AnswerBuilder().
-                    withLocale(localeCode).
+                    withLocaleCode(localeCode).
                     withId(id).
                     withQuestionId(questionId).
                     withText(text).

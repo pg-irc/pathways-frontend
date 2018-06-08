@@ -1,4 +1,4 @@
-import { Locale } from '../../locale';
+import { LocaleDefinition } from '../../locale';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 
@@ -10,16 +10,16 @@ export namespace SetLocale {
 }
 
 // tslint:disable-next-line:typedef
-export const request = (locale: Locale) => {
+export const request = (locale: LocaleDefinition) => {
     return helpers.makeAction(constants.SET_LOCALE_REQUEST, { locale });
 };
 
 // tslint:disable-next-line:typedef
-export function success(locale: Locale) {
+export function success(locale: LocaleDefinition) {
     return helpers.makeAction(constants.SET_LOCALE_SUCCESS, { locale });
 }
 
 // tslint:disable-next-line:typedef
-export function failure(message: string, locale: Locale) {
+export function failure(message: string, locale: LocaleDefinition) {
     return helpers.makeAction(constants.SET_LOCALE_FAILURE, { message, locale });
 }

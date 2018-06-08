@@ -22,14 +22,14 @@ describe('tasks test helpers', () => {
         test('title property', () => {
             const localeCode = aString();
             const title = aString();
-            const task = new TaskBuilder().withLocale(localeCode).withTitle(title).build();
+            const task = new TaskBuilder().withLocaleCode(localeCode).withTitle(title).build();
             expect(task.title[localeCode]).toBe(title);
         });
 
         test('description property', () => {
             const localeCode = aString();
             const description = aString();
-            const task = new TaskBuilder().withLocale(localeCode).withDescription(description).build();
+            const task = new TaskBuilder().withLocaleCode(localeCode).withDescription(description).build();
             expect(task.description[localeCode]).toBe(description);
         });
 

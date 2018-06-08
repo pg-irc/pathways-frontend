@@ -1,13 +1,13 @@
 // tslint:disable:no-expression-statement
-import { Locale } from '../../locale';
+import { LocaleDefinition } from '../../locale';
 import * as locale from '../locale';
 import * as constants from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { LocaleBuilder } from './helpers/locale_helpers';
+import { LocaleDefinitionBuilder } from './helpers/locale_helpers';
 
-const aLocale = new LocaleBuilder().build();
+const aLocale = new LocaleDefinitionBuilder().build();
 
-const buildStoreWithLocale = (theLocale: Locale): locale.Store => {
+const buildStoreWithLocale = (theLocale: LocaleDefinition): locale.Store => {
     return { code: theLocale.code, fallback: theLocale.code, errorMessage: '', loading: false };
 };
 

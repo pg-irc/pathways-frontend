@@ -3,38 +3,38 @@
 // tslint:disable:no-expression-statement
 // tslint:disable:readonly-array
 // tslint:disable:no-class
-import { Catalog, Locale, LocalizedText } from '../../../locale';
+import { Catalog, LocaleDefinition, LocalizedText } from '../../../locale';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
-import { LocaleInfo } from '../../../locale/types';
+import { Locale } from '../../../locale/types';
 
-export class LocaleBuilder {
+export class LocaleDefinitionBuilder {
 
     code: string = aString();
     label: string = aString();
     catalog: Catalog = {};
     isRTL: boolean = aBoolean();
 
-    withCode(code: string): LocaleBuilder {
+    withCode(code: string): LocaleDefinitionBuilder {
         this.code = code;
         return this;
     }
 
-    withLabel(label: string): LocaleBuilder {
+    withLabel(label: string): LocaleDefinitionBuilder {
         this.label = label;
         return this;
     }
 
-    withCatalog(catalog: Catalog): LocaleBuilder {
+    withCatalog(catalog: Catalog): LocaleDefinitionBuilder {
         this.catalog = catalog;
         return this;
     }
 
-    withRTL(isRTL: boolean): LocaleBuilder {
+    withRTL(isRTL: boolean): LocaleDefinitionBuilder {
         this.isRTL = isRTL;
         return this;
     }
 
-    build(): Locale {
+    build(): LocaleDefinition {
         return {
             code: this.code,
             label: this.label,
@@ -44,21 +44,21 @@ export class LocaleBuilder {
     }
 }
 
-export class LocaleInfoBuilder {
+export class LocaleBuilder {
     code: string = aString();
     fallback: string = aString();
 
-    withCode(code: string): LocaleInfoBuilder {
+    withCode(code: string): LocaleBuilder {
         this.code = code;
         return this;
     }
 
-    withFallback(fallback: string): LocaleInfoBuilder {
+    withFallback(fallback: string): LocaleBuilder {
         this.fallback = fallback;
         return this;
     }
 
-    build(): LocaleInfo {
+    build(): Locale {
         return {
             code: this.code,
             fallback: this.fallback,

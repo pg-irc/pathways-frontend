@@ -1,4 +1,4 @@
-import { Locale } from '../../locale';
+import { LocaleDefinition } from '../../locale';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 
@@ -15,7 +15,7 @@ export const request = () => {
 };
 
 // tslint:disable-next-line:typedef
-export function success(locale: Locale) {
+export function success(locale: LocaleDefinition) {
     return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { locale });
 }
 
