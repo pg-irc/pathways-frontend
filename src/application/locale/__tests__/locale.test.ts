@@ -11,6 +11,10 @@ describe('LocaleManager', () => {
             expect(() => LocaleManager.get(aString())).toThrow();
         });
 
+        it('.getFallbackLocale() should throw an error', () => {
+            expect(() => LocaleManager.getFallbackLocale()).toThrow();
+        });
+
         it('.locales should throw an error', () => {
             expect(() => LocaleManager.locales).toThrow();
         });
@@ -54,6 +58,10 @@ describe('LocaleManager', () => {
 
         it('.get() should throw an error if given an unknown locale code', () => {
             expect(() => LocaleManager.get(aString())).toThrow();
+        });
+
+        it('.getFallbackLocale() should return the first registered locale', () => {
+            expect(LocaleManager.getFallbackLocale()).toBe(aLocale);
         });
 
         it('.locales should be an array of the known locales', () => {

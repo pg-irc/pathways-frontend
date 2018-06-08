@@ -57,6 +57,10 @@ export class LocaleManager {
         return this.instance.locale(code);
     }
 
+    static getFallbackLocale(): Locale {
+        return this.instance.getFallbackLocale();
+    }
+
     static get locales(): ReadonlyArray<Locale> {
         return this.instance.locales;
     }
@@ -80,6 +84,8 @@ export class LocaleManager {
         return this.localeManagerInstance;
     }
 
+    private fallbackLocaleCode: string;
+
     private locales: ReadonlyArray<Locale>;
 
     private catalogsMap: CatalogsMap;
@@ -95,6 +101,15 @@ export class LocaleManager {
             throw new Error(`Unknown locale code: ${code}`);
         }
         return locale;
+    }
+
+    private getFallbackLocale(): Locale {
+        if (this.fallbackLocaleCode) {
+            return this.locale(this.fallbackLocaleCode);
+        } else {
+            const [ fallbackLocale ]: ReadonlyArray<Locale> = this.locales;
+            return fallbackLocale;
+        }
     }
 
 }
