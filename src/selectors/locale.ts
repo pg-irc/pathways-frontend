@@ -1,15 +1,25 @@
-import { Store as LocaleStore } from '../stores/locale';
 import * as app from '../application/store';
-import * as model from '../stores/locale';
+import { LocalizedText } from '../locale';
+import { Locale, LocaleInfo } from '../locale/types';
 
-export const selectLocaleStore = (appStore: app.Store): LocaleStore => {
-    return appStore.applicationState.localeInStore;
-};
-
-export function selectLocaleCode(localeStore: model.Store): string {
-    return localeStore.code;
+export function selectLocale(appStore: app.Store): Locale {
+    const store = appStore.applicationState.localeInStore;
+    return {
+        code: store.code,
+        fallback: store.fallback,
+    };
 }
 
-export const selectLocale = (appStore: app.Store): string => {
-    return selectLocaleCode(selectLocaleStore(appStore));
-};
+export function selectAvailableLocales(appStore: app.Store): ReadonlyArray<LocaleInfo> {
+    return appStore.applicationState.localeInStore.availableLocales;
+}
+
+export function selectLocalizedText (locale: Locale, localizedText: LocalizedText): string {
+    if (localizedText[locale.code]) {
+        return localizedText[locale.code];
+    }
+    if (localizedText[locale.fallback]) {
+        return localizedText[locale.fallback];
+    }
+    throw new Error(`Missing text for locale: ${locale.code} or fallback ${locale.fallback}`);
+}

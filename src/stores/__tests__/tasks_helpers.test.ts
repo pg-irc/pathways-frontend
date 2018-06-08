@@ -20,15 +20,17 @@ describe('tasks test helpers', () => {
         });
 
         test('title property', () => {
+            const localeCode = aString();
             const title = aString();
-            const task = new TaskBuilder().withTitle(title).build();
-            expect(task.title).toBe(title);
+            const task = new TaskBuilder().withLocaleCode(localeCode).withTitle(title).build();
+            expect(task.title[localeCode]).toBe(title);
         });
 
         test('description property', () => {
+            const localeCode = aString();
             const description = aString();
-            const task = new TaskBuilder().withDescription(description).build();
-            expect(task.description).toBe(description);
+            const task = new TaskBuilder().withLocaleCode(localeCode).withDescription(description).build();
+            expect(task.description[localeCode]).toBe(description);
         });
 
         test('tags property', () => {

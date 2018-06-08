@@ -1,28 +1,28 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 import { Trans } from '@lingui/react';
-import { Locale } from '../../application/locale';
+import { Locale, LocaleInfo } from '../../locale/types';
 
 export interface Props {
     readonly currentLocale: Locale;
-    readonly locales: ReadonlyArray<Locale>;
+    readonly availableLocales: ReadonlyArray<LocaleInfo>;
 }
 
 export interface Actions {
-    setLocale(locale: Locale): void;
+    setLocale(locale: string): void;
 }
 
 export type LanguageSwitcherProps = Props & Actions;
 
 export const LanguageSwitcher = (props: LanguageSwitcherProps): JSX.Element => {
-    const { currentLocale, locales, setLocale }: LanguageSwitcherProps = props;
+    const { currentLocale, availableLocales, setLocale }: LanguageSwitcherProps = props;
     return (
         <View>
             <View style={{ alignItems: 'center' }}>
-                {locales.map((locale: Locale) => (
+                {availableLocales.map((locale: LocaleInfo) => (
                     <Button key={locale.code}
                             title={locale.label}
-                            onPress={(): void => setLocale(locale)}
+                            onPress={(): void => setLocale(locale.code)}
                             disabled={locale.code === currentLocale.code} />
                 ))}
             </View>

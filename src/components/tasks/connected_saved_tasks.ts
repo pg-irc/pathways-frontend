@@ -5,9 +5,10 @@ import { Actions } from './task';
 import { Store } from '../../application/store';
 import { selectAllSavedTasks } from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
+import { selectLocale } from '../../selectors/locale';
 
 const mapStateToProps = (store: Store): Props => ({
-    tasks: selectAllSavedTasks(store.applicationState.tasksInStore),
+    tasks: selectAllSavedTasks(selectLocale(store), store.applicationState.tasksInStore),
     taskRenderer: renderSavedTask,
 });
 

@@ -7,6 +7,8 @@
 
 import * as store from '../../questionnaire';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
+import { LocalizedText } from '../../../locale';
+import { LocalizedTextBuilder } from './locale_helpers';
 
 export const buildNormalizedQuestionnaire = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
     {
@@ -38,10 +40,16 @@ interface WritableAnswersMap {
 }
 
 export class QuestionBuilder {
+    localeCode: string = aString();
     id: string = aString();
     text: string = aString();
     acceptMultipleAnswers: boolean = true;
     answers: Array<AnswerBuilder> = Array<AnswerBuilder>(3);
+
+    withLocaleCode(localeCode: string): QuestionBuilder {
+        this.localeCode = localeCode;
+        return this;
+    }
 
     withId(id: string): QuestionBuilder {
         this.id = id;
@@ -66,17 +74,27 @@ export class QuestionBuilder {
     build(): store.Question {
         return {
             id: this.id,
-            text: this.text,
+            text: this.createLocalizedText(this.text),
             acceptMultipleAnswers: this.acceptMultipleAnswers,
         };
+    }
+
+    private createLocalizedText(text: string): LocalizedText {
+        return new LocalizedTextBuilder(this.localeCode, text).build();
     }
 }
 
 export class AnswerBuilder {
+    localeCode: string = aString();
     id: string = aString();
     questionId: string = aString();
     text: string = aString();
     isSelected: boolean = aBoolean();
+
+    withLocaleCode(localeCode: string): AnswerBuilder {
+        this.localeCode = localeCode;
+        return this;
+    }
 
     withId(id: string): AnswerBuilder {
         this.id = id;
@@ -102,8 +120,12 @@ export class AnswerBuilder {
         return {
             id: this.id,
             questionId: this.questionId,
-            text: this.text,
+            text: this.createLocalizedText(this.text),
             isSelected: this.isSelected,
         };
+    }
+
+    private createLocalizedText(text: string): LocalizedText {
+        return new LocalizedTextBuilder(this.localeCode, text).build();
     }
 }

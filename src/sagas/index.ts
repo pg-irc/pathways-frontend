@@ -6,7 +6,7 @@ import { watchLoadFonts } from './fonts';
 
 export const sagaMiddleware = createSagaMiddleware();
 
-interface ApplicationSaga {
+export interface ApplicationSaga {
     readonly middleware: SagaMiddleware<object>;
 }
 

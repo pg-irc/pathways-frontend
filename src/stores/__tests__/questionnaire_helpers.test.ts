@@ -7,6 +7,8 @@ import { Answer, Question } from '../questionnaire';
 
 describe('questionnaire test helper for', () => {
 
+    let localeCode = aString();
+
     describe('building questions', () => {
 
         let id: string;
@@ -18,6 +20,7 @@ describe('questionnaire test helper for', () => {
             text = aString();
             question = new helpers.QuestionBuilder().
                 withId(id).
+                withLocaleCode(localeCode).
                 withText(text).
                 build();
         });
@@ -27,7 +30,7 @@ describe('questionnaire test helper for', () => {
         });
 
         it('with given question text', () => {
-            expect(question.text).toBe(text);
+            expect(question.text[localeCode]).toBe(text);
         });
 
         it('defaults to three answers', () => {
@@ -50,6 +53,7 @@ describe('questionnaire test helper for', () => {
                 text = aString();
                 isSelected = aBoolean();
                 answer = new helpers.AnswerBuilder().
+                    withLocaleCode(localeCode).
                     withId(id).
                     withQuestionId(questionId).
                     withText(text).
@@ -62,7 +66,7 @@ describe('questionnaire test helper for', () => {
             });
 
             it('can build an answer', () => {
-                expect(answer.text).toBe(text);
+                expect(answer.text[localeCode]).toBe(text);
             });
 
             it('can build an answer', () => {

@@ -6,14 +6,22 @@
 
 import * as store from '../../tasks';
 import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
+import { LocalizedText } from '../../../locale';
+import { LocalizedTextBuilder } from './locale_helpers';
 
 export class TaskBuilder {
+    localeCode: string = aString();
     id: store.Id = aString();
     title: string = aString();
     description: string = aString();
     tags: ReadonlyArray<string> = [aString(), aString()];
     category: string = aString();
     importance: number = aNumber();
+
+    withLocaleCode(localeCode: string): TaskBuilder {
+        this.localeCode = localeCode;
+        return this;
+    }
 
     withId(id: string): TaskBuilder {
         this.id = id;
@@ -48,12 +56,16 @@ export class TaskBuilder {
     build(): store.Task {
         return {
             id: this.id,
-            title: this.title,
-            description: this.description,
+            title: this.createLocalizedText(this.title),
+            description: this.createLocalizedText(this.description),
             tags: this.tags,
             category: this.category,
             importance: this.importance,
         };
+    }
+
+    private createLocalizedText(text: string): LocalizedText {
+        return new LocalizedTextBuilder(this.localeCode, text).build();
     }
 }
 

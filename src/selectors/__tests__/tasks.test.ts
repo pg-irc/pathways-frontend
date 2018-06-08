@@ -7,20 +7,24 @@ import {
     TaskUserSettingsBuilder,
     buildNormalizedStore ,
 } from '../../stores/__tests__/helpers/tasks_helpers';
+import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
+import { Locale } from '../../locale/types';
 
 describe('tasks selector', () => {
 
     describe ('denormalization', () => {
+        let locale: Locale;
         let task: stores.Task;
         let taskUserSettings: stores.TaskUserSettings;
         let denormalizedTask: selector.Task;
 
         beforeEach(() => {
-            task = new TaskBuilder().build();
+            locale = new LocaleBuilder().build();
+            task = new TaskBuilder().withLocaleCode(locale.code).build();
             taskUserSettings = new TaskUserSettingsBuilder(task.id).build();
-            denormalizedTask = selector.denormalizeTask(task, taskUserSettings);
+            denormalizedTask = selector.denormalizeTask(locale, task, taskUserSettings);
         });
 
         test('id property', () => {
@@ -36,11 +40,11 @@ describe('tasks selector', () => {
         });
 
         test('title property', () => {
-            expect(denormalizedTask.title).toBe(task.title);
+            expect(denormalizedTask.title).toBe(task.title[locale.code]);
         });
 
         test('description property', () => {
-            expect(denormalizedTask.description).toBe(task.description);
+            expect(denormalizedTask.description).toBe(task.description[locale.code]);
         });
 
         test('category property', () => {
@@ -58,9 +62,11 @@ describe('tasks selector', () => {
 
     describe('data retrieval', ()  => {
         let store: stores.Store;
+        let locale: Locale;
 
         beforeEach(() => {
-            const taskBuilder = new TaskBuilder();
+            locale = new LocaleBuilder().build();
+            const taskBuilder = new TaskBuilder().withLocaleCode(locale.code);
             const taskUserSettingsBuilder = new TaskUserSettingsBuilder(taskBuilder.build().id);
             store = buildNormalizedStore(
                 [taskBuilder],
@@ -71,11 +77,11 @@ describe('tasks selector', () => {
         });
 
         test('returns all saved tasks', () => {
-            expect(Object.keys(selector.selectAllSavedTasks(store))).toHaveLength(1);
+            expect(Object.keys(selector.selectAllSavedTasks(locale, store))).toHaveLength(1);
         });
 
         test('returns all suggested tasks', () => {
-            expect(Object.keys(selector.selectAllSuggestedTasks(store))).toHaveLength(1);
+            expect(Object.keys(selector.selectAllSuggestedTasks(locale, store))).toHaveLength(1);
         });
     });
 });

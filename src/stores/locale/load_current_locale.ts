@@ -1,4 +1,3 @@
-import { Locale } from '../../application/locale';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 
@@ -15,8 +14,8 @@ export const request = () => {
 };
 
 // tslint:disable-next-line:typedef
-export function success(locale: Locale) {
-    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { locale });
+export function success(localeCode: string) {
+    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { localeCode });
 }
 
 // tslint:disable-next-line:typedef

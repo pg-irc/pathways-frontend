@@ -1,5 +1,7 @@
 import * as model from '../stores/questionnaire';
 import * as app from '../application/store';
+import { selectLocalizedText, selectLocale } from './locale';
+import { Locale } from '../locale/types';
 
 export type Questionnaire = ReadonlyArray<Question>;
 
@@ -15,27 +17,28 @@ export interface Answer {
     readonly isSelected: boolean;
 }
 
-export const selectQuestionnaire = (appStore: app.Store): Questionnaire => (
-    denormalizeQuestions(appStore.applicationState.questionnaireInStore)
-);
+export const selectQuestionnaire = (appStore: app.Store): Questionnaire => {
+    const locale = selectLocale(appStore);
+    return denormalizeQuestions(locale, appStore.applicationState.questionnaireInStore);
+};
 
-export const denormalizeQuestions = (modelStore: model.Store): Questionnaire => {
+export const denormalizeQuestions = (locale: Locale, modelStore: model.Store): Questionnaire => {
     const { questions, answers }: model.Store = modelStore;
 
     return Object.keys(questions).map((key: string) => {
         const { id, text }: model.Question = questions[key];
         return {
             id,
-            text,
-            answers: selectAnswersForQuestion(id, answers),
+            text: selectLocalizedText(locale, text),
+            answers: selectAnswersForQuestion(locale, id, answers),
         };
     });
 };
 
-const selectAnswersForQuestion = (questionId: model.Id, answers: model.AnswersMap): ReadonlyArray<Answer> => {
+const selectAnswersForQuestion = (locale: Locale, questionId: model.Id, answers: model.AnswersMap): ReadonlyArray<Answer> => {
     const keys = answerKeysForGivenQuestion(questionId, answers);
 
-    return buildViewModelForAnswers(keys, answers);
+    return buildViewModelForAnswers(locale, keys, answers);
 };
 
 const answerKeysForGivenQuestion = (questionId: model.Id, answers: model.AnswersMap): ReadonlyArray<string> => {
@@ -44,12 +47,12 @@ const answerKeysForGivenQuestion = (questionId: model.Id, answers: model.Answers
     ));
 };
 
-const buildViewModelForAnswers = (keys: ReadonlyArray<string>, answers: model.AnswersMap): ReadonlyArray<Answer> => (
+const buildViewModelForAnswers = (locale: Locale, keys: ReadonlyArray<string>, answers: model.AnswersMap): ReadonlyArray<Answer> => (
     keys.map((key: string) => {
-        const { id, text, isSelected }: Answer = answers[key];
+        const { id, text, isSelected }: model.Answer = answers[key];
         return {
             id,
-            text,
+            text: selectLocalizedText(locale, text),
             isSelected,
         };
     })
