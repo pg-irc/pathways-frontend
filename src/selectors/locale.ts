@@ -17,11 +17,9 @@ export function selectAvailableLocales(appStore: app.Store): ReadonlyArray<Local
 export function selectLocalizedText (locale: Locale, localizedText: LocalizedText): string {
     if (localizedText[locale.code]) {
         return localizedText[locale.code];
-    } else if (localizedText[locale.fallback]) {
-        return localizedText[locale.fallback];
-    } else {
-        // TODO: Should this be fatal or just return a empty string?
-        // return '';
-        throw new Error(`Missing text for locale: ${locale.code} or fallback ${locale.fallback}`);
     }
+    if (localizedText[locale.fallback]) {
+        return localizedText[locale.fallback];
+    }
+    throw new Error(`Missing text for locale: ${locale.code} or fallback ${locale.fallback}`);
 }

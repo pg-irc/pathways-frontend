@@ -2,6 +2,7 @@
 import { LocaleInfoManager } from '../';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { LocaleInfo, CatalogsMap } from '../types';
 
 describe('LocaleManager', () => {
 
@@ -46,14 +47,21 @@ describe('LocaleManager', () => {
 
     describe('with locales registered', () => {
 
-        const aLocale = new LocaleInfoBuilder().build();
+        const localeCodes: ReadonlyArray<string> = ['en', 'ar', 'zh'];
+        const availableLocales: ReadonlyArray<LocaleInfo> = localeCodes.map((localeCode: string) => (
+            new LocaleInfoBuilder().withCode(localeCode).build()
+        ));
+
         const aCatalog = {};
 
         beforeAll(() => {
-            LocaleInfoManager.registerSingle({ ...aLocale, catalog: aCatalog });
+            LocaleInfoManager.register(availableLocales.map((locale: LocaleInfo) => ({
+                ...locale, catalog: aCatalog,
+            })));
         });
 
         it('.get() should return a locale when given a known locale code', () => {
+            const aLocale = availableLocales[availableLocales.length -  1];
             expect(LocaleInfoManager.get(aLocale.code)).toEqual(aLocale);
         });
 
@@ -62,15 +70,18 @@ describe('LocaleManager', () => {
         });
 
         it('.getFallback() should return the first registered locale', () => {
-            expect(LocaleInfoManager.getFallback()).toEqual(aLocale);
+            expect(LocaleInfoManager.getFallback()).toEqual(availableLocales[0]);
         });
 
         it('.all should be an array of the known locales', () => {
-            expect(LocaleInfoManager.all).toEqual([aLocale]);
+            expect(LocaleInfoManager.all).toEqual(availableLocales);
         });
 
         it('.catalogsMap should be a map of the known locale catalogs keyed by locale code', () => {
-            expect(LocaleInfoManager.catalogsMap).toEqual({ [aLocale.code]: aCatalog });
+            const reducer = (acumulator: CatalogsMap, localeCode: string): CatalogsMap => {
+                return { ...acumulator, [localeCode]: aCatalog };
+            };
+            expect(LocaleInfoManager.catalogsMap).toEqual(localeCodes.reduce(reducer, {}));
         });
 
     });

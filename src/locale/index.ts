@@ -106,10 +106,8 @@ export class LocaleInfoManager {
     private getFallback(): LocaleInfo {
         if (this.fallbackLocaleCode) {
             return this.getLocaleInfo(this.fallbackLocaleCode);
-        } else {
-            const [ fallbackLocale ]: ReadonlyArray<LocaleInfo> = this.locales;
-            return fallbackLocale;
         }
+        return this.locales[0];
     }
 
 }
