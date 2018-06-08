@@ -2,16 +2,17 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools as compose } from 'remote-redux-devtools';
 
 import { reducer as reducerForApplicationState, Store as StoreForApplicationState } from '../stores';
-import { buildSaga, runSaga } from '../sagas';
-import { buildRouter } from './router';
+import { runSaga, ApplicationSaga } from '../sagas';
+import { ApplicationRouter } from './router';
 
 import { loadFontsActions } from '../stores/fonts';
-import { Store as LocaleStore, buildDefaultStore as buildDefaultLocaleStore, loadCurrentLocaleActions } from '../stores/locale';
+import * as locale from '../stores/locale';
 
 import { LocaleManager } from '../locale';
 import enMessages from '../../locale/en/messages';
 import arMessages from '../../locale/ar/messages';
 import zhMessages from '../../locale/zh/messages';
+
 // tslint:disable-next-line:no-expression-statement
 LocaleManager.registerLocales([
     { code: 'en', label: 'English', catalog: enMessages, isRTL: false },
@@ -19,29 +20,29 @@ LocaleManager.registerLocales([
     { code: 'zh', label: 'Chinese', catalog: zhMessages, isRTL: false },
 ]);
 
-export type Store = {
-    readonly applicationState: StoreForApplicationState,
-};
+export type Store = { readonly applicationState: StoreForApplicationState };
 
-const router = buildRouter();
-const saga = buildSaga();
-const middleware = applyMiddleware(router.middleware, saga.middleware);
+type InitialState = { readonly locale: locale.Store };
 
-const enhancers = compose(router.enhancer, middleware);
-const reducer = combineReducers({ location: router.reducer, applicationState: reducerForApplicationState });
+export function buildStore(router: ApplicationRouter, saga: ApplicationSaga): ReturnType<typeof createStore> {
+    const middleware = applyMiddleware(router.middleware, saga.middleware);
+    const reducer = combineReducers({ location: router.reducer, applicationState: reducerForApplicationState });
+    const preloadedState: InitialState = {
+        locale: {
+            ...locale.buildDefaultStore(),
+            fallback: LocaleManager.getFallbackLocale().code,
+        },
+    };
+    const enhancers = compose(router.enhancer, middleware);
+    return createStore(reducer, preloadedState, enhancers);
+}
 
-const preloadedState: { readonly locale: LocaleStore } = {
-    locale: {
-        ... buildDefaultLocaleStore(),
-        fallback: LocaleManager.getFallbackLocale().code,
-    },
-};
-export const store = createStore(reducer, preloadedState, enhancers);
-
-runSaga(saga.middleware); // tslint:disable-line:no-expression-statement
-// tslint:disable-next-line:no-expression-statement
-store.dispatch(loadFontsActions.request({
-    Roboto: require('native-base/Fonts/Roboto.ttf'),
-    Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-}));
-store.dispatch(loadCurrentLocaleActions.request()); // tslint:disable-line:no-expression-statement
+export function startApplication(saga: ApplicationSaga, store: ReturnType<typeof createStore>): void {
+    // tslint:disable:no-expression-statement
+    runSaga(saga.middleware);
+    store.dispatch(loadFontsActions.request({
+        Roboto: require('native-base/Fonts/Roboto.ttf'),
+        Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+    }));
+    store.dispatch(locale.loadCurrentLocaleActions.request());
+}

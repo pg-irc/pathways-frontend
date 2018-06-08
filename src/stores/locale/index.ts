@@ -8,9 +8,6 @@ export { SetLocale };
 export { LoadCurrentLocale };
 
 type ReducerActions = SetLocale.Request | SetLocale.Result | LoadCurrentLocale.Request | LoadCurrentLocale.Result;
-// export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
-
-// export const DEFAULT_LOCALE_CODE = 'en';
 
 export interface Store {
     readonly code: string;

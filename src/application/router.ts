@@ -24,7 +24,7 @@ const routesMap = {
     [constants.SET_EXPLORE_PAGE]: getRouteFromPage(Page.ExploreAll),
 };
 
-interface ApplicationRouter {
+export interface ApplicationRouter {
     readonly reducer: Reducer<LocationState<string, any>>; // tslint:disable-line:no-any
     readonly enhancer: GenericStoreEnhancer;
     readonly middleware: Middleware;
