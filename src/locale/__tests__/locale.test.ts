@@ -69,7 +69,7 @@ describe('LocaleManager', () => {
             expect(() => LocaleInfoManager.get(aString())).toThrow();
         });
 
-        it('.getFallback() should return the first registered locale', () => {
+        it('the default fallback locale should be the first locale registered', () => {
             expect(LocaleInfoManager.getFallback()).toEqual(availableLocales[0]);
         });
 
