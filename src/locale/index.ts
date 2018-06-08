@@ -20,7 +20,7 @@ export { CatalogsMap, Catalog, LocaleInfo, LocalizedText };
 /**
  * Side-effects
  */
-export { setTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode }  from './effects';
+export { needsTextDirectionChange, toggleTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode }  from './effects';
 
 export class LocaleInfoManager {
 

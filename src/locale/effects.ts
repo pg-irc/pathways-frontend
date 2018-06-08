@@ -3,11 +3,13 @@ import { I18nManager, AsyncStorage } from 'react-native';
 import { PREFERENCES_LOCALE_CODE } from '../application/constants';
 import { LocaleInfoManager } from '.';
 
-export function setTextDirection(localeCode: string): boolean {
+export function needsTextDirectionChange(localeCode: string): boolean {
     const locale = LocaleInfoManager.get(localeCode);
-    const reloadNeeded = I18nManager.isRTL !== locale.isRTL;
-    I18nManager.forceRTL(locale.isRTL);
-    return reloadNeeded;
+    return I18nManager.isRTL !== locale.isRTL;
+}
+
+export function toggleTextDirection(): void {
+    I18nManager.forceRTL(I18nManager.isRTL);
 }
 
 export function reload(): void {

@@ -2,8 +2,9 @@
 import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect} from 'redux-saga/effects';
 
 import * as constants from '../application/constants';
-import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode, reload, setTextDirection } from '../locale';
+import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode, reload } from '../locale';
 import { SetLocale, LoadCurrentLocale, setLocaleActions, loadCurrentLocaleActions } from '../stores/locale';
+import { toggleTextDirection, needsTextDirectionChange } from '../locale/effects';
 
 export function* watchSetLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.SET_LOCALE_REQUEST, applyLocaleChange);
@@ -14,7 +15,8 @@ export function* applyLocaleChange(action: SetLocale.Request): IterableIterator<
     try {
         yield call(saveCurrentLocaleCode, localeCode);
         yield put(setLocaleActions.success(localeCode));
-        if (yield call(setTextDirection, localeCode)) {
+        if (yield call(needsTextDirectionChange, localeCode)) {
+            yield call(toggleTextDirection);
             yield call(reload);
         }
     } catch (e) {

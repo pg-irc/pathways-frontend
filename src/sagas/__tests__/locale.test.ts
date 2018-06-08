@@ -2,7 +2,7 @@
 import { call, put, PutEffect, CallEffect } from 'redux-saga/effects';
 
 import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import { loadCurrentLocaleCode, saveCurrentLocaleCode, reload, setTextDirection, LocaleInfoManager } from '../../locale';
+import { loadCurrentLocaleCode, saveCurrentLocaleCode, reload, needsTextDirectionChange, toggleTextDirection, LocaleInfoManager } from '../../locale';
 import { loadCurrentLocaleActions, setLocaleActions, SetLocale } from '../../stores/locale';
 import { applyLocaleChange, loadCurrentLocale, LoadCurrentLocaleActions } from '../locale';
 import { anError } from '../../application/__tests__/helpers/random_test_values';
@@ -72,8 +72,9 @@ describe('the applyLocaleChange saga', () => {
 
         it('should dispatch a put effect with a success action upon completion of call effect', () => {
             expect(saga.next().value).toEqual(put(setLocaleActions.success(aLocale.code)));
-            expect(saga.next().value).toEqual(call(setTextDirection, aLocale.code));
-            expect(saga.next(true).value).toEqual(call(reload));
+            expect(saga.next().value).toEqual(call(needsTextDirectionChange, aLocale.code));
+            expect(saga.next(true).value).toEqual(call(toggleTextDirection));
+            expect(saga.next().value).toEqual(call(reload));
         });
 
         it('should dispatch a failure action upon failure of call effect', () => {
