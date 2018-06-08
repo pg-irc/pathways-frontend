@@ -1,17 +1,10 @@
-// tslint:disable:no-expression-statement
+// tslint:disable:no-expression-statement no-let
 import * as locale from '../locale';
 import * as constants from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { LocaleInfoBuilder, LocaleStoreBuilder } from './helpers/locale_helpers';
 
 const aLocaleCode = aString();
-
-const buildStoreWithLocale = (theLocaleCode: string): locale.Store => {
-    return { availableLocales: [], code: theLocaleCode, fallback: theLocaleCode, errorMessage: '', loading: false };
-};
-
-const buildStoreLoadingLocale = (): locale.Store => {
-    return { availableLocales: [], code: aLocaleCode, fallback: aLocaleCode, errorMessage: '', loading: true };
-};
 
 describe('the setLocaleAction for', () => {
 
@@ -108,7 +101,7 @@ describe('the loadCurrentLocaleAction for', () => {
 describe('the reducer', () => {
 
     it('should return store unchanged if action is undefined', () => {
-        const theOriginalStore = buildStoreWithLocale(aLocaleCode);
+        const theOriginalStore = new LocaleStoreBuilder().build();
         const theNewStore = locale.reducer(theOriginalStore, undefined);
         expect(theNewStore).toBe(theOriginalStore);
     });
@@ -124,7 +117,7 @@ describe('the reducer', () => {
     });
 
     it('when called with SET_LOCALE_REQUEST should return store with loading flag set', () => {
-        const theStore = locale.buildDefaultStore();
+        const theStore = new LocaleStoreBuilder().build();
         const theAction = {
             type: constants.SET_LOCALE_REQUEST as typeof constants.SET_LOCALE_REQUEST,
             payload: { localeCode: aLocaleCode },
@@ -134,7 +127,7 @@ describe('the reducer', () => {
     });
 
     it('when called with SET_LOCALE_SUCCESS should return store with locale code from action', () => {
-        const theStore = buildStoreLoadingLocale();
+        const theStore = new LocaleStoreBuilder().withLoading(true).build();
         const theAction = {
             type: constants.SET_LOCALE_SUCCESS as typeof constants.SET_LOCALE_SUCCESS,
             payload: { localeCode: aLocaleCode },
@@ -146,7 +139,7 @@ describe('the reducer', () => {
 
     it('when called with SET_LOCALE_FAILURE should return store with loading flag set false', () => {
         const errorMessage = aString();
-        const theStore = buildStoreLoadingLocale();
+        const theStore = new LocaleStoreBuilder().withLoading(true).build();
         const theAction = {
             type: constants.SET_LOCALE_FAILURE as typeof constants.SET_LOCALE_FAILURE,
             payload: { message: errorMessage, localeCode: aLocaleCode },
@@ -156,7 +149,7 @@ describe('the reducer', () => {
     });
 
     it('when called with LOAD_CURRENT_LOCALE_REQUEST should return store with loading flag set', () => {
-        const theStore = locale.buildDefaultStore();
+        const theStore = new LocaleStoreBuilder().build();
         const theAction = {
             type: constants.LOAD_CURRENT_LOCALE_REQUEST as typeof constants.LOAD_CURRENT_LOCALE_REQUEST,
         };
@@ -165,7 +158,7 @@ describe('the reducer', () => {
     });
 
     it('when called with LOAD_CURRENTLOCALE_SUCCESS should return store with locale code from action', () => {
-        const theStore = buildStoreLoadingLocale();
+        const theStore = new LocaleStoreBuilder().withLoading(true).build();
         const theAction = {
             type: constants.LOAD_CURRENT_LOCALE_SUCCESS as typeof constants.LOAD_CURRENT_LOCALE_SUCCESS,
             payload: { localeCode: aLocaleCode },
@@ -177,13 +170,41 @@ describe('the reducer', () => {
 
     it('when called with LOAD_CURERNT_LOCALE_FAILURE should return store with loading flag set false', () => {
         const errorMessage = aString();
-        const theStore = buildStoreLoadingLocale();
+        const theStore = new LocaleStoreBuilder().withLoading(true).build();
         const theAction = {
             type: constants.LOAD_CURRENT_LOCALE_FAILURE as typeof constants.LOAD_CURRENT_LOCALE_FAILURE,
             payload: { message: errorMessage, localeCode: aLocaleCode },
         };
         const theNewStore = locale.reducer(theStore, theAction);
         expect(theNewStore.loading).toBe(false);
+    });
+
+    describe('should never change', () => {
+        let allLocaleActions: ReadonlyArray<locale.ReducerActions> = [
+            { type: constants.LOAD_CURRENT_LOCALE_REQUEST },
+            { type: constants.LOAD_CURRENT_LOCALE_SUCCESS, payload: { localeCode: aString() } },
+            { type: constants.LOAD_CURRENT_LOCALE_FAILURE, payload: { message: aString() } },
+            { type: constants.SET_LOCALE_REQUEST, payload: { localeCode: aString() } },
+            { type: constants.SET_LOCALE_SUCCESS, payload: { localeCode: aString() } },
+            { type: constants.SET_LOCALE_FAILURE, payload: { localeCode: aString(), message: aString() } },
+        ];
+
+        test('property: availableLocales', () => {
+            let theStore = new LocaleStoreBuilder().withLocales([new LocaleInfoBuilder().build()]).build();
+            for (let theAction of allLocaleActions) {
+                const theNewStore = locale.reducer(theStore, theAction);
+                expect(theNewStore.availableLocales).toEqual(theStore.availableLocales);
+            }
+        });
+
+        test('property: fallback', () => {
+            let theStore = new LocaleStoreBuilder().build();
+            for (let theAction of allLocaleActions) {
+                const theNewStore = locale.reducer(theStore, theAction);
+                expect(theNewStore.fallback).toEqual(theStore.fallback);
+            }
+        });
+
     });
 
 });

@@ -8,7 +8,7 @@ import { LocaleInfo } from '../../locale';
 export { SetLocale };
 export { LoadCurrentLocale };
 
-type ReducerActions = SetLocale.Request | SetLocale.Result | LoadCurrentLocale.Request | LoadCurrentLocale.Result;
+export type ReducerActions = SetLocale.Request | SetLocale.Result | LoadCurrentLocale.Request | LoadCurrentLocale.Result;
 
 export interface Store {
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
@@ -34,25 +34,22 @@ export const reducer = (store: Store = buildDefaultStore(), action?: ReducerActi
         return store;
     }
     switch (action.type) {
-
         case constants.LOAD_CURRENT_LOCALE_REQUEST:
-            return { ...store, loading: true };
+            return { ...store, errorMessage: '', loading: true };
         case constants.LOAD_CURRENT_LOCALE_SUCCESS:
-            return { ...buildDefaultStore(), code: action.payload.localeCode };
+            return { ...store, errorMessage: '', loading: false, code: action.payload.localeCode };
         case constants.LOAD_CURRENT_LOCALE_FAILURE: {
             const payload = action.payload;
-            return { ...buildDefaultStore(), errorMessage: payload.message };
+            return { ...store, errorMessage: payload.message, loading: false };
         }
-
         case constants.SET_LOCALE_REQUEST:
-            return { ...store, loading: true };
+            return { ...store, errorMessage: '', loading: true };
         case constants.SET_LOCALE_SUCCESS:
-            return { ...buildDefaultStore(), code: action.payload.localeCode };
+            return { ...store, errorMessage: '', loading: false, code: action.payload.localeCode };
         case constants.SET_LOCALE_FAILURE: {
             const payload = action.payload;
-            return { ...buildDefaultStore(), errorMessage: payload.message };
+            return { ...store, errorMessage: payload.message, loading: false };
         }
-
         default:
             return store;
     }

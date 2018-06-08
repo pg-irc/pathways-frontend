@@ -8,12 +8,12 @@ import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/zh.js';
 // Tell OS to enable RTL support.
 import { I18nManager } from 'react-native';
-import { CatalogsMap, Catalog, LocaleInfo, LocaleInfoWithCatalog, LocalizedText } from './types';
+import { CatalogsMap, Catalog, Locale, LocaleInfo, LocaleInfoWithCatalog, LocalizedText } from './types';
 
 /**
  * Types
  */
-export { CatalogsMap, Catalog, LocaleInfo, LocalizedText };
+export { CatalogsMap, Catalog, Locale, LocaleInfo, LocalizedText };
 
 /**
  * Side-effects

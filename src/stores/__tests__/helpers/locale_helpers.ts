@@ -5,7 +5,8 @@
 // tslint:disable:no-class
 import { LocalizedText } from '../../../locale';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
-import { Locale, LocaleInfo } from '../../../locale/types';
+import { Locale, LocaleInfo } from '../../../locale';
+import { Store } from '../../locale';
 
 export class LocaleInfoBuilder {
     code: string = aString();
@@ -78,4 +79,49 @@ export class LocalizedTextBuilder {
         return this.localizations;
     }
 
+}
+
+export class LocaleStoreBuilder {
+
+    locale: LocaleInfo = new LocaleInfoBuilder().build();
+    availableLocales: ReadonlyArray<LocaleInfo> = [this.locale];
+    code: string = this.locale.code;
+    fallback: string = this.locale.code;
+    loading: boolean = false;
+    errorMessage: string = '';
+
+    withLocales(locales: ReadonlyArray<LocaleInfo>): LocaleStoreBuilder {
+        this.availableLocales = locales;
+        return this;
+    }
+
+    withCode(code: string): LocaleStoreBuilder {
+        this.code = code;
+        return this;
+    }
+
+    withFallback(fallback: string): LocaleStoreBuilder {
+        this.fallback = fallback;
+        return this;
+    }
+
+    withLoading(loading: boolean): LocaleStoreBuilder {
+        this.loading = loading;
+        return this;
+    }
+
+    withErrorMessage(message: string): LocaleStoreBuilder {
+        this.errorMessage = message;
+        return this;
+    }
+
+    build(): Store {
+        return {
+            availableLocales: this.availableLocales,
+            code: this.code,
+            fallback: this.fallback,
+            loading: this.loading,
+            errorMessage: this.errorMessage,
+        };
+    }
 }
