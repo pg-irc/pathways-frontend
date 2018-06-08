@@ -1,14 +1,17 @@
+// tslint:disable:no-expression-statement
 import { I18nManager, AsyncStorage } from 'react-native';
-import { LocaleDefinition } from './types';
 import { PREFERENCES_LOCALE_CODE } from '../application/constants';
+import { LocaleInfoManager } from '.';
 
-export function isReloadNeeded(locale: LocaleDefinition): boolean {
-    return I18nManager.isRTL !== locale.isRTL;
+export function setTextDirection(localeCode: string): boolean {
+    const locale = LocaleInfoManager.get(localeCode);
+    const reloadNeeded = I18nManager.isRTL !== locale.isRTL;
+    I18nManager.forceRTL(locale.isRTL);
+    return reloadNeeded;
 }
 
-export function reloadRTL(setRTL: boolean): void {
-    I18nManager.forceRTL(setRTL); // tslint:disable-line:no-expression-statement
-    Expo.Updates.reloadFromCache(); // tslint:disable-line:no-expression-statement
+export function reload(): void {
+    Expo.Updates.reloadFromCache();
 }
 
 export async function saveCurrentLocaleCode(code: string): Promise<void> {

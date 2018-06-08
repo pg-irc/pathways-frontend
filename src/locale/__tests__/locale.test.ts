@@ -1,75 +1,76 @@
 // tslint:disable:no-expression-statement
-import { LocaleDefinitionManager } from '../';
+import { LocaleInfoManager } from '../';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { LocaleDefinitionBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 
 describe('LocaleManager', () => {
 
     describe('before .registerLocales() is called', () => {
 
         it('.get() should throw an error', () => {
-            expect(() => LocaleDefinitionManager.get(aString())).toThrow();
+            expect(() => LocaleInfoManager.get(aString())).toThrow();
         });
 
         it('.getFallback() should throw an error', () => {
-            expect(() => LocaleDefinitionManager.getFallback()).toThrow();
+            expect(() => LocaleInfoManager.getFallback()).toThrow();
         });
 
         it('.all should throw an error', () => {
-            expect(() => LocaleDefinitionManager.all).toThrow();
+            expect(() => LocaleInfoManager.all).toThrow();
         });
 
         it('.catalogsMap should throw an error', () => {
-            expect(() => LocaleDefinitionManager.catalogsMap).toThrow();
+            expect(() => LocaleInfoManager.catalogsMap).toThrow();
         });
 
     });
 
     describe('.registerLocales()', () => {
 
-        const aLocale = new LocaleDefinitionBuilder().build();
+        const aLocale = { ...new LocaleInfoBuilder().build(), catalog: {} };
 
         afterEach(() => {
-            LocaleDefinitionManager.reset();
+            LocaleInfoManager.reset();
         });
 
         it('should return the LocaleManager', () => {
-            expect(LocaleDefinitionManager.registerSingle(aLocale)).toBe(LocaleDefinitionManager);
+            expect(LocaleInfoManager.registerSingle(aLocale)).toBe(LocaleInfoManager);
         });
 
         it('should throw an error if called twice', () => {
-            expect(LocaleDefinitionManager.registerSingle(aLocale)).toBe(LocaleDefinitionManager);
-            expect(() => LocaleDefinitionManager.registerSingle(aLocale)).toThrow();
+            expect(LocaleInfoManager.registerSingle(aLocale)).toBe(LocaleInfoManager);
+            expect(() => LocaleInfoManager.registerSingle(aLocale)).toThrow();
         });
 
     });
 
     describe('with locales registered', () => {
 
-        const aLocale = new LocaleDefinitionBuilder().build();
+        const aLocale = new LocaleInfoBuilder().build();
+        const aCatalog = {};
 
         beforeAll(() => {
-            LocaleDefinitionManager.registerSingle(aLocale);
+            LocaleInfoManager.registerSingle({ ...aLocale, catalog: aCatalog });
         });
 
         it('.get() should return a locale when given a known locale code', () => {
-            expect(LocaleDefinitionManager.get(aLocale.code)).toBe(aLocale);
+            expect(LocaleInfoManager.get(aLocale.code)).toEqual(aLocale);
         });
 
         it('.get() should throw an error if given an unknown locale code', () => {
-            expect(() => LocaleDefinitionManager.get(aString())).toThrow();
+            expect(() => LocaleInfoManager.get(aString())).toThrow();
         });
 
         it('.getFallback() should return the first registered locale', () => {
-            expect(LocaleDefinitionManager.getFallback()).toBe(aLocale);
+            expect(LocaleInfoManager.getFallback()).toEqual(aLocale);
         });
 
         it('.all should be an array of the known locales', () => {
-            expect(LocaleDefinitionManager.all).toEqual([aLocale]);
+            expect(LocaleInfoManager.all).toEqual([aLocale]);
         });
 
         it('.catalogsMap should be a map of the known locale catalogs keyed by locale code', () => {
-            expect(LocaleDefinitionManager.catalogsMap).toEqual({ [aLocale.code]: aLocale.catalog });
+            expect(LocaleInfoManager.catalogsMap).toEqual({ [aLocale.code]: aCatalog });
         });
 
     });

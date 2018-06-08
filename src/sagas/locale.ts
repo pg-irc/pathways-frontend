@@ -2,7 +2,7 @@
 import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect} from 'redux-saga/effects';
 
 import * as constants from '../application/constants';
-import { saveCurrentLocaleCode, loadCurrentLocaleCode, isReloadNeeded, reloadRTL, LocaleDefinitionManager } from '../locale';
+import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode, reload, setTextDirection } from '../locale';
 import { SetLocale, LoadCurrentLocale, setLocaleActions, loadCurrentLocaleActions } from '../stores/locale';
 
 export function* watchSetLocale(): IterableIterator<ForkEffect> {
@@ -14,9 +14,8 @@ export function* applyLocaleChange(action: SetLocale.Request): IterableIterator<
     try {
         yield call(saveCurrentLocaleCode, localeCode);
         yield put(setLocaleActions.success(localeCode));
-        const localeDefinition = LocaleDefinitionManager.get(localeCode);
-        if (yield call(isReloadNeeded, localeDefinition)) {
-            yield call(reloadRTL, localeDefinition.isRTL);
+        if (yield call(setTextDirection, localeCode)) {
+            yield call(reload);
         }
     } catch (e) {
         yield put(setLocaleActions.failure(e.message, localeCode));
@@ -32,7 +31,7 @@ export type LoadCurrentLocaleActions = LoadCurrentLocale.Request | LoadCurrentLo
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadCurrentLocaleActions>> {
     try {
         const code = yield call(loadCurrentLocaleCode);
-        const locale = code !== null ? LocaleDefinitionManager.get(code) : LocaleDefinitionManager.getFallback();
+        const locale = code !== null ? LocaleInfoManager.get(code) : LocaleInfoManager.getFallback();
         yield put(loadCurrentLocaleActions.success(locale.code));
     } catch (e) {
         console.error(`Failed to load current locale (${e.message})`);

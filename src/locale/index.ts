@@ -10,67 +10,56 @@ import 'intl/locale-data/jsonp/zh.js';
 import { I18nManager } from 'react-native';
 I18nManager.allowRTL(true);
 
-import { CatalogsMap, Catalog, LocaleDefinition, LocalizedText } from './types';
-import { isReloadNeeded, reloadRTL, saveCurrentLocaleCode, loadCurrentLocaleCode }  from './effects';
+import { CatalogsMap, Catalog, LocaleInfo, LocaleInfoWithCatalog, LocalizedText } from './types';
 
 /**
  * Types
  */
-export {
-    CatalogsMap,
-    Catalog,
-    LocaleDefinition,
-    LocalizedText,
-};
+export { CatalogsMap, Catalog, LocaleInfo, LocalizedText };
 
 /**
  * Side-effects
  */
-export {
-    isReloadNeeded,
-    reloadRTL,
-    saveCurrentLocaleCode,
-    loadCurrentLocaleCode,
-};
+export { setTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode }  from './effects';
 
-export class LocaleDefinitionManager {
+export class LocaleInfoManager {
 
     /**
      * Singleton nstance of LocaleManager.
      */
-    private static localeDefinitionManagerInstance: LocaleDefinitionManager = undefined;
+    private static localeInfoManagerInstance: LocaleInfoManager = undefined;
 
     /**
      * Creates a singleton instance of LocaleManager with
      * the provided locales. Throws a runtime error if called twice.
-     * @param localeDefinitions The list of locales to register with the singleton.
+     * @param locales The list of locales to register with the singleton.
      */
-    static registerSingle = (localeDefinition: LocaleDefinition, ...localeDefinitions: Array<LocaleDefinition>):
-        typeof LocaleDefinitionManager => LocaleDefinitionManager.register([localeDefinition, ...localeDefinitions])
+    static registerSingle = (locale: LocaleInfoWithCatalog, ...locales: Array<LocaleInfoWithCatalog>):
+        typeof LocaleInfoManager => LocaleInfoManager.register([locale, ...locales])
 
-    static register(localeDefinitions: ReadonlyArray<LocaleDefinition>): typeof LocaleDefinitionManager {
-        if (this.localeDefinitionManagerInstance !== undefined) {
+    static register(locale: ReadonlyArray<LocaleInfoWithCatalog>): typeof LocaleInfoManager {
+        if (this.localeInfoManagerInstance !== undefined) {
             throw new Error('Cannot register new locales after locale manager has been built');
         }
-        this.localeDefinitionManagerInstance = new LocaleDefinitionManager(localeDefinitions);
+        this.localeInfoManagerInstance = new LocaleInfoManager(locale);
         return this;
     }
 
-    static reset(): typeof LocaleDefinitionManager {
-        this.localeDefinitionManagerInstance = undefined;
+    static reset(): typeof LocaleInfoManager {
+        this.localeInfoManagerInstance = undefined;
         return this;
     }
 
-    static get(localeCode: string): LocaleDefinition {
-        return this.instance.getLocaleDefinition(localeCode);
+    static get(localeCode: string): LocaleInfo {
+        return this.instance.getLocaleInfo(localeCode);
     }
 
-    static getFallback(): LocaleDefinition {
-        return this.instance.getFallbackLocaleDefinition();
+    static getFallback(): LocaleInfo {
+        return this.instance.getFallback();
     }
 
-    static get all(): ReadonlyArray<LocaleDefinition> {
-        return this.instance.localeDefinitions;
+    static get all(): ReadonlyArray<LocaleInfo> {
+        return this.instance.locales;
     }
 
     static get catalogsMap(): CatalogsMap {
@@ -81,25 +70,29 @@ export class LocaleDefinitionManager {
      * Returns the LocaleManager singleton instance if it exists, otherwise throws
      * a runtime error.
      */
-    private static get instance(): LocaleDefinitionManager {
-        if (this.localeDefinitionManagerInstance === undefined) {
+    private static get instance(): LocaleInfoManager {
+        if (this.localeInfoManagerInstance === undefined) {
             throw new Error('LocaleManager not initialized, registerLocales([Locale,...]) must be called first');
         }
-        return this.localeDefinitionManagerInstance;
+        return this.localeInfoManagerInstance;
     }
 
     private fallbackLocaleCode: string;
 
-    private localeDefinitions: ReadonlyArray<LocaleDefinition>;
+    private locales: ReadonlyArray<LocaleInfo>;
 
     private catalogsMap: CatalogsMap;
 
-    private constructor(locales: ReadonlyArray<LocaleDefinition>) {
-        this.localeDefinitions = locales;
+    private constructor(locales: ReadonlyArray<LocaleInfoWithCatalog>) {
+        this.locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog) => ({
+            code: localeInfoWithCatalog.code,
+            label: localeInfoWithCatalog.label,
+            isRTL: localeInfoWithCatalog.isRTL,
+        }));
         this.catalogsMap = buildCatalogsMap(locales);
     }
 
-    private getLocaleDefinition(localeCode: string): LocaleDefinition {
+    private getLocaleInfo(localeCode: string): LocaleInfo {
         const locale = this.findLocale(localeCode);
         if (locale === undefined) {
             throw new Error(`Unknown locale code: ${localeCode}`);
@@ -107,23 +100,23 @@ export class LocaleDefinitionManager {
         return locale;
     }
 
-    private findLocale(code: string): LocaleDefinition {
-        return this.localeDefinitions.find((aLocale: LocaleDefinition): boolean => aLocale.code === code);
+    private findLocale(code: string): LocaleInfo {
+        return this.locales.find((aLocale: LocaleInfo): boolean => aLocale.code === code);
     }
 
-    private getFallbackLocaleDefinition(): LocaleDefinition {
+    private getFallback(): LocaleInfo {
         if (this.fallbackLocaleCode) {
-            return this.getLocaleDefinition(this.fallbackLocaleCode);
+            return this.getLocaleInfo(this.fallbackLocaleCode);
         } else {
-            const [ fallbackLocale ]: ReadonlyArray<LocaleDefinition> = this.localeDefinitions;
+            const [ fallbackLocale ]: ReadonlyArray<LocaleInfo> = this.locales;
             return fallbackLocale;
         }
     }
 
 }
 
-function buildCatalogsMap(withLocales: ReadonlyArray<LocaleDefinition>): CatalogsMap {
-    const reducer = (accumulator: CatalogsMap, locale: LocaleDefinition): CatalogsMap => {
+function buildCatalogsMap(withLocales: ReadonlyArray<LocaleInfoWithCatalog>): CatalogsMap {
+    const reducer = (accumulator: CatalogsMap, locale: LocaleInfoWithCatalog): CatalogsMap => {
         return { ...accumulator, [locale.code]: locale.catalog };
     };
     return withLocales.reduce(reducer, {});

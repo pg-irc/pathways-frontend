@@ -3,42 +3,34 @@
 // tslint:disable:no-expression-statement
 // tslint:disable:readonly-array
 // tslint:disable:no-class
-import { Catalog, LocaleDefinition, LocalizedText } from '../../../locale';
+import { LocalizedText } from '../../../locale';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
-import { Locale } from '../../../locale/types';
+import { Locale, LocaleInfo } from '../../../locale/types';
 
-export class LocaleDefinitionBuilder {
-
+export class LocaleInfoBuilder {
     code: string = aString();
     label: string = aString();
-    catalog: Catalog = {};
     isRTL: boolean = aBoolean();
 
-    withCode(code: string): LocaleDefinitionBuilder {
+    withCode(code: string): LocaleInfoBuilder {
         this.code = code;
         return this;
     }
 
-    withLabel(label: string): LocaleDefinitionBuilder {
+    withLabel(label: string): LocaleInfoBuilder {
         this.label = label;
         return this;
     }
 
-    withCatalog(catalog: Catalog): LocaleDefinitionBuilder {
-        this.catalog = catalog;
-        return this;
-    }
-
-    withRTL(isRTL: boolean): LocaleDefinitionBuilder {
+    withRTL(isRTL: boolean): LocaleInfoBuilder {
         this.isRTL = isRTL;
         return this;
     }
 
-    build(): LocaleDefinition {
+    build(): LocaleInfo {
         return {
             code: this.code,
             label: this.label,
-            catalog: this.catalog,
             isRTL: this.isRTL,
         };
     }

@@ -8,13 +8,13 @@ import { ApplicationRouter } from './router';
 import { loadFontsActions } from '../stores/fonts';
 import * as locale from '../stores/locale';
 
-import { LocaleDefinitionManager } from '../locale';
+import { LocaleInfoManager } from '../locale';
 import enMessages from '../../locale/en/messages';
 import arMessages from '../../locale/ar/messages';
 import zhMessages from '../../locale/zh/messages';
 
 // tslint:disable-next-line:no-expression-statement
-LocaleDefinitionManager.register([
+LocaleInfoManager.register([
     { code: 'en', label: 'English', catalog: enMessages, isRTL: false },
     { code: 'ar', label: 'Arabic', catalog: arMessages, isRTL: true },
     { code: 'zh', label: 'Chinese', catalog: zhMessages, isRTL: false },
@@ -31,7 +31,8 @@ export function buildStore(router: ApplicationRouter, saga: ApplicationSaga): Re
         applicationState: {
             localeInStore: {
                 ...locale.buildDefaultStore(),
-                fallback: LocaleDefinitionManager.getFallback().code,
+                availableLocales: LocaleInfoManager.all,
+                fallback: LocaleInfoManager.getFallback().code,
             },
         },
     };

@@ -6,11 +6,11 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 const aLocaleCode = aString();
 
 const buildStoreWithLocale = (theLocaleCode: string): locale.Store => {
-    return { code: theLocaleCode, fallback: theLocaleCode, errorMessage: '', loading: false };
+    return { availableLocales: [], code: theLocaleCode, fallback: theLocaleCode, errorMessage: '', loading: false };
 };
 
 const buildStoreLoadingLocale = (): locale.Store => {
-    return { code: aLocaleCode, fallback: aLocaleCode, errorMessage: '', loading: true };
+    return { availableLocales: [], code: aLocaleCode, fallback: aLocaleCode, errorMessage: '', loading: true };
 };
 
 describe('the setLocaleAction for', () => {

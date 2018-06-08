@@ -3,6 +3,7 @@ import * as setLocale from './set_locale';
 import * as loadCurrentLocale from './load_current_locale';
 import { SetLocale } from './set_locale';
 import { LoadCurrentLocale } from './load_current_locale';
+import { LocaleInfo } from '../../locale';
 
 export { SetLocale };
 export { LoadCurrentLocale };
@@ -10,6 +11,7 @@ export { LoadCurrentLocale };
 type ReducerActions = SetLocale.Request | SetLocale.Result | LoadCurrentLocale.Request | LoadCurrentLocale.Result;
 
 export interface Store {
+    readonly availableLocales: ReadonlyArray<LocaleInfo>;
     readonly code: string;
     readonly fallback: string;
     readonly loading: boolean;
@@ -17,6 +19,7 @@ export interface Store {
 }
 
 export const buildDefaultStore = (): Store => ({
+    availableLocales: [],
     code: undefined,
     fallback: undefined,
     loading: false,
