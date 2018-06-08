@@ -8,8 +8,6 @@ import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/zh.js';
 // Tell OS to enable RTL support.
 import { I18nManager } from 'react-native';
-I18nManager.allowRTL(true);
-
 import { CatalogsMap, Catalog, LocaleInfo, LocaleInfoWithCatalog, LocalizedText } from './types';
 
 /**
@@ -84,6 +82,7 @@ export class LocaleInfoManager {
     private catalogsMap: CatalogsMap;
 
     private constructor(locales: ReadonlyArray<LocaleInfoWithCatalog>) {
+        I18nManager.allowRTL(true);
         this.locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog) => ({
             code: localeInfoWithCatalog.code,
             label: localeInfoWithCatalog.label,
