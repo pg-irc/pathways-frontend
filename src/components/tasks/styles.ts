@@ -37,6 +37,9 @@ export const taskDetailStyles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 10,
     },
+    iconText: {
+        justifyContent: 'center',
+    },
     tabs: {
         marginLeft: -10,
         marginRight: -10,

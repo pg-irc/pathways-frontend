@@ -49,7 +49,7 @@ export const TaskDetail: React.StatelessComponent<Props & Actions> = (props: Pro
                             <Col size={10}>
                                 <Icon type='MaterialCommunityIcons' name='star-circle' />
                             </Col>
-                            <Col size={90}>
+                            <Col size={90} style={taskDetailStyles.iconText}>
                                 <Text>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
                             </Col>
                         </Row>
@@ -57,7 +57,7 @@ export const TaskDetail: React.StatelessComponent<Props & Actions> = (props: Pro
                             <Col size={10}>
                                 <Icon type='MaterialCommunityIcons' name='sign-text' />
                             </Col>
-                            <Col size={90}>
+                            <Col size={90} style={taskDetailStyles.iconText}>
                                 <Text>This task helps with <Text style={applicationStyles.bold}>settling in</Text>.</Text>
                             </Col>
                         </Row>
