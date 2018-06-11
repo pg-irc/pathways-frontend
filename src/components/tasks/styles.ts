@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../application/styles';
 
 export const task = StyleSheet.create({
     wrapper: {
