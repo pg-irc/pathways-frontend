@@ -1,6 +1,6 @@
 import React from 'react';
-import { ListItem, Text, Button, Icon, Grid, Col, Row, Body } from 'native-base';
-import { task as styles } from './styles';
+import { ListItem, Text, Button, Icon, Grid, Col, Row } from 'native-base';
+import { taskStyles } from './styles';
 import { TaskActions } from './actions';
 import * as selector from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
@@ -13,8 +13,9 @@ export type Actions = TaskActions;
 
 export const Task: React.StatelessComponent<selector.Task & Actions> = (props: selector.Task & Actions): JSX.Element => {
     return (
-        /* I've opened an issue here: https://github.com/GeekyAnts/NativeBase/issues/1967 regarding this TS error. */
-        <ListItem noIndent style={styles.listItem} button onPress={(): void => alert('Navigate to task detail...')}>
+        <ListItem
+            style={props.addToSavedList ? taskStyles.suggestedListItem : taskStyles.savedListItem} button noIndent
+            onPress={(): SetTaskDetailPageAction => props.goToTaskDetail(props.id)}>
             <Grid>
                 <Row>
                     <Col size={15}>
@@ -40,15 +41,10 @@ export const Task: React.StatelessComponent<selector.Task & Actions> = (props: s
                             <Text numberOfLines={2}>{props.title}</Text>
                         </Row>
                     </Col>
-                    <Col size={20}>
-                        <Row style={styles.rightColumn}>
-                            <Icon style={styles.starIcon} name='star-circle' type='MaterialCommunityIcons'/>
-                            <Button
-                                dark
-                                transparent
-                            >
-                                <Icon name='arrow-forward' />
-                            </Button>
+                    <Col size={15}>
+                        <Row style={taskStyles.rightColumn}>
+                            <Icon style={taskStyles.icon} name='star-circle' type='MaterialCommunityIcons'/>
+                            <Icon style={taskStyles.icon} name='arrow-forward' />
                         </Row>
                     </Col>
                 </Row>

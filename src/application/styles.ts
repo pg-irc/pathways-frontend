@@ -2,7 +2,14 @@ import { StyleSheet } from 'react-native';
 
 export const colors = {
     lightGrey: 'lightgrey',
-    black: 'black',
+    lighterGrey: '#F5F5F5',
+    darkGrey: '#666666',
+};
+
+export const values = {
+    smallIconSize: 20,
+    smallerIconSize: 18,
+    smallTextSize: 12,
 };
 
 export const applicationStyles = StyleSheet.create({
@@ -16,5 +23,11 @@ export const applicationStyles = StyleSheet.create({
         marginBottom: 10,
         marginLeft: -10,
         marginRight: -10,
+    },
+    pageTitle: {
+        fontWeight: 'bold',
+        fontSize: 22,
+        marginTop: 10,
+        marginBottom: 20,
     },
 });

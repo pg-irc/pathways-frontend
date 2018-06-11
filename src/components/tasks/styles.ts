@@ -1,15 +1,20 @@
 import { StyleSheet } from 'react-native';
+import { values, colors } from '../../application/styles';
 
-export const task = StyleSheet.create({
-    listItem: {
+export const taskStyles = StyleSheet.create({
+    savedListItem: {
         paddingLeft: 10,
+    },
+    suggestedListItem: {
+        paddingLeft: 10,
+        backgroundColor: colors.lighterGrey,
     },
     rightColumn: {
         alignItems: 'center',
     },
-    starIcon: {
-        fontSize: 20,
+    icon: {
         paddingLeft: 10,
+        fontSize: values.smallIconSize,
     },
 });
 
