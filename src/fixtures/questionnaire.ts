@@ -5,6 +5,7 @@ export type Id = string;
 export interface Question {
     readonly id: Id;
     readonly text: LocalizedText;
+    readonly explanation?: LocalizedText;
     readonly acceptMultipleAnswers: boolean;
 }
 
@@ -37,6 +38,11 @@ export const buildQuestionnaireFixture = (): Store => {
                     'en': 'How long have you been in Canada?',
                     'ar': 'منذ متى وأنت في كندا؟',
                     'zh': '你在加拿大多久了？',
+                },
+                explanation: {
+                    'en': 'Testing the explanation field.',
+                    'ar': 'اختبار حقل التفسير.',
+                    'zh': '测试解释领域。',
                 },
                 acceptMultipleAnswers: false,
             },
