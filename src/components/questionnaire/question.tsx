@@ -1,5 +1,5 @@
 import React from 'react';
-import { Content, Button, Grid, Row, Col, Text } from 'native-base';
+import { Button, Grid, Row, Col, Text } from 'native-base';
 import { Answer, Actions } from './answer';
 import * as selector from '../../selectors/questionnaire';
 import { QuestionnaireActions } from './actions';
