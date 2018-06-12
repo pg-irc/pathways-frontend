@@ -7,5 +7,41 @@
         12
       ]
     ]
+  },
+  "Done": {
+    "translation": "完成",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        20
+      ]
+    ]
+  },
+  "INFORMATION": {
+    "translation": "信息",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        36
+      ]
+    ]
+  },
+  "LEARN MORE": {
+    "translation": "学到更多",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        59
+      ]
+    ]
+  },
+  "FIND SERVICES": {
+    "translation": "找到服务",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        63
+      ]
+    ]
   }
 }

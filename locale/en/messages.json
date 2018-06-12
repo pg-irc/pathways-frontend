@@ -7,5 +7,41 @@
         12
       ]
     ]
+  },
+  "Done": {
+    "translation": "Done",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        20
+      ]
+    ]
+  },
+  "INFORMATION": {
+    "translation": "INFORMATION",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        36
+      ]
+    ]
+  },
+  "LEARN MORE": {
+    "translation": "LEARN MORE",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        59
+      ]
+    ]
+  },
+  "FIND SERVICES": {
+    "translation": "FIND SERVICES",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        63
+      ]
+    ]
   }
 }
