@@ -34,10 +34,10 @@ export const Question: React.StatelessComponent<Props & Actions> = (props: Props
             </Row>
             <Row style={questionStyles.buttonsWrapper}>
                 <Button style={questionStyles.continueButton} small>
-                    <Text><Trans>Continue</Trans></Text>
+                    <Text><Trans>CONTINUE</Trans></Text>
                 </Button>
                 <Button transparent small>
-                    <Text><Trans>Skip</Trans></Text>
+                    <Text><Trans>SKIP</Trans></Text>
                 </Button>
             </Row>
         </Grid>

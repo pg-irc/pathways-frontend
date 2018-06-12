@@ -21,6 +21,7 @@ export const questionStyles = StyleSheet.create({
         marginBottom: 25,
     },
     buttonsWrapper: {
+        marginTop: 10,
         marginLeft: 20,
     },
 });
