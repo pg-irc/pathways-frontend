@@ -1,5 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
 import { Task } from './task';
 import { List } from 'native-base';
 import { TaskActions } from './actions';
