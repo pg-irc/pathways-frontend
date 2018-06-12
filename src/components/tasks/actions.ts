@@ -9,5 +9,5 @@ export interface TaskActions {
     readonly toggleCompleted?: (taskUserSettingsId: stores.Id) => stores.ToggleCompletedAction;
     readonly toggleStarred?: (taskUserSettingsId: stores.Id) => stores.ToggleStarredAction;
     readonly shareTask?: () => stores.ShareAction;
-    readonly goToTaskDetail?: (taskId: stores.Id) => SetTaskDetailPageAction;
+    readonly goToTaskDetail: (taskId: stores.Id) => SetTaskDetailPageAction;
 }
