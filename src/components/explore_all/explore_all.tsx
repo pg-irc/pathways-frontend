@@ -18,15 +18,15 @@ const ExploreButton = (props: ExploreButtonProps): JSX.Element => (
     </Col >
 );
 
-interface ExploreButtonRowProps {
+interface ButtonRowProps {
     readonly sections: ReadonlyArray<ExploreButtonProps>;
 }
 
-const ExploreButtonRow = (props: ExploreButtonRowProps): JSX.Element => (
+const ButtonRow = (props: ButtonRowProps): JSX.Element => (
     <Row>
-        {props.sections.map((section: ExploreButtonProps) => {
-            return <ExploreButton key={section.name} name={section.name} icon={section.icon} />;
-        })}
+        {props.sections.map((section: ExploreButtonProps) => (
+            <ExploreButton key={section.name} name={section.name} icon={section.icon} />
+        ))}
     </Row>
 );
 
@@ -36,30 +36,30 @@ export interface Props {
 export interface Actions {
 }
 
-export const Component: React.StatelessComponent<Props & Actions> = (_: Props & Actions): JSX.Element => (
-    <Content>
+export const Component: React.StatelessComponent<Props & Actions> = (_: Props & Actions): JSX.Element => {
+    const data: ReadonlyArray<ReadonlyArray<ExploreButtonProps>> = [[
+        { name: 'Settling in', icon: 'sign-direction' },
+        { name: 'Education', icon: 'book-open-variant' },
+        { name: 'Health care', icon: 'medical-bag' },
+    ],
+    [
+        { name: 'Money & banking', icon: 'currency-usd' },
+        { name: 'Housing', icon: 'home' },
+        { name: 'Employment', icon: 'briefcase' },
+    ],
+    [
+        { name: 'Legal system & immigration', icon: 'gavel' },
+        { name: 'Driving', icon: 'car' },
+        { name: 'Help for individuals & families', icon: 'account-group' },
+    ],
+    ];
+    return <Content>
         <Grid>
-            <Row>
-                <ExploreButtonRow sections={[
-                    { name: 'Settling in', icon: 'sign-direction' },
-                    { name: 'Education', icon: 'book-open-variant' },
-                    { name: 'Health care', icon: 'medical-bag' },
-                ]} />
-            </Row>
-            <Row>
-                <ExploreButtonRow sections={[
-                    { name: 'Money & banking', icon: 'currency-usd' },
-                    { name: 'Housing', icon: 'home' },
-                    { name: 'Employment', icon: 'briefcase' },
-                ]} />
-            </Row>
-            <Row>
-                <ExploreButtonRow sections={[
-                    { name: 'Legal system & immigration', icon: 'gavel' },
-                    { name: 'Driving', icon: 'car' },
-                    { name: 'Help for individuals & families', icon: 'account-group' },
-                ]} />
-            </Row>
+            {data.map((sections: ReadonlyArray<ExploreButtonProps>) => (
+                <Row>
+                    <ButtonRow sections={sections} />
+                </Row>
+            ))}
         </Grid>
-    </Content>
-);
+    </Content>;
+};
