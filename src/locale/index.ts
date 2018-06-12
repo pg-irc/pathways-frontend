@@ -88,7 +88,7 @@ export class LocaleInfoManager {
         this.catalogsMap = buildCatalogsMap(locales);
     }
 
-    private getDefaultFallbackLocaleCode(locales: ReadonlyArray<LocaleInfo>): string{
+    private getDefaultFallbackLocaleCode(locales: ReadonlyArray<LocaleInfo>): string {
         const [ fallbackLocale ]: ReadonlyArray<LocaleInfo> = locales;
         return fallbackLocale.code;
     }
