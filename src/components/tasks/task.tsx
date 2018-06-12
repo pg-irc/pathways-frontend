@@ -6,6 +6,7 @@ import { TaskActions } from './actions';
 import * as selector from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
 import { SetTaskDetailPageAction } from '../../stores/page_switcher';
+import { I18nManager } from 'react-native';
 
 export interface Props {
 }
@@ -47,7 +48,7 @@ export const Task: React.StatelessComponent<selector.Task & Actions> = (props: s
                     <Col size={20}>
                         <Row style={taskStyles.rightColumn}>
                             <Icon style={taskStyles.icon} name='star-circle' type='MaterialCommunityIcons'/>
-                            <Icon style={taskStyles.icon} name='arrow-forward' />
+                            <Icon style={taskStyles.icon} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
                         </Row>
                     </Col>
                 </Row>

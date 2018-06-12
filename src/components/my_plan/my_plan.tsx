@@ -7,6 +7,7 @@ import { Trans } from '@lingui/react';
 import { applicationStyles } from '../../application/styles';
 import { myPlanStyles } from './styles';
 import Collapsible from 'react-native-collapsible';
+import { I18nManager } from 'react-native';
 
 interface Props {
 }
@@ -111,6 +112,9 @@ export class Component extends React.Component<Props, State> {
     }
 
     getIconNameForCollapsible(collapsed: boolean): string {
+        if (I18nManager.isRTL && collapsed) {
+            return 'arrow-dropleft';
+        }
         return collapsed ? 'arrow-dropright' : 'arrow-dropdown';
     }
 }
