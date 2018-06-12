@@ -85,6 +85,7 @@ export class LocaleStoreBuilder {
     fallback: string = this.locale.code;
     loading: boolean = false;
     errorMessage: string = '';
+    localeSwitcherOpen: boolean = false;
 
     withLocales(locales: ReadonlyArray<LocaleInfo>): LocaleStoreBuilder {
         this.availableLocales = locales;
@@ -118,6 +119,7 @@ export class LocaleStoreBuilder {
             fallback: this.fallback,
             loading: this.loading,
             errorMessage: this.errorMessage,
+            localeSwitcherOpen: this.localeSwitcherOpen,
         };
     }
 }

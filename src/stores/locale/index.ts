@@ -4,11 +4,15 @@ import * as loadCurrentLocale from './load_current_locale';
 import { SetLocale } from './set_locale';
 import { LoadCurrentLocale } from './load_current_locale';
 import { LocaleInfo } from '../../locale';
+import { OpenLocaleSwitcherAction, openLocaleSwitcher } from './open_locale_switcher';
 
+export { OpenLocaleSwitcherAction };
 export { SetLocale };
 export { LoadCurrentLocale };
 
-export type ReducerActions = SetLocale.Request | SetLocale.Result | LoadCurrentLocale.Request | LoadCurrentLocale.Result;
+export type ReducerActions = SetLocale.Request | SetLocale.Result |
+            LoadCurrentLocale.Request | LoadCurrentLocale.Result |
+            OpenLocaleSwitcherAction;
 
 export interface Store {
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
@@ -16,6 +20,7 @@ export interface Store {
     readonly fallback: string;
     readonly loading: boolean;
     readonly errorMessage: string;
+    readonly localeSwitcherOpen: boolean;
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -24,8 +29,10 @@ export const buildDefaultStore = (): Store => ({
     fallback: undefined,
     loading: false,
     errorMessage: '',
+    localeSwitcherOpen: false,
 });
 
+export { openLocaleSwitcher };
 export const setLocaleActions = setLocale;
 export const loadCurrentLocaleActions = loadCurrentLocale;
 
@@ -49,6 +56,9 @@ export const reducer = (store: Store = buildDefaultStore(), action?: ReducerActi
         case constants.SET_LOCALE_FAILURE: {
             const payload = action.payload;
             return { ...store, errorMessage: payload.message, loading: false };
+        }
+        case constants.OPEN_LOCALE_SWITCHER: {
+            return { ...store, localeSwitcherOpen: action.payload.open };
         }
         default:
             return store;

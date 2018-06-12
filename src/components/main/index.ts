@@ -7,8 +7,11 @@ import { LoaderProps, withLoader } from './loader';
 import { isApplicationLoading } from '../../selectors/application_loading';
 import * as pageSwitcher from '../../stores/page_switcher';
 import { selectLocale } from '../../selectors/locale';
+import { openLocaleSwitcher, OpenLocaleSwitcherAction } from '../../stores/locale';
 
 const mapStateToProps = (store: Store): LoaderProps & main.Props => ({
+    localeSwitcherOpen: store.applicationState.localeInStore.localeSwitcherOpen,
+    currentLocale: selectLocale(store),
     loading: isApplicationLoading(store),
     locale: selectLocale(store),
     currentPageInProps: store.applicationState.currentPageInStore.currentPage,
@@ -18,6 +21,8 @@ const mapStateToProps = (store: Store): LoaderProps & main.Props => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): main.Actions => ({
+    openLocaleSwitcher: (): OpenLocaleSwitcherAction => dispatch(openLocaleSwitcher(true)),
+    closeLocaleSwitcher: (): OpenLocaleSwitcherAction => dispatch(openLocaleSwitcher(false)),
     goToQuestionnaire: (): pageSwitcher.SetQuestionnairePageAction => dispatch(pageSwitcher.setQuestionnairePage()),
     goToPlan: (): pageSwitcher.SetPlanPageAction => dispatch(pageSwitcher.setPlanPage()),
     goToExplore: (): pageSwitcher.SetExplorePageAction => dispatch(pageSwitcher.setExplorePage()),
