@@ -18,6 +18,18 @@ const ExploreButton = (props: ExploreButtonProps): JSX.Element => (
     </Col >
 );
 
+interface ExploreButtonRowProps {
+    readonly sections: ReadonlyArray<ExploreButtonProps>;
+}
+
+const ExploreButtonRow = (props: ExploreButtonRowProps): JSX.Element => (
+    <Row>
+        {props.sections.map((section: ExploreButtonProps) => {
+            return <ExploreButton key={section.name} name={section.name} icon={section.icon} />;
+        })}
+    </Row>
+);
+
 export interface Props {
 }
 
@@ -28,19 +40,25 @@ export const Component: React.StatelessComponent<Props & Actions> = (_: Props & 
     <Content>
         <Grid>
             <Row>
-                <ExploreButton name='Settling in' icon='sign-direction' />
-                <ExploreButton name='Education' icon='book-open-variant' />
-                <ExploreButton name='Health care' icon='medical-bag' />
+                <ExploreButtonRow sections={[
+                    { name: 'Settling in', icon: 'sign-direction' },
+                    { name: 'Education', icon: 'book-open-variant' },
+                    { name: 'Health care', icon: 'medical-bag' },
+                ]} />
             </Row>
             <Row>
-                <ExploreButton name='Money & banking' icon='currency-usd' />
-                <ExploreButton name='Housing' icon='home' />
-                <ExploreButton name='Employment' icon='briefcase' />
+                <ExploreButtonRow sections={[
+                    { name: 'Money & banking', icon: 'currency-usd' },
+                    { name: 'Housing', icon: 'home' },
+                    { name: 'Employment', icon: 'briefcase' },
+                ]} />
             </Row>
             <Row>
-                <ExploreButton name='Legal system & immigration' icon='gavel' />
-                <ExploreButton name='Driving' icon='car' />
-                <ExploreButton name='Help for individuals & families' icon='account-group' />
+                <ExploreButtonRow sections={[
+                    { name: 'Legal system & immigration', icon: 'gavel' },
+                    { name: 'Driving', icon: 'car' },
+                    { name: 'Help for individuals & families', icon: 'account-group' },
+                ]} />
             </Row>
         </Grid>
     </Content>
