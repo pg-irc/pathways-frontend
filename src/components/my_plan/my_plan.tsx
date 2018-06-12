@@ -1,7 +1,6 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
-import { View } from 'react-native';
-import { Content, Button, Text, Container, ListItem, Icon, Grid, Col, Row } from 'native-base';
+import { Content, Button, Text, Container, ListItem, Icon, Grid, Col, Row, View } from 'native-base';
 import { ConnectedSavedTasks } from '../tasks/connected_saved_tasks';
 import { ConnectedSuggestedTasks } from '../tasks/connected_suggested_tasks';
 import { Trans } from '@lingui/react';
