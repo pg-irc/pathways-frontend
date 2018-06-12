@@ -1,6 +1,7 @@
 import React from 'react';
 import { ListItem, Text, Button, Icon, Grid, Col, Row } from 'native-base';
 import { taskStyles } from './styles';
+import { applicationStyles } from '../../application/styles';
 import { TaskActions } from './actions';
 import * as selector from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
@@ -18,21 +19,23 @@ export const Task: React.StatelessComponent<selector.Task & Actions> = (props: s
             onPress={(): SetTaskDetailPageAction => props.goToTaskDetail(props.id)}>
             <Grid>
                 <Row>
-                    <Col size={15}>
+                    <Col size={10}>
                         {!props.addToSavedList ?
                             <Button
                                 dark
                                 transparent
+                                iconRight
                             >
-                                <Icon name='menu' />
+                                <Icon name='drag-vertical' type='MaterialCommunityIcons'/>
                             </Button>
                         :
                             <Button
                                 onPress={(): stores.AddToSavedListAction => props.addToSavedList(props.id)}
                                 dark
                                 transparent
+                                iconRight
                             >
-                                <Icon name='add' />
+                                <Icon style={applicationStyles.bold} name='add' />
                             </Button>
                         }
                     </Col>
@@ -41,7 +44,7 @@ export const Task: React.StatelessComponent<selector.Task & Actions> = (props: s
                             <Text numberOfLines={2}>{props.title}</Text>
                         </Row>
                     </Col>
-                    <Col size={15}>
+                    <Col size={20}>
                         <Row style={taskStyles.rightColumn}>
                             <Icon style={taskStyles.icon} name='star-circle' type='MaterialCommunityIcons'/>
                             <Icon style={taskStyles.icon} name='arrow-forward' />

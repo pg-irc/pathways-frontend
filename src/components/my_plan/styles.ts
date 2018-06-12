@@ -17,4 +17,10 @@ export const myPlanStyles = StyleSheet.create({
         fontSize: values.smallerIconSize,
         color: colors.darkGrey,
     },
+    divider: {
+        marginTop: 20,
+    },
+    recommendedText: {
+        fontSize: values.smallTextSize,
+    },
 });

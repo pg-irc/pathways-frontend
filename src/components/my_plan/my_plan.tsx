@@ -1,5 +1,6 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
+import { View } from 'react-native';
 import { Content, Button, Text, Container, ListItem, Icon, Grid, Col, Row } from 'native-base';
 import { ConnectedSavedTasks } from '../tasks/connected_saved_tasks';
 import { ConnectedSuggestedTasks } from '../tasks/connected_suggested_tasks';
@@ -33,15 +34,29 @@ export class Component extends React.Component<Props, State> {
                     <ListItem
                         noBorder button
                         onPress={(): void => this.toggleSavedTasksCollapsed()}>
-                        <Text style={applicationStyles.bold}><Trans>TASKS I PLAN TO DO</Trans></Text>
-                        <Icon
-                            style={myPlanStyles.icon}
-                            name={this.getIconNameForCollapsible(this.state.savedTasksCollapsed)}
-                        />
+                        <Grid>
+                            <Row style={myPlanStyles.listItemLabel}>
+                                <Col size={85}>
+                                    <Row style={myPlanStyles.listItemLabel}>
+                                        <Text style={applicationStyles.bold}><Trans>TASKS I PLAN TO DO</Trans></Text>
+                                        <Icon
+                                            style={myPlanStyles.icon}
+                                            name={this.getIconNameForCollapsible(this.state.savedTasksCollapsed)}
+                                        />
+                                    </Row>
+                                </Col>
+                                <Col size={15}>
+                                    <Button dark transparent>
+                                        <Icon name='more' />
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Grid>
                     </ListItem>
                     <Collapsible collapsed={this.state.savedTasksCollapsed}>
                         <ConnectedSavedTasks />
                     </Collapsible>
+                    <View style={myPlanStyles.divider} />
                     <ListItem
                         style={myPlanStyles.suggestedTasksListItem} noBorder button noIndent
                         onPress={(): void => this.toggleSuggestedTasksCollapsed()}>
@@ -69,7 +84,7 @@ export class Component extends React.Component<Props, State> {
                             <Row>
                                 <Col size={85}>
                                     <Row>
-                                        <Text>Important for all newcomers to BC</Text>
+                                        <Text style={myPlanStyles.recommendedText}>Important for all newcomers to BC:</Text>
                                     </Row>
                                 </Col>
                                 <Col size={15}>
@@ -97,6 +112,6 @@ export class Component extends React.Component<Props, State> {
     }
 
     getIconNameForCollapsible(collapsed: boolean): string {
-        return collapsed ? 'arrow-forward' : 'arrow-down';
+        return collapsed ? 'arrow-dropright' : 'arrow-dropdown';
     }
 }
