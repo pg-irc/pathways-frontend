@@ -38,35 +38,23 @@ describe('locale selectors fetch', () => {
 
 describe('localized text selector', () => {
 
-    let theLocale: Locale;
-    let theText: string;
-    let theFallbackLocaleCode: string;
-    let theFallbackText: string;
-
-    beforeEach(() => {
-        theLocale = new LocaleBuilder().build();
-        theText = aString();
-        theFallbackLocaleCode = aString();
-        theFallbackText = aString();
-    });
+    let theLocale: Locale = new LocaleBuilder().build();
 
     it('selects the correct localized version of the text', () => {
+        const theText = aString();
         const theLocalizedText = new LocalizedTextBuilder(theLocale.code, theText).build();
         expect(selectLocalizedText(theLocale, theLocalizedText)).toBe(theText);
     });
 
     it('selects text from the fallback locale if the current locale is not available', () => {
-        const theLocalizedText = new LocalizedTextBuilder(theLocale.code, theText)
-                .addLocale(theFallbackLocaleCode, theFallbackText)
-                .build();
-        const aLocale = new LocaleBuilder().withFallback(theFallbackLocaleCode).build();
-        expect(selectLocalizedText(aLocale, theLocalizedText)).toBe(theFallbackText);
+        const theFallbackText = aString();
+        const theLocalizedText = new LocalizedTextBuilder().addLocale(theLocale.fallback, theFallbackText).build();
+        expect(selectLocalizedText(theLocale, theLocalizedText)).toBe(theFallbackText);
     });
 
     it('throws an error if the text is not available in the fallback locale', () => {
-        const theLocalizedText = new LocalizedTextBuilder(theLocale.code, theText).build();
-        const aLocale = new LocaleBuilder().build();
-        expect(() => selectLocalizedText(aLocale, theLocalizedText)).toThrow();
+        const theLocalizedText = new LocalizedTextBuilder().build();
+        expect(() => selectLocalizedText(theLocale, theLocalizedText)).toThrow();
     });
 
 });
