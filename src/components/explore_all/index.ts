@@ -1,12 +1,14 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Store } from '../../application/store';
-import { Component, Props, Actions } from './explore_all';
+import { ExploreAllComponent, ExploreAllProps, ExploreAllActions } from './explore_all';
+import { selectExploreSections } from '../../selectors/explore';
 
-const mapStateToProps = (_: Store): Props => ({
+const mapStateToProps = (store: Store): ExploreAllProps => ({
+    sections: selectExploreSections(store),
 });
 
-const mapDispatchToProps = (_: Dispatch<Store>): Actions => ({
+const mapDispatchToProps = (_: Dispatch<Store>): ExploreAllActions => ({
 });
 
-export const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Component);
+export const ExploreAllConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ExploreAllComponent);

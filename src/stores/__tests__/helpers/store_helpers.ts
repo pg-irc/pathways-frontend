@@ -5,6 +5,7 @@ import * as locale from '../../locale';
 import * as currentPage from '../../page_switcher';
 import * as questionnaire from '../../questionnaire';
 import * as tasks from '../../tasks';
+import * as explore from '../../explore';
 
 export class ApplicationStoreBuilder {
     fontsInStore: fonts.Store;
@@ -12,6 +13,7 @@ export class ApplicationStoreBuilder {
     currentPageInStore: currentPage.Store;
     questionnaireInStore: questionnaire.Store;
     tasksInStore: tasks.Store;
+    exploreSectionsInStore: explore.Store;
 
     withLocaleStore(store: locale.Store): ApplicationStoreBuilder {
         this.localeInStore = store;
@@ -25,6 +27,7 @@ export class ApplicationStoreBuilder {
             currentPageInStore: this.currentPageInStore,
             questionnaireInStore: this.questionnaireInStore,
             tasksInStore: this.tasksInStore,
+            exploreSectionsInStore: this.exploreSectionsInStore,
         };
     }
 }

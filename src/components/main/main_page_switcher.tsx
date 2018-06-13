@@ -1,7 +1,7 @@
 import React from 'react';
 import { Content, Text } from 'native-base';
 import * as store from '../../stores/page_switcher';
-import * as exploreAll from '../explore_all/explore_all';
+import { ExploreAllConnectedComponent } from '../explore_all';
 import * as questionnaire from '../questionnaire';
 import { MyPlan } from '../my_plan/my_plan';
 import { Store as TasksStore } from '../../stores/tasks';
@@ -28,7 +28,7 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
             return <MyPlan />;
 
         case store.Page.ExploreAll:
-            return <exploreAll.Component />;
+            return <ExploreAllConnectedComponent />;
 
         case store.Page.TaskDetail:
             return <TaskDetail
