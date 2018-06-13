@@ -112,9 +112,9 @@ export class Component extends React.Component<Props, State> {
     }
 
     getIconNameForCollapsible(collapsed: boolean): string {
-        if (I18nManager.isRTL && collapsed) {
-            return 'arrow-dropleft';
+        if (collapsed) {
+            return I18nManager.isRTL ? 'arrow-dropleft' : 'arrow-dropright';
         }
-        return collapsed ? 'arrow-dropright' : 'arrow-dropdown';
+        return 'arrow-dropdown';
     }
 }
