@@ -2,6 +2,7 @@ import React from 'react';
 import { Content, Grid, Row, Col, Button, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore';
 import { Trans } from '@lingui/react';
+import * as R from 'ramda';
 import { paginate } from './paginate';
 
 interface ButtonRowProps {
@@ -24,13 +25,23 @@ export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
             <Text>Learn about</Text>
             <Grid>
                 {sectionsGroupedIntoThrees.map((sections: ReadonlyArray<ExploreSection>) => (
-                    <Row>
+                    <Row key={computeUniqueKeyForSections(sections)}>
                         <RowOfSectionButtons sections={sections} />
                     </Row>
                 ))}
             </Grid>
         </Content>;
     };
+
+const computeUniqueKeyForSections = (sections: ReadonlyArray<ExploreSection>): string => {
+    const names = R.pluck('name', sections);
+
+    // why doesn't this work??
+    // return R.reduce(R.concat, '', names);
+
+    // tslint:disable-next-line:typedef
+    return R.reduce((acc, name) => R.concat(acc, name), '', names);
+};
 
 const RowOfSectionButtons = (props: ButtonRowProps): JSX.Element => (
     <Row>
