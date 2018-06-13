@@ -6,10 +6,14 @@ import * as main from './main';
 import { LoaderProps, withLoader } from './loader';
 import { isApplicationLoading } from '../../selectors/application_loading';
 import * as pageSwitcher from '../../stores/page_switcher';
+import { selectLocale } from '../../selectors/locale';
 
 const mapStateToProps = (store: Store): LoaderProps & main.Props => ({
     loading: isApplicationLoading(store),
+    locale: selectLocale(store),
     currentPageInProps: store.applicationState.currentPageInStore.currentPage,
+    currentPageParameters: store.applicationState.currentPageInStore.pageParameters,
+    tasksStore: store.applicationState.tasksInStore,
     canGoBack: canGoBack(),
 });
 

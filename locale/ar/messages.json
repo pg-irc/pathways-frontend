@@ -7,5 +7,41 @@
         12
       ]
     ]
+  },
+  "Done": {
+    "translation": "فعله",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        20
+      ]
+    ]
+  },
+  "INFORMATION": {
+    "translation": "معلومات",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        36
+      ]
+    ]
+  },
+  "LEARN MORE": {
+    "translation": "أعرف أكثر",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        59
+      ]
+    ]
+  },
+  "FIND SERVICES": {
+    "translation": "البحث عن الخدمات",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        63
+      ]
+    ]
   }
 }

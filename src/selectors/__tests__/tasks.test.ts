@@ -11,6 +11,7 @@ import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
 import { Locale } from '../../locale/types';
+import { aString } from '../../application/__tests__/helpers/random_test_values';
 
 describe('tasks selector', () => {
 
@@ -83,5 +84,20 @@ describe('tasks selector', () => {
         test('returns all suggested tasks', () => {
             expect(Object.keys(selector.selectAllSuggestedTasks(locale, store))).toHaveLength(1);
         });
+
+        test('returns task by id', () => {
+            const id = Object.keys(store.taskMap)[0];
+            const task = selector.selectTaskById(locale, store, id);
+            expect(task.id).toEqual(id);
+        });
+
+        test('throws when select task by id parameter is invalid', () => {
+            expect(() => selector.selectTaskById(locale, store, aString())).toThrow();
+        });
+
+        test('throws when select task user settings by id parameter is invalid', () => {
+            expect(() => selector.selectTaskUserSettingsByTaskId(store, aString())).toThrow();
+        });
+
     });
 });

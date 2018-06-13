@@ -13,6 +13,10 @@ const getRouteFromPage = (page: Page): string => {
             return '/plan';
         case Page.ExploreAll:
             return '/explore';
+        // This is how our route "should" be.
+        // Currently in discussions on why this doesn't work.
+        //case Page.TaskDetail:
+        //    return '/task-detail/:taskId';
         default:
             throw unsupportedPageError(page);
     }
@@ -22,6 +26,7 @@ const routesMap = {
     [constants.SET_QUESTIONNAIRE_PAGE]: getRouteFromPage(Page.Questionnaire),
     [constants.SET_PLAN_PAGE]: getRouteFromPage(Page.MyPlan),
     [constants.SET_EXPLORE_PAGE]: getRouteFromPage(Page.ExploreAll),
+    // [constants.SET_TASK_DETAIL_PAGE]: getRouteFromPage(Page.TaskDetail),
 };
 
 export interface ApplicationRouter {
