@@ -1,120 +1,93 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
-import { Content, Button, Text, Container, ListItem, Icon, Grid, Col, Row, View } from 'native-base';
+import { I18nManager } from 'react-native';
+import { Container, Content, Text, View, Col, Row, Grid, Button, Icon } from 'native-base';
 import { ConnectedSavedTasks } from '../tasks/connected_saved_tasks';
 import { ConnectedSuggestedTasks } from '../tasks/connected_suggested_tasks';
 import { Trans } from '@lingui/react';
 import { applicationStyles } from '../../application/styles';
 import { myPlanStyles } from './styles';
-import Collapsible from 'react-native-collapsible';
-import { I18nManager } from 'react-native';
+import { Collapser } from '../collapser/collapser';
 
-interface Props {
-}
+export const MyPlan: React.StatelessComponent = (): JSX.Element => (
+    <Container>
+        <Content padder>
+            <Text style={applicationStyles.pageTitle}><Trans>My Plan</Trans></Text>
+            <Collapser
+                collapsedHeader={getHeaderForSavedTasks(true)}
+                expandedHeader={getHeaderForSavedTasks(false)}
+                data={<ConnectedSavedTasks/>}
+                collapsed={false}
+            />
+            <View style={myPlanStyles.divider} />
+            <Collapser
+                collapsedHeader={getHeaderForSuggestedTasks(true)}
+                expandedHeader={getHeaderForSuggestedTasks(false)}
+                data={<ConnectedSuggestedTasks />}
+                collapsed={true}
+                style={myPlanStyles.suggestedTasks}
+            />
+        </Content>
+    </Container>
+);
 
-interface State {
-    savedTasksCollapsed: boolean;
-    suggestedTasksCollapsed: boolean;
-}
+const getHeaderForSavedTasks = (collapsed: boolean): JSX.Element => (
+    <Grid>
+        <Row>
+            <Col size={85} >
+                <Row style={myPlanStyles.listItemLabel}>
+                    <Text style={applicationStyles.bold}><Trans>TASKS I PLAN TO DO</Trans></Text>
+                    <Icon
+                        style={myPlanStyles.icon}
+                        name={getIconNameForCollapsible(collapsed)}
+                    />
+                </Row>
+            </Col>
+            <Col size={15}>
+                <Button dark transparent>
+                    <Icon name='more' />
+                </Button>
+            </Col>
+        </Row>
+    </Grid>
+);
 
-export class Component extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            savedTasksCollapsed: false,
-            suggestedTasksCollapsed: true,
-        };
+const getHeaderForSuggestedTasks = (collapsed: boolean): JSX.Element => (
+    <Grid>
+        <Row>
+            <Col size={85} >
+                <Row style={myPlanStyles.listItemLabel}>
+                    <Text style={applicationStyles.bold}><Trans>RECOMMENDED FOR ME</Trans></Text>
+                    <Icon style={myPlanStyles.icon} name='star-circle' type='MaterialCommunityIcons'/>
+                    <Icon
+                        style={myPlanStyles.icon}
+                        name={getIconNameForCollapsible(collapsed)}
+                    />
+                </Row>
+            </Col>
+            <Col size={15}>
+                <Button dark transparent>
+                    <Icon name='more' />
+                </Button>
+            </Col>
+        </Row>
+        <Row>
+            <Col size={85}>
+                <Row>
+                    <Text style={myPlanStyles.recommendedText}>Important for all newcomers to BC:</Text>
+                </Row>
+            </Col>
+            <Col size={15}>
+                <Icon style={myPlanStyles.infoIcon} name='information-outline' type='MaterialCommunityIcons'/>
+            </Col>
+        </Row>
+    </Grid>
+);
+
+const getIconNameForCollapsible = (collapsed: boolean): string => {
+    if (collapsed) {
+        return I18nManager.isRTL ? 'arrow-dropleft' : 'arrow-dropright';
     }
 
-    render(): JSX.Element {
-        return (
-            <Container>
-                <Content padder>
-                    <Text style={applicationStyles.pageTitle}><Trans>My Plan</Trans></Text>
-                    <ListItem
-                        noBorder button
-                        onPress={(): void => this.toggleSavedTasksCollapsed()}>
-                        <Grid>
-                            <Row style={myPlanStyles.listItemLabel}>
-                                <Col size={85}>
-                                    <Row style={myPlanStyles.listItemLabel}>
-                                        <Text style={applicationStyles.bold}><Trans>TASKS I PLAN TO DO</Trans></Text>
-                                        <Icon
-                                            style={myPlanStyles.icon}
-                                            name={this.getIconNameForCollapsible(this.state.savedTasksCollapsed)}
-                                        />
-                                    </Row>
-                                </Col>
-                                <Col size={15}>
-                                    <Button dark transparent>
-                                        <Icon name='more' />
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </Grid>
-                    </ListItem>
-                    <Collapsible collapsed={this.state.savedTasksCollapsed}>
-                        <ConnectedSavedTasks />
-                    </Collapsible>
-                    <View style={myPlanStyles.divider} />
-                    <ListItem
-                        style={myPlanStyles.suggestedTasksListItem} noBorder button noIndent
-                        onPress={(): void => this.toggleSuggestedTasksCollapsed()}>
-                        <Grid>
-                            <Row>
-                                <Col size={85} >
-                                    <Row style={myPlanStyles.listItemLabel}>
-                                        <Text style={applicationStyles.bold}><Trans>RECOMMENDED FOR ME</Trans></Text>
-                                        <Icon
-                                            style={myPlanStyles.icon}
-                                            name='star-circle'
-                                            type='MaterialCommunityIcons'/>
-                                        <Icon
-                                            style={myPlanStyles.icon}
-                                            name={this.getIconNameForCollapsible(this.state.suggestedTasksCollapsed)}
-                                        />
-                                    </Row>
-                                </Col>
-                                <Col size={15}>
-                                    <Button dark transparent>
-                                        <Icon name='more' />
-                                    </Button>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col size={85}>
-                                    <Row>
-                                        <Text style={myPlanStyles.recommendedText}>Important for all newcomers to BC:</Text>
-                                    </Row>
-                                </Col>
-                                <Col size={15}>
-                                    <Button dark transparent>
-                                        <Icon style={myPlanStyles.infoIcon} name='information-outline' type='MaterialCommunityIcons'/>
-                                    </Button>
-                                </Col>
-                            </Row>
-                        </Grid>
-                    </ListItem>
-                    <Collapsible collapsed={this.state.suggestedTasksCollapsed}>
-                        <ConnectedSuggestedTasks />
-                    </Collapsible>
-                </Content>
-            </Container>
-        );
-    }
-
-    toggleSavedTasksCollapsed(): void {
-        this.setState({ savedTasksCollapsed: !this.state.savedTasksCollapsed});
-    }
-
-    toggleSuggestedTasksCollapsed(): void {
-        this.setState({ suggestedTasksCollapsed: !this.state.suggestedTasksCollapsed});
-    }
-
-    getIconNameForCollapsible(collapsed: boolean): string {
-        if (collapsed) {
-            return I18nManager.isRTL ? 'arrow-dropleft' : 'arrow-dropright';
-        }
-        return 'arrow-dropdown';
-    }
-}
+    return 'arrow-dropdown';
+};

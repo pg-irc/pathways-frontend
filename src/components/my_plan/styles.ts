@@ -7,7 +7,7 @@ export const myPlanStyles = StyleSheet.create({
         marginRight: 10,
         fontSize: values.smallIconSize,
     },
-    suggestedTasksListItem: {
+    suggestedTasks: {
         backgroundColor: colors.lighterGrey,
     },
     listItemLabel: {
