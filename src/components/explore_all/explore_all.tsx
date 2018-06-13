@@ -38,6 +38,7 @@ export const ExploreAllComponent: React.StatelessComponent<ExploreAllProps & Exp
     (props: ExploreAllProps & ExploreAllActions): JSX.Element => {
         const sectionsGroupedIntoThrees = paginate(3, props.sections);
         return <Content>
+            <Text>Learn about</Text>
             <Grid>
                 {sectionsGroupedIntoThrees.map((sections: ReadonlyArray<ExploreSection>) => (
                     <Row>
