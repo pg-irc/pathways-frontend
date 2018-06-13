@@ -4,7 +4,43 @@ import { ExploreSection } from '../../selectors/explore';
 import { Trans } from '@lingui/react';
 import { paginate } from './paginate';
 
-const ExploreButton = (props: ExploreSection): JSX.Element => (
+interface ButtonRowProps {
+    readonly sections: ReadonlyArray<ExploreSection>;
+}
+
+export interface ExploreAllProps {
+    readonly sections: ReadonlyArray<ExploreSection>;
+}
+
+export interface ExploreAllActions {
+}
+
+type AllExploreProps = ExploreAllProps & ExploreAllActions;
+
+export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
+    (props: AllExploreProps): JSX.Element => {
+        const sectionsGroupedIntoThrees = paginate(3, props.sections);
+        return <Content>
+            <Text>Learn about</Text>
+            <Grid>
+                {sectionsGroupedIntoThrees.map((sections: ReadonlyArray<ExploreSection>) => (
+                    <Row>
+                        <RowOfSectionButtons sections={sections} />
+                    </Row>
+                ))}
+            </Grid>
+        </Content>;
+    };
+
+const RowOfSectionButtons = (props: ButtonRowProps): JSX.Element => (
+    <Row>
+        {props.sections.map((section: ExploreSection) => (
+            <SectionButton key={section.name} name={section.name} icon={section.icon} />
+        ))}
+    </Row>
+);
+
+const SectionButton = (props: ExploreSection): JSX.Element => (
     <Col>
         <Content style={{ width: 100, margin: 15 }}>
             <Button block rounded style={{ height: 100, width: 100 }}>
@@ -14,37 +50,3 @@ const ExploreButton = (props: ExploreSection): JSX.Element => (
         </Content>
     </Col >
 );
-
-interface ButtonRowProps {
-    readonly sections: ReadonlyArray<ExploreSection>;
-}
-
-const ButtonRow = (props: ButtonRowProps): JSX.Element => (
-    <Row>
-        {props.sections.map((section: ExploreSection) => (
-            <ExploreButton key={section.name} name={section.name} icon={section.icon} />
-        ))}
-    </Row>
-);
-
-export interface ExploreAllProps {
-    readonly sections: ReadonlyArray<ExploreSection>;
-}
-
-export interface ExploreAllActions {
-}
-
-export const ExploreAllComponent: React.StatelessComponent<ExploreAllProps & ExploreAllActions> =
-    (props: ExploreAllProps & ExploreAllActions): JSX.Element => {
-        const sectionsGroupedIntoThrees = paginate(3, props.sections);
-        return <Content>
-            <Text>Learn about</Text>
-            <Grid>
-                {sectionsGroupedIntoThrees.map((sections: ReadonlyArray<ExploreSection>) => (
-                    <Row>
-                        <ButtonRow sections={sections} />
-                    </Row>
-                ))}
-            </Grid>
-        </Content>;
-    };
