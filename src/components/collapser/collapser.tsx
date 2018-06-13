@@ -27,7 +27,7 @@ export class Collapser extends React.Component<Props, State> {
                 <ListItem
                     style={this.props.style ? this.props.style : undefined}
                     noBorder button noIndent onPress={(): void => this.toggleCollapsed()}>
-                    { this.state.collapsed ? this.props.collapsedHeader : this.props.expandedHeader}
+                    {this.state.collapsed ? this.props.collapsedHeader : this.props.expandedHeader}
                 </ListItem>
                 <Collapsible collapsed={this.state.collapsed}>
                     {this.props.data}
