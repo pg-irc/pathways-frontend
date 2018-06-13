@@ -6,8 +6,8 @@ import Collapsible from 'react-native-collapsible';
 export interface Props {
     readonly collapsedHeader: JSX.Element;
     readonly expandedHeader: JSX.Element;
-    readonly data: JSX.Element;
-    readonly collapsed: boolean;
+    readonly content: JSX.Element;
+    readonly initiallyCollapsed: boolean;
     readonly style?: object;
 }
 
@@ -18,7 +18,7 @@ export interface State {
 export class Collapser extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        this.state = { collapsed: this.props.collapsed };
+        this.state = { collapsed: this.props.initiallyCollapsed };
     }
 
     render(): JSX.Element {
@@ -30,7 +30,7 @@ export class Collapser extends React.Component<Props, State> {
                     {this.state.collapsed ? this.props.collapsedHeader : this.props.expandedHeader}
                 </ListItem>
                 <Collapsible collapsed={this.state.collapsed}>
-                    {this.props.data}
+                    {this.props.content}
                 </Collapsible>
             </View>
         );

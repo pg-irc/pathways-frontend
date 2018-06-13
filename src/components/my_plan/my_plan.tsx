@@ -16,15 +16,15 @@ export const MyPlan: React.StatelessComponent = (): JSX.Element => (
             <Collapser
                 collapsedHeader={getHeaderForSavedTasks(true)}
                 expandedHeader={getHeaderForSavedTasks(false)}
-                data={<ConnectedSavedTasks/>}
-                collapsed={false}
+                content={<ConnectedSavedTasks />}
+                initiallyCollapsed={false}
             />
             <View style={myPlanStyles.divider} />
             <Collapser
                 collapsedHeader={getHeaderForSuggestedTasks(true)}
                 expandedHeader={getHeaderForSuggestedTasks(false)}
-                data={<ConnectedSuggestedTasks />}
-                collapsed={true}
+                content={<ConnectedSuggestedTasks />}
+                initiallyCollapsed={true}
                 style={myPlanStyles.suggestedTasks}
             />
         </Content>
