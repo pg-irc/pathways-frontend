@@ -1,7 +1,7 @@
 import React from 'react';
 import { Content, Text } from 'native-base';
 import * as store from '../../stores/page_switcher';
-import { ExploreAllConnectedComponent } from '../explore_all';
+import { ExploreAllConnectedComponent } from '../explore';
 import * as questionnaire from '../questionnaire';
 import { MyPlan } from '../my_plan/my_plan';
 import { Store as TasksStore } from '../../stores/tasks';

@@ -1,6 +1,6 @@
 // tslint:disable:no-let
 // tslint:disable:no-expression-statement
-import { paginate } from '../explore_all/paginate';
+import { paginate } from '../explore/paginate';
 
 describe('paginate function', () => {
     let input: ReadonlyArray<number> = undefined;
