@@ -1,7 +1,6 @@
 import React from 'react';
 import { Content, View } from 'native-base';
 import { Question, Actions } from './question';
-import { ConnectedLanguageSwitcher } from '../language_switcher/connected_language_switcher';
 import * as selector from '../../selectors/questionnaire';
 import { QuestionnaireActions } from './actions';
 
@@ -13,7 +12,6 @@ export type Actions = QuestionnaireActions;
 
 export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
     <Content>
-        <ConnectedLanguageSwitcher />
         <View style={{
             flexDirection: 'column',
             justifyContent: 'flex-start',

@@ -63,7 +63,7 @@ export class LocalizedTextBuilder {
 
     localizations: LocalizedText;
 
-    constructor(defaultLocaleCode: string, defaultLocaleText: string) {
+    constructor(defaultLocaleCode: string = aString(), defaultLocaleText: string = aString()) {
         this.addLocale(defaultLocaleCode, defaultLocaleText);
     }
 
