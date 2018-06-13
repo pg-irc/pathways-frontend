@@ -4,10 +4,7 @@ import { ExploreSection } from '../../selectors/explore';
 import { Trans } from '@lingui/react';
 import * as R from 'ramda';
 import { paginate } from './paginate';
-
-interface ButtonRowProps {
-    readonly sections: ReadonlyArray<ExploreSection>;
-}
+import { exploreStyles } from './styles';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -43,6 +40,10 @@ const computeUniqueKeyForSections = (sections: ReadonlyArray<ExploreSection>): s
     return R.reduce((acc, name) => R.concat(acc, name), '', names);
 };
 
+interface ButtonRowProps {
+    readonly sections: ReadonlyArray<ExploreSection>;
+}
+
 const RowOfSectionButtons = (props: ButtonRowProps): JSX.Element => (
     <Row>
         {props.sections.map((section: ExploreSection) => (
@@ -53,11 +54,11 @@ const RowOfSectionButtons = (props: ButtonRowProps): JSX.Element => (
 
 const SectionButton = (props: ExploreSection): JSX.Element => (
     <Col>
-        <Content style={{ width: 100, margin: 15 }}>
-            <Button block rounded style={{ height: 100, width: 100 }}>
+        <Content style={exploreStyles.sectionButtonContent}>
+            <Button block rounded light style={exploreStyles.sectionButton}>
                 <Icon type='MaterialCommunityIcons' name={props.icon} style={{ fontSize: 60 }} />
             </Button>
-            <Text style={{ width: 80, textAlign: 'center' }}><Trans>{props.name}</Trans></Text>
+            <Text style={exploreStyles.sectionButtonCaption}><Trans>{props.name}</Trans></Text>
         </Content>
     </Col >
 );
