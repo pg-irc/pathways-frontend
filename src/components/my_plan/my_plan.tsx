@@ -37,16 +37,11 @@ const getHeaderForSavedTasks = (collapsed: boolean): JSX.Element => (
             <Col size={85} >
                 <Row style={myPlanStyles.listItemLabel}>
                     <Text style={applicationStyles.bold}><Trans>TASKS I PLAN TO DO</Trans></Text>
-                    <Icon
-                        style={myPlanStyles.icon}
-                        name={getIconNameForCollapsible(collapsed)}
-                    />
+                    <Icon style={myPlanStyles.icon} name={getIconNameForCollapsible(collapsed)} />
                 </Row>
             </Col>
             <Col size={15}>
-                <Button dark transparent>
-                    <Icon name='more' />
-                </Button>
+                <Button dark transparent><Icon name='more' /></Button>
             </Col>
         </Row>
     </Grid>
@@ -59,16 +54,11 @@ const getHeaderForSuggestedTasks = (collapsed: boolean): JSX.Element => (
                 <Row style={myPlanStyles.listItemLabel}>
                     <Text style={applicationStyles.bold}><Trans>RECOMMENDED FOR ME</Trans></Text>
                     <Icon style={myPlanStyles.icon} name='star-circle' type='MaterialCommunityIcons'/>
-                    <Icon
-                        style={myPlanStyles.icon}
-                        name={getIconNameForCollapsible(collapsed)}
-                    />
+                    <Icon style={myPlanStyles.icon} name={getIconNameForCollapsible(collapsed)} />
                 </Row>
             </Col>
             <Col size={15}>
-                <Button dark transparent>
-                    <Icon name='more' />
-                </Button>
+                <Button dark transparent><Icon name='more' /></Button>
             </Col>
         </Row>
         <Row>
