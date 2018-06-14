@@ -4,6 +4,7 @@ import { ExploreSection } from '../../selectors/explore';
 import { Trans } from '@lingui/react';
 import * as R from 'ramda';
 import { exploreStyles } from './styles';
+import { computeUniqueKeyForSections } from './compute_unique_key_for_sections';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -28,16 +29,6 @@ export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
             </Grid>
         </Content>;
     };
-
-const computeUniqueKeyForSections = (sections: ReadonlyArray<ExploreSection>): string => {
-    const names = R.pluck('name', sections);
-
-    // why doesn't this work??
-    // return R.reduce(R.concat, '', names);
-
-    // tslint:disable-next-line:typedef
-    return R.reduce((acc, name) => R.concat(acc, name), '', names);
-};
 
 interface ButtonRowProps {
     readonly sections: ReadonlyArray<ExploreSection>;
