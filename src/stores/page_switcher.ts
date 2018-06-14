@@ -10,9 +10,6 @@ export enum Page {
     TaskDetail,
 }
 
-// TODO remove or do someting...
-export type PageParameters = string;
-
 export const initialPage = Page.Questionnaire;
 
 export type SetQuestionnairePageAction = Readonly<ReturnType<typeof setQuestionnairePage>>;
@@ -54,10 +51,9 @@ export const setExploreSectionPage = (sectionId: Id) => (
 export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 
 // TODO rename pageParameters to pageId
-// TODO rename currentPage to pageType
 // tslint:disable-next-line:typedef
 const buildDefaultStore = () => (
-    { currentPage: initialPage, pageParameters: '' }
+    { pageType: initialPage, pageParameters: '' }
 );
 
 export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitcherAction): Store => {
@@ -66,22 +62,22 @@ export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitche
     }
     switch (action.type) {
         case constants.SET_QUESTIONNAIRE_PAGE:
-            return { ...store, currentPage: Page.Questionnaire };
+            return { ...store, pageType: Page.Questionnaire };
         case constants.SET_PLAN_PAGE:
-            return { ...store, currentPage: Page.MyPlan };
+            return { ...store, pageType: Page.MyPlan };
         case constants.SET_EXPLORE_PAGE:
-            return { ...store, currentPage: Page.ExploreAll };
+            return { ...store, pageType: Page.ExploreAll };
         case constants.SET_EXPLORE_SECTION_PAGE:
             // TODO this should update the route in the store
             return {
                 ...store,
-                currentPage: Page.ExploreSection,
+                pageType: Page.ExploreSection,
                 pageParameters: action.payload.sectionId,
             };
         case constants.SET_TASK_DETAIL_PAGE:
             return {
                 ...store,
-                currentPage: Page.TaskDetail,
+                pageType: Page.TaskDetail,
                 pageParameters: action.payload.taskId,
             };
         default:

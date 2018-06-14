@@ -61,9 +61,9 @@ describe('setting the explore section page', () => {
 });
 
 describe('the reducer', () => {
-    it('should default to build a store with a currentPage property', () => {
+    it('should default to build a store with a pageType property', () => {
         const theStore = pageSwitcher.reducer();
-        expect(theStore).toHaveProperty('currentPage');
+        expect(theStore).toHaveProperty('pageType');
     });
 
     it('should default to build a store with a pageParameters property', () => {
@@ -71,36 +71,36 @@ describe('the reducer', () => {
         expect(theStore).toHaveProperty('pageParameters');
     });
 
-    it('should default to build a store with currentPage equal to Page.Questionnaire', () => {
+    it('should default to build a store with pageType equal to Page.Questionnaire', () => {
         const theStore = pageSwitcher.reducer();
-        expect(theStore.currentPage).toBe(pageSwitcher.Page.Questionnaire);
+        expect(theStore.pageType).toBe(pageSwitcher.Page.Questionnaire);
     });
 
-    it('when called with SET_QUESTIONNAIRE_PAGE should return store with currentPage = Page.Questionnaire', () => {
+    it('when called with SET_QUESTIONNAIRE_PAGE should return store with pageType = Page.Questionnaire', () => {
         const theStore = buildStore();
         const theAction = {
             type: constants.SET_QUESTIONNAIRE_PAGE as typeof constants.SET_QUESTIONNAIRE_PAGE,
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
-        expect(theNewStore.currentPage).toBe(pageSwitcher.Page.Questionnaire);
+        expect(theNewStore.pageType).toBe(pageSwitcher.Page.Questionnaire);
     });
 
-    it('when called with SET_PLAN_PAGE should return store with currentPage = Page.MyPlan', () => {
+    it('when called with SET_PLAN_PAGE should return store with pageType = Page.MyPlan', () => {
         const theStore = buildStore();
         const theAction = {
             type: constants.SET_PLAN_PAGE as typeof constants.SET_PLAN_PAGE,
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
-        expect(theNewStore.currentPage).toBe(pageSwitcher.Page.MyPlan);
+        expect(theNewStore.pageType).toBe(pageSwitcher.Page.MyPlan);
     });
 
-    it('when called with SET_EXPLORE_PAGE should return store with currentPage = Page.ExploreAll', () => {
+    it('when called with SET_EXPLORE_PAGE should return store with pageType = Page.ExploreAll', () => {
         const theStore = buildStore();
         const theAction = {
             type: constants.SET_EXPLORE_PAGE as typeof constants.SET_EXPLORE_PAGE,
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
-        expect(theNewStore.currentPage).toBe(pageSwitcher.Page.ExploreAll);
+        expect(theNewStore.pageType).toBe(pageSwitcher.Page.ExploreAll);
     });
 
     describe('when called with SET_EXPLORE_SECTION_PAGE ', () => {
@@ -118,7 +118,7 @@ describe('the reducer', () => {
             theNewStore = pageSwitcher.reducer(theStore, theAction);
         });
         it('should return store with current page = SET_EXPLORE_SECTION_PAGE', () => {
-            expect(theNewStore.currentPage).toBe(pageSwitcher.Page.ExploreSection);
+            expect(theNewStore.pageType).toBe(pageSwitcher.Page.ExploreSection);
         });
         it('should return a store with the current section id', () => {
             expect(theNewStore.pageParameters).toEqual(theId);
@@ -139,8 +139,8 @@ describe('the reducer', () => {
             };
             theNewStore = pageSwitcher.reducer(theStore, theAction);
         });
-        it('should return store with currentPage = Page.TaskDetail', () => {
-            expect(theNewStore.currentPage).toBe(pageSwitcher.Page.TaskDetail);
+        it('should return store with pageType = Page.TaskDetail', () => {
+            expect(theNewStore.pageType).toBe(pageSwitcher.Page.TaskDetail);
         });
         it('should return store with the current task id', () => {
             expect(theNewStore.pageParameters).toEqual(theId);
@@ -150,7 +150,7 @@ describe('the reducer', () => {
     it('should return store unchanged if action is undefined', () => {
         const theOriginalStore = buildStore();
         const theNewStore = pageSwitcher.reducer(theOriginalStore, undefined);
-        expect(theNewStore.currentPage).toBe(theOriginalStore.currentPage);
+        expect(theNewStore.pageType).toBe(theOriginalStore.pageType);
     });
 });
 

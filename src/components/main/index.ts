@@ -12,7 +12,7 @@ const mapStateToProps = (store: Store): LoaderProps & main.Props => ({
     currentLocale: selectLocale(store),
     loading: isApplicationLoading(store),
     locale: selectLocale(store),
-    currentPageInProps: store.applicationState.currentPageInStore.currentPage,
+    currentPageInProps: store.applicationState.currentPageInStore.pageType,
     currentPageParameters: store.applicationState.currentPageInStore.pageParameters,
     tasksStore: store.applicationState.tasksInStore,
     canGoBack: canGoBack(),

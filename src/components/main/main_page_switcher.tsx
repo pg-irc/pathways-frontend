@@ -12,7 +12,7 @@ import { Locale } from '../../locale/types';
 
 export interface Props {
     readonly currentPageInProps: store.Page;
-    readonly currentPageParameters: store.PageParameters;
+    readonly currentPageParameters: string;
     readonly tasksStore: TasksStore;
     readonly locale: Locale;
 }
