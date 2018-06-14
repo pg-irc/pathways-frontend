@@ -3,7 +3,7 @@ import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 import * as store from '../../stores/page_switcher';
 
 export interface Props {
-    readonly currentPageInProps: store.Page;
+    readonly currentPageInProps: store.Store;
 }
 
 export interface Actions {
@@ -17,15 +17,15 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
     return (
         <Footer>
             <FooterTab>
-                <Button vertical active={currentPageInProps === store.Page.Questionnaire} onPress={goToQuestionnaire}>
+                <Button vertical active={currentPageInProps.pageType === store.Page.Questionnaire} onPress={goToQuestionnaire}>
                     <Icon name='apps' />
                     <Text>Questionnaire</Text>
                 </Button>
-                <Button vertical active={currentPageInProps === store.Page.MyPlan} onPress={goToPlan}>
+                <Button vertical active={currentPageInProps.pageType === store.Page.MyPlan} onPress={goToPlan}>
                     <Icon name='camera' />
                     <Text>My plan</Text>
                 </Button>
-                <Button vertical active={currentPageInProps === store.Page.ExploreAll} onPress={goToExplore}>
+                <Button vertical active={currentPageInProps.pageType === store.Page.ExploreAll} onPress={goToExplore}>
                     <Icon active name='apps' />
                     <Text>Learn</Text>
                 </Button>
