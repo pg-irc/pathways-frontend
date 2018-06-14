@@ -1,30 +1,20 @@
 import { StyleSheet } from 'react-native';
+import { values, colors } from '../../application/styles';
 
-export const task = StyleSheet.create({
-    wrapper: {
-        borderTopColor: 'lightgrey',
-        borderTopWidth: 2,
-        flexDirection: 'row',
-        padding: 10,
+export const taskStyles = StyleSheet.create({
+    savedListItem: {
+        paddingLeft: 10,
     },
-    sideColumn: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
+    suggestedListItem: {
+        paddingLeft: 10,
+        backgroundColor: colors.lighterGrey,
     },
-    centerColumn: {
-        flex: 4,
-        flexDirection: 'row',
-    },
-    stackedItems: {
-        flex: 1,
-        flexDirection: 'column',
-    },
-    inlineItems: {
+    rightColumn: {
         alignItems: 'center',
-        flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+    },
+    icon: {
+        paddingLeft: 10,
+        fontSize: values.smallIconSize,
     },
 });
 

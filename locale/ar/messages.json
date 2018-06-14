@@ -8,6 +8,33 @@
       ]
     ]
   },
+  "My Plan": {
+    "translation": "خطتي",
+    "origin": [
+      [
+        "lib/components/my_plan/my_plan.js",
+        22
+      ]
+    ]
+  },
+  "TASKS I PLAN TO DO": {
+    "translation": "المهام التي أخطط للقيام بها",
+    "origin": [
+      [
+        "lib/components/my_plan/my_plan.js",
+        28
+      ]
+    ]
+  },
+  "RECOMMENDED FOR ME": {
+    "translation": "موصى به بالنسبة لي",
+    "origin": [
+      [
+        "lib/components/my_plan/my_plan.js",
+        49
+      ]
+    ]
+  },
   "Done": {
     "translation": "فعله",
     "origin": [

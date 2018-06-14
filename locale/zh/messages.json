@@ -8,6 +8,33 @@
       ]
     ]
   },
+  "My Plan": {
+    "translation": "我的计划",
+    "origin": [
+      [
+        "lib/components/my_plan/my_plan.js",
+        22
+      ]
+    ]
+  },
+  "TASKS I PLAN TO DO": {
+    "translation": "我打算做的任务",
+    "origin": [
+      [
+        "lib/components/my_plan/my_plan.js",
+        28
+      ]
+    ]
+  },
+  "RECOMMENDED FOR ME": {
+    "translation": "为我推荐",
+    "origin": [
+      [
+        "lib/components/my_plan/my_plan.js",
+        49
+      ]
+    ]
+  },
   "Done": {
     "translation": "完成",
     "origin": [

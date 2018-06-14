@@ -1,6 +1,6 @@
 import React from 'react';
-import { FlatList } from 'react-native';
 import { Task } from './task';
+import { List } from 'native-base';
 import { TaskActions } from './actions';
 import * as selector from '../../selectors/tasks';
 import { Actions } from './task';
@@ -17,24 +17,16 @@ export interface Props {
 export interface Actions {
 }
 
-const extractKey = (item: selector.Task): string => item.id.toString();
-
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    const renderItem = ({ item }: { readonly item: selector.Task }): JSX.Element => (
-       props.taskRenderer(item, props)
-    );
-    return (
-        <FlatList
-            data={props.tasks}
-            renderItem={renderItem}
-            keyExtractor={extractKey}
-        />
-    );
-};
+export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
+    <List>
+        {props.tasks.map((task: selector.Task) => props.taskRenderer(task, props))}
+    </List>
+);
 
 export const renderSavedTask = (item: selector.Task, actions: TaskActions): JSX.Element => {
     return (
         <Task
+            key={item.id}
             id={item.id}
             taskUserSettingsId={item.taskUserSettingsId}
             title={item.title}
@@ -56,6 +48,7 @@ export const renderSavedTask = (item: selector.Task, actions: TaskActions): JSX.
 export const renderSuggestedTask = (item: selector.Task, actions: TaskActions): JSX.Element => {
     return (
         <Task
+            key={item.id}
             id={item.id}
             taskUserSettingsId={item.taskUserSettingsId}
             title={item.title}
