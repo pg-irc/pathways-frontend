@@ -3,7 +3,6 @@ import { Content, Grid, Row, Col, Button, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore';
 import { Trans } from '@lingui/react';
 import * as R from 'ramda';
-import { paginate } from './paginate';
 import { exploreStyles } from './styles';
 
 export interface ExploreAllProps {
@@ -17,7 +16,7 @@ type AllExploreProps = ExploreAllProps & ExploreAllActions;
 
 export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
     (props: AllExploreProps): JSX.Element => {
-        const sectionsGroupedIntoThrees = paginate(3, props.sections);
+        const sectionsGroupedIntoThrees = R.splitEvery(3, props.sections);
         return <Content>
             <Text>Learn about</Text>
             <Grid>
