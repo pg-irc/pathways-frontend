@@ -15,7 +15,6 @@ const mapStateToProps = (store: Store): LoaderProps & main.Props => ({
     currentPageInProps: store.applicationState.currentPageInStore.currentPage,
     currentPageParameters: store.applicationState.currentPageInStore.pageParameters,
     tasksStore: store.applicationState.tasksInStore,
-    appStore: store,
     canGoBack: canGoBack(),
 });
 
