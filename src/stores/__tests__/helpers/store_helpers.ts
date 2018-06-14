@@ -10,7 +10,7 @@ import * as explore from '../../explore';
 export class ApplicationStoreBuilder {
     fontsInStore: fonts.Store;
     localeInStore: locale.Store;
-    currentPageInStore: pageSwitcher.Store;
+    routeInStore: pageSwitcher.Store;
     questionnaireInStore: questionnaire.Store;
     tasksInStore: tasks.Store;
     exploreSectionsInStore: explore.Store;
@@ -24,7 +24,7 @@ export class ApplicationStoreBuilder {
         return {
             fontsInStore: this.fontsInStore,
             localeInStore: this.localeInStore,
-            currentPageInStore: this.currentPageInStore,
+            routeInStore: this.routeInStore,
             questionnaireInStore: this.questionnaireInStore,
             tasksInStore: this.tasksInStore,
             exploreSectionsInStore: this.exploreSectionsInStore,

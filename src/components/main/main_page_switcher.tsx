@@ -11,7 +11,7 @@ import { selectTaskById } from '../../selectors/tasks';
 import { Locale } from '../../locale/types';
 
 export interface Props {
-    readonly currentPageInProps: store.Store;
+    readonly routeInProps: store.Store;
     readonly tasksStore: TasksStore; // TODO remove, have the selector pull it from the app store
     readonly locale: Locale;
 }
@@ -20,7 +20,7 @@ export interface Actions {
 }
 
 export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    switch (props.currentPageInProps.pageType) {
+    switch (props.routeInProps.pageType) {
         case store.Page.Questionnaire:
             return <questionnaire.ConnectedComponent />;
 
@@ -35,7 +35,7 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
 
         case store.Page.TaskDetail:
             return <TaskDetail
-                task={selectTaskById(props.locale, props.tasksStore, props.currentPageInProps.pageId)}
+                task={selectTaskById(props.locale, props.tasksStore, props.routeInProps.pageId)}
             />;
 
         default:

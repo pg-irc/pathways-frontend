@@ -8,7 +8,7 @@ import * as explore from './explore';
 
 export interface Store {
     readonly fontsInStore: fonts.Store;
-    readonly currentPageInStore: pageSwitcher.Store;
+    readonly routeInStore: pageSwitcher.Store;
     readonly localeInStore: locale.Store;
     readonly questionnaireInStore: questionnaire.Store;
     readonly tasksInStore: tasks.Store;
@@ -17,7 +17,7 @@ export interface Store {
 
 export const reducer = combineReducers<Store>({
     fontsInStore: fonts.reducer,
-    currentPageInStore: pageSwitcher.reducer,
+    routeInStore: pageSwitcher.reducer,
     localeInStore: locale.reducer,
     questionnaireInStore: questionnaire.reducer,
     tasksInStore: tasks.reducer,
