@@ -27,7 +27,7 @@ export const denormalizeSections = (locale: Locale, store: model.ExploreSectionM
 
 export const selectCurrentExploreSection = (store: app.Store): ExploreSection => {
     const locale = selectLocale(store);
-    const sectionId = store.applicationState.currentPageInStore.pageParameters;
+    const sectionId = store.applicationState.currentPageInStore.pageId;
     const allSections = store.applicationState.exploreSectionsInStore.sections;
     const section = allSections[sectionId];
     return {

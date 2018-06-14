@@ -66,9 +66,9 @@ describe('the reducer', () => {
         expect(theStore).toHaveProperty('pageType');
     });
 
-    it('should default to build a store with a pageParameters property', () => {
+    it('should default to build a store with a pageId property', () => {
         const theStore = pageSwitcher.reducer();
-        expect(theStore).toHaveProperty('pageParameters');
+        expect(theStore).toHaveProperty('pageId');
     });
 
     it('should default to build a store with pageType equal to Page.Questionnaire', () => {
@@ -121,7 +121,7 @@ describe('the reducer', () => {
             expect(theNewStore.pageType).toBe(pageSwitcher.Page.ExploreSection);
         });
         it('should return a store with the current section id', () => {
-            expect(theNewStore.pageParameters).toEqual(theId);
+            expect(theNewStore.pageId).toEqual(theId);
         });
     });
 
@@ -143,7 +143,7 @@ describe('the reducer', () => {
             expect(theNewStore.pageType).toBe(pageSwitcher.Page.TaskDetail);
         });
         it('should return store with the current task id', () => {
-            expect(theNewStore.pageParameters).toEqual(theId);
+            expect(theNewStore.pageId).toEqual(theId);
         });
     });
 

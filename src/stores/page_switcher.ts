@@ -50,10 +50,9 @@ export const setExploreSectionPage = (sectionId: Id) => (
 
 export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 
-// TODO rename pageParameters to pageId
 // tslint:disable-next-line:typedef
 const buildDefaultStore = () => (
-    { pageType: initialPage, pageParameters: '' }
+    { pageType: initialPage, pageId: '' }
 );
 
 export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitcherAction): Store => {
@@ -72,13 +71,13 @@ export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitche
             return {
                 ...store,
                 pageType: Page.ExploreSection,
-                pageParameters: action.payload.sectionId,
+                pageId: action.payload.sectionId,
             };
         case constants.SET_TASK_DETAIL_PAGE:
             return {
                 ...store,
                 pageType: Page.TaskDetail,
-                pageParameters: action.payload.taskId,
+                pageId: action.payload.taskId,
             };
         default:
             return store;
