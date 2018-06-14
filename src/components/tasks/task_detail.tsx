@@ -18,7 +18,7 @@ export const TaskDetail: React.StatelessComponent<Props & Actions> = (props: Pro
         <Content padder>
             <Grid>
                 <Row>
-                    <Text style={applicationStyles.bold}>COMPLETED TASK</Text>
+                    <Text style={applicationStyles.bold}><Trans>COMPLETED TASK</Trans></Text>
                 </Row>
                 <Row>
                     <Text style={taskDetailStyles.title}>{props.task.title}</Text>
