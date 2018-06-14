@@ -6,14 +6,14 @@ import { aString } from '../../../application/__tests__/helpers/random_test_valu
 describe('request', () => {
 
     it('should pull out the name of entities', () => {
-        const data = [{ name: 'foo', id: aString(), icon: aString() }];
+        const data = [{ name: 'foo', id: aString(), introduction: aString(), icon: aString() }];
         expect(computeUniqueKeyForSections(data)).toEqual('"foo"');
     });
 
     it('should concatenate the names of multiple entities', () => {
         const data = [
-            { name: 'foo', id: aString(), icon: aString() },
-            { name: 'bar', id: aString(), icon: aString() },
+            { name: 'foo', id: aString(), introduction: aString(), icon: aString() },
+            { name: 'bar', id: aString(), introduction: aString(), icon: aString() },
         ];
         expect(computeUniqueKeyForSections(data)).toEqual('"foobar"');
     });

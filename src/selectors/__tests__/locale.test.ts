@@ -52,9 +52,9 @@ describe('localized text selector', () => {
         expect(selectLocalizedText(theLocale, theLocalizedText)).toBe(theFallbackText);
     });
 
-    it('throws an error if the text is not available in the fallback locale', () => {
+    it('returns error if string is not available in the fallback locale', () => {
         const theLocalizedText = new LocalizedTextBuilder().build();
-        expect(() => selectLocalizedText(theLocale, theLocalizedText)).toThrow();
+        expect(selectLocalizedText(theLocale, theLocalizedText)).toContain('missing');
     });
 
 });

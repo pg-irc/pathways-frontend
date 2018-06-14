@@ -48,6 +48,7 @@ const RowOfSectionButtons = (props: ButtonRowProps & ExploreAllActions): JSX.Ele
                 key={section.id}
                 id={section.id}
                 name={section.name}
+                introduction={section.introduction}
                 icon={section.icon}
                 goToExploreSection={props.goToExploreSection}
             />

@@ -7,6 +7,7 @@ import { Locale } from '../locale/types';
 export interface ExploreSection {
     readonly id: string;
     readonly name: string;
+    readonly introduction: string;
     readonly icon: string;
 }
 
@@ -20,8 +21,9 @@ export const selectExploreSections = (store: app.Store): ReadonlyArray<ExploreSe
 export const denormalizeSections = (locale: Locale, store: model.ExploreSectionMap): ReadonlyArray<ExploreSection> => {
     const buildSection = (id: string): ExploreSection => {
         const name = selectLocalizedText(locale, store[id].name);
+        const introduction = selectLocalizedText(locale, store[id].introduction);
         const icon = store[id].icon;
-        return { id, name, icon };
+        return { id, name, introduction, icon };
     };
     return R.map(buildSection, R.keys(store));
 };
@@ -34,6 +36,7 @@ export const selectCurrentExploreSection = (store: app.Store): ExploreSection =>
     return {
         id: section.id,
         name: selectLocalizedText(locale, section.name),
+        introduction: selectLocalizedText(locale, section.introduction),
         icon: section.icon,
     };
 };

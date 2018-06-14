@@ -38,6 +38,9 @@ export const ExploreSectionComponent: React.StatelessComponent<AllExploreSection
                             </Button>
                         </Col>
                     </Row>
+                    <Row>
+                        <Text>{props.section.introduction}</Text>
+                    </Row>
                 </Grid>
             </Content>
         </Container>;
