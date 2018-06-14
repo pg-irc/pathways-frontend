@@ -1,7 +1,7 @@
 import React from 'react';
 import { Content, Text } from 'native-base';
 import * as store from '../../stores/page_switcher';
-import { ExploreAllConnectedComponent } from '../explore';
+import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
 import * as questionnaire from '../questionnaire';
 import { MyPlan } from '../my_plan/my_plan';
 import { Store as TasksStore } from '../../stores/tasks';
@@ -32,12 +32,12 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
 
         case store.Page.TaskDetail:
             return <TaskDetail
-                        task={selectTaskById(
-                                props.locale,
-                                props.tasksStore,
-                                props.currentPageParameters.taskId)
-                            }
-                    />;
+                task={selectTaskById(
+                    props.locale,
+                    props.tasksStore,
+                    props.currentPageParameters.taskId)
+                }
+            />;
 
         default:
             return <Content><Text>Error</Text></Content>;
