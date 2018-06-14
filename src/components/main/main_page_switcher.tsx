@@ -2,17 +2,21 @@ import React from 'react';
 import { Content, Text } from 'native-base';
 import * as store from '../../stores/page_switcher';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
+import { ExploreSectionComponent } from '../explore/explore_section';
 import * as questionnaire from '../questionnaire';
 import { MyPlan } from '../my_plan/my_plan';
 import { Store as TasksStore } from '../../stores/tasks';
+import { Store as ExploreStore } from '../../stores/explore';
 import { TaskDetail } from '../tasks/task_detail';
 import { selectTaskById } from '../../selectors/tasks';
+import { selectExploreSectionWithId } from '../../selectors/explore';
 import { Locale } from '../../locale/types';
 
 export interface Props {
     readonly currentPageInProps: store.Page;
     readonly currentPageParameters: store.PageParameters;
     readonly tasksStore: TasksStore;
+    readonly exploreStore: ExploreStore; // TODO remove
     readonly locale: Locale;
 }
 
@@ -30,13 +34,16 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
         case store.Page.ExploreAll:
             return <ExploreAllConnectedComponent />;
 
+        case store.Page.ExploreSection:
+            // TODO use the connected component and have the selector pull
+            // the currently selected section out from routing info in the store
+            return <ExploreSectionComponent
+                section={selectExploreSectionWithId(props.locale, props.exploreStore, props.currentPageParameters.taskId)}
+            />;
+
         case store.Page.TaskDetail:
             return <TaskDetail
-                task={selectTaskById(
-                    props.locale,
-                    props.tasksStore,
-                    props.currentPageParameters.taskId)
-                }
+                task={selectTaskById(props.locale, props.tasksStore, props.currentPageParameters.taskId)}
             />;
 
         default:

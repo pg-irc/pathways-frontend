@@ -1,6 +1,8 @@
 import { buildExploreFixture, Store } from '../fixtures/explore';
 export { Store, ExploreSection, ExploreSectionMap } from '../fixtures/explore';
 
+export type Id = string;
+
 const buildDefaultStore = (): Store => (
     buildExploreFixture()
 );

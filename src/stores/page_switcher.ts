@@ -6,6 +6,7 @@ export enum Page {
     Questionnaire,
     MyPlan,
     ExploreAll,
+    ExploreSection,
     TaskDetail,
 }
 
@@ -20,9 +21,9 @@ export type SetPlanPageAction = Readonly<ReturnType<typeof setPlanPage>>;
 export type SetExplorePageAction = Readonly<ReturnType<typeof setExplorePage>>;
 export type SetTaskDetailPageAction = Readonly<ReturnType<typeof setTaskDetailPage>>;
 type PageSwitcherAction = SetQuestionnairePageAction |
-                          SetPlanPageAction |
-                          SetExplorePageAction |
-                          SetTaskDetailPageAction;
+    SetPlanPageAction |
+    SetExplorePageAction |
+    SetTaskDetailPageAction;
 
 // tslint:disable-next-line:typedef
 export const setQuestionnairePage = () => (
@@ -67,7 +68,7 @@ export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitche
             return {
                 ...store,
                 currentPage: Page.TaskDetail,
-                pageParameters: {taskId: action.payload.taskId},
+                pageParameters: { taskId: action.payload.taskId },
             };
         default:
             return store;

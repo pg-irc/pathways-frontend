@@ -1,7 +1,9 @@
 import React from 'react';
 import { Text } from 'native-base';
+import { ExploreSection } from '../../selectors/explore';
 
 export interface ExploreSectionProps {
+    readonly section: ExploreSection;
 }
 
 export interface ExploreSectionActions {
