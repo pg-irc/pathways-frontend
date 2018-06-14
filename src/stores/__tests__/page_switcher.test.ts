@@ -125,14 +125,26 @@ describe('the reducer', () => {
         });
     });
 
-    it('when called with SET_TASK_DETAIL_PAGE should return store with currentPage = Page.TaskDetail', () => {
-        const theStore = buildStore();
-        const theAction = {
-            type: constants.SET_TASK_DETAIL_PAGE as typeof constants.SET_TASK_DETAIL_PAGE,
-            payload: { taskId: aString() },
-        };
-        const theNewStore = pageSwitcher.reducer(theStore, theAction);
-        expect(theNewStore.currentPage).toBe(pageSwitcher.Page.TaskDetail);
+    describe('when called with SET_TASK_DETAIL_PAGE', () => {
+
+        let theId: string = '';
+        let theNewStore: pageSwitcher.Store = undefined;
+
+        beforeEach(() => {
+            theId = aString();
+            const theStore = buildStore();
+            const theAction = {
+                type: constants.SET_TASK_DETAIL_PAGE as typeof constants.SET_TASK_DETAIL_PAGE,
+                payload: { taskId: theId },
+            };
+            theNewStore = pageSwitcher.reducer(theStore, theAction);
+        });
+        it('should return store with currentPage = Page.TaskDetail', () => {
+            expect(theNewStore.currentPage).toBe(pageSwitcher.Page.TaskDetail);
+        });
+        it('should return store with the current task id', () => {
+            expect(theNewStore.pageParameters).toEqual({ taskId: theId });
+        });
     });
 
     it('should return store unchanged if action is undefined', () => {
