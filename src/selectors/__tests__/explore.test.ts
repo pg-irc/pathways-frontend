@@ -22,6 +22,10 @@ const theStore: ExploreSectionMap = {
             'ar': aString(),
             'zh': aString(),
         },
+        taxonomyTerms: [{
+            taxonomyId: aString(),
+            taxonomyTermId: aString(),
+        }],
         icon: theIcon,
     },
 };

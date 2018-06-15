@@ -24,12 +24,15 @@ export interface TaxonomyTermReference {
 export const buildTaxonomyFixture = (): Store => ({
     taxonomyMap: {
         'Explore': {
-            'Education': {
-                icon: 'the icon',
-            },
-            'Money': {
-                icon: 'the icon',
-            },
+            'SettlingIn': {},
+            'Education': {},
+            'HealthCare': {},
+            'Money': {},
+            'Housing': {},
+            'Employment': {},
+            'LegalOrImmigration': {},
+            'Driving': {},
+            'HelpForIndividualsAndFamilies': {},
         },
     },
 });
