@@ -13,12 +13,16 @@ describe('tasks selector', () => {
     describe('denormalization', () => {
         let locale: Locale;
         let task: stores.Task;
+        let taxonomyId: string;
+        let taxonomyTermId: string;
         let taskUserSettings: stores.TaskUserSettings;
         let denormalizedTask: selector.Task;
 
         beforeEach(() => {
+            taxonomyId = aString();
+            taxonomyTermId = aString();
             locale = new LocaleBuilder().build();
-            task = new TaskBuilder().withLocaleCode(locale.code).build();
+            task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             taskUserSettings = new TaskUserSettingsBuilder(task.id).build();
             denormalizedTask = selector.denormalizeTask(locale, task, taskUserSettings);
         });
@@ -53,6 +57,9 @@ describe('tasks selector', () => {
 
         test('tags property', () => {
             expect(denormalizedTask.tags).toBe(task.tags);
+        });
+        test('taxonomy term reference', () => {
+            expect(denormalizedTask.taxonomyTermReferences).toEqual([{ taxonomyId, taxonomyTermId }]);
         });
     });
 

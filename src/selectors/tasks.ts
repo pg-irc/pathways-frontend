@@ -1,13 +1,13 @@
 import * as stores from '../stores/tasks';
 import { selectLocalizedText } from './locale';
 import { Locale } from '../locale/types';
-import { TaxTermIdetifyingPair } from './tax';
+import { TaxonomyTermReference } from './tax';
 
 export interface Task {
     readonly id: string;
     readonly title: string;
     readonly description: string;
-    readonly taxTermIds: ReadonlyArray<TaxTermIdetifyingPair>;
+    readonly taxonomyTermReferences: ReadonlyArray<TaxonomyTermReference>;
     readonly category: string;
     readonly importance: number;
     // TODO remove
@@ -23,7 +23,7 @@ export const denormalizeTask =
             id: task.id,
             title: selectLocalizedText(locale, task.title),
             description: selectLocalizedText(locale, task.description),
-            taxTermIds: [], // TODO complete this
+            taxonomyTermReferences: task.taxonomyTermReferences,
             category: task.category,
             importance: task.importance,
             tags: task.tags,

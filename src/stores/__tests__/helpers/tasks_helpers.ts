@@ -8,14 +8,14 @@ import * as store from '../../tasks';
 import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
-import { TaxTermIdetifyingPair } from '../../../fixtures/tax';
+import { TaxonomyTermReference } from '../../../fixtures/tax';
 
 export class TaskBuilder {
     localeCode: string = aString();
     id: store.Id = aString();
     title: string = aString();
     description: string = aString();
-    taxonomyTerms: TaxTermIdetifyingPair[] = [];
+    taxonomyTerms: TaxonomyTermReference[] = [];
     tags: ReadonlyArray<string> = [aString(), aString()];
     category: string = aString();
     importance: number = aNumber();
@@ -40,8 +40,8 @@ export class TaskBuilder {
         return this;
     }
 
-    withTaxTerm(taxId: string, taxTermId: string): TaskBuilder {
-        this.taxonomyTerms = [...this.taxonomyTerms, { taxId, taxTermId }];
+    withTaxonomyTerm(taxonomyTerm: TaxonomyTermReference): TaskBuilder {
+        this.taxonomyTerms = [...this.taxonomyTerms, taxonomyTerm];
         return this;
     }
 
@@ -66,7 +66,7 @@ export class TaskBuilder {
             id: this.id,
             title: this.createLocalizedText(this.title),
             description: this.createLocalizedText(this.description),
-            taxTermIds: this.taxonomyTerms,
+            taxonomyTermReferences: this.taxonomyTerms,
             tags: this.tags,
             category: this.category,
             importance: this.importance,

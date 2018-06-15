@@ -5,7 +5,7 @@ export interface TaxonomyTerm {
 
 // Examples are AIRS, BC211
 export interface Taxonomy {
-    readonly [termId: string]: TaxonomyTerm;
+    readonly [taxonomyTermId: string]: TaxonomyTerm;
 }
 
 export interface TaxonomyMap {
@@ -13,16 +13,16 @@ export interface TaxonomyMap {
 }
 
 export interface Store {
-    readonly taxonomies: TaxonomyMap;
+    readonly taxonomyMap: TaxonomyMap;
 }
 
-export interface TaxTermIdetifyingPair {
-    readonly taxId: string;
-    readonly taxTermId: string;
+export interface TaxonomyTermReference {
+    readonly taxonomyId: string;
+    readonly taxonomyTermId: string;
 }
 
 export const buildTaxonomyFixture = (): Store => ({
-    taxonomies: {
+    taxonomyMap: {
         'Explore': {
             'Education': {
                 icon: 'the icon',

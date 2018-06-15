@@ -1,46 +1,52 @@
 // tslint:disable:no-expression-statement
 
-import { aString } from '../../application/__tests__/helpers/random_test_values';
-import * as tasksHelpers from '../../stores/__tests__/helpers/tasks_helpers';
-import * as taskStore from '../../stores/tasks';
-import * as taskSelector from '../tasks';
-import * as taxSelector from '../tax';
-import * as R from 'ramda';
 import { Locale } from '../../locale';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { TaxonomyTermReference } from '../tax';
+import * as store from '../../stores/tasks';
+import * as selector from '../tasks';
+import * as helpers from '../../stores/__tests__/helpers/tasks_helpers';
+import { aString } from '../../application/__tests__/helpers/random_test_values';
+import * as R from 'ramda';
 
+// TODO move to selector file in tasks
 const selectTasksByTaxonomyTerm =
-    (locale: Locale, haystack: taskStore.Store, needle: taxSelector.TaxTermIdetifyingPair): ReadonlyArray<taskSelector.Task> => {
+    (locale: Locale, taskStore: store.Store, needle: TaxonomyTermReference): ReadonlyArray<selector.Task> => {
 
-        const isMatch = (id: taxSelector.TaxTermIdetifyingPair): boolean => (
-            id.taxId === needle.taxId && id.taxTermId === needle.taxTermId
+        const matchesNeedle = (id: TaxonomyTermReference): boolean => (
+            id.taxonomyId === needle.taxonomyId && id.taxonomyTermId === needle.taxonomyTermId
         );
 
-        const hasMatch = (task: taskStore.Task): boolean => (
-            R.any(isMatch, task.taxTermIds)
+        const hasMatch = (task: store.Task): boolean => (
+            R.any(matchesNeedle, task.taxonomyTermReferences)
         );
 
-        const findUserTask = (task: taskStore.Task): taskStore.TaskUserSettings => (
-            R.find((u: taskStore.TaskUserSettings) => u.taskId === task.id, R.values(haystack.taskUserSettingsMap))
+        const findUserTask = (task: store.Task): store.TaskUserSettings => (
+            R.find((u: store.TaskUserSettings) => u.taskId === task.id, R.values(taskStore.taskUserSettingsMap))
         );
 
-        const denormalize = (task: taskStore.Task): taskSelector.Task => (
-            taskSelector.denormalizeTask(locale, task, findUserTask(task))
+        const denormalize = (task: store.Task): selector.Task => (
+            selector.denormalizeTask(locale, task, findUserTask(task))
         );
 
-        return R.map(denormalize, R.values(R.filter(hasMatch, haystack.taskMap)));
+        return R.map(denormalize, R.values(R.filter(hasMatch, taskStore.taskMap)));
     };
 
 describe('select tasks by taxonomy term', () => {
     it('should return tasks annotated with the given taxonomy term', () => {
         const locale = new LocaleBuilder().build();
-        const taxId = aString();
-        const taxTermId = aString();
+        const taxonomyId = aString();
+        const taxonomyTermId = aString();
         const taskId = aString();
-        const taskBuilder = new tasksHelpers.TaskBuilder().withId(taskId).withTaxTerm(taxId, taxTermId).withLocaleCode(locale.code);
-        const taskUserSettingsBuilder = new tasksHelpers.TaskUserSettingsBuilder(taskId);
-        const tasksStore = tasksHelpers.buildNormalizedStore([taskBuilder], [taskUserSettingsBuilder], [], []);
-        const theTasks = selectTasksByTaxonomyTerm(locale, tasksStore, { taxId, taxTermId });
+        const taskBuilder = new helpers.TaskBuilder().
+            withId(taskId).
+            withTaxonomyTerm({ taxonomyId, taxonomyTermId }).
+            withLocaleCode(locale.code);
+        const taskUserSettingsBuilder = new helpers.TaskUserSettingsBuilder(taskId);
+        const tasksStore = helpers.buildNormalizedStore([taskBuilder], [taskUserSettingsBuilder], [], []);
+
+        const theTasks = selectTasksByTaxonomyTerm(locale, tasksStore, { taxonomyId, taxonomyTermId });
+
         expect(theTasks[0].id).toBe(taskId);
     });
 });

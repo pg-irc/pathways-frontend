@@ -3,7 +3,7 @@
 // tslint:disable:no-this
 // tslint:disable:no-expression-statement
 
-import * as taxStore from '../../../fixtures/tax'; // TODO change from fixture to store
+import * as store from '../../../fixtures/tax'; // TODO change from fixture to store
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 
 interface TaxonomyTerm {
@@ -18,30 +18,30 @@ interface TaxonomyMap {
     [taxonomyId: string]: TaxonomTermMap;
 }
 
-export class TaxStoreBuilder {
+export class TaxonomyStoreBuilder {
 
     map: TaxonomyMap;
-    currentTaxId: string = aString();
+    currentTaxonomyId: string = aString();
 
-    withTaxId(taxId: string): TaxStoreBuilder {
-        this.currentTaxId = taxId;
+    withTaxonomyId(taxonomyId: string): TaxonomyStoreBuilder {
+        this.currentTaxonomyId = taxonomyId;
         return this;
     }
 
-    addTaxTerm(taxTermId: string): TaxStoreBuilder {
-        return this.addTaxTermWithIcon(taxTermId);
+    addTaxonomyTerm(taxonomyTermId: string): TaxonomyStoreBuilder {
+        return this.addTaxonomyTermWithIcon(taxonomyTermId, undefined);
     }
 
-    addTaxTermWithIcon(taxTermId: string, icon?: string): TaxStoreBuilder {
-        const taxId = this.currentTaxId;
-        if (!this.map[taxId]) {
-            this.map[taxId] = {};
+    addTaxonomyTermWithIcon(taxonomyTermId: string, icon: string): TaxonomyStoreBuilder {
+        const taxonomyId = this.currentTaxonomyId;
+        if (!this.map[taxonomyId]) {
+            this.map[taxonomyId] = {};
         }
-        this.map[taxId][taxTermId] = icon ? { icon } : {};
+        this.map[taxonomyId][taxonomyTermId] = icon ? { icon } : {};
         return this;
     }
 
-    build(): taxStore.Store {
-        return { taxonomies: this.map };
+    build(): store.Store {
+        return { taxonomyMap: this.map };
     }
 }
