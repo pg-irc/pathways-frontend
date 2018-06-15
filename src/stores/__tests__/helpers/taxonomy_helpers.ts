@@ -3,7 +3,7 @@
 // tslint:disable:no-this
 // tslint:disable:no-expression-statement
 
-import * as store from '../../../fixtures/taxonomies'; // TODO change from fixture to store
+import * as store from '../../../stores/taxonomies';
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 
 interface TaxonomyTerm {
