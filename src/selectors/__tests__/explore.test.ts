@@ -1,5 +1,6 @@
 // tslint:disable:no-let no-expression-statement
-import { denormalizeSections, ExploreSection, getExploreSectionById } from '../explore';
+import { denormalizeSections, getExploreSectionById } from '../details/explore';
+import { ExploreSection } from '../explore';
 import { ExploreSectionMap } from '../../stores/explore';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 
