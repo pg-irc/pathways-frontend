@@ -2,6 +2,8 @@ import * as app from '../application/store';
 import { LocalizedText } from '../locale';
 import { Locale, LocaleInfo } from '../locale/types';
 
+export { Locale, LocaleInfo } from '../locale/types';
+
 export function selectLocale(appStore: app.Store): Locale {
     const store = appStore.applicationState.localeInStore;
     return {

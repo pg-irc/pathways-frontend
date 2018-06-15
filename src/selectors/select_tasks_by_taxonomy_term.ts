@@ -15,9 +15,18 @@ export const selectTasksByTaxonomyTerm =
             R.any(matchesNeedle, task.taxonomyTerms)
         );
 
-        const findUserTask = (task: StoreTask): StoreUserTask => (
-            R.find((u: StoreUserTask) => u.taskId === task.id, R.values(taskStore.taskUserSettingsMap))
-        );
+        const findUserTask = (task: StoreTask): StoreUserTask => {
+            const getUserTasks = R.compose(R.values, R.pickBy(R.propEq('taskId', task.id)));
+            const userTasks = getUserTasks(taskStore.taskUserSettingsMap);
+            return validateUserTaskResult(userTasks, task.id);
+        };
+
+        const validateUserTaskResult = (userTasks: ReadonlyArray<StoreUserTask>, taskId: string): StoreUserTask => {
+            if (userTasks.length !== 1) {
+                throw new Error(`Could not find TaskUserSettings for task id: ${taskId}`);
+            }
+            return userTasks[0];
+        };
 
         const denormalize = (task: StoreTask): SelectorTask => (
             denormalizeTask(locale, task, findUserTask(task))
