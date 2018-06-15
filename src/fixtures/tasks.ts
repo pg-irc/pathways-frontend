@@ -8,8 +8,8 @@ export interface Task {
     readonly title: LocalizedText;
     readonly description: LocalizedText;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
-    readonly tags: ReadonlyArray<string>; // i.e important, do soon, free etc.
-    readonly category: string; // i.e. education, health, transportation etc.
+    readonly tags: ReadonlyArray<string>; // TODO remove i.e important, do soon, free etc.
+    readonly category: string; // TODO remove, i.e. education, health, transportation etc.
     readonly importance: number;
 }
 
@@ -52,7 +52,10 @@ export const buildTasksFixture = (): Store => {
                     'ar': 'وصف المثال.',
                     'zh': '示例描述。',
                 },
-                'taxonomyTerms': [],
+                'taxonomyTerms': [{
+                    'taxonomyId': 'Explore',
+                    'taxonomyTermId': 'Education',
+                }],
                 'tags': ['important', 'do soon', 'free'],
                 'category': 'education',
                 'importance': 1,
@@ -69,7 +72,10 @@ export const buildTasksFixture = (): Store => {
                     'ar': 'وصف المثال.',
                     'zh': '示例描述。',
                 },
-                'taxonomyTerms': [],
+                'taxonomyTerms': [{
+                    'taxonomyId': 'Explore',
+                    'taxonomyTermId': 'Education',
+                }],
                 'tags': ['important', 'do soon', 'free'],
                 'category': 'education',
                 'importance': 1,
@@ -86,7 +92,10 @@ export const buildTasksFixture = (): Store => {
                     'ar': 'وصف المثال.',
                     'zh': '示例描述。',
                 },
-                'taxonomyTerms': [],
+                'taxonomyTerms': [{
+                    'taxonomyId': 'Explore',
+                    'taxonomyTermId': 'Education',
+                }],
                 'tags': ['important', 'do soon', 'free'],
                 'category': 'education',
                 'importance': 1,
@@ -103,7 +112,10 @@ export const buildTasksFixture = (): Store => {
                     'ar': 'وصف المثال.',
                     'zh': '示例描述。',
                 },
-                'taxonomyTerms': [],
+                'taxonomyTerms': [{
+                    'taxonomyId': 'Explore',
+                    'taxonomyTermId': 'Money',
+                }],
                 'tags': ['important'],
                 'category': 'finance',
                 'importance': 1,
@@ -120,7 +132,10 @@ export const buildTasksFixture = (): Store => {
                     'ar': 'وصف المثال.',
                     'zh': '示例描述。',
                 },
-                'taxonomyTerms': [],
+                'taxonomyTerms': [{
+                    'taxonomyId': 'Explore',
+                    'taxonomyTermId': 'Money',
+                }],
                 'tags': ['important'],
                 'category': 'employment',
                 'importance': 1,

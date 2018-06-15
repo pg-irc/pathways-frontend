@@ -27,7 +27,8 @@ export const buildTaxonomyFixture = (): Store => ({
             'Education': {
                 icon: 'the icon',
             },
-            'Health': {
+            'Money': {
+                icon: 'the icon',
             },
         },
     },
