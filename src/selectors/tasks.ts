@@ -1,7 +1,7 @@
 import * as stores from '../stores/tasks';
 import { selectLocalizedText } from './locale';
 import { Locale } from '../locale/types';
-import { TaxonomyTermReference } from './tax';
+import { TaxonomyTermReference } from './taxonomies';
 
 export interface Task {
     readonly id: string;

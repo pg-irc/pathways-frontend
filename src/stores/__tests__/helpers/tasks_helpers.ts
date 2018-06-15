@@ -8,7 +8,7 @@ import * as store from '../../tasks';
 import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
-import { TaxonomyTermReference } from '../../../fixtures/tax';
+import { TaxonomyTermReference } from '../../../selectors/taxonomies';
 
 export class TaskBuilder {
     localeCode: string = aString();
