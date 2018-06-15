@@ -7,6 +7,5 @@ export interface Route {
 }
 
 export const selectRoute = (store: app.Store): Route => {
-    const { pageType, pageId }: route.Store = store.applicationState.routeInStore;
-    return { pageType, pageId };
+    return store.applicationState.routeInStore;
 };
