@@ -1,5 +1,5 @@
 import { buildTaxonomyFixture, Store } from '../fixtures/taxonomies';
-export { Store, TaxonomyTermReference } from '../fixtures/taxonomies';
+export { Store, TaxonomyTermReference, Taxonomy, ExploreTaxonomyId } from '../fixtures/taxonomies';
 
 export type Id = string;
 

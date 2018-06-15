@@ -10,7 +10,6 @@ export interface ExploreSection {
     readonly name: LocalizedText;
     readonly introduction: LocalizedText;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
-    readonly icon: string;
 }
 
 export interface ExploreSectionMap {
@@ -40,7 +39,6 @@ export const buildExploreFixture = (): Store => (
                     'taxonomyId': 'Explore',
                     'taxonomyTermId': 'SettlingIn',
                 }],
-                icon: 'sign-text',
             },
             's2': {
                 id: 's2',
@@ -58,7 +56,6 @@ export const buildExploreFixture = (): Store => (
                     'taxonomyId': 'Explore',
                     'taxonomyTermId': 'Education',
                 }],
-                icon: 'book-open-variant',
             },
             's3': {
                 id: 's3',
@@ -76,7 +73,6 @@ export const buildExploreFixture = (): Store => (
                     'taxonomyId': 'Explore',
                     'taxonomyTermId': 'HealthCare',
                 }],
-                icon: 'medical-bag',
             },
             's4': {
                 id: 's4',
@@ -94,7 +90,6 @@ export const buildExploreFixture = (): Store => (
                     'taxonomyId': 'Explore',
                     'taxonomyTermId': 'Money',
                 }],
-                icon: 'currency-usd',
             },
             's5': {
                 id: 's5',
@@ -112,7 +107,6 @@ export const buildExploreFixture = (): Store => (
                     'taxonomyId': 'Explore',
                     'taxonomyTermId': 'Housing',
                 }],
-                icon: 'home',
             },
             's6': {
                 id: 's6',
@@ -130,7 +124,6 @@ export const buildExploreFixture = (): Store => (
                     'taxonomyId': 'Explore',
                     'taxonomyTermId': 'Employment',
                 }],
-                icon: 'briefcase',
             },
             's7': {
                 id: 's7',
@@ -148,7 +141,6 @@ export const buildExploreFixture = (): Store => (
                     'taxonomyId': 'Explore',
                     'taxonomyTermId': 'LegalOrImmigration',
                 }],
-                icon: 'gavel',
             },
             's8': {
                 id: 's8',
@@ -166,7 +158,6 @@ export const buildExploreFixture = (): Store => (
                     'taxonomyId': 'Explore',
                     'taxonomyTermId': 'Driving',
                 }],
-                icon: 'car',
             },
             's9': {
                 id: 's9',
@@ -184,7 +175,6 @@ export const buildExploreFixture = (): Store => (
                     'taxonomyId': 'Explore',
                     'taxonomyTermId': 'HelpForIndividualsAndFamilies',
                 }],
-                icon: 'account',
             },
         },
     }

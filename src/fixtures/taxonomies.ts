@@ -21,18 +21,20 @@ export interface TaxonomyTermReference {
     readonly taxonomyTermId: string;
 }
 
+export const ExploreTaxonomyId = 'Explore';
+
 export const buildTaxonomyFixture = (): Store => ({
     taxonomyMap: {
-        'Explore': {
-            'SettlingIn': {},
-            'Education': {},
-            'HealthCare': {},
-            'Money': {},
-            'Housing': {},
-            'Employment': {},
-            'LegalOrImmigration': {},
-            'Driving': {},
-            'HelpForIndividualsAndFamilies': {},
+        [ExploreTaxonomyId]: {
+            'SettlingIn': { icon: 'sign-text' },
+            'Education': { icon: 'book-open-variant' },
+            'HealthCare': { icon: 'medical-bag' },
+            'Money': { icon: 'currency-usd' },
+            'Housing': { icon: 'home' },
+            'Employment': { icon: 'briefcase' },
+            'LegalOrImmigration': { icon: 'gavel' },
+            'Driving': { icon: 'car' },
+            'HelpForIndividualsAndFamilies': { icon: 'account' },
         },
     },
 });
