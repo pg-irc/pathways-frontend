@@ -12,7 +12,7 @@ export const selectTasksByTaxonomyTerm =
         );
 
         const hasMatch = (task: StoreTask): boolean => (
-            R.any(matchesNeedle, task.taxonomyTermReferences)
+            R.any(matchesNeedle, task.taxonomyTerms)
         );
 
         const findUserTask = (task: StoreTask): StoreUserTask => (

@@ -23,7 +23,7 @@ export const denormalizeTask =
             id: task.id,
             title: selectLocalizedText(locale, task.title),
             description: selectLocalizedText(locale, task.description),
-            taxonomyTermReferences: task.taxonomyTermReferences,
+            taxonomyTermReferences: task.taxonomyTerms,
             category: task.category,
             importance: task.importance,
             tags: task.tags,

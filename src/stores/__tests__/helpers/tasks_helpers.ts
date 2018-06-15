@@ -66,7 +66,7 @@ export class TaskBuilder {
             id: this.id,
             title: this.createLocalizedText(this.title),
             description: this.createLocalizedText(this.description),
-            taxonomyTermReferences: this.taxonomyTerms,
+            taxonomyTerms: this.taxonomyTerms,
             tags: this.tags,
             category: this.category,
             importance: this.importance,
