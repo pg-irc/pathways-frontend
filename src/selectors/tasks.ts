@@ -1,8 +1,13 @@
 import * as stores from '../stores/tasks';
+import * as app from '../application/store';
 import { selectLocalizedText } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
 import * as R from 'ramda';
+import { selectRoute } from './route';
+import { ExploreTaxonomyId } from '../stores/taxonomies';
+import { Page } from '../stores/page_switcher';
+import { ExploreSection } from '../stores/explore';
 
 export interface Task {
     readonly id: string;
@@ -75,3 +80,45 @@ const validateOneResultWasFound =
         }
         return userTasks[0];
     });
+
+// TODO move to route
+const selectCurrentExploreSectionId = (store: app.Store): stores.Id => {
+    const route = selectRoute(store);
+    if (route.pageType !== Page.ExploreSection) {
+        throw new Error('The current route is not an explore section');
+    }
+    return route.pageId;
+};
+
+// TODO move to explore
+const selectCurrentExploreSection = (store: app.Store): ExploreSection => {
+    const sectionId = selectCurrentExploreSectionId(store);
+    return store.applicationState.exploreSectionsInStore.sections[sectionId];
+};
+
+export const selectTasksForCurrentExploreSection = (store: app.Store): ReadonlyArray<Task> => {
+    const exploreSection = selectCurrentExploreSection(store);
+    const taskMap = store.applicationState.tasksInStore.taskMap;
+    return findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, taskMap);
+};
+
+// TODO move to taxonomy
+// TODO take taxonomy id as argument, don't assume one return value
+// TODO pick out taxonomyTerms property, making this more generic?
+const getExploreTaxonomyTerms = R.filter(R.propEq('taxonomyId', ExploreTaxonomyId));
+
+// TODO move to detail
+// TODO take taxonomy id as argument, don't assume one return value
+export const findTasksByExploreTaxonomyTerm =
+    (needle: ReadonlyArray<TaxonomyTermReference>, haystack: stores.TaskMap): ReadonlyArray<Task> => {
+        const needleTerms = getExploreTaxonomyTerms(needle);
+
+        const termMatches = (task: stores.Task): boolean => {
+            const haystackTerms = getExploreTaxonomyTerms(task.taxonomyTerms);
+            const commonTerms = R.intersection(needleTerms, haystackTerms);
+            return R.length(commonTerms) > 0;
+        };
+
+        const findTasks = R.compose(R.values, R.pickBy(termMatches));
+        return findTasks(haystack);
+    };
