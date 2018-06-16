@@ -2,6 +2,7 @@ import * as stores from '../stores/tasks';
 import { selectLocalizedText } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
+import * as R from 'ramda';
 
 export interface Task {
     readonly id: string;
@@ -60,14 +61,17 @@ export const selectTaskById = (locale: Locale, store: stores.Store, taskId: stor
     return denormalizeTask(locale, taskMap[taskId], taskUserSettings);
 };
 
-export const selectTaskUserSettingsByTaskId = (store: stores.Store, taskId: stores.Id): stores.TaskUserSettings => {
-    const { taskUserSettingsMap }: stores.Store = store;
-    const id: stores.Id =
-        Object.keys(taskUserSettingsMap).find((key: string) => (
-            taskUserSettingsMap[key].taskId === taskId
-        ));
-    if (id === undefined) {
-        throw new Error(`Could not find TaskUserSettings for task id: ${taskId}`);
-    }
-    return taskUserSettingsMap[id];
-};
+export const selectTaskUserSettingsByTaskId =
+    (store: stores.Store, taskId: stores.Id): stores.TaskUserSettings => {
+        const validate = validateOneResultWasFound(taskId);
+        const getUserTask = R.compose(validate, R.values, R.pickBy(R.propEq('taskId', taskId)));
+        return getUserTask(store.taskUserSettingsMap);
+    };
+
+const validateOneResultWasFound =
+    R.curry((taskId: string, userTasks: ReadonlyArray<stores.TaskUserSettings>): stores.TaskUserSettings => {
+        if (userTasks.length !== 1) {
+            throw new Error(`Could not find TaskUserSettings for task id: ${taskId}`);
+        }
+        return userTasks[0];
+    });
