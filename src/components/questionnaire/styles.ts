@@ -12,7 +12,7 @@ export const questionStyles = StyleSheet.create({
         fontSize: values.smallTextSize,
         color: colors.darkGrey,
         marginTop: 5,
-        marginLeft: 20,
+        marginLeft: 25,
     },
     continueButton: {
         backgroundColor: colors.darkGrey,
@@ -23,5 +23,15 @@ export const questionStyles = StyleSheet.create({
     buttonsWrapper: {
         marginTop: 10,
         marginLeft: 20,
+    },
+    expandedBG: {
+        borderRadius: 30,
+        backgroundColor: colors.darkGrey,
+        marginRight: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
+    },
+    expandedText: {
+        color: colors.white,
     },
 });
