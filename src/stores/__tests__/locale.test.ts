@@ -1,18 +1,10 @@
 // tslint:disable:no-expression-statement no-let
 import * as locale from '../locale';
 import * as constants from '../../application/constants';
-import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
+import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { LocaleInfoBuilder, LocaleStoreBuilder } from './helpers/locale_helpers';
-import { openLocaleSwitcher } from '../locale/open_locale_switcher';
 
 const aLocaleCode = aString();
-
-describe('opening the locale switcher', () => {
-    it('should create action with type OPEN_LOCALE_SWITCHER', () => {
-        const theAction = openLocaleSwitcher(aBoolean());
-        expect(theAction.type).toBe(constants.OPEN_LOCALE_SWITCHER);
-    });
-});
 
 describe('the setLocaleAction for', () => {
 
@@ -112,16 +104,6 @@ describe('the reducer', () => {
         const theOriginalStore = new LocaleStoreBuilder().build();
         const theNewStore = locale.reducer(theOriginalStore, undefined);
         expect(theNewStore).toBe(theOriginalStore);
-    });
-
-    it('when called with OPEN_LOCALE_SWITCHER should return store with localeSwitcherDrawerOpen === action.payload.open', () => {
-        const theStore = locale.reducer();
-        const theAction = {
-            type: constants.OPEN_LOCALE_SWITCHER as typeof constants.OPEN_LOCALE_SWITCHER,
-            payload: { open: true },
-        };
-        const theNewStore = locale.reducer(theStore, theAction);
-        expect(theNewStore.localeSwitcherOpen).toBe(theAction.payload.open);
     });
 
     it('should default to build a store with a undefined locale code', () => {

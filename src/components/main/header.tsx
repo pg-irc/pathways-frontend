@@ -11,11 +11,14 @@ export interface Props {
 
 export interface Actions {
     readonly goBack: () => void;
-    readonly openLocaleSwitcher: () => void;
 }
 
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    const { canGoBack, goBack, openLocaleSwitcher, currentLocale }: Props & Actions = props;
+export interface UiActions {
+    readonly onLanguageSelect: () => void;
+}
+
+export const Component: React.StatelessComponent<Props & Actions & UiActions> = (props: Props & Actions & UiActions): JSX.Element => {
+    const { canGoBack, goBack, onLanguageSelect, currentLocale }: Props & Actions & UiActions = props;
     return (
         <Header>
             <Left>
@@ -27,7 +30,7 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
                 <Title>Pathways</Title>
             </Body>
             <Right>
-                <CurrentLocale onPress={openLocaleSwitcher} locale={currentLocale} />
+                <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
             </Right>
         </Header>
     );

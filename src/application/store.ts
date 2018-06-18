@@ -16,8 +16,26 @@ import zhMessages from '../../locale/zh/messages';
 // tslint:disable-next-line:no-expression-statement
 LocaleInfoManager.register([
     { code: 'en', label: 'English', catalog: enMessages, isRTL: false },
-    { code: 'ar', label: 'Arabic', catalog: arMessages, isRTL: true },
-    { code: 'zh', label: 'Chinese', catalog: zhMessages, isRTL: false },
+    { code: 'ar', label: 'عربى', catalog: arMessages, isRTL: true },
+    { code: 'zh', label: '中文', catalog: zhMessages, isRTL: false },
+    { code: 'a', label: 'A', catalog: enMessages, isRTL: false },
+    { code: 'b', label: 'B', catalog: arMessages, isRTL: true },
+    { code: 'c', label: 'C', catalog: zhMessages, isRTL: false },
+    { code: 'd', label: 'D', catalog: enMessages, isRTL: false },
+    { code: 'e', label: 'E', catalog: arMessages, isRTL: true },
+    { code: 'f', label: 'F', catalog: zhMessages, isRTL: false },
+    { code: 'g', label: 'G', catalog: enMessages, isRTL: false },
+    { code: 'h', label: 'H', catalog: arMessages, isRTL: true },
+    { code: 'i', label: 'I', catalog: zhMessages, isRTL: false },
+    { code: 'j', label: 'J', catalog: enMessages, isRTL: false },
+    { code: 'k', label: 'K', catalog: arMessages, isRTL: true },
+    { code: 'l', label: 'L', catalog: zhMessages, isRTL: false },
+    { code: 'm', label: 'M', catalog: enMessages, isRTL: false },
+    { code: 'n', label: 'N', catalog: arMessages, isRTL: true },
+    { code: 'o', label: 'O', catalog: zhMessages, isRTL: false },
+    { code: 'p', label: 'P', catalog: enMessages, isRTL: false },
+    { code: 'q', label: 'Q', catalog: arMessages, isRTL: true },
+    { code: 'r', label: 'R', catalog: zhMessages, isRTL: false },
 ]);
 
 export type Store = { readonly applicationState: StoreForApplicationState };
