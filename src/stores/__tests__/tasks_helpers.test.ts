@@ -1,10 +1,9 @@
-// tslint:disable:no-expression-statement
-// tslint:disable:no-let
+// tslint:disable:no-expression-statement no-let
 
 import {
     TaskBuilder,
     TaskUserSettingsBuilder,
-    buildNormalizedStore ,
+    buildNormalizedStore,
 } from './helpers/tasks_helpers';
 import * as stores from '../../stores/tasks';
 import { aString, aBoolean, aNumber } from '../../application/__tests__/helpers/random_test_values';
@@ -58,7 +57,7 @@ describe('tasks test helpers', () => {
             let taskId: string;
 
             beforeEach(() => {
-               taskId = aString();
+                taskId = aString();
             });
 
             test('task id property', () => {

@@ -1,5 +1,4 @@
-// tslint:disable:no-expression-statement
-// tslint:disable:readonly-array
+// tslint:disable:no-expression-statement readonly-array
 
 import { computeUniqueKeyForSections } from '../compute_unique_key_for_sections';
 import { aString } from '../../../application/__tests__/helpers/random_test_values';

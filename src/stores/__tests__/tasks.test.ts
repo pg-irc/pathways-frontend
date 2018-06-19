@@ -1,10 +1,9 @@
-// tslint:disable:no-expression-statement
-// tslint:disable:no-let
+// tslint:disable:no-expression-statement no-let
 
 import {
     TaskBuilder,
     TaskUserSettingsBuilder,
-    buildNormalizedStore ,
+    buildNormalizedStore,
 } from '../../stores/__tests__/helpers/tasks_helpers';
 import * as stores from '../tasks';
 

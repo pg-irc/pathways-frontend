@@ -1,8 +1,8 @@
+// tslint:disable:no-let no-expression-statement
+
 import { ExploreSection, denormalizeSections } from '../explore';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-
-// tslint:disable:no-let no-expression-statement
 
 describe('denormalizing explore section', () => {
     const locale = new LocaleBuilder().build();
