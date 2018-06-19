@@ -3,16 +3,13 @@
 import { findTasksByExploreTaxonomyTerm } from '../tasks';
 import { ExploreTaxonomyId, TaxonomyTermReference } from '../../stores/taxonomies';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { TaskBuilder, TaskUserSettingsBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
-import { TaskMap, TaskUserSettingsMap } from '../../stores/tasks';
-import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
+import { TaskMap } from '../../stores/tasks';
 
 describe('find task by explore taxonomy term', () => {
     let exploreTerm: TaxonomyTermReference;
     let taskId: string;
     let tasks: TaskMap;
-    let userTasks: TaskUserSettingsMap;
-    const locale = new LocaleBuilder().build();
 
     beforeEach(() => {
         exploreTerm = {
@@ -23,14 +20,10 @@ describe('find task by explore taxonomy term', () => {
         tasks = {
             [taskId]: new TaskBuilder().withId(taskId).withTaxonomyTerm(exploreTerm).build(),
         };
-        const userTaskId = aString();
-        userTasks = {
-            [userTaskId]: new TaskUserSettingsBuilder(taskId).withId(userTaskId).build(),
-        };
     });
 
     it('should return a task tagged with the given taxonomy term', () => {
-        const found = findTasksByExploreTaxonomyTerm(locale, [exploreTerm], tasks, userTasks);
+        const found = findTasksByExploreTaxonomyTerm([exploreTerm], tasks);
         expect(found[0].id).toBe(taskId);
     });
 
@@ -39,24 +32,25 @@ describe('find task by explore taxonomy term', () => {
             taxonomyId: ExploreTaxonomyId,
             taxonomyTermId: aString(),
         };
-        const found = findTasksByExploreTaxonomyTerm(locale, [aDifferentExploreTerm], tasks, userTasks);
+        const found = findTasksByExploreTaxonomyTerm([aDifferentExploreTerm], tasks);
         expect(found).toHaveLength(0);
     });
 
     it('should not return a task tagged with non-explore taxonomy term', () => {
+        const aDifferentTaxonomyId = aString();
         const aNonExploreTerm = {
-            taxonomyId: aString(),
-            taxonomyTermId: aString(),
+            taxonomyId: aDifferentTaxonomyId,
+            taxonomyTermId: exploreTerm.taxonomyTermId,
         };
         tasks = {
             [taskId]: new TaskBuilder().withId(taskId).withTaxonomyTerm(aNonExploreTerm).build(),
         };
-        const found = findTasksByExploreTaxonomyTerm(locale, [aNonExploreTerm], tasks, userTasks);
+        const found = findTasksByExploreTaxonomyTerm([aNonExploreTerm], tasks);
         expect(found).toHaveLength(0);
     });
 
     it('should not return a task when called with no expore terms', () => {
-        const found = findTasksByExploreTaxonomyTerm(locale, [], tasks, userTasks);
+        const found = findTasksByExploreTaxonomyTerm([], tasks);
         expect(found).toHaveLength(0);
     });
 });

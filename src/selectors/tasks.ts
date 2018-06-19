@@ -43,7 +43,7 @@ export const selectAllSavedTasks = (locale: Locale, store: stores.Store): Readon
     const { savedTasksList, taskMap }: stores.Store = store;
     return savedTasksList.map((taskId: stores.Id) => {
         const task: stores.Task = taskMap[taskId];
-        const taskUserSettings = selectTaskUserSettingsByTaskId(store.taskUserSettingsMap, task.id);
+        const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, task.id);
         return denormalizeTask(locale, task, taskUserSettings);
     });
 };
@@ -52,7 +52,7 @@ export const selectAllSuggestedTasks = (locale: Locale, store: stores.Store): Re
     const { suggestedTasksList, taskMap }: stores.Store = store;
     return suggestedTasksList.map((taskId: stores.Id) => {
         const task: stores.Task = taskMap[taskId];
-        const taskUserSettings = selectTaskUserSettingsByTaskId(store.taskUserSettingsMap, task.id);
+        const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, task.id);
         return denormalizeTask(locale, task, taskUserSettings);
     });
 };
@@ -62,11 +62,11 @@ export const selectTaskById = (locale: Locale, store: stores.Store, taskId: stor
     if (taskMap[taskId] === undefined) {
         throw new Error(`Could not find Task for task id: ${taskId}`);
     }
-    const taskUserSettings = selectTaskUserSettingsByTaskId(store.taskUserSettingsMap, taskId);
+    const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, taskId);
     return denormalizeTask(locale, taskMap[taskId], taskUserSettings);
 };
 
-export const selectTaskUserSettingsByTaskId =
+export const findTaskUserSettingsByTaskId =
     (taskUserSettingsMap: stores.TaskUserSettingsMap, taskId: stores.Id): stores.TaskUserSettings => {
         const validate = validateOneResultWasFound(taskId);
         const getUserTask = R.compose(validate, R.values, R.pickBy(R.propEq('taskId', taskId)));
@@ -101,19 +101,26 @@ export const selectTasksForCurrentExploreSection = (store: app.Store): ReadonlyA
     const exploreSection = selectCurrentExploreSection(store);
     const tasks = store.applicationState.tasksInStore.taskMap;
     const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
-    return findTasksByExploreTaxonomyTerm(locale, exploreSection.taxonomyTerms, tasks, userTasks);
+    const matchingTasks = findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
+
+    return R.map(buildTaskForView(locale, userTasks), matchingTasks);
 };
+
+// TODO move to detail/task
+const buildTaskForView = R.curry((locale: Locale, userTasks: stores.TaskUserSettingsMap, task: stores.Task): Task => {
+    const userTask = findTaskUserSettingsByTaskId(userTasks, task.id);
+    return denormalizeTask(locale, task, userTask);
+});
 
 // TODO move to taxonomy
 // TODO take taxonomy id as argument, don't assume one return value
 // TODO pick out taxonomyTerms property, making this more generic?
 const getExploreTaxonomyTerms = R.filter(R.propEq('taxonomyId', ExploreTaxonomyId));
 
-// TODO move to detail
+// TODO move to detail/task
 // TODO take taxonomy id as argument, don't assume one return value
 export const findTasksByExploreTaxonomyTerm =
-    (locale: Locale, needle: ReadonlyArray<TaxonomyTermReference>,
-        tasks: stores.TaskMap, userTasks: stores.TaskUserSettingsMap): ReadonlyArray<Task> => {
+    (needle: ReadonlyArray<TaxonomyTermReference>, tasks: stores.TaskMap): ReadonlyArray<stores.Task> => {
 
         const needleTerms = getExploreTaxonomyTerms(needle);
 
@@ -123,15 +130,7 @@ export const findTasksByExploreTaxonomyTerm =
             return R.length(commonTerms) > 0;
         };
 
-        const buildTaskForView = (task: stores.Task): Task => {
-            const userTask = selectTaskUserSettingsByTaskId(userTasks, task.id);
-            return denormalizeTask(locale, task, userTask);
-        };
+        const findTasks = R.compose(R.values, R.pickBy(matchesTaxonomyTerm));
 
-        const findTasks = R.compose(
-            R.values,
-            R.pickBy(matchesTaxonomyTerm),
-        );
-
-        return R.map(buildTaskForView, findTasks(tasks));
+        return findTasks(tasks);
     };

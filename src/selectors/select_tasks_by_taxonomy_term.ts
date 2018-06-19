@@ -1,7 +1,7 @@
 import { Locale } from '../locale';
 import { TaxonomyTermReference } from './taxonomies';
 import { Store, Task as StoreTask } from '../stores/tasks';
-import { denormalizeTask, Task as SelectorTask, selectTaskUserSettingsByTaskId } from './tasks';
+import { denormalizeTask, Task as SelectorTask, findTaskUserSettingsByTaskId } from './tasks';
 import * as R from 'ramda';
 
 export const selectTasksByTaxonomyTerm =
@@ -16,7 +16,7 @@ export const selectTasksByTaxonomyTerm =
         );
 
         const denormalize = (task: StoreTask): SelectorTask => (
-            denormalizeTask(locale, task, selectTaskUserSettingsByTaskId(taskStore.taskUserSettingsMap, task.id))
+            denormalizeTask(locale, task, findTaskUserSettingsByTaskId(taskStore.taskUserSettingsMap, task.id))
         );
 
         return R.map(denormalize, R.values(R.filter(hasMatch, taskStore.taskMap)));
