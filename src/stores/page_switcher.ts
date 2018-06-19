@@ -47,9 +47,10 @@ export const setTaskDetailPage = (taskId: Id) => (
 export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 
 // tslint:disable-next-line:typedef
-const buildDefaultStore = () => (
-    { currentPage: initialPage, pageParameters: {} }
-);
+const buildDefaultStore = () => ({
+    currentPage: initialPage,
+    pageParameters: {},
+});
 
 export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitcherAction): Store => {
     if (!action) {

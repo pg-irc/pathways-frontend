@@ -16,8 +16,8 @@ import zhMessages from '../../locale/zh/messages';
 // tslint:disable-next-line:no-expression-statement
 LocaleInfoManager.register([
     { code: 'en', label: 'English', catalog: enMessages, isRTL: false },
-    { code: 'ar', label: 'Arabic', catalog: arMessages, isRTL: true },
-    { code: 'zh', label: 'Chinese', catalog: zhMessages, isRTL: false },
+    { code: 'ar', label: 'عربى', catalog: arMessages, isRTL: true },
+    { code: 'zh', label: '中文', catalog: zhMessages, isRTL: false },
 ]);
 
 export type Store = { readonly applicationState: StoreForApplicationState };

@@ -8,7 +8,8 @@ import { LocaleInfo } from '../../locale';
 export { SetLocale };
 export { LoadCurrentLocale };
 
-export type ReducerActions = SetLocale.Request | SetLocale.Result | LoadCurrentLocale.Request | LoadCurrentLocale.Result;
+export type ReducerActions = SetLocale.Request | SetLocale.Result |
+            LoadCurrentLocale.Request | LoadCurrentLocale.Result;
 
 export interface Store {
     readonly availableLocales: ReadonlyArray<LocaleInfo>;

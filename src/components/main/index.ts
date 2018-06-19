@@ -9,6 +9,7 @@ import * as pageSwitcher from '../../stores/page_switcher';
 import { selectLocale } from '../../selectors/locale';
 
 const mapStateToProps = (store: Store): LoaderProps & main.Props => ({
+    currentLocale: selectLocale(store),
     loading: isApplicationLoading(store),
     locale: selectLocale(store),
     currentPageInProps: store.applicationState.currentPageInStore.currentPage,
