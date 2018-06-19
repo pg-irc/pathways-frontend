@@ -1,34 +1,30 @@
 // tslint:disable:no-let no-expression-statement
+import { denormalizeSections } from '../explore';
+import { ExploreSectionMap } from '../../stores/explore';
 
-import { ExploreSection, denormalizeSections } from '../explore';
-import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import { aString } from '../../application/__tests__/helpers/random_test_values';
+describe('denormalize all explore sections', () => {
 
-describe('denormalizing explore section', () => {
-    const locale = new LocaleBuilder().build();
-    let sections: ReadonlyArray<ExploreSection>;
-    const name = aString();
-    const icon = aString();
-
-    beforeEach(() => {
-        const id = aString();
-        const exploreSectionMap = {
-            [id]: {
-                id,
-                icon,
-                name: {
-                    [locale.code]: name,
-                },
+    const theStore: ExploreSectionMap = {
+        's1': {
+            id: 's1',
+            name: {
+                'en': 'Settling in',
+                'ar': 'تسوية في',
+                'zh': '定居',
             },
-        };
-        sections = denormalizeSections(locale, exploreSectionMap);
-    });
+            icon: 'sign-direction',
+        },
+    };
 
-    it('should build section with localized name', () => {
-        expect(sections[0].name).toBe(name);
-    });
+    const theLocale = { code: 'en', fallback: 'ar' };
 
-    it('should build section with icon', () => {
-        expect(sections[0].icon).toBe(icon);
+    it('should return object with id', () => {
+        expect(denormalizeSections(theLocale, theStore)[0].id).toBe('s1');
+    });
+    it('should return object with name in correct locale', () => {
+        expect(denormalizeSections(theLocale, theStore)[0].name).toBe('Settling in');
+    });
+    it('should return object with icon id', () => {
+        expect(denormalizeSections(theLocale, theStore)[0].icon).toBe('sign-direction');
     });
 });
