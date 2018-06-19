@@ -121,7 +121,7 @@ describe('the reducer', () => {
             expect(theNewStore.currentPage).toBe(pageSwitcher.Page.ExploreSection);
         });
         it('should return a store with the current section id', () => {
-            expect(theNewStore.pageParameters).toEqual({ sectionId: theId });
+            expect(theNewStore.pageParameters).toEqual(theId);
         });
     });
 
@@ -143,7 +143,7 @@ describe('the reducer', () => {
             expect(theNewStore.currentPage).toBe(pageSwitcher.Page.TaskDetail);
         });
         it('should return store with the current task id', () => {
-            expect(theNewStore.pageParameters).toEqual({ taskId: theId });
+            expect(theNewStore.pageParameters).toEqual(theId);
         });
     });
 

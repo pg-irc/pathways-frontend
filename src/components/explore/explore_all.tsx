@@ -44,7 +44,8 @@ interface ButtonRowProps {
 const RowOfSectionButtons = (props: ButtonRowProps & ExploreAllActions): JSX.Element => (
     <Row>
         {props.sections.map((section: ExploreSection) => (
-            <SectionButton key={section.id}
+            <SectionButton
+                key={section.id}
                 id={section.id}
                 name={section.name}
                 icon={section.icon}

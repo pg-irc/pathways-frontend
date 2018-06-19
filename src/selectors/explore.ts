@@ -25,11 +25,11 @@ export const denormalizeSections = (locale: Locale, store: model.ExploreSectionM
     return R.map(buildSection, R.keys(store));
 };
 
-// TODO this needs to take an app store
-// TODO this should pull out the locale itself
-// TODO this needs to pull out the relevant ids from the routing state in the store
-export const selectExploreSectionWithId = (locale: Locale, store: model.Store, sectionId: model.Id): ExploreSection => {
-    const section = store.sections[sectionId];
+export const selectCurrentExploreSection = (store: app.Store): ExploreSection => {
+    const locale = selectLocale(store);
+    const sectionId = store.applicationState.currentPageInStore.pageParameters;
+    const allSections = store.applicationState.exploreSectionsInStore.sections;
+    const section = allSections[sectionId];
     return {
         id: section.id,
         name: selectLocalizedText(locale, section.name),
