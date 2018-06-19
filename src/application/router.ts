@@ -16,7 +16,7 @@ const getRouteFromPage = (page: Page): string => {
         // This is how our route "should" be.
         // Currently in discussions on why this doesn't work.
         // case Page.TaskDetail:
-        //     return '/task-detail/:taskId';
+        //    return '/task-detail/:taskId';
         default:
             throw unsupportedPageError(page);
     }
