@@ -12,6 +12,6 @@ export interface ExploreSectionActions {
 type AllExploreSectionProps = ExploreSectionProps & ExploreSectionActions;
 
 export const ExploreSectionComponent: React.StatelessComponent<AllExploreSectionProps> =
-    (_: AllExploreSectionProps): JSX.Element => {
-        return <Text>ExploreSectionComponent</Text>;
+    (props: AllExploreSectionProps): JSX.Element => {
+        return <Text>{props.section.name}</Text>;
     };

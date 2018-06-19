@@ -38,7 +38,7 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
             // TODO use the connected component and have the selector pull
             // the currently selected section out from routing info in the store
             return <ExploreSectionComponent
-                section={selectExploreSectionWithId(props.locale, props.exploreStore, props.currentPageParameters.taskId)}
+                section={selectExploreSectionWithId(props.locale, props.exploreStore, props.currentPageParameters.sectionId)}
             />;
 
         case store.Page.TaskDetail:
