@@ -20,10 +20,12 @@ export type SetQuestionnairePageAction = Readonly<ReturnType<typeof setQuestionn
 export type SetPlanPageAction = Readonly<ReturnType<typeof setPlanPage>>;
 export type SetExplorePageAction = Readonly<ReturnType<typeof setExplorePage>>;
 export type SetTaskDetailPageAction = Readonly<ReturnType<typeof setTaskDetailPage>>;
+export type SetExploreSectionPageAction = Readonly<ReturnType<typeof setExploreSectionPage>>;
 type PageSwitcherAction = SetQuestionnairePageAction |
     SetPlanPageAction |
     SetExplorePageAction |
-    SetTaskDetailPageAction;
+    SetTaskDetailPageAction |
+    SetExploreSectionPageAction;
 
 // tslint:disable-next-line:typedef
 export const setQuestionnairePage = () => (
@@ -45,6 +47,11 @@ export const setTaskDetailPage = (taskId: Id) => (
     helpers.makeAction(constants.SET_TASK_DETAIL_PAGE, { taskId })
 );
 
+// tslint:disable-next-line:typedef
+export const setExploreSectionPage = (sectionId: Id) => (
+    helpers.makeAction(constants.SET_EXPLORE_SECTION_PAGE, { sectionId })
+);
+
 export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 
 // tslint:disable-next-line:typedef
@@ -64,6 +71,12 @@ export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitche
             return { ...store, currentPage: Page.MyPlan };
         case constants.SET_EXPLORE_PAGE:
             return { ...store, currentPage: Page.ExploreAll };
+        case constants.SET_EXPLORE_SECTION_PAGE:
+            return {
+                ...store,
+                currentPage: Page.ExploreSection,
+                pageParameters: { sectionId: action.payload.sectionId },
+            };
         case constants.SET_TASK_DETAIL_PAGE:
             return {
                 ...store,
