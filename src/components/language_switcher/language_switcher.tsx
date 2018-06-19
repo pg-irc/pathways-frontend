@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text, I18nManager, SectionList, SectionBase } from 'react-native';
+import { Text, SectionList, SectionBase } from 'react-native';
 import { Trans } from '@lingui/react';
 import { LocaleInfo } from '../../locale/types';
-import { ListItem, Left, Right, Icon, Container, Content, Header, Title, Body } from 'native-base';
+import { ListItem, Container, Content, Header, Title, Body, Left, Right, Icon } from 'native-base';
 
 export interface Props {
     readonly currentLocale: LocaleInfo;
@@ -17,10 +17,8 @@ export type LanguageSwitcherProps = Props & Actions;
 
 export const LanguageSwitcher = (props: LanguageSwitcherProps): JSX.Element => {
     const { currentLocale, availableLocales, setLocale }: LanguageSwitcherProps = props;
-    const currentLocaleSection: SectionListData = {
-        ...currentLocale,
-        data: [ ...availableLocales.map((locale: LocaleInfo) => ({ ...locale, setLocale })) ]
-    };
+    const localeListItemBuilder = createLocaleListItemBuilder(setLocale);
+    const currentLocaleSection = buildLocaleSectionListData(currentLocale, availableLocales, localeListItemBuilder);
 
     return (
         <Container style={{ height: '100%', backgroundColor: '#FFF' }}>
@@ -29,7 +27,6 @@ export const LanguageSwitcher = (props: LanguageSwitcherProps): JSX.Element => {
             </Header>
             <Content>
                 <SectionList
-                    initialNumToRender={10}
                     stickySectionHeadersEnabled={true}
                     keyExtractor={(item: LocaleInfo): string => item.code}
                     sections={[currentLocaleSection]}
@@ -51,22 +48,40 @@ type SectionItemInfo = {
 type SectionListData = LocaleInfo & SectionBase<LocaleListItem>;
 
 type LocaleListItem = LocaleInfo & {
-    readonly setLocale: (code: string) => void;
+    readonly onPress: () => void;
 };
+
+type LocaleListItemBuilder = (locale: LocaleInfo) =>  LocaleListItem;
 
 function renderSectionHeader({ section }: SectionHeaderInfo): JSX.Element {
     return (
         <ListItem key={section.code} itemDivider>
-            <Text style={{ fontWeight: 'bold' }}>{section.label}</Text>
+            <Left>
+                <Text style={{ fontWeight: 'bold' }}>{section.label}</Text>
+            </Left>
+            <Right><Icon name='checkmark'/></Right>
         </ListItem>
     );
 }
 
 function renderLocaleListItem({ item }: SectionItemInfo): JSX.Element {
     return (
-        <ListItem key={item.code} onPress={(): void => item.setLocale(item.code)}>
-            <Left><Text>{item.label}</Text></Left>
-            <Right><Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} /></Right>
+        <ListItem key={item.code} onPress={item.onPress}>
+            <Text>{item.label}</Text>
         </ListItem>
     );
+}
+
+function createLocaleListItemBuilder(onPress: (code: string) => void): LocaleListItemBuilder {
+    return (locale: LocaleInfo): LocaleListItem => {
+        return { ...locale, onPress: (): void => onPress(locale.code) };
+    };
+}
+
+function buildLocaleSectionListData(
+    sectionLocale: LocaleInfo,
+    locales: ReadonlyArray<LocaleInfo>,
+    itemBuilder: LocaleListItemBuilder,
+): SectionListData {
+    return { ...sectionLocale, data: [ ...locales.map(itemBuilder) ] };
 }
