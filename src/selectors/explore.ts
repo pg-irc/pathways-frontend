@@ -15,7 +15,7 @@ export const selectExploreSections = (store: app.Store): ReadonlyArray<ExploreSe
     return denormalizeSections(locale, sections);
 };
 
-const denormalizeSections = (locale: Locale, store: model.ExploreSectionMap): ReadonlyArray<ExploreSection> => {
+export const denormalizeSections = (locale: Locale, store: model.ExploreSectionMap): ReadonlyArray<ExploreSection> => {
     const buildSection = (id: string): ExploreSection => {
         const name = selectLocalizedText(locale, store[id].name);
         const icon = store[id].icon;

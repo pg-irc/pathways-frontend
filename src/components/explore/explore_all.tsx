@@ -5,6 +5,7 @@ import { Trans } from '@lingui/react';
 import * as R from 'ramda';
 import { exploreStyles } from './styles';
 import { computeUniqueKeyForSections } from './compute_unique_key_for_sections';
+import { applicationStyles } from '../../application/styles';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -18,8 +19,8 @@ type AllExploreProps = ExploreAllProps & ExploreAllActions;
 export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
     (props: AllExploreProps): JSX.Element => {
         const sectionsGroupedIntoThrees = R.splitEvery(3, props.sections);
-        return <Content>
-            <Text>Learn about</Text>
+        return <Content padder>
+            <Text style={applicationStyles.pageTitle}>Learn about:</Text>
             <Grid>
                 {sectionsGroupedIntoThrees.map((sections: ReadonlyArray<ExploreSection>) => (
                     <Row key={computeUniqueKeyForSections(sections)}>
