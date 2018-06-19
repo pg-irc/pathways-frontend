@@ -13,6 +13,7 @@ export const questionStyles = StyleSheet.create({
         color: colors.darkGrey,
         marginTop: 5,
         marginLeft: 25,
+        textAlign: 'left',
     },
     continueButton: {
         backgroundColor: colors.darkGrey,
