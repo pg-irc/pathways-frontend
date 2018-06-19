@@ -7,6 +7,7 @@ export type Questionnaire = ReadonlyArray<Question>;
 
 export interface Question {
     readonly id: model.Id;
+    readonly number: number;
     readonly text: string;
     readonly explanation?: string;
     readonly answers: ReadonlyArray<Answer>;
@@ -27,21 +28,15 @@ export const selectQuestionnaire = (appStore: app.Store): Questionnaire => {
 export const denormalizeQuestions = (locale: Locale, modelStore: model.Store): Questionnaire => {
     const { questions, answers }: model.Store = modelStore;
 
-    return Object.keys(questions).map((key: string) => {
+    return Object.keys(questions).map((key: string, index: number) => {
         const question: model.Question = questions[key];
-        return question.explanation ?
-            {
-                id: question.id,
-                text: selectLocalizedText(locale, question.text),
-                explanation: selectLocalizedText(locale, question.explanation),
-                answers: selectAnswersForQuestion(locale, question, answers),
-            }
-            :
-            {
-                id: question.id,
-                text: selectLocalizedText(locale, question.text),
-                answers: selectAnswersForQuestion(locale, question, answers),
-            };
+        return {
+            id: question.id,
+            number: index + 1,
+            text: selectLocalizedText(locale, question.text),
+            explanation: question.explanation ? selectLocalizedText(locale, question.explanation) : undefined,
+            answers: selectAnswersForQuestion(locale, question, answers),
+        };
     });
 };
 

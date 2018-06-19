@@ -10,20 +10,19 @@ import { Collapser } from '../collapser/collapser';
 
 export interface Props {
     readonly question: selector.Question;
-    readonly questionNumber: number;
 }
 
 export type Actions = QuestionnaireActions;
 
 export const Question: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    const { question, questionNumber, selectAnswer }: Props & Actions = props;
+    const { question, selectAnswer }: Props & Actions = props;
     return (
         <Collapser
-            collapsedHeader={getQuestionCollapsedHeader(questionNumber, question)}
-            expandedHeader={getQuestionExpandedHeader(questionNumber, question)}
+            collapsedHeader={getQuestionCollapsedHeader(question.number, question)}
+            expandedHeader={getQuestionExpandedHeader(question.number, question)}
             content={getQuestionContent(question, selectAnswer)}
             // TODO - This should likely be the next unaswered question in the questionnaire
-            initiallyCollapsed={questionNumber === 1 ? false : true }
+            initiallyCollapsed={question.number === 1 ? false : true }
         />
     );
 };

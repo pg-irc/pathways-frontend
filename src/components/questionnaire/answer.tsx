@@ -11,25 +11,32 @@ export interface Props {
 
 export type Actions = QuestionnaireActions;
 
+enum AnswerType {
+    CheckboxAnswer,
+    RadioAnswer,
+}
+
 export const Answer: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    return props.answer.acceptMultipleAnswers ? <CheckboxAnswer {...props} /> : <RadioAnswer {...props} />;
+    const answerType = props.answer.acceptMultipleAnswers ? AnswerType.CheckboxAnswer : AnswerType.RadioAnswer;
+    const onPress = (): SelectAnswerAction => props.selectAnswer(props.answer.id);
+    return (
+        <ListItem button noBorder onPress={onPress}>
+            <Body>
+                <Text>{props.answer.text}</Text>
+            </Body>
+            <Right>
+                {getComponentForAnswerType(props, answerType, onPress)}
+            </Right>
+        </ListItem>
+    );
 };
 
-const CheckboxAnswer: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
-    renderAnswer(props, <CheckBox checked={props.answer.isSelected} />)
-);
-
-const RadioAnswer: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
-    renderAnswer(props, <Radio selected={props.answer.isSelected} />)
-);
-
-const renderAnswer: React.StatelessComponent = (props: Props & Actions, component: JSX.Element): JSX.Element => (
-    <ListItem button noBorder onPress={(): SelectAnswerAction => props.selectAnswer(props.answer.id)}>
-        <Body>
-            <Text>{props.answer.text}</Text>
-        </Body>
-        <Right>
-            {component}
-        </Right>
-    </ListItem>
-);
+const getComponentForAnswerType = (props: Props, answerType: AnswerType, onPress: () => void): JSX.Element => {
+    switch (answerType) {
+        case AnswerType.CheckboxAnswer:
+            return <CheckBox checked={props.answer.isSelected} onPress={onPress} />;
+        case AnswerType.RadioAnswer:
+        default:
+            return <Radio selected={props.answer.isSelected} onPress={onPress} />;
+    }
+};

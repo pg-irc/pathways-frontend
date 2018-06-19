@@ -18,8 +18,8 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
         <Content padder>
             <Text style={applicationStyles.pageTitle}><Trans>Personalize My Plan</Trans></Text>
             <Text style={questionnaireStyles.introText}>Immigration can be overwhelming but we are here to help!</Text>
-            {props.questionnaire.map((question: selector.Question, index: number) => (
-                <Question key={question.id} question={question} questionNumber={index + 1} selectAnswer={props.selectAnswer} />
+            {props.questionnaire.map((question: selector.Question) => (
+                <Question key={question.id} question={question} selectAnswer={props.selectAnswer} />
             ))}
         </Content>
     </Container>
