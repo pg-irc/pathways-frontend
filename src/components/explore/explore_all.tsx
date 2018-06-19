@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { Content, Grid, Row, Col, Button, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore';
 import { Trans } from '@lingui/react';
