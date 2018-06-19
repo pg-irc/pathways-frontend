@@ -3,11 +3,9 @@ import * as app from '../application/store';
 import { selectLocalizedText, selectLocale } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
+import { pickCurrentExploreSection } from './explore';
+import * as taskDetails from './details/tasks';
 import * as R from 'ramda';
-import { selectRoute } from './route';
-import { ExploreTaxonomyId } from '../stores/taxonomies';
-import { Page } from '../stores/page_switcher';
-import { ExploreSection } from '../stores/explore';
 
 export interface Task {
     readonly id: string;
@@ -81,56 +79,18 @@ const validateOneResultWasFound =
         return userTasks[0];
     });
 
-// TODO move to route
-const selectCurrentExploreSectionId = (store: app.Store): stores.Id => {
-    const route = selectRoute(store);
-    if (route.pageType !== Page.ExploreSection) {
-        throw new Error('The current route is not an explore section');
-    }
-    return route.pageId;
-};
-
-// TODO move to explore
-const selectCurrentExploreSection = (store: app.Store): ExploreSection => {
-    const sectionId = selectCurrentExploreSectionId(store);
-    return store.applicationState.exploreSectionsInStore.sections[sectionId];
-};
-
 export const selectTasksForCurrentExploreSection = (store: app.Store): ReadonlyArray<Task> => {
     const locale = selectLocale(store);
-    const exploreSection = selectCurrentExploreSection(store);
+    const exploreSection = pickCurrentExploreSection(store);
     const tasks = store.applicationState.tasksInStore.taskMap;
     const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
-    const matchingTasks = findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
+
+    const matchingTasks = taskDetails.findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
 
     return R.map(buildTaskForView(locale, userTasks), matchingTasks);
 };
 
-// TODO move to detail/task
 const buildTaskForView = R.curry((locale: Locale, userTasks: stores.TaskUserSettingsMap, task: stores.Task): Task => {
     const userTask = findTaskUserSettingsByTaskId(userTasks, task.id);
     return denormalizeTask(locale, task, userTask);
 });
-
-// TODO move to taxonomy
-// TODO take taxonomy id as argument, don't assume one return value
-// TODO pick out taxonomyTerms property, making this more generic?
-const getExploreTaxonomyTerms = R.filter(R.propEq('taxonomyId', ExploreTaxonomyId));
-
-// TODO move to detail/task
-// TODO take taxonomy id as argument, don't assume one return value
-export const findTasksByExploreTaxonomyTerm =
-    (needle: ReadonlyArray<TaxonomyTermReference>, tasks: stores.TaskMap): ReadonlyArray<stores.Task> => {
-
-        const needleTerms = getExploreTaxonomyTerms(needle);
-
-        const matchesTaxonomyTerm = (task: stores.Task): boolean => {
-            const haystackTerms = getExploreTaxonomyTerms(task.taxonomyTerms);
-            const commonTerms = R.intersection(needleTerms, haystackTerms);
-            return R.length(commonTerms) > 0;
-        };
-
-        const findTasks = R.compose(R.values, R.pickBy(matchesTaxonomyTerm));
-
-        return findTasks(tasks);
-    };
