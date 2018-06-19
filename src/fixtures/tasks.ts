@@ -1,4 +1,5 @@
 import { LocalizedText } from '../locale';
+import { TaxTermIdetifyingPair } from './tax';
 
 export type Id = string;
 
@@ -6,6 +7,7 @@ export interface Task {
     readonly id: Id;
     readonly title: LocalizedText;
     readonly description: LocalizedText;
+    readonly taxTermIds: ReadonlyArray<TaxTermIdetifyingPair>;
     readonly tags: ReadonlyArray<string>; // i.e important, do soon, free etc.
     readonly category: string; // i.e. education, health, transportation etc.
     readonly importance: number;
@@ -50,6 +52,7 @@ export const buildTasksFixture = (): Store => {
                     'ar': 'وصف المثال.',
                     'zh': '示例描述。',
                 },
+                'taxTermIds': [],
                 'tags': ['important', 'do soon', 'free'],
                 'category': 'education',
                 'importance': 1,
@@ -66,6 +69,7 @@ export const buildTasksFixture = (): Store => {
                     'ar': 'وصف المثال.',
                     'zh': '示例描述。',
                 },
+                'taxTermIds': [],
                 'tags': ['important', 'do soon', 'free'],
                 'category': 'education',
                 'importance': 1,
@@ -82,6 +86,7 @@ export const buildTasksFixture = (): Store => {
                     'ar': 'وصف المثال.',
                     'zh': '示例描述。',
                 },
+                'taxTermIds': [],
                 'tags': ['important', 'do soon', 'free'],
                 'category': 'education',
                 'importance': 1,
@@ -98,6 +103,7 @@ export const buildTasksFixture = (): Store => {
                     'ar': 'وصف المثال.',
                     'zh': '示例描述。',
                 },
+                'taxTermIds': [],
                 'tags': ['important'],
                 'category': 'finance',
                 'importance': 1,
@@ -114,6 +120,7 @@ export const buildTasksFixture = (): Store => {
                     'ar': 'وصف المثال.',
                     'zh': '示例描述。',
                 },
+                'taxTermIds': [],
                 'tags': ['important'],
                 'category': 'employment',
                 'importance': 1,

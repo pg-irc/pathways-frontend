@@ -1,33 +1,37 @@
 import * as stores from '../stores/tasks';
 import { selectLocalizedText } from './locale';
 import { Locale } from '../locale/types';
+import { TaxTermIdetifyingPair } from './tax';
 
 export interface Task {
     readonly id: string;
     readonly title: string;
     readonly description: string;
+    readonly taxTermIds: ReadonlyArray<TaxTermIdetifyingPair>;
     readonly category: string;
     readonly importance: number;
+    // TODO remove
     readonly tags: ReadonlyArray<string>;
     readonly taskUserSettingsId: string;
     readonly starred: boolean;
     readonly completed: boolean;
 }
 
-export const denormalizeTask = (locale: Locale, task: stores.Task,
-        taskUserSettings: stores.TaskUserSettings): Task => (
-    {
-        id: task.id,
-        title: selectLocalizedText(locale, task.title),
-        description: selectLocalizedText(locale, task.description),
-        category: task.category,
-        importance: task.importance,
-        tags: task.tags,
-        taskUserSettingsId: taskUserSettings.id,
-        starred: taskUserSettings.starred,
-        completed: taskUserSettings.completed,
-    }
-);
+export const denormalizeTask =
+    (locale: Locale, task: stores.Task, taskUserSettings: stores.TaskUserSettings): Task => (
+        {
+            id: task.id,
+            title: selectLocalizedText(locale, task.title),
+            description: selectLocalizedText(locale, task.description),
+            taxTermIds: [], // TODO complete this
+            category: task.category,
+            importance: task.importance,
+            tags: task.tags,
+            taskUserSettingsId: taskUserSettings.id,
+            starred: taskUserSettings.starred,
+            completed: taskUserSettings.completed,
+        }
+    );
 
 export const selectAllSavedTasks = (locale: Locale, store: stores.Store): ReadonlyArray<Task> => {
     const { savedTasksList, taskMap }: stores.Store = store;

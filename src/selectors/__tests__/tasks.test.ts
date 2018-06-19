@@ -1,10 +1,7 @@
 // tslint:disable:no-expression-statement no-let no-any
 
-import {
-    TaskBuilder,
-    TaskUserSettingsBuilder,
-    buildNormalizedStore,
-} from '../../stores/__tests__/helpers/tasks_helpers';
+import { TaskBuilder, TaskUserSettingsBuilder, buildNormalizedStore }
+    from '../../stores/__tests__/helpers/tasks_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
