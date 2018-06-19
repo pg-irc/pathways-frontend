@@ -1,11 +1,9 @@
-// tslint:disable:no-expression-statement
-// tslint:disable:no-let
-// tslint:disable:no-any
+// tslint:disable:no-expression-statement no-let no-any
 
 import {
     TaskBuilder,
     TaskUserSettingsBuilder,
-    buildNormalizedStore ,
+    buildNormalizedStore,
 } from '../../stores/__tests__/helpers/tasks_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
@@ -15,7 +13,7 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 
 describe('tasks selector', () => {
 
-    describe ('denormalization', () => {
+    describe('denormalization', () => {
         let locale: Locale;
         let task: stores.Task;
         let taskUserSettings: stores.TaskUserSettings;
@@ -61,7 +59,7 @@ describe('tasks selector', () => {
         });
     });
 
-    describe('data retrieval', ()  => {
+    describe('data retrieval', () => {
         let store: stores.Store;
         let locale: Locale;
 

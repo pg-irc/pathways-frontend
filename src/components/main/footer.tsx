@@ -26,8 +26,8 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
                     <Text>My plan</Text>
                 </Button>
                 <Button vertical active={currentPageInProps === store.Page.ExploreAll} onPress={goToExplore}>
-                    <Icon active name='navigate' />
-                    <Text>Explore</Text>
+                    <Icon active name='apps' />
+                    <Text>Learn</Text>
                 </Button>
             </FooterTab>
         </Footer>

@@ -1,5 +1,4 @@
-// tslint:disable:no-expression-statement
-// tslint:disable:no-let
+// tslint:disable:no-expression-statement no-let
 
 import * as store from '../questionnaire';
 import * as helpers from './helpers/questionnaire_helpers';
