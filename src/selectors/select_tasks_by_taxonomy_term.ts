@@ -16,7 +16,7 @@ export const selectTasksByTaxonomyTerm =
         );
 
         const denormalize = (task: StoreTask): SelectorTask => (
-            denormalizeTask(locale, task, selectTaskUserSettingsByTaskId(taskStore, task.id))
+            denormalizeTask(locale, task, selectTaskUserSettingsByTaskId(taskStore.taskUserSettingsMap, task.id))
         );
 
         return R.map(denormalize, R.values(R.filter(hasMatch, taskStore.taskMap)));

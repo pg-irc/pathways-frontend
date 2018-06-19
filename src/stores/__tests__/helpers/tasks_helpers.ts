@@ -1,9 +1,4 @@
-// tslint:disable:readonly-keyword
-// tslint:disable:no-this
-// tslint:disable:no-expression-statement
-// tslint:disable:readonly-array
-// tslint:disable:no-class
-
+// tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import * as store from '../../tasks';
 import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';

@@ -43,9 +43,11 @@ export const ExploreSectionComponent: React.StatelessComponent<AllExploreSection
                     <Row>
                         <Text>{props.section.introduction}</Text>
                     </Row>
-                    props.tasks.map((task) => {
-                        <Text>task.name</Text>
-                    })
+                    {props.tasks.map((task: Task) => (
+                        <Row>
+                            <Text>{task.title}</Text>
+                        </Row>
+                    ))}
                 </Grid>
             </Content>
         </Container>;
