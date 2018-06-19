@@ -5633,9 +5633,9 @@ native-base-shoutem-theme@0.2.2:
     lodash "^4.10.1"
     prop-types "^15.5.10"
 
-native-base@affinitybridge/NativeBase:
-  version "2.5.1"
-  resolved "https://codeload.github.com/affinitybridge/NativeBase/tar.gz/41369f688b6ef5e6be297ab4443445ca9312eb17"
+native-base@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/native-base/-/native-base-2.5.2.tgz#62d2a0a8d4d1e0384bcc07f36845bdf256930a9f"
   dependencies:
     blueimp-md5 "^2.5.0"
     clamp "^1.0.1"
