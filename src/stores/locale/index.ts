@@ -17,7 +17,6 @@ export interface Store {
     readonly fallback: string;
     readonly loading: boolean;
     readonly errorMessage: string;
-    readonly localeSwitcherOpen: boolean;
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -26,7 +25,6 @@ export const buildDefaultStore = (): Store => ({
     fallback: undefined,
     loading: false,
     errorMessage: '',
-    localeSwitcherOpen: false,
 });
 
 export const setLocaleActions = setLocale;
