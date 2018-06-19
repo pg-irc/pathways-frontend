@@ -8,8 +8,8 @@ export interface Task {
     readonly title: LocalizedText;
     readonly description: LocalizedText;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
-    readonly tags: ReadonlyArray<string>; // TODO remove i.e important, do soon, free etc.
-    readonly category: string; // TODO remove, i.e. education, health, transportation etc.
+    readonly tags: ReadonlyArray<string>;
+    readonly category: string;
     readonly importance: number;
 }
 

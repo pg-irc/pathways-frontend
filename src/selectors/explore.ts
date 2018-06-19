@@ -1,7 +1,7 @@
 import * as app from '../application/store';
 import * as details from './details/explore';
 import { selectLocale } from './locale';
-import { selectRoute, selectCurrentExploreSectionId } from './route';
+import { selectRoute, pickCurrentExploreSectionId } from './route';
 import { selectExploreTaxonomy } from './taxonomies';
 import * as stores from '../stores/explore';
 
@@ -13,7 +13,7 @@ export interface ExploreSection {
 }
 
 export const pickCurrentExploreSection = (store: app.Store): stores.ExploreSection => {
-    const sectionId = selectCurrentExploreSectionId(store);
+    const sectionId = pickCurrentExploreSectionId(store);
     return store.applicationState.exploreSectionsInStore.sections[sectionId];
 };
 

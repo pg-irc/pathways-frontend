@@ -12,8 +12,7 @@ export const selectRoute = (store: app.Store): Route => {
     return store.applicationState.routeInStore;
 };
 
-// TODO move to route, TODO rename to pick
-export const selectCurrentExploreSectionId = (store: app.Store): Id => {
+export const pickCurrentExploreSectionId = (store: app.Store): Id => {
     const theRoute = selectRoute(store);
     if (theRoute.pageType !== Page.ExploreSection) {
         throw new Error('The current route is not an explore section');

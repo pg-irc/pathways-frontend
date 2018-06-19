@@ -67,7 +67,6 @@ export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitche
         case constants.SET_EXPLORE_PAGE:
             return { ...store, pageType: Page.ExploreAll };
         case constants.SET_EXPLORE_SECTION_PAGE:
-            // TODO this should update the route in the store
             return {
                 ...store,
                 pageType: Page.ExploreSection,

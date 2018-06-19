@@ -3,9 +3,8 @@ import { Task, TaskMap } from '../../stores/tasks';
 import { getExploreTaxonomyTerms } from '../taxonomies';
 import * as R from 'ramda';
 
-// TODO take taxonomy id as argument, don't assume one return value
 export const findTasksByExploreTaxonomyTerm =
-    (needle: ReadonlyArray<TaxonomyTermReference>, tasks: TaskMap): ReadonlyArray<Task> => {
+    (needle: ReadonlyArray<TaxonomyTermReference>, haystack: TaskMap): ReadonlyArray<Task> => {
 
         const needleTerms = getExploreTaxonomyTerms(needle);
 
@@ -17,5 +16,5 @@ export const findTasksByExploreTaxonomyTerm =
 
         const findTasks = R.compose(R.values, R.pickBy(matchesTaxonomyTerm));
 
-        return findTasks(tasks);
+        return findTasks(haystack);
     };

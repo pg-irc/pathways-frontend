@@ -11,7 +11,7 @@ export interface Task {
     readonly id: string;
     readonly title: string;
     readonly description: string;
-    readonly taxonomyTermReferences: ReadonlyArray<TaxonomyTermReference>;
+    readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly category: string;
     readonly importance: number;
     // TODO remove
@@ -27,7 +27,7 @@ export const denormalizeTask =
             id: task.id,
             title: selectLocalizedText(locale, task.title),
             description: selectLocalizedText(locale, task.description),
-            taxonomyTermReferences: task.taxonomyTerms,
+            taxonomyTerms: task.taxonomyTerms,
             category: task.category,
             importance: task.importance,
             tags: task.tags,
@@ -80,17 +80,18 @@ const validateOneResultWasFound =
     });
 
 export const selectTasksForCurrentExploreSection = (store: app.Store): ReadonlyArray<Task> => {
-    const locale = selectLocale(store);
     const exploreSection = pickCurrentExploreSection(store);
     const tasks = store.applicationState.tasksInStore.taskMap;
-    const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
-
     const matchingTasks = taskDetails.findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
 
-    return R.map(buildTaskForView(locale, userTasks), matchingTasks);
+    const locale = selectLocale(store);
+    const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
+    const denormalizedTasks = R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
+
+    return denormalizedTasks;
 };
 
-const buildTaskForView = R.curry((locale: Locale, userTasks: stores.TaskUserSettingsMap, task: stores.Task): Task => {
+const buildDenormalizedTask = R.curry((locale: Locale, userTasks: stores.TaskUserSettingsMap, task: stores.Task): Task => {
     const userTask = findTaskUserSettingsByTaskId(userTasks, task.id);
     return denormalizeTask(locale, task, userTask);
 });

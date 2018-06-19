@@ -40,7 +40,6 @@ export class TaskBuilder {
         return this;
     }
 
-    // TODO remove
     withTags(tags: ReadonlyArray<string>): TaskBuilder {
         this.tags = tags;
         return this;

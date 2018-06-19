@@ -59,7 +59,7 @@ describe('tasks selector', () => {
             expect(denormalizedTask.tags).toBe(task.tags);
         });
         test('taxonomy term reference', () => {
-            expect(denormalizedTask.taxonomyTermReferences).toEqual([{ taxonomyId, taxonomyTermId }]);
+            expect(denormalizedTask.taxonomyTerms).toEqual([{ taxonomyId, taxonomyTermId }]);
         });
     });
 
