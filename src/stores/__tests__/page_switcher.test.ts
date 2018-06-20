@@ -1,4 +1,5 @@
 // tslint:disable:no-expression-statement
+// tslint:disable:no-let
 
 import * as pageSwitcher from '../page_switcher';
 import * as constants from '../../application/constants';
@@ -40,65 +41,116 @@ describe('setting the task detail page', () => {
         const theAction = pageSwitcher.setTaskDetailPage(aString());
         expect(theAction.type).toBe(constants.SET_TASK_DETAIL_PAGE);
     });
+    it('should create action with type page id', () => {
+        const theId = aString();
+        const theAction = pageSwitcher.setTaskDetailPage(theId);
+        expect(theAction.payload.taskId).toBe(theId);
+    });
+});
+
+describe('setting the explore section page', () => {
+    it('should create action with type SET_EXPLORE_SECTION_PAGE', () => {
+        const theAction = pageSwitcher.setExploreSectionPage(aString());
+        expect(theAction.type).toBe(constants.SET_EXPLORE_SECTION_PAGE);
+    });
+    it('should create action with section page id', () => {
+        const theId = aString();
+        const theAction = pageSwitcher.setExploreSectionPage(theId);
+        expect(theAction.payload.sectionId).toBe(theId);
+    });
 });
 
 describe('the reducer', () => {
-    it('should default to build a store with a currentPage property', () => {
+    it('should default to build a store with a pageType property', () => {
         const theStore = pageSwitcher.reducer();
-        expect(theStore).toHaveProperty('currentPage');
+        expect(theStore).toHaveProperty('pageType');
     });
 
-    it('should default to build a store with a pageParameters property', () => {
+    it('should default to build a store with a pageId property', () => {
         const theStore = pageSwitcher.reducer();
-        expect(theStore).toHaveProperty('pageParameters');
+        expect(theStore).toHaveProperty('pageId');
     });
 
-    it('should default to build a store with currentPage equal to Page.Questionnaire', () => {
+    it('should default to build a store with pageType equal to Page.Questionnaire', () => {
         const theStore = pageSwitcher.reducer();
-        expect(theStore.currentPage).toBe(pageSwitcher.Page.Questionnaire);
+        expect(theStore.pageType).toBe(pageSwitcher.Page.Questionnaire);
     });
 
-    it('when called with SET_QUESTIONNAIRE_PAGE should return store with currentPage = Page.Questionnaire', () => {
+    it('when called with SET_QUESTIONNAIRE_PAGE should return store with pageType = Page.Questionnaire', () => {
         const theStore = buildStore();
         const theAction = {
             type: constants.SET_QUESTIONNAIRE_PAGE as typeof constants.SET_QUESTIONNAIRE_PAGE,
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
-        expect(theNewStore.currentPage).toBe(pageSwitcher.Page.Questionnaire);
+        expect(theNewStore.pageType).toBe(pageSwitcher.Page.Questionnaire);
     });
 
-    it('when called with SET_PLAN_PAGE should return store with currentPage = Page.MyPlan', () => {
+    it('when called with SET_PLAN_PAGE should return store with pageType = Page.MyPlan', () => {
         const theStore = buildStore();
         const theAction = {
             type: constants.SET_PLAN_PAGE as typeof constants.SET_PLAN_PAGE,
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
-        expect(theNewStore.currentPage).toBe(pageSwitcher.Page.MyPlan);
+        expect(theNewStore.pageType).toBe(pageSwitcher.Page.MyPlan);
     });
 
-    it('when called with SET_EXPLORE_PAGE should return store with currentPage = Page.ExploreAll', () => {
+    it('when called with SET_EXPLORE_PAGE should return store with pageType = Page.ExploreAll', () => {
         const theStore = buildStore();
         const theAction = {
             type: constants.SET_EXPLORE_PAGE as typeof constants.SET_EXPLORE_PAGE,
         };
         const theNewStore = pageSwitcher.reducer(theStore, theAction);
-        expect(theNewStore.currentPage).toBe(pageSwitcher.Page.ExploreAll);
+        expect(theNewStore.pageType).toBe(pageSwitcher.Page.ExploreAll);
     });
 
-    it('when called with SET_TASK_DETAIL_PAGE should return store with currentPage = Page.TaskDetail', () => {
-        const theStore = buildStore();
-        const theAction = {
-            type: constants.SET_TASK_DETAIL_PAGE as typeof constants.SET_TASK_DETAIL_PAGE,
-            payload: {taskId: aString()},
-        };
-        const theNewStore = pageSwitcher.reducer(theStore, theAction);
-        expect(theNewStore.currentPage).toBe(pageSwitcher.Page.TaskDetail);
+    describe('when called with SET_EXPLORE_SECTION_PAGE ', () => {
+
+        let theId: string = '';
+        let theNewStore: pageSwitcher.Store = undefined;
+
+        beforeEach(() => {
+            const theStore = buildStore();
+            theId = aString();
+            const theAction = {
+                type: constants.SET_EXPLORE_SECTION_PAGE as typeof constants.SET_EXPLORE_SECTION_PAGE,
+                payload: { sectionId: theId },
+            };
+            theNewStore = pageSwitcher.reducer(theStore, theAction);
+        });
+        it('should return store with current page = SET_EXPLORE_SECTION_PAGE', () => {
+            expect(theNewStore.pageType).toBe(pageSwitcher.Page.ExploreSection);
+        });
+        it('should return a store with the current section id', () => {
+            expect(theNewStore.pageId).toEqual(theId);
+        });
+    });
+
+    describe('when called with SET_TASK_DETAIL_PAGE', () => {
+
+        let theId: string = '';
+        let theNewStore: pageSwitcher.Store = undefined;
+
+        beforeEach(() => {
+            theId = aString();
+            const theStore = buildStore();
+            const theAction = {
+                type: constants.SET_TASK_DETAIL_PAGE as typeof constants.SET_TASK_DETAIL_PAGE,
+                payload: { taskId: theId },
+            };
+            theNewStore = pageSwitcher.reducer(theStore, theAction);
+        });
+        it('should return store with pageType = Page.TaskDetail', () => {
+            expect(theNewStore.pageType).toBe(pageSwitcher.Page.TaskDetail);
+        });
+        it('should return store with the current task id', () => {
+            expect(theNewStore.pageId).toEqual(theId);
+        });
     });
 
     it('should return store unchanged if action is undefined', () => {
         const theOriginalStore = buildStore();
         const theNewStore = pageSwitcher.reducer(theOriginalStore, undefined);
-        expect(theNewStore.currentPage).toBe(theOriginalStore.currentPage);
+        expect(theNewStore.pageType).toBe(theOriginalStore.pageType);
     });
 });
 

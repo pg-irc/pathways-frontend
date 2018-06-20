@@ -14,12 +14,12 @@ export function selectAvailableLocales(appStore: app.Store): ReadonlyArray<Local
     return appStore.applicationState.localeInStore.availableLocales;
 }
 
-export function selectLocalizedText (locale: Locale, localizedText: LocalizedText): string {
+export function selectLocalizedText(locale: Locale, localizedText: LocalizedText): string {
     if (localizedText[locale.code]) {
         return localizedText[locale.code];
     }
     if (localizedText[locale.fallback]) {
         return localizedText[locale.fallback];
     }
-    throw new Error(`Missing text for locale: ${locale.code} or fallback ${locale.fallback}`);
+    return `missing in ${locale.code}&${locale.fallback}`;
 }
