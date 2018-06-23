@@ -1,9 +1,9 @@
 import React from 'react';
-import { Task } from './task';
-import { List } from 'native-base';
+import { TaskListItem } from './task_list_item';
+import { View } from 'native-base';
 import { TaskActions } from './actions';
 import * as selector from '../../selectors/tasks';
-import { Actions } from './task';
+import { Actions } from './task_list_item';
 
 interface TaskRenderer {
     (item: selector.Task, actions: TaskActions): JSX.Element;
@@ -18,14 +18,14 @@ export interface Actions {
 }
 
 export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => (
-    <List>
+    <View>
         {props.tasks.map((task: selector.Task) => props.taskRenderer(task, props))}
-    </List>
+    </View>
 );
 
 export const renderSavedTask = (item: selector.Task, actions: TaskActions): JSX.Element => {
     return (
-        <Task
+        <TaskListItem
             key={item.id}
             id={item.id}
             taskUserSettingsId={item.taskUserSettingsId}
@@ -48,7 +48,7 @@ export const renderSavedTask = (item: selector.Task, actions: TaskActions): JSX.
 
 export const renderSuggestedTask = (item: selector.Task, actions: TaskActions): JSX.Element => {
     return (
-        <Task
+        <TaskListItem
             key={item.id}
             id={item.id}
             taskUserSettingsId={item.taskUserSettingsId}

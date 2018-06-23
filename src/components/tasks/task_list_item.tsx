@@ -8,11 +8,12 @@ import { AddToSavedListAction } from '../../stores/tasks';
 import { SetTaskDetailPageAction } from '../../stores/page_switcher';
 import { I18nManager } from 'react-native';
 
-export type Props = selector.Task;
+export interface Props {
+}
 
 export type Actions = TaskActions;
 
-export const Task: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
+export const TaskListItem: React.StatelessComponent<selector.Task & Actions> = (props: selector.Task & Actions): JSX.Element => {
     const addToSavedList = (): AddToSavedListAction => props.addToSavedList(props.id);
     const goToTaskDetail = (): SetTaskDetailPageAction => props.goToTaskDetail(props.id);
     const style = props.addToSavedList ? taskStyles.suggestedListItem : taskStyles.savedListItem;
@@ -21,7 +22,7 @@ export const Task: React.StatelessComponent<Props & Actions> = (props: Props & A
             <Grid>
                 <Row>
                     <Col size={10}>
-                        {!props.addToSavedList ? getDragButton() : getSaveButton(addToSavedList)}
+                        {!props.addToSavedList ? getDragButton() : getSaveButton(addToSavedList) }
                     </Col>
                     <Col size={70}>
                         <Row>
@@ -30,7 +31,7 @@ export const Task: React.StatelessComponent<Props & Actions> = (props: Props & A
                     </Col>
                     <Col size={20}>
                         <Row style={taskStyles.rightColumn}>
-                            <Icon style={taskStyles.icon} name='star-circle' type='MaterialCommunityIcons' />
+                            <Icon style={taskStyles.icon} name='star-circle' type='MaterialCommunityIcons'/>
                             <Icon style={taskStyles.icon} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
                         </Row>
                     </Col>

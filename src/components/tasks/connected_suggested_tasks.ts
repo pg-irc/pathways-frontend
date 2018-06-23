@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Component, Props, renderSuggestedTask } from './task_list';
-import { Actions } from './task';
+import { Actions } from './task_list_item';
 import { Store } from '../../application/store';
 import { selectAllSuggestedTasks } from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
