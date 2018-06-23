@@ -2,12 +2,12 @@ import React from 'react';
 import { Content, Grid, Row, Col, Button, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore';
 import { Trans } from '@lingui/react';
-import * as R from 'ramda';
 import { exploreStyles } from './styles';
 import { computeUniqueKeyForSections } from './compute_unique_key_for_sections';
 import { applicationStyles } from '../../application/styles';
 import { Id } from '../../stores/explore';
 import { SetExploreSectionPageAction } from '../../stores/page_switcher';
+import * as R from 'ramda';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;

@@ -4,9 +4,11 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { ExploreSection } from '../../selectors/explore';
 import { applicationStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
+import { Task } from '../../selectors/tasks';
 
 export interface ExploreSectionProps {
     readonly section: ExploreSection;
+    readonly tasks: ReadonlyArray<Task>;
 }
 
 export interface ExploreSectionActions {
@@ -41,6 +43,11 @@ export const ExploreSectionComponent: React.StatelessComponent<AllExploreSection
                     <Row>
                         <Text>{props.section.introduction}</Text>
                     </Row>
+                    {props.tasks.map((task: Task) => (
+                        <Row>
+                            <Text>{task.title}</Text>
+                        </Row>
+                    ))}
                 </Grid>
             </Content>
         </Container>;

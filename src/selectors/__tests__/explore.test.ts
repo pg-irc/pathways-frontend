@@ -1,6 +1,8 @@
 // tslint:disable:no-let no-expression-statement
-import { denormalizeSections, ExploreSection, getExploreSectionById } from '../explore';
+import { denormalizeSections, getExploreSectionById } from '../details/explore';
+import { ExploreSection } from '../explore';
 import { ExploreSectionMap } from '../../stores/explore';
+import { ExploreTaxonomyId } from '../../stores/taxonomies';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 
 const englishLocale = { code: 'en', fallback: 'ar' };
@@ -8,6 +10,9 @@ const theId = aString();
 const theNameInEnglish = aString();
 const theIntroductionInEnglish = aString();
 const theIcon = aString();
+
+const taxonomyId = ExploreTaxonomyId;
+const taxonomyTermId = aString();
 
 const theStore: ExploreSectionMap = {
     [theId]: {
@@ -22,6 +27,15 @@ const theStore: ExploreSectionMap = {
             'ar': aString(),
             'zh': aString(),
         },
+        taxonomyTerms: [{
+            taxonomyId,
+            taxonomyTermId,
+        }],
+    },
+};
+
+const theExploreTaxonomy = {
+    [taxonomyTermId]: {
         icon: theIcon,
     },
 };
@@ -29,7 +43,7 @@ const theStore: ExploreSectionMap = {
 describe('denormalize all explore sections', () => {
     let section: ExploreSection = undefined;
     beforeEach(() => {
-        section = denormalizeSections(englishLocale, theStore)[0];
+        section = denormalizeSections(englishLocale, theStore, theExploreTaxonomy)[0];
     });
     it('should return object with id', () => {
         expect(section.id).toBe(theId);
@@ -48,7 +62,7 @@ describe('denormalize all explore sections', () => {
 describe('get section by id', () => {
     let section: ExploreSection = undefined;
     beforeEach(() => {
-        section = getExploreSectionById(englishLocale, theId, theStore);
+        section = getExploreSectionById(englishLocale, theId, theStore, theExploreTaxonomy);
     });
     it('should return the section with the given id', () => {
         expect(section.id).toBe(theId);

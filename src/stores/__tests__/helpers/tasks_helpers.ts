@@ -1,19 +1,16 @@
-// tslint:disable:readonly-keyword
-// tslint:disable:no-this
-// tslint:disable:no-expression-statement
-// tslint:disable:readonly-array
-// tslint:disable:no-class
-
+// tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import * as store from '../../tasks';
 import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
+import { TaxonomyTermReference } from '../../../selectors/taxonomies';
 
 export class TaskBuilder {
     localeCode: string = aString();
     id: store.Id = aString();
     title: string = aString();
     description: string = aString();
+    taxonomyTerms: TaxonomyTermReference[] = [];
     tags: ReadonlyArray<string> = [aString(), aString()];
     category: string = aString();
     importance: number = aNumber();
@@ -38,6 +35,11 @@ export class TaskBuilder {
         return this;
     }
 
+    withTaxonomyTerm(taxonomyTerm: TaxonomyTermReference): TaskBuilder {
+        this.taxonomyTerms = [...this.taxonomyTerms, taxonomyTerm];
+        return this;
+    }
+
     withTags(tags: ReadonlyArray<string>): TaskBuilder {
         this.tags = tags;
         return this;
@@ -58,6 +60,7 @@ export class TaskBuilder {
             id: this.id,
             title: this.createLocalizedText(this.title),
             description: this.createLocalizedText(this.description),
+            taxonomyTerms: this.taxonomyTerms,
             tags: this.tags,
             category: this.category,
             importance: this.importance,
@@ -106,16 +109,16 @@ export class TaskUserSettingsBuilder {
 }
 
 export const buildNormalizedStore = (taskBuilders: ReadonlyArray<TaskBuilder>,
-                                     taskUserSettingsBuilders: ReadonlyArray<TaskUserSettingsBuilder>,
-                                     savedTasks: ReadonlyArray<store.Id>,
-                                     suggestedTasks: ReadonlyArray<store.Id>): store.Store => (
-    {
-        taskMap: buildTaskMap(taskBuilders),
-        taskUserSettingsMap: buildTaskUserSettingsMap(taskUserSettingsBuilders),
-        savedTasksList: savedTasks,
-        suggestedTasksList: suggestedTasks,
-    }
-);
+    taskUserSettingsBuilders: ReadonlyArray<TaskUserSettingsBuilder>,
+    savedTasks: ReadonlyArray<store.Id>,
+    suggestedTasks: ReadonlyArray<store.Id>): store.Store => (
+        {
+            taskMap: buildTaskMap(taskBuilders),
+            taskUserSettingsMap: buildTaskUserSettingsMap(taskUserSettingsBuilders),
+            savedTasksList: savedTasks,
+            suggestedTasksList: suggestedTasks,
+        }
+    );
 
 const buildTaskMap = (tasks: ReadonlyArray<TaskBuilder>): store.TaskMap => {
     const buildAndMapToIds = (map: store.TaskMap, builder: TaskBuilder): store.TaskMap => {
@@ -126,7 +129,7 @@ const buildTaskMap = (tasks: ReadonlyArray<TaskBuilder>): store.TaskMap => {
 
 const buildTaskUserSettingsMap = (taskUserSettings: ReadonlyArray<TaskUserSettingsBuilder>): store.TaskUserSettingsMap => {
     const buildAndMapToIds = (map: store.TaskUserSettingsMap,
-                              builder: TaskUserSettingsBuilder): store.TaskUserSettingsMap => {
+        builder: TaskUserSettingsBuilder): store.TaskUserSettingsMap => {
         return { ...map, [builder.id]: builder.build() };
     };
     return taskUserSettings.reduce(buildAndMapToIds, {});

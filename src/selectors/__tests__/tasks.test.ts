@@ -1,10 +1,7 @@
 // tslint:disable:no-expression-statement no-let no-any
 
-import {
-    TaskBuilder,
-    TaskUserSettingsBuilder,
-    buildNormalizedStore,
-} from '../../stores/__tests__/helpers/tasks_helpers';
+import { TaskBuilder, TaskUserSettingsBuilder, buildNormalizedStore }
+    from '../../stores/__tests__/helpers/tasks_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
@@ -16,12 +13,16 @@ describe('tasks selector', () => {
     describe('denormalization', () => {
         let locale: Locale;
         let task: stores.Task;
+        let taxonomyId: string;
+        let taxonomyTermId: string;
         let taskUserSettings: stores.TaskUserSettings;
         let denormalizedTask: selector.Task;
 
         beforeEach(() => {
+            taxonomyId = aString();
+            taxonomyTermId = aString();
             locale = new LocaleBuilder().build();
-            task = new TaskBuilder().withLocaleCode(locale.code).build();
+            task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             taskUserSettings = new TaskUserSettingsBuilder(task.id).build();
             denormalizedTask = selector.denormalizeTask(locale, task, taskUserSettings);
         });
@@ -56,6 +57,9 @@ describe('tasks selector', () => {
 
         test('tags property', () => {
             expect(denormalizedTask.tags).toBe(task.tags);
+        });
+        test('taxonomy term reference', () => {
+            expect(denormalizedTask.taxonomyTerms).toEqual([{ taxonomyId, taxonomyTermId }]);
         });
     });
 
@@ -94,7 +98,7 @@ describe('tasks selector', () => {
         });
 
         test('throws when select task user settings by id parameter is invalid', () => {
-            expect(() => selector.selectTaskUserSettingsByTaskId(store, aString())).toThrow();
+            expect(() => selector.findTaskUserSettingsByTaskId(store.taskUserSettingsMap, aString())).toThrow();
         });
 
     });
