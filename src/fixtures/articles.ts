@@ -9,6 +9,7 @@ export interface Article {
     readonly content: LocalizedText;
     readonly relatedTasks?: ReadonlyArray<TaskId>;
     readonly relatedArticles?: ReadonlyArray<Id>;
+    readonly isRecommendedToAllUsers: boolean;
     readonly isStarred: boolean;
 }
 
@@ -37,6 +38,7 @@ export const buildArticlesFixture = (): Store => (
                 },
                 'relatedTasks': ['t1', 't2', 't3'],
                 'relatedArticles': ['a2'],
+                'isRecommendedToAllUsers': false,
                 'isStarred': false,
             },
             'a2': {
@@ -53,6 +55,7 @@ export const buildArticlesFixture = (): Store => (
                 },
                 'relatedTasks': ['t1', 't2', 't3'],
                 'relatedArticles': ['a1'],
+                'isRecommendedToAllUsers': false,
                 'isStarred': false,
             },
         },

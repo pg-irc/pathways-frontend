@@ -7,6 +7,7 @@ import * as questionnaire from '../../questionnaire';
 import * as tasks from '../../tasks';
 import * as explore from '../../explore';
 import * as taxonomies from '../../taxonomies';
+import * as articles from '../../articles';
 
 export class ApplicationStoreBuilder {
     fontsInStore: fonts.Store;
@@ -16,6 +17,7 @@ export class ApplicationStoreBuilder {
     tasksInStore: tasks.Store;
     exploreSectionsInStore: explore.Store;
     taxonomiesInStore: taxonomies.Store;
+    articlesInStore: articles.Store;
 
     withLocaleStore(store: locale.Store): ApplicationStoreBuilder {
         this.localeInStore = store;
@@ -31,6 +33,7 @@ export class ApplicationStoreBuilder {
             tasksInStore: this.tasksInStore,
             exploreSectionsInStore: this.exploreSectionsInStore,
             taxonomiesInStore: this.taxonomiesInStore,
+            articlesInStore: this.articlesInStore,
         };
     }
 }

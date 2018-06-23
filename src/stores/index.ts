@@ -6,6 +6,7 @@ import * as questionnaire from './questionnaire';
 import * as tasks from './tasks';
 import * as explore from './explore';
 import * as taxonomies from './taxonomies';
+import * as articles from './articles';
 
 export interface Store {
     readonly fontsInStore: fonts.Store;
@@ -15,6 +16,7 @@ export interface Store {
     readonly tasksInStore: tasks.Store;
     readonly exploreSectionsInStore: explore.Store;
     readonly taxonomiesInStore: taxonomies.Store;
+    readonly articlesInStore: articles.Store;
 }
 
 export const reducer = combineReducers<Store>({
@@ -25,4 +27,5 @@ export const reducer = combineReducers<Store>({
     tasksInStore: tasks.reducer,
     exploreSectionsInStore: explore.reducer,
     taxonomiesInStore: taxonomies.reducer,
+    articlesInStore: articles.reducer,
 });
