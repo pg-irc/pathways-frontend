@@ -24,10 +24,7 @@ export const denormalizeArticle = (locale: Locale, article: model.Article): Arti
 
 export const selectArticle = (locale: Locale, store: app.Store, articleId: model.Id): Article => {
     const articles = store.applicationState.articlesInStore.articles;
-    if (articles[articleId] === undefined) {
-        throw new Error(`Could not find Article for article id: ${articleId}`);
-    }
-    const article = articles[articleId];
+    const article = findArticleById(articles, articleId);
     const relatedTasks = article.relatedTasks ? selectRelatedTasks(locale, store, article.relatedTasks) : undefined;
     const relatedArticles = article.relatedArticles ? selectRelatedArticles(locale, store, article.relatedArticles) : undefined;
     return { ...denormalizeArticle(locale, article), relatedTasks, relatedArticles };
@@ -35,11 +32,23 @@ export const selectArticle = (locale: Locale, store: app.Store, articleId: model
 
 export const selectArticleAsListItem = (locale: Locale, store: app.Store, articleId: model.Id): Article => {
     const articles = store.applicationState.articlesInStore.articles;
-    if (articles[articleId] === undefined) {
-        throw new Error(`Could not find Article for article id: ${articleId}`);
-    }
-    return denormalizeArticle(locale, articles[articleId]);
+    const article = findArticleById(articles, articleId);
+    return denormalizeArticle(locale, article);
 };
+
+export const findArticleById = (articles: model.ArticleMap, articleId: model.Id): model.Article => {
+    const validate = validateOneResultWasFound(articleId);
+    const getArticle = R.compose(validate, R.values, R.pickBy(R.propEq('Id', articleId)));
+    return getArticle(articles);
+};
+
+const validateOneResultWasFound =
+    R.curry((articleId: string, articles: ReadonlyArray<model.Article>): model.Article => {
+        if (articles.length !== 1) {
+            throw new Error(`Could not find Article for article id: ${articleId}`);
+        }
+        return articles[0];
+    });
 
 export const selectRelatedTasks = (locale: Locale, store: app.Store, taskIds: ReadonlyArray<TaskId>): ReadonlyArray<Task> => (
     R.map((id: TaskId) => selectTaskById(locale, store.applicationState.tasksInStore, id), taskIds)

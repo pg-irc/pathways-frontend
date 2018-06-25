@@ -1,6 +1,6 @@
 import { buildArticlesFixture, Store } from '../fixtures/articles';
 
-export { Id, Store, Article }  from '../fixtures/articles';
+export { Id, Store, Article, ArticleMap }  from '../fixtures/articles';
 
 export const buildDefaultStore = (): Store => (
     buildArticlesFixture()
