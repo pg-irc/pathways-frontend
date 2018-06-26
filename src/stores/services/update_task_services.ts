@@ -2,15 +2,25 @@ import { Service } from './types';
 import { Task } from '../tasks';
 import { Task as constants} from '../../application/constants';
 import * as helpers from '../helpers/make_action';
+import { Action as ReduxAction } from 'redux';
 
-export namespace UpdateTaskServicesAsync {
-    export type Request = Readonly<ReturnType<typeof updateTaskServicesAsync.request>>;
-    export type Success = Readonly<ReturnType<typeof updateTaskServicesAsync.success>>;
-    export type Failure = Readonly<ReturnType<typeof updateTaskServicesAsync.failure>>;
-    export type Result = Success | Failure;
+interface UpdateTaskServicesAction<P extends {} = {}> extends ReduxAction {
+    readonly payload: P;
 }
 
-export type UpdateTaskServicesAction = UpdateTaskServicesAsync.Request | UpdateTaskServicesAsync.Result;
+export namespace UpdateTaskServicesAsync {
+    export interface Request extends UpdateTaskServicesAction {
+        readonly payload: { readonly task: Task; readonly query: string; };
+    }
+    export interface Success extends UpdateTaskServicesAction {
+        readonly payload: { readonly task: Task; readonly services: ReadonlyArray<Service>; };
+    }
+    export interface Failure extends UpdateTaskServicesAction {
+        readonly payload: { readonly task: Task; readonly message: string; };
+    }
+    export type Result = Success | Failure;
+    export type Action = Request | Result;
+}
 
 export const updateTaskServicesAsync = {
     // tslint:disable-next-line:typedef

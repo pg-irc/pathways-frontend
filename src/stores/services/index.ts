@@ -1,13 +1,13 @@
 import { LocalizedText } from '../../locale';
 
-import { Service, Store, ServiceMap } from './types';
-import { UpdateTaskServicesAction, UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
+import { Id, Service, Store, ServiceMap } from './types';
+import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import { ServiceData } from '../../api/api_client';
 import { Task as constants } from '../../application/constants';
-import { Task } from '../../fixtures/tasks';
+import { Action } from 'redux';
 
-export { Service };
-export { UpdateTaskServicesAction, UpdateTaskServicesAsync, updateTaskServicesAsync };
+export { Id, Service, Store };
+export { UpdateTaskServicesAsync, updateTaskServicesAsync };
 
 export function serviceFromServiceData(data: ServiceData): Service {
     const { id, name }: ServiceData = data;
@@ -24,17 +24,20 @@ function buildDefaultStore(): Store {
     };
 }
 
-export function reducer(store: Store = buildDefaultStore(), action: UpdateTaskServicesAction): Store {
+export function reducer(store: Store = buildDefaultStore(), action: Action): Store {
     switch (action.type) {
-        case constants.UPDATE_SERVICES_REQUEST: return updateServicesRequest(store, action.payload);
-        case constants.UPDATE_SERVICES_SUCCESS: return updateServicesSuccess(store, action.payload);
-        case constants.UPDATE_SERVICES_FAILURE: return updateServicesFailure(store, action.payload);
+        case constants.UPDATE_SERVICES_REQUEST:
+            return updateServicesRequest(store, action as UpdateTaskServicesAsync.Request);
+        case constants.UPDATE_SERVICES_SUCCESS:
+            return updateServicesSuccess(store, action as UpdateTaskServicesAsync.Success);
+        case constants.UPDATE_SERVICES_FAILURE:
+            return updateServicesFailure(store, action as UpdateTaskServicesAsync.Failure);
         default: return store;
     }
 }
 
-type UpdateServicesRequestPayload = { readonly task: Task };
-function updateServicesRequest(store: Store, { task }: UpdateServicesRequestPayload): Store {
+function updateServicesRequest(store: Store, action: UpdateTaskServicesAsync.Request): Store {
+    const task = action.payload.task;
     return {
         ...store,
         taskServicesMap: {
@@ -44,8 +47,9 @@ function updateServicesRequest(store: Store, { task }: UpdateServicesRequestPayl
     };
 }
 
-type UpdateServicesSuccessPayload = { readonly task: Task, readonly services: ReadonlyArray<Service> };
-function updateServicesSuccess(store: Store, { task, services }: UpdateServicesSuccessPayload): Store {
+function updateServicesSuccess(store: Store, action: UpdateTaskServicesAsync.Success): Store {
+    const services = action.payload.services;
+    const task = action.payload.task;
     const serviceMap = createServiceMap(services);
     const serviceIds = Object.keys(serviceMap);
     const taskServicesMap = { [task.id]: { ...store.taskServicesMap[task.id], serviceIds, loading: false } };
@@ -56,8 +60,9 @@ function updateServicesSuccess(store: Store, { task, services }: UpdateServicesS
     };
 }
 
-type UpdateServicesFailurePayload = { readonly task: Task, readonly message: string };
-function updateServicesFailure(store: Store, { task, message}: UpdateServicesFailurePayload): Store {
+function updateServicesFailure(store: Store, action: UpdateTaskServicesAsync.Failure): Store {
+    const task = action.payload.task;
+    const message = action.payload.message;
     return {
         ...store,
         taskServicesMap: {

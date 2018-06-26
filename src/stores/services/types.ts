@@ -1,6 +1,6 @@
 import { LocalizedText } from '../../locale';
 
-type Id = string;
+export type Id = string;
 
 export interface Service {
     readonly id: Id;

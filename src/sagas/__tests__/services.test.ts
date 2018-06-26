@@ -5,7 +5,7 @@ import { updateTaskServices } from '../services';
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
 import { Task } from '../../stores/tasks';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { updateTaskServicesAsync, UpdateTaskServicesAsync, Service, UpdateTaskServicesAction } from '../../stores/services';
+import { updateTaskServicesAsync, UpdateTaskServicesAsync, Service } from '../../stores/services';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { createRelatedServicesQueryFromTask } from '../../selectors/services';
 
@@ -24,7 +24,7 @@ describe('The update task services saga', () => {
     describe('after making request for related services, should', () => {
         let task: Task;
         let query: string;
-        let saga: IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAction>>;
+        let saga: IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAsync.Action>>;
         let action: UpdateTaskServicesAsync.Request;
 
         beforeEach(() => {
