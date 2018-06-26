@@ -1,6 +1,7 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 import { Id } from './tasks';
+import { Id as ArticleId } from './articles';
 
 export enum Page {
     Questionnaire,
@@ -8,6 +9,7 @@ export enum Page {
     ExploreAll,
     ExploreSection,
     TaskDetail,
+    ArticleDetail,
 }
 
 export const initialPage = Page.Questionnaire;
@@ -17,11 +19,13 @@ export type SetPlanPageAction = Readonly<ReturnType<typeof setPlanPage>>;
 export type SetExplorePageAction = Readonly<ReturnType<typeof setExplorePage>>;
 export type SetTaskDetailPageAction = Readonly<ReturnType<typeof setTaskDetailPage>>;
 export type SetExploreSectionPageAction = Readonly<ReturnType<typeof setExploreSectionPage>>;
+export type SetArticleDetailPageAction = Readonly<ReturnType<typeof setArticleDetailPage>>;
 type PageSwitcherAction = SetQuestionnairePageAction |
     SetPlanPageAction |
     SetExplorePageAction |
     SetTaskDetailPageAction |
-    SetExploreSectionPageAction;
+    SetExploreSectionPageAction |
+    SetArticleDetailPageAction;
 
 // tslint:disable-next-line:typedef
 export const setQuestionnairePage = () => (
@@ -46,6 +50,11 @@ export const setTaskDetailPage = (taskId: Id) => (
 // tslint:disable-next-line:typedef
 export const setExploreSectionPage = (sectionId: Id) => (
     helpers.makeAction(constants.SET_EXPLORE_SECTION_PAGE, { sectionId })
+);
+
+// tslint:disable-next-line:typedef
+export const setArticleDetailPage = (articleId: ArticleId) => (
+    helpers.makeAction(constants.SET_ARTICLE_DETAIL_PAGE, { articleId })
 );
 
 export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
@@ -77,6 +86,12 @@ export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitche
                 ...store,
                 pageType: Page.TaskDetail,
                 pageId: action.payload.taskId,
+            };
+        case constants.SET_ARTICLE_DETAIL_PAGE:
+            return {
+                ...store,
+                pageType: Page.ArticleDetail,
+                pageId: action.payload.articleId,
             };
         default:
             return store;

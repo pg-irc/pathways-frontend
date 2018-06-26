@@ -1,12 +1,14 @@
 import * as app from '../application/store';
 import * as model from '../stores/articles';
 import * as R from 'ramda';
-import { selectLocalizedText } from './locale';
+import { selectLocale, selectLocalizedText } from './locale';
+import { selectRoute } from './route';
 import { Locale } from '../locale/types';
 import { Task, selectTaskById } from './tasks';
 import { Id as TaskId } from '../stores/tasks';
 
 export interface Article {
+    readonly id: model.Id;
     readonly name: string;
     readonly content: string;
     readonly isStarred: boolean;
@@ -16,21 +18,28 @@ export interface Article {
 
 export const denormalizeArticle = (locale: Locale, article: model.Article): Article => (
     {
+        id: article.id,
         name: selectLocalizedText(locale, article.name),
         content: selectLocalizedText(locale, article.content),
         isStarred: article.isStarred,
     }
 );
 
-export const selectArticle = (locale: Locale, store: app.Store, articleId: model.Id): Article => {
+export const selectCurrentArticle = (store: app.Store): Article => {
+    const locale = selectLocale(store);
     const articles = store.applicationState.articlesInStore.articles;
+    const articleId = selectRoute(store).pageId;
     const article = findArticleById(articles, articleId);
-    const relatedTasks = article.relatedTasks ? selectRelatedTasks(locale, store, article.relatedTasks) : undefined;
-    const relatedArticles = article.relatedArticles ? selectRelatedArticles(locale, store, article.relatedArticles) : undefined;
+    // TODO task selectors should take the whole store.
+    const relatedTasks = article.relatedTasks ?
+        R.map((id: TaskId) => selectTaskById(locale, store.applicationState.tasksInStore, id), article.relatedTasks) : undefined;
+    const relatedArticles = article.relatedArticles ?
+        R.map((id: model.Id) => selectArticleAsListItem(store, id), article.relatedArticles) : undefined;
     return { ...denormalizeArticle(locale, article), relatedTasks, relatedArticles };
 };
 
-export const selectArticleAsListItem = (locale: Locale, store: app.Store, articleId: model.Id): Article => {
+export const selectArticleAsListItem = (store: app.Store, articleId: model.Id): Article => {
+    const locale = selectLocale(store);
     const articles = store.applicationState.articlesInStore.articles;
     const article = findArticleById(articles, articleId);
     return denormalizeArticle(locale, article);
@@ -38,7 +47,7 @@ export const selectArticleAsListItem = (locale: Locale, store: app.Store, articl
 
 export const findArticleById = (articles: model.ArticleMap, articleId: model.Id): model.Article => {
     const validate = validateOneResultWasFound(articleId);
-    const getArticle = R.compose(validate, R.values, R.pickBy(R.propEq('Id', articleId)));
+    const getArticle = R.compose(validate, R.values, R.pickBy(R.propEq('id', articleId)));
     return getArticle(articles);
 };
 
@@ -49,11 +58,3 @@ const validateOneResultWasFound =
         }
         return articles[0];
     });
-
-export const selectRelatedTasks = (locale: Locale, store: app.Store, taskIds: ReadonlyArray<TaskId>): ReadonlyArray<Task> => (
-    R.map((id: TaskId) => selectTaskById(locale, store.applicationState.tasksInStore, id), taskIds)
-);
-
-export const selectRelatedArticles = (locale: Locale, store: app.Store, articleIds: ReadonlyArray<model.Id>): ReadonlyArray<Article> => (
-    R.map((id: model.Id) => selectArticleAsListItem(locale, store, id), articleIds)
-);

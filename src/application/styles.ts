@@ -19,8 +19,10 @@ export const applicationStyles = StyleSheet.create({
         fontWeight: 'bold',
     },
     hr: {
-        borderWidth: 0.5,
+        borderTopWidth: 0.5,
         borderColor: colors.lightGrey,
+        flexDirection: 'row',
+        flex: 1,
         marginTop: 20,
         marginBottom: 10,
         marginLeft: -10,
