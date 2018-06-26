@@ -7,14 +7,13 @@ import { Task } from '../../stores/tasks';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { updateTaskServicesAsync, UpdateTaskServicesAsync, Service } from '../../stores/services';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import { createRelatedServicesQueryFromTask } from '../../selectors/services';
 
 describe('The update task services saga', () => {
     const locale = new LocaleBuilder().build();
 
     it('should dispatch a call effect for api.getRelatedServicesForTask', () => {
         const task = new TaskBuilder().withLocaleCode(locale.code).build();
-        const query = createRelatedServicesQueryFromTask(locale, task);
+        const query = aString();
         const action = updateTaskServicesAsync.request(task, query);
         const saga = updateTaskServices(action);
         const value = saga.next().value;
@@ -29,7 +28,7 @@ describe('The update task services saga', () => {
 
         beforeEach(() => {
             task = new TaskBuilder().withLocaleCode(locale.code).build();
-            query = createRelatedServicesQueryFromTask(locale, task);
+            query = aString();
             action = updateTaskServicesAsync.request(task, query);
             saga = updateTaskServices(action);
             saga.next();

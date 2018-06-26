@@ -1,7 +1,5 @@
-import { Task } from '../fixtures/tasks';
-import { selectLocalizedText } from '../selectors/locale';
-import { Locale } from '../locale';
+import { Task } from '../selectors/tasks';
 
-export function createRelatedServicesQueryFromTask(locale: Locale, task: Task): string {
-    return selectLocalizedText(locale, task.title).replace(' ', ',');
+export function createRelatedServicesQueryFromTask(task: Task): string {
+    return task.title.replace(' ', ',');
 }

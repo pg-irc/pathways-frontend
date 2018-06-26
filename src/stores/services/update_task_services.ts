@@ -1,5 +1,5 @@
 import { Service } from './types';
-import { Task } from '../tasks';
+import { Task } from '../../selectors/tasks';
 import { Task as constants} from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { Action as ReduxAction } from 'redux';
