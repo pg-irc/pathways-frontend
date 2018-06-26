@@ -6,3 +6,5 @@
 declare const Expo: any; // tslint:disable-line:no-any
 declare module '@lingui/*';
 declare module '../../locale/*/messages';
+
+declare module 'react-native-dotenv';
