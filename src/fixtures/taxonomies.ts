@@ -1,31 +1,11 @@
-// Examples are Health, Education
-export interface TaxonomyTerm {
-    readonly icon?: string;
-}
+import { Store, ExploreTaxonomyId } from './types/taxonomies';
 
-// Examples are AIRS, BC211
-export interface Taxonomy {
-    readonly [taxonomyTermId: string]: TaxonomyTerm;
-}
-
-export interface TaxonomyMap {
-    readonly [taxonomyId: string]: Taxonomy;
-}
-
-export interface Store {
-    readonly taxonomyMap: TaxonomyMap;
-}
-
-export interface TaxonomyTermReference {
-    readonly taxonomyId: string;
-    readonly taxonomyTermId: string;
-}
-
-export const ExploreTaxonomyId = 'Explore';
+export { Store, TaxonomyTermReference, Taxonomy, ExploreTaxonomyId } from './types/taxonomies';
 
 export const buildTaxonomyFixture = (): Store => ({
     taxonomyMap: {
         [ExploreTaxonomyId]: {
+            // TODO make sure these match the newcomer data
             'SettlingIn': { icon: 'sign-text' },
             'Education': { icon: 'book-open-variant' },
             'HealthCare': { icon: 'medical-bag' },
