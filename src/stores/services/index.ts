@@ -1,6 +1,6 @@
 import { LocalizedText } from '../../locale';
 
-import { Id, Service, Store, ServiceMap } from './types';
+import { Id, Service, Store, ServiceMap, TaskServices } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import { ServiceData } from '../../api/api_client';
 import { Task as constants } from '../../application/constants';
@@ -24,6 +24,14 @@ function buildDefaultStore(): Store {
     };
 }
 
+export function buildDefaultTaskServices(): TaskServices {
+    return {
+        loading: false,
+        message: '',
+        serviceIds: [],
+    };
+}
+
 export function reducer(store: Store = buildDefaultStore(), action: Action): Store {
     switch (action.type) {
         case constants.UPDATE_SERVICES_REQUEST:
@@ -32,27 +40,29 @@ export function reducer(store: Store = buildDefaultStore(), action: Action): Sto
             return updateServicesSuccess(store, action as UpdateTaskServicesAsync.Success);
         case constants.UPDATE_SERVICES_FAILURE:
             return updateServicesFailure(store, action as UpdateTaskServicesAsync.Failure);
-        default: return store;
+        default:
+            return store;
     }
 }
 
 function updateServicesRequest(store: Store, action: UpdateTaskServicesAsync.Request): Store {
-    const task = action.payload.task;
+    const taskId = action.payload.taskId;
+    const taskServices = store.taskServicesMap[taskId] || buildDefaultTaskServices();
     return {
         ...store,
         taskServicesMap: {
             ...store.taskServicesMap,
-            [task.id]: { ...store.taskServicesMap[task.id], message: '', loading: true },
+            [taskId]: { ...taskServices, message: '', loading: true },
         },
     };
 }
 
 function updateServicesSuccess(store: Store, action: UpdateTaskServicesAsync.Success): Store {
     const services = action.payload.services;
-    const task = action.payload.task;
+    const taskId = action.payload.taskId;
     const serviceMap = createServiceMap(services);
     const serviceIds = Object.keys(serviceMap);
-    const taskServicesMap = { [task.id]: { ...store.taskServicesMap[task.id], serviceIds, loading: false } };
+    const taskServicesMap = { [taskId]: { ...store.taskServicesMap[taskId], serviceIds, loading: false } };
     return {
         ...store,
         serviceMap: { ...store.serviceMap, ...serviceMap },
@@ -61,13 +71,13 @@ function updateServicesSuccess(store: Store, action: UpdateTaskServicesAsync.Suc
 }
 
 function updateServicesFailure(store: Store, action: UpdateTaskServicesAsync.Failure): Store {
-    const task = action.payload.task;
+    const taskId = action.payload.taskId;
     const message = action.payload.message;
     return {
         ...store,
         taskServicesMap: {
             ...store.taskServicesMap,
-            [task.id]: { ...store.taskServicesMap[task.id], message, loading: false },
+            [taskId]: { ...store.taskServicesMap[taskId], message, loading: false },
         },
     };
 }

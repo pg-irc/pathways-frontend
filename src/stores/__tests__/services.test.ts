@@ -20,10 +20,14 @@ describe('services reducer', () => {
         const query = aString();
         const action: UpdateTaskServicesAsync.Request = {
             type: constants.UPDATE_SERVICES_REQUEST,
-            payload: { task, query },
+            payload: { taskId: task.id, query },
         };
         const store = reducer(theStore, action);
         const taskServices = store.taskServicesMap[task.id];
+
+        it('creates a complete but empty task services object if none exists for the task', () => {
+            expect(taskServices.serviceIds).toEqual([]);
+        });
 
         it('sets the task services as loading', () => {
             expect(taskServices.loading).toBe(true);
@@ -39,7 +43,7 @@ describe('services reducer', () => {
         const services: ReadonlyArray<Service> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
         const action: UpdateTaskServicesAsync.Success = {
             type: constants.UPDATE_SERVICES_SUCCESS,
-            payload: { task, services },
+            payload: { taskId: task.id, services },
         };
         const store = reducer(theStore, action);
 
@@ -73,7 +77,7 @@ describe('services reducer', () => {
         const message = aString();
         const action: UpdateTaskServicesAsync.Failure = {
             type: constants.UPDATE_SERVICES_FAILURE,
-            payload: { task, message },
+            payload: { taskId: task.id, message },
         };
         const store = reducer(theStore, action);
 

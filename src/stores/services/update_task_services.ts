@@ -1,5 +1,5 @@
 import { Service } from './types';
-import { Task } from '../../selectors/tasks';
+import { Id as TaskId } from '../tasks';
 import { Task as constants} from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { Action as ReduxAction } from 'redux';
@@ -10,29 +10,26 @@ interface UpdateTaskServicesAction<P extends {} = {}> extends ReduxAction {
 
 export namespace UpdateTaskServicesAsync {
     export interface Request extends UpdateTaskServicesAction {
-        readonly payload: { readonly task: Task; readonly query: string; };
+        readonly payload: { readonly taskId: TaskId; readonly query: string; };
     }
     export interface Success extends UpdateTaskServicesAction {
-        readonly payload: { readonly task: Task; readonly services: ReadonlyArray<Service>; };
+        readonly payload: { readonly taskId: TaskId; readonly services: ReadonlyArray<Service>; };
     }
     export interface Failure extends UpdateTaskServicesAction {
-        readonly payload: { readonly task: Task; readonly message: string; };
+        readonly payload: { readonly taskId: TaskId; readonly message: string; };
     }
     export type Result = Success | Failure;
     export type Action = Request | Result;
 }
 
 export const updateTaskServicesAsync = {
-    // tslint:disable-next-line:typedef
-    request(task: Task, query: string) {
-        return helpers.makeAction(constants.UPDATE_SERVICES_REQUEST, { task, query });
+    request(taskId: TaskId, query: string): UpdateTaskServicesAsync.Request {
+        return helpers.makeAction(constants.UPDATE_SERVICES_REQUEST, { taskId, query });
     },
-    // tslint:disable-next-line:typedef
-    success(task: Task, services: ReadonlyArray<Service>) {
-        return helpers.makeAction(constants.UPDATE_SERVICES_SUCCESS, { task, services });
+    success(taskId: TaskId, services: ReadonlyArray<Service>): UpdateTaskServicesAsync.Success {
+        return helpers.makeAction(constants.UPDATE_SERVICES_SUCCESS, { taskId, services });
     },
-    // tslint:disable-next-line:typedef
-    failure(message: string, task: Task) {
-        return helpers.makeAction(constants.UPDATE_SERVICES_FAILURE, { message, task });
+    failure(message: string, taskId: TaskId): UpdateTaskServicesAsync.Failure {
+        return helpers.makeAction(constants.UPDATE_SERVICES_FAILURE, { message, taskId });
     },
 };

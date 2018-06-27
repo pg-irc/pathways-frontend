@@ -1,27 +1,25 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import { APIClient, ServiceData } from './api_client';
-
+import { APIClient, ServiceData, APIResponse } from './api_client';
 export { APIClient };
+export { APIError } from './errors';
 
 export class API {
 
-    private static instance: APIClient;
+    private static apiClient: APIClient = undefined;
 
     static configure(url: string): void {
-        this.instance = new APIClient(url);
+        this.apiClient = new APIClient(url);
     }
 
-    static async searchServices(query: string): Promise<ReadonlyArray<ServiceData>> {
-        return this.client.searchServices(query);
+    static async searchServices(query: string): Promise<APIResponse<ServiceData>> {
+        return await this.client.searchServices(query);
     }
 
     private static get client(): APIClient {
-        if (this.instance === undefined) {
+        if (this.apiClient === undefined) {
             throw new Error('APIClient initialized, API.configure(...) must be called first');
         }
-        return this.instance;
+        return this.apiClient;
     }
 
 }
-
-export class APIError extends Error {}
