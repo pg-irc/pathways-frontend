@@ -22,6 +22,8 @@ export const buildTasksFixture = (): Store => {
                 'tags': ['important', 'do soon', 'free'],
                 'category': 'education',
                 'importance': 1,
+                'relatedTasks': ['t2'],
+                'relatedArticles': ['a1', 'a2'],
             },
             't2': {
                 'id': 't2',
@@ -42,6 +44,8 @@ export const buildTasksFixture = (): Store => {
                 'tags': ['important', 'do soon', 'free'],
                 'category': 'education',
                 'importance': 1,
+                'relatedTasks': ['t1'],
+                'relatedArticles': ['a1'],
             },
             't3': {
                 'id': 't3',
@@ -62,6 +66,8 @@ export const buildTasksFixture = (): Store => {
                 'tags': ['important', 'do soon', 'free'],
                 'category': 'education',
                 'importance': 1,
+                'relatedTasks': ['t2'],
+                'relatedArticles': ['a1'],
             },
             't4': {
                 'id': 't4',
@@ -82,6 +88,8 @@ export const buildTasksFixture = (): Store => {
                 'tags': ['important'],
                 'category': 'finance',
                 'importance': 1,
+                'relatedTasks': [],
+                'relatedArticles': [],
             },
             't5': {
                 'id': 't5',
@@ -102,6 +110,8 @@ export const buildTasksFixture = (): Store => {
                 'tags': ['important'],
                 'category': 'employment',
                 'importance': 1,
+                'relatedTasks': [],
+                'relatedArticles': [],
             },
         },
         taskUserSettingsMap: {
