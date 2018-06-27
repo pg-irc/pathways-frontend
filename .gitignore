@@ -27,3 +27,6 @@ yarn-error.log*
 
 # Contains copyright material, do not commit
 src/fixtures/newcomers_guide
+
+# Build-time configuration file
+.env
