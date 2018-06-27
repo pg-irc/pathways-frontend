@@ -1,4 +1,4 @@
-import { buildTaxonomyFixture } from '../fixtures/hard_coded/taxonomies';
+import { buildTaxonomyFixture } from '../fixtures/buildFixtures';
 import { Store } from '../fixtures/types/taxonomies';
 export { Store, TaxonomyTermReference, Taxonomy, ExploreTaxonomyId } from '../fixtures/types/taxonomies';
 

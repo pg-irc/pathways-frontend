@@ -1,4 +1,4 @@
-import { buildQuestionnaireFixture } from '../fixtures/hard_coded/questionnaire';
+import { buildQuestionnaireFixture } from '../fixtures/buildFixtures';
 import { Id, AnswersMap, Store } from '../fixtures/types/questionnaire';
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';

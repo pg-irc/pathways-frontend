@@ -1,4 +1,4 @@
-import { buildTasksFixture } from '../fixtures/hard_coded/tasks';
+import { buildTasksFixture } from '../fixtures/buildFixtures';
 import { Store, TaskList, Id, TaskUserSettings } from '../fixtures/types/tasks';
 import { Task as constants } from '../application/constants';
 import * as helpers from './helpers/make_action';
