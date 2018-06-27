@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'native-base';
 import { Task } from '../../selectors/tasks';
-import { TaskListItemComponent, TaskListItemActions, TaskListItemStyles } from './task_list_item';
+import { TaskListItemComponent, TaskListItemActions, TaskListItemStyleProps } from './task_list_item';
 import R from 'ramda';
 
-export interface TaskListProps extends TaskListItemStyles {
+export interface TaskListProps extends TaskListItemStyleProps {
     readonly tasks: ReadonlyArray<Task>;
 }
 export interface TaskListActions extends TaskListItemActions {
@@ -17,7 +17,7 @@ export const TaskListComponent: React.StatelessComponent<AllTaskListProps> = (pr
         {R.map((task: Task) =>
             <TaskListItemComponent
                 key={task.id}
-                style={props.style}
+                listItemStyle={props.listItemStyle}
                 goToTaskDetail = {props.goToTaskDetail}
                 addToSavedList = {props.addToSavedList}
                 displayTaskInteractions={props.shouldDisplayTaskInteractions ? props.shouldDisplayTaskInteractions(task) : true}

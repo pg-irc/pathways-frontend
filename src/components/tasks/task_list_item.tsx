@@ -8,10 +8,10 @@ import { AddToSavedListAction } from '../../stores/tasks';
 import { SetTaskDetailPageAction } from '../../stores/page_switcher';
 import { I18nManager } from 'react-native';
 
-export interface TaskListItemStyles {
-    readonly style?: object;
+export interface TaskListItemStyleProps {
+    readonly listItemStyle?: object;
 }
-export interface TaskListItemProps extends TaskListItemStyles, Task {
+export interface TaskListItemProps extends TaskListItemStyleProps, Task {
     readonly displayTaskInteractions: boolean;
 }
 export type TaskListItemActions = TaskActions;
@@ -20,7 +20,7 @@ export type AllTaskListItemProps = TaskListItemProps & TaskListItemActions;
 export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProps> = (props: AllTaskListItemProps): JSX.Element => {
     const goToTaskDetail = (): SetTaskDetailPageAction => props.goToTaskDetail(props.id);
     return (
-        <ListItem style={props.style} button noIndent onPress={goToTaskDetail}>
+        <ListItem style={props.listItemStyle} button noIndent onPress={goToTaskDetail}>
             <Grid>
                 <Row>
                     {props.displayTaskInteractions ? renderTaskInteractions(props) : undefined}

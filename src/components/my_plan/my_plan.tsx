@@ -24,7 +24,7 @@ export const MyPlan: React.StatelessComponent = (): JSX.Element => (
             <Collapser
                 collapsedHeader={getHeaderForSuggestedTasks(true)}
                 expandedHeader={getHeaderForSuggestedTasks(false)}
-                content={<ConnectedSuggestedTasks style={taskStyles.suggestedListItem}/>}
+                content={<ConnectedSuggestedTasks listItemStyle={taskStyles.suggestedListItem}/>}
                 initiallyCollapsed={true}
                 style={myPlanStyles.suggestedTasks}
             />
