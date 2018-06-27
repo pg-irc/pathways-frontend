@@ -1,6 +1,4 @@
-import { Store, ExploreTaxonomyId } from './types/taxonomies';
-
-export { Store, TaxonomyTermReference, Taxonomy, ExploreTaxonomyId } from './types/taxonomies';
+import { Store, ExploreTaxonomyId } from '../types/taxonomies';
 
 export const buildTaxonomyFixture = (): Store => ({
     taxonomyMap: {

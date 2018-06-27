@@ -1,5 +1,7 @@
-import { buildExploreFixture, Store } from '../fixtures/explore';
-export { Store, ExploreSection, ExploreSectionMap } from '../fixtures/explore';
+import { buildExploreFixture } from '../fixtures/hard_coded/explore';
+import { Store } from '../fixtures/types/explore';
+
+export { Store, ExploreSection, ExploreSectionMap } from '../fixtures/types/explore';
 
 export type Id = string;
 

@@ -1,8 +1,9 @@
-import { buildTasksFixture, Store, TaskList, Id, TaskUserSettings } from '../fixtures/tasks';
+import { buildTasksFixture } from '../fixtures/hard_coded/tasks';
+import { Store, TaskList, Id, TaskUserSettings } from '../fixtures/types/tasks';
 import { Task as constants } from '../application/constants';
 import * as helpers from './helpers/make_action';
 
-export { Id, Task, TaskUserSettings, TaskMap, TaskUserSettingsMap, TaskList, Store } from '../fixtures/tasks';
+export { Id, Task, TaskUserSettings, TaskMap, TaskUserSettingsMap, TaskList, Store } from '../fixtures/types/tasks';
 
 export type AddToSavedListAction = Readonly<ReturnType<typeof addToSavedList>>;
 export type RemoveFromSavedListAction = Readonly<ReturnType<typeof removeFromSavedList>>;
@@ -12,12 +13,12 @@ export type ToggleCompletedAction = Readonly<ReturnType<typeof toggleCompleted>>
 export type ToggleStarredAction = Readonly<ReturnType<typeof toggleStarred>>;
 export type ShareAction = Readonly<ReturnType<typeof share>>;
 type TaskAction = AddToSavedListAction |
-                  RemoveFromSavedListAction |
-                  AddToSuggestedListAction |
-                  RemoveFromSuggestedListAction |
-                  ToggleCompletedAction |
-                  ToggleStarredAction |
-                  ShareAction;
+    RemoveFromSavedListAction |
+    AddToSuggestedListAction |
+    RemoveFromSuggestedListAction |
+    ToggleCompletedAction |
+    ToggleStarredAction |
+    ShareAction;
 
 // tslint:disable-next-line:typedef
 export const addToSavedList = (taskId: Id) => (
@@ -82,14 +83,14 @@ export const reducer = (store: Store = buildDefaultStore(), action?: TaskAction)
     }
 };
 
-const addToTaskList = (store: Store, property: keyof(Store), taskList: TaskList, value: Id): Store => {
+const addToTaskList = (store: Store, property: keyof (Store), taskList: TaskList, value: Id): Store => {
     if (taskList.indexOf(value) !== -1) {
         return store;
     }
     return { ...store, [property]: [...taskList, value] };
 };
 
-const removeFromTaskList = (store: Store, property: keyof(Store), taskList: TaskList, value: Id): Store => {
+const removeFromTaskList = (store: Store, property: keyof (Store), taskList: TaskList, value: Id): Store => {
     if (taskList.indexOf(value) === -1) {
         return store;
     }

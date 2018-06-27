@@ -1,6 +1,4 @@
-import { Store } from './types/tasks';
-
-export { Id, Store, Task, TaskList, TaskMap, TaskUserSettings, TaskUserSettingsMap } from './types/tasks';
+import { Store } from '../types/tasks';
 
 export const buildTasksFixture = (): Store => {
     return {
