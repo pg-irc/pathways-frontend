@@ -1,6 +1,7 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
-import { Id } from './tasks';
+import { Id as TaskId } from './tasks';
+import { Id as SectionId } from './explore';
 import { Id as ArticleId } from './articles';
 
 export enum Page {
@@ -43,12 +44,12 @@ export const setExplorePage = () => (
 );
 
 // tslint:disable-next-line:typedef
-export const setTaskDetailPage = (taskId: Id) => (
+export const setTaskDetailPage = (taskId: TaskId) => (
     helpers.makeAction(constants.SET_TASK_DETAIL_PAGE, { taskId })
 );
 
 // tslint:disable-next-line:typedef
-export const setExploreSectionPage = (sectionId: Id) => (
+export const setExploreSectionPage = (sectionId: SectionId) => (
     helpers.makeAction(constants.SET_EXPLORE_SECTION_PAGE, { sectionId })
 );
 

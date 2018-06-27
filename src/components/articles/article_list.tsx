@@ -7,9 +7,7 @@ import R from 'ramda';
 export interface ArticleListProps {
     readonly articles: ReadonlyArray<Article>;
 }
-
 export type ArticleListActions = ArticleListItemActions;
-
 export type AllArticleListProps = ArticleListProps & ArticleListActions;
 
 export const ArticleListComponent: React.StatelessComponent<AllArticleListProps> = (props: AllArticleListProps): JSX.Element => (
@@ -17,8 +15,8 @@ export const ArticleListComponent: React.StatelessComponent<AllArticleListProps>
         {R.map((article: Article) =>
             <ArticleListItemComponent
                 key={article.id}
-                {...article}
                 goToArticleDetail={props.goToArticleDetail}
+                {...article}
             />, props.articles)}
     </View>
 );

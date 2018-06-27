@@ -1,24 +1,18 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Component, Props, renderSavedTask } from './task_list';
-import { Actions } from './task_list_item';
+import { TaskListComponent, TaskListProps, TaskListActions } from './task_list';
 import { Store } from '../../application/store';
 import { selectAllSavedTasks } from '../../selectors/tasks';
 import * as stores from '../../stores/tasks';
 import { selectLocale } from '../../selectors/locale';
 import { SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 
-const mapStateToProps = (store: Store): Props => ({
+const mapStateToProps = (store: Store): TaskListProps => ({
     tasks: selectAllSavedTasks(selectLocale(store), store.applicationState.tasksInStore),
-    taskRenderer: renderSavedTask,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): Actions => ({
-    removeFromSavedList: (taskId: stores.Id): stores.RemoveFromSavedListAction => dispatch(stores.removeFromSavedList(taskId)),
-    toggleCompleted: (taskUserSettingsId: stores.Id): stores.ToggleCompletedAction => dispatch(stores.toggleCompleted(taskUserSettingsId)),
-    toggleStarred: (taskUserSettingsId: stores.Id): stores.ToggleStarredAction => dispatch(stores.toggleStarred(taskUserSettingsId)),
-    shareTask: (): stores.ShareAction => dispatch(stores.share()),
+const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListActions => ({
     goToTaskDetail: (taskId: stores.Id): SetTaskDetailPageAction => dispatch(setTaskDetailPage(taskId)),
 });
 
-export const ConnectedSavedTasks = connect(mapStateToProps, mapDispatchToProps)(Component);
+export const ConnectedSavedTasks = connect(mapStateToProps, mapDispatchToProps)(TaskListComponent);

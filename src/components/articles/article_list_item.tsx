@@ -7,11 +7,9 @@ import { SetArticleDetailPageAction } from '../../stores/page_switcher';
 import { Article } from '../../selectors/articles';
 
 export type ArticleListItemProps = Article;
-
 export interface ArticleListItemActions {
     readonly goToArticleDetail: (articleId: Id) => SetArticleDetailPageAction;
 }
-
 export type AllArticleListItemProps = ArticleListItemActions & ArticleListItemProps;
 
 export const ArticleListItemComponent: React.StatelessComponent<AllArticleListItemProps> =

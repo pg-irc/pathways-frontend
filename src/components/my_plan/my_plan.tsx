@@ -8,6 +8,7 @@ import { Trans } from '@lingui/react';
 import { applicationStyles } from '../../application/styles';
 import { myPlanStyles } from './styles';
 import { Collapser } from '../collapser/collapser';
+import { taskStyles } from '../tasks/styles';
 
 export const MyPlan: React.StatelessComponent = (): JSX.Element => (
     <Container>
@@ -23,7 +24,7 @@ export const MyPlan: React.StatelessComponent = (): JSX.Element => (
             <Collapser
                 collapsedHeader={getHeaderForSuggestedTasks(true)}
                 expandedHeader={getHeaderForSuggestedTasks(false)}
-                content={<ConnectedSuggestedTasks />}
+                content={<ConnectedSuggestedTasks style={taskStyles.suggestedListItem}/>}
                 initiallyCollapsed={true}
                 style={myPlanStyles.suggestedTasks}
             />

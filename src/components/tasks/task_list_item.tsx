@@ -3,28 +3,28 @@ import { ListItem, Text, Button, Icon, Grid, Col, Row } from 'native-base';
 import { taskStyles } from './styles';
 import { applicationStyles } from '../../application/styles';
 import { TaskActions } from './actions';
-import * as selector from '../../selectors/tasks';
+import { Task } from '../../selectors/tasks';
 import { AddToSavedListAction } from '../../stores/tasks';
 import { SetTaskDetailPageAction } from '../../stores/page_switcher';
 import { I18nManager } from 'react-native';
 
-export interface Props {
+export interface TaskListItemStyles {
+    readonly style?: object;
 }
+export interface TaskListItemProps extends TaskListItemStyles, Task {
+    readonly displayTaskInteractions: boolean;
+}
+export type TaskListItemActions = TaskActions;
+export type AllTaskListItemProps = TaskListItemProps & TaskListItemActions;
 
-export type Actions = TaskActions;
-
-export const TaskListItem: React.StatelessComponent<selector.Task & Actions> = (props: selector.Task & Actions): JSX.Element => {
-    const addToSavedList = (): AddToSavedListAction => props.addToSavedList(props.id);
+export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProps> = (props: AllTaskListItemProps): JSX.Element => {
     const goToTaskDetail = (): SetTaskDetailPageAction => props.goToTaskDetail(props.id);
-    const style = props.addToSavedList ? taskStyles.suggestedListItem : taskStyles.savedListItem;
     return (
-        <ListItem style={style} button noIndent onPress={goToTaskDetail}>
+        <ListItem style={props.style} button noIndent onPress={goToTaskDetail}>
             <Grid>
                 <Row>
-                    <Col size={10}>
-                        {!props.addToSavedList ? getDragButton() : getSaveButton(addToSavedList) }
-                    </Col>
-                    <Col size={70}>
+                    {props.displayTaskInteractions ? renderTaskInteractions(props) : undefined}
+                    <Col size={props.displayTaskInteractions ? 70 : 80}>
                         <Row>
                             <Text numberOfLines={2}>{props.title}</Text>
                         </Row>
@@ -41,14 +41,23 @@ export const TaskListItem: React.StatelessComponent<selector.Task & Actions> = (
     );
 };
 
-const getDragButton = (): JSX.Element => (
-    <Button dark transparent iconRight>
-        <Icon style={applicationStyles.bold} name='drag-vertical' type='MaterialCommunityIcons' />
+const renderTaskInteractions = (props: AllTaskListItemProps): JSX.Element => {
+    const addToSavedList = (): AddToSavedListAction => props.addToSavedList(props.id);
+    return (
+        <Col size={10}>
+            {props.addToSavedList ? renderAddButton(addToSavedList) : renderDragButton()}
+        </Col>
+    );
+};
+
+const renderAddButton = (onPress: () => void): JSX.Element => (
+    <Button dark transparent iconRight onPress={onPress}>
+        <Icon style={applicationStyles.bold} name='add' />
     </Button>
 );
 
-const getSaveButton = (onPress: () => void): JSX.Element => (
-    <Button dark transparent iconRight onPress={onPress}>
-        <Icon style={applicationStyles.bold} name='add' />
+const renderDragButton = (): JSX.Element => (
+    <Button dark transparent iconRight>
+        <Icon style={applicationStyles.bold} name='drag-vertical' type='MaterialCommunityIcons' />
     </Button>
 );

@@ -173,7 +173,7 @@ export const buildTasksFixture = (): Store => {
                 'completed': false,
             },
         },
-        savedTasksList: ['t1', 't2', 't3'],
-        suggestedTasksList: ['t4', 't5'],
+        savedTasksList: [],
+        suggestedTasksList: ['t1', 't2', 't3', 't4', 't5'],
     };
 };
