@@ -21,7 +21,6 @@ export class APIClient {
     async searchServices(query: string): Promise<APIResponse<ServiceData>> {
         const endpoint = 'services';
         const servicesResponse = await this.fetch(endpoint, { search: query });
-        console.log('[APIClient#searchServices()]', servicesResponse);
         return servicesResponse;
     }
 
@@ -29,7 +28,6 @@ export class APIClient {
         const queryString = qs.stringify(query);
         // TODO: Should use something a bit more robust to build urls.
         const url = `${this.host}/${endpoint}?${queryString}`;
-        console.log('[ApiClient#fetch()]', url);
         const response = await fetch(url);
         return APIResponse.fromResponse(response);
     }
