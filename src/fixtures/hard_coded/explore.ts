@@ -19,7 +19,7 @@ export const buildExploreFixture = (): Store => (
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'SettlingIn',
+                    'taxonomyTermId': 'settling_in',
                 }],
             },
             's2': {
@@ -36,7 +36,7 @@ export const buildExploreFixture = (): Store => (
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'education',
                 }],
             },
             's3': {
@@ -53,7 +53,7 @@ export const buildExploreFixture = (): Store => (
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'HealthCare',
+                    'taxonomyTermId': 'healthCare',
                 }],
             },
             's4': {
@@ -70,7 +70,7 @@ export const buildExploreFixture = (): Store => (
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Money',
+                    'taxonomyTermId': 'money',
                 }],
             },
             's5': {
@@ -87,7 +87,7 @@ export const buildExploreFixture = (): Store => (
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Housing',
+                    'taxonomyTermId': 'housing',
                 }],
             },
             's6': {
@@ -104,7 +104,7 @@ export const buildExploreFixture = (): Store => (
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Employment',
+                    'taxonomyTermId': 'employment',
                 }],
             },
             's7': {
@@ -121,7 +121,7 @@ export const buildExploreFixture = (): Store => (
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'LegalOrImmigration',
+                    'taxonomyTermId': 'legal',
                 }],
             },
             's8': {
@@ -138,7 +138,7 @@ export const buildExploreFixture = (): Store => (
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Driving',
+                    'taxonomyTermId': 'driving',
                 }],
             },
             's9': {
@@ -155,7 +155,7 @@ export const buildExploreFixture = (): Store => (
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'HelpForIndividualsAndFamilies',
+                    'taxonomyTermId': 'helpForIndividualsAndFamilies',
                 }],
             },
         },

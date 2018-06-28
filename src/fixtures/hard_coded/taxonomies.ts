@@ -1,18 +1,17 @@
-import { Store, ExploreTaxonomyId } from '../types/taxonomies';
+import { Store } from '../types/taxonomies';
 
 export const buildTaxonomyFixture = (): Store => ({
     taxonomyMap: {
-        [ExploreTaxonomyId]: {
-            // TODO make sure these match the newcomer data
-            'SettlingIn': { icon: 'sign-text' },
-            'Education': { icon: 'book-open-variant' },
-            'HealthCare': { icon: 'medical-bag' },
-            'Money': { icon: 'currency-usd' },
-            'Housing': { icon: 'home' },
-            'Employment': { icon: 'briefcase' },
-            'LegalOrImmigration': { icon: 'gavel' },
-            'Driving': { icon: 'car' },
-            'HelpForIndividualsAndFamilies': { icon: 'account' },
+        'explore': {
+            'settling_in': { icon: 'sign-text' },
+            'education': { icon: 'book-open-variant' },
+            'healthCare': { icon: 'medical-bag' },
+            'money': { icon: 'currency-usd' },
+            'housing': { icon: 'home' },
+            'employment': { icon: 'briefcase' },
+            'legal': { icon: 'gavel' },
+            'driving': { icon: 'car' },
+            'helpForIndividualsAndFamilies': { icon: 'account' },
         },
     },
 });
