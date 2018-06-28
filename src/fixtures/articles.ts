@@ -7,8 +7,8 @@ export interface Article {
     readonly id: Id;
     readonly name: LocalizedText;
     readonly content: LocalizedText;
-    readonly relatedTasks?: ReadonlyArray<TaskId>;
-    readonly relatedArticles?: ReadonlyArray<Id>;
+    readonly relatedTasks: ReadonlyArray<TaskId>;
+    readonly relatedArticles: ReadonlyArray<Id>;
     readonly isRecommendedToAllUsers: boolean;
     readonly isStarred: boolean;
 }

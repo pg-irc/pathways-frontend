@@ -15,7 +15,7 @@ describe('articles selector', () => {
         beforeEach(() => {
             locale = new LocaleBuilder().build();
             article = new ArticleBuilder().withLocaleCode(locale.code).build();
-            denormalizedArticle = selector.denormalizeArticle(locale, article);
+            denormalizedArticle = selector.denormalizeArticle(locale, article, [], []);
         });
 
         test('name property', () => {
