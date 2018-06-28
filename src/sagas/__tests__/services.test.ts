@@ -4,8 +4,8 @@ import { API } from '../../api';
 import { updateTaskServices } from '../services';
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
 import { Task } from '../../stores/tasks';
-import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
-import { updateTaskServicesAsync, UpdateTaskServicesAsync } from '../../stores/services';
+import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { updateTaskServicesAsync, UpdateTaskServicesAsync, serviceFromServiceData } from '../../stores/services';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { APIResponse } from '../../api/api_client';
 
@@ -36,15 +36,15 @@ describe('The update task services saga', () => {
         });
 
         it('dispatch a success action with the results', () => {
-            const response = new APIResponse({ results: [] });
+            const response: APIResponse = { hasError: false, message: '', results: [] };
             const value = saga.next(response).value;
-            expect(value).toEqual(put(updateTaskServicesAsync.success(task.id, response.results)));
+            const services = response.results.map(serviceFromServiceData);
+            expect(value).toEqual(put(updateTaskServicesAsync.success(task.id, services)));
         });
 
-        it('dispatch a failure action if there is an error', () => {
-            const error = anError();
+        it('dispatch a failure action if there is a problem', () => {
             const message = aString();
-            const response = new APIResponse({ error, message });
+            const response: APIResponse = { hasError: true, message };
             const value = saga.next(response).value;
             expect(value).toEqual(put(updateTaskServicesAsync.failure(response.message, task.id)));
         });

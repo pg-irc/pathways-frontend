@@ -6,6 +6,7 @@ import { Props } from './task_detail';
 import { TaskServices, selectTaskServices, createRelatedServicesQueryFromTask } from '../../selectors/services';
 import { Task } from '../../selectors/tasks';
 import { connect } from 'react-redux';
+import { selectLocale } from '../../selectors/locale';
 
 interface StateProps {
     readonly query: string;
@@ -13,9 +14,11 @@ interface StateProps {
 }
 
 function mapStateToProps(store: Store, ownProps: OwnProps): StateProps {
+    const servicesStore = store.applicationState.servicesInStore;
+    const locale = selectLocale(store);
     return {
         query: createRelatedServicesQueryFromTask(ownProps.task),
-        taskServices: selectTaskServices(ownProps.task.id, store.applicationState.servicesInStore),
+        taskServices: selectTaskServices(locale, ownProps.task.id, servicesStore),
     };
 }
 

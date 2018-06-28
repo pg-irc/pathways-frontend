@@ -2,19 +2,21 @@ import { LocalizedText } from '../../locale';
 
 import { Id, Service, Store, ServiceMap, TaskServices } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
-import { ServiceData } from '../../api/api_client';
 import { Task as constants } from '../../application/constants';
 import { Action } from 'redux';
 
 export { Id, Service, Store };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
 
-export function serviceFromServiceData(data: ServiceData): Service {
-    const { id, name }: ServiceData = data;
+export function serviceFromServiceData(data: any): Service { // tslint:disable-line:no-any
     // TODO: Perform appropriate data validation.
-    //       Eg: ensure 'name' has appropriate LocalizedText structure.
     //       Alternatively bring in a tool to do this for us, eg: Serializr
-    return { id: id as string, name: name as LocalizedText};
+    const id: string = data.id || undefined;
+    // TODO: Determine how to handle localization from the API.
+    // TODO: Hard-coding 'en' for the meantime.
+    const name: LocalizedText = { 'en': data.name || '' };
+    const description: LocalizedText = { 'en': data.description || '' };
+    return { id, name, description };
 }
 
 function buildDefaultStore(): Store {

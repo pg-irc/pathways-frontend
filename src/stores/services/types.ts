@@ -5,6 +5,7 @@ export type Id = string;
 export interface Service {
     readonly id: Id;
     readonly name: LocalizedText;
+    readonly description: LocalizedText;
 }
 
 export interface TaskServices {

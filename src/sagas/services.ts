@@ -3,7 +3,7 @@ import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-
 import { Task as constants } from '../application/constants';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync, serviceFromServiceData } from '../stores/services';
 import { API } from '../api';
-import { APIResponse, ServiceData } from '../api/api_client';
+import { APIResponse } from '../api/api_client';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.UPDATE_SERVICES_REQUEST, updateTaskServices);
@@ -14,7 +14,7 @@ export function* updateTaskServices(
 ): IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAsync.Result>> {
     const query = action.payload.query;
     const taskId = action.payload.taskId;
-    const response: APIResponse<ServiceData> = yield call([API, API.searchServices], query);
+    const response: APIResponse = yield call([API, API.searchServices], query);
     if (response.hasError) {
         yield put(updateTaskServicesAsync.failure(response.message, taskId));
     } else {

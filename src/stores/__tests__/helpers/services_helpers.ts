@@ -31,6 +31,7 @@ function buildTaskServicesMap(tasks: ReadonlyArray<TaskServicesBuilder>, service
 export class ServiceBuilder {
     id: Id = aString();
     name: LocalizedText = new LocalizedTextBuilder().build();
+    description: LocalizedText = new LocalizedTextBuilder().build();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -42,10 +43,16 @@ export class ServiceBuilder {
         return this;
     }
 
+    withDescription(description: LocalizedText): ServiceBuilder {
+        this.description = description;
+        return this;
+    }
+
     build(): Service {
         return {
             id: this.id,
             name: this.name,
+            description: this.description,
         };
     }
 }
