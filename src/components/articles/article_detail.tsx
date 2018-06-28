@@ -28,7 +28,7 @@ export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailPr
                         </Row>
                         {renderActions(props)}
                         <Row>
-                            <Text>{article.description}</Text>
+                            <Text>{props.article.description}</Text>
                         </Row>
                         {props.article.relatedArticles ? renderRelatedArticles(props) : undefined}
                         {props.article.relatedTasks ? renderRelatedTasks(props) : undefined}
