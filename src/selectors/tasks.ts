@@ -42,7 +42,8 @@ export const denormalizeTask =
         }
     );
 
-export const selectAllSavedTasks = (locale: Locale, store: app.Store): ReadonlyArray<Task> => {
+export const selectAllSavedTasks = (store: app.Store): ReadonlyArray<Task> => {
+    const locale = selectLocale(store);
     const { savedTasksList, taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
     return savedTasksList.map((taskId: model.Id) => {
         const task: model.Task = taskMap[taskId];
@@ -51,7 +52,8 @@ export const selectAllSavedTasks = (locale: Locale, store: app.Store): ReadonlyA
     });
 };
 
-export const selectAllSuggestedTasks = (locale: Locale, store: app.Store): ReadonlyArray<Task> => {
+export const selectAllSuggestedTasks = (store: app.Store): ReadonlyArray<Task> => {
+    const locale = selectLocale(store);
     const { suggestedTasksList, taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
     return suggestedTasksList.map((taskId: model.Id) => {
         const task: model.Task = taskMap[taskId];

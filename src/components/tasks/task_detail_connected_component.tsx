@@ -8,11 +8,10 @@ import { selectCurrentTask } from '../../selectors/tasks';
 import { SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 import { selectAllSavedTasks } from '../../selectors/tasks';
 import { AddToSavedListAction, addToSavedList } from '../../stores/tasks';
-import { selectLocale } from '../../selectors/locale';
 
 const mapStateToProps = (store: Store): TaskDetailProps => ({
     task: selectCurrentTask(store),
-    savedTasks: selectAllSavedTasks(selectLocale(store), store),
+    savedTasks: selectAllSavedTasks(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskDetailActions => ({
