@@ -20,8 +20,12 @@ export const TaskListComponent: React.StatelessComponent<AllTaskListProps> = (pr
                 listItemStyle={props.listItemStyle}
                 goToTaskDetail = {props.goToTaskDetail}
                 addToSavedList = {props.addToSavedList}
-                displayTaskInteractions={props.shouldDisplayTaskInteractions ? props.shouldDisplayTaskInteractions(task) : true}
+                displayTaskInteractions={displayTaskInteractions(task, props.shouldDisplayTaskInteractions)}
                 {...task}
             />, props.tasks)}
     </View>
 );
+
+const displayTaskInteractions = (task: Task, callback: (task: Task) => boolean): boolean => {
+    return callback ? callback(task) : true;
+};
