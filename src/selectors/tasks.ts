@@ -45,22 +45,16 @@ export const denormalizeTask =
     );
 
 export const selectAllSavedTasks = (store: app.Store): ReadonlyArray<Task> => {
-    const locale = selectLocale(store);
-    const { savedTasksList, taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
+    const { savedTasksList }: model.Store = store.applicationState.tasksInStore;
     return savedTasksList.map((taskId: model.Id) => {
-        const task: model.Task = taskMap[taskId];
-        const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, task.id);
-        return denormalizeTask(locale, task, taskUserSettings, [], []);
+        return selectTaskAsListItem(store, taskId);
     });
 };
 
 export const selectAllSuggestedTasks = (store: app.Store): ReadonlyArray<Task> => {
-    const locale = selectLocale(store);
-    const { suggestedTasksList, taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
+    const { suggestedTasksList }: model.Store = store.applicationState.tasksInStore;
     return suggestedTasksList.map((taskId: model.Id) => {
-        const task: model.Task = taskMap[taskId];
-        const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, task.id);
-        return denormalizeTask(locale, task, taskUserSettings, [], []);
+        return selectTaskAsListItem(store, taskId);
     });
 };
 
@@ -116,5 +110,5 @@ export const selectTasksForCurrentExploreSection = (store: app.Store): ReadonlyA
 
 const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUserSettingsMap, task: model.Task): Task => {
     const userTask = findTaskUserSettingsByTaskId(userTasks, task.id);
-    return denormalizeTask(locale, task, userTask);
+    return denormalizeTask(locale, task, userTask, [], []);
 });

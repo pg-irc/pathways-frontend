@@ -24,7 +24,7 @@ describe('tasks selector', () => {
             locale = new LocaleBuilder().build();
             task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             taskUserSettings = new TaskUserSettingsBuilder(task.id).build();
-            denormalizedTask = selector.denormalizeTask(locale, task, taskUserSettings);
+            denormalizedTask = selector.denormalizeTask(locale, task, taskUserSettings, [], []);
         });
 
         test('id property', () => {
@@ -58,6 +58,7 @@ describe('tasks selector', () => {
         test('tags property', () => {
             expect(denormalizedTask.tags).toBe(task.tags);
         });
+
         test('taxonomy term reference', () => {
             expect(denormalizedTask.taxonomyTerms).toEqual([{ taxonomyId, taxonomyTermId }]);
         });
