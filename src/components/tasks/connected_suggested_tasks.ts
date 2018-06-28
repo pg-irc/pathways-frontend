@@ -9,7 +9,7 @@ import { selectLocale } from '../../selectors/locale';
 import { SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 
 const mapStateToProps = (store: Store, ownProps: TaskListItemStyleProps): TaskListProps => ({
-    tasks: selectAllSuggestedTasks(selectLocale(store), store.applicationState.tasksInStore),
+    tasks: selectAllSuggestedTasks(selectLocale(store), store),
     listItemStyle: ownProps.listItemStyle,
 });
 

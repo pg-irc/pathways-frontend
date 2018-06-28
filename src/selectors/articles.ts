@@ -5,7 +5,7 @@ import { selectLocale, selectLocalizedText } from './locale';
 import { selectRoute } from './route';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
-import { Task, selectTaskById } from './tasks';
+import { Task, selectTaskAsListItem } from './tasks';
 import { Id as TaskId } from '../stores/tasks';
 
 export interface Article {
@@ -38,7 +38,7 @@ export const selectCurrentArticle = (store: app.Store): Article => {
     const article = articles[articleId];
     // TODO task selectors should take the whole store.
     const relatedTasks = article.relatedTasks ?
-        R.map((id: TaskId) => selectTaskById(locale, store.applicationState.tasksInStore, id), article.relatedTasks) : undefined;
+        R.map((id: TaskId) => selectTaskAsListItem(store, id), article.relatedTasks) : undefined;
     const relatedArticles = article.relatedArticles ?
         R.map((id: model.Id) => selectArticleAsListItem(store, id), article.relatedArticles) : undefined;
     return denormalizeArticle(locale, article, relatedArticles, relatedTasks);

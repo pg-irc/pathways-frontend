@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-let no-any
 
-import { TaskBuilder, TaskUserSettingsBuilder, buildNormalizedStore }
+import { TaskBuilder, TaskUserSettingsBuilder }
     from '../../stores/__tests__/helpers/tasks_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
@@ -61,45 +61,7 @@ describe('tasks selector', () => {
         test('taxonomy term reference', () => {
             expect(denormalizedTask.taxonomyTerms).toEqual([{ taxonomyId, taxonomyTermId }]);
         });
-    });
-
-    describe('data retrieval', () => {
-        let store: stores.Store;
-        let locale: Locale;
-
-        beforeEach(() => {
-            locale = new LocaleBuilder().build();
-            const taskBuilder = new TaskBuilder().withLocaleCode(locale.code);
-            const taskUserSettingsBuilder = new TaskUserSettingsBuilder(taskBuilder.build().id);
-            store = buildNormalizedStore(
-                [taskBuilder],
-                [taskUserSettingsBuilder],
-                [taskBuilder.build().id],
-                [taskBuilder.build().id],
-            );
-        });
-
-        test('returns all saved tasks', () => {
-            expect(Object.keys(selector.selectAllSavedTasks(locale, store))).toHaveLength(1);
-        });
-
-        test('returns all suggested tasks', () => {
-            expect(Object.keys(selector.selectAllSuggestedTasks(locale, store))).toHaveLength(1);
-        });
-
-        test('returns task by id', () => {
-            const id = Object.keys(store.taskMap)[0];
-            const task = selector.selectTaskById(locale, store, id);
-            expect(task.id).toEqual(id);
-        });
-
-        test('throws when select task by id parameter is invalid', () => {
-            expect(() => selector.selectTaskById(locale, store, aString())).toThrow();
-        });
-
-        test('throws when select task user settings by id parameter is invalid', () => {
-            expect(() => selector.findTaskUserSettingsByTaskId(store.taskUserSettingsMap, aString())).toThrow();
-        });
 
     });
+
 });

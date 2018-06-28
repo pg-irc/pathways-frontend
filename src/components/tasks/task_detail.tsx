@@ -1,7 +1,11 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
-import { Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem, View } from 'native-base';
-import * as selector from '../../selectors/tasks';
+import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
+import { Task } from '../../selectors/tasks';
+import { TaskListComponent } from '../tasks/task_list';
+import { TaskListItemActions } from '../tasks/task_list_item';
+import { ArticleListComponent } from '../articles/article_list';
+import { ArticleListItemActions } from '../articles/article_list_item';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
@@ -10,21 +14,23 @@ import { Service, TaskServices} from '../../selectors/services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
 import { FlatList, ListRenderItemInfo } from 'react-native';
+import { RelatedContentList } from '../related_content_list/related_content_list';
+import R from 'ramda';
 
-export interface Props {
+export interface TaskDetailProps {
     readonly taskServices: TaskServices;
-    readonly task: selector.Task;
+    readonly task: Task;
+    readonly savedTasks: ReadonlyArray<Task>;
 }
-
-export interface Actions {
+export interface TaskDetailActions extends TaskListItemActions, ArticleListItemActions {
     readonly requestUpdateTaskServices: () => UpdateTaskServicesAsync.Request;
 }
-
+export type AllTaskDetailProps = TaskDetailProps & TaskDetailActions;
 type TabChangeEvent = { readonly i: number, from: number, readonly ref: React.Ref<Tabs> };
 
-export class TaskDetail extends React.Component<Props & Actions> {
+export class TaskDetail extends React.Component<AllTaskDetailProps> {
 
-    constructor(props: Props & Actions) {
+    constructor(props: AllTaskDetailProps) {
         super(props);
         this.onChangeTab = this.onChangeTab.bind(this);
     }
@@ -83,10 +89,8 @@ export class TaskDetail extends React.Component<Props & Actions> {
                                 <Row style={taskDetailStyles.row}>
                                     <Text>You can get information about your community ...</Text>
                                 </Row>
-                                <Row style={applicationStyles.hr} />
-                                <Row>
-                                    <Text style={applicationStyles.bold}><Trans>LEARN MORE</Trans></Text>
-                                </Row>
+                                {this.props.task.relatedArticles ? renderRelatedArticles(this.props) : undefined}
+                                {this.props.task.relatedTasks ? renderRelatedTasks(this.props) : undefined}
                             </Grid>
                         </Content>
                     </Tab>
@@ -114,6 +118,14 @@ export class TaskDetail extends React.Component<Props & Actions> {
 
 interface ServiceItemInfo extends ListRenderItemInfo<Service> {}
 
+function ServiceListEmpty(): JSX.Element {
+    return (
+        <View style={{ padding: 20 }}>
+            <Text><Trans>No related services found.</Trans></Text>
+        </View>
+    );
+}
+
 function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
     return (
         <ListItem>
@@ -122,10 +134,35 @@ function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
     );
 }
 
-function ServiceListEmpty(): JSX.Element {
+function renderRelatedArticles (props: AllTaskDetailProps): JSX.Element {
+    const componentProps = {
+        articles: props.task.relatedArticles,
+        goToArticleDetail: props.goToArticleDetail,
+    };
     return (
-        <View style={{ padding: 20 }}>
-            <Text><Trans>No related services found.</Trans></Text>
-        </View>
+        <RelatedContentList
+            title={'LEARN MORE'}
+            component={ArticleListComponent}
+            componentProps={componentProps}
+        />
+    );
+}
+
+function renderRelatedTasks (props: AllTaskDetailProps): JSX.Element {
+    const shouldDisplayTaskInteractions = (task: Task): boolean => (
+        R.find(R.propEq('id', task.id))(props.savedTasks) === undefined
+    );
+    const componentProps = {
+        tasks: props.task.relatedTasks,
+        goToTaskDetail: props.goToTaskDetail,
+        addToSavedList: props.addToSavedList,
+        shouldDisplayTaskInteractions: shouldDisplayTaskInteractions,
+    };
+    return (
+        <RelatedContentList
+            title={'RELATED TASKS'}
+            component={TaskListComponent}
+            componentProps={componentProps}
+        />
     );
 }

@@ -1,5 +1,6 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import * as store from '../../tasks';
+import { Id as ArticleId } from '../../articles';
 import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
@@ -14,6 +15,8 @@ export class TaskBuilder {
     tags: ReadonlyArray<string> = [aString(), aString()];
     category: string = aString();
     importance: number = aNumber();
+    relatedTasks: ReadonlyArray<ArticleId> = [aString(), aString()];
+    relatedArticles: ReadonlyArray<store.Id> = [aString(), aString()];
 
     withLocaleCode(localeCode: string): TaskBuilder {
         this.localeCode = localeCode;
@@ -52,6 +55,16 @@ export class TaskBuilder {
 
     withImportance(importance: number): TaskBuilder {
         this.importance = importance;
+        return this;
+    }
+
+    withRelatedTasks(relatedTasks: ReadonlyArray<store.Id>): TaskBuilder {
+        this.relatedTasks = relatedTasks;
+        return this;
+    }
+
+    withRelatedArticles(relatedArticles: ReadonlyArray<ArticleId>): TaskBuilder {
+        this.relatedArticles = relatedArticles;
         return this;
     }
 

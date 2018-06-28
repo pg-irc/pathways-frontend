@@ -8,7 +8,7 @@ import { selectLocale } from '../../selectors/locale';
 import { SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 
 const mapStateToProps = (store: Store): TaskListProps => ({
-    tasks: selectAllSavedTasks(selectLocale(store), store.applicationState.tasksInStore),
+    tasks: selectAllSavedTasks(selectLocale(store), store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListActions => ({
