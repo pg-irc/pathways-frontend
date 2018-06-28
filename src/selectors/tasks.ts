@@ -67,7 +67,7 @@ export const selectCurrentTask = (store: app.Store): Task => {
     const { taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
     const taskId = selectRoute(store).pageId;
     const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
-    const task = findTaskById(taskMap, taskId);
+    const task = taskMap[taskId];
     const relatedTasks = task.relatedTasks ?
         R.map((id: model.Id) => selectTaskAsListItem(store, id), task.relatedTasks) : undefined;
     const relatedArticles = task.relatedArticles ?
@@ -78,38 +78,24 @@ export const selectCurrentTask = (store: app.Store): Task => {
 export const selectTaskAsListItem = (store: app.Store, taskId: model.Id): Task => {
     const locale = selectLocale(store);
     const { taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
-    const task = findTaskById(taskMap, taskId);
+    const task = taskMap[taskId];
     const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
     return denormalizeTask(locale, task, taskUserSettings);
 };
 
-export const findTaskById = (tasks: model.TaskMap, taskId: model.Id): model.Task => {
-    const validate = validateOneTaskResultWasFound(taskId);
-    const getTask = R.compose(validate, R.values, R.pickBy(R.propEq('id', taskId)));
-    return getTask(tasks);
-};
-
 export const findTaskUserSettingsByTaskId =
     (taskUserSettingsMap: model.TaskUserSettingsMap, taskId: model.Id): model.TaskUserSettings => {
-        const validate = validateOneUserTaskResultWasFound(taskId);
+        const validate = validateOneResultWasFound(taskId);
         const getUserTask = R.compose(validate, R.values, R.pickBy(R.propEq('taskId', taskId)));
         return getUserTask(taskUserSettingsMap);
     };
 
-const validateOneUserTaskResultWasFound =
+const validateOneResultWasFound =
     R.curry((taskId: string, userTasks: ReadonlyArray<model.TaskUserSettings>): model.TaskUserSettings => {
         if (userTasks.length !== 1) {
             throw new Error(`Could not find TaskUserSettings for task id: ${taskId}`);
         }
         return userTasks[0];
-    });
-
-const validateOneTaskResultWasFound =
-    R.curry((taskId: string, tasks: ReadonlyArray<model.Task>): model.Task => {
-        if (tasks.length !== 1) {
-            throw new Error(`Could not find Task for task id: ${taskId}`);
-        }
-        return tasks[0];
     });
 
 export const selectTasksForCurrentExploreSection = (store: app.Store): ReadonlyArray<Task> => {

@@ -36,7 +36,6 @@ export const selectCurrentArticle = (store: app.Store): Article => {
     const articles = store.applicationState.articlesInStore.articles;
     const articleId = selectRoute(store).pageId;
     const article = articles[articleId];
-    // TODO task selectors should take the whole store.
     const relatedTasks = article.relatedTasks ?
         R.map((id: TaskId) => selectTaskAsListItem(store, id), article.relatedTasks) : undefined;
     const relatedArticles = article.relatedArticles ?
