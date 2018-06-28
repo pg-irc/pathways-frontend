@@ -3,12 +3,11 @@ import * as model from '../stores/tasks';
 import * as taskDetails from './details/tasks';
 import * as R from 'ramda';
 import { selectLocalizedText, selectLocale } from './locale';
+import { selectRoute } from './route';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
 import { pickCurrentExploreSection } from './explore';
-import { Article, selectArticleAsListItem } from './articles';
-import { Id as ArticleId } from '../stores/articles';
-import { selectRoute } from './route';
+import { Article, selectRelatedArticles } from './articles';
 
 export interface Task {
     readonly id: string;
@@ -27,17 +26,20 @@ export interface Task {
 }
 
 export const denormalizeTask =
-    (locale: Locale, task: model.Task, taskUserSettings: model.TaskUserSettings): Task => (
+    (locale: Locale, task: model.Task, taskUserSettings: model.TaskUserSettings,
+     relatedArticles: ReadonlyArray<Article>, relatedTasks: ReadonlyArray<Task>): Task => (
         {
             id: task.id,
             title: selectLocalizedText(locale, task.title),
             description: selectLocalizedText(locale, task.description),
             taxonomyTerms: task.taxonomyTerms,
+            starred: taskUserSettings.starred,
+            relatedArticles: relatedArticles,
+            relatedTasks: relatedTasks,
+            taskUserSettingsId: taskUserSettings.id,
             category: task.category,
             importance: task.importance,
             tags: task.tags,
-            taskUserSettingsId: taskUserSettings.id,
-            starred: taskUserSettings.starred,
             completed: taskUserSettings.completed,
         }
     );
@@ -48,7 +50,7 @@ export const selectAllSavedTasks = (store: app.Store): ReadonlyArray<Task> => {
     return savedTasksList.map((taskId: model.Id) => {
         const task: model.Task = taskMap[taskId];
         const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, task.id);
-        return denormalizeTask(locale, task, taskUserSettings);
+        return denormalizeTask(locale, task, taskUserSettings, [], []);
     });
 };
 
@@ -58,7 +60,7 @@ export const selectAllSuggestedTasks = (store: app.Store): ReadonlyArray<Task> =
     return suggestedTasksList.map((taskId: model.Id) => {
         const task: model.Task = taskMap[taskId];
         const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, task.id);
-        return denormalizeTask(locale, task, taskUserSettings);
+        return denormalizeTask(locale, task, taskUserSettings, [], []);
     });
 };
 
@@ -68,19 +70,21 @@ export const selectCurrentTask = (store: app.Store): Task => {
     const taskId = selectRoute(store).pageId;
     const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
     const task = taskMap[taskId];
-    const relatedTasks = task.relatedTasks ?
-        R.map((id: model.Id) => selectTaskAsListItem(store, id), task.relatedTasks) : undefined;
-    const relatedArticles = task.relatedArticles ?
-        R.map((id: ArticleId) => selectArticleAsListItem(store, id), task.relatedArticles) : undefined;
-    return { ...denormalizeTask(locale, task, taskUserSettings), relatedTasks, relatedArticles };
+    const relatedTasks = task.relatedTasks ? selectRelatedTasks(store, task.relatedTasks) : undefined;
+    const relatedArticles = task.relatedArticles ? selectRelatedArticles(store, task.relatedArticles) : undefined;
+    return denormalizeTask(locale, task, taskUserSettings, relatedArticles, relatedTasks);
 };
+
+export const selectRelatedTasks = (store: app.Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<Task> => (
+    R.map((id: model.Id) => selectTaskAsListItem(store, id), taskIds)
+);
 
 export const selectTaskAsListItem = (store: app.Store, taskId: model.Id): Task => {
     const locale = selectLocale(store);
     const { taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
     const task = taskMap[taskId];
     const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
-    return denormalizeTask(locale, task, taskUserSettings);
+    return denormalizeTask(locale, task, taskUserSettings, [], []);
 };
 
 export const findTaskUserSettingsByTaskId =
