@@ -92,6 +92,7 @@ export class TaskDetail extends React.Component<Props & Actions> {
                     </Tab>
                     <Tab heading={<TabHeading><Text><Trans>FIND SERVICES</Trans></Text></TabHeading>}>
                         <FlatList
+                            ListEmptyComponent={ServiceListEmpty}
                             refreshing={this.props.taskServices.loading}
                             onRefresh={this.props.requestUpdateTaskServices}
                             data={this.props.taskServices.services}
@@ -118,5 +119,13 @@ function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
         <ListItem>
             <ServiceComponent service={item} />
         </ListItem>
+    );
+}
+
+function ServiceListEmpty(): JSX.Element {
+    return (
+        <View style={{ padding: 20 }}>
+            <Text><Trans>No related services found.</Trans></Text>
+        </View>
     );
 }
