@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row, Text } from 'native-base';
+import { View, Text } from 'native-base';
 import { applicationStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
 
@@ -16,12 +16,10 @@ export const RelatedContentList: React.StatelessComponent<AllRelatedContentListP
     (props: AllRelatedContentListProps): JSX.Element => {
         const ListComponent = props.component;
         return (
-            <Col>
-                <Row style={applicationStyles.hr} />
-                <Row>
-                    <Text style={applicationStyles.bold}><Trans>{props.title}</Trans></Text>
-                </Row>
+            <View>
+                <View style={applicationStyles.hr} />
+                <Text style={applicationStyles.bold}><Trans>{props.title}</Trans></Text>
                 <ListComponent {...props.componentProps} />
-            </Col>
+            </View>
         );
     };
