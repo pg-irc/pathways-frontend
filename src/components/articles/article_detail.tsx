@@ -16,7 +16,7 @@ export interface ArticleDetailProps {
     readonly savedTasks: ReadonlyArray<Task>;
 }
 export type ArticleDetailActions = ArticleListItemActions & TaskListItemActions;
-export type AllArticleDetailProps = ArticleDetailActions & ArticleDetailProps;
+type AllArticleDetailProps = ArticleDetailActions & ArticleDetailProps;
 
 export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailProps> =
     (props: AllArticleDetailProps): JSX.Element => {

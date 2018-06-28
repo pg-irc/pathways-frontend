@@ -10,7 +10,7 @@ export interface TaskListProps extends TaskListItemStyleProps {
 export interface TaskListActions extends TaskListItemActions {
     readonly shouldDisplayTaskInteractions?: (task: Task) => boolean;
 }
-export type AllTaskListProps = TaskListProps & TaskListActions;
+type AllTaskListProps = TaskListProps & TaskListActions;
 
 export const TaskListComponent: React.StatelessComponent<AllTaskListProps> = (props: AllTaskListProps): JSX.Element => (
     <View>

@@ -6,11 +6,10 @@ import { Id } from '../../stores/articles';
 import { SetArticleDetailPageAction } from '../../stores/page_switcher';
 import { Article } from '../../selectors/articles';
 
-export type ArticleListItemProps = Article;
 export interface ArticleListItemActions {
     readonly goToArticleDetail: (articleId: Id) => SetArticleDetailPageAction;
 }
-export type AllArticleListItemProps = ArticleListItemActions & ArticleListItemProps;
+type AllArticleListItemProps = ArticleListItemActions & Article;
 
 export const ArticleListItemComponent: React.StatelessComponent<AllArticleListItemProps> =
     (props: AllArticleListItemProps): JSX.Element => (
