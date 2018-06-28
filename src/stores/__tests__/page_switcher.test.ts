@@ -60,6 +60,18 @@ describe('setting the explore section page', () => {
     });
 });
 
+describe('setting the article detail page', () => {
+    it('should create action with type SET_ARTICLE_DETAIL_PAGE', () => {
+        const theAction = pageSwitcher.setArticleDetailPage(aString());
+        expect(theAction.type).toBe(constants.SET_ARTICLE_DETAIL_PAGE);
+    });
+    it('should create action with type article id', () => {
+        const theId = aString();
+        const theAction = pageSwitcher.setArticleDetailPage(theId);
+        expect(theAction.payload.articleId).toBe(theId);
+    });
+});
+
 describe('the reducer', () => {
     it('should default to build a store with a pageType property', () => {
         const theStore = pageSwitcher.reducer();
@@ -143,6 +155,28 @@ describe('the reducer', () => {
             expect(theNewStore.pageType).toBe(pageSwitcher.Page.TaskDetail);
         });
         it('should return store with the current task id', () => {
+            expect(theNewStore.pageId).toEqual(theId);
+        });
+    });
+
+    describe('when called with SET_ARTICLE_DETAIL_PAGE', () => {
+
+        let theId: string = '';
+        let theNewStore: pageSwitcher.Store = undefined;
+
+        beforeEach(() => {
+            theId = aString();
+            const theStore = buildStore();
+            const theAction = {
+                type: constants.SET_ARTICLE_DETAIL_PAGE as typeof constants.SET_ARTICLE_DETAIL_PAGE,
+                payload: { articleId: theId },
+            };
+            theNewStore = pageSwitcher.reducer(theStore, theAction);
+        });
+        it('should return store with pageType = Page.ArticleDetail', () => {
+            expect(theNewStore.pageType).toBe(pageSwitcher.Page.ArticleDetail);
+        });
+        it('should return store with the current article id', () => {
             expect(theNewStore.pageId).toEqual(theId);
         });
     });

@@ -2,11 +2,7 @@ import { StyleSheet } from 'react-native';
 import { values, colors } from '../../application/styles';
 
 export const taskStyles = StyleSheet.create({
-    savedListItem: {
-        paddingLeft: 10,
-    },
     suggestedListItem: {
-        paddingLeft: 10,
         backgroundColor: colors.lighterGrey,
     },
     rightColumn: {

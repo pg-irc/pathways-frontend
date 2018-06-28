@@ -3,6 +3,7 @@ import { Content, Text } from 'native-base';
 import * as store from '../../stores/page_switcher';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
 import { ExploreSectionConnectedComponent } from '../explore/explore_section_connected_component';
+import { ArticleDetailConnectedComponent } from '../articles/article_detail_connected_component';
 import * as questionnaire from '../questionnaire';
 import { MyPlan } from '../my_plan/my_plan';
 import { Store as TasksStore } from '../../stores/tasks';
@@ -37,6 +38,9 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
             return <TaskDetail
                 task={selectTaskById(props.locale, props.tasksStore, props.routeInProps.pageId)}
             />;
+
+        case store.Page.ArticleDetail:
+            return <ArticleDetailConnectedComponent />;
 
         default:
             return <Content><Text>Error</Text></Content>;
