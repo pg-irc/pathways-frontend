@@ -18,16 +18,20 @@ describe('articles selector', () => {
             denormalizedArticle = selector.denormalizeArticle(locale, article, [], []);
         });
 
-        test('name property', () => {
-            expect(denormalizedArticle.name).toBe(article.name[locale.code]);
+        test('title property', () => {
+            expect(denormalizedArticle.title).toBe(article.title[locale.code]);
         });
 
-        test('content property', () => {
-            expect(denormalizedArticle.content).toBe(article.content[locale.code]);
+        test('description property', () => {
+            expect(denormalizedArticle.description).toBe(article.description[locale.code]);
         });
 
-        test('is starred property', () => {
-            expect(denormalizedArticle.isStarred).toBe(article.isStarred);
+        test('taxonomy terms property', () => {
+            expect(denormalizedArticle.taxonomyTerms).toBe(article.taxonomyTerms);
+        });
+
+        test('starred property', () => {
+            expect(denormalizedArticle.starred).toBe(article.starred);
         });
 
     });

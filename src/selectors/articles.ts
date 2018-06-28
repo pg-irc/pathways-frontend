@@ -4,14 +4,16 @@ import * as R from 'ramda';
 import { selectLocale, selectLocalizedText } from './locale';
 import { selectRoute } from './route';
 import { Locale } from '../locale/types';
+import { TaxonomyTermReference } from './taxonomies';
 import { Task, selectTaskById } from './tasks';
 import { Id as TaskId } from '../stores/tasks';
 
 export interface Article {
     readonly id: model.Id;
-    readonly name: string;
-    readonly content: string;
-    readonly isStarred: boolean;
+    readonly title: string;
+    readonly description: string;
+    readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
+    readonly starred: boolean;
     readonly relatedArticles: ReadonlyArray<Article>;
     readonly relatedTasks: ReadonlyArray<Task>;
 }
@@ -20,9 +22,10 @@ export const denormalizeArticle =
     (locale: Locale, article: model.Article, relatedArticles: ReadonlyArray<Article>, relatedTasks: ReadonlyArray<Task>): Article => (
     {
         id: article.id,
-        name: selectLocalizedText(locale, article.name),
-        content: selectLocalizedText(locale, article.content),
-        isStarred: article.isStarred,
+        title: selectLocalizedText(locale, article.title),
+        description: selectLocalizedText(locale, article.description),
+        taxonomyTerms: article.taxonomyTerms,
+        starred: article.starred,
         relatedArticles: relatedArticles,
         relatedTasks: relatedTasks,
     }
@@ -32,7 +35,7 @@ export const selectCurrentArticle = (store: app.Store): Article => {
     const locale = selectLocale(store);
     const articles = store.applicationState.articlesInStore.articles;
     const articleId = selectRoute(store).pageId;
-    const article = findArticleById(articles, articleId);
+    const article = articles[articleId];
     // TODO task selectors should take the whole store.
     const relatedTasks = article.relatedTasks ?
         R.map((id: TaskId) => selectTaskById(locale, store.applicationState.tasksInStore, id), article.relatedTasks) : undefined;
@@ -44,20 +47,6 @@ export const selectCurrentArticle = (store: app.Store): Article => {
 export const selectArticleAsListItem = (store: app.Store, articleId: model.Id): Article => {
     const locale = selectLocale(store);
     const articles = store.applicationState.articlesInStore.articles;
-    const article = findArticleById(articles, articleId);
+    const article = articles[articleId];
     return denormalizeArticle(locale, article, [], []);
 };
-
-export const findArticleById = (articles: model.ArticleMap, articleId: model.Id): model.Article => {
-    const validate = validateOneResultWasFound(articleId);
-    const getArticle = R.compose(validate, R.values, R.pickBy(R.propEq('id', articleId)));
-    return getArticle(articles);
-};
-
-const validateOneResultWasFound =
-    R.curry((articleId: string, articles: ReadonlyArray<model.Article>): model.Article => {
-        if (articles.length !== 1) {
-            throw new Error(`Could not find Article for article id: ${articleId}`);
-        }
-        return articles[0];
-    });

@@ -30,7 +30,7 @@ export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailPr
                         </Row>
                         {renderActions(props)}
                         <Row>
-                            <Text>{article.content}</Text>
+                            <Text>{article.description}</Text>
                         </Row>
                         {article.relatedArticles ? renderRelatedContent('LEARN MORE', renderRelatedArticles(props)) : undefined}
                         {article.relatedTasks ? renderRelatedContent('RELATED TASKS', renderRelatedTasks(props)) : undefined}
@@ -43,7 +43,7 @@ export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailPr
 const renderActions = (props: AllArticleDetailProps): JSX.Element => (
     <Row>
         <Col size={70}>
-            <Text style={applicationStyles.pageTitle}>{props.article.name}</Text>
+            <Text style={applicationStyles.pageTitle}>{props.article.title}</Text>
         </Col>
         <Col size={15}>
             <Button dark transparent>

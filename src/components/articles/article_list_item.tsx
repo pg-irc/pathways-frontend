@@ -21,10 +21,10 @@ export const ArticleListItemComponent: React.StatelessComponent<AllArticleListIt
                     </Col>
                     <Col size={80}>
                         <Row>
-                            <Text style={applicationStyles.bold}>{props.name}</Text>
+                            <Text style={applicationStyles.bold}>{props.title}</Text>
                          </Row>
                         <Row>
-                            <Text numberOfLines={1} note>{props.content}</Text>
+                            <Text numberOfLines={1} note>{props.description}</Text>
                         </Row>
                     </Col>
                 </Row>

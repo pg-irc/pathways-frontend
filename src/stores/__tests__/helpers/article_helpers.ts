@@ -5,18 +5,20 @@
 // tslint:disable:no-class
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedTextBuilder } from './locale_helpers';
+import { TaxonomyTermReference } from '../../../selectors/taxonomies';
 import { Id, Article } from '../../articles';
 import { Id as TaskId } from '../../tasks';
 
 export class ArticleBuilder {
     localeCode: string = aString();
     id: Id = aString();
-    name: string = aString();
-    content: string = aString();
+    title: string = aString();
+    description: string = aString();
+    taxonomyTerms: TaxonomyTermReference[] = [];
     relatedTasks: ReadonlyArray<TaskId> = [aString(), aString()];
     relatedArticles: ReadonlyArray<Id> = [aString(), aString()];
     isRecommendedToAllUsers: boolean = aBoolean();
-    isStarred: boolean = aBoolean();
+    starred: boolean = aBoolean();
 
     withLocaleCode(localeCode: string): ArticleBuilder {
         this.localeCode = localeCode;
@@ -28,13 +30,18 @@ export class ArticleBuilder {
         return this;
     }
 
-    withName(name: string): ArticleBuilder {
-        this.name = name;
+    withTitle(title: string): ArticleBuilder {
+        this.title = title;
         return this;
     }
 
-    withContent(content: string): ArticleBuilder {
-        this.content = content;
+    withDescription(description: string): ArticleBuilder {
+        this.description = description;
+        return this;
+    }
+
+    withTaxonomyTerm(taxonomyTerm: TaxonomyTermReference): ArticleBuilder {
+        this.taxonomyTerms = [...this.taxonomyTerms, taxonomyTerm];
         return this;
     }
 
@@ -48,20 +55,21 @@ export class ArticleBuilder {
         return this;
     }
 
-    withIsStarred(isStarred: boolean): ArticleBuilder {
-        this.isStarred = isStarred;
+    withStarred(starred: boolean): ArticleBuilder {
+        this.starred = starred;
         return this;
     }
 
     build(): Article {
         return {
             id: this.id,
-            name: new LocalizedTextBuilder(this.localeCode, this.name).build(),
-            content: new LocalizedTextBuilder(this.localeCode, this.content).build(),
+            title: new LocalizedTextBuilder(this.localeCode, this.title).build(),
+            description: new LocalizedTextBuilder(this.localeCode, this.description).build(),
             relatedTasks: this.relatedTasks,
             relatedArticles: this.relatedArticles,
             isRecommendedToAllUsers: this.isRecommendedToAllUsers,
-            isStarred: this.isStarred,
+            starred: this.starred,
+            taxonomyTerms: this.taxonomyTerms,
         };
     }
 
