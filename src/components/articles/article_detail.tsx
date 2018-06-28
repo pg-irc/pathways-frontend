@@ -69,7 +69,7 @@ const renderRelatedArticles = (props: AllArticleDetailProps): JSX.Element => {
 
 const renderRelatedTasks = (props: AllArticleDetailProps): JSX.Element => {
     const shouldDisplayTaskInteractions = (task: Task): boolean => (
-        R.find(R.propEq('id', task.id))(props.savedTasks) === undefined
+        R.find(R.propEq('id', task.id), props.savedTasks) === undefined
     );
     return (
         <TaskListComponent
