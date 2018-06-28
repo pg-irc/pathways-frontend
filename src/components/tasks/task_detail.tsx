@@ -1,13 +1,15 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
-import { Button, Content, Text, Icon, Container, Tab, Tabs, TabHeading } from 'native-base';
+import { Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem, View } from 'native-base';
 import * as selector from '../../selectors/tasks';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
 import { Trans } from '@lingui/react';
-import { TaskServices } from '../../selectors/services';
-import { UpdateTaskServicesAsync, Service } from '../../stores/services';
+import { Service, TaskServices} from '../../selectors/services';
+import { UpdateTaskServicesAsync } from '../../stores/services';
+import { Service as ServiceComponent } from '../services/service';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 
 export interface Props {
     readonly taskServices: TaskServices;
@@ -29,8 +31,8 @@ export class TaskDetail extends React.Component<Props & Actions> {
 
     render(): JSX.Element {
         return (
-            <Container>
-                <Content padder>
+            <View style={{ flex: 1 }}>
+                <Content padder scrollEnabled={false} style={{ flex: 0, flexGrow: 0, flexShrink: 0, height: 'auto' }}>
                     <Grid>
                         <Row>
                             <Text style={applicationStyles.bold}><Trans>COMPLETED TASK</Trans></Text>
@@ -57,8 +59,10 @@ export class TaskDetail extends React.Component<Props & Actions> {
                             </Col>
                         </Row>
                     </Grid>
-                    <Tabs style={taskDetailStyles.tabs} onChangeTab={this.props.requestUpdateTaskServices}>
-                        <Tab heading={<TabHeading><Text><Trans>INFORMATION</Trans></Text></TabHeading>}>
+                </Content>
+                <Tabs style={taskDetailStyles.tabs} onChangeTab={this.props.requestUpdateTaskServices}>
+                    <Tab heading={<TabHeading><Text><Trans>INFORMATION</Trans></Text></TabHeading>}>
+                        <Content padder>
                             <Grid style={taskDetailStyles.tabContent}>
                                 <Row style={taskDetailStyles.row}>
                                     <Col size={10}>
@@ -84,16 +88,18 @@ export class TaskDetail extends React.Component<Props & Actions> {
                                     <Text style={applicationStyles.bold}><Trans>LEARN MORE</Trans></Text>
                                 </Row>
                             </Grid>
-                        </Tab>
-                        <Tab heading={<TabHeading><Text><Trans>FIND SERVICES</Trans></Text></TabHeading>}>
-                            {this.props.taskServices.loading ? <Text>...{ this.props.taskServices.services.length ? 'Updating' : 'Loading' }...</Text> : undefined}
-                            {this.props.taskServices.services.map((service: Service) => (
-                                <Text key={service.id}>{service.name}</Text>
-                            ))}
-                        </Tab>
-                    </Tabs>
-                </Content>
-            </Container>
+                        </Content>
+                    </Tab>
+                    <Tab heading={<TabHeading><Text><Trans>FIND SERVICES</Trans></Text></TabHeading>}>
+                        <FlatList
+                            refreshing={this.props.taskServices.loading}
+                            onRefresh={this.props.requestUpdateTaskServices}
+                            data={this.props.taskServices.services}
+                            keyExtractor={(service: Service): string => service.id}
+                            renderItem={renderServiceListItem} />
+                    </Tab>
+                </Tabs>
+            </View>
         );
     }
 
@@ -103,4 +109,14 @@ export class TaskDetail extends React.Component<Props & Actions> {
         }
     }
 
+}
+
+interface ServiceItemInfo extends ListRenderItemInfo<Service> {}
+
+function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
+    return (
+        <ListItem>
+            <ServiceComponent service={item} />
+        </ListItem>
+    );
 }

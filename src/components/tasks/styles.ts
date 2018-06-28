@@ -33,7 +33,7 @@ export const taskDetailStyles = StyleSheet.create({
         padding: 10,
     },
     row: {
-        marginTop: 10,
+        height: 'auto',
         marginBottom: 10,
     },
 });
