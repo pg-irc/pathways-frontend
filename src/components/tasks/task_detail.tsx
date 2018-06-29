@@ -8,7 +8,7 @@ import { taskDetailStyles } from './styles';
 import { Trans } from '@lingui/react';
 import { Service, TaskServices} from '../../selectors/services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
-import { Service as ServiceComponent } from '../services/service';
+import { ServiceComponent } from '../services/service';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 
 export interface Props {

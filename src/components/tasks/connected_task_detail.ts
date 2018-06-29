@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { selectLocale } from '../../selectors/locale';
 
 interface StateProps {
-    readonly query: string;
+    readonly searchQuery: string;
     readonly taskServices: TaskServices;
 }
 
@@ -17,7 +17,7 @@ function mapStateToProps(store: Store, ownProps: OwnProps): StateProps {
     const servicesStore = store.applicationState.servicesInStore;
     const locale = selectLocale(store);
     return {
-        query: createRelatedServicesQueryFromTask(ownProps.task),
+        searchQuery: createRelatedServicesQueryFromTask(ownProps.task),
         taskServices: selectTaskServices(locale, ownProps.task.id, servicesStore),
     };
 }
@@ -43,7 +43,7 @@ function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps, ownPro
         task: ownProps.task,
         taskServices: stateProps.taskServices,
         requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
-            return dispatchProps.requestUpdateTaskServices(ownProps.task, stateProps.query);
+            return dispatchProps.requestUpdateTaskServices(ownProps.task, stateProps.searchQuery);
         },
     };
 }

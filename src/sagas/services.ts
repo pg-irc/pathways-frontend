@@ -9,9 +9,8 @@ export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.UPDATE_SERVICES_REQUEST, updateTaskServices);
 }
 
-export function* updateTaskServices(
-    action: UpdateTaskServicesAsync.Request,
-): IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAsync.Result>> {
+type UpdateResult = IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAsync.Result>>;
+export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): UpdateResult {
     const query = action.payload.query;
     const taskId = action.payload.taskId;
     const response: APIResponse = yield call([API, API.searchServices], query);

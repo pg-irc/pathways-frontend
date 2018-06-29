@@ -8,7 +8,7 @@ interface Props {
     readonly service: Service;
 }
 
-export function Service(props: Props): JSX.Element {
+export function ServiceComponent(props: Props): JSX.Element {
     return (
         <View>
             <Text style={applicationStyles.bold}>{props.service.name}</Text>
