@@ -30,8 +30,8 @@ export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailPr
                         <Row>
                             <Text>{props.article.description}</Text>
                         </Row>
-                        {props.article.relatedArticles ? renderRelatedArticles(props) : undefined}
-                        {props.article.relatedTasks ? renderRelatedTasks(props) : undefined}
+                        {renderRelatedArticles(props)}
+                        {renderRelatedTasks(props)}
                     </Grid>
                 </Content>
             </Container>

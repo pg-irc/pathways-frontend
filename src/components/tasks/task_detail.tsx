@@ -89,8 +89,8 @@ export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
                                 <Row style={taskDetailStyles.row}>
                                     <Text>You can get information about your community ...</Text>
                                 </Row>
-                                {this.props.task.relatedArticles ? renderRelatedArticles(this.props) : undefined}
-                                {this.props.task.relatedTasks ? renderRelatedTasks(this.props) : undefined}
+                                {renderRelatedArticles(this.props)}
+                                {renderRelatedTasks(this.props)}
                             </Grid>
                         </Content>
                     </Tab>
