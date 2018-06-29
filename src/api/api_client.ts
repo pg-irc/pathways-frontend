@@ -8,7 +8,7 @@ export interface APIResponse {
     readonly results?: any; // tslint:disable-line:no-any
 }
 
-interface Query {
+interface APIQuery {
     readonly [property: string]: string;
 }
 
@@ -31,7 +31,7 @@ export class APIClient {
         return servicesResponse;
     }
 
-    private async fetch(endpoint: string, query: Query = {}): Promise<APIResponse> {
+    private async fetch(endpoint: string, query: APIQuery = {}): Promise<APIResponse> {
         const queryString = qs.stringify(query);
         // TODO: Should use something a bit more robust to build urls: nodejs's
         //       URL module is a good example.
