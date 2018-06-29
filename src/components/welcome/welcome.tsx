@@ -18,7 +18,6 @@ export interface Actions {
 
 export function Welcome(props: Props & I18nProps & Actions): JSX.Element {
     const logoImg = require('../../../icon.png');
-    console.log(props.currentLocale);
     return (
         <View style={[
             {
