@@ -56,6 +56,9 @@ const renderActions = (props: AllArticleDetailProps): JSX.Element => (
 );
 
 const renderRelatedArticles = (props: AllArticleDetailProps): JSX.Element => {
+    if (props.article.relatedArticles.length === 0) {
+        return undefined;
+    }
     const componentProps = {
         articles: props.article.relatedArticles,
         goToArticleDetail: props.goToArticleDetail,
@@ -70,6 +73,9 @@ const renderRelatedArticles = (props: AllArticleDetailProps): JSX.Element => {
 };
 
 const renderRelatedTasks = (props: AllArticleDetailProps): JSX.Element => {
+    if (props.article.relatedArticles.length === 0) {
+        return undefined;
+    }
     const shouldDisplayTaskInteractions = (task: Task): boolean => (
         R.find(R.propEq('id', task.id), props.savedTasks) === undefined
     );

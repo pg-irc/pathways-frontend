@@ -135,6 +135,9 @@ function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
 }
 
 function renderRelatedArticles (props: AllTaskDetailProps): JSX.Element {
+    if (props.task.relatedArticles.length === 0) {
+        return undefined;
+    }
     const componentProps = {
         articles: props.task.relatedArticles,
         goToArticleDetail: props.goToArticleDetail,
@@ -149,6 +152,9 @@ function renderRelatedArticles (props: AllTaskDetailProps): JSX.Element {
 }
 
 function renderRelatedTasks (props: AllTaskDetailProps): JSX.Element {
+    if (props.task.relatedTasks.length === 0) {
+        return undefined;
+    }
     const shouldDisplayTaskInteractions = (task: Task): boolean => (
         R.find(R.propEq('id', task.id))(props.savedTasks) === undefined
     );
