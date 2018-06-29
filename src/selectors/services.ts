@@ -1,10 +1,10 @@
 import { Id as TaskId } from '../stores/tasks';
 import { Id as ServiceId, buildDefaultTaskServices } from '../stores/services';
 import { Task } from '../selectors/tasks';
-import { Store } from '../stores/services';
+import { Store } from '../application/store';
 import { take } from 'ramda';
 import { Locale } from '../locale';
-import { selectLocalizedText } from './locale';
+import { selectLocalizedText, selectLocale } from './locale';
 
 export interface Service {
     readonly id: string;
@@ -18,13 +18,15 @@ export interface TaskServices {
     readonly services: ReadonlyArray<Service>;
 }
 
-export function selectTaskServices(locale: Locale, taskId: TaskId, store: Store): TaskServices {
-    const taskServices = store.taskServicesMap[taskId] || buildDefaultTaskServices();
+export function selectTaskServices(taskId: TaskId, store: Store): TaskServices {
+    const locale: Locale = selectLocale(store);
+    const servicesStore = store.applicationState.servicesInStore;
+    const taskServices = servicesStore.taskServicesMap[taskId] || buildDefaultTaskServices();
     return {
         loading: taskServices.loading,
         message: taskServices.message,
         services: taskServices.serviceIds.map((serviceId: ServiceId) => {
-            const service = store.serviceMap[serviceId];
+            const service = servicesStore.serviceMap[serviceId];
             return {
                 id: service.id,
                 name: selectLocalizedText(locale, service.name),
