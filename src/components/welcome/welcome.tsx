@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React from 'react';
 import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
-import { Image, Platform } from 'react-native';
+import { Image } from 'react-native';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
