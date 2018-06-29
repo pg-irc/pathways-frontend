@@ -17,8 +17,11 @@ export interface Actions {
     readonly goToExplore: () => void;
 }
 
+// tslint:diable-next-line:no-var-requires
+// @ts-ignore: React Native uses require() to load ImageBitmaps; it's best to do this once, outside of render.
+const logoImg = require('../../../icon.png');
+
 export function Welcome(props: Props & I18nProps & Actions): JSX.Element {
-    const logoImg = require('../../../icon.png');
     return (
         <View style={[
             {
