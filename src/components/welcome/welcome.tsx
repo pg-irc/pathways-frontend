@@ -14,6 +14,7 @@ export interface Props {
 
 export interface Actions {
     readonly setLocale: (localeCode: string) => SetLocale.Request;
+    readonly goToExplore: () => void;
 }
 
 export function Welcome(props: Props & I18nProps & Actions): JSX.Element {
@@ -64,7 +65,9 @@ export function Welcome(props: Props & I18nProps & Actions): JSX.Element {
             </Form>
             {props.isFirstRun ?
                 undefined :
-                <Button full><Text><Trans>Get started</Trans></Text></Button>
+                <Button full onPress={props.goToExplore}>
+                    <Text><Trans>Get started</Trans></Text>
+                </Button>
             }
         </View>
     );

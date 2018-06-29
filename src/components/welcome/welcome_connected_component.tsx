@@ -4,6 +4,7 @@ import { Welcome, Props, Actions } from './welcome';
 import { Store } from '../../application/store';
 import { selectAvailableLocales, selectLocale } from '../../selectors/locale';
 import { setLocaleActions, SetLocale } from '../../stores/locale';
+import * as pageSwitcher from '../../stores/page_switcher';
 
 function mapStateToProps(store: Store): Props {
     return {
@@ -16,6 +17,7 @@ function mapStateToProps(store: Store): Props {
 function mapDispatchToProps(dispatch: Dispatch<Store>): Actions {
     return {
         setLocale: (localeCode: string): SetLocale.Request => dispatch(setLocaleActions.request(localeCode)),
+        goToExplore: (): pageSwitcher.SetExplorePageAction => dispatch(pageSwitcher.setExplorePage()),
     };
 }
 
