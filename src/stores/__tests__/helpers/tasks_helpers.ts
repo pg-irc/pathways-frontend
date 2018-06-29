@@ -12,11 +12,11 @@ export class TaskBuilder {
     title: string = aString();
     description: string = aString();
     taxonomyTerms: TaxonomyTermReference[] = [];
+    relatedTasks: ReadonlyArray<ArticleId> = [aString(), aString()];
+    relatedArticles: ReadonlyArray<store.Id> = [aString(), aString()];
     tags: ReadonlyArray<string> = [aString(), aString()];
     category: string = aString();
     importance: number = aNumber();
-    relatedTasks: ReadonlyArray<ArticleId> = [aString(), aString()];
-    relatedArticles: ReadonlyArray<store.Id> = [aString(), aString()];
 
     withLocaleCode(localeCode: string): TaskBuilder {
         this.localeCode = localeCode;
@@ -74,6 +74,8 @@ export class TaskBuilder {
             title: this.createLocalizedText(this.title),
             description: this.createLocalizedText(this.description),
             taxonomyTerms: this.taxonomyTerms,
+            relatedArticles: this.relatedArticles,
+            relatedTasks: this.relatedArticles,
             tags: this.tags,
             category: this.category,
             importance: this.importance,
