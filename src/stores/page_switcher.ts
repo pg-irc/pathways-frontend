@@ -5,6 +5,7 @@ import { Id as SectionId } from './explore';
 import { Id as ArticleId } from './articles';
 
 export enum Page {
+    Welcome,
     Questionnaire,
     MyPlan,
     ExploreAll,
@@ -13,20 +14,28 @@ export enum Page {
     ArticleDetail,
 }
 
-export const initialPage = Page.Questionnaire;
+export const initialPage = Page.Welcome;
 
+export type SetWelcomePageAction = Readonly<ReturnType<typeof setWelcomePage>>;
 export type SetQuestionnairePageAction = Readonly<ReturnType<typeof setQuestionnairePage>>;
 export type SetPlanPageAction = Readonly<ReturnType<typeof setPlanPage>>;
 export type SetExplorePageAction = Readonly<ReturnType<typeof setExplorePage>>;
 export type SetTaskDetailPageAction = Readonly<ReturnType<typeof setTaskDetailPage>>;
 export type SetExploreSectionPageAction = Readonly<ReturnType<typeof setExploreSectionPage>>;
 export type SetArticleDetailPageAction = Readonly<ReturnType<typeof setArticleDetailPage>>;
-type PageSwitcherAction = SetQuestionnairePageAction |
+type PageSwitcherAction =
+    SetWelcomePageAction |
+    SetQuestionnairePageAction |
     SetPlanPageAction |
     SetExplorePageAction |
     SetTaskDetailPageAction |
     SetExploreSectionPageAction |
     SetArticleDetailPageAction;
+
+// tslint:disable-next-line:typedef
+export const setWelcomePage = () => (
+    helpers.makeAction(constants.SET_WELCOME_PAGE)
+);
 
 // tslint:disable-next-line:typedef
 export const setQuestionnairePage = () => (
@@ -70,6 +79,8 @@ export const reducer = (store: Store = buildDefaultStore(), action?: PageSwitche
         return store;
     }
     switch (action.type) {
+        case constants.SET_WELCOME_PAGE:
+            return { ...store, pageType: Page.Welcome };
         case constants.SET_QUESTIONNAIRE_PAGE:
             return { ...store, pageType: Page.Questionnaire };
         case constants.SET_PLAN_PAGE:
