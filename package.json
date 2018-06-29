@@ -42,7 +42,7 @@
   "scripts": {
     "postinstall": "bin/postinstall.sh",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
-    "build": "tsc",
+    "build": "bin/buildFixtures.sh && tsc",
     "test": "yarn run build && yarn run jest",
     "clean": "rimraf 'lib/**/*.js' 'lib/**/*.js.map' 'locale/_build/**/*.json'",
     "extract-strings": "yarn run build && lingui extract",

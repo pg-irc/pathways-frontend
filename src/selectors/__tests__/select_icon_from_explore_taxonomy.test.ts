@@ -26,7 +26,19 @@ describe('selecting icon from explore taxonomy', () => {
         expect(selectIconFromExploreTaxonomy(taxonomyRefs, exploreTaxonomy)).toBe(anIconId);
     });
 
-    it('should return undefined if taxonomy terms contain no explore taxonomy terms', () => {
+    it('should return question mark if there is no matching taxonomy term', () => {
+        const anExploreTerm = aString();
+        const aDifferentExploreTerm = aString();
+        const taxonomyRefs = taxonomyRefsWithExploreTerm(anExploreTerm);
+        const exploreTaxonomy: Taxonomy = {
+            [aDifferentExploreTerm]: {
+                icon: aString(),
+            },
+        };
+        expect(selectIconFromExploreTaxonomy(taxonomyRefs, exploreTaxonomy)).toBe('help-circle');
+    });
+
+    it('should return question mark if taxonomy terms contain no explore taxonomy terms', () => {
         const anExploreTerm = aString();
         const anIconId = aString();
         const taxonomyRefs: ReadonlyArray<TaxonomyTermReference> = [];
@@ -35,15 +47,15 @@ describe('selecting icon from explore taxonomy', () => {
                 icon: anIconId,
             },
         };
-        expect(selectIconFromExploreTaxonomy(taxonomyRefs, exploreTaxonomy)).toBeUndefined();
+        expect(selectIconFromExploreTaxonomy(taxonomyRefs, exploreTaxonomy)).toBe('help-circle');
     });
 
-    it('should return undefined if explore taxonomy terms contains no icon', () => {
+    it('should return question mark if explore taxonomy terms contains no icon', () => {
         const anExploreTerm = aString();
         const taxonomyRefs = taxonomyRefsWithExploreTerm(anExploreTerm);
         const exploreTaxonomy: Taxonomy = {
             [anExploreTerm]: {},
         };
-        expect(selectIconFromExploreTaxonomy(taxonomyRefs, exploreTaxonomy)).toBeUndefined();
+        expect(selectIconFromExploreTaxonomy(taxonomyRefs, exploreTaxonomy)).toBe('help-circle');
     });
 });

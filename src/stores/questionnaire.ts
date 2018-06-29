@@ -1,9 +1,9 @@
-import { buildQuestionnaireFixture, Store } from '../fixtures/questionnaire';
-import { Id, AnswersMap } from '../fixtures/questionnaire';
+import { buildQuestionnaireFixture } from '../fixtures/buildFixtures';
+import { Id, AnswersMap, Store } from '../fixtures/types/questionnaire';
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 
-export { Id, Question, Answer, QuestionsMap, AnswersMap, Store } from '../fixtures/questionnaire';
+export { Id, Question, Answer, QuestionsMap, AnswersMap, Store } from '../fixtures/types/questionnaire';
 
 const buildDefaultStore = (): Store => (
     buildQuestionnaireFixture()

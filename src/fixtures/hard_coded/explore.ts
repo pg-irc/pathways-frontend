@@ -1,24 +1,6 @@
 // tslint:disable:max-line-length
 
-import { LocalizedText } from '../locale';
-import { TaxonomyTermReference } from './taxonomies';
-
-export type Id = string;
-
-export interface ExploreSection {
-    readonly id: Id;
-    readonly name: LocalizedText;
-    readonly introduction: LocalizedText;
-    readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
-}
-
-export interface ExploreSectionMap {
-    readonly [key: string]: ExploreSection;
-}
-
-export interface Store {
-    readonly sections: ExploreSectionMap;
-}
+import { Store } from '../types/explore';
 
 export const buildExploreFixture = (): Store => (
     {
@@ -36,8 +18,8 @@ export const buildExploreFixture = (): Store => (
                     'zh': '自 1850 年起就有人陆续从中国来到卑诗省 （即 BC 省）。今天，10 个卑诗省民当中就有 1 个自称拥有华人血统。事实上，迁移到这里的人当中，来自中国的比来自全球任何其他地方的都要多。无论您想在这里创业、求学还是继续您的事业，您和您的家人有多种方法可来到加拿大卑诗省。本指南可让您了解那些能帮助您以永久居民、临时外籍劳工或国际学生的身份迁居卑诗省的计划，并会帮助您选择最适合您和您家人需要的计划，为您在卑诗省展开新生活做好准备',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'Explore',
-                    'taxonomyTermId': 'SettlingIn',
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'settling_in',
                 }],
             },
             's2': {
@@ -53,8 +35,8 @@ export const buildExploreFixture = (): Store => (
                     'zh': 'ί 卑 詩 省dהϞ 5 Ї 16 ๋ٙՅɝኪf ̋ɽ઺ԃӻ୕ʱй͟ʮࣧʿዹͭ ӷͭ ኪࣧଡ଼ϓfʮࣧ͟卑詩省ִ݁Όᅰ資пfՅ ഁజᛘʮࣧdኪ൬Όеfዹͭӷ̥ࣧ݊݁͟ ִ௅΅資пfɽ௅΅ٙӷࣧdኪ͛ٙ˨͎ே ࠅ˹൬f ί 卑 詩 省dኪ ࣧ ӻ ୕ ( ̼͟ຯ෤Ցୋ 12 फ ) ݊ ͟省ִ݁ 卑詩省઺ԃᝂ dᑌΝήਜٙ઺ԃ ҅ʿዹͭኪࣧዚ࿴˾ڌ΍Ν၍ଣf省ִ݁ ᅡಛ資п઺ԃӻ୕dԨ˲ࠈͭجԷձ஝ۆd ᜫהϞኪࣧୌΥ省ٙ઺ԃᅺ๟d՘ɢމӊ Зኪ͛౤Զ৷ሯ९ٙ઺ԃf www.gov.bc.ca/bced Յഁ͵̙˸वί࢕ʕኪ୦f༉ઋԈୋ 49 fࠫ',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'Explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'education',
                 }],
             },
             's3': {
@@ -70,8 +52,8 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'Explore',
-                    'taxonomyTermId': 'HealthCare',
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'healthCare',
                 }],
             },
             's4': {
@@ -87,8 +69,8 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'Explore',
-                    'taxonomyTermId': 'Money',
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'money',
                 }],
             },
             's5': {
@@ -104,8 +86,8 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'Explore',
-                    'taxonomyTermId': 'Housing',
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'housing',
                 }],
             },
             's6': {
@@ -121,8 +103,8 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'Explore',
-                    'taxonomyTermId': 'Employment',
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'employment',
                 }],
             },
             's7': {
@@ -138,8 +120,8 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'Explore',
-                    'taxonomyTermId': 'LegalOrImmigration',
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'legal',
                 }],
             },
             's8': {
@@ -155,8 +137,8 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'Explore',
-                    'taxonomyTermId': 'Driving',
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'driving',
                 }],
             },
             's9': {
@@ -172,8 +154,8 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'Explore',
-                    'taxonomyTermId': 'HelpForIndividualsAndFamilies',
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'helpForIndividualsAndFamilies',
                 }],
             },
         },
