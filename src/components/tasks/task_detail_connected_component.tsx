@@ -50,6 +50,7 @@ function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps): TaskD
         taskServices: stateProps.taskServices,
         goToArticleDetail: dispatchProps.goToArticleDetail,
         goToTaskDetail: dispatchProps.goToTaskDetail,
+        addToSavedList: dispatchProps.addToSavedList,
         requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
             return dispatchProps.requestUpdateTaskServices(stateProps.task, stateProps.searchQuery);
         },
