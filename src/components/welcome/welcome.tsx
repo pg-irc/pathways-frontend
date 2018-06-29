@@ -6,22 +6,22 @@ import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
 
-export interface Props {
+export interface WelcomeProps {
     readonly isFirstRun: boolean;
     readonly currentLocale: Locale;
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
 }
 
-export interface Actions {
+export interface WelcomeActions {
     readonly setLocale: (localeCode: string) => SetLocale.Request;
     readonly goToExplore: () => void;
 }
 
-// tslint:diable-next-line:no-var-requires
 // @ts-ignore: React Native uses require() to load ImageBitmaps; it's best to do this once, outside of render.
+// tslint:diable-next-line:no-var-requires
 const logoImg = require('../../../icon.png');
 
-export function Welcome(props: Props & I18nProps & Actions): JSX.Element {
+export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.Element {
     return (
         <View style={[
             {
