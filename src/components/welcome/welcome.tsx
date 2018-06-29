@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React from 'react';
 import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
-import { Image } from 'react-native';
+import { Image, Platform } from 'react-native';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
@@ -50,11 +50,10 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.E
             <Form style={[
                 { marginBottom: 20 },
             ]}>
-                <Item>
+                <Item style={{ marginLeft: 0, width: '100%' }}>
                     <Picker
                             mode='dropdown'
                             iosIcon={<Icon name='ios-arrow-down-outline' />}
-                            style={{ width: undefined }}
                             placeholder={props.i18n.t`Select your language`}
                             placeholderStyle={{ color: '#bfc6ea' }}
                             placeholderIconColor='#007aff'
