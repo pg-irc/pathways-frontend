@@ -7,6 +7,10 @@ import { ConnectedI18nProvider } from '../components/i18n_provider';
 import { buildSaga } from '../sagas';
 import { buildRouter } from './router';
 
+import { API_URL } from 'react-native-dotenv';
+import { API } from '../api';
+API.configure(API_URL); // tslint:disable-line:no-expression-statement
+
 const router = buildRouter();
 const saga = buildSaga();
 const store = buildStore(router, saga);

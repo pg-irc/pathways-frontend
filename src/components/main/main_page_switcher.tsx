@@ -7,7 +7,7 @@ import { ArticleDetailConnectedComponent } from '../articles/article_detail_conn
 import * as questionnaire from '../questionnaire';
 import { MyPlan } from '../my_plan/my_plan';
 import { Store as TasksStore } from '../../stores/tasks';
-import { TaskDetail } from '../tasks/task_detail';
+import { ConnectedTaskDetail } from '../tasks/connected_task_detail';
 import { selectTaskById } from '../../selectors/tasks';
 import { Locale } from '../../locale/types';
 
@@ -35,7 +35,7 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
             return <ExploreSectionConnectedComponent />;
 
         case store.Page.TaskDetail:
-            return <TaskDetail
+            return <ConnectedTaskDetail
                 task={selectTaskById(props.locale, props.tasksStore, props.routeInProps.pageId)}
             />;
 
