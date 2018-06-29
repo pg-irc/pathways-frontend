@@ -1,5 +1,6 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
 import { Task } from '../../selectors/tasks';
 import { TaskListComponent } from '../tasks/task_list';
@@ -13,22 +14,21 @@ import { Trans } from '@lingui/react';
 import { Service, TaskServices} from '../../selectors/services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
-import { FlatList, ListRenderItemInfo } from 'react-native';
 import { RelatedContentList } from '../related_content_list/related_content_list';
 import R from 'ramda';
 
 export interface TaskDetailProps {
-    readonly taskServices: TaskServices;
     readonly task: Task;
     readonly savedTasks: ReadonlyArray<Task>;
+    readonly taskServices: TaskServices;
 }
 export interface TaskDetailActions extends TaskListItemActions, ArticleListItemActions {
     readonly requestUpdateTaskServices: () => UpdateTaskServicesAsync.Request;
 }
-export type AllTaskDetailProps = TaskDetailProps & TaskDetailActions;
+type AllTaskDetailProps = TaskDetailProps & TaskDetailActions;
 type TabChangeEvent = { readonly i: number, from: number, readonly ref: React.Ref<Tabs> };
 
-export class TaskDetail extends React.Component<AllTaskDetailProps> {
+export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
 
     constructor(props: AllTaskDetailProps) {
         super(props);

@@ -4,11 +4,11 @@ import * as store from '../../stores/page_switcher';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
 import { ExploreSectionConnectedComponent } from '../explore/explore_section_connected_component';
 import { ArticleDetailConnectedComponent } from '../articles/article_detail_connected_component';
+import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
 import * as questionnaire from '../questionnaire';
 import { MyPlan } from '../my_plan/my_plan';
 import { Store as TasksStore } from '../../stores/tasks';
 import { Locale } from '../../locale/types';
-import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
 
 export interface Props {
     readonly routeInProps: store.Store;
