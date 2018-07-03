@@ -67,12 +67,13 @@ const buildViewModelForAnswers = (locale: Locale, keys: ReadonlyArray<string>,
         })
     );
 
-export const selectTaxonomyTermsForSelectedAnswers = (modelStore: model.Store): ReadonlyArray<TaxonomyTermReference> => {
+export const selectTaxonomyTermsForSelectedAnswers = (store: app.Store): ReadonlyArray<TaxonomyTermReference> => (
+    filterTaxonomyTermsForSelectedAnswers(store.applicationState.questionnaireInStore.answers)
+);
+
+export const filterTaxonomyTermsForSelectedAnswers = (answers: model.AnswersMap): ReadonlyArray<TaxonomyTermReference> => {
     type ReferenceArray = ReadonlyArray<TaxonomyTermReference>;
+    const flatten = R.reduce((acc: ReferenceArray, val: ReferenceArray): ReferenceArray => [...acc, ...val], []);
 
-    const flatten = (acc: ReferenceArray, val: ReferenceArray): ReferenceArray => (
-        [...acc, ...val]
-    );
-
-    return R.reduce(flatten, [], R.pluck('taxonomyTerms', R.filter(R.prop('isSelected'), R.values(modelStore.answers))));
+    return flatten(R.pluck('taxonomyTerms', R.filter(R.propEq('isSelected', true), R.values(answers))));
 };

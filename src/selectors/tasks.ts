@@ -117,7 +117,7 @@ const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUser
 });
 
 export const selectRecommendedTasks = (store: app.Store): ReadonlyArray<Task> => {
-    const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store.applicationState.questionnaireInStore);
+    const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store);
     const matchingTasks = filterTasksByTaxonomyTerms(taxonomyTerms, store.applicationState.tasksInStore.taskMap);
 
     const locale = selectLocale(store);

@@ -80,18 +80,18 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([selectedAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
-        const result = selector.selectTaxonomyTermsForSelectedAnswers(normalizedData);
+        const result = selector.filterTaxonomyTermsForSelectedAnswers(normalizedData.answers);
 
         expect(result).toEqual([theTaxonomyTerm]);
     });
 
-    it('should return not the taxonomy terms for a non-selected answer', () => {
+    it('should not return the taxonomy terms for a non-selected answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
-        const selectedAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withSelected(false);
-        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([selectedAnswer]);
+        const nonSelectedAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withSelected(false);
+        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([nonSelectedAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
-        const result = selector.selectTaxonomyTermsForSelectedAnswers(normalizedData);
+        const result = selector.filterTaxonomyTermsForSelectedAnswers(normalizedData.answers);
 
         expect(result).toEqual([]);
     });
@@ -104,7 +104,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([selectedAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
-        const result = selector.selectTaxonomyTermsForSelectedAnswers(normalizedData);
+        const result = selector.filterTaxonomyTermsForSelectedAnswers(normalizedData.answers);
 
         expect(result).toContain(theTaxonomyTerm);
         expect(result).toContain(theSecondTaxonomyTerm);
