@@ -116,17 +116,16 @@ const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUser
     return denormalizeTask(locale, task, userTask, [], []);
 });
 
-export const blaSelectRecommendedTasks = (store: app.Store): ReadonlyArray<Task> => {
-    // TODO this function should just take the store
+export const selectRecommendedTasks = (store: app.Store): ReadonlyArray<Task> => {
     const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store.applicationState.questionnaireInStore);
-    const matchingTasks = selectRecommendedTasks(taxonomyTerms, store.applicationState.tasksInStore.taskMap);
+    const matchingTasks = filterTasksByTaxonomyTerms(taxonomyTerms, store.applicationState.tasksInStore.taskMap);
 
     const locale = selectLocale(store);
     const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
     return R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
 };
 
-export const selectRecommendedTasks =
+export const filterTasksByTaxonomyTerms =
     (selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
 
         const taskContainsTaxonomyTerms = R.curry((targetTerms: ReadonlyArray<TaxonomyTermReference>, task: model.Task): boolean => (

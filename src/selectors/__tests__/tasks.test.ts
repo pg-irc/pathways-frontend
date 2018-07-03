@@ -74,7 +74,7 @@ describe('tasks selector', () => {
         it('should not recommend tasks by default', () => {
             const task = new TaskBuilder().withLocaleCode(locale.code).build();
             const taskMap = { [task.id]: task };
-            const result = selector.selectRecommendedTasks([], taskMap);
+            const result = selector.filterTasksByTaxonomyTerms([], taskMap);
             expect(result).toEqual([]);
         });
 
@@ -83,7 +83,7 @@ describe('tasks selector', () => {
             const taxonomyTermId = 'recommendToAll';
             const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taskMap = { [task.id]: task };
-            const result = selector.selectRecommendedTasks([], taskMap);
+            const result = selector.filterTasksByTaxonomyTerms([], taskMap);
             expect(result).toEqual([task]);
         });
 
@@ -92,7 +92,7 @@ describe('tasks selector', () => {
             const selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference> = [taxonomyTermReference];
             const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm(taxonomyTermReference).build();
             const taskMap = { [task.id]: task };
-            const result = selector.selectRecommendedTasks(selectedAnswerTaxonomyTerms, taskMap);
+            const result = selector.filterTasksByTaxonomyTerms(selectedAnswerTaxonomyTerms, taskMap);
             expect(result).toEqual([task]);
         });
 
