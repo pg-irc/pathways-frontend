@@ -8,6 +8,7 @@ import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
 import { pickCurrentExploreSection } from './explore';
 import { ArticleListItem, selectRelatedArticles } from './articles';
+import { selectTaxonomyTermsForSelectedAnswers } from './questionnaire';
 
 export interface Task {
     readonly id: string;
@@ -114,6 +115,16 @@ const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUser
     const userTask = findTaskUserSettingsByTaskId(userTasks, task.id);
     return denormalizeTask(locale, task, userTask, [], []);
 });
+
+export const blaSelectRecommendedTasks = (store: app.Store): ReadonlyArray<Task> => {
+    // TODO this function should just take the store
+    const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store.applicationState.questionnaireInStore);
+    const matchingTasks = selectRecommendedTasks(taxonomyTerms, store.applicationState.tasksInStore.taskMap);
+
+    const locale = selectLocale(store);
+    const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
+    return R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
+};
 
 export const selectRecommendedTasks =
     (selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
