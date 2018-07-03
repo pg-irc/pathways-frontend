@@ -10,8 +10,15 @@ const buildStore = (): pageSwitcher.Store => (
 );
 
 describe('the initial page', () => {
-    it('should be set to Page.Questionnaire', () => {
-        expect(pageSwitcher.initialPage).toBe(pageSwitcher.Page.Questionnaire);
+    it('should be set to Page.Welcome', () => {
+        expect(pageSwitcher.initialPage).toBe(pageSwitcher.Page.Welcome);
+    });
+});
+
+describe('setting the welcome page', () => {
+    it('should create action with type SET_WELCOME_PAGE', () => {
+        const theAction = pageSwitcher.setWelcomePage();
+        expect(theAction.type).toBe(constants.SET_WELCOME_PAGE);
     });
 });
 
@@ -83,9 +90,9 @@ describe('the reducer', () => {
         expect(theStore).toHaveProperty('pageId');
     });
 
-    it('should default to build a store with pageType equal to Page.Questionnaire', () => {
+    it('should default to build a store with pageType equal to Page.Welcome', () => {
         const theStore = pageSwitcher.reducer();
-        expect(theStore.pageType).toBe(pageSwitcher.Page.Questionnaire);
+        expect(theStore.pageType).toBe(pageSwitcher.Page.Welcome);
     });
 
     it('when called with SET_QUESTIONNAIRE_PAGE should return store with pageType = Page.Questionnaire', () => {
@@ -194,8 +201,8 @@ describe('the unsupportedPageError', () => {
         expect(result.name).toBe('Error');
     });
 
-    it('should create an Error with the message [Error: 2: Unsupported Page]', () => {
+    it('should create an Error with the message [Error: 3: Unsupported Page]', () => {
         const result = pageSwitcher.unsupportedPageError(pageSwitcher.Page.ExploreAll);
-        expect(result.message).toBe('2: Unsupported Page');
+        expect(result.message).toBe('3: Unsupported Page');
     });
 });

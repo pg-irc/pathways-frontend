@@ -7,6 +7,8 @@ import { initialPage, Page, unsupportedPageError } from '../stores/page_switcher
 
 const getRouteFromPage = (page: Page): string => {
     switch (page) {
+        case Page.Welcome:
+            return '/';
         case Page.Questionnaire:
             return '/questionnaire';
         case Page.MyPlan:
@@ -19,6 +21,7 @@ const getRouteFromPage = (page: Page): string => {
 };
 
 const routesMap = {
+    [constants.SET_WELCOME_PAGE]: getRouteFromPage(Page.Welcome),
     [constants.SET_QUESTIONNAIRE_PAGE]: getRouteFromPage(Page.Questionnaire),
     [constants.SET_PLAN_PAGE]: getRouteFromPage(Page.MyPlan),
     [constants.SET_EXPLORE_PAGE]: getRouteFromPage(Page.ExploreAll),
