@@ -4,12 +4,12 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
 import { Id } from '../../stores/articles';
 import { SetArticleDetailPageAction } from '../../stores/page_switcher';
-import { Article } from '../../selectors/articles';
+import { ArticleListItem } from '../../selectors/articles';
 
 export interface ArticleListItemActions {
     readonly goToArticleDetail: (articleId: Id) => SetArticleDetailPageAction;
 }
-type AllArticleListItemProps = ArticleListItemActions & Article;
+type AllArticleListItemProps = ArticleListItemActions & ArticleListItem;
 
 export const ArticleListItemComponent: React.StatelessComponent<AllArticleListItemProps> =
     (props: AllArticleListItemProps): JSX.Element => (

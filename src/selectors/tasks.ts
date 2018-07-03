@@ -7,7 +7,7 @@ import { selectRoute } from './route';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
 import { pickCurrentExploreSection } from './explore';
-import { Article, selectRelatedArticles } from './articles';
+import { ArticleListItem, selectRelatedArticles } from './articles';
 
 export interface Task {
     readonly id: string;
@@ -16,17 +16,23 @@ export interface Task {
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly category: string;
     readonly importance: number;
-    readonly relatedTasks: ReadonlyArray<Task>;
-    readonly relatedArticles: ReadonlyArray<Article>;
+    readonly relatedTasks: ReadonlyArray<TaskListItem>;
+    readonly relatedArticles: ReadonlyArray<ArticleListItem>;
     // TODO remove
     readonly tags: ReadonlyArray<string>;
     readonly starred: boolean;
     readonly completed: boolean;
 }
 
+export interface TaskListItem {
+    readonly id: string;
+    readonly title: string;
+    readonly description: string;
+}
+
 export const denormalizeTask =
     (locale: Locale, task: model.Task, taskUserSettings: model.TaskUserSettings,
-     relatedArticles: ReadonlyArray<Article>, relatedTasks: ReadonlyArray<Task>): Task => (
+     relatedArticles: ReadonlyArray<ArticleListItem>, relatedTasks: ReadonlyArray<TaskListItem>): Task => (
         {
             id: task.id,
             title: selectLocalizedText(locale, task.title),
@@ -42,15 +48,23 @@ export const denormalizeTask =
         }
     );
 
-export const selectAllSavedTasks = (store: app.Store): ReadonlyArray<Task> => {
-    const { savedTasksList }: model.Store = store.applicationState.tasksInStore;
+export const denormalizeTaskListItem = (locale: Locale, task: model.Task): TaskListItem => (
+        {
+            id: task.id,
+            title: selectLocalizedText(locale, task.title),
+            description: selectLocalizedText(locale, task.description),
+        }
+    );
+
+export const selectAllSavedTasks = (store: app.Store): ReadonlyArray<TaskListItem> => {
+    const savedTasksList = store.applicationState.tasksInStore.savedTasksList;
     return savedTasksList.map((taskId: model.Id) => {
         return selectTaskAsListItem(store, taskId);
     });
 };
 
-export const selectAllSuggestedTasks = (store: app.Store): ReadonlyArray<Task> => {
-    const { suggestedTasksList }: model.Store = store.applicationState.tasksInStore;
+export const selectAllSuggestedTasks = (store: app.Store): ReadonlyArray<TaskListItem> => {
+    const suggestedTasksList = store.applicationState.tasksInStore.suggestedTasksList;
     return suggestedTasksList.map((taskId: model.Id) => {
         return selectTaskAsListItem(store, taskId);
     });
@@ -58,7 +72,8 @@ export const selectAllSuggestedTasks = (store: app.Store): ReadonlyArray<Task> =
 
 export const selectCurrentTask = (store: app.Store): Task => {
     const locale = selectLocale(store);
-    const { taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
+    const taskMap = store.applicationState.tasksInStore.taskMap;
+    const taskUserSettingsMap = store.applicationState.tasksInStore.taskUserSettingsMap;
     const taskId = selectRoute(store).pageId;
     const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
     const task = taskMap[taskId];
@@ -67,16 +82,15 @@ export const selectCurrentTask = (store: app.Store): Task => {
     return denormalizeTask(locale, task, taskUserSettings, relatedArticles, relatedTasks);
 };
 
-export const selectRelatedTasks = (store: app.Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<Task> => (
+export const selectRelatedTasks = (store: app.Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<TaskListItem> => (
     R.map((id: model.Id) => selectTaskAsListItem(store, id), taskIds)
 );
 
-export const selectTaskAsListItem = (store: app.Store, taskId: model.Id): Task => {
+export const selectTaskAsListItem = (store: app.Store, taskId: model.Id): TaskListItem => {
     const locale = selectLocale(store);
-    const { taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
+    const taskMap = store.applicationState.tasksInStore.taskMap;
     const task = taskMap[taskId];
-    const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
-    return denormalizeTask(locale, task, taskUserSettings, [], []);
+    return denormalizeTaskListItem(locale, task);
 };
 
 export const findTaskUserSettingsByTaskId =

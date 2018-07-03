@@ -5,7 +5,7 @@ import { selectLocale, selectLocalizedText } from './locale';
 import { selectRoute } from './route';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
-import { Task, selectRelatedTasks } from './tasks';
+import { TaskListItem, selectRelatedTasks } from './tasks';
 
 export interface Article {
     readonly id: model.Id;
@@ -13,12 +13,19 @@ export interface Article {
     readonly description: string;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly starred: boolean;
-    readonly relatedArticles: ReadonlyArray<Article>;
-    readonly relatedTasks: ReadonlyArray<Task>;
+    readonly relatedArticles: ReadonlyArray<ArticleListItem>;
+    readonly relatedTasks: ReadonlyArray<TaskListItem>;
+}
+
+export interface ArticleListItem {
+    readonly id: string;
+    readonly title: string;
+    readonly description: string;
 }
 
 export const denormalizeArticle =
-    (locale: Locale, article: model.Article, relatedArticles: ReadonlyArray<Article>, relatedTasks: ReadonlyArray<Task>): Article => (
+    (locale: Locale, article: model.Article, relatedArticles: ReadonlyArray<ArticleListItem>,
+     relatedTasks: ReadonlyArray<TaskListItem>): Article => (
     {
         id: article.id,
         title: selectLocalizedText(locale, article.title),
@@ -30,6 +37,14 @@ export const denormalizeArticle =
     }
 );
 
+export const denormalizeArticleListItem = (locale: Locale, article: model.Article): ArticleListItem => (
+        {
+            id: article.id,
+            title: selectLocalizedText(locale, article.title),
+            description: selectLocalizedText(locale, article.description),
+        }
+    );
+
 export const selectCurrentArticle = (store: app.Store): Article => {
     const locale = selectLocale(store);
     const articles = store.applicationState.articlesInStore.articles;
@@ -40,13 +55,13 @@ export const selectCurrentArticle = (store: app.Store): Article => {
     return denormalizeArticle(locale, article, relatedArticles, relatedTasks);
 };
 
-export const selectRelatedArticles = (store: app.Store, articleIds: ReadonlyArray<model.Id>): ReadonlyArray<Article> => (
+export const selectRelatedArticles = (store: app.Store, articleIds: ReadonlyArray<model.Id>): ReadonlyArray<ArticleListItem> => (
     R.map((id: model.Id) => selectArticleAsListItem(store, id), articleIds)
 );
 
-export const selectArticleAsListItem = (store: app.Store, articleId: model.Id): Article => {
+export const selectArticleAsListItem = (store: app.Store, articleId: model.Id): ArticleListItem => {
     const locale = selectLocale(store);
     const articles = store.applicationState.articlesInStore.articles;
     const article = articles[articleId];
-    return denormalizeArticle(locale, article, [], []);
+    return denormalizeArticleListItem(locale, article);
 };

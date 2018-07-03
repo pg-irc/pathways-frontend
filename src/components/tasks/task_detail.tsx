@@ -2,6 +2,7 @@
 import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
+import { Id as TaskId } from '../../stores/tasks';
 import { Task } from '../../selectors/tasks';
 import { TaskListItemActions } from '../tasks/task_list_item';
 import { ArticleListItemActions } from '../articles/article_list_item';
@@ -17,7 +18,7 @@ import { RelatedArticlesComponent } from '../related_articles/related_articles';
 
 export interface TaskDetailProps {
     readonly task: Task;
-    readonly savedTasks: ReadonlyArray<Task>;
+    readonly savedTasks: ReadonlyArray<TaskId>;
     readonly taskServices: TaskServices;
 }
 export interface TaskDetailActions extends TaskListItemActions, ArticleListItemActions {

@@ -2,14 +2,15 @@ import React from 'react';
 import { View, Text } from 'native-base';
 import R from 'ramda';
 import { applicationStyles } from '../../application/styles';
-import { Task } from '../../selectors/tasks';
+import { TaskListItem } from '../../selectors/tasks';
+import { Id as TaskId } from '../../stores/tasks';
 import { TaskListComponent } from '../tasks/task_list';
 import { Trans } from '@lingui/react';
 import { TaskListItemActions } from '../tasks/task_list_item';
 
 interface RelatedTasksProps {
-    readonly relatedTasks: ReadonlyArray<Task>;
-    readonly savedTasks: ReadonlyArray<Task>;
+    readonly relatedTasks: ReadonlyArray<TaskListItem>;
+    readonly savedTasks: ReadonlyArray<TaskId>;
 }
 type AllRelatedTasksProps = RelatedTasksProps & TaskListItemActions;
 
@@ -18,8 +19,8 @@ export const RelatedTasksComponent: React.StatelessComponent<AllRelatedTasksProp
         // tslint:disable-next-line:no-null-keyword
         return null;
     }
-    const shouldDisplayTaskInteractions = (task: Task): boolean => (
-        R.none(R.propEq('id', task.id), props.savedTasks)
+    const shouldDisplayTaskInteractions = (taskId: TaskId): boolean => (
+        R.none((id: TaskId) => id === taskId, props.savedTasks)
     );
     const componentProps = {
         tasks: props.relatedTasks,

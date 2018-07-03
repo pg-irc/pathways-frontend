@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Content, Text, Icon, Button } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Article } from '../../selectors/articles';
-import { Task } from '../../selectors/tasks';
+import { Id as TaskId } from '../../stores/tasks';
 import { applicationStyles } from '../../application/styles';
 import { ArticleListItemActions } from './article_list_item';
 import { TaskListItemActions } from '../tasks/task_list_item';
@@ -11,7 +11,7 @@ import { RelatedArticlesComponent } from '../related_articles/related_articles';
 
 export interface ArticleDetailProps {
     readonly article: Article;
-    readonly savedTasks: ReadonlyArray<Task>;
+    readonly savedTasks: ReadonlyArray<TaskId>;
 }
 export type ArticleDetailActions = ArticleListItemActions & TaskListItemActions;
 type AllArticleDetailProps = ArticleDetailActions & ArticleDetailProps;
