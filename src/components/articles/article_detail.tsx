@@ -4,12 +4,10 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Article } from '../../selectors/articles';
 import { Task } from '../../selectors/tasks';
 import { applicationStyles } from '../../application/styles';
-import { ArticleListComponent } from './article_list';
 import { ArticleListItemActions } from './article_list_item';
 import { TaskListItemActions } from '../tasks/task_list_item';
-import { TaskListComponent } from '../tasks/task_list';
-import R from 'ramda';
-import { RelatedContentList } from '../related_content_list/related_content_list';
+import { RelatedTasksComponent } from '../related_tasks/related_tasks';
+import { RelatedArticlesComponent } from '../related_articles/related_articles';
 
 export interface ArticleDetailProps {
     readonly article: Article;
@@ -30,8 +28,15 @@ export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailPr
                         <Row>
                             <Text>{props.article.description}</Text>
                         </Row>
-                        {renderRelatedArticles(props)}
-                        {renderRelatedTasks(props)}
+                        <RelatedArticlesComponent
+                            relatedArticles={props.article.relatedArticles}
+                            {...props}
+                        />
+                        <RelatedTasksComponent
+                            relatedTasks={props.article.relatedTasks}
+                            savedTasks={props.savedTasks}
+                            {...props}
+                        />
                     </Grid>
                 </Content>
             </Container>
@@ -54,42 +59,3 @@ const renderActions = (props: AllArticleDetailProps): JSX.Element => (
         </Col>
     </Row>
 );
-
-const renderRelatedArticles = (props: AllArticleDetailProps): JSX.Element => {
-    if (props.article.relatedArticles.length === 0) {
-        return undefined;
-    }
-    const componentProps = {
-        articles: props.article.relatedArticles,
-        goToArticleDetail: props.goToArticleDetail,
-    };
-    return (
-        <RelatedContentList
-            title={'LEARN MORE'}
-            component={ArticleListComponent}
-            componentProps={componentProps}
-        />
-    );
-};
-
-const renderRelatedTasks = (props: AllArticleDetailProps): JSX.Element => {
-    if (props.article.relatedArticles.length === 0) {
-        return undefined;
-    }
-    const shouldDisplayTaskInteractions = (task: Task): boolean => (
-        R.find(R.propEq('id', task.id), props.savedTasks) === undefined
-    );
-    const componentProps = {
-        tasks: props.article.relatedTasks,
-        goToTaskDetail: props.goToTaskDetail,
-        addToSavedList: props.addToSavedList,
-        shouldDisplayTaskInteractions: shouldDisplayTaskInteractions,
-    };
-    return (
-        <RelatedContentList
-            title={'RELATED TASKS'}
-            component={TaskListComponent}
-            componentProps={componentProps}
-        />
-    );
-};

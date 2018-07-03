@@ -3,9 +3,7 @@ import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
 import { Task } from '../../selectors/tasks';
-import { TaskListComponent } from '../tasks/task_list';
 import { TaskListItemActions } from '../tasks/task_list_item';
-import { ArticleListComponent } from '../articles/article_list';
 import { ArticleListItemActions } from '../articles/article_list_item';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
@@ -14,8 +12,8 @@ import { Trans } from '@lingui/react';
 import { Service, TaskServices} from '../../selectors/services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
-import { RelatedContentList } from '../related_content_list/related_content_list';
-import R from 'ramda';
+import { RelatedTasksComponent } from '../related_tasks/related_tasks';
+import { RelatedArticlesComponent } from '../related_articles/related_articles';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -89,8 +87,15 @@ export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
                                 <Row style={taskDetailStyles.row}>
                                     <Text>You can get information about your community ...</Text>
                                 </Row>
-                                {renderRelatedArticles(this.props)}
-                                {renderRelatedTasks(this.props)}
+                                <RelatedArticlesComponent
+                                    relatedArticles={this.props.task.relatedArticles}
+                                    {...this.props}
+                                />
+                                <RelatedTasksComponent
+                                    relatedTasks={this.props.task.relatedTasks}
+                                    savedTasks={this.props.savedTasks}
+                                    {...this.props}
+                                />
                             </Grid>
                         </Content>
                     </Tab>
@@ -131,44 +136,5 @@ function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
         <ListItem>
             <ServiceComponent service={item} />
         </ListItem>
-    );
-}
-
-function renderRelatedArticles (props: AllTaskDetailProps): JSX.Element {
-    if (props.task.relatedArticles.length === 0) {
-        return undefined;
-    }
-    const componentProps = {
-        articles: props.task.relatedArticles,
-        goToArticleDetail: props.goToArticleDetail,
-    };
-    return (
-        <RelatedContentList
-            title={'LEARN MORE'}
-            component={ArticleListComponent}
-            componentProps={componentProps}
-        />
-    );
-}
-
-function renderRelatedTasks (props: AllTaskDetailProps): JSX.Element {
-    if (props.task.relatedTasks.length === 0) {
-        return undefined;
-    }
-    const shouldDisplayTaskInteractions = (task: Task): boolean => (
-        R.find(R.propEq('id', task.id))(props.savedTasks) === undefined
-    );
-    const componentProps = {
-        tasks: props.task.relatedTasks,
-        goToTaskDetail: props.goToTaskDetail,
-        addToSavedList: props.addToSavedList,
-        shouldDisplayTaskInteractions: shouldDisplayTaskInteractions,
-    };
-    return (
-        <RelatedContentList
-            title={'RELATED TASKS'}
-            component={TaskListComponent}
-            componentProps={componentProps}
-        />
     );
 }
