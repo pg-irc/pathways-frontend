@@ -115,14 +115,20 @@ const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUser
     return denormalizeTask(locale, task, userTask, [], []);
 });
 
-export const selectRecommendedTasks = (taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
-    const recommendToAll = (ref: TaxonomyTermReference): boolean => (
-        ref.taxonomyId === 'recommendation' && ref.taxonomyTermId === 'recommendToAll'
-    );
+export const selectRecommendedTasks =
+    (selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
 
-    const isRecommended = (task: model.Task): boolean => (
-        R.any(recommendToAll, task.taxonomyTerms)
-    );
+        const taskContainsTaxonomyTerms = R.curry((targetTerms: ReadonlyArray<TaxonomyTermReference>, task: model.Task): boolean => (
+            R.not(R.isEmpty(R.intersection(targetTerms, task.taxonomyTerms)))
+        ));
 
-    return R.filter(isRecommended, R.values(taskMap));
-};
+        const taxonomyId = 'recommendation';
+        const taxonomyTermId = 'recommendToAll';
+
+        const isRecommendedToAll = taskContainsTaxonomyTerms([{ taxonomyId, taxonomyTermId }]);
+        const isRecommendedBecauseOfSelecedAnswers = taskContainsTaxonomyTerms(selectedAnswerTaxonomyTerms);
+
+        const isRecommended = R.either(isRecommendedToAll, isRecommendedBecauseOfSelecedAnswers);
+
+        return R.filter(isRecommended, R.values(taskMap));
+    };

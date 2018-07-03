@@ -7,8 +7,13 @@ import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
 import { Locale } from '../../locale/types';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { TaxonomyTermReference } from '../../stores/taxonomies';
 
 let locale: Locale = undefined;
+
+const aTaxonomyTermReference = (): TaxonomyTermReference => (
+    { taxonomyId: aString(), taxonomyTermId: aString() }
+);
 
 beforeEach(() => {
     locale = new LocaleBuilder().build();
@@ -69,7 +74,7 @@ describe('tasks selector', () => {
         it('should not recommend tasks by default', () => {
             const task = new TaskBuilder().withLocaleCode(locale.code).build();
             const taskMap = { [task.id]: task };
-            const result = selector.selectRecommendedTasks(taskMap);
+            const result = selector.selectRecommendedTasks([], taskMap);
             expect(result).toEqual([]);
         });
 
@@ -78,9 +83,19 @@ describe('tasks selector', () => {
             const taxonomyTermId = 'recommendToAll';
             const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taskMap = { [task.id]: task };
-            const result = selector.selectRecommendedTasks(taskMap);
+            const result = selector.selectRecommendedTasks([], taskMap);
             expect(result).toEqual([task]);
         });
+
+        it('should recommend tasks tagged with the same taxonomy term as a selected answer', () => {
+            const taxonomyTermReference = aTaxonomyTermReference();
+            const selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference> = [taxonomyTermReference];
+            const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm(taxonomyTermReference).build();
+            const taskMap = { [task.id]: task };
+            const result = selector.selectRecommendedTasks(selectedAnswerTaxonomyTerms, taskMap);
+            expect(result).toEqual([task]);
+        });
+
     });
 
     describe('selected data', () => {
