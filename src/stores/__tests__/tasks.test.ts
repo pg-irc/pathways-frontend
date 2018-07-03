@@ -19,7 +19,6 @@ describe('tasks reducer', () => {
                 [taskBuilder],
                 [taskUserSettingsBuilder],
                 [taskBuilder.build().id],
-                [taskBuilder.build().id],
             );
         });
 
@@ -29,20 +28,9 @@ describe('tasks reducer', () => {
             expect(finalStore.savedTasksList).toHaveLength(2);
         });
 
-        test('can add task to suggested tasks list', () => {
-            const task = new TaskBuilder().build();
-            const finalStore = stores.reducer(store, stores.addToSuggestedList(task.id));
-            expect(finalStore.suggestedTasksList).toHaveLength(2);
-        });
-
         test('can remove task from saved tasks list', () => {
             const finalStore = stores.reducer(store, stores.removeFromSavedList(store.savedTasksList[0]));
             expect(finalStore.savedTasksList).toHaveLength(0);
-        });
-
-        test('can remove task from suggested tasks list', () => {
-            const finalStore = stores.reducer(store, stores.removeFromSuggestedList(store.suggestedTasksList[0]));
-            expect(finalStore.suggestedTasksList).toHaveLength(0);
         });
 
         test('can toggle a task completed', () => {

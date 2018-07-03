@@ -125,13 +125,11 @@ export class TaskUserSettingsBuilder {
 
 export const buildNormalizedStore = (taskBuilders: ReadonlyArray<TaskBuilder>,
     taskUserSettingsBuilders: ReadonlyArray<TaskUserSettingsBuilder>,
-    savedTasks: ReadonlyArray<store.Id>,
-    suggestedTasks: ReadonlyArray<store.Id>): store.Store => (
+    savedTasks: ReadonlyArray<store.Id>): store.Store => (
         {
             taskMap: buildTaskMap(taskBuilders),
             taskUserSettingsMap: buildTaskUserSettingsMap(taskUserSettingsBuilders),
             savedTasksList: savedTasks,
-            suggestedTasksList: suggestedTasks,
         }
     );
 

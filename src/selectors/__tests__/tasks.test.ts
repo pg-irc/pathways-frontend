@@ -55,10 +55,6 @@ describe('tasks selector', () => {
             expect(denormalizedTask.importance).toBe(task.importance);
         });
 
-        test('tags property', () => {
-            expect(denormalizedTask.tags).toBe(task.tags);
-        });
-
         test('taxonomy term reference', () => {
             expect(denormalizedTask.taxonomyTerms).toEqual([{ taxonomyId, taxonomyTermId }]);
         });
@@ -76,7 +72,6 @@ describe('tasks selector', () => {
             store = buildNormalizedStore(
                 [taskBuilder],
                 [taskUserSettingsBuilder],
-                [taskBuilder.build().id],
                 [taskBuilder.build().id],
             );
         });

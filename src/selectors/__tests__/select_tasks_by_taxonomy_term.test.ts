@@ -15,7 +15,7 @@ describe('select tasks by taxonomy term', () => {
         withTaxonomyTerm({ taxonomyId, taxonomyTermId }).
         withLocaleCode(locale.code);
     const taskUserSettingsBuilder = new helpers.TaskUserSettingsBuilder(taskId);
-    const tasksStore = helpers.buildNormalizedStore([taskBuilder], [taskUserSettingsBuilder], [], []);
+    const tasksStore = helpers.buildNormalizedStore([taskBuilder], [taskUserSettingsBuilder], []);
 
     it('should return tasks annotated with the given taxonomy term', () => {
         const theTasks = selectTasksByTaxonomyTerm(locale, tasksStore, { taxonomyId, taxonomyTermId });

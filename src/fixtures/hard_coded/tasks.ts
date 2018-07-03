@@ -147,6 +147,5 @@ export const buildTasksFixture = (): Store => {
             },
         },
         savedTasksList: [],
-        suggestedTasksList: ['t1', 't2', 't3', 't4', 't5'],
     };
 };
