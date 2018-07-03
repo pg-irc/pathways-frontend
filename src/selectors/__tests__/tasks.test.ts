@@ -24,7 +24,7 @@ describe('tasks selector', () => {
             locale = new LocaleBuilder().build();
             task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             taskUserSettings = new TaskUserSettingsBuilder(task.id).build();
-            denormalizedTask = selector.denormalizeTask(locale, task, taskUserSettings);
+            denormalizedTask = selector.denormalizeTask(locale, task, taskUserSettings, [], []);
         });
 
         test('id property', () => {
@@ -58,12 +58,14 @@ describe('tasks selector', () => {
         test('tags property', () => {
             expect(denormalizedTask.tags).toBe(task.tags);
         });
+
         test('taxonomy term reference', () => {
             expect(denormalizedTask.taxonomyTerms).toEqual([{ taxonomyId, taxonomyTermId }]);
         });
+
     });
 
-    describe('data retrieval', () => {
+    describe('selected data', () => {
         let store: stores.Store;
         let locale: Locale;
 
@@ -77,24 +79,6 @@ describe('tasks selector', () => {
                 [taskBuilder.build().id],
                 [taskBuilder.build().id],
             );
-        });
-
-        test('returns all saved tasks', () => {
-            expect(Object.keys(selector.selectAllSavedTasks(locale, store))).toHaveLength(1);
-        });
-
-        test('returns all suggested tasks', () => {
-            expect(Object.keys(selector.selectAllSuggestedTasks(locale, store))).toHaveLength(1);
-        });
-
-        test('returns task by id', () => {
-            const id = Object.keys(store.taskMap)[0];
-            const task = selector.selectTaskById(locale, store, id);
-            expect(task.id).toEqual(id);
-        });
-
-        test('throws when select task by id parameter is invalid', () => {
-            expect(() => selector.selectTaskById(locale, store, aString())).toThrow();
         });
 
         test('throws when select task user settings by id parameter is invalid', () => {

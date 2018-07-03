@@ -1,7 +1,10 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
-import { Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem, View } from 'native-base';
-import * as selector from '../../selectors/tasks';
+import { FlatList, ListRenderItemInfo } from 'react-native';
+import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
+import { Task } from '../../selectors/tasks';
+import { TaskListItemActions } from '../tasks/task_list_item';
+import { ArticleListItemActions } from '../articles/article_list_item';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
@@ -9,22 +12,23 @@ import { Trans } from '@lingui/react';
 import { Service, TaskServices} from '../../selectors/services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
-import { FlatList, ListRenderItemInfo } from 'react-native';
+import { RelatedTasksComponent } from '../related_tasks/related_tasks';
+import { RelatedArticlesComponent } from '../related_articles/related_articles';
 
-export interface Props {
+export interface TaskDetailProps {
+    readonly task: Task;
+    readonly savedTasks: ReadonlyArray<Task>;
     readonly taskServices: TaskServices;
-    readonly task: selector.Task;
 }
-
-export interface Actions {
+export interface TaskDetailActions extends TaskListItemActions, ArticleListItemActions {
     readonly requestUpdateTaskServices: () => UpdateTaskServicesAsync.Request;
 }
-
+type AllTaskDetailProps = TaskDetailProps & TaskDetailActions;
 type TabChangeEvent = { readonly i: number, from: number, readonly ref: React.Ref<Tabs> };
 
-export class TaskDetail extends React.Component<Props & Actions> {
+export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
 
-    constructor(props: Props & Actions) {
+    constructor(props: AllTaskDetailProps) {
         super(props);
         this.onChangeTab = this.onChangeTab.bind(this);
     }
@@ -83,10 +87,15 @@ export class TaskDetail extends React.Component<Props & Actions> {
                                 <Row style={taskDetailStyles.row}>
                                     <Text>You can get information about your community ...</Text>
                                 </Row>
-                                <Row style={applicationStyles.hr} />
-                                <Row>
-                                    <Text style={applicationStyles.bold}><Trans>LEARN MORE</Trans></Text>
-                                </Row>
+                                <RelatedArticlesComponent
+                                    relatedArticles={this.props.task.relatedArticles}
+                                    {...this.props}
+                                />
+                                <RelatedTasksComponent
+                                    relatedTasks={this.props.task.relatedTasks}
+                                    savedTasks={this.props.savedTasks}
+                                    {...this.props}
+                                />
                             </Grid>
                         </Content>
                     </Tab>
@@ -114,18 +123,18 @@ export class TaskDetail extends React.Component<Props & Actions> {
 
 interface ServiceItemInfo extends ListRenderItemInfo<Service> {}
 
-function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
-    return (
-        <ListItem>
-            <ServiceComponent service={item} />
-        </ListItem>
-    );
-}
-
 function ServiceListEmpty(): JSX.Element {
     return (
         <View style={{ padding: 20 }}>
             <Text><Trans>No related services found.</Trans></Text>
         </View>
+    );
+}
+
+function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
+    return (
+        <ListItem>
+            <ServiceComponent service={item} />
+        </ListItem>
     );
 }

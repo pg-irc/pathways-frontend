@@ -4,7 +4,7 @@ import { Article } from '../../selectors/articles';
 import { ArticleListItemComponent, ArticleListItemActions } from './article_list_item';
 import R from 'ramda';
 
-interface ArticleListProps {
+export interface ArticleListProps {
     readonly articles: ReadonlyArray<Article>;
 }
 export type ArticleListActions = ArticleListItemActions;

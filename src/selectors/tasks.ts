@@ -1,11 +1,13 @@
-import * as stores from '../stores/tasks';
 import * as app from '../application/store';
+import * as model from '../stores/tasks';
+import * as taskDetails from './details/tasks';
+import * as R from 'ramda';
 import { selectLocalizedText, selectLocale } from './locale';
+import { selectRoute } from './route';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
 import { pickCurrentExploreSection } from './explore';
-import * as taskDetails from './details/tasks';
-import * as R from 'ramda';
+import { Article, selectRelatedArticles } from './articles';
 
 export interface Task {
     readonly id: string;
@@ -14,65 +16,78 @@ export interface Task {
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly category: string;
     readonly importance: number;
+    readonly relatedTasks: ReadonlyArray<Task>;
+    readonly relatedArticles: ReadonlyArray<Article>;
     // TODO remove
     readonly tags: ReadonlyArray<string>;
-    readonly taskUserSettingsId: string;
     readonly starred: boolean;
     readonly completed: boolean;
 }
 
 export const denormalizeTask =
-    (locale: Locale, task: stores.Task, taskUserSettings: stores.TaskUserSettings): Task => (
+    (locale: Locale, task: model.Task, taskUserSettings: model.TaskUserSettings,
+     relatedArticles: ReadonlyArray<Article>, relatedTasks: ReadonlyArray<Task>): Task => (
         {
             id: task.id,
             title: selectLocalizedText(locale, task.title),
             description: selectLocalizedText(locale, task.description),
             taxonomyTerms: task.taxonomyTerms,
+            starred: taskUserSettings.starred,
+            relatedArticles: relatedArticles,
+            relatedTasks: relatedTasks,
             category: task.category,
             importance: task.importance,
             tags: task.tags,
-            taskUserSettingsId: taskUserSettings.id,
-            starred: taskUserSettings.starred,
             completed: taskUserSettings.completed,
         }
     );
 
-export const selectAllSavedTasks = (locale: Locale, store: stores.Store): ReadonlyArray<Task> => {
-    const { savedTasksList, taskMap }: stores.Store = store;
-    return savedTasksList.map((taskId: stores.Id) => {
-        const task: stores.Task = taskMap[taskId];
-        const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, task.id);
-        return denormalizeTask(locale, task, taskUserSettings);
+export const selectAllSavedTasks = (store: app.Store): ReadonlyArray<Task> => {
+    const { savedTasksList }: model.Store = store.applicationState.tasksInStore;
+    return savedTasksList.map((taskId: model.Id) => {
+        return selectTaskAsListItem(store, taskId);
     });
 };
 
-export const selectAllSuggestedTasks = (locale: Locale, store: stores.Store): ReadonlyArray<Task> => {
-    const { suggestedTasksList, taskMap }: stores.Store = store;
-    return suggestedTasksList.map((taskId: stores.Id) => {
-        const task: stores.Task = taskMap[taskId];
-        const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, task.id);
-        return denormalizeTask(locale, task, taskUserSettings);
+export const selectAllSuggestedTasks = (store: app.Store): ReadonlyArray<Task> => {
+    const { suggestedTasksList }: model.Store = store.applicationState.tasksInStore;
+    return suggestedTasksList.map((taskId: model.Id) => {
+        return selectTaskAsListItem(store, taskId);
     });
 };
 
-export const selectTaskById = (locale: Locale, store: stores.Store, taskId: stores.Id): Task => {
-    const { taskMap }: stores.Store = store;
-    if (taskMap[taskId] === undefined) {
-        throw new Error(`Could not find Task for task id: ${taskId}`);
-    }
-    const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, taskId);
-    return denormalizeTask(locale, taskMap[taskId], taskUserSettings);
+export const selectCurrentTask = (store: app.Store): Task => {
+    const locale = selectLocale(store);
+    const { taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
+    const taskId = selectRoute(store).pageId;
+    const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
+    const task = taskMap[taskId];
+    const relatedTasks = selectRelatedTasks(store, task.relatedTasks);
+    const relatedArticles = selectRelatedArticles(store, task.relatedArticles);
+    return denormalizeTask(locale, task, taskUserSettings, relatedArticles, relatedTasks);
+};
+
+export const selectRelatedTasks = (store: app.Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<Task> => (
+    R.map((id: model.Id) => selectTaskAsListItem(store, id), taskIds)
+);
+
+export const selectTaskAsListItem = (store: app.Store, taskId: model.Id): Task => {
+    const locale = selectLocale(store);
+    const { taskMap, taskUserSettingsMap }: model.Store = store.applicationState.tasksInStore;
+    const task = taskMap[taskId];
+    const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
+    return denormalizeTask(locale, task, taskUserSettings, [], []);
 };
 
 export const findTaskUserSettingsByTaskId =
-    (taskUserSettingsMap: stores.TaskUserSettingsMap, taskId: stores.Id): stores.TaskUserSettings => {
+    (taskUserSettingsMap: model.TaskUserSettingsMap, taskId: model.Id): model.TaskUserSettings => {
         const validate = validateOneResultWasFound(taskId);
         const getUserTask = R.compose(validate, R.values, R.pickBy(R.propEq('taskId', taskId)));
         return getUserTask(taskUserSettingsMap);
     };
 
 const validateOneResultWasFound =
-    R.curry((taskId: string, userTasks: ReadonlyArray<stores.TaskUserSettings>): stores.TaskUserSettings => {
+    R.curry((taskId: string, userTasks: ReadonlyArray<model.TaskUserSettings>): model.TaskUserSettings => {
         if (userTasks.length !== 1) {
             throw new Error(`Could not find TaskUserSettings for task id: ${taskId}`);
         }
@@ -91,7 +106,7 @@ export const selectTasksForCurrentExploreSection = (store: app.Store): ReadonlyA
     return denormalizedTasks;
 };
 
-const buildDenormalizedTask = R.curry((locale: Locale, userTasks: stores.TaskUserSettingsMap, task: stores.Task): Task => {
+const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUserSettingsMap, task: model.Task): Task => {
     const userTask = findTaskUserSettingsByTaskId(userTasks, task.id);
-    return denormalizeTask(locale, task, userTask);
+    return denormalizeTask(locale, task, userTask, [], []);
 });

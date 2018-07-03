@@ -1,4 +1,5 @@
 import { LocalizedText } from '../../locale';
+import { Id as ArticleId } from './articles';
 import { TaxonomyTermReference } from './taxonomies';
 
 export type Id = string;
@@ -8,6 +9,8 @@ export interface Task {
     readonly title: LocalizedText;
     readonly description: LocalizedText;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
+    readonly relatedTasks: ReadonlyArray<Id>;
+    readonly relatedArticles: ReadonlyArray<ArticleId>;
     readonly tags?: ReadonlyArray<string>;
     readonly category?: string;
     readonly importance?: number;

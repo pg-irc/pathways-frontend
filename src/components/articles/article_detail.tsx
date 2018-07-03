@@ -4,12 +4,10 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Article } from '../../selectors/articles';
 import { Task } from '../../selectors/tasks';
 import { applicationStyles } from '../../application/styles';
-import { ArticleListComponent } from './article_list';
 import { ArticleListItemActions } from './article_list_item';
 import { TaskListItemActions } from '../tasks/task_list_item';
-import { TaskListComponent } from '../tasks/task_list';
-import { Trans } from '@lingui/react';
-import R from 'ramda';
+import { RelatedTasksComponent } from '../related_tasks/related_tasks';
+import { RelatedArticlesComponent } from '../related_articles/related_articles';
 
 export interface ArticleDetailProps {
     readonly article: Article;
@@ -19,9 +17,7 @@ export type ArticleDetailActions = ArticleListItemActions & TaskListItemActions;
 type AllArticleDetailProps = ArticleDetailActions & ArticleDetailProps;
 
 export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailProps> =
-    (props: AllArticleDetailProps): JSX.Element => {
-        const article = props.article;
-        return (
+    (props: AllArticleDetailProps): JSX.Element => (
             <Container>
                 <Content padder>
                     <Grid>
@@ -30,15 +26,21 @@ export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailPr
                         </Row>
                         {renderActions(props)}
                         <Row>
-                            <Text>{article.description}</Text>
+                            <Text>{props.article.description}</Text>
                         </Row>
-                        {article.relatedArticles ? renderRelatedContent('LEARN MORE', renderRelatedArticles(props)) : undefined}
-                        {article.relatedTasks ? renderRelatedContent('RELATED TASKS', renderRelatedTasks(props)) : undefined}
+                        <RelatedArticlesComponent
+                            relatedArticles={props.article.relatedArticles}
+                            {...props}
+                        />
+                        <RelatedTasksComponent
+                            relatedTasks={props.article.relatedTasks}
+                            savedTasks={props.savedTasks}
+                            {...props}
+                        />
                     </Grid>
                 </Content>
             </Container>
     );
-};
 
 const renderActions = (props: AllArticleDetailProps): JSX.Element => (
     <Row>
@@ -56,37 +58,4 @@ const renderActions = (props: AllArticleDetailProps): JSX.Element => (
             </Button>
         </Col>
     </Row>
-);
-
-const renderRelatedArticles = (props: AllArticleDetailProps): JSX.Element => {
-    return(
-        <ArticleListComponent
-            articles={props.article.relatedArticles}
-            goToArticleDetail={props.goToArticleDetail}
-        />
-    );
-};
-
-const renderRelatedTasks = (props: AllArticleDetailProps): JSX.Element => {
-    const shouldDisplayTaskInteractions = (task: Task): boolean => (
-        R.find(R.propEq('id', task.id), props.savedTasks) === undefined
-    );
-    return (
-        <TaskListComponent
-            tasks={props.article.relatedTasks}
-            goToTaskDetail={props.goToTaskDetail}
-            addToSavedList={props.addToSavedList}
-            shouldDisplayTaskInteractions={shouldDisplayTaskInteractions}
-        />
-    );
-};
-
-const renderRelatedContent = (sectionTitle: string, renderedContent: JSX.Element): JSX.Element => (
-    <Col>
-        <Row style={applicationStyles.hr} />
-        <Row>
-            <Text style={applicationStyles.bold}><Trans>{sectionTitle}</Trans></Text>
-        </Row>
-        {renderedContent}
-    </Col>
 );

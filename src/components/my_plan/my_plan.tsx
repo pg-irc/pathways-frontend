@@ -2,8 +2,8 @@
 import React from 'react';
 import { I18nManager } from 'react-native';
 import { Container, Content, Text, View, Col, Row, Grid, Button, Icon } from 'native-base';
-import { ConnectedSavedTasks } from '../tasks/connected_saved_tasks';
-import { ConnectedSuggestedTasks } from '../tasks/connected_suggested_tasks';
+import { SavedTasksConnectedComponent } from '../tasks/saved_tasks_connected_component';
+import { SuggestedTasksConnectedComponent } from '../tasks/suggested_tasks_connected_component';
 import { Trans } from '@lingui/react';
 import { applicationStyles } from '../../application/styles';
 import { myPlanStyles } from './styles';
@@ -17,14 +17,14 @@ export const MyPlan: React.StatelessComponent = (): JSX.Element => (
             <Collapser
                 collapsedHeader={getHeaderForSavedTasks(true)}
                 expandedHeader={getHeaderForSavedTasks(false)}
-                content={<ConnectedSavedTasks />}
+                content={<SavedTasksConnectedComponent />}
                 initiallyCollapsed={false}
             />
             <View style={myPlanStyles.divider} />
             <Collapser
                 collapsedHeader={getHeaderForSuggestedTasks(true)}
                 expandedHeader={getHeaderForSuggestedTasks(false)}
-                content={<ConnectedSuggestedTasks listItemStyle={taskStyles.suggestedListItem}/>}
+                content={<SuggestedTasksConnectedComponent listItemStyle={taskStyles.suggestedListItem}/>}
                 initiallyCollapsed={true}
                 style={myPlanStyles.suggestedTasks}
             />

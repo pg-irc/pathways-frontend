@@ -5,11 +5,10 @@ import { TaskListItemStyleProps } from './task_list_item';
 import { Store } from '../../application/store';
 import { selectAllSuggestedTasks } from '../../selectors/tasks';
 import { Id, AddToSavedListAction, addToSavedList } from '../../stores/tasks';
-import { selectLocale } from '../../selectors/locale';
 import { SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 
 const mapStateToProps = (store: Store, ownProps: TaskListItemStyleProps): TaskListProps => ({
-    tasks: selectAllSuggestedTasks(selectLocale(store), store.applicationState.tasksInStore),
+    tasks: selectAllSuggestedTasks(store),
     listItemStyle: ownProps.listItemStyle,
 });
 
@@ -18,4 +17,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListActions => ({
     addToSavedList: (taskId: Id): AddToSavedListAction => dispatch(addToSavedList(taskId)),
 });
 
-export const ConnectedSuggestedTasks = connect(mapStateToProps, mapDispatchToProps)(TaskListComponent);
+export const SuggestedTasksConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TaskListComponent);
