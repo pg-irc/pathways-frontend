@@ -6,12 +6,11 @@ import { Id } from '../../stores/articles';
 import { SetArticleDetailPageAction, setArticleDetailPage } from '../../stores/page_switcher';
 import { selectCurrentArticle } from '../../selectors/articles';
 import { SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
-import { selectAllSavedTasks } from '../../selectors/tasks';
 import { AddToSavedListAction, addToSavedList } from '../../stores/tasks';
 
 const mapStateToProps = (store: Store): ArticleDetailProps => ({
     article: selectCurrentArticle(store),
-    savedTasks: selectAllSavedTasks(store),
+    savedTasks: store.applicationState.tasksInStore.savedTasksList,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): ArticleDetailActions => ({

@@ -3,7 +3,7 @@ import { ListItem, Text, Button, Icon, Grid, Col, Row } from 'native-base';
 import { taskStyles } from './styles';
 import { applicationStyles } from '../../application/styles';
 import { TaskActions } from './actions';
-import { Task } from '../../selectors/tasks';
+import { TaskListItem } from '../../selectors/tasks';
 import { AddToSavedListAction } from '../../stores/tasks';
 import { SetTaskDetailPageAction } from '../../stores/page_switcher';
 import { I18nManager } from 'react-native';
@@ -11,7 +11,7 @@ import { I18nManager } from 'react-native';
 export interface TaskListItemStyleProps {
     readonly listItemStyle?: object;
 }
-export interface TaskListItemProps extends TaskListItemStyleProps, Task {
+export interface TaskListItemProps extends TaskListItemStyleProps, TaskListItem {
     readonly displayTaskInteractions: boolean;
 }
 export type TaskListItemActions = TaskActions;

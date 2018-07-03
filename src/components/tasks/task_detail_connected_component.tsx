@@ -5,7 +5,7 @@ import { TaskDetailProps, TaskDetailActions, TaskDetailComponent } from './task_
 import { TaskServices, selectTaskServices, createRelatedServicesQueryFromTask } from '../../selectors/services';
 import { Id, AddToSavedListAction, addToSavedList } from '../../stores/tasks';
 import { connect } from 'react-redux';
-import { Task, selectCurrentTask, selectAllSavedTasks } from '../../selectors/tasks';
+import { Task, selectCurrentTask } from '../../selectors/tasks';
 import { SetArticleDetailPageAction, setArticleDetailPage,
          SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 import { ArticleListItemActions } from '../articles/article_list_item';
@@ -20,7 +20,7 @@ function mapStateToProps(store: Store): StateProps {
     const task: Task  = selectCurrentTask(store);
     return {
         task: task,
-        savedTasks: selectAllSavedTasks(store),
+        savedTasks: store.applicationState.tasksInStore.savedTasksList,
         searchQuery: createRelatedServicesQueryFromTask(task),
         taskServices: selectTaskServices(task.id, store),
     };
