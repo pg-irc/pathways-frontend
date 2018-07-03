@@ -16,11 +16,10 @@ export interface Task {
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly category: string;
     readonly importance: number;
-    readonly relatedTasks?: ReadonlyArray<Task>;
-    readonly relatedArticles?: ReadonlyArray<Article>;
+    readonly relatedTasks: ReadonlyArray<Task>;
+    readonly relatedArticles: ReadonlyArray<Article>;
     // TODO remove
     readonly tags: ReadonlyArray<string>;
-    readonly taskUserSettingsId: string;
     readonly starred: boolean;
     readonly completed: boolean;
 }
@@ -36,7 +35,6 @@ export const denormalizeTask =
             starred: taskUserSettings.starred,
             relatedArticles: relatedArticles,
             relatedTasks: relatedTasks,
-            taskUserSettingsId: taskUserSettings.id,
             category: task.category,
             importance: task.importance,
             tags: task.tags,
