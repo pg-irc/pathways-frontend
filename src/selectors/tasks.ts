@@ -114,3 +114,15 @@ const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUser
     const userTask = findTaskUserSettingsByTaskId(userTasks, task.id);
     return denormalizeTask(locale, task, userTask, [], []);
 });
+
+export const selectRecommendedTasks = (taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
+    const recommendToAll = (ref: TaxonomyTermReference): boolean => (
+        ref.taxonomyId === 'recommendation' && ref.taxonomyTermId === 'recommendToAll'
+    );
+
+    const isRecommended = (task: model.Task): boolean => (
+        R.any(recommendToAll, task.taxonomyTerms)
+    );
+
+    return R.filter(isRecommended, R.values(taskMap));
+};

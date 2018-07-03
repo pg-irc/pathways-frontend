@@ -8,10 +8,15 @@ import * as stores from '../../stores/tasks';
 import { Locale } from '../../locale/types';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 
+let locale: Locale = undefined;
+
+beforeEach(() => {
+    locale = new LocaleBuilder().build();
+});
+
 describe('tasks selector', () => {
 
     describe('denormalization', () => {
-        let locale: Locale;
         let task: stores.Task;
         let taxonomyId: string;
         let taxonomyTermId: string;
@@ -21,7 +26,6 @@ describe('tasks selector', () => {
         beforeEach(() => {
             taxonomyId = aString();
             taxonomyTermId = aString();
-            locale = new LocaleBuilder().build();
             task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             taskUserSettings = new TaskUserSettingsBuilder(task.id).build();
             denormalizedTask = selector.denormalizeTask(locale, task, taskUserSettings, [], []);
@@ -61,12 +65,28 @@ describe('tasks selector', () => {
 
     });
 
+    describe('recommendation engine', () => {
+        it('should not recommend tasks by default', () => {
+            const task = new TaskBuilder().withLocaleCode(locale.code).build();
+            const taskMap = { [task.id]: task };
+            const result = selector.selectRecommendedTasks(taskMap);
+            expect(result).toEqual([]);
+        });
+
+        it('should recommend tasks tagged with the recommend to all taxonomy term', () => {
+            const taxonomyId = 'recommendation';
+            const taxonomyTermId = 'recommendToAll';
+            const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
+            const taskMap = { [task.id]: task };
+            const result = selector.selectRecommendedTasks(taskMap);
+            expect(result).toEqual([task]);
+        });
+    });
+
     describe('selected data', () => {
         let store: stores.Store;
-        let locale: Locale;
 
         beforeEach(() => {
-            locale = new LocaleBuilder().build();
             const taskBuilder = new TaskBuilder().withLocaleCode(locale.code);
             const taskUserSettingsBuilder = new TaskUserSettingsBuilder(taskBuilder.build().id);
             store = buildNormalizedStore(
