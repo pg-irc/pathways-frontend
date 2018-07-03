@@ -55,6 +55,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '我計劃搬到加拿大',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a2': {
                 id: 'a2',
@@ -65,6 +69,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '我剛剛不到1個月前抵達',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a3': {
                 id: 'a3',
@@ -75,6 +83,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '少於6個月',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a4': {
                 id: 'a4',
@@ -85,6 +97,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '不到1年',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a5': {
                 id: 'a5',
@@ -95,6 +111,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '不到2年',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a6': {
                 id: 'a6',
@@ -105,6 +125,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '超過2年',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a7': {
                 id: 'a7',
@@ -115,6 +139,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '由你自己',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a8': {
                 id: 'a8',
@@ -125,6 +153,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '和你的家人',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a9': {
                 id: 'a9',
@@ -135,6 +167,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '13歲以下',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a10': {
                 id: 'a10',
@@ -145,6 +181,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '13-18歲',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a11': {
                 id: 'a11',
@@ -155,6 +195,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '18-64歲',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a12': {
                 id: 'a12',
@@ -165,6 +209,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '18-64歲',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a13': {
                 id: 'a13',
@@ -175,6 +223,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '獲得工作',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a14': {
                 id: 'a14',
@@ -185,6 +237,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '學習英語',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a15': {
                 id: 'a15',
@@ -195,6 +251,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '將我的孩子報名參加學校',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a16': {
                 id: 'a16',
@@ -205,6 +265,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '獲得醫療保健',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a17': {
                 id: 'a17',
@@ -215,6 +279,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '財政，稅收，銀行業務',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a18': {
                 id: 'a18',
@@ -225,6 +293,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '找到一個生活的地方',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a19': {
                 id: 'a19',
@@ -235,6 +307,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '把我的家人帶到加拿大',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a20': {
                 id: 'a20',
@@ -245,6 +321,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '獲得心理健康支持',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a21': {
                 id: 'a21',
@@ -255,6 +335,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '法律援助和保護',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
             'a22': {
                 id: 'a22',
@@ -265,6 +349,10 @@ export const buildQuestionnaireFixture = (): Store => {
                     'zh': '報名參加教育',
                 },
                 isSelected: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'explore',
+                    'taxonomyTermId': 'Education',
+                }],
             },
         },
     };

@@ -43,6 +43,8 @@ describe('questionnaire test helper for', () => {
             let id: string;
             let questionId: string;
             let text: string;
+            let taxonomyId: string;
+            let taxonomyTermId: string;
             let isSelected: boolean;
             let answer: Answer;
 
@@ -50,6 +52,8 @@ describe('questionnaire test helper for', () => {
                 id = aString();
                 questionId = aString();
                 text = aString();
+                taxonomyId = aString();
+                taxonomyTermId = aString();
                 isSelected = aBoolean();
                 answer = new helpers.AnswerBuilder().
                     withLocaleCode(localeCode).
@@ -57,6 +61,7 @@ describe('questionnaire test helper for', () => {
                     withQuestionId(questionId).
                     withText(text).
                     withSelected(isSelected).
+                    withTaxonomyTerm({ taxonomyId, taxonomyTermId }).
                     build();
             });
 
@@ -64,16 +69,24 @@ describe('questionnaire test helper for', () => {
                 expect(answer.id).toBe(id);
             });
 
-            it('can build an answer', () => {
+            it('can build an answer with text', () => {
                 expect(answer.text[localeCode]).toBe(text);
             });
 
-            it('can build an answer', () => {
+            it('can build an answer with question id', () => {
                 expect(answer.questionId).toBe(questionId);
             });
 
-            it('can build an answer', () => {
+            it('can build an answer with selected flag', () => {
                 expect(answer.isSelected).toBe(isSelected);
+            });
+
+            it('can build an answer with taxonomy id', () => {
+                expect(answer.taxonomyTerms[0].taxonomyId).toBe(taxonomyId);
+            });
+
+            it('can build an answer with taxonomy term id', () => {
+                expect(answer.taxonomyTerms[0].taxonomyTermId).toBe(taxonomyTermId);
             });
         });
     });
