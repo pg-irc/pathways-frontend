@@ -35,8 +35,8 @@ export const selectCurrentArticle = (store: app.Store): Article => {
     const articles = store.applicationState.articlesInStore.articles;
     const articleId = selectRoute(store).pageId;
     const article = articles[articleId];
-    const relatedTasks = article.relatedTasks ? selectRelatedTasks(store, article.relatedTasks) : undefined;
-    const relatedArticles = article.relatedArticles ? selectRelatedArticles(store, article.relatedArticles) : undefined;
+    const relatedTasks = selectRelatedTasks(store, article.relatedTasks);
+    const relatedArticles = selectRelatedArticles(store, article.relatedArticles);
     return denormalizeArticle(locale, article, relatedArticles, relatedTasks);
 };
 

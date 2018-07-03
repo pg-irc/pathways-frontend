@@ -13,7 +13,8 @@ type AllRelatedArticlesProps = RelatedArticlesProps & ArticleListItemActions;
 
 export const RelatedArticlesComponent: React.StatelessComponent<AllRelatedArticlesProps> = (props: AllRelatedArticlesProps): JSX.Element => {
     if (props.relatedArticles.length === 0) {
-        return undefined;
+        // tslint:disable-next-line:no-null-keyword
+        return null;
     }
     const componentProps = {
         articles: props.relatedArticles,

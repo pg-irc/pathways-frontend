@@ -64,8 +64,8 @@ export const selectCurrentTask = (store: app.Store): Task => {
     const taskId = selectRoute(store).pageId;
     const taskUserSettings = findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
     const task = taskMap[taskId];
-    const relatedTasks = task.relatedTasks ? selectRelatedTasks(store, task.relatedTasks) : undefined;
-    const relatedArticles = task.relatedArticles ? selectRelatedArticles(store, task.relatedArticles) : undefined;
+    const relatedTasks = selectRelatedTasks(store, task.relatedTasks);
+    const relatedArticles = selectRelatedArticles(store, task.relatedArticles);
     return denormalizeTask(locale, task, taskUserSettings, relatedArticles, relatedTasks);
 };
 

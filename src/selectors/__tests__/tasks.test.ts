@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-let no-any
 
-import { TaskBuilder, TaskUserSettingsBuilder }
+import { TaskBuilder, TaskUserSettingsBuilder, buildNormalizedStore }
     from '../../stores/__tests__/helpers/tasks_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
@@ -65,4 +65,25 @@ describe('tasks selector', () => {
 
     });
 
+    describe('selected data', () => {
+        let store: stores.Store;
+        let locale: Locale;
+
+        beforeEach(() => {
+            locale = new LocaleBuilder().build();
+            const taskBuilder = new TaskBuilder().withLocaleCode(locale.code);
+            const taskUserSettingsBuilder = new TaskUserSettingsBuilder(taskBuilder.build().id);
+            store = buildNormalizedStore(
+                [taskBuilder],
+                [taskUserSettingsBuilder],
+                [taskBuilder.build().id],
+                [taskBuilder.build().id],
+            );
+        });
+
+        test('throws when select task user settings by id parameter is invalid', () => {
+            expect(() => selector.findTaskUserSettingsByTaskId(store.taskUserSettingsMap, aString())).toThrow();
+        });
+
+    });
 });

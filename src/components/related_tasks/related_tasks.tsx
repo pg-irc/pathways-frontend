@@ -15,10 +15,11 @@ type AllRelatedTasksProps = RelatedTasksProps & TaskListItemActions;
 
 export const RelatedTasksComponent: React.StatelessComponent<AllRelatedTasksProps> = (props: AllRelatedTasksProps): JSX.Element => {
     if (props.relatedTasks.length === 0) {
-        return undefined;
+        // tslint:disable-next-line:no-null-keyword
+        return null;
     }
     const shouldDisplayTaskInteractions = (task: Task): boolean => (
-        R.find(R.propEq('id', task.id), props.savedTasks) === undefined
+        R.none(R.propEq('id', task.id), props.savedTasks)
     );
     const componentProps = {
         tasks: props.relatedTasks,
