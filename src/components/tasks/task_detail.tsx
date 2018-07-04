@@ -17,11 +17,6 @@ import { ServiceComponent } from '../services/service';
 import { RelatedTasksComponent } from '../related_tasks/related_tasks';
 import { RelatedArticlesComponent } from '../related_articles/related_articles';
 
-export enum TaskStates {
-    NotInSavedList,
-    InSavedList,
-    Done,
-}
 export interface TaskDetailProps {
     readonly task: Task;
     readonly savedTasks: ReadonlyArray<TaskId>;
