@@ -113,7 +113,7 @@ describe('tasks selector', () => {
         });
 
         test('throws when select task user settings by id parameter is invalid', () => {
-            expect(() => selector.findTaskUserSettingsByTaskId(store.taskUserSettingsMap, aString())).toThrow();
+            expect(() => stores.findTaskUserSettingsByTaskId(store.taskUserSettingsMap, aString())).toThrow();
         });
 
     });

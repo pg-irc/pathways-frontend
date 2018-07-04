@@ -1,7 +1,7 @@
 import { Locale } from '../locale';
 import { TaxonomyTermReference } from './taxonomies';
-import { Store, Task as StoreTask } from '../stores/tasks';
-import { denormalizeTask, Task as SelectorTask, findTaskUserSettingsByTaskId } from './tasks';
+import { Store, Task as StoreTask, findTaskUserSettingsByTaskId } from '../stores/tasks';
+import { denormalizeTask, Task as SelectorTask } from './tasks';
 import * as R from 'ramda';
 
 export const selectTasksByTaxonomyTerm =
