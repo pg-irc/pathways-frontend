@@ -1,6 +1,7 @@
 import * as app from '../application/store';
 import * as model from '../stores/tasks';
 import * as taskDetails from './details/tasks';
+import { Taxonomies as TaxonomyConstants } from '../application/constants';
 import * as R from 'ramda';
 import { selectLocalizedText, selectLocale } from './locale';
 import { selectRoute } from './route';
@@ -132,8 +133,8 @@ export const filterTasksByTaxonomyTerms =
             R.not(R.isEmpty(R.intersection(targetTerms, task.taxonomyTerms)))
         ));
 
-        const taxonomyId = 'recommendation';
-        const taxonomyTermId = 'recommendToAll';
+        const taxonomyId = TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID;
+        const taxonomyTermId = TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID;
 
         const isRecommendedToAll = taskContainsTaxonomyTerms([{ taxonomyId, taxonomyTermId }]);
         const isRecommendedBecauseOfSelecedAnswers = taskContainsTaxonomyTerms(selectedAnswerTaxonomyTerms);

@@ -1,4 +1,7 @@
 import { Store } from '../types/tasks';
+import { Taxonomies } from '../../application/constants';
+
+const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
 export const buildTasksFixture = (): Store => {
     return {
@@ -16,7 +19,7 @@ export const buildTasksFixture = (): Store => {
                     'zh': '示例描述。',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'Education',
                 }],
                 'tags': ['important', 'do soon', 'free'],
@@ -38,7 +41,7 @@ export const buildTasksFixture = (): Store => {
                     'zh': '示例描述。',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'Education',
                 }],
                 'tags': ['important', 'do soon', 'free'],
@@ -60,7 +63,7 @@ export const buildTasksFixture = (): Store => {
                     'zh': '示例描述。',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'Education',
                 }],
                 'tags': ['important', 'do soon', 'free'],
@@ -82,7 +85,7 @@ export const buildTasksFixture = (): Store => {
                     'zh': '示例描述。',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'Money',
                 }],
                 'tags': ['important'],
@@ -104,7 +107,7 @@ export const buildTasksFixture = (): Store => {
                     'zh': '示例描述。',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'Money',
                 }],
                 'tags': ['important'],

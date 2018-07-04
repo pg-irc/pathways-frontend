@@ -5,6 +5,7 @@ import { TaskBuilder, TaskUserSettingsBuilder, buildNormalizedStore }
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
+import { Taxonomies as TaxonomyConstants } from '../../application/constants';
 import { Locale } from '../../locale/types';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
@@ -79,8 +80,8 @@ describe('tasks selector', () => {
         });
 
         it('should recommend tasks tagged with the recommend to all taxonomy term', () => {
-            const taxonomyId = 'recommendation';
-            const taxonomyTermId = 'recommendToAll';
+            const taxonomyId = TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID;
+            const taxonomyTermId = TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID;
             const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taskMap = { [task.id]: task };
             const result = selector.filterTasksByTaxonomyTerms([], taskMap);

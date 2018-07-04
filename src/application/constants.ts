@@ -33,3 +33,9 @@ export namespace Task {
 }
 
 export const PREFERENCES_LOCALE_CODE = 'PREFERENCES:LOCALE_CODE';
+
+export namespace Taxonomies {
+  export const EXPLORE_TAXONOMY_ID = 'explore';
+  export const RECOMMENDATION_TAXONOMY_ID = 'recommendation';
+  export const RECOMMEND_TO_ALL_TAXONOMY_TERM_ID = 'recommendToAll';
+}

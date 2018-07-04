@@ -1,6 +1,9 @@
 // tslint:disable:max-line-length
 
 import { Store } from '../types/explore';
+import { Taxonomies } from '../../application/constants';
+
+const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
 export const buildExploreFixture = (): Store => (
     {
@@ -18,7 +21,7 @@ export const buildExploreFixture = (): Store => (
                     'zh': '自 1850 年起就有人陆续从中国来到卑诗省 （即 BC 省）。今天，10 个卑诗省民当中就有 1 个自称拥有华人血统。事实上，迁移到这里的人当中，来自中国的比来自全球任何其他地方的都要多。无论您想在这里创业、求学还是继续您的事业，您和您的家人有多种方法可来到加拿大卑诗省。本指南可让您了解那些能帮助您以永久居民、临时外籍劳工或国际学生的身份迁居卑诗省的计划，并会帮助您选择最适合您和您家人需要的计划，为您在卑诗省展开新生活做好准备',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'settling_in',
                 }],
             },
@@ -35,7 +38,7 @@ export const buildExploreFixture = (): Store => (
                     'zh': 'ί 卑 詩 省dהϞ 5 Ї 16 ๋ٙՅɝኪf ̋ɽ઺ԃӻ୕ʱй͟ʮࣧʿዹͭ ӷͭ ኪࣧଡ଼ϓfʮࣧ͟卑詩省ִ݁Όᅰ資пfՅ ഁజᛘʮࣧdኪ൬Όеfዹͭӷ̥ࣧ݊݁͟ ִ௅΅資пfɽ௅΅ٙӷࣧdኪ͛ٙ˨͎ே ࠅ˹൬f ί 卑 詩 省dኪ ࣧ ӻ ୕ ( ̼͟ຯ෤Ցୋ 12 फ ) ݊ ͟省ִ݁ 卑詩省઺ԃᝂ dᑌΝήਜٙ઺ԃ ҅ʿዹͭኪࣧዚ࿴˾ڌ΍Ν၍ଣf省ִ݁ ᅡಛ資п઺ԃӻ୕dԨ˲ࠈͭجԷձ஝ۆd ᜫהϞኪࣧୌΥ省ٙ઺ԃᅺ๟d՘ɢމӊ Зኪ͛౤Զ৷ሯ९ٙ઺ԃf www.gov.bc.ca/bced Յഁ͵̙˸वί࢕ʕኪ୦f༉ઋԈୋ 49 fࠫ',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'education',
                 }],
             },
@@ -52,7 +55,7 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'healthCare',
                 }],
             },
@@ -69,7 +72,7 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'money',
                 }],
             },
@@ -86,7 +89,7 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'housing',
                 }],
             },
@@ -103,7 +106,7 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'employment',
                 }],
             },
@@ -120,7 +123,7 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'legal',
                 }],
             },
@@ -137,7 +140,7 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'driving',
                 }],
             },
@@ -154,7 +157,7 @@ export const buildExploreFixture = (): Store => (
                     'zh': '',
                 },
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
+                    'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'helpForIndividualsAndFamilies',
                 }],
             },
