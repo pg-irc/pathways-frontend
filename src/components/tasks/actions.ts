@@ -3,11 +3,11 @@ import { SetTaskDetailPageAction } from '../../stores/page_switcher';
 
 export interface TaskActions {
     readonly goToTaskDetail: (taskId: stores.Id) => SetTaskDetailPageAction;
-    readonly addToSavedList?: (taskId: stores.Id) => stores.AddToSavedListAction;
-    readonly removeFromSavedList?: (taskId: stores.Id) => stores.RemoveFromSavedListAction;
+    readonly toggleCompleted: (taskId: stores.Id) => stores.ToggleCompletedAction;
+    readonly addToSavedList: (taskId: stores.Id) => stores.AddToSavedListAction;
+    readonly removeFromSavedList: (taskId: stores.Id) => stores.RemoveFromSavedListAction;
     readonly addToSuggestedList?: (taskId: stores.Id) => stores.AddToSuggestedListAction;
     readonly removeFromSuggestedList?: (taskId: stores.Id) => stores.RemoveFromSuggestedListAction;
-    readonly toggleCompleted?: (taskUserSettingsId: stores.Id) => stores.ToggleCompletedAction;
-    readonly toggleStarred?: (taskUserSettingsId: stores.Id) => stores.ToggleStarredAction;
+    readonly toggleStarred?: (taskId: stores.Id) => stores.ToggleStarredAction;
     readonly shareTask?: () => stores.ShareAction;
 }

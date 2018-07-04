@@ -1,15 +1,15 @@
 import { Dispatch } from 'redux';
 import { Store } from '../../application/store';
 import { updateTaskServicesAsync, UpdateTaskServicesAsync } from '../../stores/services';
-import { TaskDetailProps, TaskDetailActions, TaskDetailComponent } from './task_detail';
+import { TaskDetailProps, TaskDetailActions, TaskDetailComponent, TaskServiceUpdater } from './task_detail';
 import { TaskServices, selectTaskServices, createRelatedServicesQueryFromTask } from '../../selectors/services';
-import { Id, AddToSavedListAction, addToSavedList } from '../../stores/tasks';
+import { Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
+         toggleCompleted, RemoveFromSavedListAction, removeFromSavedList } from '../../stores/tasks';
+import { Id as ArticleId } from '../../stores/articles';
 import { connect } from 'react-redux';
 import { Task, selectCurrentTask } from '../../selectors/tasks';
 import { SetArticleDetailPageAction, setArticleDetailPage,
          SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
-import { ArticleListItemActions } from '../articles/article_list_item';
-import { TaskListItemActions } from './task_list_item';
 
 interface StateProps extends TaskDetailProps {
     readonly searchQuery: string;
@@ -26,24 +26,26 @@ function mapStateToProps(store: Store): StateProps {
     };
 }
 
-interface Actions {
+interface DispatchProps extends TaskDetailActions {
     readonly requestUpdateTaskServices: (task: Task, query: string) => UpdateTaskServicesAsync.Request;
 }
 
-type DispatchProps = Actions & TaskListItemActions & ArticleListItemActions;
-
 function mapDispatchToProps(dispatch: Dispatch<Store>): DispatchProps {
     return {
-        goToArticleDetail: (articleId: Id): SetArticleDetailPageAction => dispatch(setArticleDetailPage(articleId)),
-        goToTaskDetail: (taskId: Id): SetTaskDetailPageAction => dispatch(setTaskDetailPage(taskId)),
-        addToSavedList: (taskId: Id): AddToSavedListAction => dispatch(addToSavedList(taskId)),
+        goToArticleDetail: (articleId: ArticleId): SetArticleDetailPageAction => dispatch(setArticleDetailPage(articleId)),
+        goToTaskDetail: (taskId: ArticleId): SetTaskDetailPageAction => dispatch(setTaskDetailPage(taskId)),
+        addToSavedList: (taskId: ArticleId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
+        removeFromSavedList: (taskId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
+        toggleCompleted: (taskId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(taskId)),
         requestUpdateTaskServices: (task: Task, query: string): UpdateTaskServicesAsync.Request => {
             return dispatch(updateTaskServicesAsync.request(task.id, query));
         },
     };
 }
 
-function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps): TaskDetailProps & TaskDetailActions {
+type ComponentProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater;
+
+function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps): ComponentProps {
     return {
         task: stateProps.task,
         savedTasks: stateProps.savedTasks,
@@ -51,6 +53,8 @@ function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps): TaskD
         goToArticleDetail: dispatchProps.goToArticleDetail,
         goToTaskDetail: dispatchProps.goToTaskDetail,
         addToSavedList: dispatchProps.addToSavedList,
+        removeFromSavedList: dispatchProps.removeFromSavedList,
+        toggleCompleted: dispatchProps.toggleCompleted,
         requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
             return dispatchProps.requestUpdateTaskServices(stateProps.task, stateProps.searchQuery);
         },
