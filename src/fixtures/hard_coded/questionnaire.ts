@@ -51,6 +51,13 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 acceptMultipleAnswers: false,
             },
+            'q6': {
+                id: 'q6',
+                text: {
+                    'en': 'Which immigrant type do you currently identify as?'
+                },
+                acceptMultipleAnswers: false,
+            },
         },
         answers: {
             'a1': {
@@ -407,6 +414,66 @@ export const buildQuestionnaireFixture = (): Store => {
                 taxonomyTerms: [{
                     taxonomyId: 'age',
                     taxonomyTermId: 'over_65',
+                }],
+            },
+            'a27': {
+                id: 'a27',
+                questionId: 'q6',
+                text: {
+                    'en': 'Refugee claimant',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'immigrant_type',
+                    taxonomyTermId: 'refugee_claimant',
+                }],
+            },
+            'a28': {
+                id: 'a28',
+                questionId: 'q6',
+                text: {
+                    'en': 'Temporary resident',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'immigrant_type',
+                    taxonomyTermId: 'temporary_resident',
+                }],
+            },
+            'a29': {
+                id: 'a29',
+                questionId: 'q6',
+                text: {
+                    'en': 'Permanent resident',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'immigrant_type',
+                    taxonomyTermId: 'permanent_resident',
+                }],
+            },
+            'a30': {
+                id: 'a30',
+                questionId: 'q6',
+                text: {
+                    'en': 'Permanent resident',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'immigrant_type',
+                    taxonomyTermId: 'permanent_resident',
+                }],
+            },
+            'a31': {
+                id: 'a31',
+                questionId: 'q6',
+                text: {
+                    'en': 'None of the above, or I’m not sure',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'immigrant_type',
+                    taxonomyTermId: 'unknown',
                 }],
             },
         },
