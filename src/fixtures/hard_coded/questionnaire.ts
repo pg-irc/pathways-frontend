@@ -47,7 +47,7 @@ export const buildQuestionnaireFixture = (): Store => {
             'q5': {
                 id: 'q5',
                 text: {
-                    'en': 'Which immigrant type do you currently identify as?',
+                    'en': 'Which age group do you belong to?',
                 },
                 acceptMultipleAnswers: false,
             },
@@ -55,6 +55,13 @@ export const buildQuestionnaireFixture = (): Store => {
                 id: 'q6',
                 text: {
                     'en': 'Which immigrant type do you currently identify as?'
+                },
+                acceptMultipleAnswers: false,
+            },
+            'q7': {
+                id: 'q7',
+                text: {
+                    'en': 'What is your current stage in the refugee claim process?',
                 },
                 acceptMultipleAnswers: false,
             },
@@ -474,6 +481,78 @@ export const buildQuestionnaireFixture = (): Store => {
                 taxonomyTerms: [{
                     taxonomyId: 'immigrant_type',
                     taxonomyTermId: 'unknown',
+                }],
+            },
+            'a32': {
+                id: 'a32',
+                questionId: 'q7',
+                text: {
+                    'en': 'I just claimed at an airport, seaport, or land border crossing',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'refugee_claim_stage',
+                    taxonomyTermId: 'claim_at_border',
+                }],
+            },
+            'a33': {
+                id: 'a33',
+                questionId: 'q7',
+                text: {
+                    'en': 'I have not yet started but will claim at a CIC office inside Canada',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'refugee_claim_stage',
+                    taxonomyTermId: 'not_started',
+                }],
+            },
+            'a34': {
+                id: 'a34',
+                questionId: 'q7',
+                text: {
+                    'en': 'I just claimed at a CIC office inside Canada',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'refugee_claim_stage',
+                    taxonomyTermId: 'claim_at_cic_office',
+                }],
+            },
+            'a35': {
+                id: 'a35',
+                questionId: 'q7',
+                text: {
+                    'en': 'I am waiting for my refugee hearing',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'refugee_claim_stage',
+                    taxonomyTermId: 'hearing',
+                }],
+            },
+            'a36': {
+                id: 'a36',
+                questionId: 'q7',
+                text: {
+                    'en': 'I received a positive decision and can apply or have applied to be a Permanent Resident',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'refugee_claim_stage',
+                    taxonomyTermId: 'positive_decision',
+                }],
+            },
+            'a37': {
+                id: 'a37',
+                questionId: 'q7',
+                text: {
+                    'en': 'I received a negative decision and want to learn about my options',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'refugee_claim_stage',
+                    taxonomyTermId: 'negative_decision',
                 }],
             },
         },
