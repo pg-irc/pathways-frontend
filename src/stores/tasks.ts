@@ -1,7 +1,8 @@
 import { buildTasksFixture } from '../fixtures/buildFixtures';
-import { Store, TaskList, Id, TaskUserSettings } from '../fixtures/types/tasks';
+import { Store, TaskList, Id, TaskUserSettings, TaskUserSettingsMap } from '../fixtures/types/tasks';
 import { Task as constants } from '../application/constants';
 import * as helpers from './helpers/make_action';
+import * as R from 'ramda';
 
 export { Id, Task, TaskUserSettings, TaskMap, TaskUserSettingsMap, TaskList, Store } from '../fixtures/types/tasks';
 
@@ -41,13 +42,13 @@ export const removeFromSuggestedList = (taskId: Id) => (
 );
 
 // tslint:disable-next-line:typedef
-export const toggleCompleted = (taskUserSettingsId: Id) => (
-    helpers.makeAction(constants.TOGGLE_COMPLETED, { taskUserSettingsId })
+export const toggleCompleted = (taskId: Id) => (
+    helpers.makeAction(constants.TOGGLE_COMPLETED, { taskId })
 );
 
 // tslint:disable-next-line:typedef
-export const toggleStarred = (taskUserSettingsId: Id) => (
-    helpers.makeAction(constants.TOGGLE_STARRED, { taskUserSettingsId })
+export const toggleStarred = (taskId: Id) => (
+    helpers.makeAction(constants.TOGGLE_STARRED, { taskId })
 );
 
 // tslint:disable-next-line:typedef
@@ -73,9 +74,9 @@ export const reducer = (store: Store = buildDefaultStore(), action?: TaskAction)
         case constants.REMOVE_FROM_SUGGESTED_LIST:
             return removeFromTaskList(store, 'suggestedTasksList', store.suggestedTasksList, action.payload.taskId);
         case constants.TOGGLE_COMPLETED:
-            return toggleTaskUserSettingsCompletedValue(store, action.payload.taskUserSettingsId);
+    return toggleTaskUserSettingsCompletedValue(store, action.payload.taskId);
         case constants.TOGGLE_STARRED:
-            return toggleTaskUserSettingsStarredValue(store, action.payload.taskUserSettingsId);
+            return toggleTaskUserSettingsStarredValue(store, action.payload.taskId);
         // TODO
         case constants.SHARE:
         default:
@@ -97,8 +98,8 @@ const removeFromTaskList = (store: Store, property: keyof (Store), taskList: Tas
     return { ...store, [property]: taskList.filter((id: Id) => id !== value) };
 };
 
-const toggleTaskUserSettingsCompletedValue = (store: Store, taskUserSettingsId: Id): Store => {
-    const taskUserSettings: TaskUserSettings = store.taskUserSettingsMap[taskUserSettingsId];
+const toggleTaskUserSettingsCompletedValue = (store: Store, taskId: Id): Store => {
+    const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, taskId);
     return {
         ...store,
         taskUserSettingsMap: {
@@ -111,8 +112,8 @@ const toggleTaskUserSettingsCompletedValue = (store: Store, taskUserSettingsId: 
     };
 };
 
-const toggleTaskUserSettingsStarredValue = (store: Store, taskUserSettingsId: Id): Store => {
-    const taskUserSettings: TaskUserSettings = store.taskUserSettingsMap[taskUserSettingsId];
+const toggleTaskUserSettingsStarredValue = (store: Store, taskId: Id): Store => {
+    const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, taskId);
     return {
         ...store,
         taskUserSettingsMap: {
@@ -124,3 +125,18 @@ const toggleTaskUserSettingsStarredValue = (store: Store, taskUserSettingsId: Id
         },
     };
 };
+
+export const findTaskUserSettingsByTaskId =
+    (taskUserSettingsMap: TaskUserSettingsMap, taskId: Id): TaskUserSettings => {
+        const validate = validateOneResultWasFound(taskId);
+        const getUserTask = R.compose(validate, R.values, R.pickBy(R.propEq('taskId', taskId)));
+        return getUserTask(taskUserSettingsMap);
+    };
+
+const validateOneResultWasFound =
+    R.curry((taskId: string, userTasks: ReadonlyArray<TaskUserSettings>): TaskUserSettings => {
+        if (userTasks.length !== 1) {
+            throw new Error(`Could not find TaskUserSettings for task id: ${taskId}`);
+        }
+        return userTasks[0];
+    });

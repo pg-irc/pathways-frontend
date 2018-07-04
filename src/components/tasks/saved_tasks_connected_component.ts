@@ -12,6 +12,7 @@ const mapStateToProps = (store: Store): TaskListProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListActions => ({
     goToTaskDetail: (taskId: stores.Id): SetTaskDetailPageAction => dispatch(setTaskDetailPage(taskId)),
+    addToSavedList: undefined,
 });
 
 export const SavedTasksConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TaskListComponent);
