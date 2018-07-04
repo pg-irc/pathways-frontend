@@ -65,6 +65,13 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 acceptMultipleAnswers: false,
             },
+            'q8': {
+                id: 'q8',
+                text: {
+                    'en': 'What is your level of English?',
+                },
+                acceptMultipleAnswers: true,
+            },
         },
         answers: {
             'a1': {
@@ -553,6 +560,54 @@ export const buildQuestionnaireFixture = (): Store => {
                 taxonomyTerms: [{
                     taxonomyId: 'refugee_claim_stage',
                     taxonomyTermId: 'negative_decision',
+                }],
+            },
+            'a38': {
+                id: 'a38',
+                questionId: 'q8',
+                text: {
+                    'en': 'None',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'english_level',
+                    taxonomyTermId: 'none',
+                }],
+            },
+            'a39': {
+                id: 'a39',
+                questionId: 'q8',
+                text: {
+                    'en': 'Beginner',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'english_level',
+                    taxonomyTermId: 'beginner',
+                }],
+            },
+            'a40': {
+                id: 'a40',
+                questionId: 'q8',
+                text: {
+                    'en': 'Intermediate',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'english_level',
+                    taxonomyTermId: 'intermediate',
+                }],
+            },
+            'a41': {
+                id: 'a41',
+                questionId: 'q8',
+                text: {
+                    'en': 'Fluent',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'english_level',
+                    taxonomyTermId: 'fluent',
                 }],
             },
         },
