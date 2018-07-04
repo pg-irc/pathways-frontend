@@ -44,6 +44,13 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 acceptMultipleAnswers: true,
             },
+            'q5': {
+                id: 'q5',
+                text: {
+                    'en': 'Which immigrant type do you currently identify as?',
+                },
+                acceptMultipleAnswers: false,
+            },
         },
         answers: {
             'a1': {
@@ -352,6 +359,54 @@ export const buildQuestionnaireFixture = (): Store => {
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
                     'taxonomyTermId': 'education',
+                }],
+            },
+            'a23': {
+                id: 'a23',
+                questionId: 'q5',
+                text: {
+                    'en': 'Under 13 years old',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'age',
+                    taxonomyTermId: 'under_13',
+                }],
+            },
+            'a24': {
+                id: 'a24',
+                questionId: 'q5',
+                text: {
+                    'en': '13-18 years old',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'age',
+                    taxonomyTermId: '13_to_18',
+                }],
+            },
+            'a25': {
+                id: 'a25',
+                questionId: 'q5',
+                text: {
+                    'en': '18-64 years old',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'age',
+                    taxonomyTermId: '18_to_64',
+                }],
+            },
+            'a26': {
+                id: 'a26',
+                questionId: 'q5',
+                text: {
+                    'en': '65+ years old',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'age',
+                    taxonomyTermId: 'over_65',
                 }],
             },
         },
