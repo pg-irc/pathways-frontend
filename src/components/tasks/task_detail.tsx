@@ -16,6 +16,7 @@ import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
 import { RelatedTasksComponent } from '../related_tasks/related_tasks';
 import { RelatedArticlesComponent } from '../related_articles/related_articles';
+import { getTaskState, TaskStates } from './task_states';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -116,14 +117,15 @@ function ServiceListEmpty(): JSX.Element {
 }
 
 function renderHeader(props: AllTaskDetailProps): JSX.Element {
-    const inPlan = R.any((id: TaskId) => id === props.task.id, props.savedTasks);
     const task = props.task;
+    const inPlan = R.any((id: TaskId) => id === task.id, props.savedTasks);
+    const taskState = getTaskState(inPlan, task.completed);
 
     const doneButton = (
         <Button iconLeft rounded light style={[{marginTop: 10}]}
                 onPress={(): void => {props.toggleCompleted(task.id); props.removeFromSavedList(task.id); }}>
             <Icon name='checkbox' />
-            <Text><Trans>Done</Trans></Text>
+            <Text><Trans>Mark Done</Trans></Text>
         </Button>
     );
     const notDoneButton = (
@@ -146,12 +148,15 @@ function renderHeader(props: AllTaskDetailProps): JSX.Element {
         </Button>
     );
 
-    if (!inPlan && task.completed) {
-        return buildHeader(task.title, 'COMPLETED TASK', notDoneButton);
-    } else if (inPlan && !task.completed) {
-        return buildHeader(task.title, 'TASK I PLAN TO DO', <View>{removeFromPlanButton}{doneButton}</View>);
-    } else {
-        return buildHeader(task.title, 'AVAILABLE TASK', addToPlanButton);
+    switch (taskState) {
+        case TaskStates.CompletedInPlan:
+        case TaskStates.CompletedNotInPlan:
+            return buildHeader(task.title, 'COMPLETED TASK', notDoneButton);
+        case TaskStates.InProgress:
+            return buildHeader(task.title, 'TASK I PLAN TO DO', <View>{removeFromPlanButton}{doneButton}</View>);
+        case TaskStates.Available:
+        default:
+            return buildHeader(task.title, 'AVAILABLE TASK', addToPlanButton);
     }
 }
 
