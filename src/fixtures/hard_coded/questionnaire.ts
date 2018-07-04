@@ -72,6 +72,13 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 acceptMultipleAnswers: true,
             },
+            'q9': {
+                id: 'q9',
+                text: {
+                    'en': 'Finally, are you interested in learning about services for special groups?',
+                },
+                acceptMultipleAnswers: true,
+            },
         },
         answers: {
             'a1': {
@@ -608,6 +615,66 @@ export const buildQuestionnaireFixture = (): Store => {
                 taxonomyTerms: [{
                     taxonomyId: 'english_level',
                     taxonomyTermId: 'fluent',
+                }],
+            },
+            'a42': {
+                id: 'a42',
+                questionId: 'q9',
+                text: {
+                    'en': 'Women’s services',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'group',
+                    taxonomyTermId: 'women',
+                }],
+            },
+            'a43': {
+                id: 'a43',
+                questionId: 'q9',
+                text: {
+                    'en': 'Services for people with disabilities',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'group',
+                    taxonomyTermId: 'disability',
+                }],
+            },
+            'a44': {
+                id: 'a44',
+                questionId: 'q9',
+                text: {
+                    'en': 'LGBTQ2 services',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'group',
+                    taxonomyTermId: 'lgbtq2',
+                }],
+            },
+            'a45': {
+                id: 'a45',
+                questionId: 'q9',
+                text: {
+                    'en': 'Services offered in French',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'group',
+                    taxonomyTermId: 'services_in_french',
+                }],
+            },
+            'a46': {
+                id: 'a46',
+                questionId: 'q9',
+                text: {
+                    'en': 'Services for low income people',
+                },
+                isSelected: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'group',
+                    taxonomyTermId: 'low_income',
                 }],
             },
         },
