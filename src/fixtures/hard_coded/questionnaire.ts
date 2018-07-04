@@ -56,8 +56,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'time_in_canada',
+                    'taxonomyTermId': 'not_yet_arrived',
                 }],
             },
             'a2': {
@@ -70,8 +70,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'time_in_canada',
+                    'taxonomyTermId': 'under_1_month',
                 }],
             },
             'a3': {
@@ -84,8 +84,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'time_in_canada',
+                    'taxonomyTermId': 'under_6_months',
                 }],
             },
             'a4': {
@@ -98,8 +98,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'time_in_canada',
+                    'taxonomyTermId': 'under_1_year',
                 }],
             },
             'a5': {
@@ -112,8 +112,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'time_in_canada',
+                    'taxonomyTermId': 'under_2_years',
                 }],
             },
             'a6': {
@@ -126,8 +126,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'time_in_canada',
+                    'taxonomyTermId': 'over_2_years',
                 }],
             },
             'a7': {
@@ -140,8 +140,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'user',
+                    'taxonomyTermId': 'alone',
                 }],
             },
             'a8': {
@@ -154,8 +154,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'user',
+                    'taxonomyTermId': 'with_family',
                 }],
             },
             'a9': {
@@ -168,8 +168,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'age',
+                    'taxonomyTermId': 'under_13',
                 }],
             },
             'a10': {
@@ -182,8 +182,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'age',
+                    'taxonomyTermId': '13_to_18',
                 }],
             },
             'a11': {
@@ -196,8 +196,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'age',
+                    'taxonomyTermId': '18_to_64',
                 }],
             },
             'a12': {
@@ -210,8 +210,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyId': 'age',
+                    'taxonomyTermId': 'over_65',
                 }],
             },
             'a13': {
@@ -225,7 +225,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 isSelected: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'employment',
                 }],
             },
             'a14': {
@@ -239,7 +239,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 isSelected: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'education',
                 }],
             },
             'a15': {
@@ -253,7 +253,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 isSelected: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'education',
                 }],
             },
             'a16': {
@@ -267,7 +267,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 isSelected: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'health',
                 }],
             },
             'a17': {
@@ -281,7 +281,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 isSelected: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'money',
                 }],
             },
             'a18': {
@@ -295,7 +295,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 isSelected: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'housing',
                 }],
             },
             'a19': {
@@ -309,7 +309,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 isSelected: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'legal',
                 }],
             },
             'a20': {
@@ -323,7 +323,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 isSelected: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'health',
                 }],
             },
             'a21': {
@@ -337,7 +337,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 isSelected: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'legal',
                 }],
             },
             'a22': {
@@ -351,7 +351,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 isSelected: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'explore',
-                    'taxonomyTermId': 'Education',
+                    'taxonomyTermId': 'education',
                 }],
             },
         },
