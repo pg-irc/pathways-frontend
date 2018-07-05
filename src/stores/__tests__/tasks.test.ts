@@ -35,16 +35,16 @@ describe('tasks reducer', () => {
 
         test('can toggle a task completed', () => {
             const taskUserSettingsId = Object.keys(store.taskUserSettingsMap)[0];
-            const oldValue = store.taskUserSettingsMap[taskUserSettingsId].completed;
-            const finalStore = stores.reducer(store, stores.toggleCompleted(taskUserSettingsId));
-            expect(finalStore.taskUserSettingsMap[taskUserSettingsId].completed).toEqual(!oldValue);
+            const taskUserSettings = store.taskUserSettingsMap[taskUserSettingsId];
+            const finalStore = stores.reducer(store, stores.toggleCompleted(taskUserSettings.taskId));
+            expect(finalStore.taskUserSettingsMap[taskUserSettingsId].completed).toEqual(!taskUserSettings.completed);
         });
 
         test('can toggle a task starred', () => {
             const taskUserSettingsId = Object.keys(store.taskUserSettingsMap)[0];
-            const oldValue = store.taskUserSettingsMap[taskUserSettingsId].starred;
-            const finalStore = stores.reducer(store, stores.toggleStarred(taskUserSettingsId));
-            expect(finalStore.taskUserSettingsMap[taskUserSettingsId].starred).toEqual(!oldValue);
+            const taskUserSettings = store.taskUserSettingsMap[taskUserSettingsId];
+            const finalStore = stores.reducer(store, stores.toggleStarred(taskUserSettings.taskId));
+            expect(finalStore.taskUserSettingsMap[taskUserSettingsId].starred).toEqual(!taskUserSettings.starred);
         });
     });
 });

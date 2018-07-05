@@ -15,9 +15,6 @@ export const taskStyles = StyleSheet.create({
 });
 
 export const taskDetailStyles = StyleSheet.create({
-    title: {
-        marginTop: 5,
-    },
     actions: {
         marginTop: 15,
         marginBottom: 10,
