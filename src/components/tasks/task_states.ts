@@ -5,7 +5,13 @@ export enum TaskStates {
     Available,
 }
 
-export const getTaskState = (inPlan: boolean, completed: boolean): TaskStates => {
+interface TaskStatus {
+    readonly inPlan: boolean;
+    readonly completed: boolean;
+}
+
+export const getTaskState = (taskStatus: TaskStatus): TaskStates => {
+    const { inPlan, completed }: TaskStatus = taskStatus;
     if (inPlan && completed) {
         return TaskStates.CompletedInPlan;
     } else if (!inPlan && completed) {

@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
@@ -119,7 +119,7 @@ function ServiceListEmpty(): JSX.Element {
 function renderHeader(props: AllTaskDetailProps): JSX.Element {
     const task = props.task;
     const inPlan = R.any((id: TaskId) => id === task.id, props.savedTasks);
-    const taskState = getTaskState(inPlan, task.completed);
+    const taskState = getTaskState({inPlan: inPlan, completed: task.completed});
 
     const doneButton = (
         <Button iconLeft rounded light style={[{marginTop: 10}]}

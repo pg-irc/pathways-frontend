@@ -3,7 +3,7 @@ import { View } from 'native-base';
 import { TaskListItem } from '../../selectors/tasks';
 import { Id as TaskId } from '../../stores/tasks';
 import { TaskListItemComponent, TaskListItemActions, TaskListItemStyleProps } from './task_list_item';
-import R from 'ramda';
+import * as R from 'ramda';
 
 export interface TaskListProps extends TaskListItemStyleProps {
     readonly tasks: ReadonlyArray<TaskListItem>;

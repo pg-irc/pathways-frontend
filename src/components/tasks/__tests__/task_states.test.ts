@@ -6,36 +6,32 @@ describe('getTaskState tests', () => {
     describe('state.CompletedInPlan value returned', () => {
 
         it('when in plan and completed', () => {
-            const inPlan = true;
-            const completed = true;
-            expect(getTaskState(inPlan, completed)).toBe(TaskStates.CompletedInPlan);
+            const taskStatus = {inPlan: true, completed: true};
+            expect(getTaskState(taskStatus)).toBe(TaskStates.CompletedInPlan);
         });
     });
 
     describe('state.CompletedNotInPlan value returned', () => {
 
-        it('when completed and not in plan', () => {
-            const inPlan = false;
-            const completed = true;
-            expect(getTaskState(inPlan, completed)).toBe(TaskStates.CompletedNotInPlan);
+        it('when not in plan and completed', () => {
+            const taskStatus = {inPlan: false, completed: true};
+            expect(getTaskState(taskStatus)).toBe(TaskStates.CompletedNotInPlan);
         });
     });
 
     describe('state.InProgress value returned', () => {
 
         it('when in plan and not completed', () => {
-            const inPlan = true;
-            const completed = false;
-            expect(getTaskState(inPlan, completed)).toBe(TaskStates.InProgress);
+            const taskStatus = {inPlan: true, completed: false};
+            expect(getTaskState(taskStatus)).toBe(TaskStates.InProgress);
         });
     });
 
     describe('state.Available value returned', () => {
 
         it('when not in plan and not completed', () => {
-            const inPlan = false;
-            const completed = false;
-            expect(getTaskState(inPlan, completed)).toBe(TaskStates.Available);
+            const taskStatus = {inPlan: false, completed: false};
+            expect(getTaskState(taskStatus)).toBe(TaskStates.Available);
         });
 
     });
