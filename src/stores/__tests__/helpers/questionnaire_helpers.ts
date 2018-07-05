@@ -4,6 +4,7 @@ import * as store from '../../questionnaire';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
+import { TaxonomyTermReference } from '../../../selectors/taxonomies';
 
 export const buildNormalizedQuestionnaire = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
     {
@@ -85,6 +86,7 @@ export class AnswerBuilder {
     questionId: string = aString();
     text: string = aString();
     isSelected: boolean = aBoolean();
+    taxonomyTerms: TaxonomyTermReference[] = [];
 
     withLocaleCode(localeCode: string): AnswerBuilder {
         this.localeCode = localeCode;
@@ -111,12 +113,18 @@ export class AnswerBuilder {
         return this;
     }
 
+    withTaxonomyTerm(taxonomyTerm: TaxonomyTermReference): AnswerBuilder {
+        this.taxonomyTerms = [...this.taxonomyTerms, taxonomyTerm];
+        return this;
+    }
+
     build(): store.Answer {
         return {
             id: this.id,
             questionId: this.questionId,
             text: this.createLocalizedText(this.text),
             isSelected: this.isSelected,
+            taxonomyTerms: this.taxonomyTerms,
         };
     }
 

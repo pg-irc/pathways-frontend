@@ -7,15 +7,11 @@ export { Id, Task, TaskUserSettings, TaskMap, TaskUserSettingsMap, TaskList, Sto
 
 export type AddToSavedListAction = Readonly<ReturnType<typeof addToSavedList>>;
 export type RemoveFromSavedListAction = Readonly<ReturnType<typeof removeFromSavedList>>;
-export type AddToSuggestedListAction = Readonly<ReturnType<typeof addToSuggestedList>>;
-export type RemoveFromSuggestedListAction = Readonly<ReturnType<typeof removeFromSuggestedList>>;
 export type ToggleCompletedAction = Readonly<ReturnType<typeof toggleCompleted>>;
 export type ToggleStarredAction = Readonly<ReturnType<typeof toggleStarred>>;
 export type ShareAction = Readonly<ReturnType<typeof share>>;
 type TaskAction = AddToSavedListAction |
     RemoveFromSavedListAction |
-    AddToSuggestedListAction |
-    RemoveFromSuggestedListAction |
     ToggleCompletedAction |
     ToggleStarredAction |
     ShareAction;
@@ -28,16 +24,6 @@ export const addToSavedList = (taskId: Id) => (
 // tslint:disable-next-line:typedef
 export const removeFromSavedList = (taskId: Id) => (
     helpers.makeAction(constants.REMOVE_FROM_SAVED_LIST, { taskId })
-);
-
-// tslint:disable-next-line:typedef
-export const addToSuggestedList = (taskId: Id) => (
-    helpers.makeAction(constants.ADD_TO_SUGGESTED_LIST, { taskId })
-);
-
-// tslint:disable-next-line:typedef
-export const removeFromSuggestedList = (taskId: Id) => (
-    helpers.makeAction(constants.REMOVE_FROM_SUGGESTED_LIST, { taskId })
 );
 
 // tslint:disable-next-line:typedef
@@ -68,10 +54,6 @@ export const reducer = (store: Store = buildDefaultStore(), action?: TaskAction)
             return addToTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
         case constants.REMOVE_FROM_SAVED_LIST:
             return removeFromTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
-        case constants.ADD_TO_SUGGESTED_LIST:
-            return addToTaskList(store, 'suggestedTasksList', store.suggestedTasksList, action.payload.taskId);
-        case constants.REMOVE_FROM_SUGGESTED_LIST:
-            return removeFromTaskList(store, 'suggestedTasksList', store.suggestedTasksList, action.payload.taskId);
         case constants.TOGGLE_COMPLETED:
             return toggleTaskUserSettingsCompletedValue(store, action.payload.taskUserSettingsId);
         case constants.TOGGLE_STARRED:

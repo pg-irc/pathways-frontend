@@ -2,6 +2,8 @@ import * as model from '../stores/questionnaire';
 import * as app from '../application/store';
 import { selectLocalizedText, selectLocale } from './locale';
 import { Locale } from '../locale/types';
+import { TaxonomyTermReference } from '../stores/taxonomies';
+import * as R from 'ramda';
 
 export type Questionnaire = ReadonlyArray<Question>;
 
@@ -54,13 +56,24 @@ const answerKeysForGivenQuestion = (questionId: model.Id, answers: model.Answers
 
 const buildViewModelForAnswers = (locale: Locale, keys: ReadonlyArray<string>,
     answers: model.AnswersMap, acceptMultipleAnswers: boolean): ReadonlyArray<Answer> => (
-    keys.map((key: string) => {
-        const { id, text, isSelected }: model.Answer = answers[key];
-        return {
-            id,
-            text: selectLocalizedText(locale, text),
-            isSelected,
-            acceptMultipleAnswers,
-        };
-    })
+        keys.map((key: string) => {
+            const { id, text, isSelected }: model.Answer = answers[key];
+            return {
+                id,
+                text: selectLocalizedText(locale, text),
+                isSelected,
+                acceptMultipleAnswers,
+            };
+        })
+    );
+
+export const selectTaxonomyTermsForSelectedAnswers = (store: app.Store): ReadonlyArray<TaxonomyTermReference> => (
+    filterTaxonomyTermsForSelectedAnswers(store.applicationState.questionnaireInStore.answers)
 );
+
+export const filterTaxonomyTermsForSelectedAnswers = (answers: model.AnswersMap): ReadonlyArray<TaxonomyTermReference> => {
+    type ReferenceArray = ReadonlyArray<TaxonomyTermReference>;
+    const flatten = R.reduce((acc: ReferenceArray, val: ReferenceArray): ReferenceArray => [...acc, ...val], []);
+
+    return flatten(R.pluck('taxonomyTerms', R.filter(R.propEq('isSelected', true), R.values(answers))));
+};

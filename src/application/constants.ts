@@ -24,8 +24,6 @@ export const SELECT_ANSWER = 'QUESTIONNAIRE:SELECT_ANSWER';
 export namespace Task {
   export const ADD_TO_SAVED_LIST = 'TASK:ADD_TO_SAVED_LIST';
   export const REMOVE_FROM_SAVED_LIST = 'TASK:REMOVE_FROM_SAVED_LIST';
-  export const ADD_TO_SUGGESTED_LIST = 'TASK:ADD_TO_SUGGESTED_LIST';
-  export const REMOVE_FROM_SUGGESTED_LIST = 'TASK:REMOVE_FROM_SUGGESTED_LIST';
   export const TOGGLE_COMPLETED = 'TASK:TOGGLE_COMPLETED';
   export const TOGGLE_STARRED = 'TASK:TOGGLE_STARRED';
   export const SHARE = 'TASK:SHARE';
@@ -35,3 +33,9 @@ export namespace Task {
 }
 
 export const PREFERENCES_LOCALE_CODE = 'PREFERENCES:LOCALE_CODE';
+
+export namespace Taxonomies {
+  export const EXPLORE_TAXONOMY_ID = 'explore';
+  export const RECOMMENDATION_TAXONOMY_ID = 'recommendation';
+  export const RECOMMEND_TO_ALL_TAXONOMY_TERM_ID = 'recommendToAll';
+}

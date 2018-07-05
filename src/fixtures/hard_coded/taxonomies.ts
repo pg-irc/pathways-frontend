@@ -1,8 +1,9 @@
 import { Store } from '../types/taxonomies';
+import { Taxonomies } from '../../application/constants';
 
 export const buildTaxonomyFixture = (): Store => ({
     taxonomyMap: {
-        'explore': {
+        [Taxonomies.EXPLORE_TAXONOMY_ID]: {
             'settling_in': { icon: 'sign-text' },
             'education': { icon: 'book-open-variant' },
             'healthCare': { icon: 'medical-bag' },

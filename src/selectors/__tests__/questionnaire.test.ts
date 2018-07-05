@@ -3,6 +3,12 @@ import * as selector from '../questionnaire';
 import { anInteger } from '../../application/__tests__/helpers/random_test_values';
 import * as testHelpers from '../../stores/__tests__/helpers/questionnaire_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { TaxonomyTermReference } from '../../stores/taxonomies';
+
+const aTaxonomyTermReference = (): TaxonomyTermReference => (
+    { taxonomyId: aString(), taxonomyTermId: aString() }
+);
 
 describe('questionnaire selector', () => {
 
@@ -66,5 +72,41 @@ describe('questionnaire selector', () => {
         const denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
 
         expect(denormalizedData[0].answers).toHaveLength(answerCount);
+    });
+
+    it('should return the taxonomy terms for a selected answer', () => {
+        const theTaxonomyTerm = aTaxonomyTermReference();
+        const selectedAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withSelected(true);
+        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([selectedAnswer]);
+        const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
+
+        const result = selector.filterTaxonomyTermsForSelectedAnswers(normalizedData.answers);
+
+        expect(result).toEqual([theTaxonomyTerm]);
+    });
+
+    it('should not return the taxonomy terms for a non-selected answer', () => {
+        const theTaxonomyTerm = aTaxonomyTermReference();
+        const nonSelectedAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withSelected(false);
+        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([nonSelectedAnswer]);
+        const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
+
+        const result = selector.filterTaxonomyTermsForSelectedAnswers(normalizedData.answers);
+
+        expect(result).toEqual([]);
+    });
+
+    it('should return all taxonomy terms for a selected answer', () => {
+        const theTaxonomyTerm = aTaxonomyTermReference();
+        const theSecondTaxonomyTerm = aTaxonomyTermReference();
+        const selectedAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
+            withTaxonomyTerm(theSecondTaxonomyTerm).withSelected(true);
+        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([selectedAnswer]);
+        const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
+
+        const result = selector.filterTaxonomyTermsForSelectedAnswers(normalizedData.answers);
+
+        expect(result).toContain(theTaxonomyTerm);
+        expect(result).toContain(theSecondTaxonomyTerm);
     });
 });

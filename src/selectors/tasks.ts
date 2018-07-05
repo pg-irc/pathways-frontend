@@ -1,6 +1,7 @@
 import * as app from '../application/store';
 import * as model from '../stores/tasks';
 import * as taskDetails from './details/tasks';
+import { Taxonomies as TaxonomyConstants } from '../application/constants';
 import * as R from 'ramda';
 import { selectLocalizedText, selectLocale } from './locale';
 import { selectRoute } from './route';
@@ -8,6 +9,7 @@ import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
 import { pickCurrentExploreSection } from './explore';
 import { ArticleListItem, selectRelatedArticles } from './articles';
+import { selectTaxonomyTermsForSelectedAnswers } from './questionnaire';
 
 export interface Task {
     readonly id: string;
@@ -18,8 +20,6 @@ export interface Task {
     readonly importance: number;
     readonly relatedTasks: ReadonlyArray<TaskListItem>;
     readonly relatedArticles: ReadonlyArray<ArticleListItem>;
-    // TODO remove
-    readonly tags: ReadonlyArray<string>;
     readonly starred: boolean;
     readonly completed: boolean;
 }
@@ -32,40 +32,32 @@ export interface TaskListItem {
 
 export const denormalizeTask =
     (locale: Locale, task: model.Task, taskUserSettings: model.TaskUserSettings,
-     relatedArticles: ReadonlyArray<ArticleListItem>, relatedTasks: ReadonlyArray<TaskListItem>): Task => (
-        {
-            id: task.id,
-            title: selectLocalizedText(locale, task.title),
-            description: selectLocalizedText(locale, task.description),
-            taxonomyTerms: task.taxonomyTerms,
-            starred: taskUserSettings.starred,
-            relatedArticles: relatedArticles,
-            relatedTasks: relatedTasks,
-            category: task.category,
-            importance: task.importance,
-            tags: task.tags,
-            completed: taskUserSettings.completed,
-        }
-    );
+        relatedArticles: ReadonlyArray<ArticleListItem>, relatedTasks: ReadonlyArray<TaskListItem>): Task => (
+            {
+                id: task.id,
+                title: selectLocalizedText(locale, task.title),
+                description: selectLocalizedText(locale, task.description),
+                taxonomyTerms: task.taxonomyTerms,
+                starred: taskUserSettings.starred,
+                relatedArticles: relatedArticles,
+                relatedTasks: relatedTasks,
+                category: task.category,
+                importance: task.importance,
+                completed: taskUserSettings.completed,
+            }
+        );
 
 export const denormalizeTaskListItem = (locale: Locale, task: model.Task): TaskListItem => (
-        {
-            id: task.id,
-            title: selectLocalizedText(locale, task.title),
-            description: selectLocalizedText(locale, task.description),
-        }
-    );
+    {
+        id: task.id,
+        title: selectLocalizedText(locale, task.title),
+        description: selectLocalizedText(locale, task.description),
+    }
+);
 
 export const selectAllSavedTasks = (store: app.Store): ReadonlyArray<TaskListItem> => {
     const savedTasksList = store.applicationState.tasksInStore.savedTasksList;
     return savedTasksList.map((taskId: model.Id) => {
-        return selectTaskAsListItem(store, taskId);
-    });
-};
-
-export const selectAllSuggestedTasks = (store: app.Store): ReadonlyArray<TaskListItem> => {
-    const suggestedTasksList = store.applicationState.tasksInStore.suggestedTasksList;
-    return suggestedTasksList.map((taskId: model.Id) => {
         return selectTaskAsListItem(store, taskId);
     });
 };
@@ -124,3 +116,30 @@ const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUser
     const userTask = findTaskUserSettingsByTaskId(userTasks, task.id);
     return denormalizeTask(locale, task, userTask, [], []);
 });
+
+export const selectRecommendedTasks = (store: app.Store): ReadonlyArray<Task> => {
+    const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store);
+    const matchingTasks = filterTasksByTaxonomyTerms(taxonomyTerms, store.applicationState.tasksInStore.taskMap);
+
+    const locale = selectLocale(store);
+    const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
+    return R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
+};
+
+export const filterTasksByTaxonomyTerms =
+    (selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
+
+        const taskContainsTaxonomyTerms = R.curry((targetTerms: ReadonlyArray<TaxonomyTermReference>, task: model.Task): boolean => (
+            R.not(R.isEmpty(R.intersection(targetTerms, task.taxonomyTerms)))
+        ));
+
+        const taxonomyId = TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID;
+        const taxonomyTermId = TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID;
+
+        const isRecommendedToAll = taskContainsTaxonomyTerms([{ taxonomyId, taxonomyTermId }]);
+        const isRecommendedBecauseOfSelecedAnswers = taskContainsTaxonomyTerms(selectedAnswerTaxonomyTerms);
+
+        const isRecommended = R.either(isRecommendedToAll, isRecommendedBecauseOfSelecedAnswers);
+
+        return R.filter(isRecommended, R.values(taskMap));
+    };

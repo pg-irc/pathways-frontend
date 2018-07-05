@@ -32,12 +32,6 @@ describe('tasks test helpers', () => {
             expect(task.description[localeCode]).toBe(description);
         });
 
-        test('tags property', () => {
-            const tags: ReadonlyArray<string> = [aString(), aString()];
-            const task = new TaskBuilder().withTags(tags).build();
-            expect(task.tags).toBe(tags);
-        });
-
         test('category property', () => {
             const category = aString();
             const task = new TaskBuilder().withCategory(category).build();
@@ -103,7 +97,6 @@ describe('tasks test helpers', () => {
                     [firstTaskBuilder, secondTaskBuilder],
                     [firstTaskUserSettingsBuilder, secondTaskUserSettingsBuilder],
                     [firstTaskBuilder.build().id],
-                    [secondTaskBuilder.build().id],
                 );
             });
 
@@ -117,10 +110,6 @@ describe('tasks test helpers', () => {
 
             test('saved tasks list property', () => {
                 expect(store).toHaveProperty('savedTasksList');
-            });
-
-            test('suggested tasks list property', () => {
-                expect(store).toHaveProperty('suggestedTasksList');
             });
 
             test('tasks map keys are expected task ids', () => {

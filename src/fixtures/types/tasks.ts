@@ -37,5 +37,4 @@ export interface Store {
     readonly taskMap: TaskMap;
     readonly taskUserSettingsMap: TaskUserSettingsMap;
     readonly savedTasksList: TaskList;
-    readonly suggestedTasksList: TaskList;
 }

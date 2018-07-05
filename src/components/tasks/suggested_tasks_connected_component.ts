@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { TaskListComponent, TaskListProps, TaskListActions } from './task_list';
 import { TaskListItemStyleProps } from './task_list_item';
 import { Store } from '../../application/store';
-import { selectAllSuggestedTasks } from '../../selectors/tasks';
+import { selectRecommendedTasks } from '../../selectors/tasks';
 import { Id, AddToSavedListAction, addToSavedList } from '../../stores/tasks';
 import { SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 
 const mapStateToProps = (store: Store, ownProps: TaskListItemStyleProps): TaskListProps => ({
-    tasks: selectAllSuggestedTasks(store),
+    tasks: selectRecommendedTasks(store),
     listItemStyle: ownProps.listItemStyle,
 });
 
