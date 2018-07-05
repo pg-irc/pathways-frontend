@@ -118,8 +118,10 @@ function ServiceListEmpty(): JSX.Element {
 
 function renderHeader(props: AllTaskDetailProps): JSX.Element {
     const task = props.task;
-    const inPlan = R.any((id: TaskId) => id === task.id, props.savedTasks);
-    const taskState = getTaskState({inPlan: inPlan, completed: task.completed});
+    const taskState = getTaskState({
+        inPlan: R.any((id: TaskId) => id === task.id, props.savedTasks),
+        completed: task.completed,
+    });
 
     const doneButton = (
         <Button iconLeft rounded light style={[{marginTop: 10}]}

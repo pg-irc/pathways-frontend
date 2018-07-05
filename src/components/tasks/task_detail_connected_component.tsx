@@ -34,7 +34,7 @@ function mapDispatchToProps(dispatch: Dispatch<Store>): DispatchProps {
     return {
         goToArticleDetail: (articleId: ArticleId): SetArticleDetailPageAction => dispatch(setArticleDetailPage(articleId)),
         goToTaskDetail: (taskId: ArticleId): SetTaskDetailPageAction => dispatch(setTaskDetailPage(taskId)),
-        addToSavedList: (taskId: ArticleId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
+        addToSavedList: (taskId: TaskId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
         removeFromSavedList: (taskId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
         toggleCompleted: (taskId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(taskId)),
         requestUpdateTaskServices: (task: Task, query: string): UpdateTaskServicesAsync.Request => {
