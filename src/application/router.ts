@@ -9,6 +9,8 @@ const getRouteFromPage = (page: Page): string => {
     switch (page) {
         case Page.Welcome:
             return '/';
+        case Page.Home:
+            return '/home';
         case Page.Questionnaire:
             return '/questionnaire';
         case Page.MyPlan:

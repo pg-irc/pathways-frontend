@@ -22,6 +22,13 @@ describe('setting the welcome page', () => {
     });
 });
 
+describe('setting the home page', () => {
+    it('should create action with type SET_HOME_PAGE', () => {
+        const theAction = pageSwitcher.setHomePage();
+        expect(theAction.type).toBe(constants.SET_HOME_PAGE);
+    });
+});
+
 describe('setting the questionnaire page', () => {
     it('should create action with type SET_QUESTIONNAIRE_PAGE', () => {
         const theAction = pageSwitcher.setQuestionnairePage();
@@ -201,8 +208,8 @@ describe('the unsupportedPageError', () => {
         expect(result.name).toBe('Error');
     });
 
-    it('should create an Error with the message [Error: 3: Unsupported Page]', () => {
+    it('should create an Error with the message [Error: 4: Unsupported Page]', () => {
         const result = pageSwitcher.unsupportedPageError(pageSwitcher.Page.ExploreAll);
-        expect(result.message).toBe('3: Unsupported Page');
+        expect(result.message).toBe('4: Unsupported Page');
     });
 });
