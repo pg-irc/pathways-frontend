@@ -15,7 +15,7 @@ export enum Page {
     ArticleDetail,
 }
 
-export const initialPage = Page.Home;
+export const initialPage = Page.Welcome;
 
 export type SetWelcomePageAction = Readonly<ReturnType<typeof setWelcomePage>>;
 export type SetHomePageAction = Readonly<ReturnType<typeof setHomePage>>;
