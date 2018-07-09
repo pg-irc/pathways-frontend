@@ -18,6 +18,7 @@ const mapStateToProps = (store: Store): LoaderProps & main.Props => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): main.Actions => ({
+    goToHome: (): pageSwitcher.SetHomePageAction => dispatch(pageSwitcher.setHomePage()),
     goToQuestionnaire: (): pageSwitcher.SetQuestionnairePageAction => dispatch(pageSwitcher.setQuestionnairePage()),
     goToPlan: (): pageSwitcher.SetPlanPageAction => dispatch(pageSwitcher.setPlanPage()),
     goToExplore: (): pageSwitcher.SetExplorePageAction => dispatch(pageSwitcher.setExplorePage()),

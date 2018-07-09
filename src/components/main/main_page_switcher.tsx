@@ -2,6 +2,7 @@ import React from 'react';
 import { Content, Text } from 'native-base';
 import * as store from '../../stores/page_switcher';
 import { WelcomeConnectedComponent } from '../welcome/welcome_connected_component';
+import { HomePageConnectedComponent } from '../home_page/home_page_connected_component';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
 import { ExploreSectionConnectedComponent } from '../explore/explore_section_connected_component';
 import { ArticleDetailConnectedComponent } from '../articles/article_detail_connected_component';
@@ -24,6 +25,9 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
     switch (props.routeInProps.pageType) {
         case store.Page.Welcome:
             return <WelcomeConnectedComponent />;
+
+        case store.Page.Home:
+            return <HomePageConnectedComponent />;
 
         case store.Page.Questionnaire:
             return <questionnaire.ConnectedComponent />;
