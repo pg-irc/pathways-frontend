@@ -3,6 +3,7 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { Text } from 'native-base';
 import * as selector from '../../selectors/notifications';
+import { colors } from '../../application/styles';
 
 export interface ExpiringNotificationProps {
     readonly notification: selector.Notification;
@@ -28,7 +29,7 @@ export class ExpiringNotificationComponent extends React.Component<AllExpiringNo
 
     render(): JSX.Element {
         return(
-            <Text><Trans>{this.props.notification.text}</Trans></Text>
+            <Text style={[{color: colors.white}]}><Trans>{this.props.notification.text}</Trans></Text>
         );
     }
 }

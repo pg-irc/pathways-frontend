@@ -50,12 +50,12 @@ const renderNotification = (notification: selector.Notification, props: AllNotif
 
 const styles = StyleSheet.create({
     stackedNotification: {
-        backgroundColor: colors.lighterGrey,
+        backgroundColor: colors.darkGrey,
         position: 'absolute',
         padding: 10,
         bottom: 20,
-        left: 5,
-        right: 5,
+        left: 0,
+        right: 0,
         justifyContent: 'center',
         alignItems: 'center',
     },
