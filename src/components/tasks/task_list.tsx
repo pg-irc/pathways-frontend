@@ -19,8 +19,8 @@ export const TaskListComponent: React.StatelessComponent<AllTaskListProps> = (pr
             <TaskListItemComponent
                 key={task.id}
                 listItemStyle={props.listItemStyle}
-                goToTaskDetail = {props.goToTaskDetail}
-                addToSavedList = {props.addToSavedList}
+                goToTaskDetail={props.goToTaskDetail}
+                addToSavedList={props.addToSavedList}
                 displayTaskInteractions={displayTaskInteractions(task.id, props.shouldDisplayTaskInteractions)}
                 {...task}
             />, props.tasks)}

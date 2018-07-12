@@ -3,29 +3,11 @@ import * as uuid from 'uuid';
 import * as constants from '../application/constants';
 import { AddToSavedListAction } from './tasks';
 import * as helpers from './helpers/make_action';
+import { Notification, NotificationType, Id, Store } from '../fixtures/types/notifications';
 
-export type Id = string;
-
-export enum NotificationType {
-    Expiring,
-}
-
-export interface Notification {
-    readonly id: Id;
-    readonly type: NotificationType;
-    readonly text: string;
-}
-
-export interface NotificationMap {
-    readonly [property: string]: Notification;
-}
-
-export interface Store {
-    readonly notifications: NotificationMap;
-}
+export { Id, NotificationType, Notification, NotificationMap, Store } from '../fixtures/types/notifications';
 
 export type RemoveNotificationAction = Readonly<ReturnType<typeof removeNotification>>;
-
 type NotificationAction = AddToSavedListAction |
     RemoveNotificationAction;
 
