@@ -20,7 +20,7 @@ type TaskAction = AddToSavedListAction |
 
 // tslint:disable-next-line:typedef
 export const addToSavedList = (taskId: Id) => {
-    const notification = createNotification(NotificationType.Expiring, 'Added ' + taskId);
+    const notification = createNotification(NotificationType.Expiring, 'task added to my plan');
     return helpers.makeAction(constants.ADD_TO_SAVED_LIST, { taskId, notification });
 };
 

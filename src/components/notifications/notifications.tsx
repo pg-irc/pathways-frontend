@@ -1,15 +1,19 @@
 import React from 'react';
 import * as R from 'ramda';
+import * as model from '../../stores/notifications';
+import * as selector from '../../selectors/notifications';
 import { View } from 'native-base';
-import { Id, Store, Notification, NotificationType, RemoveNotificationAction } from '../../stores/notifications';
 import { ExpiringNotificationComponent } from './expiring_notification';
 import { StyleSheet } from 'react-native';
 import { colors } from '../../application/styles';
 
-export interface NotificationsActions {
-    readonly removeNotification: (notificationId: Id) => RemoveNotificationAction;
+export interface NotificationsProps {
+    readonly notifications: ReadonlyArray<selector.Notification>;
 }
-type AllNotificationsProps = Store & NotificationsActions;
+export interface NotificationsActions {
+    readonly removeNotification: (notificationId: model.Id) => model.RemoveNotificationAction;
+}
+type AllNotificationsProps = NotificationsProps & NotificationsActions;
 
 export const NotificationsComponent: React.StatelessComponent<AllNotificationsProps> = (props: AllNotificationsProps): JSX.Element => {
     // tslint:disable-next-line:no-null-keyword
@@ -19,26 +23,26 @@ export const NotificationsComponent: React.StatelessComponent<AllNotificationsPr
 const renderNotifications = (props: AllNotificationsProps): JSX.Element => {
     return (
         <View>
-            {R.map((notificationId: Id) => {
+            {R.map((notification: selector.Notification) => {
                 return (
-                    <View key={notificationId} style={styles.stackedNotification}>
-                        {renderNotification(props.notifications[notificationId], props)}
+                    <View key={notification.id} style={styles.stackedNotification}>
+                        {renderNotification(notification, props)}
                     </View>
                 );
-            }, R.keys(props.notifications))}
+            }, props.notifications)}
         </View>
     );
 };
 
-const renderNotification = (notification: Notification, props: AllNotificationsProps): JSX.Element => {
+const renderNotification = (notification: selector.Notification, props: AllNotificationsProps): JSX.Element => {
     switch (notification.type) {
         default:
-        case NotificationType.Expiring:
+        case model.NotificationType.Expiring:
             return (
                 <ExpiringNotificationComponent
                     notification={notification}
                     timeInSeconds={1}
-                    timeElapsedCallback={(): RemoveNotificationAction => props.removeNotification(notification.id)}
+                    timeElapsedCallback={(): model.RemoveNotificationAction => props.removeNotification(notification.id)}
                 />
             );
     }

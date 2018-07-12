@@ -1,10 +1,11 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
+import { Trans } from '@lingui/react';
 import { Text } from 'native-base';
-import { Notification } from '../../stores/notifications';
+import * as selector from '../../selectors/notifications';
 
 export interface ExpiringNotificationProps {
-    readonly notification: Notification;
+    readonly notification: selector.Notification;
     readonly timeInSeconds: number;
 }
 export interface ExpiringNotificationActions {
@@ -27,7 +28,7 @@ export class ExpiringNotificationComponent extends React.Component<AllExpiringNo
 
     render(): JSX.Element {
         return(
-            <Text>{this.props.notification.text}</Text>
+            <Text><Trans>{this.props.notification.text}</Trans></Text>
         );
     }
 }

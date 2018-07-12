@@ -29,4 +29,5 @@ export class NotificationBuilder {
             text: this.text,
         };
     }
+
 }
