@@ -3,9 +3,9 @@ import * as uuid from 'uuid';
 import * as constants from '../application/constants';
 import { AddToSavedListAction } from './tasks';
 import * as helpers from './helpers/make_action';
-import { Notification, NotificationType, Id, Store } from '../fixtures/types/notifications';
+import { Id, NotificationType, Notification, Store } from '../fixtures/types/notifications';
 
-export { Id, NotificationType, Notification, NotificationMap, Store } from '../fixtures/types/notifications';
+export { Id, NotificationType, Notification, Store } from '../fixtures/types/notifications';
 
 export type RemoveNotificationAction = Readonly<ReturnType<typeof removeNotification>>;
 type NotificationAction = AddToSavedListAction |
@@ -27,13 +27,15 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Notificatio
         return store;
     }
     switch (action.type) {
-        case constants.Task.ADD_TO_SAVED_LIST:
+        case constants.Task.ADD_TO_SAVED_LIST: {
+            const notification = createNotification(NotificationType.Expiring, action.payload.notificationText);
             return {
                 notifications: {
                     ...store.notifications,
-                    [action.payload.notification.id]: action.payload.notification,
+                    [notification.id]: notification,
                 },
             };
+        }
         case constants.REMOVE_NOTIFICATION:
             const isNotActionNotification = (notification: Notification): boolean =>
                 notification.id !== action.payload.notificationId;

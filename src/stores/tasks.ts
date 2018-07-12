@@ -1,7 +1,6 @@
 import { buildTasksFixture } from '../fixtures/buildFixtures';
 import { Store, TaskList, Id, TaskUserSettings, TaskUserSettingsMap } from '../fixtures/types/tasks';
 import { Task as constants } from '../application/constants';
-import { NotificationType, createNotification } from './notifications';
 import * as helpers from './helpers/make_action';
 import * as R from 'ramda';
 
@@ -20,8 +19,8 @@ type TaskAction = AddToSavedListAction |
 
 // tslint:disable-next-line:typedef
 export const addToSavedList = (taskId: Id) => {
-    const notification = createNotification(NotificationType.Expiring, 'Task added to my plan');
-    return helpers.makeAction(constants.ADD_TO_SAVED_LIST, { taskId, notification });
+    const notificationText = 'Task added to my plan';
+    return helpers.makeAction(constants.ADD_TO_SAVED_LIST, { taskId, notificationText });
 };
 
 // tslint:disable-next-line:typedef
