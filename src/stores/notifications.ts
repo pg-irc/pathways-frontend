@@ -37,10 +37,8 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Notificatio
             };
         }
         case constants.REMOVE_NOTIFICATION:
-            const isNotActionNotification = (notification: Notification): boolean =>
-                notification.id !== action.payload.notificationId;
             return {
-                notifications: R.pickBy(isNotActionNotification, store.notifications),
+                notifications: R.reject(R.propEq('id', action.payload.notificationId), store.notifications),
             };
         default:
             return store;
