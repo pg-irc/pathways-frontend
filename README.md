@@ -81,3 +81,9 @@ If you want to help out, get in touch at dev@peacegeeks.org.
 ### Commit messages
 
 All commits are labelled with the issue they are being done under. This ensures that we don't do work that is not tracked, and history of why every change is made is maintained. Most front end and back end work is tracked by issues in their respective repositories, in which case the commit message should start with "Issue #N", e.g. "Issue #13". Occasionally, front end work may be tracked under backend issues, in which case each commits message should start with "Issue pg-irc/pathways-backend#13".
+
+## Big Thanks
+
+Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs][SauceLabsURL]
+
+[SauceLabsURL]: https://saucelabs.com
