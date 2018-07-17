@@ -16,6 +16,12 @@ export interface Actions {
 
 export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
     const { goToHome, goToQuestionnaire, goToPlan, goToExplore, routeInProps }: Props & Actions = props;
+
+    if (routeInProps.pageType === store.Page.Welcome) {
+        // tslint:disable-next-line:no-null-keyword
+        return null;
+    }
+
     return (
         <Footer>
             <FooterTab>
