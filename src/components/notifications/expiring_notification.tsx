@@ -30,11 +30,11 @@ export class ExpiringNotificationComponent extends React.Component<AllExpiringNo
 
     render(): JSX.Element {
         return(
-            <Text style={[{color: colors.white}]}>{this.getContentForNotification(this.props.notification)}</Text>
+            <Text style={[{color: colors.white}]}>{this.renderContentForNotification(this.props.notification)}</Text>
         );
     }
 
-    private getContentForNotification(notification: model.Notification): JSX.Element {
+    private renderContentForNotification(notification: model.Notification): JSX.Element {
         switch (notification.type) {
             default:
             case model.NotificationType.TaskAddedToPlan:
