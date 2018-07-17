@@ -5,14 +5,12 @@ import * as model from '../stores/notifications';
 export interface Notification {
     readonly id: model.Id;
     readonly type: model.NotificationType;
-    readonly text: string;
 }
 
 export const denormalizeNotification = (notification: model.Notification): Notification => (
     {
         id: notification.id,
         type: notification.type,
-        text: notification.text,
     }
 );
 

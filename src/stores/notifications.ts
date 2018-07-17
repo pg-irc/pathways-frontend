@@ -28,7 +28,7 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Notificatio
     }
     switch (action.type) {
         case constants.Task.ADD_TO_SAVED_LIST: {
-            const notification = createNotification(NotificationType.Expiring, action.payload.notificationText);
+            const notification = createNotification(NotificationType.TaskAddedToPlan);
             return {
                 notifications: {
                     ...store.notifications,
@@ -47,10 +47,9 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Notificatio
     }
 };
 
-export const createNotification = (type: NotificationType, text: string): Notification => {
+export const createNotification = (type: NotificationType): Notification => {
     return {
         id: uuid.v1(),
         type: type,
-        text: text,
     };
 };

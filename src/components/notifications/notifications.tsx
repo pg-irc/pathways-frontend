@@ -37,7 +37,7 @@ const renderNotifications = (props: AllNotificationsProps): JSX.Element => {
 const renderNotification = (notification: selector.Notification, props: AllNotificationsProps): JSX.Element => {
     switch (notification.type) {
         default:
-        case model.NotificationType.Expiring:
+        case model.NotificationType.TaskAddedToPlan:
             return (
                 <ExpiringNotificationComponent
                     notification={notification}

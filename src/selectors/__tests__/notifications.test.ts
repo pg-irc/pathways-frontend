@@ -22,10 +22,6 @@ describe('articles selector', () => {
             expect(denormalizedNotification.type).toBe(notification.type);
         });
 
-        test('text property', () => {
-            expect(denormalizedNotification.text).toBe(notification.text);
-        });
-
     });
 
 });

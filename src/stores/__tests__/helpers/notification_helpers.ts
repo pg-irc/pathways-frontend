@@ -4,8 +4,7 @@ import { NotificationType, Notification } from '../../notifications';
 
 export class NotificationBuilder {
     id: string = aString();
-    type: NotificationType = NotificationType.Expiring;
-    text: string = aString();
+    type: NotificationType = NotificationType.TaskAddedToPlan;
 
     withId(id: string): NotificationBuilder {
         this.id = id;
@@ -17,16 +16,10 @@ export class NotificationBuilder {
         return this;
     }
 
-    withText(text: string): NotificationBuilder {
-        this.text = text;
-        return this;
-    }
-
     build(): Notification {
         return {
             id: this.id,
             type: this.type,
-            text: this.text,
         };
     }
 

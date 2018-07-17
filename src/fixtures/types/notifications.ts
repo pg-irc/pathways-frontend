@@ -1,13 +1,12 @@
 export type Id = string;
 
 export enum NotificationType {
-    Expiring,
+    TaskAddedToPlan,
 }
 
 export interface Notification {
     readonly id: Id;
     readonly type: NotificationType;
-    readonly text: string;
 }
 
 export interface NotificationMap {

@@ -9,47 +9,41 @@ describe('notifications store', () => {
 
     describe('reducer', () => {
         let aNotification: model.Notification;
-        let anotherNotification: model.Notification;
         let store: model.Store;
 
         beforeEach(() => {
-            aNotification = new NotificationBuilder().withText('a notification').build();
-            anotherNotification = new NotificationBuilder().withText('another notification').build();
+            aNotification = new NotificationBuilder().withType(model.NotificationType.TaskAddedToPlan).build();
             store = {
                 notifications: {
                     [aNotification.id]: aNotification,
-                    [anotherNotification.id]: anotherNotification,
                 },
             };
         });
 
-        it('creates notification of type "expiring" when adding a task to my plan', () => {
+        it('creates notification of type "TaskAddedToPlan" when adding a task to my plan', () => {
             const task = new TaskBuilder().build();
             const finalStore = model.reducer(store, addToSavedList(task.id));
-            const lastKey = R.keys(finalStore.notifications)[2];
-            expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.Expiring);
+            const lastKey = R.keys(finalStore.notifications)[1];
+            expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TaskAddedToPlan);
         });
 
         it ('allows for the removal of a notificiation', () => {
             const finalStore = model.reducer(store, model.removeNotification(aNotification.id));
-            expect (R.keys(finalStore.notifications).length).toBe(1);
+            expect (R.keys(finalStore.notifications).length).toBe(0);
         });
 
     });
 
     describe('create notification helper', () => {
-        const notification = model.createNotification(model.NotificationType.Expiring, 'a notification');
+        const notification = model.createNotification(model.NotificationType.TaskAddedToPlan);
 
         it('creates a notification with a generated id', () => {
             expect (notification).toHaveProperty('id');
         });
 
         it('creates a notification with expected type', () => {
-            expect (notification.type).toBe(model.NotificationType.Expiring);
+            expect (notification.type).toBe(model.NotificationType.TaskAddedToPlan);
         });
 
-        it('creates a notification with expected text', () => {
-            expect (notification.text).toBe('a notification');
-        });
     });
 });

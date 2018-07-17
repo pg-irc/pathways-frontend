@@ -3,6 +3,7 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { Text } from 'native-base';
 import * as selector from '../../selectors/notifications';
+import * as model from '../../stores/notifications';
 import { colors } from '../../application/styles';
 
 export interface ExpiringNotificationProps {
@@ -29,7 +30,15 @@ export class ExpiringNotificationComponent extends React.Component<AllExpiringNo
 
     render(): JSX.Element {
         return(
-            <Text style={[{color: colors.white}]}><Trans>{this.props.notification.text}</Trans></Text>
+            <Text style={[{color: colors.white}]}>{this.getContentForNotification(this.props.notification)}</Text>
         );
+    }
+
+    private getContentForNotification(notification: model.Notification): JSX.Element {
+        switch (notification.type) {
+            default:
+            case model.NotificationType.TaskAddedToPlan:
+                return <Trans>Task added to plan</Trans>;
+        }
     }
 }
