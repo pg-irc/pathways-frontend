@@ -27,7 +27,7 @@ describe('notifications store', () => {
             expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TaskAddedToPlan);
         });
 
-        it ('allows for the removal of a notificiation', () => {
+        it ('allows for the removal of a notification', () => {
             const finalStore = model.reducer(store, model.removeNotification(aNotification.id));
             expect (R.keys(finalStore.notifications).length).toBe(0);
         });
