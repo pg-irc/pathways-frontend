@@ -41,12 +41,13 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.E
             <Text style={[
                 { fontWeight: 'bold', fontSize: 32 },
                 { marginBottom: 20 },
-            ]}><Trans>Newcomer Connect</Trans></Text>
+            ]}><Trans>Arrival Advisor</Trans></Text>
             <Text style={[
                 { textAlign: 'center' },
                 { marginBottom: 20 },
             ]}>
-                <Trans>Helping you navigate everything you need to settle in Canada, even before you get here</Trans>
+                <Trans>For immigrants and refugees new to Canada. Arrival Advisor is here
+                    to help you start your new life in Canada, every step of the way.</Trans>
             </Text>
             <Form style={[
                 { marginBottom: 20 },
