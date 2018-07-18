@@ -11,13 +11,13 @@ import * as locale from '../stores/locale';
 import { LocaleInfoManager } from '../locale';
 import enMessages from '../../locale/en/messages';
 import arMessages from '../../locale/ar/messages';
-import zhMessages from '../../locale/zh/messages';
+import frMessages from '../../locale/fr/messages';
 
 // tslint:disable-next-line:no-expression-statement
 LocaleInfoManager.register([
     { code: 'en', label: 'English', catalog: enMessages, isRTL: false },
     { code: 'ar', label: 'عربى', catalog: arMessages, isRTL: true },
-    { code: 'zh', label: '中文', catalog: zhMessages, isRTL: false },
+    { code: 'fr', label: 'Français', catalog: frMessages, isRTL: false},
 ]);
 
 export type Store = { readonly applicationState: StoreForApplicationState };

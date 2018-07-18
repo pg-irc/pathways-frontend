@@ -155,7 +155,7 @@ function renderHeader(props: AllTaskDetailProps): JSX.Element {
         case TaskStates.CompletedNotInPlan:
             return buildHeader(task.title, <Trans>COMPLETED TASK</Trans>, notDoneButton);
         case TaskStates.InProgress:
-            return buildHeader(task.title, <Trans>TASK I PLAN TO DO'</Trans>, <View>{removeFromPlanButton}{doneButton}</View>);
+            return buildHeader(task.title, <Trans>TASK I PLAN TO DO</Trans>, <View>{removeFromPlanButton}{doneButton}</View>);
         case TaskStates.Available:
         default:
             return buildHeader(task.title, <Trans>AVAILABLE TASK</Trans>, addToPlanButton);

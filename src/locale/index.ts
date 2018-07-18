@@ -5,7 +5,7 @@
 import 'intl';
 import 'intl/locale-data/jsonp/en.js';
 import 'intl/locale-data/jsonp/ar.js';
-import 'intl/locale-data/jsonp/zh.js';
+import 'intl/locale-data/jsonp/fr.js';
 // Tell OS to enable RTL support.
 import { I18nManager } from 'react-native';
 import { CatalogsMap, Catalog, Locale, LocaleInfo, LocaleInfoWithCatalog, LocalizedText } from './types';

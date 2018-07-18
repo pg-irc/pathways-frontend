@@ -5,6 +5,7 @@ import { computeUniqueKeyForSections } from './compute_unique_key_for_sections';
 import { applicationStyles } from '../../application/styles';
 import { Id } from '../../stores/explore';
 import { SetExploreSectionPageAction, SetExplorePageAction } from '../../stores/page_switcher';
+import { Trans } from '@lingui/react';
 import * as R from 'ramda';
 
 export interface ExploreAllProps {
@@ -28,7 +29,7 @@ export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
             />
         );
         return <Content padder>
-            <Text style={applicationStyles.pageTitle}>Learn about:</Text>
+            <Text style={applicationStyles.pageTitle}><Trans>Learn about:</Trans></Text>
             <View style={[{flex: 1}]}>
                 {sectionsGroupedIntoThrees.map((sections: ReadonlyArray<ExploreSection>) => (
                     <RowOfSectionButtons

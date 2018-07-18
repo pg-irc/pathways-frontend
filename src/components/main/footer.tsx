@@ -2,6 +2,7 @@ import React from 'react';
 import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 import * as store from '../../stores/page_switcher';
 import { values } from '../../application/styles';
+import { Trans } from '@lingui/react';
 
 export interface Props {
     readonly routeInProps: store.Store;
@@ -27,19 +28,19 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
             <FooterTab>
                 <Button vertical active={routeInProps.pageType === store.Page.Home} onPress={goToHome}>
                     <Icon name='home' />
-                    <Text>Home</Text>
+                    <Text><Trans>Home</Trans></Text>
                 </Button>
                 <Button vertical active={routeInProps.pageType === store.Page.Questionnaire} onPress={goToQuestionnaire}>
                     <Icon name='apps' />
-                    <Text style={[{fontSize: values.smallTextSize}]}>Questions</Text>
+                    <Text style={[{fontSize: values.smallTextSize}]}><Trans>Questions</Trans></Text>
                 </Button>
                 <Button vertical active={routeInProps.pageType === store.Page.MyPlan} onPress={goToPlan}>
                     <Icon name='camera' />
-                    <Text>My plan</Text>
+                    <Text><Trans>My plan</Trans></Text>
                 </Button>
                 <Button vertical active={routeInProps.pageType === store.Page.ExploreAll} onPress={goToExplore}>
                     <Icon active name='apps' />
-                    <Text>Learn</Text>
+                    <Text><Trans>Learn</Trans></Text>
                 </Button>
             </FooterTab>
         </Footer>

@@ -23,13 +23,14 @@ export interface HomePageActions extends ExploreAllActions {
 }
 type AllHomePageProps = HomePageProps & HomePageActions;
 
-export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => {
+export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: I18nProps & AllHomePageProps): JSX.Element => {
+    const i18n = props.i18n;
     const sectionsGroupedIntoFour = R.splitEvery(4, R.slice(0, 8, props.sections));
     const renderSectionButton = (section: ExploreSection): JSX.Element => {
         const goToExplorePage = (): SetExplorePageAction => props.goToExplorePage();
         const goToExploreSection = (): SetExploreSectionPageAction => props.goToExploreSection(section.id);
         const style = {height: 70};
-        const moreButtonProps = {onPress: goToExplorePage, icon: 'apps', name: 'More', buttonStyle: style};
+        const moreButtonProps = {onPress: goToExplorePage, icon: 'apps', name: i18n.t`More`, buttonStyle: style};
         const sectionButtonProps = {onPress: goToExploreSection, buttonStyle: style, ...section};
         // TODO Improve the "more" functionality once designs are nailed down
         return section.id === 's8' ? <SectionButton {...moreButtonProps} /> : <SectionButton {...sectionButtonProps} />;

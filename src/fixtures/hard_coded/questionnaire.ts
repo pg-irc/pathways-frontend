@@ -11,12 +11,12 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'How long have you been in Canada?',
                     'ar': 'منذ متى وأنت في كندا؟',
-                    'zh': '你在加拿大多久了？',
+                    'fr': 'Depuis combien de temps êtes-vous au Canada?',
                 },
                 explanation: {
                     'en': 'Testing the explanation field.',
                     'ar': 'اختبار حقل التفسير.',
-                    'zh': '测试解释领域。',
+                    'fr': 'Test du champ d\'explication',
                 },
                 acceptMultipleAnswers: false,
             },
@@ -25,7 +25,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'You are settling in Canada ...',
                     'ar': 'انت تستقر في كندا ...',
-                    'zh': '你在加拿大定居...',
+                    'fr': 'Vous vous installez au Canada ...',
                 },
                 acceptMultipleAnswers: false,
             },
@@ -34,7 +34,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Which age group do you belong to?',
                     'ar': 'ما هي الفئة العمرية التي تنتمي إليها؟',
-                    'zh': '你屬於哪個年齡組？',
+                    'fr': 'De quoi avez-vous besoin pour aider au Canada?',
                 },
                 acceptMultipleAnswers: false,
             },
@@ -43,14 +43,16 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'What do you need help with in Canada?',
                     'ar': 'ما الذي تحتاجه للمساعدة في كندا؟',
-                    'zh': '你在加拿大需要什麼幫助？',
+                    'fr': '',
                 },
                 acceptMultipleAnswers: true,
             },
             'q6': {
                 id: 'q6',
                 text: {
-                    'en': 'Which immigrant type do you currently identify as?'
+                    'en': 'Which immigrant type do you currently identify as?',
+                    'ar': 'ما نوع المهاجر الذي تعرفه حاليا؟',
+                    'fr': 'Quel type d\'immigrant identifiez-vous actuellement?',
                 },
                 acceptMultipleAnswers: false,
             },
@@ -58,6 +60,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 id: 'q7',
                 text: {
                     'en': 'What is your current stage in the refugee claim process?',
+                    'ar': 'ما هو مستواك في اللغة الإنجليزية؟',
+                    'fr': 'Quelle est votre étape actuelle dans le processus de demande d\'asile?',
                 },
                 acceptMultipleAnswers: false,
             },
@@ -65,6 +69,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 id: 'q8',
                 text: {
                     'en': 'What is your level of English?',
+                    'ar': 'ما هو مستواك في اللغة الإنجليزية؟',
+                    'fr': 'Quel est votre niveau d\'anglais?',
                 },
                 acceptMultipleAnswers: true,
             },
@@ -72,6 +78,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 id: 'q9',
                 text: {
                     'en': 'Finally, are you interested in learning about services for special groups?',
+                    'ar': 'وأخيرًا ، هل أنت مهتم بالتعرف على الخدمات الخاصة بالمجموعات الخاصة؟',
+                    'fr':'Enfin, êtes-vous intéressé à en apprendre davantage sur les services offerts aux groupes spéciaux?',
                 },
                 acceptMultipleAnswers: true,
             },
@@ -83,7 +91,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'I am planning to move to Canada',
                     'ar': 'أخطط للانتقال إلى كندا',
-                    'zh': '我計劃搬到加拿大',
+                    'fr': 'Je prévois déménager au Canada',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -97,7 +105,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'I just arrived less than 1 month ago',
                     'ar': 'لقد وصلت للتو قبل أقل من شهر',
-                    'zh': '我剛剛不到1個月前抵達',
+                    'fr': 'Je viens d\'arriver il y a moins d\'un mois',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -111,7 +119,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Less than 6 months',
                     'ar': 'أقل من 6 أشهر',
-                    'zh': '少於6個月',
+                    'fr': 'Moins de 6 mois',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -125,7 +133,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Less than 1 year',
                     'ar': 'أقل من 1 سنة',
-                    'zh': '不到1年',
+                    'fr': 'Moins d\'un an',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -139,7 +147,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Less than 2 years',
                     'ar': 'أقل من سنتين',
-                    'zh': '不到2年',
+                    'fr': 'Moins de 2 ans',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -153,7 +161,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'More than 2 years',
                     'ar': 'أكثر من 2 سنوات',
-                    'zh': '超過2年',
+                    'fr': 'Plus de 2 ans',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -167,7 +175,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'by yourself',
                     'ar': 'بنفسك',
-                    'zh': '由你自己',
+                    'fr': 'par vous-même',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -181,7 +189,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'with your family',
                     'ar': 'مع عائلتك',
-                    'zh': '和你的家人',
+                    'fr': 'avec ta famille',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -195,7 +203,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Under 13 years old',
                     'ar': 'تحت 13 سنة',
-                    'zh': '13歲以下',
+                    'fr': 'Moins de 13 ans',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -209,7 +217,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': '13-18 years old',
                     'ar': '13-18 سنة',
-                    'zh': '13-18歲',
+                    'fr': '13-18 ans',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -223,7 +231,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': '18-64 years old',
                     'ar': '18-64 سنة',
-                    'zh': '18-64歲',
+                    'fr': '18-64 ans',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -236,8 +244,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q3',
                 text: {
                     'en': '65+ years old',
-                    'ar': '18-64 سنة',
-                    'zh': '18-64歲',
+                    'ar': '65+ سنة',
+                    'fr': '65+ ans',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -251,7 +259,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Getting employed',
                     'ar': 'الحصول على موظف',
-                    'zh': '獲得工作',
+                    'fr': 'Trouver un emploi',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -265,7 +273,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Learning English',
                     'ar': 'تعلم الانجليزية',
-                    'zh': '學習英語',
+                    'fr': 'Apprendre l\'anglais',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -279,7 +287,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Enrolling my children in school',
                     'ar': 'تسجيل أطفالي في المدرسة',
-                    'zh': '將我的孩子報名參加學校',
+                    'fr': 'Inscription de mes enfants à l\'école',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -293,7 +301,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Accessing health care',
                     'ar': 'الوصول إلى الرعاية الصحية',
-                    'zh': '獲得醫療保健',
+                    'fr': 'Accès aux soins de santé',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -307,7 +315,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Finances, taxes, banking',
                     'ar': 'المالية والضرائب والخدمات المصرفية',
-                    'zh': '財政，稅收，銀行業務',
+                    'fr': 'Finances, impôts, opérations bancaires',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -321,7 +329,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Finding a place to live',
                     'ar': 'العثور على مكان للعيش فيه',
-                    'zh': '找到一個生活的地方',
+                    'fr': 'Trouver un endroit pour vivre',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -335,7 +343,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Bringing my family to Canada',
                     'ar': 'جلب عائلتي إلى كندا',
-                    'zh': '把我的家人帶到加拿大',
+                    'fr': 'Amener ma famille au Canada',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -349,7 +357,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Getting mental health support',
                     'ar': 'الحصول على دعم الصحة العقلية',
-                    'zh': '獲得心理健康支持',
+                    'fr': 'Obtenir un soutien en santé mentale',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -363,7 +371,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Legal assistance and protection',
                     'ar': 'المساعدة القانونية والحماية',
-                    'zh': '法律援助和保護',
+                    'fr': 'Assistance juridique et protection',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -377,7 +385,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Enrolling myself in education',
                     'ar': 'تسجيل نفسي في التعليم',
-                    'zh': '報名參加教育',
+                    'fr': 'M\'inscrire à l\'éducation',
                 },
                 isSelected: false,
                 'taxonomyTerms': [{
@@ -390,6 +398,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q6',
                 text: {
                     'en': 'Refugee claimant',
+                    'ar': 'طالب اللجوء',
+                    'fr': 'Demandeur d\'asile',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -402,6 +412,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q6',
                 text: {
                     'en': 'Temporary resident',
+                    'ar': 'سكن مؤقت',
+                    'fr':'Résident temporaire',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -414,6 +426,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q6',
                 text: {
                     'en': 'Permanent resident',
+                    'ar': 'مقيم دائم',
+                    'fr': 'Résident permanent',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -426,6 +440,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q6',
                 text: {
                     'en': 'Permanent resident',
+                    'ar': 'مقيم دائم',
+                    'fr': 'Résident permanent',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -438,6 +454,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q6',
                 text: {
                     'en': 'None of the above, or I’m not sure',
+                    'ar': 'لا شيء مما سبق ، أو لست متأكداx',
+                    'fr': 'Rien de ce qui précède, ou je ne suis pas sûr',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -450,6 +468,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q7',
                 text: {
                     'en': 'I just claimed at an airport, seaport, or land border crossing',
+                    'ar': 'لقد ادعت للتو في مطار أو ميناء بحري أو معبر للحدود البرية',
+                    'fr': 'Je viens de réclamer dans un aéroport, un port maritime ou un poste frontalier terrestre',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -462,6 +482,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q7',
                 text: {
                     'en': 'I have not yet started but will claim at a CIC office inside Canada',
+                    'ar': 'لم أبدأ بعد ولكن سوف ادعي في مكتب CIC داخل كندا',
+                    'fr': 'Je n\'ai pas encore commencé mais je vais réclamer dans un bureau de CIC à l\'intérieur du Canada',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -474,6 +496,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q7',
                 text: {
                     'en': 'I just claimed at a CIC office inside Canada',
+                    'ar': 'أنا فقط ادعى في مكتب CIC داخل كندا',
+                    'fr': 'Je viens de réclamer dans un bureau de CIC à l\'intérieur du Canada',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -486,6 +510,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q7',
                 text: {
                     'en': 'I am waiting for my refugee hearing',
+                    'ar': 'أنا في انتظار جلسة استماع للاجئين',
+                    'fr': 'J\'attends mon audience sur le statut de réfugié',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -498,6 +524,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q7',
                 text: {
                     'en': 'I received a positive decision and can apply or have applied to be a Permanent Resident',
+                    'ar': 'لقد تلقيت قرارًا إيجابيًا ويمكنني تقديم طلب أو تقدمت بطلب ليكون مقيمًا دائمًا',
+                    'fr': 'J\'ai reçu une décision positive et je peux demander ou être inscrit comme résident permanent',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -510,6 +538,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q7',
                 text: {
                     'en': 'I received a negative decision and want to learn about my options',
+                    'ar': 'تلقيت قرارًا سلبيًا وتريد التعرف على خياراتي',
+                    'fr': 'J\'ai reçu une décision négative et je veux en savoir plus sur mes options',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -522,6 +552,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q8',
                 text: {
                     'en': 'None',
+                    'ar': 'لا شيء',
+                    'fr': 'Aucun',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -534,6 +566,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q8',
                 text: {
                     'en': 'Beginner',
+                    'ar': 'مبتدئ',
+                    'fr': 'Débutant',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -546,6 +580,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q8',
                 text: {
                     'en': 'Intermediate',
+                    'ar': 'متوسط',
+                    'fr': 'Intermédiaire',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -558,6 +594,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q8',
                 text: {
                     'en': 'Fluent',
+                    'ar': 'بطلاقة',
+                    'fr': 'Courant',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -570,6 +608,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q9',
                 text: {
                     'en': 'Women’s services',
+                    'ar': 'خدمات النساء',
+                    'fr': 'Les services aux femmes',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -582,6 +622,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q9',
                 text: {
                     'en': 'Services for people with disabilities',
+                    'ar': 'خدمات لذوي الاحتياجات الخاصة',
+                    'fr': 'Services pour les personnes handicapées',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -594,6 +636,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q9',
                 text: {
                     'en': 'LGBTQ2 services',
+                    'ar': 'خدمات LGBTQ2',
+                    'fr': 'LGBTQ2 services',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -606,6 +650,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q9',
                 text: {
                     'en': 'Services offered in French',
+                    'ar': 'الخدمات المقدمة باللغة الفرنسية',
+                    'fr': 'Services offerts en français',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -618,6 +664,8 @@ export const buildQuestionnaireFixture = (): Store => {
                 questionId: 'q9',
                 text: {
                     'en': 'Services for low income people',
+                    'ar': 'خدمات لذوي الدخل المحدود',
+                    'fr': 'Services pour les personnes à faible revenu',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
