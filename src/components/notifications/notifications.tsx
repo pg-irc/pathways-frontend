@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import * as model from '../../stores/notifications';
 import * as selector from '../../selectors/notifications';
 import { View } from 'native-base';
-import { ExpiringNotificationComponent } from './expiring_notification';
+import { NotificationComponent } from './notification';
 import { StyleSheet } from 'react-native';
 import { colors } from '../../application/styles';
 
@@ -39,7 +39,7 @@ const renderNotification = (notification: selector.Notification, props: AllNotif
         default:
         case model.NotificationType.TaskAddedToPlan:
             return (
-                <ExpiringNotificationComponent
+                <NotificationComponent
                     notification={notification}
                     timeInSeconds={1}
                     timeElapsedCallback={(): model.RemoveNotificationAction => props.removeNotification(notification.id)}

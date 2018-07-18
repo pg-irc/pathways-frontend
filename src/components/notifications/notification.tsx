@@ -15,7 +15,7 @@ export interface ExpiringNotificationActions {
 }
 type AllExpiringNotificationProps = ExpiringNotificationProps & ExpiringNotificationActions;
 
-export class ExpiringNotificationComponent extends React.Component<AllExpiringNotificationProps> {
+export class NotificationComponent extends React.Component<AllExpiringNotificationProps> {
     timer: number;
 
     componentDidMount(): void {
