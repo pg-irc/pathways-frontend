@@ -14,7 +14,7 @@ export interface WelcomeProps {
 
 export interface WelcomeActions {
     readonly setLocale: (localeCode: string) => SetLocale.Request;
-    readonly goToExplore: () => void;
+    readonly goToHome: () => void;
 }
 
 // @ts-ignore: React Native uses require() to load ImageBitmaps; it's best to do this once, outside of render.
@@ -68,7 +68,7 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.E
             </Form>
             {props.isFirstRun ?
                 undefined :
-                <Button full onPress={props.goToExplore}>
+                <Button full onPress={props.goToHome}>
                     <Text><Trans>Get started</Trans></Text>
                 </Button>
             }
