@@ -44,8 +44,8 @@ export function startApplication(saga: ApplicationSaga, store: ReturnType<typeof
     // tslint:disable:no-expression-statement
     runSaga(saga.middleware);
     store.dispatch(loadFontsActions.request({
-        Roboto: require('native-base/Fonts/Roboto.ttf'),
-        Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+        Roboto: require('../../assets/fonts/Roboto.ttf'),
+        Roboto_medium: require('../../assets/fonts/Roboto_medium.ttf'),
     }));
     store.dispatch(locale.loadCurrentLocaleActions.request());
 }

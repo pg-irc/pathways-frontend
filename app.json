@@ -1,8 +1,8 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0",
+    "sdkVersion": "28.0.0",
     "name": "Pathways",
-    "icon": "./icon.png",
+    "icon": "./assets/images/icon.png",
     "version": "0.0.1",
     "slug": "pathways",
     "ios": {
@@ -10,6 +10,11 @@
     },
     "android": {
       "package": "org.peacegeeks.pathways"
-    }
+    },
+    "assetBundlePatterns": [
+      "assets/images/*",
+      "assets/fonts/*",
+      "node_modules/native-base/Fonts"
+    ]
   }
 }

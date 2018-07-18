@@ -1,10 +1,194 @@
 {
-  "This sentence exists to demonstrate the translation functionality that exists in this application.": {
-    "translation": "這句話的存在是為了演示這個應用程序中存在的翻譯功能。",
+  "LEARN ABOUT": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/explore/explore_section.js",
+        15
+      ],
+      [
+        "lib/components/home_page/home_page.js",
+        24
+      ]
+    ]
+  },
+  "How can we help you?": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/home_page/home_page.js",
+        22
+      ]
+    ]
+  },
+  "PLAN FOR SUCCESS": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/home_page/home_page.js",
+        29
+      ]
+    ]
+  },
+  "SEE MORE TASKS IN MY PLAN": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/home_page/home_page.js",
+        33
+      ]
+    ]
+  },
+  "Select language": {
+    "translation": "",
     "origin": [
       [
         "lib/components/language_switcher/language_switcher.js",
-        12
+        11
+      ]
+    ]
+  },
+  "CONTINUE": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/questionnaire/question.js",
+        32
+      ]
+    ]
+  },
+  "SKIP": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/questionnaire/question.js",
+        35
+      ]
+    ]
+  },
+  "Personalize My Plan": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/questionnaire/questionnaire.js",
+        9
+      ]
+    ]
+  },
+  "RELATED TASKS": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/related_tasks/related_tasks.js",
+        21
+      ]
+    ]
+  },
+  "No related services found.": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        66
+      ]
+    ]
+  },
+  "Mark Done": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        77
+      ]
+    ]
+  },
+  "Not done": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        81
+      ]
+    ]
+  },
+  "Remove from plan": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        85
+      ]
+    ]
+  },
+  "Add to plan": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        89
+      ]
+    ]
+  },
+  "COMPLETED TASK": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        94
+      ]
+    ]
+  },
+  "TASK I PLAN TO DO'": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        96
+      ]
+    ]
+  },
+  "AVAILABLE TASK": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        99
+      ]
+    ]
+  },
+  "Newcomer Connect": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/welcome/welcome.js",
+        26
+      ]
+    ]
+  },
+  "Helping you navigate everything you need to settle in Canada, even before you get here": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/welcome/welcome.js",
+        31
+      ]
+    ]
+  },
+  "Select your language": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/welcome/welcome.js",
+        37
+      ]
+    ]
+  },
+  "Get started": {
+    "translation": "",
+    "origin": [
+      [
+        "lib/components/welcome/welcome.js",
+        45
       ]
     ]
   },
@@ -13,7 +197,7 @@
     "origin": [
       [
         "lib/components/my_plan/my_plan.js",
-        22
+        14
       ]
     ]
   },
@@ -22,7 +206,7 @@
     "origin": [
       [
         "lib/components/my_plan/my_plan.js",
-        28
+        24
       ]
     ]
   },
@@ -31,16 +215,7 @@
     "origin": [
       [
         "lib/components/my_plan/my_plan.js",
-        49
-      ]
-    ]
-  },
-  "Done": {
-    "translation": "完成",
-    "origin": [
-      [
-        "lib/components/tasks/task_detail.js",
-        20
+        37
       ]
     ]
   },
@@ -49,7 +224,7 @@
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
-        36
+        25
       ]
     ]
   },
@@ -57,8 +232,8 @@
     "translation": "学到更多",
     "origin": [
       [
-        "lib/components/tasks/task_detail.js",
-        59
+        "lib/components/related_articles/related_articles.js",
+        17
       ]
     ]
   },
@@ -67,7 +242,7 @@
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
-        63
+        52
       ]
     ]
   }

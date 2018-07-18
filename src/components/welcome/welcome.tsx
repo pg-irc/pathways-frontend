@@ -19,9 +19,10 @@ export interface WelcomeActions {
 
 // @ts-ignore: React Native uses require() to load ImageBitmaps; it's best to do this once, outside of render.
 // tslint:diable-next-line:no-var-requires
-const logoImg = require('../../../icon.png');
+const logoImg = require('../../../assets/images/icon.png');
 
 export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.Element {
+    const i18n = props.i18n;
     return (
         <View style={[
             {
@@ -54,7 +55,7 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.E
                     <Picker
                             mode='dropdown'
                             iosIcon={<Icon name='ios-arrow-down-outline' />}
-                            placeholder={props.i18n.t`Select your language`}
+                            placeholder={i18n.t`Select your language`}
                             placeholderStyle={{ color: '#bfc6ea' }}
                             placeholderIconColor='#007aff'
                             selectedValue={props.currentLocale.code}

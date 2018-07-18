@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Content, Button, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore';
-import { Trans } from '@lingui/react';
 import { computeUniqueKeyForSections } from './compute_unique_key_for_sections';
 import { applicationStyles } from '../../application/styles';
 import { Id } from '../../stores/explore';
@@ -78,6 +77,6 @@ export const SectionButton = (props: SectionButtonProps & SectionButtonActions):
             onPress={props.onPress} >
             <Icon type='MaterialCommunityIcons' name={props.icon} style={{ fontSize: 40 }} />
         </Button>
-        <Text style={[{textAlign: 'center'}]}><Trans>{props.name}</Trans></Text>
+        <Text style={[{textAlign: 'center'}]}>{props.name}</Text>
     </View>
 );

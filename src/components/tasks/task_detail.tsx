@@ -153,20 +153,20 @@ function renderHeader(props: AllTaskDetailProps): JSX.Element {
     switch (taskState) {
         case TaskStates.CompletedInPlan:
         case TaskStates.CompletedNotInPlan:
-            return buildHeader(task.title, 'COMPLETED TASK', notDoneButton);
+            return buildHeader(task.title, <Trans>COMPLETED TASK</Trans>, notDoneButton);
         case TaskStates.InProgress:
-            return buildHeader(task.title, 'TASK I PLAN TO DO', <View>{removeFromPlanButton}{doneButton}</View>);
+            return buildHeader(task.title, <Trans>TASK I PLAN TO DO'</Trans>, <View>{removeFromPlanButton}{doneButton}</View>);
         case TaskStates.Available:
         default:
-            return buildHeader(task.title, 'AVAILABLE TASK', addToPlanButton);
+            return buildHeader(task.title, <Trans>AVAILABLE TASK</Trans>, addToPlanButton);
     }
 }
 
-function buildHeader(taskTitle: string, stateTitle: string, stateButtons: JSX.Element): JSX.Element {
+function buildHeader(taskTitle: string, stateTitle: string | JSX.Element, stateButtons: JSX.Element): JSX.Element {
     return (
         <Grid>
             <Row>
-                <Text style={[applicationStyles.bold, {marginBottom: 5}]}><Trans>{stateTitle}</Trans></Text>
+                <Text style={[applicationStyles.bold, {marginBottom: 5}]}>{stateTitle}</Text>
             </Row>
             <Row>
                 <Text>{taskTitle}</Text>
