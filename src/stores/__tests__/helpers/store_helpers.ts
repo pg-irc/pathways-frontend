@@ -9,6 +9,7 @@ import * as services from '../../services';
 import * as explore from '../../explore';
 import * as taxonomies from '../../taxonomies';
 import * as articles from '../../articles';
+import * as notifications from '../../notifications';
 
 export class ApplicationStoreBuilder {
     fontsInStore: fonts.Store;
@@ -20,6 +21,7 @@ export class ApplicationStoreBuilder {
     exploreSectionsInStore: explore.Store;
     taxonomiesInStore: taxonomies.Store;
     articlesInStore: articles.Store;
+    notificationsInStore: notifications.Store;
 
     withLocaleStore(store: locale.Store): ApplicationStoreBuilder {
         this.localeInStore = store;
@@ -37,6 +39,7 @@ export class ApplicationStoreBuilder {
             exploreSectionsInStore: this.exploreSectionsInStore,
             taxonomiesInStore: this.taxonomiesInStore,
             articlesInStore: this.articlesInStore,
+            notificationsInStore: this.notificationsInStore,
         };
     }
 }

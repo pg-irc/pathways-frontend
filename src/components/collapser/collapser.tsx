@@ -11,7 +11,7 @@ export interface Props {
     readonly style?: object;
 }
 
-export interface State {
+interface State {
     collapsed: boolean;
 }
 

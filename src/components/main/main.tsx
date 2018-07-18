@@ -5,6 +5,7 @@ import * as header from './header';
 import * as mainPageSwitcher from './main_page_switcher';
 import * as footer from './footer';
 import { ConnectedLanguageSwitcher } from '../language_switcher/connected_language_switcher';
+import { NotificationsConnectedComponent } from '../notifications/notifications_connected_component';
 
 interface DrawerState {
     readonly isDrawerOpen: boolean;
@@ -34,6 +35,7 @@ export class Component extends React.Component<Props & Actions, DrawerState> {
                 <Container>
                     <header.Component onLanguageSelect={this.openDrawer} {...this.props} />
                     <mainPageSwitcher.Component {...this.props} />
+                    <NotificationsConnectedComponent />
                     <footer.Component {...this.props} />
                 </Container>
             </Drawer>

@@ -18,9 +18,10 @@ type TaskAction = AddToSavedListAction |
     ShareAction;
 
 // tslint:disable-next-line:typedef
-export const addToSavedList = (taskId: Id) => (
-    helpers.makeAction(constants.ADD_TO_SAVED_LIST, { taskId })
-);
+export const addToSavedList = (taskId: Id) => {
+    const notificationText = 'Task added to my plan';
+    return helpers.makeAction(constants.ADD_TO_SAVED_LIST, { taskId, notificationText });
+};
 
 // tslint:disable-next-line:typedef
 export const removeFromSavedList = (taskId: Id) => (
@@ -56,7 +57,7 @@ export const reducer = (store: Store = buildDefaultStore(), action?: TaskAction)
         case constants.REMOVE_FROM_SAVED_LIST:
             return removeFromTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
         case constants.TOGGLE_COMPLETED:
-    return toggleTaskUserSettingsCompletedValue(store, action.payload.taskId);
+            return toggleTaskUserSettingsCompletedValue(store, action.payload.taskId);
         case constants.TOGGLE_STARRED:
             return toggleTaskUserSettingsStarredValue(store, action.payload.taskId);
         // TODO
