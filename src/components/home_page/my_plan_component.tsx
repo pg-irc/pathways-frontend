@@ -13,10 +13,11 @@ export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (prop
         <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>MY PLAN</Trans></Text>
         {R.isEmpty(props.tasks) ? myPlanIntroWithEmptyPlan(props) : myPlanIntro(props)}
         <TaskListComponent
-            tasks={props.tasks}
+            tasks={R.take(3, props.tasks)}
             goToTaskDetail={props.goToTaskDetail}
             addToSavedList={props.addToSavedList}
             listItemStyle={{ backgroundColor: colors.lighterGrey }} />
+
         <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
             <Button
                 style={[{ backgroundColor: colors.darkGrey }]}
@@ -29,14 +30,23 @@ export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (prop
 );
 
 const myPlanIntro = (props: HomePageActions): JSX.Element => (
-    <Text style={[
-        { textAlign: 'left' },
-        { marginBottom: 20 },
-    ]}>
-        <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
+    <View>
+        <Text style={[
+            { textAlign: 'left' },
+            { marginBottom: 20 },
+        ]}>
+            <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
         you need to take? <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
-                <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
-    </Text>
+                    <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
+        </Text>
+
+        <Text style={[
+            { textAlign: 'left' },
+            { marginBottom: 20 },
+        ]}>
+            <Trans>Here are some sample tasks:</Trans>
+        </Text>
+    </View>
 );
 
 const myPlanIntroWithEmptyPlan = (props: HomePageActions): JSX.Element => (
