@@ -2,7 +2,7 @@ import React from 'react';
 import { Header, Left, Button, Icon, Right } from 'native-base';
 import { CurrentLocale } from '../language_switcher/current_locale';
 import { Locale } from '../../locale';
-import { I18nManager } from 'react-native';
+import { I18nManager, StatusBar, Platform } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton } from 'react-router-native';
 import { routePathWithoutParameter, Routes, goBack } from '../../application/routing';
@@ -24,8 +24,10 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
         // tslint:disable-next-line:no-null-keyword
         return null;
     }
+
+    const marginTop = getMarginForPlatform();
     return (
-        <Header>
+        <Header style={{ marginTop }}>
             <Left>
                 <Button transparent onPress={(): void => goBack(props.history)}>
                     <Icon name={I18nManager.isRTL ? 'arrow-forward' : 'arrow-back'} />
@@ -38,3 +40,7 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
         </Header>
     );
 };
+
+const getMarginForPlatform = (): number => (
+    Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
+);
