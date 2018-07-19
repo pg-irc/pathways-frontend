@@ -54,7 +54,7 @@ export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (pr
                 <Button
                     style={[{ backgroundColor: colors.darkGrey }]}
                     onPress={props.goToPlanPage}>
-                    <Text><Trans>SEE MORE TASKS IN MY PLAN</Trans></Text>
+                    <Text><Trans>GO TO MY PLAN</Trans></Text>
                 </Button>
             </View>
             <View style={applicationStyles.hr} />
@@ -71,25 +71,25 @@ const LearnSectionComponent: React.StatelessComponent<AllHomePageProps> = (props
                 key={computeUniqueKeyForSections(sections)}
                 sections={sections}
                 goToExploreSection={props.goToExploreSection}
-                renderSectionButton={renderButton(props)}
+                renderSectionButton={renderLearnButton(props)}
             />
         ))}
     </View>;
 };
 
-const renderButton = R.curry((props: AllHomePageProps, section: ExploreSection): JSX.Element => {
+const renderLearnButton = R.curry((props: AllHomePageProps, section: ExploreSection): JSX.Element => {
     // TODO Improve the "more" functionality once designs are nailed down
-    return section.id === 's8' ? renderMoreButton(props) : renderSectionButton(props, section);
+    return section.id === 's8' ? renderLearnMoreButton(props) : renderLearnSectionButton(props, section);
 });
 
-const renderSectionButton = (props: AllHomePageProps, section: ExploreSection): JSX.Element => {
+const renderLearnSectionButton = (props: AllHomePageProps, section: ExploreSection): JSX.Element => {
     const goToExploreSection = (): SetExploreSectionPageAction => props.goToExploreSection(section.id);
     const style = { height: 70 };
     const buttonProps = { onPress: goToExploreSection, buttonStyle: style, ...section };
     return <SectionButton {...buttonProps} />;
 };
 
-const renderMoreButton = (props: AllHomePageProps): JSX.Element => {
+const renderLearnMoreButton = (props: AllHomePageProps): JSX.Element => {
     const i18n = props.i18n;
     const goToExplorePage = (): SetExplorePageAction => props.goToExplorePage();
     const style = { height: 70 };
