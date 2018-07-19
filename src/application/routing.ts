@@ -21,6 +21,7 @@ export enum Routes {
     LearnDetail,
     TaskDetail,
     ArticleDetail,
+    Help,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -30,6 +31,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/';
         case Routes.Home:
             return '/home';
+        case Routes.Help:
+            return '/help';
         case Routes.Questionnaire:
             return '/questionnaire';
         case Routes.MyPlan:

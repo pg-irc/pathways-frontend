@@ -6,7 +6,7 @@ import { Locale } from '../../locale';
 import { I18nManager, StatusBar, Platform } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton } from 'react-router-native';
-import { routePathWithoutParameter, Routes, goBack } from '../../application/routing';
+import { routePathWithoutParameter, Routes, goBack, goToRouteWithoutParameter } from '../../application/routing';
 import { emptyComponent } from '../empty_component/empty_component';
 
 export interface HeaderProps {
@@ -36,15 +36,19 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
                 <BackButton />
             </Left>
             <Right>
-                <HelpButton />
+                <HelpButton onPress={(): void => goToRouteWithoutParameter(Routes.Help, props.history)} />
                 <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
             </Right>
         </Header>
     );
 };
 
-const HelpButton: React.StatelessComponent = (): JSX.Element => (
-    <Button style={{ backgroundColor: 'green' }}>
+interface ButtonActions {
+    readonly onPress: () => void;
+}
+
+const HelpButton: React.StatelessComponent<ButtonActions> = (props: ButtonActions): JSX.Element => (
+    <Button {...props} style={{ backgroundColor: 'green' }}>
         <Icon name='help-circle' />
         <Text><Trans>NEED HELP?</Trans></Text>
     </Button>
