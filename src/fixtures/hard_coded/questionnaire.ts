@@ -43,7 +43,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'What do you need help with in Canada?',
                     'ar': 'ما الذي تحتاجه للمساعدة في كندا؟',
-                    'fr': '',
+                    'fr': 'De quoi avez-vous besoin pour aider au Canada?',
                 },
                 acceptMultipleAnswers: true,
             },
@@ -79,7 +79,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Finally, are you interested in learning about services for special groups?',
                     'ar': 'وأخيرًا ، هل أنت مهتم بالتعرف على الخدمات الخاصة بالمجموعات الخاصة؟',
-                    'fr':'Enfin, êtes-vous intéressé à en apprendre davantage sur les services offerts aux groupes spéciaux?',
+                    'fr': 'Enfin, êtes-vous intéressé à en apprendre davantage sur les services offerts aux groupes spéciaux?',
                 },
                 acceptMultipleAnswers: true,
             },
@@ -413,7 +413,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Temporary resident',
                     'ar': 'سكن مؤقت',
-                    'fr':'Résident temporaire',
+                    'fr': 'Résident(e) temporaire',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -427,7 +427,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Permanent resident',
                     'ar': 'مقيم دائم',
-                    'fr': 'Résident permanent',
+                    'fr': 'Résident(e) permanent',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -441,7 +441,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Permanent resident',
                     'ar': 'مقيم دائم',
-                    'fr': 'Résident permanent',
+                    'fr': 'Résident(e) permanent',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -525,7 +525,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'I received a positive decision and can apply or have applied to be a Permanent Resident',
                     'ar': 'لقد تلقيت قرارًا إيجابيًا ويمكنني تقديم طلب أو تقدمت بطلب ليكون مقيمًا دائمًا',
-                    'fr': 'J\'ai reçu une décision positive et je peux demander ou être inscrit comme résident permanent',
+                    'fr': 'J\'ai reçu une décision positive et je peux demander ou être inscrit comme résident(e) permanent',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -567,7 +567,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Beginner',
                     'ar': 'مبتدئ',
-                    'fr': 'Débutant',
+                    'fr': 'Débutant(e)',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
@@ -595,7 +595,7 @@ export const buildQuestionnaireFixture = (): Store => {
                 text: {
                     'en': 'Fluent',
                     'ar': 'بطلاقة',
-                    'fr': 'Courant',
+                    'fr': 'Couramment',
                 },
                 isSelected: false,
                 taxonomyTerms: [{
