@@ -2,7 +2,7 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { View, Content, Text } from 'native-base';
 import { applicationStyles } from '../../application/styles';
-import { CopyrightComponent } from '../copyright/copyright';
+import { CopyrightComponent } from './copyright';
 import { HomePageProps, HomePageActions } from './props';
 import { LearnSectionComponent } from './learn_section_component';
 import { MyPlanComponent } from './my_plan_component';
