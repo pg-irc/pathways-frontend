@@ -87,14 +87,7 @@ const renderLearnMoreButton = (props: AllHomePageProps): JSX.Element => {
 const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => (
     <View>
         <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>MY PLAN</Trans></Text>
-        <Text style={[
-            { textAlign: 'left' },
-            { marginBottom: 20 },
-        ]}>
-            <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
-            you need to take? <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
-                    <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
-        </Text>
+        {R.isEmpty(props.tasks) ? myPlanIntroWithEmptyPlan(props) : myPlanIntro(props)}
         <TaskListComponent
             tasks={props.tasks}
             goToTaskDetail={props.goToTaskDetail}
@@ -109,4 +102,25 @@ const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (props: AllH
         </View>
         <View style={applicationStyles.hr} />
     </View>
+);
+
+const myPlanIntro = (props: AllHomePageProps): JSX.Element => (
+    <Text style={[
+        { textAlign: 'left' },
+        { marginBottom: 20 },
+    ]}>
+        <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
+        you need to take? <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
+                <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
+    </Text>
+);
+
+const myPlanIntroWithEmptyPlan = (props: AllHomePageProps): JSX.Element => (
+    <Text style={[
+        { textAlign: 'left' },
+        { marginBottom: 20 },
+    ]}>
+        <Trans>You haven't personalized your Plan yet. Would you like to <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
+            <Trans>answer some questions</Trans></Text> to get your most relevant tasks?</Trans>
+    </Text>
 );
