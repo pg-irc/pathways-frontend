@@ -34,6 +34,7 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.E
             <Image
                 source={logoImg}
                 style={[
+                    { flex: 1 },
                     { width: 200, height: 200 },
                     { marginTop: 50, marginBottom: 20 },
                 ]} />
