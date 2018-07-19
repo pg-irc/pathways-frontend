@@ -1,33 +1,18 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Trans } from '@lingui/react';
-import { View, Button, Content, Text } from 'native-base';
-import { applicationStyles, colors } from '../../application/styles';
-import {
-    SetExploreSectionPageAction,
-    SetExplorePageAction,
-    SetTaskDetailPageAction,
-    SetPlanPageAction,
-    SetQuestionnairePageAction,
-} from '../../stores/page_switcher';
-import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
+import { View, Content, Text } from 'native-base';
+import { applicationStyles } from '../../application/styles';
+import { SetExploreSectionPageAction, SetExplorePageAction } from '../../stores/page_switcher';
 import { computeUniqueKeyForSections } from '../explore/compute_unique_key_for_sections';
 import { ExploreSection } from '../../selectors/explore';
-import { TaskListItem } from '../../selectors/tasks';
-import { ExploreAllProps, ExploreAllActions, RowOfSectionButtons, SectionButton } from '../explore/explore_all';
-import { TaskListComponent } from '../tasks/task_list';
+import { RowOfSectionButtons, SectionButton } from '../explore/explore_all';
 import { CopyrightComponent } from '../copyright/copyright';
+import { HomePageProps, HomePageActions } from './props';
+import { MyPlanComponent } from './my_plan_component';
 
-export interface HomePageProps extends ExploreAllProps {
-    readonly tasks: ReadonlyArray<TaskListItem>;
-}
-export interface HomePageActions extends ExploreAllActions {
-    readonly goToExplorePage: () => SetExplorePageAction;
-    readonly goToPlanPage: () => SetPlanPageAction;
-    readonly goToQuestionnaire: () => SetQuestionnairePageAction;
-    readonly goToTaskDetail: (taskId: TaskId) => SetTaskDetailPageAction;
-    readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
-}
+export { HomePageProps, HomePageActions } from './props';
+
 type AllHomePageProps = I18nProps & HomePageProps & HomePageActions;
 
 export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => {
@@ -69,7 +54,7 @@ const renderLearnButton = R.curry((props: AllHomePageProps, section: ExploreSect
     return section.id === 's8' ? renderLearnMoreButton(props) : renderLearnSectionButton(props, section);
 });
 
-const renderLearnSectionButton = (props: AllHomePageProps, section: ExploreSection): JSX.Element => {
+const renderLearnSectionButton = (props: HomePageActions, section: ExploreSection): JSX.Element => {
     const goToExploreSection = (): SetExploreSectionPageAction => props.goToExploreSection(section.id);
     const style = { height: 70 };
     const buttonProps = { onPress: goToExploreSection, buttonStyle: style, ...section };
@@ -83,44 +68,3 @@ const renderLearnMoreButton = (props: AllHomePageProps): JSX.Element => {
     const buttonProps = { onPress: goToExplorePage, icon: 'apps', name: i18n.t`More`, buttonStyle: style };
     return <SectionButton {...buttonProps} />;
 };
-
-const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => (
-    <View>
-        <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>MY PLAN</Trans></Text>
-        {R.isEmpty(props.tasks) ? myPlanIntroWithEmptyPlan(props) : myPlanIntro(props)}
-        <TaskListComponent
-            tasks={props.tasks}
-            goToTaskDetail={props.goToTaskDetail}
-            addToSavedList={props.addToSavedList}
-            listItemStyle={{ backgroundColor: colors.lighterGrey }} />
-        <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
-            <Button
-                style={[{ backgroundColor: colors.darkGrey }]}
-                onPress={props.goToPlanPage}>
-                <Text><Trans>GO TO MY PLAN</Trans></Text>
-            </Button>
-        </View>
-        <View style={applicationStyles.hr} />
-    </View>
-);
-
-const myPlanIntro = (props: AllHomePageProps): JSX.Element => (
-    <Text style={[
-        { textAlign: 'left' },
-        { marginBottom: 20 },
-    ]}>
-        <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
-        you need to take? <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
-                <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
-    </Text>
-);
-
-const myPlanIntroWithEmptyPlan = (props: AllHomePageProps): JSX.Element => (
-    <Text style={[
-        { textAlign: 'left' },
-        { marginBottom: 20 },
-    ]}>
-        <Trans>You haven't personalized your Plan yet. Would you like to <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
-            <Trans>answer some questions</Trans></Text> to get your most relevant tasks?</Trans>
-    </Text>
-);
