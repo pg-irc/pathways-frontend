@@ -22,7 +22,6 @@ export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (pr
                 <Trans>Arrival Advisor helps you start your new life in Canada, every step of the way.</Trans>
             </Text>
             <View style={applicationStyles.hr} />
-            <Text style={applicationStyles.bold}><Trans>LEARN ABOUT</Trans></Text>
             <LearnSectionComponent {...props} />
             <MyPlanComponent {...props} />
             <CopyrightComponent />
