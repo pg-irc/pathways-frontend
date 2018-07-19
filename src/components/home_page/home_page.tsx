@@ -3,7 +3,13 @@ import * as R from 'ramda';
 import { Trans } from '@lingui/react';
 import { View, Button, Content, Text } from 'native-base';
 import { applicationStyles, colors } from '../../application/styles';
-import { SetExploreSectionPageAction, SetExplorePageAction, SetTaskDetailPageAction, SetPlanPageAction } from '../../stores/page_switcher';
+import {
+    SetExploreSectionPageAction,
+    SetExplorePageAction,
+    SetTaskDetailPageAction,
+    SetPlanPageAction,
+    SetQuestionnairePageAction,
+} from '../../stores/page_switcher';
 import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
 import { computeUniqueKeyForSections } from '../explore/compute_unique_key_for_sections';
 import { ExploreSection } from '../../selectors/explore';
@@ -18,6 +24,7 @@ export interface HomePageProps extends ExploreAllProps {
 export interface HomePageActions extends ExploreAllActions {
     readonly goToExplorePage: () => SetExplorePageAction;
     readonly goToPlanPage: () => SetPlanPageAction;
+    readonly goToQuestionnaire: () => SetQuestionnairePageAction;
     readonly goToTaskDetail: (taskId: TaskId) => SetTaskDetailPageAction;
     readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
 }
@@ -43,7 +50,8 @@ export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (pr
                 { marginBottom: 20 },
             ]}>
                 <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
-                    you need to take? Answer some questions to get tasks and tips recommended for you.</Trans>
+                    you need to take? <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
+                        <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
             </Text>
             <TaskListComponent
                 tasks={props.tasks}
@@ -59,7 +67,7 @@ export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (pr
             </View>
             <View style={applicationStyles.hr} />
             <CopyrightComponent />
-        </Content>
+        </Content >
     );
 };
 
