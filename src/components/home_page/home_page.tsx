@@ -43,29 +43,7 @@ export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (pr
             <View style={applicationStyles.hr} />
             <Text style={applicationStyles.bold}><Trans>LEARN ABOUT</Trans></Text>
             <LearnSectionComponent {...props} />
-            <View style={applicationStyles.hr} />
-            <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>MY PLAN</Trans></Text>
-            <Text style={[
-                { textAlign: 'left' },
-                { marginBottom: 20 },
-            ]}>
-                <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
-                    you need to take? <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
-                        <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
-            </Text>
-            <TaskListComponent
-                tasks={props.tasks}
-                goToTaskDetail={props.goToTaskDetail}
-                addToSavedList={props.addToSavedList}
-                listItemStyle={{ backgroundColor: colors.lighterGrey }} />
-            <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
-                <Button
-                    style={[{ backgroundColor: colors.darkGrey }]}
-                    onPress={props.goToPlanPage}>
-                    <Text><Trans>GO TO MY PLAN</Trans></Text>
-                </Button>
-            </View>
-            <View style={applicationStyles.hr} />
+            <MyPlanComponent {...props} />
             <CopyrightComponent />
         </Content >
     );
@@ -82,6 +60,7 @@ const LearnSectionComponent: React.StatelessComponent<AllHomePageProps> = (props
                 renderSectionButton={renderLearnButton(props)}
             />
         ))}
+        <View style={applicationStyles.hr} />
     </View>;
 };
 
@@ -104,3 +83,30 @@ const renderLearnMoreButton = (props: AllHomePageProps): JSX.Element => {
     const buttonProps = { onPress: goToExplorePage, icon: 'apps', name: i18n.t`More`, buttonStyle: style };
     return <SectionButton {...buttonProps} />;
 };
+
+const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => (
+    <View>
+        <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>MY PLAN</Trans></Text>
+        <Text style={[
+            { textAlign: 'left' },
+            { marginBottom: 20 },
+        ]}>
+            <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
+            you need to take? <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
+                    <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
+        </Text>
+        <TaskListComponent
+            tasks={props.tasks}
+            goToTaskDetail={props.goToTaskDetail}
+            addToSavedList={props.addToSavedList}
+            listItemStyle={{ backgroundColor: colors.lighterGrey }} />
+        <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
+            <Button
+                style={[{ backgroundColor: colors.darkGrey }]}
+                onPress={props.goToPlanPage}>
+                <Text><Trans>GO TO MY PLAN</Trans></Text>
+            </Button>
+        </View>
+        <View style={applicationStyles.hr} />
+    </View>
+);
