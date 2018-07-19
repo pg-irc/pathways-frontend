@@ -31,7 +31,14 @@ export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (pr
             <Text style={applicationStyles.bold}><Trans>LEARN ABOUT</Trans></Text>
             <LearnSectionComponent {...props} />
             <View style={applicationStyles.hr} />
-            <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>PLAN FOR SUCCESS</Trans></Text>
+            <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>MY PLAN</Trans></Text>
+            <Text style={[
+                { textAlign: 'left' },
+                { marginBottom: 20 },
+            ]}>
+                <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
+                    you need to take? Answer some questions to get tasks and tips recommended for you.</Trans>
+            </Text>
             <TaskListComponent
                 tasks={props.tasks}
                 goToTaskDetail={props.goToTaskDetail}
