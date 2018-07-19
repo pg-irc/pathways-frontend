@@ -4,6 +4,7 @@ import { History, Location } from 'history';
 import { values } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { Routes, routePathWithoutParameter, goToRouteWithoutParameter } from '../../application/routing';
+import { emptyComponent } from '../empty_component/empty_component';
 
 export interface FooterProps {
     readonly history: History;
@@ -13,8 +14,7 @@ export interface FooterProps {
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
     const path = props.location.pathname;
     if (path === '/') {
-        // tslint:disable-next-line:no-null-keyword
-        return null;
+        return emptyComponent();
     }
     return (
         <Footer>
@@ -27,7 +27,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
                 <Button vertical active={path === routePathWithoutParameter(Routes.Questionnaire)}
                         onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)}>
                     <Icon name='apps' />
-                    <Text style={[{fontSize: values.smallTextSize}]}><Trans>Questions</Trans></Text>
+                    <Text style={[{ fontSize: values.smallTextSize }]}><Trans>Questions</Trans></Text>
                 </Button>
                 <Button vertical active={path === routePathWithoutParameter(Routes.MyPlan)}
                         onPress={goToRouteWithoutParameter(Routes.MyPlan, props.history)}>

@@ -6,6 +6,7 @@ import { I18nManager, StatusBar, Platform } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton } from 'react-router-native';
 import { routePathWithoutParameter, Routes, goBack } from '../../application/routing';
+import { emptyComponent } from '../empty_component/empty_component';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -21,8 +22,7 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
     const { onLanguageSelect, currentLocale }: HeaderProps & UiActions = props;
 
     if (props.location.pathname === routePathWithoutParameter(Routes.Welcome)) {
-        // tslint:disable-next-line:no-null-keyword
-        return null;
+        return emptyComponent();
     }
 
     const marginTop = getMarginForPlatform();

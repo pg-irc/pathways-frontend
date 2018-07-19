@@ -5,6 +5,7 @@ import { ArticleListItem } from '../../selectors/articles';
 import { ArticleListComponent } from '../articles/article_list';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
+import { emptyComponent } from '../empty_component/empty_component';
 
 interface RelatedArticlesProps {
     readonly relatedArticles: ReadonlyArray<ArticleListItem>;
@@ -13,8 +14,7 @@ type AllRelatedArticlesProps = RelatedArticlesProps & RouterProps;
 
 export const RelatedArticlesComponent: React.StatelessComponent<AllRelatedArticlesProps> = (props: AllRelatedArticlesProps): JSX.Element => {
     if (props.relatedArticles.length === 0) {
-        // tslint:disable-next-line:no-null-keyword
-        return null;
+        return emptyComponent();
     }
     return (
         <View>

@@ -8,6 +8,7 @@ import { TaskListComponent } from '../tasks/task_list';
 import { Trans } from '@lingui/react';
 import { TaskListItemActions } from '../tasks/task_list_item';
 import { RouterProps } from '../../application/routing';
+import { emptyComponent } from '../empty_component/empty_component';
 
 interface RelatedTasksProps {
     readonly relatedTasks: ReadonlyArray<TaskListItem>;
@@ -17,8 +18,7 @@ type AllRelatedTasksProps = RelatedTasksProps & TaskListItemActions & RouterProp
 
 export const RelatedTasksComponent: React.StatelessComponent<AllRelatedTasksProps> = (props: AllRelatedTasksProps): JSX.Element => {
     if (props.relatedTasks.length === 0) {
-        // tslint:disable-next-line:no-null-keyword
-        return null;
+        return emptyComponent();
     }
     const shouldDisplayTaskInteractions = (taskId: TaskId): boolean => (
         R.none((id: TaskId) => id === taskId, props.savedTasks)
