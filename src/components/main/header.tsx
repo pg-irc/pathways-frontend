@@ -1,5 +1,6 @@
 import React from 'react';
-import { Header, Left, Button, Icon, Right } from 'native-base';
+import { Header, Text, Left, Button, Icon, Right } from 'native-base';
+import { Trans } from '@lingui/react';
 import { CurrentLocale } from '../language_switcher/current_locale';
 import { Locale } from '../../locale';
 import { I18nManager, StatusBar, Platform } from 'react-native';
@@ -35,11 +36,19 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
                 <BackButton />
             </Left>
             <Right>
+                <HelpButton />
                 <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
             </Right>
         </Header>
     );
 };
+
+const HelpButton: React.StatelessComponent = (): JSX.Element => (
+    <Button style={{ backgroundColor: 'green' }}>
+        <Icon name='help-circle' />
+        <Text><Trans>NEED HELP?</Trans></Text>
+    </Button>
+);
 
 const getMarginForPlatform = (): number => (
     Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
