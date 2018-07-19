@@ -26,7 +26,13 @@ type AllHomePageProps = I18nProps & HomePageProps & HomePageActions;
 export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => {
     return (
         <Content padder>
-            <Text style={applicationStyles.pageTitle}><Trans>How can we help you?</Trans></Text>
+            <Text style={[
+                applicationStyles.bold,
+                { textAlign: 'left' },
+                { marginBottom: 20 },
+            ]}>
+                <Trans>Arrival Advisor helps you start your new life in Canada, every step of the way.</Trans>
+            </Text>
             <View style={applicationStyles.hr} />
             <Text style={applicationStyles.bold}><Trans>LEARN ABOUT</Trans></Text>
             <LearnSectionComponent {...props} />
