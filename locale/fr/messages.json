@@ -1,4 +1,40 @@
 {
+  "Task added to plan": {
+    "translation": "Tâche ajoutée au plan",
+    "origin": [
+      [
+        "lib/components/notifications/notification.js",
+        23
+      ]
+    ]
+  },
+  "Arrival Advisor": {
+    "translation": "Arrival Advisor",
+    "origin": [
+      [
+        "lib/components/welcome/welcome.js",
+        26
+      ]
+    ]
+  },
+  "For immigrants and refugees new to Canada. Arrival Advisor is here to help you start your new life in Canada, every step of the way.": {
+    "translation": "Pour les immigrants et les réfugiés nouvellement arrivés au Canada. Arrival Advisor est là pour vous aider à démarrer votre nouvelle vie au Canada, à chaque étape du processus.",
+    "origin": [
+      [
+        "lib/components/welcome/welcome.js",
+        31
+      ]
+    ]
+  },
+  "Select your language:": {
+    "translation": "Choisissez votre langue:",
+    "origin": [
+      [
+        "lib/components/welcome/welcome.js",
+        41
+      ]
+    ]
+  },
   "Learn about:": {
     "translation": "En savoir plus:",
     "origin": [
@@ -282,39 +318,12 @@
       ]
     ]
   },
-  "Newcomer Connect": {
-    "translation": "Newcomer Connect",
-    "origin": [
-      [
-        "lib/components/welcome/welcome.js",
-        26
-      ]
-    ]
-  },
-  "Helping you navigate everything you need to settle in Canada, even before you get here": {
-    "translation": "Vous aider à naviguer tout ce dont vous avez besoin pour vous installer au Canada, avant même d'arriver ici",
-    "origin": [
-      [
-        "lib/components/welcome/welcome.js",
-        31
-      ]
-    ]
-  },
-  "Select your language": {
-    "translation": "Choisissez votre langue",
-    "origin": [
-      [
-        "lib/components/welcome/welcome.js",
-        37
-      ]
-    ]
-  },
   "Get started": {
     "translation": "Commencer",
     "origin": [
       [
         "lib/components/welcome/welcome.js",
-        45
+        52
       ]
     ]
   }
