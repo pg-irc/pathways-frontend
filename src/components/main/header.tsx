@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Left, Button, Icon, Title, Body, Right } from 'native-base';
+import { Header, Left, Button, Icon, Right } from 'native-base';
 import { CurrentLocale } from '../language_switcher/current_locale';
 import { Locale } from '../../locale';
 import { I18nManager } from 'react-native';
@@ -28,13 +28,10 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
         <Header>
             <Left>
                 <Button transparent onPress={(): void => goBack(props.history)}>
-                    <Icon name={ I18nManager.isRTL ? 'arrow-forward' : 'arrow-back' } />
+                    <Icon name={I18nManager.isRTL ? 'arrow-forward' : 'arrow-back'} />
                 </Button>
                 <BackButton />
             </Left>
-            <Body>
-                <Title>Pathways</Title>
-            </Body>
             <Right>
                 <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
             </Right>
