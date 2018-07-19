@@ -14,17 +14,31 @@ type AllHomePageProps = I18nProps & HomePageProps & HomePageActions;
 export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => {
     return (
         <Content padder>
-            <Text style={[
-                applicationStyles.bold,
-                { textAlign: 'left' },
-                { marginBottom: 20 },
-            ]}>
-                <Trans>Arrival Advisor helps you start your new life in Canada, every step of the way.</Trans>
-            </Text>
-            <View style={applicationStyles.hr} />
+            {introduction()}
             <LearnSectionComponent {...props} />
             <MyPlanComponent {...props} />
             <CopyrightComponent />
         </Content >
     );
 };
+
+const introduction = (): JSX.Element => (
+    <View style={[
+        { backgroundColor: 'darkblue' },
+    ]}>
+        <Text style={[
+            applicationStyles.bold,
+            { color: 'white' },
+            { textAlign: 'left' },
+            { fontWeight: 'bold' },
+            { fontSize: 22 },
+            { marginTop: 20 },
+            { marginLeft: 20 },
+            { marginRight: 20 },
+            { marginBottom: 20 },
+        ]}>
+            <Trans>Arrival Advisor helps you start your new life in Canada, every step of the way.</Trans>
+        </Text>
+        <View style={applicationStyles.hr} />
+    </View>
+);
