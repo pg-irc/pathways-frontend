@@ -9,6 +9,7 @@ import { Id as TaskId } from '../../stores/tasks';
 import { SetTaskDetailPageAction, setTaskDetailPage, SetExploreSectionPageAction, setExploreSectionPage,
          SetExplorePageAction, setExplorePage, SetPlanPageAction, setPlanPage } from '../../stores/page_switcher';
 import { AddToSavedListAction, addToSavedList } from '../../stores/tasks';
+import { withI18n } from '@lingui/react';
 
 const mapStateToProps = (store: Store): HomePageProps => ({
     tasks: selectRecommendedTasks(store),
@@ -23,4 +24,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Store>): HomePageActions => ({
     addToSavedList: (taskId: TaskId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
 });
 
-export const HomePageConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HomePageComponent);
+export const HomePageConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(withI18n()(HomePageComponent));

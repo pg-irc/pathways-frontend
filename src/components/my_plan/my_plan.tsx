@@ -65,7 +65,7 @@ const getHeaderForSuggestedTasks = (collapsed: boolean): JSX.Element => (
         <Row>
             <Col size={85}>
                 <Row>
-                    <Text style={myPlanStyles.recommendedText}>Important for all newcomers to BC:</Text>
+                    <Text style={myPlanStyles.recommendedText}><Trans>Important for all newcomers to BC:</Trans></Text>
                 </Row>
             </Col>
             <Col size={15}>

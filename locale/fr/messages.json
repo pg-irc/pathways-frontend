@@ -1,6 +1,6 @@
 {
   "Learn about:": {
-    "translation": "Learn about:",
+    "translation": "En savoir plus:",
     "origin": [
       [
         "lib/components/explore/explore_all.js",
@@ -9,7 +9,7 @@
     ]
   },
   "LEARN ABOUT": {
-    "translation": "LEARN ABOUT",
+    "translation": "EN SAVOIR PLUS",
     "origin": [
       [
         "lib/components/explore/explore_section.js",
@@ -22,7 +22,7 @@
     ]
   },
   "More": {
-    "translation": "More",
+    "translation": "Plus",
     "origin": [
       [
         "lib/components/home_page/home_page.js",
@@ -31,7 +31,7 @@
     ]
   },
   "How can we help you?": {
-    "translation": "How can we help you?",
+    "translation": "Comment pouvons-nous vous aider?",
     "origin": [
       [
         "lib/components/home_page/home_page.js",
@@ -40,7 +40,7 @@
     ]
   },
   "PLAN FOR SUCCESS": {
-    "translation": "PLAN FOR SUCCESS",
+    "translation": "PLAN DE SUCCÈS",
     "origin": [
       [
         "lib/components/home_page/home_page.js",
@@ -49,7 +49,7 @@
     ]
   },
   "SEE MORE TASKS IN MY PLAN": {
-    "translation": "SEE MORE TASKS IN MY PLAN",
+    "translation": "VOIR PLUS DE TÂCHES DANS MON PLAN",
     "origin": [
       [
         "lib/components/home_page/home_page.js",
@@ -58,7 +58,7 @@
     ]
   },
   "Select language": {
-    "translation": "Select language",
+    "translation": "Choisir la langue",
     "origin": [
       [
         "lib/components/language_switcher/language_switcher.js",
@@ -67,7 +67,7 @@
     ]
   },
   "Home": {
-    "translation": "Home",
+    "translation": "Accueil",
     "origin": [
       [
         "lib/components/main/footer.js",
@@ -85,7 +85,7 @@
     ]
   },
   "My plan": {
-    "translation": "My plan",
+    "translation": "Mon plan",
     "origin": [
       [
         "lib/components/main/footer.js",
@@ -94,7 +94,7 @@
     ]
   },
   "Learn": {
-    "translation": "Learn",
+    "translation": "Apprendre",
     "origin": [
       [
         "lib/components/main/footer.js",
@@ -103,7 +103,7 @@
     ]
   },
   "My Plan": {
-    "translation": "My Plan",
+    "translation": "Mon plan",
     "origin": [
       [
         "lib/components/my_plan/my_plan.js",
@@ -112,7 +112,7 @@
     ]
   },
   "TASKS I PLAN TO DO": {
-    "translation": "TASKS I PLAN TO DO",
+    "translation": "TÂCHES QUE JE PRÉVOIS DE FAIRE",
     "origin": [
       [
         "lib/components/my_plan/my_plan.js",
@@ -121,7 +121,7 @@
     ]
   },
   "RECOMMENDED FOR ME": {
-    "translation": "RECOMMENDED FOR ME",
+    "translation": "RECOMMANDÉ POUR MOI",
     "origin": [
       [
         "lib/components/my_plan/my_plan.js",
@@ -130,7 +130,7 @@
     ]
   },
   "Important for all newcomers to BC:": {
-    "translation": "Important for all newcomers to BC:",
+    "translation": "Important pour tous les nouveaux arrivants en C.-B.:",
     "origin": [
       [
         "lib/components/my_plan/my_plan.js",
@@ -139,7 +139,7 @@
     ]
   },
   "CONTINUE": {
-    "translation": "CONTINUE",
+    "translation": "CONTINUER",
     "origin": [
       [
         "lib/components/questionnaire/question.js",
@@ -148,7 +148,7 @@
     ]
   },
   "SKIP": {
-    "translation": "SKIP",
+    "translation": "PASSER",
     "origin": [
       [
         "lib/components/questionnaire/question.js",
@@ -157,7 +157,7 @@
     ]
   },
   "Personalize My Plan": {
-    "translation": "Personalize My Plan",
+    "translation": "Personnaliser mon plan",
     "origin": [
       [
         "lib/components/questionnaire/questionnaire.js",
@@ -166,7 +166,7 @@
     ]
   },
   "Immigration can be overwhelming but we are here to help!": {
-    "translation": "Immigration can be overwhelming but we are here to help!",
+    "translation": "L'immigration peut être écrasante mais nous sommes là pour vous aider!",
     "origin": [
       [
         "lib/components/questionnaire/questionnaire.js",
@@ -175,7 +175,7 @@
     ]
   },
   "LEARN MORE": {
-    "translation": "LEARN MORE",
+    "translation": "EN SAVOIR PLUS",
     "origin": [
       [
         "lib/components/related_articles/related_articles.js",
@@ -184,7 +184,7 @@
     ]
   },
   "RELATED TASKS": {
-    "translation": "RELATED TASKS",
+    "translation": "TÂCHES ASSOCIÉES",
     "origin": [
       [
         "lib/components/related_tasks/related_tasks.js",
@@ -202,7 +202,7 @@
     ]
   },
   "FIND SERVICES": {
-    "translation": "FIND SERVICES",
+    "translation": "TROUVER DES SERVICES",
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
@@ -211,7 +211,7 @@
     ]
   },
   "No related services found.": {
-    "translation": "No related services found.",
+    "translation": "Aucun service connexe trouvé.",
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
@@ -220,7 +220,7 @@
     ]
   },
   "Mark Done": {
-    "translation": "Mark Done",
+    "translation": "Cocher",
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
@@ -229,7 +229,7 @@
     ]
   },
   "Not done": {
-    "translation": "Not done",
+    "translation": "Décocher",
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
@@ -238,7 +238,7 @@
     ]
   },
   "Remove from plan": {
-    "translation": "Remove from plan",
+    "translation": "Retirer du plan",
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
@@ -247,7 +247,7 @@
     ]
   },
   "Add to plan": {
-    "translation": "Add to plan",
+    "translation": "Ajouter au plan",
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
@@ -256,7 +256,7 @@
     ]
   },
   "COMPLETED TASK": {
-    "translation": "COMPLETED TASK",
+    "translation": "TÂCHE ACCOMPLIE",
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
@@ -265,7 +265,7 @@
     ]
   },
   "TASK I PLAN TO DO": {
-    "translation": "TASK I PLAN TO DO",
+    "translation": "TÂCHE QUE JE PRÉVOIS DE FAIRE",
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
@@ -274,7 +274,7 @@
     ]
   },
   "AVAILABLE TASK": {
-    "translation": "AVAILABLE TASK",
+    "translation": "TÂCHE DISPONIBLE",
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
@@ -292,7 +292,7 @@
     ]
   },
   "Helping you navigate everything you need to settle in Canada, even before you get here": {
-    "translation": "Helping you navigate everything you need to settle in Canada, even before you get here",
+    "translation": "Vous aider à naviguer tout ce dont vous avez besoin pour vous installer au Canada, avant même d'arriver ici",
     "origin": [
       [
         "lib/components/welcome/welcome.js",
@@ -301,7 +301,7 @@
     ]
   },
   "Select your language": {
-    "translation": "Select your language",
+    "translation": "Choisissez votre langue",
     "origin": [
       [
         "lib/components/welcome/welcome.js",
@@ -310,7 +310,7 @@
     ]
   },
   "Get started": {
-    "translation": "Get started",
+    "translation": "Commencer",
     "origin": [
       [
         "lib/components/welcome/welcome.js",

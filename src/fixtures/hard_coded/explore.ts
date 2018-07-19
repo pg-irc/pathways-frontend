@@ -13,12 +13,12 @@ export const buildExploreFixture = (): Store => (
                 name: {
                     'en': 'Settling in',
                     'ar': 'تسوية في',
-                    'zh': '定居',
+                    'fr': 'S\'installer',
                 },
                 introduction: {
                     'en': 'The provincial edition of the Newcomers’ Guide has information for people living anywhere in B.C. It has been translated into simplified and traditional Chinese, Punjabi, Tagalog, Arabic, Korean and French. It is available online and in print. Local editions have details and contact information for services in 26 different communities across B.C. They are available online, and in English only. www.welcomebc.ca/newcomersguides',
                     'ar': ' على دليل القادمين الجدد في بريتش كولومبيا يحتوي ستقرار في بريتش كولومبيا في إ معلومات ستساعدك على ال ولى من وصولك. أ شهر القليلة ال أال ت التي تتضمن معظم الفصول على قائمة بأسماء الوكال يمكنك الحصول منها على مزيد من المعلومات. سماء وأرقام قد تكون بعض المعلومات (مثل ال الهواتف والعناوين) قد تغيرت منذ وقت طباعة هذا الدليل. يجاد إستخدم الملحق في نهاية هذا الكتاب ل المعلومات في هذا الدليل. نترنت مكتوبة باللغة إ جميع المواقع على شبكة ال نجليزية. قد تقدم بعضها معلومات مكتوبة إ ال بلغات أخرى',
-                    'zh': '自 1850 年起就有人陆续从中国来到卑诗省 （即 BC 省）。今天，10 个卑诗省民当中就有 1 个自称拥有华人血统。事实上，迁移到这里的人当中，来自中国的比来自全球任何其他地方的都要多。无论您想在这里创业、求学还是继续您的事业，您和您的家人有多种方法可来到加拿大卑诗省。本指南可让您了解那些能帮助您以永久居民、临时外籍劳工或国际学生的身份迁居卑诗省的计划，并会帮助您选择最适合您和您家人需要的计划，为您在卑诗省展开新生活做好准备',
+                    'fr': 'L\'édition provinciale du Guide des nouveaux arrivants contient de l\'information à l\'intention des personnes vivant en C.-B. Il a été traduit en chinois simplifié et traditionnel, punjabi, tagalog, arabe, coréen et français. Il est disponible en ligne et en version imprimée. Les éditions locales ont des détails et des informations de contact pour les services dans 26 communautés différentes à travers B.C. Ils sont disponibles en ligne et en anglais seulement. www.welcomebc.ca/newcomersguides',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
@@ -30,12 +30,12 @@ export const buildExploreFixture = (): Store => (
                 name: {
                     'en': 'Education',
                     'ar': 'التعليم',
-                    'zh': '教育',
+                    'fr': 'Éducation',
                 },
                 introduction: {
-                    'en': 'In British Columbia, all children between the ages of five and 16 must go to school. The school system is made up of public schools and independent (private) schools. Public schools are fully funded by the B.C. government. There is no fee for your child to attend a public school. Independent schools are only partially funded by government. Parents are required to pay fees for their children to attend most independent schools. The provincial government (Ministry of Education), local boards of education, and independent school authorities manage the school system (Kindergarten to Grade 12). The provincial government funds the school system and sets the legislation, regulations, and policies to make sure that every school meets provincial standards and every student receives a high-quality education. www.gov.bc.ca/bced Children can also learn at home. For more information, see page 49.',
+                    'en': 'In British Columbia, all children between the ages of five and 16 must go to school. The school system is made up of public schools and independent (private) schools. Public schools are fully funded by the B.C. government. There is no fee for your child to attend a public school. Independent schools are only partially funded by government. Parents are required to pay fees for their children to attend most independent schools. The provincial government (Ministry of Education), local boards of education, and independent school authorities manage the school system (Kindergarten to Grade 12). The provincial government funds the school system and sets the legislation, regulations, and policies to make sure that every school meets provincial standards and every student receives a high-quality education. www.gov.bc.ca/bced Children can also learn at home.',
                     'ar': 'طفال من سن الـ في بريتش كولومبيا، يجب على جميع ال 5 إلى 16 الذهاب إلى المدرسة. ينقسم النظام المدرسي إلى مدارس عامة ومدارس مستقلة (خاصة). المدارس العامة هي مدارس مدعومة بشكل تام من قبل حكومة ل يتوجب دفع رسوم لكي يدرس طفلك بريتش كولومبيا. و في مدرسة عامة. أما المدارس المستقلة، فهي تحصل على تمويل جزئي من الحكومة. وعليه يتوجب على أولياء مور دفع رسوم لكي يدرس أطفالهم في معظم أ ال المدارس المستقلة. في بريتش كولومبيا، تقوم حكومة المقاطعة (وزارة التربية) ومجالس التربية المحلية وسلطات المدارس المستقلة بإدارة طفال إلى الصف 12). أ النظام المدرسي العام (من رياض ال تقوم حكومة المقاطعة بتمويل النظام التعليمي وتسن التشريعات والقوانين والسياسات لضمان توفر المعايير ذو ً قليمية في كافة المدارس وتلقي كافة الطلاب تعليما إ ال كفاءة عالية. www.gov.bc.ca/bced الحصول على التعليم في منازلهم. ً طفال أيضا أ يمكن للا لمزيد من المعلومات، يرجى مشاهدة الصفحة 49',
-                    'zh': 'ί 卑 詩 省dהϞ 5 Ї 16 ๋ٙՅɝኪf ̋ɽ઺ԃӻ୕ʱй͟ʮࣧʿዹͭ ӷͭ ኪࣧଡ଼ϓfʮࣧ͟卑詩省ִ݁Όᅰ資пfՅ ഁజᛘʮࣧdኪ൬Όеfዹͭӷ̥ࣧ݊݁͟ ִ௅΅資пfɽ௅΅ٙӷࣧdኪ͛ٙ˨͎ே ࠅ˹൬f ί 卑 詩 省dኪ ࣧ ӻ ୕ ( ̼͟ຯ෤Ցୋ 12 फ ) ݊ ͟省ִ݁ 卑詩省઺ԃᝂ dᑌΝήਜٙ઺ԃ ҅ʿዹͭኪࣧዚ࿴˾ڌ΍Ν၍ଣf省ִ݁ ᅡಛ資п઺ԃӻ୕dԨ˲ࠈͭجԷձ஝ۆd ᜫהϞኪࣧୌΥ省ٙ઺ԃᅺ๟d՘ɢމӊ Зኪ͛౤Զ৷ሯ९ٙ઺ԃf www.gov.bc.ca/bced Յഁ͵̙˸वί࢕ʕኪ୦f༉ઋԈୋ 49 fࠫ',
+                    'fr': 'En Colombie-Britannique, tous les enfants âgés de cinq à 16 ans doivent aller à l\'école. Le système scolaire est composé d\'écoles publiques et d\'écoles indépendantes (privées). Les écoles publiques sont entièrement financées par le B.C. gouvernement. Il n\'y a pas de frais pour que votre enfant fréquente une école publique. Les écoles indépendantes ne sont financées que partiellement par le gouvernement. Les parents sont tenus de payer des frais pour que leurs enfants fréquentent la plupart des écoles indépendantes. Le gouvernement provincial (ministère de l\'Éducation), les conseils scolaires locaux et les administrations scolaires indépendantes gèrent le système scolaire (de la maternelle à la 12e année). Le gouvernement provincial finance le système scolaire et établit les lois, les règlements et les politiques pour s\'assurer que chaque école répond aux normes provinciales et que chaque élève reçoit une éducation de haute qualité. www.gov.bc.ca/bced Les enfants peuvent aussi apprendre à la maison.',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
@@ -47,12 +47,12 @@ export const buildExploreFixture = (): Store => (
                 name: {
                     'en': 'Health care',
                     'ar': 'الرعاىة الصحية',
-                    'zh': '卫生保健',
+                    'fr': 'Soins de santé',
                 },
                 introduction: {
                     'en': '',
                     'ar': '',
-                    'zh': '',
+                    'fr': '',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
@@ -64,12 +64,12 @@ export const buildExploreFixture = (): Store => (
                 name: {
                     'en': 'Money & banking',
                     'ar': 'المال والبنوك',
-                    'zh': '货币和银行',
+                    'fr': 'Argent et banque',
                 },
                 introduction: {
                     'en': '',
                     'ar': '',
-                    'zh': '',
+                    'fr': '',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
@@ -81,12 +81,12 @@ export const buildExploreFixture = (): Store => (
                 name: {
                     'en': 'Housing',
                     'ar': 'الإسكان',
-                    'zh': '住房',
+                    'fr': 'Logement',
                 },
                 introduction: {
                     'en': '',
                     'ar': '',
-                    'zh': '',
+                    'fr': '',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
@@ -98,12 +98,12 @@ export const buildExploreFixture = (): Store => (
                 name: {
                     'en': 'Employment',
                     'ar': 'توظيف',
-                    'zh': '雇用',
+                    'fr': 'Emploi',
                 },
                 introduction: {
                     'en': '',
                     'ar': '',
-                    'zh': '',
+                    'fr': '',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
@@ -115,12 +115,12 @@ export const buildExploreFixture = (): Store => (
                 name: {
                     'en': 'Legal system & immigration',
                     'ar': 'النظام القانوني والهجرة',
-                    'zh': '法律制度和移民',
+                    'fr': 'Système juridique et immigration',
                 },
                 introduction: {
                     'en': '',
                     'ar': '',
-                    'zh': '',
+                    'fr': '',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
@@ -132,12 +132,12 @@ export const buildExploreFixture = (): Store => (
                 name: {
                     'en': 'Driving',
                     'ar': 'القيادة',
-                    'zh': '驾驶',
+                    'fr': 'Conduite',
                 },
                 introduction: {
                     'en': '',
                     'ar': '',
-                    'zh': '',
+                    'fr': '',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
@@ -149,12 +149,12 @@ export const buildExploreFixture = (): Store => (
                 name: {
                     'en': 'Help for individuals & families',
                     'ar': 'مساعدة للأفراد والعائلات',
-                    'zh': '帮助个人和家庭',
+                    'fr': 'Aide pour les individus et les familles',
                 },
                 introduction: {
                     'en': '',
                     'ar': '',
-                    'zh': '',
+                    'fr': '',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,

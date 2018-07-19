@@ -17,7 +17,7 @@ export const Component: React.StatelessComponent<Props & Actions> = (props: Prop
     <Container>
         <Content padder>
             <Text style={applicationStyles.pageTitle}><Trans>Personalize My Plan</Trans></Text>
-            <Text style={questionnaireStyles.introText}>Immigration can be overwhelming but we are here to help!</Text>
+            <Text style={questionnaireStyles.introText}><Trans>Immigration can be overwhelming but we are here to help!</Trans></Text>
             {props.questionnaire.map((question: selector.Question) => (
                 <Question key={question.id} question={question} selectAnswer={props.selectAnswer} />
             ))}
