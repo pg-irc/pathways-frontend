@@ -51,18 +51,20 @@ export const HelpComponent: React.StatelessComponent<AllProps> =
             <View style={[{ flexDirection: 'column' }]}>
                 <Text style={applicationStyles.pageTitle}><Trans>{'Help & Support'}</Trans></Text>
                 <Text><Trans>If you are having difficulty with settlement in Canada, get in touch with a settlement worker.</Trans></Text>
-
-                <View style={[{ flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
-                    <Button style={[{ backgroundColor: colors.darkGrey }]}>
-                        <Text><Trans>CONTACT SETTLEMENT WORKER</Trans></Text>
-                    </Button>
-                </View>
-
+                <ContactSettlementWorkerButton />
                 <Text style={applicationStyles.subHeading}><Trans>FOR ADDITIONAL ASSISTANCE</Trans></Text>
                 {R.map(createContactComponent, fixture)}
             </View>
         </Content>
     );
+
+const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element => (
+    <View style={[{ flexDirection: 'row', justifyContent: 'center', paddingTop: 10, paddingBottom: 40 }]}>
+        <Button style={[{ backgroundColor: colors.darkGrey }]}>
+            <Text><Trans>CONTACT SETTLEMENT WORKER</Trans></Text>
+        </Button>
+    </View>
+);
 
 const createContactComponent = (contact: HelpContact): JSX.Element => (
     <View style={[{ flexDirection: 'column' }]} key={contact.description} >
