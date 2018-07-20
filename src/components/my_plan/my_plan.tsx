@@ -7,7 +7,7 @@ import { applicationStyles, colors } from '../../application/styles';
 import { myPlanStyles } from './styles';
 import { Collapser } from '../collapser/collapser';
 import { TaskListItem } from '../../selectors/tasks';
-import { TaskListComponent, TaskListActions, noTasksAddedYetTextComponent } from '../tasks/task_list';
+import { TaskListComponent, TaskListActions, noTasksAddedYetTextComponent, noTasksRecommendedTextComponent } from '../tasks/task_list';
 import { RouterProps } from '../../application/routing';
 import { MyPlanIntroComponent, EmptyMyPlanIntroComponent } from './my_plan_intro_component';
 import * as R from 'ramda';
@@ -29,7 +29,7 @@ export const MyPlanComponent: React.StatelessComponent<Props> = (props: Props): 
         {...props}
         tasks={props.recommendedTasks}
         listItemStyle={[{ backgroundColor: colors.lighterGrey }]}
-        emptyTaskListComponent={noTasksAddedYetTextComponent()}
+        emptyTaskListComponent={noTasksRecommendedTextComponent()}
     />;
 
     return (
