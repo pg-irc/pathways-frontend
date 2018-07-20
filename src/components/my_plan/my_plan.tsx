@@ -78,12 +78,5 @@ const getHeaderForSuggestedTasks = (icon: string): JSX.Element => (
                 </Row>
             </Col>
         </Row>
-        <Row>
-            <Col size={85}>
-                <Row>
-                    <Text style={myPlanStyles.recommendedText}><Trans>Important for all newcomers to BC:</Trans></Text>
-                </Row>
-            </Col>
-        </Row>
     </Grid>
 );
