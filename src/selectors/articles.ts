@@ -2,7 +2,6 @@ import * as app from '../application/store';
 import * as model from '../stores/articles';
 import * as R from 'ramda';
 import { selectLocale, selectLocalizedText } from './locale';
-import { selectRoute } from './route';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
 import { TaskListItem, selectRelatedTasks } from './tasks';
@@ -44,16 +43,6 @@ export const denormalizeArticleListItem = (locale: Locale, article: model.Articl
             description: selectLocalizedText(locale, article.description),
         }
     );
-
-export const selectCurrentArticle = (store: app.Store): Article => {
-    const locale = selectLocale(store);
-    const articles = store.applicationState.articlesInStore.articles;
-    const articleId = selectRoute(store).pageId;
-    const article = articles[articleId];
-    const relatedTasks = selectRelatedTasks(store, article.relatedTasks);
-    const relatedArticles = selectRelatedArticles(store, article.relatedArticles);
-    return denormalizeArticle(locale, article, relatedArticles, relatedTasks);
-};
 
 export const selectRelatedArticles = (store: app.Store, articleIds: ReadonlyArray<model.Id>): ReadonlyArray<ArticleListItem> => (
     R.map((id: model.Id) => selectArticleAsListItem(store, id), articleIds)

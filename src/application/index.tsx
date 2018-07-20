@@ -6,15 +6,13 @@ import { buildStore, startApplication } from './store';
 import { ErrorBoundary } from './error_boundary';
 import { ConnectedI18nProvider } from '../components/i18n_provider';
 import { buildSaga } from '../sagas';
-import { buildRouter } from './router';
 
 import { API_URL } from 'react-native-dotenv';
 import { API } from '../api';
 API.configure(API_URL); // tslint:disable-line:no-expression-statement
 
-const router = buildRouter();
 const saga = buildSaga();
-const store = buildStore(router, saga);
+const store = buildStore(saga);
 startApplication(saga, store); // tslint:disable-line:no-expression-statement
 
 export const Application = (): JSX.Element => (

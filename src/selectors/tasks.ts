@@ -5,10 +5,8 @@ import * as taskDetails from './details/tasks';
 import { Taxonomies as TaxonomyConstants } from '../application/constants';
 import * as R from 'ramda';
 import { selectLocalizedText, selectLocale } from './locale';
-import { selectRoute } from './route';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
-import { pickCurrentExploreSection } from './explore';
 import { ArticleListItem, selectRelatedArticles } from './articles';
 import { selectTaxonomyTermsForSelectedAnswers } from './questionnaire';
 
@@ -63,18 +61,6 @@ export const selectAllSavedTasks = (store: app.Store): ReadonlyArray<TaskListIte
     });
 };
 
-export const selectCurrentTask = (store: app.Store): Task => {
-    const locale = selectLocale(store);
-    const taskMap = store.applicationState.tasksInStore.taskMap;
-    const taskUserSettingsMap = store.applicationState.tasksInStore.taskUserSettingsMap;
-    const taskId = selectRoute(store).pageId;
-    const taskUserSettings = model.findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
-    const task = taskMap[taskId];
-    const relatedTasks = selectRelatedTasks(store, task.relatedTasks);
-    const relatedArticles = selectRelatedArticles(store, task.relatedArticles);
-    return denormalizeTask(locale, task, taskUserSettings, relatedArticles, relatedTasks);
-};
-
 export const selectRelatedTasks = (store: app.Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<TaskListItem> => (
     R.map((id: model.Id) => selectTaskAsListItem(store, id), taskIds)
 );
@@ -84,18 +70,6 @@ export const selectTaskAsListItem = (store: app.Store, taskId: model.Id): TaskLi
     const taskMap = store.applicationState.tasksInStore.taskMap;
     const task = taskMap[taskId];
     return denormalizeTaskListItem(locale, task);
-};
-
-export const selectTasksForCurrentExploreSection = (store: app.Store): ReadonlyArray<Task> => {
-    const exploreSection = pickCurrentExploreSection(store);
-    const tasks = store.applicationState.tasksInStore.taskMap;
-    const matchingTasks = taskDetails.findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
-
-    const locale = selectLocale(store);
-    const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
-    const denormalizedTasks = R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
-
-    return denormalizedTasks;
 };
 
 const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUserSettingsMap, task: model.Task): Task => {

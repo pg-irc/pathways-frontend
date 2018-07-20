@@ -796,20 +796,6 @@
   dependencies:
     csstype "^2.2.0"
 
-"@types/redux-first-router-link@^1.4.3":
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/@types/redux-first-router-link/-/redux-first-router-link-1.4.3.tgz#3db3bfb21e7386bf8c9720ce2167a12df7913df1"
-  dependencies:
-    "@types/react" "*"
-    "@types/redux-first-router" "*"
-
-"@types/redux-first-router@*", "@types/redux-first-router@^1.10.2":
-  version "1.10.3"
-  resolved "https://registry.yarnpkg.com/@types/redux-first-router/-/redux-first-router-1.10.3.tgz#89399802a5770f930020b9b898ae928ffa009f3d"
-  dependencies:
-    "@types/history" "*"
-    redux "^3.7.0"
-
 "@types/remote-redux-devtools@^0.5.2":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@types/remote-redux-devtools/-/remote-redux-devtools-0.5.2.tgz#828112e340e397a69f613ab1fd501021b8fb9f67"
@@ -6375,13 +6361,6 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.5.10:
-  version "15.5.10"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
-  dependencies:
-    fbjs "^0.8.9"
-    loose-envify "^1.3.1"
-
 prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
@@ -6951,20 +6930,6 @@ redux-devtools@^3.4.1:
     prop-types "^15.5.7"
     redux-devtools-instrument "^1.0.1"
 
-redux-first-router-link@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/redux-first-router-link/-/redux-first-router-link-1.4.2.tgz#2cd5274fe12539f617068bb2412f329f437813d2"
-  dependencies:
-    path-to-regexp "^1.7.0"
-    prop-types "15.5.10"
-    rudy-match-path "^0.3.0"
-
-redux-first-router@^0.0.16-next:
-  version "0.0.16-next"
-  resolved "https://registry.yarnpkg.com/redux-first-router/-/redux-first-router-0.0.16-next.tgz#493c344dd92b4c20a318a024d4dfa7d948d87d86"
-  dependencies:
-    rudy-match-path "^0.3.0"
-
 redux-logger@^2.7.4:
   version "2.10.2"
   resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-2.10.2.tgz#3c5a5f0a6f32577c1deadf6655f257f82c6c3937"
@@ -6979,7 +6944,7 @@ redux-saga@^0.16.0:
   version "0.16.0"
   resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.16.0.tgz#0a231db0a1489301dd980f6f2f88d8ced418f724"
 
-redux@^3.6.0, redux@^3.7.0, redux@^3.7.2:
+redux@^3.6.0, redux@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
   dependencies:
@@ -7253,12 +7218,6 @@ rst-selector-parser@^2.2.3:
 rsvp@^3.3.3:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.6.2.tgz#2e96491599a96cde1b515d5674a8f7a91452926a"
-
-rudy-match-path@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/rudy-match-path/-/rudy-match-path-0.3.0.tgz#c90e23caac500f244d5e4ab448e2725f1254e2e8"
-  dependencies:
-    path-to-regexp "^1.7.0"
 
 run-async@^2.2.0:
   version "2.3.0"

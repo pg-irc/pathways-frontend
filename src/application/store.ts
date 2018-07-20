@@ -3,7 +3,6 @@ import { composeWithDevTools as compose } from 'remote-redux-devtools';
 
 import { reducer as reducerForApplicationState, Store as StoreForApplicationState } from '../stores';
 import { runSaga, ApplicationSaga } from '../sagas';
-import { ApplicationRouter } from './router';
 
 import { loadFontsActions } from '../stores/fonts';
 import * as locale from '../stores/locale';
@@ -24,9 +23,9 @@ export type Store = { readonly applicationState: StoreForApplicationState };
 
 type InitialState = { readonly applicationState: { readonly localeInStore: locale.Store } };
 
-export function buildStore(router: ApplicationRouter, saga: ApplicationSaga): ReturnType<typeof createStore> {
-    const middleware = applyMiddleware(router.middleware, saga.middleware);
-    const reducer = combineReducers({ location: router.reducer, applicationState: reducerForApplicationState });
+export function buildStore(saga: ApplicationSaga): ReturnType<typeof createStore> {
+    const middleware = applyMiddleware(saga.middleware);
+    const reducer = combineReducers({ applicationState: reducerForApplicationState });
     const preloadedState: InitialState = {
         applicationState: {
             localeInStore: {
@@ -36,7 +35,7 @@ export function buildStore(router: ApplicationRouter, saga: ApplicationSaga): Re
             },
         },
     };
-    const enhancers = compose(router.enhancer, middleware);
+    const enhancers = compose(middleware);
     return createStore(reducer, preloadedState, enhancers);
 }
 

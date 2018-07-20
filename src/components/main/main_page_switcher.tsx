@@ -11,35 +11,6 @@ import { MyPlanConnectedComponent } from '../my_plan/my_plan_connected_component
 import { Routes, routePath } from '../../application/routing';
 
 export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Element => {
-    // TODO Use this as a guide for what we remove....
-    // switch (props.routeInProps.pageType) {
-    //     case store.Page.Welcome:
-    //         return <WelcomeConnectedComponent />;
-
-    //     case store.Page.Home:
-    //         return <HomePageConnectedComponent />;
-
-    //     case store.Page.Questionnaire:
-    //         return <questionnaire.ConnectedComponent />;
-
-    //     case store.Page.MyPlan:
-    //         return <MyPlan />;
-
-    //     case store.Page.ExploreAll:
-    //         return <ExploreAllConnectedComponent />;
-
-    //     case store.Page.ExploreSection:
-    //         return <ExploreSectionConnectedComponent />;
-
-    //     case store.Page.TaskDetail:
-    //         return <TaskDetailConnectedComponent />;
-
-    //     case store.Page.ArticleDetail:
-    //         return <ArticleDetailConnectedComponent />;
-
-    //     default:
-    //         return <Content><Text>Error</Text></Content>;
-    // }
     return (
         <Switch>
             <Route exact path={routePath(Routes.Welcome)} component={WelcomeConnectedComponent} />
