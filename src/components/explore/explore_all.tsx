@@ -1,12 +1,13 @@
 import React from 'react';
+import * as R from 'ramda';
 import { View, Content, Button, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore';
 import { computeUniqueKeyForSections } from './compute_unique_key_for_sections';
 import { applicationStyles } from '../../application/styles';
 import { Id } from '../../stores/explore';
-import { SetExploreSectionPageAction, SetExplorePageAction } from '../../stores/page_switcher';
 import { Trans } from '@lingui/react';
-import * as R from 'ramda';
+import { SetExploreSectionPageAction } from '../../stores/page_switcher';
+import { RouterProps } from '../../application/routing';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -19,7 +20,7 @@ export interface ExploreAllActions {
 type AllExploreProps = ExploreAllProps & ExploreAllActions;
 
 export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
-    (props: AllExploreProps): JSX.Element => {
+    (props: AllExploreProps & RouterProps): JSX.Element => {
         const sectionsGroupedIntoThrees = R.splitEvery(3, props.sections);
         const renderSectionButton = (section: ExploreSection): JSX.Element => (
             <SectionButton
@@ -35,7 +36,6 @@ export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
                     <RowOfSectionButtons
                         key={computeUniqueKeyForSections(sections)}
                         sections={sections}
-                        goToExploreSection={props.goToExploreSection}
                         renderSectionButton={renderSectionButton}
                     />
                 ))}
@@ -51,7 +51,7 @@ interface ButtonRowActions {
     readonly renderSectionButton: (section: ExploreSection) => JSX.Element;
 }
 
-export const RowOfSectionButtons = (props: ButtonRowProps & ButtonRowActions & ExploreAllActions): JSX.Element => (
+export const RowOfSectionButtons = (props: ButtonRowProps & ButtonRowActions): JSX.Element => (
     <View style={[{flex: props.sections.length, flexDirection: 'row', justifyContent: 'space-evenly'}]}>
         {R.map((section: ExploreSection) => (
             <View key={section.id} style={[{flex: 1, margin: 10}]}>
@@ -68,7 +68,7 @@ interface SectionButtonProps {
 }
 
 interface SectionButtonActions {
-    readonly onPress: () => SetExplorePageAction | SetExploreSectionPageAction;
+    readonly onPress: () => void;
 }
 
 export const SectionButton = (props: SectionButtonProps & SectionButtonActions): JSX.Element => (

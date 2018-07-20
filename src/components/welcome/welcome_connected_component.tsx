@@ -4,7 +4,6 @@ import { Welcome, WelcomeProps, WelcomeActions } from './welcome';
 import { Store } from '../../application/store';
 import { selectAvailableLocales, selectLocale } from '../../selectors/locale';
 import { setLocaleActions, SetLocale } from '../../stores/locale';
-import * as pageSwitcher from '../../stores/page_switcher';
 
 function mapStateToProps(store: Store): WelcomeProps {
     return {
@@ -17,7 +16,6 @@ function mapStateToProps(store: Store): WelcomeProps {
 function mapDispatchToProps(dispatch: Dispatch<Store>): WelcomeActions {
     return {
         setLocale: (localeCode: string): SetLocale.Request => dispatch(setLocaleActions.request(localeCode)),
-        goToHome: (): pageSwitcher.SetHomePageAction => dispatch(pageSwitcher.setHomePage()),
     };
 }
 

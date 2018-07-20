@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { NativeRouter } from 'react-router-native';
 import * as main from '../components/main';
 import { buildStore, startApplication } from './store';
 import { ErrorBoundary } from './error_boundary';
@@ -20,7 +21,9 @@ export const Application = (): JSX.Element => (
     <ErrorBoundary>
         <Provider store={store}>
             <ConnectedI18nProvider>
-                <main.ConnectedComponent />
+                <NativeRouter>
+                    <main.ConnectedComponent />
+                </NativeRouter>
             </ConnectedI18nProvider>
         </Provider>
     </ErrorBoundary>

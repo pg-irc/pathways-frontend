@@ -1,53 +1,55 @@
 import React from 'react';
-import { Content, Text } from 'native-base';
-import * as store from '../../stores/page_switcher';
+import { Switch, Route } from 'react-router-native';
 import { WelcomeConnectedComponent } from '../welcome/welcome_connected_component';
 import { HomePageConnectedComponent } from '../home_page/home_page_connected_component';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
 import { ExploreSectionConnectedComponent } from '../explore/explore_section_connected_component';
 import { ArticleDetailConnectedComponent } from '../articles/article_detail_connected_component';
 import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
-import * as questionnaire from '../questionnaire';
+import { QuestionnaireConnectedComponent } from '../questionnaire';
 import { MyPlan } from '../my_plan/my_plan';
-import { Store as TasksStore } from '../../stores/tasks';
-import { Locale } from '../../locale/types';
+import { Routes } from '../../application/routing';
 
-export interface Props {
-    readonly routeInProps: store.Store;
-    readonly tasksStore: TasksStore; // TODO remove, have the selector pull it from the app store
-    readonly locale: Locale;
-}
+export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Element => {
+    // TODO Use this as a guide for what we remove....
+    // switch (props.routeInProps.pageType) {
+    //     case store.Page.Welcome:
+    //         return <WelcomeConnectedComponent />;
 
-export interface Actions {
-}
+    //     case store.Page.Home:
+    //         return <HomePageConnectedComponent />;
 
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    switch (props.routeInProps.pageType) {
-        case store.Page.Welcome:
-            return <WelcomeConnectedComponent />;
+    //     case store.Page.Questionnaire:
+    //         return <questionnaire.ConnectedComponent />;
 
-        case store.Page.Home:
-            return <HomePageConnectedComponent />;
+    //     case store.Page.MyPlan:
+    //         return <MyPlan />;
 
-        case store.Page.Questionnaire:
-            return <questionnaire.ConnectedComponent />;
+    //     case store.Page.ExploreAll:
+    //         return <ExploreAllConnectedComponent />;
 
-        case store.Page.MyPlan:
-            return <MyPlan />;
+    //     case store.Page.ExploreSection:
+    //         return <ExploreSectionConnectedComponent />;
 
-        case store.Page.ExploreAll:
-            return <ExploreAllConnectedComponent />;
+    //     case store.Page.TaskDetail:
+    //         return <TaskDetailConnectedComponent />;
 
-        case store.Page.ExploreSection:
-            return <ExploreSectionConnectedComponent />;
+    //     case store.Page.ArticleDetail:
+    //         return <ArticleDetailConnectedComponent />;
 
-        case store.Page.TaskDetail:
-            return <TaskDetailConnectedComponent />;
-
-        case store.Page.ArticleDetail:
-            return <ArticleDetailConnectedComponent />;
-
-        default:
-            return <Content><Text>Error</Text></Content>;
-    }
+    //     default:
+    //         return <Content><Text>Error</Text></Content>;
+    // }
+    return (
+        <Switch>
+            <Route exact path={Routes.welcome} component={WelcomeConnectedComponent} />
+            <Route exact path={Routes.home} component={HomePageConnectedComponent} />
+            <Route exact path={Routes.questionnaire} component={QuestionnaireConnectedComponent} />
+            <Route exact path={Routes.myPlan} component={MyPlan} />
+            <Route exact path={Routes.exploreSections} component={ExploreAllConnectedComponent} />
+            <Route exact path={Routes.exploreSectionDetail} component={ExploreSectionConnectedComponent} />
+            <Route exact path={Routes.taskDetail} component={TaskDetailConnectedComponent} />
+            <Route exact path={Routes.articleDetail} component={ArticleDetailConnectedComponent} />
+        </Switch>
+    );
 };

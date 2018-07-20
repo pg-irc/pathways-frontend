@@ -15,4 +15,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Store>): Actions => ({
     selectAnswer: (answerId: Id): SelectAnswerAction => dispatch(selectAnswer(answerId)),
 });
 
-export const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Component);
+export const QuestionnaireConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Component);

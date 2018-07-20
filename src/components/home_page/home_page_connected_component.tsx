@@ -11,12 +11,6 @@ import {
     setTaskDetailPage,
     SetExploreSectionPageAction,
     setExploreSectionPage,
-    SetExplorePageAction,
-    setExplorePage,
-    SetPlanPageAction,
-    setPlanPage,
-    SetQuestionnairePageAction,
-    setQuestionnairePage,
 } from '../../stores/page_switcher';
 import { AddToSavedListAction, addToSavedList } from '../../stores/tasks';
 import { withI18n } from '@lingui/react';
@@ -28,9 +22,6 @@ const mapStateToProps = (store: Store): HomePageProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): HomePageActions => ({
     goToExploreSection: (sectionId: SectionId): SetExploreSectionPageAction => dispatch(setExploreSectionPage(sectionId)),
-    goToExplorePage: (): SetExplorePageAction => dispatch(setExplorePage()),
-    goToPlanPage: (): SetPlanPageAction => dispatch(setPlanPage()),
-    goToQuestionnaire: (): SetQuestionnairePageAction => dispatch(setQuestionnairePage()),
     goToTaskDetail: (taskId: TaskId): SetTaskDetailPageAction => dispatch(setTaskDetailPage(taskId)),
     addToSavedList: (taskId: TaskId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
 });

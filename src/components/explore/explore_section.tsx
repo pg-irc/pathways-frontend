@@ -5,6 +5,7 @@ import { ExploreSection } from '../../selectors/explore';
 import { applicationStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { Task } from '../../selectors/tasks';
+import { RouterProps } from '../../application/routing';
 
 export interface ExploreSectionProps {
     readonly section: ExploreSection;
@@ -17,7 +18,7 @@ export interface ExploreSectionActions {
 type AllExploreSectionProps = ExploreSectionProps & ExploreSectionActions;
 
 export const ExploreSectionComponent: React.StatelessComponent<AllExploreSectionProps> =
-    (props: AllExploreSectionProps): JSX.Element => {
+    (props: AllExploreSectionProps & RouterProps): JSX.Element => {
         return <Container>
             <Content padder>
                 <Grid>
