@@ -4,10 +4,11 @@ import { Trans } from '@lingui/react';
 import { View, Button, Text } from 'native-base';
 import { applicationStyles, colors } from '../../application/styles';
 import { TaskListComponent } from '../tasks/task_list';
-import { HomePageProps, HomePageActions } from './props';
+import { HomePageProps } from './props';
 import { RouterProps, Routes, routePath } from '../../application/routing';
+import { TaskListItemActions } from '../tasks/task_list_item';
 
-type AllHomePageProps = HomePageProps & HomePageActions & RouterProps;
+type AllHomePageProps = HomePageProps & TaskListItemActions & RouterProps;
 
 export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => (
     <View>

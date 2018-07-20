@@ -3,14 +3,15 @@ import { Trans } from '@lingui/react';
 import { View, Content, Text } from 'native-base';
 import { applicationStyles } from '../../application/styles';
 import { CopyrightComponent } from './copyright';
-import { HomePageProps, HomePageActions } from './props';
+import { HomePageProps } from './props';
 import { LearnSectionComponent } from './learn_section_component';
 import { MyPlanComponent } from './my_plan_component';
 import { RouterProps } from '../../application/routing';
+import { TaskListItemActions } from '../tasks/task_list_item';
 
-export { HomePageProps, HomePageActions } from './props';
+export { HomePageProps } from './props';
 
-type AllHomePageProps = I18nProps & HomePageProps & HomePageActions & RouterProps;
+type AllHomePageProps = I18nProps & HomePageProps & TaskListItemActions & RouterProps;
 
 export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => {
     return (

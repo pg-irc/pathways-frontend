@@ -5,11 +5,8 @@ import { TaskDetailProps, TaskDetailActions, TaskDetailComponent, TaskServiceUpd
 import { TaskServices, selectTaskServices, createRelatedServicesQueryFromTask } from '../../selectors/services';
 import { Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
          toggleCompleted, RemoveFromSavedListAction, removeFromSavedList } from '../../stores/tasks';
-import { Id as ArticleId } from '../../stores/articles';
 import { connect } from 'react-redux';
 import { Task, selectTaskByPathParameter } from '../../selectors/tasks';
-import { SetArticleDetailPageAction, setArticleDetailPage,
-         SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 import { RouterProps } from '../../application/routing';
 
 interface StateProps extends TaskDetailProps {
@@ -33,8 +30,6 @@ interface DispatchProps extends TaskDetailActions {
 
 function mapDispatchToProps(dispatch: Dispatch<Store>): DispatchProps {
     return {
-        goToArticleDetail: (articleId: ArticleId): SetArticleDetailPageAction => dispatch(setArticleDetailPage(articleId)),
-        goToTaskDetail: (taskId: ArticleId): SetTaskDetailPageAction => dispatch(setTaskDetailPage(taskId)),
         addToSavedList: (taskId: TaskId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
         removeFromSavedList: (taskId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
         toggleCompleted: (taskId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(taskId)),
@@ -51,8 +46,6 @@ function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps, router
         task: stateProps.task,
         savedTasks: stateProps.savedTasks,
         taskServices: stateProps.taskServices,
-        goToArticleDetail: dispatchProps.goToArticleDetail,
-        goToTaskDetail: dispatchProps.goToTaskDetail,
         addToSavedList: dispatchProps.addToSavedList,
         removeFromSavedList: dispatchProps.removeFromSavedList,
         toggleCompleted: dispatchProps.toggleCompleted,

@@ -5,8 +5,6 @@ import { FlatList, ListRenderItemInfo } from 'react-native';
 import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
 import { Task } from '../../selectors/tasks';
-import { TaskListItemActions } from '../tasks/task_list_item';
-import { ArticleListItemActions } from '../articles/article_list_item';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
@@ -24,7 +22,7 @@ export interface TaskDetailProps {
     readonly savedTasks: ReadonlyArray<TaskId>;
     readonly taskServices: TaskServices;
 }
-export interface TaskDetailActions extends TaskListItemActions, ArticleListItemActions {
+export interface TaskDetailActions {
     readonly toggleCompleted: (taskId: TaskId) => ToggleCompletedAction;
     readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
     readonly removeFromSavedList: (taskId: TaskId) => RemoveFromSavedListAction;

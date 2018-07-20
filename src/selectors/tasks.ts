@@ -1,5 +1,6 @@
 import * as app from '../application/store';
 import * as model from '../stores/tasks';
+import { Id as LearnId } from '../stores/explore';
 import * as taskDetails from './details/tasks';
 import { Taxonomies as TaxonomyConstants } from '../application/constants';
 import * as R from 'ramda';
@@ -138,4 +139,16 @@ export const selectTaskByPathParameter = (store: app.Store, taskId: model.Id): T
     const relatedTasks = selectRelatedTasks(store, task.relatedTasks);
     const relatedArticles = selectRelatedArticles(store, task.relatedArticles);
     return denormalizeTask(locale, task, taskUserSettings, relatedArticles, relatedTasks);
+};
+
+export const selectTasksForLearnDetail = (store: app.Store, learnId: LearnId): ReadonlyArray<Task> => {
+    const exploreSection = store.applicationState.exploreSectionsInStore.sections[learnId];
+    const tasks = store.applicationState.tasksInStore.taskMap;
+    const matchingTasks = taskDetails.findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
+
+    const locale = selectLocale(store);
+    const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
+    const denormalizedTasks = R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
+
+    return denormalizedTasks;
 };
