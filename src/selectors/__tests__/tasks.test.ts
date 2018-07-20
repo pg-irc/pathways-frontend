@@ -111,6 +111,18 @@ describe('tasks selector', () => {
             expect(result).toEqual([]);
         });
 
+        it('includes tasks that are not completed', () => {
+            const nonCompletedTask = new TaskBuilder().withCompleted(false).withLocaleCode(locale.code).build();
+            const result = selector.rejectAllCompletedTasks([nonCompletedTask]);
+            expect(result).toEqual([nonCompletedTask]);
+        });
+
+        it('excludes tasks that are completed', () => {
+            const completedTask = new TaskBuilder().withCompleted(true).withLocaleCode(locale.code).build();
+            const result = selector.rejectAllCompletedTasks([completedTask]);
+            expect(result).toEqual([]);
+        });
+
     });
 
     describe('selected data', () => {

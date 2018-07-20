@@ -81,10 +81,11 @@ export const selectRecommendedTasks = (store: Store): ReadonlyArray<Task> => {
     const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store);
     const matchingTasks = filterTasksByTaxonomyTerms(taxonomyTerms, store.tasksInStore.taskMap);
     const recommendedTasks = rejectAllSavedTasks(matchingTasks, store.tasksInStore.savedTasksList);
+    const incompleteTasks = rejectAllCompletedTasks(recommendedTasks);
 
     const locale = selectLocale(store);
     const userTasks = store.tasksInStore.taskUserSettingsMap;
-    return R.map(buildDenormalizedTask(locale, userTasks), recommendedTasks);
+    return R.map(buildDenormalizedTask(locale, userTasks), incompleteTasks);
 };
 
 export const rejectAllSavedTasks =
@@ -94,6 +95,8 @@ export const rejectAllSavedTasks =
         );
         return R.reject(isTaskInSavedList, tasks);
     };
+
+export const rejectAllCompletedTasks = R.reject(R.prop('completed'));
 
 export const filterTasksByTaxonomyTerms =
     (selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
