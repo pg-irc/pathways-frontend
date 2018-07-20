@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Text, View, Icon, Button } from 'native-base';
+import { Text, View, Icon, Button, Content } from 'native-base';
 import { Trans } from '@lingui/react';
 import { I18nManager } from 'react-native';
 import { applicationStyles, colors } from '../../application/styles';
@@ -47,19 +47,21 @@ const fixture: ReadonlyArray<HelpContact> = [
 
 export const HelpComponent: React.StatelessComponent<AllProps> =
     (_: AllProps): JSX.Element => (
-        <View style={[{ flexDirection: 'column' }]}>
-            <Text style={applicationStyles.pageTitle}><Trans>{'Help & Support'}</Trans></Text>
-            <Text><Trans>If you are having difficulty with settlement in Canada, get in touch with a settlement worker.</Trans></Text>
+        <Content padder>
+            <View style={[{ flexDirection: 'column' }]}>
+                <Text style={applicationStyles.pageTitle}><Trans>{'Help & Support'}</Trans></Text>
+                <Text><Trans>If you are having difficulty with settlement in Canada, get in touch with a settlement worker.</Trans></Text>
 
-            <View style={[{ flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
-                <Button style={[{ backgroundColor: colors.darkGrey }]}>
-                    <Text><Trans>CONTACT SETTLEMENT WORKER</Trans></Text>
-                </Button>
+                <View style={[{ flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
+                    <Button style={[{ backgroundColor: colors.darkGrey }]}>
+                        <Text><Trans>CONTACT SETTLEMENT WORKER</Trans></Text>
+                    </Button>
+                </View>
+
+                <Text style={applicationStyles.subHeading}><Trans>FOR ADDITIONAL ASSISTANCE</Trans></Text>
+                {R.map(createContactComponent, fixture)}
             </View>
-
-            <Text style={applicationStyles.subHeading}><Trans>FOR ADDITIONAL ASSISTANCE</Trans></Text>
-            {R.map(createContactComponent, fixture)}
-        </View>
+        </Content>
     );
 
 const createContactComponent = (contact: HelpContact): JSX.Element => (
@@ -72,3 +74,4 @@ const createContactComponent = (contact: HelpContact): JSX.Element => (
         <View style={applicationStyles.hr} />
     </View>
 );
+
