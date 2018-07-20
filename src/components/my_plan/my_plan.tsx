@@ -29,15 +29,15 @@ export const MyPlanComponent: React.StatelessComponent<AllMyPlanProps> = (props:
         <Content padder>
             <Text style={applicationStyles.pageTitle}><Trans>My Plan</Trans></Text>
             <Collapser
-                collapsedHeader={getHeaderForSavedTasks(true)}
-                expandedHeader={getHeaderForSavedTasks(false)}
+                collapsedHeader={getHeaderForSavedTasks(collapsedIcon())}
+                expandedHeader={getHeaderForSavedTasks(expandedIcon())}
                 content={savedTasksContent}
                 initiallyCollapsed={false}
             />
             <View style={myPlanStyles.divider} />
             <Collapser
-                collapsedHeader={getHeaderForSuggestedTasks(true)}
-                expandedHeader={getHeaderForSuggestedTasks(false)}
+                collapsedHeader={getHeaderForSuggestedTasks(collapsedIcon())}
+                expandedHeader={getHeaderForSuggestedTasks(expandedIcon())}
                 content={recommendedTasksContent}
                 initiallyCollapsed={true}
                 style={myPlanStyles.suggestedTasks}
@@ -46,13 +46,21 @@ export const MyPlanComponent: React.StatelessComponent<AllMyPlanProps> = (props:
     );
 };
 
-const getHeaderForSavedTasks = (collapsed: boolean): JSX.Element => (
+const collapsedIcon = (): string => (
+    I18nManager.isRTL ? 'arrow-dropleft' : 'arrow-dropright'
+);
+
+const expandedIcon = (): string => (
+    'arrow-dropdown'
+);
+
+const getHeaderForSavedTasks = (icon: string): JSX.Element => (
     <Grid>
         <Row>
             <Col size={85} >
                 <Row style={myPlanStyles.listItemLabel}>
                     <Text style={applicationStyles.bold}><Trans>TASKS I PLAN TO DO</Trans></Text>
-                    <Icon style={myPlanStyles.icon} name={getIconNameForCollapsible(collapsed)} />
+                    <Icon style={myPlanStyles.icon} name={icon} />
                 </Row>
             </Col>
             <Col size={15}>
@@ -62,14 +70,14 @@ const getHeaderForSavedTasks = (collapsed: boolean): JSX.Element => (
     </Grid>
 );
 
-const getHeaderForSuggestedTasks = (collapsed: boolean): JSX.Element => (
+const getHeaderForSuggestedTasks = (icon: string): JSX.Element => (
     <Grid>
         <Row>
             <Col size={85} >
                 <Row style={myPlanStyles.listItemLabel}>
                     <Text style={applicationStyles.bold}><Trans>RECOMMENDED FOR ME</Trans></Text>
-                    <Icon style={myPlanStyles.icon} name='star-circle' type='MaterialCommunityIcons'/>
-                    <Icon style={myPlanStyles.icon} name={getIconNameForCollapsible(collapsed)} />
+                    <Icon style={myPlanStyles.icon} name='star-circle' type='MaterialCommunityIcons' />
+                    <Icon style={myPlanStyles.icon} name={icon} />
                 </Row>
             </Col>
             <Col size={15}>
@@ -83,16 +91,8 @@ const getHeaderForSuggestedTasks = (collapsed: boolean): JSX.Element => (
                 </Row>
             </Col>
             <Col size={15}>
-                <Icon style={myPlanStyles.infoIcon} name='information-outline' type='MaterialCommunityIcons'/>
+                <Icon style={myPlanStyles.infoIcon} name='information-outline' type='MaterialCommunityIcons' />
             </Col>
         </Row>
     </Grid>
 );
-
-const getIconNameForCollapsible = (collapsed: boolean): string => {
-    if (collapsed) {
-        return I18nManager.isRTL ? 'arrow-dropleft' : 'arrow-dropright';
-    }
-
-    return 'arrow-dropdown';
-};
