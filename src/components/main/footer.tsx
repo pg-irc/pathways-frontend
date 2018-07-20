@@ -13,7 +13,7 @@ export interface FooterProps {
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
     const path = props.location.pathname;
-    if (path === '/') {
+    if (path === '/' || path === '/help') {
         return emptyComponent();
     }
     return (
