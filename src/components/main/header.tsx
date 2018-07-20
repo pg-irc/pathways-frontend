@@ -32,7 +32,7 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
         <Header style={{ marginTop }}>
             <Left>
                 <Button transparent onPress={(): void => goBack(props.history)}>
-                    <Icon name={I18nManager.isRTL ? 'arrow-forward' : 'arrow-back'} />
+                    <Icon name={getBackButtonIcon(props.location.pathname)} />
                 </Button>
                 <BackButton />
             </Left>
@@ -42,6 +42,16 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
             </Right>
         </Header>
     );
+};
+
+const getBackButtonIcon = (pathname: string): string => {
+    if (pathname === routePathWithoutParameter(Routes.Help)) {
+        return 'close';
+    }
+    if (I18nManager.isRTL) {
+        return 'arrow-forward';
+    }
+    return 'arrow-back';
 };
 
 interface ButtonActions {
