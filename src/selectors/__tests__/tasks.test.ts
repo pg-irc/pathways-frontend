@@ -42,7 +42,7 @@ describe('tasks selector', () => {
         });
 
         test('completed property', () => {
-            expect(denormalizedTask.completed).toBe(taskUserSettings.completed);
+            expect(denormalizedTask.completed).toBe(task.completed);
         });
 
         test('starred property', () => {

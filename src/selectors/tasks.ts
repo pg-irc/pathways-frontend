@@ -42,7 +42,7 @@ export const denormalizeTask =
                 relatedTasks: relatedTasks,
                 category: task.category,
                 importance: task.importance,
-                completed: taskUserSettings.completed,
+                completed: task.completed,
             }
         );
 

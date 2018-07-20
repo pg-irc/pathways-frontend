@@ -34,10 +34,10 @@ describe('tasks reducer', () => {
         });
 
         test('can toggle a task completed', () => {
-            const taskUserSettingsId = Object.keys(store.taskUserSettingsMap)[0];
-            const taskUserSettings = store.taskUserSettingsMap[taskUserSettingsId];
-            const finalStore = stores.reducer(store, stores.toggleCompleted(taskUserSettings.taskId));
-            expect(finalStore.taskUserSettingsMap[taskUserSettingsId].completed).toEqual(!taskUserSettings.completed);
+            const taskId = Object.keys(store.taskMap)[0];
+            const oldCompleted = store.taskMap[taskId].completed;
+            const finalStore = stores.reducer(store, stores.toggleCompleted(taskId));
+            expect(finalStore.taskMap[taskId].completed).toEqual(!oldCompleted);
         });
 
         test('can toggle a task starred', () => {

@@ -57,7 +57,7 @@ export const reducer = (store: Store = buildDefaultStore(), action?: TaskAction)
         case constants.REMOVE_FROM_SAVED_LIST:
             return removeFromTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
         case constants.TOGGLE_COMPLETED:
-            return toggleTaskUserSettingsCompletedValue(store, action.payload.taskId);
+            return toggleCompletedValue(store, action.payload.taskId);
         case constants.TOGGLE_STARRED:
             return toggleTaskUserSettingsStarredValue(store, action.payload.taskId);
         // TODO
@@ -81,15 +81,15 @@ const removeFromTaskList = (store: Store, property: keyof (Store), taskList: Tas
     return { ...store, [property]: taskList.filter((id: Id) => id !== value) };
 };
 
-const toggleTaskUserSettingsCompletedValue = (store: Store, taskId: Id): Store => {
-    const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, taskId);
+const toggleCompletedValue = (store: Store, taskId: Id): Store => {
+    const task = store.taskMap[taskId];
     return {
         ...store,
-        taskUserSettingsMap: {
-            ...store.taskUserSettingsMap,
-            [taskUserSettings.id]: {
-                ...taskUserSettings,
-                completed: !taskUserSettings.completed,
+        taskMap: {
+            ...store.taskMap,
+            [taskId]: {
+                ...task,
+                completed: !task.completed,
             },
         },
     };

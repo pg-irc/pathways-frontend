@@ -32,6 +32,12 @@ describe('tasks test helpers', () => {
             expect(task.description[localeCode]).toBe(description);
         });
 
+        test('completed property', () => {
+            const completed = aBoolean();
+            const task = new TaskBuilder().withCompleted(completed).build();
+            expect(task.completed).toBe(completed);
+        });
+
         test('category property', () => {
             const category = aString();
             const task = new TaskBuilder().withCategory(category).build();
@@ -69,12 +75,6 @@ describe('tasks test helpers', () => {
                 const starred = aBoolean();
                 const taskUserSettings = new TaskUserSettingsBuilder(taskId).withStarred(starred).build();
                 expect(taskUserSettings.starred).toBe(starred);
-            });
-
-            test('completed property', () => {
-                const completed = aBoolean();
-                const taskUserSettings = new TaskUserSettingsBuilder(taskId).withCompleted(completed).build();
-                expect(taskUserSettings.completed).toBe(completed);
             });
         });
     });

@@ -14,6 +14,7 @@ export class TaskBuilder {
     taxonomyTerms: TaxonomyTermReference[] = [];
     relatedTasks: ReadonlyArray<ArticleId> = [aString(), aString()];
     relatedArticles: ReadonlyArray<store.Id> = [aString(), aString()];
+    completed: boolean = aBoolean();
     tags: ReadonlyArray<string> = [aString(), aString()];
     category: string = aString();
     importance: number = aNumber();
@@ -35,6 +36,11 @@ export class TaskBuilder {
 
     withDescription(description: string): TaskBuilder {
         this.description = description;
+        return this;
+    }
+
+    withCompleted(completed: boolean): TaskBuilder {
+        this.completed = completed;
         return this;
     }
 
@@ -76,6 +82,7 @@ export class TaskBuilder {
             taxonomyTerms: this.taxonomyTerms,
             relatedArticles: this.relatedArticles,
             relatedTasks: this.relatedArticles,
+            completed: this.completed,
             tags: this.tags,
             category: this.category,
             importance: this.importance,
@@ -91,7 +98,6 @@ export class TaskUserSettingsBuilder {
     id: store.Id = aString();
     taskId: store.Id = undefined;
     starred: boolean = aBoolean();
-    completed: boolean = aBoolean();
 
     constructor(taskId: store.Id) {
         this.taskId = taskId;
@@ -108,17 +114,11 @@ export class TaskUserSettingsBuilder {
         return this;
     }
 
-    withCompleted(completed: boolean): TaskUserSettingsBuilder {
-        this.completed = completed;
-        return this;
-    }
-
     build(): store.TaskUserSettings {
         return {
             id: this.id,
             taskId: this.taskId,
             starred: this.starred,
-            completed: this.completed,
         };
     }
 }
