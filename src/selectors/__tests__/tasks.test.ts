@@ -97,6 +97,20 @@ describe('tasks selector', () => {
             expect(result).toEqual([task]);
         });
 
+        it('includes tasks that are not saved in my plan', () => {
+            const task = new TaskBuilder().withLocaleCode(locale.code).build();
+            const noSavedTaskIds: ReadonlyArray<string> = [];
+            const result = selector.rejectAllSavedTasks([task], noSavedTaskIds);
+            expect(result).toEqual([task]);
+        });
+
+        it('excludes tasks that are saved in my plan', () => {
+            const task = new TaskBuilder().withLocaleCode(locale.code).build();
+            const savedTaskIds: ReadonlyArray<string> = [task.id];
+            const result = selector.rejectAllSavedTasks([task], savedTaskIds);
+            expect(result).toEqual([]);
+        });
+
     });
 
     describe('selected data', () => {

@@ -80,11 +80,20 @@ const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUser
 export const selectRecommendedTasks = (store: Store): ReadonlyArray<Task> => {
     const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store);
     const matchingTasks = filterTasksByTaxonomyTerms(taxonomyTerms, store.tasksInStore.taskMap);
+    const recommendedTasks = rejectAllSavedTasks(matchingTasks, store.tasksInStore.savedTasksList);
 
     const locale = selectLocale(store);
     const userTasks = store.tasksInStore.taskUserSettingsMap;
-    return R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
+    return R.map(buildDenormalizedTask(locale, userTasks), recommendedTasks);
 };
+
+export const rejectAllSavedTasks =
+    (tasks: ReadonlyArray<model.Task>, savedTasksIdList: model.TaskList): ReadonlyArray<model.Task> => {
+        const isTaskInSavedList = (task: model.Task): boolean => (
+            R.contains(task.id, savedTasksIdList)
+        );
+        return R.reject(isTaskInSavedList, tasks);
+    };
 
 export const filterTasksByTaxonomyTerms =
     (selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
