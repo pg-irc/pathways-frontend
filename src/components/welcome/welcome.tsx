@@ -18,11 +18,10 @@ export interface WelcomeActions {
 }
 
 // @ts-ignore: React Native uses require() to load ImageBitmaps; it's best to do this once, outside of render.
-// tslint:diable-next-line:no-var-requires
+// tslint:disable-next-line:no-var-requires
 const logoImg = require('../../../assets/images/icon.png');
 
 export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & RouterProps): JSX.Element {
-    const i18n = props.i18n;
     return (
         <View style={[
             {

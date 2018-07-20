@@ -15,10 +15,10 @@ export interface ExploreSectionProps {
 export interface ExploreSectionActions {
 }
 
-type AllExploreSectionProps = ExploreSectionProps & ExploreSectionActions;
+type AllExploreSectionProps = ExploreSectionProps & ExploreSectionActions & RouterProps;
 
 export const ExploreSectionComponent: React.StatelessComponent<AllExploreSectionProps> =
-    (props: AllExploreSectionProps & RouterProps): JSX.Element => {
+    (props: AllExploreSectionProps): JSX.Element => {
         return <Container>
             <Content padder>
                 <Grid>

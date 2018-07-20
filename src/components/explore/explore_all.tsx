@@ -17,10 +17,10 @@ export interface ExploreAllActions {
     readonly goToExploreSection: (sectionId: Id) => SetExploreSectionPageAction;
 }
 
-type AllExploreProps = ExploreAllProps & ExploreAllActions;
+type AllExploreProps = ExploreAllProps & ExploreAllActions & RouterProps;
 
 export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
-    (props: AllExploreProps & RouterProps): JSX.Element => {
+    (props: AllExploreProps): JSX.Element => {
         const sectionsGroupedIntoThrees = R.splitEvery(3, props.sections);
         const renderSectionButton = (section: ExploreSection): JSX.Element => (
             <SectionButton

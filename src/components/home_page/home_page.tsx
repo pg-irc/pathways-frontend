@@ -10,9 +10,9 @@ import { RouterProps } from '../../application/routing';
 
 export { HomePageProps, HomePageActions } from './props';
 
-type AllHomePageProps = I18nProps & HomePageProps & HomePageActions;
+type AllHomePageProps = I18nProps & HomePageProps & HomePageActions & RouterProps;
 
-export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps & RouterProps): JSX.Element => {
+export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => {
     return (
         <Content padder>
             {introduction()}
