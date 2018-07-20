@@ -7,7 +7,7 @@ import { I18nManager, StatusBar, Platform } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton } from 'react-router-native';
 import { routePathWithoutParameter, Routes, goBack, goToRouteWithoutParameter } from '../../application/routing';
-import { emptyComponent } from '../empty_component/empty_component';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -23,10 +23,11 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
     const { onLanguageSelect, currentLocale }: HeaderProps & UiActions = props;
 
     if (props.location.pathname === routePathWithoutParameter(Routes.Welcome)) {
-        return emptyComponent();
+        return <EmptyComponent />;
     }
 
-    const marginTop = getMarginForPlatform();
+    const marginTop = getStatusBarHeightForPlatform();
+
     return (
         <Header style={{ marginTop }}>
             <Left>
@@ -36,7 +37,7 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
                 <BackButton />
             </Left>
             <Right>
-                <HelpButton onPress={(): void => goToRouteWithoutParameter(Routes.Help, props.history)} />
+                {helpButtonIfShown(props)}
                 <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
             </Right>
         </Header>
@@ -47,6 +48,15 @@ interface ButtonActions {
     readonly onPress: () => void;
 }
 
+const helpButtonIfShown = (props: HeaderProps): JSX.Element => {
+    const showHelpButton = props.location.pathname !== routePathWithoutParameter(Routes.Help);
+    if (!showHelpButton) {
+        return <EmptyComponent />;
+    }
+    const onPress = goToRouteWithoutParameter(Routes.Help, props.history);
+    return <HelpButton onPress={onPress} />;
+};
+
 const HelpButton: React.StatelessComponent<ButtonActions> = (props: ButtonActions): JSX.Element => (
     <Button {...props} style={{ backgroundColor: 'green' }}>
         <Icon name='help-circle' />
@@ -54,6 +64,6 @@ const HelpButton: React.StatelessComponent<ButtonActions> = (props: ButtonAction
     </Button>
 );
 
-const getMarginForPlatform = (): number => (
+const getStatusBarHeightForPlatform = (): number => (
     Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
 );
