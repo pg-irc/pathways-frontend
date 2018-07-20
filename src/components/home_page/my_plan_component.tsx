@@ -7,6 +7,7 @@ import { TaskListComponent } from '../tasks/task_list';
 import { HomePageProps } from './props';
 import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { TaskListItemActions } from '../tasks/task_list_item';
+import { MyPlanIntroComponent } from '../my_plan/my_plan_intro_component';
 
 type AllHomePageProps = HomePageProps & TaskListItemActions & RouterProps;
 
@@ -32,22 +33,14 @@ export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (prop
 
 const myPlanIntro = (props: RouterProps): JSX.Element => (
     <View>
-        <Text style={[
-            { textAlign: 'left' },
-            { marginBottom: 20 },
-        ]}>
-            <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps you need to take?
-            <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
-            <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
-        </Text>
-
+        <MyPlanIntroComponent {...props} />
         <Text style={[
             { textAlign: 'left' },
             { marginBottom: 20 },
         ]}>
             <Trans>Here are some sample tasks:</Trans>
         </Text>
-    </View>
+    </View >
 );
 
 const myPlanIntroWithEmptyPlan = (props: RouterProps): JSX.Element => (
@@ -57,6 +50,6 @@ const myPlanIntroWithEmptyPlan = (props: RouterProps): JSX.Element => (
     ]}>
         <Trans>You haven't personalized your Plan yet. Would you like to
         <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
-        <Trans>answer some questions</Trans></Text> to get your most relevant tasks?</Trans>
+                <Trans>answer some questions</Trans></Text> to get your most relevant tasks?</Trans>
     </Text>
 );
