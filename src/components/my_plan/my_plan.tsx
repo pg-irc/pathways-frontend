@@ -39,7 +39,7 @@ export const MyPlanComponent: React.StatelessComponent<AllMyPlanProps> = (props:
                 collapsedHeader={getHeaderForSuggestedTasks(collapsedIcon())}
                 expandedHeader={getHeaderForSuggestedTasks(expandedIcon())}
                 content={recommendedTasksContent}
-                initiallyCollapsed={true}
+                initiallyCollapsed={false}
                 style={myPlanStyles.suggestedTasks}
             />
         </Content>
