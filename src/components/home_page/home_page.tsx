@@ -6,12 +6,13 @@ import { CopyrightComponent } from './copyright';
 import { HomePageProps, HomePageActions } from './props';
 import { LearnSectionComponent } from './learn_section_component';
 import { MyPlanComponent } from './my_plan_component';
+import { RouterProps } from '../../application/routing';
 
 export { HomePageProps, HomePageActions } from './props';
 
 type AllHomePageProps = I18nProps & HomePageProps & HomePageActions;
 
-export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => {
+export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps & RouterProps): JSX.Element => {
     return (
         <Content padder>
             {introduction()}

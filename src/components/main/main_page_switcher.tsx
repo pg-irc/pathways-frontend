@@ -8,7 +8,7 @@ import { ArticleDetailConnectedComponent } from '../articles/article_detail_conn
 import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
 import { QuestionnaireConnectedComponent } from '../questionnaire';
 import { MyPlan } from '../my_plan/my_plan';
-import { Routes } from '../../application/routing';
+import { Routes, routePath } from '../../application/routing';
 
 export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Element => {
     // TODO Use this as a guide for what we remove....
@@ -42,14 +42,14 @@ export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Eleme
     // }
     return (
         <Switch>
-            <Route exact path={Routes.welcome} component={WelcomeConnectedComponent} />
-            <Route exact path={Routes.home} component={HomePageConnectedComponent} />
-            <Route exact path={Routes.questionnaire} component={QuestionnaireConnectedComponent} />
-            <Route exact path={Routes.myPlan} component={MyPlan} />
-            <Route exact path={Routes.exploreSections} component={ExploreAllConnectedComponent} />
-            <Route exact path={Routes.exploreSectionDetail} component={ExploreSectionConnectedComponent} />
-            <Route exact path={Routes.taskDetail} component={TaskDetailConnectedComponent} />
-            <Route exact path={Routes.articleDetail} component={ArticleDetailConnectedComponent} />
+            <Route exact path={routePath(Routes.Welcome)} component={WelcomeConnectedComponent} />
+            <Route exact path={routePath(Routes.Home)} component={HomePageConnectedComponent} />
+            <Route exact path={routePath(Routes.Questionnaire)} component={QuestionnaireConnectedComponent} />
+            <Route exact path={routePath(Routes.MyPlan)} component={MyPlan} />
+            <Route exact path={routePath(Routes.Learn)} component={ExploreAllConnectedComponent} />
+            <Route exact path={routePath(Routes.LearnDetail)} component={ExploreSectionConnectedComponent} />
+            <Route exact path={routePath(Routes.TaskDetail)} component={TaskDetailConnectedComponent} />
+            <Route exact path={routePath(Routes.ArticleDetail)} component={ArticleDetailConnectedComponent} />
         </Switch>
     );
 };
