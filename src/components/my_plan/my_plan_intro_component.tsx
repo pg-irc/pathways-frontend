@@ -13,3 +13,15 @@ export const MyPlanIntroComponent: React.StatelessComponent<RouterProps> = (prop
                 <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
     </Text>
 );
+
+export const EmptyMyPlanIntroComponent: React.StatelessComponent<RouterProps> =
+    (props: RouterProps): JSX.Element => (
+        <Text style={[
+            { textAlign: 'left' },
+            { marginBottom: 20 },
+        ]}>
+            <Trans>You haven't personalized your Plan yet. Would you like to
+                <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
+                    <Trans>answer some questions</Trans></Text> to get your most relevant tasks?</Trans>
+        </Text>
+    );
