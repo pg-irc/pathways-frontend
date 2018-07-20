@@ -9,7 +9,8 @@ import { Collapser } from '../collapser/collapser';
 import { TaskListItem } from '../../selectors/tasks';
 import { TaskListComponent, TaskListActions, noTasksAddedYetTextComponent } from '../tasks/task_list';
 import { RouterProps } from '../../application/routing';
-import { MyPlanIntroComponent } from './my_plan_intro_component';
+import { MyPlanIntroComponent, EmptyMyPlanIntroComponent } from './my_plan_intro_component';
+import * as R from 'ramda';
 
 export interface MyPlanProps {
     readonly savedTasks: ReadonlyArray<TaskListItem>;
@@ -34,7 +35,7 @@ export const MyPlanComponent: React.StatelessComponent<Props> = (props: Props): 
     return (
         <Content padder>
             <Text style={applicationStyles.pageTitle}><Trans>My Plan</Trans></Text>
-            <MyPlanIntroComponent {...props} />
+            <Intro {...props} />
             <Collapser
                 collapsedHeader={getHeaderForSavedTasks(collapsedIcon())}
                 expandedHeader={getHeaderForSavedTasks(expandedIcon())}
@@ -52,6 +53,10 @@ export const MyPlanComponent: React.StatelessComponent<Props> = (props: Props): 
         </Content>
     );
 };
+
+const Intro: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    R.isEmpty(props.recommendedTasks) ? <EmptyMyPlanIntroComponent {...props} /> : <MyPlanIntroComponent {...props} />
+);
 
 const collapsedIcon = (): string => (
     I18nManager.isRTL ? 'arrow-dropleft' : 'arrow-dropright'
