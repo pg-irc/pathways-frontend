@@ -18,6 +18,10 @@ export const applicationStyles = StyleSheet.create({
     bold: {
         fontWeight: 'bold',
     },
+    subHeading: {
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
     hr: {
         borderTopWidth: 0.5,
         borderColor: colors.lightGrey,

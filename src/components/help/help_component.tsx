@@ -1,5 +1,9 @@
 import React from 'react';
-import { Text } from 'native-base';
+import * as R from 'ramda';
+import { Text, View, Icon, Button } from 'native-base';
+import { Trans } from '@lingui/react';
+import { I18nManager } from 'react-native';
+import { applicationStyles, colors } from '../../application/styles';
 
 export interface HelpComponentProps {
 }
@@ -9,7 +13,62 @@ export interface HelpComponentActions {
 
 type AllProps = HelpComponentProps & HelpComponentActions;
 
+interface HelpContact {
+    readonly icon: string;
+    readonly description: string;
+}
+
+const fixture: ReadonlyArray<HelpContact> = [
+    {
+        icon: 'phone',
+        description: 'Emergencies (9-1-1)',
+    },
+    {
+        icon: 'phone',
+        description: 'HealthLinkBC: multilingual health information (8-1-1)',
+    },
+    {
+        icon: 'phone',
+        description: 'Mental health & trauma support',
+    },
+    {
+        icon: 'phone',
+        description: 'Legal aid help line',
+    },
+    {
+        icon: 'phone',
+        description: 'Other multilingual helplines',
+    },
+    {
+        icon: 'email',
+        description: 'Contact app team for technical issues',
+    },
+];
+
 export const HelpComponent: React.StatelessComponent<AllProps> =
-    (_: AllProps): JSX.Element => {
-        return <Text>Help</Text>;
-    };
+    (_: AllProps): JSX.Element => (
+        <View style={[{ flexDirection: 'column' }]}>
+            <Text style={applicationStyles.pageTitle}><Trans>{'Help & Support'}</Trans></Text>
+            <Text><Trans>If you are having difficulty with settlement in Canada, get in touch with a settlement worker.</Trans></Text>
+
+            <View style={[{ flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
+                <Button style={[{ backgroundColor: colors.darkGrey }]}>
+                    <Text><Trans>CONTACT SETTLEMENT WORKER</Trans></Text>
+                </Button>
+            </View>
+
+            <Text style={applicationStyles.subHeading}><Trans>FOR ADDITIONAL ASSISTANCE</Trans></Text>
+            {R.map(createContactComponent, fixture)}
+        </View>
+    );
+
+const createContactComponent = (contact: HelpContact): JSX.Element => (
+    <View style={[{ flexDirection: 'column' }]} key={contact.description} >
+        <View style={[{ flexDirection: 'row' }]}>
+            <Icon style={[{ justifyContent: 'flex-start' }]} type='MaterialCommunityIcons' name={contact.icon} />
+            <Text style={[{ flex: 1, justifyContent: 'flex-start' }]}>{contact.description}</Text>
+            <Icon style={[{ justifyContent: 'flex-end' }]} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
+        </View>
+        <View style={applicationStyles.hr} />
+    </View>
+);
