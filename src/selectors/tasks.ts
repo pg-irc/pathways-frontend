@@ -128,3 +128,14 @@ export const filterTasksByTaxonomyTerms =
 
         return R.filter(isRecommended, R.values(taskMap));
     };
+
+export const selectTaskByPathParameter = (store: app.Store, taskId: model.Id): Task => {
+    const locale = selectLocale(store);
+    const taskMap = store.applicationState.tasksInStore.taskMap;
+    const taskUserSettingsMap = store.applicationState.tasksInStore.taskUserSettingsMap;
+    const taskUserSettings = model.findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
+    const task = taskMap[taskId];
+    const relatedTasks = selectRelatedTasks(store, task.relatedTasks);
+    const relatedArticles = selectRelatedArticles(store, task.relatedArticles);
+    return denormalizeTask(locale, task, taskUserSettings, relatedArticles, relatedTasks);
+};

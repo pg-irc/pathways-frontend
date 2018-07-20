@@ -65,3 +65,12 @@ export const selectArticleAsListItem = (store: app.Store, articleId: model.Id): 
     const article = articles[articleId];
     return denormalizeArticleListItem(locale, article);
 };
+
+export const selectArticleByPathParameter = (store: app.Store, articleId: model.Id): Article => {
+    const locale = selectLocale(store);
+    const articles = store.applicationState.articlesInStore.articles;
+    const article = articles[articleId];
+    const relatedTasks = selectRelatedTasks(store, article.relatedTasks);
+    const relatedArticles = selectRelatedArticles(store, article.relatedArticles);
+    return denormalizeArticle(locale, article, relatedArticles, relatedTasks);
+};

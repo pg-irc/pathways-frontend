@@ -7,7 +7,7 @@ import { Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedActi
          toggleCompleted, RemoveFromSavedListAction, removeFromSavedList } from '../../stores/tasks';
 import { Id as ArticleId } from '../../stores/articles';
 import { connect } from 'react-redux';
-import { Task, selectCurrentTask } from '../../selectors/tasks';
+import { Task, selectTaskByPathParameter } from '../../selectors/tasks';
 import { SetArticleDetailPageAction, setArticleDetailPage,
          SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 import { RouterProps } from '../../application/routing';
@@ -17,8 +17,8 @@ interface StateProps extends TaskDetailProps {
     readonly taskServices: TaskServices;
 }
 
-function mapStateToProps(store: Store): StateProps {
-    const task: Task = selectCurrentTask(store);
+function mapStateToProps(store: Store, ownProps: RouterProps): StateProps {
+    const task: Task = selectTaskByPathParameter(store, ownProps.match.params.taskId);
     return {
         task: task,
         savedTasks: store.applicationState.tasksInStore.savedTasksList,

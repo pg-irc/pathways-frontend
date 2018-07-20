@@ -7,7 +7,7 @@ import { applicationStyles } from '../../application/styles';
 import { Id } from '../../stores/explore';
 import { Trans } from '@lingui/react';
 import { SetExploreSectionPageAction } from '../../stores/page_switcher';
-import { RouterProps } from '../../application/routing';
+import { RouterProps, Routes, routePathWithArgument } from '../../application/routing';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -22,13 +22,6 @@ type AllExploreProps = ExploreAllProps & ExploreAllActions & RouterProps;
 export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
     (props: AllExploreProps): JSX.Element => {
         const sectionsGroupedIntoThrees = R.splitEvery(3, props.sections);
-        const renderSectionButton = (section: ExploreSection): JSX.Element => (
-            <SectionButton
-                onPress={(): SetExploreSectionPageAction => props.goToExploreSection(section.id)}
-                buttonStyle={{height: 100}}
-                {...section}
-            />
-        );
         return <Content padder>
             <Text style={applicationStyles.pageTitle}><Trans>Learn about:</Trans></Text>
             <View style={[{flex: 1}]}>
@@ -36,12 +29,27 @@ export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
                     <RowOfSectionButtons
                         key={computeUniqueKeyForSections(sections)}
                         sections={sections}
-                        renderSectionButton={renderSectionButton}
+                        renderSectionButton={renderLearnButton(props)}
                     />
                 ))}
             </View>
         </Content>;
     };
+
+const renderLearnButton = R.curry((props: AllExploreProps, section: ExploreSection): JSX.Element => (
+    renderLearnSectionButton(props, section)
+));
+
+const renderLearnSectionButton = (props: AllExploreProps, section: ExploreSection): JSX.Element => {
+    const goToExploreSection = (): SetExploreSectionPageAction => {
+        // tslint:disable-next-line:no-expression-statement
+        props.history.push(routePathWithArgument(Routes.LearnDetail, section.id));
+        return props.goToExploreSection(section.id);
+    };
+    return(
+        <SectionButton {...section} onPress={goToExploreSection} buttonStyle={{height: 100}} />
+    );
+};
 
 interface ButtonRowProps {
     readonly sections: ReadonlyArray<ExploreSection>;

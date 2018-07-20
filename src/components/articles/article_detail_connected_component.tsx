@@ -4,12 +4,13 @@ import { Store } from '../../application/store';
 import { ArticleDetailComponent, ArticleDetailProps, ArticleDetailActions } from './article_detail';
 import { Id } from '../../stores/articles';
 import { SetArticleDetailPageAction, setArticleDetailPage } from '../../stores/page_switcher';
-import { selectCurrentArticle } from '../../selectors/articles';
+import { selectArticleByPathParameter } from '../../selectors/articles';
 import { SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 import { AddToSavedListAction, addToSavedList } from '../../stores/tasks';
+import { RouterProps } from '../../application/routing';
 
-const mapStateToProps = (store: Store): ArticleDetailProps => ({
-    article: selectCurrentArticle(store),
+const mapStateToProps = (store: Store, ownProps: RouterProps): ArticleDetailProps => ({
+    article: selectArticleByPathParameter(store, ownProps.match.params.articleId),
     savedTasks: store.applicationState.tasksInStore.savedTasksList,
 });
 

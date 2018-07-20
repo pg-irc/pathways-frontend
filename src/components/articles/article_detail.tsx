@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Content, Text, Icon, Button } from 'native-base';
+import { Content, Text, Icon, Button } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { Article } from '../../selectors/articles';
 import { Id as TaskId } from '../../stores/tasks';
@@ -19,28 +19,26 @@ type AllArticleDetailProps = ArticleDetailActions & ArticleDetailProps & RouterP
 
 export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailProps> =
     (props: AllArticleDetailProps): JSX.Element => (
-            <Container>
-                <Content padder>
-                    <Grid>
-                        <Row>
-                            <Text>[image]</Text>
-                        </Row>
-                        {renderActions(props)}
-                        <Row>
-                            <Text>{props.article.description}</Text>
-                        </Row>
-                        <RelatedArticlesComponent
-                            {...props}
-                            relatedArticles={props.article.relatedArticles}
-                        />
-                        <RelatedTasksComponent
-                            {...props}
-                            relatedTasks={props.article.relatedTasks}
-                            savedTasks={props.savedTasks}
-                        />
-                    </Grid>
-                </Content>
-            </Container>
+            <Content padder>
+                <Grid>
+                    <Row>
+                        <Text>[image]</Text>
+                    </Row>
+                    {renderActions(props)}
+                    <Row>
+                        <Text>{props.article.description}</Text>
+                    </Row>
+                    <RelatedArticlesComponent
+                        {...props}
+                        relatedArticles={props.article.relatedArticles}
+                    />
+                    <RelatedTasksComponent
+                        {...props}
+                        relatedTasks={props.article.relatedTasks}
+                        savedTasks={props.savedTasks}
+                    />
+                </Grid>
+            </Content>
     );
 
 const renderActions = (props: AllArticleDetailProps): JSX.Element => (

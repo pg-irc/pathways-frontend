@@ -31,3 +31,10 @@ export const selectCurrentExploreSection = (store: app.Store): ExploreSection =>
     const exploreTaxonomy = selectExploreTaxonomy(store);
     return details.getExploreSectionById(locale, sectionId, sections, exploreTaxonomy);
 };
+
+export const selectExploreSectionByPathParameter = (store: app.Store, exploreId: stores.Id): ExploreSection => {
+    const locale = selectLocale(store);
+    const sections = store.applicationState.exploreSectionsInStore.sections;
+    const exploreTaxonomy = selectExploreTaxonomy(store);
+    return details.getExploreSectionById(locale, exploreId, sections, exploreTaxonomy);
+};
