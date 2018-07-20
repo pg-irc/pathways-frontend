@@ -1,7 +1,7 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
 import { I18nManager } from 'react-native';
-import { Content, Text, View, Col, Row, Grid, Button, Icon } from 'native-base';
+import { Content, Text, View, Col, Row, Grid, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { applicationStyles, colors } from '../../application/styles';
 import { myPlanStyles } from './styles';
@@ -63,9 +63,6 @@ const getHeaderForSavedTasks = (icon: string): JSX.Element => (
                     <Icon style={myPlanStyles.icon} name={icon} />
                 </Row>
             </Col>
-            <Col size={15}>
-                <Button dark transparent><Icon name='more' /></Button>
-            </Col>
         </Row>
     </Grid>
 );
@@ -80,18 +77,12 @@ const getHeaderForSuggestedTasks = (icon: string): JSX.Element => (
                     <Icon style={myPlanStyles.icon} name={icon} />
                 </Row>
             </Col>
-            <Col size={15}>
-                <Button dark transparent><Icon name='more' /></Button>
-            </Col>
         </Row>
         <Row>
             <Col size={85}>
                 <Row>
                     <Text style={myPlanStyles.recommendedText}><Trans>Important for all newcomers to BC:</Trans></Text>
                 </Row>
-            </Col>
-            <Col size={15}>
-                <Icon style={myPlanStyles.infoIcon} name='information-outline' type='MaterialCommunityIcons' />
             </Col>
         </Row>
     </Grid>
