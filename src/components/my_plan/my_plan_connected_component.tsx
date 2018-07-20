@@ -1,15 +1,15 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { TaskListComponent, TaskListProps, TaskListActions } from './task_list';
-import { TaskListItemStyleProps } from './task_list_item';
+import { TaskListActions } from '../tasks/task_list';
 import { Store } from '../../application/store';
-import { selectRecommendedTasks } from '../../selectors/tasks';
+import { MyPlanComponent, MyPlanProps } from './my_plan';
+import { selectAllSavedTasks, selectRecommendedTasks } from '../../selectors/tasks';
 import { Id, AddToSavedListAction, addToSavedList } from '../../stores/tasks';
 import { SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
 
-const mapStateToProps = (store: Store, ownProps: TaskListItemStyleProps): TaskListProps => ({
-    tasks: selectRecommendedTasks(store),
-    listItemStyle: ownProps.listItemStyle,
+const mapStateToProps = (store: Store): MyPlanProps => ({
+    savedTasks: selectAllSavedTasks(store),
+    recommendedTasks: selectRecommendedTasks(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListActions => ({
@@ -17,4 +17,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListActions => ({
     addToSavedList: (taskId: Id): AddToSavedListAction => dispatch(addToSavedList(taskId)),
 });
 
-export const SuggestedTasksConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TaskListComponent);
+export const MyPlanConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(MyPlanComponent);

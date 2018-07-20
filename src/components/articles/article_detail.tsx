@@ -6,15 +6,16 @@ import { Id as TaskId } from '../../stores/tasks';
 import { applicationStyles } from '../../application/styles';
 import { ArticleListItemActions } from './article_list_item';
 import { TaskListItemActions } from '../tasks/task_list_item';
-import { RelatedTasksComponent } from '../related_tasks/related_tasks';
-import { RelatedArticlesComponent } from '../related_articles/related_articles';
+import { RelatedTasksComponent } from '../tasks/related_tasks';
+import { RelatedArticlesComponent } from './related_articles';
+import { RouterProps } from '../../application/routing';
 
 export interface ArticleDetailProps {
     readonly article: Article;
     readonly savedTasks: ReadonlyArray<TaskId>;
 }
 export type ArticleDetailActions = ArticleListItemActions & TaskListItemActions;
-type AllArticleDetailProps = ArticleDetailActions & ArticleDetailProps;
+type AllArticleDetailProps = ArticleDetailActions & ArticleDetailProps & RouterProps;
 
 export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailProps> =
     (props: AllArticleDetailProps): JSX.Element => (
@@ -29,13 +30,13 @@ export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailPr
                             <Text>{props.article.description}</Text>
                         </Row>
                         <RelatedArticlesComponent
-                            relatedArticles={props.article.relatedArticles}
                             {...props}
+                            relatedArticles={props.article.relatedArticles}
                         />
                         <RelatedTasksComponent
+                            {...props}
                             relatedTasks={props.article.relatedTasks}
                             savedTasks={props.savedTasks}
-                            {...props}
                         />
                     </Grid>
                 </Content>

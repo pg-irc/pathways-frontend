@@ -14,9 +14,8 @@ export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (prop
         <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>MY PLAN</Trans></Text>
         {R.isEmpty(props.tasks) ? myPlanIntroWithEmptyPlan(props) : myPlanIntro(props)}
         <TaskListComponent
+            {...props}
             tasks={R.take(3, props.tasks)}
-            goToTaskDetail={props.goToTaskDetail}
-            addToSavedList={props.addToSavedList}
             listItemStyle={{ backgroundColor: colors.lighterGrey }} />
 
         <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>

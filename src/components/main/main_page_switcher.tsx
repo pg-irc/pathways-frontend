@@ -7,7 +7,7 @@ import { ExploreSectionConnectedComponent } from '../explore/explore_section_con
 import { ArticleDetailConnectedComponent } from '../articles/article_detail_connected_component';
 import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
 import { QuestionnaireConnectedComponent } from '../questionnaire';
-import { MyPlan } from '../my_plan/my_plan';
+import { MyPlanConnectedComponent } from '../my_plan/my_plan_connected_component';
 import { Routes, routePath } from '../../application/routing';
 
 export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Element => {
@@ -45,7 +45,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Eleme
             <Route exact path={routePath(Routes.Welcome)} component={WelcomeConnectedComponent} />
             <Route exact path={routePath(Routes.Home)} component={HomePageConnectedComponent} />
             <Route exact path={routePath(Routes.Questionnaire)} component={QuestionnaireConnectedComponent} />
-            <Route exact path={routePath(Routes.MyPlan)} component={MyPlan} />
+            <Route exact path={routePath(Routes.MyPlan)} component={MyPlanConnectedComponent} />
             <Route exact path={routePath(Routes.Learn)} component={ExploreAllConnectedComponent} />
             <Route exact path={routePath(Routes.LearnDetail)} component={ExploreSectionConnectedComponent} />
             <Route exact path={routePath(Routes.TaskDetail)} component={TaskDetailConnectedComponent} />

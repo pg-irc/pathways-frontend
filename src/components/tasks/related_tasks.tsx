@@ -7,12 +7,13 @@ import { Id as TaskId } from '../../stores/tasks';
 import { TaskListComponent } from '../tasks/task_list';
 import { Trans } from '@lingui/react';
 import { TaskListItemActions } from '../tasks/task_list_item';
+import { RouterProps } from '../../application/routing';
 
 interface RelatedTasksProps {
     readonly relatedTasks: ReadonlyArray<TaskListItem>;
     readonly savedTasks: ReadonlyArray<TaskId>;
 }
-type AllRelatedTasksProps = RelatedTasksProps & TaskListItemActions;
+type AllRelatedTasksProps = RelatedTasksProps & TaskListItemActions & RouterProps;
 
 export const RelatedTasksComponent: React.StatelessComponent<AllRelatedTasksProps> = (props: AllRelatedTasksProps): JSX.Element => {
     if (props.relatedTasks.length === 0) {
@@ -32,7 +33,7 @@ export const RelatedTasksComponent: React.StatelessComponent<AllRelatedTasksProp
         <View>
             <View style={applicationStyles.hr} />
             <Text style={applicationStyles.bold}><Trans>RELATED TASKS</Trans></Text>
-            <TaskListComponent {...componentProps} />
+            <TaskListComponent {...props} {...componentProps} />
         </View>
     );
 };

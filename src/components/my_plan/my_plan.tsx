@@ -1,36 +1,50 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
 import { I18nManager } from 'react-native';
-import { Container, Content, Text, View, Col, Row, Grid, Button, Icon } from 'native-base';
-import { SavedTasksConnectedComponent } from '../tasks/saved_tasks_connected_component';
-import { SuggestedTasksConnectedComponent } from '../tasks/suggested_tasks_connected_component';
+import { Content, Text, View, Col, Row, Grid, Button, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import { applicationStyles } from '../../application/styles';
+import { applicationStyles, colors } from '../../application/styles';
 import { myPlanStyles } from './styles';
 import { Collapser } from '../collapser/collapser';
-import { taskStyles } from '../tasks/styles';
+import { TaskListItem } from '../../selectors/tasks';
+import { TaskListComponent, TaskListActions } from '../tasks/task_list';
+import { RouterProps } from '../../application/routing';
 
-export const MyPlan: React.StatelessComponent = (): JSX.Element => (
-    <Container>
+export interface MyPlanProps {
+    readonly savedTasks: ReadonlyArray<TaskListItem>;
+    readonly recommendedTasks: ReadonlyArray<TaskListItem>;
+}
+
+type AllMyPlanProps = MyPlanProps & TaskListActions & RouterProps;
+
+export const MyPlanComponent: React.StatelessComponent<AllMyPlanProps> = (props: AllMyPlanProps): JSX.Element => {
+    const savedTasksContent = <TaskListComponent {...props} tasks={props.savedTasks} />;
+    const recommendedTasksContent =
+        <TaskListComponent
+            {...props}
+            tasks={props.recommendedTasks}
+            listItemStyle={[{ backgroundColor: colors.lighterGrey }]} />;
+
+    return (
         <Content padder>
             <Text style={applicationStyles.pageTitle}><Trans>My Plan</Trans></Text>
             <Collapser
                 collapsedHeader={getHeaderForSavedTasks(true)}
                 expandedHeader={getHeaderForSavedTasks(false)}
-                content={<SavedTasksConnectedComponent />}
+                content={savedTasksContent}
                 initiallyCollapsed={false}
             />
             <View style={myPlanStyles.divider} />
             <Collapser
                 collapsedHeader={getHeaderForSuggestedTasks(true)}
                 expandedHeader={getHeaderForSuggestedTasks(false)}
-                content={<SuggestedTasksConnectedComponent listItemStyle={taskStyles.suggestedListItem}/>}
+                content={recommendedTasksContent}
                 initiallyCollapsed={true}
                 style={myPlanStyles.suggestedTasks}
             />
         </Content>
-    </Container>
-);
+    );
+};
 
 const getHeaderForSavedTasks = (collapsed: boolean): JSX.Element => (
     <Grid>

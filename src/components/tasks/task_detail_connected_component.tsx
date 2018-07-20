@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Task, selectCurrentTask } from '../../selectors/tasks';
 import { SetArticleDetailPageAction, setArticleDetailPage,
          SetTaskDetailPageAction, setTaskDetailPage } from '../../stores/page_switcher';
+import { RouterProps } from '../../application/routing';
 
 interface StateProps extends TaskDetailProps {
     readonly searchQuery: string;
@@ -17,7 +18,7 @@ interface StateProps extends TaskDetailProps {
 }
 
 function mapStateToProps(store: Store): StateProps {
-    const task: Task  = selectCurrentTask(store);
+    const task: Task = selectCurrentTask(store);
     return {
         task: task,
         savedTasks: store.applicationState.tasksInStore.savedTasksList,
@@ -43,9 +44,9 @@ function mapDispatchToProps(dispatch: Dispatch<Store>): DispatchProps {
     };
 }
 
-type ComponentProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater;
+type ComponentProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater & RouterProps;
 
-function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps): ComponentProps {
+function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps, routerProps: RouterProps): ComponentProps {
     return {
         task: stateProps.task,
         savedTasks: stateProps.savedTasks,
@@ -58,6 +59,9 @@ function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps): Compo
         requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
             return dispatchProps.requestUpdateTaskServices(stateProps.task, stateProps.searchQuery);
         },
+        history: routerProps.history,
+        location: routerProps.location,
+        match: routerProps.match,
     };
 }
 

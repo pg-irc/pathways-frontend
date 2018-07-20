@@ -6,6 +6,7 @@ import { TaskListItem } from '../../selectors/tasks';
 import { AddToSavedListAction, Id as TaskId } from '../../stores/tasks';
 import { SetTaskDetailPageAction } from '../../stores/page_switcher';
 import { I18nManager } from 'react-native';
+import { RouterProps, Routes, routePathWithArgument } from '../../application/routing';
 
 export interface TaskListItemStyleProps {
     readonly listItemStyle?: object;
@@ -17,10 +18,14 @@ export interface TaskListItemActions {
     readonly goToTaskDetail: (taskId: TaskId) => SetTaskDetailPageAction;
     readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
 }
-type AllTaskListItemProps = TaskListItemProps & TaskListItemActions;
+type AllTaskListItemProps = TaskListItemProps & TaskListItemActions & RouterProps;
 
 export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProps> = (props: AllTaskListItemProps): JSX.Element => {
-    const goToTaskDetail = (): SetTaskDetailPageAction => props.goToTaskDetail(props.id);
+    const goToTaskDetail = (): SetTaskDetailPageAction => {
+        // tslint:disable-next-line:no-expression-statement
+        props.history.push(routePathWithArgument(Routes.TaskDetail, props.id));
+        return props.goToTaskDetail(props.id);
+    };
     return (
         <ListItem style={props.listItemStyle} button noIndent onPress={goToTaskDetail}>
             <Grid>

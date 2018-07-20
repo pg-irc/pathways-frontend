@@ -5,11 +5,12 @@ import { ArticleListItem } from '../../selectors/articles';
 import { ArticleListComponent } from '../articles/article_list';
 import { Trans } from '@lingui/react';
 import { ArticleListItemActions } from '../articles/article_list_item';
+import { RouterProps } from '../../application/routing';
 
 interface RelatedArticlesProps {
     readonly relatedArticles: ReadonlyArray<ArticleListItem>;
 }
-type AllRelatedArticlesProps = RelatedArticlesProps & ArticleListItemActions;
+type AllRelatedArticlesProps = RelatedArticlesProps & ArticleListItemActions & RouterProps;
 
 export const RelatedArticlesComponent: React.StatelessComponent<AllRelatedArticlesProps> = (props: AllRelatedArticlesProps): JSX.Element => {
     if (props.relatedArticles.length === 0) {
@@ -24,7 +25,7 @@ export const RelatedArticlesComponent: React.StatelessComponent<AllRelatedArticl
         <View>
             <View style={applicationStyles.hr} />
             <Text style={applicationStyles.bold}><Trans>LEARN MORE</Trans></Text>
-            <ArticleListComponent {...componentProps} />
+            <ArticleListComponent {...props} {...componentProps} />
         </View>
     );
 };
