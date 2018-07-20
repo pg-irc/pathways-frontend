@@ -14,7 +14,7 @@ export interface WelcomeProps {
 
 export interface WelcomeActions {
     readonly setLocale: (localeCode: string) => SetLocale.Request;
-    readonly goToExplore: () => void;
+    readonly goToHome: () => void;
 }
 
 // @ts-ignore: React Native uses require() to load ImageBitmaps; it's best to do this once, outside of render.
@@ -22,7 +22,6 @@ export interface WelcomeActions {
 const logoImg = require('../../../assets/images/icon.png');
 
 export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.Element {
-    const i18n = props.i18n;
     return (
         <View style={[
             {
@@ -35,31 +34,36 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.E
             <Image
                 source={logoImg}
                 style={[
-                    { width: 200, height: 200},
+                    { flex: 1 },
+                    { width: 200, height: 200 },
                     { marginTop: 50, marginBottom: 20 },
                 ]} />
             <Text style={[
                 { fontWeight: 'bold', fontSize: 32 },
                 { marginBottom: 20 },
-            ]}><Trans>Newcomer Connect</Trans></Text>
+            ]}><Trans>Arrival Advisor</Trans></Text>
             <Text style={[
                 { textAlign: 'center' },
                 { marginBottom: 20 },
             ]}>
-                <Trans>Helping you navigate everything you need to settle in Canada, even before you get here</Trans>
+                <Trans>For immigrants and refugees new to Canada. Arrival Advisor is here
+                    to help you start your new life in Canada, every step of the way.</Trans>
             </Text>
             <Form style={[
                 { marginBottom: 20 },
             ]}>
+                <Text style={[
+                    { textAlign: 'left' },
+                    { marginBottom: 20 },
+                ]}>
+                    <Trans>Select your language:</Trans>
+                </Text>
                 <Item style={{ marginLeft: 0, width: '100%' }}>
                     <Picker
-                            mode='dropdown'
-                            iosIcon={<Icon name='ios-arrow-down-outline' />}
-                            placeholder={i18n.t`Select your language`}
-                            placeholderStyle={{ color: '#bfc6ea' }}
-                            placeholderIconColor='#007aff'
-                            selectedValue={props.currentLocale.code}
-                            onValueChange={props.setLocale}>
+                        mode='dropdown'
+                        iosIcon={<Icon name='ios-arrow-down-outline' />}
+                        selectedValue={props.currentLocale.code}
+                        onValueChange={props.setLocale}>
                         {props.availableLocales.map((locale: LocaleInfo) => (
                             <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
                         ))}
@@ -68,7 +72,7 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.E
             </Form>
             {props.isFirstRun ?
                 undefined :
-                <Button full onPress={props.goToExplore}>
+                <Button full onPress={props.goToHome}>
                     <Text><Trans>Get started</Trans></Text>
                 </Button>
             }

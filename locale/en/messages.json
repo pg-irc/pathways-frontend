@@ -1,4 +1,40 @@
 {
+  "Task added to plan": {
+    "translation": "Task added to plan",
+    "origin": [
+      [
+        "lib/components/notifications/notification.js",
+        23
+      ]
+    ]
+  },
+  "Arrival Advisor": {
+    "translation": "Arrival Advisor",
+    "origin": [
+      [
+        "lib/components/welcome/welcome.js",
+        26
+      ]
+    ]
+  },
+  "For immigrants and refugees new to Canada. Arrival Advisor is here to help you start your new life in Canada, every step of the way.": {
+    "translation": "For immigrants and refugees new to Canada. Arrival Advisor is here to help you start your new life in Canada, every step of the way.",
+    "origin": [
+      [
+        "lib/components/welcome/welcome.js",
+        31
+      ]
+    ]
+  },
+  "Select your language:": {
+    "translation": "Select your language:",
+    "origin": [
+      [
+        "lib/components/welcome/welcome.js",
+        41
+      ]
+    ]
+  },
   "Learn about:": {
     "translation": "Learn about:",
     "origin": [
@@ -282,39 +318,12 @@
       ]
     ]
   },
-  "Newcomer Connect": {
-    "translation": "Newcomer Connect",
-    "origin": [
-      [
-        "lib/components/welcome/welcome.js",
-        26
-      ]
-    ]
-  },
-  "Helping you navigate everything you need to settle in Canada, even before you get here": {
-    "translation": "Helping you navigate everything you need to settle in Canada, even before you get here",
-    "origin": [
-      [
-        "lib/components/welcome/welcome.js",
-        31
-      ]
-    ]
-  },
-  "Select your language": {
-    "translation": "Select your language",
-    "origin": [
-      [
-        "lib/components/welcome/welcome.js",
-        37
-      ]
-    ]
-  },
   "Get started": {
     "translation": "Get started",
     "origin": [
       [
         "lib/components/welcome/welcome.js",
-        45
+        52
       ]
     ]
   }

@@ -17,7 +17,7 @@ function mapStateToProps(store: Store): WelcomeProps {
 function mapDispatchToProps(dispatch: Dispatch<Store>): WelcomeActions {
     return {
         setLocale: (localeCode: string): SetLocale.Request => dispatch(setLocaleActions.request(localeCode)),
-        goToExplore: (): pageSwitcher.SetExplorePageAction => dispatch(pageSwitcher.setExplorePage()),
+        goToHome: (): pageSwitcher.SetHomePageAction => dispatch(pageSwitcher.setHomePage()),
     };
 }
 
