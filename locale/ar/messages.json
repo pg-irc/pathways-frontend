@@ -1,4 +1,58 @@
 {
+  "Arrival Advisor helps you start your new life in Canada, every step of the way.": {
+    "translation": "مستشار الوصول يساعدك على بدء حياتك الجديدة في كندا ، في كل خطوة على الطريق.",
+    "origin": [
+      [
+        "lib/components/home_page/home_page.js",
+        30
+      ]
+    ]
+  },
+  "MY PLAN": {
+    "translation": "خطتي",
+    "origin": [
+      [
+        "lib/components/home_page/my_plan_component.js",
+        8
+      ]
+    ]
+  },
+  "GO TO MY PLAN": {
+    "translation": "اذهب الى خطتي",
+    "origin": [
+      [
+        "lib/components/home_page/my_plan_component.js",
+        14
+      ]
+    ]
+  },
+  "Plan everything you need to do as a newcomer to Canada. Want to know what next steps you need to take? <0>Answer some questions</0> to get tasks and tips recommended for you.": {
+    "translation": "خطط لكل ما تحتاج إلى القيام به كوافد جديد إلى كندا. تريد أن تعرف ما هي الخطوات التالية التي تحتاج إلى اتخاذها؟ <0> أجب عن بعض الأسئلة </ 0> للحصول على المهام والنصائح المقترحة لك.",
+    "origin": [
+      [
+        "lib/components/home_page/my_plan_component.js",
+        24
+      ]
+    ]
+  },
+  "Here are some sample tasks:": {
+    "translation": "فيما يلي بعض مهام العينة:",
+    "origin": [
+      [
+        "lib/components/home_page/my_plan_component.js",
+        33
+      ]
+    ]
+  },
+  "You haven't personalized your Plan yet. Would you like to <0>answer some questions</0> to get your most relevant tasks?": {
+    "translation": "لم تقم بتخصيص خطتك حتى الآن. هل تريد <0> الإجابة عن بعض الأسئلة </ 0> للحصول على أكثر المهام ذات الصلة؟",
+    "origin": [
+      [
+        "lib/components/home_page/my_plan_component.js",
+        40
+      ]
+    ]
+  },
   "Task added to plan": {
     "translation": "المهمة المضافة للخطة",
     "origin": [
@@ -52,8 +106,8 @@
         15
       ],
       [
-        "lib/components/home_page/home_page.js",
-        25
+        "lib/components/home_page/learn_section_component.js",
+        11
       ]
     ]
   },
@@ -61,35 +115,8 @@
     "translation": "أكثر من",
     "origin": [
       [
-        "lib/components/home_page/home_page.js",
-        17
-      ]
-    ]
-  },
-  "How can we help you?": {
-    "translation": "كيف يمكننا مساعدتك؟",
-    "origin": [
-      [
-        "lib/components/home_page/home_page.js",
-        23
-      ]
-    ]
-  },
-  "PLAN FOR SUCCESS": {
-    "translation": "خطة للنجاح",
-    "origin": [
-      [
-        "lib/components/home_page/home_page.js",
+        "lib/components/home_page/learn_section_component.js",
         30
-      ]
-    ]
-  },
-  "SEE MORE TASKS IN MY PLAN": {
-    "translation": "انظر المزيد من المهام في خطتي",
-    "origin": [
-      [
-        "lib/components/home_page/home_page.js",
-        34
       ]
     ]
   },
