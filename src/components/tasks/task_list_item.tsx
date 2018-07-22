@@ -45,7 +45,7 @@ export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProp
 const renderTaskInteractions = (props: AllTaskListItemProps): JSX.Element => {
     const addToSavedList = (): AddToSavedListAction => props.addToSavedList(props.id);
     return (
-        <Col size={10}>
+        <Col size={15}>
             {props.addToSavedList ? renderAddButton(addToSavedList) : renderUnchecedkBox()}
         </Col>
     );
