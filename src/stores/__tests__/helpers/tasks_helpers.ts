@@ -94,41 +94,10 @@ export class TaskBuilder {
     }
 }
 
-export class TaskUserSettingsBuilder {
-    id: store.Id = aString();
-    taskId: store.Id = undefined;
-    starred: boolean = aBoolean();
-
-    constructor(taskId: store.Id) {
-        this.taskId = taskId;
-        return this;
-    }
-
-    withId(id: string): TaskUserSettingsBuilder {
-        this.id = id;
-        return this;
-    }
-
-    withStarred(starred: boolean): TaskUserSettingsBuilder {
-        this.starred = starred;
-        return this;
-    }
-
-    build(): store.TaskUserSettings {
-        return {
-            id: this.id,
-            taskId: this.taskId,
-            starred: this.starred,
-        };
-    }
-}
-
 export const buildNormalizedStore = (taskBuilders: ReadonlyArray<TaskBuilder>,
-    taskUserSettingsBuilders: ReadonlyArray<TaskUserSettingsBuilder>,
     savedTasks: ReadonlyArray<store.Id>): store.Store => (
         {
             taskMap: buildTaskMap(taskBuilders),
-            taskUserSettingsMap: buildTaskUserSettingsMap(taskUserSettingsBuilders),
             savedTasksList: savedTasks,
         }
     );
@@ -138,12 +107,4 @@ const buildTaskMap = (tasks: ReadonlyArray<TaskBuilder>): store.TaskMap => {
         return { ...map, [builder.id]: builder.build() };
     };
     return tasks.reduce(buildAndMapToIds, {});
-};
-
-const buildTaskUserSettingsMap = (taskUserSettings: ReadonlyArray<TaskUserSettingsBuilder>): store.TaskUserSettingsMap => {
-    const buildAndMapToIds = (map: store.TaskUserSettingsMap,
-        builder: TaskUserSettingsBuilder): store.TaskUserSettingsMap => {
-        return { ...map, [builder.id]: builder.build() };
-    };
-    return taskUserSettings.reduce(buildAndMapToIds, {});
 };

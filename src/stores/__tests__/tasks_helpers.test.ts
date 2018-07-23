@@ -1,11 +1,7 @@
 // tslint:disable:no-expression-statement no-let
 
-import {
-    TaskBuilder,
-    TaskUserSettingsBuilder,
-    buildNormalizedStore,
-} from './helpers/tasks_helpers';
-import * as stores from '../tasks';
+import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
+import * as stores from '../../stores/tasks';
 import { aString, aBoolean, aNumber } from '../../application/__tests__/helpers/random_test_values';
 
 describe('tasks test helpers', () => {
@@ -51,61 +47,24 @@ describe('tasks test helpers', () => {
         });
     });
 
-    describe('building the task user settings', () => {
-
-        describe('with properties', () => {
-            let taskId: string;
-
-            beforeEach(() => {
-                taskId = aString();
-            });
-
-            test('task id property', () => {
-                const taskUserSettings = new TaskUserSettingsBuilder(taskId).build();
-                expect(taskUserSettings.taskId).toBe(taskId);
-            });
-
-            test('id property', () => {
-                const id = aString();
-                const taskUserSettings = new TaskUserSettingsBuilder(taskId).withId(id).build();
-                expect(taskUserSettings.id).toBe(id);
-            });
-
-            test('starred property', () => {
-                const starred = aBoolean();
-                const taskUserSettings = new TaskUserSettingsBuilder(taskId).withStarred(starred).build();
-                expect(taskUserSettings.starred).toBe(starred);
-            });
-        });
-    });
-
     describe('the store', () => {
 
         describe('building a normalized store', () => {
             let firstTaskBuilder: TaskBuilder;
             let secondTaskBuilder: TaskBuilder;
-            let firstTaskUserSettingsBuilder: TaskUserSettingsBuilder;
-            let secondTaskUserSettingsBuilder: TaskUserSettingsBuilder;
             let store: stores.Store;
 
             beforeEach(() => {
                 firstTaskBuilder = new TaskBuilder();
                 secondTaskBuilder = new TaskBuilder();
-                firstTaskUserSettingsBuilder = new TaskUserSettingsBuilder(firstTaskBuilder.build().id);
-                secondTaskUserSettingsBuilder = new TaskUserSettingsBuilder(secondTaskBuilder.build().id);
                 store = buildNormalizedStore(
                     [firstTaskBuilder, secondTaskBuilder],
-                    [firstTaskUserSettingsBuilder, secondTaskUserSettingsBuilder],
                     [firstTaskBuilder.build().id],
                 );
             });
 
             test('task map property', () => {
                 expect(store).toHaveProperty('taskMap');
-            });
-
-            test('task user settings map property', () => {
-                expect(store).toHaveProperty('taskUserSettingsMap');
             });
 
             test('saved tasks list property', () => {
@@ -116,13 +75,6 @@ describe('tasks test helpers', () => {
                 expect(Object.keys(store.taskMap)).toEqual([firstTaskBuilder.build().id, secondTaskBuilder.build().id]);
             });
 
-            test('task user settings map keys are expected task user settings ids', () => {
-                const expectedIds: ReadonlyArray<stores.Id> = [
-                    firstTaskUserSettingsBuilder.build().id,
-                    secondTaskUserSettingsBuilder.build().id,
-                ];
-                expect(Object.keys(store.taskUserSettingsMap)).toEqual(expectedIds);
-            });
         });
     });
 });

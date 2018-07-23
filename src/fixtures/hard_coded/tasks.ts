@@ -122,33 +122,6 @@ export const buildTasksFixture = (): Store => {
                 'relatedArticles': [],
             },
         },
-        taskUserSettingsMap: {
-            'tu1': {
-                'id': 'tu1',
-                'taskId': 't1',
-                'starred': false,
-            },
-            'tu2': {
-                'id': 'tu2',
-                'taskId': 't2',
-                'starred': false,
-            },
-            'tu3': {
-                'id': 'tu3',
-                'taskId': 't3',
-                'starred': false,
-            },
-            'tu4': {
-                'id': 'tu4',
-                'taskId': 't4',
-                'starred': false,
-            },
-            'tu5': {
-                'id': 'tu5',
-                'taskId': 't5',
-                'starred': false,
-            },
-        },
         savedTasksList: [],
     };
 };
