@@ -3,13 +3,13 @@ import { ListItem, Text } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
 import { ArticleListItem } from '../../selectors/articles';
-import { RouterProps, Routes, routePathWithArgument } from '../../application/routing';
+import { RouterProps, Routes, routePathWithParameter } from '../../application/routing';
 
 type AllArticleListItemProps = ArticleListItem & RouterProps;
 
 export const ArticleListItemComponent: React.StatelessComponent<AllArticleListItemProps> =
     (props: AllArticleListItemProps): JSX.Element => {
-    const goToArticleDetail = (): void => props.history.push(routePathWithArgument(Routes.ArticleDetail, props.id));
+    const goToArticleDetail = (): void => props.history.push(routePathWithParameter(Routes.ArticleDetail, props.id));
     return (
         <ListItem noIndent noBorder button onPress={goToArticleDetail}>
             <Grid>

@@ -5,7 +5,7 @@ import { ExploreSection } from '../../selectors/explore';
 import { computeUniqueKeyForSections } from './compute_unique_key_for_sections';
 import { applicationStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
-import { RouterProps, Routes, routePathWithArgument } from '../../application/routing';
+import { RouterProps, Routes, routePathWithParameter } from '../../application/routing';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -35,7 +35,7 @@ const renderLearnButton = R.curry((props: AllExploreProps, section: ExploreSecti
 ));
 
 const renderLearnSectionButton = (props: AllExploreProps, section: ExploreSection): JSX.Element => {
-    const goToLearnDetail = (): void => props.history.push(routePathWithArgument(Routes.LearnDetail, section.id));
+    const goToLearnDetail = (): void => props.history.push(routePathWithParameter(Routes.LearnDetail, section.id));
     return(
         <SectionButton {...section} onPress={goToLearnDetail} buttonStyle={{height: 100}} />
     );

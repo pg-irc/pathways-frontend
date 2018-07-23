@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { Routes, routePath, routePathWithArgument } from '../routing';
+import { Routes, routePath, routePathWithParameter } from '../routing';
 
 describe('the routePath function', () => {
 
@@ -36,9 +36,9 @@ describe('the routePath function', () => {
     });
 });
 
-describe('the routePathWithArgument function', () => {
+describe('the routePathWithParameter function', () => {
 
     it('Replaces a Route argument placeholder with provided value', () => {
-        expect(routePathWithArgument(Routes.LearnDetail, 'l1')).toEqual('/learn/l1');
+        expect(routePathWithParameter(Routes.LearnDetail, 'l1')).toEqual('/learn/l1');
     });
 });

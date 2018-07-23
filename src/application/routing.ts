@@ -36,6 +36,6 @@ export const routePath = (route: Routes): string => {
     }
 };
 
-export const routePathWithArgument = (route: Routes, parameter: string): string => (
+export const routePathWithParameter = (route: Routes, parameter: string): string => (
     routePath(route).replace(/:.*/, parameter)
 );
