@@ -3,7 +3,7 @@ import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 import { History, Location } from 'history';
 import { values } from '../../application/styles';
 import { Trans } from '@lingui/react';
-import { Routes, routePath } from '../../application/routing';
+import { Routes, routePathWithoutParameter } from '../../application/routing';
 
 export interface FooterProps {
     readonly history: History;
@@ -19,23 +19,23 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     return (
         <Footer>
             <FooterTab>
-                <Button vertical active={path === routePath(Routes.Home)}
-                        onPress={(): void => props.history.push(routePath(Routes.Home))}>
+                <Button vertical active={path === routePathWithoutParameter(Routes.Home)}
+                        onPress={(): void => props.history.push(routePathWithoutParameter(Routes.Home))}>
                     <Icon name='home' />
                     <Text><Trans>Home</Trans></Text>
                 </Button>
-                <Button vertical active={path === routePath(Routes.Questionnaire)}
-                        onPress={(): void => props.history.push(routePath(Routes.Questionnaire))}>
+                <Button vertical active={path === routePathWithoutParameter(Routes.Questionnaire)}
+                        onPress={(): void => props.history.push(routePathWithoutParameter(Routes.Questionnaire))}>
                     <Icon name='apps' />
                     <Text style={[{fontSize: values.smallTextSize}]}><Trans>Questions</Trans></Text>
                 </Button>
-                <Button vertical active={path === routePath(Routes.MyPlan)}
-                        onPress={(): void => props.history.push(routePath(Routes.MyPlan))}>
+                <Button vertical active={path === routePathWithoutParameter(Routes.MyPlan)}
+                        onPress={(): void => props.history.push(routePathWithoutParameter(Routes.MyPlan))}>
                     <Icon name='camera' />
                     <Text><Trans>My plan</Trans></Text>
                 </Button>
-                <Button vertical active={path === routePath(Routes.Learn)}
-                        onPress={(): void => props.history.push(routePath(Routes.Learn))}>
+                <Button vertical active={path === routePathWithoutParameter(Routes.Learn)}
+                        onPress={(): void => props.history.push(routePathWithoutParameter(Routes.Learn))}>
                     <Icon active name='apps' />
                     <Text><Trans>Learn</Trans></Text>
                 </Button>

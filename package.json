@@ -14,6 +14,7 @@
     "@types/react": "^16.0.40",
     "@types/react-native": "^0.52.20",
     "@types/react-redux": "^5.0.19",
+    "@types/react-router-native": "^4.2.3",
     "@types/react-test-renderer": "^16.0.1",
     "@types/remote-redux-devtools": "^0.5.2",
     "@types/uuid": "^3.4.3",
@@ -76,7 +77,6 @@
   "dependencies": {
     "@lingui/react": "2.1.0",
     "@types/query-string": "^6.1.0",
-    "@types/react-router-native": "^4.2.3",
     "expo": "28.0.0",
     "history": "^4.7.2",
     "intl": "^1.2.5",

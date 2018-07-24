@@ -7,7 +7,7 @@ import { computeUniqueKeyForSections } from '../explore/compute_unique_key_for_s
 import { ExploreSection } from '../../selectors/explore';
 import { RowOfSectionButtons, SectionButton } from '../explore/explore_all';
 import { HomePageProps } from './props';
-import { RouterProps, Routes, routePathWithParameter, routePath } from '../../application/routing';
+import { RouterProps, Routes, routePathWithParameter, routePathWithoutParameter } from '../../application/routing';
 import { TaskListItemActions } from '../tasks/task_list_item';
 
 type AllHomePageProps = I18nProps & HomePageProps & TaskListItemActions & RouterProps;
@@ -41,7 +41,7 @@ const renderLearnSectionButton = (props: AllHomePageProps, section: ExploreSecti
 
 const renderLearnMoreButton = (props: AllHomePageProps): JSX.Element => {
     const i18n = props.i18n;
-    const goToLearn = (): void => props.history.push(routePath(Routes.Learn));
+    const goToLearn = (): void => props.history.push(routePathWithoutParameter(Routes.Learn));
     const style = { height: 70 };
     const buttonProps = { onPress: goToLearn, icon: 'apps', name: i18n.t`More`, buttonStyle: style };
     return <SectionButton {...buttonProps} />;

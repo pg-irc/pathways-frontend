@@ -36,6 +36,22 @@ export const routePath = (route: Routes): string => {
     }
 };
 
-export const routePathWithParameter = (route: Routes, parameter: string): string => (
-    routePath(route).replace(/:.*/, parameter)
+export const routePathWithoutParameter = (route: Routes): string => {
+    if (routeHasParameter(route)) {
+        throw new Error('The provided route cannot be a parameterized route');
+    }
+
+    return routePath(route);
+};
+
+export const routePathWithParameter = (route: Routes, parameter: string): string => {
+    if (!routeHasParameter(route)) {
+        throw new Error('The provided route must be a parameterized route');
+    }
+
+    return routePath(route).replace(/:.*/, parameter);
+};
+
+const routeHasParameter = (route: Routes): boolean => (
+    routePath(route).indexOf(':') !== -1
 );
