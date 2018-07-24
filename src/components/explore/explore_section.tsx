@@ -8,10 +8,13 @@ import { Task } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';
 import { colors } from '../../application/styles';
 import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
+import { ArticleListItem } from '../../selectors/articles';
+import { ArticleListComponent } from '../articles/article_list';
 
 export interface ExploreSectionProps {
     readonly section: ExploreSection;
     readonly tasks: ReadonlyArray<Task>;
+    readonly articles: ReadonlyArray<ArticleListItem>;
 }
 
 export interface ExploreSectionActions {
@@ -31,6 +34,7 @@ export const ExploreSectionComponent: React.StatelessComponent<AllExploreSection
                     }]} >
                     <TitleComponent {...props} />
                     <IntroductionComponent {...props} />
+                    <ArticleListComponent {...props} articles={props.articles} />
                     <TaskListComponent {...props} tasks={props.tasks} />
                 </View>
             </Content>
