@@ -4,7 +4,6 @@ import * as R from 'ramda';
 import * as taskDetails from './details/tasks';
 import { selectLocale, selectLocalizedText } from './locale';
 import { Locale } from '../locale/types';
-import { TaxonomyTermReference } from './taxonomies';
 import { TaskListItem, selectRelatedTasks } from './tasks';
 import { RouterProps } from '../application/routing';
 
@@ -12,7 +11,6 @@ export interface Article {
     readonly id: model.Id;
     readonly title: string;
     readonly description: string;
-    readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly starred: boolean;
     readonly relatedArticles: ReadonlyArray<ArticleListItem>;
     readonly relatedTasks: ReadonlyArray<TaskListItem>;
@@ -31,7 +29,6 @@ export const denormalizeArticle =
                 id: article.id,
                 title: selectLocalizedText(locale, article.title),
                 description: selectLocalizedText(locale, article.description),
-                taxonomyTerms: article.taxonomyTerms,
                 starred: article.starred,
                 relatedArticles: relatedArticles,
                 relatedTasks: relatedTasks,

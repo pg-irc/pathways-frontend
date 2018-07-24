@@ -26,13 +26,8 @@ describe('articles selector', () => {
             expect(denormalizedArticle.description).toBe(article.description[locale.code]);
         });
 
-        test('taxonomy terms property', () => {
-            expect(denormalizedArticle.taxonomyTerms).toBe(article.taxonomyTerms);
-        });
-
         test('starred property', () => {
             expect(denormalizedArticle.starred).toBe(article.starred);
         });
-
     });
 });
