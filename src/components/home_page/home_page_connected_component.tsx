@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { HomePageProps, HomePageComponent } from './home_page';
-import { selectExploreSections } from '../../selectors/explore';
+import { selectLearnSections } from '../../selectors/explore';
 import { selectRecommendedTasks } from '../../selectors/tasks';
 import { Id as TaskId } from '../../stores/tasks';
 import { AddToSavedListAction, addToSavedList } from '../../stores/tasks';
@@ -11,7 +11,7 @@ import { TaskListItemActions } from '../tasks/task_list_item';
 
 const mapStateToProps = (store: Store): HomePageProps => ({
     tasks: selectRecommendedTasks(store),
-    sections: selectExploreSections(store),
+    sections: selectLearnSections(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListItemActions => ({

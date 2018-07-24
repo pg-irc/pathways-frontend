@@ -2,7 +2,7 @@ import { Store } from '../stores';
 import * as details from './details/explore';
 import { selectLocale } from './locale';
 import { selectExploreTaxonomy } from './taxonomies';
-import * as stores from '../stores/explore';
+import { RouterProps } from '../application/routing';
 
 export interface ExploreSection {
     readonly id: string;
@@ -11,16 +11,16 @@ export interface ExploreSection {
     readonly icon: string;
 }
 
-export const selectExploreSections = (store: Store): ReadonlyArray<ExploreSection> => {
+export const selectLearnSections = (store: Store): ReadonlyArray<ExploreSection> => {
     const locale = selectLocale(store);
     const sections = store.exploreSectionsInStore.sections;
     const exploreTaxonomy = selectExploreTaxonomy(store);
     return details.denormalizeSections(locale, sections, exploreTaxonomy);
 };
 
-export const selectLearnByPathParameter = (store: Store, learnId: stores.Id): ExploreSection => {
+export const selectLearn = (store: Store, routerProps: RouterProps): ExploreSection => {
     const locale = selectLocale(store);
     const sections = store.exploreSectionsInStore.sections;
     const exploreTaxonomy = selectExploreTaxonomy(store);
-    return details.getExploreSectionById(locale, learnId, sections, exploreTaxonomy);
+    return details.getExploreSectionById(locale, routerProps.match.params.learnId, sections, exploreTaxonomy);
 };

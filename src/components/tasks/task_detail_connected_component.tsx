@@ -6,7 +6,7 @@ import { TaskServices, selectTaskServices, createRelatedServicesQueryFromTask } 
 import { Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
          toggleCompleted, RemoveFromSavedListAction, removeFromSavedList } from '../../stores/tasks';
 import { connect } from 'react-redux';
-import { Task, selectTaskByPathParameter } from '../../selectors/tasks';
+import { Task, selectTask } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';
 
 interface StateProps extends TaskDetailProps {
@@ -15,7 +15,7 @@ interface StateProps extends TaskDetailProps {
 }
 
 function mapStateToProps(store: Store, ownProps: RouterProps): StateProps {
-    const task: Task = selectTaskByPathParameter(store, ownProps.match.params.taskId);
+    const task: Task = selectTask(store, ownProps);
     return {
         task: task,
         savedTasks: store.tasksInStore.savedTasksList,

@@ -1,6 +1,5 @@
 import { Store } from '../stores';
 import * as model from '../stores/tasks';
-import { Id as LearnId } from '../stores/explore';
 import * as taskDetails from './details/tasks';
 import { Taxonomies as TaxonomyConstants } from '../application/constants';
 import * as R from 'ramda';
@@ -9,6 +8,7 @@ import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
 import { ArticleListItem, selectRelatedArticles } from './articles';
 import { selectTaxonomyTermsForSelectedAnswers } from './questionnaire';
+import { RouterProps } from '../application/routing';
 
 export interface Task {
     readonly id: string;
@@ -104,8 +104,9 @@ export const filterTasksByTaxonomyTerms =
         return R.filter(isRecommended, R.values(taskMap));
     };
 
-export const selectTaskByPathParameter = (store: Store, taskId: model.Id): Task => {
+export const selectTask = (store: Store, routerProps: RouterProps): Task => {
     const locale = selectLocale(store);
+    const taskId = routerProps.match.params.taskId;
     const taskMap = store.tasksInStore.taskMap;
     const taskUserSettingsMap = store.tasksInStore.taskUserSettingsMap;
     const taskUserSettings = model.findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
@@ -115,8 +116,8 @@ export const selectTaskByPathParameter = (store: Store, taskId: model.Id): Task 
     return denormalizeTask(locale, task, taskUserSettings, relatedArticles, relatedTasks);
 };
 
-export const selectTasksForLearnDetail = (store: Store, learnId: LearnId): ReadonlyArray<Task> => {
-    const exploreSection = store.exploreSectionsInStore.sections[learnId];
+export const selectTasksForLearn = (store: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
+    const exploreSection = store.exploreSectionsInStore.sections[routerProps.match.params.learnId];
     const tasks = store.tasksInStore.taskMap;
     const matchingTasks = taskDetails.findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
 

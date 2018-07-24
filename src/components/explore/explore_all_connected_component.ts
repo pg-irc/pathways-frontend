@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { ExploreAllComponent, ExploreAllProps } from './explore_all';
-import { selectExploreSections } from '../../selectors/explore';
+import { selectLearnSections } from '../../selectors/explore';
 
 const mapStateToProps = (store: Store): ExploreAllProps => ({
-    sections: selectExploreSections(store),
+    sections: selectLearnSections(store),
 });
 
 export const ExploreAllConnectedComponent = connect(mapStateToProps, {})(ExploreAllComponent);

@@ -5,6 +5,7 @@ import { selectLocale, selectLocalizedText } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
 import { TaskListItem, selectRelatedTasks } from './tasks';
+import { RouterProps } from '../application/routing';
 
 export interface Article {
     readonly id: model.Id;
@@ -55,10 +56,10 @@ export const selectArticleAsListItem = (store: Store, articleId: model.Id): Arti
     return denormalizeArticleListItem(locale, article);
 };
 
-export const selectArticleByPathParameter = (store: Store, articleId: model.Id): Article => {
+export const selectArticle = (store: Store, routerProps: RouterProps): Article => {
     const locale = selectLocale(store);
     const articles = store.articlesInStore.articles;
-    const article = articles[articleId];
+    const article = articles[routerProps.match.params.articleId];
     const relatedTasks = selectRelatedTasks(store, article.relatedTasks);
     const relatedArticles = selectRelatedArticles(store, article.relatedArticles);
     return denormalizeArticle(locale, article, relatedArticles, relatedTasks);
