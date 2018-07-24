@@ -1,20 +1,27 @@
 import { TaxonomyTermReference } from '../../stores/taxonomies';
-import { Task, TaskMap } from '../../stores/tasks';
 import { getExploreTaxonomyTerms } from '../taxonomies';
 import * as R from 'ramda';
 
-export const findTasksByExploreTaxonomyTerm =
-    (needle: ReadonlyArray<TaxonomyTermReference>, haystack: TaskMap): ReadonlyArray<Task> => {
+export interface HasTaxonomyTerms {
+    readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
+}
 
-        const needleTerms = getExploreTaxonomyTerms(needle);
+export interface MapOfHasTaxonomyTerms<T extends HasTaxonomyTerms> {
+    readonly [property: string]: T;
+}
 
-        const matchesTaxonomyTerm = (task: Task): boolean => {
-            const haystackTerms = getExploreTaxonomyTerms(task.taxonomyTerms);
-            const commonTerms = R.intersection(needleTerms, haystackTerms);
-            return R.length(commonTerms) > 0;
-        };
+export function findTasksByExploreTaxonomyTerm<T extends HasTaxonomyTerms>(needle: ReadonlyArray<TaxonomyTermReference>,
+    haystack: MapOfHasTaxonomyTerms<T>): ReadonlyArray<T> {
 
-        const findTasks = R.compose(R.values, R.pickBy(matchesTaxonomyTerm));
+    const needleTerms = getExploreTaxonomyTerms(needle);
 
-        return findTasks(haystack);
+    const matchesTaxonomyTerm = (task: T): boolean => {
+        const haystackTerms = getExploreTaxonomyTerms(task.taxonomyTerms);
+        const commonTerms = R.intersection(needleTerms, haystackTerms);
+        return R.length(commonTerms) > 0;
     };
+
+    const findTasks = R.compose(R.values, R.pickBy(matchesTaxonomyTerm));
+
+    return findTasks(haystack);
+}
