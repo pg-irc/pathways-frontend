@@ -1,11 +1,10 @@
 import React from 'react';
-import { Container, Content, Text, Icon, Button } from 'native-base';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Container, Content, View, Icon, Text } from 'native-base';
+import { ImageBackground } from 'react-native';
 import { ExploreSection } from '../../selectors/explore';
-import { applicationStyles } from '../../application/styles';
-import { Trans } from '@lingui/react';
 import { Task } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';
+import { colors } from '../../application/styles';
 
 export interface ExploreSectionProps {
     readonly section: ExploreSection;
@@ -21,35 +20,78 @@ export const ExploreSectionComponent: React.StatelessComponent<AllExploreSection
     (props: AllExploreSectionProps): JSX.Element => {
         return <Container>
             <Content padder>
-                <Grid>
-                    <Row>
-                        <Col>
-                            <Icon type='MaterialCommunityIcons' name={props.section.icon} />
-                        </Col>
-                        <Col>
-                            <Text style={applicationStyles.bold}><Trans>LEARN ABOUT</Trans></Text>
-                            <Text>{props.section.name}</Text>
-                        </Col>
-                        <Col>
-                            <Button dark transparent>
-                                <Icon type='MaterialCommunityIcons' name='heart-outline' />
-                            </Button>
-                        </Col>
-                        <Col>
-                            <Button dark transparent>
-                                <Icon name='share' />
-                            </Button>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Text>{props.section.introduction}</Text>
-                    </Row>
-                    {props.tasks.map((task: Task) => (
-                        <Row>
-                            <Text>{task.title}</Text>
-                        </Row>
-                    ))}
-                </Grid>
+                <View style={[
+                    {
+                        flexDirection: 'column',
+                        alignItems: 'stretch',
+                    }]} >
+                    <TitleComponent {...props} />
+                </View>
             </Content>
-        </Container>;
+        </Container >;
     };
+
+// tslint:disable-next-line:no-var-requires
+const sectionImage = require('../../../assets/images/icon.png');
+
+const TitleComponent: React.StatelessComponent<AllExploreSectionProps> = (_: AllExploreSectionProps): JSX.Element => (
+    <View>
+        <ImageBackground
+            source={sectionImage}
+            style={[
+                { width: '100%' },
+            ]}>
+            <View style={[
+                { flexDirection: 'row' },
+                { alignItems: 'stretch' },
+                { marginTop: 120 },
+                { backgroundColor: 'rgba(0,0,0,0.4)' },
+            ]}>
+                <Icon type='MaterialCommunityIcons' name='book-open-variant' style={[
+                    { color: colors.white },
+                    { fontSize: 40 },
+                    { marginTop: 20 },
+                    { marginLeft: 20 },
+                    { marginRight: 20 },
+                    { marginBottom: 20 },
+                    { alignSelf: 'center' },
+                ]} />
+                <View style={[
+                    { flex: 1 },
+                    { flexDirection: 'column' },
+                    { alignItems: 'flex-start' },
+                    { marginTop: 20 },
+                    { marginLeft: 0 },
+                    { marginRight: 20 },
+                    { marginBottom: 20 },
+                ]}>
+                    <Text style={[
+                        { color: colors.white },
+                        { fontWeight: 'bold' },
+                    ]}>LEARN ABOUT</Text>
+                    <Text style={[
+                        { color: colors.white },
+                        { fontSize: 30 },
+                        { fontWeight: 'bold' },
+                    ]}>Education</Text>
+                </View>
+                <Icon type='MaterialCommunityIcons' name='heart-outline' style={[
+                    { color: colors.white },
+                    { marginTop: 20 },
+                    { marginLeft: 0 },
+                    { marginRight: 20 },
+                    { marginBottom: 20 },
+                    { alignSelf: 'flex-end' },
+                ]} />
+                <Icon name='share' style={[
+                    { color: colors.white },
+                    { marginTop: 20 },
+                    { marginLeft: 0 },
+                    { marginRight: 20 },
+                    { marginBottom: 20 },
+                    { alignSelf: 'flex-end' },
+                ]} />
+            </View>
+        </ImageBackground>
+    </View>
+);
