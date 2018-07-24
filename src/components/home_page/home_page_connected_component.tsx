@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Store } from '../../application/store';
+import { Store } from '../../stores';
 import { HomePageProps, HomePageComponent } from './home_page';
 import { selectExploreSections } from '../../selectors/explore';
 import { selectRecommendedTasks } from '../../selectors/tasks';

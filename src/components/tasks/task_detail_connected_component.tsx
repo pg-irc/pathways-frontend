@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { Store } from '../../application/store';
+import { Store } from '../../stores';
 import { updateTaskServicesAsync, UpdateTaskServicesAsync } from '../../stores/services';
 import { TaskDetailProps, TaskDetailActions, TaskDetailComponent, TaskServiceUpdater } from './task_detail';
 import { TaskServices, selectTaskServices, createRelatedServicesQueryFromTask } from '../../selectors/services';
@@ -18,7 +18,7 @@ function mapStateToProps(store: Store, ownProps: RouterProps): StateProps {
     const task: Task = selectTaskByPathParameter(store, ownProps.match.params.taskId);
     return {
         task: task,
-        savedTasks: store.applicationState.tasksInStore.savedTasksList,
+        savedTasks: store.tasksInStore.savedTasksList,
         searchQuery: createRelatedServicesQueryFromTask(task),
         taskServices: selectTaskServices(task.id, store),
     };

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { Store } from '../../application/store';
+import { Store } from '../../stores';
 import * as main from './main';
 import { LoaderProps, withLoader } from './loader';
 import { isApplicationLoading } from '../../selectors/application_loading';

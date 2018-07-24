@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import * as app from '../application/store';
+import { Store } from '../stores';
 import * as model from '../stores/notifications';
 
 export interface Notification {
@@ -14,8 +14,8 @@ export const denormalizeNotification = (notification: model.Notification): Notif
     }
 );
 
-export const selectNotifications = (store: app.Store): ReadonlyArray<Notification> => {
-    const notifications = store.applicationState.notificationsInStore.notifications;
+export const selectNotifications = (store: Store): ReadonlyArray<Notification> => {
+    const notifications = store.notificationsInStore.notifications;
     return R.map((notificationId: model.Id) =>
         denormalizeNotification(notifications[notificationId]), R.keys(notifications));
 };

@@ -1,7 +1,7 @@
+import { Store } from '../stores';
 import { Id as TaskId } from '../stores/tasks';
 import { Id as ServiceId, buildDefaultTaskServices } from '../stores/services';
 import { Task } from '../selectors/tasks';
-import { Store } from '../application/store';
 import { take } from 'ramda';
 import { Locale } from '../locale';
 import { selectLocalizedText, selectLocale } from './locale';
@@ -20,7 +20,7 @@ export interface TaskServices {
 
 export function selectTaskServices(taskId: TaskId, store: Store): TaskServices {
     const locale: Locale = selectLocale(store);
-    const servicesStore = store.applicationState.servicesInStore;
+    const servicesStore = store.servicesInStore;
     const taskServices = servicesStore.taskServicesMap[taskId] || buildDefaultTaskServices();
     return {
         loading: taskServices.loading,

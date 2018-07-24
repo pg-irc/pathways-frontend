@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Component, Props, Actions } from './questionnaire';
-import { Store } from '../../application/store';
+import { Store } from '../../stores';
 import { Id, SelectAnswerAction, selectAnswer } from '../../stores/questionnaire';
 import { selectQuestionnaire } from '../../selectors/questionnaire';
 

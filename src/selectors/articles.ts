@@ -1,4 +1,4 @@
-import * as app from '../application/store';
+import { Store } from '../stores';
 import * as model from '../stores/articles';
 import * as R from 'ramda';
 import { selectLocale, selectLocalizedText } from './locale';
@@ -44,20 +44,20 @@ export const denormalizeArticleListItem = (locale: Locale, article: model.Articl
         }
     );
 
-export const selectRelatedArticles = (store: app.Store, articleIds: ReadonlyArray<model.Id>): ReadonlyArray<ArticleListItem> => (
+export const selectRelatedArticles = (store: Store, articleIds: ReadonlyArray<model.Id>): ReadonlyArray<ArticleListItem> => (
     R.map((id: model.Id) => selectArticleAsListItem(store, id), articleIds)
 );
 
-export const selectArticleAsListItem = (store: app.Store, articleId: model.Id): ArticleListItem => {
+export const selectArticleAsListItem = (store: Store, articleId: model.Id): ArticleListItem => {
     const locale = selectLocale(store);
-    const articles = store.applicationState.articlesInStore.articles;
+    const articles = store.articlesInStore.articles;
     const article = articles[articleId];
     return denormalizeArticleListItem(locale, article);
 };
 
-export const selectArticleByPathParameter = (store: app.Store, articleId: model.Id): Article => {
+export const selectArticleByPathParameter = (store: Store, articleId: model.Id): Article => {
     const locale = selectLocale(store);
-    const articles = store.applicationState.articlesInStore.articles;
+    const articles = store.articlesInStore.articles;
     const article = articles[articleId];
     const relatedTasks = selectRelatedTasks(store, article.relatedTasks);
     const relatedArticles = selectRelatedArticles(store, article.relatedArticles);

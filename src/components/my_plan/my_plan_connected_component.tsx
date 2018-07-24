@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { TaskListActions } from '../tasks/task_list';
-import { Store } from '../../application/store';
+import { Store } from '../../stores';
 import { MyPlanComponent, MyPlanProps } from './my_plan';
 import { selectAllSavedTasks, selectRecommendedTasks } from '../../selectors/tasks';
 import { Id, AddToSavedListAction, addToSavedList } from '../../stores/tasks';

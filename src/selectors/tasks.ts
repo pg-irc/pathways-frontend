@@ -1,4 +1,4 @@
-import * as app from '../application/store';
+import { Store } from '../stores';
 import * as model from '../stores/tasks';
 import { Id as LearnId } from '../stores/explore';
 import * as taskDetails from './details/tasks';
@@ -54,20 +54,20 @@ export const denormalizeTaskListItem = (locale: Locale, task: model.Task): TaskL
     }
 );
 
-export const selectAllSavedTasks = (store: app.Store): ReadonlyArray<TaskListItem> => {
-    const savedTasksList = store.applicationState.tasksInStore.savedTasksList;
+export const selectAllSavedTasks = (store: Store): ReadonlyArray<TaskListItem> => {
+    const savedTasksList = store.tasksInStore.savedTasksList;
     return savedTasksList.map((taskId: model.Id) => {
         return selectTaskAsListItem(store, taskId);
     });
 };
 
-export const selectRelatedTasks = (store: app.Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<TaskListItem> => (
+export const selectRelatedTasks = (store: Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<TaskListItem> => (
     R.map((id: model.Id) => selectTaskAsListItem(store, id), taskIds)
 );
 
-export const selectTaskAsListItem = (store: app.Store, taskId: model.Id): TaskListItem => {
+export const selectTaskAsListItem = (store: Store, taskId: model.Id): TaskListItem => {
     const locale = selectLocale(store);
-    const taskMap = store.applicationState.tasksInStore.taskMap;
+    const taskMap = store.tasksInStore.taskMap;
     const task = taskMap[taskId];
     return denormalizeTaskListItem(locale, task);
 };
@@ -77,12 +77,12 @@ const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUser
     return denormalizeTask(locale, task, userTask, [], []);
 });
 
-export const selectRecommendedTasks = (store: app.Store): ReadonlyArray<Task> => {
+export const selectRecommendedTasks = (store: Store): ReadonlyArray<Task> => {
     const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store);
-    const matchingTasks = filterTasksByTaxonomyTerms(taxonomyTerms, store.applicationState.tasksInStore.taskMap);
+    const matchingTasks = filterTasksByTaxonomyTerms(taxonomyTerms, store.tasksInStore.taskMap);
 
     const locale = selectLocale(store);
-    const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
+    const userTasks = store.tasksInStore.taskUserSettingsMap;
     return R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
 };
 
@@ -104,10 +104,10 @@ export const filterTasksByTaxonomyTerms =
         return R.filter(isRecommended, R.values(taskMap));
     };
 
-export const selectTaskByPathParameter = (store: app.Store, taskId: model.Id): Task => {
+export const selectTaskByPathParameter = (store: Store, taskId: model.Id): Task => {
     const locale = selectLocale(store);
-    const taskMap = store.applicationState.tasksInStore.taskMap;
-    const taskUserSettingsMap = store.applicationState.tasksInStore.taskUserSettingsMap;
+    const taskMap = store.tasksInStore.taskMap;
+    const taskUserSettingsMap = store.tasksInStore.taskUserSettingsMap;
     const taskUserSettings = model.findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
     const task = taskMap[taskId];
     const relatedTasks = selectRelatedTasks(store, task.relatedTasks);
@@ -115,13 +115,13 @@ export const selectTaskByPathParameter = (store: app.Store, taskId: model.Id): T
     return denormalizeTask(locale, task, taskUserSettings, relatedArticles, relatedTasks);
 };
 
-export const selectTasksForLearnDetail = (store: app.Store, learnId: LearnId): ReadonlyArray<Task> => {
-    const exploreSection = store.applicationState.exploreSectionsInStore.sections[learnId];
-    const tasks = store.applicationState.tasksInStore.taskMap;
+export const selectTasksForLearnDetail = (store: Store, learnId: LearnId): ReadonlyArray<Task> => {
+    const exploreSection = store.exploreSectionsInStore.sections[learnId];
+    const tasks = store.tasksInStore.taskMap;
     const matchingTasks = taskDetails.findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
 
     const locale = selectLocale(store);
-    const userTasks = store.applicationState.tasksInStore.taskUserSettingsMap;
+    const userTasks = store.tasksInStore.taskUserSettingsMap;
     const denormalizedTasks = R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
 
     return denormalizedTasks;

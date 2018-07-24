@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { LanguageSwitcher, Props, Actions } from './language_switcher';
-import { Store } from '../../application/store';
+import { Store } from '../../stores';
 import { SetLocale, setLocaleActions } from '../../stores/locale';
 import { selectLocale, selectAvailableLocales } from '../../selectors/locale';
 import { LocaleInfo } from '../../locale';

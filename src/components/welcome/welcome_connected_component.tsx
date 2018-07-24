@@ -1,7 +1,7 @@
 import { withI18n } from '@lingui/react';
 import { connect, Dispatch } from 'react-redux';
 import { Welcome, WelcomeProps, WelcomeActions } from './welcome';
-import { Store } from '../../application/store';
+import { Store } from '../../stores';
 import { selectAvailableLocales, selectLocale } from '../../selectors/locale';
 import { setLocaleActions, SetLocale } from '../../stores/locale';
 
