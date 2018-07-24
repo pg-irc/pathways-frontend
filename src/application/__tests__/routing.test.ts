@@ -1,30 +1,46 @@
 // tslint:disable:no-expression-statement
-import { Routes, routePathWithoutParameter, routePathWithParameter } from '../routing';
+import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter } from '../routing';
 import { aString } from './helpers/random_test_values';
 
-describe('the routePathWithoutParameter function', () => {
+describe('the routePathDefinition function', () => {
 
     it('For Routes.Home returns path: "/"', () => {
-        expect(routePathWithoutParameter(Routes.Welcome)).toEqual('/');
+        expect(routePathDefinition(Routes.Welcome)).toEqual('/');
     });
 
     it('For Routes.Welcome returns path: "/welcome"', () => {
-        expect(routePathWithoutParameter(Routes.Home)).toEqual('/home');
+        expect(routePathDefinition(Routes.Home)).toEqual('/home');
     });
 
     it('For Routes.Questionnaire returns path: "/questionnaire"', () => {
-        expect(routePathWithoutParameter(Routes.Questionnaire)).toEqual('/questionnaire');
+        expect(routePathDefinition(Routes.Questionnaire)).toEqual('/questionnaire');
     });
 
     it('For Routes.MyPlan returns path: "/my-plan"', () => {
-        expect(routePathWithoutParameter(Routes.MyPlan)).toEqual('/my-plan');
+        expect(routePathDefinition(Routes.MyPlan)).toEqual('/my-plan');
     });
 
     it('For Routes.Learn returns path: "/learn"', () => {
-        expect(routePathWithoutParameter(Routes.Learn)).toEqual('/learn');
+        expect(routePathDefinition(Routes.Learn)).toEqual('/learn');
     });
 
-    it('throws when provided route is a parameterized route', () => {
+    it('For Routes.LearnDetail returns path: "/learn/:learnId"', () => {
+        expect(routePathDefinition(Routes.LearnDetail)).toEqual('/learn/:learnId');
+    });
+
+    it('For Routes.TaskDetail returns path: "/task/:taskId" with parameter', () => {
+        expect(routePathDefinition(Routes.TaskDetail)).toEqual('/task/:taskId');
+    });
+
+    it('For Routes.ArticleDetail returns path: "/article/:articleId" with parameter', () => {
+        expect(routePathDefinition(Routes.ArticleDetail)).toEqual('/article/:articleId');
+    });
+
+});
+
+describe('the routePathWithoutParameter function', () => {
+
+    it('Throws when provided route is a parameterized route', () => {
         expect(() => routePathWithoutParameter(Routes.LearnDetail)).toThrow();
     });
 
@@ -33,19 +49,11 @@ describe('the routePathWithoutParameter function', () => {
 describe('the routePathWithParameter function', () => {
     const parameter = aString();
 
-    it('For Routes.LearnDetail returns path: "/learn/" with parameter', () => {
+    it('Substitutes path parameters', () => {
         expect(routePathWithParameter(Routes.LearnDetail, parameter)).toEqual(`/learn/${parameter}`);
     });
 
-    it('For Routes.TaskDetail returns path: "/task/" with parameter', () => {
-        expect(routePathWithParameter(Routes.TaskDetail, parameter)).toEqual(`/task/${parameter}`);
-    });
-
-    it('For Routes.ArticleDetail returns path: "/article/" with parameter', () => {
-        expect(routePathWithParameter(Routes.ArticleDetail, parameter)).toEqual(`/article/${parameter}`);
-    });
-
-    it('throws when provided route is not a parameterized route', () => {
+    it('Throws when provided route is not a parameterized route', () => {
         expect(() => routePathWithParameter(Routes.Learn, parameter)).toThrow();
     });
 

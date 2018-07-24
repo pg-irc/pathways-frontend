@@ -15,7 +15,7 @@ export enum Routes {
     ArticleDetail,
 }
 
-export const routePath = (route: Routes): string => {
+export const routePathDefinition = (route: Routes): string => {
     switch (route) {
         default:
         case Routes.Welcome:
@@ -42,7 +42,7 @@ export const routePathWithoutParameter = (route: Routes): string => {
         throw new Error('The provided route cannot be a parameterized route');
     }
 
-    return routePath(route);
+    return routePathDefinition(route);
 };
 
 export const routePathWithParameter = (route: Routes, parameter: string): string => {
@@ -50,7 +50,7 @@ export const routePathWithParameter = (route: Routes, parameter: string): string
         throw new Error('The provided route must be a parameterized route');
     }
 
-    return routePath(route).replace(/:.*/, parameter);
+    return routePathDefinition(route).replace(/:.*/, parameter);
 };
 
 export const goToRouteWithoutParameter = (route: Routes, history: History): void => {
@@ -66,5 +66,5 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
 };
 
 const routeHasParameter = (route: Routes): boolean => (
-    routePath(route).indexOf(':') !== -1
+    routePathDefinition(route).indexOf(':') !== -1
 );
