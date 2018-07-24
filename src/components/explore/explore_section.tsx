@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Content, View, Icon, Text } from 'native-base';
 import { ImageBackground } from 'react-native';
+import { Trans } from '@lingui/react';
 import { ExploreSection } from '../../selectors/explore';
 import { Task } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';
@@ -26,6 +27,7 @@ export const ExploreSectionComponent: React.StatelessComponent<AllExploreSection
                         alignItems: 'stretch',
                     }]} >
                     <TitleComponent {...props} />
+                    <IntroductionComponent {...props} />
                 </View>
             </Content>
         </Container >;
@@ -81,7 +83,7 @@ const TitleTextComponent: React.StatelessComponent<AllExploreSectionProps> = (pr
         <Text style={[
             { color: colors.white },
             { fontWeight: 'bold' },
-        ]}>LEARN ABOUT</Text>
+        ]}><Trans>LEARN ABOUT</Trans></Text>
         <Text style={[
             { color: colors.white },
             { fontSize: 30 },
@@ -110,4 +112,13 @@ const ShareButton: React.StatelessComponent = (): JSX.Element => (
         { marginBottom: 20 },
         { alignSelf: 'flex-end' },
     ]} />
+);
+
+const IntroductionComponent: React.StatelessComponent<AllExploreSectionProps> = (props: AllExploreSectionProps): JSX.Element => (
+    <Text style={[
+        { marginTop: 20 },
+        { marginLeft: 20 },
+        { marginRight: 20 },
+        { marginBottom: 20 },
+    ]}>{props.section.introduction}</Text>
 );
