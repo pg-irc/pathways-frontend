@@ -65,6 +65,10 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
     history.push(path);
 };
 
+export const goBack = (history: History): void => (
+    history.goBack()
+);
+
 const routeHasParameter = (route: Routes): boolean => (
     routePathDefinition(route).indexOf(':') !== -1
 );

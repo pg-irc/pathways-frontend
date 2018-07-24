@@ -5,6 +5,7 @@ import { Locale } from '../../locale';
 import { I18nManager } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton } from 'react-router-native';
+import { routePathWithoutParameter, Routes, goBack } from '../../application/routing';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -19,15 +20,14 @@ export interface UiActions {
 export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> = (props: HeaderProps & UiActions): JSX.Element => {
     const { onLanguageSelect, currentLocale }: HeaderProps & UiActions = props;
 
-    if (props.location.pathname === '/') {
+    if (props.location.pathname === routePathWithoutParameter(Routes.Welcome)) {
         // tslint:disable-next-line:no-null-keyword
         return null;
     }
-
     return (
         <Header>
             <Left>
-                <Button transparent onPress={(): void => props.history.goBack()}>
+                <Button transparent onPress={(): void => goBack(props.history)}>
                     <Icon name={ I18nManager.isRTL ? 'arrow-forward' : 'arrow-back' } />
                 </Button>
                 <BackButton />
