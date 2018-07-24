@@ -3,9 +3,11 @@ import { Container, Content, View, Icon, Text } from 'native-base';
 import { ImageBackground } from 'react-native';
 import { Trans } from '@lingui/react';
 import { ExploreSection } from '../../selectors/explore';
+import { TaskListComponent } from '../tasks/task_list';
 import { Task } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';
 import { colors } from '../../application/styles';
+import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
 
 export interface ExploreSectionProps {
     readonly section: ExploreSection;
@@ -13,6 +15,7 @@ export interface ExploreSectionProps {
 }
 
 export interface ExploreSectionActions {
+    readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
 }
 
 type AllExploreSectionProps = ExploreSectionProps & ExploreSectionActions & RouterProps;
@@ -28,6 +31,7 @@ export const ExploreSectionComponent: React.StatelessComponent<AllExploreSection
                     }]} >
                     <TitleComponent {...props} />
                     <IntroductionComponent {...props} />
+                    <TaskListComponent {...props} tasks={props.tasks} />
                 </View>
             </Content>
         </Container >;
