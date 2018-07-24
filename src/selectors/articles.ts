@@ -68,9 +68,9 @@ export const selectArticle = (store: Store, routerProps: RouterProps): Article =
 
 export const selectArticlesForLearnDetail = (store: Store, routerProps: RouterProps): ReadonlyArray<ArticleListItem> => {
     const learnId = routerProps.match.params.learnId;
-    const exploreSection = store.exploreSectionsInStore.sections[learnId];
+    const learnSection = store.exploreSectionsInStore.sections[learnId];
     const articles = store.articlesInStore.articles;
-    const matchingArticles = taskDetails.findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, articles);
+    const matchingArticles = taskDetails.findItemByLearnTaxonomyTerm(learnSection.taxonomyTerms, articles);
 
     const locale = selectLocale(store);
     const denormalizedArticles = R.map(denormalizeArticleListItem(locale), matchingArticles);

@@ -119,7 +119,7 @@ export const selectTask = (store: Store, routerProps: RouterProps): Task => {
 export const selectTasksForLearn = (store: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
     const exploreSection = store.exploreSectionsInStore.sections[routerProps.match.params.learnId];
     const tasks = store.tasksInStore.taskMap;
-    const matchingTasks = taskDetails.findTasksByExploreTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
+    const matchingTasks = taskDetails.findItemByLearnTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
 
     const locale = selectLocale(store);
     const userTasks = store.tasksInStore.taskUserSettingsMap;
