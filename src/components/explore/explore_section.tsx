@@ -34,7 +34,7 @@ export const ExploreSectionComponent: React.StatelessComponent<AllExploreSection
 // tslint:disable-next-line:no-var-requires
 const sectionImage = require('../../../assets/images/icon.png');
 
-const TitleComponent: React.StatelessComponent<AllExploreSectionProps> = (_: AllExploreSectionProps): JSX.Element => (
+const TitleComponent: React.StatelessComponent<AllExploreSectionProps> = (props: AllExploreSectionProps): JSX.Element => (
     <View>
         <ImageBackground
             source={sectionImage}
@@ -47,51 +47,67 @@ const TitleComponent: React.StatelessComponent<AllExploreSectionProps> = (_: All
                 { marginTop: 120 },
                 { backgroundColor: 'rgba(0,0,0,0.4)' },
             ]}>
-                <Icon type='MaterialCommunityIcons' name='book-open-variant' style={[
-                    { color: colors.white },
-                    { fontSize: 40 },
-                    { marginTop: 20 },
-                    { marginLeft: 20 },
-                    { marginRight: 20 },
-                    { marginBottom: 20 },
-                    { alignSelf: 'center' },
-                ]} />
-                <View style={[
-                    { flex: 1 },
-                    { flexDirection: 'column' },
-                    { alignItems: 'flex-start' },
-                    { marginTop: 20 },
-                    { marginLeft: 0 },
-                    { marginRight: 20 },
-                    { marginBottom: 20 },
-                ]}>
-                    <Text style={[
-                        { color: colors.white },
-                        { fontWeight: 'bold' },
-                    ]}>LEARN ABOUT</Text>
-                    <Text style={[
-                        { color: colors.white },
-                        { fontSize: 30 },
-                        { fontWeight: 'bold' },
-                    ]}>Education</Text>
-                </View>
-                <Icon type='MaterialCommunityIcons' name='heart-outline' style={[
-                    { color: colors.white },
-                    { marginTop: 20 },
-                    { marginLeft: 0 },
-                    { marginRight: 20 },
-                    { marginBottom: 20 },
-                    { alignSelf: 'flex-end' },
-                ]} />
-                <Icon name='share' style={[
-                    { color: colors.white },
-                    { marginTop: 20 },
-                    { marginLeft: 0 },
-                    { marginRight: 20 },
-                    { marginBottom: 20 },
-                    { alignSelf: 'flex-end' },
-                ]} />
+                <IconComponent {...props} />
+                <TitleTextComponent {...props} />
+                <HeartButton />
+                <ShareButton />
             </View>
         </ImageBackground>
     </View>
+);
+
+const IconComponent: React.StatelessComponent<AllExploreSectionProps> = (props: AllExploreSectionProps): JSX.Element => (
+    <Icon type='MaterialCommunityIcons' name={props.section.icon} style={[
+        { color: colors.white },
+        { fontSize: 40 },
+        { marginTop: 20 },
+        { marginLeft: 20 },
+        { marginRight: 20 },
+        { marginBottom: 20 },
+        { alignSelf: 'center' },
+    ]} />
+);
+
+const TitleTextComponent: React.StatelessComponent<AllExploreSectionProps> = (props: AllExploreSectionProps): JSX.Element => (
+    <View style={[
+        { flex: 1 },
+        { flexDirection: 'column' },
+        { alignItems: 'flex-start' },
+        { marginTop: 20 },
+        { marginLeft: 0 },
+        { marginRight: 20 },
+        { marginBottom: 20 },
+    ]}>
+        <Text style={[
+            { color: colors.white },
+            { fontWeight: 'bold' },
+        ]}>LEARN ABOUT</Text>
+        <Text style={[
+            { color: colors.white },
+            { fontSize: 30 },
+            { fontWeight: 'bold' },
+        ]}>{props.section.name}</Text>
+    </View>
+);
+
+const HeartButton: React.StatelessComponent = (): JSX.Element => (
+    <Icon type='MaterialCommunityIcons' name='heart-outline' style={[
+        { color: colors.white },
+        { marginTop: 20 },
+        { marginLeft: 0 },
+        { marginRight: 20 },
+        { marginBottom: 20 },
+        { alignSelf: 'flex-end' },
+    ]} />
+);
+
+const ShareButton: React.StatelessComponent = (): JSX.Element => (
+    <Icon name='share' style={[
+        { color: colors.white },
+        { marginTop: 20 },
+        { marginLeft: 0 },
+        { marginRight: 20 },
+        { marginBottom: 20 },
+        { alignSelf: 'flex-end' },
+    ]} />
 );
