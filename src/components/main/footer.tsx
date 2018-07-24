@@ -3,7 +3,7 @@ import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 import { History, Location } from 'history';
 import { values } from '../../application/styles';
 import { Trans } from '@lingui/react';
-import { Routes, routePathWithoutParameter } from '../../application/routing';
+import { Routes, routePathWithoutParameter, goToRouteWithoutParameter } from '../../application/routing';
 
 export interface FooterProps {
     readonly history: History;
@@ -20,22 +20,22 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
         <Footer>
             <FooterTab>
                 <Button vertical active={path === routePathWithoutParameter(Routes.Home)}
-                        onPress={(): void => props.history.push(routePathWithoutParameter(Routes.Home))}>
+                        onPress={(): void => goToRouteWithoutParameter(Routes.Home, props.history)}>
                     <Icon name='home' />
                     <Text><Trans>Home</Trans></Text>
                 </Button>
                 <Button vertical active={path === routePathWithoutParameter(Routes.Questionnaire)}
-                        onPress={(): void => props.history.push(routePathWithoutParameter(Routes.Questionnaire))}>
+                        onPress={(): void => goToRouteWithoutParameter(Routes.Questionnaire, props.history)}>
                     <Icon name='apps' />
                     <Text style={[{fontSize: values.smallTextSize}]}><Trans>Questions</Trans></Text>
                 </Button>
                 <Button vertical active={path === routePathWithoutParameter(Routes.MyPlan)}
-                        onPress={(): void => props.history.push(routePathWithoutParameter(Routes.MyPlan))}>
+                        onPress={(): void => goToRouteWithoutParameter(Routes.MyPlan, props.history)}>
                     <Icon name='camera' />
                     <Text><Trans>My plan</Trans></Text>
                 </Button>
                 <Button vertical active={path === routePathWithoutParameter(Routes.Learn)}
-                        onPress={(): void => props.history.push(routePathWithoutParameter(Routes.Learn))}>
+                        onPress={(): void => goToRouteWithoutParameter(Routes.Learn, props.history)}>
                     <Icon active name='apps' />
                     <Text><Trans>Learn</Trans></Text>
                 </Button>

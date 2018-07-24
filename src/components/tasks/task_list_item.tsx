@@ -5,7 +5,7 @@ import { applicationStyles } from '../../application/styles';
 import { TaskListItem } from '../../selectors/tasks';
 import { AddToSavedListAction, Id as TaskId } from '../../stores/tasks';
 import { I18nManager } from 'react-native';
-import { RouterProps, Routes, routePathWithParameter } from '../../application/routing';
+import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 
 export interface TaskListItemStyleProps {
     readonly listItemStyle?: object;
@@ -19,7 +19,7 @@ export interface TaskListItemActions {
 type AllTaskListItemProps = TaskListItemProps & TaskListItemActions & RouterProps;
 
 export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProps> = (props: AllTaskListItemProps): JSX.Element => {
-    const goToTaskDetail = (): void => props.history.push(routePathWithParameter(Routes.TaskDetail, props.id));
+    const goToTaskDetail = (): void => goToRouteWithParameter(Routes.TaskDetail, props.id, props.history);
     return (
         <ListItem style={props.listItemStyle} button noIndent onPress={goToTaskDetail}>
             <Grid>

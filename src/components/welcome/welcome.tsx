@@ -5,7 +5,7 @@ import { Image } from 'react-native';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
-import { RouterProps, Routes, routePathWithoutParameter } from '../../application/routing';
+import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
 
 export interface WelcomeProps {
     readonly isFirstRun: boolean;
@@ -72,7 +72,7 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & Route
             </Form>
             {props.isFirstRun ?
                 undefined :
-                <Button full onPress={(): void => props.history.push(routePathWithoutParameter(Routes.Home))}>
+                <Button full onPress={(): void => goToRouteWithoutParameter(Routes.Home, props.history)}>
                     <Text><Trans>Get started</Trans></Text>
                 </Button>
             }

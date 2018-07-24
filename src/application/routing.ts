@@ -1,4 +1,5 @@
 import { RouteComponentProps } from 'react-router-native';
+import { History } from 'history';
 
 // tslint:disable-next-line:no-any
 export type RouterProps = RouteComponentProps<any>;
@@ -50,6 +51,18 @@ export const routePathWithParameter = (route: Routes, parameter: string): string
     }
 
     return routePath(route).replace(/:.*/, parameter);
+};
+
+export const goToRouteWithoutParameter = (route: Routes, history: History): void => {
+    const path = routePathWithoutParameter(route);
+    // tslint:disable-next-line:no-expression-statement
+    history.push(path);
+};
+
+export const goToRouteWithParameter = (route: Routes, parameter: string, history: History): void => {
+    const path = routePathWithParameter(route, parameter);
+    // tslint:disable-next-line:no-expression-statement
+    history.push(path);
 };
 
 const routeHasParameter = (route: Routes): boolean => (
