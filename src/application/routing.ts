@@ -1,8 +1,13 @@
 import { RouteComponentProps } from 'react-router-native';
 import { History } from 'history';
 
-// tslint:disable-next-line:no-any
-export type RouterProps = RouteComponentProps<any>;
+interface MatchParameters {
+    readonly articleId: string;
+    readonly learnId: string;
+    readonly taskId: string;
+}
+
+export type RouterProps = RouteComponentProps<MatchParameters>;
 
 export enum Routes {
     Welcome,
