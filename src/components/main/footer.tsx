@@ -1,44 +1,41 @@
 import React from 'react';
 import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
-import * as store from '../../stores/page_switcher';
+import { History, Location } from 'history';
 import { values } from '../../application/styles';
 import { Trans } from '@lingui/react';
+import { Routes, routePathWithoutParameter, goToRouteWithoutParameter } from '../../application/routing';
 
-export interface Props {
-    readonly routeInProps: store.Store;
+export interface FooterProps {
+    readonly history: History;
+    readonly location: Location;
 }
 
-export interface Actions {
-    readonly goToHome: () => void;
-    readonly goToQuestionnaire: () => void;
-    readonly goToPlan: () => void;
-    readonly goToExplore: () => void;
-}
-
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    const { goToHome, goToQuestionnaire, goToPlan, goToExplore, routeInProps }: Props & Actions = props;
-
-    if (routeInProps.pageType === store.Page.Welcome) {
+export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
+    const path = props.location.pathname;
+    if (path === '/') {
         // tslint:disable-next-line:no-null-keyword
         return null;
     }
-
     return (
         <Footer>
             <FooterTab>
-                <Button vertical active={routeInProps.pageType === store.Page.Home} onPress={goToHome}>
+                <Button vertical active={path === routePathWithoutParameter(Routes.Home)}
+                        onPress={goToRouteWithoutParameter(Routes.Home, props.history)}>
                     <Icon name='home' />
                     <Text><Trans>Home</Trans></Text>
                 </Button>
-                <Button vertical active={routeInProps.pageType === store.Page.Questionnaire} onPress={goToQuestionnaire}>
+                <Button vertical active={path === routePathWithoutParameter(Routes.Questionnaire)}
+                        onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)}>
                     <Icon name='apps' />
                     <Text style={[{fontSize: values.smallTextSize}]}><Trans>Questions</Trans></Text>
                 </Button>
-                <Button vertical active={routeInProps.pageType === store.Page.MyPlan} onPress={goToPlan}>
+                <Button vertical active={path === routePathWithoutParameter(Routes.MyPlan)}
+                        onPress={goToRouteWithoutParameter(Routes.MyPlan, props.history)}>
                     <Icon name='camera' />
                     <Text><Trans>My plan</Trans></Text>
                 </Button>
-                <Button vertical active={routeInProps.pageType === store.Page.ExploreAll} onPress={goToExplore}>
+                <Button vertical active={path === routePathWithoutParameter(Routes.Learn)}
+                        onPress={goToRouteWithoutParameter(Routes.Learn, props.history)}>
                     <Icon active name='apps' />
                     <Text><Trans>Learn</Trans></Text>
                 </Button>

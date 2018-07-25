@@ -5,6 +5,7 @@ import { ExploreSection } from '../../selectors/explore';
 import { applicationStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { Task } from '../../selectors/tasks';
+import { RouterProps } from '../../application/routing';
 
 export interface ExploreSectionProps {
     readonly section: ExploreSection;
@@ -14,7 +15,7 @@ export interface ExploreSectionProps {
 export interface ExploreSectionActions {
 }
 
-type AllExploreSectionProps = ExploreSectionProps & ExploreSectionActions;
+type AllExploreSectionProps = ExploreSectionProps & ExploreSectionActions & RouterProps;
 
 export const ExploreSectionComponent: React.StatelessComponent<AllExploreSectionProps> =
     (props: AllExploreSectionProps): JSX.Element => {

@@ -3,36 +3,34 @@ import { Header, Left, Button, Icon, Title, Body, Right } from 'native-base';
 import { CurrentLocale } from '../language_switcher/current_locale';
 import { Locale } from '../../locale';
 import { I18nManager } from 'react-native';
-import * as pageSwitcher from '../../stores/page_switcher';
+import { History, Location } from 'history';
+import { BackButton } from 'react-router-native';
+import { routePathWithoutParameter, Routes, goBack } from '../../application/routing';
 
-export interface Props {
-    readonly canGoBack: boolean;
+export interface HeaderProps {
     readonly currentLocale: Locale;
-    readonly routeInProps: pageSwitcher.Store;
-}
-
-export interface Actions {
-    readonly goBack: () => void;
+    readonly history: History;
+    readonly location: Location;
 }
 
 export interface UiActions {
     readonly onLanguageSelect: () => void;
 }
 
-export const Component: React.StatelessComponent<Props & Actions & UiActions> = (props: Props & Actions & UiActions): JSX.Element => {
-    const { canGoBack, goBack, onLanguageSelect, currentLocale, routeInProps }: Props & Actions & UiActions = props;
+export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> = (props: HeaderProps & UiActions): JSX.Element => {
+    const { onLanguageSelect, currentLocale }: HeaderProps & UiActions = props;
 
-    if (routeInProps.pageType === pageSwitcher.Page.Welcome) {
+    if (props.location.pathname === routePathWithoutParameter(Routes.Welcome)) {
         // tslint:disable-next-line:no-null-keyword
         return null;
     }
-
     return (
         <Header>
             <Left>
-                <Button transparent disabled={!canGoBack} onPress={goBack}>
+                <Button transparent onPress={(): void => goBack(props.history)}>
                     <Icon name={ I18nManager.isRTL ? 'arrow-forward' : 'arrow-back' } />
                 </Button>
+                <BackButton />
             </Left>
             <Body>
                 <Title>Pathways</Title>

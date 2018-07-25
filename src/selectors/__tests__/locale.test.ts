@@ -2,7 +2,7 @@
 import { LocaleStoreBuilder, LocalizedTextBuilder, LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { selectLocale, selectAvailableLocales, selectLocalizedText } from '../locale';
 import { ApplicationStoreBuilder } from '../../stores/__tests__/helpers/store_helpers';
-import { Store } from '../../application/store';
+import { Store } from '../../stores';
 import * as locale from '../../stores/locale';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { Locale } from '../../locale';
@@ -14,9 +14,7 @@ describe('locale selectors fetch', () => {
 
     beforeEach(() => {
         aLocaleStore = new LocaleStoreBuilder().build();
-        theStore = {
-            applicationState: new ApplicationStoreBuilder().withLocaleStore(aLocaleStore).build(),
-        };
+        theStore = new ApplicationStoreBuilder().withLocaleStore(aLocaleStore).build();
     });
 
     it('the locale code', () => {

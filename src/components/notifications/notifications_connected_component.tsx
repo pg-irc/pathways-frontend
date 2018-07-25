@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Store } from '../../application/store';
+import { Store } from '../../stores';
 import { NotificationsProps, NotificationsActions, NotificationsComponent } from './notifications';
 import * as model from '../../stores/notifications';
 import * as selector from '../../selectors/notifications';

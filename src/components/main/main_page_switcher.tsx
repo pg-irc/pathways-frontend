@@ -1,53 +1,24 @@
 import React from 'react';
-import { Content, Text } from 'native-base';
-import * as store from '../../stores/page_switcher';
+import { Switch, Route } from 'react-router-native';
 import { WelcomeConnectedComponent } from '../welcome/welcome_connected_component';
 import { HomePageConnectedComponent } from '../home_page/home_page_connected_component';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
 import { ExploreSectionConnectedComponent } from '../explore/explore_section_connected_component';
 import { ArticleDetailConnectedComponent } from '../articles/article_detail_connected_component';
 import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
-import * as questionnaire from '../questionnaire';
-import { MyPlan } from '../my_plan/my_plan';
-import { Store as TasksStore } from '../../stores/tasks';
-import { Locale } from '../../locale/types';
+import { QuestionnaireConnectedComponent } from '../questionnaire';
+import { MyPlanConnectedComponent } from '../my_plan/my_plan_connected_component';
+import { Routes, routePathDefinition } from '../../application/routing';
 
-export interface Props {
-    readonly routeInProps: store.Store;
-    readonly tasksStore: TasksStore; // TODO remove, have the selector pull it from the app store
-    readonly locale: Locale;
-}
-
-export interface Actions {
-}
-
-export const Component: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    switch (props.routeInProps.pageType) {
-        case store.Page.Welcome:
-            return <WelcomeConnectedComponent />;
-
-        case store.Page.Home:
-            return <HomePageConnectedComponent />;
-
-        case store.Page.Questionnaire:
-            return <questionnaire.ConnectedComponent />;
-
-        case store.Page.MyPlan:
-            return <MyPlan />;
-
-        case store.Page.ExploreAll:
-            return <ExploreAllConnectedComponent />;
-
-        case store.Page.ExploreSection:
-            return <ExploreSectionConnectedComponent />;
-
-        case store.Page.TaskDetail:
-            return <TaskDetailConnectedComponent />;
-
-        case store.Page.ArticleDetail:
-            return <ArticleDetailConnectedComponent />;
-
-        default:
-            return <Content><Text>Error</Text></Content>;
-    }
-};
+export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Element => (
+    <Switch>
+        <Route exact path={routePathDefinition(Routes.Welcome)} component={WelcomeConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.Home)} component={HomePageConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.Questionnaire)} component={QuestionnaireConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.MyPlan)} component={MyPlanConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.Learn)} component={ExploreAllConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.LearnDetail)} component={ExploreSectionConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.TaskDetail)} component={TaskDetailConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.ArticleDetail)} component={ArticleDetailConnectedComponent} />
+    </Switch>
+);

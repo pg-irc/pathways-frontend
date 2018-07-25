@@ -5,6 +5,7 @@ import { Image } from 'react-native';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
+import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
 
 export interface WelcomeProps {
     readonly isFirstRun: boolean;
@@ -14,14 +15,13 @@ export interface WelcomeProps {
 
 export interface WelcomeActions {
     readonly setLocale: (localeCode: string) => SetLocale.Request;
-    readonly goToHome: () => void;
 }
 
 // @ts-ignore: React Native uses require() to load ImageBitmaps; it's best to do this once, outside of render.
-// tslint:diable-next-line:no-var-requires
+// tslint:disable-next-line:no-var-requires
 const logoImg = require('../../../assets/images/icon.png');
 
-export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.Element {
+export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & RouterProps): JSX.Element {
     return (
         <View style={[
             {
@@ -72,7 +72,7 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions): JSX.E
             </Form>
             {props.isFirstRun ?
                 undefined :
-                <Button full onPress={props.goToHome}>
+                <Button full onPress={goToRouteWithoutParameter(Routes.Home, props.history)}>
                     <Text><Trans>Get started</Trans></Text>
                 </Button>
             }

@@ -1,19 +1,19 @@
-import * as app from '../application/store';
+import { Store } from '../stores';
 import { LocalizedText } from '../locale';
 import { Locale, LocaleInfo } from '../locale/types';
 
 export { Locale, LocaleInfo } from '../locale/types';
 
-export function selectLocale(appStore: app.Store): Locale {
-    const store = appStore.applicationState.localeInStore;
+export function selectLocale(appStore: Store): Locale {
+    const store = appStore.localeInStore;
     return {
         code: store.code,
         fallback: store.fallback,
     };
 }
 
-export function selectAvailableLocales(appStore: app.Store): ReadonlyArray<LocaleInfo> {
-    return appStore.applicationState.localeInStore.availableLocales;
+export function selectAvailableLocales(appStore: Store): ReadonlyArray<LocaleInfo> {
+    return appStore.localeInStore.availableLocales;
 }
 
 export function selectLocalizedText(locale: Locale, localizedText: LocalizedText): string {

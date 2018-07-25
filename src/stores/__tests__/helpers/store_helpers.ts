@@ -2,7 +2,6 @@
 import { Store } from '../../';
 import * as fonts from '../../fonts';
 import * as locale from '../../locale';
-import * as pageSwitcher from '../../page_switcher';
 import * as questionnaire from '../../questionnaire';
 import * as tasks from '../../tasks';
 import * as services from '../../services';
@@ -14,7 +13,6 @@ import * as notifications from '../../notifications';
 export class ApplicationStoreBuilder {
     fontsInStore: fonts.Store;
     localeInStore: locale.Store;
-    routeInStore: pageSwitcher.Store;
     questionnaireInStore: questionnaire.Store;
     tasksInStore: tasks.Store;
     servicesInStore: services.Store;
@@ -32,7 +30,6 @@ export class ApplicationStoreBuilder {
         return {
             fontsInStore: this.fontsInStore,
             localeInStore: this.localeInStore,
-            routeInStore: this.routeInStore,
             questionnaireInStore: this.questionnaireInStore,
             tasksInStore: this.tasksInStore,
             servicesInStore: this.servicesInStore,

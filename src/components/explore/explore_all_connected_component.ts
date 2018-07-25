@@ -1,17 +1,10 @@
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Store } from '../../application/store';
-import { ExploreAllComponent, ExploreAllProps, ExploreAllActions } from './explore_all';
-import { selectExploreSections } from '../../selectors/explore';
-import * as stores from '../../stores/explore';
-import { SetExploreSectionPageAction, setExploreSectionPage } from '../../stores/page_switcher';
+import { Store } from '../../stores';
+import { ExploreAllComponent, ExploreAllProps } from './explore_all';
+import { selectLearnSections } from '../../selectors/explore';
 
 const mapStateToProps = (store: Store): ExploreAllProps => ({
-    sections: selectExploreSections(store),
+    sections: selectLearnSections(store),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): ExploreAllActions => ({
-    goToExploreSection: (sectionId: stores.Id): SetExploreSectionPageAction => dispatch(setExploreSectionPage(sectionId)),
-});
-
-export const ExploreAllConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ExploreAllComponent);
+export const ExploreAllConnectedComponent = connect(mapStateToProps, {})(ExploreAllComponent);

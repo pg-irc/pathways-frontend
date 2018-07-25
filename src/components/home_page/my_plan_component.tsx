@@ -4,24 +4,25 @@ import { Trans } from '@lingui/react';
 import { View, Button, Text } from 'native-base';
 import { applicationStyles, colors } from '../../application/styles';
 import { TaskListComponent } from '../tasks/task_list';
-import { HomePageProps, HomePageActions } from './props';
+import { HomePageProps } from './props';
+import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
+import { TaskListItemActions } from '../tasks/task_list_item';
 
-type AllHomePageProps = HomePageProps & HomePageActions;
+type AllHomePageProps = HomePageProps & TaskListItemActions & RouterProps;
 
 export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => (
     <View>
         <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>MY PLAN</Trans></Text>
         {R.isEmpty(props.tasks) ? myPlanIntroWithEmptyPlan(props) : myPlanIntro(props)}
         <TaskListComponent
+            {...props}
             tasks={R.take(3, props.tasks)}
-            goToTaskDetail={props.goToTaskDetail}
-            addToSavedList={props.addToSavedList}
             listItemStyle={{ backgroundColor: colors.lighterGrey }} />
 
         <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
             <Button
                 style={[{ backgroundColor: colors.darkGrey }]}
-                onPress={props.goToPlanPage}>
+                onPress={goToRouteWithoutParameter(Routes.MyPlan, props.history)}>
                 <Text><Trans>GO TO MY PLAN</Trans></Text>
             </Button>
         </View>
@@ -29,15 +30,15 @@ export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (prop
     </View>
 );
 
-const myPlanIntro = (props: HomePageActions): JSX.Element => (
+const myPlanIntro = (props: RouterProps): JSX.Element => (
     <View>
         <Text style={[
             { textAlign: 'left' },
             { marginBottom: 20 },
         ]}>
-            <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
-        you need to take? <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
-                    <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
+            <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps you need to take?
+            <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
+            <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
         </Text>
 
         <Text style={[
@@ -49,12 +50,13 @@ const myPlanIntro = (props: HomePageActions): JSX.Element => (
     </View>
 );
 
-const myPlanIntroWithEmptyPlan = (props: HomePageActions): JSX.Element => (
+const myPlanIntroWithEmptyPlan = (props: RouterProps): JSX.Element => (
     <Text style={[
         { textAlign: 'left' },
         { marginBottom: 20 },
     ]}>
-        <Trans>You haven't personalized your Plan yet. Would you like to <Text onPress={props.goToQuestionnaire} style={[{ color: 'blue' }]}>
-            <Trans>answer some questions</Trans></Text> to get your most relevant tasks?</Trans>
+        <Trans>You haven't personalized your Plan yet. Would you like to
+        <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
+        <Trans>answer some questions</Trans></Text> to get your most relevant tasks?</Trans>
     </Text>
 );

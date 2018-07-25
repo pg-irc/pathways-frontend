@@ -5,8 +5,6 @@ import { FlatList, ListRenderItemInfo } from 'react-native';
 import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
 import { Task } from '../../selectors/tasks';
-import { TaskListItemActions } from '../tasks/task_list_item';
-import { ArticleListItemActions } from '../articles/article_list_item';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
@@ -14,16 +12,17 @@ import { Trans } from '@lingui/react';
 import { Service, TaskServices} from '../../selectors/services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
-import { RelatedTasksComponent } from '../related_tasks/related_tasks';
-import { RelatedArticlesComponent } from '../related_articles/related_articles';
+import { RelatedTasksComponent } from './related_tasks';
+import { RelatedArticlesComponent } from '../articles/related_articles';
 import { getTaskState, TaskStates } from './task_states';
+import { RouterProps } from '../../application/routing';
 
 export interface TaskDetailProps {
     readonly task: Task;
     readonly savedTasks: ReadonlyArray<TaskId>;
     readonly taskServices: TaskServices;
 }
-export interface TaskDetailActions extends TaskListItemActions, ArticleListItemActions {
+export interface TaskDetailActions {
     readonly toggleCompleted: (taskId: TaskId) => ToggleCompletedAction;
     readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
     readonly removeFromSavedList: (taskId: TaskId) => RemoveFromSavedListAction;
@@ -33,7 +32,7 @@ export interface TaskServiceUpdater {
     readonly requestUpdateTaskServices: () => UpdateTaskServicesAsync.Request;
 }
 
-type AllTaskDetailProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater;
+type AllTaskDetailProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater & RouterProps;
 type TabChangeEvent = { readonly i: number, from: number, readonly ref: React.Ref<Tabs> };
 
 export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
@@ -73,13 +72,13 @@ export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
                                     <Text>You can get information about your community ...</Text>
                                 </Row>
                                 <RelatedArticlesComponent
-                                    relatedArticles={this.props.task.relatedArticles}
                                     {...this.props}
+                                    relatedArticles={this.props.task.relatedArticles}
                                 />
                                 <RelatedTasksComponent
+                                    {...this.props}
                                     relatedTasks={this.props.task.relatedTasks}
                                     savedTasks={this.props.savedTasks}
-                                    {...this.props}
                                 />
                             </Grid>
                         </Content>

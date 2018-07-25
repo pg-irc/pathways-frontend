@@ -1,9 +1,8 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools as compose } from 'remote-redux-devtools';
 
-import { reducer as reducerForApplicationState, Store as StoreForApplicationState } from '../stores';
+import { reducer } from '../stores';
 import { runSaga, ApplicationSaga } from '../sagas';
-import { ApplicationRouter } from './router';
 
 import { loadFontsActions } from '../stores/fonts';
 import * as locale from '../stores/locale';
@@ -20,23 +19,18 @@ LocaleInfoManager.register([
     { code: 'fr', label: 'Français', catalog: frMessages, isRTL: false},
 ]);
 
-export type Store = { readonly applicationState: StoreForApplicationState };
+type InitialState = { readonly localeInStore: locale.Store };
 
-type InitialState = { readonly applicationState: { readonly localeInStore: locale.Store } };
-
-export function buildStore(router: ApplicationRouter, saga: ApplicationSaga): ReturnType<typeof createStore> {
-    const middleware = applyMiddleware(router.middleware, saga.middleware);
-    const reducer = combineReducers({ location: router.reducer, applicationState: reducerForApplicationState });
+export function buildStore(saga: ApplicationSaga): ReturnType<typeof createStore> {
+    const middleware = applyMiddleware(saga.middleware);
     const preloadedState: InitialState = {
-        applicationState: {
-            localeInStore: {
-                ...locale.buildDefaultStore(),
-                availableLocales: LocaleInfoManager.all,
-                fallback: LocaleInfoManager.getFallback().code,
-            },
+        localeInStore: {
+            ...locale.buildDefaultStore(),
+            availableLocales: LocaleInfoManager.all,
+            fallback: LocaleInfoManager.getFallback().code,
         },
     };
-    const enhancers = compose(router.enhancer, middleware);
+    const enhancers = compose(middleware);
     return createStore(reducer, preloadedState, enhancers);
 }
 

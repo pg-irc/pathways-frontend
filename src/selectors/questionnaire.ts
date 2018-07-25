@@ -1,9 +1,9 @@
+import * as R from 'ramda';
+import { Store } from '../stores';
 import * as model from '../stores/questionnaire';
-import * as app from '../application/store';
 import { selectLocalizedText, selectLocale } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from '../stores/taxonomies';
-import * as R from 'ramda';
 
 export type Questionnaire = ReadonlyArray<Question>;
 
@@ -22,9 +22,9 @@ export interface Answer {
     readonly acceptMultipleAnswers: boolean;
 }
 
-export const selectQuestionnaire = (appStore: app.Store): Questionnaire => {
+export const selectQuestionnaire = (appStore: Store): Questionnaire => {
     const locale = selectLocale(appStore);
-    return denormalizeQuestions(locale, appStore.applicationState.questionnaireInStore);
+    return denormalizeQuestions(locale, appStore.questionnaireInStore);
 };
 
 export const denormalizeQuestions = (locale: Locale, modelStore: model.Store): Questionnaire => {
@@ -67,8 +67,8 @@ const buildViewModelForAnswers = (locale: Locale, keys: ReadonlyArray<string>,
         })
     );
 
-export const selectTaxonomyTermsForSelectedAnswers = (store: app.Store): ReadonlyArray<TaxonomyTermReference> => (
-    filterTaxonomyTermsForSelectedAnswers(store.applicationState.questionnaireInStore.answers)
+export const selectTaxonomyTermsForSelectedAnswers = (store: Store): ReadonlyArray<TaxonomyTermReference> => (
+    filterTaxonomyTermsForSelectedAnswers(store.questionnaireInStore.answers)
 );
 
 export const filterTaxonomyTermsForSelectedAnswers = (answers: model.AnswersMap): ReadonlyArray<TaxonomyTermReference> => {

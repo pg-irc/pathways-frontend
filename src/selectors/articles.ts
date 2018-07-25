@@ -1,11 +1,11 @@
-import * as app from '../application/store';
+import { Store } from '../stores';
 import * as model from '../stores/articles';
 import * as R from 'ramda';
 import { selectLocale, selectLocalizedText } from './locale';
-import { selectRoute } from './route';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from './taxonomies';
 import { TaskListItem, selectRelatedTasks } from './tasks';
+import { RouterProps } from '../application/routing';
 
 export interface Article {
     readonly id: model.Id;
@@ -45,23 +45,22 @@ export const denormalizeArticleListItem = (locale: Locale, article: model.Articl
         }
     );
 
-export const selectCurrentArticle = (store: app.Store): Article => {
-    const locale = selectLocale(store);
-    const articles = store.applicationState.articlesInStore.articles;
-    const articleId = selectRoute(store).pageId;
-    const article = articles[articleId];
-    const relatedTasks = selectRelatedTasks(store, article.relatedTasks);
-    const relatedArticles = selectRelatedArticles(store, article.relatedArticles);
-    return denormalizeArticle(locale, article, relatedArticles, relatedTasks);
-};
-
-export const selectRelatedArticles = (store: app.Store, articleIds: ReadonlyArray<model.Id>): ReadonlyArray<ArticleListItem> => (
+export const selectRelatedArticles = (store: Store, articleIds: ReadonlyArray<model.Id>): ReadonlyArray<ArticleListItem> => (
     R.map((id: model.Id) => selectArticleAsListItem(store, id), articleIds)
 );
 
-export const selectArticleAsListItem = (store: app.Store, articleId: model.Id): ArticleListItem => {
+export const selectArticleAsListItem = (store: Store, articleId: model.Id): ArticleListItem => {
     const locale = selectLocale(store);
-    const articles = store.applicationState.articlesInStore.articles;
+    const articles = store.articlesInStore.articles;
     const article = articles[articleId];
     return denormalizeArticleListItem(locale, article);
+};
+
+export const selectArticle = (store: Store, routerProps: RouterProps): Article => {
+    const locale = selectLocale(store);
+    const articles = store.articlesInStore.articles;
+    const article = articles[routerProps.match.params.articleId];
+    const relatedTasks = selectRelatedTasks(store, article.relatedTasks);
+    const relatedArticles = selectRelatedArticles(store, article.relatedArticles);
+    return denormalizeArticle(locale, article, relatedArticles, relatedTasks);
 };

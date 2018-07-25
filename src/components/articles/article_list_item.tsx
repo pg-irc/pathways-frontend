@@ -2,18 +2,16 @@ import React from 'react';
 import { ListItem, Text } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
-import { Id } from '../../stores/articles';
-import { SetArticleDetailPageAction } from '../../stores/page_switcher';
 import { ArticleListItem } from '../../selectors/articles';
+import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 
-export interface ArticleListItemActions {
-    readonly goToArticleDetail: (articleId: Id) => SetArticleDetailPageAction;
-}
-type AllArticleListItemProps = ArticleListItemActions & ArticleListItem;
+type AllArticleListItemProps = ArticleListItem & RouterProps;
 
 export const ArticleListItemComponent: React.StatelessComponent<AllArticleListItemProps> =
-    (props: AllArticleListItemProps): JSX.Element => (
-        <ListItem noIndent noBorder button onPress={(): SetArticleDetailPageAction => props.goToArticleDetail(props.id)}>
+    (props: AllArticleListItemProps): JSX.Element => {
+    const goToArticleDetail = goToRouteWithParameter(Routes.ArticleDetail, props.id, props.history);
+    return (
+        <ListItem noIndent noBorder button onPress={goToArticleDetail}>
             <Grid>
                 <Row>
                     <Col size={20}>
@@ -22,7 +20,7 @@ export const ArticleListItemComponent: React.StatelessComponent<AllArticleListIt
                     <Col size={80}>
                         <Row>
                             <Text style={applicationStyles.bold}>{props.title}</Text>
-                         </Row>
+                        </Row>
                         <Row>
                             <Text numberOfLines={1} note>{props.description}</Text>
                         </Row>
@@ -31,3 +29,4 @@ export const ArticleListItemComponent: React.StatelessComponent<AllArticleListIt
             </Grid>
         </ListItem>
     );
+};

@@ -1,13 +1,14 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Store } from '../../application/store';
+import { Store } from '../../stores';
 import { ExploreSectionComponent, ExploreSectionProps, ExploreSectionActions } from './explore_section';
-import { selectCurrentExploreSection } from '../../selectors/explore';
-import { selectTasksForCurrentExploreSection } from '../../selectors/tasks';
+import { selectLearn } from '../../selectors/explore';
+import { selectTasksForLearn } from '../../selectors/tasks';
+import { RouterProps } from '../../application/routing';
 
-const mapStateToProps = (store: Store): ExploreSectionProps => ({
-    section: selectCurrentExploreSection(store),
-    tasks: selectTasksForCurrentExploreSection(store),
+const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreSectionProps => ({
+    section: selectLearn(store, ownProps),
+    tasks: selectTasksForLearn(store, ownProps),
 });
 
 const mapDispatchToProps = (_: Dispatch<Store>): ExploreSectionActions => ({

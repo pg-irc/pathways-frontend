@@ -1,6 +1,6 @@
-import * as app from '../application/store';
+import { Store } from '../stores';
 
-export const isApplicationLoading = (appStore: app.Store): boolean => {
-    return appStore.applicationState.fontsInStore.loading ||
-        appStore.applicationState.localeInStore.loading;
+export const isApplicationLoading = (appStore: Store): boolean => {
+    return appStore.fontsInStore.loading ||
+        appStore.localeInStore.loading;
 };
