@@ -72,7 +72,7 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & Route
             </Form>
             {props.isFirstRun ?
                 undefined :
-                <Button full onPress={(): void => goToRouteWithoutParameter(Routes.Home, props.history)}>
+                <Button full onPress={goToRouteWithoutParameter(Routes.Home, props.history)}>
                     <Text><Trans>Get started</Trans></Text>
                 </Button>
             }

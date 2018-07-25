@@ -22,7 +22,7 @@ export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (prop
         <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
             <Button
                 style={[{ backgroundColor: colors.darkGrey }]}
-                onPress={(): void => goToRouteWithoutParameter(Routes.MyPlan, props.history)}>
+                onPress={goToRouteWithoutParameter(Routes.MyPlan, props.history)}>
                 <Text><Trans>GO TO MY PLAN</Trans></Text>
             </Button>
         </View>
@@ -37,7 +37,7 @@ const myPlanIntro = (props: RouterProps): JSX.Element => (
             { marginBottom: 20 },
         ]}>
             <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps you need to take?
-            <Text onPress={(): void => goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
+            <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
             <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
         </Text>
 
@@ -56,7 +56,7 @@ const myPlanIntroWithEmptyPlan = (props: RouterProps): JSX.Element => (
         { marginBottom: 20 },
     ]}>
         <Trans>You haven't personalized your Plan yet. Would you like to
-        <Text onPress={(): void => goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
+        <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
         <Trans>answer some questions</Trans></Text> to get your most relevant tasks?</Trans>
     </Text>
 );

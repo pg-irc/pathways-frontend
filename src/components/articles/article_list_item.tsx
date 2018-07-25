@@ -9,7 +9,7 @@ type AllArticleListItemProps = ArticleListItem & RouterProps;
 
 export const ArticleListItemComponent: React.StatelessComponent<AllArticleListItemProps> =
     (props: AllArticleListItemProps): JSX.Element => {
-    const goToArticleDetail = (): void => goToRouteWithParameter(Routes.ArticleDetail, props.id, props.history);
+    const goToArticleDetail = goToRouteWithParameter(Routes.ArticleDetail, props.id, props.history);
     return (
         <ListItem noIndent noBorder button onPress={goToArticleDetail}>
             <Grid>

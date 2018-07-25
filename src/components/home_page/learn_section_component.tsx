@@ -33,7 +33,7 @@ const renderLearnButton = R.curry((props: AllHomePageProps, section: ExploreSect
 });
 
 const renderLearnSectionButton = (props: AllHomePageProps, section: ExploreSection): JSX.Element => {
-    const goToLearnDetail = (): void => goToRouteWithParameter(Routes.LearnDetail, section.id, props.history);
+    const goToLearnDetail = goToRouteWithParameter(Routes.LearnDetail, section.id, props.history);
     const style = { height: 70 };
     const buttonProps = { onPress: goToLearnDetail, buttonStyle: style, ...section };
     return <SectionButton {...buttonProps} />;
@@ -41,7 +41,7 @@ const renderLearnSectionButton = (props: AllHomePageProps, section: ExploreSecti
 
 const renderLearnMoreButton = (props: AllHomePageProps): JSX.Element => {
     const i18n = props.i18n;
-    const goToLearn = (): void => goToRouteWithoutParameter(Routes.Learn, props.history);
+    const goToLearn = goToRouteWithoutParameter(Routes.Learn, props.history);
     const style = { height: 70 };
     const buttonProps = { onPress: goToLearn, icon: 'apps', name: i18n.t`More`, buttonStyle: style };
     return <SectionButton {...buttonProps} />;

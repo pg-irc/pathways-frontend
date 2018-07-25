@@ -35,7 +35,7 @@ const renderLearnButton = R.curry((props: AllExploreProps, section: ExploreSecti
 ));
 
 const renderLearnSectionButton = (props: AllExploreProps, section: ExploreSection): JSX.Element => {
-    const goToLearnDetail = (): void => goToRouteWithParameter(Routes.LearnDetail, section.id, props.history);
+    const goToLearnDetail = goToRouteWithParameter(Routes.LearnDetail, section.id, props.history);
     return(
         <SectionButton {...section} onPress={goToLearnDetail} buttonStyle={{height: 100}} />
     );

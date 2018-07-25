@@ -20,22 +20,22 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
         <Footer>
             <FooterTab>
                 <Button vertical active={path === routePathWithoutParameter(Routes.Home)}
-                        onPress={(): void => goToRouteWithoutParameter(Routes.Home, props.history)}>
+                        onPress={goToRouteWithoutParameter(Routes.Home, props.history)}>
                     <Icon name='home' />
                     <Text><Trans>Home</Trans></Text>
                 </Button>
                 <Button vertical active={path === routePathWithoutParameter(Routes.Questionnaire)}
-                        onPress={(): void => goToRouteWithoutParameter(Routes.Questionnaire, props.history)}>
+                        onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)}>
                     <Icon name='apps' />
                     <Text style={[{fontSize: values.smallTextSize}]}><Trans>Questions</Trans></Text>
                 </Button>
                 <Button vertical active={path === routePathWithoutParameter(Routes.MyPlan)}
-                        onPress={(): void => goToRouteWithoutParameter(Routes.MyPlan, props.history)}>
+                        onPress={goToRouteWithoutParameter(Routes.MyPlan, props.history)}>
                     <Icon name='camera' />
                     <Text><Trans>My plan</Trans></Text>
                 </Button>
                 <Button vertical active={path === routePathWithoutParameter(Routes.Learn)}
-                        onPress={(): void => goToRouteWithoutParameter(Routes.Learn, props.history)}>
+                        onPress={goToRouteWithoutParameter(Routes.Learn, props.history)}>
                     <Icon active name='apps' />
                     <Text><Trans>Learn</Trans></Text>
                 </Button>

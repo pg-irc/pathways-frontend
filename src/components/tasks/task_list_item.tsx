@@ -19,7 +19,7 @@ export interface TaskListItemActions {
 type AllTaskListItemProps = TaskListItemProps & TaskListItemActions & RouterProps;
 
 export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProps> = (props: AllTaskListItemProps): JSX.Element => {
-    const goToTaskDetail = (): void => goToRouteWithParameter(Routes.TaskDetail, props.id, props.history);
+    const goToTaskDetail = goToRouteWithParameter(Routes.TaskDetail, props.id, props.history);
     return (
         <ListItem style={props.listItemStyle} button noIndent onPress={goToTaskDetail}>
             <Grid>

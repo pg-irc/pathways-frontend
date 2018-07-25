@@ -53,16 +53,16 @@ export const routePathWithParameter = (route: Routes, parameter: string): string
     return routePathDefinition(route).replace(/:.*/, parameter);
 };
 
-export const goToRouteWithoutParameter = (route: Routes, history: History): void => {
+export const goToRouteWithoutParameter = (route: Routes, history: History): () => void => {
     const path = routePathWithoutParameter(route);
     // tslint:disable-next-line:no-expression-statement
-    history.push(path);
+    return (): void => history.push(path);
 };
 
-export const goToRouteWithParameter = (route: Routes, parameter: string, history: History): void => {
+export const goToRouteWithParameter = (route: Routes, parameter: string, history: History): () => void => {
     const path = routePathWithParameter(route, parameter);
     // tslint:disable-next-line:no-expression-statement
-    history.push(path);
+    return (): void => history.push(path);
 };
 
 export const goBack = (history: History): void => (
