@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-let
 
-import { findItemByLearnTaxonomyTerm } from '../tasks/../details/tasks';
+import { findItemByLearnTaxonomyTerm } from '../details/tasks';
 import { ExploreTaxonomyId, TaxonomyTermReference } from '../../stores/taxonomies';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';

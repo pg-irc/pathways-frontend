@@ -1,7 +1,7 @@
 import { Store } from '../stores';
 import { Id as TaskId } from '../stores/tasks';
 import { Id as ServiceId, buildDefaultTaskServices } from '../stores/services';
-import { Task } from '../selectors/tasks';
+import { Task } from './tasks';
 import { take } from 'ramda';
 import { Locale } from '../locale';
 import { selectLocalizedText, selectLocale } from './locale';

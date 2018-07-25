@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { LocaleInfoManager } from '../';
+import { LocaleInfoManager } from '..';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { LocaleInfo, CatalogsMap } from '../types';

@@ -11,21 +11,20 @@ import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
 import { ArticleListItem } from '../../selectors/articles';
 import { ArticleListComponent } from '../articles/article_list';
 
-export interface ExploreSectionProps {
+export interface ExploreSectionDetailProps {
     readonly section: ExploreSection;
     readonly tasks: ReadonlyArray<Task>;
     readonly articles: ReadonlyArray<ArticleListItem>;
 }
 
-export interface ExploreSectionActions {
+export interface ExploreSectionDetailActions {
     readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
 }
 
-type AllExploreSectionProps = ExploreSectionProps & ExploreSectionActions & RouterProps;
+type Props = ExploreSectionDetailProps & ExploreSectionDetailActions & RouterProps;
 
-// rename ExploreSectionDetailComponent
-export const ExploreSectionComponent: React.StatelessComponent<AllExploreSectionProps> =
-    (props: AllExploreSectionProps): JSX.Element => {
+export const ExploreSectionDetailComponent: React.StatelessComponent<Props> =
+    (props: Props): JSX.Element => {
         return <Container>
             <Content padder>
                 <View style={[
@@ -45,7 +44,7 @@ export const ExploreSectionComponent: React.StatelessComponent<AllExploreSection
 // tslint:disable-next-line:no-var-requires
 const sectionImage = require('../../../assets/images/icon.png');
 
-const TitleComponent: React.StatelessComponent<AllExploreSectionProps> = (props: AllExploreSectionProps): JSX.Element => (
+const TitleComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View>
         <ImageBackground
             source={sectionImage}
@@ -67,7 +66,7 @@ const TitleComponent: React.StatelessComponent<AllExploreSectionProps> = (props:
     </View>
 );
 
-const IconComponent: React.StatelessComponent<AllExploreSectionProps> = (props: AllExploreSectionProps): JSX.Element => (
+const IconComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <Icon type='MaterialCommunityIcons' name={props.section.icon} style={[
         { color: colors.white },
         { fontSize: 40 },
@@ -79,7 +78,7 @@ const IconComponent: React.StatelessComponent<AllExploreSectionProps> = (props: 
     ]} />
 );
 
-const TitleTextComponent: React.StatelessComponent<AllExploreSectionProps> = (props: AllExploreSectionProps): JSX.Element => (
+const TitleTextComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View style={[
         { flex: 1 },
         { flexDirection: 'column' },
@@ -123,7 +122,7 @@ const ShareButton: React.StatelessComponent = (): JSX.Element => (
     ]} />
 );
 
-const IntroductionComponent: React.StatelessComponent<AllExploreSectionProps> = (props: AllExploreSectionProps): JSX.Element => (
+const IntroductionComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <Text style={[
         { marginTop: 20 },
         { marginLeft: 20 },

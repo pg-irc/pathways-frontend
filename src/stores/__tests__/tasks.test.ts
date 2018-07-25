@@ -4,7 +4,7 @@ import {
     TaskBuilder,
     TaskUserSettingsBuilder,
     buildNormalizedStore,
-} from '../../stores/__tests__/helpers/tasks_helpers';
+} from './helpers/tasks_helpers';
 import * as stores from '../tasks';
 
 describe('tasks reducer', () => {
