@@ -26,5 +26,5 @@ export const selectLearn = (store: Store, routerProps: RouterProps): ExploreSect
     const theSection = sections[id];
     const exploreTaxonomy = selectExploreTaxonomy(store);
     const icon = selectIconFromExploreTaxonomy(theSection.taxonomyTerms, exploreTaxonomy);
-    return details.getExploreSectionById(locale, theSection, icon);
+    return details.buildExploreSection(locale, theSection, icon);
 };

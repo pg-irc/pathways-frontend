@@ -1,5 +1,5 @@
 // tslint:disable:no-let no-expression-statement
-import { denormalizeSections, getExploreSectionById } from '../details/explore';
+import { denormalizeSections, buildExploreSection } from '../details/explore';
 import { ExploreSection } from '../explore';
 import { ExploreSectionMap } from '../../stores/explore';
 import { ExploreTaxonomyId } from '../../stores/taxonomies';
@@ -74,7 +74,7 @@ describe('build selector explore section', () => {
             withIntroduction(localizedIntroduction).
             build();
 
-        section = getExploreSectionById(englishLocale, inputSection, theIcon);
+        section = buildExploreSection(englishLocale, inputSection, theIcon);
     });
 
     it('should return the section with the given id', () => {

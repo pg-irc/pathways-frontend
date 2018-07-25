@@ -20,13 +20,10 @@ export const denormalizeSections =
         return R.map(buildOneSectionForView, R.keys(sections));
     };
 
-// TODO rename to buildExploreSection
-export const getExploreSectionById =
-    (locale: Locale, theSection: stores.ExploreSection, icon: string): select.ExploreSection => {
+export const buildExploreSection = (locale: Locale, theSection: stores.ExploreSection, icon: string): select.ExploreSection => {
+    const id = theSection.id;
+    const name = selectLocalizedText(locale, theSection.name);
+    const introduction = selectLocalizedText(locale, theSection.introduction);
 
-        const id = theSection.id;
-        const name = selectLocalizedText(locale, theSection.name);
-        const introduction = selectLocalizedText(locale, theSection.introduction);
-
-        return { id, name, introduction, icon };
-    };
+    return { id, name, introduction, icon };
+};
