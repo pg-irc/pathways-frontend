@@ -1,11 +1,13 @@
 import React from 'react';
-import { Header, Left, Button, Icon, Title, Body, Right } from 'native-base';
+import { Header, Text, Left, Button, Icon, Right } from 'native-base';
+import { Trans } from '@lingui/react';
 import { CurrentLocale } from '../language_switcher/current_locale';
 import { Locale } from '../../locale';
-import { I18nManager } from 'react-native';
+import { I18nManager, StatusBar, Platform } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton } from 'react-router-native';
-import { routePathWithoutParameter, Routes, goBack } from '../../application/routing';
+import { routePathWithoutParameter, Routes, goBack, goToRouteWithoutParameter } from '../../application/routing';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -21,23 +23,57 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
     const { onLanguageSelect, currentLocale }: HeaderProps & UiActions = props;
 
     if (props.location.pathname === routePathWithoutParameter(Routes.Welcome)) {
-        // tslint:disable-next-line:no-null-keyword
-        return null;
+        return <EmptyComponent />;
     }
+
+    const marginTop = getStatusBarHeightForPlatform();
+
     return (
-        <Header>
+        <Header style={{ marginTop }}>
             <Left>
                 <Button transparent onPress={(): void => goBack(props.history)}>
-                    <Icon name={ I18nManager.isRTL ? 'arrow-forward' : 'arrow-back' } />
+                    <Icon name={getBackButtonIcon(props.location.pathname)} />
                 </Button>
                 <BackButton />
             </Left>
-            <Body>
-                <Title>Pathways</Title>
-            </Body>
             <Right>
+                {helpButtonIfShown(props)}
                 <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
             </Right>
         </Header>
     );
 };
+
+const getBackButtonIcon = (pathname: string): string => {
+    if (pathname === routePathWithoutParameter(Routes.Help)) {
+        return 'close';
+    }
+    if (I18nManager.isRTL) {
+        return 'arrow-forward';
+    }
+    return 'arrow-back';
+};
+
+interface ButtonActions {
+    readonly onPress: () => void;
+}
+
+const helpButtonIfShown = (props: HeaderProps): JSX.Element => {
+    const showHelpButton = props.location.pathname !== routePathWithoutParameter(Routes.Help);
+    if (!showHelpButton) {
+        return <EmptyComponent />;
+    }
+    const onPress = goToRouteWithoutParameter(Routes.Help, props.history);
+    return <HelpButton onPress={onPress} />;
+};
+
+const HelpButton: React.StatelessComponent<ButtonActions> = (props: ButtonActions): JSX.Element => (
+    <Button {...props} style={{ backgroundColor: '#0066ff' }}>
+        <Icon name='help-circle' />
+        <Text><Trans>NEED HELP?</Trans></Text>
+    </Button>
+);
+
+const getStatusBarHeightForPlatform = (): number => (
+    Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
+);
