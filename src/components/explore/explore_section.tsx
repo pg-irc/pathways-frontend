@@ -23,6 +23,7 @@ export interface ExploreSectionActions {
 
 type AllExploreSectionProps = ExploreSectionProps & ExploreSectionActions & RouterProps;
 
+// rename ExploreSectionDetailComponent
 export const ExploreSectionComponent: React.StatelessComponent<AllExploreSectionProps> =
     (props: AllExploreSectionProps): JSX.Element => {
         return <Container>

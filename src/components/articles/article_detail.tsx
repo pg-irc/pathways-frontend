@@ -22,7 +22,7 @@ export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailPr
                     flexDirection: 'column',
                     alignItems: 'stretch',
                 }]} >
-                <TitleComponent />
+                <TitleComponent {...props} />
                 <ContentComponent {...props} />
             </View>
         </Content>
@@ -31,45 +31,47 @@ export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailPr
 // tslint:disable-next-line:no-var-requires
 const sectionImage = require('../../../assets/images/icon.png');
 
-const TitleComponent: React.StatelessComponent = (): JSX.Element => (
-    <View>
-        <ImageBackground
-            source={sectionImage}
-            style={[
-                { width: '100%' },
-            ]}>
-            <View style={[
-                { flexDirection: 'row' },
-                { alignItems: 'flex-end' },
-                { backgroundColor: 'rgba(0,0,0,0.4)' },
-                { marginTop: 120 },
-            ]}>
-                <TitleTextComponent />
-                <HeartButton />
-                <ShareButton />
-            </View>
-            <View style={[
-                { flexDirection: 'row' },
-                { alignItems: 'center' },
-                { backgroundColor: 'rgba(0,0,0,0.4)' },
-            ]}>
-                <IconComponent />
-                <LabelComponent />
-            </View>
-        </ImageBackground>
-    </View>
-);
+const TitleComponent: React.StatelessComponent<AllArticleDetailProps> =
+    (props: AllArticleDetailProps): JSX.Element => (
+        <View>
+            <ImageBackground
+                source={sectionImage}
+                style={[
+                    { width: '100%' },
+                ]}>
+                <View style={[
+                    { flexDirection: 'row' },
+                    { alignItems: 'flex-end' },
+                    { backgroundColor: 'rgba(0,0,0,0.4)' },
+                    { marginTop: 120 },
+                ]}>
+                    <TitleTextComponent {...props} />
+                    <HeartButton />
+                    <ShareButton />
+                </View>
+                <View style={[
+                    { flexDirection: 'row' },
+                    { alignItems: 'center' },
+                    { backgroundColor: 'rgba(0,0,0,0.4)' },
+                ]}>
+                    <IconComponent {...props} />
+                    <LabelComponent {...props} />
+                </View>
+            </ImageBackground>
+        </View>
+    );
 
-const TitleTextComponent: React.StatelessComponent = (): JSX.Element => (
-    <Text style={[
-        { flex: 1 },
-        { color: colors.white },
-        { fontWeight: 'bold' },
-        { fontSize: 30 },
-        { marginLeft: 20 },
-        { marginRight: 20 },
-    ]}>British Columbia's Education System</Text>
-);
+const TitleTextComponent: React.StatelessComponent<AllArticleDetailProps> =
+    (props: AllArticleDetailProps): JSX.Element => (
+        <Text style={[
+            { flex: 1 },
+            { color: colors.white },
+            { fontWeight: 'bold' },
+            { fontSize: 30 },
+            { marginLeft: 20 },
+            { marginRight: 20 },
+        ]}>{props.article.title}</Text>
+    );
 
 const HeartButton: React.StatelessComponent = (): JSX.Element => (
     <Icon type='MaterialCommunityIcons' name='heart-outline' style={[
@@ -89,25 +91,27 @@ const ShareButton: React.StatelessComponent = (): JSX.Element => (
     ]} />
 );
 
-const IconComponent: React.StatelessComponent = (): JSX.Element => (
-    <Icon type='MaterialCommunityIcons' name='book-open-variant' style={[
-        { color: colors.white },
-        { fontSize: 30 },
-        { marginTop: 20 },
-        { marginLeft: 20 },
-        { marginRight: 20 },
-        { marginBottom: 20 },
-    ]} />
-);
+const IconComponent: React.StatelessComponent<AllArticleDetailProps> =
+    (props: AllArticleDetailProps): JSX.Element => (
+        <Icon type='MaterialCommunityIcons' name={props.article.exploreSection.icon} style={[
+            { color: colors.white },
+            { fontSize: 30 },
+            { marginTop: 20 },
+            { marginLeft: 20 },
+            { marginRight: 20 },
+            { marginBottom: 20 },
+        ]} />
+    );
 
-const LabelComponent: React.StatelessComponent = (): JSX.Element => (
-    <Text style={[
-        { flex: 1 },
-        { color: colors.white },
-        { fontWeight: 'bold' },
-        { fontSize: 20 },
-    ]}>Education</Text>
-);
+const LabelComponent: React.StatelessComponent<AllArticleDetailProps> =
+    (props: AllArticleDetailProps): JSX.Element => (
+        <Text style={[
+            { flex: 1 },
+            { color: colors.white },
+            { fontWeight: 'bold' },
+            { fontSize: 20 },
+        ]}>{props.article.exploreSection.name}</Text>
+    );
 
 const ContentComponent: React.StatelessComponent<AllArticleDetailProps> = (props: AllArticleDetailProps): JSX.Element => (
     <Text style={[
