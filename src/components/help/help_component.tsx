@@ -67,13 +67,28 @@ const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element 
 );
 
 const createContactComponent = (contact: HelpContact): JSX.Element => (
-    <View style={[{ flexDirection: 'column' }]} key={contact.description} >
+    <View key={contact.description} style={[
+        { flexDirection: 'column' },
+    ]} >
         <View style={[{ flexDirection: 'row' }]}>
-            <Icon style={[{ justifyContent: 'flex-start' }]} type='MaterialCommunityIcons' name={contact.icon} />
-            <Text style={[{ flex: 1, justifyContent: 'flex-start' }]}>{contact.description}</Text>
-            <Icon style={[{ justifyContent: 'flex-end' }]} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
+            <Icon style={[
+                { justifyContent: 'flex-start' },
+                { marginLeft: 10 },
+                { marginRight: 10 },
+            ]} type='MaterialCommunityIcons' name={contact.icon} />
+
+            <Text style={[
+                { flex: 1 },
+                { justifyContent: 'flex-start' },
+            ]}>{contact.description}</Text>
+
+            <Icon style={[
+                { justifyContent: 'flex-end' },
+                { marginLeft: 10 },
+                { marginRight: 10 },
+            ]} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
+
         </View>
         <View style={applicationStyles.hr} />
     </View>
 );
-
