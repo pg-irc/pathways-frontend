@@ -1,10 +1,13 @@
 import { RouteComponentProps } from 'react-router-native';
 import { History } from 'history';
+import { Id as ArticleId } from '../stores/articles';
+import { Id as LearnId } from '../stores/explore';
+import { Id as TaskId } from '../stores/tasks';
 
 interface MatchParameters {
-    readonly articleId: string;
-    readonly learnId: string;
-    readonly taskId: string;
+    readonly articleId: ArticleId;
+    readonly learnId: LearnId;
+    readonly taskId: TaskId;
 }
 
 export type RouterProps = RouteComponentProps<MatchParameters>;
