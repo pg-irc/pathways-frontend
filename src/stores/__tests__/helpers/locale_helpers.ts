@@ -55,6 +55,7 @@ export class LocaleBuilder {
     }
 }
 
+// TODO fix constructor signature to adhere to builder pattern
 export class LocalizedTextBuilder {
 
     localizations: LocalizedText;
@@ -74,7 +75,6 @@ export class LocalizedTextBuilder {
     build(): LocalizedText {
         return this.localizations;
     }
-
 }
 
 export class LocaleStoreBuilder {

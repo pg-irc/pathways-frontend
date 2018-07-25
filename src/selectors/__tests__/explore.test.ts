@@ -4,6 +4,8 @@ import { ExploreSection } from '../explore';
 import { ExploreSectionMap } from '../../stores/explore';
 import { ExploreTaxonomyId } from '../../stores/taxonomies';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { ExploreSectionBuilder as StoreExploreSectionBuilder } from '../../stores/__tests__/helpers/explore_section_builder';
+import { LocalizedTextBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 
 const englishLocale = { code: 'en', fallback: 'ar' };
 const theId = aString();
@@ -59,11 +61,22 @@ describe('denormalize all explore sections', () => {
     });
 });
 
-describe('get section by id', () => {
+describe('build selector explore section', () => {
     let section: ExploreSection = undefined;
+
     beforeEach(() => {
-        section = getExploreSectionById(englishLocale, theId, theStore, theExploreTaxonomy);
+        const localizedName = new LocalizedTextBuilder(englishLocale.code, theNameInEnglish).build();
+        const localizedIntroduction = new LocalizedTextBuilder(englishLocale.code, theIntroductionInEnglish).build();
+
+        const inputSection = new StoreExploreSectionBuilder().
+            withId(theId).
+            withName(localizedName).
+            withIntroduction(localizedIntroduction).
+            build();
+
+        section = getExploreSectionById(englishLocale, inputSection, theIcon);
     });
+
     it('should return the section with the given id', () => {
         expect(section.id).toBe(theId);
     });
