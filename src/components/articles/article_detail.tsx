@@ -1,11 +1,10 @@
 import React from 'react';
+import { Image } from 'react-native';
 import { Content, View, Text, Icon } from 'native-base';
 import { Article } from '../../selectors/articles';
 import { Id as TaskId } from '../../stores/tasks';
 import { TaskListItemActions } from '../tasks/task_list_item';
 import { RouterProps } from '../../application/routing';
-import { ImageBackground } from 'react-native';
-import { colors } from '../../application/styles';
 
 export interface ArticleDetailProps {
     readonly article: Article;
@@ -33,31 +32,29 @@ const sectionImage = require('../../../assets/images/icon.png');
 
 const TitleComponent: React.StatelessComponent<AllArticleDetailProps> =
     (props: AllArticleDetailProps): JSX.Element => (
-        <View>
-            <ImageBackground
-                source={sectionImage}
-                style={[
-                    { width: '100%' },
-                ]}>
-                <View style={[
-                    { flexDirection: 'row' },
-                    { alignItems: 'flex-end' },
-                    { backgroundColor: 'rgba(0,0,0,0.4)' },
-                    { marginTop: 120 },
-                ]}>
-                    <TitleTextComponent {...props} />
-                    <HeartButton />
-                    <ShareButton />
-                </View>
-                <View style={[
-                    { flexDirection: 'row' },
-                    { alignItems: 'center' },
-                    { backgroundColor: 'rgba(0,0,0,0.4)' },
-                ]}>
-                    <IconComponent {...props} />
-                    <LabelComponent {...props} />
-                </View>
-            </ImageBackground>
+        <View style={[
+            { flexDirection: 'column' },
+            { alignItems: 'flex-start' },
+        ]}>
+            <Image source={sectionImage} style={[
+                { width: '100%' },
+                { flex: 1 },
+            ]} />
+            <View style={[
+                { flexDirection: 'row' },
+                { alignItems: 'flex-end' },
+            ]}>
+                <TitleTextComponent {...props} />
+                <HeartButton />
+                <ShareButton />
+            </View>
+            <View style={[
+                { flexDirection: 'row' },
+                { alignItems: 'center' },
+            ]}>
+                <IconComponent {...props} />
+                <LabelComponent {...props} />
+            </View>
         </View>
     );
 
@@ -65,7 +62,6 @@ const TitleTextComponent: React.StatelessComponent<AllArticleDetailProps> =
     (props: AllArticleDetailProps): JSX.Element => (
         <Text style={[
             { flex: 1 },
-            { color: colors.white },
             { fontWeight: 'bold' },
             { fontSize: 30 },
             { marginLeft: 20 },
@@ -75,7 +71,6 @@ const TitleTextComponent: React.StatelessComponent<AllArticleDetailProps> =
 
 const HeartButton: React.StatelessComponent = (): JSX.Element => (
     <Icon type='MaterialCommunityIcons' name='heart-outline' style={[
-        { color: colors.white },
         { alignSelf: 'flex-end' },
         { marginRight: 20 },
         { marginBottom: 20 },
@@ -84,7 +79,6 @@ const HeartButton: React.StatelessComponent = (): JSX.Element => (
 
 const ShareButton: React.StatelessComponent = (): JSX.Element => (
     <Icon name='share' style={[
-        { color: colors.white },
         { alignSelf: 'flex-end' },
         { marginRight: 20 },
         { marginBottom: 20 },
@@ -94,7 +88,6 @@ const ShareButton: React.StatelessComponent = (): JSX.Element => (
 const IconComponent: React.StatelessComponent<AllArticleDetailProps> =
     (props: AllArticleDetailProps): JSX.Element => (
         <Icon type='MaterialCommunityIcons' name={props.article.exploreSection.icon} style={[
-            { color: colors.white },
             { fontSize: 30 },
             { marginTop: 20 },
             { marginLeft: 20 },
@@ -107,7 +100,6 @@ const LabelComponent: React.StatelessComponent<AllArticleDetailProps> =
     (props: AllArticleDetailProps): JSX.Element => (
         <Text style={[
             { flex: 1 },
-            { color: colors.white },
             { fontWeight: 'bold' },
             { fontSize: 20 },
         ]}>{props.article.exploreSection.name}</Text>
