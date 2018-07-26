@@ -8,7 +8,7 @@ import { myPlanStyles } from './styles';
 import { Collapser } from '../collapser/collapser';
 import { TaskListItem } from '../../selectors/tasks';
 import { TaskListComponent, TaskListActions } from '../tasks/task_list';
-import { RouterProps } from '../../application/routing';
+import { RouterProps, goToRouteWithoutParameter, Routes } from '../../application/routing';
 
 export interface MyPlanProps {
     readonly savedTasks: ReadonlyArray<TaskListItem>;
@@ -28,6 +28,14 @@ export const MyPlanComponent: React.StatelessComponent<AllMyPlanProps> = (props:
     return (
         <Content padder>
             <Text style={applicationStyles.pageTitle}><Trans>My Plan</Trans></Text>
+            <Text style={[
+                { textAlign: 'left' },
+                { marginBottom: 20 },
+            ]}>
+                <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
+                you need to take? <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
+                        <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
+            </Text>
             <Collapser
                 collapsedHeader={getHeaderForSavedTasks(collapsedIcon())}
                 expandedHeader={getHeaderForSavedTasks(expandedIcon())}
