@@ -100,26 +100,26 @@ describe('tasks selector', () => {
         it('includes tasks that are not saved in my plan', () => {
             const task = new TaskBuilder().withLocaleCode(locale.code).build();
             const noSavedTaskIds: ReadonlyArray<string> = [];
-            const result = selector.rejectAllSavedTasks([task], noSavedTaskIds);
+            const result = selector.rejectTasksWithIdsInList(noSavedTaskIds, [task]);
             expect(result).toEqual([task]);
         });
 
         it('excludes tasks that are saved in my plan', () => {
             const task = new TaskBuilder().withLocaleCode(locale.code).build();
             const savedTaskIds: ReadonlyArray<string> = [task.id];
-            const result = selector.rejectAllSavedTasks([task], savedTaskIds);
+            const result = selector.rejectTasksWithIdsInList(savedTaskIds, [task]);
             expect(result).toEqual([]);
         });
 
         it('includes tasks that are not completed', () => {
             const nonCompletedTask = new TaskBuilder().withCompleted(false).withLocaleCode(locale.code).build();
-            const result = selector.rejectAllCompletedTasks([nonCompletedTask]);
+            const result = selector.rejectCompletedTasks([nonCompletedTask]);
             expect(result).toEqual([nonCompletedTask]);
         });
 
         it('excludes tasks that are completed', () => {
             const completedTask = new TaskBuilder().withCompleted(true).withLocaleCode(locale.code).build();
-            const result = selector.rejectAllCompletedTasks([completedTask]);
+            const result = selector.rejectCompletedTasks([completedTask]);
             expect(result).toEqual([]);
         });
 
