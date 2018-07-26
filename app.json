@@ -1,15 +1,15 @@
 {
   "expo": {
     "sdkVersion": "28.0.0",
-    "name": "Pathways",
+    "name": "Arrival Advisor",
     "icon": "./assets/images/icon.png",
     "version": "0.0.1",
-    "slug": "pathways",
+    "slug": "arrival_advisor",
     "ios": {
-      "bundleIdentifier": "org.peacegeeks.pathways"
+      "bundleIdentifier": "org.peacegeeks.arrivalAdvisor"
     },
     "android": {
-      "package": "org.peacegeeks.pathways"
+      "package": "org.peacegeeks.arrivalAdvisor"
     },
     "assetBundlePatterns": [
       "assets/images/*",
