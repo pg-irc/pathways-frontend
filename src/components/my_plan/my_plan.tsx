@@ -8,16 +8,17 @@ import { myPlanStyles } from './styles';
 import { Collapser } from '../collapser/collapser';
 import { TaskListItem } from '../../selectors/tasks';
 import { TaskListComponent, TaskListActions } from '../tasks/task_list';
-import { RouterProps, goToRouteWithoutParameter, Routes } from '../../application/routing';
+import { RouterProps } from '../../application/routing';
+import { MyPlanIntroComponent } from './my_plan_intro_component';
 
 export interface MyPlanProps {
     readonly savedTasks: ReadonlyArray<TaskListItem>;
     readonly recommendedTasks: ReadonlyArray<TaskListItem>;
 }
 
-type AllMyPlanProps = MyPlanProps & TaskListActions & RouterProps;
+type Props = MyPlanProps & TaskListActions & RouterProps;
 
-export const MyPlanComponent: React.StatelessComponent<AllMyPlanProps> = (props: AllMyPlanProps): JSX.Element => {
+export const MyPlanComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const savedTasksContent = <TaskListComponent {...props} tasks={props.savedTasks} />;
     const recommendedTasksContent =
         <TaskListComponent
@@ -28,14 +29,7 @@ export const MyPlanComponent: React.StatelessComponent<AllMyPlanProps> = (props:
     return (
         <Content padder>
             <Text style={applicationStyles.pageTitle}><Trans>My Plan</Trans></Text>
-            <Text style={[
-                { textAlign: 'left' },
-                { marginBottom: 20 },
-            ]}>
-                <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps
-                you need to take? <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
-                        <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
-            </Text>
+            <MyPlanIntroComponent {...props} />
             <Collapser
                 collapsedHeader={getHeaderForSavedTasks(collapsedIcon())}
                 expandedHeader={getHeaderForSavedTasks(expandedIcon())}
