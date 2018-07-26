@@ -7,7 +7,7 @@ import { applicationStyles, colors } from '../../application/styles';
 import { myPlanStyles } from './styles';
 import { Collapser } from '../collapser/collapser';
 import { TaskListItem } from '../../selectors/tasks';
-import { TaskListComponent, TaskListActions } from '../tasks/task_list';
+import { TaskListComponent, TaskListActions, noTasksAddedYetTextComponent } from '../tasks/task_list';
 import { RouterProps } from '../../application/routing';
 import { MyPlanIntroComponent } from './my_plan_intro_component';
 
@@ -19,12 +19,17 @@ export interface MyPlanProps {
 type Props = MyPlanProps & TaskListActions & RouterProps;
 
 export const MyPlanComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const savedTasksContent = <TaskListComponent {...props} tasks={props.savedTasks} />;
-    const recommendedTasksContent =
-        <TaskListComponent
-            {...props}
-            tasks={props.recommendedTasks}
-            listItemStyle={[{ backgroundColor: colors.lighterGrey }]} />;
+    const savedTasksContent = <TaskListComponent
+        {...props}
+        tasks={props.savedTasks}
+        emptyTaskListComponent={noTasksAddedYetTextComponent()}
+    />;
+    const recommendedTasksContent = <TaskListComponent
+        {...props}
+        tasks={props.recommendedTasks}
+        listItemStyle={[{ backgroundColor: colors.lighterGrey }]}
+        emptyTaskListComponent={noTasksAddedYetTextComponent()}
+    />;
 
     return (
         <Content padder>

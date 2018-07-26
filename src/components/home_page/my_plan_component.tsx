@@ -18,7 +18,9 @@ export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (prop
         <TaskListComponent
             {...props}
             tasks={R.take(3, props.tasks)}
-            listItemStyle={{ backgroundColor: colors.lighterGrey }} />
+            listItemStyle={{ backgroundColor: colors.lighterGrey }}
+            // tslint:disable-next-line:no-null-keyword
+            emptyTaskListComponent={null} />
 
         <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
             <Button

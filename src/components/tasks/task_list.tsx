@@ -9,19 +9,21 @@ import { RouterProps } from '../../application/routing';
 
 export interface TaskListProps extends TaskListItemStyleProps {
     readonly tasks: ReadonlyArray<TaskListItem>;
+    readonly emptyTaskListComponent: JSX.Element;
 }
 
 export interface TaskListActions extends TaskListItemActions {
     readonly shouldDisplayTaskInteractions?: (taskId: TaskId) => boolean;
 }
+
+export const noTasksAddedYetTextComponent = (): JSX.Element => (
+    <Text><Trans>No tasks added yet</Trans></Text>
+);
+
 type AllTaskListProps = TaskListProps & TaskListActions & RouterProps;
 
 export const TaskListComponent: React.StatelessComponent<AllTaskListProps> = (props: AllTaskListProps): JSX.Element => (
-    R.isEmpty(props.tasks) ? <EmptyTaskListComponent /> : <NonEmptyTaskListComponent {...props} />
-);
-
-const EmptyTaskListComponent: React.StatelessComponent = (): JSX.Element => (
-    <Text><Trans>No tasks added yet</Trans></Text>
+    R.isEmpty(props.tasks) ? props.emptyTaskListComponent : <NonEmptyTaskListComponent {...props} />
 );
 
 const NonEmptyTaskListComponent: React.StatelessComponent<AllTaskListProps> = (props: AllTaskListProps): JSX.Element => (

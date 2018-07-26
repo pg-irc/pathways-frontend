@@ -4,7 +4,7 @@ import R from 'ramda';
 import { applicationStyles } from '../../application/styles';
 import { TaskListItem } from '../../selectors/tasks';
 import { Id as TaskId } from '../../stores/tasks';
-import { TaskListComponent } from './task_list';
+import { TaskListComponent, noTasksAddedYetTextComponent } from '../tasks/task_list';
 import { Trans } from '@lingui/react';
 import { TaskListItemActions } from './task_list_item';
 import { RouterProps } from '../../application/routing';
@@ -30,7 +30,9 @@ export const RelatedTasksComponent: React.StatelessComponent<AllRelatedTasksProp
             <TaskListComponent
                 {...props}
                 tasks={props.relatedTasks}
-                shouldDisplayTaskInteractions={shouldDisplayTaskInteractions} />
+                shouldDisplayTaskInteractions={shouldDisplayTaskInteractions}
+                emptyTaskListComponent={noTasksAddedYetTextComponent()}
+            />
         </View>
     );
 };
