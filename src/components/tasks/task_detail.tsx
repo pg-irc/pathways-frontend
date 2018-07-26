@@ -9,7 +9,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
 import { Trans } from '@lingui/react';
-import { Service, TaskServices} from '../../selectors/services';
+import { Service, TaskServices } from '../../selectors/services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
 import { RelatedTasksComponent } from './related_tasks';
@@ -32,12 +32,12 @@ export interface TaskServiceUpdater {
     readonly requestUpdateTaskServices: () => UpdateTaskServicesAsync.Request;
 }
 
-type AllTaskDetailProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater & RouterProps;
+type Props = TaskDetailProps & TaskDetailActions & TaskServiceUpdater & RouterProps;
 type TabChangeEvent = { readonly i: number, from: number, readonly ref: React.Ref<Tabs> };
 
-export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
+export class TaskDetailComponent extends React.Component<Props> {
 
-    constructor(props: AllTaskDetailProps) {
+    constructor(props: Props) {
         super(props);
         this.onChangeTab = this.onChangeTab.bind(this);
     }
@@ -45,52 +45,13 @@ export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
     render(): JSX.Element {
         return (
             <View style={{ flex: 1 }}>
-                <Content padder scrollEnabled={false} style={{ flex: 0, flexGrow: 0, flexShrink: 0, height: 'auto' }}>
-                    {renderHeader(this.props)}
-                </Content>
+                <TitleComponent {...this.props} />
                 <Tabs style={taskDetailStyles.tabs} onChangeTab={this.props.requestUpdateTaskServices}>
                     <Tab heading={<TabHeading><Text><Trans>INFORMATION</Trans></Text></TabHeading>}>
-                        <Content padder>
-                            <Grid style={taskDetailStyles.tabContent}>
-                                <Row style={taskDetailStyles.row}>
-                                    <Col size={10}>
-                                        <Icon type='MaterialCommunityIcons' name='star-circle' />
-                                    </Col>
-                                    <Col size={90} style={taskDetailStyles.iconText}>
-                                        <Text>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
-                                    </Col>
-                                </Row>
-                                <Row style={taskDetailStyles.row}>
-                                    <Col size={10}>
-                                        <Icon type='MaterialCommunityIcons' name='sign-text' />
-                                    </Col>
-                                    <Col size={90} style={taskDetailStyles.iconText}>
-                                        <Text>This task helps with <Text style={applicationStyles.bold}>settling in</Text>.</Text>
-                                    </Col>
-                                </Row>
-                                <Row style={taskDetailStyles.row}>
-                                    <Text>You can get information about your community ...</Text>
-                                </Row>
-                                <RelatedArticlesComponent
-                                    {...this.props}
-                                    relatedArticles={this.props.task.relatedArticles}
-                                />
-                                <RelatedTasksComponent
-                                    {...this.props}
-                                    relatedTasks={this.props.task.relatedTasks}
-                                    savedTasks={this.props.savedTasks}
-                                />
-                            </Grid>
-                        </Content>
+                        <InformationTab {...this.props} />
                     </Tab>
                     <Tab heading={<TabHeading><Text><Trans>FIND SERVICES</Trans></Text></TabHeading>}>
-                        <FlatList
-                            ListEmptyComponent={ServiceListEmpty}
-                            refreshing={this.props.taskServices.loading}
-                            onRefresh={this.props.requestUpdateTaskServices}
-                            data={this.props.taskServices.services}
-                            keyExtractor={(service: Service): string => service.id}
-                            renderItem={renderServiceListItem} />
+                        <ServicesTab {...this.props} />
                     </Tab>
                 </Tabs>
             </View>
@@ -102,20 +63,15 @@ export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
             this.props.requestUpdateTaskServices();
         }
     }
-
 }
 
-interface ServiceItemInfo extends ListRenderItemInfo<Service> {}
+const TitleComponent = (props: Props): JSX.Element => (
+    <Content padder scrollEnabled={false} style={{ flex: 0, flexGrow: 0, flexShrink: 0, height: 'auto' }}>
+        {renderHeader(props)}
+    </Content>
+);
 
-function ServiceListEmpty(): JSX.Element {
-    return (
-        <View style={{ padding: 20 }}>
-            <Text><Trans>No related services found.</Trans></Text>
-        </View>
-    );
-}
-
-function renderHeader(props: AllTaskDetailProps): JSX.Element {
+function renderHeader(props: Props): JSX.Element {
     const task = props.task;
     const taskState = getTaskState({
         inPlan: R.any((id: TaskId) => id === task.id, props.savedTasks),
@@ -123,15 +79,15 @@ function renderHeader(props: AllTaskDetailProps): JSX.Element {
     });
 
     const doneButton = (
-        <Button iconLeft rounded light style={[{marginTop: 10}]}
-                onPress={(): void => {props.toggleCompleted(task.id); props.removeFromSavedList(task.id); }}>
+        <Button iconLeft rounded light style={[{ marginTop: 10 }]}
+            onPress={(): void => { props.toggleCompleted(task.id); props.removeFromSavedList(task.id); }}>
             <Icon name='checkbox' />
             <Text><Trans>Mark Done</Trans></Text>
         </Button>
     );
     const notDoneButton = (
         <Button iconLeft rounded light
-                onPress={(): void => {props.toggleCompleted(task.id); props.addToSavedList(task.id); }}>
+            onPress={(): void => { props.toggleCompleted(task.id); props.addToSavedList(task.id); }}>
             <Icon name='close' />
             <Text><Trans>Not done</Trans></Text>
         </Button>
@@ -165,7 +121,7 @@ function buildHeader(taskTitle: string, stateTitle: string | JSX.Element, stateB
     return (
         <Grid>
             <Row>
-                <Text style={[applicationStyles.bold, {marginBottom: 5}]}>{stateTitle}</Text>
+                <Text style={[applicationStyles.bold, { marginBottom: 5 }]}>{stateTitle}</Text>
             </Row>
             <Row>
                 <Text>{taskTitle}</Text>
@@ -189,6 +145,59 @@ function buildHeader(taskTitle: string, stateTitle: string | JSX.Element, stateB
     );
 }
 
+const InformationTab = (props: Props): JSX.Element => (
+    <Content padder>
+        <Grid style={taskDetailStyles.tabContent}>
+            <Row style={taskDetailStyles.row}>
+                <Col size={10}>
+                    <Icon type='MaterialCommunityIcons' name='star-circle' />
+                </Col>
+                <Col size={90} style={taskDetailStyles.iconText}>
+                    <Text>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
+                </Col>
+            </Row>
+            <Row style={taskDetailStyles.row}>
+                <Col size={10}>
+                    <Icon type='MaterialCommunityIcons' name='sign-text' />
+                </Col>
+                <Col size={90} style={taskDetailStyles.iconText}>
+                    <Text>This task helps with <Text style={applicationStyles.bold}>settling in</Text>.</Text>
+                </Col>
+            </Row>
+            <Row style={taskDetailStyles.row}>
+                <Text>You can get information about your community ...</Text>
+            </Row>
+            <RelatedArticlesComponent
+                {...props}
+                relatedArticles={props.task.relatedArticles}
+            />
+            <RelatedTasksComponent
+                {...props}
+                relatedTasks={props.task.relatedTasks}
+                savedTasks={props.savedTasks}
+            />
+        </Grid>
+    </Content>
+);
+
+const ServicesTab = (props: Props): JSX.Element => (
+    <FlatList
+        ListEmptyComponent={ServiceListEmpty}
+        refreshing={props.taskServices.loading}
+        onRefresh={props.requestUpdateTaskServices}
+        data={props.taskServices.services}
+        keyExtractor={(service: Service): string => service.id}
+        renderItem={renderServiceListItem} />
+);
+
+function ServiceListEmpty(): JSX.Element {
+    return (
+        <View style={{ padding: 20 }}>
+            <Text><Trans>No related services found.</Trans></Text>
+        </View>
+    );
+}
+
 function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
     return (
         <ListItem>
@@ -196,3 +205,5 @@ function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
         </ListItem>
     );
 }
+
+interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
