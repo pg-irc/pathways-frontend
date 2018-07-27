@@ -31,6 +31,7 @@ export interface TaskListItem {
     readonly id: string;
     readonly title: string;
     readonly description: string;
+    readonly isRecommended: boolean;
 }
 
 export const denormalizeTask =
@@ -51,11 +52,12 @@ export const denormalizeTask =
             }
         );
 
-export const denormalizeTaskListItem = (locale: Locale, task: model.Task): TaskListItem => (
+export const denormalizeTaskListItem = (locale: Locale, task: model.Task, isRecommended: boolean): TaskListItem => (
     {
         id: task.id,
         title: selectLocalizedText(locale, task.title),
         description: selectLocalizedText(locale, task.description),
+        isRecommended: isRecommended,
     }
 );
 
@@ -74,7 +76,9 @@ export const selectTaskAsListItem = (store: Store, taskId: model.Id): TaskListIt
     const locale = selectLocale(store);
     const taskMap = store.tasksInStore.taskMap;
     const task = taskMap[taskId];
-    return denormalizeTaskListItem(locale, task);
+    const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(store);
+    const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
+    return denormalizeTaskListItem(locale, task, isRecommended);
 };
 
 const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: model.Task, exploreSection: ExploreSection, isRecommended: boolean): Task => {

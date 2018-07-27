@@ -151,18 +151,14 @@ const toJsxButtons = (buttons: ReadonlyArray<TaskStateButton>, jsxButtons: JsxBu
     return R.map(toJsxButton, buttons);
 };
 
-function buildHeader(taskTitle: string, stateTitle: string | JSX.Element, stateButtons: ReadonlyArray<JSX.Element>): JSX.Element {
+function buildHeader(taskTitle: string, stateTitle: JSX.Element, stateButtons: ReadonlyArray<JSX.Element>): JSX.Element {
     return (
         <View style={[
             { flexDirection: 'column' },
         ]}>
             <Text style={applicationStyles.pageTitle}>{taskTitle}</Text>
             <Text style={[applicationStyles.bold, { marginBottom: 5 }]}>{stateTitle}</Text>
-            <View style={[
-                { flexDirection: 'row' },
-            ]}>
-                {stateButtons}
-            </View>
+            <View style={[{ flexDirection: 'row' }]}>{stateButtons}</View>
         </View>
     );
 }
