@@ -86,7 +86,7 @@ function renderHeader(props: Props): JSX.Element {
         <Button iconLeft rounded light
             onPress={(): void => { props.toggleCompleted(task.id); props.addToSavedList(task.id); }}>
             <Icon name='checkbox-marked-outline' type='MaterialCommunityIcons' />
-            <Text><Trans>Not done</Trans></Text>
+            <Text><Trans>Mark as not Done</Trans></Text>
         </Button>
     );
     const removeFromPlanButton = (
