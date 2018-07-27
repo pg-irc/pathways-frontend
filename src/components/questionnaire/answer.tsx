@@ -4,19 +4,19 @@ import * as selector from '../../selectors/questionnaire';
 import { SelectAnswerAction } from '../../stores/questionnaire';
 import { QuestionnaireActions } from './actions';
 
-export interface Props {
+export interface AnswerProps {
     readonly answer: selector.Answer;
     readonly acceptMultipleAnswers: boolean;
 }
+export type AnswerActions = QuestionnaireActions;
 
-export type Actions = QuestionnaireActions;
-
+type Props = AnswerProps & AnswerActions;
 enum AnswerType {
     CheckboxAnswer,
     RadioAnswer,
 }
 
-export const Answer: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
+export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const answerType = props.answer.acceptMultipleAnswers ? AnswerType.CheckboxAnswer : AnswerType.RadioAnswer;
     const onPress = (): SelectAnswerAction => props.selectAnswer(props.answer.id);
     return (

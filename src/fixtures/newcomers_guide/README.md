@@ -1,1 +1,0 @@
-This folder is here to contain generated content from newcomers guide. This would be generated at build time and never checked in.

@@ -13,7 +13,6 @@ export interface Question {
     readonly text: string;
     readonly explanation?: string;
     readonly answers: ReadonlyArray<Answer>;
-    readonly isFinalQuestion: boolean;
 }
 
 export interface Answer {
@@ -39,7 +38,6 @@ export const denormalizeQuestions = (locale: Locale, modelStore: model.Store): Q
             text: selectLocalizedText(locale, question.text),
             explanation: question.explanation ? selectLocalizedText(locale, question.explanation) : undefined,
             answers: selectAnswersForQuestion(locale, question, answers),
-            isFinalQuestion: question.isFinalQuestion,
         };
     });
 };

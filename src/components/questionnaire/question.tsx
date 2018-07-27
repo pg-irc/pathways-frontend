@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Grid, Row, Col, Text, View } from 'native-base';
-import { Answer, Actions } from './answer';
+import { Answer, AnswerActions } from './answer';
 import * as selector from '../../selectors/questionnaire';
 import { QuestionnaireActions } from './actions';
 import { applicationStyles } from '../../application/styles';
@@ -10,13 +10,12 @@ import { Collapser } from '../collapser/collapser';
 import { RouterProps, goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { History } from 'history';
 
-export interface Props {
+export interface QuestionProps {
     readonly question: selector.Question;
 }
-export type Actions = QuestionnaireActions;
-type AllQuestionProps = Props & Actions & RouterProps;
+type Props = QuestionProps & QuestionnaireActions & AnswerActions & RouterProps;
 
-export const Question: React.StatelessComponent<AllQuestionProps> = (props: AllQuestionProps): JSX.Element => {
+export const Question: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     return (
         <Collapser
             collapsedHeader={renderQuestionCollapsedHeader(props)}
@@ -28,13 +27,13 @@ export const Question: React.StatelessComponent<AllQuestionProps> = (props: AllQ
     );
 };
 
-const renderQuestionCollapsedHeader = ({ question }: AllQuestionProps): JSX.Element => (
+const renderQuestionCollapsedHeader = ({ question }: Props): JSX.Element => (
     <Text style={applicationStyles.bold}>
         <Text style={applicationStyles.bold}>{question.number}. {question.text}</Text>
     </Text>
 );
 
-const renderQuestionExpandedHeader = ({ question }: AllQuestionProps): JSX.Element => (
+const renderQuestionExpandedHeader = ({ question }: Props): JSX.Element => (
     <Row>
         <View style={questionStyles.expandedBG}>
             <Text style={questionStyles.expandedText}>{question.number}</Text>
@@ -43,7 +42,7 @@ const renderQuestionExpandedHeader = ({ question }: AllQuestionProps): JSX.Eleme
     </Row>
 );
 
-const renderQuestionContent = ({ question, selectAnswer, history }: AllQuestionProps): JSX.Element => (
+const renderQuestionContent = ({ question, selectAnswer, history }: Props): JSX.Element => (
     <Grid style={questionStyles.questionWrapper}>
         <Row>
             <Col>
@@ -59,9 +58,13 @@ const renderQuestionContent = ({ question, selectAnswer, history }: AllQuestionP
             </Col>
         </Row>
         <Row style={questionStyles.buttonsWrapper}>
-            {question.isFinalQuestion ? renderFinalQuestionButton(history) : renderNextQuestionButton()}
+            {isFinalQuestion(question) ? renderFinalQuestionButton(history) : renderNextQuestionButton()}
         </Row>
     </Grid>
+);
+
+const isFinalQuestion = (question: selector.Question): boolean => (
+    question.id === 'q9'
 );
 
 const renderFinalQuestionButton = (history: History): JSX.Element => (

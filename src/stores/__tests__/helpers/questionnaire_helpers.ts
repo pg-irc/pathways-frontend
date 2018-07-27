@@ -41,7 +41,6 @@ export class QuestionBuilder {
     text: string = aString();
     acceptMultipleAnswers: boolean = true;
     answers: Array<AnswerBuilder> = Array<AnswerBuilder>(3);
-    isFinalQuestion: boolean = false;
 
     withLocaleCode(localeCode: string): QuestionBuilder {
         this.localeCode = localeCode;
@@ -68,17 +67,11 @@ export class QuestionBuilder {
         return this;
     }
 
-    withIsFinalQuestion(isFinalQuestion: boolean): QuestionBuilder {
-        this.isFinalQuestion = isFinalQuestion;
-        return this;
-    }
-
     build(): store.Question {
         return {
             id: this.id,
             text: this.createLocalizedText(this.text),
             acceptMultipleAnswers: this.acceptMultipleAnswers,
-            isFinalQuestion: this.isFinalQuestion,
         };
     }
 
