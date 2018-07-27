@@ -12,6 +12,7 @@ import { History } from 'history';
 
 export interface QuestionProps {
     readonly question: selector.Question;
+    readonly isFinalQuestion: boolean;
 }
 type Props = QuestionProps & QuestionnaireActions & AnswerActions & RouterProps;
 
@@ -42,7 +43,7 @@ const renderQuestionExpandedHeader = ({ question }: Props): JSX.Element => (
     </Row>
 );
 
-const renderQuestionContent = ({ question, selectAnswer, history }: Props): JSX.Element => (
+const renderQuestionContent = ({ question, isFinalQuestion, selectAnswer, history }: Props): JSX.Element => (
     <Grid style={questionStyles.questionWrapper}>
         <Row>
             <Col>
@@ -58,13 +59,9 @@ const renderQuestionContent = ({ question, selectAnswer, history }: Props): JSX.
             </Col>
         </Row>
         <Row style={questionStyles.buttonsWrapper}>
-            {isFinalQuestion(question) ? renderFinalQuestionButton(history) : renderNextQuestionButton()}
+            {isFinalQuestion ? renderFinalQuestionButton(history) : renderNextQuestionButton()}
         </Row>
     </Grid>
-);
-
-const isFinalQuestion = (question: selector.Question): boolean => (
-    question.id === 'q9'
 );
 
 const renderFinalQuestionButton = (history: History): JSX.Element => (

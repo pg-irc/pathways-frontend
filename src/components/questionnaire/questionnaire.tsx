@@ -25,6 +25,7 @@ export const Component: React.StatelessComponent<Props> = (props: Props): JSX.El
                 key={question.id}
                 question={question}
                 selectAnswer={props.selectAnswer}
+                isFinalQuestion={question.number === props.questionnaire.length}
             />
         ))}
     </Content>
