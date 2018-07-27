@@ -16,6 +16,7 @@ import { RelatedTasksComponent } from './related_tasks';
 import { RelatedArticlesComponent } from '../articles/related_articles';
 import { getTaskState, TaskStates } from './task_states';
 import { RouterProps } from '../../application/routing';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -166,14 +167,7 @@ function buildHeader(taskTitle: string, stateTitle: string | JSX.Element, stateB
 const InformationTab = (props: Props): JSX.Element => (
     <Content padder>
         <Grid style={taskDetailStyles.tabContent}>
-            <Row style={taskDetailStyles.row}>
-                <Col size={10}>
-                    <Icon type='MaterialCommunityIcons' name='star-circle' />
-                </Col>
-                <Col size={90} style={taskDetailStyles.iconText}>
-                    <Text>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
-                </Col>
-            </Row>
+            {props.task.isRecommended ? <ThisTaskIsRecommended /> : <EmptyComponent />}
             <TaxonomyComponent {...props} />
             <Row style={taskDetailStyles.row}>
                 <Text>{props.task.description}</Text>
@@ -189,6 +183,17 @@ const InformationTab = (props: Props): JSX.Element => (
             />
         </Grid>
     </Content>
+);
+
+const ThisTaskIsRecommended = (): JSX.Element => (
+    <Row style={taskDetailStyles.row}>
+        <Col size={10}>
+            <Icon type='MaterialCommunityIcons' name='star-circle' />
+        </Col>
+        <Col size={90} style={taskDetailStyles.iconText}>
+            <Text>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
+        </Col>
+    </Row>
 );
 
 const TaxonomyComponent = ({ task }: Props): JSX.Element => (
