@@ -149,16 +149,6 @@ function buildHeader(taskTitle: string, stateTitle: string | JSX.Element, stateB
                 <Col size={70}>
                     {stateButtons}
                 </Col>
-                <Col size={15}>
-                    <Button dark transparent>
-                        <Icon name='share' />
-                    </Button>
-                </Col>
-                <Col size={15}>
-                    <Button dark transparent>
-                        <Icon name='more' />
-                    </Button>
-                </Col>
             </Row>
         </Grid>
     );
