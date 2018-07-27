@@ -156,14 +156,7 @@ const InformationTab = (props: Props): JSX.Element => (
                     <Text>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
                 </Col>
             </Row>
-            <Row style={taskDetailStyles.row}>
-                <Col size={10}>
-                    <Icon type='MaterialCommunityIcons' name='sign-text' />
-                </Col>
-                <Col size={90} style={taskDetailStyles.iconText}>
-                    <Text>This task helps with <Text style={applicationStyles.bold}>settling in</Text>.</Text>
-                </Col>
-            </Row>
+            <TaxonomyComponent {...props} />
             <Row style={taskDetailStyles.row}>
                 <Text>You can get information about your community ...</Text>
             </Row>
@@ -178,6 +171,17 @@ const InformationTab = (props: Props): JSX.Element => (
             />
         </Grid>
     </Content>
+);
+
+const TaxonomyComponent = (props: Props): JSX.Element => (
+    <Row style={taskDetailStyles.row}>
+        <Col size={10}>
+            <Icon type='MaterialCommunityIcons' name={props.task.exploreSection.icon} />
+        </Col>
+        <Col size={90} style={taskDetailStyles.iconText}>
+            <Text>This task helps with <Text style={applicationStyles.bold}>{props.task.exploreSection.name}</Text>.</Text>
+        </Col>
+    </Row>
 );
 
 const ServicesTab = (props: Props): JSX.Element => (
