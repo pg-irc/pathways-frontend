@@ -105,6 +105,24 @@ function renderHeader(props: Props): JSX.Element {
         </Button>
     );
 
+    /*
+    Task states:
+
+    Recommended: False Saved: False Completed: False  Text: TASK
+    Recommended: False Saved: False Completed: True   Text: COMPLETED TASK
+    Recommended: False Saved: True  Completed: False  Text: TASK I PLAN TO DO
+    Recommended: False Saved: True  Completed: True   Text: COMPLETED TASK
+    Recommended: True  Saved: False Completed: False  Text: RECOMMENDED TASK
+    Recommended: True  Saved: False Completed: True   Text: COMPLETED TASK
+    Recommended: True  Saved: True  Completed: False  Text: TASK I PLAN TO DO
+    Recommended: True  Saved: True  Completed: True   Text: COMPLETED TASK
+
+    if (Completed) return COMPLETED TASK
+    else if (Saved) return TASK I PLAN TO DO
+    else if (Recommended) return RECOMMENDED TASK
+    else return TASK
+    */
+
     switch (taskState) {
         case TaskStates.CompletedInPlan:
         case TaskStates.CompletedNotInPlan:
@@ -121,10 +139,10 @@ function buildHeader(taskTitle: string, stateTitle: string | JSX.Element, stateB
     return (
         <Grid>
             <Row>
-                <Text style={[applicationStyles.bold, { marginBottom: 5 }]}>{stateTitle}</Text>
+                <Text style={applicationStyles.pageTitle}>{taskTitle}</Text>
             </Row>
             <Row>
-                <Text>{taskTitle}</Text>
+                <Text style={[applicationStyles.bold, { marginBottom: 5 }]}>{stateTitle}</Text>
             </Row>
             <Row style={taskDetailStyles.actions}>
                 <Col size={70}>
@@ -158,7 +176,7 @@ const InformationTab = (props: Props): JSX.Element => (
             </Row>
             <TaxonomyComponent {...props} />
             <Row style={taskDetailStyles.row}>
-                <Text>You can get information about your community ...</Text>
+                <Text>{props.task.description}</Text>
             </Row>
             <RelatedArticlesComponent
                 {...props}
@@ -173,13 +191,13 @@ const InformationTab = (props: Props): JSX.Element => (
     </Content>
 );
 
-const TaxonomyComponent = (props: Props): JSX.Element => (
+const TaxonomyComponent = ({ task }: Props): JSX.Element => (
     <Row style={taskDetailStyles.row}>
         <Col size={10}>
-            <Icon type='MaterialCommunityIcons' name={props.task.exploreSection.icon} />
+            <Icon type='MaterialCommunityIcons' name={task.exploreSection.icon} />
         </Col>
         <Col size={90} style={taskDetailStyles.iconText}>
-            <Text>This task helps with <Text style={applicationStyles.bold}>{props.task.exploreSection.name}</Text>.</Text>
+            <Text>This task helps with <Text style={applicationStyles.bold}>{task.exploreSection.name}</Text>.</Text>
         </Col>
     </Row>
 );
