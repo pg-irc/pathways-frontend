@@ -1,10 +1,6 @@
 // tslint:disable:no-expression-statement no-let
 
-import {
-    TaskBuilder,
-    TaskUserSettingsBuilder,
-    buildNormalizedStore,
-} from './helpers/tasks_helpers';
+import { TaskBuilder, buildNormalizedStore } from '../../stores/__tests__/helpers/tasks_helpers';
 import * as stores from '../tasks';
 
 describe('tasks reducer', () => {
@@ -14,10 +10,8 @@ describe('tasks reducer', () => {
 
         beforeEach(() => {
             const taskBuilder = new TaskBuilder();
-            const taskUserSettingsBuilder = new TaskUserSettingsBuilder(taskBuilder.build().id);
             store = buildNormalizedStore(
                 [taskBuilder],
-                [taskUserSettingsBuilder],
                 [taskBuilder.build().id],
             );
         });
@@ -34,17 +28,10 @@ describe('tasks reducer', () => {
         });
 
         test('can toggle a task completed', () => {
-            const taskUserSettingsId = Object.keys(store.taskUserSettingsMap)[0];
-            const taskUserSettings = store.taskUserSettingsMap[taskUserSettingsId];
-            const finalStore = stores.reducer(store, stores.toggleCompleted(taskUserSettings.taskId));
-            expect(finalStore.taskUserSettingsMap[taskUserSettingsId].completed).toEqual(!taskUserSettings.completed);
-        });
-
-        test('can toggle a task starred', () => {
-            const taskUserSettingsId = Object.keys(store.taskUserSettingsMap)[0];
-            const taskUserSettings = store.taskUserSettingsMap[taskUserSettingsId];
-            const finalStore = stores.reducer(store, stores.toggleStarred(taskUserSettings.taskId));
-            expect(finalStore.taskUserSettingsMap[taskUserSettingsId].starred).toEqual(!taskUserSettings.starred);
+            const taskId = Object.keys(store.taskMap)[0];
+            const oldCompleted = store.taskMap[taskId].completed;
+            const finalStore = stores.reducer(store, stores.toggleCompleted(taskId));
+            expect(finalStore.taskMap[taskId].completed).toEqual(!oldCompleted);
         });
     });
 });

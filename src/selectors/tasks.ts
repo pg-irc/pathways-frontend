@@ -19,7 +19,6 @@ export interface Task {
     readonly importance: number;
     readonly relatedTasks: ReadonlyArray<TaskListItem>;
     readonly relatedArticles: ReadonlyArray<ArticleListItem>;
-    readonly starred: boolean;
     readonly completed: boolean;
 }
 
@@ -30,19 +29,18 @@ export interface TaskListItem {
 }
 
 export const denormalizeTask =
-    (locale: Locale, task: model.Task, taskUserSettings: model.TaskUserSettings,
+    (locale: Locale, task: model.Task,
         relatedArticles: ReadonlyArray<ArticleListItem>, relatedTasks: ReadonlyArray<TaskListItem>): Task => (
             {
                 id: task.id,
                 title: selectLocalizedText(locale, task.title),
                 description: selectLocalizedText(locale, task.description),
                 taxonomyTerms: task.taxonomyTerms,
-                starred: taskUserSettings.starred,
                 relatedArticles: relatedArticles,
                 relatedTasks: relatedTasks,
                 category: task.category,
                 importance: task.importance,
-                completed: taskUserSettings.completed,
+                completed: task.completed,
             }
         );
 
@@ -72,22 +70,39 @@ export const selectTaskAsListItem = (store: Store, taskId: model.Id): TaskListIt
     return denormalizeTaskListItem(locale, task);
 };
 
-const buildDenormalizedTask = R.curry((locale: Locale, userTasks: model.TaskUserSettingsMap, task: model.Task): Task => {
-    const userTask = model.findTaskUserSettingsByTaskId(userTasks, task.id);
-    return denormalizeTask(locale, task, userTask, [], []);
+const denormalizeTasksWithoutRelatedEntities = R.curry((locale: Locale, task: model.Task): Task => {
+    return denormalizeTask(locale, task, [], []);
 });
 
 export const selectRecommendedTasks = (store: Store): ReadonlyArray<Task> => {
     const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store);
-    const matchingTasks = filterTasksByTaxonomyTerms(taxonomyTerms, store.tasksInStore.taskMap);
+    const filterTasks = filterTasksByTaxonomyTerms(taxonomyTerms);
 
-    const locale = selectLocale(store);
-    const userTasks = store.tasksInStore.taskUserSettingsMap;
-    return R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
+    const savedTaskIds = store.tasksInStore.savedTasksList;
+    const rejectSavedTasks = rejectTasksWithIdsInList(savedTaskIds);
+
+    const denormalizeTasks = denormalizeTasksWithoutRelatedEntities(selectLocale(store));
+
+    const allTasks = store.tasksInStore.taskMap;
+    const matchingTasks = filterTasks(allTasks);
+    const nonSavedTasks = rejectSavedTasks(matchingTasks);
+    const nonCompletedTasks = rejectCompletedTasks(nonSavedTasks);
+
+    return R.map(denormalizeTasks, nonCompletedTasks);
 };
 
+export const rejectTasksWithIdsInList =
+    R.curry((listOfIds: model.TaskList, tasks: ReadonlyArray<model.Task>): ReadonlyArray<model.Task> => {
+        const idIsInList = (task: model.Task): boolean => (
+            R.contains(task.id, listOfIds)
+        );
+        return R.reject(idIsInList, tasks);
+    });
+
+export const rejectCompletedTasks = R.reject(R.prop('completed'));
+
 export const filterTasksByTaxonomyTerms =
-    (selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
+    R.curry((selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
 
         const taskContainsTaxonomyTerms = R.curry((targetTerms: ReadonlyArray<TaxonomyTermReference>, task: model.Task): boolean => (
             R.not(R.isEmpty(R.intersection(targetTerms, task.taxonomyTerms)))
@@ -102,18 +117,16 @@ export const filterTasksByTaxonomyTerms =
         const isRecommended = R.either(isRecommendedToAll, isRecommendedBecauseOfSelecedAnswers);
 
         return R.filter(isRecommended, R.values(taskMap));
-    };
+    });
 
 export const selectTask = (store: Store, routerProps: RouterProps): Task => {
     const locale = selectLocale(store);
     const taskId = routerProps.match.params.taskId;
     const taskMap = store.tasksInStore.taskMap;
-    const taskUserSettingsMap = store.tasksInStore.taskUserSettingsMap;
-    const taskUserSettings = model.findTaskUserSettingsByTaskId(taskUserSettingsMap, taskId);
     const task = taskMap[taskId];
     const relatedTasks = selectRelatedTasks(store, task.relatedTasks);
     const relatedArticles = selectRelatedArticles(store, task.relatedArticles);
-    return denormalizeTask(locale, task, taskUserSettings, relatedArticles, relatedTasks);
+    return denormalizeTask(locale, task, relatedArticles, relatedTasks);
 };
 
 export const selectTasksForLearn = (store: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
@@ -122,8 +135,7 @@ export const selectTasksForLearn = (store: Store, routerProps: RouterProps): Rea
     const matchingTasks = taskDetails.findItemByLearnTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
 
     const locale = selectLocale(store);
-    const userTasks = store.tasksInStore.taskUserSettingsMap;
-    const denormalizedTasks = R.map(buildDenormalizedTask(locale, userTasks), matchingTasks);
+    const denormalizedTasks = R.map(denormalizeTasksWithoutRelatedEntities(locale), matchingTasks);
 
     return denormalizedTasks;
 };

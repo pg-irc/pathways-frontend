@@ -1,7 +1,6 @@
 // tslint:disable:no-expression-statement no-let no-any
 
-import { TaskBuilder, TaskUserSettingsBuilder, buildNormalizedStore }
-    from '../../stores/__tests__/helpers/tasks_helpers';
+import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
@@ -26,15 +25,13 @@ describe('tasks selector', () => {
         let task: stores.Task;
         let taxonomyId: string;
         let taxonomyTermId: string;
-        let taskUserSettings: stores.TaskUserSettings;
         let denormalizedTask: selector.Task;
 
         beforeEach(() => {
             taxonomyId = aString();
             taxonomyTermId = aString();
             task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
-            taskUserSettings = new TaskUserSettingsBuilder(task.id).build();
-            denormalizedTask = selector.denormalizeTask(locale, task, taskUserSettings, [], []);
+            denormalizedTask = selector.denormalizeTask(locale, task, [], []);
         });
 
         test('id property', () => {
@@ -42,11 +39,7 @@ describe('tasks selector', () => {
         });
 
         test('completed property', () => {
-            expect(denormalizedTask.completed).toBe(taskUserSettings.completed);
-        });
-
-        test('starred property', () => {
-            expect(denormalizedTask.starred).toBe(taskUserSettings.starred);
+            expect(denormalizedTask.completed).toBe(task.completed);
         });
 
         test('title property', () => {
@@ -97,23 +90,30 @@ describe('tasks selector', () => {
             expect(result).toEqual([task]);
         });
 
-    });
-
-    describe('selected data', () => {
-        let store: stores.Store;
-
-        beforeEach(() => {
-            const taskBuilder = new TaskBuilder().withLocaleCode(locale.code);
-            const taskUserSettingsBuilder = new TaskUserSettingsBuilder(taskBuilder.build().id);
-            store = buildNormalizedStore(
-                [taskBuilder],
-                [taskUserSettingsBuilder],
-                [taskBuilder.build().id],
-            );
+        it('includes tasks that are not saved in my plan', () => {
+            const task = new TaskBuilder().withLocaleCode(locale.code).build();
+            const noSavedTaskIds: ReadonlyArray<string> = [];
+            const result = selector.rejectTasksWithIdsInList(noSavedTaskIds, [task]);
+            expect(result).toEqual([task]);
         });
 
-        test('throws when select task user settings by id parameter is invalid', () => {
-            expect(() => stores.findTaskUserSettingsByTaskId(store.taskUserSettingsMap, aString())).toThrow();
+        it('excludes tasks that are saved in my plan', () => {
+            const task = new TaskBuilder().withLocaleCode(locale.code).build();
+            const savedTaskIds: ReadonlyArray<string> = [task.id];
+            const result = selector.rejectTasksWithIdsInList(savedTaskIds, [task]);
+            expect(result).toEqual([]);
+        });
+
+        it('includes tasks that are not completed', () => {
+            const nonCompletedTask = new TaskBuilder().withCompleted(false).withLocaleCode(locale.code).build();
+            const result = selector.rejectCompletedTasks([nonCompletedTask]);
+            expect(result).toEqual([nonCompletedTask]);
+        });
+
+        it('excludes tasks that are completed', () => {
+            const completedTask = new TaskBuilder().withCompleted(true).withLocaleCode(locale.code).build();
+            const result = selector.rejectCompletedTasks([completedTask]);
+            expect(result).toEqual([]);
         });
 
     });

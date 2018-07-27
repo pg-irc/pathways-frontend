@@ -1,20 +1,17 @@
 import { buildTasksFixture } from '../fixtures/buildFixtures';
-import { Store, TaskList, Id, TaskUserSettings, TaskUserSettingsMap } from '../fixtures/types/tasks';
+import { Store, TaskList, Id } from '../fixtures/types/tasks';
 import { Task as constants } from '../application/constants';
 import * as helpers from './helpers/make_action';
-import * as R from 'ramda';
 
-export { Id, Task, TaskUserSettings, TaskMap, TaskUserSettingsMap, TaskList, Store } from '../fixtures/types/tasks';
+export { Id, Task, TaskMap, TaskList, Store } from '../fixtures/types/tasks';
 
 export type AddToSavedListAction = Readonly<ReturnType<typeof addToSavedList>>;
 export type RemoveFromSavedListAction = Readonly<ReturnType<typeof removeFromSavedList>>;
 export type ToggleCompletedAction = Readonly<ReturnType<typeof toggleCompleted>>;
-export type ToggleStarredAction = Readonly<ReturnType<typeof toggleStarred>>;
 export type ShareAction = Readonly<ReturnType<typeof share>>;
 type TaskAction = AddToSavedListAction |
     RemoveFromSavedListAction |
     ToggleCompletedAction |
-    ToggleStarredAction |
     ShareAction;
 
 // tslint:disable-next-line:typedef
@@ -31,11 +28,6 @@ export const removeFromSavedList = (taskId: Id) => (
 // tslint:disable-next-line:typedef
 export const toggleCompleted = (taskId: Id) => (
     helpers.makeAction(constants.TOGGLE_COMPLETED, { taskId })
-);
-
-// tslint:disable-next-line:typedef
-export const toggleStarred = (taskId: Id) => (
-    helpers.makeAction(constants.TOGGLE_STARRED, { taskId })
 );
 
 // tslint:disable-next-line:typedef
@@ -57,9 +49,7 @@ export const reducer = (store: Store = buildDefaultStore(), action?: TaskAction)
         case constants.REMOVE_FROM_SAVED_LIST:
             return removeFromTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
         case constants.TOGGLE_COMPLETED:
-            return toggleTaskUserSettingsCompletedValue(store, action.payload.taskId);
-        case constants.TOGGLE_STARRED:
-            return toggleTaskUserSettingsStarredValue(store, action.payload.taskId);
+            return toggleCompletedValue(store, action.payload.taskId);
         // TODO
         case constants.SHARE:
         default:
@@ -81,45 +71,16 @@ const removeFromTaskList = (store: Store, property: keyof (Store), taskList: Tas
     return { ...store, [property]: taskList.filter((id: Id) => id !== value) };
 };
 
-const toggleTaskUserSettingsCompletedValue = (store: Store, taskId: Id): Store => {
-    const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, taskId);
+const toggleCompletedValue = (store: Store, taskId: Id): Store => {
+    const task = store.taskMap[taskId];
     return {
         ...store,
-        taskUserSettingsMap: {
-            ...store.taskUserSettingsMap,
-            [taskUserSettings.id]: {
-                ...taskUserSettings,
-                completed: !taskUserSettings.completed,
+        taskMap: {
+            ...store.taskMap,
+            [taskId]: {
+                ...task,
+                completed: !task.completed,
             },
         },
     };
 };
-
-const toggleTaskUserSettingsStarredValue = (store: Store, taskId: Id): Store => {
-    const taskUserSettings = findTaskUserSettingsByTaskId(store.taskUserSettingsMap, taskId);
-    return {
-        ...store,
-        taskUserSettingsMap: {
-            ...store.taskUserSettingsMap,
-            [taskUserSettings.id]: {
-                ...taskUserSettings,
-                starred: !taskUserSettings.starred,
-            },
-        },
-    };
-};
-
-export const findTaskUserSettingsByTaskId =
-    (taskUserSettingsMap: TaskUserSettingsMap, taskId: Id): TaskUserSettings => {
-        const validate = validateOneResultWasFound(taskId);
-        const getUserTask = R.compose(validate, R.values, R.pickBy(R.propEq('taskId', taskId)));
-        return getUserTask(taskUserSettingsMap);
-    };
-
-const validateOneResultWasFound =
-    R.curry((taskId: string, userTasks: ReadonlyArray<TaskUserSettings>): TaskUserSettings => {
-        if (userTasks.length !== 1) {
-            throw new Error(`Could not find TaskUserSettings for task id: ${taskId}`);
-        }
-        return userTasks[0];
-    });

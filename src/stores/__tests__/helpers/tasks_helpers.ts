@@ -14,6 +14,7 @@ export class TaskBuilder {
     taxonomyTerms: TaxonomyTermReference[] = [];
     relatedTasks: ReadonlyArray<ArticleId> = [aString(), aString()];
     relatedArticles: ReadonlyArray<store.Id> = [aString(), aString()];
+    completed: boolean = aBoolean();
     tags: ReadonlyArray<string> = [aString(), aString()];
     category: string = aString();
     importance: number = aNumber();
@@ -35,6 +36,11 @@ export class TaskBuilder {
 
     withDescription(description: string): TaskBuilder {
         this.description = description;
+        return this;
+    }
+
+    withCompleted(completed: boolean): TaskBuilder {
+        this.completed = completed;
         return this;
     }
 
@@ -76,6 +82,7 @@ export class TaskBuilder {
             taxonomyTerms: this.taxonomyTerms,
             relatedArticles: this.relatedArticles,
             relatedTasks: this.relatedArticles,
+            completed: this.completed,
             tags: this.tags,
             category: this.category,
             importance: this.importance,
@@ -87,48 +94,10 @@ export class TaskBuilder {
     }
 }
 
-export class TaskUserSettingsBuilder {
-    id: store.Id = aString();
-    taskId: store.Id = undefined;
-    starred: boolean = aBoolean();
-    completed: boolean = aBoolean();
-
-    constructor(taskId: store.Id) {
-        this.taskId = taskId;
-        return this;
-    }
-
-    withId(id: string): TaskUserSettingsBuilder {
-        this.id = id;
-        return this;
-    }
-
-    withStarred(starred: boolean): TaskUserSettingsBuilder {
-        this.starred = starred;
-        return this;
-    }
-
-    withCompleted(completed: boolean): TaskUserSettingsBuilder {
-        this.completed = completed;
-        return this;
-    }
-
-    build(): store.TaskUserSettings {
-        return {
-            id: this.id,
-            taskId: this.taskId,
-            starred: this.starred,
-            completed: this.completed,
-        };
-    }
-}
-
 export const buildNormalizedStore = (taskBuilders: ReadonlyArray<TaskBuilder>,
-    taskUserSettingsBuilders: ReadonlyArray<TaskUserSettingsBuilder>,
     savedTasks: ReadonlyArray<store.Id>): store.Store => (
         {
             taskMap: buildTaskMap(taskBuilders),
-            taskUserSettingsMap: buildTaskUserSettingsMap(taskUserSettingsBuilders),
             savedTasksList: savedTasks,
         }
     );
@@ -138,12 +107,4 @@ const buildTaskMap = (tasks: ReadonlyArray<TaskBuilder>): store.TaskMap => {
         return { ...map, [builder.id]: builder.build() };
     };
     return tasks.reduce(buildAndMapToIds, {});
-};
-
-const buildTaskUserSettingsMap = (taskUserSettings: ReadonlyArray<TaskUserSettingsBuilder>): store.TaskUserSettingsMap => {
-    const buildAndMapToIds = (map: store.TaskUserSettingsMap,
-        builder: TaskUserSettingsBuilder): store.TaskUserSettingsMap => {
-        return { ...map, [builder.id]: builder.build() };
-    };
-    return taskUserSettings.reduce(buildAndMapToIds, {});
 };

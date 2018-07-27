@@ -32,7 +32,7 @@ export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProp
                     </Col>
                     <Col size={20}>
                         <Row style={taskStyles.rightColumn}>
-                            <Icon style={taskStyles.icon} name='star-circle' type='MaterialCommunityIcons'/>
+                            <Icon style={taskStyles.icon} name='star-circle' type='MaterialCommunityIcons' />
                             <Icon style={taskStyles.icon} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
                         </Row>
                     </Col>
@@ -45,8 +45,8 @@ export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProp
 const renderTaskInteractions = (props: AllTaskListItemProps): JSX.Element => {
     const addToSavedList = (): AddToSavedListAction => props.addToSavedList(props.id);
     return (
-        <Col size={10}>
-            {props.addToSavedList ? renderAddButton(addToSavedList) : renderDragButton()}
+        <Col size={15}>
+            {props.addToSavedList ? renderAddButton(addToSavedList) : renderUncheckedBox()}
         </Col>
     );
 };
@@ -57,8 +57,8 @@ const renderAddButton = (onPress: () => void): JSX.Element => (
     </Button>
 );
 
-const renderDragButton = (): JSX.Element => (
+const renderUncheckedBox = (): JSX.Element => (
     <Button dark transparent iconRight>
-        <Icon style={applicationStyles.bold} name='drag-vertical' type='MaterialCommunityIcons' />
+        <Icon style={applicationStyles.bold} name='checkbox-blank-outline' type='MaterialCommunityIcons' />
     </Button>
 );

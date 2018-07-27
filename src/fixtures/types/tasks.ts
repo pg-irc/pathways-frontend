@@ -11,30 +11,19 @@ export interface Task {
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly relatedTasks: ReadonlyArray<Id>;
     readonly relatedArticles: ReadonlyArray<ArticleId>;
+    readonly completed: boolean;
     readonly tags?: ReadonlyArray<string>;
     readonly category?: string;
     readonly importance?: number;
-}
-
-export interface TaskUserSettings {
-    readonly id: Id;
-    readonly taskId: Id;
-    readonly starred: boolean;
-    readonly completed: boolean;
 }
 
 export interface TaskMap {
     readonly [property: string]: Task;
 }
 
-export interface TaskUserSettingsMap {
-    readonly [property: string]: TaskUserSettings;
-}
-
 export type TaskList = ReadonlyArray<Id>;
 
 export interface Store {
     readonly taskMap: TaskMap;
-    readonly taskUserSettingsMap: TaskUserSettingsMap;
     readonly savedTasksList: TaskList;
 }

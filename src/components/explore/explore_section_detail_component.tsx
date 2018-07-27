@@ -3,7 +3,7 @@ import { Container, Content, View, Icon, Text } from 'native-base';
 import { ImageBackground } from 'react-native';
 import { Trans } from '@lingui/react';
 import { ExploreSection } from '../../selectors/explore';
-import { TaskListComponent } from '../tasks/task_list';
+import { TaskListComponent, noTasksAddedYetTextComponent } from '../tasks/task_list';
 import { Task } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';
 import { colors } from '../../application/styles';
@@ -35,7 +35,7 @@ export const ExploreSectionDetailComponent: React.StatelessComponent<Props> =
                     <TitleComponent {...props} />
                     <IntroductionComponent {...props} />
                     <ArticleListComponent {...props} articles={props.articles} />
-                    <TaskListComponent {...props} tasks={props.tasks} />
+                    <TaskListComponent {...props} tasks={props.tasks} emptyTaskListComponent={noTasksAddedYetTextComponent()} />
                 </View>
             </Content>
         </Container >;

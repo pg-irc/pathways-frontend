@@ -7,17 +7,20 @@ import { TaskListComponent } from '../tasks/task_list';
 import { HomePageProps } from './props';
 import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { TaskListItemActions } from '../tasks/task_list_item';
+import { MyPlanIntroComponent, EmptyMyPlanIntroComponent } from '../my_plan/my_plan_intro_component';
 
 type AllHomePageProps = HomePageProps & TaskListItemActions & RouterProps;
 
 export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => (
     <View>
         <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>MY PLAN</Trans></Text>
-        {R.isEmpty(props.tasks) ? myPlanIntroWithEmptyPlan(props) : myPlanIntro(props)}
+        {R.isEmpty(props.tasks) ? introWithoutTasks(props) : introWithTasks(props)}
         <TaskListComponent
             {...props}
             tasks={R.take(3, props.tasks)}
-            listItemStyle={{ backgroundColor: colors.lighterGrey }} />
+            listItemStyle={{ backgroundColor: colors.lighterGrey }}
+            // tslint:disable-next-line:no-null-keyword
+            emptyTaskListComponent={null} />
 
         <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'center', paddingTop: 10 }]}>
             <Button
@@ -30,33 +33,18 @@ export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (prop
     </View>
 );
 
-const myPlanIntro = (props: RouterProps): JSX.Element => (
+const introWithTasks = (props: RouterProps): JSX.Element => (
     <View>
+        <MyPlanIntroComponent {...props} />
         <Text style={[
             { textAlign: 'left' },
             { marginBottom: 20 },
         ]}>
-            <Trans>Plan everything you need to do as a newcomer to Canada. Want to know what next steps you need to take?
-            <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
-            <Trans>Answer some questions</Trans></Text> to get tasks and tips recommended for you.</Trans>
+            <Trans>Here are some recommended tasks:</Trans>
         </Text>
-
-        <Text style={[
-            { textAlign: 'left' },
-            { marginBottom: 20 },
-        ]}>
-            <Trans>Here are some sample tasks:</Trans>
-        </Text>
-    </View>
+    </View >
 );
 
-const myPlanIntroWithEmptyPlan = (props: RouterProps): JSX.Element => (
-    <Text style={[
-        { textAlign: 'left' },
-        { marginBottom: 20 },
-    ]}>
-        <Trans>You haven't personalized your Plan yet. Would you like to
-        <Text onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)} style={[{ color: 'blue' }]}>
-        <Trans>answer some questions</Trans></Text> to get your most relevant tasks?</Trans>
-    </Text>
+const introWithoutTasks = (props: RouterProps): JSX.Element => (
+    <EmptyMyPlanIntroComponent {...props} />
 );
