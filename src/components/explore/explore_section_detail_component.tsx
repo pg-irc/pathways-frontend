@@ -10,6 +10,7 @@ import { colors } from '../../application/styles';
 import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
 import { ArticleListItem } from '../../selectors/articles';
 import { ArticleListComponent } from '../articles/article_list';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface ExploreSectionDetailProps {
     readonly section: ExploreSection;
@@ -58,8 +59,8 @@ const TitleComponent: React.StatelessComponent<Props> = (props: Props): JSX.Elem
             ]}>
                 <IconComponent {...props} />
                 <TitleTextComponent {...props} />
-                <HeartButton />
-                <ShareButton />
+                {false ? <HeartButton /> : <EmptyComponent />}
+                {false ? <ShareButton /> : <EmptyComponent />}
             </View>
         </ImageBackground>
     </View>

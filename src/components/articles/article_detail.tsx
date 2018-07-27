@@ -5,6 +5,7 @@ import { Article } from '../../selectors/articles';
 import { Id as TaskId } from '../../stores/tasks';
 import { TaskListItemActions } from '../tasks/task_list_item';
 import { RouterProps } from '../../application/routing';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface ArticleDetailProps {
     readonly article: Article;
@@ -44,8 +45,8 @@ const TitleComponent: React.StatelessComponent<AllArticleDetailProps> =
                 { alignItems: 'flex-end' },
             ]}>
                 <TitleTextComponent {...props} />
-                <HeartButton />
-                <ShareButton />
+                {false ? <HeartButton /> : <EmptyComponent />}
+                {false ? <ShareButton /> : <EmptyComponent />}
             </View>
             <View style={[
                 { flexDirection: 'row' },
