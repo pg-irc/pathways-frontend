@@ -6,7 +6,7 @@ import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
 import { Locale } from '../../locale/types';
-import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore';
@@ -28,6 +28,7 @@ describe('tasks selector', () => {
         let taxonomyId: string;
         let taxonomyTermId: string;
         let exploreSectionName: string;
+        let isRecommended: boolean;
         let exploreSection: ExploreSection;
         let denormalizedTask: selector.Task;
 
@@ -37,7 +38,8 @@ describe('tasks selector', () => {
             exploreSectionName = aString();
             task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             exploreSection = new ExploreSectionBuilder().withName(exploreSectionName).build();
-            denormalizedTask = selector.denormalizeTask(locale, task, exploreSection, [], []);
+            isRecommended = aBoolean();
+            denormalizedTask = selector.denormalizeTask(locale, task, exploreSection, isRecommended, [], []);
         });
 
         test('id property', () => {
@@ -70,6 +72,10 @@ describe('tasks selector', () => {
 
         test('explore section', () => {
             expect(denormalizedTask.exploreSection.name).toEqual(exploreSectionName);
+        });
+
+        test('is recommended flag', () => {
+            expect(denormalizedTask.isRecommended).toEqual(isRecommended);
         });
     });
 
@@ -124,6 +130,50 @@ describe('tasks selector', () => {
             const result = selector.rejectCompletedTasks([completedTask]);
             expect(result).toEqual([]);
         });
+    });
+    describe('is task recommended', () => {
 
+        it('returns false by default', () => {
+            const task = new TaskBuilder().build();
+            const noTaxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [];
+
+            const result = selector.isTaskRecommended(noTaxonomyTermsFromQuestionnaire, task);
+
+            expect(result).toBe(false);
+        });
+
+        it('returns true if task is recommended to all', () => {
+            const taxonomyId = TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID;
+            const taxonomyTermId = TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID;
+            const task = new TaskBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
+            const noTaxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [];
+
+            const result = selector.isTaskRecommended(noTaxonomyTermsFromQuestionnaire, task);
+
+            expect(result).toBe(true);
+        });
+
+        it('returns true if tasks is tagged with the same taxonomy term as a selected answer', () => {
+            const taxonomyId = aString();
+            const taxonomyTermId = aString();
+            const task = new TaskBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
+            const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
+
+            const result = selector.isTaskRecommended(taxonomyTermsFromQuestionnaire, task);
+
+            expect(result).toBe(true);
+        });
+
+        it('returns true for a completed task', () => {
+            const taxonomyId = aString();
+            const taxonomyTermId = aString();
+            const task = new TaskBuilder().withCompleted(true).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
+            const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
+
+            const result = selector.isTaskRecommended(taxonomyTermsFromQuestionnaire, task);
+
+            expect(result).toBe(true);
+        });
+        // TODO should also return true for a saved task (for once we refactor tasks to have a saved flag)
     });
 });

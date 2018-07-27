@@ -19,6 +19,7 @@ export interface Task {
     readonly description: string;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly exploreSection: ExploreSection;
+    readonly isRecommended: boolean;
     readonly category: string;
     readonly importance: number;
     readonly relatedTasks: ReadonlyArray<TaskListItem>;
@@ -33,7 +34,7 @@ export interface TaskListItem {
 }
 
 export const denormalizeTask =
-    (locale: Locale, task: model.Task, exploreSection: ExploreSection,
+    (locale: Locale, task: model.Task, exploreSection: ExploreSection, isRecommended: boolean,
         relatedArticles: ReadonlyArray<ArticleListItem>, relatedTasks: ReadonlyArray<TaskListItem>): Task => (
             {
                 id: task.id,
@@ -41,6 +42,7 @@ export const denormalizeTask =
                 description: selectLocalizedText(locale, task.description),
                 taxonomyTerms: task.taxonomyTerms,
                 exploreSection: exploreSection,
+                isRecommended: isRecommended,
                 relatedArticles: relatedArticles,
                 relatedTasks: relatedTasks,
                 category: task.category,
@@ -75,8 +77,8 @@ export const selectTaskAsListItem = (store: Store, taskId: model.Id): TaskListIt
     return denormalizeTaskListItem(locale, task);
 };
 
-const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: model.Task, exploreSection: ExploreSection): Task => {
-    return denormalizeTask(locale, task, exploreSection, [], []);
+const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: model.Task, exploreSection: ExploreSection, isRecommended: boolean): Task => {
+    return denormalizeTask(locale, task, exploreSection, isRecommended, [], []);
 };
 
 export const selectRecommendedTasks = (store: Store): ReadonlyArray<Task> => {
@@ -94,7 +96,8 @@ export const selectRecommendedTasks = (store: Store): ReadonlyArray<Task> => {
     const locale = selectLocale(store);
     const toSelectorTask = (task: model.Task): Task => {
         const exploreSection = selectExploreSectionFromTask(store, task);
-        return denormalizeTasksWithoutRelatedEntities(locale, task, exploreSection);
+        const isRecommended = true;
+        return denormalizeTasksWithoutRelatedEntities(locale, task, exploreSection, isRecommended);
     };
 
     return R.map(toSelectorTask, nonCompletedTasks);
@@ -143,9 +146,17 @@ export const selectTask = (store: Store, routerProps: RouterProps): Task => {
     const taskMap = store.tasksInStore.taskMap;
     const task = taskMap[taskId];
     const exploreSection = selectExploreSectionFromTask(store, task);
+    const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(store);
+    const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
     const relatedTasks = selectRelatedTasks(store, task.relatedTasks);
     const relatedArticles = selectRelatedArticles(store, task.relatedArticles);
-    return denormalizeTask(locale, task, exploreSection, relatedArticles, relatedTasks);
+    return denormalizeTask(locale, task, exploreSection, isRecommended, relatedArticles, relatedTasks);
+};
+
+export const isTaskRecommended = (termsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference>, task: model.Task): boolean => {
+    const taskMapWithTask = { [task.id]: task };
+    const filtered = filterTasksByTaxonomyTerms(termsFromQuestionnaire, taskMapWithTask);
+    return !R.isEmpty(filtered);
 };
 
 export const selectTasksForLearn = (store: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
@@ -157,7 +168,9 @@ export const selectTasksForLearn = (store: Store, routerProps: RouterProps): Rea
 
     const buildTask = (task: model.Task): Task => {
         const exploreSectionForTask = selectExploreSectionFromTask(store, task);
-        return denormalizeTasksWithoutRelatedEntities(locale, task, exploreSectionForTask);
+        const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(store);
+        const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
+        return denormalizeTasksWithoutRelatedEntities(locale, task, exploreSectionForTask, isRecommended);
     };
 
     return R.map(buildTask, matchingTasks);
