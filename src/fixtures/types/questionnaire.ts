@@ -8,6 +8,7 @@ export interface Question {
     readonly text: LocalizedText;
     readonly explanation?: LocalizedText;
     readonly acceptMultipleAnswers: boolean;
+    readonly isFinalQuestion: boolean;
 }
 
 export interface QuestionsMap {

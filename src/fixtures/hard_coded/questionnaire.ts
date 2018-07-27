@@ -19,6 +19,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'fr': 'Test du champ d\'explication',
                 },
                 acceptMultipleAnswers: false,
+                isFinalQuestion: false,
             },
             'q2': {
                 id: 'q2',
@@ -28,6 +29,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'fr': 'Vous vous installez au Canada ...',
                 },
                 acceptMultipleAnswers: false,
+                isFinalQuestion: false,
             },
             'q3': {
                 id: 'q3',
@@ -37,6 +39,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'fr': 'De quoi avez-vous besoin pour aider au Canada?',
                 },
                 acceptMultipleAnswers: false,
+                isFinalQuestion: false,
             },
             'q4': {
                 id: 'q4',
@@ -46,6 +49,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'fr': 'De quoi avez-vous besoin pour aider au Canada?',
                 },
                 acceptMultipleAnswers: true,
+                isFinalQuestion: false,
             },
             'q6': {
                 id: 'q6',
@@ -55,6 +59,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'fr': 'Quel type d\'immigrant identifiez-vous actuellement?',
                 },
                 acceptMultipleAnswers: false,
+                isFinalQuestion: false,
             },
             'q7': {
                 id: 'q7',
@@ -64,6 +69,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'fr': 'Quelle est votre étape actuelle dans le processus de demande d\'asile?',
                 },
                 acceptMultipleAnswers: false,
+                isFinalQuestion: false,
             },
             'q8': {
                 id: 'q8',
@@ -73,6 +79,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'fr': 'Quel est votre niveau d\'anglais?',
                 },
                 acceptMultipleAnswers: true,
+                isFinalQuestion: false,
             },
             'q9': {
                 id: 'q9',
@@ -82,6 +89,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'fr': 'Enfin, êtes-vous intéressé à en apprendre davantage sur les services offerts aux groupes spéciaux?',
                 },
                 acceptMultipleAnswers: true,
+                isFinalQuestion: true,
             },
         },
         answers: {

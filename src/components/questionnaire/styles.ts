@@ -15,7 +15,7 @@ export const questionStyles = StyleSheet.create({
         marginLeft: 25,
         textAlign: 'left',
     },
-    continueButton: {
+    nextButton: {
         backgroundColor: colors.darkGrey,
     },
     questionWrapper: {

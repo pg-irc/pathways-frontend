@@ -7,42 +7,43 @@ import { applicationStyles } from '../../application/styles';
 import { questionStyles } from './styles';
 import { Trans } from '@lingui/react';
 import { Collapser } from '../collapser/collapser';
+import { RouterProps, goToRouteWithoutParameter, Routes } from '../../application/routing';
+import { History } from 'history';
 
 export interface Props {
     readonly question: selector.Question;
 }
-
 export type Actions = QuestionnaireActions;
+type AllQuestionProps = Props & Actions & RouterProps;
 
-export const Question: React.StatelessComponent<Props & Actions> = (props: Props & Actions): JSX.Element => {
-    const { question, selectAnswer }: Props & Actions = props;
+export const Question: React.StatelessComponent<AllQuestionProps> = (props: AllQuestionProps): JSX.Element => {
     return (
         <Collapser
-            collapsedHeader={getQuestionCollapsedHeader(question.number, question)}
-            expandedHeader={getQuestionExpandedHeader(question.number, question)}
-            content={getQuestionContent(question, selectAnswer)}
+            collapsedHeader={renderQuestionCollapsedHeader(props)}
+            expandedHeader={renderQuestionExpandedHeader(props)}
+            content={renderQuestionContent(props)}
             // TODO - This should likely be the next unaswered question in the questionnaire
-            initiallyCollapsed={question.number === 1 ? false : true }
+            initiallyCollapsed={props.question.number === 1 ? false : true }
         />
     );
 };
 
-const getQuestionCollapsedHeader = (questionNumber: number, question: selector.Question): JSX.Element => (
+const renderQuestionCollapsedHeader = ({ question }: AllQuestionProps): JSX.Element => (
     <Text style={applicationStyles.bold}>
-        <Text style={applicationStyles.bold}>{questionNumber}. {question.text}</Text>
+        <Text style={applicationStyles.bold}>{question.number}. {question.text}</Text>
     </Text>
 );
 
-const getQuestionExpandedHeader = (questionNumber: number, question: selector.Question): JSX.Element => (
+const renderQuestionExpandedHeader = ({ question }: AllQuestionProps): JSX.Element => (
     <Row>
         <View style={questionStyles.expandedBG}>
-            <Text style={questionStyles.expandedText}>{questionNumber}</Text>
+            <Text style={questionStyles.expandedText}>{question.number}</Text>
         </View>
         <Text style={applicationStyles.bold}>{question.text}</Text>
     </Row>
 );
 
-const getQuestionContent = (question: selector.Question, selectAnswer: Actions['selectAnswer']): JSX.Element => (
+const renderQuestionContent = ({ question, selectAnswer, history }: AllQuestionProps): JSX.Element => (
     <Grid style={questionStyles.questionWrapper}>
         <Row>
             <Col>
@@ -58,12 +59,19 @@ const getQuestionContent = (question: selector.Question, selectAnswer: Actions['
             </Col>
         </Row>
         <Row style={questionStyles.buttonsWrapper}>
-            <Button style={questionStyles.continueButton} small>
-                <Text><Trans>CONTINUE</Trans></Text>
-            </Button>
-            <Button transparent small>
-                <Text><Trans>SKIP</Trans></Text>
-            </Button>
+            {question.isFinalQuestion ? renderFinalQuestionButton(history) : renderNextQuestionButton()}
         </Row>
     </Grid>
+);
+
+const renderFinalQuestionButton = (history: History): JSX.Element => (
+    <Button style={questionStyles.nextButton} small onPress={goToRouteWithoutParameter(Routes.MyPlan, history)}>
+        <Text><Trans>GO TO MY PLAN</Trans></Text>
+    </Button>
+);
+
+const renderNextQuestionButton = (): JSX.Element => (
+    <Button style={questionStyles.nextButton} small>
+        <Text><Trans>NEXT</Trans></Text>
+    </Button>
 );

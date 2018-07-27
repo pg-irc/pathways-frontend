@@ -1,7 +1,6 @@
 import React from 'react';
 import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 import { History, Location } from 'history';
-import { values } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { Routes, routePathWithoutParameter, goToRouteWithoutParameter } from '../../application/routing';
 import { emptyComponent } from '../empty_component/empty_component';
@@ -23,11 +22,6 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
                         onPress={goToRouteWithoutParameter(Routes.Home, props.history)}>
                     <Icon name='home' />
                     <Text><Trans>Home</Trans></Text>
-                </Button>
-                <Button vertical active={path === routePathWithoutParameter(Routes.Questionnaire)}
-                        onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)}>
-                    <Icon name='apps' />
-                    <Text style={[{ fontSize: values.smallTextSize }]}><Trans>Questions</Trans></Text>
                 </Button>
                 <Button vertical active={path === routePathWithoutParameter(Routes.MyPlan)}
                         onPress={goToRouteWithoutParameter(Routes.MyPlan, props.history)}>
