@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'native-base';
 import { applicationStyles } from '../../application/styles';
 import { ArticleListItem } from '../../selectors/articles';
-import { ArticleListComponent } from '../articles/article_list';
+import { ArticleListComponent } from './article_list';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
 import { emptyComponent } from '../empty_component/empty_component';

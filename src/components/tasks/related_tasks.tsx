@@ -4,9 +4,9 @@ import R from 'ramda';
 import { applicationStyles } from '../../application/styles';
 import { TaskListItem } from '../../selectors/tasks';
 import { Id as TaskId } from '../../stores/tasks';
-import { TaskListComponent } from '../tasks/task_list';
+import { TaskListComponent } from './task_list';
 import { Trans } from '@lingui/react';
-import { TaskListItemActions } from '../tasks/task_list_item';
+import { TaskListItemActions } from './task_list_item';
 import { RouterProps } from '../../application/routing';
 import { emptyComponent } from '../empty_component/empty_component';
 

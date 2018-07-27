@@ -2,7 +2,7 @@
 import * as model from '../notifications';
 import * as R from 'ramda';
 import { addToSavedList } from '../tasks';
-import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
+import { TaskBuilder } from './helpers/tasks_helpers';
 import { NotificationBuilder }  from './helpers/notification_helpers';
 
 describe('notifications store', () => {

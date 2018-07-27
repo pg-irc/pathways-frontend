@@ -8,6 +8,7 @@ import { History, Location } from 'history';
 import { BackButton } from 'react-router-native';
 import { routePathWithoutParameter, Routes, goBack, goToRouteWithoutParameter } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { colors } from '../../application/styles';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -68,7 +69,7 @@ const helpButtonIfShown = (props: HeaderProps): JSX.Element => {
 };
 
 const HelpButton: React.StatelessComponent<ButtonActions> = (props: ButtonActions): JSX.Element => (
-    <Button {...props} style={{ backgroundColor: '#0066ff' }}>
+    <Button {...props} style={{ backgroundColor: colors.brightBlue }}>
         <Icon name='help-circle' />
         <Text><Trans>NEED HELP?</Trans></Text>
     </Button>

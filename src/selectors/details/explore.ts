@@ -20,13 +20,10 @@ export const denormalizeSections =
         return R.map(buildOneSectionForView, R.keys(sections));
     };
 
-export const getExploreSectionById =
-    (locale: Locale, id: stores.Id, sections: stores.ExploreSectionMap, exploreTaxonomy: Taxonomy): select.ExploreSection => {
+export const buildExploreSection = (locale: Locale, theSection: stores.ExploreSection, icon: string): select.ExploreSection => {
+    const id = theSection.id;
+    const name = selectLocalizedText(locale, theSection.name);
+    const introduction = selectLocalizedText(locale, theSection.introduction);
 
-        const theSection = sections[id];
-        const name = selectLocalizedText(locale, theSection.name);
-        const introduction = selectLocalizedText(locale, theSection.introduction);
-        const icon = selectIconFromExploreTaxonomy(theSection.taxonomyTerms, exploreTaxonomy);
-
-        return { id, name, introduction, icon };
-    };
+    return { id, name, introduction, icon };
+};

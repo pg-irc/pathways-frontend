@@ -4,18 +4,22 @@ import * as model from '../../stores/articles';
 import { ArticleBuilder } from '../../stores/__tests__/helpers/article_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { Locale } from '../../locale/types';
+import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
+import { ExploreSection } from '../explore';
 
 describe('articles selector', () => {
 
     describe('denormalization', () => {
         let locale: Locale;
         let article: model.Article;
+        let exploreSection: ExploreSection;
         let denormalizedArticle: selector.Article;
 
         beforeEach(() => {
             locale = new LocaleBuilder().build();
             article = new ArticleBuilder().withLocaleCode(locale.code).build();
-            denormalizedArticle = selector.denormalizeArticle(locale, article, [], []);
+            exploreSection = new ExploreSectionBuilder().build();
+            denormalizedArticle = selector.denormalizeArticle(locale, article, exploreSection, [], []);
         });
 
         test('title property', () => {
@@ -26,13 +30,12 @@ describe('articles selector', () => {
             expect(denormalizedArticle.description).toBe(article.description[locale.code]);
         });
 
-        test('taxonomy terms property', () => {
-            expect(denormalizedArticle.taxonomyTerms).toBe(article.taxonomyTerms);
-        });
-
         test('starred property', () => {
             expect(denormalizedArticle.starred).toBe(article.starred);
         });
 
+        test('explore section', () => {
+            expect(denormalizedArticle.exploreSection).toBe(exploreSection);
+        });
     });
 });

@@ -1,58 +1,115 @@
 import React from 'react';
-import { Content, Text, Icon, Button } from 'native-base';
-import { Col, Row, Grid } from 'react-native-easy-grid';
+import { Image } from 'react-native';
+import { Content, View, Text, Icon } from 'native-base';
 import { Article } from '../../selectors/articles';
 import { Id as TaskId } from '../../stores/tasks';
-import { applicationStyles } from '../../application/styles';
 import { TaskListItemActions } from '../tasks/task_list_item';
-import { RelatedTasksComponent } from '../tasks/related_tasks';
-import { RelatedArticlesComponent } from './related_articles';
 import { RouterProps } from '../../application/routing';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface ArticleDetailProps {
     readonly article: Article;
     readonly savedTasks: ReadonlyArray<TaskId>;
 }
+
 type AllArticleDetailProps = ArticleDetailProps & TaskListItemActions & RouterProps;
 
 export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailProps> =
     (props: AllArticleDetailProps): JSX.Element => (
-            <Content padder>
-                <Grid>
-                    <Row>
-                        <Text>[image]</Text>
-                    </Row>
-                    {renderActions(props)}
-                    <Row>
-                        <Text>{props.article.description}</Text>
-                    </Row>
-                    <RelatedArticlesComponent
-                        {...props}
-                        relatedArticles={props.article.relatedArticles}
-                    />
-                    <RelatedTasksComponent
-                        {...props}
-                        relatedTasks={props.article.relatedTasks}
-                        savedTasks={props.savedTasks}
-                    />
-                </Grid>
-            </Content>
+        <Content padder>
+            <View style={[
+                { flexDirection: 'column' },
+                { alignItems: 'stretch' },
+            ]} >
+                <TitleComponent {...props} />
+                <ContentComponent {...props} />
+            </View>
+        </Content>
     );
 
-const renderActions = (props: AllArticleDetailProps): JSX.Element => (
-    <Row>
-        <Col size={70}>
-            <Text style={applicationStyles.pageTitle}>{props.article.title}</Text>
-        </Col>
-        <Col size={15}>
-            <Button dark transparent>
-                <Icon type='MaterialCommunityIcons' name='heart-outline' />
-            </Button>
-        </Col>
-        <Col size={15}>
-            <Button dark transparent>
-                <Icon name='share' />
-            </Button>
-        </Col>
-    </Row>
+// tslint:disable-next-line:no-var-requires
+const sectionImage = require('../../../assets/images/icon.png');
+
+const TitleComponent: React.StatelessComponent<AllArticleDetailProps> =
+    (props: AllArticleDetailProps): JSX.Element => (
+        <View style={[
+            { flexDirection: 'column' },
+            { alignItems: 'flex-start' },
+        ]}>
+            <Image source={sectionImage} style={[
+                { width: '100%' },
+                { flex: 1 },
+            ]} />
+            <View style={[
+                { flexDirection: 'row' },
+                { alignItems: 'flex-end' },
+            ]}>
+                <TitleTextComponent {...props} />
+                {false ? <HeartButton /> : <EmptyComponent />}
+                {false ? <ShareButton /> : <EmptyComponent />}
+            </View>
+            <View style={[
+                { flexDirection: 'row' },
+                { alignItems: 'center' },
+            ]}>
+                <IconComponent {...props} />
+                <LabelComponent {...props} />
+            </View>
+        </View>
+    );
+
+const TitleTextComponent: React.StatelessComponent<AllArticleDetailProps> =
+    (props: AllArticleDetailProps): JSX.Element => (
+        <Text style={[
+            { flex: 1 },
+            { fontWeight: 'bold' },
+            { fontSize: 30 },
+            { marginLeft: 20 },
+            { marginRight: 20 },
+        ]}>{props.article.title}</Text>
+    );
+
+const HeartButton: React.StatelessComponent = (): JSX.Element => (
+    <Icon type='MaterialCommunityIcons' name='heart-outline' style={[
+        { alignSelf: 'flex-end' },
+        { marginRight: 20 },
+        { marginBottom: 20 },
+    ]} />
+);
+
+const ShareButton: React.StatelessComponent = (): JSX.Element => (
+    <Icon name='share' style={[
+        { alignSelf: 'flex-end' },
+        { marginRight: 20 },
+        { marginBottom: 20 },
+    ]} />
+);
+
+const IconComponent: React.StatelessComponent<AllArticleDetailProps> =
+    (props: AllArticleDetailProps): JSX.Element => (
+        <Icon type='MaterialCommunityIcons' name={props.article.exploreSection.icon} style={[
+            { fontSize: 30 },
+            { marginTop: 20 },
+            { marginLeft: 20 },
+            { marginRight: 20 },
+            { marginBottom: 20 },
+        ]} />
+    );
+
+const LabelComponent: React.StatelessComponent<AllArticleDetailProps> =
+    (props: AllArticleDetailProps): JSX.Element => (
+        <Text style={[
+            { flex: 1 },
+            { fontWeight: 'bold' },
+            { fontSize: 20 },
+        ]}>{props.article.exploreSection.name}</Text>
+    );
+
+const ContentComponent: React.StatelessComponent<AllArticleDetailProps> = (props: AllArticleDetailProps): JSX.Element => (
+    <Text style={[
+        { marginTop: 20 },
+        { marginLeft: 20 },
+        { marginRight: 20 },
+        { marginBottom: 20 },
+    ]}>{props.article.description}</Text>
 );

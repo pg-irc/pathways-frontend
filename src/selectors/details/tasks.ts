@@ -1,20 +1,49 @@
 import { TaxonomyTermReference } from '../../stores/taxonomies';
-import { Task, TaskMap } from '../../stores/tasks';
 import { getExploreTaxonomyTerms } from '../taxonomies';
+import { ExploreSectionMap, ExploreSection } from '../../stores/explore';
 import * as R from 'ramda';
 
-export const findTasksByExploreTaxonomyTerm =
-    (needle: ReadonlyArray<TaxonomyTermReference>, haystack: TaskMap): ReadonlyArray<Task> => {
+export interface HasTaxonomyTerms {
+    readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
+}
 
-        const needleTerms = getExploreTaxonomyTerms(needle);
+export interface MapOfHasTaxonomyTerms<T extends HasTaxonomyTerms> {
+    readonly [property: string]: T;
+}
 
-        const matchesTaxonomyTerm = (task: Task): boolean => {
-            const haystackTerms = getExploreTaxonomyTerms(task.taxonomyTerms);
-            const commonTerms = R.intersection(needleTerms, haystackTerms);
-            return R.length(commonTerms) > 0;
-        };
+export function findItemByLearnTaxonomyTerm<T extends HasTaxonomyTerms>(needle: ReadonlyArray<TaxonomyTermReference>,
+    haystack: MapOfHasTaxonomyTerms<T>): ReadonlyArray<T> {
 
-        const findTasks = R.compose(R.values, R.pickBy(matchesTaxonomyTerm));
+    const needleTerms = getExploreTaxonomyTerms(needle);
 
-        return findTasks(haystack);
+    const matchesTaxonomyTerm = (item: T): boolean => {
+        const haystackTerms = getExploreTaxonomyTerms(item.taxonomyTerms);
+        const commonTerms = R.intersection(needleTerms, haystackTerms);
+        return R.length(commonTerms) > 0;
     };
+
+    const find = R.compose(R.values, R.pickBy(matchesTaxonomyTerm));
+
+    return find(haystack);
+}
+
+export function findExploreSectionBy<T extends HasTaxonomyTerms>(needle: T,
+    haystack: ExploreSectionMap): ExploreSection | undefined {
+
+    const needleTerms = getExploreTaxonomyTerms(needle.taxonomyTerms);
+
+    const matchesTaxonomyTerm = (section: ExploreSection): boolean => {
+        const haystackTerms = getExploreTaxonomyTerms(section.taxonomyTerms);
+        const commonTerms = R.intersection(needleTerms, haystackTerms);
+        return R.length(commonTerms) > 0;
+    };
+
+    const find = R.compose(R.values, R.pickBy(matchesTaxonomyTerm));
+    const found = find(haystack);
+
+    if (R.isEmpty(found)) {
+        return undefined;
+    }
+
+    return R.head(found);
+}

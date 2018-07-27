@@ -1,5 +1,5 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import { Store } from '../../';
+import { Store } from '../..';
 import * as fonts from '../../fonts';
 import * as locale from '../../locale';
 import * as questionnaire from '../../questionnaire';

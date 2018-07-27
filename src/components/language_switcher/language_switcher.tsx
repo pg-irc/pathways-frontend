@@ -3,6 +3,7 @@ import { Text, SectionList, SectionBase } from 'react-native';
 import { Trans } from '@lingui/react';
 import { LocaleInfo } from '../../locale/types';
 import { ListItem, Container, Content, Header, Title, Body, Left, Right, Icon } from 'native-base';
+import { colors } from '../../application/styles';
 
 export interface Props {
     readonly currentLocale: LocaleInfo;
@@ -21,7 +22,7 @@ export const LanguageSwitcher = (props: LanguageSwitcherProps): JSX.Element => {
     const currentLocaleSection = buildLocaleSectionListData(currentLocale, availableLocales, localeListItemBuilder);
 
     return (
-        <Container style={{ height: '100%', backgroundColor: '#FFF' }}>
+        <Container style={{ height: '100%', backgroundColor: colors.blue }}>
             <Header>
                 <Body><Title><Trans>Select language</Trans></Title></Body>
             </Header>
@@ -51,7 +52,7 @@ type LocaleListItem = LocaleInfo & {
     readonly onPress: () => void;
 };
 
-type LocaleListItemBuilder = (locale: LocaleInfo) =>  LocaleListItem;
+type LocaleListItemBuilder = (locale: LocaleInfo) => LocaleListItem;
 
 function renderSectionHeader({ section }: SectionHeaderInfo): JSX.Element {
     return (
@@ -59,7 +60,7 @@ function renderSectionHeader({ section }: SectionHeaderInfo): JSX.Element {
             <Left>
                 <Text style={{ fontWeight: 'bold' }}>{section.label}</Text>
             </Left>
-            <Right><Icon name='checkmark'/></Right>
+            <Right><Icon name='checkmark' /></Right>
         </ListItem>
     );
 }
@@ -83,5 +84,5 @@ function buildLocaleSectionListData(
     locales: ReadonlyArray<LocaleInfo>,
     itemBuilder: LocaleListItemBuilder,
 ): SectionListData {
-    return { ...sectionLocale, data: [ ...locales.map(itemBuilder) ] };
+    return { ...sectionLocale, data: [...locales.map(itemBuilder)] };
 }
