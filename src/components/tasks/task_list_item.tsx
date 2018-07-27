@@ -46,7 +46,7 @@ const renderTaskInteractions = (props: AllTaskListItemProps): JSX.Element => {
     const addToSavedList = (): AddToSavedListAction => props.addToSavedList(props.id);
     return (
         <Col size={15}>
-            {props.addToSavedList ? renderAddButton(addToSavedList) : renderUnchecedkBox()}
+            {props.addToSavedList ? renderAddButton(addToSavedList) : renderUncheckedBox()}
         </Col>
     );
 };
@@ -57,7 +57,7 @@ const renderAddButton = (onPress: () => void): JSX.Element => (
     </Button>
 );
 
-const renderUnchecedkBox = (): JSX.Element => (
+const renderUncheckedBox = (): JSX.Element => (
     <Button dark transparent iconRight>
         <Icon style={applicationStyles.bold} name='checkbox-blank-outline' type='MaterialCommunityIcons' />
     </Button>
