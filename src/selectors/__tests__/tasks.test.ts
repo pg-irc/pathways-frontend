@@ -8,6 +8,8 @@ import { Taxonomies as TaxonomyConstants } from '../../application/constants';
 import { Locale } from '../../locale/types';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
+import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
+import { ExploreSection } from '../explore';
 
 let locale: Locale = undefined;
 
@@ -25,13 +27,17 @@ describe('tasks selector', () => {
         let task: stores.Task;
         let taxonomyId: string;
         let taxonomyTermId: string;
+        let exploreSectionName: string;
+        let exploreSection: ExploreSection;
         let denormalizedTask: selector.Task;
 
         beforeEach(() => {
             taxonomyId = aString();
             taxonomyTermId = aString();
+            exploreSectionName = aString();
             task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
-            denormalizedTask = selector.denormalizeTask(locale, task, [], []);
+            exploreSection = new ExploreSectionBuilder().withName(exploreSectionName).build();
+            denormalizedTask = selector.denormalizeTask(locale, task, exploreSection, [], []);
         });
 
         test('id property', () => {
@@ -62,6 +68,9 @@ describe('tasks selector', () => {
             expect(denormalizedTask.taxonomyTerms).toEqual([{ taxonomyId, taxonomyTermId }]);
         });
 
+        test('explore section', () => {
+            expect(denormalizedTask.exploreSection.name).toEqual(exploreSectionName);
+        });
     });
 
     describe('recommendation engine', () => {
