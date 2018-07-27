@@ -14,9 +14,9 @@ import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
 import { RelatedTasksComponent } from './related_tasks';
 import { RelatedArticlesComponent } from '../articles/related_articles';
-import { getTaskState, TaskStates } from './task_states';
 import { RouterProps } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { computeStateLabel, computeStateButtons, TaskStateLabel, TaskStateButton } from './task_states';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -74,13 +74,9 @@ const TitleComponent = (props: Props): JSX.Element => (
 
 function renderHeader(props: Props): JSX.Element {
     const task = props.task;
-    const taskState = getTaskState({
-        inPlan: R.any((id: TaskId) => id === task.id, props.savedTasks),
-        completed: task.completed,
-    });
 
     const doneButton = (
-        <Button iconLeft rounded light style={[{ marginTop: 10 }]}
+        <Button iconLeft rounded light
             onPress={(): void => { props.toggleCompleted(task.id); props.removeFromSavedList(task.id); }}>
             <Icon name='checkbox' />
             <Text><Trans>Mark Done</Trans></Text>
@@ -106,51 +102,68 @@ function renderHeader(props: Props): JSX.Element {
         </Button>
     );
 
-    /*
-    Task states:
+    const state = {
+        isRecommended: task.isRecommended,
+        isSaved: R.any((id: TaskId) => id === task.id, props.savedTasks),
+        isCompleted: task.completed,
+    };
 
-    Recommended: False Saved: False Completed: False  Text: TASK
-    Recommended: False Saved: False Completed: True   Text: COMPLETED TASK
-    Recommended: False Saved: True  Completed: False  Text: TASK I PLAN TO DO
-    Recommended: False Saved: True  Completed: True   Text: COMPLETED TASK
-    Recommended: True  Saved: False Completed: False  Text: RECOMMENDED TASK
-    Recommended: True  Saved: False Completed: True   Text: COMPLETED TASK
-    Recommended: True  Saved: True  Completed: False  Text: TASK I PLAN TO DO
-    Recommended: True  Saved: True  Completed: True   Text: COMPLETED TASK
+    const stateLabel = toJsxLabel(computeStateLabel(state));
 
-    if (Completed) return COMPLETED TASK
-    else if (Saved) return TASK I PLAN TO DO
-    else if (Recommended) return RECOMMENDED TASK
-    else return TASK
-    */
+    const buttons = {
+        doneButton,
+        notDoneButton,
+        removeFromPlanButton,
+        addToPlanButton,
+    };
 
-    switch (taskState) {
-        case TaskStates.CompletedInPlan:
-        case TaskStates.CompletedNotInPlan:
-            return buildHeader(task.title, <Trans>COMPLETED TASK</Trans>, notDoneButton);
-        case TaskStates.InProgress:
-            return buildHeader(task.title, <Trans>TASK I PLAN TO DO</Trans>, <View>{removeFromPlanButton}{doneButton}</View>);
-        case TaskStates.Available:
-        default:
-            return buildHeader(task.title, <Trans>AVAILABLE TASK</Trans>, addToPlanButton);
-    }
+    const stateButtons = toJsxButtons(computeStateButtons(state), buttons);
+
+    return buildHeader(task.title, stateLabel, stateButtons);
 }
 
-function buildHeader(taskTitle: string, stateTitle: string | JSX.Element, stateButtons: JSX.Element): JSX.Element {
+const toJsxLabel = (label: TaskStateLabel): JSX.Element => {
+    switch (label) {
+        default: return <Trans>TASK</Trans>;
+        case TaskStateLabel.CompletedTask: return <Trans>COMPLETED TASK</Trans>;
+        case TaskStateLabel.TaskIPlanToDo: return <Trans>TASK I PLAN TO DO</Trans>;
+        case TaskStateLabel.RecommendedTask: return <Trans>RECOMMENDED TASK</Trans>;
+    }
+};
+
+interface JsxButtons {
+    readonly notDoneButton: JSX.Element;
+    readonly removeFromPlanButton: JSX.Element;
+    readonly doneButton: JSX.Element;
+    readonly addToPlanButton: JSX.Element;
+}
+
+const toJsxButtons = (buttons: ReadonlyArray<TaskStateButton>, jsxButtons: JsxButtons): ReadonlyArray<JSX.Element> => {
+    const toJsxButton = (button: TaskStateButton): JSX.Element => {
+        switch (button) {
+            default:
+            case TaskStateButton.AddToPlanButton: return jsxButtons.addToPlanButton;
+            case TaskStateButton.DoneButton: return jsxButtons.doneButton;
+            case TaskStateButton.NotDoneButton: return jsxButtons.notDoneButton;
+            case TaskStateButton.RemoveFromPlanButton: return jsxButtons.removeFromPlanButton;
+        }
+    };
+    return R.map(toJsxButton, buttons);
+};
+
+function buildHeader(taskTitle: string, stateTitle: string | JSX.Element, stateButtons: ReadonlyArray<JSX.Element>): JSX.Element {
     return (
-        <Grid>
-            <Row>
-                <Text style={applicationStyles.pageTitle}>{taskTitle}</Text>
-            </Row>
-            <Row>
-                <Text style={[applicationStyles.bold, { marginBottom: 5 }]}>{stateTitle}</Text>
-            </Row>
-            <Row style={taskDetailStyles.actions}>
-                <Col size={70}>
-                    {stateButtons}
-                </Col>
-            </Row>
-        </Grid>
+        <View style={[
+            { flexDirection: 'column' },
+        ]}>
+            <Text style={applicationStyles.pageTitle}>{taskTitle}</Text>
+            <Text style={[applicationStyles.bold, { marginBottom: 5 }]}>{stateTitle}</Text>
+            <View style={[
+                { flexDirection: 'row' },
+            ]}>
+                {stateButtons}
+            </View>
+        </View>
     );
 }
 
