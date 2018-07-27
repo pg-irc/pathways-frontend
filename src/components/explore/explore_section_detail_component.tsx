@@ -28,10 +28,9 @@ export const ExploreSectionDetailComponent: React.StatelessComponent<Props> =
         return <Container>
             <Content padder>
                 <View style={[
-                    {
-                        flexDirection: 'column',
-                        alignItems: 'stretch',
-                    }]} >
+                    { flexDirection: 'column' },
+                    { alignItems: 'stretch' },
+                ]} >
                     <TitleComponent {...props} />
                     <IntroductionComponent {...props} />
                     <ArticleListComponent {...props} articles={props.articles} />
@@ -55,7 +54,7 @@ const TitleComponent: React.StatelessComponent<Props> = (props: Props): JSX.Elem
                 { flexDirection: 'row' },
                 { alignItems: 'stretch' },
                 { marginTop: 120 },
-                { backgroundColor: 'rgba(0,0,0,0.4)' },
+                { backgroundColor: colors.darkGreyWithAlpha },
             ]}>
                 <IconComponent {...props} />
                 <TitleTextComponent {...props} />

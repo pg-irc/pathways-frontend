@@ -17,10 +17,9 @@ export const ArticleDetailComponent: React.StatelessComponent<AllArticleDetailPr
     (props: AllArticleDetailProps): JSX.Element => (
         <Content padder>
             <View style={[
-                {
-                    flexDirection: 'column',
-                    alignItems: 'stretch',
-                }]} >
+                { flexDirection: 'column' },
+                { alignItems: 'stretch' },
+            ]} >
                 <TitleComponent {...props} />
                 <ContentComponent {...props} />
             </View>
