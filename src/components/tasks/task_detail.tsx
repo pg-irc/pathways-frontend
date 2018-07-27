@@ -78,26 +78,26 @@ function renderHeader(props: Props): JSX.Element {
     const doneButton = (
         <Button iconLeft rounded light
             onPress={(): void => { props.toggleCompleted(task.id); props.removeFromSavedList(task.id); }}>
-            <Icon name='checkbox' />
+            <Icon name='checkbox-blank-outline' type='MaterialCommunityIcons' />
             <Text><Trans>Mark Done</Trans></Text>
         </Button>
     );
     const notDoneButton = (
         <Button iconLeft rounded light
             onPress={(): void => { props.toggleCompleted(task.id); props.addToSavedList(task.id); }}>
-            <Icon name='close' />
+            <Icon name='checkbox-marked-outline' type='MaterialCommunityIcons' />
             <Text><Trans>Not done</Trans></Text>
         </Button>
     );
     const removeFromPlanButton = (
         <Button iconLeft rounded light onPress={(): RemoveFromSavedListAction => props.removeFromSavedList(task.id)}>
-            <Icon name='remove' />
+            <Icon name='minus' type='MaterialCommunityIcons' />
             <Text><Trans>Remove from plan</Trans></Text>
         </Button>
     );
     const addToPlanButton = (
         <Button iconLeft rounded light onPress={(): AddToSavedListAction => props.addToSavedList(task.id)}>
-            <Icon name='add' />
+            <Icon name='plus' type='MaterialCommunityIcons' />
             <Text><Trans>Add to plan</Trans></Text>
         </Button>
     );
