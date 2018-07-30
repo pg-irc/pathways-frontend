@@ -2,13 +2,16 @@ import React from 'react';
 import { ListItem, Body, Right, Text, CheckBox, Radio } from 'native-base';
 import * as selector from '../../selectors/questionnaire';
 import { SelectAnswerAction } from '../../stores/questionnaire';
-import { QuestionnaireActions } from './actions';
+import { Id } from '../../stores/questionnaire';
+import { colors } from '../../application/styles';
 
 export interface AnswerProps {
     readonly answer: selector.Answer;
     readonly acceptMultipleAnswers: boolean;
 }
-export type AnswerActions = QuestionnaireActions;
+export interface AnswerActions {
+    readonly selectAnswer: (answerId: Id) => SelectAnswerAction;
+}
 
 type Props = AnswerProps & AnswerActions;
 enum AnswerType {
@@ -20,18 +23,22 @@ export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Eleme
     const answerType = props.answer.acceptMultipleAnswers ? AnswerType.CheckboxAnswer : AnswerType.RadioAnswer;
     const onPress = (): SelectAnswerAction => props.selectAnswer(props.answer.id);
     return (
-        <ListItem button noBorder onPress={onPress}>
+        <ListItem button noIndent noBorder onPress={onPress} style={[
+            { backgroundColor: colors.lighterGrey },
+            { borderTopColor: colors.white},
+            { borderTopWidth: 1},
+        ]}>
             <Body>
                 <Text>{props.answer.text}</Text>
             </Body>
-            <Right>
-                {getComponentForAnswerType(props, answerType, onPress)}
+            <Right style={[ { paddingHorizontal: 7 } ]}>
+                {renderComponentForAnswerType(props, answerType, onPress)}
             </Right>
         </ListItem>
     );
 };
 
-const getComponentForAnswerType = (props: Props, answerType: AnswerType, onPress: () => void): JSX.Element => {
+const renderComponentForAnswerType = (props: Props, answerType: AnswerType, onPress: () => void): JSX.Element => {
     switch (answerType) {
         case AnswerType.CheckboxAnswer:
             return <CheckBox checked={props.answer.isSelected} onPress={onPress} />;

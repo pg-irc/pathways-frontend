@@ -8,6 +8,7 @@ import { TaxonomyTermReference } from '../../../selectors/taxonomies';
 
 export const buildNormalizedQuestionnaire = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
     {
+        activeQuestion: 0,
         questions: buildQuestionMap(questions),
         answers: buildAnswerMap(questions),
     }

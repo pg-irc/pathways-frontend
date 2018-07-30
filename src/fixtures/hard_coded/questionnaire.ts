@@ -5,6 +5,7 @@ const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
 export const buildQuestionnaireFixture = (): Store => {
     return {
+        activeQuestion: 0,
         questions: {
             'q1': {
                 id: 'q1',
@@ -12,11 +13,6 @@ export const buildQuestionnaireFixture = (): Store => {
                     'en': 'How long have you been in Canada?',
                     'ar': 'منذ متى وأنت في كندا؟',
                     'fr': 'Depuis combien de temps êtes-vous au Canada?',
-                },
-                explanation: {
-                    'en': 'Testing the explanation field.',
-                    'ar': 'اختبار حقل التفسير.',
-                    'fr': 'Test du champ d\'explication',
                 },
                 acceptMultipleAnswers: false,
             },

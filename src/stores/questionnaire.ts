@@ -10,19 +10,31 @@ const buildDefaultStore = (): Store => (
 );
 
 export type SelectAnswerAction = Readonly<ReturnType<typeof selectAnswer>>;
+export type SetActiveQuestionAction = Readonly<ReturnType<typeof setActiveQuestion>>;
+type QuestionnaireAction = SelectAnswerAction | SetActiveQuestionAction;
 
 // tslint:disable-next-line:typedef
 export const selectAnswer = (answerId: Id) => (
     helpers.makeAction(constants.SELECT_ANSWER, { answerId })
 );
 
-export const reducer = (store: Store = buildDefaultStore(), action?: SelectAnswerAction): Store => {
+// tslint:disable-next-line:typedef
+export const setActiveQuestion = (activeQuestion: number) => (
+    helpers.makeAction(constants.SET_ACTIVE_QUESTION, { activeQuestion })
+);
+
+export const reducer = (store: Store = buildDefaultStore(), action?: QuestionnaireAction): Store => {
     if (!action) {
         return store;
     }
     switch (action.type) {
         case constants.SELECT_ANSWER:
             return toggleSelectionForAnswer(store, action.payload.answerId);
+        case constants.SET_ACTIVE_QUESTION:
+            return {
+                ...store,
+                activeQuestion: action.payload.activeQuestion,
+            };
         default:
             return store;
     }

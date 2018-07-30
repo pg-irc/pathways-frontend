@@ -29,4 +29,5 @@ export interface AnswersMap {
 export interface Store {
     readonly questions: QuestionsMap;
     readonly answers: AnswersMap;
+    readonly activeQuestion: number;
 }
