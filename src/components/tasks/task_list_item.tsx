@@ -6,6 +6,7 @@ import { TaskListItem } from '../../selectors/tasks';
 import { AddToSavedListAction, Id as TaskId } from '../../stores/tasks';
 import { I18nManager } from 'react-native';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface TaskListItemStyleProps {
     readonly listItemStyle?: object;
@@ -32,7 +33,7 @@ export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProp
                     </Col>
                     <Col size={20}>
                         <Row style={taskStyles.rightColumn}>
-                            <Icon style={taskStyles.icon} name='star-circle' type='MaterialCommunityIcons' />
+                            {props.isRecommended ? <IsRecommendedComponent /> : <EmptyComponent />}
                             <Icon style={taskStyles.icon} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
                         </Row>
                     </Col>
@@ -41,6 +42,10 @@ export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProp
         </ListItem>
     );
 };
+
+const IsRecommendedComponent = (): JSX.Element => (
+    <Icon style={taskStyles.icon} name='star-circle' type='MaterialCommunityIcons' />
+);
 
 const renderTaskInteractions = (props: AllTaskListItemProps): JSX.Element => {
     const addToSavedList = (): AddToSavedListAction => props.addToSavedList(props.id);

@@ -71,7 +71,7 @@ const getHeaderForSavedTasks = (icon: string): JSX.Element => (
         <Row>
             <Col size={85} >
                 <Row style={myPlanStyles.listItemLabel}>
-                    <Text style={applicationStyles.bold}><Trans>TASKS I PLAN TO DO</Trans></Text>
+                    <Text style={applicationStyles.bold}><Trans>MY TASKS</Trans></Text>
                     <Icon style={myPlanStyles.icon} name={icon} />
                 </Row>
             </Col>

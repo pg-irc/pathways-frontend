@@ -9,13 +9,14 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
 import { Trans } from '@lingui/react';
-import { Service, TaskServices} from '../../selectors/services';
+import { Service, TaskServices } from '../../selectors/services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
 import { RelatedTasksComponent } from './related_tasks';
 import { RelatedArticlesComponent } from '../articles/related_articles';
-import { getTaskState, TaskStates } from './task_states';
 import { RouterProps } from '../../application/routing';
+import { EmptyComponent } from '../empty_component/empty_component';
+import { computeStateLabel, computeStateButtons, TaskStateLabel, TaskStateButton } from './task_states';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -32,12 +33,12 @@ export interface TaskServiceUpdater {
     readonly requestUpdateTaskServices: () => UpdateTaskServicesAsync.Request;
 }
 
-type AllTaskDetailProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater & RouterProps;
+type Props = TaskDetailProps & TaskDetailActions & TaskServiceUpdater & RouterProps;
 type TabChangeEvent = { readonly i: number, from: number, readonly ref: React.Ref<Tabs> };
 
-export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
+export class TaskDetailComponent extends React.Component<Props> {
 
-    constructor(props: AllTaskDetailProps) {
+    constructor(props: Props) {
         super(props);
         this.onChangeTab = this.onChangeTab.bind(this);
     }
@@ -45,52 +46,13 @@ export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
     render(): JSX.Element {
         return (
             <View style={{ flex: 1 }}>
-                <Content padder scrollEnabled={false} style={{ flex: 0, flexGrow: 0, flexShrink: 0, height: 'auto' }}>
-                    {renderHeader(this.props)}
-                </Content>
+                <TitleComponent {...this.props} />
                 <Tabs style={taskDetailStyles.tabs} onChangeTab={this.props.requestUpdateTaskServices}>
                     <Tab heading={<TabHeading><Text><Trans>INFORMATION</Trans></Text></TabHeading>}>
-                        <Content padder>
-                            <Grid style={taskDetailStyles.tabContent}>
-                                <Row style={taskDetailStyles.row}>
-                                    <Col size={10}>
-                                        <Icon type='MaterialCommunityIcons' name='star-circle' />
-                                    </Col>
-                                    <Col size={90} style={taskDetailStyles.iconText}>
-                                        <Text>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
-                                    </Col>
-                                </Row>
-                                <Row style={taskDetailStyles.row}>
-                                    <Col size={10}>
-                                        <Icon type='MaterialCommunityIcons' name='sign-text' />
-                                    </Col>
-                                    <Col size={90} style={taskDetailStyles.iconText}>
-                                        <Text>This task helps with <Text style={applicationStyles.bold}>settling in</Text>.</Text>
-                                    </Col>
-                                </Row>
-                                <Row style={taskDetailStyles.row}>
-                                    <Text>You can get information about your community ...</Text>
-                                </Row>
-                                <RelatedArticlesComponent
-                                    {...this.props}
-                                    relatedArticles={this.props.task.relatedArticles}
-                                />
-                                <RelatedTasksComponent
-                                    {...this.props}
-                                    relatedTasks={this.props.task.relatedTasks}
-                                    savedTasks={this.props.savedTasks}
-                                />
-                            </Grid>
-                        </Content>
+                        <InformationTab {...this.props} />
                     </Tab>
                     <Tab heading={<TabHeading><Text><Trans>FIND SERVICES</Trans></Text></TabHeading>}>
-                        <FlatList
-                            ListEmptyComponent={ServiceListEmpty}
-                            refreshing={this.props.taskServices.loading}
-                            onRefresh={this.props.requestUpdateTaskServices}
-                            data={this.props.taskServices.services}
-                            keyExtractor={(service: Service): string => service.id}
-                            renderItem={renderServiceListItem} />
+                        <ServicesTab {...this.props} />
                     </Tab>
                 </Tabs>
             </View>
@@ -102,90 +64,163 @@ export class TaskDetailComponent extends React.Component<AllTaskDetailProps> {
             this.props.requestUpdateTaskServices();
         }
     }
-
 }
 
-interface ServiceItemInfo extends ListRenderItemInfo<Service> {}
+const TitleComponent = (props: Props): JSX.Element => (
+    <Content padder scrollEnabled={false} style={{ flex: 0, flexGrow: 0, flexShrink: 0, height: 'auto' }}>
+        {renderHeader(props)}
+    </Content>
+);
+
+function renderHeader(props: Props): JSX.Element {
+    const task = props.task;
+
+    const doneButton = (
+        <Button iconLeft rounded light
+            onPress={(): void => { props.toggleCompleted(task.id); props.removeFromSavedList(task.id); }}>
+            <Icon name='checkbox-blank-outline' type='MaterialCommunityIcons' />
+            <Text><Trans>Mark Done</Trans></Text>
+        </Button>
+    );
+    const notDoneButton = (
+        <Button iconLeft rounded light
+            onPress={(): void => { props.toggleCompleted(task.id); props.addToSavedList(task.id); }}>
+            <Icon name='checkbox-marked-outline' type='MaterialCommunityIcons' />
+            <Text><Trans>Mark as not Done</Trans></Text>
+        </Button>
+    );
+    const removeFromPlanButton = (
+        <Button iconLeft rounded light onPress={(): RemoveFromSavedListAction => props.removeFromSavedList(task.id)}>
+            <Icon name='minus' type='MaterialCommunityIcons' />
+            <Text><Trans>Remove from plan</Trans></Text>
+        </Button>
+    );
+    const addToPlanButton = (
+        <Button iconLeft rounded light onPress={(): AddToSavedListAction => props.addToSavedList(task.id)}>
+            <Icon name='plus' type='MaterialCommunityIcons' />
+            <Text><Trans>Add to plan</Trans></Text>
+        </Button>
+    );
+
+    const state = {
+        isRecommended: task.isRecommended,
+        isSaved: R.any((id: TaskId) => id === task.id, props.savedTasks),
+        isCompleted: task.completed,
+    };
+
+    const stateLabel = toJsxLabel(computeStateLabel(state));
+
+    const buttons = {
+        doneButton,
+        notDoneButton,
+        removeFromPlanButton,
+        addToPlanButton,
+    };
+
+    const stateButtons = toJsxButtons(computeStateButtons(state), buttons);
+
+    return buildHeader(task.title, stateLabel, stateButtons);
+}
+
+const toJsxLabel = (label: TaskStateLabel): JSX.Element => {
+    switch (label) {
+        default: return <Trans>TASK</Trans>;
+        case TaskStateLabel.CompletedTask: return <Trans>COMPLETED TASK</Trans>;
+        case TaskStateLabel.TaskIPlanToDo: return <Trans>TASK I PLAN TO DO</Trans>;
+        case TaskStateLabel.RecommendedTask: return <Trans>RECOMMENDED TASK</Trans>;
+    }
+};
+
+interface JsxButtons {
+    readonly notDoneButton: JSX.Element;
+    readonly removeFromPlanButton: JSX.Element;
+    readonly doneButton: JSX.Element;
+    readonly addToPlanButton: JSX.Element;
+}
+
+const toJsxButtons = (buttons: ReadonlyArray<TaskStateButton>, jsxButtons: JsxButtons): ReadonlyArray<JSX.Element> => {
+    const toJsxButton = (button: TaskStateButton): JSX.Element => {
+        switch (button) {
+            default:
+            case TaskStateButton.AddToPlanButton: return jsxButtons.addToPlanButton;
+            case TaskStateButton.DoneButton: return jsxButtons.doneButton;
+            case TaskStateButton.NotDoneButton: return jsxButtons.notDoneButton;
+            case TaskStateButton.RemoveFromPlanButton: return jsxButtons.removeFromPlanButton;
+        }
+    };
+    return R.map(toJsxButton, buttons);
+};
+
+function buildHeader(taskTitle: string, stateTitle: JSX.Element, stateButtons: ReadonlyArray<JSX.Element>): JSX.Element {
+    return (
+        <View style={[
+            { flexDirection: 'column' },
+        ]}>
+            <Text style={applicationStyles.pageTitle}>{taskTitle}</Text>
+            <Text style={[applicationStyles.bold, { marginBottom: 5 }]}>{stateTitle}</Text>
+            <View style={[{ flexDirection: 'row' }]}>{stateButtons}</View>
+        </View>
+    );
+}
+
+const InformationTab = (props: Props): JSX.Element => (
+    <Content padder>
+        <Grid style={taskDetailStyles.tabContent}>
+            {props.task.isRecommended ? <ThisTaskIsRecommended /> : <EmptyComponent />}
+            <TaxonomyComponent {...props} />
+            <Row style={taskDetailStyles.row}>
+                <Text>{props.task.description}</Text>
+            </Row>
+            <RelatedArticlesComponent
+                {...props}
+                relatedArticles={props.task.relatedArticles}
+            />
+            <RelatedTasksComponent
+                {...props}
+                relatedTasks={props.task.relatedTasks}
+                savedTasks={props.savedTasks}
+            />
+        </Grid>
+    </Content>
+);
+
+const ThisTaskIsRecommended = (): JSX.Element => (
+    <Row style={taskDetailStyles.row}>
+        <Col size={10}>
+            <Icon type='MaterialCommunityIcons' name='star-circle' />
+        </Col>
+        <Col size={90} style={taskDetailStyles.iconText}>
+            <Text>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
+        </Col>
+    </Row>
+);
+
+const TaxonomyComponent = ({ task }: Props): JSX.Element => (
+    <Row style={taskDetailStyles.row}>
+        <Col size={10}>
+            <Icon type='MaterialCommunityIcons' name={task.exploreSection.icon} />
+        </Col>
+        <Col size={90} style={taskDetailStyles.iconText}>
+            <Text>This task helps with <Text style={applicationStyles.bold}>{task.exploreSection.name}</Text>.</Text>
+        </Col>
+    </Row>
+);
+
+const ServicesTab = (props: Props): JSX.Element => (
+    <FlatList
+        ListEmptyComponent={ServiceListEmpty}
+        refreshing={props.taskServices.loading}
+        onRefresh={props.requestUpdateTaskServices}
+        data={props.taskServices.services}
+        keyExtractor={(service: Service): string => service.id}
+        renderItem={renderServiceListItem} />
+);
 
 function ServiceListEmpty(): JSX.Element {
     return (
         <View style={{ padding: 20 }}>
             <Text><Trans>No related services found.</Trans></Text>
         </View>
-    );
-}
-
-function renderHeader(props: AllTaskDetailProps): JSX.Element {
-    const task = props.task;
-    const taskState = getTaskState({
-        inPlan: R.any((id: TaskId) => id === task.id, props.savedTasks),
-        completed: task.completed,
-    });
-
-    const doneButton = (
-        <Button iconLeft rounded light style={[{marginTop: 10}]}
-                onPress={(): void => {props.toggleCompleted(task.id); props.removeFromSavedList(task.id); }}>
-            <Icon name='checkbox' />
-            <Text><Trans>Mark Done</Trans></Text>
-        </Button>
-    );
-    const notDoneButton = (
-        <Button iconLeft rounded light
-                onPress={(): void => {props.toggleCompleted(task.id); props.addToSavedList(task.id); }}>
-            <Icon name='close' />
-            <Text><Trans>Not done</Trans></Text>
-        </Button>
-    );
-    const removeFromPlanButton = (
-        <Button iconLeft rounded light onPress={(): RemoveFromSavedListAction => props.removeFromSavedList(task.id)}>
-            <Icon name='remove' />
-            <Text><Trans>Remove from plan</Trans></Text>
-        </Button>
-    );
-    const addToPlanButton = (
-        <Button iconLeft rounded light onPress={(): AddToSavedListAction => props.addToSavedList(task.id)}>
-            <Icon name='add' />
-            <Text><Trans>Add to plan</Trans></Text>
-        </Button>
-    );
-
-    switch (taskState) {
-        case TaskStates.CompletedInPlan:
-        case TaskStates.CompletedNotInPlan:
-            return buildHeader(task.title, <Trans>COMPLETED TASK</Trans>, notDoneButton);
-        case TaskStates.InProgress:
-            return buildHeader(task.title, <Trans>TASK I PLAN TO DO</Trans>, <View>{removeFromPlanButton}{doneButton}</View>);
-        case TaskStates.Available:
-        default:
-            return buildHeader(task.title, <Trans>AVAILABLE TASK</Trans>, addToPlanButton);
-    }
-}
-
-function buildHeader(taskTitle: string, stateTitle: string | JSX.Element, stateButtons: JSX.Element): JSX.Element {
-    return (
-        <Grid>
-            <Row>
-                <Text style={[applicationStyles.bold, {marginBottom: 5}]}>{stateTitle}</Text>
-            </Row>
-            <Row>
-                <Text>{taskTitle}</Text>
-            </Row>
-            <Row style={taskDetailStyles.actions}>
-                <Col size={70}>
-                    {stateButtons}
-                </Col>
-                <Col size={15}>
-                    <Button dark transparent>
-                        <Icon name='share' />
-                    </Button>
-                </Col>
-                <Col size={15}>
-                    <Button dark transparent>
-                        <Icon name='more' />
-                    </Button>
-                </Col>
-            </Row>
-        </Grid>
     );
 }
 
@@ -196,3 +231,5 @@ function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
         </ListItem>
     );
 }
+
+interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
