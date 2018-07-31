@@ -4,12 +4,12 @@ import { Component, QuestionnaireProps } from './questionnaire';
 import { QuestionnaireActions } from './questionnaire';
 import { Store } from '../../stores';
 import { Id, SelectAnswerAction, selectAnswer, SetActiveQuestionAction, setActiveQuestion } from '../../stores/questionnaire';
-import { selectQuestionnaire } from '../../selectors/questionnaire';
+import { selectQuestionnaire, selectActiveQuestion } from '../../selectors/questionnaire';
 
 const mapStateToProps = (store: Store): QuestionnaireProps => {
     return {
         questionnaire: selectQuestionnaire(store),
-        activeQuestion: store.questionnaireInStore.activeQuestion,
+        activeQuestion: selectActiveQuestion(store),
     };
 };
 
