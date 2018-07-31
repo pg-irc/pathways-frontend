@@ -5,7 +5,7 @@ const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
 export const buildQuestionnaireFixture = (): Store => {
     return {
-        activeQuestion: 0,
+        activeQuestion: 'q1',
         questions: {
             'q1': {
                 id: 'q1',

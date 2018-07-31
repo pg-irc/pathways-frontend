@@ -3,7 +3,7 @@
 import * as store from '../questionnaire';
 import * as helpers from './helpers/questionnaire_helpers';
 import { SELECT_ANSWER } from '../../application/constants';
-import { aString, aNumber } from '../../application/__tests__/helpers/random_test_values';
+import { aString } from '../../application/__tests__/helpers/random_test_values';
 
 describe('select answer action creator', () => {
     it('should create action with type SELECT_ANSWER', () => {
@@ -39,9 +39,9 @@ describe('questionnaire reducer', () => {
 
     it('should allow the active question to be set', () => {
         theStore = helpers.buildNormalizedQuestionnaire([new helpers.QuestionBuilder()]);
-        const activeQuestionNumber = aNumber();
-        newStore = store.reducer(theStore, store.setActiveQuestion(activeQuestionNumber));
-        expect(newStore.activeQuestion).toEqual(activeQuestionNumber);
+        const activeQuestion = aString();
+        newStore = store.reducer(theStore, store.setActiveQuestion(activeQuestion));
+        expect(newStore.activeQuestion).toEqual(activeQuestion);
     });
 
     describe('for questions accepting at most one answer', () => {

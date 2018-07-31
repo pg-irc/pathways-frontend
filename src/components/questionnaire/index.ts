@@ -15,7 +15,7 @@ const mapStateToProps = (store: Store): QuestionnaireProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): QuestionnaireActions => ({
     selectAnswer: (answerId: Id): SelectAnswerAction => dispatch(selectAnswer(answerId)),
-    setActiveQuestion: (activeQuestion: number): SetActiveQuestionAction => dispatch(setActiveQuestion(activeQuestion)),
+    setActiveQuestion: (activeQuestion: Id): SetActiveQuestionAction => dispatch(setActiveQuestion(activeQuestion)),
 });
 
 export const QuestionnaireConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Component);

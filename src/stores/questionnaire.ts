@@ -19,7 +19,7 @@ export const selectAnswer = (answerId: Id) => (
 );
 
 // tslint:disable-next-line:typedef
-export const setActiveQuestion = (activeQuestion: number) => (
+export const setActiveQuestion = (activeQuestion: Id) => (
     helpers.makeAction(constants.SET_ACTIVE_QUESTION, { activeQuestion })
 );
 
