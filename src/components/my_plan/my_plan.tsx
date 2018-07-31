@@ -53,7 +53,10 @@ export class MyPlanComponent extends React.Component<Props> {
     render(): JSX.Element {
         return (
             <Content padder ref={(component: ContentComponentRef): ContentComponentRef => this.contentComponent = component}>
-                {renderHeading(this.props.completedTasks.length, (): void => this.contentComponent._root.scrollToEnd())}
+                <Header
+                    completedCount={this.props.completedTasks.length}
+                    completedButtonOnPress={(): void => this.contentComponent._root.scrollToEnd()}
+                />
                 <Intro {...this.props} />
                 <Collapser
                     collapsedHeader={getHeaderForSavedTasks(collapsedIcon())}
@@ -82,12 +85,18 @@ export class MyPlanComponent extends React.Component<Props> {
     }
 }
 
-const renderHeading = (completedCount: number, onCompletedButtonPress: () => void): JSX.Element => {
+interface HeaderProps {
+    readonly completedCount: number;
+}
+interface HeaderActions {
+    readonly completedButtonOnPress: () => void;
+}
+const Header: React.StatelessComponent<HeaderProps & HeaderActions> = (props: HeaderProps & HeaderActions): JSX.Element => {
     return (
         <View style={[ { flex: 1, flexDirection: 'row', justifyContent: 'space-between'} ]}>
             <Text style={[ applicationStyles.pageTitle ]}><Trans>My Plan</Trans></Text>
-            <Button onPress={onCompletedButtonPress} rounded small style={[ { backgroundColor: colors.darkGrey } ]}>
-                <Text><Trans>COMPLETED {completedCount}</Trans></Text>
+            <Button onPress={props.completedButtonOnPress} rounded small style={[ { backgroundColor: colors.darkGrey } ]}>
+                <Text><Trans>COMPLETED {props.completedCount}</Trans></Text>
             </Button>
         </View>
     );
