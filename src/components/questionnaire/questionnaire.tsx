@@ -25,7 +25,7 @@ export const Component: React.StatelessComponent<Props> = (props: Props): JSX.El
         <Text style={applicationStyles.pageTitle}><Trans>Personalize My Plan</Trans></Text>
         <Text style={[ { marginBottom: 20 } ]}>
             <Trans>There is no requirement to answer any of the following questions
-                but in doing so you help us recommend tasks and articles for you</Trans>
+                but in doing so you help us recommend tasks and articles for you.</Trans>
         </Text>
         <Accordion
             activeSection={findIndexForQuestion(props.activeQuestion, props.questionnaire)}
