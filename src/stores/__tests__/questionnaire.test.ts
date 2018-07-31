@@ -37,6 +37,13 @@ describe('questionnaire reducer', () => {
         expect(newStore).toEqual(theStore);
     });
 
+    it('should allow the active question to be set', () => {
+        theStore = helpers.buildNormalizedQuestionnaire([new helpers.QuestionBuilder()]);
+        const activeQuestion = aString();
+        newStore = store.reducer(theStore, store.setActiveQuestion(activeQuestion));
+        expect(newStore.activeQuestion).toEqual(activeQuestion);
+    });
+
     describe('for questions accepting at most one answer', () => {
 
         beforeEach(() => {

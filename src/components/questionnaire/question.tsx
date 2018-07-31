@@ -1,53 +1,32 @@
 import React from 'react';
-import { Button, Grid, Row, Col, Text, View } from 'native-base';
-import { Answer, AnswerActions } from './answer';
+import { colors, values } from '../../application/styles';
+import { Button, View, Text } from 'native-base';
+import { Answer } from './answer';
 import * as selector from '../../selectors/questionnaire';
-import { QuestionnaireActions } from './actions';
-import { applicationStyles } from '../../application/styles';
-import { questionStyles } from './styles';
 import { Trans } from '@lingui/react';
-import { Collapser } from '../collapser/collapser';
 import { RouterProps, goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { History } from 'history';
+import { SetActiveQuestionAction, SelectAnswerAction, Id } from '../../stores/questionnaire';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface QuestionProps {
     readonly question: selector.Question;
     readonly isFinalQuestion: boolean;
 }
-type Props = QuestionProps & QuestionnaireActions & AnswerActions & RouterProps;
+export interface QuestionActions {
+    readonly selectAnswer: (answerId: Id) => SelectAnswerAction;
+    readonly nextButtonOnPress: () => SetActiveQuestionAction;
+}
+type Props = QuestionProps & QuestionActions & RouterProps;
 
 export const Question: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+    const { question, selectAnswer, isFinalQuestion, history, nextButtonOnPress }: Props = props;
     return (
-        <Collapser
-            collapsedHeader={renderQuestionCollapsedHeader(props)}
-            expandedHeader={renderQuestionExpandedHeader(props)}
-            content={renderQuestionContent(props)}
-            // TODO - This should likely be the next unaswered question in the questionnaire
-            initiallyCollapsed={props.question.number === 1 ? false : true }
-        />
-    );
-};
-
-const renderQuestionCollapsedHeader = ({ question }: Props): JSX.Element => (
-    <Text style={applicationStyles.bold}>
-        <Text style={applicationStyles.bold}>{question.number}. {question.text}</Text>
-    </Text>
-);
-
-const renderQuestionExpandedHeader = ({ question }: Props): JSX.Element => (
-    <Row>
-        <View style={questionStyles.expandedBG}>
-            <Text style={questionStyles.expandedText}>{question.number}</Text>
-        </View>
-        <Text style={applicationStyles.bold}>{question.text}</Text>
-    </Row>
-);
-
-const renderQuestionContent = ({ question, isFinalQuestion, selectAnswer, history }: Props): JSX.Element => (
-    <Grid style={questionStyles.questionWrapper}>
-        <Row>
-            <Col>
-            {question.explanation ? <Text style={questionStyles.explanationText}>{question.explanation}</Text> : undefined}
+        <View style={[
+            { flex: 1 },
+            { marginBottom: 10 },
+        ]}>
+            {question.explanation ? <Text style={[ { fontSize: values.smallTextSize } ]}>{question.explanation}</Text> : <EmptyComponent/>}
             {question.answers.map((answer: selector.Answer) => (
                 <Answer
                     key={answer.id}
@@ -56,22 +35,24 @@ const renderQuestionContent = ({ question, isFinalQuestion, selectAnswer, histor
                     acceptMultipleAnswers={answer.acceptMultipleAnswers}
                 />
             ))}
-            </Col>
-        </Row>
-        <Row style={questionStyles.buttonsWrapper}>
-            {isFinalQuestion ? renderFinalQuestionButton(history) : renderNextQuestionButton()}
-        </Row>
-    </Grid>
-);
+            <View style={[
+                { marginTop: 10 },
+                { marginLeft: 20 },
+            ]}>
+                {isFinalQuestion ? renderFinalQuestionButton(history) : renderNextQuestionButton(nextButtonOnPress)}
+            </View>
+        </View>
+    );
+};
 
 const renderFinalQuestionButton = (history: History): JSX.Element => (
-    <Button style={questionStyles.nextButton} small onPress={goToRouteWithoutParameter(Routes.MyPlan, history)}>
+    <Button style={[ { backgroundColor: colors.darkGrey } ]} small onPress={goToRouteWithoutParameter(Routes.MyPlan, history)}>
         <Text><Trans>GO TO MY PLAN</Trans></Text>
     </Button>
 );
 
-const renderNextQuestionButton = (): JSX.Element => (
-    <Button style={questionStyles.nextButton} small>
+const renderNextQuestionButton = (onPress: () => SetActiveQuestionAction): JSX.Element => (
+    <Button style={[ { backgroundColor: colors.darkGrey } ]} small onPress={onPress}>
         <Text><Trans>NEXT</Trans></Text>
     </Button>
 );
