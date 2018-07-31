@@ -17,6 +17,7 @@ import { RelatedArticlesComponent } from '../articles/related_articles';
 import { RouterProps } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { computeStateLabel, computeStateButtons, TaskStateLabel, TaskStateButton } from './task_states';
+import Markdown from 'react-native-markdown-renderer';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -169,7 +170,7 @@ const InformationTab = (props: Props): JSX.Element => (
             {props.task.isRecommended ? <ThisTaskIsRecommended /> : <EmptyComponent />}
             <TaxonomyComponent {...props} />
             <Row style={taskDetailStyles.row}>
-                <Text>{props.task.description}</Text>
+                <Markdown>{props.task.description}</Markdown>
             </Row>
             <RelatedArticlesComponent
                 {...props}

@@ -11,6 +11,7 @@ import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
 import { ArticleListItem } from '../../selectors/articles';
 import { ArticleListComponent } from '../articles/article_list';
 import { EmptyComponent } from '../empty_component/empty_component';
+import Markdown from 'react-native-markdown-renderer';
 
 export interface ExploreSectionDetailProps {
     readonly section: ExploreSection;
@@ -123,10 +124,14 @@ const ShareButton: React.StatelessComponent = (): JSX.Element => (
 );
 
 const IntroductionComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <Text style={[
+    <View style={[
         { marginTop: 20 },
         { marginLeft: 20 },
         { marginRight: 20 },
         { marginBottom: 20 },
-    ]}>{props.section.introduction}</Text>
+    ]}>
+        <Markdown>
+            {props.section.introduction}
+        </Markdown>
+    </View>
 );
