@@ -6,6 +6,7 @@ import { Id as TaskId } from '../../stores/tasks';
 import { TaskListItemActions } from '../tasks/task_list_item';
 import { RouterProps } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
+import Markdown from 'react-native-markdown-renderer';
 
 export interface ArticleDetailProps {
     readonly article: Article;
@@ -106,10 +107,14 @@ const LabelComponent: React.StatelessComponent<AllArticleDetailProps> =
     );
 
 const ContentComponent: React.StatelessComponent<AllArticleDetailProps> = (props: AllArticleDetailProps): JSX.Element => (
-    <Text style={[
+    <View style={[
         { marginTop: 20 },
         { marginLeft: 20 },
         { marginRight: 20 },
         { marginBottom: 20 },
-    ]}>{props.article.description}</Text>
+    ]}>
+        <Markdown>
+            {props.article.description}
+        </Markdown>
+    </View>
 );
