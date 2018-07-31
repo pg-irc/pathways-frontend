@@ -1,4 +1,103 @@
 {
+  "Here are some recommended tasks:": {
+    "translation": "فيما يلي بعض المهام الموصى بها:",
+    "origin": [
+      [
+        "lib/components/home_page/my_plan_component.js",
+        29
+      ]
+    ]
+  },
+  "MY TASKS": {
+    "translation": "مهامي",
+    "origin": [
+      [
+        "lib/components/my_plan/my_plan.js",
+        30
+      ]
+    ]
+  },
+  "Plan everything you need to do as a newcomer to Canada. Want to know what next steps you need to take? <0>Answer some questions</0> to get tasks and tips recommended for you.": {
+    "translation": "خطط لكل ما تحتاج إلى القيام به كوافد جديد إلى كندا. تريد أن تعرف ما هي الخطوات التالية التي تحتاج إلى اتخاذها؟ <0> أجب عن بعض الأسئلة </ 0> للحصول على المهام والنصائح المقترحة لك.",
+    "origin": [
+      [
+        "lib/components/my_plan/my_plan_intro_component.js",
+        9
+      ]
+    ]
+  },
+  "You haven't personalized your Plan yet. Would you like to <0>answer some questions</0> to get your most relevant tasks?": {
+    "translation": "لم تقم بتخصيص خطتك حتى الآن. هل تريد <0> الإجابة عن بعض الأسئلة </ 0> للحصول على أكثر المهام ذات الصلة؟",
+    "origin": [
+      [
+        "lib/components/my_plan/my_plan_intro_component.js",
+        20
+      ]
+    ]
+  },
+  "NEXT": {
+    "translation": "التالى",
+    "origin": [
+      [
+        "lib/components/questionnaire/question.js",
+        38
+      ]
+    ]
+  },
+  "There is no requirement to answer any of the following questions but in doing so you help us recommend tasks right for you.": {
+    "translation": "لا يوجد أي متطلبات للإجابة على أي من الأسئلة التالية ، ولكن عند القيام بذلك ، فإنك تساعدنا على التوصية بالمهام المناسبة لك.",
+    "origin": [
+      [
+        "lib/components/questionnaire/questionnaire.js",
+        10
+      ]
+    ]
+  },
+  "Mark as not Done": {
+    "translation": "ضع علامة على عدم الانتهاء",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        50
+      ]
+    ]
+  },
+  "TASK": {
+    "translation": "مهمة",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        77
+      ]
+    ]
+  },
+  "RECOMMENDED TASK": {
+    "translation": "المهمة الموصى بها",
+    "origin": [
+      [
+        "lib/components/tasks/task_detail.js",
+        80
+      ]
+    ]
+  },
+  "No tasks added yet": {
+    "translation": "لم تتم إضافة أية مهام بعد",
+    "origin": [
+      [
+        "lib/components/tasks/task_list.js",
+        6
+      ]
+    ]
+  },
+  "No tasks to recommend": {
+    "translation": "لا توجد مهام التوصية",
+    "origin": [
+      [
+        "lib/components/tasks/task_list.js",
+        7
+      ]
+    ]
+  },
   "LEARN MORE": {
     "translation": "أعرف أكثر",
     "origin": [
@@ -21,8 +120,8 @@
     "translation": "تعلم حول",
     "origin": [
       [
-        "lib/components/explore/explore_section.js",
-        15
+        "lib/components/explore/explore_section_detail_component.js",
+        64
       ],
       [
         "lib/components/home_page/learn_section_component.js",
@@ -89,7 +188,7 @@
     "origin": [
       [
         "lib/components/home_page/my_plan_component.js",
-        9
+        10
       ]
     ]
   },
@@ -98,34 +197,11 @@
     "origin": [
       [
         "lib/components/home_page/my_plan_component.js",
-        15
-      ]
-    ]
-  },
-  "Plan everything you need to do as a newcomer to Canada. Want to know what next steps you need to take?<0>Answer some questions</0> to get tasks and tips recommended for you.": {
-    "translation": "خطط لكل ما تحتاج إلى القيام به كوافد جديد إلى كندا. هل تريد معرفة الخطوات التالية التي تحتاج إلى اتخاذها؟ </> الإجابة على بعض الأسئلة </ 0> للحصول على المهام والنصائح المقترحة لك.",
-    "origin": [
+        18
+      ],
       [
-        "lib/components/home_page/my_plan_component.js",
-        25
-      ]
-    ]
-  },
-  "Here are some sample tasks:": {
-    "translation": "فيما يلي بعض مهام العينة:",
-    "origin": [
-      [
-        "lib/components/home_page/my_plan_component.js",
-        34
-      ]
-    ]
-  },
-  "You haven't personalized your Plan yet. Would you like to<0>answer some questions</0> to get your most relevant tasks?": {
-    "translation": "لم تقم بتخصيص خطتك حتى الآن. هل تريد <0> الإجابة عن بعض الأسئلة </ 0> للحصول على أكثر المهام ذات الصلة؟",
-    "origin": [
-      [
-        "lib/components/home_page/my_plan_component.js",
-        41
+        "lib/components/questionnaire/question.js",
+        35
       ]
     ]
   },
@@ -134,7 +210,7 @@
     "origin": [
       [
         "lib/components/language_switcher/language_switcher.js",
-        11
+        12
       ]
     ]
   },
@@ -143,16 +219,7 @@
     "origin": [
       [
         "lib/components/main/footer.js",
-        16
-      ]
-    ]
-  },
-  "Questions": {
-    "translation": "الأسئلة",
-    "origin": [
-      [
-        "lib/components/main/footer.js",
-        20
+        15
       ]
     ]
   },
@@ -161,7 +228,7 @@
     "origin": [
       [
         "lib/components/main/footer.js",
-        24
+        19
       ]
     ]
   },
@@ -170,7 +237,7 @@
     "origin": [
       [
         "lib/components/main/footer.js",
-        28
+        23
       ]
     ]
   },
@@ -179,7 +246,7 @@
     "origin": [
       [
         "lib/components/main/header.js",
-        47
+        48
       ]
     ]
   },
@@ -188,16 +255,7 @@
     "origin": [
       [
         "lib/components/my_plan/my_plan.js",
-        14
-      ]
-    ]
-  },
-  "TASKS I PLAN TO DO": {
-    "translation": "المهام التي أخطط للقيام بها",
-    "origin": [
-      [
-        "lib/components/my_plan/my_plan.js",
-        24
+        16
       ]
     ]
   },
@@ -206,16 +264,7 @@
     "origin": [
       [
         "lib/components/my_plan/my_plan.js",
-        37
-      ]
-    ]
-  },
-  "Important for all newcomers to BC:": {
-    "translation": "مهم لجميع القادمين الجدد إلى كولومبيا البريطانية:",
-    "origin": [
-      [
-        "lib/components/my_plan/my_plan.js",
-        49
+        40
       ]
     ]
   },
@@ -228,39 +277,12 @@
       ]
     ]
   },
-  "CONTINUE": {
-    "translation": "استمر",
-    "origin": [
-      [
-        "lib/components/questionnaire/question.js",
-        32
-      ]
-    ]
-  },
-  "SKIP": {
-    "translation": "تخطى",
-    "origin": [
-      [
-        "lib/components/questionnaire/question.js",
-        35
-      ]
-    ]
-  },
   "Personalize My Plan": {
     "translation": "إضفاء الطابع الشخصي على خطتي",
     "origin": [
       [
         "lib/components/questionnaire/questionnaire.js",
         8
-      ]
-    ]
-  },
-  "Immigration can be overwhelming but we are here to help!": {
-    "translation": "قد تكون الهجرة غامرة ، لكننا هنا للمساعدة!",
-    "origin": [
-      [
-        "lib/components/questionnaire/questionnaire.js",
-        9
       ]
     ]
   },
@@ -278,7 +300,7 @@
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
-        25
+        24
       ]
     ]
   },
@@ -287,16 +309,7 @@
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
-        52
-      ]
-    ]
-  },
-  "No related services found.": {
-    "translation": "لم يتم العثور على خدمات ذات صلة.",
-    "origin": [
-      [
-        "lib/components/tasks/task_detail.js",
-        66
+        27
       ]
     ]
   },
@@ -305,16 +318,7 @@
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
-        77
-      ]
-    ]
-  },
-  "Not done": {
-    "translation": "لم تفعل",
-    "origin": [
-      [
-        "lib/components/tasks/task_detail.js",
-        81
+        46
       ]
     ]
   },
@@ -323,7 +327,7 @@
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
-        85
+        54
       ]
     ]
   },
@@ -332,7 +336,7 @@
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
-        89
+        58
       ]
     ]
   },
@@ -341,7 +345,7 @@
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
-        94
+        78
       ]
     ]
   },
@@ -350,16 +354,16 @@
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
-        96
+        79
       ]
     ]
   },
-  "AVAILABLE TASK": {
-    "translation": "المهمة المتاحة",
+  "No related services found.": {
+    "translation": "لم يتم العثور على خدمات ذات صلة.",
     "origin": [
       [
         "lib/components/tasks/task_detail.js",
-        99
+        134
       ]
     ]
   },
