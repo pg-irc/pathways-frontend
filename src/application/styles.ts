@@ -10,6 +10,7 @@ export const colors = {
     brightBlue: '#0066ff',
     white: 'white',
     urlColor: 'blue',
+    linkColor: 'blue',
 };
 
 export const values = {
@@ -49,5 +50,8 @@ export const applicationStyles = StyleSheet.create({
 export const markdownStyles = StyleSheet.create({
     text: {
         textAlign: 'left',
+    },
+    divider: {
+        marginTop: 20,
     },
 });

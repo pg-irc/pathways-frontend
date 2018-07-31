@@ -32,6 +32,10 @@ export const noTasksRecommendedTextComponent = (): JSX.Element => (
     </Text>
 );
 
+export const noTasksCompletedTextComponent = (): JSX.Element => (
+    <Text><Trans>No tasks completed</Trans></Text>
+);
+
 type AllTaskListProps = TaskListProps & TaskListActions & RouterProps;
 
 export const TaskListComponent: React.StatelessComponent<AllTaskListProps> = (props: AllTaskListProps): JSX.Element => (

@@ -69,8 +69,14 @@ export const selectAllSavedTasks = (store: Store): ReadonlyArray<TaskListItem> =
 };
 
 export const selectRelatedTasks = (store: Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<TaskListItem> => (
-    R.map((id: model.Id) => selectTaskAsListItem(store, id), taskIds)
+    R.map((taskId: model.Id) => selectTaskAsListItem(store, taskId), taskIds)
 );
+
+export const selectCompletedTasks = (store: Store): ReadonlyArray<TaskListItem> => {
+    const isCompleted = (task: model.Task): boolean => task.completed;
+    const taskIds = R.keys(R.pickBy(isCompleted, store.tasksInStore.taskMap));
+    return R.map((taskId: model.Id) => selectTaskAsListItem(store, taskId), taskIds);
+};
 
 export const selectTaskAsListItem = (store: Store, taskId: model.Id): TaskListItem => {
     const locale = selectLocale(store);
