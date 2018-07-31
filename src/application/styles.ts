@@ -10,6 +10,7 @@ export const colors = {
     brightBlue: '#0066ff',
     white: 'white',
     urlColor: 'blue',
+    linkColor: 'blue',
 };
 
 export const values = {
@@ -41,5 +42,8 @@ export const applicationStyles = StyleSheet.create({
         fontSize: 22,
         marginTop: 10,
         marginBottom: 20,
+    },
+    divider: {
+        marginTop: 20,
     },
 });
