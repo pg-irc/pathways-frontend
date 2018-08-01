@@ -36,13 +36,13 @@ export const noTasksCompletedTextComponent = (): JSX.Element => (
     <Text><Trans>No tasks completed</Trans></Text>
 );
 
-type AllTaskListProps = TaskListProps & TaskListActions & RouterProps;
+type Props = TaskListProps & TaskListActions & RouterProps;
 
-export const TaskListComponent: React.StatelessComponent<AllTaskListProps> = (props: AllTaskListProps): JSX.Element => (
+export const TaskListComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     R.isEmpty(props.tasks) ? props.emptyTaskListComponent : <NonEmptyTaskListComponent {...props} />
 );
 
-const NonEmptyTaskListComponent: React.StatelessComponent<AllTaskListProps> = (props: AllTaskListProps): JSX.Element => (
+const NonEmptyTaskListComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View>
         {R.map((task: TaskListItem) =>
             <TaskListItemComponent

@@ -139,6 +139,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
         return (
             <TaskListComponent
                 {...this.props}
+                addToSavedList={undefined}
                 tasks={this.props.savedTasks}
                 emptyTaskListComponent={noTasksAddedYetTextComponent()} />
         );

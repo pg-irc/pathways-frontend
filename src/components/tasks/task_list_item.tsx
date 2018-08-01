@@ -1,7 +1,7 @@
 import React from 'react';
-import { ListItem, Text, Button, Icon, Grid, Col, Row } from 'native-base';
+import { View, ListItem, Text, Button, Icon, Grid, Col, Row } from 'native-base';
 import { taskStyles } from './styles';
-import { applicationStyles } from '../../application/styles';
+import { applicationStyles, values } from '../../application/styles';
 import { TaskListItem } from '../../selectors/tasks';
 import { AddToSavedListAction, Id as TaskId } from '../../stores/tasks';
 import { I18nManager } from 'react-native';
@@ -62,12 +62,12 @@ const renderTaskInteractions = (props: AllTaskListItemProps): JSX.Element => {
 
 const renderAddButton = (onPress: () => void): JSX.Element => (
     <Button dark transparent iconRight onPress={onPress}>
-        <Icon style={applicationStyles.bold} name='add' />
+        <Icon style={[ applicationStyles.bold ]} name='add' />
     </Button>
 );
 
 const renderUncheckedBox = (): JSX.Element => (
-    <Button dark transparent iconRight>
-        <Icon style={applicationStyles.bold} name='checkbox-blank-outline' type='MaterialCommunityIcons' />
-    </Button>
+    <View style={[ { flex: 1 }, { justifyContent: 'center' } ]}>
+        <Icon style={[ { fontSize: values.smallerIconSize } ]}name='checkbox-blank-outline' type='MaterialCommunityIcons' />
+    </View>
 );
