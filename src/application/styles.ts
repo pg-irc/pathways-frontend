@@ -10,7 +10,6 @@ export const colors = {
     brightBlue: '#0066ff',
     white: 'white',
     urlColor: 'blue',
-    linkColor: 'blue',
 };
 
 export const values = {

@@ -3,17 +3,14 @@ import * as R from 'ramda';
 import { Text, View } from 'native-base';
 import { Trans } from '@lingui/react';
 import { TaskListItem } from '../../selectors/tasks';
-import { Id as TaskId } from '../../stores/tasks';
 import { TaskListItemComponent, TaskListItemActions, TaskListItemStyleProps } from './task_list_item';
+import { Id } from '../../stores/tasks';
 import { RouterProps } from '../../application/routing';
 
 export interface TaskListProps extends TaskListItemStyleProps {
     readonly tasks: ReadonlyArray<TaskListItem>;
     readonly emptyTaskListComponent: JSX.Element;
-}
-
-export interface TaskListActions extends TaskListItemActions {
-    readonly shouldDisplayTaskInteractions?: (taskId: TaskId) => boolean;
+    readonly savedTasksIdList: ReadonlyArray<Id>;
 }
 
 export const noTasksAddedYetTextComponent = (): JSX.Element => (
@@ -36,7 +33,7 @@ export const noTasksCompletedTextComponent = (): JSX.Element => (
     <Text><Trans>No tasks completed</Trans></Text>
 );
 
-type Props = TaskListProps & TaskListActions & RouterProps;
+type Props = TaskListProps & TaskListItemActions & RouterProps;
 
 export const TaskListComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     R.isEmpty(props.tasks) ? props.emptyTaskListComponent : <NonEmptyTaskListComponent {...props} />
@@ -46,14 +43,9 @@ const NonEmptyTaskListComponent: React.StatelessComponent<Props> = (props: Props
     <View>
         {R.map((task: TaskListItem) =>
             <TaskListItemComponent
-                {...task}
                 {...props}
                 key={task.id}
-                displayTaskInteractions={displayTaskInteractions(task.id, props.shouldDisplayTaskInteractions)}
+                task={task}
             />, props.tasks)}
     </View>
 );
-
-const displayTaskInteractions = (taskId: TaskId, callback: (taskId: TaskId) => boolean): boolean => {
-    return callback ? callback(taskId) : true;
-};

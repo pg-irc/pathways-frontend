@@ -9,11 +9,11 @@ import { CollapsibleContent } from '../collapsible_content/collapsible_content';
 import { TaskListItem } from '../../selectors/tasks';
 import {
     TaskListComponent,
-    TaskListActions,
     noTasksAddedYetTextComponent,
     noTasksRecommendedTextComponent,
     noTasksCompletedTextComponent,
 } from '../tasks/task_list';
+import { TaskListItemActions } from '../tasks/task_list_item';
 import { RouterProps } from '../../application/routing';
 import { MyPlanIntroComponent, EmptyMyPlanIntroComponent } from './my_plan_intro_component';
 
@@ -28,10 +28,10 @@ interface MyPlanState {
     readonly recommendedTasksIsCollapsed: boolean;
     readonly completedTasksIsCollapsed: boolean;
 }
-type Props = MyPlanProps & TaskListActions & RouterProps;
+
+type Props = MyPlanProps & TaskListItemActions & RouterProps;
 
 interface ContentComponentRef extends Content {
-    // This should be something like: "KeyboardAwareScrollView" but couldn't get the type working
     // tslint:disable-next-line:no-any
     readonly _root: any;
 }
@@ -61,107 +61,85 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
                 />
                 <Intro {...this.props} />
                 <CollapsibleContent
-                    collapsedHeader={this.getHeaderForSavedTasks(collapsedIcon())}
-                    expandedHeader={this.getHeaderForSavedTasks(expandedIcon())}
+                    collapsedHeader={this.getHeading(this.getSavedTasksHeading(), this.collapsedIcon())}
+                    expandedHeader={this.getHeading(this.getSavedTasksHeading(), this.expandedIcon())}
+                    content={this.getContent(this.props.savedTasks, noTasksAddedYetTextComponent())}
                     onHeaderPress={this.toggleSavedTasksCollapsed}
-                    content={this.getContentForSavedTasks()}
-                    collapsed={this.state.savedTasksIsCollapsed}
+                    isCollapsed={this.state.savedTasksIsCollapsed}
                 />
                 <View style={applicationStyles.divider} />
                 <CollapsibleContent
-                    collapsedHeader={this.getHeaderForRecommendedTasks(collapsedIcon())}
-                    expandedHeader={this.getHeaderForRecommendedTasks(expandedIcon())}
+                    collapsedHeader={this.getHeading(this.getRecommendedTasksHeading(), this.collapsedIcon())}
+                    expandedHeader={this.getHeading(this.getRecommendedTasksHeading(), this.expandedIcon())}
+                    content={this.getContent(this.props.recommendedTasks, noTasksRecommendedTextComponent(), styles.greyBackground)}
                     onHeaderPress={this.toggleRecommendedTasksCollapsed}
-                    content={this.getContentForRecommendedTasks()}
-                    collapsed={this.state.recommendedTasksIsCollapsed}
+                    isCollapsed={this.state.recommendedTasksIsCollapsed}
                     style={styles.greyBackground}
                 />
                 <View style={applicationStyles.divider} />
                 <CollapsibleContent
-                    collapsedHeader={this.getHeaderForCompletedTasks(collapsedIcon())}
-                    expandedHeader={this.getHeaderForCompletedTasks(expandedIcon())}
+                    collapsedHeader={this.getHeading(this.getCompletedTasksHeading(), this.collapsedIcon())}
+                    expandedHeader={this.getHeading(this.getCompletedTasksHeading(), this.expandedIcon())}
+                    content={this.getContent(this.props.completedTasks, noTasksCompletedTextComponent(), styles.greyBackground)}
                     onHeaderPress={this.toggleCompletedTasksCollapsed}
-                    content={this.getContentForCompletedTasks()}
-                    collapsed={this.state.completedTasksIsCollapsed}
+                    isCollapsed={this.state.completedTasksIsCollapsed}
                     style={styles.greyBackground}
                 />
             </Content>
         );
     }
 
-    private getHeaderForSavedTasks(icon: string): JSX.Element {
+    private expandedIcon(): string {
+        return 'arrow-dropdown';
+    }
+
+    private collapsedIcon(): string {
+       return I18nManager.isRTL ? 'arrow-dropleft' : 'arrow-dropright';
+    }
+
+    private getSavedTasksHeading(): JSX.Element {
         return (
-            <Grid>
-                <Row>
-                    <Col size={85} >
-                        <Row style={styles.listItemLabel}>
-                            <Text style={applicationStyles.bold}><Trans>MY TASKS</Trans></Text>
-                            <Icon style={styles.icon} name={icon} />
-                        </Row>
-                    </Col>
-                </Row>
-            </Grid>
+            <View>
+                <Text style={[ applicationStyles.bold ]}><Trans>MY TASKS</Trans></Text>
+            </View>
         );
     }
 
-    private getHeaderForRecommendedTasks(icon: string): JSX.Element {
+    private getRecommendedTasksHeading(): JSX.Element {
         return (
-            <Grid>
-                <Row>
-                    <Col size={85} >
-                        <Row style={styles.listItemLabel}>
-                            <Text style={applicationStyles.bold}><Trans>RECOMMENDED FOR ME</Trans></Text>
-                            <Icon style={styles.icon} name='star-circle' type='MaterialCommunityIcons' />
-                            <Icon style={styles.icon} name={icon} />
-                        </Row>
-                    </Col>
-                </Row>
-            </Grid>
+            <View style={[{ flexDirection: 'row' }]}>
+                <Text style={[ applicationStyles.bold ]}><Trans>RECOMMENDED FOR ME</Trans></Text>
+                <Icon style={styles.icon} name='star-circle' type='MaterialCommunityIcons' />
+            </View>
         );
     }
 
-    private getHeaderForCompletedTasks(icon: string): JSX.Element {
+    private getCompletedTasksHeading(): JSX.Element {
         return (
-            <Grid>
-                <Row>
-                    <Col size={85} >
-                        <Row style={styles.listItemLabel}>
-                            <Text style={applicationStyles.bold}><Trans>COMPLETED TASKS</Trans></Text>
-                            <Icon style={styles.icon} name={icon} />
-                        </Row>
-                    </Col>
-                </Row>
-            </Grid>
+            <View>
+                <Text style={[ applicationStyles.bold ]}><Trans>COMPLETED TASKS</Trans></Text>
+            </View>
         );
     }
 
-    private getContentForSavedTasks(): JSX.Element {
+    private getHeading(heading: JSX.Element, icon: string): JSX.Element {
+        return (
+            <View style={[styles.heading]}>
+                {heading}
+                <Icon style={styles.icon} name={icon} />
+            </View>
+        );
+    }
+
+    private getContent(tasks: ReadonlyArray<TaskListItem>, emptyTaskListComponent: JSX.Element, style?: object): JSX.Element {
         return (
             <TaskListComponent
                 {...this.props}
-                addToSavedList={undefined}
-                tasks={this.props.savedTasks}
-                emptyTaskListComponent={noTasksAddedYetTextComponent()} />
-        );
-    }
-
-    private getContentForRecommendedTasks(): JSX.Element {
-        return (
-            <TaskListComponent
-                {...this.props}
-                tasks={this.props.recommendedTasks}
-                listItemStyle={styles.greyBackground}
-                emptyTaskListComponent={noTasksRecommendedTextComponent()} />
-        );
-    }
-
-    private getContentForCompletedTasks(): JSX.Element {
-        return (
-            <TaskListComponent
-                {...this.props}
-                tasks={this.props.completedTasks}
-                listItemStyle={styles.greyBackground}
-                emptyTaskListComponent={noTasksCompletedTextComponent()} />
+                tasks={tasks}
+                emptyTaskListComponent={emptyTaskListComponent}
+                listItemStyle={style}
+                savedTasksIdList={R.pluck('id', this.props.savedTasks)}
+                />
         );
     }
 
@@ -188,9 +166,11 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
 interface HeaderProps {
     readonly completedCount: number;
 }
+
 interface HeaderActions {
     readonly completedButtonOnPress: () => void;
 }
+
 const Header: React.StatelessComponent<HeaderProps & HeaderActions> = (props: HeaderProps & HeaderActions): JSX.Element => {
     return (
         <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }]}>
@@ -206,22 +186,14 @@ const Intro: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     R.isEmpty(props.recommendedTasks) ? <EmptyMyPlanIntroComponent {...props} /> : <MyPlanIntroComponent {...props} />
 );
 
-const collapsedIcon = (): string => (
-    I18nManager.isRTL ? 'arrow-dropleft' : 'arrow-dropright'
-);
-
-const expandedIcon = (): string => (
-    'arrow-dropdown'
-);
-
 const styles = StyleSheet.create({
-    icon: {
-        marginLeft: 10,
-        marginRight: 10,
-        fontSize: values.smallIconSize,
+    heading: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
-    listItemLabel: {
-        alignItems: 'center',
+    icon: {
+        fontSize: values.smallIconSize,
     },
     greyBackground: {
         backgroundColor: colors.lighterGrey,

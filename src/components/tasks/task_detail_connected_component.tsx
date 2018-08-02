@@ -6,7 +6,7 @@ import { TaskServices, selectTaskServices, createRelatedServicesQueryFromTask } 
 import { Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
          toggleCompleted, RemoveFromSavedListAction, removeFromSavedList } from '../../stores/tasks';
 import { connect } from 'react-redux';
-import { Task, selectTask } from '../../selectors/tasks';
+import { Task, selectTask, selectSavedTasksIdList } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';
 
 interface StateProps extends TaskDetailProps {
@@ -18,7 +18,7 @@ function mapStateToProps(store: Store, ownProps: RouterProps): StateProps {
     const task: Task = selectTask(store, ownProps);
     return {
         task: task,
-        savedTasks: store.tasksInStore.savedTasksList,
+        savedTasksIdList: selectSavedTasksIdList(store),
         searchQuery: createRelatedServicesQueryFromTask(task),
         taskServices: selectTaskServices(task.id, store),
     };
@@ -44,7 +44,7 @@ type ComponentProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater &
 function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps, routerProps: RouterProps): ComponentProps {
     return {
         task: stateProps.task,
-        savedTasks: stateProps.savedTasks,
+        savedTasksIdList: stateProps.savedTasksIdList,
         taskServices: stateProps.taskServices,
         addToSavedList: dispatchProps.addToSavedList,
         removeFromSavedList: dispatchProps.removeFromSavedList,

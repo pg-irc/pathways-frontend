@@ -1,5 +1,3 @@
-// tslint:disable:no-class no-this readonly-keyword no-expression-statement
-
 /*
 Task states:
 
@@ -44,6 +42,12 @@ export enum TaskStateButton {
     AddToPlanButton,
 }
 
+export enum TaskStateListItemIcon {
+    Checked,
+    UnChecked,
+    Add,
+}
+
 export const computeStateLabel = (state: TaskState): TaskStateLabel => {
     if (state.isCompleted) {
         return TaskStateLabel.CompletedTask;
@@ -65,4 +69,14 @@ export const computeStateButtons = (state: TaskState): ReadonlyArray<TaskStateBu
         return [TaskStateButton.RemoveFromPlanButton, TaskStateButton.DoneButton];
     }
     return [TaskStateButton.AddToPlanButton];
+};
+
+export const computeStateListItemIcon = (state: TaskState): TaskStateListItemIcon => {
+    if (state.isCompleted) {
+        return TaskStateListItemIcon.Checked;
+    }
+    if (state.isSaved) {
+        return TaskStateListItemIcon.UnChecked;
+    }
+    return TaskStateListItemIcon.Add;
 };

@@ -32,6 +32,7 @@ export interface TaskListItem {
     readonly title: string;
     readonly description: string;
     readonly isRecommended: boolean;
+    readonly completed: boolean;
 }
 
 export const denormalizeTask =
@@ -58,15 +59,20 @@ export const denormalizeTaskListItem = (locale: Locale, task: model.Task, isReco
         title: selectLocalizedText(locale, task.title),
         description: selectLocalizedText(locale, task.description),
         isRecommended: isRecommended,
+        completed: task.completed,
     }
 );
 
-export const selectAllSavedTasks = (store: Store): ReadonlyArray<TaskListItem> => {
+export const selectSavedTasks = (store: Store): ReadonlyArray<TaskListItem> => {
     const savedTasksList = store.tasksInStore.savedTasksList;
     return savedTasksList.map((taskId: model.Id) => {
         return selectTaskAsListItem(store, taskId);
     });
 };
+
+export const selectSavedTasksIdList = (store: Store): ReadonlyArray<model.Id> => (
+    store.tasksInStore.savedTasksList
+);
 
 export const selectRelatedTasks = (store: Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<TaskListItem> => (
     R.map((taskId: model.Id) => selectTaskAsListItem(store, taskId), taskIds)

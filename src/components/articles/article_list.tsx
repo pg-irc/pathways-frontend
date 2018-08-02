@@ -15,8 +15,8 @@ export const ArticleListComponent: React.StatelessComponent<AllArticleListProps>
         {R.map((article: ArticleListItem) =>
             <ArticleListItemComponent
                 {...props}
-                {...article}
                 key={article.id}
+                article={article}
             />, props.articles)}
     </View>
 );

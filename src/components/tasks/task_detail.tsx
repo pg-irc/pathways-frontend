@@ -21,7 +21,7 @@ import Markdown from 'react-native-markdown-renderer';
 
 export interface TaskDetailProps {
     readonly task: Task;
-    readonly savedTasks: ReadonlyArray<TaskId>;
+    readonly savedTasksIdList: ReadonlyArray<TaskId>;
     readonly taskServices: TaskServices;
 }
 export interface TaskDetailActions {
@@ -105,7 +105,7 @@ function renderHeader(props: Props): JSX.Element {
 
     const state = {
         isRecommended: task.isRecommended,
-        isSaved: R.any((id: TaskId) => id === task.id, props.savedTasks),
+        isSaved: R.any((id: TaskId) => id === task.id, props.savedTasksIdList),
         isCompleted: task.completed,
     };
 
@@ -185,7 +185,6 @@ const InformationTab = (props: Props): JSX.Element => (
             <RelatedTasksComponent
                 {...props}
                 relatedTasks={props.task.relatedTasks}
-                savedTasks={props.savedTasks}
             />
         </Grid>
     </Content>

@@ -1,5 +1,12 @@
 // tslint:disable:no-expression-statement
-import { computeStateLabel, computeStateButtons, TaskStateLabel, TaskStateButton } from '../task_states';
+import {
+    computeStateLabel,
+    computeStateButtons,
+    computeStateListItemIcon,
+    TaskStateLabel,
+    TaskStateButton,
+    TaskStateListItemIcon }
+from '../task_states';
 import { aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 
 describe('task state', () => {
@@ -67,5 +74,34 @@ describe('task state', () => {
             };
             expect(computeStateButtons(state)).toEqual([TaskStateButton.AddToPlanButton]);
         });
+    });
+    describe('computeStateListItemIcon', () => {
+        it('returns Checked for completed tasks', () => {
+            const state = {
+                isCompleted: true,
+                isRecommended: aBoolean(),
+                isSaved: aBoolean(),
+            };
+            expect(computeStateListItemIcon(state)).toBe(TaskStateListItemIcon.Checked);
+        });
+
+        it('returns UnChecked for non-completed tasks in my plan', () => {
+            const state = {
+                isCompleted: false,
+                isRecommended: aBoolean(),
+                isSaved: true,
+            };
+            expect(computeStateListItemIcon(state)).toBe(TaskStateListItemIcon.UnChecked);
+        });
+
+        it('returns Add for non-completed tasks not in my plan', () => {
+            const state = {
+                isCompleted: false,
+                isRecommended: aBoolean(),
+                isSaved: false,
+            };
+            expect(computeStateListItemIcon(state)).toBe(TaskStateListItemIcon.Add);
+        });
+
     });
 });

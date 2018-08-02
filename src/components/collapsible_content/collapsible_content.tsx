@@ -6,7 +6,7 @@ export interface CollapsibleComponentProps {
     readonly collapsedHeader: JSX.Element;
     readonly expandedHeader: JSX.Element;
     readonly content: JSX.Element;
-    readonly collapsed: boolean;
+    readonly isCollapsed: boolean;
     readonly style?: object;
 }
 export interface CollapsibleComponentActions {
@@ -20,9 +20,9 @@ export const CollapsibleContent: React.StatelessComponent<Props> = (props: Props
         <ListItem
             style={props.style ? props.style : undefined}
             noBorder button noIndent onPress={(): void => props.onHeaderPress()}>
-            {props.collapsed ? props.collapsedHeader : props.expandedHeader}
+            {props.isCollapsed ? props.collapsedHeader : props.expandedHeader}
         </ListItem>
-        <Collapsible collapsed={props.collapsed}>
+        <Collapsible collapsed={props.isCollapsed}>
             {props.content}
         </Collapsible>
     </View>
