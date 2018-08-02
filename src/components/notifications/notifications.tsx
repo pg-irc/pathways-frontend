@@ -1,62 +1,42 @@
 import React from 'react';
 import * as R from 'ramda';
-import * as model from '../../stores/notifications';
-import * as selector from '../../selectors/notifications';
+import { Id, RemoveNotificationAction } from '../../stores/notifications';
+import { TaskList } from '../../selectors/tasks';
+import { Notification, NotificationList }from '../../selectors/notifications';
 import { View } from 'native-base';
 import { NotificationComponent } from './notification';
-import { StyleSheet } from 'react-native';
-import { colors } from '../../application/styles';
+import { EmptyComponent } from '../empty_component/empty_component';
 
+export interface NotificationParameters {
+    readonly recommendedTasks: TaskList;
+}
 export interface NotificationsProps {
-    readonly notifications: ReadonlyArray<selector.Notification>;
+    readonly notifications: NotificationList;
+    readonly notificationParameters: NotificationParameters;
 }
 export interface NotificationsActions {
-    readonly removeNotification: (notificationId: model.Id) => model.RemoveNotificationAction;
+    readonly removeNotification: (notificationId: Id) => RemoveNotificationAction;
 }
-type AllNotificationsProps = NotificationsProps & NotificationsActions;
+type Props = NotificationsProps & NotificationsActions;
 
-export const NotificationsComponent: React.StatelessComponent<AllNotificationsProps> = (props: AllNotificationsProps): JSX.Element => {
-    // tslint:disable-next-line:no-null-keyword
-    return R.keys(props.notifications).length > 0 ? renderNotifications(props) : null;
+export const NotificationsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+    return R.keys(props.notifications).length > 0 ? <Notifications {...props} /> : <EmptyComponent />;
 };
 
-const renderNotifications = (props: AllNotificationsProps): JSX.Element => {
+const Notifications: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     return (
         <View>
-            {R.map((notification: selector.Notification) => {
+            {R.map((notification: Notification) => {
+                const timeElapsedCallback = (): RemoveNotificationAction => props.removeNotification(notification.id);
                 return (
-                    <View key={notification.id} style={styles.stackedNotification}>
-                        {renderNotification(notification, props)}
+                    <View key={notification.id}>
+                        <NotificationComponent
+                            notification={notification}
+                            notificationParameters={props.notificationParameters}
+                            timeElapsedCallback={timeElapsedCallback} />
                     </View>
                 );
             }, props.notifications)}
         </View>
     );
 };
-
-const renderNotification = (notification: selector.Notification, props: AllNotificationsProps): JSX.Element => {
-    switch (notification.type) {
-        default:
-        case model.NotificationType.TaskAddedToPlan:
-            return (
-                <NotificationComponent
-                    notification={notification}
-                    timeInSeconds={1}
-                    timeElapsedCallback={(): model.RemoveNotificationAction => props.removeNotification(notification.id)}
-                />
-            );
-    }
-};
-
-const styles = StyleSheet.create({
-    stackedNotification: {
-        backgroundColor: colors.darkGrey,
-        position: 'absolute',
-        padding: 10,
-        bottom: 20,
-        left: 0,
-        right: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});

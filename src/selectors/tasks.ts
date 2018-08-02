@@ -63,7 +63,11 @@ export const denormalizeTaskListItem = (locale: Locale, task: model.Task, isReco
     }
 );
 
-export const selectSavedTasks = (store: Store): ReadonlyArray<TaskListItem> => {
+export type TaskList = ReadonlyArray<Task>;
+export type TaskListItemList = ReadonlyArray<TaskListItem>;
+export type TaskModelList = ReadonlyArray<model.Task>;
+
+export const selectSavedTasks = (store: Store): TaskListItemList => {
     const savedTasksList = store.tasksInStore.savedTasksList;
     return savedTasksList.map((taskId: model.Id) => {
         return selectTaskAsListItem(store, taskId);
@@ -97,7 +101,7 @@ const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: model.Task
     return denormalizeTask(locale, task, exploreSection, isRecommended, [], []);
 };
 
-export const selectRecommendedTasks = (store: Store): ReadonlyArray<Task> => {
+export const selectRecommendedTasks = (store: Store): TaskList => {
     const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store);
     const filterTasks = filterTasksByTaxonomyTerms(taxonomyTerms);
 
@@ -129,7 +133,7 @@ const selectExploreSectionFromTask = (store: Store, task: model.Task): ExploreSe
 };
 
 export const rejectTasksWithIdsInList =
-    R.curry((listOfIds: model.TaskList, tasks: ReadonlyArray<model.Task>): ReadonlyArray<model.Task> => {
+    R.curry((listOfIds: model.TaskList, tasks: ReadonlyArray<model.Task>): TaskModelList => {
         const idIsInList = (task: model.Task): boolean => (
             R.contains(task.id, listOfIds)
         );
@@ -139,7 +143,7 @@ export const rejectTasksWithIdsInList =
 export const rejectCompletedTasks = R.reject(R.prop('completed'));
 
 export const filterTasksByTaxonomyTerms =
-    R.curry((selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
+    R.curry((selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): TaskModelList => {
 
         const taskContainsTaxonomyTerms = R.curry((targetTerms: ReadonlyArray<TaxonomyTermReference>, task: model.Task): boolean => (
             R.not(R.isEmpty(R.intersection(targetTerms, task.taxonomyTerms)))
@@ -175,7 +179,7 @@ export const isTaskRecommended = (termsFromQuestionnaire: ReadonlyArray<Taxonomy
     return !R.isEmpty(filtered);
 };
 
-export const selectTasksForLearn = (store: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
+export const selectTasksForLearn = (store: Store, routerProps: RouterProps): TaskList => {
     const exploreSection = store.exploreSectionsInStore.sections[routerProps.match.params.learnId];
     const tasks = store.tasksInStore.taskMap;
     const matchingTasks = taskDetails.findItemByLearnTaxonomyTerm(exploreSection.taxonomyTerms, tasks);

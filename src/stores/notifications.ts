@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import * as uuid from 'uuid';
 import * as constants from '../application/constants';
 import { AddToSavedListAction } from './tasks';
+import { SelectAnswerAction } from './questionnaire';
 import * as helpers from './helpers/make_action';
 import { Id, NotificationType, Notification, Store } from '../fixtures/types/notifications';
 
@@ -9,6 +10,7 @@ export { Id, NotificationType, Notification, Store } from '../fixtures/types/not
 
 export type RemoveNotificationAction = Readonly<ReturnType<typeof removeNotification>>;
 type NotificationAction = AddToSavedListAction |
+    SelectAnswerAction |
     RemoveNotificationAction;
 
 // tslint:disable-next-line:typedef
@@ -27,15 +29,10 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Notificatio
         return store;
     }
     switch (action.type) {
-        case constants.Task.ADD_TO_SAVED_LIST: {
-            const notification = createNotification(NotificationType.TaskAddedToPlan);
-            return {
-                notifications: {
-                    ...store.notifications,
-                    [notification.id]: notification,
-                },
-            };
-        }
+        case constants.Task.ADD_TO_SAVED_LIST:
+            return addNotificationToStore(store, NotificationType.TaskAddedToPlan);
+        case constants.SELECT_ANSWER:
+            return addNotificationToStore(store, NotificationType.QuestionAnswered);
         case constants.REMOVE_NOTIFICATION:
             return {
                 notifications: R.reject(R.propEq('id', action.payload.notificationId), store.notifications),
@@ -43,6 +40,16 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Notificatio
         default:
             return store;
     }
+};
+
+const addNotificationToStore = (store: Store, notificationType: NotificationType): Store => {
+    const notification = createNotification(notificationType);
+    return {
+        notifications: {
+            ...store.notifications,
+            [notification.id]: notification,
+        },
+    };
 };
 
 export const createNotification = (type: NotificationType): Notification => {
