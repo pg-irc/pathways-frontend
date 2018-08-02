@@ -2,7 +2,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { I18nManager, StyleSheet } from 'react-native';
-import { Content, Text, View, Col, Row, Grid, Icon, Button } from 'native-base';
+import { Content, Text, View, Icon, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { applicationStyles, colors, values } from '../../application/styles';
 import { CollapsibleContent } from '../collapsible_content/collapsible_content';
@@ -144,10 +144,14 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     }
 
     private getCompletedButtonOnPress(): void {
+        this.expandCompletedTasks();
+        this.contentComponent._root.scrollToEnd();
+    }
+
+    private expandCompletedTasks(): void {
         if (this.state.completedTasksIsCollapsed) {
             this.toggleCompletedTasksCollapsed();
         }
-        this.contentComponent._root.scrollToEnd();
     }
 
     private toggleSavedTasksCollapsed(): void {
