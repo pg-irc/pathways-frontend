@@ -29,7 +29,11 @@ export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Eleme
             { borderTopWidth: 1},
         ]}>
             <Body>
-                <Text>{props.answer.text}</Text>
+                <Text style={[
+                    { textAlign: 'left' },
+                ]}>
+                    {props.answer.text}
+                </Text>
             </Body>
             <Right style={[ { paddingHorizontal: 7 } ]}>
                 {renderComponentForAnswerType(props, answerType, onPress)}
