@@ -15,7 +15,12 @@ type AllHomePageProps = I18nProps & HomePageProps & TaskListItemActions & Router
 export const LearnSectionComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => {
     const sectionsGroupedIntoFour = R.splitEvery(4, R.slice(0, 8, props.sections));
     return <View>
-        <Text style={applicationStyles.bold}><Trans>LEARN ABOUT</Trans></Text>
+        <Text style={[
+            applicationStyles.bold,
+            { textAlign: 'left' },
+        ]}>
+            <Trans>LEARN ABOUT</Trans>
+        </Text>
         {sectionsGroupedIntoFour.map((sections: ReadonlyArray<ExploreSection>) => (
             <RowOfSectionButtons
                 key={computeUniqueKeyForSections(sections)}

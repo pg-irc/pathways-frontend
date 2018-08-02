@@ -13,7 +13,13 @@ type AllHomePageProps = HomePageProps & TaskListItemActions & RouterProps;
 
 export const MyPlanComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => (
     <View>
-        <Text style={[applicationStyles.bold, { marginBottom: 10 }]}><Trans>MY PLAN</Trans></Text>
+        <Text style={[
+            applicationStyles.bold,
+            { marginBottom: 10 },
+            { textAlign: 'left' },
+        ]}>
+            <Trans>MY PLAN</Trans>
+        </Text>
         {R.isEmpty(props.tasks) ? introWithoutTasks(props) : introWithTasks(props)}
         <TaskListComponent
             {...props}
