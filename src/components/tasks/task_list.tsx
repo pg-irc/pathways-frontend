@@ -17,11 +17,19 @@ export interface TaskListActions extends TaskListItemActions {
 }
 
 export const noTasksAddedYetTextComponent = (): JSX.Element => (
-    <Text><Trans>No tasks added yet</Trans></Text>
+    <Text style={[
+        { textAlign: 'left' },
+    ]}>
+        <Trans>No tasks added yet</Trans>
+    </Text>
 );
 
 export const noTasksRecommendedTextComponent = (): JSX.Element => (
-    <Text><Trans>No tasks to recommend</Trans></Text>
+    <Text style={[
+        { textAlign: 'left' },
+    ]}>
+        <Trans>No tasks to recommend</Trans>
+    </Text>
 );
 
 type AllTaskListProps = TaskListProps & TaskListActions & RouterProps;
