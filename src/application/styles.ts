@@ -45,3 +45,9 @@ export const applicationStyles = StyleSheet.create({
         textAlign: 'left',
     },
 });
+
+export const markdownStyles = StyleSheet.create({
+    text: {
+        textAlign: 'left',
+    },
+});
