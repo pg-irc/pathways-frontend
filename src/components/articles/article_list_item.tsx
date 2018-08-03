@@ -19,10 +19,15 @@ export const ArticleListItemComponent: React.StatelessComponent<AllArticleListIt
                     </Col>
                     <Col size={80}>
                         <Row>
-                            <Text style={applicationStyles.bold}>{props.title}</Text>
+                            <Text style={[
+                                applicationStyles.bold,
+                                { textAlign: 'left' },
+                            ]}>
+                                {props.title}
+                            </Text>
                         </Row>
                         <Row>
-                            <Text numberOfLines={1} note>{props.description}</Text>
+                            <Text style={[{ textAlign: 'left' }]} numberOfLines={1} note>{props.description}</Text>
                         </Row>
                     </Col>
                 </Row>

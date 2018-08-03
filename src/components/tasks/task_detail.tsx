@@ -6,7 +6,7 @@ import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } fr
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
 import { Task } from '../../selectors/tasks';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { applicationStyles } from '../../application/styles';
+import { applicationStyles, markdownStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
 import { Trans } from '@lingui/react';
 import { Service, TaskServices } from '../../selectors/services';
@@ -80,26 +80,26 @@ function renderHeader(props: Props): JSX.Element {
         <Button iconLeft rounded light
             onPress={(): void => { props.toggleCompleted(task.id); props.removeFromSavedList(task.id); }}>
             <Icon name='checkbox-blank-outline' type='MaterialCommunityIcons' />
-            <Text><Trans>Mark Done</Trans></Text>
+            <Text style={[{ textAlign: 'left' }]}><Trans>Mark Done</Trans></Text>
         </Button>
     );
     const notDoneButton = (
         <Button iconLeft rounded light
             onPress={(): void => { props.toggleCompleted(task.id); props.addToSavedList(task.id); }}>
             <Icon name='checkbox-marked-outline' type='MaterialCommunityIcons' />
-            <Text><Trans>Mark as not Done</Trans></Text>
+            <Text style={[{ textAlign: 'left' }]}><Trans>Mark as not Done</Trans></Text>
         </Button>
     );
     const removeFromPlanButton = (
         <Button iconLeft rounded light onPress={(): RemoveFromSavedListAction => props.removeFromSavedList(task.id)}>
             <Icon name='minus' type='MaterialCommunityIcons' />
-            <Text><Trans>Remove from plan</Trans></Text>
+            <Text style={[{ textAlign: 'left' }]}><Trans>Remove from plan</Trans></Text>
         </Button>
     );
     const addToPlanButton = (
         <Button iconLeft rounded light onPress={(): AddToSavedListAction => props.addToSavedList(task.id)}>
             <Icon name='plus' type='MaterialCommunityIcons' />
-            <Text><Trans>Add to plan</Trans></Text>
+            <Text style={[{ textAlign: 'left' }]}><Trans>Add to plan</Trans></Text>
         </Button>
     );
 
@@ -158,7 +158,13 @@ function buildHeader(taskTitle: string, stateTitle: JSX.Element, stateButtons: R
             { flexDirection: 'column' },
         ]}>
             <Text style={applicationStyles.pageTitle}>{taskTitle}</Text>
-            <Text style={[applicationStyles.bold, { marginBottom: 5 }]}>{stateTitle}</Text>
+            <Text style={[
+                applicationStyles.bold,
+                { marginBottom: 5 },
+                { textAlign: 'left' },
+            ]}>
+                {stateTitle}
+            </Text>
             <View style={[{ flexDirection: 'row' }]}>{stateButtons}</View>
         </View>
     );
@@ -170,7 +176,7 @@ const InformationTab = (props: Props): JSX.Element => (
             {props.task.isRecommended ? <ThisTaskIsRecommended /> : <EmptyComponent />}
             <TaxonomyComponent {...props} />
             <Row style={taskDetailStyles.row}>
-                <Markdown>{props.task.description}</Markdown>
+                <Markdown style={markdownStyles}>{props.task.description}</Markdown>
             </Row>
             <RelatedArticlesComponent
                 {...props}
@@ -191,7 +197,7 @@ const ThisTaskIsRecommended = (): JSX.Element => (
             <Icon type='MaterialCommunityIcons' name='star-circle' />
         </Col>
         <Col size={90} style={taskDetailStyles.iconText}>
-            <Text>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
+            <Text style={[{ textAlign: 'left' }]}>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
         </Col>
     </Row>
 );
@@ -202,7 +208,7 @@ const TaxonomyComponent = ({ task }: Props): JSX.Element => (
             <Icon type='MaterialCommunityIcons' name={task.exploreSection.icon} />
         </Col>
         <Col size={90} style={taskDetailStyles.iconText}>
-            <Text>This task helps with <Text style={applicationStyles.bold}>{task.exploreSection.name}</Text>.</Text>
+            <Text style={[{ textAlign: 'left' }]}>This task helps with <Text style={applicationStyles.bold}>{task.exploreSection.name}</Text>.</Text>
         </Col>
     </Row>
 );
@@ -220,7 +226,7 @@ const ServicesTab = (props: Props): JSX.Element => (
 function ServiceListEmpty(): JSX.Element {
     return (
         <View style={{ padding: 20 }}>
-            <Text><Trans>No related services found.</Trans></Text>
+            <Text style={[ {textAlign: 'left' }]}><Trans>No related services found.</Trans></Text>
         </View>
     );
 }

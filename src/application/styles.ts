@@ -25,6 +25,7 @@ export const applicationStyles = StyleSheet.create({
     subHeading: {
         fontWeight: 'bold',
         marginBottom: 10,
+        textAlign: 'left',
     },
     hr: {
         borderTopWidth: 0.5,
@@ -41,5 +42,12 @@ export const applicationStyles = StyleSheet.create({
         fontSize: 22,
         marginTop: 10,
         marginBottom: 20,
+        textAlign: 'left',
+    },
+});
+
+export const markdownStyles = StyleSheet.create({
+    text: {
+        textAlign: 'left',
     },
 });

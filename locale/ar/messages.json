@@ -18,7 +18,7 @@
     ]
   },
   "Plan everything you need to do as a newcomer to Canada. Want to know what next steps you need to take? <0>Answer some questions</0> to get tasks and tips recommended for you.": {
-    "translation": "خطط لكل ما تحتاج إلى القيام به كوافد جديد إلى كندا. تريد أن تعرف ما هي الخطوات التالية التي تحتاج إلى اتخاذها؟ <0> أجب عن بعض الأسئلة </ 0> للحصول على المهام والنصائح المقترحة لك.",
+    "translation": "خطط لكل ما تحتاج إلى القيام به كوافد جديد إلى كندا. تريد أن تعرف ما هي الخطوات التالية التي تحتاج إلى اتخاذها؟ <0> أجب عن بعض الأسئلة </0> للحصول على المهام والنصائح المقترحة لك.",
     "origin": [
       [
         "lib/components/my_plan/my_plan_intro_component.js",
@@ -27,7 +27,7 @@
     ]
   },
   "You haven't personalized your Plan yet. Would you like to <0>answer some questions</0> to get your most relevant tasks?": {
-    "translation": "لم تقم بتخصيص خطتك حتى الآن. هل تريد <0> الإجابة عن بعض الأسئلة </ 0> للحصول على أكثر المهام ذات الصلة؟",
+    "translation": "لم تقم بتخصيص خطتك حتى الآن. هل تريد <0> الإجابة عن بعض الأسئلة </0> للحصول على أكثر المهام ذات الصلة؟",
     "origin": [
       [
         "lib/components/my_plan/my_plan_intro_component.js",

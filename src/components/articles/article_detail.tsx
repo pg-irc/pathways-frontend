@@ -7,6 +7,7 @@ import { TaskListItemActions } from '../tasks/task_list_item';
 import { RouterProps } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import Markdown from 'react-native-markdown-renderer';
+import { markdownStyles } from '../../application/styles';
 
 export interface ArticleDetailProps {
     readonly article: Article;
@@ -67,6 +68,7 @@ const TitleTextComponent: React.StatelessComponent<AllArticleDetailProps> =
             { fontSize: 30 },
             { marginLeft: 20 },
             { marginRight: 20 },
+            { textAlign: 'left' },
         ]}>{props.article.title}</Text>
     );
 
@@ -103,6 +105,7 @@ const LabelComponent: React.StatelessComponent<AllArticleDetailProps> =
             { flex: 1 },
             { fontWeight: 'bold' },
             { fontSize: 20 },
+            { textAlign: 'left' },
         ]}>{props.article.exploreSection.name}</Text>
     );
 
@@ -113,7 +116,7 @@ const ContentComponent: React.StatelessComponent<AllArticleDetailProps> = (props
         { marginRight: 20 },
         { marginBottom: 20 },
     ]}>
-        <Markdown>
+        <Markdown style={markdownStyles}>
             {props.article.description}
         </Markdown>
     </View>

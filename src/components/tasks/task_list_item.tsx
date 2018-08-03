@@ -28,7 +28,11 @@ export const TaskListItemComponent: React.StatelessComponent<AllTaskListItemProp
                     {props.displayTaskInteractions ? renderTaskInteractions(props) : undefined}
                     <Col size={props.displayTaskInteractions ? 70 : 80}>
                         <Row>
-                            <Text numberOfLines={2}>{props.title}</Text>
+                            <Text numberOfLines={2} style={[
+                                { textAlign: 'left' },
+                            ]}>
+                                {props.title}
+                            </Text>
                         </Row>
                     </Col>
                     <Col size={20}>

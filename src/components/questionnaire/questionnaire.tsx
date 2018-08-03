@@ -23,7 +23,10 @@ type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 export const Component: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <Content padder>
         <Text style={applicationStyles.pageTitle}><Trans>Personalize My Plan</Trans></Text>
-        <Text style={[ { marginBottom: 20 } ]}>
+        <Text style={[
+            { marginBottom: 20 },
+            { textAlign: 'left' },
+        ]}>
             <Trans>There is no requirement to answer any of the following questions
                 but in doing so you help us recommend tasks and articles for you.</Trans>
         </Text>

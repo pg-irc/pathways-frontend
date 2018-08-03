@@ -12,6 +12,7 @@ import { ArticleListItem } from '../../selectors/articles';
 import { ArticleListComponent } from '../articles/article_list';
 import { EmptyComponent } from '../empty_component/empty_component';
 import Markdown from 'react-native-markdown-renderer';
+import { markdownStyles } from '../../application/styles';
 
 export interface ExploreSectionDetailProps {
     readonly section: ExploreSection;
@@ -92,11 +93,13 @@ const TitleTextComponent: React.StatelessComponent<Props> = (props: Props): JSX.
         <Text style={[
             { color: colors.white },
             { fontWeight: 'bold' },
+            { textAlign: 'left' },
         ]}><Trans>LEARN ABOUT</Trans></Text>
         <Text style={[
             { color: colors.white },
             { fontSize: 30 },
             { fontWeight: 'bold' },
+            { textAlign: 'left' },
         ]}>{props.section.name}</Text>
     </View>
 );
@@ -130,7 +133,7 @@ const IntroductionComponent: React.StatelessComponent<Props> = (props: Props): J
         { marginRight: 20 },
         { marginBottom: 20 },
     ]}>
-        <Markdown>
+        <Markdown style={markdownStyles}>
             {props.section.introduction}
         </Markdown>
     </View>

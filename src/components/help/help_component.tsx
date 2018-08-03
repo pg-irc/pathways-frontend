@@ -50,7 +50,9 @@ export const HelpComponent: React.StatelessComponent<AllProps> =
         <Content padder>
             <View style={[{ flexDirection: 'column' }]}>
                 <Text style={applicationStyles.pageTitle}><Trans>{'Help & Support'}</Trans></Text>
-                <Text><Trans>If you are having difficulty with settlement in Canada, get in touch with a settlement worker.</Trans></Text>
+                <Text style={[{ textAlign: 'left' }]}>
+                    <Trans>If you are having difficulty with settlement in Canada, get in touch with a settlement worker.</Trans>
+                </Text>
                 <ContactSettlementWorkerButton />
                 <Text style={applicationStyles.subHeading}><Trans>FOR ADDITIONAL ASSISTANCE</Trans></Text>
                 {R.map(createContactComponent, fixture)}
@@ -80,6 +82,7 @@ const createContactComponent = (contact: HelpContact): JSX.Element => (
             <Text style={[
                 { flex: 1 },
                 { justifyContent: 'flex-start' },
+                { textAlign: 'left' },
             ]}>{contact.description}</Text>
 
             <Icon style={[
