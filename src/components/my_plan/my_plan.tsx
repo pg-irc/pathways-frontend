@@ -31,9 +31,12 @@ interface MyPlanState {
 
 type Props = MyPlanProps & TaskListItemActions & RouterProps;
 
+interface HasScrollToEnd {
+    readonly scrollToEnd: () => void;
+}
+
 interface ContentComponentRef extends Content {
-    // tslint:disable-next-line:no-any
-    readonly _root: any;
+    readonly _root: HasScrollToEnd;
 }
 
 export class MyPlanComponent extends React.Component<Props, MyPlanState> {
@@ -149,9 +152,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     }
 
     private expandCompletedTasks(): void {
-        if (this.state.completedTasksIsCollapsed) {
-            this.toggleCompletedTasksCollapsed();
-        }
+        this.setState({ ...this.state, completedTasksIsCollapsed: false });
     }
 
     private toggleSavedTasksCollapsed(): void {
