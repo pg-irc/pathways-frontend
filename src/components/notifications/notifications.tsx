@@ -1,18 +1,13 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Id, RemoveNotificationAction } from '../../stores/notifications';
-import { TaskList } from '../../selectors/tasks';
 import { Notification, NotificationList }from '../../selectors/notifications';
 import { View } from 'native-base';
 import { NotificationComponent } from './notification';
 import { EmptyComponent } from '../empty_component/empty_component';
 
-export interface NotificationParameters {
-    readonly recommendedTasks: TaskList;
-}
 export interface NotificationsProps {
     readonly notifications: NotificationList;
-    readonly notificationParameters: NotificationParameters;
 }
 export interface NotificationsActions {
     readonly removeNotification: (notificationId: Id) => RemoveNotificationAction;
@@ -32,7 +27,6 @@ const Notifications: React.StatelessComponent<Props> = (props: Props): JSX.Eleme
                     <View key={notification.id}>
                         <NotificationComponent
                             notification={notification}
-                            notificationParameters={props.notificationParameters}
                             timeElapsedCallback={timeElapsedCallback} />
                     </View>
                 );

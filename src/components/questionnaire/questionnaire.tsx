@@ -12,6 +12,7 @@ import { Id, SelectAnswerAction, SetActiveQuestionAction } from '../../stores/qu
 export interface QuestionnaireProps {
     readonly questionnaire: selector.Questionnaire;
     readonly activeQuestion: Id;
+    readonly recommendedTaskCount: number;
 }
 export interface QuestionnaireActions {
     readonly selectAnswer: (answerId: Id) => SelectAnswerAction;

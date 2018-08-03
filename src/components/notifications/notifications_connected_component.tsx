@@ -4,13 +4,9 @@ import { Store } from '../../stores';
 import { NotificationsProps, NotificationsActions, NotificationsComponent } from './notifications';
 import { Id, RemoveNotificationAction, removeNotification } from '../../stores/notifications';
 import { selectNotifications } from '../../selectors/notifications';
-import { selectRecommendedTasks } from '../../selectors/tasks';
 
 const mapStateToProps = (store: Store): NotificationsProps => ({
     notifications: selectNotifications(store),
-    notificationParameters: {
-        recommendedTasks: selectRecommendedTasks(store),
-    },
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): NotificationsActions => ({
