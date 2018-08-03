@@ -6,7 +6,6 @@ import { Text, View } from 'native-base';
 import { Notification } from '../../selectors/notifications';
 import { NotificationType } from '../../stores/notifications';
 import { colors } from '../../application/styles';
-import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface NotificationProps {
     readonly notification: Notification;
