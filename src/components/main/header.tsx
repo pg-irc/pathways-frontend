@@ -69,9 +69,9 @@ const helpButtonIfShown = (props: HeaderProps): JSX.Element => {
 };
 
 const HelpButton: React.StatelessComponent<ButtonActions> = (props: ButtonActions): JSX.Element => (
-    <Button {...props} style={{ backgroundColor: colors.brightBlue }}>
-        <Icon name='help-circle' />
-        <Text><Trans>NEED HELP?</Trans></Text>
+    <Button {...props} style={[ { backgroundColor: colors.darkGrey } ]} iconLeft small rounded>
+        <Icon name='help-circle' style={[ { color: colors.white } ]}/>
+        <Text style={[ { color: colors.white } ]}><Trans>NEED HELP?</Trans></Text>
     </Button>
 );
 
