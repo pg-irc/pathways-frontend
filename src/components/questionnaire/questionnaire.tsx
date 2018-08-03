@@ -43,13 +43,13 @@ export const Component: React.StatelessComponent<Props> = (props: Props): JSX.El
                 duration={400}
             />
         </Content>
-        <View style={styles.floatingCount}>
-                <Text style={[ styles.floatingNumberText ]}>
-                    {props.recommendedTaskCount} <Text style={[ styles.floatingText ]}>
+        <View style={ styles.floatingCount }>
+                <Text style={[ styles.floatingText, { fontSize: 20 } ]}>
+                    {props.recommendedTaskCount} <Text style={[ styles.floatingText, { fontSize: values.smallTextSize } ]}>
                         {props.recommendedTaskCount === 1 ? <Trans>task</Trans> : <Trans>tasks</Trans>}
                     </Text>
                 </Text>
-                <Text style={[ styles.floatingText ]}>
+                <Text style={[ styles.floatingText, { fontSize: values.smallTextSize } ]}>
                     <Trans>recommended</Trans>
                 </Text>
         </View>
@@ -130,16 +130,9 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 10,
         borderTopLeftRadius: 10,
     },
-    floatingNumberText: {
-        color: colors.white,
-        fontWeight: 'bold',
-        fontSize: 20,
-        textAlign: 'center',
-    },
     floatingText: {
         color: colors.white,
         fontWeight: 'bold',
-        fontSize: values.smallTextSize,
         textAlign: 'center',
     },
 });
