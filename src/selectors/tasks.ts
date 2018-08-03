@@ -22,7 +22,7 @@ export interface Task {
     readonly isRecommended: boolean;
     readonly category: string;
     readonly importance: number;
-    readonly relatedTasks: ReadonlyArray<TaskListItem>;
+    readonly relatedTasks: TaskListItemList;
     readonly relatedArticles: ReadonlyArray<ArticleListItem>;
     readonly completed: boolean;
 }
@@ -37,7 +37,7 @@ export interface TaskListItem {
 
 export const denormalizeTask =
     (locale: Locale, task: model.Task, exploreSection: ExploreSection, isRecommended: boolean,
-        relatedArticles: ReadonlyArray<ArticleListItem>, relatedTasks: ReadonlyArray<TaskListItem>): Task => (
+        relatedArticles: ReadonlyArray<ArticleListItem>, relatedTasks: TaskListItemList): Task => (
             {
                 id: task.id,
                 title: selectLocalizedText(locale, task.title),
@@ -79,11 +79,11 @@ export const selectSavedTasksIdList = (store: Store): TaskIdList => (
     store.tasksInStore.savedTasksList
 );
 
-export const selectRelatedTasks = (store: Store, taskIds: TaskIdList): ReadonlyArray<TaskListItem> => (
+export const selectRelatedTasks = (store: Store, taskIds: TaskIdList): TaskListItemList => (
     R.map((taskId: model.Id) => selectTaskAsListItem(store, taskId), taskIds)
 );
 
-export const selectCompletedTasks = (store: Store): ReadonlyArray<TaskListItem> => {
+export const selectCompletedTasks = (store: Store): TaskListItemList => {
     const isCompleted = (task: model.Task): boolean => task.completed;
     const taskIds = R.keys(R.pickBy(isCompleted, store.tasksInStore.taskMap));
     return R.map((taskId: model.Id) => selectTaskAsListItem(store, taskId), taskIds);

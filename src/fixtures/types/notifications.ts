@@ -2,7 +2,6 @@ export type Id = string;
 
 export enum NotificationType {
     TaskAddedToPlan,
-    QuestionAnswered,
 }
 
 export interface Notification {

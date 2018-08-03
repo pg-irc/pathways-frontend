@@ -33,16 +33,7 @@ export class NotificationComponent extends React.Component<Props> {
     }
 
     render(): JSX.Element {
-        const shouldRender = this.shouldRenderContentForNotification();
-        return shouldRender ?  this.renderNotification() : <EmptyComponent/>;
-    }
-
-    private shouldRenderContentForNotification(): boolean {
-        switch (this.props.notification.type) {
-            default:
-            case NotificationType.TaskAddedToPlan:
-                return true;
-        }
+        return this.renderNotification();
     }
 
     private renderNotification(): JSX.Element {
