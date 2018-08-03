@@ -18,6 +18,7 @@ export interface ExploreSectionDetailProps {
     readonly section: ExploreSection;
     readonly tasks: ReadonlyArray<Task>;
     readonly articles: ReadonlyArray<ArticleListItem>;
+    readonly savedTasksIdList: ReadonlyArray<TaskId>;
 }
 
 export interface ExploreSectionDetailActions {

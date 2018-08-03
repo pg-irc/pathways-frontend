@@ -27,6 +27,10 @@ export const selectQuestionnaire = (appStore: Store): Questionnaire => {
     return denormalizeQuestions(locale, appStore.questionnaireInStore);
 };
 
+export const selectActiveQuestion = (appStore: Store): model.Id => (
+    appStore.questionnaireInStore.activeQuestion
+);
+
 export const denormalizeQuestions = (locale: Locale, modelStore: model.Store): Questionnaire => {
     const { questions, answers }: model.Store = modelStore;
 

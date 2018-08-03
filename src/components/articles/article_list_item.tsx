@@ -5,11 +5,14 @@ import { applicationStyles } from '../../application/styles';
 import { ArticleListItem } from '../../selectors/articles';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 
-type AllArticleListItemProps = ArticleListItem & RouterProps;
+export interface ArticleListItemProps {
+    readonly article: ArticleListItem;
+}
+type Props = ArticleListItemProps & RouterProps;
 
-export const ArticleListItemComponent: React.StatelessComponent<AllArticleListItemProps> =
-    (props: AllArticleListItemProps): JSX.Element => {
-    const goToArticleDetail = goToRouteWithParameter(Routes.ArticleDetail, props.id, props.history);
+export const ArticleListItemComponent: React.StatelessComponent<Props> =
+    (props: Props): JSX.Element => {
+    const goToArticleDetail = goToRouteWithParameter(Routes.ArticleDetail, props.article.id, props.history);
     return (
         <ListItem noIndent noBorder button onPress={goToArticleDetail}>
             <Grid>
@@ -23,11 +26,11 @@ export const ArticleListItemComponent: React.StatelessComponent<AllArticleListIt
                                 applicationStyles.bold,
                                 { textAlign: 'left' },
                             ]}>
-                                {props.title}
+                                {props.article.title}
                             </Text>
                         </Row>
                         <Row>
-                            <Text style={[{ textAlign: 'left' }]} numberOfLines={1} note>{props.description}</Text>
+                            <Text style={[{ textAlign: 'left' }]} numberOfLines={1} note>{props.article.description}</Text>
                         </Row>
                     </Col>
                 </Row>

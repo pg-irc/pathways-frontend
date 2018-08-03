@@ -11,7 +11,7 @@ import { markdownStyles } from '../../application/styles';
 
 export interface ArticleDetailProps {
     readonly article: Article;
-    readonly savedTasks: ReadonlyArray<TaskId>;
+    readonly savedTasksIdList: ReadonlyArray<TaskId>;
 }
 
 type AllArticleDetailProps = ArticleDetailProps & TaskListItemActions & RouterProps;

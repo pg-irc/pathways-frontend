@@ -44,6 +44,9 @@ export const applicationStyles = StyleSheet.create({
         marginBottom: 20,
         textAlign: 'left',
     },
+    divider: {
+        marginTop: 20,
+    },
 });
 
 export const markdownStyles = StyleSheet.create({
