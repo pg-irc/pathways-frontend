@@ -120,8 +120,6 @@ const styles = StyleSheet.create({
     floatingCount: {
         backgroundColor: colors.darkGrey,
         padding: 5,
-        borderTopColor: colors.white,
-        borderTopWidth: 1,
         flex: 1,
         position: 'absolute',
         bottom: 20,
