@@ -12,7 +12,6 @@ import { EmptyComponent } from '../empty_component/empty_component';
 export interface QuestionProps {
     readonly question: selector.Question;
     readonly isFinalQuestion: boolean;
-    readonly recommendedTaskCount: number;
 }
 export interface QuestionActions {
     readonly selectAnswer: (answerId: Id) => SelectAnswerAction;
@@ -21,7 +20,7 @@ export interface QuestionActions {
 type Props = QuestionProps & QuestionActions & RouterProps;
 
 export const Question: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const { question, selectAnswer, isFinalQuestion, history, nextButtonOnPress, recommendedTaskCount }: Props = props;
+    const { question, selectAnswer, isFinalQuestion, history, nextButtonOnPress }: Props = props;
     return (
         <View style={[
             { flex: 1 },
@@ -36,21 +35,6 @@ export const Question: React.StatelessComponent<Props> = (props: Props): JSX.Ele
                     acceptMultipleAnswers={answer.acceptMultipleAnswers}
                 />
             ))}
-            <View style={[
-                { backgroundColor: colors.lighterGrey },
-                { padding: 5 },
-                { borderTopColor: colors.white},
-                { borderTopWidth: 1},
-            ]}>
-                <Text style={[
-                    { fontSize: values.smallTextSize },
-                    { textAlign: 'center' },
-                ]}>
-                    <Trans>You have</Trans>
-                    <Text style={[ { fontSize: values.smallTextSize } ]}> {recommendedTaskCount} </Text>
-                    {recommendedTaskCount === 1 ? <Trans>recommended task</Trans> : <Trans>recommended tasks</Trans>} <Trans>in My plan</Trans>
-                </Text>
-            </View>
             <View style={[
                 { marginTop: 10 },
                 { marginLeft: 20 },

@@ -1,10 +1,11 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import * as R from 'ramda';
 import Accordion from 'react-native-collapsible/Accordion';
-import { Content, Text, ListItem } from 'native-base';
+import { Content, View, Text, ListItem } from 'native-base';
 import * as selector from '../../selectors/questionnaire';
 import { Question} from './question';
-import { applicationStyles, colors } from '../../application/styles';
+import { applicationStyles, colors, values } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
 import { Id, SelectAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
@@ -22,23 +23,37 @@ export interface QuestionnaireActions {
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
 export const Component: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <Content padder>
-        <Text style={applicationStyles.pageTitle}><Trans>Personalize My Plan</Trans></Text>
-        <Text style={[
-            { marginBottom: 20 },
-            { textAlign: 'left' },
-        ]}>
-            <Trans>There is no requirement to answer any of the following questions
+    <View style={[
+        { flex: 1 },
+    ]}>
+        <Content padder>
+            <Text style={applicationStyles.pageTitle}><Trans>Personalize My Plan</Trans></Text>
+            <Text style={[
+                { marginBottom: 20 },
+                { textAlign: 'left' },
+            ]}>
+                <Trans>There is no requirement to answer any of the following questions
                 but in doing so you help us recommend tasks and articles for you.</Trans>
-        </Text>
-        <Accordion
-            activeSection={findIndexForQuestion(props.activeQuestion, props.questionnaire)}
-            sections={getAccordionSections(props)}
-            renderHeader={renderHeader(props)}
-            renderContent={renderContent}
-            duration={400}
-        />
-    </Content>
+            </Text>
+            <Accordion
+                activeSection={findIndexForQuestion(props.activeQuestion, props.questionnaire)}
+                sections={getAccordionSections(props)}
+                renderHeader={renderHeader(props)}
+                renderContent={renderContent}
+                duration={400}
+            />
+        </Content>
+        <View style={styles.floatingCount}>
+                <Text style={[ styles.floatingNumberText ]}>
+                    {props.recommendedTaskCount} <Text style={[ styles.floatingText ]}>
+                        {props.recommendedTaskCount === 1 ? <Trans>task</Trans> : <Trans>tasks</Trans>}
+                    </Text>
+                </Text>
+                <Text style={[ styles.floatingText ]}>
+                    <Trans>recommended</Trans>
+                </Text>
+        </View>
+    </View>
 );
 
 const findIndexForQuestion = (questionId: Id, questions: selector.Questionnaire): number => (
@@ -100,3 +115,31 @@ const renderHeader = R.curry((props: Props, section: AccordionSection, _index: n
 const renderContent = (section: AccordionSection): JSX.Element => (
     section.content
 );
+
+const styles = StyleSheet.create({
+    floatingCount: {
+        backgroundColor: colors.darkGrey,
+        padding: 5,
+        borderTopColor: colors.white,
+        borderTopWidth: 1,
+        flex: 1,
+        position: 'absolute',
+        bottom: 20,
+        right: 0,
+        justifyContent: 'center',
+        borderBottomLeftRadius: 10,
+        borderTopLeftRadius: 10,
+    },
+    floatingNumberText: {
+        color: colors.white,
+        fontWeight: 'bold',
+        fontSize: 20,
+        textAlign: 'center',
+    },
+    floatingText: {
+        color: colors.white,
+        fontWeight: 'bold',
+        fontSize: values.smallTextSize,
+        textAlign: 'center',
+    },
+});
