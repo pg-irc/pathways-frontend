@@ -93,11 +93,13 @@ const TitleTextComponent: React.StatelessComponent<Props> = (props: Props): JSX.
         <Text style={[
             { color: colors.white },
             { fontWeight: 'bold' },
+            { textAlign: 'left' },
         ]}><Trans>LEARN ABOUT</Trans></Text>
         <Text style={[
             { color: colors.white },
             { fontSize: 30 },
             { fontWeight: 'bold' },
+            { textAlign: 'left' },
         ]}>{props.section.name}</Text>
     </View>
 );
