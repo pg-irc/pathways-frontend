@@ -66,6 +66,7 @@ export const denormalizeTaskListItem = (locale: Locale, task: model.Task, isReco
 export type TaskList = ReadonlyArray<Task>;
 export type TaskListItemList = ReadonlyArray<TaskListItem>;
 export type TaskModelList = ReadonlyArray<model.Task>;
+export type TaskIdList = ReadonlyArray<model.Id>;
 
 export const selectSavedTasks = (store: Store): TaskListItemList => {
     const savedTasksList = store.tasksInStore.savedTasksList;
@@ -74,11 +75,11 @@ export const selectSavedTasks = (store: Store): TaskListItemList => {
     });
 };
 
-export const selectSavedTasksIdList = (store: Store): ReadonlyArray<model.Id> => (
+export const selectSavedTasksIdList = (store: Store): TaskIdList => (
     store.tasksInStore.savedTasksList
 );
 
-export const selectRelatedTasks = (store: Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<TaskListItem> => (
+export const selectRelatedTasks = (store: Store, taskIds: TaskIdList): ReadonlyArray<TaskListItem> => (
     R.map((taskId: model.Id) => selectTaskAsListItem(store, taskId), taskIds)
 );
 
@@ -133,7 +134,7 @@ const selectExploreSectionFromTask = (store: Store, task: model.Task): ExploreSe
 };
 
 export const rejectTasksWithIdsInList =
-    R.curry((listOfIds: model.TaskList, tasks: ReadonlyArray<model.Task>): TaskModelList => {
+    R.curry((listOfIds: model.TaskList, tasks: TaskModelList): TaskModelList => {
         const idIsInList = (task: model.Task): boolean => (
             R.contains(task.id, listOfIds)
         );
