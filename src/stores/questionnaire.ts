@@ -23,6 +23,15 @@ export const setActiveQuestion = (activeQuestion: Id) => (
     helpers.makeAction(constants.SET_ACTIVE_QUESTION, { activeQuestion })
 );
 
+export namespace Persistence {
+    export type Success = Readonly<ReturnType<typeof success>>;
+
+    // tslint:disable-next-line:typedef
+    export const success = (activeQuestions: ReadonlyArray<Id>) => {
+        return helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_SUCCESS, { activeQuestions });
+    };
+}
+
 export const reducer = (store: Store = buildDefaultStore(), action?: QuestionnaireAction): Store => {
     if (!action) {
         return store;
