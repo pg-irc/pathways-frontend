@@ -24,22 +24,35 @@ export const setActiveQuestion = (activeQuestion: Id) => (
 );
 
 export namespace Persistence {
-    export type Request = Readonly<ReturnType<typeof request>>;
-    export type Success = Readonly<ReturnType<typeof success>>;
-    export type Failure = Readonly<ReturnType<typeof failure>>;
+    export type SaveRequest = Readonly<ReturnType<typeof saveRequest>>;
+    export type SaveSuccess = Readonly<ReturnType<typeof saveSuccess>>;
+
+    export type LoadRequest = Readonly<ReturnType<typeof loadRequest>>;
+    export type LoadSuccess = Readonly<ReturnType<typeof loadSuccess>>;
+    export type LoadFailure = Readonly<ReturnType<typeof loadFailure>>;
 
     // tslint:disable-next-line:typedef
-    export const request = (activeQuestions: ReadonlyArray<Id>) => {
+    export const saveRequest = (activeQuestions: ReadonlyArray<Id>) => {
+        return helpers.makeAction(constants.SAVE_ACTIVE_QUESTIONS_REQUEST, { activeQuestions });
+    };
+
+    // tslint:disable-next-line:typedef
+    export const saveSuccess = () => {
+        return helpers.makeAction(constants.SAVE_ACTIVE_QUESTIONS_SUCCESS);
+    };
+
+    // tslint:disable-next-line:typedef
+    export const loadRequest = (activeQuestions: ReadonlyArray<Id>) => {
         return helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_REQUEST, { activeQuestions });
     };
 
     // tslint:disable-next-line:typedef
-    export const success = (activeQuestions: ReadonlyArray<Id>) => {
+    export const loadSuccess = (activeQuestions: ReadonlyArray<Id>) => {
         return helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_SUCCESS, { activeQuestions });
     };
 
     // tslint:disable-next-line:typedef
-    export const failure = (message: string) => {
+    export const loadFailure = (message: string) => {
         return helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_FAILURE, { message });
     };
 }

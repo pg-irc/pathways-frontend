@@ -13,7 +13,7 @@ describe('the loadActiveQuestions saga', () => {
     });
 
     describe('after requesting the selected questions', () => {
-        let saga: IterableIterator<CallEffect | PutEffect<Persistence.Success | Persistence.Failure>>;
+        let saga: IterableIterator<CallEffect | PutEffect<Persistence.LoadSuccess | Persistence.LoadFailure>>;
 
         beforeEach(() => {
             saga = loadActiveQuestions();
@@ -23,7 +23,7 @@ describe('the loadActiveQuestions saga', () => {
         it('should dispatch a success action on success', () => {
             const questionId = aString();
             const value = saga.next(questionId).value;
-            expect(value).toEqual(put(Persistence.success([questionId])));
+            expect(value).toEqual(put(Persistence.loadSuccess([questionId])));
         });
 
         it('should split the data on comma', () => {
@@ -31,13 +31,13 @@ describe('the loadActiveQuestions saga', () => {
             const secondQuestionId = aString();
             const argument = firstQuestionId + ',' + secondQuestionId;
             const value = saga.next(argument).value;
-            expect(value).toEqual(put(Persistence.success([firstQuestionId, secondQuestionId])));
+            expect(value).toEqual(put(Persistence.loadSuccess([firstQuestionId, secondQuestionId])));
         });
 
         it('should dispatch a failure action on error', () => {
             const error = anError();
             const value = saga.throw(error).value;
-            expect(value).toEqual(put(Persistence.failure(error.message)));
+            expect(value).toEqual(put(Persistence.loadFailure(error.message)));
         });
     });
 });
@@ -45,7 +45,7 @@ describe('the loadActiveQuestions saga', () => {
 describe('the saveActiveQuestions saga', () => {
 
     it('should dispatch a call effect for saveActiveQuestionsToStorage', () => {
-        const request = Persistence.request([]);
+        const request = Persistence.saveRequest([]);
         const saga = saveActiveQuestions(request);
         expect(saga.next().value).toEqual(call(Async.saveActiveQuestionsToStorage, ''));
     });
@@ -53,10 +53,23 @@ describe('the saveActiveQuestions saga', () => {
     it('should pass in serialized ids', () => {
         const firstId = aString();
         const secondId = aString();
-        const request = Persistence.request([firstId, secondId]);
+        const request = Persistence.saveRequest([firstId, secondId]);
         const saga = saveActiveQuestions(request);
         expect(saga.next().value).toEqual(call(Async.saveActiveQuestionsToStorage, firstId + ',' + secondId));
     });
 
+    describe('after requesting the ids to be saved', () => {
+
+        let saga: IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccess>>;
+        beforeEach(() => {
+            const request = Persistence.saveRequest([]);
+            saga = saveActiveQuestions(request);
+            saga.next();
+        });
+
+        it('should dispatch a put effect with a success action', () => {
+            expect(saga.next().value).toEqual(put(Persistence.saveSuccess()));
+        });
+    });
 });
 
