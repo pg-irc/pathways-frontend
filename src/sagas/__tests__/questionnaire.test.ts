@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-let
 import { call, CallEffect, PutEffect, put } from 'redux-saga/effects';
-import { loadActiveQuestions, Async, saveActiveQuestions } from '../questionnaire';
+import { loadActiveQuestions, saveActiveQuestions, loadActiveQuestionsAsync, saveActiveQuestionsAsync } from '../questionnaire';
 import { Persistence } from '../../stores/questionnaire';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
 
@@ -9,11 +9,11 @@ describe('the loadActiveQuestions saga', () => {
     it('should dispatch a call effect for loadActiveQuestionsFromStorage()', () => {
         const saga = loadActiveQuestions();
         const value = saga.next().value;
-        expect(value).toEqual(call(Async.loadActiveQuestionsFromStorage));
+        expect(value).toEqual(call(loadActiveQuestionsAsync));
     });
 
     describe('after requesting the selected questions', () => {
-        let saga: IterableIterator<CallEffect | PutEffect<Persistence.LoadSuccess | Persistence.LoadFailure>>;
+        let saga: IterableIterator<CallEffect | PutEffect<Persistence.LoadSuccessAction | Persistence.LoadFailureAction>>;
 
         beforeEach(() => {
             saga = loadActiveQuestions();
@@ -47,7 +47,7 @@ describe('the saveActiveQuestions saga', () => {
     it('should dispatch a call effect for saveActiveQuestionsToStorage', () => {
         const request = Persistence.saveRequest([]);
         const saga = saveActiveQuestions(request);
-        expect(saga.next().value).toEqual(call(Async.saveActiveQuestionsToStorage, ''));
+        expect(saga.next().value).toEqual(call(saveActiveQuestionsAsync, ''));
     });
 
     it('should pass in serialized ids', () => {
@@ -55,12 +55,12 @@ describe('the saveActiveQuestions saga', () => {
         const secondId = aString();
         const request = Persistence.saveRequest([firstId, secondId]);
         const saga = saveActiveQuestions(request);
-        expect(saga.next().value).toEqual(call(Async.saveActiveQuestionsToStorage, firstId + ',' + secondId));
+        expect(saga.next().value).toEqual(call(saveActiveQuestionsAsync, firstId + ',' + secondId));
     });
 
     describe('after requesting the ids to be saved', () => {
 
-        let saga: IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccess | Persistence.SaveFailure>>;
+        let saga: IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccessAction | Persistence.SaveFailureAction>>;
         beforeEach(() => {
             const request = Persistence.saveRequest([]);
             saga = saveActiveQuestions(request);

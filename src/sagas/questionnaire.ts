@@ -5,23 +5,12 @@ import { AsyncStorage } from 'react-native';
 import { QUESTIONNAIRE_LOCAL_STORAGE_KEY } from '../application/constants';
 import { Persistence, Id } from '../stores/questionnaire';
 
-export namespace Async {
+type SaveActions = IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccessAction | Persistence.SaveFailureAction>>;
 
-    export async function saveActiveQuestionsToStorage(ids: string): Promise<void> {
-        return await AsyncStorage.setItem(QUESTIONNAIRE_LOCAL_STORAGE_KEY, ids);
-    }
-
-    export async function loadActiveQuestionsFromStorage(): Promise<string> {
-        return await AsyncStorage.getItem(QUESTIONNAIRE_LOCAL_STORAGE_KEY);
-    }
-}
-
-type SaveActions = IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccess | Persistence.SaveFailure>>;
-
-export function* saveActiveQuestions(request: Persistence.SaveRequest): SaveActions {
+export function* saveActiveQuestions(request: Persistence.SaveRequestAction): SaveActions {
     try {
         const serializedIds = serialize(request.payload.activeQuestions);
-        yield call(Async.saveActiveQuestionsToStorage, serializedIds);
+        yield call(saveActiveQuestionsAsync, serializedIds);
         yield put(Persistence.saveSuccess());
     } catch (error) {
         console.error(`Failed to save active questions (${error.message})`);
@@ -29,11 +18,19 @@ export function* saveActiveQuestions(request: Persistence.SaveRequest): SaveActi
     }
 }
 
-type LoadActions = IterableIterator<CallEffect | PutEffect<Persistence.LoadSuccess | Persistence.LoadFailure>>;
+export async function saveActiveQuestionsAsync(ids: string): Promise<void> {
+    return await AsyncStorage.setItem(QUESTIONNAIRE_LOCAL_STORAGE_KEY, ids);
+}
+
+const serialize = (ids: ReadonlyArray<string>): string => (
+    ids.join(',')
+);
+
+type LoadActions = IterableIterator<CallEffect | PutEffect<Persistence.LoadSuccessAction | Persistence.LoadFailureAction>>;
 
 export function* loadActiveQuestions(): LoadActions {
     try {
-        const serializedIds = yield call(Async.loadActiveQuestionsFromStorage);
+        const serializedIds = yield call(loadActiveQuestionsAsync);
         const ids = deserialize(serializedIds);
         yield put(Persistence.loadSuccess(ids));
     } catch (error) {
@@ -42,9 +39,9 @@ export function* loadActiveQuestions(): LoadActions {
     }
 }
 
-const serialize = (ids: ReadonlyArray<string>): string => (
-    ids.join(',')
-);
+export async function loadActiveQuestionsAsync(): Promise<string> {
+    return await AsyncStorage.getItem(QUESTIONNAIRE_LOCAL_STORAGE_KEY);
+}
 
 const deserialize = (ids: string): ReadonlyArray<Id> => (
     ids.split(',')
