@@ -24,8 +24,10 @@ export const setActiveQuestion = (activeQuestion: Id) => (
 );
 
 export namespace Persistence {
+
     export type SaveRequest = Readonly<ReturnType<typeof saveRequest>>;
     export type SaveSuccess = Readonly<ReturnType<typeof saveSuccess>>;
+    export type SaveFailure = Readonly<ReturnType<typeof saveFailure>>;
 
     export type LoadRequest = Readonly<ReturnType<typeof loadRequest>>;
     export type LoadSuccess = Readonly<ReturnType<typeof loadSuccess>>;
@@ -37,24 +39,29 @@ export namespace Persistence {
     };
 
     // tslint:disable-next-line:typedef
-    export const saveSuccess = () => {
-        return helpers.makeAction(constants.SAVE_ACTIVE_QUESTIONS_SUCCESS);
-    };
+    export const saveSuccess = () => (
+        helpers.makeAction(constants.SAVE_ACTIVE_QUESTIONS_SUCCESS)
+    );
 
     // tslint:disable-next-line:typedef
-    export const loadRequest = (activeQuestions: ReadonlyArray<Id>) => {
-        return helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_REQUEST, { activeQuestions });
-    };
+    export const saveFailure = (message: string) => (
+        helpers.makeAction(constants.SAVE_ACTIVE_QUESTIONS_FAILURE, { message })
+    );
 
     // tslint:disable-next-line:typedef
-    export const loadSuccess = (activeQuestions: ReadonlyArray<Id>) => {
-        return helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_SUCCESS, { activeQuestions });
-    };
+    export const loadRequest = (activeQuestions: ReadonlyArray<Id>) => (
+        helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_REQUEST, { activeQuestions })
+    );
 
     // tslint:disable-next-line:typedef
-    export const loadFailure = (message: string) => {
-        return helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_FAILURE, { message });
-    };
+    export const loadSuccess = (activeQuestions: ReadonlyArray<Id>) => (
+        helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_SUCCESS, { activeQuestions })
+    );
+
+    // tslint:disable-next-line:typedef
+    export const loadFailure = (message: string) => (
+        helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_FAILURE, { message })
+    );
 }
 
 export const reducer = (store: Store = buildDefaultStore(), action?: QuestionnaireAction): Store => {

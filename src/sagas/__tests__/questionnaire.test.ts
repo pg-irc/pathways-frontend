@@ -34,7 +34,7 @@ describe('the loadActiveQuestions saga', () => {
             expect(value).toEqual(put(Persistence.loadSuccess([firstQuestionId, secondQuestionId])));
         });
 
-        it('should dispatch a failure action on error', () => {
+        it('should dispatch a put effect with a failure action on error', () => {
             const error = anError();
             const value = saga.throw(error).value;
             expect(value).toEqual(put(Persistence.loadFailure(error.message)));
@@ -60,7 +60,7 @@ describe('the saveActiveQuestions saga', () => {
 
     describe('after requesting the ids to be saved', () => {
 
-        let saga: IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccess>>;
+        let saga: IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccess | Persistence.SaveFailure>>;
         beforeEach(() => {
             const request = Persistence.saveRequest([]);
             saga = saveActiveQuestions(request);
@@ -70,6 +70,11 @@ describe('the saveActiveQuestions saga', () => {
         it('should dispatch a put effect with a success action', () => {
             expect(saga.next().value).toEqual(put(Persistence.saveSuccess()));
         });
+
+        it('should dispatch a put effect with a failure action on error', () => {
+            const error = anError();
+            const value = saga.throw(error).value;
+            expect(value).toEqual(put(Persistence.saveFailure(error.message)));
+        });
     });
 });
-

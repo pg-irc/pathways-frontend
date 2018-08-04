@@ -16,12 +16,17 @@ export namespace Async {
     }
 }
 
-type SaveActions = IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccess>>;
+type SaveActions = IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccess | Persistence.SaveFailure>>;
 
 export function* saveActiveQuestions(request: Persistence.SaveRequest): SaveActions {
-    const serializedIds = serialize(request.payload.activeQuestions);
-    yield call(Async.saveActiveQuestionsToStorage, serializedIds);
-    yield put(Persistence.saveSuccess());
+    try {
+        const serializedIds = serialize(request.payload.activeQuestions);
+        yield call(Async.saveActiveQuestionsToStorage, serializedIds);
+        yield put(Persistence.saveSuccess());
+    } catch (error) {
+        console.error(`Failed to save active questions (${error.message})`);
+        yield put(Persistence.saveFailure(error.message));
+    }
 }
 
 type LoadActions = IterableIterator<CallEffect | PutEffect<Persistence.LoadSuccess | Persistence.LoadFailure>>;
