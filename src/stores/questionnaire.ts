@@ -24,8 +24,14 @@ export const setActiveQuestion = (activeQuestion: Id) => (
 );
 
 export namespace Persistence {
+    export type Request = Readonly<ReturnType<typeof request>>;
     export type Success = Readonly<ReturnType<typeof success>>;
     export type Failure = Readonly<ReturnType<typeof failure>>;
+
+    // tslint:disable-next-line:typedef
+    export const request = (activeQuestions: ReadonlyArray<Id>) => {
+        return helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_REQUEST, { activeQuestions });
+    };
 
     // tslint:disable-next-line:typedef
     export const success = (activeQuestions: ReadonlyArray<Id>) => {

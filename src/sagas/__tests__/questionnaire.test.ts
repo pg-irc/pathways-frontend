@@ -1,15 +1,15 @@
 // tslint:disable:no-expression-statement no-let
 import { call, CallEffect, PutEffect, put } from 'redux-saga/effects';
-import { loadActiveQuestions, Effects } from '../questionnaire';
+import { loadActiveQuestions, Async, saveActiveQuestions } from '../questionnaire';
 import { Persistence } from '../../stores/questionnaire';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
 
 describe('the loadActiveQuestions saga', () => {
 
-    it('should dispatch a call effect for loadActiveQuestionsFromAsyncStorage()', () => {
+    it('should dispatch a call effect for loadActiveQuestionsFromStorage()', () => {
         const saga = loadActiveQuestions();
         const value = saga.next().value;
-        expect(value).toEqual(call(Effects.loadActiveQuestionsFromAsyncStorage));
+        expect(value).toEqual(call(Async.loadActiveQuestionsFromStorage));
     });
 
     describe('after requesting the selected questions', () => {
@@ -41,3 +41,22 @@ describe('the loadActiveQuestions saga', () => {
         });
     });
 });
+
+describe('the saveActiveQuestions saga', () => {
+
+    it('should dispatch a call effect for saveActiveQuestionsToStorage', () => {
+        const request = Persistence.request([]);
+        const saga = saveActiveQuestions(request);
+        expect(saga.next().value).toEqual(call(Async.saveActiveQuestionsToStorage, ''));
+    });
+
+    it('should pass in serialized ids', () => {
+        const firstId = aString();
+        const secondId = aString();
+        const request = Persistence.request([firstId, secondId]);
+        const saga = saveActiveQuestions(request);
+        expect(saga.next().value).toEqual(call(Async.saveActiveQuestionsToStorage, firstId + ',' + secondId));
+    });
+
+});
+
