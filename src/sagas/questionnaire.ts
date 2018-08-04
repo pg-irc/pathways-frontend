@@ -15,6 +15,6 @@ export function* loadActiveQuestions(): IterableIterator<CallEffect | PutEffect<
     yield put(Persistence.success(parse(activeQuestions)));
 }
 
-const parse = (id: string): ReadonlyArray<Id> => {
-    return [id];
+const parse = (commaSeparatedIds: string): ReadonlyArray<Id> => {
+    return commaSeparatedIds.split(',');
 };

@@ -20,10 +20,18 @@ describe('the loadActiveQuestions saga', () => {
             saga.next();
         });
 
-        it('dispatch a success action', () => {
+        it('should dispatch a success action', () => {
             const questionId = aString();
             const value = saga.next(questionId).value;
             expect(value).toEqual(put(Persistence.success([questionId])));
+        });
+
+        it('should split the data on comma', () => {
+            const firstQuestionId = aString();
+            const secondQuestionId = aString();
+            const argument = firstQuestionId + ',' + secondQuestionId;
+            const value = saga.next(argument).value;
+            expect(value).toEqual(put(Persistence.success([firstQuestionId, secondQuestionId])));
         });
     });
 });
