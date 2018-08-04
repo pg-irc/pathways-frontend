@@ -43,7 +43,7 @@ export namespace Task {
 }
 
 export const PREFERENCES_LOCALE_CODE = 'PREFERENCES:LOCALE_CODE';
-export const QUESTIONNAIRE_LOCAL_STORAGE_KEY = 'QUESTIONNAIRE_LOCAL_STORAGE_KEY';
+export const ACTIVE_QUESTIONS_STORAGE_KEY = 'QUESTIONNAIRE_LOCAL_STORAGE_KEY';
 
 export namespace Taxonomies {
   export const EXPLORE_TAXONOMY_ID = 'explore';
