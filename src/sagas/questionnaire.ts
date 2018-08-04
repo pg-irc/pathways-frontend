@@ -1,3 +1,5 @@
+// tslint:disable:no-expression-statement
+
 import { call, CallEffect, PutEffect, put } from 'redux-saga/effects';
 import { AsyncStorage } from 'react-native';
 import { QUESTIONNAIRE_LOCAL_STORAGE_KEY } from '../application/constants';
@@ -9,10 +11,15 @@ export namespace Effects {
     }
 }
 
-export function* loadActiveQuestions(): IterableIterator<CallEffect | PutEffect<Persistence.Success>> {
-    const activeQuestions = yield call(Effects.loadActiveQuestionsFromAsyncStorage);
-    // tslint:disable-next-line:no-expression-statement
-    yield put(Persistence.success(parse(activeQuestions)));
+export function* loadActiveQuestions(): IterableIterator<CallEffect | PutEffect<Persistence.Success | Persistence.Failure>> {
+    try {
+        const questionIds = yield call(Effects.loadActiveQuestionsFromAsyncStorage);
+        const parsedQuestionIds = parse(questionIds);
+        yield put(Persistence.success(parsedQuestionIds));
+    } catch (error) {
+        console.error(`Failed to load active questions (${error.message})`);
+        yield put(Persistence.failure(error.message));
+    }
 }
 
 const parse = (commaSeparatedIds: string): ReadonlyArray<Id> => {

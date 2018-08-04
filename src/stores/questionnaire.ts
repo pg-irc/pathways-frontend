@@ -25,10 +25,16 @@ export const setActiveQuestion = (activeQuestion: Id) => (
 
 export namespace Persistence {
     export type Success = Readonly<ReturnType<typeof success>>;
+    export type Failure = Readonly<ReturnType<typeof failure>>;
 
     // tslint:disable-next-line:typedef
     export const success = (activeQuestions: ReadonlyArray<Id>) => {
         return helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_SUCCESS, { activeQuestions });
+    };
+
+    // tslint:disable-next-line:typedef
+    export const failure = (message: string) => {
+        return helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_FAILURE, { message });
     };
 }
 
