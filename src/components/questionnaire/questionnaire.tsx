@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
     },
     floatingText: {
         color: colors.white,
-        fontWeight: 'bold',
         textAlign: 'center',
     },
 });

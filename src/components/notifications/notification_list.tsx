@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Id, RemoveNotificationAction } from '../../stores/notifications';
-import { Notification }from '../../stores/notifications';
+import { Notification } from '../../stores/notifications';
 import { View } from 'native-base';
 import { NotificationComponent } from './notification';
 import { EmptyComponent } from '../empty_component/empty_component';
