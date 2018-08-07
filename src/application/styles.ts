@@ -64,7 +64,7 @@ export const markdownStyles = StyleSheet.create({
             lineHeight: 36,
           },
           android: {
-            lineHeight: 30,
+            lineHeight: 40,
           },
         }),
       },

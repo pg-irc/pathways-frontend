@@ -37,7 +37,7 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
                 </Button>
                 <BackButton />
             </Left>
-            <Right>
+            <Right style={[ { alignItems: 'center' } ]}>
                 {helpButtonIfShown(props)}
                 <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
             </Right>
