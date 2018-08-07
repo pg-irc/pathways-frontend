@@ -116,11 +116,11 @@ describe('getting ids of all active questions', () => {
     it('should include ids for active questions', () => {
         const locale = new LocaleBuilder().build();
         const answerId = aString();
-        const anAnswer = new testHelpers.AnswerBuilder().
+        const anActiveAnswer = new testHelpers.AnswerBuilder().
             withSelected(true).
             withId(answerId).
             withLocaleCode(locale.code);
-        const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anAnswer]);
+        const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anActiveAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
 
         const result = getIdsOfActiveAnswers(normalizedData.answers);
@@ -131,11 +131,11 @@ describe('getting ids of all active questions', () => {
     it('should not include ids for inactive questions', () => {
         const locale = new LocaleBuilder().build();
         const answerId = aString();
-        const anAnswer = new testHelpers.AnswerBuilder().
+        const anInactiveAnswer = new testHelpers.AnswerBuilder().
             withSelected(false).
             withId(answerId).
             withLocaleCode(locale.code);
-        const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anAnswer]);
+        const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anInactiveAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
 
         const result = getIdsOfActiveAnswers(normalizedData.answers);

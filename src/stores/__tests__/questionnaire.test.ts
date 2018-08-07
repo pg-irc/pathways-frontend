@@ -168,7 +168,7 @@ describe('questionnaire reducer', () => {
             unselectedAnswer = new helpers.AnswerBuilder().withSelected(false).withId(answerId);
             question = new helpers.QuestionBuilder().withAnswers([unselectedAnswer]);
             theStore = helpers.buildNormalizedQuestionnaire([question]);
-            const action = store.Persistence.loadRequest([unselectedAnswer.id]);
+            const action = store.Persistence.loadSuccess([unselectedAnswer.id]);
 
             newStore = store.reducer(theStore, action);
 
@@ -180,7 +180,7 @@ describe('questionnaire reducer', () => {
             selectedAnswer = new helpers.AnswerBuilder().withSelected(true).withId(answerId);
             question = new helpers.QuestionBuilder().withAnswers([selectedAnswer]);
             theStore = helpers.buildNormalizedQuestionnaire([question]);
-            const action = store.Persistence.loadRequest([]);
+            const action = store.Persistence.loadSuccess([]);
 
             newStore = store.reducer(theStore, action);
 

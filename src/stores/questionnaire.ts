@@ -43,8 +43,8 @@ export namespace Persistence {
     );
 
     // tslint:disable-next-line:typedef
-    export const loadRequest = (activeAnswers: ReadonlyArray<Id>) => (
-        helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_REQUEST, { activeAnswers })
+    export const loadRequest = () => (
+        helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_REQUEST)
     );
 
     // tslint:disable-next-line:typedef
@@ -58,14 +58,14 @@ export namespace Persistence {
     );
 }
 
-type QuestionnaireAction = SelectAnswerAction | SetActiveQuestionAction | Persistence.LoadRequestAction;
+type QuestionnaireAction = SelectAnswerAction | SetActiveQuestionAction | Persistence.LoadSuccessAction;
 
 export const reducer = (store: Store = buildDefaultStore(), action?: QuestionnaireAction): Store => {
     if (!action) {
         return store;
     }
     switch (action.type) {
-        case constants.LOAD_ACTIVE_QUESTIONS_REQUEST:
+        case constants.LOAD_ACTIVE_QUESTIONS_SUCCESS:
             return {
                 ...store,
                 answers: setAnswersWithIdsToActive(store.answers, action.payload.activeAnswers),
