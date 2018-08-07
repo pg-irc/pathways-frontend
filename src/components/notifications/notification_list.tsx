@@ -1,26 +1,22 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Id, RemoveNotificationAction } from '../../stores/notifications';
-import { Notification, NotificationList }from '../../selectors/notifications';
+import { Notification }from '../../stores/notifications';
 import { View } from 'native-base';
 import { NotificationComponent } from './notification';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface NotificationsProps {
-    readonly notifications: NotificationList;
+    readonly notifications: ReadonlyArray<Notification>;
 }
 export interface NotificationsActions {
     readonly removeNotification: (notificationId: Id) => RemoveNotificationAction;
 }
 type Props = NotificationsProps & NotificationsActions;
 
-export const NotificationsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    return R.keys(props.notifications).length > 0 ? <Notifications {...props} /> : <EmptyComponent />;
-};
-
-const Notifications: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    return (
-        <View>
+export const NotificationListComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+    return R.empty(props.notifications) ? <EmptyComponent /> :
+        (<View>
             {R.map((notification: Notification) => {
                 const timeElapsedCallback = (): RemoveNotificationAction => props.removeNotification(notification.id);
                 return (
@@ -31,6 +27,5 @@ const Notifications: React.StatelessComponent<Props> = (props: Props): JSX.Eleme
                     </View>
                 );
             }, props.notifications)}
-        </View>
-    );
+        </View>);
 };

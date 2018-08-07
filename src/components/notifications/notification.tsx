@@ -3,8 +3,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Trans } from '@lingui/react';
 import { Text, View } from 'native-base';
-import { Notification } from '../../selectors/notifications';
-import { NotificationType } from '../../stores/notifications';
+import { Notification } from '../../stores/notifications';
 import { colors } from '../../application/styles';
 
 export interface NotificationProps {
@@ -37,15 +36,7 @@ export class NotificationComponent extends React.Component<Props> {
 
     private renderNotification(): JSX.Element {
         const style = styles.stackedContent;
-        return (<View style={style}>{this.renderContentForNotification()}</View>);
-    }
-
-    private renderContentForNotification(): JSX.Element {
-        switch (this.props.notification.type) {
-            default:
-            case NotificationType.TaskAddedToPlan:
-                return this.renderContentForTaskAddedNotification();
-        }
+        return <View style={style}>{this.renderContentForTaskAddedNotification()}</View>;
     }
 
     private renderContentForTaskAddedNotification(): JSX.Element {

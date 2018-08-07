@@ -7,7 +7,7 @@ import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_c
 import { ExploreSectionDetailConnectedComponent } from '../explore/explore_section_detail_connected_component';
 import { ArticleDetailConnectedComponent } from '../articles/article_detail_connected_component';
 import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
-import { QuestionnaireConnectedComponent } from '../questionnaire';
+import { QuestionnaireConnectedComponent } from '../questionnaire/questionnaire_connected_component';
 import { MyPlanConnectedComponent } from '../my_plan/my_plan_connected_component';
 import { Routes, routePathDefinition } from '../../application/routing';
 
