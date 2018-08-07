@@ -15,7 +15,7 @@ export interface NotificationsActions {
 type Props = NotificationsProps & NotificationsActions;
 
 export const NotificationListComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    return R.empty(props.notifications) ? <EmptyComponent /> :
+    return R.isEmpty(props.notifications) ? <EmptyComponent /> :
         (<View>
             {R.map((notification: Notification) => {
                 const timeElapsedCallback = (): RemoveNotificationAction => props.removeNotification(notification.id);
