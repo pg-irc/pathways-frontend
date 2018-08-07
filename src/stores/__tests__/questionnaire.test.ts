@@ -160,4 +160,31 @@ describe('questionnaire reducer', () => {
             });
         });
     });
+
+    describe('when loading active answers from persistent storage', () => {
+
+        it('should set question with id in request to active', () => {
+            const answerId = aString();
+            unselectedAnswer = new helpers.AnswerBuilder().withSelected(false).withId(answerId);
+            question = new helpers.QuestionBuilder().withAnswers([unselectedAnswer]);
+            theStore = helpers.buildNormalizedQuestionnaire([question]);
+            const action = store.Persistence.loadRequest([unselectedAnswer.id]);
+
+            newStore = store.reducer(theStore, action);
+
+            expect(newStore.answers[answerId].isSelected).toBe(true);
+        });
+
+        it('should set question with id not in request to not active', () => {
+            const answerId = aString();
+            selectedAnswer = new helpers.AnswerBuilder().withSelected(true).withId(answerId);
+            question = new helpers.QuestionBuilder().withAnswers([selectedAnswer]);
+            theStore = helpers.buildNormalizedQuestionnaire([question]);
+            const action = store.Persistence.loadRequest([]);
+
+            newStore = store.reducer(theStore, action);
+
+            expect(newStore.answers[answerId].isSelected).toBe(false);
+        });
+    });
 });
