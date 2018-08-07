@@ -27,15 +27,8 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Notificatio
         return store;
     }
     switch (action.type) {
-        case constants.Task.ADD_TO_SAVED_LIST: {
-            const notification = createNotification(NotificationType.TaskAddedToPlan);
-            return {
-                notifications: {
-                    ...store.notifications,
-                    [notification.id]: notification,
-                },
-            };
-        }
+        case constants.Task.ADD_TO_SAVED_LIST:
+            return addNotificationToStore(store, NotificationType.TaskAddedToPlan);
         case constants.REMOVE_NOTIFICATION:
             return {
                 notifications: R.reject(R.propEq('id', action.payload.notificationId), store.notifications),
@@ -43,6 +36,16 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Notificatio
         default:
             return store;
     }
+};
+
+const addNotificationToStore = (store: Store, notificationType: NotificationType): Store => {
+    const notification = createNotification(notificationType);
+    return {
+        notifications: {
+            ...store.notifications,
+            [notification.id]: notification,
+        },
+    };
 };
 
 export const createNotification = (type: NotificationType): Notification => {

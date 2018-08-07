@@ -1,8 +1,8 @@
+import * as R from 'ramda';
 import { Store } from '../stores';
-import * as model from '../stores/tasks';
+import * as store from '../stores/tasks';
 import * as taskDetails from './details/tasks';
 import { Taxonomies as TaxonomyConstants } from '../application/constants';
-import * as R from 'ramda';
 import { selectLocalizedText, selectLocale } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference, selectExploreTaxonomy } from './taxonomies';
@@ -36,7 +36,7 @@ export interface TaskListItem {
 }
 
 export const denormalizeTask =
-    (locale: Locale, task: model.Task, exploreSection: ExploreSection, isRecommended: boolean,
+    (locale: Locale, task: store.Task, exploreSection: ExploreSection, isRecommended: boolean,
         relatedArticles: ReadonlyArray<ArticleListItem>, relatedTasks: ReadonlyArray<TaskListItem>): Task => (
             {
                 id: task.id,
@@ -53,7 +53,7 @@ export const denormalizeTask =
             }
         );
 
-export const denormalizeTaskListItem = (locale: Locale, task: model.Task, isRecommended: boolean): TaskListItem => (
+export const denormalizeTaskListItem = (locale: Locale, task: store.Task, isRecommended: boolean): TaskListItem => (
     {
         id: task.id,
         title: selectLocalizedText(locale, task.title),
@@ -63,55 +63,55 @@ export const denormalizeTaskListItem = (locale: Locale, task: model.Task, isReco
     }
 );
 
-export const selectSavedTasks = (store: Store): ReadonlyArray<TaskListItem> => {
-    const savedTasksList = store.tasksInStore.savedTasksList;
-    return savedTasksList.map((taskId: model.Id) => {
-        return selectTaskAsListItem(store, taskId);
+export const selectSavedTasks = (appStore: Store): ReadonlyArray<TaskListItem> => {
+    const savedTasksList = appStore.tasksInStore.savedTasksList;
+    return savedTasksList.map((taskId: store.Id) => {
+        return selectTaskAsListItem(appStore, taskId);
     });
 };
 
-export const selectSavedTasksIdList = (store: Store): ReadonlyArray<model.Id> => (
-    store.tasksInStore.savedTasksList
+export const selectSavedTasksIdList = (appStore: Store): ReadonlyArray<store.Id> => (
+    appStore.tasksInStore.savedTasksList
 );
 
-export const selectRelatedTasks = (store: Store, taskIds: ReadonlyArray<model.Id>): ReadonlyArray<TaskListItem> => (
-    R.map((taskId: model.Id) => selectTaskAsListItem(store, taskId), taskIds)
+export const selectRelatedTasks = (appStore: Store, taskIds: ReadonlyArray<store.Id>): ReadonlyArray<TaskListItem> => (
+    R.map((taskId: store.Id) => selectTaskAsListItem(appStore, taskId), taskIds)
 );
 
-export const selectCompletedTasks = (store: Store): ReadonlyArray<TaskListItem> => {
-    const isCompleted = (task: model.Task): boolean => task.completed;
-    const taskIds = R.keys(R.pickBy(isCompleted, store.tasksInStore.taskMap));
-    return R.map((taskId: model.Id) => selectTaskAsListItem(store, taskId), taskIds);
+export const selectCompletedTasks = (appStore: Store): ReadonlyArray<TaskListItem> => {
+    const isCompleted = (task: store.Task): boolean => task.completed;
+    const taskIds = R.keys(R.pickBy(isCompleted, appStore.tasksInStore.taskMap));
+    return R.map((taskId: store.Id) => selectTaskAsListItem(appStore, taskId), taskIds);
 };
 
-export const selectTaskAsListItem = (store: Store, taskId: model.Id): TaskListItem => {
-    const locale = selectLocale(store);
-    const taskMap = store.tasksInStore.taskMap;
+export const selectTaskAsListItem = (appStore: Store, taskId: store.Id): TaskListItem => {
+    const locale = selectLocale(appStore);
+    const taskMap = appStore.tasksInStore.taskMap;
     const task = taskMap[taskId];
-    const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(store);
+    const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(appStore);
     const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
     return denormalizeTaskListItem(locale, task, isRecommended);
 };
 
-const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: model.Task, exploreSection: ExploreSection, isRecommended: boolean): Task => {
+const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: store.Task, exploreSection: ExploreSection, isRecommended: boolean): Task => {
     return denormalizeTask(locale, task, exploreSection, isRecommended, [], []);
 };
 
-export const selectRecommendedTasks = (store: Store): ReadonlyArray<Task> => {
-    const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(store);
+export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => {
+    const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(appStore);
     const filterTasks = filterTasksByTaxonomyTerms(taxonomyTerms);
 
-    const savedTaskIds = store.tasksInStore.savedTasksList;
+    const savedTaskIds = appStore.tasksInStore.savedTasksList;
     const rejectSavedTasks = rejectTasksWithIdsInList(savedTaskIds);
 
-    const allTasks = store.tasksInStore.taskMap;
+    const allTasks = appStore.tasksInStore.taskMap;
     const matchingTasks = filterTasks(allTasks);
     const nonSavedTasks = rejectSavedTasks(matchingTasks);
     const nonCompletedTasks = rejectCompletedTasks(nonSavedTasks);
 
-    const locale = selectLocale(store);
-    const toSelectorTask = (task: model.Task): Task => {
-        const exploreSection = selectExploreSectionFromTask(store, task);
+    const locale = selectLocale(appStore);
+    const toSelectorTask = (task: store.Task): Task => {
+        const exploreSection = selectExploreSectionFromTask(appStore, task);
         const isRecommended = true;
         return denormalizeTasksWithoutRelatedEntities(locale, task, exploreSection, isRecommended);
     };
@@ -119,18 +119,18 @@ export const selectRecommendedTasks = (store: Store): ReadonlyArray<Task> => {
     return R.map(toSelectorTask, nonCompletedTasks);
 };
 
-const selectExploreSectionFromTask = (store: Store, task: model.Task): ExploreSection => {
-    const storeExploreSection = taskDetails.findExploreSectionBy(task, store.exploreSectionsInStore.sections);
-    const exploreTaxonomy = selectExploreTaxonomy(store);
+const selectExploreSectionFromTask = (appStore: Store, task: store.Task): ExploreSection => {
+    const storeExploreSection = taskDetails.findExploreSectionBy(task, appStore.exploreSectionsInStore.sections);
+    const exploreTaxonomy = selectExploreTaxonomy(appStore);
     const icon = selectIconFromExploreTaxonomy(storeExploreSection.taxonomyTerms, exploreTaxonomy);
-    const locale = selectLocale(store);
+    const locale = selectLocale(appStore);
 
     return buildExploreSection(locale, storeExploreSection, icon);
 };
 
 export const rejectTasksWithIdsInList =
-    R.curry((listOfIds: model.TaskList, tasks: ReadonlyArray<model.Task>): ReadonlyArray<model.Task> => {
-        const idIsInList = (task: model.Task): boolean => (
+    R.curry((listOfIds: store.TaskList, tasks: ReadonlyArray<store.Task>): ReadonlyArray<store.Task> => {
+        const idIsInList = (task: store.Task): boolean => (
             R.contains(task.id, listOfIds)
         );
         return R.reject(idIsInList, tasks);
@@ -139,9 +139,9 @@ export const rejectTasksWithIdsInList =
 export const rejectCompletedTasks = R.reject(R.prop('completed'));
 
 export const filterTasksByTaxonomyTerms =
-    R.curry((selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: model.TaskMap): ReadonlyArray<model.Task> => {
+    R.curry((selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: store.TaskMap): ReadonlyArray<store.Task> => {
 
-        const taskContainsTaxonomyTerms = R.curry((targetTerms: ReadonlyArray<TaxonomyTermReference>, task: model.Task): boolean => (
+        const taskContainsTaxonomyTerms = R.curry((targetTerms: ReadonlyArray<TaxonomyTermReference>, task: store.Task): boolean => (
             R.not(R.isEmpty(R.intersection(targetTerms, task.taxonomyTerms)))
         ));
 
@@ -156,35 +156,35 @@ export const filterTasksByTaxonomyTerms =
         return R.filter(isRecommended, R.values(taskMap));
     });
 
-export const selectTask = (store: Store, routerProps: RouterProps): Task => {
-    const locale = selectLocale(store);
+export const selectTask = (appStore: Store, routerProps: RouterProps): Task => {
+    const locale = selectLocale(appStore);
     const taskId = routerProps.match.params.taskId;
-    const taskMap = store.tasksInStore.taskMap;
+    const taskMap = appStore.tasksInStore.taskMap;
     const task = taskMap[taskId];
-    const exploreSection = selectExploreSectionFromTask(store, task);
-    const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(store);
+    const exploreSection = selectExploreSectionFromTask(appStore, task);
+    const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(appStore);
     const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
-    const relatedTasks = selectRelatedTasks(store, task.relatedTasks);
-    const relatedArticles = selectRelatedArticles(store, task.relatedArticles);
+    const relatedTasks = selectRelatedTasks(appStore, task.relatedTasks);
+    const relatedArticles = selectRelatedArticles(appStore, task.relatedArticles);
     return denormalizeTask(locale, task, exploreSection, isRecommended, relatedArticles, relatedTasks);
 };
 
-export const isTaskRecommended = (termsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference>, task: model.Task): boolean => {
+export const isTaskRecommended = (termsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference>, task: store.Task): boolean => {
     const taskMapWithTask = { [task.id]: task };
     const filtered = filterTasksByTaxonomyTerms(termsFromQuestionnaire, taskMapWithTask);
     return !R.isEmpty(filtered);
 };
 
-export const selectTasksForLearn = (store: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
-    const exploreSection = store.exploreSectionsInStore.sections[routerProps.match.params.learnId];
-    const tasks = store.tasksInStore.taskMap;
+export const selectTasksForLearn = (appStore: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
+    const exploreSection = appStore.exploreSectionsInStore.sections[routerProps.match.params.learnId];
+    const tasks = appStore.tasksInStore.taskMap;
     const matchingTasks = taskDetails.findItemByLearnTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
 
-    const locale = selectLocale(store);
+    const locale = selectLocale(appStore);
 
-    const buildTask = (task: model.Task): Task => {
-        const exploreSectionForTask = selectExploreSectionFromTask(store, task);
-        const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(store);
+    const buildTask = (task: store.Task): Task => {
+        const exploreSectionForTask = selectExploreSectionFromTask(appStore, task);
+        const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(appStore);
         const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
         return denormalizeTasksWithoutRelatedEntities(locale, task, exploreSectionForTask, isRecommended);
     };
