@@ -1,15 +1,18 @@
 // tslint:disable:no-expression-statement no-let
-import { call, CallEffect, PutEffect, put } from 'redux-saga/effects';
+import { call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
 import { loadActiveQuestions, saveActiveQuestions, loadActiveQuestionsAsync, saveActiveQuestionsAsync } from '../questionnaire';
 import { Persistence } from '../../stores/questionnaire';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
+import { selectIdsOfActiveQuestions } from '../../selectors/select_ids_of_active_questions';
 
 describe('the loadActiveQuestions saga', () => {
 
     it('should dispatch a call effect for loadActiveQuestionsFromStorage()', () => {
         const saga = loadActiveQuestions();
-        const value = saga.next().value;
-        expect(value).toEqual(call(loadActiveQuestionsAsync));
+
+        const result = saga.next().value;
+
+        expect(result).toEqual(call(loadActiveQuestionsAsync));
     });
 
     describe('after requesting the selected questions', () => {
@@ -22,59 +25,84 @@ describe('the loadActiveQuestions saga', () => {
 
         it('should dispatch a success action on success', () => {
             const questionId = aString();
-            const value = saga.next(questionId).value;
-            expect(value).toEqual(put(Persistence.loadSuccess([questionId])));
+
+            const result = saga.next(questionId).value;
+
+            expect(result).toEqual(put(Persistence.loadSuccess([questionId])));
         });
 
         it('should split the data on comma', () => {
             const firstQuestionId = aString();
             const secondQuestionId = aString();
             const argument = firstQuestionId + ',' + secondQuestionId;
-            const value = saga.next(argument).value;
-            expect(value).toEqual(put(Persistence.loadSuccess([firstQuestionId, secondQuestionId])));
+
+            const result = saga.next(argument).value;
+
+            expect(result).toEqual(put(Persistence.loadSuccess([firstQuestionId, secondQuestionId])));
         });
 
         it('should dispatch a put effect with a failure action on error', () => {
             const error = anError();
-            const value = saga.throw(error).value;
-            expect(value).toEqual(put(Persistence.loadFailure(error.message)));
+
+            const result = saga.throw(error).value;
+
+            expect(result).toEqual(put(Persistence.loadFailure(error.message)));
         });
     });
 });
 
 describe('the saveActiveQuestions saga', () => {
 
-    it('should dispatch a call effect for saveActiveQuestionsToStorage', () => {
-        const request = Persistence.saveRequest([]);
-        const saga = saveActiveQuestions(request);
-        expect(saga.next().value).toEqual(call(saveActiveQuestionsAsync, ''));
+    it('should dispatch select effect to get active question ids from the store', () => {
+        const saga = saveActiveQuestions();
+
+        const result = saga.next().value;
+
+        expect(result).toEqual(select(selectIdsOfActiveQuestions));
     });
 
-    it('should pass in serialized ids', () => {
-        const firstId = aString();
-        const secondId = aString();
-        const request = Persistence.saveRequest([firstId, secondId]);
-        const saga = saveActiveQuestions(request);
-        expect(saga.next().value).toEqual(call(saveActiveQuestionsAsync, firstId + ',' + secondId));
-    });
+    describe('after selectig active question ids from store', () => {
+        let saga: IterableIterator<SelectEffect | CallEffect | PutEffect<Persistence.SaveSuccessAction | Persistence.SaveFailureAction>>;
 
-    describe('after requesting the ids to be saved', () => {
-
-        let saga: IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccessAction | Persistence.SaveFailureAction>>;
         beforeEach(() => {
-            const request = Persistence.saveRequest([]);
-            saga = saveActiveQuestions(request);
+            saga = saveActiveQuestions();
             saga.next();
         });
 
-        it('should dispatch a put effect with a success action', () => {
-            expect(saga.next().value).toEqual(put(Persistence.saveSuccess()));
+        it('should dispatch call effect to save question ids', () => {
+            const result = saga.next([]).value;
+
+            expect(result).toEqual(call(saveActiveQuestionsAsync, ''));
+        });
+
+        it('should save question ids as comma-separated string', () => {
+            const firstId = aString();
+            const secondId = aString();
+
+            const result = saga.next([firstId, secondId]).value;
+
+            expect(result).toEqual(call(saveActiveQuestionsAsync, firstId + ',' + secondId));
         });
 
         it('should dispatch a put effect with a failure action on error', () => {
             const error = anError();
-            const value = saga.throw(error).value;
-            expect(value).toEqual(put(Persistence.saveFailure(error.message)));
+
+            const result = saga.throw(error).value;
+
+            expect(result).toEqual(put(Persistence.saveFailure(error.message)));
+        });
+
+        describe('after successfully saving ids', () => {
+
+            beforeEach(() => {
+                saga.next([]);
+            });
+
+            it('should dispatch a put effect with a success action', () => {
+                const result = saga.next().value;
+
+                expect(result).toEqual(put(Persistence.saveSuccess()));
+            });
         });
     });
 });

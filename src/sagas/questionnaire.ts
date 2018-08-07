@@ -1,20 +1,22 @@
 // tslint:disable:no-expression-statement
 
-import { call, CallEffect, PutEffect, put, ForkEffect, takeLatest } from 'redux-saga/effects';
+import { call, CallEffect, PutEffect, put, ForkEffect, takeLatest, select, SelectEffect } from 'redux-saga/effects';
 import { AsyncStorage } from 'react-native';
 import { ACTIVE_QUESTIONS_STORAGE_KEY } from '../application/constants';
 import { Persistence, Id } from '../stores/questionnaire';
 import * as constants from '../application/constants';
+import { selectIdsOfActiveQuestions } from '../selectors/select_ids_of_active_questions';
 
-export function* watchSaveActiveQuestions(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.SAVE_ACTIVE_QUESTIONS_REQUEST, saveActiveQuestions);
+export function* watchAnswerChangesToSaveAllAnswerStates(): IterableIterator<ForkEffect> {
+    yield takeLatest(constants.SELECT_ANSWER, saveActiveQuestions);
 }
 
-type SaveActions = IterableIterator<CallEffect | PutEffect<Persistence.SaveSuccessAction | Persistence.SaveFailureAction>>;
+type SaveActions = IterableIterator<SelectEffect | CallEffect | PutEffect<Persistence.SaveSuccessAction | Persistence.SaveFailureAction>>;
 
-export function* saveActiveQuestions(request: Persistence.SaveRequestAction): SaveActions {
+export function* saveActiveQuestions(): SaveActions {
     try {
-        const serializedIds = serialize(request.payload.activeQuestions);
+        const ids = yield select(selectIdsOfActiveQuestions);
+        const serializedIds = serialize(ids);
         yield call(saveActiveQuestionsAsync, serializedIds);
         yield put(Persistence.saveSuccess());
     } catch (error) {

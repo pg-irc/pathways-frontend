@@ -25,18 +25,12 @@ export const setActiveQuestion = (activeQuestion: Id) => (
 
 export namespace Persistence {
 
-    export type SaveRequestAction = Readonly<ReturnType<typeof saveRequest>>;
     export type SaveSuccessAction = Readonly<ReturnType<typeof saveSuccess>>;
     export type SaveFailureAction = Readonly<ReturnType<typeof saveFailure>>;
 
     export type LoadRequestAction = Readonly<ReturnType<typeof loadRequest>>;
     export type LoadSuccessAction = Readonly<ReturnType<typeof loadSuccess>>;
     export type LoadFailureAction = Readonly<ReturnType<typeof loadFailure>>;
-
-    // tslint:disable-next-line:typedef
-    export const saveRequest = (activeQuestions: ReadonlyArray<Id>) => {
-        return helpers.makeAction(constants.SAVE_ACTIVE_QUESTIONS_REQUEST, { activeQuestions });
-    };
 
     // tslint:disable-next-line:typedef
     export const saveSuccess = () => (
