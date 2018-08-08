@@ -56,6 +56,8 @@ describe('the loadActiveQuestions saga', () => {
 
             expect(result).toEqual(put(Persistence.loadFailure(error.message)));
         });
+
+        // TODO add test for handling no persistent data
     });
 });
 
