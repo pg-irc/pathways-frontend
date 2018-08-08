@@ -38,10 +38,6 @@ export class APIClient {
         const url = `${this.host}/${endpoint}?${queryString}`;
         const response = await fetch(url);
         // TODO: Handle fetching paged results.
-        //       The API doesn't specify total number of results* or number of
-        //       pages so would need to make sequential requests until no
-        //       results are returned.
-        //       *Maybe it should? JSON-API is a good spec to follow
         return createAPIResponse(response);
     }
 
@@ -52,6 +48,6 @@ async function createAPIResponse(response: Response): Promise<APIResponse> {
     if (!response.ok) {
         return { hasError: true, message, response };
     }
-    const results =  await response.json();
+    const results = await response.json();
     return { hasError: false, message, response, results };
 }

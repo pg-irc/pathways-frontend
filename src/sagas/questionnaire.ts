@@ -54,6 +54,6 @@ export async function loadActiveQuestionsAsync(): Promise<string> {
     return await AsyncStorage.getItem(ACTIVE_QUESTIONS_STORAGE_KEY);
 }
 
-const deserialize = (ids: string): ReadonlyArray<Id> => (
-    ids.split(',')
+const deserialize = (ids: string): ReadonlyArray<Id> | undefined => (
+    ids ? ids.split(',') : []
 );

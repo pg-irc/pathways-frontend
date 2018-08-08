@@ -31,6 +31,14 @@ describe('the loadActiveQuestions saga', () => {
             expect(result).toEqual(put(Persistence.loadSuccess([questionId])));
         });
 
+        it('should return zero ids when there is no data in persistent storage', () => {
+            const questionId: string = undefined;
+
+            const result = saga.next(questionId).value;
+
+            expect(result).toEqual(put(Persistence.loadSuccess([])));
+        });
+
         it('should split the data on comma', () => {
             const firstQuestionId = aString();
             const secondQuestionId = aString();
