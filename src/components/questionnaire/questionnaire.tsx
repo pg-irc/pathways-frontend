@@ -4,11 +4,11 @@ import * as R from 'ramda';
 import Accordion from 'react-native-collapsible/Accordion';
 import { Content, View, Text, ListItem } from 'native-base';
 import * as selector from '../../selectors/questionnaire';
-import { Question} from './question';
+import { Question } from './question';
 import { applicationStyles, colors, values } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
-import { Id, SelectAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
+import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
 
 export interface QuestionnaireProps {
     readonly questionnaire: selector.Questionnaire;
@@ -16,7 +16,7 @@ export interface QuestionnaireProps {
     readonly recommendedTaskCount: number;
 }
 export interface QuestionnaireActions {
-    readonly selectAnswer: (answerId: Id) => SelectAnswerAction;
+    readonly chooseAnswer: (answerId: Id) => ChooseAnswerAction;
     readonly setActiveQuestion: (activeQuestion: Id) => SetActiveQuestionAction;
 }
 
@@ -43,15 +43,15 @@ export const Component: React.StatelessComponent<Props> = (props: Props): JSX.El
                 duration={400}
             />
         </Content>
-        <View style={ styles.floatingCount }>
-                <Text style={[ styles.floatingText, { fontSize: 20 } ]}>
-                    {props.recommendedTaskCount} <Text style={[ styles.floatingText, { fontSize: values.smallTextSize } ]}>
-                        {props.recommendedTaskCount === 1 ? <Trans>task</Trans> : <Trans>tasks</Trans>}
-                    </Text>
+        <View style={styles.floatingCount}>
+            <Text style={[styles.floatingText, { fontSize: 20 }]}>
+                {props.recommendedTaskCount} <Text style={[styles.floatingText, { fontSize: values.smallTextSize }]}>
+                    {props.recommendedTaskCount === 1 ? <Trans>task</Trans> : <Trans>tasks</Trans>}
                 </Text>
-                <Text style={[ styles.floatingText, { fontSize: values.smallTextSize } ]}>
-                    <Trans>recommended</Trans>
-                </Text>
+            </Text>
+            <Text style={[styles.floatingText, { fontSize: values.smallTextSize }]}>
+                <Trans>recommended</Trans>
+            </Text>
         </View>
     </View>
 );
@@ -105,7 +105,7 @@ const renderQuestionContent = (question: selector.Question, props: Props): JSX.E
 const renderHeader = R.curry((props: Props, section: AccordionSection, _index: number, isActive: boolean): JSX.Element => (
     <ListItem button noIndent noBorder
         onPress={(): SetActiveQuestionAction => props.setActiveQuestion(section.id)}
-        style={isActive ? [{ backgroundColor: colors.lighterGrey }] : [{ backgroundColor: colors.white}]}>
+        style={isActive ? [{ backgroundColor: colors.lighterGrey }] : [{ backgroundColor: colors.white }]}>
         <Text style={isActive ? [{ padding: 10 }, applicationStyles.bold] : [{ padding: 10 }]}>
             {section.title}
         </Text>

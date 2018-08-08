@@ -89,7 +89,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'أخطط للانتقال إلى كندا',
                     'fr': 'Je prévois déménager au Canada',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'time_in_canada',
                     'taxonomyTermId': 'not_yet_arrived',
@@ -103,7 +103,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'لقد وصلت للتو قبل أقل من شهر',
                     'fr': 'Je viens d\'arriver il y a moins d\'un mois',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'time_in_canada',
                     'taxonomyTermId': 'under_1_month',
@@ -117,7 +117,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'أقل من 6 أشهر',
                     'fr': 'Moins de 6 mois',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'time_in_canada',
                     'taxonomyTermId': 'under_6_months',
@@ -131,7 +131,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'أقل من 1 سنة',
                     'fr': 'Moins d\'un an',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'time_in_canada',
                     'taxonomyTermId': 'under_1_year',
@@ -145,7 +145,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'أقل من سنتين',
                     'fr': 'Moins de 2 ans',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'time_in_canada',
                     'taxonomyTermId': 'under_2_years',
@@ -159,7 +159,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'أكثر من 2 سنوات',
                     'fr': 'Plus de 2 ans',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'time_in_canada',
                     'taxonomyTermId': 'over_2_years',
@@ -173,7 +173,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'بنفسك',
                     'fr': 'par vous-même',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'user',
                     'taxonomyTermId': 'alone',
@@ -187,7 +187,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'مع عائلتك',
                     'fr': 'avec ta famille',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'user',
                     'taxonomyTermId': 'with_family',
@@ -201,7 +201,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'تحت 13 سنة',
                     'fr': 'Moins de 13 ans',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
                     'taxonomyTermId': 'under_13',
@@ -215,7 +215,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': '13-18 سنة',
                     'fr': '13-18 ans',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
                     'taxonomyTermId': '13_to_18',
@@ -229,7 +229,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': '18-64 سنة',
                     'fr': '18-64 ans',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
                     'taxonomyTermId': '18_to_64',
@@ -243,7 +243,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': '65+ سنة',
                     'fr': '65+ ans',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
                     'taxonomyTermId': 'over_65',
@@ -257,7 +257,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'الحصول على موظف',
                     'fr': 'Trouver un emploi',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'employment',
@@ -271,7 +271,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'تعلم الانجليزية',
                     'fr': 'Apprendre l\'anglais',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'education',
@@ -285,7 +285,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'تسجيل أطفالي في المدرسة',
                     'fr': 'Inscription de mes enfants à l\'école',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'education',
@@ -299,7 +299,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'الوصول إلى الرعاية الصحية',
                     'fr': 'Accès aux soins de santé',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'health',
@@ -313,7 +313,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'المالية والضرائب والخدمات المصرفية',
                     'fr': 'Finances, impôts, opérations bancaires',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'money',
@@ -327,7 +327,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'العثور على مكان للعيش فيه',
                     'fr': 'Trouver un endroit pour vivre',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'housing',
@@ -341,7 +341,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'جلب عائلتي إلى كندا',
                     'fr': 'Amener ma famille au Canada',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'legal',
@@ -355,7 +355,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'الحصول على دعم الصحة العقلية',
                     'fr': 'Obtenir un soutien en santé mentale',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'health',
@@ -369,7 +369,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'المساعدة القانونية والحماية',
                     'fr': 'Assistance juridique et protection',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'legal',
@@ -383,7 +383,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'تسجيل نفسي في التعليم',
                     'fr': 'M\'inscrire à l\'éducation',
                 },
-                isSelected: false,
+                isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'education',
@@ -397,7 +397,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'طالب اللجوء',
                     'fr': 'Demandeur d\'asile',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'immigrant_type',
                     taxonomyTermId: 'refugee_claimant',
@@ -411,7 +411,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'سكن مؤقت',
                     'fr': 'Résident(e) temporaire',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'immigrant_type',
                     taxonomyTermId: 'temporary_resident',
@@ -425,7 +425,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'مقيم دائم',
                     'fr': 'Résident(e) permanent',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'immigrant_type',
                     taxonomyTermId: 'permanent_resident',
@@ -439,7 +439,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'مقيم دائم',
                     'fr': 'Résident(e) permanent',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'immigrant_type',
                     taxonomyTermId: 'permanent_resident',
@@ -453,7 +453,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'لا شيء مما سبق ، أو لست متأكداx',
                     'fr': 'Rien de ce qui précède, ou je ne suis pas sûr',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'immigrant_type',
                     taxonomyTermId: 'unknown',
@@ -467,7 +467,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'لقد ادعت للتو في مطار أو ميناء بحري أو معبر للحدود البرية',
                     'fr': 'Je viens de réclamer dans un aéroport, un port maritime ou un poste frontalier terrestre',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'refugee_claim_stage',
                     taxonomyTermId: 'claim_at_border',
@@ -481,7 +481,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'لم أبدأ بعد ولكن سوف ادعي في مكتب CIC داخل كندا',
                     'fr': 'Je n\'ai pas encore commencé mais je vais réclamer dans un bureau de CIC à l\'intérieur du Canada',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'refugee_claim_stage',
                     taxonomyTermId: 'not_started',
@@ -495,7 +495,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'أنا فقط ادعى في مكتب CIC داخل كندا',
                     'fr': 'Je viens de réclamer dans un bureau de CIC à l\'intérieur du Canada',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'refugee_claim_stage',
                     taxonomyTermId: 'claim_at_cic_office',
@@ -509,7 +509,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'أنا في انتظار جلسة استماع للاجئين',
                     'fr': 'J\'attends mon audience sur le statut de réfugié',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'refugee_claim_stage',
                     taxonomyTermId: 'hearing',
@@ -523,7 +523,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'لقد تلقيت قرارًا إيجابيًا ويمكنني تقديم طلب أو تقدمت بطلب ليكون مقيمًا دائمًا',
                     'fr': 'J\'ai reçu une décision positive et je peux demander ou être inscrit comme résident(e) permanent',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'refugee_claim_stage',
                     taxonomyTermId: 'positive_decision',
@@ -537,7 +537,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'تلقيت قرارًا سلبيًا وتريد التعرف على خياراتي',
                     'fr': 'J\'ai reçu une décision négative et je veux en savoir plus sur mes options',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'refugee_claim_stage',
                     taxonomyTermId: 'negative_decision',
@@ -551,7 +551,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'لا شيء',
                     'fr': 'Aucun',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'english_level',
                     taxonomyTermId: 'none',
@@ -565,7 +565,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'مبتدئ',
                     'fr': 'Débutant(e)',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'english_level',
                     taxonomyTermId: 'beginner',
@@ -579,7 +579,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'متوسط',
                     'fr': 'Intermédiaire',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'english_level',
                     taxonomyTermId: 'intermediate',
@@ -593,7 +593,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'بطلاقة',
                     'fr': 'Couramment',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'english_level',
                     taxonomyTermId: 'fluent',
@@ -607,7 +607,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'خدمات النساء',
                     'fr': 'Les services aux femmes',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'group',
                     taxonomyTermId: 'women',
@@ -621,7 +621,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'خدمات لذوي الاحتياجات الخاصة',
                     'fr': 'Services pour les personnes handicapées',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'group',
                     taxonomyTermId: 'disability',
@@ -635,7 +635,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'خدمات LGBTQ2',
                     'fr': 'LGBTQ2 services',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'group',
                     taxonomyTermId: 'lgbtq2',
@@ -649,7 +649,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'الخدمات المقدمة باللغة الفرنسية',
                     'fr': 'Services offerts en français',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'group',
                     taxonomyTermId: 'services_in_french',
@@ -663,7 +663,7 @@ export const buildQuestionnaireFixture = (): Store => {
                     'ar': 'خدمات لذوي الدخل المحدود',
                     'fr': 'Services pour les personnes à faible revenu',
                 },
-                isSelected: false,
+                isChosen: false,
                 taxonomyTerms: [{
                     taxonomyId: 'group',
                     taxonomyTermId: 'low_income',

@@ -1,25 +1,25 @@
 // tslint:disable:no-expression-statement no-let
 import { call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
-import { loadActiveQuestions, saveActiveQuestions, loadActiveQuestionsAsync, saveActiveQuestionsAsync } from '../questionnaire';
+import { loadChosenQuestions, saveChosenQuestions, loadChosenQuestionsAsync, saveChosenQuestionsAsync } from '../questionnaire';
 import { Persistence } from '../../stores/questionnaire';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
-import { selectIdsOfActiveQuestions } from '../../selectors/select_ids_of_active_questions';
+import { selectIdsOfChosenAnswers } from '../../selectors/select_ids_of_chosen_questions';
 
-describe('the loadActiveQuestions saga', () => {
+describe('the loadChosenQuestions saga', () => {
 
-    it('should dispatch a call effect for loadActiveQuestionsFromStorage()', () => {
-        const saga = loadActiveQuestions();
+    it('should dispatch a call effect for loadChosenQuestions()', () => {
+        const saga = loadChosenQuestions();
 
         const result = saga.next().value;
 
-        expect(result).toEqual(call(loadActiveQuestionsAsync));
+        expect(result).toEqual(call(loadChosenQuestionsAsync));
     });
 
-    describe('after requesting the selected questions', () => {
+    describe('after requesting the chosen questions', () => {
         let saga: IterableIterator<CallEffect | PutEffect<Persistence.LoadSuccessAction | Persistence.LoadFailureAction>>;
 
         beforeEach(() => {
-            saga = loadActiveQuestions();
+            saga = loadChosenQuestions();
             saga.next();
         });
 
@@ -61,28 +61,28 @@ describe('the loadActiveQuestions saga', () => {
     });
 });
 
-describe('the saveActiveQuestions saga', () => {
+describe('the saveChosenQuestions saga', () => {
 
-    it('should dispatch select effect to get active question ids from the store', () => {
-        const saga = saveActiveQuestions();
+    it('should dispatch select effect to get chosen answer ids from the store', () => {
+        const saga = saveChosenQuestions();
 
         const result = saga.next().value;
 
-        expect(result).toEqual(select(selectIdsOfActiveQuestions));
+        expect(result).toEqual(select(selectIdsOfChosenAnswers));
     });
 
-    describe('after selecting active question ids from store', () => {
+    describe('after selecting chosen answer ids from store', () => {
         let saga: IterableIterator<SelectEffect | CallEffect | PutEffect<Persistence.SaveSuccessAction | Persistence.SaveFailureAction>>;
 
         beforeEach(() => {
-            saga = saveActiveQuestions();
+            saga = saveChosenQuestions();
             saga.next();
         });
 
         it('should dispatch call effect to save question ids', () => {
             const result = saga.next([]).value;
 
-            expect(result).toEqual(call(saveActiveQuestionsAsync, ''));
+            expect(result).toEqual(call(saveChosenQuestionsAsync, ''));
         });
 
         it('should save question ids as comma-separated string', () => {
@@ -91,7 +91,7 @@ describe('the saveActiveQuestions saga', () => {
 
             const result = saga.next([firstId, secondId]).value;
 
-            expect(result).toEqual(call(saveActiveQuestionsAsync, firstId + ',' + secondId));
+            expect(result).toEqual(call(saveChosenQuestionsAsync, firstId + ',' + secondId));
         });
 
         it('should dispatch a put effect with a failure action on error', () => {
