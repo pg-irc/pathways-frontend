@@ -1,8 +1,7 @@
-import { Id, Answer, AnswersMap, Store as ValidStore } from '../../fixtures/types/questionnaire';
+import { AnswersMap, Store as ValidStore } from '../../fixtures/types/questionnaire';
 import { QuestionnaireAction } from './actions';
-import { Store, asValid, asInvalid } from './tagged_stores';
+import { Store, asValid, asInvalid, asLoading } from './tagged_stores';
 import * as constants from '../../application/constants';
-import * as R from 'ramda';
 
 export const validStoreReducer = (store: ValidStore, action?: QuestionnaireAction): Store => {
     if (!action) {
@@ -11,18 +10,14 @@ export const validStoreReducer = (store: ValidStore, action?: QuestionnaireActio
 
     switch (action.type) {
         case constants.SAVE_CHOSEN_QUESTIONS_SUCCESS:
-        case constants.LOAD_CHOSEN_QUESTIONS_REQUEST:
         case constants.SAVE_CHOSEN_QUESTIONS_FAILURE:
             return asValid(store);
 
+        case constants.LOAD_CHOSEN_QUESTIONS_REQUEST:
+            return asLoading({ lastValidState: store });
+
         case constants.LOAD_CHOSEN_QUESTIONS_FAILURE:
             return asInvalid(store);
-
-        case constants.LOAD_CHOSEN_QUESTIONS_SUCCESS:
-            return asValid({
-                ...store,
-                answers: chooseAnswersWithIdsIn(store.answers, action.payload.chosenAnswers),
-            });
 
         case constants.CHOOSE_ANSWER:
             return asValid(toggleIsChosenFlagForAnswer(store, action.payload.answerId));
@@ -36,14 +31,6 @@ export const validStoreReducer = (store: ValidStore, action?: QuestionnaireActio
         default:
             return asValid(store);
     }
-};
-
-const chooseAnswersWithIdsIn = (answerMap: AnswersMap, idsToSetToChosen: ReadonlyArray<Id>): AnswersMap => {
-    const setToChosenIfIdMatches = (answer: Answer): Answer => ({
-        ...answer,
-        isChosen: R.contains(answer.id, idsToSetToChosen),
-    });
-    return R.mapObjIndexed(setToChosenIfIdMatches, answerMap);
 };
 
 const toggleIsChosenFlagForAnswer = (store: ValidStore, answerId: string): ValidStore => (

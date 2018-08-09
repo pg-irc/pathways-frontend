@@ -23,7 +23,15 @@ export const INVALID_STORE_TAG = 'ERROR_STORE_TAG';
 export const asInvalid = (store: InvalidStore) => tagStore(INVALID_STORE_TAG, store);
 export type TaggedInvalidStore = Readonly<ReturnType<typeof asInvalid>>;
 
-export type Store = TaggedValidStore | TaggedInvalidStore;
+export interface LoadingStore {
+    readonly lastValidState: ValidStore;
+}
+export const LOADING_STORE_TAG = 'LOADING_STORE_TAG';
+// tslint:disable-next-line:typedef
+export const asLoading = (store: LoadingStore) => tagStore(LOADING_STORE_TAG, store); // TODO rename as tagAsLoading
+export type TaggedLoadingStore = Readonly<ReturnType<typeof asLoading>>;
+
+export type Store = TaggedValidStore | TaggedInvalidStore | TaggedLoadingStore; // TODO rename to AnyTaggedStore
 
 export const toValidOrThrow = (store: Store): ValidStore => {
     if (store.tag === VALID_STORE_TAG) {

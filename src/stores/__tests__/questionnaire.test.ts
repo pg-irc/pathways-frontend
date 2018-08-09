@@ -4,7 +4,7 @@ import * as store from '../questionnaire';
 import * as helpers from './helpers/questionnaire_helpers';
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { toValidOrThrow, INVALID_STORE_TAG } from '../questionnaire/tagged_stores';
+import { toValidOrThrow, INVALID_STORE_TAG, LOADING_STORE_TAG, TaggedLoadingStore } from '../questionnaire/tagged_stores';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -167,7 +167,7 @@ describe('questionnaire reducer', () => {
         it('should set question with id in request to chosen', () => {
             nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
             question = new helpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
-            theStore = helpers.buildNormalizedQuestionnaire([question]);
+            theStore = helpers.buildLoadingStore([question]);
             const action = store.Persistence.loadSuccess([nonChosenAnswer.id]);
 
             newStore = store.reducer(theStore, action);
@@ -178,12 +178,35 @@ describe('questionnaire reducer', () => {
         it('should set question with id not in request to not chosen', () => {
             chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
             question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
-            theStore = helpers.buildNormalizedQuestionnaire([question]);
+            theStore = helpers.buildLoadingStore([question]);
             const action = store.Persistence.loadSuccess([]);
 
             newStore = store.reducer(theStore, action);
 
             expect(toValidOrThrow(newStore).answers[chosenAnswer.id].isChosen).toBe(false);
+        });
+
+        describe('when handling a load request', () => {
+
+            beforeEach(() => {
+                const answer = new helpers.AnswerBuilder();
+                question = new helpers.QuestionBuilder().withAnswers([answer]);
+                theStore = helpers.buildNormalizedQuestionnaire([question]);
+                const action = store.Persistence.loadRequest();
+
+                newStore = store.reducer(theStore, action);
+            });
+
+            it('should return a store tagged as loading', () => {
+                expect(newStore.tag).toBe(LOADING_STORE_TAG);
+            });
+
+            it('should return a store containing the last known valid state', () => {
+                if (newStore.tag === LOADING_STORE_TAG) {
+                    const loadingStore = newStore as TaggedLoadingStore;
+                    expect(loadingStore.store.lastValidState).toBe(theStore.store);
+                }
+            });
         });
 
         describe('when handling a load error', () => {

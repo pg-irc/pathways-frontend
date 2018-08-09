@@ -5,13 +5,23 @@ import { aString, aBoolean } from '../../../application/__tests__/helpers/random
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies';
-import { asValid } from '../../questionnaire/tagged_stores';
+import { asValid, asLoading } from '../../questionnaire/tagged_stores';
 
 export const buildNormalizedQuestionnaire = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
     asValid({
         activeQuestion: aString(),
         questions: buildQuestionMap(questions),
         answers: buildAnswerMap(questions),
+    })
+);
+
+export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
+    asLoading({
+        lastValidState: {
+            activeQuestion: aString(),
+            questions: buildQuestionMap(questions),
+            answers: buildAnswerMap(questions),
+        },
     })
 );
 
