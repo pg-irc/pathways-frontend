@@ -13,7 +13,7 @@ import * as notifications from '../../notifications';
 export class ApplicationStoreBuilder {
     fontsInStore: fonts.Store;
     localeInStore: locale.Store;
-    questionnaireInStore: questionnaire.Store;
+    questionnaireInStore: questionnaire.AnyTaggedStore;
     tasksInStore: tasks.Store;
     servicesInStore: services.Store;
     exploreSectionsInStore: explore.Store;

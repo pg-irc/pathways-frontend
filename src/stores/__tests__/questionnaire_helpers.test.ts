@@ -99,7 +99,7 @@ describe('questionnaire test helper for', () => {
             const builder = new helpers.QuestionBuilder().
                 withId(questionId);
 
-            const store = helpers.buildNormalizedQuestionnaire([builder]);
+            const store = helpers.buildValidStore([builder]);
 
             expect(toValidOrThrow(store).questions[questionId]).toHaveProperty('id', questionId);
         });
@@ -111,7 +111,7 @@ describe('questionnaire test helper for', () => {
             const questionBuilder = new helpers.QuestionBuilder().
                 withAnswers([answerBuilder]);
 
-            const store = helpers.buildNormalizedQuestionnaire([questionBuilder]);
+            const store = helpers.buildValidStore([questionBuilder]);
 
             expect(toValidOrThrow(store).answers[answerId]).toHaveProperty('id', answerId);
         });
@@ -125,7 +125,7 @@ describe('questionnaire test helper for', () => {
                 withId(questionId).
                 withAnswers([answerBuilder]);
 
-            const store = helpers.buildNormalizedQuestionnaire([questionBuilder]);
+            const store = helpers.buildValidStore([questionBuilder]);
 
             expect(toValidOrThrow(store).answers[answerId].questionId).toBe(questionId);
         });

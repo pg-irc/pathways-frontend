@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import * as main from './main';
 import { LoaderProps, withLoader } from './loader';
-import { isApplicationLoading } from '../../selectors/application_loading';
+import { isApplicationLoading } from '../../selectors/is_application_loading';
 import { selectLocale } from '../../selectors/locale';
 import { withRouter } from 'react-router-native';
 import { RouterProps } from '../../application/routing';

@@ -15,7 +15,7 @@ export const setActiveQuestion = (activeQuestion: Id) => (
     helpers.makeAction(constants.SET_ACTIVE_QUESTION, { activeQuestion })
 );
 
-export namespace Persistence {
+export namespace LocalStorage {
 
     export type SaveSuccessAction = Readonly<ReturnType<typeof saveSuccess>>;
     export type SaveFailureAction = Readonly<ReturnType<typeof saveFailure>>;
@@ -51,5 +51,5 @@ export namespace Persistence {
 }
 
 export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction
-    | Persistence.SaveSuccessAction | Persistence.SaveFailureAction
-    | Persistence.LoadRequestAction | Persistence.LoadSuccessAction | Persistence.LoadFailureAction;
+    | LocalStorage.SaveSuccessAction | LocalStorage.SaveFailureAction
+    | LocalStorage.LoadRequestAction | LocalStorage.LoadSuccessAction | LocalStorage.LoadFailureAction;

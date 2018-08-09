@@ -12,7 +12,7 @@ import * as notifications from './notifications';
 export interface Store {
     readonly fontsInStore: fonts.Store;
     readonly localeInStore: locale.Store;
-    readonly questionnaireInStore: questionnaire.Store;
+    readonly questionnaireInStore: questionnaire.AnyTaggedStore;
     readonly tasksInStore: tasks.Store;
     readonly servicesInStore: services.Store;
     readonly exploreSectionsInStore: explore.Store;

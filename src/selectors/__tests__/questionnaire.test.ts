@@ -25,7 +25,7 @@ describe('questionnaire selector', () => {
         beforeEach(() => {
             anAnswer = new testHelpers.AnswerBuilder().withLocaleCode(locale.code);
             aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anAnswer]);
-            const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
+            const normalizedData = testHelpers.buildValidStore([aQuestion]);
 
             denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
         });
@@ -56,7 +56,7 @@ describe('questionnaire selector', () => {
         const questions = new Array(questionCount).fill(0).map(() => (
             new testHelpers.QuestionBuilder().withLocaleCode(locale.code)),
         );
-        const normalizedData = testHelpers.buildNormalizedQuestionnaire(questions);
+        const normalizedData = testHelpers.buildValidStore(questions);
 
         const denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
 
@@ -69,7 +69,7 @@ describe('questionnaire selector', () => {
             new testHelpers.AnswerBuilder().withLocaleCode(locale.code)),
         );
         const theQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers(answers);
-        const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
+        const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
         const denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
 
@@ -80,7 +80,7 @@ describe('questionnaire selector', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
         const chosenAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(true);
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosenAnswer]);
-        const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
+        const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
         const result = selector.filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
@@ -91,7 +91,7 @@ describe('questionnaire selector', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
         const nonChosenAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(false);
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
-        const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
+        const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
         const result = selector.filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
@@ -104,7 +104,7 @@ describe('questionnaire selector', () => {
         const chosendAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
             withTaxonomyTerm(theSecondTaxonomyTerm).withIsChosen(true);
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosendAnswer]);
-        const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
+        const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
         const result = selector.filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
@@ -118,7 +118,7 @@ describe('getting ids of all chosen answers', () => {
         const locale = new LocaleBuilder().build();
         const aChosenAnswer = new testHelpers.AnswerBuilder().withIsChosen(true).withLocaleCode(locale.code);
         const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([aChosenAnswer]);
-        const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
+        const normalizedData = testHelpers.buildValidStore([aQuestion]);
 
         const result = getIdsOfChosenAnswers(toValidOrThrow(normalizedData).answers);
 
@@ -129,7 +129,7 @@ describe('getting ids of all chosen answers', () => {
         const locale = new LocaleBuilder().build();
         const aNonChosenAnswer = new testHelpers.AnswerBuilder().withIsChosen(false).withLocaleCode(locale.code);
         const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
-        const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
+        const normalizedData = testHelpers.buildValidStore([aQuestion]);
 
         const result = getIdsOfChosenAnswers(toValidOrThrow(normalizedData).answers);
 

@@ -5,18 +5,18 @@ import { aString, aBoolean } from '../../../application/__tests__/helpers/random
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies';
-import { asValid, asLoading } from '../../questionnaire/tagged_stores';
+import { tagAsValid, tagAsLoading } from '../../questionnaire/tagged_stores';
 
-export const buildNormalizedQuestionnaire = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
-    asValid({
+export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): store.AnyTaggedStore => (
+    tagAsValid({
         activeQuestion: aString(),
         questions: buildQuestionMap(questions),
         answers: buildAnswerMap(questions),
     })
 );
 
-export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
-    asLoading({
+export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.AnyTaggedStore => (
+    tagAsLoading({
         lastValidState: {
             activeQuestion: aString(),
             questions: buildQuestionMap(questions),

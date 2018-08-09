@@ -4,7 +4,8 @@ import * as store from '../questionnaire';
 import * as helpers from './helpers/questionnaire_helpers';
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { toValidOrThrow, INVALID_STORE_TAG, LOADING_STORE_TAG, TaggedLoadingStore } from '../questionnaire/tagged_stores';
+import { toValidOrThrow, TaggedLoadingStore } from '../questionnaire/tagged_stores';
+import { INVALID_STORE_TAG, LOADING_STORE_TAG } from '../../application/constants';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -28,18 +29,18 @@ describe('questionnaire reducer', () => {
     let chosenAnswerToSecondQuestion: helpers.AnswerBuilder;
     let nonChosenAnswerToSecondQuestion: helpers.AnswerBuilder;
     let question, secondQuestion: helpers.QuestionBuilder;
-    let theStore: store.Store;
-    let newStore: store.Store;
+    let theStore: store.AnyTaggedStore;
+    let newStore: store.AnyTaggedStore;
 
     it('should return original store if the action is undefined', () => {
-        theStore = helpers.buildNormalizedQuestionnaire([new helpers.QuestionBuilder()]);
+        theStore = helpers.buildValidStore([new helpers.QuestionBuilder()]);
         const undefinedAction: store.ChooseAnswerAction = undefined;
         newStore = store.reducer(theStore, undefinedAction);
         expect(newStore).toEqual(theStore);
     });
 
     it('should allow the active question to be set', () => {
-        theStore = helpers.buildNormalizedQuestionnaire([new helpers.QuestionBuilder()]);
+        theStore = helpers.buildValidStore([new helpers.QuestionBuilder()]);
         const activeQuestion = aString();
         newStore = store.reducer(theStore, store.setActiveQuestion(activeQuestion));
         expect(toValidOrThrow(newStore).activeQuestion).toEqual(activeQuestion);
@@ -62,7 +63,7 @@ describe('questionnaire reducer', () => {
                 withAnswers([chosenAnswerToSecondQuestion, nonChosenAnswerToSecondQuestion]).
                 withAcceptsMultipleAnswers(false);
 
-            theStore = helpers.buildNormalizedQuestionnaire([question, secondQuestion]);
+            theStore = helpers.buildValidStore([question, secondQuestion]);
         });
 
         describe('when choosing an non-chosen answer', () => {
@@ -120,7 +121,7 @@ describe('questionnaire reducer', () => {
                 withAnswers([chosenAnswerToSecondQuestion, nonChosenAnswerToSecondQuestion]).
                 withAcceptsMultipleAnswers(true);
 
-            theStore = helpers.buildNormalizedQuestionnaire([question, secondQuestion]);
+            theStore = helpers.buildValidStore([question, secondQuestion]);
         });
 
         describe('when choosing a non-chosen answer', () => {
@@ -168,7 +169,7 @@ describe('questionnaire reducer', () => {
             nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
             question = new helpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
             theStore = helpers.buildLoadingStore([question]);
-            const action = store.Persistence.loadSuccess([nonChosenAnswer.id]);
+            const action = store.LocalStorage.loadSuccess([nonChosenAnswer.id]);
 
             newStore = store.reducer(theStore, action);
 
@@ -179,7 +180,7 @@ describe('questionnaire reducer', () => {
             chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
             question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
             theStore = helpers.buildLoadingStore([question]);
-            const action = store.Persistence.loadSuccess([]);
+            const action = store.LocalStorage.loadSuccess([]);
 
             newStore = store.reducer(theStore, action);
 
@@ -191,8 +192,8 @@ describe('questionnaire reducer', () => {
             beforeEach(() => {
                 const answer = new helpers.AnswerBuilder();
                 question = new helpers.QuestionBuilder().withAnswers([answer]);
-                theStore = helpers.buildNormalizedQuestionnaire([question]);
-                const action = store.Persistence.loadRequest();
+                theStore = helpers.buildValidStore([question]);
+                const action = store.LocalStorage.loadRequest();
 
                 newStore = store.reducer(theStore, action);
             });
@@ -214,8 +215,8 @@ describe('questionnaire reducer', () => {
             it('should return a store tagged as invalid', () => {
                 chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
                 question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
-                theStore = helpers.buildNormalizedQuestionnaire([question]);
-                const action = store.Persistence.loadFailure('error');
+                theStore = helpers.buildValidStore([question]);
+                const action = store.LocalStorage.loadFailure('error');
 
                 newStore = store.reducer(theStore, action);
 
@@ -225,8 +226,8 @@ describe('questionnaire reducer', () => {
             it('should return store state unchanged from before error', () => {
                 chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
                 question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
-                theStore = helpers.buildNormalizedQuestionnaire([question]);
-                const action = store.Persistence.loadFailure('error');
+                theStore = helpers.buildValidStore([question]);
+                const action = store.LocalStorage.loadFailure('error');
 
                 newStore = store.reducer(theStore, action);
 
