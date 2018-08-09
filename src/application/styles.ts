@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export const colors = {
     black: 'black',
@@ -49,8 +49,23 @@ export const applicationStyles = StyleSheet.create({
     },
 });
 
+// See https://github.com/mientjan/react-native-markdown-renderer/blob/master/src/lib/styles.js for styles to override.
 export const markdownStyles = StyleSheet.create({
     text: {
         textAlign: 'left',
     },
+    listUnorderedItemIcon: {
+        fontWeight: 'bold',
+        fontSize: 35,
+        marginLeft: 10,
+        marginRight: 10,
+        ...Platform.select({
+          ios: {
+            lineHeight: 36,
+          },
+          android: {
+            lineHeight: 40,
+          },
+        }),
+      },
 });

@@ -141,12 +141,15 @@ interface JsxButtons {
 
 const toJsxButtons = (buttons: ReadonlyArray<TaskStateButton>, jsxButtons: JsxButtons): ReadonlyArray<JSX.Element> => {
     const toJsxButton = (button: TaskStateButton): JSX.Element => {
+        const buttonWithKey = (button: TaskStateButton, buttonJSX: JSX.Element): JSX.Element => (
+            <View key={button}>{buttonJSX}</View>
+        );
         switch (button) {
             default:
-            case TaskStateButton.AddToPlanButton: return jsxButtons.addToPlanButton;
-            case TaskStateButton.DoneButton: return jsxButtons.doneButton;
-            case TaskStateButton.NotDoneButton: return jsxButtons.notDoneButton;
-            case TaskStateButton.RemoveFromPlanButton: return jsxButtons.removeFromPlanButton;
+            case TaskStateButton.AddToPlanButton: return buttonWithKey(button, jsxButtons.addToPlanButton);
+            case TaskStateButton.DoneButton: return buttonWithKey(button, jsxButtons.doneButton);
+            case TaskStateButton.NotDoneButton: return buttonWithKey(button, jsxButtons.notDoneButton);
+            case TaskStateButton.RemoveFromPlanButton: return buttonWithKey(button, jsxButtons.removeFromPlanButton);
         }
     };
     return R.map(toJsxButton, buttons);
