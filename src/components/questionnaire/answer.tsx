@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListItem, Body, Right, Text, CheckBox, Radio } from 'native-base';
 import * as selector from '../../selectors/questionnaire';
-import { SelectAnswerAction } from '../../stores/questionnaire';
+import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { Id } from '../../stores/questionnaire';
 import { colors } from '../../application/styles';
 
@@ -10,7 +10,7 @@ export interface AnswerProps {
     readonly acceptMultipleAnswers: boolean;
 }
 export interface AnswerActions {
-    readonly selectAnswer: (answerId: Id) => SelectAnswerAction;
+    readonly chooseAnswer: (answerId: Id) => ChooseAnswerAction;
 }
 
 type Props = AnswerProps & AnswerActions;
@@ -21,12 +21,12 @@ enum AnswerType {
 
 export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const answerType = props.answer.acceptMultipleAnswers ? AnswerType.CheckboxAnswer : AnswerType.RadioAnswer;
-    const onPress = (): SelectAnswerAction => props.selectAnswer(props.answer.id);
+    const onPress = (): ChooseAnswerAction => props.chooseAnswer(props.answer.id);
     return (
         <ListItem button noIndent noBorder onPress={onPress} style={[
             { backgroundColor: colors.lighterGrey },
-            { borderTopColor: colors.white},
-            { borderTopWidth: 1},
+            { borderTopColor: colors.white },
+            { borderTopWidth: 1 },
         ]}>
             <Body>
                 <Text style={[
@@ -35,7 +35,7 @@ export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Eleme
                     {props.answer.text}
                 </Text>
             </Body>
-            <Right style={[ { paddingHorizontal: 7 } ]}>
+            <Right style={[{ paddingHorizontal: 7 }]}>
                 {renderComponentForAnswerType(props, answerType, onPress)}
             </Right>
         </ListItem>
@@ -45,9 +45,9 @@ export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Eleme
 const renderComponentForAnswerType = (props: Props, answerType: AnswerType, onPress: () => void): JSX.Element => {
     switch (answerType) {
         case AnswerType.CheckboxAnswer:
-            return <CheckBox checked={props.answer.isSelected} onPress={onPress} />;
+            return <CheckBox checked={props.answer.isChosen} onPress={onPress} />;
         case AnswerType.RadioAnswer:
         default:
-            return <Radio selected={props.answer.isSelected} onPress={onPress} />;
+            return <Radio selected={props.answer.isChosen} onPress={onPress} />;
     }
 };

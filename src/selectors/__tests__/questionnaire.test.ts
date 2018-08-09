@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-let
 import * as selector from '../questionnaire';
-import { getIdsOfActiveAnswers } from '../select_ids_of_active_questions';
+import { getIdsOfChosenAnswers } from '../select_ids_of_chosen_questions';
 import { anInteger } from '../../application/__tests__/helpers/random_test_values';
 import * as testHelpers from '../../stores/__tests__/helpers/questionnaire_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
@@ -45,8 +45,8 @@ describe('questionnaire selector', () => {
             expect(denormalizedData[0].answers[0].text).toBe(anAnswer.text);
         });
 
-        it('answer isSelected flag', () => {
-            expect(denormalizedData[0].answers[0].isSelected).toBe(anAnswer.isSelected);
+        it('answer isChosen flag', () => {
+            expect(denormalizedData[0].answers[0].isChosen).toBe(anAnswer.isChosen);
         });
     });
 
@@ -75,24 +75,24 @@ describe('questionnaire selector', () => {
         expect(denormalizedData[0].answers).toHaveLength(answerCount);
     });
 
-    it('should return the taxonomy terms for a selected answer', () => {
+    it('should return the taxonomy terms for a chosen answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
-        const selectedAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withSelected(true);
-        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([selectedAnswer]);
+        const chosenAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(true);
+        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosenAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForSelectedAnswers(normalizedData.answers);
+        const result = selector.filterTaxonomyTermsForChosenAnswers(normalizedData.answers);
 
         expect(result).toEqual([theTaxonomyTerm]);
     });
 
-    it('should not return the taxonomy terms for a non-selected answer', () => {
+    it('should not return the taxonomy terms for a non-chosen answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
-        const nonSelectedAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withSelected(false);
-        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([nonSelectedAnswer]);
+        const nonChosenAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(false);
+        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForSelectedAnswers(normalizedData.answers);
+        const result = selector.filterTaxonomyTermsForChosenAnswers(normalizedData.answers);
 
         expect(result).toEqual([]);
     });
@@ -100,38 +100,38 @@ describe('questionnaire selector', () => {
     it('should return all taxonomy terms for a selected answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
         const theSecondTaxonomyTerm = aTaxonomyTermReference();
-        const selectedAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
-            withTaxonomyTerm(theSecondTaxonomyTerm).withSelected(true);
-        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([selectedAnswer]);
+        const chosendAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
+            withTaxonomyTerm(theSecondTaxonomyTerm).withIsChosen(true);
+        const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosendAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForSelectedAnswers(normalizedData.answers);
+        const result = selector.filterTaxonomyTermsForChosenAnswers(normalizedData.answers);
 
         expect(result).toContain(theTaxonomyTerm);
         expect(result).toContain(theSecondTaxonomyTerm);
     });
 });
 
-describe('getting ids of all active questions', () => {
-    it('should include ids for active questions', () => {
+describe('getting ids of all chosen answers', () => {
+    it('should include ids for chosen answers', () => {
         const locale = new LocaleBuilder().build();
-        const anActiveAnswer = new testHelpers.AnswerBuilder().withSelected(true).withLocaleCode(locale.code);
-        const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anActiveAnswer]);
+        const aChosenAnswer = new testHelpers.AnswerBuilder().withIsChosen(true).withLocaleCode(locale.code);
+        const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([aChosenAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
 
-        const result = getIdsOfActiveAnswers(normalizedData.answers);
+        const result = getIdsOfChosenAnswers(normalizedData.answers);
 
-        expect(result).toContain(anActiveAnswer.id);
+        expect(result).toContain(aChosenAnswer.id);
     });
 
-    it('should not include ids for inactive questions', () => {
+    it('should not include ids for non-chosen questions', () => {
         const locale = new LocaleBuilder().build();
-        const anInactiveAnswer = new testHelpers.AnswerBuilder().withSelected(false).withLocaleCode(locale.code);
-        const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anInactiveAnswer]);
+        const aNonChosenAnswer = new testHelpers.AnswerBuilder().withIsChosen(false).withLocaleCode(locale.code);
+        const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
 
-        const result = getIdsOfActiveAnswers(normalizedData.answers);
+        const result = getIdsOfChosenAnswers(normalizedData.answers);
 
-        expect(result).not.toContain(anInactiveAnswer.id);
+        expect(result).not.toContain(aNonChosenAnswer.id);
     });
 });

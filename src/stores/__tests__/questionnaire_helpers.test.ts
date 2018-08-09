@@ -45,7 +45,7 @@ describe('questionnaire test helper for', () => {
             let text: string;
             let taxonomyId: string;
             let taxonomyTermId: string;
-            let isSelected: boolean;
+            let isChosen: boolean;
             let answer: Answer;
 
             beforeEach(() => {
@@ -54,13 +54,13 @@ describe('questionnaire test helper for', () => {
                 text = aString();
                 taxonomyId = aString();
                 taxonomyTermId = aString();
-                isSelected = aBoolean();
+                isChosen = aBoolean();
                 answer = new helpers.AnswerBuilder().
                     withLocaleCode(localeCode).
                     withId(id).
                     withQuestionId(questionId).
                     withText(text).
-                    withSelected(isSelected).
+                    withIsChosen(isChosen).
                     withTaxonomyTerm({ taxonomyId, taxonomyTermId }).
                     build();
             });
@@ -78,7 +78,7 @@ describe('questionnaire test helper for', () => {
             });
 
             it('can build an answer with selected flag', () => {
-                expect(answer.isSelected).toBe(isSelected);
+                expect(answer.isChosen).toBe(isChosen);
             });
 
             it('can build an answer with taxonomy id', () => {

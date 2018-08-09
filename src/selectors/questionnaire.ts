@@ -18,7 +18,7 @@ export interface Question {
 export interface Answer {
     readonly id: model.Id;
     readonly text: string;
-    readonly isSelected: boolean;
+    readonly isChosen: boolean;
     readonly acceptMultipleAnswers: boolean;
 }
 
@@ -61,23 +61,23 @@ const answerKeysForGivenQuestion = (questionId: model.Id, answers: model.Answers
 const buildViewModelForAnswers = (locale: Locale, keys: ReadonlyArray<string>,
     answers: model.AnswersMap, acceptMultipleAnswers: boolean): ReadonlyArray<Answer> => (
         keys.map((key: string) => {
-            const { id, text, isSelected }: model.Answer = answers[key];
+            const { id, text, isChosen }: model.Answer = answers[key];
             return {
                 id,
                 text: selectLocalizedText(locale, text),
-                isSelected,
+                isChosen,
                 acceptMultipleAnswers,
             };
         })
     );
 
 export const selectTaxonomyTermsForSelectedAnswers = (store: Store): ReadonlyArray<TaxonomyTermReference> => (
-    filterTaxonomyTermsForSelectedAnswers(store.questionnaireInStore.answers)
+    filterTaxonomyTermsForChosenAnswers(store.questionnaireInStore.answers)
 );
 
-export const filterTaxonomyTermsForSelectedAnswers = (answers: model.AnswersMap): ReadonlyArray<TaxonomyTermReference> => {
+export const filterTaxonomyTermsForChosenAnswers = (answers: model.AnswersMap): ReadonlyArray<TaxonomyTermReference> => {
     type ReferenceArray = ReadonlyArray<TaxonomyTermReference>;
     const flatten = R.reduce((acc: ReferenceArray, val: ReferenceArray): ReferenceArray => [...acc, ...val], []);
 
-    return flatten(R.pluck('taxonomyTerms', R.filter(R.propEq('isSelected', true), R.values(answers))));
+    return flatten(R.pluck('taxonomyTerms', R.filter(R.propEq('isChosen', true), R.values(answers))));
 };

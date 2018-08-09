@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'native-base';
 import { applicationStyles } from '../../application/styles';
 import { TaskListItem } from '../../selectors/tasks';
-import { TaskListComponent, noTasksAddedYetTextComponent } from '../tasks/task_list';
+import { TaskListComponent, noTasksAddedYetTextComponent } from './task_list';
 import { Trans } from '@lingui/react';
 import { TaskListItemActions } from './task_list_item';
 import { RouterProps } from '../../application/routing';

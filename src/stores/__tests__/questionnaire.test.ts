@@ -2,37 +2,37 @@
 
 import * as store from '../questionnaire';
 import * as helpers from './helpers/questionnaire_helpers';
-import { SELECT_ANSWER } from '../../application/constants';
+import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 
-describe('select answer action creator', () => {
-    it('should create action with type SELECT_ANSWER', () => {
-        const theAction = store.selectAnswer(aString());
-        expect(theAction.type).toBe(SELECT_ANSWER);
+describe('choose answer action creator', () => {
+    it('should create action with type CHOOSE_ANSWER', () => {
+        const theAction = store.chooseAnswer(aString());
+        expect(theAction.type).toBe(CHOOSE_ANSWER);
     });
 
     it('should create action with page id as passed to the action creator', () => {
         const theAnswerId = aString();
-        const theAction = store.selectAnswer(theAnswerId);
+        const theAction = store.chooseAnswer(theAnswerId);
         expect(theAction.payload.answerId).toBe(theAnswerId);
     });
 });
 
 describe('questionnaire reducer', () => {
 
-    let selectedAnswer: helpers.AnswerBuilder;
-    let unselectedAnswer: helpers.AnswerBuilder;
-    let secondSelectedAnswer: helpers.AnswerBuilder;
-    let secondUnselectedAnswer: helpers.AnswerBuilder;
-    let selectedAnswerToSecondQuestion: helpers.AnswerBuilder;
-    let unselectedAnswerToSecondQuestion: helpers.AnswerBuilder;
+    let chosenAnswer: helpers.AnswerBuilder;
+    let nonChosenAnswer: helpers.AnswerBuilder;
+    let secondChosenAnswer: helpers.AnswerBuilder;
+    let secondNonChosenAnswer: helpers.AnswerBuilder;
+    let chosenAnswerToSecondQuestion: helpers.AnswerBuilder;
+    let nonChosenAnswerToSecondQuestion: helpers.AnswerBuilder;
     let question, secondQuestion: helpers.QuestionBuilder;
     let theStore: store.Store;
     let newStore: store.Store;
 
     it('should return original store if the action is undefined', () => {
         theStore = helpers.buildNormalizedQuestionnaire([new helpers.QuestionBuilder()]);
-        const undefinedAction: store.SelectAnswerAction = undefined;
+        const undefinedAction: store.ChooseAnswerAction = undefined;
         newStore = store.reducer(theStore, undefinedAction);
         expect(newStore).toEqual(theStore);
     });
@@ -47,142 +47,142 @@ describe('questionnaire reducer', () => {
     describe('for questions accepting at most one answer', () => {
 
         beforeEach(() => {
-            selectedAnswer = new helpers.AnswerBuilder().withSelected(true);
-            unselectedAnswer = new helpers.AnswerBuilder().withSelected(false);
-            secondUnselectedAnswer = new helpers.AnswerBuilder().withSelected(false);
+            chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
+            nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
+            secondNonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
 
             question = new helpers.QuestionBuilder().
-                withAnswers([selectedAnswer, unselectedAnswer, secondUnselectedAnswer]).
+                withAnswers([chosenAnswer, nonChosenAnswer, secondNonChosenAnswer]).
                 withAcceptsMultipleAnswers(false);
 
-            selectedAnswerToSecondQuestion = new helpers.AnswerBuilder().withSelected(true);
-            unselectedAnswerToSecondQuestion = new helpers.AnswerBuilder().withSelected(false);
+            chosenAnswerToSecondQuestion = new helpers.AnswerBuilder().withIsChosen(true);
+            nonChosenAnswerToSecondQuestion = new helpers.AnswerBuilder().withIsChosen(false);
             secondQuestion = new helpers.QuestionBuilder().
-                withAnswers([selectedAnswerToSecondQuestion, unselectedAnswerToSecondQuestion]).
+                withAnswers([chosenAnswerToSecondQuestion, nonChosenAnswerToSecondQuestion]).
                 withAcceptsMultipleAnswers(false);
 
             theStore = helpers.buildNormalizedQuestionnaire([question, secondQuestion]);
         });
 
-        describe('when selecting an unselected answer', () => {
+        describe('when choosing an non-chosen answer', () => {
             beforeEach(() => {
-                const action = store.selectAnswer(unselectedAnswer.id);
+                const action = store.chooseAnswer(nonChosenAnswer.id);
                 newStore = store.reducer(theStore, action);
             });
-            it('it makes the answer selected', () => {
-                expect(newStore.answers[unselectedAnswer.id].isSelected).toBe(true);
+            it('it makes the answer chosen', () => {
+                expect(newStore.answers[nonChosenAnswer.id].isChosen).toBe(true);
             });
-            it('makes other answers to the same quenstion unselected', () => {
-                expect(newStore.answers[selectedAnswer.id].isSelected).toBe(false);
+            it('makes other answers to the same quenstion non-chosen', () => {
+                expect(newStore.answers[chosenAnswer.id].isChosen).toBe(false);
             });
             it('does not change other answers to the same quenstion', () => {
-                expect(newStore.answers[secondUnselectedAnswer.id].isSelected).toBe(false);
+                expect(newStore.answers[secondNonChosenAnswer.id].isChosen).toBe(false);
             });
             it('does not change answers to other questions', () => {
-                expect(newStore.answers[unselectedAnswerToSecondQuestion.id].isSelected).toBe(false);
-                expect(newStore.answers[selectedAnswerToSecondQuestion.id].isSelected).toBe(true);
+                expect(newStore.answers[nonChosenAnswerToSecondQuestion.id].isChosen).toBe(false);
+                expect(newStore.answers[chosenAnswerToSecondQuestion.id].isChosen).toBe(true);
             });
         });
 
-        describe('when selecting an already selected answer', () => {
+        describe('when choosing an already chosen answer', () => {
             beforeEach(() => {
-                const action = store.selectAnswer(selectedAnswer.id);
+                const action = store.chooseAnswer(chosenAnswer.id);
                 newStore = store.reducer(theStore, action);
             });
-            it('it makes the answer unselected', () => {
-                expect(newStore.answers[selectedAnswer.id].isSelected).toBe(false);
+            it('it makes the answer non-chosen', () => {
+                expect(newStore.answers[chosenAnswer.id].isChosen).toBe(false);
             });
             it('it does not change other answers to the question', () => {
-                expect(newStore.answers[unselectedAnswer.id].isSelected).toBe(false);
+                expect(newStore.answers[nonChosenAnswer.id].isChosen).toBe(false);
             });
             it('does not change answers to other questions', () => {
-                expect(newStore.answers[unselectedAnswerToSecondQuestion.id].isSelected).toBe(false);
-                expect(newStore.answers[selectedAnswerToSecondQuestion.id].isSelected).toBe(true);
+                expect(newStore.answers[nonChosenAnswerToSecondQuestion.id].isChosen).toBe(false);
+                expect(newStore.answers[chosenAnswerToSecondQuestion.id].isChosen).toBe(true);
             });
         });
     });
 
     describe('for questions accepting more than one answer', () => {
         beforeEach(() => {
-            selectedAnswer = new helpers.AnswerBuilder().withSelected(true);
-            unselectedAnswer = new helpers.AnswerBuilder().withSelected(false);
-            secondSelectedAnswer = new helpers.AnswerBuilder().withSelected(true);
-            secondUnselectedAnswer = new helpers.AnswerBuilder().withSelected(false);
+            chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
+            nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
+            secondChosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
+            secondNonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
 
             question = new helpers.QuestionBuilder().
-                withAnswers([selectedAnswer, unselectedAnswer, secondSelectedAnswer, secondUnselectedAnswer]).
+                withAnswers([chosenAnswer, nonChosenAnswer, secondChosenAnswer, secondNonChosenAnswer]).
                 withAcceptsMultipleAnswers(true);
 
-            selectedAnswerToSecondQuestion = new helpers.AnswerBuilder().withSelected(true);
-            unselectedAnswerToSecondQuestion = new helpers.AnswerBuilder().withSelected(false);
+            chosenAnswerToSecondQuestion = new helpers.AnswerBuilder().withIsChosen(true);
+            nonChosenAnswerToSecondQuestion = new helpers.AnswerBuilder().withIsChosen(false);
             secondQuestion = new helpers.QuestionBuilder().
-                withAnswers([selectedAnswerToSecondQuestion, unselectedAnswerToSecondQuestion]).
+                withAnswers([chosenAnswerToSecondQuestion, nonChosenAnswerToSecondQuestion]).
                 withAcceptsMultipleAnswers(true);
 
             theStore = helpers.buildNormalizedQuestionnaire([question, secondQuestion]);
         });
 
-        describe('when selecting an unselected answer', () => {
+        describe('when choosing a non-chosen answer', () => {
             beforeEach(() => {
-                const action = store.selectAnswer(unselectedAnswer.id);
+                const action = store.chooseAnswer(nonChosenAnswer.id);
                 newStore = store.reducer(theStore, action);
             });
-            it('makes the answer selected', () => {
-                expect(newStore.answers[unselectedAnswer.id].isSelected).toBe(true);
+            it('makes the answer chosen', () => {
+                expect(newStore.answers[nonChosenAnswer.id].isChosen).toBe(true);
             });
             it('does not change other answers to the same questions', () => {
-                expect(newStore.answers[selectedAnswer.id].isSelected).toBe(true);
-                expect(newStore.answers[secondSelectedAnswer.id].isSelected).toBe(true);
-                expect(newStore.answers[secondUnselectedAnswer.id].isSelected).toBe(false);
+                expect(newStore.answers[chosenAnswer.id].isChosen).toBe(true);
+                expect(newStore.answers[secondChosenAnswer.id].isChosen).toBe(true);
+                expect(newStore.answers[secondNonChosenAnswer.id].isChosen).toBe(false);
             });
             it('does not change answers to other questions', () => {
-                expect(newStore.answers[unselectedAnswerToSecondQuestion.id].isSelected).toBe(false);
-                expect(newStore.answers[selectedAnswerToSecondQuestion.id].isSelected).toBe(true);
+                expect(newStore.answers[nonChosenAnswerToSecondQuestion.id].isChosen).toBe(false);
+                expect(newStore.answers[chosenAnswerToSecondQuestion.id].isChosen).toBe(true);
             });
         });
 
-        describe('when selecting an already selected answer', () => {
+        describe('when choosing an already chosen answer', () => {
             beforeEach(() => {
-                const action = store.selectAnswer(selectedAnswer.id);
+                const action = store.chooseAnswer(chosenAnswer.id);
                 newStore = store.reducer(theStore, action);
             });
-            it('makes the answer unselected', () => {
-                expect(newStore.answers[selectedAnswer.id].isSelected).toBe(false);
+            it('makes the answer non-chosen', () => {
+                expect(newStore.answers[chosenAnswer.id].isChosen).toBe(false);
             });
             it('does not change other answers to the same questions', () => {
-                expect(newStore.answers[unselectedAnswer.id].isSelected).toBe(false);
-                expect(newStore.answers[secondSelectedAnswer.id].isSelected).toBe(true);
-                expect(newStore.answers[secondUnselectedAnswer.id].isSelected).toBe(false);
+                expect(newStore.answers[nonChosenAnswer.id].isChosen).toBe(false);
+                expect(newStore.answers[secondChosenAnswer.id].isChosen).toBe(true);
+                expect(newStore.answers[secondNonChosenAnswer.id].isChosen).toBe(false);
             });
             it('does not change answers to other questions', () => {
-                expect(newStore.answers[unselectedAnswerToSecondQuestion.id].isSelected).toBe(false);
-                expect(newStore.answers[selectedAnswerToSecondQuestion.id].isSelected).toBe(true);
+                expect(newStore.answers[nonChosenAnswerToSecondQuestion.id].isChosen).toBe(false);
+                expect(newStore.answers[chosenAnswerToSecondQuestion.id].isChosen).toBe(true);
             });
         });
     });
 
-    describe('when loading active answers from persistent storage', () => {
+    describe('when loading chosen answers from persistent storage', () => {
 
-        it('should set question with id in request to active', () => {
-            unselectedAnswer = new helpers.AnswerBuilder().withSelected(false);
-            question = new helpers.QuestionBuilder().withAnswers([unselectedAnswer]);
+        it('should set question with id in request to chosen', () => {
+            nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
+            question = new helpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
             theStore = helpers.buildNormalizedQuestionnaire([question]);
-            const action = store.Persistence.loadSuccess([unselectedAnswer.id]);
+            const action = store.Persistence.loadSuccess([nonChosenAnswer.id]);
 
             newStore = store.reducer(theStore, action);
 
-            expect(newStore.answers[unselectedAnswer.id].isSelected).toBe(true);
+            expect(newStore.answers[nonChosenAnswer.id].isChosen).toBe(true);
         });
 
-        it('should set question with id not in request to not active', () => {
-            selectedAnswer = new helpers.AnswerBuilder().withSelected(true);
-            question = new helpers.QuestionBuilder().withAnswers([selectedAnswer]);
+        it('should set question with id not in request to not chosen', () => {
+            chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
+            question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
             theStore = helpers.buildNormalizedQuestionnaire([question]);
             const action = store.Persistence.loadSuccess([]);
 
             newStore = store.reducer(theStore, action);
 
-            expect(newStore.answers[selectedAnswer.id].isSelected).toBe(false);
+            expect(newStore.answers[chosenAnswer.id].isChosen).toBe(false);
         });
     });
 });

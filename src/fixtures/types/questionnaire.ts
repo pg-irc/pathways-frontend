@@ -18,9 +18,7 @@ export interface Answer {
     readonly id: Id;
     readonly questionId: Id;
     readonly text: LocalizedText;
-    // TODO fix terminology, use chose and isChosen throughout,
-    // replacing both selected and active
-    readonly isSelected: boolean;
+    readonly isChosen: boolean;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
 }
 

@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-let
 
-import { TaskBuilder, buildNormalizedStore } from '../../stores/__tests__/helpers/tasks_helpers';
+import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
 import * as stores from '../tasks';
 
 describe('tasks reducer', () => {

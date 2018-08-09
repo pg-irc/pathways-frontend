@@ -86,7 +86,7 @@ export class AnswerBuilder {
     id: string = aString();
     questionId: string = aString();
     text: string = aString();
-    isSelected: boolean = aBoolean();
+    isChosen: boolean = aBoolean();
     taxonomyTerms: TaxonomyTermReference[] = [];
 
     withLocaleCode(localeCode: string): AnswerBuilder {
@@ -109,8 +109,8 @@ export class AnswerBuilder {
         return this;
     }
 
-    withSelected(isSelected: boolean): AnswerBuilder {
-        this.isSelected = isSelected;
+    withIsChosen(isChosen: boolean): AnswerBuilder {
+        this.isChosen = isChosen;
         return this;
     }
 
@@ -124,7 +124,7 @@ export class AnswerBuilder {
             id: this.id,
             questionId: this.questionId,
             text: this.createLocalizedText(this.text),
-            isSelected: this.isSelected,
+            isChosen: this.isChosen,
             taxonomyTerms: this.taxonomyTerms,
         };
     }
