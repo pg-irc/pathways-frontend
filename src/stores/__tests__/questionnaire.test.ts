@@ -4,7 +4,7 @@ import * as store from '../questionnaire';
 import * as helpers from './helpers/questionnaire_helpers';
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { unwrapValidStoreOrThrow } from '../questionnaire/tagged_stores';
+import { unwrapValidStoreOrThrow, INVALID_STORE_TAG } from '../questionnaire/tagged_stores';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -184,6 +184,31 @@ describe('questionnaire reducer', () => {
             newStore = store.reducer(theStore, action);
 
             expect(unwrapValidStoreOrThrow(newStore).answers[chosenAnswer.id].isChosen).toBe(false);
+        });
+
+        describe('when handling a load error', () => {
+
+            it('should return a store tagged as invalid', () => {
+                chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
+                question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
+                theStore = helpers.buildNormalizedQuestionnaire([question]);
+                const action = store.Persistence.loadFailure('error');
+
+                newStore = store.reducer(theStore, action);
+
+                expect(newStore.tag).toBe(INVALID_STORE_TAG);
+            });
+
+            it('should return store state unchanged from before error', () => {
+                chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
+                question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
+                theStore = helpers.buildNormalizedQuestionnaire([question]);
+                const action = store.Persistence.loadFailure('error');
+
+                newStore = store.reducer(theStore, action);
+
+                expect(newStore.store).toBe(theStore.store);
+            });
         });
     });
 });

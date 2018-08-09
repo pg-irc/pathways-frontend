@@ -50,4 +50,6 @@ export namespace Persistence {
     );
 }
 
-export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction | Persistence.LoadSuccessAction;
+export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction
+    | Persistence.SaveSuccessAction | Persistence.SaveFailureAction
+    | Persistence.LoadRequestAction | Persistence.LoadSuccessAction | Persistence.LoadFailureAction;

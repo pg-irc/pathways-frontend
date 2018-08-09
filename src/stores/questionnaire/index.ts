@@ -8,10 +8,6 @@ import { Store, VALID_STORE_TAG, tagAsValidStore } from './tagged_stores';
 import { validStoreReducer } from './valid_store';
 
 export const reducer = (taggedStore: Store = buildDefaultStore(), action?: QuestionnaireAction): Store => {
-    if (!action) {
-        return taggedStore;
-    }
-
     switch (taggedStore.tag) {
         case VALID_STORE_TAG:
             return validStoreReducer(taggedStore.store, action);

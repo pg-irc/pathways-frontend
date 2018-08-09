@@ -14,18 +14,18 @@ function tagStore<T extends string, S>(tag: T, store: S): TaggedStore<T, S> {
 
 export const VALID_STORE_TAG = 'VALID_STORE_TAG';
 // tslint:disable-next-line:typedef
-export const tagAsValidStore = (store: ValidStore) => tagStore(VALID_STORE_TAG, store);
+export const tagAsValidStore = (store: ValidStore) => tagStore(VALID_STORE_TAG, store); // TODO rename to asValid
 export type TaggedValidStore = Readonly<ReturnType<typeof tagAsValidStore>>;
 
 export interface InvalidStore { }
 export const INVALID_STORE_TAG = 'ERROR_STORE_TAG';
 // tslint:disable-next-line:typedef
-export const tagAsInvalidStore = (store: InvalidStore) => tagStore(INVALID_STORE_TAG, store);
+export const tagAsInvalidStore = (store: InvalidStore) => tagStore(INVALID_STORE_TAG, store); // TODO rename to asInvalid
 export type TaggedInvalidStore = Readonly<ReturnType<typeof tagAsInvalidStore>>;
 
 export type Store = TaggedValidStore | TaggedInvalidStore;
 
-export const unwrapValidStoreOrThrow = (store: Store): ValidStore => {
+export const unwrapValidStoreOrThrow = (store: Store): ValidStore => { // TODO rename unwrapValidOrThrow
     if (store.tag === VALID_STORE_TAG) {
         return store.store;
     }

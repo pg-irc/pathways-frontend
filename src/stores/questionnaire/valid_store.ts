@@ -1,6 +1,6 @@
 import { Id, Answer, AnswersMap, Store as ValidStore } from '../../fixtures/types/questionnaire';
 import { QuestionnaireAction } from './actions';
-import { Store, tagAsValidStore } from './tagged_stores';
+import { Store, tagAsValidStore, tagAsInvalidStore } from './tagged_stores';
 import * as constants from '../../application/constants';
 import * as R from 'ramda';
 
@@ -8,7 +8,16 @@ export const validStoreReducer = (store: ValidStore, action?: QuestionnaireActio
     if (!action) {
         return tagAsValidStore(store);
     }
+
     switch (action.type) {
+        case constants.SAVE_CHOSEN_QUESTIONS_SUCCESS:
+        case constants.LOAD_CHOSEN_QUESTIONS_REQUEST:
+        case constants.SAVE_CHOSEN_QUESTIONS_FAILURE:
+            return tagAsValidStore(store);
+
+        case constants.LOAD_CHOSEN_QUESTIONS_FAILURE:
+            return tagAsInvalidStore(store);
+
         case constants.LOAD_CHOSEN_QUESTIONS_SUCCESS:
             return tagAsValidStore({
                 ...store,
