@@ -1,39 +1,33 @@
-import { Id, Answer, AnswersMap, Store } from '../../fixtures/types/questionnaire';
-import { buildQuestionnaireFixture } from '../../fixtures/buildFixtures';
-import { ChooseAnswerAction, SetActiveQuestionAction, Persistence } from './actions';
+import { Id, Answer, AnswersMap, Store as ValidStore } from '../../fixtures/types/questionnaire';
+import { QuestionnaireAction } from './actions';
+import { Store, tagAsValidStore } from './tagged_stores';
 import * as constants from '../../application/constants';
 import * as R from 'ramda';
 
-type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction | Persistence.LoadSuccessAction;
-
-export const reducer = (store: Store = buildDefaultStore(), action?: QuestionnaireAction): Store => {
+export const validStoreReducer = (store: ValidStore, action?: QuestionnaireAction): Store => {
     if (!action) {
-        return store;
+        return tagAsValidStore(store);
     }
     switch (action.type) {
         case constants.LOAD_CHOSEN_QUESTIONS_SUCCESS:
-            return {
+            return tagAsValidStore({
                 ...store,
                 answers: chooseAnswersWithIdsIn(store.answers, action.payload.chosenAnswers),
-            };
+            });
 
         case constants.CHOOSE_ANSWER:
-            return toggleIsChosenFlagForAnswer(store, action.payload.answerId);
+            return tagAsValidStore(toggleIsChosenFlagForAnswer(store, action.payload.answerId));
 
         case constants.SET_ACTIVE_QUESTION:
-            return {
+            return tagAsValidStore({
                 ...store,
                 activeQuestion: action.payload.activeQuestion,
-            };
+            });
 
         default:
-            return store;
+            return tagAsValidStore(store);
     }
 };
-
-const buildDefaultStore = (): Store => (
-    buildQuestionnaireFixture()
-);
 
 const chooseAnswersWithIdsIn = (answerMap: AnswersMap, idsToSetToChosen: ReadonlyArray<Id>): AnswersMap => {
     const setToChosenIfIdMatches = (answer: Answer): Answer => ({
@@ -43,19 +37,19 @@ const chooseAnswersWithIdsIn = (answerMap: AnswersMap, idsToSetToChosen: Readonl
     return R.mapObjIndexed(setToChosenIfIdMatches, answerMap);
 };
 
-const toggleIsChosenFlagForAnswer = (store: Store, answerId: string): Store => (
+const toggleIsChosenFlagForAnswer = (store: ValidStore, answerId: string): ValidStore => (
     canChooseMultiple(store, answerId) ?
         toggleIsChosenFlag(store, answerId) :
         toggleIsChosenFlagForSingleAnswer(store, answerId)
 );
 
-const canChooseMultiple = (store: Store, answerId: string): boolean => {
+const canChooseMultiple = (store: ValidStore, answerId: string): boolean => {
     const answer = store.answers[answerId];
     const question = store.questions[answer.questionId];
     return question.acceptMultipleAnswers;
 };
 
-const toggleIsChosenFlag = (store: Store, answerId: string): Store => {
+const toggleIsChosenFlag = (store: ValidStore, answerId: string): ValidStore => {
     const answer = store.answers[answerId];
     return {
         ...store,
@@ -69,14 +63,14 @@ const toggleIsChosenFlag = (store: Store, answerId: string): Store => {
     };
 };
 
-const toggleIsChosenFlagForSingleAnswer = (store: Store, answerId: string): Store => {
+const toggleIsChosenFlagForSingleAnswer = (store: ValidStore, answerId: string): ValidStore => {
     const answer = store.answers[answerId];
     return answer.isChosen ?
         toggleIsChosenFlag(store, answerId) :
         toggleIsChosenFlag(setAllAnswersForQuestionToNonChosen(store, answer.questionId), answerId);
 };
 
-const setAllAnswersForQuestionToNonChosen = (store: Store, questionId: string): Store => {
+const setAllAnswersForQuestionToNonChosen = (store: ValidStore, questionId: string): ValidStore => {
     const setToNonChosenIfQuestionIdMatches = (accumulator: AnswersMap, answerId: string): AnswersMap => {
         const answer = store.answers[answerId];
         if (answer.questionId === questionId) {

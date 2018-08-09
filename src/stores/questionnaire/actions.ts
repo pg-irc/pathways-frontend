@@ -49,3 +49,5 @@ export namespace Persistence {
         helpers.makeAction(constants.LOAD_CHOSEN_QUESTIONS_FAILURE, { message })
     );
 }
+
+export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction | Persistence.LoadSuccessAction;

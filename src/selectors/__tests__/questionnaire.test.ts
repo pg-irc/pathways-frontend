@@ -6,6 +6,7 @@ import * as testHelpers from '../../stores/__tests__/helpers/questionnaire_helpe
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
+import { unwrapValidStoreOrThrow } from '../../stores/questionnaire/tagged_stores';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
@@ -81,7 +82,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosenAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForChosenAnswers(normalizedData.answers);
+        const result = selector.filterTaxonomyTermsForChosenAnswers(unwrapValidStoreOrThrow(normalizedData).answers);
 
         expect(result).toEqual([theTaxonomyTerm]);
     });
@@ -92,7 +93,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForChosenAnswers(normalizedData.answers);
+        const result = selector.filterTaxonomyTermsForChosenAnswers(unwrapValidStoreOrThrow(normalizedData).answers);
 
         expect(result).toEqual([]);
     });
@@ -105,7 +106,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosendAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForChosenAnswers(normalizedData.answers);
+        const result = selector.filterTaxonomyTermsForChosenAnswers(unwrapValidStoreOrThrow(normalizedData).answers);
 
         expect(result).toContain(theTaxonomyTerm);
         expect(result).toContain(theSecondTaxonomyTerm);
@@ -119,7 +120,7 @@ describe('getting ids of all chosen answers', () => {
         const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([aChosenAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
 
-        const result = getIdsOfChosenAnswers(normalizedData.answers);
+        const result = getIdsOfChosenAnswers(unwrapValidStoreOrThrow(normalizedData).answers);
 
         expect(result).toContain(aChosenAnswer.id);
     });
@@ -130,7 +131,7 @@ describe('getting ids of all chosen answers', () => {
         const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
         const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
 
-        const result = getIdsOfChosenAnswers(normalizedData.answers);
+        const result = getIdsOfChosenAnswers(unwrapValidStoreOrThrow(normalizedData).answers);
 
         expect(result).not.toContain(aNonChosenAnswer.id);
     });

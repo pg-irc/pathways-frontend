@@ -3,6 +3,7 @@
 import * as helpers from './helpers/questionnaire_helpers';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { Answer, Question } from '../questionnaire';
+import { unwrapValidStoreOrThrow } from '../questionnaire/tagged_stores';
 
 describe('questionnaire test helper for', () => {
 
@@ -100,7 +101,7 @@ describe('questionnaire test helper for', () => {
 
             const store = helpers.buildNormalizedQuestionnaire([builder]);
 
-            expect(store.questions[questionId]).toHaveProperty('id', questionId);
+            expect(unwrapValidStoreOrThrow(store).questions[questionId]).toHaveProperty('id', questionId);
         });
 
         it('adds answers keyed on their ids', () => {
@@ -112,7 +113,7 @@ describe('questionnaire test helper for', () => {
 
             const store = helpers.buildNormalizedQuestionnaire([questionBuilder]);
 
-            expect(store.answers[answerId]).toHaveProperty('id', answerId);
+            expect(unwrapValidStoreOrThrow(store).answers[answerId]).toHaveProperty('id', answerId);
         });
 
         it('sets question id on answers', () => {
@@ -126,7 +127,7 @@ describe('questionnaire test helper for', () => {
 
             const store = helpers.buildNormalizedQuestionnaire([questionBuilder]);
 
-            expect(store.answers[answerId].questionId).toBe(questionId);
+            expect(unwrapValidStoreOrThrow(store).answers[answerId].questionId).toBe(questionId);
         });
     });
 });
