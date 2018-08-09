@@ -1,10 +1,10 @@
-import { buildQuestionnaireFixture } from '../fixtures/buildFixtures';
-import { Id, Answer, AnswersMap, Store } from '../fixtures/types/questionnaire';
-import * as constants from '../application/constants';
-import * as helpers from './helpers/make_action';
+import { buildQuestionnaireFixture } from '../../fixtures/buildFixtures';
+import { Id, Answer, AnswersMap, Store } from '../../fixtures/types/questionnaire';
+import * as constants from '../../application/constants';
+import * as helpers from '../helpers/make_action';
 import * as R from 'ramda';
 
-export { Id, Question, Answer, QuestionsMap, AnswersMap, Store } from '../fixtures/types/questionnaire';
+export { Id, Question, Answer, QuestionsMap, AnswersMap, Store } from '../../fixtures/types/questionnaire';
 
 const buildDefaultStore = (): Store => (
     buildQuestionnaireFixture()
