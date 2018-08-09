@@ -71,7 +71,7 @@ describe('the saveActiveQuestions saga', () => {
         expect(result).toEqual(select(selectIdsOfActiveQuestions));
     });
 
-    describe('after selectig active question ids from store', () => {
+    describe('after selecting active question ids from store', () => {
         let saga: IterableIterator<SelectEffect | CallEffect | PutEffect<Persistence.SaveSuccessAction | Persistence.SaveFailureAction>>;
 
         beforeEach(() => {

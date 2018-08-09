@@ -90,7 +90,7 @@ const setAnswersWithIdsToActive = (answerMap: AnswersMap, idsToSetToActive: Read
         ...answer,
         isSelected: R.contains(answer.id, idsToSetToActive),
     });
-    return R.mapObjIndexed(setToActiveIfIdMatches, answerMap);
+    return R.map(setToActiveIfIdMatches, answerMap);
 };
 
 const toggleSelectionForAnswer = (store: Store, answerId: string): Store => (
