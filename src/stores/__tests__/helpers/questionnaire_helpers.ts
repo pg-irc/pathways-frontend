@@ -5,10 +5,10 @@ import { aString, aBoolean } from '../../../application/__tests__/helpers/random
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies';
-import { tagAsValidStore } from '../../questionnaire/tagged_stores';
+import { asValid } from '../../questionnaire/tagged_stores';
 
 export const buildNormalizedQuestionnaire = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
-    tagAsValidStore({
+    asValid({
         activeQuestion: aString(),
         questions: buildQuestionMap(questions),
         answers: buildAnswerMap(questions),

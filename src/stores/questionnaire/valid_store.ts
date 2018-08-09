@@ -1,40 +1,40 @@
 import { Id, Answer, AnswersMap, Store as ValidStore } from '../../fixtures/types/questionnaire';
 import { QuestionnaireAction } from './actions';
-import { Store, tagAsValidStore, tagAsInvalidStore } from './tagged_stores';
+import { Store, asValid, asInvalid } from './tagged_stores';
 import * as constants from '../../application/constants';
 import * as R from 'ramda';
 
 export const validStoreReducer = (store: ValidStore, action?: QuestionnaireAction): Store => {
     if (!action) {
-        return tagAsValidStore(store);
+        return asValid(store);
     }
 
     switch (action.type) {
         case constants.SAVE_CHOSEN_QUESTIONS_SUCCESS:
         case constants.LOAD_CHOSEN_QUESTIONS_REQUEST:
         case constants.SAVE_CHOSEN_QUESTIONS_FAILURE:
-            return tagAsValidStore(store);
+            return asValid(store);
 
         case constants.LOAD_CHOSEN_QUESTIONS_FAILURE:
-            return tagAsInvalidStore(store);
+            return asInvalid(store);
 
         case constants.LOAD_CHOSEN_QUESTIONS_SUCCESS:
-            return tagAsValidStore({
+            return asValid({
                 ...store,
                 answers: chooseAnswersWithIdsIn(store.answers, action.payload.chosenAnswers),
             });
 
         case constants.CHOOSE_ANSWER:
-            return tagAsValidStore(toggleIsChosenFlagForAnswer(store, action.payload.answerId));
+            return asValid(toggleIsChosenFlagForAnswer(store, action.payload.answerId));
 
         case constants.SET_ACTIVE_QUESTION:
-            return tagAsValidStore({
+            return asValid({
                 ...store,
                 activeQuestion: action.payload.activeQuestion,
             });
 
         default:
-            return tagAsValidStore(store);
+            return asValid(store);
     }
 };
 

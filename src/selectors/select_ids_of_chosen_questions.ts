@@ -1,10 +1,14 @@
 import { Store } from '../stores';
 import { Id, AnswersMap } from '../stores/questionnaire';
-import { unwrapValidStoreOrThrow } from '../stores/questionnaire/tagged_stores';
+import { toValidOrThrow, ValidStore } from '../stores/questionnaire/tagged_stores';
 import * as R from 'ramda';
 
 export const selectIdsOfChosenAnswers = (appStore: Store): ReadonlyArray<Id> => (
-    getIdsOfChosenAnswers(unwrapValidStoreOrThrow(appStore.questionnaireInStore).answers)
+    getIdsOfChosenAnswers(pickQuestionnaire(appStore).answers)
+);
+
+const pickQuestionnaire = (appStore: Store): ValidStore => (
+    toValidOrThrow(appStore.questionnaireInStore)
 );
 
 export const getIdsOfChosenAnswers = (answers: AnswersMap): ReadonlyArray<Id> => (

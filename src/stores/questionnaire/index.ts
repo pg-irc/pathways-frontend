@@ -4,7 +4,7 @@ export { Store, ValidStore } from './tagged_stores';
 
 import { buildQuestionnaireFixture } from '../../fixtures/buildFixtures';
 import { QuestionnaireAction } from './actions';
-import { Store, VALID_STORE_TAG, tagAsValidStore } from './tagged_stores';
+import { Store, VALID_STORE_TAG, asValid } from './tagged_stores';
 import { validStoreReducer } from './valid_store';
 
 export const reducer = (taggedStore: Store = buildDefaultStore(), action?: QuestionnaireAction): Store => {
@@ -17,5 +17,5 @@ export const reducer = (taggedStore: Store = buildDefaultStore(), action?: Quest
 };
 
 const buildDefaultStore = (): Store => (
-    tagAsValidStore(buildQuestionnaireFixture())
+    asValid(buildQuestionnaireFixture())
 );
