@@ -37,10 +37,5 @@ export function selectTaskServices(taskId: TaskId, store: Store): TaskServices {
 }
 
 export function createRelatedServicesQueryFromTask(task: Task): string {
-    // TODO: Determine better method of getting / creating a search query.
-    //       The current approach is to split task title into a list and take
-    //       the first three words. The intention being to provide some
-    //       (hopefully) relevant keywords but not so many that we don't get any
-    //       results.
     return take(3, task.title.split(' ')).join(',');
 }

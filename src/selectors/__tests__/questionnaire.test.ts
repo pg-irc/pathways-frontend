@@ -1,5 +1,6 @@
 // tslint:disable:no-expression-statement no-let
 import * as selector from '../questionnaire';
+import { getIdsOfActiveAnswers } from '../select_ids_of_active_questions';
 import { anInteger } from '../../application/__tests__/helpers/random_test_values';
 import * as testHelpers from '../../stores/__tests__/helpers/questionnaire_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
@@ -108,5 +109,29 @@ describe('questionnaire selector', () => {
 
         expect(result).toContain(theTaxonomyTerm);
         expect(result).toContain(theSecondTaxonomyTerm);
+    });
+});
+
+describe('getting ids of all active questions', () => {
+    it('should include ids for active questions', () => {
+        const locale = new LocaleBuilder().build();
+        const anActiveAnswer = new testHelpers.AnswerBuilder().withSelected(true).withLocaleCode(locale.code);
+        const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anActiveAnswer]);
+        const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
+
+        const result = getIdsOfActiveAnswers(normalizedData.answers);
+
+        expect(result).toContain(anActiveAnswer.id);
+    });
+
+    it('should not include ids for inactive questions', () => {
+        const locale = new LocaleBuilder().build();
+        const anInactiveAnswer = new testHelpers.AnswerBuilder().withSelected(false).withLocaleCode(locale.code);
+        const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anInactiveAnswer]);
+        const normalizedData = testHelpers.buildNormalizedQuestionnaire([aQuestion]);
+
+        const result = getIdsOfActiveAnswers(normalizedData.answers);
+
+        expect(result).not.toContain(anInactiveAnswer.id);
     });
 });

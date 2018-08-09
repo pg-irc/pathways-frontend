@@ -50,7 +50,6 @@ export const reducer = (store: Store = buildDefaultStore(), action?: TaskAction)
             return removeFromTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
         case constants.TOGGLE_COMPLETED:
             return toggleCompletedValue(store, action.payload.taskId);
-        // TODO
         case constants.SHARE:
         default:
             return store;

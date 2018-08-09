@@ -12,8 +12,6 @@ export function serviceFromServiceData(data: any): Service { // tslint:disable-l
     // TODO: Perform appropriate data validation.
     //       Alternatively bring in a tool to do this for us, eg: Serializr
     const id: string = data.id || undefined;
-    // TODO: Determine how to handle localization from the API.
-    // TODO: Hard-coding 'en' for the meantime.
     const name: LocalizedText = { 'en': data.name || '' };
     const description: LocalizedText = { 'en': data.description || '' };
     return { id, name, description };

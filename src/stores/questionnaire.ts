@@ -1,7 +1,8 @@
 import { buildQuestionnaireFixture } from '../fixtures/buildFixtures';
-import { Id, AnswersMap, Store } from '../fixtures/types/questionnaire';
+import { Id, Answer, AnswersMap, Store } from '../fixtures/types/questionnaire';
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
+import * as R from 'ramda';
 
 export { Id, Question, Answer, QuestionsMap, AnswersMap, Store } from '../fixtures/types/questionnaire';
 
@@ -11,7 +12,6 @@ const buildDefaultStore = (): Store => (
 
 export type SelectAnswerAction = Readonly<ReturnType<typeof selectAnswer>>;
 export type SetActiveQuestionAction = Readonly<ReturnType<typeof setActiveQuestion>>;
-type QuestionnaireAction = SelectAnswerAction | SetActiveQuestionAction;
 
 // tslint:disable-next-line:typedef
 export const selectAnswer = (answerId: Id) => (
@@ -23,21 +23,74 @@ export const setActiveQuestion = (activeQuestion: Id) => (
     helpers.makeAction(constants.SET_ACTIVE_QUESTION, { activeQuestion })
 );
 
+export namespace Persistence {
+
+    export type SaveSuccessAction = Readonly<ReturnType<typeof saveSuccess>>;
+    export type SaveFailureAction = Readonly<ReturnType<typeof saveFailure>>;
+
+    export type LoadRequestAction = Readonly<ReturnType<typeof loadRequest>>;
+    export type LoadSuccessAction = Readonly<ReturnType<typeof loadSuccess>>;
+    export type LoadFailureAction = Readonly<ReturnType<typeof loadFailure>>;
+
+    // tslint:disable-next-line:typedef
+    export const saveSuccess = () => (
+        helpers.makeAction(constants.SAVE_ACTIVE_QUESTIONS_SUCCESS)
+    );
+
+    // tslint:disable-next-line:typedef
+    export const saveFailure = (message: string) => (
+        helpers.makeAction(constants.SAVE_ACTIVE_QUESTIONS_FAILURE, { message })
+    );
+
+    // tslint:disable-next-line:typedef
+    export const loadRequest = () => (
+        helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_REQUEST)
+    );
+
+    // tslint:disable-next-line:typedef
+    export const loadSuccess = (activeAnswers: ReadonlyArray<Id>) => (
+        helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_SUCCESS, { activeAnswers })
+    );
+
+    // tslint:disable-next-line:typedef
+    export const loadFailure = (message: string) => (
+        helpers.makeAction(constants.LOAD_ACTIVE_QUESTIONS_FAILURE, { message })
+    );
+}
+
+type QuestionnaireAction = SelectAnswerAction | SetActiveQuestionAction | Persistence.LoadSuccessAction;
+
 export const reducer = (store: Store = buildDefaultStore(), action?: QuestionnaireAction): Store => {
     if (!action) {
         return store;
     }
     switch (action.type) {
+        case constants.LOAD_ACTIVE_QUESTIONS_SUCCESS:
+            return {
+                ...store,
+                answers: setAnswersWithIdsToActive(store.answers, action.payload.activeAnswers),
+            };
+
         case constants.SELECT_ANSWER:
             return toggleSelectionForAnswer(store, action.payload.answerId);
+
         case constants.SET_ACTIVE_QUESTION:
             return {
                 ...store,
                 activeQuestion: action.payload.activeQuestion,
             };
+
         default:
             return store;
     }
+};
+
+const setAnswersWithIdsToActive = (answerMap: AnswersMap, idsToSetToActive: ReadonlyArray<Id>): AnswersMap => {
+    const setToActiveIfIdMatches = (answer: Answer): Answer => ({
+        ...answer,
+        isSelected: R.contains(answer.id, idsToSetToActive),
+    });
+    return R.map(setToActiveIfIdMatches, answerMap);
 };
 
 const toggleSelectionForAnswer = (store: Store, answerId: string): Store => (

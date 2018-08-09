@@ -33,7 +33,6 @@ export const LearnSectionComponent: React.StatelessComponent<AllHomePageProps> =
 };
 
 const renderLearnButton = R.curry((props: AllHomePageProps, section: ExploreSection): JSX.Element => {
-    // TODO Improve the "more" functionality once designs are nailed down
     return section.id === 's8' ? renderLearnMoreButton(props) : renderLearnSectionButton(props, section);
 });
 
