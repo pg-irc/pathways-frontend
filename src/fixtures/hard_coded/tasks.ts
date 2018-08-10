@@ -8,6 +8,7 @@ export const buildTasksFixture = (): Store => {
         taskMap: {
             't1': {
                 'id': 't1',
+                'chapter': '',
                 'title': {
                     'en': 'Enroll child in elementary school.',
                     'ar': 'تسجيل الطفل في المدرسة الابتدائية.',
@@ -31,6 +32,7 @@ export const buildTasksFixture = (): Store => {
             },
             't2': {
                 'id': 't2',
+                'chapter': '',
                 'title': {
                     'en': 'Register for Language Instruction for Newcomer to Canada (LINC) classes.',
                     'ar': 'سجل لتعليم اللغة للدروس الوافدة الجدد إلى كندا (LINC).',
@@ -54,6 +56,7 @@ export const buildTasksFixture = (): Store => {
             },
             't3': {
                 'id': 't3',
+                'chapter': '',
                 'title': {
                     'en': 'Get support for English language learning for children.',
                     'ar': 'احصل على دعم لتعلم اللغة الإنجليزية للأطفال.',
@@ -77,6 +80,7 @@ export const buildTasksFixture = (): Store => {
             },
             't4': {
                 'id': 't4',
+                'chapter': '',
                 'title': {
                     'en': 'Open a bank account',
                     'ar': 'افتح حساب بنكي',
@@ -100,6 +104,7 @@ export const buildTasksFixture = (): Store => {
             },
             't5': {
                 'id': 't5',
+                'chapter': '',
                 'title': {
                     'en': 'Get social insurance number (SIN)',
                     'ar': 'الحصول على رقم التأمين الاجتماعي (SIN)',
