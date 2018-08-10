@@ -1,8 +1,8 @@
-import { InvalidStore, AnyTaggedStore } from './tagged_stores';
+import { InvalidStore, Store } from './tagged_stores';
 import { QuestionnaireAction } from './actions';
 import * as constants from '../../application/constants';
 
-export const reduceInvalidStore = (store: InvalidStore, action?: QuestionnaireAction): AnyTaggedStore => {
+export const reduceInvalidStore = (store: InvalidStore, action?: QuestionnaireAction): Store => {
     if (!action) {
         return store;
     }

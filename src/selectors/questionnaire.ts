@@ -32,8 +32,8 @@ export const selectActiveQuestion = (appStore: Store): model.Id => (
     toValidOrThrow(appStore.questionnaireInStore).activeQuestion
 );
 
-export const denormalizeQuestions = (locale: Locale, modelStore: model.AnyTaggedStore): Questionnaire => {
-    const { questions, answers }: model.Store = toValidOrThrow(modelStore);
+export const denormalizeQuestions = (locale: Locale, modelStore: model.Store): Questionnaire => {
+    const { questions, answers }: model.ValidStore = toValidOrThrow(modelStore);
 
     return Object.keys(questions).map((key: string, index: number) => {
         const question: model.Question = questions[key];

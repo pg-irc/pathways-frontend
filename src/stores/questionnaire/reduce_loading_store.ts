@@ -1,17 +1,17 @@
 import * as constants from '../../application/constants';
 import * as R from 'ramda';
-import { Id, Answer, AnswersMap, Store } from '../../fixtures/types/questionnaire';
-import { LoadingStore, AnyTaggedStore, InvalidStore } from './tagged_stores';
+import { Id, Answer, AnswersMap, ValidStore } from '../../fixtures/types/questionnaire';
+import { LoadingStore, Store, InvalidStore } from './tagged_stores';
 import { QuestionnaireAction } from './actions';
 
-export const reduceLoadingStore = (store: LoadingStore, action?: QuestionnaireAction): AnyTaggedStore => {
+export const reduceLoadingStore = (store: LoadingStore, action?: QuestionnaireAction): Store => {
     if (!action) {
         return store;
     }
 
     switch (action.type) {
         case constants.LOAD_CHOSEN_QUESTIONS_SUCCESS:
-            return new Store({
+            return new ValidStore({
                 ...store.lastValidStore,
                 answers: chooseAnswersWithIdsIn(store.lastValidStore.answers, action.payload.chosenAnswers),
             });

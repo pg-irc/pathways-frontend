@@ -34,7 +34,7 @@ export interface IStore {
 
 // tslint:disable:no-class no-this no-expression-statement
 
-export class Store {
+export class ValidStore {
     constructor(parameters: IStore) {
         this.questions = parameters.questions;
         this.answers = parameters.answers;

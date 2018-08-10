@@ -1,16 +1,16 @@
 export { Id, Question, Answer, QuestionsMap, AnswersMap } from '../../fixtures/types/questionnaire';
 export { LocalStorage, chooseAnswer, ChooseAnswerAction, setActiveQuestion, SetActiveQuestionAction } from './actions';
-export { AnyTaggedStore, Store } from './tagged_stores';
+export { Store, ValidStore } from './tagged_stores';
 
 import { buildQuestionnaireFixture } from '../../fixtures/buildFixtures';
 import { QuestionnaireAction } from './actions';
-import { Store, AnyTaggedStore, InvalidStore, LoadingStore } from './tagged_stores';
+import { Store, ValidStore, LoadingStore, InvalidStore } from './tagged_stores';
 import { reduceValidStore } from './reduce_valid_store';
 import { reduceLoadingStore } from './reduce_loading_store';
 import { reduceInvalidStore } from './reduce_invalid_store';
 
-export const reducer = (store: AnyTaggedStore = buildDefaultStore(), action?: QuestionnaireAction): AnyTaggedStore => {
-    if (store instanceof Store) {
+export const reducer = (store: Store = buildDefaultStore(), action?: QuestionnaireAction): Store => {
+    if (store instanceof ValidStore) {
         return reduceValidStore(store, action);
     }
     if (store instanceof LoadingStore) {
@@ -22,18 +22,18 @@ export const reducer = (store: AnyTaggedStore = buildDefaultStore(), action?: Qu
     return store;
 };
 
-const buildDefaultStore = (): Store => (
-    new Store(buildQuestionnaireFixture())
+const buildDefaultStore = (): ValidStore => (
+    new ValidStore(buildQuestionnaireFixture())
 );
 
-export const isValid = (store: AnyTaggedStore): boolean => (
-    store instanceof Store
+export const isValid = (store: Store): boolean => (
+    store instanceof ValidStore
 );
 
-export const isLoading = (store: AnyTaggedStore): boolean => (
+export const isLoading = (store: Store): boolean => (
     store instanceof LoadingStore
 );
 
-export const isInvalid = (store: AnyTaggedStore): boolean => (
+export const isInvalid = (store: Store): boolean => (
     store instanceof InvalidStore
 );

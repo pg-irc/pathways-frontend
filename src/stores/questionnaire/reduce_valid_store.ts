@@ -1,9 +1,9 @@
-import { AnswersMap, Store as ValidStore } from '../../fixtures/types/questionnaire';
+import { AnswersMap, ValidStore as ValidStore } from '../../fixtures/types/questionnaire';
 import { QuestionnaireAction } from './actions';
-import { AnyTaggedStore, LoadingStore } from './tagged_stores';
+import { Store, LoadingStore } from './tagged_stores';
 import * as constants from '../../application/constants';
 
-export const reduceValidStore = (store: ValidStore, action?: QuestionnaireAction): AnyTaggedStore => {
+export const reduceValidStore = (store: ValidStore, action?: QuestionnaireAction): Store => {
     if (!action) {
         return store;
     }

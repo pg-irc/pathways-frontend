@@ -1,9 +1,9 @@
-import { Store } from '../types/questionnaire';
+import { ValidStore } from '../types/questionnaire';
 import { Taxonomies } from '../../application/constants';
 
 const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
-export const buildQuestionnaireFixture = (): Store => {
+export const buildQuestionnaireFixture = (): ValidStore => {
     return {
         activeQuestion: 'q1',
         questions: {

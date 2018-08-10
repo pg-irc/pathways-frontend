@@ -28,8 +28,8 @@ describe('questionnaire reducer', () => {
     let chosenAnswerToSecondQuestion: helpers.AnswerBuilder;
     let nonChosenAnswerToSecondQuestion: helpers.AnswerBuilder;
     let question, secondQuestion: helpers.QuestionBuilder;
-    let theStore: store.AnyTaggedStore;
-    let newStore: store.AnyTaggedStore;
+    let theStore: store.Store;
+    let newStore: store.Store;
 
     it('should return original store if the action is undefined', () => {
         theStore = helpers.buildValidStore([new helpers.QuestionBuilder()]);
