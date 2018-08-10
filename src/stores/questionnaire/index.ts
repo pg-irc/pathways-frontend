@@ -6,20 +6,20 @@ import { buildQuestionnaireFixture } from '../../fixtures/buildFixtures';
 import { QuestionnaireAction } from './actions';
 import { AnyTaggedStore, tagAsValid, TaggedValidStore } from './tagged_stores';
 import { VALID_STORE_TAG, LOADING_STORE_TAG, INVALID_STORE_TAG } from '../../application/constants';
-import { validStoreReducer } from './valid_store_reducer';
-import { loadingStoreReducer } from './loading_store_reducer';
-import { invalidStoreReducer } from './invalid_store_reducer';
+import { reduceValidStore } from './reduce_valid_store';
+import { reduceLoadingStore } from './reduce_loading_store';
+import { reduceInvalidStore } from './reduce_invalid_store';
 
 export const reducer = (taggedStore: AnyTaggedStore = buildDefaultStore(), action?: QuestionnaireAction): AnyTaggedStore => {
     switch (taggedStore.tag) {
         case VALID_STORE_TAG:
-            return validStoreReducer(taggedStore.store, action);
+            return reduceValidStore(taggedStore.store, action);
 
         case LOADING_STORE_TAG:
-            return loadingStoreReducer(taggedStore.store, action);
+            return reduceLoadingStore(taggedStore.store, action);
 
         case INVALID_STORE_TAG:
-            return invalidStoreReducer(taggedStore.store, action);
+            return reduceInvalidStore(taggedStore.store, action);
 
         default:
             return taggedStore;

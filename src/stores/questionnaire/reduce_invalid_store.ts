@@ -2,7 +2,7 @@ import { InvalidStore, AnyTaggedStore, tagAsInvalid, tagAsValid } from './tagged
 import { QuestionnaireAction } from './actions';
 import * as constants from '../../application/constants';
 
-export const invalidStoreReducer = (store: InvalidStore, action?: QuestionnaireAction): AnyTaggedStore => {
+export const reduceInvalidStore = (store: InvalidStore, action?: QuestionnaireAction): AnyTaggedStore => {
     if (!action) {
         return tagAsInvalid(store);
     }

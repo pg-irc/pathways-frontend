@@ -4,7 +4,7 @@ import { Id, Answer, AnswersMap } from '../../fixtures/types/questionnaire';
 import { tagAsLoading, tagAsValid, LoadingStore, AnyTaggedStore, tagAsInvalid } from './tagged_stores';
 import { QuestionnaireAction } from './actions';
 
-export const loadingStoreReducer = (store: LoadingStore, action?: QuestionnaireAction): AnyTaggedStore => {
+export const reduceLoadingStore = (store: LoadingStore, action?: QuestionnaireAction): AnyTaggedStore => {
     if (!action) {
         return tagAsLoading(store);
     }
@@ -29,5 +29,5 @@ const chooseAnswersWithIdsIn = (answerMap: AnswersMap, idsToSetToChosen: Readonl
         ...answer,
         isChosen: R.contains(answer.id, idsToSetToChosen),
     });
-    return R.mapObjIndexed(setToChosenIfIdMatches, answerMap);
+    return R.map(setToChosenIfIdMatches, answerMap);
 };
