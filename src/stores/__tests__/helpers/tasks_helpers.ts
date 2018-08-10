@@ -9,6 +9,7 @@ import { TaxonomyTermReference } from '../../../selectors/taxonomies';
 export class TaskBuilder {
     localeCode: string = aString();
     id: store.Id = aString();
+    chapter: string = aString();
     title: string = aString();
     description: string = aString();
     taxonomyTerms: TaxonomyTermReference[] = [];
@@ -26,6 +27,11 @@ export class TaskBuilder {
 
     withId(id: string): TaskBuilder {
         this.id = id;
+        return this;
+    }
+
+    withChapter(chapter: string): TaskBuilder {
+        this.chapter = chapter;
         return this;
     }
 
@@ -77,6 +83,7 @@ export class TaskBuilder {
     build(): store.Task {
         return {
             id: this.id,
+            chapter: this.chapter,
             title: this.createLocalizedText(this.title),
             description: this.createLocalizedText(this.description),
             taxonomyTerms: this.taxonomyTerms,

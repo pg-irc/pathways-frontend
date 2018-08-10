@@ -5,6 +5,7 @@ export const buildArticlesFixture = (): Store => (
         articles: {
             'a1': {
                 'id': 'a1',
+                'chapter': '',
                 'title': {
                     'en': 'British Columbia\'s Education System',
                     'ar': 'نظام التعليم في كولومبيا البريطانية',
@@ -23,6 +24,7 @@ export const buildArticlesFixture = (): Store => (
             },
             'a2': {
                 'id': 'a2',
+                'chapter': '',
                 'title': {
                     'en': 'Elementary, middle, and secondary school',
                     'ar': 'المدرسة الابتدائية والمتوسطة والثانوية',

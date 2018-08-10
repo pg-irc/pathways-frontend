@@ -8,6 +8,7 @@ import { Id as TaskId } from '../../tasks';
 export class ArticleBuilder {
     localeCode: string = aString();
     id: Id = aString();
+    chapter: string = aString();
     title: string = aString();
     description: string = aString();
     taxonomyTerms: TaxonomyTermReference[] = [];
@@ -23,6 +24,11 @@ export class ArticleBuilder {
 
     withId(id: string): ArticleBuilder {
         this.id = id;
+        return this;
+    }
+
+    withChapter(chapter: string): ArticleBuilder {
+        this.chapter = chapter;
         return this;
     }
 
@@ -59,6 +65,7 @@ export class ArticleBuilder {
     build(): Article {
         return {
             id: this.id,
+            chapter: this.chapter,
             title: new LocalizedTextBuilder(this.localeCode, this.title).build(),
             description: new LocalizedTextBuilder(this.localeCode, this.description).build(),
             relatedTasks: this.relatedTasks,

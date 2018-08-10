@@ -6,6 +6,7 @@ export type Id = string;
 
 export interface Article {
     readonly id: Id;
+    readonly chapter: string;
     readonly title: LocalizedText;
     readonly description: LocalizedText;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
