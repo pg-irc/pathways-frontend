@@ -4,8 +4,7 @@ import * as store from '../questionnaire';
 import * as helpers from './helpers/questionnaire_helpers';
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { toValidOrThrow, TaggedLoadingStore } from '../questionnaire/tagged_stores';
-import { INVALID_STORE_TAG, LOADING_STORE_TAG } from '../../application/constants';
+import { toValidOrThrow, LoadingStore, InvalidStore } from '../questionnaire/tagged_stores';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -199,13 +198,12 @@ describe('questionnaire reducer', () => {
             });
 
             it('should return a store tagged as loading', () => {
-                expect(newStore.tag).toBe(LOADING_STORE_TAG);
+                expect(newStore instanceof LoadingStore).toBeTruthy();
             });
 
             it('should return a store containing the last known valid state', () => {
-                if (newStore.tag === LOADING_STORE_TAG) {
-                    const loadingStore = newStore as TaggedLoadingStore;
-                    expect(loadingStore.store.lastValidState).toBe(theStore.store);
+                if (newStore instanceof LoadingStore) {
+                    expect(newStore.lastValidStore).toBe(theStore);
                 }
             });
         });
@@ -220,7 +218,7 @@ describe('questionnaire reducer', () => {
 
                 newStore = store.reducer(theStore, action);
 
-                expect(newStore.tag).toBe(INVALID_STORE_TAG);
+                expect(newStore instanceof InvalidStore).toBeTruthy();
             });
 
             it('should return store state unchanged from before error', () => {
@@ -231,7 +229,7 @@ describe('questionnaire reducer', () => {
 
                 newStore = store.reducer(theStore, action);
 
-                expect(newStore.store).toBe(theStore.store);
+                expect(newStore).toBe(theStore);
             });
         });
     });

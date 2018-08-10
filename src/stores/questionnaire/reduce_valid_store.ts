@@ -1,28 +1,28 @@
 import { AnswersMap, Store as ValidStore } from '../../fixtures/types/questionnaire';
 import { QuestionnaireAction } from './actions';
-import { AnyTaggedStore, tagAsValid, tagAsLoading } from './tagged_stores';
+import { AnyTaggedStore, LoadingStore } from './tagged_stores';
 import * as constants from '../../application/constants';
 
 export const reduceValidStore = (store: ValidStore, action?: QuestionnaireAction): AnyTaggedStore => {
     if (!action) {
-        return tagAsValid(store);
+        return store;
     }
 
     switch (action.type) {
         case constants.SET_ACTIVE_QUESTION:
-            return tagAsValid({
+            return new ValidStore({
                 ...store,
                 activeQuestion: action.payload.activeQuestion,
             });
 
         case constants.CHOOSE_ANSWER:
-            return tagAsValid(toggleIsChosenFlagForAnswer(store, action.payload.answerId));
+            return new ValidStore(toggleIsChosenFlagForAnswer(store, action.payload.answerId));
 
         case constants.LOAD_CHOSEN_QUESTIONS_REQUEST:
-            return tagAsLoading({ lastValidState: store });
+            return new LoadingStore(store, 0);
 
         default:
-            return tagAsValid(store);
+            return store;
     }
 };
 

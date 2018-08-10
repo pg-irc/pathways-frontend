@@ -1,17 +1,17 @@
-import { InvalidStore, AnyTaggedStore, tagAsInvalid, tagAsValid } from './tagged_stores';
+import { InvalidStore, AnyTaggedStore } from './tagged_stores';
 import { QuestionnaireAction } from './actions';
 import * as constants from '../../application/constants';
 
 export const reduceInvalidStore = (store: InvalidStore, action?: QuestionnaireAction): AnyTaggedStore => {
     if (!action) {
-        return tagAsInvalid(store);
+        return store;
     }
 
     switch (action.type) {
         case constants.CLEAR_ERROR_STATE:
-            return tagAsValid(store.lastValidState);
+            return store.lastValidStore;
 
         default:
-            return tagAsInvalid(store);
+            return store;
     }
 };

@@ -5,25 +5,21 @@ import { aString, aBoolean } from '../../../application/__tests__/helpers/random
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies';
-import { tagAsValid, tagAsLoading } from '../../questionnaire/tagged_stores';
+import { Store, LoadingStore } from '../../questionnaire/tagged_stores';
 
-export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): store.AnyTaggedStore => (
-    tagAsValid({
+export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
+    new Store({
         activeQuestion: aString(),
         questions: buildQuestionMap(questions),
         answers: buildAnswerMap(questions),
     })
 );
 
-export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.AnyTaggedStore => (
-    tagAsLoading({
-        lastValidState: {
-            activeQuestion: aString(),
-            questions: buildQuestionMap(questions),
-            answers: buildAnswerMap(questions),
-        },
-    })
-);
+export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.AnyTaggedStore => {
+    const lastValidStore = buildValidStore(questions);
+    const progress = 0;
+    return new LoadingStore(lastValidStore, progress);
+};
 
 const buildQuestionMap = (questions: ReadonlyArray<QuestionBuilder>): store.QuestionsMap => {
     const buildAndMapToIds = (map: store.QuestionsMap, builder: QuestionBuilder): store.QuestionsMap => {
