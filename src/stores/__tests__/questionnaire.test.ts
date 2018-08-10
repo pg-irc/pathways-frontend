@@ -215,7 +215,7 @@ describe('questionnaire reducer', () => {
             it('should return a store tagged as invalid', () => {
                 chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
                 question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
-                theStore = helpers.buildValidStore([question]);
+                theStore = helpers.buildLoadingStore([question]);
                 const action = store.LocalStorage.loadFailure('error');
 
                 newStore = store.reducer(theStore, action);

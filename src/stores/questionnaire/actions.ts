@@ -50,6 +50,14 @@ export namespace LocalStorage {
     );
 }
 
+// tslint:disable-next-line:typedef
+export const clearErrorState = () => (
+    helpers.makeAction(constants.CLEAR_ERROR_STATE)
+);
+
+export type ClearErrorAction = Readonly<ReturnType<typeof clearErrorState>>;
+
 export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction
     | LocalStorage.SaveSuccessAction | LocalStorage.SaveFailureAction
-    | LocalStorage.LoadRequestAction | LocalStorage.LoadSuccessAction | LocalStorage.LoadFailureAction;
+    | LocalStorage.LoadRequestAction | LocalStorage.LoadSuccessAction | LocalStorage.LoadFailureAction
+    | ClearErrorAction;

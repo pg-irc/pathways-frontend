@@ -8,7 +8,9 @@ export const tagAsValid = (store: ValidStore) => tagStore(VALID_STORE_TAG, store
 
 export type TaggedValidStore = Readonly<ReturnType<typeof tagAsValid>>;
 
-export interface InvalidStore { }
+export interface InvalidStore {
+    readonly lastValidState: ValidStore;
+}
 
 // tslint:disable-next-line:typedef
 export const tagAsInvalid = (store: InvalidStore) => tagStore(INVALID_STORE_TAG, store);
