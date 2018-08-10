@@ -1,10 +1,10 @@
 export { Id, Question, Answer, QuestionsMap, AnswersMap } from '../../fixtures/types/questionnaire';
 export { LocalStorage, chooseAnswer, ChooseAnswerAction, setActiveQuestion, SetActiveQuestionAction } from './actions';
-export { Store, ValidStore } from './tagged_stores';
+export { Store, ValidStore } from './stores';
 
 import { buildQuestionnaireFixture } from '../../fixtures/buildFixtures';
 import { QuestionnaireAction } from './actions';
-import { Store, ValidStore, LoadingStore, InvalidStore } from './tagged_stores';
+import { Store, ValidStore, LoadingStore, InvalidStore } from './stores';
 import { reduceValidStore } from './reduce_valid_store';
 import { reduceLoadingStore } from './reduce_loading_store';
 import { reduceInvalidStore } from './reduce_invalid_store';
@@ -23,7 +23,7 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Questionnai
 };
 
 const buildDefaultStore = (): ValidStore => (
-    new ValidStore(buildQuestionnaireFixture())
+    buildQuestionnaireFixture()
 );
 
 export const isValid = (store: Store): boolean => (

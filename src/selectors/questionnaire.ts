@@ -4,7 +4,7 @@ import * as model from '../stores/questionnaire';
 import { selectLocalizedText, selectLocale } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from '../stores/taxonomies';
-import { toValidOrThrow } from '../stores/questionnaire/tagged_stores';
+import { toValidOrThrow } from '../stores/questionnaire/stores';
 
 export type Questionnaire = ReadonlyArray<Question>;
 

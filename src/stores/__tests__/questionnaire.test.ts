@@ -4,7 +4,7 @@ import * as store from '../questionnaire';
 import * as helpers from './helpers/questionnaire_helpers';
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { toValidOrThrow, LoadingStore, InvalidStore } from '../questionnaire/tagged_stores';
+import { toValidOrThrow, LoadingStore, InvalidStore } from '../questionnaire/stores';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -164,13 +164,15 @@ describe('questionnaire reducer', () => {
 
     describe('when loading chosen answers from persistent storage', () => {
 
+        let loadingStore: store.Store = undefined;
+
         it('should set question with id in request to chosen', () => {
             nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
             question = new helpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
-            theStore = helpers.buildLoadingStore([question]);
+            loadingStore = helpers.buildLoadingStore([question]);
             const action = store.LocalStorage.loadSuccess([nonChosenAnswer.id]);
 
-            newStore = store.reducer(theStore, action);
+            newStore = store.reducer(loadingStore, action);
 
             expect(toValidOrThrow(newStore).answers[nonChosenAnswer.id].isChosen).toBe(true);
         });
@@ -178,10 +180,10 @@ describe('questionnaire reducer', () => {
         it('should set question with id not in request to not chosen', () => {
             chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
             question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
-            theStore = helpers.buildLoadingStore([question]);
+            loadingStore = helpers.buildLoadingStore([question]);
             const action = store.LocalStorage.loadSuccess([]);
 
-            newStore = store.reducer(theStore, action);
+            newStore = store.reducer(loadingStore, action);
 
             expect(toValidOrThrow(newStore).answers[chosenAnswer.id].isChosen).toBe(false);
         });
@@ -197,39 +199,49 @@ describe('questionnaire reducer', () => {
                 newStore = store.reducer(theStore, action);
             });
 
-            it('should return a store tagged as loading', () => {
-                expect(newStore instanceof LoadingStore).toBeTruthy();
+            it('should return a loading store', () => {
+                expect(newStore).toBeInstanceOf(LoadingStore);
             });
 
             it('should return a store containing the last known valid state', () => {
                 if (newStore instanceof LoadingStore) {
-                    expect(newStore.lastValidStore).toBe(theStore);
+                    expect(newStore.lastValidState).toBe(theStore);
+                } else {
+                    fail();
                 }
             });
         });
 
         describe('when handling a load error', () => {
 
-            it('should return a store tagged as invalid', () => {
+            let theError: string = aString();
+            beforeEach(() => {
                 chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
                 question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
-                theStore = helpers.buildLoadingStore([question]);
-                const action = store.LocalStorage.loadFailure('error');
+                loadingStore = helpers.buildLoadingStore([question]);
+                const action = store.LocalStorage.loadFailure(theError);
 
-                newStore = store.reducer(theStore, action);
+                newStore = store.reducer(loadingStore, action);
+            });
 
-                expect(newStore instanceof InvalidStore).toBeTruthy();
+            it('should return an invalid store', () => {
+                expect(newStore).toBeInstanceOf(InvalidStore);
             });
 
             it('should return store state unchanged from before error', () => {
-                chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
-                question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
-                theStore = helpers.buildValidStore([question]);
-                const action = store.LocalStorage.loadFailure('error');
+                if (loadingStore instanceof LoadingStore && newStore instanceof InvalidStore) {
+                    expect(newStore.lastValidState).toBe(loadingStore.lastValidState);
+                } else {
+                    fail();
+                }
+            });
 
-                newStore = store.reducer(theStore, action);
-
-                expect(newStore).toBe(theStore);
+            it('should return store state with error message', () => {
+                if (newStore instanceof InvalidStore) {
+                    expect(newStore.error).toBe(theError);
+                } else {
+                    fail();
+                }
             });
         });
     });

@@ -3,7 +3,7 @@
 import * as helpers from './helpers/questionnaire_helpers';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { Answer, Question } from '../questionnaire';
-import { toValidOrThrow } from '../questionnaire/tagged_stores';
+import { toValidOrThrow } from '../questionnaire/stores';
 
 describe('questionnaire test helper for', () => {
 

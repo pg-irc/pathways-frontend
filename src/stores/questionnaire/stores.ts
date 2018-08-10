@@ -4,21 +4,19 @@ import { ValidStore } from '../../fixtures/types/questionnaire';
 export { ValidStore } from '../../fixtures/types/questionnaire';
 
 export class InvalidStore {
-    constructor(lastValidStore: ValidStore, error: string) {
-        this.lastValidStore = lastValidStore;
+    constructor(lastValidState: ValidStore, error: string) {
+        this.lastValidState = lastValidState;
         this.error = error;
     }
-    readonly lastValidStore: ValidStore;
+    readonly lastValidState: ValidStore;
     readonly error: string;
 }
 
 export class LoadingStore {
-    constructor(lastValidStore: ValidStore, percentDone: number) {
-        this.lastValidStore = lastValidStore;
-        this.percentDone = percentDone;
+    constructor(lastValidState: ValidStore) {
+        this.lastValidState = lastValidState;
     }
-    readonly lastValidStore: ValidStore;
-    readonly percentDone: number;
+    readonly lastValidState: ValidStore;
 }
 
 export type Store = ValidStore | InvalidStore | LoadingStore;

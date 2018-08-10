@@ -6,7 +6,7 @@ import * as testHelpers from '../../stores/__tests__/helpers/questionnaire_helpe
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
-import { toValidOrThrow } from '../../stores/questionnaire/tagged_stores';
+import { toValidOrThrow } from '../../stores/questionnaire/stores';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }

@@ -5,7 +5,7 @@ import { aString, aBoolean } from '../../../application/__tests__/helpers/random
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies';
-import { ValidStore, LoadingStore } from '../../questionnaire/tagged_stores';
+import { ValidStore, LoadingStore } from '../../questionnaire/stores';
 
 export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): store.ValidStore => (
     new ValidStore({
@@ -16,9 +16,8 @@ export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): stor
 );
 
 export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.Store => {
-    const lastValidStore = buildValidStore(questions);
-    const progress = 0;
-    return new LoadingStore(lastValidStore, progress);
+    const lastValidState = buildValidStore(questions);
+    return new LoadingStore(lastValidState);
 };
 
 const buildQuestionMap = (questions: ReadonlyArray<QuestionBuilder>): store.QuestionsMap => {

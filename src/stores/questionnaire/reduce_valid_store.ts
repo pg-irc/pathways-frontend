@@ -1,7 +1,8 @@
-import { AnswersMap, ValidStore as ValidStore } from '../../fixtures/types/questionnaire';
+import { ValidStore, Answer } from '../../fixtures/types/questionnaire';
 import { QuestionnaireAction } from './actions';
-import { Store, LoadingStore } from './tagged_stores';
+import { Store, LoadingStore } from './stores';
 import * as constants from '../../application/constants';
+import * as R from 'ramda';
 
 export const reduceValidStore = (store: ValidStore, action?: QuestionnaireAction): Store => {
     if (!action) {
@@ -16,10 +17,10 @@ export const reduceValidStore = (store: ValidStore, action?: QuestionnaireAction
             });
 
         case constants.CHOOSE_ANSWER:
-            return new ValidStore(toggleIsChosenFlagForAnswer(store, action.payload.answerId));
+            return toggleIsChosenFlagForAnswer(store, action.payload.answerId);
 
         case constants.LOAD_CHOSEN_QUESTIONS_REQUEST:
-            return new LoadingStore(store, 0);
+            return new LoadingStore(store);
 
         default:
             return store;
@@ -40,7 +41,7 @@ const canChooseMultiple = (store: ValidStore, answerId: string): boolean => {
 
 const toggleIsChosenFlag = (store: ValidStore, answerId: string): ValidStore => {
     const answer = store.answers[answerId];
-    return {
+    return new ValidStore({
         ...store,
         answers: {
             ...store.answers,
@@ -49,26 +50,23 @@ const toggleIsChosenFlag = (store: ValidStore, answerId: string): ValidStore => 
                 isChosen: !answer.isChosen,
             },
         },
-    };
+    });
 };
 
 const toggleIsChosenFlagForSingleAnswer = (store: ValidStore, answerId: string): ValidStore => {
     const answer = store.answers[answerId];
     return answer.isChosen ?
         toggleIsChosenFlag(store, answerId) :
-        toggleIsChosenFlag(setAllAnswersForQuestionToNonChosen(store, answer.questionId), answerId);
+        toggleIsChosenFlag(unchooseAllAnswersForQuestion(store, answer.questionId), answerId);
 };
 
-const setAllAnswersForQuestionToNonChosen = (store: ValidStore, questionId: string): ValidStore => {
-    const setToNonChosenIfQuestionIdMatches = (accumulator: AnswersMap, answerId: string): AnswersMap => {
-        const answer = store.answers[answerId];
-        if (answer.questionId === questionId) {
-            return { ...accumulator, [answerId]: { ...answer, isChosen: false } };
-        }
-        return { ...accumulator, [answerId]: answer };
-    };
-    return {
+const unchooseAllAnswersForQuestion = (store: ValidStore, questionId: string): ValidStore => {
+    const unchooseIfQuestionMatches = (answer: Answer): Answer => ({
+        ...answer,
+        isChosen: answer.questionId === questionId ? false : answer.isChosen,
+    });
+    return new ValidStore({
         ...store,
-        answers: Object.keys(store.answers).reduce(setToNonChosenIfQuestionIdMatches, {}),
-    };
+        answers: R.map(unchooseIfQuestionMatches, store.answers),
+    });
 };
