@@ -5,7 +5,7 @@ import { ArticleBuilder } from '../../stores/__tests__/helpers/article_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { Locale } from '../../locale/types';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
-import { ExploreSection } from '../explore';
+import { ExploreSection } from '../explore/types';
 import { toSelectorArticle } from '../articles/to_selector_article';
 
 describe('articles selector', () => {

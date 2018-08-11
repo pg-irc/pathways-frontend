@@ -4,7 +4,7 @@ import { selectLocale } from '../locale';
 import { selectExploreTaxonomy } from '../taxonomies';
 import { RouterProps } from '../../application/routing';
 import { selectIconFromExploreTaxonomy } from '../select_icon_from_explore_taxonomy';
-import { ExploreSection } from '.';
+import { ExploreSection } from './types';
 
 export const selectExploreSection = (store: Store, routerProps: RouterProps): ExploreSection => {
     const locale = selectLocale(store);

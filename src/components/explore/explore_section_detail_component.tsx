@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Content, View, Icon, Text } from 'native-base';
 import { ImageBackground } from 'react-native';
 import { Trans } from '@lingui/react';
-import { ExploreSection } from '../../selectors/explore';
+import { ExploreSection } from '../../selectors/explore/types';
 import { TaskListComponent, noTasksAddedYetTextComponent } from '../tasks/task_list';
 import { Task } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';

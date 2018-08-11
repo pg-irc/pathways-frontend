@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 
-import { ExploreSection } from '../../explore';
+import { ExploreSection } from '../../explore/types';
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 
 export class ExploreSectionBuilder {
