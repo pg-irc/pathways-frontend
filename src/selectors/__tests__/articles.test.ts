@@ -6,6 +6,7 @@ import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { Locale } from '../../locale/types';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore';
+import { toSelectorArticle } from '../articles/to_selector_article';
 
 describe('articles selector', () => {
 
@@ -19,7 +20,7 @@ describe('articles selector', () => {
             locale = new LocaleBuilder().build();
             article = new ArticleBuilder().withLocaleCode(locale.code).build();
             exploreSection = new ExploreSectionBuilder().build();
-            denormalizedArticle = selector.denormalizeArticle(locale, article, exploreSection, [], []);
+            denormalizedArticle = toSelectorArticle(locale, article, exploreSection, [], []);
         });
 
         test('title property', () => {
