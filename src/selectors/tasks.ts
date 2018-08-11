@@ -10,9 +10,9 @@ import { ArticleListItem } from './articles/types';
 import { selectTaxonomyTermsForSelectedAnswers } from './questionnaire';
 import { RouterProps } from '../application/routing';
 import { ExploreSection } from './explore/types';
-import { buildExploreSection } from './details/explore';
 import { selectIconFromExploreTaxonomy } from './select_icon_from_explore_taxonomy';
 import { toSelectorArticleList } from './articles/to_selector_article_list';
+import { buildExploreSection } from './explore/build_explore_section';
 
 export interface Task {
     readonly id: string;
