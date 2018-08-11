@@ -1,9 +1,9 @@
-import { Store } from '../stores';
-import * as details from './details/explore';
-import { selectLocale } from './locale';
-import { selectExploreTaxonomy } from './taxonomies';
-import { RouterProps } from '../application/routing';
-import { selectIconFromExploreTaxonomy } from './select_icon_from_explore_taxonomy';
+import { Store } from '../../stores';
+import * as details from '../details/explore';
+import { selectLocale } from '../locale';
+import { selectExploreTaxonomy } from '../taxonomies';
+import { RouterProps } from '../../application/routing';
+import { selectIconFromExploreTaxonomy } from '../select_icon_from_explore_taxonomy';
 
 export interface ExploreSection {
     readonly id: string;
