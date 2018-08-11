@@ -9,7 +9,7 @@ import { Locale } from '../../locale/types';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
-import { ExploreSection } from '../explore';
+import { ExploreSection } from '../explore/types';
 
 let locale: Locale = undefined;
 

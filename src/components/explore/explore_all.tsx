@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { View, Content, Button, Icon, Text } from 'native-base';
-import { ExploreSection } from '../../selectors/explore';
+import { ExploreSection } from '../../selectors/explore/types';
 import { computeUniqueKeyForSections } from './compute_unique_key_for_sections';
 import { applicationStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';

@@ -9,7 +9,7 @@ import { TaxonomyTermReference, selectExploreTaxonomy } from './taxonomies';
 import { ArticleListItem } from './articles/types';
 import { selectTaxonomyTermsForSelectedAnswers } from './questionnaire';
 import { RouterProps } from '../application/routing';
-import { ExploreSection } from './explore';
+import { ExploreSection } from './explore/types';
 import { buildExploreSection } from './details/explore';
 import { selectIconFromExploreTaxonomy } from './select_icon_from_explore_taxonomy';
 import { toSelectorArticleList } from './articles/to_selector_article_list';

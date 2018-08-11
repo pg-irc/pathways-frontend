@@ -1,6 +1,6 @@
 import * as model from '../../stores/articles';
 import { TaskListItem } from '../tasks';
-import { ExploreSection } from '../explore';
+import { ExploreSection } from '../explore/types';
 
 export interface Article {
     readonly id: model.Id;
