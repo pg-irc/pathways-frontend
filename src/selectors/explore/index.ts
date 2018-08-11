@@ -12,13 +12,6 @@ export interface ExploreSection {
     readonly icon: string;
 }
 
-export const selectLearnSections = (store: Store): ReadonlyArray<ExploreSection> => {
-    const locale = selectLocale(store);
-    const sections = store.exploreSectionsInStore.sections;
-    const exploreTaxonomy = selectExploreTaxonomy(store);
-    return details.denormalizeSections(locale, sections, exploreTaxonomy);
-};
-
 export const selectLearn = (store: Store, routerProps: RouterProps): ExploreSection => {
     const locale = selectLocale(store);
     const sections = store.exploreSectionsInStore.sections;
