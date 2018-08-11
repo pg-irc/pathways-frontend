@@ -4,7 +4,7 @@ import * as taskDetails from '../details/tasks';
 import { selectLocale } from '../locale';
 import { RouterProps } from '../../application/routing';
 import { toSelectorArticleListItem } from './to_selector_article_list_item';
-import { ArticleListItem } from '.';
+import { ArticleListItem } from './types';
 
 export const selectArticlesForExploreDetail = (store: Store, routerProps: RouterProps): ReadonlyArray<ArticleListItem> => {
     const learnId = routerProps.match.params.learnId;

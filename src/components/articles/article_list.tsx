@@ -1,7 +1,7 @@
 import React from 'react';
 import R from 'ramda';
 import { View } from 'native-base';
-import { ArticleListItem } from '../../selectors/articles';
+import { ArticleListItem } from '../../selectors/articles/types';
 import { ArticleListItemComponent } from './article_list_item';
 import { RouterProps } from '../../application/routing';
 

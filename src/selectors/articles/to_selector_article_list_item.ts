@@ -2,7 +2,7 @@ import * as model from '../../stores/articles';
 import * as R from 'ramda';
 import { selectLocalizedText } from '../locale';
 import { Locale } from '../../locale/types';
-import { ArticleListItem } from '.';
+import { ArticleListItem } from './types';
 
 export const toSelectorArticleListItem = R.curry((locale: Locale, article: model.Article): ArticleListItem => (
     {

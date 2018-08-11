@@ -6,7 +6,7 @@ import { Taxonomies as TaxonomyConstants } from '../application/constants';
 import { selectLocalizedText, selectLocale } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference, selectExploreTaxonomy } from './taxonomies';
-import { ArticleListItem } from './articles';
+import { ArticleListItem } from './articles/types';
 import { selectTaxonomyTermsForSelectedAnswers } from './questionnaire';
 import { RouterProps } from '../application/routing';
 import { ExploreSection } from './explore';

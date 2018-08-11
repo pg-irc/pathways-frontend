@@ -8,7 +8,7 @@ import { Task } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';
 import { colors } from '../../application/styles';
 import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
-import { ArticleListItem } from '../../selectors/articles';
+import { ArticleListItem } from '../../selectors/articles/types';
 import { ArticleListComponent } from '../articles/article_list';
 import { EmptyComponent } from '../empty_component/empty_component';
 import Markdown from 'react-native-markdown-renderer';

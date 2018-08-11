@@ -1,5 +1,5 @@
 // tslint:disable:no-let no-expression-statement
-import * as selector from '../articles';
+import * as selector from '../articles/types';
 import * as model from '../../stores/articles';
 import { ArticleBuilder } from '../../stores/__tests__/helpers/article_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
