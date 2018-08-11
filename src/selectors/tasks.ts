@@ -6,12 +6,13 @@ import { Taxonomies as TaxonomyConstants } from '../application/constants';
 import { selectLocalizedText, selectLocale } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference, selectExploreTaxonomy } from './taxonomies';
-import { ArticleListItem, selectRelatedArticles } from './articles';
+import { ArticleListItem } from './articles';
 import { selectTaxonomyTermsForSelectedAnswers } from './questionnaire';
 import { RouterProps } from '../application/routing';
 import { ExploreSection } from './explore';
 import { buildExploreSection } from './details/explore';
 import { selectIconFromExploreTaxonomy } from './select_icon_from_explore_taxonomy';
+import { toSelectorArticleList } from './articles/to_selector_article_list';
 
 export interface Task {
     readonly id: string;
@@ -165,7 +166,7 @@ export const selectTask = (appStore: Store, routerProps: RouterProps): Task => {
     const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(appStore);
     const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
     const relatedTasks = selectRelatedTasks(appStore, task.relatedTasks);
-    const relatedArticles = selectRelatedArticles(appStore, task.relatedArticles);
+    const relatedArticles = toSelectorArticleList(appStore, task.relatedArticles);
     return denormalizeTask(locale, task, exploreSection, isRecommended, relatedArticles, relatedTasks);
 };
 

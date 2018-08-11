@@ -11,6 +11,7 @@ import { selectExploreTaxonomy } from '../taxonomies';
 import { selectIconFromExploreTaxonomy } from '../select_icon_from_explore_taxonomy';
 import { toSelectorArticle } from './to_selector_article';
 import { toSelectorArticleListItem } from './to_selector_article_list_item';
+import { toSelectorArticleList } from './to_selector_article_list';
 
 export interface Article {
     readonly id: model.Id;
@@ -28,23 +29,12 @@ export interface ArticleListItem {
     readonly description: string;
 }
 
-export const selectRelatedArticles = (store: Store, articleIds: ReadonlyArray<model.Id>): ReadonlyArray<ArticleListItem> => (
-    R.map((id: model.Id) => selectArticleAsListItem(store, id), articleIds)
-);
-
-export const selectArticleAsListItem = (store: Store, articleId: model.Id): ArticleListItem => {
-    const locale = selectLocale(store);
-    const articles = store.articlesInStore.articles;
-    const article = articles[articleId];
-    return toSelectorArticleListItem(locale, article);
-};
-
 export const selectArticle = (store: Store, routerProps: RouterProps): Article => {
     const locale = selectLocale(store);
     const articles = store.articlesInStore.articles;
     const article = articles[routerProps.match.params.articleId];
     const relatedTasks = selectRelatedTasks(store, article.relatedTasks);
-    const relatedArticles = selectRelatedArticles(store, article.relatedArticles);
+    const relatedArticles = toSelectorArticleList(store, article.relatedArticles);
     const storeExploreSection = taskDetails.findExploreSectionBy(article, store.exploreSectionsInStore.sections);
     const exploreTaxonomy = selectExploreTaxonomy(store);
     const icon = selectIconFromExploreTaxonomy(storeExploreSection.taxonomyTerms, exploreTaxonomy);
