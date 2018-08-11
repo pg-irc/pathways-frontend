@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { Content, View, Text, Icon } from 'native-base';
-import { Article } from '../../selectors/articles';
+import { Article } from '../../selectors/articles/types';
 import { Id as TaskId } from '../../stores/tasks';
 import { TaskListItemActions } from '../tasks/task_list_item';
 import { RouterProps } from '../../application/routing';

@@ -2,7 +2,7 @@ import React from 'react';
 import { Image } from 'react-native';
 import { ListItem, Text, View } from 'native-base';
 import { applicationStyles } from '../../application/styles';
-import { ArticleListItem } from '../../selectors/articles';
+import { ArticleListItem } from '../../selectors/articles/types';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 
 export interface ArticleListItemProps {

@@ -3,7 +3,7 @@ import * as model from '../../stores/articles';
 import * as R from 'ramda';
 import { selectLocale } from '../locale';
 import { toSelectorArticleListItem } from './to_selector_article_list_item';
-import { ArticleListItem } from '.';
+import { ArticleListItem } from './types';
 
 export const toSelectorArticleList = (store: Store, articleIds: ReadonlyArray<model.Id>): ReadonlyArray<ArticleListItem> => {
     const selectArticleAsListItem = (articleId: model.Id): ArticleListItem => {
