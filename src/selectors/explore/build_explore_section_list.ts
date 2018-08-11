@@ -5,7 +5,7 @@ import { Locale, selectLocalizedText } from '../locale';
 import { selectIconFromExploreTaxonomy } from '../select_icon_from_explore_taxonomy';
 import * as R from 'ramda';
 
-export const denormalizeSections =
+export const buildExploreSectionList =
     (locale: Locale, sections: stores.ExploreSectionMap, exploreTaxonomy: Taxonomy): ReadonlyArray<select.ExploreSection> => {
 
         const buildOneSectionForView = (id: string): select.ExploreSection => {
