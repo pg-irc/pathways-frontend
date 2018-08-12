@@ -6,7 +6,7 @@ import { QuestionList, Answer } from './types';
 import { toSelectorAnswerList } from './to_selector_answer_list';
 import { filterAnswerIdsToGivenQuestion } from './filter_answer_ids_to_given_question';
 
-export const buildQuestionList = (locale: Locale, modelStore: model.Store): QuestionList => {
+export const toSelectorQuestionList = (locale: Locale, modelStore: model.Store): QuestionList => {
     const { questions, answers }: model.ValidStore = toValidOrThrow(modelStore);
 
     return Object.keys(questions).map((key: string, index: number) => {
