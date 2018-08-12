@@ -7,7 +7,7 @@ import { getLocalizedText } from './locale/get_localized_text';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference, pullExploreTaxonomy } from './taxonomies/pull_explore_taxonomy';
 import { ArticleListItem } from './articles/types';
-import { selectTaxonomyTermsForSelectedAnswers } from './taxonomies/select_taxonomy_terms_for_selected_answers';
+import { selectTaxonomyTermsForChosenAnswers } from './taxonomies/select_taxonomy_terms_for_chosen_answers';
 import { RouterProps } from '../application/routing';
 import { ExploreSection } from './explore/types';
 import { selectIconFromExploreTaxonomy } from './explore/select_icon_from_explore_taxonomy';
@@ -90,7 +90,7 @@ export const selectTaskAsListItem = (appStore: Store, taskId: store.Id): TaskLis
     const locale = selectLocale(appStore);
     const taskMap = appStore.tasksInStore.taskMap;
     const task = taskMap[taskId];
-    const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(appStore);
+    const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
     const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
     return denormalizeTaskListItem(locale, task, isRecommended);
 };
@@ -100,7 +100,7 @@ const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: store.Task
 };
 
 export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => {
-    const taxonomyTerms = selectTaxonomyTermsForSelectedAnswers(appStore);
+    const taxonomyTerms = selectTaxonomyTermsForChosenAnswers(appStore);
     const filterTasks = filterTasksByTaxonomyTerms(taxonomyTerms);
 
     const savedTaskIds = appStore.tasksInStore.savedTasksList;
@@ -164,7 +164,7 @@ export const selectTask = (appStore: Store, routerProps: RouterProps): Task => {
     const taskMap = appStore.tasksInStore.taskMap;
     const task = taskMap[taskId];
     const exploreSection = selectExploreSectionFromTask(appStore, task);
-    const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(appStore);
+    const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
     const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
     const relatedTasks = selectRelatedTasks(appStore, task.relatedTasks);
     const relatedArticles = toSelectorArticleList(appStore, task.relatedArticles);
@@ -186,7 +186,7 @@ export const selectTasksForLearn = (appStore: Store, routerProps: RouterProps): 
 
     const buildTask = (task: store.Task): Task => {
         const exploreSectionForTask = selectExploreSectionFromTask(appStore, task);
-        const termsFromQuestionnaire = selectTaxonomyTermsForSelectedAnswers(appStore);
+        const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
         const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
         return denormalizeTasksWithoutRelatedEntities(locale, task, exploreSectionForTask, isRecommended);
     };
