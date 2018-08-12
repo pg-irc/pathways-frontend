@@ -8,6 +8,7 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
 import { buildQuestionnaire } from '../questionnaire/build_questionnaire';
+import { filterTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_selected_answers';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
@@ -77,13 +78,14 @@ describe('questionnaire selector', () => {
         expect(denormalizedData[0].answers).toHaveLength(answerCount);
     });
 
+    // TODO move tests for filterTaxonomyTermsForChosenAnswers to a different test suite
     it('should return the taxonomy terms for a chosen answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
         const chosenAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(true);
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosenAnswer]);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toEqual([theTaxonomyTerm]);
     });
@@ -94,7 +96,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toEqual([]);
     });
@@ -107,7 +109,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosendAnswer]);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toContain(theTaxonomyTerm);
         expect(result).toContain(theSecondTaxonomyTerm);
