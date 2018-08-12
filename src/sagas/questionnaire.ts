@@ -5,7 +5,7 @@ import { AsyncStorage } from 'react-native';
 import { CHOSEN_QUESTIONS_STORAGE_KEY } from '../application/constants';
 import { LocalStorage, Id } from '../stores/questionnaire';
 import * as constants from '../application/constants';
-import { selectIdsOfChosenAnswers } from '../selectors/select_ids_of_chosen_questions';
+import { selectIdsOfChosenAnswers } from '../selectors/questionnaire/select_ids_of_chosen_questions';
 
 export function* watchAnswerChangesToSaveAllAnswerStates(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.CHOOSE_ANSWER, saveChosenQuestions);

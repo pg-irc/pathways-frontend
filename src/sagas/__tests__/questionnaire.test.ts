@@ -3,7 +3,7 @@ import { call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-sa
 import { loadChosenQuestions, saveChosenQuestions, loadChosenQuestionsAsync, saveChosenQuestionsAsync } from '../questionnaire';
 import { LocalStorage } from '../../stores/questionnaire';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
-import { selectIdsOfChosenAnswers } from '../../selectors/select_ids_of_chosen_questions';
+import { selectIdsOfChosenAnswers } from '../../selectors/questionnaire/select_ids_of_chosen_questions';
 
 describe('the loadChosenQuestions saga', () => {
 
