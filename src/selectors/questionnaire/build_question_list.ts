@@ -4,6 +4,7 @@ import { Locale } from '../../locale/types';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
 import { QuestionList, Answer } from './types';
 import { toSelectorAnswerList } from './to_selector_answer_list';
+import { filterAnswerIdsToGivenQuestion } from './filter_answer_ids_to_given_question';
 
 export const buildQuestionList = (locale: Locale, modelStore: model.Store): QuestionList => {
     const { questions, answers }: model.ValidStore = toValidOrThrow(modelStore);
@@ -21,13 +22,7 @@ export const buildQuestionList = (locale: Locale, modelStore: model.Store): Ques
 };
 
 const selectAnswersForQuestion = (locale: Locale, question: model.Question, answers: model.AnswersMap): ReadonlyArray<Answer> => {
-    const keys = answerKeysForGivenQuestion(question.id, answers);
+    const keys = filterAnswerIdsToGivenQuestion(question.id, answers);
 
     return toSelectorAnswerList(locale, keys, answers, question.acceptMultipleAnswers);
-};
-
-const answerKeysForGivenQuestion = (questionId: model.Id, answers: model.AnswersMap): ReadonlyArray<string> => {
-    return Object.keys(answers).filter((key: string) => (
-        answers[key].questionId === questionId
-    ));
 };
