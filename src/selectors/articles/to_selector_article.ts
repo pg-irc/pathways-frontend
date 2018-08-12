@@ -1,5 +1,5 @@
 import * as model from '../../stores/articles';
-import { selectLocalizedText } from '../locale';
+import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { TaskListItem } from '../tasks';
 import { ExploreSection } from '../explore/types';
@@ -14,8 +14,8 @@ export const toSelectorArticle = (
     (
         {
             id: article.id,
-            title: selectLocalizedText(locale, article.title),
-            description: selectLocalizedText(locale, article.description),
+            title: getLocalizedText(locale, article.title),
+            description: getLocalizedText(locale, article.description),
             starred: article.starred,
             exploreSection: exploreSection,
             relatedArticles: relatedArticles,

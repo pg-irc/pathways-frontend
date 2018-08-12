@@ -1,7 +1,7 @@
 import * as select from './types';
 import * as stores from '../../stores/explore';
 import { Taxonomy } from '../../stores/taxonomies';
-import { Locale, selectLocalizedText } from '../locale';
+import { Locale, getLocalizedText } from '../locale/get_localized_text';
 import { selectIconFromExploreTaxonomy } from '../select_icon_from_explore_taxonomy';
 import * as R from 'ramda';
 
@@ -10,8 +10,8 @@ export const buildExploreSectionList =
 
         const buildOneSectionForView = (id: string): select.ExploreSection => {
             const theSection = sections[id];
-            const name = selectLocalizedText(locale, theSection.name);
-            const introduction = selectLocalizedText(locale, theSection.introduction);
+            const name = getLocalizedText(locale, theSection.name);
+            const introduction = getLocalizedText(locale, theSection.introduction);
             const icon = selectIconFromExploreTaxonomy(theSection.taxonomyTerms, exploreTaxonomy);
 
             return { id, name, introduction, icon };

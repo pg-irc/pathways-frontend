@@ -3,7 +3,7 @@ import { Store } from '../stores';
 import * as store from '../stores/tasks';
 import * as taskDetails from './details/tasks';
 import { Taxonomies as TaxonomyConstants } from '../application/constants';
-import { selectLocalizedText } from './locale';
+import { getLocalizedText } from './locale/get_localized_text';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference, selectExploreTaxonomy } from './taxonomies';
 import { ArticleListItem } from './articles/types';
@@ -42,8 +42,8 @@ export const denormalizeTask =
         relatedArticles: ReadonlyArray<ArticleListItem>, relatedTasks: ReadonlyArray<TaskListItem>): Task => (
             {
                 id: task.id,
-                title: selectLocalizedText(locale, task.title),
-                description: selectLocalizedText(locale, task.description),
+                title: getLocalizedText(locale, task.title),
+                description: getLocalizedText(locale, task.description),
                 taxonomyTerms: task.taxonomyTerms,
                 exploreSection: exploreSection,
                 isRecommended: isRecommended,
@@ -58,8 +58,8 @@ export const denormalizeTask =
 export const denormalizeTaskListItem = (locale: Locale, task: store.Task, isRecommended: boolean): TaskListItem => (
     {
         id: task.id,
-        title: selectLocalizedText(locale, task.title),
-        description: selectLocalizedText(locale, task.description),
+        title: getLocalizedText(locale, task.title),
+        description: getLocalizedText(locale, task.description),
         isRecommended: isRecommended,
         completed: task.completed,
     }

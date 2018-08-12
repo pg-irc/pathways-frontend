@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { Store } from '../stores';
 import * as model from '../stores/questionnaire';
-import { selectLocalizedText } from './locale';
+import { getLocalizedText } from './locale/get_localized_text';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from '../stores/taxonomies';
 import { toValidOrThrow } from '../stores/questionnaire/stores';
@@ -41,8 +41,8 @@ export const denormalizeQuestions = (locale: Locale, modelStore: model.Store): Q
         return {
             id: question.id,
             number: index + 1,
-            text: selectLocalizedText(locale, question.text),
-            explanation: question.explanation ? selectLocalizedText(locale, question.explanation) : undefined,
+            text: getLocalizedText(locale, question.text),
+            explanation: question.explanation ? getLocalizedText(locale, question.explanation) : undefined,
             answers: selectAnswersForQuestion(locale, question, answers),
         };
     });
@@ -66,7 +66,7 @@ const buildViewModelForAnswers = (locale: Locale, keys: ReadonlyArray<string>,
             const { id, text, isChosen }: model.Answer = answers[key];
             return {
                 id,
-                text: selectLocalizedText(locale, text),
+                text: getLocalizedText(locale, text),
                 isChosen,
                 acceptMultipleAnswers,
             };
