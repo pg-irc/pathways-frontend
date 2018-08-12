@@ -1,5 +1,5 @@
 import { TaxonomyTermReference } from '../../stores/taxonomies';
-import { getExploreTaxonomyTerms } from '../taxonomies';
+import { getExploreTaxonomyTerms } from '../taxonomies/pull_explore_taxonomy';
 import { ExploreSectionMap, ExploreSection } from '../../stores/explore';
 import * as R from 'ramda';
 
