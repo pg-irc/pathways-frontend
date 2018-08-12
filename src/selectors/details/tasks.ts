@@ -1,5 +1,5 @@
 import { TaxonomyTermReference } from '../../stores/taxonomies';
-import { getExploreTaxonomyTerms } from '../taxonomies/pull_explore_taxonomy';
+import { filterExploreTaxonomyTerms } from '../taxonomies/filter_explore_taxonomy_terms';
 import { ExploreSectionMap, ExploreSection } from '../../stores/explore';
 import * as R from 'ramda';
 
@@ -14,10 +14,10 @@ export interface MapOfHasTaxonomyTerms<T extends HasTaxonomyTerms> {
 export function findItemByLearnTaxonomyTerm<T extends HasTaxonomyTerms>(needle: ReadonlyArray<TaxonomyTermReference>,
     haystack: MapOfHasTaxonomyTerms<T>): ReadonlyArray<T> {
 
-    const needleTerms = getExploreTaxonomyTerms(needle);
+    const needleTerms = filterExploreTaxonomyTerms(needle);
 
     const matchesTaxonomyTerm = (item: T): boolean => {
-        const haystackTerms = getExploreTaxonomyTerms(item.taxonomyTerms);
+        const haystackTerms = filterExploreTaxonomyTerms(item.taxonomyTerms);
         const commonTerms = R.intersection(needleTerms, haystackTerms);
         return R.length(commonTerms) > 0;
     };
@@ -30,10 +30,10 @@ export function findItemByLearnTaxonomyTerm<T extends HasTaxonomyTerms>(needle: 
 export function findExploreSectionBy<T extends HasTaxonomyTerms>(needle: T,
     haystack: ExploreSectionMap): ExploreSection | undefined {
 
-    const needleTerms = getExploreTaxonomyTerms(needle.taxonomyTerms);
+    const needleTerms = filterExploreTaxonomyTerms(needle.taxonomyTerms);
 
     const matchesTaxonomyTerm = (section: ExploreSection): boolean => {
-        const haystackTerms = getExploreTaxonomyTerms(section.taxonomyTerms);
+        const haystackTerms = filterExploreTaxonomyTerms(section.taxonomyTerms);
         const commonTerms = R.intersection(needleTerms, haystackTerms);
         return R.length(commonTerms) > 0;
     };
