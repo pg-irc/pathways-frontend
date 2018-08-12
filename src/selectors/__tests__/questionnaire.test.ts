@@ -7,7 +7,7 @@ import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
-import { buildQuestionList } from '../questionnaire/build_question_list';
+import { toSelectorQuestionList } from '../questionnaire/to_selector_question_list';
 import { filterTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_selected_answers';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
@@ -29,7 +29,7 @@ describe('questionnaire selector', () => {
             aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anAnswer]);
             const normalizedData = testHelpers.buildValidStore([aQuestion]);
 
-            denormalizedData = buildQuestionList(locale, normalizedData);
+            denormalizedData = toSelectorQuestionList(locale, normalizedData);
         });
 
         it('question id', () => {
@@ -60,7 +60,7 @@ describe('questionnaire selector', () => {
         );
         const normalizedData = testHelpers.buildValidStore(questions);
 
-        const denormalizedData = buildQuestionList(locale, normalizedData);
+        const denormalizedData = toSelectorQuestionList(locale, normalizedData);
 
         expect(denormalizedData).toHaveLength(questionCount);
     });
@@ -73,7 +73,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers(answers);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const denormalizedData = buildQuestionList(locale, normalizedData);
+        const denormalizedData = toSelectorQuestionList(locale, normalizedData);
 
         expect(denormalizedData[0].answers).toHaveLength(answerCount);
     });
