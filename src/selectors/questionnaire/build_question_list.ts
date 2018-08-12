@@ -2,9 +2,9 @@ import * as model from '../../stores/questionnaire';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
-import { Questionnaire, Answer } from './types';
+import { QuestionList, Answer } from './types';
 
-export const buildQuestionnaire = (locale: Locale, modelStore: model.Store): Questionnaire => {
+export const buildQuestionList = (locale: Locale, modelStore: model.Store): QuestionList => {
     const { questions, answers }: model.ValidStore = toValidOrThrow(modelStore);
 
     return Object.keys(questions).map((key: string, index: number) => {

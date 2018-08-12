@@ -1,6 +1,6 @@
 import * as model from '../../stores/questionnaire';
 
-export type Questionnaire = ReadonlyArray<Question>;
+export type QuestionList = ReadonlyArray<Question>;
 
 export interface Question {
     readonly id: model.Id;
