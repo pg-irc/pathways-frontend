@@ -1,6 +1,6 @@
 import { Store } from '../../stores';
-import { toValidOrThrow, ValidStore as QuestionnaireStore } from '../../stores/questionnaire/stores';
+import { toValidOrThrow, ValidStore } from '../../stores/questionnaire/stores';
 
-export const pickQuestionnaire = (appStore: Store): QuestionnaireStore => (
+export const pickQuestionnaire = (appStore: Store): ValidStore => (
     toValidOrThrow(appStore.questionnaireInStore)
 );

@@ -3,6 +3,7 @@ import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
 import { QuestionList, Answer } from './types';
+import { toSelectorAnswerList } from './to_selector_answer_list';
 
 export const buildQuestionList = (locale: Locale, modelStore: model.Store): QuestionList => {
     const { questions, answers }: model.ValidStore = toValidOrThrow(modelStore);
@@ -22,7 +23,7 @@ export const buildQuestionList = (locale: Locale, modelStore: model.Store): Ques
 const selectAnswersForQuestion = (locale: Locale, question: model.Question, answers: model.AnswersMap): ReadonlyArray<Answer> => {
     const keys = answerKeysForGivenQuestion(question.id, answers);
 
-    return buildViewModelForAnswers(locale, keys, answers, question.acceptMultipleAnswers);
+    return toSelectorAnswerList(locale, keys, answers, question.acceptMultipleAnswers);
 };
 
 const answerKeysForGivenQuestion = (questionId: model.Id, answers: model.AnswersMap): ReadonlyArray<string> => {
@@ -30,16 +31,3 @@ const answerKeysForGivenQuestion = (questionId: model.Id, answers: model.Answers
         answers[key].questionId === questionId
     ));
 };
-
-const buildViewModelForAnswers = (locale: Locale, keys: ReadonlyArray<string>,
-    answers: model.AnswersMap, acceptMultipleAnswers: boolean): ReadonlyArray<Answer> => (
-        keys.map((key: string) => {
-            const { id, text, isChosen }: model.Answer = answers[key];
-            return {
-                id,
-                text: getLocalizedText(locale, text),
-                isChosen,
-                acceptMultipleAnswers,
-            };
-        })
-    );
