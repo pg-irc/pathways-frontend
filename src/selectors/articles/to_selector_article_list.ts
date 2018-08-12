@@ -1,7 +1,7 @@
 import { Store } from '../../stores';
 import * as model from '../../stores/articles';
 import * as R from 'ramda';
-import { selectLocale } from '../locale';
+import { selectLocale } from '../locale/select_locale';
 import { toSelectorArticleListItem } from './to_selector_article_list_item';
 import { ArticleListItem } from './types';
 

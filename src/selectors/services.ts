@@ -4,7 +4,8 @@ import { Id as ServiceId, buildDefaultTaskServices } from '../stores/services';
 import { Task } from './tasks';
 import { take } from 'ramda';
 import { Locale } from '../locale';
-import { selectLocalizedText, selectLocale } from './locale';
+import { selectLocalizedText } from './locale';
+import { selectLocale } from './locale/select_locale';
 
 export interface Service {
     readonly id: string;

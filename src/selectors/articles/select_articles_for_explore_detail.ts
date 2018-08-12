@@ -1,7 +1,7 @@
 import { Store } from '../../stores';
 import * as R from 'ramda';
 import * as taskDetails from '../details/tasks';
-import { selectLocale } from '../locale';
+import { selectLocale } from '../locale/select_locale';
 import { RouterProps } from '../../application/routing';
 import { toSelectorArticleListItem } from './to_selector_article_list_item';
 import { ArticleListItem } from './types';

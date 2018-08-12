@@ -1,11 +1,12 @@
 // tslint:disable:no-let no-expression-statement
 import { LocaleStoreBuilder, LocalizedTextBuilder, LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import { selectLocale, selectAvailableLocales, selectLocalizedText } from '../locale';
+import { selectAvailableLocales, selectLocalizedText } from '../locale';
 import { ApplicationStoreBuilder } from '../../stores/__tests__/helpers/store_helpers';
 import { Store } from '../../stores';
 import * as locale from '../../stores/locale';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { Locale } from '../../locale';
+import { selectLocale } from '../locale/select_locale';
 
 describe('locale selectors fetch', () => {
 

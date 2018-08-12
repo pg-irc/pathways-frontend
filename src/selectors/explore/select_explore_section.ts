@@ -1,5 +1,5 @@
 import { Store } from '../../stores';
-import { selectLocale } from '../locale';
+import { selectLocale } from '../locale/select_locale';
 import { selectExploreTaxonomy } from '../taxonomies';
 import { RouterProps } from '../../application/routing';
 import { selectIconFromExploreTaxonomy } from '../select_icon_from_explore_taxonomy';

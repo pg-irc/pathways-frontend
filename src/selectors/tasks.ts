@@ -3,7 +3,7 @@ import { Store } from '../stores';
 import * as store from '../stores/tasks';
 import * as taskDetails from './details/tasks';
 import { Taxonomies as TaxonomyConstants } from '../application/constants';
-import { selectLocalizedText, selectLocale } from './locale';
+import { selectLocalizedText } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference, selectExploreTaxonomy } from './taxonomies';
 import { ArticleListItem } from './articles/types';
@@ -13,6 +13,7 @@ import { ExploreSection } from './explore/types';
 import { selectIconFromExploreTaxonomy } from './select_icon_from_explore_taxonomy';
 import { toSelectorArticleList } from './articles/to_selector_article_list';
 import { buildExploreSection } from './explore/build_explore_section';
+import { selectLocale } from './locale/select_locale';
 
 export interface Task {
     readonly id: string;
