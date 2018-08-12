@@ -3,7 +3,7 @@ import { Store } from '../../stores';
 import * as main from './main';
 import { LoaderProps, withLoader } from './loader';
 import { isApplicationLoading } from '../../selectors/is_application_loading';
-import { selectLocale } from '../../selectors/locale';
+import { selectLocale } from '../../selectors/locale/select_locale';
 import { withRouter } from 'react-router-native';
 import { RouterProps } from '../../application/routing';
 

@@ -1,6 +1,6 @@
 import { Store } from '../../stores';
 import * as taskDetails from '../details/tasks';
-import { selectLocale } from '../locale';
+import { selectLocale } from '../locale/select_locale';
 import { selectRelatedTasks } from '../tasks';
 import { RouterProps } from '../../application/routing';
 import { selectExploreTaxonomy } from '../taxonomies';

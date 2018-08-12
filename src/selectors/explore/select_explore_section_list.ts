@@ -1,5 +1,5 @@
 import { Store } from '../../stores';
-import { selectLocale } from '../locale';
+import { selectLocale } from '../locale/select_locale';
 import { selectExploreTaxonomy } from '../taxonomies';
 import { ExploreSection } from './types';
 import { buildExploreSectionList } from './build_explore_section_list';

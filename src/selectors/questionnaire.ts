@@ -1,10 +1,11 @@
 import * as R from 'ramda';
 import { Store } from '../stores';
 import * as model from '../stores/questionnaire';
-import { selectLocalizedText, selectLocale } from './locale';
+import { selectLocalizedText } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from '../stores/taxonomies';
 import { toValidOrThrow } from '../stores/questionnaire/stores';
+import { selectLocale } from './locale/select_locale';
 
 export type Questionnaire = ReadonlyArray<Question>;
 

@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { LanguageSwitcher, Props, Actions } from './language_switcher';
 import { Store } from '../../stores';
 import { SetLocale, setLocaleActions } from '../../stores/locale';
-import { selectLocale, selectAvailableLocales } from '../../selectors/locale';
+import { selectAvailableLocales } from '../../selectors/locale';
 import { LocaleInfo } from '../../locale';
+import { selectLocale } from '../../selectors/locale/select_locale';
 
 const mapStateToProps = (store: Store): Props => {
     const locales = selectAvailableLocales(store);

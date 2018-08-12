@@ -1,4 +1,4 @@
-import * as select from '../explore/types';
+import * as select from './types';
 import * as stores from '../../stores/explore';
 import { Taxonomy } from '../../stores/taxonomies';
 import { Locale, selectLocalizedText } from '../locale';
