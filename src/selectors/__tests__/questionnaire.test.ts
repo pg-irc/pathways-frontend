@@ -7,7 +7,7 @@ import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
-import { buildQuestionnaire } from '../questionnaire/build_questionnaire';
+import { buildQuestionList } from '../questionnaire/build_question_list';
 import { filterTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_selected_answers';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
@@ -22,14 +22,14 @@ describe('questionnaire selector', () => {
 
         let anAnswer: testHelpers.AnswerBuilder;
         let aQuestion: testHelpers.QuestionBuilder;
-        let denormalizedData: selector.Questionnaire;
+        let denormalizedData: selector.QuestionList;
 
         beforeEach(() => {
             anAnswer = new testHelpers.AnswerBuilder().withLocaleCode(locale.code);
             aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anAnswer]);
             const normalizedData = testHelpers.buildValidStore([aQuestion]);
 
-            denormalizedData = buildQuestionnaire(locale, normalizedData);
+            denormalizedData = buildQuestionList(locale, normalizedData);
         });
 
         it('question id', () => {
@@ -60,7 +60,7 @@ describe('questionnaire selector', () => {
         );
         const normalizedData = testHelpers.buildValidStore(questions);
 
-        const denormalizedData = buildQuestionnaire(locale, normalizedData);
+        const denormalizedData = buildQuestionList(locale, normalizedData);
 
         expect(denormalizedData).toHaveLength(questionCount);
     });
@@ -73,7 +73,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers(answers);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const denormalizedData = buildQuestionnaire(locale, normalizedData);
+        const denormalizedData = buildQuestionList(locale, normalizedData);
 
         expect(denormalizedData[0].answers).toHaveLength(answerCount);
     });

@@ -11,7 +11,7 @@ import { RouterProps } from '../../application/routing';
 import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
 
 export interface QuestionnaireProps {
-    readonly questionnaire: selector.Questionnaire;
+    readonly questionnaire: selector.QuestionList;
     readonly activeQuestion: Id;
     readonly recommendedTaskCount: number;
 }
@@ -56,11 +56,11 @@ export const Component: React.StatelessComponent<Props> = (props: Props): JSX.El
     </View>
 );
 
-const findIndexForQuestion = (questionId: Id, questions: selector.Questionnaire): number => (
+const findIndexForQuestion = (questionId: Id, questions: selector.QuestionList): number => (
     R.findIndex(R.propEq('id', questionId), questions)
 );
 
-const findNextActiveQuestion = (currentActiveQuestionId: Id, questions: selector.Questionnaire): Id => {
+const findNextActiveQuestion = (currentActiveQuestionId: Id, questions: selector.QuestionList): Id => {
     const nextActiveQuestionIndex = findIndexForQuestion(currentActiveQuestionId, questions) + 1;
     return questions[nextActiveQuestionIndex].id;
 };
