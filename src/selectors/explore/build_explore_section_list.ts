@@ -2,7 +2,7 @@ import * as select from './types';
 import * as stores from '../../stores/explore';
 import { Taxonomy } from '../../stores/taxonomies';
 import { Locale, getLocalizedText } from '../locale/get_localized_text';
-import { selectIconFromExploreTaxonomy } from '../select_icon_from_explore_taxonomy';
+import { selectIconFromExploreTaxonomy } from './select_icon_from_explore_taxonomy';
 import * as R from 'ramda';
 
 export const buildExploreSectionList =

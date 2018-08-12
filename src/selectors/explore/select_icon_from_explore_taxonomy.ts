@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { Taxonomy, TaxonomyTermReference, ExploreTaxonomyId } from '../stores/taxonomies';
+import { Taxonomy, TaxonomyTermReference, ExploreTaxonomyId } from '../../stores/taxonomies';
 import * as R from 'ramda';
 
 // TODO change this to take the whole store as argument instead of exploreTaxonomy
