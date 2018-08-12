@@ -2,10 +2,10 @@ import * as model from '../../stores/questionnaire';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
-import { QuestionList } from './types';
+import { Question } from './types';
 import { toSelectorAnswerListForQuestion } from './to_selector_answer_listFor_question';
 
-export const toSelectorQuestionList = (locale: Locale, modelStore: model.Store): QuestionList => {
+export const toSelectorQuestionList = (locale: Locale, modelStore: model.Store): ReadonlyArray<Question> => {
     const { questions, answers }: model.ValidStore = toValidOrThrow(modelStore);
 
     return Object.keys(questions).map((key: string, index: number) => {
