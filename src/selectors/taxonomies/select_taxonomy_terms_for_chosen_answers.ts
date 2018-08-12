@@ -2,10 +2,10 @@ import * as R from 'ramda';
 import { Store } from '../../stores';
 import * as model from '../../stores/questionnaire';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
-import { toValidOrThrow } from '../../stores/questionnaire/stores';
+import { pullQuestionnaire } from '../questionnaire/pull_questionnaire';
 
-export const selectTaxonomyTermsForSelectedAnswers = (store: Store): ReadonlyArray<TaxonomyTermReference> => (
-    filterTaxonomyTermsForChosenAnswers(toValidOrThrow(store.questionnaireInStore).answers)
+export const selectTaxonomyTermsForChosenAnswers = (store: Store): ReadonlyArray<TaxonomyTermReference> => (
+    filterTaxonomyTermsForChosenAnswers(pullQuestionnaire(store).answers)
 );
 
 export const filterTaxonomyTermsForChosenAnswers = (answers: model.AnswersMap): ReadonlyArray<TaxonomyTermReference> => {

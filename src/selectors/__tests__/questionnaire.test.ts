@@ -8,7 +8,7 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
 import { toSelectorQuestionList } from '../questionnaire/to_selector_question_list';
-import { filterTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_selected_answers';
+import { filterTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_chosen_answers';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
