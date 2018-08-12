@@ -2,8 +2,8 @@ import * as model from '../../stores/questionnaire';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
-import { Question } from './types';
-import { toSelectorAnswerListForQuestion } from './to_selector_answer_listFor_question';
+import { Question } from './question';
+import { toSelectorAnswerListForQuestion } from './to_selector_answer_list_for_question';
 
 export const toSelectorQuestionList = (locale: Locale, modelStore: model.Store): ReadonlyArray<Question> => {
     const { questions, answers }: model.ValidStore = toValidOrThrow(modelStore);

@@ -1,6 +1,6 @@
 import { Store } from '../../stores';
 import { selectLocale } from '../locale/select_locale';
-import { Question } from './types';
+import { Question } from './question';
 import { toSelectorQuestionList } from './to_selector_question_list';
 import { pullQuestionnaire } from './pull_questionnaire';
 
