@@ -1,6 +1,6 @@
 import React from 'react';
 import { ListItem, Body, Right, Text, CheckBox, Radio } from 'native-base';
-import * as selector from '../../selectors/questionnaire';
+import * as selector from '../../selectors/questionnaire/types';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { Id } from '../../stores/questionnaire';
 import { colors } from '../../application/styles';
