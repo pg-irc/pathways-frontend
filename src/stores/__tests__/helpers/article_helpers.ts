@@ -1,7 +1,7 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedTextBuilder } from './locale_helpers';
-import { TaxonomyTermReference } from '../../../selectors/taxonomies';
+import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 import { Id, Article } from '../../articles';
 import { Id as TaskId } from '../../tasks';
 

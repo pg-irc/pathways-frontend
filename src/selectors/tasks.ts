@@ -5,7 +5,7 @@ import * as taskDetails from './details/tasks';
 import { Taxonomies as TaxonomyConstants } from '../application/constants';
 import { getLocalizedText } from './locale/get_localized_text';
 import { Locale } from '../locale/types';
-import { TaxonomyTermReference, selectExploreTaxonomy } from './taxonomies';
+import { TaxonomyTermReference, pullExploreTaxonomy } from './taxonomies/pull_explore_taxonomy';
 import { ArticleListItem } from './articles/types';
 import { selectTaxonomyTermsForSelectedAnswers } from './taxonomies/select_taxonomy_terms_for_selected_answers';
 import { RouterProps } from '../application/routing';
@@ -123,7 +123,7 @@ export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => 
 
 const selectExploreSectionFromTask = (appStore: Store, task: store.Task): ExploreSection => {
     const storeExploreSection = taskDetails.findExploreSectionBy(task, appStore.exploreSectionsInStore.sections);
-    const exploreTaxonomy = selectExploreTaxonomy(appStore);
+    const exploreTaxonomy = pullExploreTaxonomy(appStore);
     const icon = selectIconFromExploreTaxonomy(storeExploreSection.taxonomyTerms, exploreTaxonomy);
     const locale = selectLocale(appStore);
 
