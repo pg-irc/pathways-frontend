@@ -1,12 +1,12 @@
 import React from 'react';
 import { ListItem, Body, Right, Text, CheckBox, Radio } from 'native-base';
-import * as selector from '../../selectors/questionnaire/types';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { Id } from '../../stores/questionnaire';
 import { colors } from '../../application/styles';
+import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
 
 export interface AnswerProps {
-    readonly answer: selector.Answer;
+    readonly answer: SelectorAnswer;
     readonly acceptMultipleAnswers: boolean;
 }
 export interface AnswerActions {

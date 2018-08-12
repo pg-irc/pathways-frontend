@@ -1,6 +1,6 @@
 import * as model from '../../stores/questionnaire';
 import { Locale } from '../../locale/types';
-import { Answer } from './types';
+import { Answer } from './answer';
 import { toSelectorAnswerList } from './to_selector_answer_list';
 import { filterAnswerIdsToGivenQuestion } from './filter_answer_ids_to_given_question';
 

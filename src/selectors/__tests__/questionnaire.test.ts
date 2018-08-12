@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement no-let
-import * as selector from '../questionnaire/types';
+import * as selector from '../questionnaire/question';
 import { getIdsOfChosenAnswers } from '../questionnaire/get_ids_of_chosen_answers';
 import { anInteger } from '../../application/__tests__/helpers/random_test_values';
 import * as testHelpers from '../../stores/__tests__/helpers/questionnaire_helpers';

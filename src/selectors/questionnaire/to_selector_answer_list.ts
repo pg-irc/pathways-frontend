@@ -1,7 +1,7 @@
 import * as model from '../../stores/questionnaire';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
-import { Answer } from './types';
+import { Answer } from './answer';
 
 export const toSelectorAnswerList =
     (locale: Locale, answerIds: ReadonlyArray<string>, answers: model.AnswersMap, acceptMultipleAnswers: boolean): ReadonlyArray<Answer> => (

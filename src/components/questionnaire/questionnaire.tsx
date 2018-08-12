@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import * as R from 'ramda';
 import Accordion from 'react-native-collapsible/Accordion';
 import { Content, View, Text, ListItem } from 'native-base';
-import * as selector from '../../selectors/questionnaire/types';
+import * as selector from '../../selectors/questionnaire/question';
 import { Question } from './question';
 import { applicationStyles, colors, values } from '../../application/styles';
 import { Trans } from '@lingui/react';
