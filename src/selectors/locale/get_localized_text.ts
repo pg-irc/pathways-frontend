@@ -3,7 +3,7 @@ import { Locale } from '../../locale/types';
 
 export { Locale, LocaleInfo } from '../../locale/types';
 
-export function selectLocalizedText(locale: Locale, localizedText: LocalizedText): string {
+export const getLocalizedText = (locale: Locale, localizedText: LocalizedText): string => {
     if (localizedText[locale.code]) {
         return localizedText[locale.code];
     }
@@ -11,4 +11,4 @@ export function selectLocalizedText(locale: Locale, localizedText: LocalizedText
         return localizedText[locale.fallback];
     }
     return `missing in ${locale.code}&${locale.fallback}`;
-}
+};
