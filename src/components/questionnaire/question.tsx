@@ -2,7 +2,7 @@ import React from 'react';
 import { colors, values } from '../../application/styles';
 import { Button, View, Text } from 'native-base';
 import { Answer } from './answer';
-import * as selector from '../../selectors/questionnaire';
+import * as selector from '../../selectors/questionnaire/types';
 import { Trans } from '@lingui/react';
 import { RouterProps, goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { History } from 'history';

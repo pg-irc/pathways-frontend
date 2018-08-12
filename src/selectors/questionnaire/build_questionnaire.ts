@@ -2,7 +2,7 @@ import * as model from '../../stores/questionnaire';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
-import { Questionnaire, Answer } from '.';
+import { Questionnaire, Answer } from './types';
 
 export const buildQuestionnaire = (locale: Locale, modelStore: model.Store): Questionnaire => {
     const { questions, answers }: model.ValidStore = toValidOrThrow(modelStore);
