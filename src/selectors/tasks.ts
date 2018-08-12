@@ -7,7 +7,7 @@ import { getLocalizedText } from './locale/get_localized_text';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference, selectExploreTaxonomy } from './taxonomies';
 import { ArticleListItem } from './articles/types';
-import { selectTaxonomyTermsForSelectedAnswers } from './questionnaire';
+import { selectTaxonomyTermsForSelectedAnswers } from './taxonomies/select_taxonomy_terms_for_selected_answers';
 import { RouterProps } from '../application/routing';
 import { ExploreSection } from './explore/types';
 import { selectIconFromExploreTaxonomy } from './explore/select_icon_from_explore_taxonomy';
