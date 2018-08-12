@@ -2,7 +2,7 @@ import { Store } from '../../stores';
 import { selectLocale } from '../locale/select_locale';
 import { selectExploreTaxonomy } from '../taxonomies';
 import { RouterProps } from '../../application/routing';
-import { selectIconFromExploreTaxonomy } from '../select_icon_from_explore_taxonomy';
+import { selectIconFromExploreTaxonomy } from './select_icon_from_explore_taxonomy';
 import { ExploreSection } from './types';
 import { buildExploreSection } from './build_explore_section';
 

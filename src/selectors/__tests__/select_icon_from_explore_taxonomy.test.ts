@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 // tslint:disable:no-let
 
-import { selectIconFromExploreTaxonomy } from '../select_icon_from_explore_taxonomy';
+import { selectIconFromExploreTaxonomy } from '../explore/select_icon_from_explore_taxonomy';
 import { ExploreTaxonomyId, TaxonomyTermReference, Taxonomy } from '../../stores/taxonomies';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 
