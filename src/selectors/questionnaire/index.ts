@@ -23,10 +23,6 @@ export interface Answer {
     readonly acceptMultipleAnswers: boolean;
 }
 
-export const selectActiveQuestion = (appStore: Store): model.Id => (
-    toValidOrThrow(appStore.questionnaireInStore).activeQuestion
-);
-
 export const denormalizeQuestions = (locale: Locale, modelStore: model.Store): Questionnaire => {
     const { questions, answers }: model.ValidStore = toValidOrThrow(modelStore);
 
