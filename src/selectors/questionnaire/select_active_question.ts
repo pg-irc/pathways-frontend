@@ -1,7 +1,7 @@
 import { Store } from '../../stores';
 import * as model from '../../stores/questionnaire';
-import { toValidOrThrow } from '../../stores/questionnaire/stores';
+import { pullQuestionnaire } from './pull_questionnaire';
 
 export const selectActiveQuestion = (appStore: Store): model.Id => (
-    toValidOrThrow(appStore.questionnaireInStore).activeQuestion
+    pullQuestionnaire(appStore).activeQuestion
 );
