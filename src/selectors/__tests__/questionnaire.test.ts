@@ -8,7 +8,7 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
 import { toSelectorQuestionList } from '../questionnaire/to_selector_question_list';
-import { filterTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_chosen_answers';
+import { getTaxonomyTermsForChosenAnswers } from '../taxonomies/get_taxonomy_terms_for_chosen_answers';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
@@ -85,7 +85,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosenAnswer]);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const result = filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = getTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toEqual([theTaxonomyTerm]);
     });
@@ -96,7 +96,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const result = filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = getTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toEqual([]);
     });
@@ -109,7 +109,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosendAnswer]);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const result = filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = getTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toContain(theTaxonomyTerm);
         expect(result).toContain(theSecondTaxonomyTerm);
