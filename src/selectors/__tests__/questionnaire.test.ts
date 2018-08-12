@@ -22,7 +22,7 @@ describe('questionnaire selector', () => {
 
         let anAnswer: testHelpers.AnswerBuilder;
         let aQuestion: testHelpers.QuestionBuilder;
-        let denormalizedData: selector.QuestionList;
+        let denormalizedData: ReadonlyArray<selector.Question>;
 
         beforeEach(() => {
             anAnswer = new testHelpers.AnswerBuilder().withLocaleCode(locale.code);
