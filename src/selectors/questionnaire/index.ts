@@ -1,11 +1,10 @@
 import * as R from 'ramda';
-import { Store } from '../stores';
-import * as model from '../stores/questionnaire';
-import { getLocalizedText } from './locale/get_localized_text';
-import { Locale } from '../locale/types';
-import { TaxonomyTermReference } from '../stores/taxonomies';
-import { toValidOrThrow } from '../stores/questionnaire/stores';
-import { selectLocale } from './locale/select_locale';
+import { Store } from '../../stores';
+import * as model from '../../stores/questionnaire';
+import { getLocalizedText } from '../locale/get_localized_text';
+import { Locale } from '../../locale/types';
+import { TaxonomyTermReference } from '../../stores/taxonomies';
+import { toValidOrThrow } from '../../stores/questionnaire/stores';
 
 export type Questionnaire = ReadonlyArray<Question>;
 
@@ -23,11 +22,6 @@ export interface Answer {
     readonly isChosen: boolean;
     readonly acceptMultipleAnswers: boolean;
 }
-
-export const selectQuestionnaire = (appStore: Store): Questionnaire => {
-    const locale = selectLocale(appStore);
-    return denormalizeQuestions(locale, appStore.questionnaireInStore);
-};
 
 export const selectActiveQuestion = (appStore: Store): model.Id => (
     toValidOrThrow(appStore.questionnaireInStore).activeQuestion
