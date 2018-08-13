@@ -1,15 +1,11 @@
 import * as R from 'ramda';
 import { Store } from '../../stores';
 import * as store from '../../stores/tasks';
-import * as taskDetails from '../explore/find_explore_section_by';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
-import { TaxonomyTermReference, pullExploreTaxonomy } from '../taxonomies/pull_explore_taxonomy';
+import { TaxonomyTermReference } from '../taxonomies/pull_explore_taxonomy';
 import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_chosen_answers';
 import { RouterProps } from '../../application/routing';
-import { ExploreSection } from '../explore/types';
-import { selectIconFromExploreTaxonomy } from '../explore/select_icon_from_explore_taxonomy';
 import { toSelectorArticleList } from '../articles/to_selector_article_list';
-import { buildExploreSection } from '../explore/build_explore_section';
 import { selectLocale } from '../locale/select_locale';
 import { findItemByLearnTaxonomyTerm } from '../taxonomies/find_item_by_explore_taxonomy_term';
 import { toSelectorTask } from './to_selector_task';
@@ -17,41 +13,11 @@ import { Task } from './task';
 import { TaskListItem } from './task_list_item';
 import { selectTaskAsListItem } from './select_task_as_list_item';
 import { toSelectorTaskWithoutRelatedEntities } from './to_selector_task_without_related_entities';
+import { selectExploreSectionFromTask } from './select_explore_section_from_task';
 
 export const selectRelatedTasks = (appStore: Store, taskIds: ReadonlyArray<store.Id>): ReadonlyArray<TaskListItem> => (
     R.map((taskId: store.Id) => selectTaskAsListItem(appStore, taskId), taskIds)
 );
-
-export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => {
-    const taxonomyTerms = selectTaxonomyTermsForChosenAnswers(appStore);
-    const filterTasks = filterTasksByTaxonomyTerms(taxonomyTerms);
-
-    const savedTaskIds = appStore.tasksInStore.savedTasksList;
-    const rejectSavedTasks = rejectTasksWithIdsInList(savedTaskIds);
-
-    const allTasks = appStore.tasksInStore.taskMap;
-    const matchingTasks = filterTasks(allTasks);
-    const nonSavedTasks = rejectSavedTasks(matchingTasks);
-    const nonCompletedTasks = rejectCompletedTasks(nonSavedTasks);
-
-    const locale = selectLocale(appStore);
-    const buildSelectorTask = (task: store.Task): Task => {
-        const exploreSection = selectExploreSectionFromTask(appStore, task);
-        const isRecommended = true;
-        return toSelectorTaskWithoutRelatedEntities(locale, task, exploreSection, isRecommended);
-    };
-
-    return R.map(buildSelectorTask, nonCompletedTasks);
-};
-
-const selectExploreSectionFromTask = (appStore: Store, task: store.Task): ExploreSection => {
-    const storeExploreSection = taskDetails.findExploreSectionBy(task, appStore.exploreSectionsInStore.sections);
-    const exploreTaxonomy = pullExploreTaxonomy(appStore);
-    const icon = selectIconFromExploreTaxonomy(storeExploreSection.taxonomyTerms, exploreTaxonomy);
-    const locale = selectLocale(appStore);
-
-    return buildExploreSection(locale, storeExploreSection, icon);
-};
 
 export const rejectTasksWithIdsInList =
     R.curry((listOfIds: store.TaskList, tasks: ReadonlyArray<store.Task>): ReadonlyArray<store.Task> => {
