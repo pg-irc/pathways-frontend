@@ -14,6 +14,7 @@ import { toSelectorTask } from '../tasks/to_selector_task';
 import { Task } from '../tasks/task';
 import { isTaskRecommended } from '../tasks/is_task_recommended';
 import { filterTasksByTaxonomyTerms } from '../tasks/filter_tasks_by_taxonomy_terms';
+import { rejectCompletedTasks } from '../tasks/reject_completed_tasks';
 
 let locale: Locale = undefined;
 
@@ -125,13 +126,13 @@ describe('tasks selector', () => {
 
         it('includes tasks that are not completed', () => {
             const nonCompletedTask = new TaskBuilder().withCompleted(false).withLocaleCode(locale.code).build();
-            const result = selector.rejectCompletedTasks([nonCompletedTask]);
+            const result = rejectCompletedTasks([nonCompletedTask]);
             expect(result).toEqual([nonCompletedTask]);
         });
 
         it('excludes tasks that are completed', () => {
             const completedTask = new TaskBuilder().withCompleted(true).withLocaleCode(locale.code).build();
-            const result = selector.rejectCompletedTasks([completedTask]);
+            const result = rejectCompletedTasks([completedTask]);
             expect(result).toEqual([]);
         });
     });

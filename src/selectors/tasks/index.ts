@@ -15,5 +15,3 @@ export const rejectTasksWithIdsInList =
         );
         return R.reject(idIsInList, tasks);
     });
-
-export const rejectCompletedTasks = R.reject(R.prop('completed'));
