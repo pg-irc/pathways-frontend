@@ -5,8 +5,9 @@ import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxono
 import { selectLocale } from '../locale/select_locale';
 import { Task } from './task';
 import { toSelectorTaskWithoutRelatedEntities } from './to_selector_task_without_related_entities';
-import { filterTasksByTaxonomyTerms, rejectTasksWithIdsInList, rejectCompletedTasks } from '.';
+import { rejectTasksWithIdsInList, rejectCompletedTasks } from '.';
 import { selectExploreSectionFromTask } from './select_explore_section_from_task';
+import { filterTasksByTaxonomyTerms } from './filter_tasks_by_taxonomy_terms';
 
 export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => {
     const taxonomyTerms = selectTaxonomyTermsForChosenAnswers(appStore);
