@@ -8,7 +8,7 @@ import {
     toggleCompleted, RemoveFromSavedListAction, removeFromSavedList,
 } from '../../stores/tasks';
 import { connect } from 'react-redux';
-import { selectTask } from '../../selectors/tasks';
+import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { RouterProps } from '../../application/routing';
 import { Task } from '../../selectors/tasks/task';
 import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
@@ -19,7 +19,7 @@ interface StateProps extends TaskDetailProps {
 }
 
 function mapStateToProps(store: Store, ownProps: RouterProps): StateProps {
-    const task: Task = selectTask(store, ownProps);
+    const task: Task = selectCurrentTask(store, ownProps);
     return {
         task: task,
         savedTasksIdList: pickSavedTaskIds(store),
