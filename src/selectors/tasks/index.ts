@@ -14,9 +14,9 @@ import { buildExploreSection } from '../explore/build_explore_section';
 import { selectLocale } from '../locale/select_locale';
 import { findItemByLearnTaxonomyTerm } from '../taxonomies/find_item_by_explore_taxonomy_term';
 import { toSelectorTask } from './to_selector_task';
-import { toSelectorTaskListItem } from './to_selector_task_list_item';
 import { Task } from './task';
 import { TaskListItem } from './task_list_item';
+import { selectTaskAsListItem } from './select_task_as_list_item';
 
 export const selectRelatedTasks = (appStore: Store, taskIds: ReadonlyArray<store.Id>): ReadonlyArray<TaskListItem> => (
     R.map((taskId: store.Id) => selectTaskAsListItem(appStore, taskId), taskIds)
@@ -26,15 +26,6 @@ export const selectCompletedTasks = (appStore: Store): ReadonlyArray<TaskListIte
     const isCompleted = (task: store.Task): boolean => task.completed;
     const taskIds = R.keys(R.pickBy(isCompleted, appStore.tasksInStore.taskMap));
     return R.map((taskId: store.Id) => selectTaskAsListItem(appStore, taskId), taskIds);
-};
-
-export const selectTaskAsListItem = (appStore: Store, taskId: store.Id): TaskListItem => {
-    const locale = selectLocale(appStore);
-    const taskMap = appStore.tasksInStore.taskMap;
-    const task = taskMap[taskId];
-    const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
-    const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
-    return toSelectorTaskListItem(locale, task, isRecommended);
 };
 
 const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: store.Task, exploreSection: ExploreSection, isRecommended: boolean): Task => {
