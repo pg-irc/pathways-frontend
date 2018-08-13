@@ -1,7 +1,7 @@
 import * as store from '../../stores/tasks';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
-import { TaskListItem } from '.';
+import { TaskListItem } from './task_list_item';
 
 export const toSelectorTaskListItem = (locale: Locale, task: store.Task, isRecommended: boolean): TaskListItem => (
     {

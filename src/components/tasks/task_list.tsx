@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { Text, View } from 'native-base';
 import { Trans } from '@lingui/react';
-import { TaskListItem } from '../../selectors/tasks';
+import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListItemComponent, TaskListItemActions, TaskListItemStyleProps } from './task_list_item';
 import { Id } from '../../stores/tasks';
 import { RouterProps } from '../../application/routing';

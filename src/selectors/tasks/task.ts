@@ -1,7 +1,7 @@
 import { TaxonomyTermReference } from '../taxonomies/pull_explore_taxonomy';
 import { ArticleListItem } from '../articles/article_list_item';
 import { ExploreSection } from '../explore/types';
-import { TaskListItem } from '.';
+import { TaskListItem } from './task_list_item';
 
 export interface Task {
     readonly id: string;
