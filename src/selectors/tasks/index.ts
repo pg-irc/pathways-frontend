@@ -7,12 +7,10 @@ import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxono
 import { RouterProps } from '../../application/routing';
 import { toSelectorArticleList } from '../articles/to_selector_article_list';
 import { selectLocale } from '../locale/select_locale';
-import { findItemByLearnTaxonomyTerm } from '../taxonomies/find_item_by_explore_taxonomy_term';
 import { toSelectorTask } from './to_selector_task';
 import { Task } from './task';
 import { TaskListItem } from './task_list_item';
 import { selectTaskAsListItem } from './select_task_as_list_item';
-import { toSelectorTaskWithoutRelatedEntities } from './to_selector_task_without_related_entities';
 import { selectExploreSectionFromTask } from './select_explore_section_from_task';
 
 export const selectRelatedTasks = (appStore: Store, taskIds: ReadonlyArray<store.Id>): ReadonlyArray<TaskListItem> => (
@@ -64,21 +62,4 @@ export const isTaskRecommended = (termsFromQuestionnaire: ReadonlyArray<Taxonomy
     const taskMapWithTask = { [task.id]: task };
     const filtered = filterTasksByTaxonomyTerms(termsFromQuestionnaire, taskMapWithTask);
     return !R.isEmpty(filtered);
-};
-
-export const selectTasksForLearn = (appStore: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
-    const exploreSection = appStore.exploreSectionsInStore.sections[routerProps.match.params.learnId];
-    const tasks = appStore.tasksInStore.taskMap;
-    const matchingTasks = findItemByLearnTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
-
-    const locale = selectLocale(appStore);
-
-    const buildTask = (task: store.Task): Task => {
-        const exploreSectionForTask = selectExploreSectionFromTask(appStore, task);
-        const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
-        const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
-        return toSelectorTaskWithoutRelatedEntities(locale, task, exploreSectionForTask, isRecommended);
-    };
-
-    return R.map(buildTask, matchingTasks);
 };
