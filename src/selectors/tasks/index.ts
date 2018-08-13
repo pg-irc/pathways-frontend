@@ -3,16 +3,8 @@ import { Store } from '../../stores';
 import * as store from '../../stores/tasks';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
 import { TaxonomyTermReference } from '../taxonomies/pull_explore_taxonomy';
-import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_chosen_answers';
-import { RouterProps } from '../../application/routing';
-import { toSelectorArticleList } from '../articles/to_selector_article_list';
-import { selectLocale } from '../locale/select_locale';
-import { toSelectorTask } from './to_selector_task';
-import { Task } from './task';
 import { TaskListItem } from './task_list_item';
 import { selectTaskAsListItem } from './select_task_as_list_item';
-import { selectExploreSectionFromTask } from './select_explore_section_from_task';
-import { isTaskRecommended } from './is_task_recommended';
 
 export const selectRelatedTasks = (appStore: Store, taskIds: ReadonlyArray<store.Id>): ReadonlyArray<TaskListItem> => (
     R.map((taskId: store.Id) => selectTaskAsListItem(appStore, taskId), taskIds)
@@ -45,16 +37,3 @@ export const filterTasksByTaxonomyTerms =
 
         return R.filter(isRecommended, R.values(taskMap));
     });
-
-export const selectTask = (appStore: Store, routerProps: RouterProps): Task => {
-    const locale = selectLocale(appStore);
-    const taskId = routerProps.match.params.taskId;
-    const taskMap = appStore.tasksInStore.taskMap;
-    const task = taskMap[taskId];
-    const exploreSection = selectExploreSectionFromTask(appStore, task);
-    const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
-    const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
-    const relatedTasks = selectRelatedTasks(appStore, task.relatedTasks);
-    const relatedArticles = toSelectorArticleList(appStore, task.relatedArticles);
-    return toSelectorTask(locale, task, exploreSection, isRecommended, relatedArticles, relatedTasks);
-};
