@@ -4,7 +4,6 @@ import { ImageBackground } from 'react-native';
 import { Trans } from '@lingui/react';
 import { ExploreSection } from '../../selectors/explore/types';
 import { TaskListComponent, noTasksAddedYetTextComponent } from '../tasks/task_list';
-import { Task } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';
 import { colors } from '../../application/styles';
 import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
@@ -13,6 +12,7 @@ import { ArticleListComponent } from '../articles/article_list';
 import { EmptyComponent } from '../empty_component/empty_component';
 import Markdown from 'react-native-markdown-renderer';
 import { markdownStyles } from '../../application/styles';
+import { Task } from '../../selectors/tasks/task';
 
 export interface ExploreSectionDetailProps {
     readonly section: ExploreSection;

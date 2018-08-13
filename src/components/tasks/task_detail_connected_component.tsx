@@ -3,11 +3,14 @@ import { Store } from '../../stores';
 import { updateTaskServicesAsync, UpdateTaskServicesAsync } from '../../stores/services';
 import { TaskDetailProps, TaskDetailActions, TaskDetailComponent, TaskServiceUpdater } from './task_detail';
 import { TaskServices, selectTaskServices, createRelatedServicesQueryFromTask } from '../../selectors/services';
-import { Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
-         toggleCompleted, RemoveFromSavedListAction, removeFromSavedList } from '../../stores/tasks';
+import {
+    Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
+    toggleCompleted, RemoveFromSavedListAction, removeFromSavedList,
+} from '../../stores/tasks';
 import { connect } from 'react-redux';
-import { Task, selectTask, selectSavedTasksIdList } from '../../selectors/tasks';
+import { selectTask, selectSavedTasksIdList } from '../../selectors/tasks';
 import { RouterProps } from '../../application/routing';
+import { Task } from '../../selectors/tasks/task';
 
 interface StateProps extends TaskDetailProps {
     readonly searchQuery: string;

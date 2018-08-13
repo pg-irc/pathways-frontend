@@ -1,11 +1,11 @@
 import { Store } from '../stores';
 import { Id as TaskId } from '../stores/tasks';
 import { Id as ServiceId, buildDefaultTaskServices } from '../stores/services';
-import { Task } from './tasks';
-import { take } from 'ramda';
 import { Locale } from '../locale';
 import { getLocalizedText } from './locale/get_localized_text';
 import { selectLocale } from './locale/select_locale';
+import { Task } from './tasks/task';
+import * as R from 'ramda';
 
 export interface Service {
     readonly id: string;
@@ -38,5 +38,5 @@ export function selectTaskServices(taskId: TaskId, store: Store): TaskServices {
 }
 
 export function createRelatedServicesQueryFromTask(task: Task): string {
-    return take(3, task.title.split(' ')).join(',');
+    return R.take(3, task.title.split(' ')).join(',');
 }

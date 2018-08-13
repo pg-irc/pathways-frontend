@@ -4,7 +4,6 @@ import * as R from 'ramda';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
-import { Task } from '../../selectors/tasks';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles, markdownStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
@@ -18,6 +17,7 @@ import { RouterProps } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { computeStateLabel, computeStateButtons, TaskStateLabel, TaskStateButton } from './task_states';
 import Markdown from 'react-native-markdown-renderer';
+import { Task } from '../../selectors/tasks/task';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -228,7 +228,7 @@ const ServicesTab = (props: Props): JSX.Element => (
 function ServiceListEmpty(): JSX.Element {
     return (
         <View style={{ padding: 20 }}>
-            <Text style={[ {textAlign: 'left' }]}><Trans>No related services found.</Trans></Text>
+            <Text style={[{ textAlign: 'left' }]}><Trans>No related services found.</Trans></Text>
         </View>
     );
 }

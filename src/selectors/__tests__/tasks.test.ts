@@ -11,6 +11,7 @@ import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore/types';
 import { toSelectorTask } from '../tasks/to_selector_task';
+import { Task } from '../tasks/task';
 
 let locale: Locale = undefined;
 
@@ -31,7 +32,7 @@ describe('tasks selector', () => {
         let exploreSectionName: string;
         let isRecommended: boolean;
         let exploreSection: ExploreSection;
-        let denormalizedTask: selector.Task;
+        let denormalizedTask: Task;
 
         beforeEach(() => {
             taxonomyId = aString();
