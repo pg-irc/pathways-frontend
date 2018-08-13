@@ -14,6 +14,7 @@ import { selectIconFromExploreTaxonomy } from './explore/select_icon_from_explor
 import { toSelectorArticleList } from './articles/to_selector_article_list';
 import { buildExploreSection } from './explore/build_explore_section';
 import { selectLocale } from './locale/select_locale';
+import { findItemByLearnTaxonomyTerm } from './taxonomies/find_item_by_explore_taxonomy_term';
 
 export interface Task {
     readonly id: string;
@@ -180,7 +181,7 @@ export const isTaskRecommended = (termsFromQuestionnaire: ReadonlyArray<Taxonomy
 export const selectTasksForLearn = (appStore: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
     const exploreSection = appStore.exploreSectionsInStore.sections[routerProps.match.params.learnId];
     const tasks = appStore.tasksInStore.taskMap;
-    const matchingTasks = taskDetails.findItemByLearnTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
+    const matchingTasks = findItemByLearnTaxonomyTerm(exploreSection.taxonomyTerms, tasks);
 
     const locale = selectLocale(appStore);
 
