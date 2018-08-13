@@ -7,8 +7,8 @@ import { pullExploreTaxonomy } from '../taxonomies/pull_explore_taxonomy';
 import { selectIconFromExploreTaxonomy } from '../explore/select_icon_from_explore_taxonomy';
 import { toSelectorArticle } from './to_selector_article';
 import { toSelectorArticleList } from './to_selector_article_list';
-import { Article } from './types';
 import { buildExploreSection } from '../explore/build_explore_section';
+import { Article } from './article';
 
 export const selectArticle = (store: Store, routerProps: RouterProps): Article => {
     const locale = selectLocale(store);
