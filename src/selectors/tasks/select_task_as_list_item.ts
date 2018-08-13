@@ -4,7 +4,7 @@ import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxono
 import { selectLocale } from '../locale/select_locale';
 import { toSelectorTaskListItem } from './to_selector_task_list_item';
 import { TaskListItem } from './task_list_item';
-import { isTaskRecommended } from '.';
+import { isTaskRecommended } from './is_task_recommended';
 
 export const selectTaskAsListItem = (appStore: Store, taskId: store.Id): TaskListItem => {
     const locale = selectLocale(appStore);

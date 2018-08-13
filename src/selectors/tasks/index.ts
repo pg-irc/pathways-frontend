@@ -12,6 +12,7 @@ import { Task } from './task';
 import { TaskListItem } from './task_list_item';
 import { selectTaskAsListItem } from './select_task_as_list_item';
 import { selectExploreSectionFromTask } from './select_explore_section_from_task';
+import { isTaskRecommended } from './is_task_recommended';
 
 export const selectRelatedTasks = (appStore: Store, taskIds: ReadonlyArray<store.Id>): ReadonlyArray<TaskListItem> => (
     R.map((taskId: store.Id) => selectTaskAsListItem(appStore, taskId), taskIds)
@@ -56,10 +57,4 @@ export const selectTask = (appStore: Store, routerProps: RouterProps): Task => {
     const relatedTasks = selectRelatedTasks(appStore, task.relatedTasks);
     const relatedArticles = toSelectorArticleList(appStore, task.relatedArticles);
     return toSelectorTask(locale, task, exploreSection, isRecommended, relatedArticles, relatedTasks);
-};
-
-export const isTaskRecommended = (termsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference>, task: store.Task): boolean => {
-    const taskMapWithTask = { [task.id]: task };
-    const filtered = filterTasksByTaxonomyTerms(termsFromQuestionnaire, taskMapWithTask);
-    return !R.isEmpty(filtered);
 };

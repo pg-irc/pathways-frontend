@@ -8,7 +8,7 @@ import { findItemByLearnTaxonomyTerm } from '../taxonomies/find_item_by_explore_
 import { Task } from './task';
 import { toSelectorTaskWithoutRelatedEntities } from './to_selector_task_without_related_entities';
 import { selectExploreSectionFromTask } from './select_explore_section_from_task';
-import { isTaskRecommended } from '.';
+import { isTaskRecommended } from './is_task_recommended';
 import { pickExploreSectionById } from '../explore/pick_explore_section_by_id';
 
 export const selectTaskForCurrentExploreSection = (appStore: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
