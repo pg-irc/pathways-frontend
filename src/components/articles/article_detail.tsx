@@ -1,13 +1,13 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { Content, View, Text, Icon } from 'native-base';
-import { Article } from '../../selectors/articles';
 import { Id as TaskId } from '../../stores/tasks';
 import { TaskListItemActions } from '../tasks/task_list_item';
 import { RouterProps } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import Markdown from 'react-native-markdown-renderer';
 import { markdownStyles } from '../../application/styles';
+import { Article } from '../../selectors/articles/article';
 
 export interface ArticleDetailProps {
     readonly article: Article;

@@ -2,14 +2,19 @@
 
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
 import { Locale } from '../../locale/types';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
-import { ExploreSection } from '../explore';
+import { ExploreSection } from '../explore/types';
+import { toSelectorTask } from '../tasks/to_selector_task';
+import { Task } from '../tasks/task';
+import { isTaskRecommended } from '../tasks/is_task_recommended';
+import { filterTasksByTaxonomyTerms } from '../tasks/filter_tasks_by_taxonomy_terms';
+import { rejectCompletedTasks } from '../tasks/reject_completed_tasks';
+import { rejectTasksWithIdsInList } from '../tasks/reject_tasks_with_ids_in_list';
 
 let locale: Locale = undefined;
 
@@ -30,7 +35,7 @@ describe('tasks selector', () => {
         let exploreSectionName: string;
         let isRecommended: boolean;
         let exploreSection: ExploreSection;
-        let denormalizedTask: selector.Task;
+        let denormalizedTask: Task;
 
         beforeEach(() => {
             taxonomyId = aString();
@@ -39,7 +44,7 @@ describe('tasks selector', () => {
             task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             exploreSection = new ExploreSectionBuilder().withName(exploreSectionName).build();
             isRecommended = aBoolean();
-            denormalizedTask = selector.denormalizeTask(locale, task, exploreSection, isRecommended, [], []);
+            denormalizedTask = toSelectorTask(locale, task, exploreSection, isRecommended, [], []);
         });
 
         test('id property', () => {
@@ -83,7 +88,7 @@ describe('tasks selector', () => {
         it('should not recommend tasks by default', () => {
             const task = new TaskBuilder().withLocaleCode(locale.code).build();
             const taskMap = { [task.id]: task };
-            const result = selector.filterTasksByTaxonomyTerms([], taskMap);
+            const result = filterTasksByTaxonomyTerms([], taskMap);
             expect(result).toEqual([]);
         });
 
@@ -92,7 +97,7 @@ describe('tasks selector', () => {
             const taxonomyTermId = TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID;
             const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taskMap = { [task.id]: task };
-            const result = selector.filterTasksByTaxonomyTerms([], taskMap);
+            const result = filterTasksByTaxonomyTerms([], taskMap);
             expect(result).toEqual([task]);
         });
 
@@ -101,33 +106,33 @@ describe('tasks selector', () => {
             const selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference> = [taxonomyTermReference];
             const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm(taxonomyTermReference).build();
             const taskMap = { [task.id]: task };
-            const result = selector.filterTasksByTaxonomyTerms(selectedAnswerTaxonomyTerms, taskMap);
+            const result = filterTasksByTaxonomyTerms(selectedAnswerTaxonomyTerms, taskMap);
             expect(result).toEqual([task]);
         });
 
         it('includes tasks that are not saved in my plan', () => {
             const task = new TaskBuilder().withLocaleCode(locale.code).build();
             const noSavedTaskIds: ReadonlyArray<string> = [];
-            const result = selector.rejectTasksWithIdsInList(noSavedTaskIds, [task]);
+            const result = rejectTasksWithIdsInList(noSavedTaskIds, [task]);
             expect(result).toEqual([task]);
         });
 
         it('excludes tasks that are saved in my plan', () => {
             const task = new TaskBuilder().withLocaleCode(locale.code).build();
             const savedTaskIds: ReadonlyArray<string> = [task.id];
-            const result = selector.rejectTasksWithIdsInList(savedTaskIds, [task]);
+            const result = rejectTasksWithIdsInList(savedTaskIds, [task]);
             expect(result).toEqual([]);
         });
 
         it('includes tasks that are not completed', () => {
             const nonCompletedTask = new TaskBuilder().withCompleted(false).withLocaleCode(locale.code).build();
-            const result = selector.rejectCompletedTasks([nonCompletedTask]);
+            const result = rejectCompletedTasks([nonCompletedTask]);
             expect(result).toEqual([nonCompletedTask]);
         });
 
         it('excludes tasks that are completed', () => {
             const completedTask = new TaskBuilder().withCompleted(true).withLocaleCode(locale.code).build();
-            const result = selector.rejectCompletedTasks([completedTask]);
+            const result = rejectCompletedTasks([completedTask]);
             expect(result).toEqual([]);
         });
     });
@@ -137,7 +142,7 @@ describe('tasks selector', () => {
             const task = new TaskBuilder().build();
             const noTaxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [];
 
-            const result = selector.isTaskRecommended(noTaxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended(noTaxonomyTermsFromQuestionnaire, task);
 
             expect(result).toBe(false);
         });
@@ -148,7 +153,7 @@ describe('tasks selector', () => {
             const task = new TaskBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const noTaxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [];
 
-            const result = selector.isTaskRecommended(noTaxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended(noTaxonomyTermsFromQuestionnaire, task);
 
             expect(result).toBe(true);
         });
@@ -159,7 +164,7 @@ describe('tasks selector', () => {
             const task = new TaskBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
 
-            const result = selector.isTaskRecommended(taxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended(taxonomyTermsFromQuestionnaire, task);
 
             expect(result).toBe(true);
         });
@@ -170,7 +175,7 @@ describe('tasks selector', () => {
             const task = new TaskBuilder().withCompleted(true).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
 
-            const result = selector.isTaskRecommended(taxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended(taxonomyTermsFromQuestionnaire, task);
 
             expect(result).toBe(true);
         });

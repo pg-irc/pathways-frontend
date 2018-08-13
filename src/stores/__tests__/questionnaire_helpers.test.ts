@@ -3,6 +3,7 @@
 import * as helpers from './helpers/questionnaire_helpers';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { Answer, Question } from '../questionnaire';
+import { toValidOrThrow } from '../questionnaire/stores';
 
 describe('questionnaire test helper for', () => {
 
@@ -98,9 +99,9 @@ describe('questionnaire test helper for', () => {
             const builder = new helpers.QuestionBuilder().
                 withId(questionId);
 
-            const store = helpers.buildNormalizedQuestionnaire([builder]);
+            const store = helpers.buildValidStore([builder]);
 
-            expect(store.questions[questionId]).toHaveProperty('id', questionId);
+            expect(toValidOrThrow(store).questions[questionId]).toHaveProperty('id', questionId);
         });
 
         it('adds answers keyed on their ids', () => {
@@ -110,9 +111,9 @@ describe('questionnaire test helper for', () => {
             const questionBuilder = new helpers.QuestionBuilder().
                 withAnswers([answerBuilder]);
 
-            const store = helpers.buildNormalizedQuestionnaire([questionBuilder]);
+            const store = helpers.buildValidStore([questionBuilder]);
 
-            expect(store.answers[answerId]).toHaveProperty('id', answerId);
+            expect(toValidOrThrow(store).answers[answerId]).toHaveProperty('id', answerId);
         });
 
         it('sets question id on answers', () => {
@@ -124,9 +125,9 @@ describe('questionnaire test helper for', () => {
                 withId(questionId).
                 withAnswers([answerBuilder]);
 
-            const store = helpers.buildNormalizedQuestionnaire([questionBuilder]);
+            const store = helpers.buildValidStore([questionBuilder]);
 
-            expect(store.answers[answerId].questionId).toBe(questionId);
+            expect(toValidOrThrow(store).answers[answerId].questionId).toBe(questionId);
         });
     });
 });

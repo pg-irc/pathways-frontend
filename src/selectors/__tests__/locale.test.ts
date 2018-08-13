@@ -1,11 +1,13 @@
 // tslint:disable:no-let no-expression-statement
 import { LocaleStoreBuilder, LocalizedTextBuilder, LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import { selectLocale, selectAvailableLocales, selectLocalizedText } from '../locale';
+import { getLocalizedText } from '../locale/get_localized_text';
 import { ApplicationStoreBuilder } from '../../stores/__tests__/helpers/store_helpers';
 import { Store } from '../../stores';
 import * as locale from '../../stores/locale';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { Locale } from '../../locale';
+import { selectLocale } from '../locale/select_locale';
+import { pullAvailableLocales } from '../locale/pull_available_locales';
 
 describe('locale selectors fetch', () => {
 
@@ -28,7 +30,7 @@ describe('locale selectors fetch', () => {
     });
 
     it('the available locales', () => {
-        const availableLocales = selectAvailableLocales(theStore);
+        const availableLocales = pullAvailableLocales(theStore);
         expect(availableLocales).toBe(aLocaleStore.availableLocales);
     });
 
@@ -41,18 +43,18 @@ describe('localized text selector', () => {
     it('selects the correct localized version of the text', () => {
         const theText = aString();
         const theLocalizedText = new LocalizedTextBuilder(theLocale.code, theText).build();
-        expect(selectLocalizedText(theLocale, theLocalizedText)).toBe(theText);
+        expect(getLocalizedText(theLocale, theLocalizedText)).toBe(theText);
     });
 
     it('selects text from the fallback locale if the current locale is not available', () => {
         const theFallbackText = aString();
         const theLocalizedText = new LocalizedTextBuilder().addLocale(theLocale.fallback, theFallbackText).build();
-        expect(selectLocalizedText(theLocale, theLocalizedText)).toBe(theFallbackText);
+        expect(getLocalizedText(theLocale, theLocalizedText)).toBe(theFallbackText);
     });
 
     it('returns error if string is not available in the fallback locale', () => {
         const theLocalizedText = new LocalizedTextBuilder().build();
-        expect(selectLocalizedText(theLocale, theLocalizedText)).toContain('missing');
+        expect(getLocalizedText(theLocale, theLocalizedText)).toContain('missing');
     });
 
 });

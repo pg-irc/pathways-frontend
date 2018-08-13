@@ -2,12 +2,18 @@ import { Dispatch } from 'redux';
 import { Store } from '../../stores';
 import { updateTaskServicesAsync, UpdateTaskServicesAsync } from '../../stores/services';
 import { TaskDetailProps, TaskDetailActions, TaskDetailComponent, TaskServiceUpdater } from './task_detail';
-import { TaskServices, selectTaskServices, createRelatedServicesQueryFromTask } from '../../selectors/services';
-import { Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
-         toggleCompleted, RemoveFromSavedListAction, removeFromSavedList } from '../../stores/tasks';
+import { createRelatedServicesQueryFromTask } from '../../selectors/services/create_related_services_query_from_task';
+import {
+    Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
+    toggleCompleted, RemoveFromSavedListAction, removeFromSavedList,
+} from '../../stores/tasks';
 import { connect } from 'react-redux';
-import { Task, selectTask, selectSavedTasksIdList } from '../../selectors/tasks';
+import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { RouterProps } from '../../application/routing';
+import { Task } from '../../selectors/tasks/task';
+import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
+import { TaskServices } from '../../selectors/services/task_services';
+import { selectTaskServices } from '../../selectors/services/select_task_services';
 
 interface StateProps extends TaskDetailProps {
     readonly searchQuery: string;
@@ -15,10 +21,10 @@ interface StateProps extends TaskDetailProps {
 }
 
 function mapStateToProps(store: Store, ownProps: RouterProps): StateProps {
-    const task: Task = selectTask(store, ownProps);
+    const task: Task = selectCurrentTask(store, ownProps);
     return {
         task: task,
-        savedTasksIdList: selectSavedTasksIdList(store),
+        savedTasksIdList: pickSavedTaskIds(store),
         searchQuery: createRelatedServicesQueryFromTask(task),
         taskServices: selectTaskServices(task.id, store),
     };

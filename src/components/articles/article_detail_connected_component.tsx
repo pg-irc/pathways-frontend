@@ -4,14 +4,14 @@ import { Store } from '../../stores';
 import { ArticleDetailComponent, ArticleDetailProps } from './article_detail';
 import { TaskListItemActions } from '../tasks/task_list_item';
 import { Id } from '../../stores/articles';
-import { selectArticle } from '../../selectors/articles';
+import { selectCurrentArticle } from '../../selectors/articles/select_current_article';
 import { AddToSavedListAction, addToSavedList } from '../../stores/tasks';
 import { RouterProps } from '../../application/routing';
-import { selectSavedTasksIdList } from '../../selectors/tasks';
+import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ArticleDetailProps => ({
-    article: selectArticle(store, ownProps),
-    savedTasksIdList: selectSavedTasksIdList(store),
+    article: selectCurrentArticle(store, ownProps),
+    savedTasksIdList: pickSavedTaskIds(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListItemActions => ({

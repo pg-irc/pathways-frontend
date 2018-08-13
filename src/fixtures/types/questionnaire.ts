@@ -26,7 +26,20 @@ export interface AnswersMap {
     readonly [key: string]: Answer;
 }
 
-export interface Store {
+export interface IStore {
+    readonly questions: QuestionsMap;
+    readonly answers: AnswersMap;
+    readonly activeQuestion: Id;
+}
+
+// tslint:disable:no-class no-this no-expression-statement
+
+export class ValidStore {
+    constructor(parameters: IStore) {
+        this.questions = parameters.questions;
+        this.answers = parameters.answers;
+        this.activeQuestion = parameters.activeQuestion;
+    }
     readonly questions: QuestionsMap;
     readonly answers: AnswersMap;
     readonly activeQuestion: Id;

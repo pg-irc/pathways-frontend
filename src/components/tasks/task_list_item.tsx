@@ -4,7 +4,7 @@ import { computeStateListItemIcon, TaskStateListItemIcon } from './task_states';
 import { View, ListItem, Text, Button, Icon, Grid, Col, Row } from 'native-base';
 import { taskStyles } from './styles';
 import { applicationStyles, values } from '../../application/styles';
-import { TaskListItem } from '../../selectors/tasks';
+import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { AddToSavedListAction, Id } from '../../stores/tasks';
 import { I18nManager } from 'react-native';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
@@ -85,13 +85,13 @@ const checkedIcon = (): string => 'checkbox-marked-outline';
 const unCheckedIcon = (): string => 'checkbox-blank-outline';
 
 const renderCheckBox = (icon: string): JSX.Element => (
-    <View style={[ { flex: 1 }, { justifyContent: 'center' } ]}>
-        <Icon style={[ { fontSize: values.smallerIconSize } ]} name={icon} type='MaterialCommunityIcons' />
+    <View style={[{ flex: 1 }, { justifyContent: 'center' }]}>
+        <Icon style={[{ fontSize: values.smallerIconSize }]} name={icon} type='MaterialCommunityIcons' />
     </View>
 );
 
 const renderAddButton = (onPress: () => void): JSX.Element => (
     <Button dark transparent iconRight onPress={onPress}>
-        <Icon style={[ applicationStyles.bold ]} name='add' />
+        <Icon style={[applicationStyles.bold]} name='add' />
     </Button>
 );

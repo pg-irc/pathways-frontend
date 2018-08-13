@@ -2,14 +2,15 @@ import { withI18n } from '@lingui/react';
 import { connect, Dispatch } from 'react-redux';
 import { Welcome, WelcomeProps, WelcomeActions } from './welcome';
 import { Store } from '../../stores';
-import { selectAvailableLocales, selectLocale } from '../../selectors/locale';
+import { pullAvailableLocales } from '../../selectors/locale/pull_available_locales';
 import { setLocaleActions, SetLocale } from '../../stores/locale';
+import { selectLocale } from '../../selectors/locale/select_locale';
 
 function mapStateToProps(store: Store): WelcomeProps {
     return {
         isFirstRun: false,
         currentLocale: selectLocale(store),
-        availableLocales: selectAvailableLocales(store),
+        availableLocales: pullAvailableLocales(store),
     };
 }
 

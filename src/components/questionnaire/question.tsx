@@ -2,15 +2,16 @@ import React from 'react';
 import { colors, values } from '../../application/styles';
 import { Button, View, Text } from 'native-base';
 import { Answer } from './answer';
-import * as selector from '../../selectors/questionnaire';
 import { Trans } from '@lingui/react';
 import { RouterProps, goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { History } from 'history';
 import { SetActiveQuestionAction, ChooseAnswerAction, Id } from '../../stores/questionnaire';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
+import { Question as SelectorQuestion } from '../../selectors/questionnaire/question';
 
 export interface QuestionProps {
-    readonly question: selector.Question;
+    readonly question: SelectorQuestion;
     readonly isFinalQuestion: boolean;
 }
 export interface QuestionActions {
@@ -27,7 +28,7 @@ export const Question: React.StatelessComponent<Props> = (props: Props): JSX.Ele
             { marginBottom: 10 },
         ]}>
             {question.explanation ? <Text style={[{ fontSize: values.smallTextSize }]}>{question.explanation}</Text> : <EmptyComponent />}
-            {question.answers.map((answer: selector.Answer) => (
+            {question.answers.map((answer: SelectorAnswer) => (
                 <Answer
                     key={answer.id}
                     answer={answer}

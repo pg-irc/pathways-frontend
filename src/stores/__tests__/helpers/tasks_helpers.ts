@@ -4,7 +4,7 @@ import { Id as ArticleId } from '../../articles';
 import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
-import { TaxonomyTermReference } from '../../../selectors/taxonomies';
+import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 
 export class TaskBuilder {
     localeCode: string = aString();

@@ -1,10 +1,10 @@
-import { Store } from '../types/questionnaire';
+import { ValidStore } from '../types/questionnaire';
 import { Taxonomies } from '../../application/constants';
 
 const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
-export const buildQuestionnaireFixture = (): Store => {
-    return {
+export const buildQuestionnaireFixture = (): ValidStore => {
+    return new ValidStore({
         activeQuestion: 'q1',
         questions: {
             'q1': {
@@ -670,5 +670,5 @@ export const buildQuestionnaireFixture = (): Store => {
                 }],
             },
         },
-    };
+    });
 };

@@ -1,9 +1,9 @@
 // tslint:disable:no-expression-statement no-let
 import { call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
 import { loadChosenQuestions, saveChosenQuestions, loadChosenQuestionsAsync, saveChosenQuestionsAsync } from '../questionnaire';
-import { Persistence } from '../../stores/questionnaire';
+import { LocalStorage } from '../../stores/questionnaire';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
-import { selectIdsOfChosenAnswers } from '../../selectors/select_ids_of_chosen_questions';
+import { selectIdsOfChosenAnswers } from '../../selectors/questionnaire/select_ids_of_chosen_questions';
 
 describe('the loadChosenQuestions saga', () => {
 
@@ -16,7 +16,7 @@ describe('the loadChosenQuestions saga', () => {
     });
 
     describe('after requesting the chosen questions', () => {
-        let saga: IterableIterator<CallEffect | PutEffect<Persistence.LoadSuccessAction | Persistence.LoadFailureAction>>;
+        let saga: IterableIterator<CallEffect | PutEffect<LocalStorage.LoadSuccessAction | LocalStorage.LoadFailureAction>>;
 
         beforeEach(() => {
             saga = loadChosenQuestions();
@@ -28,7 +28,7 @@ describe('the loadChosenQuestions saga', () => {
 
             const result = saga.next(questionId).value;
 
-            expect(result).toEqual(put(Persistence.loadSuccess([questionId])));
+            expect(result).toEqual(put(LocalStorage.loadSuccess([questionId])));
         });
 
         it('should return zero ids when there is no data in persistent storage', () => {
@@ -36,7 +36,7 @@ describe('the loadChosenQuestions saga', () => {
 
             const result = saga.next(questionId).value;
 
-            expect(result).toEqual(put(Persistence.loadSuccess([])));
+            expect(result).toEqual(put(LocalStorage.loadSuccess([])));
         });
 
         it('should split the data on comma', () => {
@@ -46,7 +46,7 @@ describe('the loadChosenQuestions saga', () => {
 
             const result = saga.next(argument).value;
 
-            expect(result).toEqual(put(Persistence.loadSuccess([firstQuestionId, secondQuestionId])));
+            expect(result).toEqual(put(LocalStorage.loadSuccess([firstQuestionId, secondQuestionId])));
         });
 
         it('should dispatch a put effect with a failure action on error', () => {
@@ -54,7 +54,7 @@ describe('the loadChosenQuestions saga', () => {
 
             const result = saga.throw(error).value;
 
-            expect(result).toEqual(put(Persistence.loadFailure(error.message)));
+            expect(result).toEqual(put(LocalStorage.loadFailure(error.message)));
         });
 
         // TODO add test for handling no persistent data
@@ -72,7 +72,7 @@ describe('the saveChosenQuestions saga', () => {
     });
 
     describe('after selecting chosen answer ids from store', () => {
-        let saga: IterableIterator<SelectEffect | CallEffect | PutEffect<Persistence.SaveSuccessAction | Persistence.SaveFailureAction>>;
+        let saga: IterableIterator<SelectEffect | CallEffect | PutEffect<LocalStorage.SaveSuccessAction | LocalStorage.SaveFailureAction>>;
 
         beforeEach(() => {
             saga = saveChosenQuestions();
@@ -99,7 +99,7 @@ describe('the saveChosenQuestions saga', () => {
 
             const result = saga.throw(error).value;
 
-            expect(result).toEqual(put(Persistence.saveFailure(error.message)));
+            expect(result).toEqual(put(LocalStorage.saveFailure(error.message)));
         });
 
         describe('after successfully saving ids', () => {
@@ -111,7 +111,7 @@ describe('the saveChosenQuestions saga', () => {
             it('should dispatch a put effect with a success action', () => {
                 const result = saga.next().value;
 
-                expect(result).toEqual(put(Persistence.saveSuccess()));
+                expect(result).toEqual(put(LocalStorage.saveSuccess()));
             });
         });
     });
