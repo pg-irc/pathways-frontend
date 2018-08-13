@@ -1,5 +1,5 @@
 import { TaxonomyTermReference } from '../../stores/taxonomies';
-import { filterExploreTaxonomyTerms } from '../taxonomies/filter_explore_taxonomy_terms';
+import { filterExploreTaxonomyTerms } from './filter_explore_taxonomy_terms';
 import * as R from 'ramda';
 
 export interface HasTaxonomyTerms {
