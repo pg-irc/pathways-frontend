@@ -3,7 +3,6 @@ import { Store } from '../../stores';
 import * as store from '../../stores/tasks';
 import * as taskDetails from '../explore/find_explore_section_by';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
-import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { TaxonomyTermReference, pullExploreTaxonomy } from '../taxonomies/pull_explore_taxonomy';
 import { ArticleListItem } from '../articles/article_list_item';
@@ -16,6 +15,7 @@ import { buildExploreSection } from '../explore/build_explore_section';
 import { selectLocale } from '../locale/select_locale';
 import { findItemByLearnTaxonomyTerm } from '../taxonomies/find_item_by_explore_taxonomy_term';
 import { toSelectorTask } from './to_selector_task';
+import { toSelectorTaskListItem } from './to_selector_task_list_item';
 
 export interface Task {
     readonly id: string;
@@ -38,16 +38,6 @@ export interface TaskListItem {
     readonly isRecommended: boolean;
     readonly completed: boolean;
 }
-
-export const denormalizeTaskListItem = (locale: Locale, task: store.Task, isRecommended: boolean): TaskListItem => (
-    {
-        id: task.id,
-        title: getLocalizedText(locale, task.title),
-        description: getLocalizedText(locale, task.description),
-        isRecommended: isRecommended,
-        completed: task.completed,
-    }
-);
 
 export const selectSavedTasks = (appStore: Store): ReadonlyArray<TaskListItem> => {
     const savedTasksList = appStore.tasksInStore.savedTasksList;
@@ -76,7 +66,7 @@ export const selectTaskAsListItem = (appStore: Store, taskId: store.Id): TaskLis
     const task = taskMap[taskId];
     const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
     const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
-    return denormalizeTaskListItem(locale, task, isRecommended);
+    return toSelectorTaskListItem(locale, task, isRecommended);
 };
 
 const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: store.Task, exploreSection: ExploreSection, isRecommended: boolean): Task => {
