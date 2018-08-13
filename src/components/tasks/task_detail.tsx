@@ -8,7 +8,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles, markdownStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
 import { Trans } from '@lingui/react';
-import { Service, TaskServices } from '../../selectors/services';
+import { TaskServices } from '../../selectors/services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
 import { RelatedTasksComponent } from './related_tasks';
@@ -18,6 +18,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { computeStateLabel, computeStateButtons, TaskStateLabel, TaskStateButton } from './task_states';
 import Markdown from 'react-native-markdown-renderer';
 import { Task } from '../../selectors/tasks/task';
+import { Service } from '../../selectors/services/service';
 
 export interface TaskDetailProps {
     readonly task: Task;
