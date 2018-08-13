@@ -8,7 +8,7 @@ import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles, markdownStyles } from '../../application/styles';
 import { taskDetailStyles } from './styles';
 import { Trans } from '@lingui/react';
-import { TaskServices } from '../../selectors/services';
+import { TaskServices } from '../../selectors/services/task_services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
 import { RelatedTasksComponent } from './related_tasks';
