@@ -2,7 +2,6 @@
 
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
 import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
-import * as selector from '../tasks';
 import * as stores from '../../stores/tasks';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
 import { Locale } from '../../locale/types';
@@ -15,6 +14,7 @@ import { Task } from '../tasks/task';
 import { isTaskRecommended } from '../tasks/is_task_recommended';
 import { filterTasksByTaxonomyTerms } from '../tasks/filter_tasks_by_taxonomy_terms';
 import { rejectCompletedTasks } from '../tasks/reject_completed_tasks';
+import { rejectTasksWithIdsInList } from '../tasks/reject_tasks_with_ids_in_list';
 
 let locale: Locale = undefined;
 
@@ -113,14 +113,14 @@ describe('tasks selector', () => {
         it('includes tasks that are not saved in my plan', () => {
             const task = new TaskBuilder().withLocaleCode(locale.code).build();
             const noSavedTaskIds: ReadonlyArray<string> = [];
-            const result = selector.rejectTasksWithIdsInList(noSavedTaskIds, [task]);
+            const result = rejectTasksWithIdsInList(noSavedTaskIds, [task]);
             expect(result).toEqual([task]);
         });
 
         it('excludes tasks that are saved in my plan', () => {
             const task = new TaskBuilder().withLocaleCode(locale.code).build();
             const savedTaskIds: ReadonlyArray<string> = [task.id];
-            const result = selector.rejectTasksWithIdsInList(savedTaskIds, [task]);
+            const result = rejectTasksWithIdsInList(savedTaskIds, [task]);
             expect(result).toEqual([]);
         });
 

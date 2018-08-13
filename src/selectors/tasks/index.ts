@@ -7,11 +7,3 @@ import { selectTaskAsListItem } from './select_task_as_list_item';
 export const selectRelatedTasks = (appStore: Store, taskIds: ReadonlyArray<store.Id>): ReadonlyArray<TaskListItem> => (
     R.map((taskId: store.Id) => selectTaskAsListItem(appStore, taskId), taskIds)
 );
-
-export const rejectTasksWithIdsInList =
-    R.curry((listOfIds: store.TaskList, tasks: ReadonlyArray<store.Task>): ReadonlyArray<store.Task> => {
-        const idIsInList = (task: store.Task): boolean => (
-            R.contains(task.id, listOfIds)
-        );
-        return R.reject(idIsInList, tasks);
-    });
