@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { HomePageProps, HomePageComponent } from './home_page';
 import { selectExploreSectionList } from '../../selectors/explore/select_explore_section_list';
-import { selectRecommendedTasks } from '../../selectors/tasks';
+import { selectRecommendedTasks } from '../../selectors/tasks/select_recommended_tasks';
 import { Id as TaskId } from '../../stores/tasks';
 import { AddToSavedListAction, addToSavedList } from '../../stores/tasks';
 import { withI18n } from '@lingui/react';

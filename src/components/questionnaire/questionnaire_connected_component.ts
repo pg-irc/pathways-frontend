@@ -5,7 +5,7 @@ import { QuestionnaireActions } from './questionnaire';
 import { Store } from '../../stores';
 import { Id, ChooseAnswerAction, chooseAnswer, SetActiveQuestionAction, setActiveQuestion } from '../../stores/questionnaire';
 import { selectActiveQuestion } from '../../selectors/questionnaire/select_active_question';
-import { selectRecommendedTasks } from '../../selectors/tasks';
+import { selectRecommendedTasks } from '../../selectors/tasks/select_recommended_tasks';
 import { selectQuestionList } from '../../selectors/questionnaire/select_question_list';
 
 const mapStateToProps = (store: Store): QuestionnaireProps => ({
