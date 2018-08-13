@@ -1,7 +1,7 @@
 import { Store } from '../../stores';
 import * as taskDetails from '../explore/find_explore_section_by';
 import { selectLocale } from '../locale/select_locale';
-import { selectRelatedTasks } from '../tasks';
+import { selectRelatedTasks } from '../tasks/select_related_tasks';
 import { RouterProps } from '../../application/routing';
 import { pullExploreTaxonomy } from '../taxonomies/pull_explore_taxonomy';
 import { selectIconFromExploreTaxonomy } from '../explore/select_icon_from_explore_taxonomy';

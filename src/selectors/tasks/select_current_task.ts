@@ -7,7 +7,7 @@ import { toSelectorTask } from './to_selector_task';
 import { Task } from './task';
 import { selectExploreSectionFromTask } from './select_explore_section_from_task';
 import { isTaskRecommended } from './is_task_recommended';
-import { selectRelatedTasks } from '.';
+import { selectRelatedTasks } from './select_related_tasks';
 
 export const selectCurrentTask = (appStore: Store, routerProps: RouterProps): Task => {
     const locale = selectLocale(appStore);
