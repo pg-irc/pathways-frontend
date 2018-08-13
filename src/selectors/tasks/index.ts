@@ -5,7 +5,6 @@ import * as taskDetails from '../explore/find_explore_section_by';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
 import { Locale } from '../../locale/types';
 import { TaxonomyTermReference, pullExploreTaxonomy } from '../taxonomies/pull_explore_taxonomy';
-import { ArticleListItem } from '../articles/article_list_item';
 import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_chosen_answers';
 import { RouterProps } from '../../application/routing';
 import { ExploreSection } from '../explore/types';
@@ -16,20 +15,7 @@ import { selectLocale } from '../locale/select_locale';
 import { findItemByLearnTaxonomyTerm } from '../taxonomies/find_item_by_explore_taxonomy_term';
 import { toSelectorTask } from './to_selector_task';
 import { toSelectorTaskListItem } from './to_selector_task_list_item';
-
-export interface Task {
-    readonly id: string;
-    readonly title: string;
-    readonly description: string;
-    readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
-    readonly exploreSection: ExploreSection;
-    readonly isRecommended: boolean;
-    readonly category: string;
-    readonly importance: number;
-    readonly relatedTasks: ReadonlyArray<TaskListItem>;
-    readonly relatedArticles: ReadonlyArray<ArticleListItem>;
-    readonly completed: boolean;
-}
+import { Task } from './task';
 
 export interface TaskListItem {
     readonly id: string;

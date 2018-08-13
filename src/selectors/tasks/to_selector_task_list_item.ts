@@ -12,4 +12,3 @@ export const toSelectorTaskListItem = (locale: Locale, task: store.Task, isRecom
         completed: task.completed,
     }
 );
-

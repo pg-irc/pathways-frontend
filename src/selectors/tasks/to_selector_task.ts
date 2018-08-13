@@ -3,7 +3,8 @@ import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { ArticleListItem } from '../articles/article_list_item';
 import { ExploreSection } from '../explore/types';
-import { Task, TaskListItem } from '.';
+import { TaskListItem } from '.';
+import { Task } from './task';
 
 export const toSelectorTask =
     (locale: Locale, task: store.Task, exploreSection: ExploreSection, isRecommended: boolean,
@@ -22,4 +23,3 @@ export const toSelectorTask =
                 completed: task.completed,
             }
         );
-
