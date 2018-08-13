@@ -6,7 +6,7 @@ import { Content, Text, View, Icon, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { applicationStyles, colors, values } from '../../application/styles';
 import { CollapsibleContent } from '../collapsible_content/collapsible_content';
-import { TaskListItem } from '../../selectors/tasks';
+import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import {
     TaskListComponent,
     noTasksAddedYetTextComponent,
@@ -97,13 +97,13 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     }
 
     private collapsedIcon(): string {
-       return I18nManager.isRTL ? 'arrow-dropleft' : 'arrow-dropright';
+        return I18nManager.isRTL ? 'arrow-dropleft' : 'arrow-dropright';
     }
 
     private getSavedTasksHeading(): JSX.Element {
         return (
             <View>
-                <Text style={[ applicationStyles.bold ]}><Trans>MY TASKS</Trans></Text>
+                <Text style={[applicationStyles.bold]}><Trans>MY TASKS</Trans></Text>
             </View>
         );
     }
@@ -111,7 +111,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     private getRecommendedTasksHeading(): JSX.Element {
         return (
             <View style={[{ flexDirection: 'row' }]}>
-                <Text style={[ applicationStyles.bold ]}><Trans>RECOMMENDED FOR ME</Trans></Text>
+                <Text style={[applicationStyles.bold]}><Trans>RECOMMENDED FOR ME</Trans></Text>
                 <Icon style={styles.icon} name='star-circle' type='MaterialCommunityIcons' />
             </View>
         );
@@ -120,7 +120,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     private getCompletedTasksHeading(): JSX.Element {
         return (
             <View>
-                <Text style={[ applicationStyles.bold ]}><Trans>COMPLETED TASKS</Trans></Text>
+                <Text style={[applicationStyles.bold]}><Trans>COMPLETED TASKS</Trans></Text>
             </View>
         );
     }
@@ -142,7 +142,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
                 emptyTaskListComponent={emptyTaskListComponent}
                 listItemStyle={style}
                 savedTasksIdList={R.pluck('id', this.props.savedTasks)}
-                />
+            />
         );
     }
 

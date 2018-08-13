@@ -16,14 +16,7 @@ import { findItemByLearnTaxonomyTerm } from '../taxonomies/find_item_by_explore_
 import { toSelectorTask } from './to_selector_task';
 import { toSelectorTaskListItem } from './to_selector_task_list_item';
 import { Task } from './task';
-
-export interface TaskListItem {
-    readonly id: string;
-    readonly title: string;
-    readonly description: string;
-    readonly isRecommended: boolean;
-    readonly completed: boolean;
-}
+import { TaskListItem } from './task_list_item';
 
 export const selectSavedTasks = (appStore: Store): ReadonlyArray<TaskListItem> => {
     const savedTasksList = appStore.tasksInStore.savedTasksList;

@@ -1,7 +1,7 @@
 import * as model from '../../stores/articles';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
-import { TaskListItem } from '../tasks';
+import { TaskListItem } from '../tasks/task_list_item';
 import { ExploreSection } from '../explore/types';
 import { ArticleListItem } from './article_list_item';
 import { Article } from './article';
