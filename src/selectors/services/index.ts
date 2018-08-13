@@ -6,13 +6,7 @@ import { getLocalizedText } from '../locale/get_localized_text';
 import { selectLocale } from '../locale/select_locale';
 import { Task } from '../tasks/task';
 import * as R from 'ramda';
-import { Service } from './service';
-
-export interface TaskServices {
-    readonly loading: boolean;
-    readonly message: string;
-    readonly services: ReadonlyArray<Service>;
-}
+import { TaskServices } from './task_services';
 
 export function selectTaskServices(taskId: TaskId, store: Store): TaskServices {
     const locale: Locale = selectLocale(store);

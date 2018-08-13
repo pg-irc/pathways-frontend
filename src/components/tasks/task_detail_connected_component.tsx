@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { Store } from '../../stores';
 import { updateTaskServicesAsync, UpdateTaskServicesAsync } from '../../stores/services';
 import { TaskDetailProps, TaskDetailActions, TaskDetailComponent, TaskServiceUpdater } from './task_detail';
-import { TaskServices, selectTaskServices, createRelatedServicesQueryFromTask } from '../../selectors/services';
+import { selectTaskServices, createRelatedServicesQueryFromTask } from '../../selectors/services';
 import {
     Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
     toggleCompleted, RemoveFromSavedListAction, removeFromSavedList,
@@ -12,6 +12,7 @@ import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { RouterProps } from '../../application/routing';
 import { Task } from '../../selectors/tasks/task';
 import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
+import { TaskServices } from '../../selectors/services/task_services';
 
 interface StateProps extends TaskDetailProps {
     readonly searchQuery: string;
