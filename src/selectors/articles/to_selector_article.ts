@@ -3,7 +3,8 @@ import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { TaskListItem } from '../tasks';
 import { ExploreSection } from '../explore/types';
-import { ArticleListItem, Article } from './types';
+import { ArticleListItem } from './article_list_item';
+import { Article } from './article';
 
 export const toSelectorArticle = (
     locale: Locale,

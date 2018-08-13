@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'native-base';
 import { applicationStyles } from '../../application/styles';
-import { ArticleListItem } from '../../selectors/articles/types';
+import { ArticleListItem } from '../../selectors/articles/article_list_item';
 import { ArticleListComponent } from './article_list';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
