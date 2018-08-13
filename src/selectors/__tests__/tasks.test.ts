@@ -10,6 +10,7 @@ import { aString, aBoolean } from '../../application/__tests__/helpers/random_te
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore/types';
+import { toSelectorTask } from '../tasks/to_selector_task';
 
 let locale: Locale = undefined;
 
@@ -39,7 +40,7 @@ describe('tasks selector', () => {
             task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             exploreSection = new ExploreSectionBuilder().withName(exploreSectionName).build();
             isRecommended = aBoolean();
-            denormalizedTask = selector.denormalizeTask(locale, task, exploreSection, isRecommended, [], []);
+            denormalizedTask = toSelectorTask(locale, task, exploreSection, isRecommended, [], []);
         });
 
         test('id property', () => {

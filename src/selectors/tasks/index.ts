@@ -1,20 +1,21 @@
 import * as R from 'ramda';
-import { Store } from '../stores';
-import * as store from '../stores/tasks';
-import * as taskDetails from './explore/find_explore_section_by';
-import { Taxonomies as TaxonomyConstants } from '../application/constants';
-import { getLocalizedText } from './locale/get_localized_text';
-import { Locale } from '../locale/types';
-import { TaxonomyTermReference, pullExploreTaxonomy } from './taxonomies/pull_explore_taxonomy';
-import { ArticleListItem } from './articles/article_list_item';
-import { selectTaxonomyTermsForChosenAnswers } from './taxonomies/select_taxonomy_terms_for_chosen_answers';
-import { RouterProps } from '../application/routing';
-import { ExploreSection } from './explore/types';
-import { selectIconFromExploreTaxonomy } from './explore/select_icon_from_explore_taxonomy';
-import { toSelectorArticleList } from './articles/to_selector_article_list';
-import { buildExploreSection } from './explore/build_explore_section';
-import { selectLocale } from './locale/select_locale';
-import { findItemByLearnTaxonomyTerm } from './taxonomies/find_item_by_explore_taxonomy_term';
+import { Store } from '../../stores';
+import * as store from '../../stores/tasks';
+import * as taskDetails from '../explore/find_explore_section_by';
+import { Taxonomies as TaxonomyConstants } from '../../application/constants';
+import { getLocalizedText } from '../locale/get_localized_text';
+import { Locale } from '../../locale/types';
+import { TaxonomyTermReference, pullExploreTaxonomy } from '../taxonomies/pull_explore_taxonomy';
+import { ArticleListItem } from '../articles/article_list_item';
+import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_chosen_answers';
+import { RouterProps } from '../../application/routing';
+import { ExploreSection } from '../explore/types';
+import { selectIconFromExploreTaxonomy } from '../explore/select_icon_from_explore_taxonomy';
+import { toSelectorArticleList } from '../articles/to_selector_article_list';
+import { buildExploreSection } from '../explore/build_explore_section';
+import { selectLocale } from '../locale/select_locale';
+import { findItemByLearnTaxonomyTerm } from '../taxonomies/find_item_by_explore_taxonomy_term';
+import { toSelectorTask } from './to_selector_task';
 
 export interface Task {
     readonly id: string;
@@ -37,24 +38,6 @@ export interface TaskListItem {
     readonly isRecommended: boolean;
     readonly completed: boolean;
 }
-
-export const denormalizeTask =
-    (locale: Locale, task: store.Task, exploreSection: ExploreSection, isRecommended: boolean,
-        relatedArticles: ReadonlyArray<ArticleListItem>, relatedTasks: ReadonlyArray<TaskListItem>): Task => (
-            {
-                id: task.id,
-                title: getLocalizedText(locale, task.title),
-                description: getLocalizedText(locale, task.description),
-                taxonomyTerms: task.taxonomyTerms,
-                exploreSection: exploreSection,
-                isRecommended: isRecommended,
-                relatedArticles: relatedArticles,
-                relatedTasks: relatedTasks,
-                category: task.category,
-                importance: task.importance,
-                completed: task.completed,
-            }
-        );
 
 export const denormalizeTaskListItem = (locale: Locale, task: store.Task, isRecommended: boolean): TaskListItem => (
     {
@@ -97,7 +80,7 @@ export const selectTaskAsListItem = (appStore: Store, taskId: store.Id): TaskLis
 };
 
 const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: store.Task, exploreSection: ExploreSection, isRecommended: boolean): Task => {
-    return denormalizeTask(locale, task, exploreSection, isRecommended, [], []);
+    return toSelectorTask(locale, task, exploreSection, isRecommended, [], []);
 };
 
 export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => {
@@ -113,13 +96,13 @@ export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => 
     const nonCompletedTasks = rejectCompletedTasks(nonSavedTasks);
 
     const locale = selectLocale(appStore);
-    const toSelectorTask = (task: store.Task): Task => {
+    const buildSelectorTask = (task: store.Task): Task => {
         const exploreSection = selectExploreSectionFromTask(appStore, task);
         const isRecommended = true;
         return denormalizeTasksWithoutRelatedEntities(locale, task, exploreSection, isRecommended);
     };
 
-    return R.map(toSelectorTask, nonCompletedTasks);
+    return R.map(buildSelectorTask, nonCompletedTasks);
 };
 
 const selectExploreSectionFromTask = (appStore: Store, task: store.Task): ExploreSection => {
@@ -169,7 +152,7 @@ export const selectTask = (appStore: Store, routerProps: RouterProps): Task => {
     const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
     const relatedTasks = selectRelatedTasks(appStore, task.relatedTasks);
     const relatedArticles = toSelectorArticleList(appStore, task.relatedArticles);
-    return denormalizeTask(locale, task, exploreSection, isRecommended, relatedArticles, relatedTasks);
+    return toSelectorTask(locale, task, exploreSection, isRecommended, relatedArticles, relatedTasks);
 };
 
 export const isTaskRecommended = (termsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference>, task: store.Task): boolean => {
