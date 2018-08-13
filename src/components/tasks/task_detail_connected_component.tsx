@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { Store } from '../../stores';
 import { updateTaskServicesAsync, UpdateTaskServicesAsync } from '../../stores/services';
 import { TaskDetailProps, TaskDetailActions, TaskDetailComponent, TaskServiceUpdater } from './task_detail';
-import { createRelatedServicesQueryFromTask } from '../../selectors/services';
+import { createRelatedServicesQueryFromTask } from '../../selectors/services/create_related_services_query_from_task';
 import {
     Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
     toggleCompleted, RemoveFromSavedListAction, removeFromSavedList,
