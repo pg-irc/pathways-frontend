@@ -18,13 +18,6 @@ import { toSelectorTaskListItem } from './to_selector_task_list_item';
 import { Task } from './task';
 import { TaskListItem } from './task_list_item';
 
-export const selectSavedTasks = (appStore: Store): ReadonlyArray<TaskListItem> => {
-    const savedTasksList = appStore.tasksInStore.savedTasksList;
-    return savedTasksList.map((taskId: store.Id) => {
-        return selectTaskAsListItem(appStore, taskId);
-    });
-};
-
 export const selectSavedTasksIdList = (appStore: Store): ReadonlyArray<store.Id> => (
     appStore.tasksInStore.savedTasksList
 );
