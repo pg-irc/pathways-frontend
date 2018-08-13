@@ -13,6 +13,7 @@ import { ExploreSection } from '../explore/types';
 import { toSelectorTask } from '../tasks/to_selector_task';
 import { Task } from '../tasks/task';
 import { isTaskRecommended } from '../tasks/is_task_recommended';
+import { filterTasksByTaxonomyTerms } from '../tasks/filter_tasks_by_taxonomy_terms';
 
 let locale: Locale = undefined;
 
@@ -86,7 +87,7 @@ describe('tasks selector', () => {
         it('should not recommend tasks by default', () => {
             const task = new TaskBuilder().withLocaleCode(locale.code).build();
             const taskMap = { [task.id]: task };
-            const result = selector.filterTasksByTaxonomyTerms([], taskMap);
+            const result = filterTasksByTaxonomyTerms([], taskMap);
             expect(result).toEqual([]);
         });
 
@@ -95,7 +96,7 @@ describe('tasks selector', () => {
             const taxonomyTermId = TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID;
             const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taskMap = { [task.id]: task };
-            const result = selector.filterTasksByTaxonomyTerms([], taskMap);
+            const result = filterTasksByTaxonomyTerms([], taskMap);
             expect(result).toEqual([task]);
         });
 
@@ -104,7 +105,7 @@ describe('tasks selector', () => {
             const selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference> = [taxonomyTermReference];
             const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm(taxonomyTermReference).build();
             const taskMap = { [task.id]: task };
-            const result = selector.filterTasksByTaxonomyTerms(selectedAnswerTaxonomyTerms, taskMap);
+            const result = filterTasksByTaxonomyTerms(selectedAnswerTaxonomyTerms, taskMap);
             expect(result).toEqual([task]);
         });
 
