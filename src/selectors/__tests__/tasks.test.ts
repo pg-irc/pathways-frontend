@@ -12,6 +12,7 @@ import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore/types';
 import { toSelectorTask } from '../tasks/to_selector_task';
 import { Task } from '../tasks/task';
+import { isTaskRecommended } from '../tasks/is_task_recommended';
 
 let locale: Locale = undefined;
 
@@ -139,7 +140,7 @@ describe('tasks selector', () => {
             const task = new TaskBuilder().build();
             const noTaxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [];
 
-            const result = selector.isTaskRecommended(noTaxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended(noTaxonomyTermsFromQuestionnaire, task);
 
             expect(result).toBe(false);
         });
@@ -150,7 +151,7 @@ describe('tasks selector', () => {
             const task = new TaskBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const noTaxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [];
 
-            const result = selector.isTaskRecommended(noTaxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended(noTaxonomyTermsFromQuestionnaire, task);
 
             expect(result).toBe(true);
         });
@@ -161,7 +162,7 @@ describe('tasks selector', () => {
             const task = new TaskBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
 
-            const result = selector.isTaskRecommended(taxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended(taxonomyTermsFromQuestionnaire, task);
 
             expect(result).toBe(true);
         });
@@ -172,7 +173,7 @@ describe('tasks selector', () => {
             const task = new TaskBuilder().withCompleted(true).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
 
-            const result = selector.isTaskRecommended(taxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended(taxonomyTermsFromQuestionnaire, task);
 
             expect(result).toBe(true);
         });
