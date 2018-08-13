@@ -1,17 +1,12 @@
-import { Store } from '../stores';
-import { Id as TaskId } from '../stores/tasks';
-import { Id as ServiceId, buildDefaultTaskServices } from '../stores/services';
-import { Locale } from '../locale';
-import { getLocalizedText } from './locale/get_localized_text';
-import { selectLocale } from './locale/select_locale';
-import { Task } from './tasks/task';
+import { Store } from '../../stores';
+import { Id as TaskId } from '../../stores/tasks';
+import { Id as ServiceId, buildDefaultTaskServices } from '../../stores/services';
+import { Locale } from '../../locale';
+import { getLocalizedText } from '../locale/get_localized_text';
+import { selectLocale } from '../locale/select_locale';
+import { Task } from '../tasks/task';
 import * as R from 'ramda';
-
-export interface Service {
-    readonly id: string;
-    readonly name: string;
-    readonly description: string;
-}
+import { Service } from './service';
 
 export interface TaskServices {
     readonly loading: boolean;
