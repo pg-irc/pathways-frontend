@@ -6,7 +6,7 @@ import { selectIconFromExploreTaxonomy } from './select_icon_from_explore_taxono
 import { ExploreSection } from './types';
 import { buildExploreSection } from './build_explore_section';
 
-export const selectExploreSection = (store: Store, routerProps: RouterProps): ExploreSection => {
+export const selectCurrentExploreSection = (store: Store, routerProps: RouterProps): ExploreSection => {
     const locale = selectLocale(store);
     const sections = store.exploreSectionsInStore.sections;
     const id = routerProps.match.params.learnId;

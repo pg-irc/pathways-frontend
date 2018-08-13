@@ -9,11 +9,11 @@ import { toSelectorArticle } from './to_selector_article';
 import { toSelectorArticleList } from './to_selector_article_list';
 import { buildExploreSection } from '../explore/build_explore_section';
 import { Article } from './article';
+import { pickArticleById } from './pick_article_by_id';
 
-export const selectArticle = (store: Store, routerProps: RouterProps): Article => {
+export const selectCurrentArticle = (store: Store, routerProps: RouterProps): Article => {
     const locale = selectLocale(store);
-    const articles = store.articlesInStore.articles;
-    const article = articles[routerProps.match.params.articleId];
+    const article = pickArticleById(store, routerProps.match.params.articleId);
     const relatedTasks = selectRelatedTasks(store, article.relatedTasks);
     const relatedArticles = toSelectorArticleList(store, article.relatedArticles);
     const storeExploreSection = taskDetails.findExploreSectionBy(article, store.exploreSectionsInStore.sections);
