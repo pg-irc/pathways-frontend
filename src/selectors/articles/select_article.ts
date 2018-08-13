@@ -1,5 +1,5 @@
 import { Store } from '../../stores';
-import * as taskDetails from '../details/tasks';
+import * as taskDetails from '../explore/find_explore_section_by';
 import { selectLocale } from '../locale/select_locale';
 import { selectRelatedTasks } from '../tasks';
 import { RouterProps } from '../../application/routing';

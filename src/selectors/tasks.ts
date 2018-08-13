@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { Store } from '../stores';
 import * as store from '../stores/tasks';
-import * as taskDetails from './details/tasks';
+import * as taskDetails from './explore/find_explore_section_by';
 import { Taxonomies as TaxonomyConstants } from '../application/constants';
 import { getLocalizedText } from './locale/get_localized_text';
 import { Locale } from '../locale/types';
