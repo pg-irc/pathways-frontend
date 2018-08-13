@@ -22,12 +22,6 @@ export const selectRelatedTasks = (appStore: Store, taskIds: ReadonlyArray<store
     R.map((taskId: store.Id) => selectTaskAsListItem(appStore, taskId), taskIds)
 );
 
-export const selectCompletedTasks = (appStore: Store): ReadonlyArray<TaskListItem> => {
-    const isCompleted = (task: store.Task): boolean => task.completed;
-    const taskIds = R.keys(R.pickBy(isCompleted, appStore.tasksInStore.taskMap));
-    return R.map((taskId: store.Id) => selectTaskAsListItem(appStore, taskId), taskIds);
-};
-
 const denormalizeTasksWithoutRelatedEntities = (locale: Locale, task: store.Task, exploreSection: ExploreSection, isRecommended: boolean): Task => {
     return toSelectorTask(locale, task, exploreSection, isRecommended, [], []);
 };
