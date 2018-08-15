@@ -5,14 +5,20 @@ import { aString, aBoolean } from '../../../application/__tests__/helpers/random
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies';
+import { ValidStore, LoadingStore } from '../../questionnaire/stores';
 
-export const buildNormalizedQuestionnaire = (questions: ReadonlyArray<QuestionBuilder>): store.Store => (
-    {
+export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): store.ValidStore => (
+    new ValidStore({
         activeQuestion: aString(),
         questions: buildQuestionMap(questions),
         answers: buildAnswerMap(questions),
-    }
+    })
 );
+
+export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.Store => {
+    const lastValidState = buildValidStore(questions);
+    return new LoadingStore(lastValidState);
+};
 
 const buildQuestionMap = (questions: ReadonlyArray<QuestionBuilder>): store.QuestionsMap => {
     const buildAndMapToIds = (map: store.QuestionsMap, builder: QuestionBuilder): store.QuestionsMap => {

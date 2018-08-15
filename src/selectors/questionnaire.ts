@@ -4,6 +4,7 @@ import * as model from '../stores/questionnaire';
 import { selectLocalizedText, selectLocale } from './locale';
 import { Locale } from '../locale/types';
 import { TaxonomyTermReference } from '../stores/taxonomies';
+import { toValidOrThrow } from '../stores/questionnaire/stores';
 
 export type Questionnaire = ReadonlyArray<Question>;
 
@@ -28,11 +29,11 @@ export const selectQuestionnaire = (appStore: Store): Questionnaire => {
 };
 
 export const selectActiveQuestion = (appStore: Store): model.Id => (
-    appStore.questionnaireInStore.activeQuestion
+    toValidOrThrow(appStore.questionnaireInStore).activeQuestion
 );
 
 export const denormalizeQuestions = (locale: Locale, modelStore: model.Store): Questionnaire => {
-    const { questions, answers }: model.Store = modelStore;
+    const { questions, answers }: model.ValidStore = toValidOrThrow(modelStore);
 
     return Object.keys(questions).map((key: string, index: number) => {
         const question: model.Question = questions[key];
@@ -72,7 +73,7 @@ const buildViewModelForAnswers = (locale: Locale, keys: ReadonlyArray<string>,
     );
 
 export const selectTaxonomyTermsForSelectedAnswers = (store: Store): ReadonlyArray<TaxonomyTermReference> => (
-    filterTaxonomyTermsForChosenAnswers(store.questionnaireInStore.answers)
+    filterTaxonomyTermsForChosenAnswers(toValidOrThrow(store.questionnaireInStore).answers)
 );
 
 export const filterTaxonomyTermsForChosenAnswers = (answers: model.AnswersMap): ReadonlyArray<TaxonomyTermReference> => {
