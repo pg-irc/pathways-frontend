@@ -6,11 +6,11 @@ import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
 import { Task } from '../../stores/tasks';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { updateTaskServicesAsync, UpdateTaskServicesAsync, serviceFromServiceData } from '../../stores/services';
-import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { APIResponse } from '../../api/api_client';
+import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
 
 describe('The update task services saga', () => {
-    const locale = new LocaleBuilder().build();
+    const locale = aLocale();
 
     it('should dispatch a call effect for api.getRelatedServicesForTask', () => {
         const task = new TaskBuilder().withLocaleCode(locale.code).build();

@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let no-any
 
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
-import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
 import * as stores from '../../stores/tasks';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
 import { Locale } from '../../locale/types';
@@ -23,7 +23,7 @@ const aTaxonomyTermReference = (): TaxonomyTermReference => (
 );
 
 beforeEach(() => {
-    locale = new LocaleBuilder().build();
+    locale = aLocale();
 });
 
 describe('tasks selector', () => {

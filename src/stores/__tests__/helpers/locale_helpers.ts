@@ -33,27 +33,10 @@ export class LocaleInfoBuilder {
     }
 }
 
-export class LocaleBuilder {
-    code: string = aString();
-    fallback: string = aString();
-
-    withCode(code: string): LocaleBuilder {
-        this.code = code;
-        return this;
-    }
-
-    withFallback(fallback: string): LocaleBuilder {
-        this.fallback = fallback;
-        return this;
-    }
-
-    build(): Locale {
-        return {
-            code: this.code,
-            fallback: this.fallback,
-        };
-    }
-}
+export const aLocale = (): Locale => ({
+    code: aString(),
+    fallback: aString(),
+});
 
 // TODO fix constructor signature to adhere to builder pattern
 export class LocalizedTextBuilder {

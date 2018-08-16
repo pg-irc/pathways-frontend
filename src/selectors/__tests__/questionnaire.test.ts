@@ -3,7 +3,7 @@ import * as selector from '../questionnaire/question';
 import { getIdsOfChosenAnswers } from '../questionnaire/get_ids_of_chosen_answers';
 import { anInteger } from '../../application/__tests__/helpers/random_test_values';
 import * as testHelpers from '../../stores/__tests__/helpers/questionnaire_helpers';
-import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
@@ -16,7 +16,7 @@ const aTaxonomyTermReference = (): TaxonomyTermReference => (
 
 describe('questionnaire selector', () => {
 
-    let locale = new LocaleBuilder().build();
+    let locale = aLocale();
 
     describe('should map properties', () => {
 
@@ -118,7 +118,7 @@ describe('questionnaire selector', () => {
 
 describe('getting ids of all chosen answers', () => {
     it('should include ids for chosen answers', () => {
-        const locale = new LocaleBuilder().build();
+        const locale = aLocale();
         const aChosenAnswer = new testHelpers.AnswerBuilder().withIsChosen(true).withLocaleCode(locale.code);
         const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([aChosenAnswer]);
         const normalizedData = testHelpers.buildValidStore([aQuestion]);
@@ -129,7 +129,7 @@ describe('getting ids of all chosen answers', () => {
     });
 
     it('should not include ids for non-chosen questions', () => {
-        const locale = new LocaleBuilder().build();
+        const locale = aLocale();
         const aNonChosenAnswer = new testHelpers.AnswerBuilder().withIsChosen(false).withLocaleCode(locale.code);
         const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
         const normalizedData = testHelpers.buildValidStore([aQuestion]);
