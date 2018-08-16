@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { NotificationsProps, NotificationsActions, NotificationListComponent } from './notification_list';
 import { Id, RemoveNotificationAction, removeNotification } from '../../stores/notifications';
-import { selectNotifications } from '../../selectors/select_notifications';
+import { selectNotifications } from '../../selectors/notifications/select_notifications';
 
 const mapStateToProps = (store: Store): NotificationsProps => ({
     notifications: selectNotifications(store),
