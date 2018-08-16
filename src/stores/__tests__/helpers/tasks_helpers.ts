@@ -97,7 +97,7 @@ export class TaskBuilder {
     }
 
     private createLocalizedText(text: string): LocalizedText {
-        return new LocalizedTextBuilder(this.localeCode, text).build();
+        return new LocalizedTextBuilder().addLocalizedText(this.localeCode, text).build();
     }
 }
 

@@ -41,13 +41,13 @@ describe('localized text selector', () => {
 
     it('selects the correct localized version of the text', () => {
         const theText = aString();
-        const theLocalizedText = new LocalizedTextBuilder(theLocale.code, theText).build();
+        const theLocalizedText = new LocalizedTextBuilder().addLocalizedText(theLocale.code, theText).build();
         expect(getLocalizedText(theLocale, theLocalizedText)).toBe(theText);
     });
 
     it('selects text from the fallback locale if the current locale is not available', () => {
         const theFallbackText = aString();
-        const theLocalizedText = new LocalizedTextBuilder().addLocale(theLocale.fallback, theFallbackText).build();
+        const theLocalizedText = new LocalizedTextBuilder().addLocalizedText(theLocale.fallback, theFallbackText).build();
         expect(getLocalizedText(theLocale, theLocalizedText)).toBe(theFallbackText);
     });
 

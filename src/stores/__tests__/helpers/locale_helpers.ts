@@ -38,16 +38,15 @@ export const aLocale = (): Locale => ({
     fallback: aString(),
 });
 
-// TODO fix constructor signature to adhere to builder pattern
 export class LocalizedTextBuilder {
 
     localizations: LocalizedText;
 
-    constructor(defaultLocaleCode: string = aString(), defaultLocaleText: string = aString()) {
-        this.addLocale(defaultLocaleCode, defaultLocaleText);
+    constructor() {
+        this.addLocalizedText(aString(), aString());
     }
 
-    addLocale(localeCode: string, localeText: string): LocalizedTextBuilder {
+    addLocalizedText(localeCode: string, localeText: string): LocalizedTextBuilder {
         this.localizations = {
             ...this.localizations,
             [localeCode]: localeText,

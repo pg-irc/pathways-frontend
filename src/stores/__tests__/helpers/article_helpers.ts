@@ -66,8 +66,8 @@ export class ArticleBuilder {
         return {
             id: this.id,
             chapter: this.chapter,
-            title: new LocalizedTextBuilder(this.localeCode, this.title).build(),
-            description: new LocalizedTextBuilder(this.localeCode, this.description).build(),
+            title: new LocalizedTextBuilder().addLocalizedText(this.localeCode, this.title).build(),
+            description: new LocalizedTextBuilder().addLocalizedText(this.localeCode, this.description).build(),
             relatedTasks: this.relatedTasks,
             relatedArticles: this.relatedArticles,
             isRecommendedToAllUsers: this.isRecommendedToAllUsers,

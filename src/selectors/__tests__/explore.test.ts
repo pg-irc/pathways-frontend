@@ -66,8 +66,8 @@ describe('build selector explore section', () => {
     let section: ExploreSection = undefined;
 
     beforeEach(() => {
-        const localizedName = new LocalizedTextBuilder(englishLocale.code, theNameInEnglish).build();
-        const localizedIntroduction = new LocalizedTextBuilder(englishLocale.code, theIntroductionInEnglish).build();
+        const localizedName = new LocalizedTextBuilder().addLocalizedText(englishLocale.code, theNameInEnglish).build();
+        const localizedIntroduction = new LocalizedTextBuilder().addLocalizedText(englishLocale.code, theIntroductionInEnglish).build();
 
         const inputSection = new StoreExploreSectionBuilder().
             withId(theId).
