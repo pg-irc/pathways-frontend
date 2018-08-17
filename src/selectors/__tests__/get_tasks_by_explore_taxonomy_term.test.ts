@@ -1,10 +1,9 @@
 // tslint:disable:no-expression-statement no-let
-
-import { findItemByLearnTaxonomyTerm } from '../details/tasks';
 import { ExploreTaxonomyId, TaxonomyTermReference } from '../../stores/taxonomies';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
 import { TaskMap } from '../../stores/tasks';
+import { findItemsByLearnTaxonomyTerm } from '../taxonomies/find_items_by_explore_taxonomy_term';
 
 describe('find task by explore taxonomy term', () => {
     let exploreTerm: TaxonomyTermReference;
@@ -23,7 +22,7 @@ describe('find task by explore taxonomy term', () => {
     });
 
     it('should return a task tagged with the given taxonomy term', () => {
-        const found = findItemByLearnTaxonomyTerm([exploreTerm], tasks);
+        const found = findItemsByLearnTaxonomyTerm([exploreTerm], tasks);
         expect(found[0].id).toBe(taskId);
     });
 
@@ -32,7 +31,7 @@ describe('find task by explore taxonomy term', () => {
             taxonomyId: ExploreTaxonomyId,
             taxonomyTermId: aString(),
         };
-        const found = findItemByLearnTaxonomyTerm([aDifferentExploreTerm], tasks);
+        const found = findItemsByLearnTaxonomyTerm([aDifferentExploreTerm], tasks);
         expect(found).toHaveLength(0);
     });
 
@@ -45,12 +44,12 @@ describe('find task by explore taxonomy term', () => {
         tasks = {
             [taskId]: new TaskBuilder().withId(taskId).withTaxonomyTerm(aNonExploreTerm).build(),
         };
-        const found = findItemByLearnTaxonomyTerm([aNonExploreTerm], tasks);
+        const found = findItemsByLearnTaxonomyTerm([aNonExploreTerm], tasks);
         expect(found).toHaveLength(0);
     });
 
     it('should not return a task when called with no expore terms', () => {
-        const found = findItemByLearnTaxonomyTerm([], tasks);
+        const found = findItemsByLearnTaxonomyTerm([], tasks);
         expect(found).toHaveLength(0);
     });
 });

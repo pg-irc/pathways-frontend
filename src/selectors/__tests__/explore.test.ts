@@ -1,11 +1,12 @@
 // tslint:disable:no-let no-expression-statement
-import { denormalizeSections, buildExploreSection } from '../details/explore';
-import { ExploreSection } from '../explore';
+import { ExploreSection } from '../explore/types';
 import { ExploreSectionMap } from '../../stores/explore';
 import { ExploreTaxonomyId } from '../../stores/taxonomies';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { ExploreSectionBuilder as StoreExploreSectionBuilder } from '../../stores/__tests__/helpers/explore_section_builder';
 import { LocalizedTextBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { buildExploreSection } from '../explore/build_explore_section';
+import { buildExploreSectionList } from '../explore/build_explore_section_list';
 
 const englishLocale = { code: 'en', fallback: 'ar' };
 const theId = aString();
@@ -45,7 +46,7 @@ const theExploreTaxonomy = {
 describe('denormalize all explore sections', () => {
     let section: ExploreSection = undefined;
     beforeEach(() => {
-        section = denormalizeSections(englishLocale, theStore, theExploreTaxonomy)[0];
+        section = buildExploreSectionList(englishLocale, theStore, theExploreTaxonomy)[0];
     });
     it('should return object with id', () => {
         expect(section.id).toBe(theId);
@@ -65,8 +66,8 @@ describe('build selector explore section', () => {
     let section: ExploreSection = undefined;
 
     beforeEach(() => {
-        const localizedName = new LocalizedTextBuilder(englishLocale.code, theNameInEnglish).build();
-        const localizedIntroduction = new LocalizedTextBuilder(englishLocale.code, theIntroductionInEnglish).build();
+        const localizedName = new LocalizedTextBuilder().addLocalizedText(englishLocale.code, theNameInEnglish).build();
+        const localizedIntroduction = new LocalizedTextBuilder().addLocalizedText(englishLocale.code, theIntroductionInEnglish).build();
 
         const inputSection = new StoreExploreSectionBuilder().
             withId(theId).

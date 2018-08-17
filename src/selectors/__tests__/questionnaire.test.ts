@@ -1,12 +1,14 @@
 // tslint:disable:no-expression-statement no-let
-import * as selector from '../questionnaire';
-import { getIdsOfChosenAnswers } from '../select_ids_of_chosen_questions';
+import * as selector from '../questionnaire/question';
+import { getIdsOfChosenAnswers } from '../questionnaire/get_ids_of_chosen_answers';
 import { anInteger } from '../../application/__tests__/helpers/random_test_values';
 import * as testHelpers from '../../stores/__tests__/helpers/questionnaire_helpers';
-import { LocaleBuilder } from '../../stores/__tests__/helpers/locale_helpers';
+import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
+import { toSelectorQuestionList } from '../questionnaire/to_selector_question_list';
+import { getTaxonomyTermsForChosenAnswers } from '../taxonomies/get_taxonomy_terms_for_chosen_answers';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
@@ -14,20 +16,20 @@ const aTaxonomyTermReference = (): TaxonomyTermReference => (
 
 describe('questionnaire selector', () => {
 
-    let locale = new LocaleBuilder().build();
+    let locale = aLocale();
 
     describe('should map properties', () => {
 
         let anAnswer: testHelpers.AnswerBuilder;
         let aQuestion: testHelpers.QuestionBuilder;
-        let denormalizedData: selector.Questionnaire;
+        let denormalizedData: ReadonlyArray<selector.Question>;
 
         beforeEach(() => {
             anAnswer = new testHelpers.AnswerBuilder().withLocaleCode(locale.code);
             aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([anAnswer]);
             const normalizedData = testHelpers.buildValidStore([aQuestion]);
 
-            denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
+            denormalizedData = toSelectorQuestionList(locale, normalizedData);
         });
 
         it('question id', () => {
@@ -58,7 +60,7 @@ describe('questionnaire selector', () => {
         );
         const normalizedData = testHelpers.buildValidStore(questions);
 
-        const denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
+        const denormalizedData = toSelectorQuestionList(locale, normalizedData);
 
         expect(denormalizedData).toHaveLength(questionCount);
     });
@@ -71,18 +73,19 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers(answers);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const denormalizedData = selector.denormalizeQuestions(locale, normalizedData);
+        const denormalizedData = toSelectorQuestionList(locale, normalizedData);
 
         expect(denormalizedData[0].answers).toHaveLength(answerCount);
     });
 
+    // TODO move tests for filterTaxonomyTermsForChosenAnswers to a different test suite
     it('should return the taxonomy terms for a chosen answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
         const chosenAnswer = new testHelpers.AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(true);
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosenAnswer]);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = getTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toEqual([theTaxonomyTerm]);
     });
@@ -93,7 +96,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = getTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toEqual([]);
     });
@@ -106,7 +109,7 @@ describe('questionnaire selector', () => {
         const theQuestion = new testHelpers.QuestionBuilder().withAnswers([chosendAnswer]);
         const normalizedData = testHelpers.buildValidStore([theQuestion]);
 
-        const result = selector.filterTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = getTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toContain(theTaxonomyTerm);
         expect(result).toContain(theSecondTaxonomyTerm);
@@ -115,7 +118,7 @@ describe('questionnaire selector', () => {
 
 describe('getting ids of all chosen answers', () => {
     it('should include ids for chosen answers', () => {
-        const locale = new LocaleBuilder().build();
+        const locale = aLocale();
         const aChosenAnswer = new testHelpers.AnswerBuilder().withIsChosen(true).withLocaleCode(locale.code);
         const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([aChosenAnswer]);
         const normalizedData = testHelpers.buildValidStore([aQuestion]);
@@ -126,7 +129,7 @@ describe('getting ids of all chosen answers', () => {
     });
 
     it('should not include ids for non-chosen questions', () => {
-        const locale = new LocaleBuilder().build();
+        const locale = aLocale();
         const aNonChosenAnswer = new testHelpers.AnswerBuilder().withIsChosen(false).withLocaleCode(locale.code);
         const aQuestion = new testHelpers.QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
         const normalizedData = testHelpers.buildValidStore([aQuestion]);

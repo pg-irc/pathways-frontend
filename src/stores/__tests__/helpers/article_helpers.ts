@@ -1,7 +1,7 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedTextBuilder } from './locale_helpers';
-import { TaxonomyTermReference } from '../../../selectors/taxonomies';
+import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 import { Id, Article } from '../../articles';
 import { Id as TaskId } from '../../tasks';
 
@@ -66,8 +66,8 @@ export class ArticleBuilder {
         return {
             id: this.id,
             chapter: this.chapter,
-            title: new LocalizedTextBuilder(this.localeCode, this.title).build(),
-            description: new LocalizedTextBuilder(this.localeCode, this.description).build(),
+            title: new LocalizedTextBuilder().addLocalizedText(this.localeCode, this.title).build(),
+            description: new LocalizedTextBuilder().addLocalizedText(this.localeCode, this.description).build(),
             relatedTasks: this.relatedTasks,
             relatedArticles: this.relatedArticles,
             isRecommendedToAllUsers: this.isRecommendedToAllUsers,

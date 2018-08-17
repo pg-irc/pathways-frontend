@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { I18nProvider } from '@lingui/react';
 import { Store } from '../../stores';
-import { selectLocale } from '../../selectors/locale';
+import { selectLocale } from '../../selectors/locale/select_locale';
 import { CatalogsMap, LocaleInfoManager } from '../../locale';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
     readonly language: string;
 }
 
-interface Actions {}
+interface Actions { }
 
 const mapStateToProps = (appStore: Store): Props => ({
     catalogs: LocaleInfoManager.catalogsMap,

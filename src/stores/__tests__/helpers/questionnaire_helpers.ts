@@ -4,7 +4,7 @@ import * as store from '../../questionnaire';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
-import { TaxonomyTermReference } from '../../../selectors/taxonomies';
+import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 import { ValidStore, LoadingStore } from '../../questionnaire/stores';
 
 export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): store.ValidStore => (
@@ -83,7 +83,7 @@ export class QuestionBuilder {
     }
 
     private createLocalizedText(text: string): LocalizedText {
-        return new LocalizedTextBuilder(this.localeCode, text).build();
+        return new LocalizedTextBuilder().addLocalizedText(this.localeCode, text).build();
     }
 }
 
@@ -136,6 +136,6 @@ export class AnswerBuilder {
     }
 
     private createLocalizedText(text: string): LocalizedText {
-        return new LocalizedTextBuilder(this.localeCode, text).build();
+        return new LocalizedTextBuilder().addLocalizedText(this.localeCode, text).build();
     }
 }

@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import * as R from 'ramda';
 import Accordion from 'react-native-collapsible/Accordion';
 import { Content, View, Text, ListItem } from 'native-base';
-import * as selector from '../../selectors/questionnaire';
+import * as selector from '../../selectors/questionnaire/question';
 import { Question } from './question';
 import { applicationStyles, colors, values } from '../../application/styles';
 import { Trans } from '@lingui/react';
@@ -11,7 +11,7 @@ import { RouterProps } from '../../application/routing';
 import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
 
 export interface QuestionnaireProps {
-    readonly questionnaire: selector.Questionnaire;
+    readonly questionnaire: ReadonlyArray<selector.Question>;
     readonly activeQuestion: Id;
     readonly recommendedTaskCount: number;
 }
@@ -56,11 +56,11 @@ export const Component: React.StatelessComponent<Props> = (props: Props): JSX.El
     </View>
 );
 
-const findIndexForQuestion = (questionId: Id, questions: selector.Questionnaire): number => (
+const findIndexForQuestion = (questionId: Id, questions: ReadonlyArray<selector.Question>): number => (
     R.findIndex(R.propEq('id', questionId), questions)
 );
 
-const findNextActiveQuestion = (currentActiveQuestionId: Id, questions: selector.Questionnaire): Id => {
+const findNextActiveQuestion = (currentActiveQuestionId: Id, questions: ReadonlyArray<selector.Question>): Id => {
     const nextActiveQuestionIndex = findIndexForQuestion(currentActiveQuestionId, questions) + 1;
     return questions[nextActiveQuestionIndex].id;
 };

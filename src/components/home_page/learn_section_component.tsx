@@ -4,7 +4,7 @@ import { Trans } from '@lingui/react';
 import { Text, View } from 'native-base';
 import { applicationStyles } from '../../application/styles';
 import { computeUniqueKeyForSections } from '../explore/compute_unique_key_for_sections';
-import { ExploreSection } from '../../selectors/explore';
+import { ExploreSection } from '../../selectors/explore/types';
 import { RowOfSectionButtons, SectionButton } from '../explore/explore_all';
 import { HomePageProps } from './props';
 import { RouterProps, Routes, goToRouteWithoutParameter, goToRouteWithParameter } from '../../application/routing';
