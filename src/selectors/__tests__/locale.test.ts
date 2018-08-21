@@ -41,7 +41,11 @@ describe('localized text selector', () => {
 
     it('selects the correct localized version of the text', () => {
         const theText = aString();
-        const theLocalizedText = new LocalizedTextBuilder().addLocalizedText(theLocale.code, theText).build();
+        const theFallbackText = aString();
+        const theLocalizedText = new LocalizedTextBuilder().
+            addLocalizedText(theLocale.code, theText).
+            addLocalizedText(theLocale.fallback, theFallbackText).
+            build();
         expect(getLocalizedText(theLocale, theLocalizedText)).toBe(theText);
     });
 
