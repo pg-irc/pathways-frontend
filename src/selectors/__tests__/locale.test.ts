@@ -1,6 +1,6 @@
 // tslint:disable:no-let no-expression-statement
 import { LocaleStoreBuilder, LocalizedTextBuilder, aLocale } from '../../stores/__tests__/helpers/locale_helpers';
-import { getLocalizedText } from '../locale/get_localized_text';
+import { getLocalizedText, getLocalizedTextOrDefault } from '../locale/get_localized_text';
 import { ApplicationStoreBuilder } from '../../stores/__tests__/helpers/store_helpers';
 import { Store } from '../../stores';
 import * as locale from '../../stores/locale';
@@ -41,7 +41,11 @@ describe('localized text selector', () => {
 
     it('selects the correct localized version of the text', () => {
         const theText = aString();
-        const theLocalizedText = new LocalizedTextBuilder().addLocalizedText(theLocale.code, theText).build();
+        const theFallbackText = aString();
+        const theLocalizedText = new LocalizedTextBuilder().
+            addLocalizedText(theLocale.code, theText).
+            addLocalizedText(theLocale.fallback, theFallbackText).
+            build();
         expect(getLocalizedText(theLocale, theLocalizedText)).toBe(theText);
     });
 
@@ -55,5 +59,15 @@ describe('localized text selector', () => {
         const theLocalizedText = new LocalizedTextBuilder().build();
         expect(getLocalizedText(theLocale, theLocalizedText)).toContain('missing');
     });
+});
 
+describe('localized text selector with default', () => {
+
+    let theLocale = aLocale();
+
+    it('returns the default value when the localized string is missing', () => {
+        const theLocalizedText = new LocalizedTextBuilder().build();
+        const theDefault = aString();
+        expect(getLocalizedTextOrDefault(theDefault, theLocale, theLocalizedText)).toBe(theDefault);
+    });
 });
