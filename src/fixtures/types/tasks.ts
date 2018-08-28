@@ -12,6 +12,7 @@ export interface Task {
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly relatedTasks: ReadonlyArray<Id>;
     readonly relatedArticles: ReadonlyArray<ArticleId>;
+    readonly serviceQuery: string;
     readonly completed: boolean;
 }
 

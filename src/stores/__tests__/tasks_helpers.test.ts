@@ -33,6 +33,12 @@ describe('tasks test helpers', () => {
             const task = new TaskBuilder().withCompleted(completed).build();
             expect(task.completed).toBe(completed);
         });
+
+        test('service query property', () => {
+            const theQuery = aString();
+            const task = new TaskBuilder().withServiceQuery(theQuery);
+            expect(task.serviceQuery).toBe(theQuery);
+        });
     });
 
     describe('the store', () => {

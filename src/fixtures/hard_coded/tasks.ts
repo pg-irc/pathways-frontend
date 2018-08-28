@@ -26,6 +26,7 @@ export const buildTasksFixture = (): Store => {
                 'completed': false,
                 'relatedTasks': ['t2'],
                 'relatedArticles': ['a1', 'a2'],
+                'serviceQuery': 'elementary school',
             },
             't2': {
                 'id': 't2',
@@ -47,6 +48,7 @@ export const buildTasksFixture = (): Store => {
                 'completed': false,
                 'relatedTasks': ['t1'],
                 'relatedArticles': ['a1'],
+                'serviceQuery': 'linc',
             },
             't3': {
                 'id': 't3',
@@ -68,6 +70,7 @@ export const buildTasksFixture = (): Store => {
                 'completed': false,
                 'relatedTasks': ['t2'],
                 'relatedArticles': ['a1'],
+                'serviceQuery': 'child english language',
             },
             't4': {
                 'id': 't4',
@@ -89,6 +92,7 @@ export const buildTasksFixture = (): Store => {
                 'completed': false,
                 'relatedTasks': [],
                 'relatedArticles': [],
+                'serviceQuery': 'bank account',
             },
             't5': {
                 'id': 't5',
@@ -110,6 +114,7 @@ export const buildTasksFixture = (): Store => {
                 'completed': false,
                 'relatedTasks': [],
                 'relatedArticles': [],
+                'serviceQuery': 'social insurance number',
             },
         },
         savedTasksList: [],

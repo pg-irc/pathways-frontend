@@ -14,10 +14,11 @@ export const toSelectorTask =
                 title: getLocalizedText(locale, task.title),
                 description: getLocalizedText(locale, task.description),
                 taxonomyTerms: task.taxonomyTerms,
-                exploreSection: exploreSection,
-                isRecommended: isRecommended,
-                relatedArticles: relatedArticles,
-                relatedTasks: relatedTasks,
+                exploreSection,
+                isRecommended,
+                relatedArticles,
+                relatedTasks,
                 completed: task.completed,
+                serviceQuery: task.serviceQuery,
             }
         );

@@ -12,5 +12,6 @@ export interface Task {
     readonly isRecommended: boolean;
     readonly relatedTasks: ReadonlyArray<TaskListItem>;
     readonly relatedArticles: ReadonlyArray<ArticleListItem>;
+    readonly serviceQuery: string;
     readonly completed: boolean;
 }
