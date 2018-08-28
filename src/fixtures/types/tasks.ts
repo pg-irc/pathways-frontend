@@ -13,9 +13,6 @@ export interface Task {
     readonly relatedTasks: ReadonlyArray<Id>;
     readonly relatedArticles: ReadonlyArray<ArticleId>;
     readonly completed: boolean;
-    readonly tags?: ReadonlyArray<string>;
-    readonly category?: string;
-    readonly importance?: number;
 }
 
 export interface TaskMap {

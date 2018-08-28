@@ -2,7 +2,7 @@
 
 import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
 import * as stores from '../tasks';
-import { aString, aBoolean, aNumber } from '../../application/__tests__/helpers/random_test_values';
+import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 
 describe('tasks test helpers', () => {
 
@@ -32,18 +32,6 @@ describe('tasks test helpers', () => {
             const completed = aBoolean();
             const task = new TaskBuilder().withCompleted(completed).build();
             expect(task.completed).toBe(completed);
-        });
-
-        test('category property', () => {
-            const category = aString();
-            const task = new TaskBuilder().withCategory(category).build();
-            expect(task.category).toBe(category);
-        });
-
-        test('importance property', () => {
-            const importance = aNumber();
-            const task = new TaskBuilder().withImportance(importance).build();
-            expect(task.importance).toBe(importance);
         });
     });
 

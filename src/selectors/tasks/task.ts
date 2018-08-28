@@ -10,8 +10,6 @@ export interface Task {
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly exploreSection: ExploreSection;
     readonly isRecommended: boolean;
-    readonly category: string;
-    readonly importance: number;
     readonly relatedTasks: ReadonlyArray<TaskListItem>;
     readonly relatedArticles: ReadonlyArray<ArticleListItem>;
     readonly completed: boolean;

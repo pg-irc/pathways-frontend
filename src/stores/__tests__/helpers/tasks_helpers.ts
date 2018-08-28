@@ -1,7 +1,7 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import * as store from '../../tasks';
 import { Id as ArticleId } from '../../articles';
-import { aString, aBoolean, aNumber } from '../../../application/__tests__/helpers/random_test_values';
+import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
@@ -16,9 +16,6 @@ export class TaskBuilder {
     relatedTasks: ReadonlyArray<ArticleId> = [aString(), aString()];
     relatedArticles: ReadonlyArray<store.Id> = [aString(), aString()];
     completed: boolean = aBoolean();
-    tags: ReadonlyArray<string> = [aString(), aString()];
-    category: string = aString();
-    importance: number = aNumber();
 
     withLocaleCode(localeCode: string): TaskBuilder {
         this.localeCode = localeCode;
@@ -55,21 +52,6 @@ export class TaskBuilder {
         return this;
     }
 
-    withTags(tags: ReadonlyArray<string>): TaskBuilder {
-        this.tags = tags;
-        return this;
-    }
-
-    withCategory(category: string): TaskBuilder {
-        this.category = category;
-        return this;
-    }
-
-    withImportance(importance: number): TaskBuilder {
-        this.importance = importance;
-        return this;
-    }
-
     withRelatedTasks(relatedTasks: ReadonlyArray<store.Id>): TaskBuilder {
         this.relatedTasks = relatedTasks;
         return this;
@@ -90,9 +72,6 @@ export class TaskBuilder {
             relatedArticles: this.relatedArticles,
             relatedTasks: this.relatedArticles,
             completed: this.completed,
-            tags: this.tags,
-            category: this.category,
-            importance: this.importance,
         };
     }
 

@@ -63,14 +63,6 @@ describe('tasks selector', () => {
             expect(denormalizedTask.description).toBe(task.description[locale.code]);
         });
 
-        test('category property', () => {
-            expect(denormalizedTask.category).toBe(task.category);
-        });
-
-        test('importance property', () => {
-            expect(denormalizedTask.importance).toBe(task.importance);
-        });
-
         test('taxonomy term reference', () => {
             expect(denormalizedTask.taxonomyTerms).toEqual([{ taxonomyId, taxonomyTermId }]);
         });

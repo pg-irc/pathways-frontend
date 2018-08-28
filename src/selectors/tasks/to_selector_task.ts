@@ -18,8 +18,6 @@ export const toSelectorTask =
                 isRecommended: isRecommended,
                 relatedArticles: relatedArticles,
                 relatedTasks: relatedTasks,
-                category: task.category,
-                importance: task.importance,
                 completed: task.completed,
             }
         );
