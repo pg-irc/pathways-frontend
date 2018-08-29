@@ -5,6 +5,7 @@ import { ArticleListItem } from '../articles/article_list_item';
 import { ExploreSection } from '../explore/types';
 import { TaskListItem } from './task_list_item';
 import { Task } from './task';
+import { createRelatedServicesQueryFromTask } from '../services/create_related_services_query_from_task';
 
 export const toSelectorTask =
     (locale: Locale, task: store.Task, exploreSection: ExploreSection, isRecommended: boolean,
@@ -14,12 +15,11 @@ export const toSelectorTask =
                 title: getLocalizedText(locale, task.title),
                 description: getLocalizedText(locale, task.description),
                 taxonomyTerms: task.taxonomyTerms,
-                exploreSection: exploreSection,
-                isRecommended: isRecommended,
-                relatedArticles: relatedArticles,
-                relatedTasks: relatedTasks,
-                category: task.category,
-                importance: task.importance,
+                exploreSection,
+                isRecommended,
+                relatedArticles,
+                relatedTasks,
                 completed: task.completed,
+                serviceQuery: createRelatedServicesQueryFromTask(task),
             }
         );

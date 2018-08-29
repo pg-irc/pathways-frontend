@@ -36,12 +36,18 @@ describe('tasks selector', () => {
         let isRecommended: boolean;
         let exploreSection: ExploreSection;
         let denormalizedTask: Task;
+        let serviceQuery: string;
 
         beforeEach(() => {
             taxonomyId = aString();
             taxonomyTermId = aString();
             exploreSectionName = aString();
-            task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
+            serviceQuery = aString();
+            task = new TaskBuilder().
+                withLocaleCode(locale.code).
+                withTaxonomyTerm({ taxonomyId, taxonomyTermId }).
+                withServiceQuery(serviceQuery).
+                build();
             exploreSection = new ExploreSectionBuilder().withName(exploreSectionName).build();
             isRecommended = aBoolean();
             denormalizedTask = toSelectorTask(locale, task, exploreSection, isRecommended, [], []);
@@ -63,14 +69,6 @@ describe('tasks selector', () => {
             expect(denormalizedTask.description).toBe(task.description[locale.code]);
         });
 
-        test('category property', () => {
-            expect(denormalizedTask.category).toBe(task.category);
-        });
-
-        test('importance property', () => {
-            expect(denormalizedTask.importance).toBe(task.importance);
-        });
-
         test('taxonomy term reference', () => {
             expect(denormalizedTask.taxonomyTerms).toEqual([{ taxonomyId, taxonomyTermId }]);
         });
@@ -81,6 +79,10 @@ describe('tasks selector', () => {
 
         test('is recommended flag', () => {
             expect(denormalizedTask.isRecommended).toEqual(isRecommended);
+        });
+
+        test('service query', () => {
+            expect(denormalizedTask.serviceQuery).toEqual(serviceQuery);
         });
     });
 

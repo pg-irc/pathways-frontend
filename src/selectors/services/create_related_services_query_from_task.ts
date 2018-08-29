@@ -1,6 +1,11 @@
-import { Task } from '../tasks/task';
-import * as R from 'ramda';
+import { Task } from '../../stores/tasks';
+import R from 'ramda';
 
-export function createRelatedServicesQueryFromTask(task: Task): string {
-    return R.take(3, task.title.split(' ')).join(',');
-}
+export const createRelatedServicesQueryFromTask = (task: Task): string => (
+    task.serviceQuery ? task.serviceQuery : firstThreeWordsFromTitleInEnglish(task)
+);
+
+const firstThreeWordsFromTitleInEnglish = (task: Task): string => (
+    // tslint:disable-next-line:no-string-literal
+    R.take(3, task.title['en'].split(' ')).join(',')
+);
