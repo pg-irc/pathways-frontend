@@ -31,7 +31,7 @@ export async function saveUserDataAsync(ids: string): Promise<void> {
 }
 
 const serialize = (userData: PersistedUserData): string => (
-    userData.chosenAnswers.join(',')
+    JSON.stringify(userData)
 );
 
 export function* watchLoadUserData(): IterableIterator<ForkEffect> {
@@ -55,6 +55,6 @@ export async function loadUserDataAsync(): Promise<string> {
     return await AsyncStorage.getItem(USER_DATA_STORAGE_KEY);
 }
 
-const deserialize = (ids: string): PersistedUserData => ({
-    chosenAnswers: ids ? ids.split(',') : [],
-});
+const deserialize = (serializedUserData: string): PersistedUserData => (
+    serializedUserData ? JSON.parse(serializedUserData) : { chosenAnswers: [] }
+);

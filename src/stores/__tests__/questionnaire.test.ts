@@ -171,7 +171,7 @@ describe('questionnaire reducer', () => {
             nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
             question = new helpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
             loadingStore = helpers.buildLoadingStore([question]);
-            const persistedData = new PersistedUserDataBuilder().addChosenAnswer(nonChosenAnswer.id).build();
+            const persistedData = new PersistedUserDataBuilder().addChosenAnswer(nonChosenAnswer.id).buildObject();
             const action = store.UserData.loadSuccess(persistedData);
 
             newStore = store.reducer(loadingStore, action);
@@ -183,7 +183,7 @@ describe('questionnaire reducer', () => {
             chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
             question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
             loadingStore = helpers.buildLoadingStore([question]);
-            const persistedData = new PersistedUserDataBuilder().build();
+            const persistedData = new PersistedUserDataBuilder().buildObject();
             const action = store.UserData.loadSuccess(persistedData);
 
             newStore = store.reducer(loadingStore, action);

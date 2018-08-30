@@ -11,9 +11,13 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    build(): PersistedUserData {
+    buildObject(): PersistedUserData {
         return {
             chosenAnswers: this.chosenAnswers,
         };
+    }
+
+    buildJson(): string {
+        return JSON.stringify(this.buildObject());
     }
 }
