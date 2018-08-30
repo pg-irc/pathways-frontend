@@ -3,9 +3,10 @@
 import { call, CallEffect, PutEffect, put, ForkEffect, takeLatest, select, SelectEffect } from 'redux-saga/effects';
 import { AsyncStorage } from 'react-native';
 import { USER_DATA_STORAGE_KEY } from '../application/constants';
-import { UserData, Id } from '../stores/questionnaire';
+import { UserData } from '../stores/questionnaire';
+import { PersistedUserData } from '../selectors/user_data/persisted_user_data';
 import * as constants from '../application/constants';
-import { selectUserDataForLocalPersistence } from '../selectors/questionnaire/select_ids_of_chosen_questions';
+import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
 
 export function* watchAnswerChangesToSaveUserData(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.CHOOSE_ANSWER, saveUserData);
@@ -15,7 +16,7 @@ type SaveActions = IterableIterator<SelectEffect | CallEffect | PutEffect<UserDa
 
 export function* saveUserData(): SaveActions {
     try {
-        const userData = yield select(selectUserDataForLocalPersistence);
+        const userData: PersistedUserData = yield select(selectUserDataForLocalPersistence);
         const serializedUserData = serialize(userData);
         yield call(saveUserDataAsync, serializedUserData);
         yield put(UserData.saveSuccess());
@@ -29,8 +30,8 @@ export async function saveUserDataAsync(ids: string): Promise<void> {
     return await AsyncStorage.setItem(USER_DATA_STORAGE_KEY, ids);
 }
 
-const serialize = (ids: ReadonlyArray<string>): string => (
-    ids.join(',')
+const serialize = (userData: PersistedUserData): string => (
+    userData.chosenAnswers.join(',')
 );
 
 export function* watchLoadUserData(): IterableIterator<ForkEffect> {
@@ -54,6 +55,6 @@ export async function loadUserDataAsync(): Promise<string> {
     return await AsyncStorage.getItem(USER_DATA_STORAGE_KEY);
 }
 
-const deserialize = (ids: string): ReadonlyArray<Id> => (
-    ids ? ids.split(',') : []
-);
+const deserialize = (ids: string): PersistedUserData => ({
+    chosenAnswers: ids ? ids.split(',') : [],
+});

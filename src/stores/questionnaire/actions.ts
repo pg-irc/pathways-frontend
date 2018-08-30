@@ -1,6 +1,7 @@
 import { Id } from '../../fixtures/types/questionnaire';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
+import { PersistedUserData } from '../../selectors/user_data/persisted_user_data';
 
 export type ChooseAnswerAction = Readonly<ReturnType<typeof chooseAnswer>>;
 export type SetActiveQuestionAction = Readonly<ReturnType<typeof setActiveQuestion>>;
@@ -15,6 +16,7 @@ export const setActiveQuestion = (activeQuestion: Id) => (
     helpers.makeAction(constants.SET_ACTIVE_QUESTION, { activeQuestion })
 );
 
+// TODO find a better name for this namespace so it doesn't look like a data type
 export namespace UserData {
 
     export type SaveSuccessAction = Readonly<ReturnType<typeof saveSuccess>>;
@@ -40,8 +42,8 @@ export namespace UserData {
     );
 
     // tslint:disable-next-line:typedef
-    export const loadSuccess = (chosenAnswers: ReadonlyArray<Id>) => (
-        helpers.makeAction(constants.LOAD_USER_DATA_SUCCESS, { chosenAnswers })
+    export const loadSuccess = (userData: PersistedUserData) => (
+        helpers.makeAction(constants.LOAD_USER_DATA_SUCCESS, userData)
     );
 
     // tslint:disable-next-line:typedef

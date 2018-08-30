@@ -1,9 +1,10 @@
 // tslint:disable:no-expression-statement no-let
 import { call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
-import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from '../questionnaire';
+import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from '../user_data';
 import { UserData } from '../../stores/questionnaire';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
-import { selectUserDataForLocalPersistence } from '../../selectors/questionnaire/select_ids_of_chosen_questions';
+import { selectUserDataForLocalPersistence } from '../../selectors/user_data/select_user_data_for_local_persistence';
+import { PersistedUserDataBuilder } from '../../selectors/__tests__/helpers/user_data_helpers';
 
 describe('the load user data saga', () => {
 
@@ -27,29 +28,35 @@ describe('the load user data saga', () => {
         });
 
         it('should dispatch a success action on success', () => {
-            const questionId = aString(); // TODO rename
+            const questionId = aString();
+            const expectedPersistedData = new PersistedUserDataBuilder().addChosenAnswer(questionId).build();
 
             const result = saga.next(questionId).value;
 
-            expect(result).toEqual(put(UserData.loadSuccess([questionId])));
+            expect(result).toEqual(put(UserData.loadSuccess(expectedPersistedData)));
         });
 
         it('should return zero ids when there is no data in persistent storage', () => {
             const questionId: string = undefined;
+            const expectedPersistedData = new PersistedUserDataBuilder().build();
 
             const result = saga.next(questionId).value;
 
-            expect(result).toEqual(put(UserData.loadSuccess([])));
+            expect(result).toEqual(put(UserData.loadSuccess(expectedPersistedData)));
         });
 
         it('should split the data on comma', () => {
             const firstQuestionId = aString();
             const secondQuestionId = aString();
             const argument = firstQuestionId + ',' + secondQuestionId;
+            const expectedPersistedData = new PersistedUserDataBuilder().
+                addChosenAnswer(firstQuestionId).
+                addChosenAnswer(secondQuestionId).
+                build();
 
             const result = saga.next(argument).value;
 
-            expect(result).toEqual(put(UserData.loadSuccess([firstQuestionId, secondQuestionId])));
+            expect(result).toEqual(put(UserData.loadSuccess(expectedPersistedData)));
         });
 
         it('should dispatch a put effect with a failure action on error', () => {
@@ -87,7 +94,8 @@ describe('the save user data saga', () => {
         });
 
         it('should dispatch call effect to save user state', () => {
-            const result = saga.next([]).value;
+            const persistedData = new PersistedUserDataBuilder().build();
+            const result = saga.next(persistedData).value;
 
             expect(result).toEqual(call(saveUserDataAsync, ''));
         });
@@ -95,8 +103,12 @@ describe('the save user data saga', () => {
         it('should save question ids as comma-separated string', () => {
             const firstId = aString();
             const secondId = aString();
+            const persistedData = new PersistedUserDataBuilder().
+                addChosenAnswer(firstId).
+                addChosenAnswer(secondId).
+                build();
 
-            const result = saga.next([firstId, secondId]).value;
+            const result = saga.next(persistedData).value;
 
             expect(result).toEqual(call(saveUserDataAsync, firstId + ',' + secondId));
         });
@@ -112,7 +124,8 @@ describe('the save user data saga', () => {
         describe('after successfully saving user data', () => {
 
             beforeEach(() => {
-                saga.next([]);
+                const persistedData = new PersistedUserDataBuilder().build();
+                saga.next(persistedData);
             });
 
             it('should dispatch a put effect with a success action', () => {

@@ -4,7 +4,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { watchLoadLocale, watchSetLocale } from './locale';
 import { watchLoadFonts } from './fonts';
 import { watchUpdateTaskServices } from './services';
-import { watchLoadUserData, watchAnswerChangesToSaveUserData } from './questionnaire';
+import { watchLoadUserData, watchAnswerChangesToSaveUserData } from './user_data';
 
 export const sagaMiddleware = createSagaMiddleware();
 

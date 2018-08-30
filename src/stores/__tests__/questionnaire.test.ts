@@ -5,6 +5,7 @@ import * as helpers from './helpers/questionnaire_helpers';
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { toValidOrThrow, LoadingStore, InvalidStore } from '../questionnaire/stores';
+import { PersistedUserDataBuilder } from '../../selectors/__tests__/helpers/user_data_helpers';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -170,7 +171,8 @@ describe('questionnaire reducer', () => {
             nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
             question = new helpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
             loadingStore = helpers.buildLoadingStore([question]);
-            const action = store.UserData.loadSuccess([nonChosenAnswer.id]);
+            const persistedData = new PersistedUserDataBuilder().addChosenAnswer(nonChosenAnswer.id).build();
+            const action = store.UserData.loadSuccess(persistedData);
 
             newStore = store.reducer(loadingStore, action);
 
@@ -181,7 +183,8 @@ describe('questionnaire reducer', () => {
             chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
             question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
             loadingStore = helpers.buildLoadingStore([question]);
-            const action = store.UserData.loadSuccess([]);
+            const persistedData = new PersistedUserDataBuilder().build();
+            const action = store.UserData.loadSuccess(persistedData);
 
             newStore = store.reducer(loadingStore, action);
 
