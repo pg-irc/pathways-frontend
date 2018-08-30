@@ -8,11 +8,9 @@ export { Id, Task, TaskMap, TaskList, Store } from '../fixtures/types/tasks';
 export type AddToSavedListAction = Readonly<ReturnType<typeof addToSavedList>>;
 export type RemoveFromSavedListAction = Readonly<ReturnType<typeof removeFromSavedList>>;
 export type ToggleCompletedAction = Readonly<ReturnType<typeof toggleCompleted>>;
-export type ShareAction = Readonly<ReturnType<typeof share>>;
 type TaskAction = AddToSavedListAction |
     RemoveFromSavedListAction |
-    ToggleCompletedAction |
-    ShareAction;
+    ToggleCompletedAction;
 
 // tslint:disable-next-line:typedef
 export const addToSavedList = (taskId: Id) => {
@@ -30,11 +28,6 @@ export const toggleCompleted = (taskId: Id) => (
     helpers.makeAction(constants.TOGGLE_COMPLETED, { taskId })
 );
 
-// tslint:disable-next-line:typedef
-export const share = () => (
-    helpers.makeAction(constants.SHARE)
-);
-
 export const buildDefaultStore = (): Store => (
     buildTasksFixture()
 );
@@ -50,7 +43,6 @@ export const reducer = (store: Store = buildDefaultStore(), action?: TaskAction)
             return removeFromTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
         case constants.TOGGLE_COMPLETED:
             return toggleCompletedValue(store, action.payload.taskId);
-        case constants.SHARE:
         default:
             return store;
     }
