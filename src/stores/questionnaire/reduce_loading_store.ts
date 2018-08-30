@@ -10,13 +10,13 @@ export const reduceLoadingStore = (store: LoadingStore, action?: QuestionnaireAc
     }
 
     switch (action.type) {
-        case constants.LOAD_CHOSEN_QUESTIONS_SUCCESS:
+        case constants.LOAD_USER_DATA_SUCCESS:
             return new ValidStore({
                 ...store.lastValidState,
                 answers: chooseAnswersWithIdsIn(store.lastValidState.answers, action.payload.chosenAnswers),
             });
 
-        case constants.LOAD_CHOSEN_QUESTIONS_FAILURE:
+        case constants.LOAD_USER_DATA_FAILURE:
             return new InvalidStore(store.lastValidState, action.payload.message);
 
         default:

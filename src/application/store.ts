@@ -43,5 +43,5 @@ export function startApplication(saga: ApplicationSaga, store: ReturnType<typeof
         Roboto_medium: require('../../assets/fonts/Roboto_medium.ttf'),
     }));
     store.dispatch(locale.loadCurrentLocaleActions.request());
-    store.dispatch(questionnaire.LocalStorage.loadRequest());
+    store.dispatch(questionnaire.UserData.loadRequest());
 }

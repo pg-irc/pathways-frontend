@@ -19,7 +19,7 @@ export const reduceValidStore = (store: ValidStore, action?: QuestionnaireAction
         case constants.CHOOSE_ANSWER:
             return toggleIsChosenFlagForAnswer(store, action.payload.answerId);
 
-        case constants.LOAD_CHOSEN_QUESTIONS_REQUEST:
+        case constants.LOAD_USER_DATA_REQUEST:
             return new LoadingStore(store);
 
         default:

@@ -1,34 +1,37 @@
 // tslint:disable:no-expression-statement no-let
 import { call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
-import { loadChosenQuestions, saveChosenQuestions, loadChosenQuestionsAsync, saveChosenQuestionsAsync } from '../questionnaire';
-import { LocalStorage } from '../../stores/questionnaire';
+import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from '../questionnaire';
+import { UserData } from '../../stores/questionnaire';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
-import { selectIdsOfChosenAnswers } from '../../selectors/questionnaire/select_ids_of_chosen_questions';
+import { selectUserDataForLocalPersistence } from '../../selectors/questionnaire/select_ids_of_chosen_questions';
 
-describe('the loadChosenQuestions saga', () => {
+describe('the load user data saga', () => {
 
-    it('should dispatch a call effect for loadChosenQuestions()', () => {
-        const saga = loadChosenQuestions();
+    it('should dispatch a call effect for loadUserDataAsync()', () => {
+        const saga = loadUserData();
 
         const result = saga.next().value;
 
-        expect(result).toEqual(call(loadChosenQuestionsAsync));
+        expect(result).toEqual(call(loadUserDataAsync));
     });
 
-    describe('after requesting the chosen questions', () => {
-        let saga: IterableIterator<CallEffect | PutEffect<LocalStorage.LoadSuccessAction | LocalStorage.LoadFailureAction>>;
+    describe('after requesting the user data', () => {
+        let saga: IterableIterator<
+            CallEffect |
+            PutEffect<UserData.LoadSuccessAction | UserData.LoadFailureAction>
+            >;
 
         beforeEach(() => {
-            saga = loadChosenQuestions();
+            saga = loadUserData();
             saga.next();
         });
 
         it('should dispatch a success action on success', () => {
-            const questionId = aString();
+            const questionId = aString(); // TODO rename
 
             const result = saga.next(questionId).value;
 
-            expect(result).toEqual(put(LocalStorage.loadSuccess([questionId])));
+            expect(result).toEqual(put(UserData.loadSuccess([questionId])));
         });
 
         it('should return zero ids when there is no data in persistent storage', () => {
@@ -36,7 +39,7 @@ describe('the loadChosenQuestions saga', () => {
 
             const result = saga.next(questionId).value;
 
-            expect(result).toEqual(put(LocalStorage.loadSuccess([])));
+            expect(result).toEqual(put(UserData.loadSuccess([])));
         });
 
         it('should split the data on comma', () => {
@@ -46,7 +49,7 @@ describe('the loadChosenQuestions saga', () => {
 
             const result = saga.next(argument).value;
 
-            expect(result).toEqual(put(LocalStorage.loadSuccess([firstQuestionId, secondQuestionId])));
+            expect(result).toEqual(put(UserData.loadSuccess([firstQuestionId, secondQuestionId])));
         });
 
         it('should dispatch a put effect with a failure action on error', () => {
@@ -54,35 +57,39 @@ describe('the loadChosenQuestions saga', () => {
 
             const result = saga.throw(error).value;
 
-            expect(result).toEqual(put(LocalStorage.loadFailure(error.message)));
+            expect(result).toEqual(put(UserData.loadFailure(error.message)));
         });
 
         // TODO add test for handling no persistent data
     });
 });
 
-describe('the saveChosenQuestions saga', () => {
+describe('the save user data saga', () => {
 
-    it('should dispatch select effect to get chosen answer ids from the store', () => {
-        const saga = saveChosenQuestions();
+    it('should dispatch select effect to get user data from the store', () => {
+        const saga = saveUserData();
 
         const result = saga.next().value;
 
-        expect(result).toEqual(select(selectIdsOfChosenAnswers));
+        expect(result).toEqual(select(selectUserDataForLocalPersistence));
     });
 
-    describe('after selecting chosen answer ids from store', () => {
-        let saga: IterableIterator<SelectEffect | CallEffect | PutEffect<LocalStorage.SaveSuccessAction | LocalStorage.SaveFailureAction>>;
+    describe('after selecting user data from store', () => {
+        let saga: IterableIterator<
+            SelectEffect |
+            CallEffect |
+            PutEffect<UserData.SaveSuccessAction | UserData.SaveFailureAction>
+            >;
 
         beforeEach(() => {
-            saga = saveChosenQuestions();
+            saga = saveUserData();
             saga.next();
         });
 
-        it('should dispatch call effect to save question ids', () => {
+        it('should dispatch call effect to save user state', () => {
             const result = saga.next([]).value;
 
-            expect(result).toEqual(call(saveChosenQuestionsAsync, ''));
+            expect(result).toEqual(call(saveUserDataAsync, ''));
         });
 
         it('should save question ids as comma-separated string', () => {
@@ -91,7 +98,7 @@ describe('the saveChosenQuestions saga', () => {
 
             const result = saga.next([firstId, secondId]).value;
 
-            expect(result).toEqual(call(saveChosenQuestionsAsync, firstId + ',' + secondId));
+            expect(result).toEqual(call(saveUserDataAsync, firstId + ',' + secondId));
         });
 
         it('should dispatch a put effect with a failure action on error', () => {
@@ -99,10 +106,10 @@ describe('the saveChosenQuestions saga', () => {
 
             const result = saga.throw(error).value;
 
-            expect(result).toEqual(put(LocalStorage.saveFailure(error.message)));
+            expect(result).toEqual(put(UserData.saveFailure(error.message)));
         });
 
-        describe('after successfully saving ids', () => {
+        describe('after successfully saving user data', () => {
 
             beforeEach(() => {
                 saga.next([]);
@@ -111,7 +118,7 @@ describe('the saveChosenQuestions saga', () => {
             it('should dispatch a put effect with a success action', () => {
                 const result = saga.next().value;
 
-                expect(result).toEqual(put(LocalStorage.saveSuccess()));
+                expect(result).toEqual(put(UserData.saveSuccess()));
             });
         });
     });

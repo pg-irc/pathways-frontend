@@ -170,7 +170,7 @@ describe('questionnaire reducer', () => {
             nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
             question = new helpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
             loadingStore = helpers.buildLoadingStore([question]);
-            const action = store.LocalStorage.loadSuccess([nonChosenAnswer.id]);
+            const action = store.UserData.loadSuccess([nonChosenAnswer.id]);
 
             newStore = store.reducer(loadingStore, action);
 
@@ -181,7 +181,7 @@ describe('questionnaire reducer', () => {
             chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
             question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
             loadingStore = helpers.buildLoadingStore([question]);
-            const action = store.LocalStorage.loadSuccess([]);
+            const action = store.UserData.loadSuccess([]);
 
             newStore = store.reducer(loadingStore, action);
 
@@ -194,7 +194,7 @@ describe('questionnaire reducer', () => {
                 const answer = new helpers.AnswerBuilder();
                 question = new helpers.QuestionBuilder().withAnswers([answer]);
                 theStore = helpers.buildValidStore([question]);
-                const action = store.LocalStorage.loadRequest();
+                const action = store.UserData.loadRequest();
 
                 newStore = store.reducer(theStore, action);
             });
@@ -219,7 +219,7 @@ describe('questionnaire reducer', () => {
                 chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
                 question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
                 loadingStore = helpers.buildLoadingStore([question]);
-                const action = store.LocalStorage.loadFailure(theError);
+                const action = store.UserData.loadFailure(theError);
 
                 newStore = store.reducer(loadingStore, action);
             });

@@ -15,7 +15,7 @@ export const setActiveQuestion = (activeQuestion: Id) => (
     helpers.makeAction(constants.SET_ACTIVE_QUESTION, { activeQuestion })
 );
 
-export namespace LocalStorage {
+export namespace UserData {
 
     export type SaveSuccessAction = Readonly<ReturnType<typeof saveSuccess>>;
     export type SaveFailureAction = Readonly<ReturnType<typeof saveFailure>>;
@@ -26,27 +26,27 @@ export namespace LocalStorage {
 
     // tslint:disable-next-line:typedef
     export const saveSuccess = () => (
-        helpers.makeAction(constants.SAVE_CHOSEN_QUESTIONS_SUCCESS)
+        helpers.makeAction(constants.SAVE_USER_DATA_SUCCESS)
     );
 
     // tslint:disable-next-line:typedef
     export const saveFailure = (message: string) => (
-        helpers.makeAction(constants.SAVE_CHOSEN_QUESTIONS_FAILURE, { message })
+        helpers.makeAction(constants.SAVE_USER_DATA_FAILURE, { message })
     );
 
     // tslint:disable-next-line:typedef
     export const loadRequest = () => (
-        helpers.makeAction(constants.LOAD_CHOSEN_QUESTIONS_REQUEST)
+        helpers.makeAction(constants.LOAD_USER_DATA_REQUEST)
     );
 
     // tslint:disable-next-line:typedef
     export const loadSuccess = (chosenAnswers: ReadonlyArray<Id>) => (
-        helpers.makeAction(constants.LOAD_CHOSEN_QUESTIONS_SUCCESS, { chosenAnswers })
+        helpers.makeAction(constants.LOAD_USER_DATA_SUCCESS, { chosenAnswers })
     );
 
     // tslint:disable-next-line:typedef
     export const loadFailure = (message: string) => (
-        helpers.makeAction(constants.LOAD_CHOSEN_QUESTIONS_FAILURE, { message })
+        helpers.makeAction(constants.LOAD_USER_DATA_FAILURE, { message })
     );
 }
 
@@ -58,6 +58,6 @@ export const clearErrorState = () => (
 export type ClearErrorAction = Readonly<ReturnType<typeof clearErrorState>>;
 
 export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction
-    | LocalStorage.SaveSuccessAction | LocalStorage.SaveFailureAction
-    | LocalStorage.LoadRequestAction | LocalStorage.LoadSuccessAction | LocalStorage.LoadFailureAction
+    | UserData.SaveSuccessAction | UserData.SaveFailureAction
+    | UserData.LoadRequestAction | UserData.LoadSuccessAction | UserData.LoadFailureAction
     | ClearErrorAction;
