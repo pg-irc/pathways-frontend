@@ -9,15 +9,17 @@ import { rejectTasksWithIdsInList } from './reject_tasks_with_ids_in_list';
 import { selectExploreSectionFromTask } from './select_explore_section_from_task';
 import { filterTasksByTaxonomyTerms } from './filter_tasks_by_taxonomy_terms';
 import { rejectCompletedTasks } from './reject_completed_tasks';
+import { pickSavedTaskIds } from './pick_saved_task_ids';
+import { pickTasks } from './pick_tasks';
 
 export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => {
     const taxonomyTerms = selectTaxonomyTermsForChosenAnswers(appStore);
     const filterTasks = filterTasksByTaxonomyTerms(taxonomyTerms);
 
-    const savedTaskIds = appStore.tasksInStore.savedTasksList;
+    const savedTaskIds = pickSavedTaskIds(appStore);
     const rejectSavedTasks = rejectTasksWithIdsInList(savedTaskIds);
 
-    const allTasks = appStore.tasksInStore.taskMap;
+    const allTasks = pickTasks(appStore);
     const matchingTasks = filterTasks(allTasks);
     const nonSavedTasks = rejectSavedTasks(matchingTasks);
     const nonCompletedTasks = rejectCompletedTasks(nonSavedTasks);

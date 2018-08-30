@@ -10,10 +10,11 @@ import { toSelectorTaskWithoutRelatedEntities } from './to_selector_task_without
 import { selectExploreSectionFromTask } from './select_explore_section_from_task';
 import { isTaskRecommended } from './is_task_recommended';
 import { pickExploreSectionById } from '../explore/pick_explore_section_by_id';
+import { pickTasks } from './pick_tasks';
 
 export const selectTaskForCurrentExploreSection = (appStore: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
     const currentExploreSection = pickExploreSectionById(appStore, routerProps.match.params.learnId);
-    const tasks = appStore.tasksInStore.taskMap;
+    const tasks = pickTasks(appStore);
     const matchingTasks = findItemsByLearnTaxonomyTerm(currentExploreSection.taxonomyTerms, tasks);
 
     const locale = selectLocale(appStore);

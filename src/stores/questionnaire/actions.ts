@@ -17,6 +17,7 @@ export const setActiveQuestion = (activeQuestion: Id) => (
 );
 
 // TODO find a better name for this namespace so it doesn't look like a data type
+// TODO move this out of this questionnaire-related file
 export namespace UserData {
 
     export type SaveSuccessAction = Readonly<ReturnType<typeof saveSuccess>>;

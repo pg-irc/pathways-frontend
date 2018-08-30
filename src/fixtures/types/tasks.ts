@@ -22,7 +22,18 @@ export interface TaskMap {
 
 export type TaskList = ReadonlyArray<Id>;
 
-export interface Store {
+export interface IStore {
+    readonly taskMap: TaskMap;
+    readonly savedTasksList: TaskList;
+}
+
+// tslint:disable:no-class no-this no-expression-statement
+
+export class ValidStore {
+    constructor(parameters: IStore) {
+        this.taskMap = parameters.taskMap;
+        this.savedTasksList = parameters.savedTasksList;
+    }
     readonly taskMap: TaskMap;
     readonly savedTasksList: TaskList;
 }

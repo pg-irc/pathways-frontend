@@ -1,9 +1,9 @@
-import { Store } from '../types/tasks';
+import { ValidStore } from '../types/tasks';
 import { Taxonomies } from '../../application/constants';
 
 const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
-export const buildTasksFixture = (): Store => {
+export const buildTasksFixture = (): ValidStore => {
     return {
         taskMap: {
             't1': {

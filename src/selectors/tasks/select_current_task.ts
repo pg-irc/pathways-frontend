@@ -8,11 +8,12 @@ import { Task } from './task';
 import { selectExploreSectionFromTask } from './select_explore_section_from_task';
 import { isTaskRecommended } from './is_task_recommended';
 import { selectRelatedTasks } from './select_related_tasks';
+import { pickTasks } from './pick_tasks';
 
 export const selectCurrentTask = (appStore: Store, routerProps: RouterProps): Task => {
     const locale = selectLocale(appStore);
     const taskId = routerProps.match.params.taskId;
-    const taskMap = appStore.tasksInStore.taskMap;
+    const taskMap = pickTasks(appStore);
     const task = taskMap[taskId];
     const exploreSection = selectExploreSectionFromTask(appStore, task);
     const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
