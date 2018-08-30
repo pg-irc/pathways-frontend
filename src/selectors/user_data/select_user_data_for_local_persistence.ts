@@ -5,4 +5,5 @@ import { PersistedUserData } from './persisted_user_data';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedUserData => ({
     chosenAnswers: getIdsOfChosenAnswers(pullQuestionnaire(appStore).answers),
+    savedTasks: [],
 });

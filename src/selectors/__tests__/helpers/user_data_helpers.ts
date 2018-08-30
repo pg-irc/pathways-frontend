@@ -14,6 +14,7 @@ export class PersistedUserDataBuilder {
     buildObject(): PersistedUserData {
         return {
             chosenAnswers: this.chosenAnswers,
+            savedTasks: [],
         };
     }
 
