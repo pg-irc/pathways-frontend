@@ -5,6 +5,7 @@ import * as stores from '../tasks';
 import { UserData } from '../user_data';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { PersistedUserDataBuilder } from '../../selectors/__tests__/helpers/user_data_helpers';
+import { addToSavedList, removeFromSavedList, toggleCompleted } from '../tasks/actions';
 
 const asValid = (aStore: stores.Store): stores.ValidStore => {
     if (aStore instanceof stores.ValidStore) {
@@ -29,20 +30,20 @@ describe('tasks reducer', () => {
 
         test('can add task to saved tasks list', () => {
             const task = new TaskBuilder().build();
-            const finalStore = stores.reducer(validStore, stores.addToSavedList(task.id));
+            const finalStore = stores.reducer(validStore, addToSavedList(task.id));
 
             expect(asValid(finalStore).savedTasksList).toHaveLength(2);
         });
 
         test('can remove task from saved tasks list', () => {
-            const finalStore = stores.reducer(validStore, stores.removeFromSavedList(validStore.savedTasksList[0]));
+            const finalStore = stores.reducer(validStore, removeFromSavedList(validStore.savedTasksList[0]));
             expect(asValid(finalStore).savedTasksList).toHaveLength(0);
         });
 
         test('can toggle a task completed', () => {
             const taskId = Object.keys(validStore.taskMap)[0];
             const oldCompleted = validStore.taskMap[taskId].completed;
-            const finalStore = stores.reducer(validStore, stores.toggleCompleted(taskId));
+            const finalStore = stores.reducer(validStore, toggleCompleted(taskId));
             expect(asValid(finalStore).taskMap[taskId].completed).toEqual(!oldCompleted);
         });
 

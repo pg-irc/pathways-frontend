@@ -34,6 +34,7 @@ export const LOAD_USER_DATA_FAILURE = 'LOAD_USER_DATA_FAILURE';
 
 export const CLEAR_ERROR_STATE = 'REDUCERS:CLEAR_ERROR_STATE';
 
+// TODO remove name space
 export namespace Task {
   export const ADD_TO_SAVED_LIST = 'TASK:ADD_TO_SAVED_LIST';
   export const REMOVE_FROM_SAVED_LIST = 'TASK:REMOVE_FROM_SAVED_LIST';
