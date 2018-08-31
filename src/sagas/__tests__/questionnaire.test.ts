@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let
 import { call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
 import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from '../user_data';
-import { UserData } from '../../stores/questionnaire';
+import { UserData } from '../../stores/user_data';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
 import { selectUserDataForLocalPersistence } from '../../selectors/user_data/select_user_data_for_local_persistence';
 import { PersistedUserDataBuilder } from '../../selectors/__tests__/helpers/user_data_helpers';

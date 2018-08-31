@@ -2,7 +2,7 @@
 
 import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
 import * as stores from '../tasks';
-import { UserData } from '../questionnaire/actions';
+import { UserData } from '../user_data';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { PersistedUserDataBuilder } from '../../selectors/__tests__/helpers/user_data_helpers';
 
@@ -17,11 +17,11 @@ describe('tasks reducer', () => {
 
     describe('with a valid store', () => {
 
-        let store: stores.ValidStore; // TODO rename to validStore
+        let validStore: stores.ValidStore;
 
         beforeEach(() => {
             const taskBuilder = new TaskBuilder();
-            store = buildNormalizedStore(
+            validStore = buildNormalizedStore(
                 [taskBuilder],
                 [taskBuilder.build().id],
             );
@@ -29,34 +29,34 @@ describe('tasks reducer', () => {
 
         test('can add task to saved tasks list', () => {
             const task = new TaskBuilder().build();
-            const finalStore = stores.reducer(store, stores.addToSavedList(task.id));
+            const finalStore = stores.reducer(validStore, stores.addToSavedList(task.id));
 
             expect(asValid(finalStore).savedTasksList).toHaveLength(2);
         });
 
         test('can remove task from saved tasks list', () => {
-            const finalStore = stores.reducer(store, stores.removeFromSavedList(store.savedTasksList[0]));
+            const finalStore = stores.reducer(validStore, stores.removeFromSavedList(validStore.savedTasksList[0]));
             expect(asValid(finalStore).savedTasksList).toHaveLength(0);
         });
 
         test('can toggle a task completed', () => {
-            const taskId = Object.keys(store.taskMap)[0];
-            const oldCompleted = store.taskMap[taskId].completed;
-            const finalStore = stores.reducer(store, stores.toggleCompleted(taskId));
+            const taskId = Object.keys(validStore.taskMap)[0];
+            const oldCompleted = validStore.taskMap[taskId].completed;
+            const finalStore = stores.reducer(validStore, stores.toggleCompleted(taskId));
             expect(asValid(finalStore).taskMap[taskId].completed).toEqual(!oldCompleted);
         });
 
         describe('when handling a load request', () => {
 
             it('returns a loading store from a load request action', () => {
-                const finalStore = stores.reducer(store, UserData.loadRequest());
+                const finalStore = stores.reducer(validStore, UserData.loadRequest());
                 expect(finalStore).toBeInstanceOf(stores.LoadingStore);
             });
 
             it('should return a store with the last known valid state', () => {
-                const finalStore = stores.reducer(store, UserData.loadRequest());
+                const finalStore = stores.reducer(validStore, UserData.loadRequest());
                 if (finalStore instanceof stores.LoadingStore) {
-                    expect(finalStore.lastValidState).toBe(store);
+                    expect(finalStore.lastValidState).toBe(validStore);
                 } else {
                     fail();
                 }
@@ -68,7 +68,7 @@ describe('tasks reducer', () => {
             let loadingStore: stores.LoadingStore;
 
             beforeEach(() => {
-                loadingStore = new stores.LoadingStore(store);
+                loadingStore = new stores.LoadingStore(validStore);
             });
 
             describe('when handling a load error', () => {

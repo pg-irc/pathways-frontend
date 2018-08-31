@@ -3,7 +3,8 @@ import { ValidStore, TaskList, Id } from '../fixtures/types/tasks';
 import { Task as constants } from '../application/constants';
 import * as UserStateActions from '../application/constants';
 import * as helpers from './helpers/make_action';
-import { UserData, ClearErrorAction } from './questionnaire/actions';
+import { ClearErrorAction } from './questionnaire/actions';
+import { UserData } from './user_data';
 
 export { Id, Task, TaskMap, TaskList } from '../fixtures/types/tasks';
 export { ValidStore } from '../fixtures/types/tasks';

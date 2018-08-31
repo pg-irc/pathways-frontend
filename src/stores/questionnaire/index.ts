@@ -1,5 +1,5 @@
 export { Id, Question, Answer, QuestionsMap, AnswersMap } from '../../fixtures/types/questionnaire';
-export { UserData, chooseAnswer, ChooseAnswerAction, setActiveQuestion, SetActiveQuestionAction } from './actions';
+export { chooseAnswer, ChooseAnswerAction, setActiveQuestion, SetActiveQuestionAction } from './actions';
 export { Store, ValidStore } from './stores';
 
 import { buildQuestionnaireFixture } from '../../fixtures/buildFixtures';
