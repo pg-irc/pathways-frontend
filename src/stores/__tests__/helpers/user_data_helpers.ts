@@ -1,8 +1,7 @@
 // tslint:disable:no-class readonly-keyword readonly-array no-expression-statement no-this
-
-import { Id as AnswerId } from '../../../stores/questionnaire/index';
-import { Id as TaskId } from '../../../stores/tasks';
-import { PersistedUserData } from '../../user_data/persisted_user_data';
+import { Id as AnswerId } from '../../questionnaire';
+import { Id as TaskId } from '../../tasks';
+import { PersistedUserData } from '../../user_data';
 
 export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];

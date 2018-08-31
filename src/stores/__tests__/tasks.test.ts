@@ -4,7 +4,7 @@ import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
 import * as stores from '../tasks';
 import { UserData } from '../user_data';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { PersistedUserDataBuilder } from '../../selectors/__tests__/helpers/user_data_helpers';
+import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { addToSavedList, removeFromSavedList, toggleCompleted } from '../tasks/actions';
 
 const asValid = (aStore: stores.Store): stores.ValidStore => {

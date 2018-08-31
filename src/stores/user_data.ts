@@ -1,7 +1,12 @@
-// TODO store should not depend on selector code, move PersistedUserData here
-import { PersistedUserData } from '../selectors/user_data/persisted_user_data';
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
+import { Id as QuestionId } from './questionnaire';
+import { Id as TaskId } from './tasks';
+
+export interface PersistedUserData {
+    readonly chosenAnswers: ReadonlyArray<QuestionId>;
+    readonly savedTasks: ReadonlyArray<TaskId>;
+}
 
 // TODO find a better name for this namespace so it doesn't look like a data type
 export namespace UserData {

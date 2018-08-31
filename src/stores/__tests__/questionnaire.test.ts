@@ -5,7 +5,7 @@ import * as helpers from './helpers/questionnaire_helpers';
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { toValidOrThrow, LoadingStore, InvalidStore } from '../questionnaire/stores';
-import { PersistedUserDataBuilder } from '../../selectors/__tests__/helpers/user_data_helpers';
+import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { UserData } from '../user_data';
 
 describe('choose answer action creator', () => {

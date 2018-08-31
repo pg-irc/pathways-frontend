@@ -4,7 +4,7 @@ import { call, CallEffect, PutEffect, put, ForkEffect, takeLatest, select, Selec
 import { AsyncStorage } from 'react-native';
 import { USER_DATA_STORAGE_KEY } from '../application/constants';
 import { UserData } from '../stores/user_data';
-import { PersistedUserData } from '../selectors/user_data/persisted_user_data';
+import { PersistedUserData } from '../stores/user_data';
 import * as constants from '../application/constants';
 import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
 

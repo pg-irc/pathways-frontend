@@ -4,7 +4,7 @@ import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from
 import { UserData } from '../../stores/user_data';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
 import { selectUserDataForLocalPersistence } from '../../selectors/user_data/select_user_data_for_local_persistence';
-import { PersistedUserDataBuilder } from '../../selectors/__tests__/helpers/user_data_helpers';
+import { PersistedUserDataBuilder } from '../../stores/__tests__/helpers/user_data_helpers';
 
 describe('the load user data saga', () => {
 
