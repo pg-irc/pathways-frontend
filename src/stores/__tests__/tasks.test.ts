@@ -100,17 +100,18 @@ describe('tasks reducer', () => {
                     const firstTaskBuilder = new TaskBuilder().withId(firstTaskId);
                     const secondTaskBuilder = new TaskBuilder().withId(secondTaskId);
 
-                    const storeWhereFirstTaskIsSaved = buildNormalizedStore(
+                    const validStoreWhereFirstTaskIsSaved = buildNormalizedStore(
                         [firstTaskBuilder, secondTaskBuilder],
                         [firstTaskId],
                     );
-                    const theLoadingStore = new stores.LoadingStore(storeWhereFirstTaskIsSaved);
+                    const theStore = new stores.LoadingStore(validStoreWhereFirstTaskIsSaved);
 
                     const dataWhereSecondTaskIsSaved = new PersistedUserDataBuilder().
                         addSavedTask(secondTaskId).
                         buildObject();
+                    const theAction = UserDataPersistence.loadSuccess(dataWhereSecondTaskIsSaved);
 
-                    resultStore = stores.reducer(theLoadingStore, UserDataPersistence.loadSuccess(dataWhereSecondTaskIsSaved));
+                    resultStore = stores.reducer(theStore, theAction);
                 });
 
                 it('should return a valid store', () => {
@@ -127,6 +128,18 @@ describe('tasks reducer', () => {
                     if (resultStore instanceof stores.ValidStore) {
                         expect(resultStore.savedTasksList).not.toContain(firstTaskId);
                     }
+                });
+
+                it('should ignore invalid task ids in the loaded data', () => {
+                    const taskBuilder = new TaskBuilder();
+                    const theValidStore = buildNormalizedStore([taskBuilder], []);
+                    const theStore = new stores.LoadingStore(theValidStore);
+                    const dataWithInvalidId = new PersistedUserDataBuilder().
+                        addSavedTask(aString()).
+                        buildObject();
+                    const theAction = UserDataPersistence.loadSuccess(dataWithInvalidId);
+                    resultStore = stores.reducer(theStore, theAction);
+                    expect(asValid(resultStore).savedTasksList).toHaveLength(0);
                 });
             });
         });
