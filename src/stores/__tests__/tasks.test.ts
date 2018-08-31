@@ -7,8 +7,8 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { addToSavedList, removeFromSavedList, toggleCompleted } from '../tasks/actions';
 
-const asValid = (aStore: stores.Store): stores.ValidStore => {
-    if (aStore instanceof stores.ValidStore) {
+const asValid = (aStore: stores.TaskStore): stores.ValidTaskStore => {
+    if (aStore instanceof stores.ValidTaskStore) {
         return aStore;
     }
     throw new Error('Store expected to be valid');
@@ -18,7 +18,7 @@ describe('tasks reducer', () => {
 
     describe('with a valid store', () => {
 
-        let validStore: stores.ValidStore;
+        let validStore: stores.ValidTaskStore;
 
         beforeEach(() => {
             const taskBuilder = new TaskBuilder();
@@ -51,12 +51,12 @@ describe('tasks reducer', () => {
 
             it('returns a loading store from a load request action', () => {
                 const finalStore = stores.reducer(validStore, UserDataPersistence.loadRequest());
-                expect(finalStore).toBeInstanceOf(stores.LoadingStore);
+                expect(finalStore).toBeInstanceOf(stores.LoadingTaskStore);
             });
 
             it('should return a store with the last known valid state', () => {
                 const finalStore = stores.reducer(validStore, UserDataPersistence.loadRequest());
-                if (finalStore instanceof stores.LoadingStore) {
+                if (finalStore instanceof stores.LoadingTaskStore) {
                     expect(finalStore.lastValidState).toBe(validStore);
                 } else {
                     fail();
@@ -66,23 +66,23 @@ describe('tasks reducer', () => {
 
         describe('with a loading store', () => {
 
-            let loadingStore: stores.LoadingStore;
+            let loadingStore: stores.LoadingTaskStore;
 
             beforeEach(() => {
-                loadingStore = new stores.LoadingStore(validStore);
+                loadingStore = new stores.LoadingTaskStore(validStore);
             });
 
             describe('when handling a load error', () => {
 
                 it('should return an invalid store', () => {
                     const finalStore = stores.reducer(loadingStore, UserDataPersistence.loadFailure(''));
-                    expect(finalStore).toBeInstanceOf(stores.InvalidStore);
+                    expect(finalStore).toBeInstanceOf(stores.InvalidTaskStore);
                 });
 
                 it('should return s store with the error message', () => {
                     const error = aString();
                     const finalStore = stores.reducer(loadingStore, UserDataPersistence.loadFailure(error));
-                    if (finalStore instanceof stores.InvalidStore) {
+                    if (finalStore instanceof stores.InvalidTaskStore) {
                         expect(finalStore.error).toBe(error);
                     } else {
                         fail();
@@ -94,7 +94,7 @@ describe('tasks reducer', () => {
 
                 let firstTaskId = aString();
                 let secondTaskId = aString();
-                let resultStore: stores.Store = undefined;
+                let resultStore: stores.TaskStore = undefined;
 
                 beforeEach(() => {
                     const firstTaskBuilder = new TaskBuilder().withId(firstTaskId);
@@ -104,7 +104,7 @@ describe('tasks reducer', () => {
                         [firstTaskBuilder, secondTaskBuilder],
                         [firstTaskId],
                     );
-                    const theStore = new stores.LoadingStore(validStoreWhereFirstTaskIsSaved);
+                    const theStore = new stores.LoadingTaskStore(validStoreWhereFirstTaskIsSaved);
 
                     const dataWhereSecondTaskIsSaved = new PersistedUserDataBuilder().
                         addSavedTask(secondTaskId).
@@ -115,17 +115,17 @@ describe('tasks reducer', () => {
                 });
 
                 it('should return a valid store', () => {
-                    expect(resultStore).toBeInstanceOf(stores.ValidStore);
+                    expect(resultStore).toBeInstanceOf(stores.ValidTaskStore);
                 });
 
                 it('should return a store with task saved in loaded data marked as saved', () => {
-                    if (resultStore instanceof stores.ValidStore) {
+                    if (resultStore instanceof stores.ValidTaskStore) {
                         expect(resultStore.savedTasksList).toContain(secondTaskId);
                     }
                 });
 
                 it('should return a store with task not saved in loaded data not marked as saved', () => {
-                    if (resultStore instanceof stores.ValidStore) {
+                    if (resultStore instanceof stores.ValidTaskStore) {
                         expect(resultStore.savedTasksList).not.toContain(firstTaskId);
                     }
                 });
@@ -133,7 +133,7 @@ describe('tasks reducer', () => {
                 it('should ignore invalid task ids in the loaded data', () => {
                     const taskBuilder = new TaskBuilder();
                     const theValidStore = buildNormalizedStore([taskBuilder], []);
-                    const theStore = new stores.LoadingStore(theValidStore);
+                    const theStore = new stores.LoadingTaskStore(theValidStore);
                     const dataWithInvalidId = new PersistedUserDataBuilder().
                         addSavedTask(aString()).
                         buildObject();

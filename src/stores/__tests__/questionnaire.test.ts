@@ -4,7 +4,7 @@ import * as store from '../questionnaire';
 import * as helpers from './helpers/questionnaire_helpers';
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { toValidOrThrow, LoadingStore, InvalidStore } from '../questionnaire/stores';
+import { toValidOrThrow, LoadingQuestionnaireStore, InvalidQuestionnaireStore } from '../questionnaire/stores';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { UserDataPersistence } from '../user_data';
 
@@ -30,8 +30,8 @@ describe('questionnaire reducer', () => {
     let chosenAnswerToSecondQuestion: helpers.AnswerBuilder;
     let nonChosenAnswerToSecondQuestion: helpers.AnswerBuilder;
     let question, secondQuestion: helpers.QuestionBuilder;
-    let theStore: store.Store;
-    let newStore: store.Store;
+    let theStore: store.QuestionnaireStore;
+    let newStore: store.QuestionnaireStore;
 
     it('should return original store if the action is undefined', () => {
         theStore = helpers.buildValidStore([new helpers.QuestionBuilder()]);
@@ -166,7 +166,7 @@ describe('questionnaire reducer', () => {
 
     describe('when loading chosen answers from persistent storage', () => {
 
-        let loadingStore: store.Store = undefined;
+        let loadingStore: store.QuestionnaireStore = undefined;
 
         it('should set question with id in request to chosen', () => {
             nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
@@ -204,11 +204,11 @@ describe('questionnaire reducer', () => {
             });
 
             it('should return a loading store', () => {
-                expect(newStore).toBeInstanceOf(LoadingStore);
+                expect(newStore).toBeInstanceOf(LoadingQuestionnaireStore);
             });
 
             it('should return a store containing the last known valid state', () => {
-                if (newStore instanceof LoadingStore) {
+                if (newStore instanceof LoadingQuestionnaireStore) {
                     expect(newStore.lastValidState).toBe(theStore);
                 } else {
                     fail();
@@ -229,11 +229,11 @@ describe('questionnaire reducer', () => {
             });
 
             it('should return an invalid store', () => {
-                expect(newStore).toBeInstanceOf(InvalidStore);
+                expect(newStore).toBeInstanceOf(InvalidQuestionnaireStore);
             });
 
             it('should return store state unchanged from before error', () => {
-                if (loadingStore instanceof LoadingStore && newStore instanceof InvalidStore) {
+                if (loadingStore instanceof LoadingQuestionnaireStore && newStore instanceof InvalidQuestionnaireStore) {
                     expect(newStore.lastValidState).toBe(loadingStore.lastValidState);
                 } else {
                     fail();
@@ -241,7 +241,7 @@ describe('questionnaire reducer', () => {
             });
 
             it('should return store state with error message', () => {
-                if (newStore instanceof InvalidStore) {
+                if (newStore instanceof InvalidQuestionnaireStore) {
                     expect(newStore.error).toBe(theError);
                 } else {
                     fail();

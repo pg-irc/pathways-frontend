@@ -1,9 +1,9 @@
-import { Store, ValidStore, LoadingStore } from './stores';
+import { TaskStore, ValidTaskStore, LoadingTaskStore } from './stores';
 import { Id, TaskList } from '../../fixtures/types/tasks';
 import * as constants from '../../application/constants';
 import { TaskAction } from './actions';
 
-export const reduceValidStore = (store: ValidStore, action: TaskAction): Store => {
+export const reduceValidStore = (store: ValidTaskStore, action: TaskAction): TaskStore => {
     switch (action.type) {
         case constants.ADD_TO_SAVED_TASKS:
             return addToTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
@@ -12,29 +12,29 @@ export const reduceValidStore = (store: ValidStore, action: TaskAction): Store =
         case constants.TOGGLE_IS_TASK_COMPLETED:
             return toggleCompletedValue(store, action.payload.taskId);
         case constants.LOAD_USER_DATA_REQUEST:
-            return new LoadingStore(store);
+            return new LoadingTaskStore(store);
         default:
             return store;
     }
 };
 
-const addToTaskList = (store: ValidStore, property: keyof (ValidStore), taskList: TaskList, value: Id): ValidStore => {
+const addToTaskList = (store: ValidTaskStore, property: keyof (ValidTaskStore), taskList: TaskList, value: Id): ValidTaskStore => {
     if (taskList.indexOf(value) !== -1) {
         return store;
     }
-    return new ValidStore({ ...store, [property]: [...taskList, value] });
+    return new ValidTaskStore({ ...store, [property]: [...taskList, value] });
 };
 
-const removeFromTaskList = (store: ValidStore, property: keyof (ValidStore), taskList: TaskList, value: Id): ValidStore => {
+const removeFromTaskList = (store: ValidTaskStore, property: keyof (ValidTaskStore), taskList: TaskList, value: Id): ValidTaskStore => {
     if (taskList.indexOf(value) === -1) {
         return store;
     }
-    return new ValidStore({ ...store, [property]: taskList.filter((id: Id) => id !== value) });
+    return new ValidTaskStore({ ...store, [property]: taskList.filter((id: Id) => id !== value) });
 };
 
-const toggleCompletedValue = (store: ValidStore, taskId: Id): ValidStore => {
+const toggleCompletedValue = (store: ValidTaskStore, taskId: Id): ValidTaskStore => {
     const task = store.taskMap[taskId];
-    return new ValidStore({
+    return new ValidTaskStore({
         ...store,
         taskMap: {
             ...store.taskMap,

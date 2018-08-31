@@ -1,11 +1,11 @@
 import { LocalizedText } from '../../locale';
 
-import { Id, Service, Store, ServiceMap, TaskServices } from './types';
+import { Id, Service, ServiceStore, ServiceMap, TaskServices } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import * as constants from '../../application/constants';
 import { Action } from 'redux';
 
-export { Id, Service, Store };
+export { Id, Service, ServiceStore };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
 
 export function serviceFromServiceData(data: any): Service { // tslint:disable-line:no-any
@@ -17,7 +17,7 @@ export function serviceFromServiceData(data: any): Service { // tslint:disable-l
     return { id, name, description };
 }
 
-function buildDefaultStore(): Store {
+function buildDefaultStore(): ServiceStore {
     return {
         serviceMap: {},
         taskServicesMap: {},
@@ -32,7 +32,7 @@ export function buildDefaultTaskServices(): TaskServices {
     };
 }
 
-export function reducer(store: Store = buildDefaultStore(), action: Action): Store {
+export function reducer(store: ServiceStore = buildDefaultStore(), action: Action): ServiceStore {
     switch (action.type) {
         case constants.LOAD_SERVICES_REQUEST:
             return updateServicesRequest(store, action as UpdateTaskServicesAsync.Request);
@@ -45,7 +45,7 @@ export function reducer(store: Store = buildDefaultStore(), action: Action): Sto
     }
 }
 
-function updateServicesRequest(store: Store, action: UpdateTaskServicesAsync.Request): Store {
+function updateServicesRequest(store: ServiceStore, action: UpdateTaskServicesAsync.Request): ServiceStore {
     const taskId = action.payload.taskId;
     const taskServices = store.taskServicesMap[taskId] || buildDefaultTaskServices();
     return {
@@ -57,7 +57,7 @@ function updateServicesRequest(store: Store, action: UpdateTaskServicesAsync.Req
     };
 }
 
-function updateServicesSuccess(store: Store, action: UpdateTaskServicesAsync.Success): Store {
+function updateServicesSuccess(store: ServiceStore, action: UpdateTaskServicesAsync.Success): ServiceStore {
     const services = action.payload.services;
     const taskId = action.payload.taskId;
     const serviceMap = createServiceMap(services);
@@ -70,7 +70,7 @@ function updateServicesSuccess(store: Store, action: UpdateTaskServicesAsync.Suc
     };
 }
 
-function updateServicesFailure(store: Store, action: UpdateTaskServicesAsync.Failure): Store {
+function updateServicesFailure(store: ServiceStore, action: UpdateTaskServicesAsync.Failure): ServiceStore {
     const taskId = action.payload.taskId;
     const message = action.payload.message;
     return {

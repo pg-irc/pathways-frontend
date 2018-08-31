@@ -9,7 +9,7 @@ describe('notifications store', () => {
 
     describe('reducer', () => {
         let aNotification: model.Notification;
-        let store: model.Store;
+        let store: model.NotificationStore;
 
         beforeEach(() => {
             aNotification = new NotificationBuilder().withType(model.NotificationType.TaskAddedToPlan).build();

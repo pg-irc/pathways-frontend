@@ -12,16 +12,16 @@ import * as notifications from '../../notifications';
 
 export class ApplicationStoreBuilder {
     fontsInStore: fonts.Store;
-    localeInStore: locale.Store;
-    questionnaireInStore: questionnaire.Store;
-    tasksInStore: tasks.Store;
-    servicesInStore: services.Store;
-    exploreSectionsInStore: explore.Store;
-    taxonomiesInStore: taxonomies.Store;
-    articlesInStore: articles.Store;
-    notificationsInStore: notifications.Store;
+    localeInStore: locale.LocaleStore;
+    questionnaireInStore: questionnaire.QuestionnaireStore;
+    tasksInStore: tasks.TaskStore;
+    servicesInStore: services.ServiceStore;
+    exploreSectionsInStore: explore.ExploreStore;
+    taxonomiesInStore: taxonomies.TaxonomyStore;
+    articlesInStore: articles.ArticleStore;
+    notificationsInStore: notifications.NotificationStore;
 
-    withLocaleStore(store: locale.Store): ApplicationStoreBuilder {
+    withLocaleStore(store: locale.LocaleStore): ApplicationStoreBuilder {
         this.localeInStore = store;
         return this;
     }

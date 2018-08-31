@@ -13,6 +13,6 @@ export interface NotificationMap {
     readonly [property: string]: Notification;
 }
 
-export interface Store {
+export interface NotificationStore {
     readonly notifications: NotificationMap;
 }

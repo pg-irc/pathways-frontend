@@ -29,7 +29,7 @@ export interface IStore {
 
 // tslint:disable:no-class no-this no-expression-statement
 
-export class ValidStore {
+export class ValidTaskStore {
     constructor(parameters: IStore) {
         this.taskMap = parameters.taskMap;
         this.savedTasksList = parameters.savedTasksList;

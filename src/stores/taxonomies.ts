@@ -1,14 +1,14 @@
 import { buildTaxonomyFixture } from '../fixtures/buildFixtures';
-import { Store } from '../fixtures/types/taxonomies';
-export { Store, TaxonomyTermReference, Taxonomy, ExploreTaxonomyId } from '../fixtures/types/taxonomies';
+import { TaxonomyStore } from '../fixtures/types/taxonomies';
+export { TaxonomyStore, TaxonomyTermReference, Taxonomy, ExploreTaxonomyId } from '../fixtures/types/taxonomies';
 
 export type Id = string;
 
-const buildDefaultStore = (): Store => (
+const buildDefaultStore = (): TaxonomyStore => (
     buildTaxonomyFixture()
 );
 
 // tslint:disable-next-line:no-any
-export const reducer = (store: Store = buildDefaultStore(), _?: any): Store => {
+export const reducer = (store: TaxonomyStore = buildDefaultStore(), _?: any): TaxonomyStore => {
     return store;
 };

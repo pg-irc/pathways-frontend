@@ -2,11 +2,11 @@
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
 import { Id as TaskId } from '../../tasks';
-import { TaskServices, Service, TaskServicesMap, ServiceMap, Store } from '../../services/types';
+import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore } from '../../services/types';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 
-export function buildNormalizedServices(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): Store {
+export function buildNormalizedServices(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): ServiceStore {
     return {
         serviceMap: buildServiceMap(services),
         taskServicesMap: buildTaskServicesMap(tasks, services),

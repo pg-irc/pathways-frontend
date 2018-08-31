@@ -1,17 +1,17 @@
-import { ValidStore, Answer } from '../../fixtures/types/questionnaire';
+import { ValidQuestionnaireStore, Answer } from '../../fixtures/types/questionnaire';
 import { QuestionnaireAction } from './actions';
-import { Store, LoadingStore } from './stores';
+import { QuestionnaireStore, LoadingQuestionnaireStore } from './stores';
 import * as constants from '../../application/constants';
 import * as R from 'ramda';
 
-export const reduceValidStore = (store: ValidStore, action?: QuestionnaireAction): Store => {
+export const reduceValidStore = (store: ValidQuestionnaireStore, action?: QuestionnaireAction): QuestionnaireStore => {
     if (!action) {
         return store;
     }
 
     switch (action.type) {
         case constants.SET_ACTIVE_QUESTION:
-            return new ValidStore({
+            return new ValidQuestionnaireStore({
                 ...store,
                 activeQuestion: action.payload.activeQuestion,
             });
@@ -20,28 +20,28 @@ export const reduceValidStore = (store: ValidStore, action?: QuestionnaireAction
             return toggleIsChosenFlagForAnswer(store, action.payload.answerId);
 
         case constants.LOAD_USER_DATA_REQUEST:
-            return new LoadingStore(store);
+            return new LoadingQuestionnaireStore(store);
 
         default:
             return store;
     }
 };
 
-const toggleIsChosenFlagForAnswer = (store: ValidStore, answerId: string): ValidStore => (
+const toggleIsChosenFlagForAnswer = (store: ValidQuestionnaireStore, answerId: string): ValidQuestionnaireStore => (
     canChooseMultiple(store, answerId) ?
         toggleIsChosenFlag(store, answerId) :
         toggleIsChosenFlagForSingleAnswer(store, answerId)
 );
 
-const canChooseMultiple = (store: ValidStore, answerId: string): boolean => {
+const canChooseMultiple = (store: ValidQuestionnaireStore, answerId: string): boolean => {
     const answer = store.answers[answerId];
     const question = store.questions[answer.questionId];
     return question.acceptMultipleAnswers;
 };
 
-const toggleIsChosenFlag = (store: ValidStore, answerId: string): ValidStore => {
+const toggleIsChosenFlag = (store: ValidQuestionnaireStore, answerId: string): ValidQuestionnaireStore => {
     const answer = store.answers[answerId];
-    return new ValidStore({
+    return new ValidQuestionnaireStore({
         ...store,
         answers: {
             ...store.answers,
@@ -53,19 +53,19 @@ const toggleIsChosenFlag = (store: ValidStore, answerId: string): ValidStore => 
     });
 };
 
-const toggleIsChosenFlagForSingleAnswer = (store: ValidStore, answerId: string): ValidStore => {
+const toggleIsChosenFlagForSingleAnswer = (store: ValidQuestionnaireStore, answerId: string): ValidQuestionnaireStore => {
     const answer = store.answers[answerId];
     return answer.isChosen ?
         toggleIsChosenFlag(store, answerId) :
         toggleIsChosenFlag(unchooseAllAnswersForQuestion(store, answer.questionId), answerId);
 };
 
-const unchooseAllAnswersForQuestion = (store: ValidStore, questionId: string): ValidStore => {
+const unchooseAllAnswersForQuestion = (store: ValidQuestionnaireStore, questionId: string): ValidQuestionnaireStore => {
     const unchooseIfQuestionMatches = (answer: Answer): Answer => ({
         ...answer,
         isChosen: answer.questionId === questionId ? false : answer.isChosen,
     });
-    return new ValidStore({
+    return new ValidQuestionnaireStore({
         ...store,
         answers: R.map(unchooseIfQuestionMatches, store.answers),
     });

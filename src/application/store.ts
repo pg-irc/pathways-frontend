@@ -20,7 +20,7 @@ LocaleInfoManager.register([
     { code: 'fr', label: 'Français', catalog: frMessages, isRTL: false },
 ]);
 
-type InitialState = { readonly localeInStore: locale.Store };
+type InitialState = { readonly localeInStore: locale.LocaleStore };
 
 export function buildStore(saga: ApplicationSaga): ReturnType<typeof createStore> {
     const middleware = applyMiddleware(saga.middleware);

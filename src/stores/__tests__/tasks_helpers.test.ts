@@ -46,7 +46,7 @@ describe('tasks test helpers', () => {
         describe('building a normalized store', () => {
             let firstTaskBuilder: TaskBuilder;
             let secondTaskBuilder: TaskBuilder;
-            let validStore: stores.ValidStore;
+            let validStore: stores.ValidTaskStore;
 
             beforeEach(() => {
                 firstTaskBuilder = new TaskBuilder();

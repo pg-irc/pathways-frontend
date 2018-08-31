@@ -2,7 +2,7 @@
 import { LocalizedText } from '../../../locale';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 import { Locale, LocaleInfo } from '../../../locale';
-import { Store } from '../../locale';
+import { LocaleStore } from '../../locale';
 
 export class LocaleInfoBuilder {
     code: string = aString();
@@ -93,7 +93,7 @@ export class LocaleStoreBuilder {
         return this;
     }
 
-    build(): Store {
+    build(): LocaleStore {
         return {
             availableLocales: this.availableLocales,
             code: this.code,

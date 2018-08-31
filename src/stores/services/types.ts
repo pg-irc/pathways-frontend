@@ -22,7 +22,7 @@ export interface TaskServicesMap {
     readonly [taskId: string]: TaskServices;
 }
 
-export interface Store {
+export interface ServiceStore {
     readonly serviceMap: ServiceMap;
     readonly taskServicesMap: TaskServicesMap;
 }
