@@ -2,7 +2,7 @@ import { LocalizedText } from '../../locale';
 
 import { Id, Service, Store, ServiceMap, TaskServices } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
-import { Task as constants } from '../../application/constants';
+import * as constants from '../../application/constants';
 import { Action } from 'redux';
 
 export { Id, Service, Store };
@@ -34,11 +34,11 @@ export function buildDefaultTaskServices(): TaskServices {
 
 export function reducer(store: Store = buildDefaultStore(), action: Action): Store {
     switch (action.type) {
-        case constants.UPDATE_SERVICES_REQUEST:
+        case constants.LOAD_SERVICES_REQUEST:
             return updateServicesRequest(store, action as UpdateTaskServicesAsync.Request);
-        case constants.UPDATE_SERVICES_SUCCESS:
+        case constants.LOAD_SERVICES_SUCCESS:
             return updateServicesSuccess(store, action as UpdateTaskServicesAsync.Success);
-        case constants.UPDATE_SERVICES_FAILURE:
+        case constants.LOAD_SERVICES_FAILURE:
             return updateServicesFailure(store, action as UpdateTaskServicesAsync.Failure);
         default:
             return store;

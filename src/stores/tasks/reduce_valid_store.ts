@@ -1,17 +1,17 @@
 import { Store, ValidStore, LoadingStore } from './stores';
 import { Id, TaskList } from '../../fixtures/types/tasks';
-import { Task as constants, LOAD_USER_DATA_REQUEST } from '../../application/constants';
+import * as constants from '../../application/constants';
 import { TaskAction } from './actions';
 
 export const reduceValidStore = (store: ValidStore, action: TaskAction): Store => {
     switch (action.type) {
-        case constants.ADD_TO_SAVED_LIST:
+        case constants.ADD_TO_SAVED_TASKS:
             return addToTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
-        case constants.REMOVE_FROM_SAVED_LIST:
+        case constants.REMOVE_FROM_SAVED_TASKS:
             return removeFromTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
-        case constants.TOGGLE_COMPLETED:
+        case constants.TOGGLE_IS_TASK_COMPLETED:
             return toggleCompletedValue(store, action.payload.taskId);
-        case LOAD_USER_DATA_REQUEST:
+        case constants.LOAD_USER_DATA_REQUEST:
             return new LoadingStore(store);
         default:
             return store;

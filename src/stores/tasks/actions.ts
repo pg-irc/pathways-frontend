@@ -1,5 +1,5 @@
 import { Id } from '../../fixtures/types/tasks';
-import { Task as constants } from '../../application/constants';
+import * as constants from '../../application/constants';
 import { ClearErrorAction } from '../clear_error';
 import { UserData } from '../user_data';
 import * as helpers from '../helpers/make_action';
@@ -21,15 +21,15 @@ export type TaskAction = AddToSavedListAction |
 // tslint:disable-next-line:typedef
 export const addToSavedList = (taskId: Id) => {
     const notificationText = 'Task added to my plan';
-    return helpers.makeAction(constants.ADD_TO_SAVED_LIST, { taskId, notificationText });
+    return helpers.makeAction(constants.ADD_TO_SAVED_TASKS, { taskId, notificationText });
 };
 
 // tslint:disable-next-line:typedef
 export const removeFromSavedList = (taskId: Id) => (
-    helpers.makeAction(constants.REMOVE_FROM_SAVED_LIST, { taskId })
+    helpers.makeAction(constants.REMOVE_FROM_SAVED_TASKS, { taskId })
 );
 
 // tslint:disable-next-line:typedef
 export const toggleCompleted = (taskId: Id) => (
-    helpers.makeAction(constants.TOGGLE_COMPLETED, { taskId })
+    helpers.makeAction(constants.TOGGLE_IS_TASK_COMPLETED, { taskId })
 );

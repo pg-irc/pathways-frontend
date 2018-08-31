@@ -1,6 +1,6 @@
 import { Service } from './types';
 import { Id as TaskId } from '../tasks';
-import { Task as constants} from '../../application/constants';
+import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { Action as ReduxAction } from 'redux';
 
@@ -24,12 +24,12 @@ export namespace UpdateTaskServicesAsync {
 
 export const updateTaskServicesAsync = {
     request(taskId: TaskId, query: string): UpdateTaskServicesAsync.Request {
-        return helpers.makeAction(constants.UPDATE_SERVICES_REQUEST, { taskId, query });
+        return helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { taskId, query });
     },
     success(taskId: TaskId, services: ReadonlyArray<Service>): UpdateTaskServicesAsync.Success {
-        return helpers.makeAction(constants.UPDATE_SERVICES_SUCCESS, { taskId, services });
+        return helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { taskId, services });
     },
     failure(message: string, taskId: TaskId): UpdateTaskServicesAsync.Failure {
-        return helpers.makeAction(constants.UPDATE_SERVICES_FAILURE, { message, taskId });
+        return helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { message, taskId });
     },
 };

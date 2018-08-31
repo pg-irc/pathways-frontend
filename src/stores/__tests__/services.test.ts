@@ -1,5 +1,5 @@
 // tslint:disable:no-let no-expression-statement
-import { Task as constants } from '../../application/constants';
+import * as constants from '../../application/constants';
 import { reducer, UpdateTaskServicesAsync, Service } from '../services';
 import { TaskBuilder } from './helpers/tasks_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
@@ -19,7 +19,7 @@ describe('services reducer', () => {
         const task = new TaskBuilder().build();
         const query = aString();
         const action: UpdateTaskServicesAsync.Request = {
-            type: constants.UPDATE_SERVICES_REQUEST,
+            type: constants.LOAD_SERVICES_REQUEST,
             payload: { taskId: task.id, query },
         };
         const store = reducer(theStore, action);
@@ -42,7 +42,7 @@ describe('services reducer', () => {
         const task = new TaskBuilder().withId(loadingTask.id).build();
         const services: ReadonlyArray<Service> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
         const action: UpdateTaskServicesAsync.Success = {
-            type: constants.UPDATE_SERVICES_SUCCESS,
+            type: constants.LOAD_SERVICES_SUCCESS,
             payload: { taskId: task.id, services },
         };
         const store = reducer(theStore, action);
@@ -76,7 +76,7 @@ describe('services reducer', () => {
         const task = new TaskBuilder().withId(loadingTask.id).build();
         const message = aString();
         const action: UpdateTaskServicesAsync.Failure = {
-            type: constants.UPDATE_SERVICES_FAILURE,
+            type: constants.LOAD_SERVICES_FAILURE,
             payload: { taskId: task.id, message },
         };
         const store = reducer(theStore, action);

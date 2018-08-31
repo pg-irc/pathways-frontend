@@ -27,7 +27,7 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Notificatio
         return store;
     }
     switch (action.type) {
-        case constants.Task.ADD_TO_SAVED_LIST:
+        case constants.ADD_TO_SAVED_TASKS:
             return addNotificationToStore(store, NotificationType.TaskAddedToPlan);
         case constants.REMOVE_NOTIFICATION:
             return {
