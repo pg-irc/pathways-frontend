@@ -6,7 +6,7 @@ import { runSaga, ApplicationSaga } from '../sagas';
 
 import { loadFontsActions } from '../stores/fonts';
 import * as locale from '../stores/locale';
-import { UserData } from '../stores/user_data';
+import { UserDataPersistence } from '../stores/user_data';
 
 import { LocaleInfoManager } from '../locale';
 import enMessages from '../../locale/en/messages';
@@ -43,5 +43,5 @@ export function startApplication(saga: ApplicationSaga, store: ReturnType<typeof
         Roboto_medium: require('../../assets/fonts/Roboto_medium.ttf'),
     }));
     store.dispatch(locale.loadCurrentLocaleActions.request());
-    store.dispatch(UserData.loadRequest());
+    store.dispatch(UserDataPersistence.loadRequest());
 }

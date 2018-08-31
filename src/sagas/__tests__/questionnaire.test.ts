@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let
 import { call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
 import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from '../user_data';
-import { UserData } from '../../stores/user_data';
+import { UserDataPersistence } from '../../stores/user_data';
 import { aString, anError } from '../../application/__tests__/helpers/random_test_values';
 import { selectUserDataForLocalPersistence } from '../../selectors/user_data/select_user_data_for_local_persistence';
 import { PersistedUserDataBuilder } from '../../stores/__tests__/helpers/user_data_helpers';
@@ -19,7 +19,7 @@ describe('the load user data saga', () => {
     describe('after requesting the user data', () => {
         let saga: IterableIterator<
             CallEffect |
-            PutEffect<UserData.LoadSuccessAction | UserData.LoadFailureAction>
+            PutEffect<UserDataPersistence.LoadSuccessAction | UserDataPersistence.LoadFailureAction>
             >;
 
         beforeEach(() => {
@@ -33,7 +33,7 @@ describe('the load user data saga', () => {
 
             const result = saga.next(dataBuilder.buildJson()).value;
 
-            expect(result).toEqual(put(UserData.loadSuccess(dataBuilder.buildObject())));
+            expect(result).toEqual(put(UserDataPersistence.loadSuccess(dataBuilder.buildObject())));
         });
 
         it('should return zero ids when there is no data in persistent storage', () => {
@@ -42,7 +42,7 @@ describe('the load user data saga', () => {
 
             const result = saga.next(questionId).value;
 
-            expect(result).toEqual(put(UserData.loadSuccess(expectedPersistedData)));
+            expect(result).toEqual(put(UserDataPersistence.loadSuccess(expectedPersistedData)));
         });
 
         it('should split the data on comma', () => {
@@ -54,7 +54,7 @@ describe('the load user data saga', () => {
 
             const result = saga.next(dataBuilder.buildJson()).value;
 
-            expect(result).toEqual(put(UserData.loadSuccess(dataBuilder.buildObject())));
+            expect(result).toEqual(put(UserDataPersistence.loadSuccess(dataBuilder.buildObject())));
         });
 
         it('should dispatch a put effect with a failure action on error', () => {
@@ -62,7 +62,7 @@ describe('the load user data saga', () => {
 
             const result = saga.throw(error).value;
 
-            expect(result).toEqual(put(UserData.loadFailure(error.message)));
+            expect(result).toEqual(put(UserDataPersistence.loadFailure(error.message)));
         });
 
         // TODO add test for handling no persistent data
@@ -83,7 +83,7 @@ describe('the save user data saga', () => {
         let saga: IterableIterator<
             SelectEffect |
             CallEffect |
-            PutEffect<UserData.SaveSuccessAction | UserData.SaveFailureAction>
+            PutEffect<UserDataPersistence.SaveSuccessAction | UserDataPersistence.SaveFailureAction>
             >;
 
         beforeEach(() => {
@@ -117,7 +117,7 @@ describe('the save user data saga', () => {
 
             const result = saga.throw(error).value;
 
-            expect(result).toEqual(put(UserData.saveFailure(error.message)));
+            expect(result).toEqual(put(UserDataPersistence.saveFailure(error.message)));
         });
 
         describe('after successfully saving user data', () => {
@@ -130,7 +130,7 @@ describe('the save user data saga', () => {
             it('should dispatch a put effect with a success action', () => {
                 const result = saga.next().value;
 
-                expect(result).toEqual(put(UserData.saveSuccess()));
+                expect(result).toEqual(put(UserDataPersistence.saveSuccess()));
             });
         });
     });

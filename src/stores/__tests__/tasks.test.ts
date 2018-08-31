@@ -2,7 +2,7 @@
 
 import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
 import * as stores from '../tasks';
-import { UserData } from '../user_data';
+import { UserDataPersistence } from '../user_data';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { addToSavedList, removeFromSavedList, toggleCompleted } from '../tasks/actions';
@@ -50,12 +50,12 @@ describe('tasks reducer', () => {
         describe('when handling a load request', () => {
 
             it('returns a loading store from a load request action', () => {
-                const finalStore = stores.reducer(validStore, UserData.loadRequest());
+                const finalStore = stores.reducer(validStore, UserDataPersistence.loadRequest());
                 expect(finalStore).toBeInstanceOf(stores.LoadingStore);
             });
 
             it('should return a store with the last known valid state', () => {
-                const finalStore = stores.reducer(validStore, UserData.loadRequest());
+                const finalStore = stores.reducer(validStore, UserDataPersistence.loadRequest());
                 if (finalStore instanceof stores.LoadingStore) {
                     expect(finalStore.lastValidState).toBe(validStore);
                 } else {
@@ -75,13 +75,13 @@ describe('tasks reducer', () => {
             describe('when handling a load error', () => {
 
                 it('should return an invalid store', () => {
-                    const finalStore = stores.reducer(loadingStore, UserData.loadFailure(''));
+                    const finalStore = stores.reducer(loadingStore, UserDataPersistence.loadFailure(''));
                     expect(finalStore).toBeInstanceOf(stores.InvalidStore);
                 });
 
                 it('should return s store with the error message', () => {
                     const error = aString();
-                    const finalStore = stores.reducer(loadingStore, UserData.loadFailure(error));
+                    const finalStore = stores.reducer(loadingStore, UserDataPersistence.loadFailure(error));
                     if (finalStore instanceof stores.InvalidStore) {
                         expect(finalStore.error).toBe(error);
                     } else {
@@ -110,7 +110,7 @@ describe('tasks reducer', () => {
                         addSavedTask(secondTaskId).
                         buildObject();
 
-                    resultStore = stores.reducer(theLoadingStore, UserData.loadSuccess(dataWhereSecondTaskIsSaved));
+                    resultStore = stores.reducer(theLoadingStore, UserDataPersistence.loadSuccess(dataWhereSecondTaskIsSaved));
                 });
 
                 it('should return a valid store', () => {

@@ -8,8 +8,7 @@ export interface PersistedUserData {
     readonly savedTasks: ReadonlyArray<TaskId>;
 }
 
-// TODO find a better name for this namespace so it doesn't look like a data type
-export namespace UserData {
+export namespace UserDataPersistence {
 
     export type SaveSuccessAction = Readonly<ReturnType<typeof saveSuccess>>;
     export type SaveFailureAction = Readonly<ReturnType<typeof saveFailure>>;

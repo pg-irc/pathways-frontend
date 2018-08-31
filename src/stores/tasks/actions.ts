@@ -1,7 +1,7 @@
 import { Id } from '../../fixtures/types/tasks';
 import * as constants from '../../application/constants';
 import { ClearErrorAction } from '../clear_error';
-import { UserData } from '../user_data';
+import { UserDataPersistence } from '../user_data';
 import * as helpers from '../helpers/make_action';
 
 export type AddToSavedListAction = Readonly<ReturnType<typeof addToSavedList>>;
@@ -13,9 +13,9 @@ export type ToggleCompletedAction = Readonly<ReturnType<typeof toggleCompleted>>
 export type TaskAction = AddToSavedListAction |
     RemoveFromSavedListAction |
     ToggleCompletedAction |
-    UserData.LoadRequestAction |
-    UserData.LoadSuccessAction |
-    UserData.LoadFailureAction |
+    UserDataPersistence.LoadRequestAction |
+    UserDataPersistence.LoadSuccessAction |
+    UserDataPersistence.LoadFailureAction |
     ClearErrorAction;
 
 // tslint:disable-next-line:typedef

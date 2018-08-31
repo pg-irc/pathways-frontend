@@ -3,7 +3,7 @@
 import { call, CallEffect, PutEffect, put, ForkEffect, takeLatest, select, SelectEffect } from 'redux-saga/effects';
 import { AsyncStorage } from 'react-native';
 import { USER_DATA_STORAGE_KEY } from '../application/constants';
-import { UserData } from '../stores/user_data';
+import { UserDataPersistence } from '../stores/user_data';
 import { PersistedUserData } from '../stores/user_data';
 import * as constants from '../application/constants';
 import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
@@ -12,17 +12,21 @@ export function* watchAnswerChangesToSaveUserData(): IterableIterator<ForkEffect
     yield takeLatest(constants.CHOOSE_ANSWER, saveUserData);
 }
 
-type SaveActions = IterableIterator<SelectEffect | CallEffect | PutEffect<UserData.SaveSuccessAction | UserData.SaveFailureAction>>;
+type SaveActions = IterableIterator<
+    SelectEffect |
+    CallEffect |
+    PutEffect<UserDataPersistence.SaveSuccessAction | UserDataPersistence.SaveFailureAction>
+    >;
 
 export function* saveUserData(): SaveActions {
     try {
         const userData: PersistedUserData = yield select(selectUserDataForLocalPersistence);
         const serializedUserData = serialize(userData);
         yield call(saveUserDataAsync, serializedUserData);
-        yield put(UserData.saveSuccess());
+        yield put(UserDataPersistence.saveSuccess());
     } catch (error) {
         console.error(`Failed to save user data (${error.message})`);
-        yield put(UserData.saveFailure(error.message));
+        yield put(UserDataPersistence.saveFailure(error.message));
     }
 }
 
@@ -38,16 +42,16 @@ export function* watchLoadUserData(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_USER_DATA_REQUEST, loadUserData);
 }
 
-type LoadActions = IterableIterator<CallEffect | PutEffect<UserData.LoadSuccessAction | UserData.LoadFailureAction>>;
+type LoadActions = IterableIterator<CallEffect | PutEffect<UserDataPersistence.LoadSuccessAction | UserDataPersistence.LoadFailureAction>>;
 
 export function* loadUserData(): LoadActions {
     try {
         const serializedUserData = yield call(loadUserDataAsync);
         const userData = deserialize(serializedUserData);
-        yield put(UserData.loadSuccess(userData));
+        yield put(UserDataPersistence.loadSuccess(userData));
     } catch (error) {
         console.error(`Failed to load user data (${error.message})`);
-        yield put(UserData.loadFailure(error.message));
+        yield put(UserDataPersistence.loadFailure(error.message));
     }
 }
 

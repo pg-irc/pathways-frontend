@@ -6,7 +6,7 @@ import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { toValidOrThrow, LoadingStore, InvalidStore } from '../questionnaire/stores';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
-import { UserData } from '../user_data';
+import { UserDataPersistence } from '../user_data';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -173,7 +173,7 @@ describe('questionnaire reducer', () => {
             question = new helpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
             loadingStore = helpers.buildLoadingStore([question]);
             const persistedData = new PersistedUserDataBuilder().addChosenAnswer(nonChosenAnswer.id).buildObject();
-            const action = UserData.loadSuccess(persistedData);
+            const action = UserDataPersistence.loadSuccess(persistedData);
 
             newStore = store.reducer(loadingStore, action);
 
@@ -185,7 +185,7 @@ describe('questionnaire reducer', () => {
             question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
             loadingStore = helpers.buildLoadingStore([question]);
             const persistedData = new PersistedUserDataBuilder().buildObject();
-            const action = UserData.loadSuccess(persistedData);
+            const action = UserDataPersistence.loadSuccess(persistedData);
 
             newStore = store.reducer(loadingStore, action);
 
@@ -198,7 +198,7 @@ describe('questionnaire reducer', () => {
                 const answer = new helpers.AnswerBuilder();
                 question = new helpers.QuestionBuilder().withAnswers([answer]);
                 theStore = helpers.buildValidStore([question]);
-                const action = UserData.loadRequest();
+                const action = UserDataPersistence.loadRequest();
 
                 newStore = store.reducer(theStore, action);
             });
@@ -223,7 +223,7 @@ describe('questionnaire reducer', () => {
                 chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
                 question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
                 loadingStore = helpers.buildLoadingStore([question]);
-                const action = UserData.loadFailure(theError);
+                const action = UserDataPersistence.loadFailure(theError);
 
                 newStore = store.reducer(loadingStore, action);
             });

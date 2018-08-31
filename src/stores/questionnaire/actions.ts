@@ -1,5 +1,5 @@
 import { Id } from '../../fixtures/types/questionnaire';
-import { UserData } from '../user_data';
+import { UserDataPersistence } from '../user_data';
 import { ClearErrorAction } from '../clear_error';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
@@ -18,6 +18,6 @@ export const setActiveQuestion = (activeQuestion: Id) => (
 );
 
 export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction
-    | UserData.SaveSuccessAction | UserData.SaveFailureAction
-    | UserData.LoadRequestAction | UserData.LoadSuccessAction | UserData.LoadFailureAction
+    | UserDataPersistence.SaveSuccessAction | UserDataPersistence.SaveFailureAction
+    | UserDataPersistence.LoadRequestAction | UserDataPersistence.LoadSuccessAction | UserDataPersistence.LoadFailureAction
     | ClearErrorAction;
