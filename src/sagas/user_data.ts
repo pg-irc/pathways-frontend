@@ -8,8 +8,14 @@ import { PersistedUserData } from '../stores/user_data';
 import * as constants from '../application/constants';
 import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
 
-export function* watchAnswerChangesToSaveUserData(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.CHOOSE_ANSWER, saveUserData);
+export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEffect> {
+    yield takeLatest(
+        [
+            constants.CHOOSE_ANSWER,
+            constants.ADD_TO_SAVED_TASKS,
+            constants.REMOVE_FROM_SAVED_TASKS,
+        ],
+        saveUserData);
 }
 
 type SaveActions = IterableIterator<
