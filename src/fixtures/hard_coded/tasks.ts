@@ -4,7 +4,7 @@ import { Taxonomies } from '../../application/constants';
 const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
 export const buildTasksFixture = (): ValidStore => {
-    return {
+    return new ValidStore({
         taskMap: {
             't1': {
                 'id': 't1',
@@ -118,5 +118,5 @@ export const buildTasksFixture = (): ValidStore => {
             },
         },
         savedTasksList: [],
-    };
+    });
 };

@@ -1,13 +1,15 @@
-import { buildTasksFixture } from '../../fixtures/buildFixtures';
-import { ValidStore, TaskList, Id } from '../../fixtures/types/tasks';
+import { Store, ValidStore, LoadingStore, InvalidStore } from './stores';
+export { Store, ValidStore, LoadingStore, InvalidStore, toValidOrThrow } from './stores';
+
+import { Id, TaskList } from '../../fixtures/types/tasks';
+export { Id, TaskList, TaskMap, Task } from '../../fixtures/types/tasks';
+
 import { Task as constants } from '../../application/constants';
 import * as UserStateActions from '../../application/constants';
-import * as helpers from '../helpers/make_action';
+import { buildTasksFixture } from '../../fixtures/buildFixtures';
 import { ClearErrorAction } from '../questionnaire/actions';
 import { UserData } from '../user_data';
-
-export { Id, Task, TaskMap, TaskList } from '../../fixtures/types/tasks';
-export { ValidStore } from '../../fixtures/types/tasks';
+import * as helpers from '../helpers/make_action';
 
 export type AddToSavedListAction = Readonly<ReturnType<typeof addToSavedList>>;
 export type RemoveFromSavedListAction = Readonly<ReturnType<typeof removeFromSavedList>>;
@@ -39,37 +41,6 @@ export const toggleCompleted = (taskId: Id) => (
 export const buildDefaultStore = (): Store => (
     buildTasksFixture()
 );
-
-// TODO move to stores.ts
-// tslint:disable-next-line:no-class
-export class InvalidStore {
-    readonly lastValidState: ValidStore;
-    readonly error: string;
-
-    constructor(lastValidState: ValidStore, error: string) {
-        this.lastValidState = lastValidState;
-        this.error = error;
-    }
-}
-
-// TODO move to stores.ts
-// tslint:disable-next-line:no-class
-export class LoadingStore {
-    readonly lastValidState: ValidStore;
-
-    constructor(lastValidState: ValidStore) {
-        this.lastValidState = lastValidState;
-    }
-}
-
-export const toValidOrThrow = (store: Store): ValidStore => {
-    if (store instanceof ValidStore) {
-        return store;
-    }
-    throw new Error('Tried to access invalid task store');
-};
-
-export type Store = ValidStore | InvalidStore | LoadingStore;
 
 export const reducer = (store: Store = buildDefaultStore(), action?: TaskAction): Store => {
     if (!action) {
