@@ -1,6 +1,6 @@
 import { Id } from '../../fixtures/types/tasks';
 import { Task as constants } from '../../application/constants';
-import { ClearErrorAction } from '../questionnaire/actions';
+import { ClearErrorAction } from '../clear_error';
 import { UserData } from '../user_data';
 import * as helpers from '../helpers/make_action';
 

@@ -1,7 +1,8 @@
 import { Id } from '../../fixtures/types/questionnaire';
+import { UserData } from '../user_data';
+import { ClearErrorAction } from '../clear_error';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { UserData } from '../user_data';
 
 export type ChooseAnswerAction = Readonly<ReturnType<typeof chooseAnswer>>;
 export type SetActiveQuestionAction = Readonly<ReturnType<typeof setActiveQuestion>>;
@@ -15,15 +16,6 @@ export const chooseAnswer = (answerId: Id) => (
 export const setActiveQuestion = (activeQuestion: Id) => (
     helpers.makeAction(constants.SET_ACTIVE_QUESTION, { activeQuestion })
 );
-
-// TODO move
-// tslint:disable-next-line:typedef
-export const clearErrorState = () => (
-    helpers.makeAction(constants.CLEAR_ERROR_STATE)
-);
-
-// TODO move
-export type ClearErrorAction = Readonly<ReturnType<typeof clearErrorState>>;
 
 export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction
     | UserData.SaveSuccessAction | UserData.SaveFailureAction
