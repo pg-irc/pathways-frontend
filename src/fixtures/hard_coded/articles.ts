@@ -19,7 +19,6 @@ export const buildArticlesFixture = (): ArticleStore => (
                 'taxonomyTerms': [],
                 'relatedTasks': ['t1', 't2', 't3'],
                 'relatedArticles': ['a2'],
-                'isRecommendedToAllUsers': false,
                 'starred': false,
             },
             'a2': {
@@ -38,7 +37,6 @@ export const buildArticlesFixture = (): ArticleStore => (
                 'taxonomyTerms': [],
                 'relatedTasks': ['t1', 't2', 't3'],
                 'relatedArticles': ['a1'],
-                'isRecommendedToAllUsers': false,
                 'starred': false,
             },
         },
