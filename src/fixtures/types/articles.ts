@@ -12,7 +12,6 @@ export interface Article {
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly relatedTasks: ReadonlyArray<TaskId>;
     readonly relatedArticles: ReadonlyArray<Id>;
-    readonly isRecommendedToAllUsers: boolean;
     readonly starred: boolean;
 }
 

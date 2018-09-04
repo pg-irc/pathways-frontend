@@ -14,7 +14,6 @@ export class ArticleBuilder {
     taxonomyTerms: TaxonomyTermReference[] = [];
     relatedTasks: ReadonlyArray<TaskId> = [aString(), aString()];
     relatedArticles: ReadonlyArray<Id> = [aString(), aString()];
-    isRecommendedToAllUsers: boolean = aBoolean();
     starred: boolean = aBoolean();
 
     withLocaleCode(localeCode: string): ArticleBuilder {
@@ -70,7 +69,6 @@ export class ArticleBuilder {
             description: new LocalizedTextBuilder().addLocalizedText(this.localeCode, this.description).build(),
             relatedTasks: this.relatedTasks,
             relatedArticles: this.relatedArticles,
-            isRecommendedToAllUsers: this.isRecommendedToAllUsers,
             starred: this.starred,
             taxonomyTerms: this.taxonomyTerms,
         };
