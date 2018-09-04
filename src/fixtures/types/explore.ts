@@ -14,6 +14,6 @@ export interface ExploreSectionMap {
     readonly [key: string]: ExploreSection;
 }
 
-export interface Store {
+export interface ExploreStore {
     readonly sections: ExploreSectionMap;
 }

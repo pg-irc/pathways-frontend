@@ -12,7 +12,7 @@ export interface TaxonomyMap {
     readonly [taxonomyId: string]: Taxonomy;
 }
 
-export interface Store {
+export interface TaxonomyStore {
     readonly taxonomyMap: TaxonomyMap;
 }
 

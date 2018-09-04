@@ -1,11 +1,11 @@
 // tslint:disable:max-line-length
 
-import { Store } from '../types/explore';
+import { ExploreStore } from '../types/explore';
 import { Taxonomies } from '../../application/constants';
 
 const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
-export const buildExploreFixture = (): Store => (
+export const buildExploreFixture = (): ExploreStore => (
     {
         sections: {
             's1': {

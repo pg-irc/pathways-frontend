@@ -1,30 +1,30 @@
 // tslint:disable:no-class no-expression-statement no-this
 
-import { ValidStore } from '../../fixtures/types/questionnaire';
-export { ValidStore } from '../../fixtures/types/questionnaire';
+import { ValidQuestionnaireStore } from '../../fixtures/types/questionnaire';
+export { ValidQuestionnaireStore } from '../../fixtures/types/questionnaire';
 
-export class InvalidStore {
-    readonly lastValidState: ValidStore;
+export class InvalidQuestionnaireStore {
+    readonly lastValidState: ValidQuestionnaireStore;
     readonly error: string;
 
-    constructor(lastValidState: ValidStore, error: string) {
+    constructor(lastValidState: ValidQuestionnaireStore, error: string) {
         this.lastValidState = lastValidState;
         this.error = error;
     }
 }
 
-export class LoadingStore {
-    readonly lastValidState: ValidStore;
+export class LoadingQuestionnaireStore {
+    readonly lastValidState: ValidQuestionnaireStore;
 
-    constructor(lastValidState: ValidStore) {
+    constructor(lastValidState: ValidQuestionnaireStore) {
         this.lastValidState = lastValidState;
     }
 }
 
-export type Store = ValidStore | InvalidStore | LoadingStore;
+export type QuestionnaireStore = ValidQuestionnaireStore | InvalidQuestionnaireStore | LoadingQuestionnaireStore;
 
-export const toValidOrThrow = (store: Store): ValidStore => {
-    if (store instanceof ValidStore) {
+export const toValidOrThrow = (store: QuestionnaireStore): ValidQuestionnaireStore => {
+    if (store instanceof ValidQuestionnaireStore) {
         return store;
     }
     throw new Error('Tried to access invalid questionnaire store');

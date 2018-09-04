@@ -11,14 +11,14 @@ import * as notifications from './notifications';
 
 export interface Store {
     readonly fontsInStore: fonts.Store;
-    readonly localeInStore: locale.Store;
-    readonly questionnaireInStore: questionnaire.Store;
-    readonly tasksInStore: tasks.Store;
-    readonly servicesInStore: services.Store;
-    readonly exploreSectionsInStore: explore.Store;
-    readonly taxonomiesInStore: taxonomies.Store;
-    readonly articlesInStore: articles.Store;
-    readonly notificationsInStore: notifications.Store;
+    readonly localeInStore: locale.LocaleStore;
+    readonly questionnaireInStore: questionnaire.QuestionnaireStore;
+    readonly tasksInStore: tasks.TaskStore;
+    readonly servicesInStore: services.ServiceStore;
+    readonly exploreSectionsInStore: explore.ExploreStore;
+    readonly taxonomiesInStore: taxonomies.TaxonomyStore;
+    readonly articlesInStore: articles.ArticleStore;
+    readonly notificationsInStore: notifications.NotificationStore;
 }
 
 export const reducer = combineReducers<Store>({

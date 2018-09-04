@@ -46,27 +46,27 @@ describe('tasks test helpers', () => {
         describe('building a normalized store', () => {
             let firstTaskBuilder: TaskBuilder;
             let secondTaskBuilder: TaskBuilder;
-            let store: stores.Store;
+            let validStore: stores.ValidTaskStore;
 
             beforeEach(() => {
                 firstTaskBuilder = new TaskBuilder();
                 secondTaskBuilder = new TaskBuilder();
-                store = buildNormalizedStore(
+                validStore = buildNormalizedStore(
                     [firstTaskBuilder, secondTaskBuilder],
                     [firstTaskBuilder.build().id],
                 );
             });
 
             test('task map property', () => {
-                expect(store).toHaveProperty('taskMap');
+                expect(validStore).toHaveProperty('taskMap');
             });
 
             test('saved tasks list property', () => {
-                expect(store).toHaveProperty('savedTasksList');
+                expect(validStore).toHaveProperty('savedTasksList');
             });
 
             test('tasks map keys are expected task ids', () => {
-                expect(Object.keys(store.taskMap)).toEqual([firstTaskBuilder.build().id, secondTaskBuilder.build().id]);
+                expect(Object.keys(validStore.taskMap)).toEqual([firstTaskBuilder.build().id, secondTaskBuilder.build().id]);
             });
 
         });

@@ -1,12 +1,12 @@
 // tslint:disable:no-expression-statement
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
-import { Task as constants } from '../application/constants';
+import * as constants from '../application/constants';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync, serviceFromServiceData } from '../stores/services';
 import { API } from '../api';
 import { APIResponse } from '../api/api_client';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.UPDATE_SERVICES_REQUEST, updateTaskServices);
+    yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
 }
 
 type UpdateResult = IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAsync.Result>>;

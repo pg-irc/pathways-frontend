@@ -6,7 +6,7 @@ import { runSaga, ApplicationSaga } from '../sagas';
 
 import { loadFontsActions } from '../stores/fonts';
 import * as locale from '../stores/locale';
-import * as questionnaire from '../stores/questionnaire';
+import { UserDataPersistence } from '../stores/user_data';
 
 import { LocaleInfoManager } from '../locale';
 import enMessages from '../../locale/en/messages';
@@ -20,7 +20,7 @@ LocaleInfoManager.register([
     { code: 'fr', label: 'Français', catalog: frMessages, isRTL: false },
 ]);
 
-type InitialState = { readonly localeInStore: locale.Store };
+type InitialState = { readonly localeInStore: locale.LocaleStore };
 
 export function buildStore(saga: ApplicationSaga): ReturnType<typeof createStore> {
     const middleware = applyMiddleware(saga.middleware);
@@ -43,5 +43,5 @@ export function startApplication(saga: ApplicationSaga, store: ReturnType<typeof
         Roboto_medium: require('../../assets/fonts/Roboto_medium.ttf'),
     }));
     store.dispatch(locale.loadCurrentLocaleActions.request());
-    store.dispatch(questionnaire.LocalStorage.loadRequest());
+    store.dispatch(UserDataPersistence.loadRequest());
 }

@@ -11,7 +11,7 @@ import { pullAvailableLocales } from '../locale/pull_available_locales';
 describe('locale selectors fetch', () => {
 
     let theStore: Store;
-    let aLocaleStore: locale.Store;
+    let aLocaleStore: locale.LocaleStore;
 
     beforeEach(() => {
         aLocaleStore = new LocaleStoreBuilder().build();

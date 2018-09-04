@@ -1,6 +1,6 @@
 import { Store } from '../../stores';
-import * as store from '../../stores/tasks';
+import { Id, toValidOrThrow } from '../../stores/tasks';
 
-export const pickSavedTaskIds = (appStore: Store): ReadonlyArray<store.Id> => (
-    appStore.tasksInStore.savedTasksList
+export const pickSavedTaskIds = (appStore: Store): ReadonlyArray<Id> => (
+    toValidOrThrow(appStore.tasksInStore).savedTasksList
 );

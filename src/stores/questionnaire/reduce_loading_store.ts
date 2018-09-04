@@ -1,23 +1,23 @@
 import * as constants from '../../application/constants';
 import * as R from 'ramda';
-import { Id, Answer, AnswersMap, ValidStore } from '../../fixtures/types/questionnaire';
-import { LoadingStore, Store, InvalidStore } from './stores';
+import { Id, Answer, AnswersMap, ValidQuestionnaireStore } from '../../fixtures/types/questionnaire';
+import { LoadingQuestionnaireStore, QuestionnaireStore, InvalidQuestionnaireStore } from './stores';
 import { QuestionnaireAction } from './actions';
 
-export const reduceLoadingStore = (store: LoadingStore, action?: QuestionnaireAction): Store => {
+export const reduceLoadingStore = (store: LoadingQuestionnaireStore, action?: QuestionnaireAction): QuestionnaireStore => {
     if (!action) {
         return store;
     }
 
     switch (action.type) {
-        case constants.LOAD_CHOSEN_QUESTIONS_SUCCESS:
-            return new ValidStore({
+        case constants.LOAD_USER_DATA_SUCCESS:
+            return new ValidQuestionnaireStore({
                 ...store.lastValidState,
                 answers: chooseAnswersWithIdsIn(store.lastValidState.answers, action.payload.chosenAnswers),
             });
 
-        case constants.LOAD_CHOSEN_QUESTIONS_FAILURE:
-            return new InvalidStore(store.lastValidState, action.payload.message);
+        case constants.LOAD_USER_DATA_FAILURE:
+            return new InvalidQuestionnaireStore(store.lastValidState, action.payload.message);
 
         default:
             return store;

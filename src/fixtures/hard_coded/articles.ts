@@ -1,6 +1,6 @@
-import { Store } from '../types/articles';
+import { ArticleStore } from '../types/articles';
 
-export const buildArticlesFixture = (): Store => (
+export const buildArticlesFixture = (): ArticleStore => (
     {
         articles: {
             'a1': {

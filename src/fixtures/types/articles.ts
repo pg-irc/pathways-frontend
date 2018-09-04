@@ -20,6 +20,6 @@ export interface ArticleMap {
     readonly [key: string]: Article;
 }
 
-export interface Store {
+export interface ArticleStore {
     readonly articles: ArticleMap;
 }

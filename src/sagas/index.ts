@@ -4,7 +4,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 import { watchLoadLocale, watchSetLocale } from './locale';
 import { watchLoadFonts } from './fonts';
 import { watchUpdateTaskServices } from './services';
-import { watchLoadChosenQuestions, watchAnswerChangesToSaveAllAnswerStates } from './questionnaire';
+import { watchLoadUserData, watchUserStateChangesToSaveUserData } from './user_data';
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -22,7 +22,7 @@ export function runSaga(middleware: SagaMiddleware<object>): void {
     middleware.run(watchLoadFonts);
     middleware.run(watchLoadLocale);
     middleware.run(watchSetLocale);
-    middleware.run(watchAnswerChangesToSaveAllAnswerStates);
-    middleware.run(watchLoadChosenQuestions);
+    middleware.run(watchUserStateChangesToSaveUserData);
+    middleware.run(watchLoadUserData);
     middleware.run(watchUpdateTaskServices);
 }

@@ -41,7 +41,7 @@ export class TaxonomyStoreBuilder {
         return this;
     }
 
-    build(): store.Store {
+    build(): store.TaxonomyStore {
         return { taxonomyMap: this.map };
     }
 }

@@ -3,9 +3,9 @@ import * as uuid from 'uuid';
 import * as constants from '../application/constants';
 import { AddToSavedListAction } from './tasks';
 import * as helpers from './helpers/make_action';
-import { Id, NotificationType, Notification, Store } from '../fixtures/types/notifications';
+import { Id, NotificationType, Notification, NotificationStore } from '../fixtures/types/notifications';
 
-export { Id, NotificationType, Notification, Store } from '../fixtures/types/notifications';
+export { Id, NotificationType, Notification, NotificationStore } from '../fixtures/types/notifications';
 
 export type RemoveNotificationAction = Readonly<ReturnType<typeof removeNotification>>;
 type NotificationAction = AddToSavedListAction |
@@ -16,18 +16,18 @@ export const removeNotification = (notificationId: Id) => (
     helpers.makeAction(constants.REMOVE_NOTIFICATION, { notificationId })
 );
 
-export const buildDefaultStore = (): Store => (
+export const buildDefaultStore = (): NotificationStore => (
     {
         notifications: {},
     }
 );
 
-export const reducer = (store: Store = buildDefaultStore(), action?: NotificationAction): Store => {
+export const reducer = (store: NotificationStore = buildDefaultStore(), action?: NotificationAction): NotificationStore => {
     if (!action) {
         return store;
     }
     switch (action.type) {
-        case constants.Task.ADD_TO_SAVED_LIST:
+        case constants.ADD_TO_SAVED_TASKS:
             return addNotificationToStore(store, NotificationType.TaskAddedToPlan);
         case constants.REMOVE_NOTIFICATION:
             return {
@@ -38,7 +38,7 @@ export const reducer = (store: Store = buildDefaultStore(), action?: Notificatio
     }
 };
 
-const addNotificationToStore = (store: Store, notificationType: NotificationType): Store => {
+const addNotificationToStore = (store: NotificationStore, notificationType: NotificationType): NotificationStore => {
     const notification = createNotification(notificationType);
     return {
         notifications: {

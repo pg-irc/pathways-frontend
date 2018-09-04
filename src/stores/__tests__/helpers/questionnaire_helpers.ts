@@ -5,19 +5,19 @@ import { aString, aBoolean } from '../../../application/__tests__/helpers/random
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
-import { ValidStore, LoadingStore } from '../../questionnaire/stores';
+import { ValidQuestionnaireStore, LoadingQuestionnaireStore } from '../../questionnaire/stores';
 
-export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): store.ValidStore => (
-    new ValidStore({
+export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): store.ValidQuestionnaireStore => (
+    new ValidQuestionnaireStore({
         activeQuestion: aString(),
         questions: buildQuestionMap(questions),
         answers: buildAnswerMap(questions),
     })
 );
 
-export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.Store => {
+export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.QuestionnaireStore => {
     const lastValidState = buildValidStore(questions);
-    return new LoadingStore(lastValidState);
+    return new LoadingQuestionnaireStore(lastValidState);
 };
 
 const buildQuestionMap = (questions: ReadonlyArray<QuestionBuilder>): store.QuestionsMap => {

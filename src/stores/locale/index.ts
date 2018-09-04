@@ -9,9 +9,9 @@ export { SetLocale };
 export { LoadCurrentLocale };
 
 export type ReducerActions = SetLocale.Request | SetLocale.Result |
-            LoadCurrentLocale.Request | LoadCurrentLocale.Result;
+    LoadCurrentLocale.Request | LoadCurrentLocale.Result;
 
-export interface Store {
+export interface LocaleStore {
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
     readonly code: string;
     readonly fallback: string;
@@ -19,7 +19,7 @@ export interface Store {
     readonly errorMessage: string;
 }
 
-export const buildDefaultStore = (): Store => ({
+export const buildDefaultStore = (): LocaleStore => ({
     availableLocales: [],
     code: undefined,
     fallback: undefined,
@@ -30,7 +30,7 @@ export const buildDefaultStore = (): Store => ({
 export const setLocaleActions = setLocale;
 export const loadCurrentLocaleActions = loadCurrentLocale;
 
-export const reducer = (store: Store = buildDefaultStore(), action?: ReducerActions): Store => {
+export const reducer = (store: LocaleStore = buildDefaultStore(), action?: ReducerActions): LocaleStore => {
     if (!action) {
         return store;
     }
