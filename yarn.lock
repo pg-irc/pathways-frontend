@@ -705,9 +705,9 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
 
-"@types/expo@^27.0.6":
-  version "27.0.6"
-  resolved "https://registry.yarnpkg.com/@types/expo/-/expo-27.0.6.tgz#2bc1720c66ca85836fd5bb4bf1c0aabbac729034"
+"@types/expo@^27.0.8":
+  version "27.0.8"
+  resolved "https://registry.yarnpkg.com/@types/expo/-/expo-27.0.8.tgz#c8780b665eb5785689e6444c23a8ae2c9bd39e07"
   dependencies:
     "@types/fbemitter" "*"
     "@types/react" "*"
@@ -773,9 +773,9 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@^5.0.19":
-  version "5.0.20"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-5.0.20.tgz#a332f2a97043d6127159956a4639a9fb5dc1f5dc"
+"@types/react-redux@^5.0.21":
+  version "5.0.21"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-5.0.21.tgz#98a3a371dfc22c894889f660d7515717639d20f4"
   dependencies:
     "@types/react" "*"
     redux "^3.6.0"
