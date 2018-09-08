@@ -6601,15 +6601,15 @@ react-native-branch@2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.2.5.tgz#4074dd63b4973e6397d9ce50e97b57c77a518e9d"
 
-react-native-collapsible@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-0.12.0.tgz#8ef25f23f4eec72af4a80074b3f534f8605c7f80"
+react-native-collapsible@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-0.13.0.tgz#bd88aa1649b15cb748d59aac44f8f6b94bb77efd"
   dependencies:
-    prop-types "^15.5.10"
+    prop-types "^15.6.2"
 
-react-native-dotenv@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-0.1.1.tgz#95a943dbaba24ddf50e95bd861e5a0c4ab03a38d"
+react-native-dotenv@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-dotenv/-/react-native-dotenv-0.2.0.tgz#311551cb6a35a3dcfede648bded55c0e3ece579d"
   dependencies:
     babel-plugin-dotenv "0.1.1"
 
