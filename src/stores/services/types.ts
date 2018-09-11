@@ -2,10 +2,21 @@ import { LocalizedText } from '../../locale';
 
 export type Id = string;
 
+export interface APIPhoneNumber {
+    readonly phone_number_type: string;
+    readonly phone_number: string;
+}
+
+export interface PhoneNumber {
+    readonly type: string;
+    readonly phoneNumber: string;
+}
+
 export interface Service {
     readonly id: Id;
     readonly name: LocalizedText;
     readonly description: LocalizedText;
+    readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
 }
 
 export interface TaskServices {

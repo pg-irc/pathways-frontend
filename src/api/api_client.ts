@@ -21,7 +21,7 @@ export class APIClient {
     }
 
     async searchServices(query: string): Promise<APIResponse> {
-        const endpoint = 'services';
+        const endpoint = 'services_at_location';
         const servicesResponse = await this.fetch(endpoint, { search: query });
         // TODO: Consider collecting and fetching associated entities
         //       (organizations and locations).

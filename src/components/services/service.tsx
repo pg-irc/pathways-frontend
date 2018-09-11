@@ -1,14 +1,17 @@
 import React from 'react';
+import * as R from 'ramda';
 import { applicationStyles } from '../../application/styles';
 import { Service } from '../../selectors/services/service';
 import { View } from 'native-base';
 import { Text } from 'react-native';
+import { PhoneNumber } from '../../stores/services/types';
 
 interface Props {
     readonly service: Service;
 }
 
 export function ServiceComponent(props: Props): JSX.Element {
+    const mapWithIndex = R.addIndex(R.map);
     return (
         <View>
             <Text style={[
@@ -17,9 +20,13 @@ export function ServiceComponent(props: Props): JSX.Element {
             ]}>
                 {props.service.name}
             </Text>
-            <Text style={[{ textAlign: 'left' }]}><Text style={{ color: 'darkgrey' }}>Address: </Text>123 Main St, Vancouver BC</Text>
-            <Text style={[{ textAlign: 'left' }]}><Text style={{ color: 'darkgrey' }}>Hours: </Text>Mon - Fri: 9:00am - 5:00pm</Text>
-            {/* <Text>{props.service.description}</Text> */}
+            {
+                mapWithIndex((phoneNumber: PhoneNumber, index: number) =>
+                    <View key={index}>
+                        <Text>{phoneNumber.type}</Text>
+                        <Text>{phoneNumber.phoneNumber}</Text>
+                    </View>, props.service.phoneNumbers)
+            }
         </View>
     );
 }

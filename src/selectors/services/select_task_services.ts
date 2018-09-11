@@ -19,6 +19,7 @@ export function selectTaskServices(taskId: TaskId, store: Store): TaskServices {
                 id: service.id,
                 name: getLocalizedText(locale, service.name),
                 description: getLocalizedText(locale, service.description),
+                phoneNumbers: service.phoneNumbers,
             };
         }),
     };
