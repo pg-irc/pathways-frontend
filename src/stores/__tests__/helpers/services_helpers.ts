@@ -2,7 +2,7 @@
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
 import { Id as TaskId } from '../../tasks';
-import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore } from '../../services/types';
+import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber } from '../../services/types';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 
@@ -28,10 +28,37 @@ function buildTaskServicesMap(tasks: ReadonlyArray<TaskServicesBuilder>, service
     return tasks.reduce(buildAndMapToId, {});
 }
 
+export class PhoneNumberBuilder {
+    static buildArray(length: number = 3): ReadonlyArray<PhoneNumber> {
+        return Array(length).fill(new PhoneNumberBuilder().build());
+    }
+
+    type: string = aString();
+    phoneNumber: string = aString();
+
+    withType(type: string): PhoneNumberBuilder {
+        this.type = type;
+        return this;
+    }
+
+    withPhoneNumber(phoneNumber: string): PhoneNumberBuilder {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    build(): PhoneNumber {
+        return {
+            type: this.type,
+            phoneNumber: this.phoneNumber,
+        };
+    }
+}
+
 export class ServiceBuilder {
     id: Id = aString();
     name: LocalizedText = new LocalizedTextBuilder().build();
     description: LocalizedText = new LocalizedTextBuilder().build();
+    phoneNumbers: ReadonlyArray<PhoneNumber> = PhoneNumberBuilder.buildArray();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -48,11 +75,17 @@ export class ServiceBuilder {
         return this;
     }
 
+    withPhoneNumbers(phoneNumbers: ReadonlyArray<PhoneNumber>): ServiceBuilder {
+        this.phoneNumbers = phoneNumbers;
+        return this;
+    }
+
     build(): Service {
         return {
             id: this.id,
             name: this.name,
             description: this.description,
+            phoneNumbers: this.phoneNumbers,
         };
     }
 }
