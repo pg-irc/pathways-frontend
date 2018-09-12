@@ -1,10 +1,18 @@
-import * as R from 'ramda';
+// tslint:disable:readonly-array no-let no-expression-statement
 import * as model from '../../stores/questionnaire';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 
 export const getTaxonomyTermsFromAnswers = (answers: model.AnswersMap): ReadonlyArray<TaxonomyTermReference> => {
-    type Terms = ReadonlyArray<TaxonomyTermReference>;
-    const flatten = R.reduce((acc: Terms, val: Terms): Terms => [...acc, ...val], []);
+    let resultingTerms: TaxonomyTermReference[] = [];
 
-    return flatten(R.pluck('taxonomyTerms', R.values(answers)));
+    for (let answerId in answers) {
+        if (answers.hasOwnProperty(answerId)) {
+            const taxonomyTerms = answers[answerId].taxonomyTerms;
+            for (let term of taxonomyTerms) {
+                resultingTerms.push(term);
+            }
+        }
+    }
+
+    return resultingTerms;
 };

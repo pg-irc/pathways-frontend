@@ -2,7 +2,7 @@ import { TaskStore, ValidTaskStore, LoadingTaskStore, InvalidTaskStore } from '.
 import * as UserStateActions from '../../application/constants';
 import { TaskAction } from './actions';
 import { TaskMap, Id } from '../../fixtures/types/tasks';
-import R from 'ramda';
+import * as R from 'ramda';
 
 export const reduceLoadingStore = (store: LoadingTaskStore, action: TaskAction): TaskStore => {
     switch (action.type) {

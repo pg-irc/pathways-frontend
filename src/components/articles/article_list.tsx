@@ -1,5 +1,5 @@
 import React from 'react';
-import R from 'ramda';
+import * as R from 'ramda';
 import { View } from 'native-base';
 import { ArticleListItem } from '../../selectors/articles/article_list_item';
 import { ArticleListItemComponent } from './article_list_item';

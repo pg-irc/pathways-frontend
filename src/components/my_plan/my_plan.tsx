@@ -135,13 +135,22 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     }
 
     private getContent(tasks: ReadonlyArray<TaskListItem>, emptyTaskListComponent: JSX.Element, style?: object): JSX.Element {
+        const getTaskListItemIds = (items: ReadonlyArray<TaskListItem>): ReadonlyArray<string> => {
+            // tslint:disable-next-line:readonly-array no-let
+            let results: string[] = [];
+            // tslint:disable-next-line:no-let
+            for (let item of items) {
+                results.push(item.id);
+            }
+            return results;
+        };
         return (
             <TaskListComponent
                 {...this.props}
                 tasks={tasks}
                 emptyTaskListComponent={emptyTaskListComponent}
                 listItemStyle={style}
-                savedTasksIdList={R.pluck('id', this.props.savedTasks)}
+                savedTasksIdList={getTaskListItemIds(this.props.savedTasks)}
             />
         );
     }
