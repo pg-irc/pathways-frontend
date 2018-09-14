@@ -3,8 +3,7 @@ import { aString } from '../../../application/__tests__/helpers/random_test_valu
 import { Id } from '../../services';
 import { Id as TaskId } from '../../tasks';
 import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber } from '../../services/types';
-import { LocalizedText } from '../../../locale';
-import { LocalizedTextBuilder } from './locale_helpers';
+
 
 export function buildNormalizedServices(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): ServiceStore {
     return {
@@ -56,8 +55,8 @@ export class PhoneNumberBuilder {
 
 export class ServiceBuilder {
     id: Id = aString();
-    name: LocalizedText = new LocalizedTextBuilder().build();
-    description: LocalizedText = new LocalizedTextBuilder().build();
+    name: string = aString();
+    description: string = aString();
     phoneNumbers: ReadonlyArray<PhoneNumber> = PhoneNumberBuilder.buildArray();
 
     withId(id: Id): ServiceBuilder {
@@ -65,12 +64,12 @@ export class ServiceBuilder {
         return this;
     }
 
-    withName(name: LocalizedText): ServiceBuilder {
+    withName(name: string): ServiceBuilder {
         this.name = name;
         return this;
     }
 
-    withDescription(description: LocalizedText): ServiceBuilder {
+    withDescription(description: string): ServiceBuilder {
         this.description = description;
         return this;
     }

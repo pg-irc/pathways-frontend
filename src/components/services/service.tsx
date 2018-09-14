@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { applicationStyles } from '../../application/styles';
-import { Service } from '../../selectors/services/service';
+import { Service } from '../../stores/services'
 import { View } from 'native-base';
 import { Text } from 'react-native';
 import { PhoneNumber } from '../../stores/services/types';

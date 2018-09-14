@@ -1,30 +1,24 @@
 import * as R from 'ramda';
-import { LocalizedText } from '../../locale';
-
-import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber, APIPhoneNumber } from './types';
+import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import * as constants from '../../application/constants';
 import { Action } from 'redux';
+import { JSONSchemaPhoneNumber } from '../../json_schemas/types';
 
 export { Id, Service, ServiceStore };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
 
 export function serviceFromServiceData(data: any): Service { // tslint:disable-line:no-any
-    // TODO: Perform appropriate data validation.
-    //       Alternatively bring in a tool to do this for us, eg: Serializr
-    const id: string = data.service.id || undefined;
-    const name: LocalizedText = { 'en': data.service.name || '' };
-    const description: LocalizedText = { 'en': data.service.description || '' };
-    const phoneNumbers: ReadonlyArray<PhoneNumber> = data.location.phone_numbers ?
-        APIPhoneNumbersToStorePhoneNumbers(data.location.phone_numbers) : [];
-    return { id, name, description, phoneNumbers };
-}
-
-function APIPhoneNumbersToStorePhoneNumbers(phoneNumbers: ReadonlyArray<APIPhoneNumber>): ReadonlyArray<PhoneNumber> {
-    return R.map((phoneNumber: APIPhoneNumber): PhoneNumber => ({
-        type: phoneNumber.phone_number_type,
-        phoneNumber: phoneNumber.phone_number,
-    }), phoneNumbers);
+    const phoneNumbers = R.map((phoneNumber: JSONSchemaPhoneNumber): PhoneNumber => ({
+         type: phoneNumber.phone_number_type,
+         phoneNumber: phoneNumber.phone_number,
+     }), data.location.phoneNumbers);
+    return {
+        id: data.service.id,
+        name: data.service.name,
+        description: data.sevice.description,
+        phoneNumbers: phoneNumbers,
+    };
 }
 
 function buildDefaultStore(): ServiceStore {

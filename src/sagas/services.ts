@@ -1,9 +1,12 @@
 // tslint:disable:no-expression-statement
+import * as R from 'ramda';
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync, serviceFromServiceData } from '../stores/services';
 import { API } from '../api';
 import { APIResponse } from '../api/api_client';
+import { isValidServiceAtLocationSchema } from '../json_schemas/validate_against_schema';
+import { Service } from '../stores/services';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
@@ -17,7 +20,11 @@ export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): Up
     if (response.hasError) {
         yield put(updateTaskServicesAsync.failure(response.message, taskId));
     } else {
-        const services = response.results.map(serviceFromServiceData);
+        const buildValidServices = R.compose(R.map(serviceFromServiceData), R.filter(isValidServiceAtLocationSchema)());
+        // Monitor this issue: https://github.com/types/npm-ramda/issues/394 experienced in R.filter above.
+        // The () after R.filter(isValidServiceAtLocation) is in place so Typescript picks a more generic type,
+        // unforunately doing this creates the requirement to coerce the type below.
+        const services = buildValidServices(response.results) as ReadonlyArray<Service>;
         yield put(updateTaskServicesAsync.success(taskId, services));
     }
 }
