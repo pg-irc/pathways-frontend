@@ -1,5 +1,5 @@
 import { Task } from '../../stores/tasks';
-import R from 'ramda';
+import * as R from 'ramda';
 
 export const createRelatedServicesQueryFromTask = (task: Task): string => (
     task.serviceQuery ? task.serviceQuery : firstThreeWordsFromTitleInEnglish(task)

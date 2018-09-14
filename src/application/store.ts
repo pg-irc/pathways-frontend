@@ -1,5 +1,4 @@
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools as compose } from 'remote-redux-devtools';
+import { createStore, applyMiddleware, compose } from 'redux';
 
 import { reducer } from '../stores';
 import { runSaga, ApplicationSaga } from '../sagas';

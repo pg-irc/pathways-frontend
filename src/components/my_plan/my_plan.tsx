@@ -141,7 +141,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
                 tasks={tasks}
                 emptyTaskListComponent={emptyTaskListComponent}
                 listItemStyle={style}
-                savedTasksIdList={R.pluck('id', this.props.savedTasks)}
+                savedTasksIdList={R.map((item: TaskListItem) => item.id, this.props.savedTasks)}
             />
         );
     }
