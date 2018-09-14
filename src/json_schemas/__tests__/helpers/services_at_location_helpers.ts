@@ -1,5 +1,5 @@
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
-import { JSONSchemaLocation, JSONSchemaPhoneNumber, JSONSchemaService, JSONSchemaServiceAtLocation } from '../../types';
+import { JSONSchemaLocation, JSONSchemaPhoneNumber, JSONSchemaService, JSONSchemaServiceAtLocation } from '../../services_at_location';
 
 export const buildJSONSchemaPhoneNumber = (): JSONSchemaPhoneNumber => (
     {

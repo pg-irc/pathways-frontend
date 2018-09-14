@@ -3,20 +3,20 @@ import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import * as constants from '../../application/constants';
 import { Action } from 'redux';
-import { JSONSchemaPhoneNumber } from '../../json_schemas/types';
+import { JSONSchemaPhoneNumber, JSONSchemaServiceAtLocation } from '../../json_schemas/services_at_location';
 
 export { Id, Service, ServiceStore };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
 
-export function serviceFromServiceData(data: any): Service { // tslint:disable-line:no-any
+export function serviceFromJSONSchema(data: JSONSchemaServiceAtLocation): Service {
     const phoneNumbers = R.map((phoneNumber: JSONSchemaPhoneNumber): PhoneNumber => ({
          type: phoneNumber.phone_number_type,
          phoneNumber: phoneNumber.phone_number,
-     }), data.location.phoneNumbers);
+     }), data.location.phone_numbers);
     return {
         id: data.service.id,
         name: data.service.name,
-        description: data.sevice.description,
+        description: data.service.description,
         phoneNumbers: phoneNumbers,
     };
 }

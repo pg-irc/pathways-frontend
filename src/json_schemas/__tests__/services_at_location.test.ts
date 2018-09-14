@@ -2,10 +2,9 @@
 // tslint:disable:no-let
 // tslint:disable:no-any
 import Ajv from 'ajv';
-import { servicesAtLocationSchema } from '../services_at_location';
+import { servicesAtLocationSchema, JSONSchemaPhoneNumber } from '../services_at_location';
 import { anInteger, aString } from '../../application/__tests__/helpers/random_test_values';
 import { buildJSONSchemaService, buildJSONSchemaServiceAtLocation } from './helpers/services_at_location_helpers';
-import { JSONSchemaPhoneNumber } from '../types';
 
 describe('services at location schema', () => {
     // By default validation fails on first error

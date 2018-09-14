@@ -2,10 +2,10 @@
 import * as R from 'ramda';
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
-import { UpdateTaskServicesAsync, updateTaskServicesAsync, serviceFromServiceData } from '../stores/services';
+import { UpdateTaskServicesAsync, updateTaskServicesAsync, serviceFromJSONSchema } from '../stores/services';
 import { API } from '../api';
 import { APIResponse } from '../api/api_client';
-import { isValidServiceAtLocationSchema } from '../json_schemas/validate_against_schema';
+import { isValidServiceAtLocationSchema } from '../json_schemas/validate';
 import { Service } from '../stores/services';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
@@ -20,7 +20,7 @@ export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): Up
     if (response.hasError) {
         yield put(updateTaskServicesAsync.failure(response.message, taskId));
     } else {
-        const buildValidServices = R.compose(R.map(serviceFromServiceData), R.filter(isValidServiceAtLocationSchema)());
+        const buildValidServices = R.compose(R.map(serviceFromJSONSchema), R.filter(isValidServiceAtLocationSchema)());
         // Monitor this issue: https://github.com/types/npm-ramda/issues/394 experienced in R.filter above.
         // The () after R.filter(isValidServiceAtLocation) is in place so Typescript picks a more generic type,
         // unforunately doing this creates the requirement to coerce the type below.
