@@ -6,7 +6,6 @@ import { UpdateTaskServicesAsync, updateTaskServicesAsync, serviceFromJSONSchema
 import { API } from '../api';
 import { APIResponse } from '../api/api_client';
 import { isValidServiceAtLocationSchema } from '../json_schemas/validate';
-import { Service } from '../stores/services';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
@@ -20,11 +19,7 @@ export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): Up
     if (response.hasError) {
         yield put(updateTaskServicesAsync.failure(response.message, taskId));
     } else {
-        const buildValidServices = R.compose(R.map(serviceFromJSONSchema), R.filter(isValidServiceAtLocationSchema)());
-        // Monitor this issue: https://github.com/types/npm-ramda/issues/394 experienced in R.filter above.
-        // The () after R.filter(isValidServiceAtLocation) is in place so Typescript picks a more generic type,
-        // unforunately doing this creates the requirement to coerce the type below.
-        const services = buildValidServices(response.results) as ReadonlyArray<Service>;
-        yield put(updateTaskServicesAsync.success(taskId, services));
+        const validatedServices = R.filter(isValidServiceAtLocationSchema, response.results);
+        yield put(updateTaskServicesAsync.success(taskId, R.map(serviceFromJSONSchema, validatedServices)));
     }
 }

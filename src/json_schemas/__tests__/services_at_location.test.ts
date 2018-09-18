@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 // tslint:disable:no-let
 // tslint:disable:no-any
-import Ajv from 'ajv';
+import * as Ajv from 'ajv';
 import { servicesAtLocationSchema, JSONSchemaPhoneNumber } from '../services_at_location';
 import { anInteger, aString } from '../../application/__tests__/helpers/random_test_values';
 import { buildJSONSchemaService, buildJSONSchemaServiceAtLocation } from './helpers/services_at_location_helpers';

@@ -1,4 +1,4 @@
-import Ajv from 'ajv';
+import * as Ajv from 'ajv';
 import { servicesAtLocationSchema } from './services_at_location';
 
 export const isValidServiceAtLocationSchema = (data: any): boolean => { // tslint:disable-line:no-any
