@@ -30,7 +30,7 @@ export class APIClient {
         const queryString = qs.stringify(query);
         // TODO: Should use something a bit more robust to build urls: nodejs's
         //       URL module is a good example.
-        const url = `${this.host}/${endpoint}?${queryString}`;
+        const url = `${this.host}/${endpoint}?${queryString}&per_page=5`;
         const response = await fetch(url);
         // TODO: Handle fetching paged results.
         return createAPIResponse(response);
