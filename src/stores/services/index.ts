@@ -1,15 +1,17 @@
 import * as R from 'ramda';
+import * as constants from '../../application/constants';
 import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
-import * as constants from '../../application/constants';
 import { Action } from 'redux';
-import { JSONSchemaPhoneNumber, JSONSchemaServiceAtLocation } from '../../json_schemas/services_at_location';
+import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON } from './types';
+import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
 export { Id, Service, ServiceStore };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
+export { serviceAtLocation, serviceAtLocationArray };
 
-export function serviceFromJSONSchema(data: JSONSchemaServiceAtLocation): Service {
-    const phoneNumbers = R.map((phoneNumber: JSONSchemaPhoneNumber): PhoneNumber => ({
+export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): Service {
+    const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): PhoneNumber => ({
          type: phoneNumber.phone_number_type,
          phoneNumber: phoneNumber.phone_number,
      }), data.location.phone_numbers);

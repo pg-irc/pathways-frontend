@@ -30,3 +30,23 @@ export interface ServiceStore {
     readonly serviceMap: ServiceMap;
     readonly taskServicesMap: TaskServicesMap;
 }
+
+export interface ValidatedPhoneNumberJSON {
+    readonly phone_number_type: string;
+    readonly phone_number: string;
+}
+
+export interface ValidatedServiceJSON {
+    readonly id: string;
+    readonly name: string;
+    readonly description: string;
+}
+
+export interface ValidatedLocationJSON {
+    readonly phone_numbers: ReadonlyArray<ValidatedPhoneNumberJSON>;
+}
+
+export interface ValidatedServiceAtLocationJSON {
+    readonly service: ValidatedServiceJSON;
+    readonly location: ValidatedLocationJSON;
+}
