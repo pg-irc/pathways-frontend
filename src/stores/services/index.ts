@@ -6,7 +6,7 @@ import { Action } from 'redux';
 import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON } from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
-export { Id, Service, ServiceStore };
+export { Id, Service, ServiceStore, PhoneNumber };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
 export { serviceAtLocation, serviceAtLocationArray };
 
