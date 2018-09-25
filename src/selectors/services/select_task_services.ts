@@ -9,14 +9,6 @@ export function selectTaskServices(taskId: TaskId, store: Store): TaskServices {
     return {
         loading: taskServices.loading,
         message: taskServices.message,
-        services: taskServices.serviceIds.map((serviceId: ServiceId) => {
-            const service = servicesStore.serviceMap[serviceId];
-            return {
-                id: service.id,
-                name: service.name,
-                description: service.description,
-                phoneNumbers: service.phoneNumbers,
-            };
-        }),
+        services: taskServices.serviceIds.map((serviceId: ServiceId) => servicesStore.serviceMap[serviceId]),
     };
 }
