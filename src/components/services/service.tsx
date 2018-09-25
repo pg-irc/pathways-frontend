@@ -1,14 +1,18 @@
 import React from 'react';
-import { applicationStyles } from '../../application/styles';
-import { Service } from '../../selectors/services/service';
+import * as R from 'ramda';
+import { applicationStyles, colors } from '../../application/styles';
+import { Service } from '../../stores/services';
 import { View } from 'native-base';
 import { Text } from 'react-native';
+import { PhoneNumber } from '../../stores/services';
+import { Trans } from '@lingui/react';
 
 interface Props {
     readonly service: Service;
 }
 
 export function ServiceComponent(props: Props): JSX.Element {
+    const mapWithIndex = R.addIndex(R.map);
     return (
         <View>
             <Text style={[
@@ -17,9 +21,21 @@ export function ServiceComponent(props: Props): JSX.Element {
             ]}>
                 {props.service.name}
             </Text>
-            <Text style={[{ textAlign: 'left' }]}><Text style={{ color: 'darkgrey' }}>Address: </Text>123 Main St, Vancouver BC</Text>
-            <Text style={[{ textAlign: 'left' }]}><Text style={{ color: 'darkgrey' }}>Hours: </Text>Mon - Fri: 9:00am - 5:00pm</Text>
-            {/* <Text>{props.service.description}</Text> */}
+            {
+                mapWithIndex((phoneNumber: PhoneNumber, index: number) =>
+                    <View key={index}>
+                        <Text>
+                            <Text style={[{ color: colors.darkGrey }]}>
+                                <Trans>Phone:</Trans>
+                            </Text> {phoneNumber.phoneNumber}
+                        </Text>
+                        <Text>
+                            <Text style={[{ color: colors.darkGrey }]}>
+                                <Trans>Phone Type:</Trans>
+                            </Text> {phoneNumber.type}
+                        </Text>
+                    </View>, props.service.phoneNumbers)
+            }
         </View>
     );
 }

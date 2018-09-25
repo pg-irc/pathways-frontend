@@ -18,7 +18,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { computeStateLabel, computeStateButtons, TaskStateLabel, TaskStateButton } from './task_states';
 import Markdown from 'react-native-markdown-renderer';
 import { Task } from '../../selectors/tasks/task';
-import { Service } from '../../selectors/services/service';
+import { Service } from '../../stores/services';
 
 export interface TaskDetailProps {
     readonly task: Task;

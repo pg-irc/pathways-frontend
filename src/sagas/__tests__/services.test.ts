@@ -5,7 +5,7 @@ import { updateTaskServices } from '../services';
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
 import { Task } from '../../stores/tasks';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { updateTaskServicesAsync, UpdateTaskServicesAsync, serviceFromServiceData } from '../../stores/services';
+import { updateTaskServicesAsync, UpdateTaskServicesAsync, serviceFromValidatedJSON } from '../../stores/services';
 import { APIResponse } from '../../api/api_client';
 import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
 
@@ -38,7 +38,7 @@ describe('The update task services saga', () => {
         it('dispatch a success action with the results', () => {
             const response: APIResponse = { hasError: false, message: '', results: [] };
             const value = saga.next(response).value;
-            const services = response.results.map(serviceFromServiceData);
+            const services = response.results.map(serviceFromValidatedJSON);
             expect(value).toEqual(put(updateTaskServicesAsync.success(task.id, services)));
         });
 

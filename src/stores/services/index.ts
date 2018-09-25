@@ -1,20 +1,26 @@
-import { LocalizedText } from '../../locale';
-
-import { Id, Service, ServiceStore, ServiceMap, TaskServices } from './types';
-import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
+import * as R from 'ramda';
 import * as constants from '../../application/constants';
+import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
+import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import { Action } from 'redux';
+import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON } from './types';
+import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
-export { Id, Service, ServiceStore };
+export { Id, Service, ServiceStore, PhoneNumber };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
+export { serviceAtLocation, serviceAtLocationArray };
 
-export function serviceFromServiceData(data: any): Service { // tslint:disable-line:no-any
-    // TODO: Perform appropriate data validation.
-    //       Alternatively bring in a tool to do this for us, eg: Serializr
-    const id: string = data.id || undefined;
-    const name: LocalizedText = { 'en': data.name || '' };
-    const description: LocalizedText = { 'en': data.description || '' };
-    return { id, name, description };
+export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): Service {
+    const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): PhoneNumber => ({
+         type: phoneNumber.phone_number_type,
+         phoneNumber: phoneNumber.phone_number,
+     }), data.location.phone_numbers);
+    return {
+        id: data.service.id,
+        name: data.service.name,
+        description: data.service.description,
+        phoneNumbers: phoneNumbers,
+    };
 }
 
 function buildDefaultStore(): ServiceStore {

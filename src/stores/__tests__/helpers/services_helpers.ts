@@ -2,9 +2,8 @@
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
 import { Id as TaskId } from '../../tasks';
-import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore } from '../../services/types';
-import { LocalizedText } from '../../../locale';
-import { LocalizedTextBuilder } from './locale_helpers';
+import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber } from '../../services/types';
+
 
 export function buildNormalizedServices(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): ServiceStore {
     return {
@@ -28,23 +27,55 @@ function buildTaskServicesMap(tasks: ReadonlyArray<TaskServicesBuilder>, service
     return tasks.reduce(buildAndMapToId, {});
 }
 
+export class PhoneNumberBuilder {
+    static buildArray(length: number = 3): ReadonlyArray<PhoneNumber> {
+        return Array(length).fill(new PhoneNumberBuilder().build());
+    }
+
+    type: string = aString();
+    phoneNumber: string = aString();
+
+    withType(type: string): PhoneNumberBuilder {
+        this.type = type;
+        return this;
+    }
+
+    withPhoneNumber(phoneNumber: string): PhoneNumberBuilder {
+        this.phoneNumber = phoneNumber;
+        return this;
+    }
+
+    build(): PhoneNumber {
+        return {
+            type: this.type,
+            phoneNumber: this.phoneNumber,
+        };
+    }
+}
+
 export class ServiceBuilder {
     id: Id = aString();
-    name: LocalizedText = new LocalizedTextBuilder().build();
-    description: LocalizedText = new LocalizedTextBuilder().build();
+    name: string = aString();
+    description: string = aString();
+    phoneNumbers: ReadonlyArray<PhoneNumber> = PhoneNumberBuilder.buildArray();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
         return this;
     }
 
-    withName(name: LocalizedText): ServiceBuilder {
+    withName(name: string): ServiceBuilder {
         this.name = name;
         return this;
     }
 
-    withDescription(description: LocalizedText): ServiceBuilder {
+    withDescription(description: string): ServiceBuilder {
         this.description = description;
+        return this;
+    }
+
+    withPhoneNumbers(phoneNumbers: ReadonlyArray<PhoneNumber>): ServiceBuilder {
+        this.phoneNumbers = phoneNumbers;
         return this;
     }
 
@@ -53,6 +84,7 @@ export class ServiceBuilder {
             id: this.id,
             name: this.name,
             description: this.description,
+            phoneNumbers: this.phoneNumbers,
         };
     }
 }
