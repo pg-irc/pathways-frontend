@@ -15,6 +15,8 @@ import { isTaskRecommended } from '../tasks/is_task_recommended';
 import { filterTasksByTaxonomyTerms } from '../tasks/filter_tasks_by_taxonomy_terms';
 import { rejectCompletedTasks } from '../tasks/reject_completed_tasks';
 import { rejectTasksWithIdsInList } from '../tasks/reject_tasks_with_ids_in_list';
+import { sortTaskList } from '../tasks/sort_task_list';
+import { ViewTaskBuilder } from './helpers/task_helpers';
 
 let locale: Locale = undefined;
 
@@ -182,5 +184,33 @@ describe('tasks selector', () => {
             expect(result).toBe(true);
         });
         // TODO should also return true for a saved task (for once we refactor tasks to have a saved flag)
+    });
+
+    describe('sorting', () => {
+        it('sorts recommended tasks before non-recommended tasks', () => {
+            const theId = aString();
+            const firstByRecommended = new ViewTaskBuilder().withId(theId).withIsRecommended(true).build();
+            const lastByRecommended = new ViewTaskBuilder().withId(theId).withIsRecommended(false).build();
+            const sorted = sortTaskList([lastByRecommended, firstByRecommended]);
+            expect(sorted[0]).toBe(firstByRecommended);
+            expect(sorted[1]).toBe(lastByRecommended);
+        });
+
+        it('sorts by id if both have the same recommended state', () => {
+            const isRecommended = aBoolean();
+            const firstById = new ViewTaskBuilder().withId('aaa').withIsRecommended(isRecommended).build();
+            const lastById = new ViewTaskBuilder().withId('bbb').withIsRecommended(isRecommended).build();
+            const sorted = sortTaskList([lastById, firstById]);
+            expect(sorted[0]).toBe(firstById);
+            expect(sorted[1]).toBe(lastById);
+        });
+
+        it('sorts by recommended flag if they have different ids', () => {
+            const firstByIdLastByRecommended = new ViewTaskBuilder().withId('aaa').withIsRecommended(false).build();
+            const lastByIdFirstByRecommended = new ViewTaskBuilder().withId('bbb').withIsRecommended(true).build();
+            const sorted = sortTaskList([firstByIdLastByRecommended, lastByIdFirstByRecommended]);
+            expect(sorted[0]).toBe(lastByIdFirstByRecommended);
+            expect(sorted[1]).toBe(firstByIdLastByRecommended);
+        });
     });
 });
