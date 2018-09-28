@@ -6,6 +6,7 @@ import { View } from 'native-base';
 import { Text } from 'react-native';
 import { PhoneNumber } from '../../stores/services';
 import { Trans } from '@lingui/react';
+import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 
 interface Props {
     readonly service: Service;
@@ -27,7 +28,7 @@ export function ServiceComponent(props: Props): JSX.Element {
                         <Text>
                             <Text style={[{ color: colors.darkGrey }]}>
                                 <Trans>Phone:</Trans>
-                            </Text> {phoneNumber.phoneNumber}
+                            </Text> <TextWithPhoneLinks text={phoneNumber.phoneNumber} />
                         </Text>
                         <Text>
                             <Text style={[{ color: colors.darkGrey }]}>
