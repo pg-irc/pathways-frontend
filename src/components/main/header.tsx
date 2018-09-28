@@ -35,7 +35,7 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
                     <Icon name={getBackButtonIcon(props.location.pathname)} />
                 </Button>
             </Left>
-            <Right style={[ { alignItems: 'center' } ]}>
+            <Right style={[{ alignItems: 'center' }]}>
                 {helpButtonIfShown(props)}
                 <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
             </Right>
@@ -67,9 +67,9 @@ const helpButtonIfShown = (props: HeaderProps): JSX.Element => {
 };
 
 const HelpButton: React.StatelessComponent<ButtonActions> = (props: ButtonActions): JSX.Element => (
-    <Button {...props} style={[ { backgroundColor: colors.darkGrey } ]} iconLeft small rounded>
-        <Icon name='help-circle' style={[ { color: colors.white } ]}/>
-        <Text style={[ { color: colors.white } ]}><Trans>NEED HELP?</Trans></Text>
+    <Button {...props} style={[{ backgroundColor: colors.darkGrey }]} iconLeft small rounded>
+        <Icon name='help-circle' style={[{ color: colors.white }]} />
+        <Text style={[{ color: colors.white }]}><Trans>NEED HELP?</Trans></Text>
     </Button>
 );
 
