@@ -5,6 +5,7 @@ import { CurrentLocale } from '../language_switcher/current_locale';
 import { Locale } from '../../locale';
 import { I18nManager, StatusBar, Platform } from 'react-native';
 import { History, Location } from 'history';
+import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
 import { routePathWithoutParameter, Routes, goBack, goToRouteWithoutParameter } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
@@ -29,13 +30,22 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
 
     const marginTop = getStatusBarHeightForPlatform();
     const backButton = backButtonComponentIfShown(props.location.pathname, props.history);
+    const helpButton = helpButtonIfShown(props);
+    const localeButton: JSX.Element = <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />;
+
+    // From the docs: "Connects the global back button on Android and tvOS to the router's history.
+    // On Android, when the initial location is reached, the default back behavior takes over.
+    // Just render one somewhere in your app."
+    // Without this, the hardware back button on Android always minimizes the app.
+    const reactRouterBackButtonHack: JSX.Element = <ReactRouterBackButtonHack />;
 
     return (
         <Header style={{ marginTop }}>
             <Left>{backButton}</Left>
+            {reactRouterBackButtonHack}
             <Right style={[{ alignItems: 'center' }]}>
-                {helpButtonIfShown(props)}
-                <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
+                {helpButton}
+                {localeButton}
             </Right>
         </Header>
     );
