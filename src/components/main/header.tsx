@@ -8,6 +8,7 @@ import { History, Location } from 'history';
 import { routePathWithoutParameter, Routes, goBack, goToRouteWithoutParameter } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
+import * as R from 'ramda';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -27,14 +28,11 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
     }
 
     const marginTop = getStatusBarHeightForPlatform();
+    const backButton = backButtonComponentIfShown(props.location.pathname, props.history);
 
     return (
         <Header style={{ marginTop }}>
-            <Left>
-                <Button transparent onPress={(): void => goBack(props.history)}>
-                    <Icon name={getBackButtonIcon(props.location.pathname)} />
-                </Button>
-            </Left>
+            <Left>{backButton}</Left>
             <Right style={[{ alignItems: 'center' }]}>
                 {helpButtonIfShown(props)}
                 <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
@@ -42,6 +40,20 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
         </Header>
     );
 };
+
+const backButtonComponentIfShown = (pathname: string, history: History): JSX.Element => (
+    isBackButtonShown(pathname) ? backButtonComponent(pathname, history) : <EmptyComponent />
+);
+
+const isBackButtonShown = (pathname: string): boolean => (
+    R.not(R.contains(pathname, R.map(routePathWithoutParameter, [Routes.Home, Routes.MyPlan, Routes.Learn])))
+);
+
+const backButtonComponent = (pathname: string, history: History): JSX.Element => (
+    <Button transparent onPress={(): void => goBack(history)}>
+        <Icon name={getBackButtonIcon(pathname)} />
+    </Button>
+);
 
 const getBackButtonIcon = (pathname: string): string => {
     if (pathname === routePathWithoutParameter(Routes.Help)) {
