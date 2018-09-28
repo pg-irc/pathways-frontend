@@ -37,8 +37,8 @@ export const ExploreSectionDetailComponent: React.StatelessComponent<Props> =
                 ]} >
                     <TitleComponent {...props} />
                     <IntroductionComponent {...props} />
-                    <ArticleListComponent {...props} articles={props.articles} />
                     <TaskListComponent {...props} tasks={props.tasks} emptyTaskListComponent={noTasksAddedYetTextComponent()} />
+                    <ArticleListComponent {...props} articles={props.articles} />
                 </View>
             </Content>
         </Container >;
