@@ -5,7 +5,6 @@ import { CurrentLocale } from '../language_switcher/current_locale';
 import { Locale } from '../../locale';
 import { I18nManager, StatusBar, Platform } from 'react-native';
 import { History, Location } from 'history';
-import { BackButton } from 'react-router-native';
 import { routePathWithoutParameter, Routes, goBack, goToRouteWithoutParameter } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
@@ -35,7 +34,6 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
                 <Button transparent onPress={(): void => goBack(props.history)}>
                     <Icon name={getBackButtonIcon(props.location.pathname)} />
                 </Button>
-                <BackButton />
             </Left>
             <Right style={[ { alignItems: 'center' } ]}>
                 {helpButtonIfShown(props)}
