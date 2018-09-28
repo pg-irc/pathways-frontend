@@ -5,10 +5,11 @@ import { CurrentLocale } from '../language_switcher/current_locale';
 import { Locale } from '../../locale';
 import { I18nManager, StatusBar, Platform } from 'react-native';
 import { History, Location } from 'history';
-import { BackButton } from 'react-router-native';
+import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
 import { routePathWithoutParameter, Routes, goBack, goToRouteWithoutParameter } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
+import * as R from 'ramda';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -28,22 +29,41 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
     }
 
     const marginTop = getStatusBarHeightForPlatform();
+    const backButton = backButtonComponentIfShown(props.location.pathname, props.history);
+    const helpButton = helpButtonIfShown(props);
+    const localeButton: JSX.Element = <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />;
+
+    // From the docs: "Connects the global back button on Android and tvOS to the router's history.
+    // On Android, when the initial location is reached, the default back behavior takes over.
+    // Just render one somewhere in your app."
+    // Without this, the hardware back button on Android always minimizes the app.
+    const reactRouterBackButtonHack: JSX.Element = <ReactRouterBackButtonHack />;
 
     return (
         <Header style={{ marginTop }}>
-            <Left>
-                <Button transparent onPress={(): void => goBack(props.history)}>
-                    <Icon name={getBackButtonIcon(props.location.pathname)} />
-                </Button>
-                <BackButton />
-            </Left>
-            <Right style={[ { alignItems: 'center' } ]}>
-                {helpButtonIfShown(props)}
-                <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />
+            <Left>{backButton}</Left>
+            {reactRouterBackButtonHack}
+            <Right style={[{ alignItems: 'center' }]}>
+                {helpButton}
+                {localeButton}
             </Right>
         </Header>
     );
 };
+
+const backButtonComponentIfShown = (pathname: string, history: History): JSX.Element => (
+    isBackButtonShown(pathname) ? backButtonComponent(pathname, history) : <EmptyComponent />
+);
+
+const isBackButtonShown = (pathname: string): boolean => (
+    R.not(R.contains(pathname, R.map(routePathWithoutParameter, [Routes.Home, Routes.MyPlan, Routes.Learn])))
+);
+
+const backButtonComponent = (pathname: string, history: History): JSX.Element => (
+    <Button transparent onPress={(): void => goBack(history)}>
+        <Icon name={getBackButtonIcon(pathname)} />
+    </Button>
+);
 
 const getBackButtonIcon = (pathname: string): string => {
     if (pathname === routePathWithoutParameter(Routes.Help)) {
@@ -69,9 +89,9 @@ const helpButtonIfShown = (props: HeaderProps): JSX.Element => {
 };
 
 const HelpButton: React.StatelessComponent<ButtonActions> = (props: ButtonActions): JSX.Element => (
-    <Button {...props} style={[ { backgroundColor: colors.darkGrey } ]} iconLeft small rounded>
-        <Icon name='help-circle' style={[ { color: colors.white } ]}/>
-        <Text style={[ { color: colors.white } ]}><Trans>NEED HELP?</Trans></Text>
+    <Button {...props} style={[{ backgroundColor: colors.darkGrey }]} iconLeft small rounded>
+        <Icon name='help-circle' style={[{ color: colors.white }]} />
+        <Text style={[{ color: colors.white }]}><Trans>NEED HELP?</Trans></Text>
     </Button>
 );
 
