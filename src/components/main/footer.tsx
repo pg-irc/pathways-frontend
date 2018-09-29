@@ -49,9 +49,9 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
 };
 
 const buttonStyle = (isActive: boolean): ReactNative.ViewStyle => (
-    isActive ? { backgroundColor: colors.blue } : { backgroundColor: colors.lightGrey }
+    isActive ? { backgroundColor: colors.white } : { backgroundColor: colors.blue }
 );
 
 const textStyle = (isActive: boolean): ReactNative.StyleProp<ReactNative.TextStyle> => (
-    isActive ? { color: colors.black } : { color: colors.darkGrey }
+    isActive ? { color: colors.darkGrey } : { color: colors.white }
 );
