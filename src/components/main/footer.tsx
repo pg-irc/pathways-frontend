@@ -15,38 +15,34 @@ export interface FooterProps {
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
     const path = props.location.pathname;
 
-    const isWelcome = path === routePathWithoutParameter(Routes.Welcome);
-    const isHelp = path === routePathWithoutParameter(Routes.Help);
-    const isHome = path === routePathWithoutParameter(Routes.Home);
-    const isOnMyPlan = path === routePathWithoutParameter(Routes.MyPlan);
-    const isOnLearn = path === routePathWithoutParameter(Routes.Learn);
+    const isOnWelcomeScreen = path === routePathWithoutParameter(Routes.Welcome);
+    const isOnHelpScreen = path === routePathWithoutParameter(Routes.Help);
+    const isOnHomeScreen = path === routePathWithoutParameter(Routes.Home);
+    const isOnMyPlanScreen = path === routePathWithoutParameter(Routes.MyPlan);
+    const isOnLearnScreen = path === routePathWithoutParameter(Routes.Learn);
 
-    if (isWelcome || isHelp) {
+    if (isOnWelcomeScreen || isOnHelpScreen) {
         return emptyComponent();
     }
 
     return (
         <Footer>
             <FooterTab style={{ backgroundColor: colors.blue }}>
-                <Button vertical style={buttonStyle(isHome)}
-                    onPress={goToRouteWithoutParameter(Routes.Home, props.history)}>
-                    <Icon name='home' active={isHome} style={textStyle(isHome)} />
-                    <Text style={textStyle(isHome)}><Trans>Home</Trans></Text>
-                </Button>
-                <Button vertical style={buttonStyle(isOnMyPlan)}
-                    onPress={goToRouteWithoutParameter(Routes.MyPlan, props.history)}>
-                    <Icon name='camera' active={isOnMyPlan} style={textStyle(isOnMyPlan)} />
-                    <Text style={textStyle(isOnMyPlan)}><Trans>My plan</Trans></Text>
-                </Button>
-                <Button vertical style={buttonStyle(isOnLearn)}
-                    onPress={goToRouteWithoutParameter(Routes.Learn, props.history)}>
-                    <Icon name='apps' active={isOnLearn} style={textStyle(isOnLearn)} />
-                    <Text style={textStyle(isOnLearn)}><Trans>Learn</Trans></Text>
-                </Button>
+                {navigationButton(props.history, Routes.Home, 'Home', 'home', isOnHomeScreen)}
+                {navigationButton(props.history, Routes.MyPlan, 'My plan', 'camera', isOnMyPlanScreen)}
+                {navigationButton(props.history, Routes.Learn, 'Learn', 'apps', isOnLearnScreen)}
             </FooterTab>
         </Footer>
     );
 };
+
+const navigationButton = (history: History, route: Routes, text: string, icon: string, isActive: boolean): JSX.Element => (
+    <Button vertical style={buttonStyle(isActive)}
+        onPress={goToRouteWithoutParameter(route, history)}>
+        <Icon name={icon} active={isActive} style={textStyle(isActive)} />
+        <Text style={textStyle(isActive)}><Trans>{text}</Trans></Text>
+    </Button>
+);
 
 const buttonStyle = (isActive: boolean): ReactNative.ViewStyle => (
     isActive ? { backgroundColor: colors.white } : { backgroundColor: colors.blue }
