@@ -27,20 +27,20 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
 
     return (
         <Footer>
-            <FooterTab style={footerStyle()}>
-                <Button vertical active={isHome} style={buttonStyle(isHome)}
+            <FooterTab style={{ backgroundColor: colors.blue }}>
+                <Button vertical style={buttonStyle(isHome)}
                     onPress={goToRouteWithoutParameter(Routes.Home, props.history)}>
-                    <Icon name='home' style={textStyle(isHome)} />
+                    <Icon name='home' active={isHome} style={textStyle(isHome)} />
                     <Text style={textStyle(isHome)}><Trans>Home</Trans></Text>
                 </Button>
-                <Button vertical active={isOnMyPlan} style={buttonStyle(isOnMyPlan)}
+                <Button vertical style={buttonStyle(isOnMyPlan)}
                     onPress={goToRouteWithoutParameter(Routes.MyPlan, props.history)}>
-                    <Icon name='camera' style={textStyle(isOnMyPlan)} />
+                    <Icon name='camera' active={isOnMyPlan} style={textStyle(isOnMyPlan)} />
                     <Text style={textStyle(isOnMyPlan)}><Trans>My plan</Trans></Text>
                 </Button>
-                <Button vertical active={isOnLearn} style={buttonStyle(isOnLearn)}
+                <Button vertical style={buttonStyle(isOnLearn)}
                     onPress={goToRouteWithoutParameter(Routes.Learn, props.history)}>
-                    <Icon name='apps' style={textStyle(isOnLearn)} />
+                    <Icon name='apps' active={isOnLearn} style={textStyle(isOnLearn)} />
                     <Text style={textStyle(isOnLearn)}><Trans>Learn</Trans></Text>
                 </Button>
             </FooterTab>
@@ -48,15 +48,10 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     );
 };
 
-const footerStyle = (): ReactNative.ViewStyle => (
-    { backgroundColor: colors.blue }
-);
-
 const buttonStyle = (isActive: boolean): ReactNative.ViewStyle => (
     isActive ? { backgroundColor: colors.blue } : { backgroundColor: colors.lightGrey }
 );
 
-// tslint:disable-next-line:no-any
 const textStyle = (isActive: boolean): ReactNative.StyleProp<ReactNative.TextStyle> => (
-    isActive ? { color: colors.white } : { color: colors.darkGrey }
+    isActive ? { color: colors.black } : { color: colors.darkGrey }
 );
