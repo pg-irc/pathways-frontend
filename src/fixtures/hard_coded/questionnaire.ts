@@ -431,20 +431,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'permanent_resident',
                 }],
             },
-            'a30': {
-                id: 'a30',
-                questionId: 'q6',
-                text: {
-                    'en': 'Permanent resident',
-                    'ar': 'مقيم دائم',
-                    'fr': 'Résident(e) permanent',
-                },
-                isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'immigrant_type',
-                    taxonomyTermId: 'permanent_resident',
-                }],
-            },
             'a31': {
                 id: 'a31',
                 questionId: 'q6',
