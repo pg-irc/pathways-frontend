@@ -7,16 +7,26 @@ import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 import { ValidQuestionnaireStore, LoadingQuestionnaireStore } from '../../questionnaire/stores';
 
-export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): store.ValidQuestionnaireStore => (
-    new ValidQuestionnaireStore({
-        activeQuestion: aString(),
-        questions: buildQuestionMap(questions),
-        answers: buildAnswerMap(questions),
-    })
-);
+export class ValidStoreBuilder {
+    activeQuestion: string = aString();
+    questionsBuilders: ReadonlyArray<QuestionBuilder> = [];
+
+    withQuestions(questionsBuilders: ReadonlyArray<QuestionBuilder>): ValidStoreBuilder {
+        this.questionsBuilders = questionsBuilders;
+        return this;
+    }
+
+    build(): store.ValidQuestionnaireStore {
+        return new ValidQuestionnaireStore({
+            activeQuestion: this.activeQuestion,
+            questions: buildQuestionMap(this.questionsBuilders),
+            answers: buildAnswerMap(this.questionsBuilders),
+        });
+    }
+}
 
 export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.QuestionnaireStore => {
-    const lastValidState = buildValidStore(questions);
+    const lastValidState = new ValidStoreBuilder().withQuestions(questions).build();
     return new LoadingQuestionnaireStore(lastValidState);
 };
 
