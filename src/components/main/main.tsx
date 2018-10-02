@@ -8,31 +8,23 @@ import { FooterComponent, FooterProps } from './footer';
 import { ConnectedLanguageSwitcher } from '../language_switcher/connected_language_switcher';
 import { RouterProps } from '../../application/routing';
 import { Location, Action } from 'history';
-import * as constants from '../../application/constants';
-import * as helpers from '../../stores/helpers/make_action';
+import { RouteChangedAction } from '../../stores/router_actions';
 
-interface State {
+interface DrawerState {
     readonly isDrawerOpen: boolean;
 }
 
-export type RouteChangedAction = Readonly<ReturnType<typeof routeChanged>>;
-
-// tslint:disable-next-line:typedef
-export const routeChanged = (location: Location) => (
-    helpers.makeAction(constants.CLEAR_ERROR_STATE, { location })
-);
+export type Props = HeaderProps & FooterProps & RouterProps;
 
 export interface Actions {
     readonly routeChanged: (location: Location, action: Action) => RouteChangedAction;
 }
 
-export type Props = HeaderProps & FooterProps & RouterProps;
-
 export type MainComponentProps = Props & Actions;
 
-export class Component extends React.Component<MainComponentProps, State> {
+export class Component extends React.Component<MainComponentProps, DrawerState> {
 
-    readonly state: State = {
+    readonly state: DrawerState = {
         isDrawerOpen: false,
     };
 
