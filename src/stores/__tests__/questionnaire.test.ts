@@ -7,6 +7,8 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 import { toValidOrThrow, LoadingQuestionnaireStore, InvalidQuestionnaireStore } from '../questionnaire/stores';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { UserDataPersistence } from '../user_data';
+import { routeChanged } from '../router_actions';
+import { State } from '../../fixtures/types/questionnaire';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -160,6 +162,43 @@ describe('questionnaire reducer', () => {
             it('does not change answers to other questions', () => {
                 expect(toValidOrThrow(newStore).answers[nonChosenAnswerToSecondQuestion.id].isChosen).toBe(false);
                 expect(toValidOrThrow(newStore).answers[chosenAnswerToSecondQuestion.id].isChosen).toBe(true);
+            });
+        });
+    });
+
+    describe('when routing', () => {
+        const routeToQuestionnaireAction = routeChanged({ pathname: '/questionnaire', search: '', state: '', hash: '' });
+        const routeToNonQuestionnaireAction = routeChanged({ pathname: '/home', search: '', state: '', hash: '' });
+
+        describe('from non-questionnaire route', () => {
+            const storeNotInQuestionnaireState = new ValidStoreBuilder().withState(State.NotInQuestionnaire).build();
+            describe('to non-questionnaire route', () => {
+                it('sets the state to NotInQuestionnaire', () => {
+                    newStore = store.reducer(storeNotInQuestionnaireState, routeToNonQuestionnaireAction);
+                    expect(toValidOrThrow(newStore).state).toBe(State.NotInQuestionnaire);
+                });
+            });
+            describe('to questionnaire route', () => {
+                it('sets the state to InQuestionnaire', () => {
+                    newStore = store.reducer(storeNotInQuestionnaireState, routeToQuestionnaireAction);
+                    expect(toValidOrThrow(newStore).state).toBe(State.InQuestionnaire);
+                });
+            });
+        });
+        describe('from questionnaire route', () => {
+            const storeInQuestionnaireState = new ValidStoreBuilder().withState(State.InQuestionnaire).build();
+            describe('to non-questionnaire route', () => {
+                it('sets the state to PopupNeeded', () => {
+                    newStore = store.reducer(storeInQuestionnaireState, routeToNonQuestionnaireAction);
+                    expect(toValidOrThrow(newStore).state).toBe(State.PopupNeeded);
+                });
+
+            });
+            describe('to questionnaire route', () => {
+                it('sets the state to InQuestionnaire', () => {
+                    newStore = store.reducer(storeInQuestionnaireState, routeToQuestionnaireAction);
+                    expect(toValidOrThrow(newStore).state).toBe(State.InQuestionnaire);
+                });
             });
         });
     });

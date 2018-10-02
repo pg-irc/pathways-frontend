@@ -3,6 +3,7 @@ import { UserDataPersistence } from '../user_data';
 import { ClearErrorAction } from '../clear_error';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
+import { RouteChangedAction } from '../router_actions';
 
 export type ChooseAnswerAction = Readonly<ReturnType<typeof chooseAnswer>>;
 export type SetActiveQuestionAction = Readonly<ReturnType<typeof setActiveQuestion>>;
@@ -20,4 +21,4 @@ export const setActiveQuestion = (activeQuestion: Id) => (
 export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction
     | UserDataPersistence.SaveSuccessAction | UserDataPersistence.SaveFailureAction
     | UserDataPersistence.LoadRequestAction | UserDataPersistence.LoadSuccessAction | UserDataPersistence.LoadFailureAction
-    | ClearErrorAction;
+    | ClearErrorAction | RouteChangedAction;
