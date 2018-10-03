@@ -60,7 +60,8 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
         const style = {
             ...markdownStyles,
             root: {
-                // Cast string: 'scroll' to scroll type see https://github.com/Microsoft/TypeScript/issues/11465.
+                // Cast string: 'scroll' to scroll type or we get same error as: https://github.com/Microsoft/TypeScript/issues/11465.
+                // It's possible the type defintion for style.root is wrong.
                 overflow: 'scroll' as 'scroll',
                 // Applying a transparent background ensures our button falls below the markdown.
                 backgroundColor: 'rgba(255, 255, 255, 1.0)',
