@@ -39,6 +39,7 @@ const setRouteState = (store: ValidQuestionnaireStore, action: RouteChangedActio
     if (store.state === State.NotInQuestionnaire && isNewRouteToQuestionnaire) {
         return new ValidQuestionnaireStore({
             ...store,
+            oldAnswers: store.answers,
             state: State.InQuestionnaire,
         });
     }

@@ -11,6 +11,7 @@ import { State } from '../../../fixtures/types/questionnaire';
 export class ValidStoreBuilder {
     activeQuestion: string = aString();
     questionsBuilders: ReadonlyArray<QuestionBuilder> = [];
+    oldAnswers: store.AnswersMap = {};
     state: State = aBoolean() ? State.NotInQuestionnaire : State.InQuestionnaire;
 
     withQuestions(questionsBuilders: ReadonlyArray<QuestionBuilder>): ValidStoreBuilder {
@@ -23,11 +24,17 @@ export class ValidStoreBuilder {
         return this;
     }
 
+    withOldAnswers(oldAnswers: store.AnswersMap): ValidStoreBuilder {
+        this.oldAnswers = oldAnswers;
+        return this;
+    }
+
     build(): store.ValidQuestionnaireStore {
         return new ValidQuestionnaireStore({
             activeQuestion: this.activeQuestion,
             questions: buildQuestionMap(this.questionsBuilders),
             answers: buildAnswerMap(this.questionsBuilders),
+            oldAnswers: this.oldAnswers,
             state: this.state,
         });
     }

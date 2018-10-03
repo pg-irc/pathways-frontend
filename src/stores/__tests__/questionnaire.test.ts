@@ -7,7 +7,7 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 import { toValidOrThrow, LoadingQuestionnaireStore, InvalidQuestionnaireStore } from '../questionnaire/stores';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { UserDataPersistence } from '../user_data';
-import { routeChanged } from '../router_actions';
+import { routeChanged, RouteChangedAction } from '../router_actions';
 import { State } from '../../fixtures/types/questionnaire';
 
 describe('choose answer action creator', () => {
@@ -166,38 +166,68 @@ describe('questionnaire reducer', () => {
         });
     });
 
+    const makeRouteAction = (pathname: string): RouteChangedAction => (
+        routeChanged({ pathname, search: '', state: '', hash: '' })
+    );
+
     describe('when routing', () => {
-        const routeToQuestionnaireAction = routeChanged({ pathname: '/questionnaire', search: '', state: '', hash: '' });
-        const routeToNonQuestionnaireAction = routeChanged({ pathname: '/home', search: '', state: '', hash: '' });
+        const enterQuestionnaire = makeRouteAction('/questionnaire');
+        const leaveQuestionnaire = makeRouteAction('/home');
 
         describe('from non-questionnaire route', () => {
-            const storeNotInQuestionnaireState = new ValidStoreBuilder().withState(State.NotInQuestionnaire).build();
+            const storeOutsideQuestionnaire = new ValidStoreBuilder().
+                withState(State.NotInQuestionnaire).
+                withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
+                build();
+
             describe('to non-questionnaire route', () => {
                 it('sets the state to NotInQuestionnaire', () => {
-                    newStore = store.reducer(storeNotInQuestionnaireState, routeToNonQuestionnaireAction);
+                    newStore = store.reducer(storeOutsideQuestionnaire, leaveQuestionnaire);
                     expect(toValidOrThrow(newStore).state).toBe(State.NotInQuestionnaire);
                 });
+                it('leaves old answers unchanged', () => {
+                    newStore = store.reducer(storeOutsideQuestionnaire, leaveQuestionnaire);
+                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeOutsideQuestionnaire.oldAnswers);
+                });
             });
+
             describe('to questionnaire route', () => {
                 it('sets the state to InQuestionnaire', () => {
-                    newStore = store.reducer(storeNotInQuestionnaireState, routeToQuestionnaireAction);
+                    newStore = store.reducer(storeOutsideQuestionnaire, enterQuestionnaire);
                     expect(toValidOrThrow(newStore).state).toBe(State.InQuestionnaire);
+                });
+                it('stores the current state of answers for later', () => {
+                    newStore = store.reducer(storeOutsideQuestionnaire, enterQuestionnaire);
+                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeOutsideQuestionnaire.answers);
                 });
             });
         });
+
         describe('from questionnaire route', () => {
-            const storeInQuestionnaireState = new ValidStoreBuilder().withState(State.InQuestionnaire).build();
+            const storeInQuestionnaire = new ValidStoreBuilder().
+                withState(State.InQuestionnaire).
+                withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
+                build();
+
             describe('to non-questionnaire route', () => {
                 it('sets the state to PopupNeeded', () => {
-                    newStore = store.reducer(storeInQuestionnaireState, routeToNonQuestionnaireAction);
+                    newStore = store.reducer(storeInQuestionnaire, leaveQuestionnaire);
                     expect(toValidOrThrow(newStore).state).toBe(State.PopupNeeded);
                 });
-
+                it('leaves old answers unchanged', () => {
+                    newStore = store.reducer(storeInQuestionnaire, leaveQuestionnaire);
+                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeInQuestionnaire.oldAnswers);
+                });
             });
+
             describe('to questionnaire route', () => {
                 it('sets the state to InQuestionnaire', () => {
-                    newStore = store.reducer(storeInQuestionnaireState, routeToQuestionnaireAction);
+                    newStore = store.reducer(storeInQuestionnaire, enterQuestionnaire);
                     expect(toValidOrThrow(newStore).state).toBe(State.InQuestionnaire);
+                });
+                it('leaves old answers unchanged', () => {
+                    newStore = store.reducer(storeInQuestionnaire, enterQuestionnaire);
+                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeInQuestionnaire.oldAnswers);
                 });
             });
         });

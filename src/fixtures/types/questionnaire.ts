@@ -35,6 +35,7 @@ export enum State {
 export interface IStore {
     readonly questions: QuestionsMap;
     readonly answers: AnswersMap;
+    readonly oldAnswers: AnswersMap;
     readonly activeQuestion: Id;
     readonly state: State;
 }
@@ -45,11 +46,13 @@ export class ValidQuestionnaireStore {
     constructor(parameters: IStore) {
         this.questions = parameters.questions;
         this.answers = parameters.answers;
+        this.oldAnswers = parameters.oldAnswers;
         this.activeQuestion = parameters.activeQuestion;
         this.state = parameters.state;
     }
     readonly questions: QuestionsMap;
     readonly answers: AnswersMap;
+    readonly oldAnswers: AnswersMap;
     readonly activeQuestion: Id;
     readonly state: State;
 }

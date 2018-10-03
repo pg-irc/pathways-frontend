@@ -6,6 +6,7 @@ const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
     return new ValidQuestionnaireStore({
         state: State.NotInQuestionnaire,
+        oldAnswers: {},
         activeQuestion: 'q1',
         questions: {
             'q1': {
