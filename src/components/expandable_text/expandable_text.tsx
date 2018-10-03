@@ -1,7 +1,7 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
 import { View, Icon } from 'native-base';
-import { Dimensions, LayoutChangeEvent, TouchableOpacity, Platform } from 'react-native';
+import { Dimensions, LayoutChangeEvent, TouchableOpacity } from 'react-native';
 import { colors, values, markdownStyles } from '../../application/styles';
 import Markdown from 'react-native-markdown-renderer';
 
