@@ -37,8 +37,14 @@ export const ExploreSectionDetailComponent: React.StatelessComponent<Props> =
                 ]} >
                     <TitleComponent {...props} />
                     <IntroductionComponent {...props} />
-                    <ArticleListComponent {...props} articles={props.articles} />
+                    <Text style={[{ fontWeight: 'bold', textAlign: 'left', fontSize: 20 }]}>
+                        <Trans>Tasks:</Trans>
+                    </Text>
                     <TaskListComponent {...props} tasks={props.tasks} emptyTaskListComponent={noTasksAddedYetTextComponent()} />
+                    <Text style={[{ fontWeight: 'bold', textAlign: 'left', fontSize: 20 }]}>
+                        <Trans>Articles:</Trans>
+                    </Text>
+                    <ArticleListComponent {...props} articles={props.articles} />
                 </View>
             </Content>
         </Container >;

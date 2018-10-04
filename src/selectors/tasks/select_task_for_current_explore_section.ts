@@ -11,6 +11,7 @@ import { selectExploreSectionFromTask } from './select_explore_section_from_task
 import { isTaskRecommended } from './is_task_recommended';
 import { pickExploreSectionById } from '../explore/pick_explore_section_by_id';
 import { pickTasks } from './pick_tasks';
+import { sortTaskList } from './sort_task_list';
 
 export const selectTaskForCurrentExploreSection = (appStore: Store, routerProps: RouterProps): ReadonlyArray<Task> => {
     const currentExploreSection = pickExploreSectionById(appStore, routerProps.match.params.learnId);
@@ -26,5 +27,5 @@ export const selectTaskForCurrentExploreSection = (appStore: Store, routerProps:
         return toSelectorTaskWithoutRelatedEntities(locale, task, exploreSectionForTask, isRecommended);
     };
 
-    return R.map(buildTask, matchingTasks);
+    return sortTaskList(R.map(buildTask, matchingTasks));
 };
