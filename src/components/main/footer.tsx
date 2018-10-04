@@ -1,5 +1,5 @@
 import React from 'react';
-import * as ReactNative from 'react-native';
+import { ViewStyle, StyleProp, TextStyle } from 'react-native';
 import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 import { History, Location } from 'history';
 import { Trans } from '@lingui/react';
@@ -44,10 +44,10 @@ const navigationButton = (history: History, route: Routes, text: string, icon: s
     </Button>
 );
 
-const buttonStyle = (isActive: boolean): ReactNative.ViewStyle => (
+const buttonStyle = (isActive: boolean): ViewStyle => (
     isActive ? { backgroundColor: colors.white } : { backgroundColor: colors.blue }
 );
 
-const textStyle = (isActive: boolean): ReactNative.StyleProp<ReactNative.TextStyle> => (
+const textStyle = (isActive: boolean): StyleProp<TextStyle> => (
     isActive ? { color: colors.darkGrey } : { color: colors.white }
 );
