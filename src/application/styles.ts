@@ -6,7 +6,7 @@ export const colors = {
     lighterGrey: '#F5F5F5',
     darkGrey: '#666666',
     darkGreyWithAlpha: 'rgba(0, 0, 0, 0.4)',
-    blue: '#FFF',
+    blue: '#6666ff',
     brightBlue: '#0066ff',
     white: 'white',
     urlColor: 'blue',
