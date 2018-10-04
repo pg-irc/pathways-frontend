@@ -1,18 +1,19 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import { View, Icon } from 'native-base';
 import { Dimensions, LayoutChangeEvent, TouchableOpacity } from 'react-native';
-import { colors, values, markdownStyles } from '../../application/styles';
+import { View, Icon } from 'native-base';
 import Markdown from 'react-native-markdown-renderer';
+import { colors, values, markdownStyles } from '../../application/styles';
+import { EmptyComponent } from '../empty_component/empty_component';
+import { getNextExpandableTextState, ExpandableTextStates } from './expandable_text_states';
 
 export interface ExpandableTextProps {
     readonly text: string;
 }
 
 interface ExpandableTextState {
-    readonly isCollapsed: boolean;
-    readonly hasBeenCollapsed: boolean;
     readonly collapsedHeight: number;
+    readonly expandableState: ExpandableTextStates;
 }
 
 export class ExpandableText extends React.Component<ExpandableTextProps, ExpandableTextState> {
@@ -22,72 +23,59 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
         const screenHeight = Dimensions.get('screen').height;
         const oneEighthTheScreen = Math.round(screenHeight / 8);
         this.state = {
-            isCollapsed: false,
-            hasBeenCollapsed: false,
             collapsedHeight: oneEighthTheScreen,
+            expandableState: ExpandableTextStates.isNotExpandable,
         };
         this.onLayoutChange = this.onLayoutChange.bind(this);
     }
 
     render(): JSX.Element {
+        const style = this.isCollapsed() ? {...markdownStyles, root: this.getRootStyles()} : markdownStyles;
         return (
             <View onLayout={this.onLayoutChange}>
-                {this.state.isCollapsed ? this.getCollapsedComponent() : this.getExpandedComponent()}
+                <View>
+                    <Markdown style={style}>{this.props.text}</Markdown>
+                    {this.shouldHaveButton() ? this.getButton() : <EmptyComponent />}
+                </View>
             </View >
         );
     }
 
     private onLayoutChange(event: LayoutChangeEvent): void {
         const viewHeight = event.nativeEvent.layout.height;
-        const shouldBeCollapsed = viewHeight > this.state.collapsedHeight && this.state.hasBeenCollapsed === false;
-
-        // TODO Animate the re-render to avoid screen flash
-        if (shouldBeCollapsed) {
-            this.setState({ isCollapsed: true, hasBeenCollapsed: true });
+        if (viewHeight > this.state.collapsedHeight) {
+            if (this.isNotExpandable()) {
+                this.setNextExpandableState();
+            }
         }
     }
 
-    private toggleIsCollapsed(): void {
+    private setNextExpandableState(): void {
         this.setState({
             ...this.state,
-            isCollapsed: !this.state.isCollapsed,
+            expandableState: getNextExpandableTextState(this.state.expandableState),
         });
     }
 
-    private getCollapsedComponent(): JSX.Element {
-        // By default the Markdown component content flows out of the enclosing View when a height is set.
-        // These styles make the component play nice.
-        const style = {
-            ...markdownStyles,
-            root: {
-                // Cast string: 'scroll' to scroll type or we get same error as: https://github.com/Microsoft/TypeScript/issues/11465.
-                // It's possible the type defintion for style.root is wrong.
-                overflow: 'scroll' as 'scroll',
-                // Applying a transparent background ensures our button falls below the markdown.
-                backgroundColor: 'rgba(255, 255, 255, 1.0)',
-                height: this.state.collapsedHeight,
-            },
+    private getRootStyles(): object {
+        return {
+            // Cast string: 'scroll' to scroll type or we get same error as: https://github.com/Microsoft/TypeScript/issues/11465.
+            // It's possible the type defintion for style.root is wrong.
+            overflow: 'scroll' as 'scroll',
+            // Applying a transparent background ensures our button falls below the markdown.
+            backgroundColor: 'rgba(255, 255, 255, 1.0)',
+            height: this.state.collapsedHeight,
         };
-        return (
-            <View>
-                <Markdown style={style}>{this.props.text}</Markdown>
-                {this.getButton('arrow-dropdown')}
-            </View>
-        );
     }
 
-    private getExpandedComponent(): JSX.Element {
-        return (
-            <View>
-                <Markdown style={markdownStyles}>{this.props.text}</Markdown>
-                {this.state.hasBeenCollapsed ?  this.getButton('arrow-dropup') : undefined}
-            </View>
-        );
+    private shouldHaveButton(): boolean {
+        return this.isCollapsed() || this.isExpanded();
     }
 
-    private getButton(icon: string): JSX.Element {
-        const onPress = (): void => this.toggleIsCollapsed();
+    private getButton(): JSX.Element {
+        const onPress = (): void => this.setNextExpandableState();
         const iconStyle = { fontSize: values.smallerIconSize, padding: 3 };
+        const icon = this.isCollapsed() ? 'arrow-dropdown' : 'arrow-dropup';
         return (
             <TouchableOpacity onPress={onPress}>
                 <View style={[
@@ -105,4 +93,17 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
             </TouchableOpacity>
         );
     }
+
+    private isNotExpandable(): boolean {
+        return this.state.expandableState === ExpandableTextStates.isNotExpandable;
+    }
+
+    private isCollapsed(): boolean {
+        return this.state.expandableState === ExpandableTextStates.isExpandableAndCollapsed;
+    }
+
+    private isExpanded(): boolean {
+        return this.state.expandableState === ExpandableTextStates.isExpandableAndExpanded;
+    }
+
 }
