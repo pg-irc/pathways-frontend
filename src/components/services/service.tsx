@@ -5,7 +5,6 @@ import { Service } from '../../stores/services';
 import { View } from 'native-base';
 import { Text } from 'react-native';
 import { PhoneNumber } from '../../stores/services';
-import { FullAddress } from '../../stores/services';
 import { Trans } from '@lingui/react';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 
@@ -15,6 +14,18 @@ interface Props {
 
 export function ServiceComponent(props: Props): JSX.Element {
     const mapWithIndex = R.addIndex(R.map);
+
+    
+    const fullAddress = props.service.fullAddresses;
+    
+    let mainAddress = "";
+    if (fullAddress != null ) {
+        const phyAddress = fullAddress.address;
+        if (phyAddress != null) {
+            mainAddress = phyAddress.address;
+        }
+    }
+      
     return (
         <View>
             <Text style={[
@@ -23,16 +34,11 @@ export function ServiceComponent(props: Props): JSX.Element {
             ]}>
                 {props.service.name}
             </Text>
-            {/* Address */}
-            {
-                mapWithIndex((fullAddress: FullAddress, index: number) =>
-                <View key={index}>
-                    <Text>
-                        <Trans>{fullAddress.address.address}</Trans>
-                    </Text>
-                    
-                </View>, R.dropLast(1 , props.service.fullAddresses))
-            }
+            <View>
+                <Text>
+                    <Trans>{mainAddress}</Trans>
+                </Text>
+            </View>
             {/* Contact */}
             {
                 mapWithIndex((phoneNumber: PhoneNumber, index: number) =>

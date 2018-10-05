@@ -24,7 +24,7 @@ export interface Service {
     readonly name: string;
     readonly description: string;
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
-    readonly fullAddresses: ReadonlyArray<FullAddress>;
+    readonly fullAddresses: FullAddress;
 }
 
 export interface TaskServices {

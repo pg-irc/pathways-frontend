@@ -1,9 +1,9 @@
 import * as R from 'ramda';
 import * as constants from '../../application/constants';
-import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber, FullAddress } from './types';
+import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import { Action } from 'redux';
-import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressJSON } from './types';
+import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressJSON, FullAddress } from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
 export { Id, Service, ServiceStore, PhoneNumber, FullAddress };
@@ -16,17 +16,26 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
          phoneNumber: phoneNumber.phone_number,
      }), data.location.phone_numbers);
 
-     const fullAddresses = R.map((address: ValidatedAddressJSON): FullAddress => ({
+    const fullAddresses = R.map((address: ValidatedAddressJSON): FullAddress => ({
         type: address.address_type,
         address: address.address,
     }), data.location.addresses);
+
+    const ADDRESS_TYPE_PHYSICAL = "physical_address";
+    var addressValue: FullAddress = null;
+    for (let index = 0; index < fullAddresses.length; index++) {
+        const element = fullAddresses[index];
+        if (element.type.match(ADDRESS_TYPE_PHYSICAL)) {
+            addressValue = element;
+        }
+    }
 
     return {
         id: data.service.id,
         name: data.service.name,
         description: data.service.description,
         phoneNumbers: phoneNumbers,
-        fullAddresses: fullAddresses,
+        fullAddresses: addressValue,
     };
 }
 

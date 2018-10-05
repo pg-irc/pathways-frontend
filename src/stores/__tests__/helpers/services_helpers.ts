@@ -2,7 +2,7 @@
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
 import { Id as TaskId } from '../../tasks';
-import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber, FullAddress, Address } from '../../services/types';
+import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber, Address, FullAddress } from '../../services/types';
 
 
 export function buildNormalizedServices(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): ServiceStore {
@@ -54,8 +54,8 @@ export class PhoneNumberBuilder {
 }
 
 export class FullAddressBuilder {
-    static buildArray(length: number = 3): ReadonlyArray<FullAddress> {
-        return Array(length).fill(new FullAddressBuilder().build());
+    static buildArray(): FullAddress {
+        return new FullAddressBuilder().build();
     }
 
     type: string = aString();
@@ -80,8 +80,8 @@ export class FullAddressBuilder {
 }
 
 export class AddressBuilder {
-    static buildArray(length: number = 3): ReadonlyArray<Address> {
-        return Array(length).fill(new AddressBuilder().build());
+    static buildArray(): Address {
+        return new AddressBuilder().build();
     }
 
     id: string = aString();
@@ -139,7 +139,7 @@ export class ServiceBuilder {
     name: string = aString();
     description: string = aString();
     phoneNumbers: ReadonlyArray<PhoneNumber> = PhoneNumberBuilder.buildArray();
-    fullAddresses: ReadonlyArray<FullAddress> = FullAddressBuilder.buildArray();
+    fullAddresses: FullAddress = FullAddressBuilder.buildArray();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -161,7 +161,7 @@ export class ServiceBuilder {
         return this;
     }
 
-    withFullAddresses(fullAddresses: ReadonlyArray<FullAddress>): ServiceBuilder {
+    withFullAddresses(fullAddresses: FullAddress): ServiceBuilder {
         this.fullAddresses = fullAddresses;
         return this;
     }
