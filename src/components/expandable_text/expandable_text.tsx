@@ -5,7 +5,7 @@ import { View, Icon } from 'native-base';
 import Markdown from 'react-native-markdown-renderer';
 import { colors, values, markdownStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { getNextExpandableTextState, ExpandableTextStates } from './expandable_text_states';
+import { toggleExpandedState, ExpandableTextStates, shouldShowButton, defaultExpandableTextState, isDefaultState } from './expandable_text_states';
 
 export interface ExpandableTextProps {
     readonly text: string;
@@ -24,13 +24,13 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
         const oneEighthTheScreen = Math.round(screenHeight / 8);
         this.state = {
             collapsedHeight: oneEighthTheScreen,
-            expandableState: ExpandableTextStates.isNotExpandable,
+            expandableState: defaultExpandableTextState,
         };
         this.onLayoutChange = this.onLayoutChange.bind(this);
     }
 
     render(): JSX.Element {
-        const style = this.isCollapsed() ? {...markdownStyles, root: this.getRootStyles()} : markdownStyles;
+        const style = this.isCollapsed() ? { ...markdownStyles, root: this.getRootStyles() } : markdownStyles;
         return (
             <View onLayout={this.onLayoutChange}>
                 <View>
@@ -42,18 +42,26 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
     }
 
     private onLayoutChange(event: LayoutChangeEvent): void {
+        const isUninitialized = isDefaultState(this.state.expandableState);
         const viewHeight = event.nativeEvent.layout.height;
-        if (viewHeight > this.state.collapsedHeight) {
-            if (this.isNotExpandable()) {
-                this.setNextExpandableState();
-            }
+        const isHeighAboveLimit = viewHeight > this.state.collapsedHeight;
+
+        if (isUninitialized && isHeighAboveLimit) {
+            this.enableExpansion();
         }
     }
 
-    private setNextExpandableState(): void {
+    private enableExpansion(): void {
         this.setState({
             ...this.state,
-            expandableState: getNextExpandableTextState(this.state.expandableState),
+            expandableState: ExpandableTextStates.isCollapsed,
+        });
+    }
+
+    private toggleState(): void {
+        this.setState({
+            ...this.state,
+            expandableState: toggleExpandedState(this.state.expandableState),
         });
     }
 
@@ -69,11 +77,10 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
     }
 
     private shouldHaveButton(): boolean {
-        return this.isCollapsed() || this.isExpanded();
+        return shouldShowButton(this.state.expandableState);
     }
-
     private getButton(): JSX.Element {
-        const onPress = (): void => this.setNextExpandableState();
+        const onPress = (): void => this.toggleState();
         const iconStyle = { fontSize: values.smallerIconSize, padding: 3 };
         const icon = this.isCollapsed() ? 'arrow-dropdown' : 'arrow-dropup';
         return (
@@ -94,16 +101,7 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
         );
     }
 
-    private isNotExpandable(): boolean {
-        return this.state.expandableState === ExpandableTextStates.isNotExpandable;
-    }
-
     private isCollapsed(): boolean {
-        return this.state.expandableState === ExpandableTextStates.isExpandableAndCollapsed;
+        return this.state.expandableState === ExpandableTextStates.isCollapsed;
     }
-
-    private isExpanded(): boolean {
-        return this.state.expandableState === ExpandableTextStates.isExpandableAndExpanded;
-    }
-
 }

@@ -1,18 +1,27 @@
+
 export enum ExpandableTextStates {
-    isNotExpandable,
-    isExpandableAndCollapsed,
-    isExpandableAndExpanded,
+    doesNotCollapse,
+    isCollapsed,
+    isExpanded,
 }
 
-export const getNextExpandableTextState = (currentState: ExpandableTextStates): ExpandableTextStates => {
-    if (currentState === ExpandableTextStates.isNotExpandable) {
-        return ExpandableTextStates.isExpandableAndCollapsed;
+export const defaultExpandableTextState = ExpandableTextStates.doesNotCollapse;
+
+export const isDefaultState = (currentState: ExpandableTextStates): boolean => (
+    currentState === defaultExpandableTextState
+);
+
+export const shouldShowButton = (currentState: ExpandableTextStates): boolean => (
+    currentState === ExpandableTextStates.isCollapsed ||
+    currentState === ExpandableTextStates.isExpanded
+);
+
+export const toggleExpandedState = (currentState: ExpandableTextStates): ExpandableTextStates => {
+    if (isDefaultState(currentState)) {
+        return currentState;
     }
-    if (currentState === ExpandableTextStates.isExpandableAndCollapsed) {
-        return ExpandableTextStates.isExpandableAndExpanded;
-    }
-    if (currentState === ExpandableTextStates.isExpandableAndExpanded) {
-        return ExpandableTextStates.isExpandableAndCollapsed;
-    }
-    return ExpandableTextStates.isNotExpandable;
+
+    return currentState === ExpandableTextStates.isCollapsed ?
+        ExpandableTextStates.isExpanded :
+        ExpandableTextStates.isCollapsed;
 };
