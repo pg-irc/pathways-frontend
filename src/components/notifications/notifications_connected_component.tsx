@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
-import { NotificationsProps, NotificationsActions, NotificationListComponent } from './notification_list';
+import { NotificationsProps, NotificationsActions, NotificationsComponent } from './notifications';
 import { Id, RemoveNotificationAction, removeNotification } from '../../stores/notifications';
 import { selectNotifications } from '../../selectors/notifications/select_notifications';
 
@@ -13,4 +13,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Store>): NotificationsActions => 
     removeNotification: (notificationId: Id): RemoveNotificationAction => dispatch(removeNotification(notificationId)),
 });
 
-export const NotificationsConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(NotificationListComponent);
+export const NotificationsConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(NotificationsComponent);

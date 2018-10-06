@@ -8,7 +8,6 @@ import { selectLocale } from '../../selectors/locale/select_locale';
 
 function mapStateToProps(store: Store): WelcomeProps {
     return {
-        isFirstRun: false,
         currentLocale: selectLocale(store),
         availableLocales: pullAvailableLocales(store),
     };
