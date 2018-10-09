@@ -15,10 +15,15 @@ import { AnswersMap } from '../../stores/questionnaire';
 import { Id } from '../../stores/tasks';
 import { pickAnswers } from '../questionnaire/pick_answers';
 
-export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => {
-    const recommendedTasks = computeRecommendedTasks(pickAnswers(appStore), pickTasks(appStore), pickSavedTaskIds(appStore));
-    return R.map(buildSelectorTask(appStore), recommendedTasks);
-};
+export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => (
+    R.map(buildSelectorTask(appStore),
+        computeRecommendedTasks(
+            pickAnswers(appStore),
+            pickTasks(appStore),
+            pickSavedTaskIds(appStore),
+        ),
+    )
+);
 
 const computeRecommendedTasks = (answers: AnswersMap, tasks: store.TaskMap, savedTaskIds: ReadonlyArray<Id>): ReadonlyArray<store.Task> => (
     rejectSavedAndCompletedTasks(savedTaskIds, getRecommendedTasksFromSelectedAnswers(answers, tasks))
