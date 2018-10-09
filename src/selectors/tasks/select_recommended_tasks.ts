@@ -23,14 +23,7 @@ export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => 
     const recommendedTasks = getRecommendedTasksFromSelectedAnswers(allTasks, answers);
     const nonCompletedTasks = rejectSavedAndCompletedTasks(recommendedTasks, savedTaskIds);
 
-    const buildSelectorTask = (task: store.Task): Task => {
-        const locale = selectLocale(appStore);
-        const exploreSection = selectExploreSectionFromTask(appStore, task);
-        const isRecommended = true;
-        return toSelectorTaskWithoutRelatedEntities(locale, task, exploreSection, isRecommended);
-    };
-
-    return R.map(buildSelectorTask, nonCompletedTasks);
+    return R.map(buildSelectorTask(appStore), nonCompletedTasks);
 };
 
 const getRecommendedTasksFromSelectedAnswers = (tasks: store.TaskMap, answers: AnswersMap): ReadonlyArray<store.Task> => (
@@ -40,3 +33,10 @@ const getRecommendedTasksFromSelectedAnswers = (tasks: store.TaskMap, answers: A
 const rejectSavedAndCompletedTasks = (tasks: ReadonlyArray<store.Task>, savedTaskIds: ReadonlyArray<Id>): ReadonlyArray<store.Task> => (
     rejectCompletedTasks(rejectTasksWithIdsInList(savedTaskIds, tasks))
 );
+
+const buildSelectorTask = R.curry((appStore: Store, task: store.Task): Task => {
+    const locale = selectLocale(appStore);
+    const exploreSection = selectExploreSectionFromTask(appStore, task);
+    const isRecommended = true;
+    return toSelectorTaskWithoutRelatedEntities(locale, task, exploreSection, isRecommended);
+});
