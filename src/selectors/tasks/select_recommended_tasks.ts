@@ -12,25 +12,25 @@ import { pickSavedTaskIds } from './pick_saved_task_ids';
 import { pickTasks } from './pick_tasks';
 import { getTaxonomyTermsForChosenAnswers } from '../taxonomies/get_taxonomy_terms_for_chosen_answers';
 import { AnswersMap } from '../../stores/questionnaire';
-import { pickQuestionnaire } from '../questionnaire/pick_questionnaire';
 import { Id } from '../../stores/tasks';
+import { pickAnswers } from '../questionnaire/pick_answers';
 
 export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => {
-    const answers = pickQuestionnaire(appStore).answers;
-    const allTasks = pickTasks(appStore);
+    const answers = pickAnswers(appStore);
+    const tasks = pickTasks(appStore);
     const savedTaskIds = pickSavedTaskIds(appStore);
 
-    const recommendedTasks = getRecommendedTasksFromSelectedAnswers(allTasks, answers);
-    const nonCompletedTasks = rejectSavedAndCompletedTasks(recommendedTasks, savedTaskIds);
+    const recommendedTasks = getRecommendedTasksFromSelectedAnswers(answers, tasks);
+    const filteredTasks = rejectSavedAndCompletedTasks(savedTaskIds, recommendedTasks);
 
-    return R.map(buildSelectorTask(appStore), nonCompletedTasks);
+    return R.map(buildSelectorTask(appStore), filteredTasks);
 };
 
-const getRecommendedTasksFromSelectedAnswers = (tasks: store.TaskMap, answers: AnswersMap): ReadonlyArray<store.Task> => (
+const getRecommendedTasksFromSelectedAnswers = (answers: AnswersMap, tasks: store.TaskMap): ReadonlyArray<store.Task> => (
     filterTasksByTaxonomyTerms(getTaxonomyTermsForChosenAnswers(answers), tasks)
 );
 
-const rejectSavedAndCompletedTasks = (tasks: ReadonlyArray<store.Task>, savedTaskIds: ReadonlyArray<Id>): ReadonlyArray<store.Task> => (
+const rejectSavedAndCompletedTasks = (savedTaskIds: ReadonlyArray<Id>, tasks: ReadonlyArray<store.Task>): ReadonlyArray<store.Task> => (
     rejectCompletedTasks(rejectTasksWithIdsInList(savedTaskIds, tasks))
 );
 
