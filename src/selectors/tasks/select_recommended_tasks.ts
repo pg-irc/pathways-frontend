@@ -12,23 +12,19 @@ import { pickSavedTaskIds } from './pick_saved_task_ids';
 import { pickTasks } from './pick_tasks';
 import { getTaxonomyTermsForChosenAnswers } from '../taxonomies/get_taxonomy_terms_for_chosen_answers';
 import { AnswersMap } from '../../stores/questionnaire';
-import { pullQuestionnaire } from '../questionnaire/pull_questionnaire';
+import { pickQuestionnaire } from '../questionnaire/pick_questionnaire';
+import { Id } from '../../stores/tasks';
 
 export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => {
-    const answers = pullQuestionnaire(appStore).answers;
+    const answers = pickQuestionnaire(appStore).answers;
     const allTasks = pickTasks(appStore);
-
-    const taxonomyTerms = getTaxonomyTermsForChosenAnswers(answers);
-    const matchingTasks = filterTasksByTaxonomyTerms(taxonomyTerms, allTasks);
-
     const savedTaskIds = pickSavedTaskIds(appStore);
-    const rejectSavedTasks = rejectTasksWithIdsInList(savedTaskIds);
 
-    const nonSavedTasks = rejectSavedTasks(matchingTasks);
-    const nonCompletedTasks = rejectCompletedTasks(nonSavedTasks);
+    const recommendedTasks = getRecommendedTasksFromSelectedAnswers(allTasks, answers);
+    const nonCompletedTasks = rejectSavedAndCompletedTasks(recommendedTasks, savedTaskIds);
 
-    const locale = selectLocale(appStore);
     const buildSelectorTask = (task: store.Task): Task => {
+        const locale = selectLocale(appStore);
         const exploreSection = selectExploreSectionFromTask(appStore, task);
         const isRecommended = true;
         return toSelectorTaskWithoutRelatedEntities(locale, task, exploreSection, isRecommended);
@@ -37,8 +33,10 @@ export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => 
     return R.map(buildSelectorTask, nonCompletedTasks);
 };
 
-export const newRecommendedTasks = (answers: AnswersMap, allTasks: store.TaskMap): ReadonlyArray<store.Task> => {
-    const taxonomyTerms = getTaxonomyTermsForChosenAnswers(answers);
-    const filterTasks = filterTasksByTaxonomyTerms(taxonomyTerms);
-    return filterTasks(allTasks);
-};
+const getRecommendedTasksFromSelectedAnswers = (tasks: store.TaskMap, answers: AnswersMap): ReadonlyArray<store.Task> => (
+    filterTasksByTaxonomyTerms(getTaxonomyTermsForChosenAnswers(answers), tasks)
+);
+
+const rejectSavedAndCompletedTasks = (tasks: ReadonlyArray<store.Task>, savedTaskIds: ReadonlyArray<Id>): ReadonlyArray<store.Task> => (
+    rejectCompletedTasks(rejectTasksWithIdsInList(savedTaskIds, tasks))
+);
