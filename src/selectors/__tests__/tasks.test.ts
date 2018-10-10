@@ -15,7 +15,6 @@ import { isTaskRecommended } from '../tasks/is_task_recommended';
 import { sortTaskList } from '../tasks/sort_task_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';
 import { Id } from '../../stores/tasks';
-import { rejectSavedAndCompletedTasks } from '../tasks/reject_saved_and_completed_tasks';
 import { getRecommendedTasks } from '../tasks/get_recommended_tasks';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
 
@@ -105,14 +104,12 @@ describe('tasks selector', () => {
                 expect(result).toEqual([]);
             });
 
-            const recommendedToAllTaxonomyTerm = (): TaxonomyTermReference => ({
-                taxonomyId: TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID,
-                taxonomyTermId: TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID,
-            });
-
             it('should recommend tasks tagged with the recommend to all taxonomy term', () => {
-                const recommendedToAll = recommendedToAllTaxonomyTerm();
-                const aTaskRecommendedToAll = new TaskBuilder().withTaxonomyTerm(recommendedToAll).withCompleted(false).build();
+                const recommendedToAllTaxonomyTerm = {
+                    taxonomyId: TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID,
+                    taxonomyTermId: TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID,
+                };
+                const aTaskRecommendedToAll = new TaskBuilder().withTaxonomyTerm(recommendedToAllTaxonomyTerm).withCompleted(false).build();
                 const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).build();
                 const noSavedTaskIds: ReadonlyArray<Id> = [];
 
@@ -122,7 +119,7 @@ describe('tasks selector', () => {
                 expect(result).toEqual([aTaskRecommendedToAll]);
             });
 
-            it('should recommend tasks tagged with the same taxonomy term as a selected answer', () => {
+            it('should recommend tasks tagged with the same taxonomy term as a chosen answer', () => {
                 const aTaxonomyTerm = aTaxonomyTermReference();
                 const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
                 const anIncompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
@@ -133,34 +130,31 @@ describe('tasks selector', () => {
 
                 expect(result).toEqual([anIncompleteTask]);
             });
-        });
 
-        describe('rejectSavedAndCompletedTasks', () => {
-
-            it('includes non-completed tasks by default', () => {
-                const nonCompletedTasks: ReadonlyArray<stores.Task> = [new TaskBuilder().withCompleted(false).build()];
+            it('should not recommend completed task', () => {
+                const aTaxonomyTerm = aTaxonomyTermReference();
+                const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
+                const aCompleteTask = new TaskBuilder().withCompleted(true).withTaxonomyTerm(aTaxonomyTerm).build();
                 const noSavedTaskIds: ReadonlyArray<Id> = [];
-                const result = rejectSavedAndCompletedTasks(noSavedTaskIds, nonCompletedTasks);
-                expect(result).toEqual(nonCompletedTasks);
-            });
 
-            it('excludes completed task', () => {
-                const completedTasks: ReadonlyArray<stores.Task> = [new TaskBuilder().withCompleted(true).build()];
-                const noSavedTaskIds: ReadonlyArray<Id> = [];
-                const result = rejectSavedAndCompletedTasks(noSavedTaskIds, completedTasks);
+                const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [aCompleteTask.id]: aCompleteTask },
+                    noSavedTaskIds);
+
                 expect(result).toEqual([]);
             });
 
-            it('excludes saved task', () => {
-                const theId = aString();
-                const nonCompletedTasks: ReadonlyArray<stores.Task> = [new TaskBuilder().withId(theId).withCompleted(false).build()];
-                const savedTaskIds: ReadonlyArray<Id> = [theId];
-                const result = rejectSavedAndCompletedTasks(savedTaskIds, nonCompletedTasks);
+            it('should not recommend saved task', () => {
+                const aTaxonomyTerm = aTaxonomyTermReference();
+                const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
+                const anIncompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
+                const savedTaskIds: ReadonlyArray<Id> = [anIncompleteTask.id];
+
+                const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask },
+                    savedTaskIds);
+
                 expect(result).toEqual([]);
             });
         });
-
-        // TODO add new tests here
     });
     describe('is task recommended', () => {
 
