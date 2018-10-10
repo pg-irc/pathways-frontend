@@ -30,7 +30,6 @@ export interface TaskDetailActions {
     readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
     readonly removeFromSavedList: (taskId: TaskId) => RemoveFromSavedListAction;
     readonly requestUpdateOfServicesForTask: (task: Task) => UpdateTaskServicesAsync.Request;
-    readonly goToTaskDetailPage: (taskId: TaskId) => void;
 }
 
 export interface TaskServiceUpdater {
