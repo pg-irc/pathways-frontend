@@ -10,9 +10,8 @@ import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
 import { ArticleListItem } from '../../selectors/articles/article_list_item';
 import { ArticleListComponent } from '../articles/article_list';
 import { EmptyComponent } from '../empty_component/empty_component';
-import Markdown from 'react-native-markdown-renderer';
-import { markdownStyles } from '../../application/styles';
 import { Task } from '../../selectors/tasks/task';
+import { ExpandableText } from '../expandable_text/expandable_text';
 
 export interface ExploreSectionDetailProps {
     readonly section: ExploreSection;
@@ -140,8 +139,6 @@ const IntroductionComponent: React.StatelessComponent<Props> = (props: Props): J
         { marginRight: 20 },
         { marginBottom: 20 },
     ]}>
-        <Markdown style={markdownStyles}>
-            {props.section.introduction}
-        </Markdown>
+        <ExpandableText text={props.section.introduction} />
     </View>
 );

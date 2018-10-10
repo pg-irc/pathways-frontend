@@ -60,12 +60,12 @@ export const markdownStyles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         ...Platform.select({
-          ios: {
-            lineHeight: 36,
-          },
-          android: {
-            lineHeight: 40,
-          },
+            ios: {
+                lineHeight: 36,
+            },
+            android: {
+                lineHeight: 40,
+            },
         }),
-      },
+    },
 });
