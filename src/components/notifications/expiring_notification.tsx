@@ -1,14 +1,13 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Trans } from '@lingui/react';
-import { Text, View } from 'native-base';
-import { Notification, NotificationType } from '../../stores/notifications';
+import { View } from 'native-base';
+import { Notification } from '../../stores/notifications';
 import { colors } from '../../application/styles';
-import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface ExpiringNotificationProps {
     readonly notification: Notification;
+    readonly notificationContent: JSX.Element;
 }
 
 export interface ExpiringNotificationActions {
@@ -19,12 +18,12 @@ type Props = ExpiringNotificationProps & ExpiringNotificationActions;
 
 export class ExpiringNotificationComponent extends React.Component<Props> {
     timer: number;
-    removeInMillis: number = 1500;
+    OnePointFiveSecondsInMilliSeconds: number = 1500;
 
     componentDidMount(): void {
         this.timer = setTimeout(() => {
             this.props.removeNotification();
-        }, this.removeInMillis);
+        }, this.OnePointFiveSecondsInMilliSeconds);
     }
 
     componentWillUnmount(): void {
@@ -34,23 +33,8 @@ export class ExpiringNotificationComponent extends React.Component<Props> {
     render(): JSX.Element {
         return (
             <View style={styles.notification}>
-                {this.getComponentForContent()}
+                {this.props.notificationContent}
             </View>
-        );
-    }
-
-    private getComponentForContent(): JSX.Element {
-        if (this.props.notification.type === NotificationType.TaskAddedToPlan) {
-            return this.getContentForTaskAddedToPlan();
-        }
-        return <EmptyComponent />;
-    }
-
-    private getContentForTaskAddedToPlan(): JSX.Element {
-        return (
-            <Text style={styles.notificationContent}>
-                <Trans>Task added to plan</Trans>
-            </Text>
         );
     }
 }
@@ -66,9 +50,5 @@ const styles = StyleSheet.create({
         bottom: 20,
         left: 0,
         right: 0,
-    },
-    notificationContent: {
-        color: colors.white,
-        fontWeight: 'bold',
     },
 });

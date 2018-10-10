@@ -1,3 +1,4 @@
+// tslint:disable:no-expression-statement
 import React from 'react';
 import * as R from 'ramda';
 import { Id, RemoveNotificationAction, NotificationType } from '../../stores/notifications';
@@ -6,7 +7,8 @@ import { View } from 'native-base';
 import { ExpiringNotificationComponent } from './expiring_notification';
 import { ModalNotificationComponent } from './modal_notification';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { RouterProps } from '../../application/routing';
+import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
+import { questionnaireInformationNotification, taskAddedNotification } from './notification_content';
 
 export interface NotificationsProps {
     readonly notifications: ReadonlyArray<Notification>;
@@ -31,21 +33,18 @@ export const NotificationsComponent: React.StatelessComponent<Props> = (props: P
 const getComponentForNotification = (notification: Notification, props: Props): JSX.Element => {
     const removeNotification = (): RemoveNotificationAction => props.removeNotification(notification.id);
     if (notification.type === NotificationType.TaskAddedToPlan) {
-        return (
-            <ExpiringNotificationComponent
-                notification={notification}
-                removeNotification={removeNotification}
-            />
-        );
+        const notificationContent = taskAddedNotification();
+        const notificationProps = { notification, removeNotification, notificationContent };
+        return <ExpiringNotificationComponent {...notificationProps}/>;
     }
     if (notification.type === NotificationType.QuestionnaireInformation) {
-        return (
-            <ModalNotificationComponent
-                {...props}
-                notification={notification}
-                removeNotification={removeNotification}
-            />
-        );
+        const goToQuestionnaire = (): void => {
+            goToRouteWithoutParameter(Routes.Questionnaire, props.history)();
+            removeNotification();
+        };
+        const notificationContent = questionnaireInformationNotification(goToQuestionnaire);
+        const notificationProps = { notification, removeNotification, notificationContent };
+        return <ModalNotificationComponent {...notificationProps} />;
     }
     return <EmptyComponent />;
 };

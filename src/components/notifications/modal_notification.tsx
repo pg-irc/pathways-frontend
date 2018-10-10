@@ -1,22 +1,21 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
 import { StyleSheet, Dimensions, LayoutChangeEvent } from 'react-native';
-import { Trans } from '@lingui/react';
-import { Text, View, Icon, Button } from 'native-base';
-import { Notification, NotificationType } from '../../stores/notifications';
+import { View, Icon, Button } from 'native-base';
+import { Notification } from '../../stores/notifications';
 import { colors } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
 
 export interface ModalNotificationProps {
     readonly notification: Notification;
+    readonly notificationContent: JSX.Element;
 }
 
 export interface ModalNotificationActions {
     readonly removeNotification: () => void;
 }
 
-type Props = ModalNotificationProps & ModalNotificationActions & RouterProps;
+type Props = ModalNotificationProps & ModalNotificationActions;
 
 interface State {
     readonly timeHasElapsed: boolean;
@@ -25,7 +24,7 @@ interface State {
 
 export class ModalNotificationComponent extends React.Component<Props, State> {
     timer: number;
-    displayAfterMilliseconds: number = 180000; // Three minutes in milliseconds
+    threeMinutesInMilliSeconds: number = 180000;
 
     constructor(props: Props) {
         super(props);
@@ -42,7 +41,7 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
                 ...this.state,
                 timeHasElapsed: true,
             });
-        }, this.displayAfterMilliseconds);
+        }, this.threeMinutesInMilliSeconds);
     }
 
     componentWillUnmount(): void {
@@ -54,30 +53,21 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
         return (
             <View style={this.getOverlayStyles()}>
                 <View style={this.getModalStyles()} onLayout={this.onLayoutChange}>
-                    {this.getComponentForContent()}
+                    {this.shouldDisplay() ? this.withHeader(this.props.notificationContent) : <EmptyComponent />}
                 </View>
             </View>
         );
     }
 
     private getOverlayStyles(): object {
-        return this.shouldDisplayModal() ? styles.modalOverlay : undefined;
+        return this.shouldDisplay() ? styles.modalOverlay : undefined;
     }
 
     private getModalStyles(): object {
-        return this.shouldDisplayModal() ? [styles.modal, { bottom: this.state.modalBottomPosition }] : undefined;
+        return this.shouldDisplay() ? [styles.modal, { bottom: this.state.modalBottomPosition }] : undefined;
     }
 
-    private getComponentForContent(): JSX.Element {
-        if (this.shouldDisplayModal()) {
-            if (this.props.notification.type === NotificationType.QuestionnaireInformation) {
-                return this.withModalHeader(this.getContentForQuestionnaireInformation());
-            }
-        }
-        return <EmptyComponent />;
-    }
-
-    private shouldDisplayModal(): boolean {
+    private shouldDisplay(): boolean {
         const positionInitialized = Number.isInteger(this.state.modalBottomPosition);
         const timeHasElapsed = this.state.timeHasElapsed;
         return positionInitialized && timeHasElapsed;
@@ -97,7 +87,7 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
         });
     }
 
-    private withModalHeader(content: JSX.Element): JSX.Element {
+    private withHeader(content: JSX.Element): JSX.Element {
         const onPress = (): void => this.props.removeNotification();
         return (
             <View>
@@ -107,25 +97,6 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
                     </Button>
                 </View>
                 <View>{content}</View>
-            </View>
-        );
-    }
-
-    private getContentForQuestionnaireInformation(): JSX.Element {
-        const goToQuestionnaire = (): void => {
-            goToRouteWithoutParameter(Routes.Questionnaire, this.props.history)();
-            this.props.removeNotification();
-        };
-        return (
-            <View>
-                <Text style={[{ textAlign: 'left', padding: 10 }]}>
-                    <Trans>Help us recommend you tasks by answering a few questions.</Trans>
-                </Text>
-                <View style={[{ flexDirection: 'row', justifyContent: 'center', marginTop: 10}]}>
-                    <Button onPress={goToQuestionnaire} rounded>
-                        <Text><Trans>Go to questionnaire</Trans></Text>
-                    </Button>
-                </View>
             </View>
         );
     }
