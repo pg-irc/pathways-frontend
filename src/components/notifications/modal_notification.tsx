@@ -25,7 +25,7 @@ interface State {
 
 export class ModalNotificationComponent extends React.Component<Props, State> {
     timer: number;
-    timeInMillis: number = 180000; // Three minutes in milliseconds
+    displayAfterMilliseconds: number = 180000; // Three minutes in milliseconds
 
     constructor(props: Props) {
         super(props);
@@ -42,7 +42,7 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
                 ...this.state,
                 timeHasElapsed: true,
             });
-        }, this.timeInMillis);
+        }, this.displayAfterMilliseconds);
     }
 
     componentWillUnmount(): void {
@@ -119,7 +119,7 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
         return (
             <View>
                 <Text style={[{ textAlign: 'left', padding: 10 }]}>
-                    <Trans>Help us recommend you tasks by answering questions from the questionnaire.</Trans>
+                    <Trans>Help us recommend you tasks by answering a few questions.</Trans>
                 </Text>
                 <View style={[{ flexDirection: 'row', justifyContent: 'center', marginTop: 10}]}>
                     <Button onPress={goToQuestionnaire} rounded>
