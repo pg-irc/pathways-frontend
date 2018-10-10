@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Store>, ownProps: RouterProps): T
     addToSavedList: (taskId: TaskId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
     removeFromSavedList: (taskId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
     toggleCompleted: (taskId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(taskId)),
-    requestUpdateTaskServices: (task: Task): UpdateTaskServicesAsync.Request => {
+    requestUpdateOfServicesForTask: (task: Task): UpdateTaskServicesAsync.Request => {
         return dispatch(updateTaskServicesAsync.request(task.id, task.serviceQuery));
     },
     goToTaskDetailPage: (taskId: TaskId): void => {
@@ -40,7 +40,7 @@ type ComponentProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater;
 const mergeProps = (stateProps: TaskDetailProps, dispatchProps: TaskDetailActions): ComponentProps => ({
     ...stateProps, ...dispatchProps,
     requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
-        return dispatchProps.requestUpdateTaskServices(stateProps.task);
+        return dispatchProps.requestUpdateOfServicesForTask(stateProps.task);
     },
 });
 
