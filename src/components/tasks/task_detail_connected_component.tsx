@@ -11,14 +11,9 @@ import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { RouterProps } from '../../application/routing';
 import { Task } from '../../selectors/tasks/task';
 import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
-import { TaskServices } from '../../selectors/services/task_services';
 import { selectTaskServices } from '../../selectors/services/select_task_services';
 
-interface StateProps extends TaskDetailProps {
-    readonly taskServices: TaskServices;
-}
-
-function mapStateToProps(store: Store, ownProps: RouterProps): StateProps {
+function mapStateToProps(store: Store, ownProps: RouterProps): TaskDetailProps {
     const task: Task = selectCurrentTask(store, ownProps);
     return {
         task: task,
@@ -44,7 +39,7 @@ function mapDispatchToProps(dispatch: Dispatch<Store>): DispatchProps {
 
 type ComponentProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater & RouterProps;
 
-function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps, routerProps: RouterProps): ComponentProps {
+function mergeProps(stateProps: TaskDetailProps, dispatchProps: DispatchProps, routerProps: RouterProps): ComponentProps {
     return {
         ...stateProps, ...dispatchProps, ...routerProps,
         requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
