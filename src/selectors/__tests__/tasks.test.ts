@@ -18,7 +18,7 @@ import { Id } from '../../stores/tasks';
 import { getRecommendedTasks } from '../tasks/get_recommended_tasks';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
 import { getNewlyRecommendedTasks } from '../tasks/get_newly_recommended_tasks';
-import { Answer } from '../../stores/questionnaire';
+import { AnswersMap } from '../../stores/questionnaire';
 
 let locale: Locale = undefined;
 
@@ -158,57 +158,57 @@ describe('tasks selector', () => {
 
     describe('getting newly recommended tasks', () => {
 
-        let notChosenAnswer: Answer = undefined;
-        let chosenAnswer: Answer = undefined;
+        let chosenAnswers: AnswersMap = undefined;
+        let nonChosenAnswers: AnswersMap = undefined;
         let incompleteTask: stores.Task = undefined;
+        let incompleteTasks: stores.TaskMap = undefined;
+        const noSavedTaskIds: ReadonlyArray<Id> = [];
 
         beforeEach(() => {
             const aTaxonomyTerm = aTaxonomyTermReference();
-            notChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(false).build();
-            chosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
+
+            const notChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(false).build();
+            nonChosenAnswers = { [notChosenAnswer.id]: notChosenAnswer };
+
+            const chosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
+            chosenAnswers = { [chosenAnswer.id]: chosenAnswer };
+
             incompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
+            incompleteTasks = { [incompleteTask.id]: incompleteTask };
         });
 
         it('should include a tasks that was not recommended and is recommended', () => {
-            const oldNonChosenAnswers = { [notChosenAnswer.id]: notChosenAnswer };
-            const newChosenAnswers = { [chosenAnswer.id]: chosenAnswer };
-            const tasks = { [incompleteTask.id]: incompleteTask };
-            const noSavedTaskIds: ReadonlyArray<Id> = [];
+            const oldNonChosenAnswers = nonChosenAnswers;
+            const newChosenAnswers = chosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newChosenAnswers, tasks, noSavedTaskIds);
+            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newChosenAnswers, incompleteTasks, noSavedTaskIds);
 
             expect(result).toEqual([incompleteTask]);
         });
 
         it('should not include a tasks that was recommended and is recommended', () => {
-            const oldChosenAnswers = { [chosenAnswer.id]: chosenAnswer };
-            const newChosenAnswers = { [chosenAnswer.id]: chosenAnswer };
-            const tasks = { [incompleteTask.id]: incompleteTask };
-            const noSavedTaskIds: ReadonlyArray<Id> = [];
+            const oldChosenAnswers = chosenAnswers;
+            const newChosenAnswers = chosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldChosenAnswers, newChosenAnswers, tasks, noSavedTaskIds);
+            const result = getNewlyRecommendedTasks(oldChosenAnswers, newChosenAnswers, incompleteTasks, noSavedTaskIds);
 
             expect(result).toEqual([]);
         });
 
         it('should not include a tasks that was not recommended and is not recommended', () => {
-            const oldNonChosenAnswers = { [notChosenAnswer.id]: notChosenAnswer };
-            const newNonChosenAnswers = { [notChosenAnswer.id]: notChosenAnswer };
-            const tasks = { [incompleteTask.id]: incompleteTask };
-            const noSavedTaskIds: ReadonlyArray<Id> = [];
+            const oldNonChosenAnswers = nonChosenAnswers;
+            const newNonChosenAnswers = nonChosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newNonChosenAnswers, tasks, noSavedTaskIds);
+            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newNonChosenAnswers, incompleteTasks, noSavedTaskIds);
 
             expect(result).toEqual([]);
         });
 
         it('should not include a tasks that was recommended and is not recommended', () => {
-            const oldChosenAnswers = { [chosenAnswer.id]: chosenAnswer };
-            const newNonChosenAnswers = { [notChosenAnswer.id]: notChosenAnswer };
-            const tasks = { [incompleteTask.id]: incompleteTask };
-            const noSavedTaskIds: ReadonlyArray<Id> = [];
+            const oldChosenAnswers = chosenAnswers;
+            const newNonChosenAnswers = nonChosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldChosenAnswers, newNonChosenAnswers, tasks, noSavedTaskIds);
+            const result = getNewlyRecommendedTasks(oldChosenAnswers, newNonChosenAnswers, incompleteTasks, noSavedTaskIds);
 
             expect(result).toEqual([]);
         });
