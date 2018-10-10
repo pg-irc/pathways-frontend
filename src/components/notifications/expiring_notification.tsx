@@ -18,12 +18,12 @@ type Props = ExpiringNotificationProps & ExpiringNotificationActions;
 
 export class ExpiringNotificationComponent extends React.Component<Props> {
     timer: number;
-    OnePointFiveSecondsInMilliSeconds: number = 1500;
+    onePointFiveSecondsInMilliSeconds: number = 1500;
 
     componentDidMount(): void {
         this.timer = setTimeout(() => {
             this.props.removeNotification();
-        }, this.OnePointFiveSecondsInMilliSeconds);
+        }, this.onePointFiveSecondsInMilliSeconds);
     }
 
     componentWillUnmount(): void {
