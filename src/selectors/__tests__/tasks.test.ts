@@ -13,10 +13,10 @@ import { toSelectorTask } from '../tasks/to_selector_task';
 import { Task } from '../tasks/task';
 import { isTaskRecommended } from '../tasks/is_task_recommended';
 import { filterTasksByTaxonomyTerms } from '../tasks/filter_tasks_by_taxonomy_terms';
-import { rejectCompletedTasks } from '../tasks/reject_completed_tasks';
-import { rejectTasksWithIdsInList } from '../tasks/reject_tasks_with_ids_in_list';
 import { sortTaskList } from '../tasks/sort_task_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';
+import { Id } from '../../stores/tasks';
+import { rejectSavedAndCompletedTasks } from '../tasks/reject_saved_and_completed_tasks';
 
 let locale: Locale = undefined;
 
@@ -108,37 +108,37 @@ describe('tasks selector', () => {
         it('should recommend tasks tagged with the same taxonomy term as a selected answer', () => {
             const taxonomyTermReference = aTaxonomyTermReference();
             const selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference> = [taxonomyTermReference];
-            const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm(taxonomyTermReference).build();
+            const task = new TaskBuilder().withTaxonomyTerm(taxonomyTermReference).build();
             const taskMap = { [task.id]: task };
             const result = filterTasksByTaxonomyTerms(selectedAnswerTaxonomyTerms, taskMap);
             expect(result).toEqual([task]);
         });
 
-        it('includes tasks that are not saved in my plan', () => {
-            const task = new TaskBuilder().withLocaleCode(locale.code).build();
-            const noSavedTaskIds: ReadonlyArray<string> = [];
-            const result = rejectTasksWithIdsInList(noSavedTaskIds, [task]);
-            expect(result).toEqual([task]);
+        describe('rejectSavedAndCompletedTasks', () => {
+
+            it('includes non-completed tasks by default', () => {
+                const nonCompletedTasks: ReadonlyArray<stores.Task> = [new TaskBuilder().withCompleted(false).build()];
+                const noSavedTaskIds: ReadonlyArray<Id> = [];
+                const result = rejectSavedAndCompletedTasks(noSavedTaskIds, nonCompletedTasks);
+                expect(result).toEqual(nonCompletedTasks);
+            });
+
+            it('excludes completed task', () => {
+                const completedTasks: ReadonlyArray<stores.Task> = [new TaskBuilder().withCompleted(true).build()];
+                const noSavedTaskIds: ReadonlyArray<Id> = [];
+                const result = rejectSavedAndCompletedTasks(noSavedTaskIds, completedTasks);
+                expect(result).toEqual([]);
+            });
+
+            it('excludes saved task', () => {
+                const theId = aString();
+                const nonCompletedTasks: ReadonlyArray<stores.Task> = [new TaskBuilder().withId(theId).withCompleted(false).build()];
+                const savedTaskIds: ReadonlyArray<Id> = [theId];
+                const result = rejectSavedAndCompletedTasks(savedTaskIds, nonCompletedTasks);
+                expect(result).toEqual([]);
+            });
         });
 
-        it('excludes tasks that are saved in my plan', () => {
-            const task = new TaskBuilder().withLocaleCode(locale.code).build();
-            const savedTaskIds: ReadonlyArray<string> = [task.id];
-            const result = rejectTasksWithIdsInList(savedTaskIds, [task]);
-            expect(result).toEqual([]);
-        });
-
-        it('includes tasks that are not completed', () => {
-            const nonCompletedTask = new TaskBuilder().withCompleted(false).withLocaleCode(locale.code).build();
-            const result = rejectCompletedTasks([nonCompletedTask]);
-            expect(result).toEqual([nonCompletedTask]);
-        });
-
-        it('excludes tasks that are completed', () => {
-            const completedTask = new TaskBuilder().withCompleted(true).withLocaleCode(locale.code).build();
-            const result = rejectCompletedTasks([completedTask]);
-            expect(result).toEqual([]);
-        });
         // TODO add new tests here
     });
     describe('is task recommended', () => {
