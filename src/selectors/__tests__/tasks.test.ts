@@ -12,11 +12,12 @@ import { ExploreSection } from '../explore/types';
 import { toSelectorTask } from '../tasks/to_selector_task';
 import { Task } from '../tasks/task';
 import { isTaskRecommended } from '../tasks/is_task_recommended';
-import { filterTasksByTaxonomyTerms } from '../tasks/filter_tasks_by_taxonomy_terms';
 import { sortTaskList } from '../tasks/sort_task_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';
 import { Id } from '../../stores/tasks';
 import { rejectSavedAndCompletedTasks } from '../tasks/reject_saved_and_completed_tasks';
+import { getRecommendedTasks } from '../tasks/get_recommended_tasks';
+import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
 
 let locale: Locale = undefined;
 
@@ -89,29 +90,49 @@ describe('tasks selector', () => {
     });
 
     describe('recommendation engine', () => {
-        it('should not recommend tasks by default', () => {
-            const task = new TaskBuilder().withLocaleCode(locale.code).build();
-            const taskMap = { [task.id]: task };
-            const result = filterTasksByTaxonomyTerms([], taskMap);
-            expect(result).toEqual([]);
-        });
 
-        it('should recommend tasks tagged with the recommend to all taxonomy term', () => {
-            const taxonomyId = TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID;
-            const taxonomyTermId = TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID;
-            const task = new TaskBuilder().withLocaleCode(locale.code).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
-            const taskMap = { [task.id]: task };
-            const result = filterTasksByTaxonomyTerms([], taskMap);
-            expect(result).toEqual([task]);
-        });
+        describe('getRecommendedTasks', () => {
 
-        it('should recommend tasks tagged with the same taxonomy term as a selected answer', () => {
-            const taxonomyTermReference = aTaxonomyTermReference();
-            const selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference> = [taxonomyTermReference];
-            const task = new TaskBuilder().withTaxonomyTerm(taxonomyTermReference).build();
-            const taskMap = { [task.id]: task };
-            const result = filterTasksByTaxonomyTerms(selectedAnswerTaxonomyTerms, taskMap);
-            expect(result).toEqual([task]);
+            it('should not recommend tasks by default', () => {
+                const aTaxonomyTerm = aTaxonomyTermReference();
+                const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withTaxonomyTerm(aTaxonomyTerm).build();
+                const anIncompleteTask = new TaskBuilder().withCompleted(false).build();
+                const noSavedTaskIds: ReadonlyArray<Id> = [];
+
+                const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask },
+                    noSavedTaskIds);
+
+                expect(result).toEqual([]);
+            });
+
+            const recommendedToAllTaxonomyTerm = (): TaxonomyTermReference => ({
+                taxonomyId: TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID,
+                taxonomyTermId: TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID,
+            });
+
+            it('should recommend tasks tagged with the recommend to all taxonomy term', () => {
+                const recommendedToAll = recommendedToAllTaxonomyTerm();
+                const aTaskRecommendedToAll = new TaskBuilder().withTaxonomyTerm(recommendedToAll).withCompleted(false).build();
+                const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).build();
+                const noSavedTaskIds: ReadonlyArray<Id> = [];
+
+                const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [aTaskRecommendedToAll.id]: aTaskRecommendedToAll },
+                    noSavedTaskIds);
+
+                expect(result).toEqual([aTaskRecommendedToAll]);
+            });
+
+            it('should recommend tasks tagged with the same taxonomy term as a selected answer', () => {
+                const aTaxonomyTerm = aTaxonomyTermReference();
+                const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
+                const anIncompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
+                const noSavedTaskIds: ReadonlyArray<Id> = [];
+
+                const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask },
+                    noSavedTaskIds);
+
+                expect(result).toEqual([anIncompleteTask]);
+            });
         });
 
         describe('rejectSavedAndCompletedTasks', () => {
