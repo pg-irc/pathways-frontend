@@ -22,11 +22,7 @@ function mapStateToProps(store: Store, ownProps: RouterProps): TaskDetailProps {
     };
 }
 
-interface DispatchProps extends TaskDetailActions {
-    readonly requestUpdateTaskServices: (task: Task) => UpdateTaskServicesAsync.Request;
-}
-
-function mapDispatchToProps(dispatch: Dispatch<Store>): DispatchProps {
+function mapDispatchToProps(dispatch: Dispatch<Store>): TaskDetailActions {
     return {
         addToSavedList: (taskId: TaskId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
         removeFromSavedList: (taskId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
@@ -39,7 +35,7 @@ function mapDispatchToProps(dispatch: Dispatch<Store>): DispatchProps {
 
 type ComponentProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater & RouterProps;
 
-function mergeProps(stateProps: TaskDetailProps, dispatchProps: DispatchProps, routerProps: RouterProps): ComponentProps {
+function mergeProps(stateProps: TaskDetailProps, dispatchProps: TaskDetailActions, routerProps: RouterProps): ComponentProps {
     return {
         ...stateProps, ...dispatchProps, ...routerProps,
         requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
@@ -48,5 +44,4 @@ function mergeProps(stateProps: TaskDetailProps, dispatchProps: DispatchProps, r
     };
 }
 
-export const TaskDetailConnectedComponent =
-    connect(mapStateToProps, mapDispatchToProps, mergeProps)(TaskDetailComponent);
+export const TaskDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps, mergeProps)(TaskDetailComponent);
