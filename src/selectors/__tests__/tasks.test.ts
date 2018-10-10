@@ -139,6 +139,7 @@ describe('tasks selector', () => {
             const result = rejectCompletedTasks([completedTask]);
             expect(result).toEqual([]);
         });
+        // TODO add new tests here
     });
     describe('is task recommended', () => {
 

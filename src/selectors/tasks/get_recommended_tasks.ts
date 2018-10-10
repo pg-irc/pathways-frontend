@@ -1,14 +1,17 @@
-import { Store } from '../../stores';
-import { Task } from '../../stores/tasks';
+import { AnswersMap } from '../../stores/questionnaire';
+import { TaskMap, Task } from '../../stores/tasks';
+import { Id } from '../../fixtures/types/explore';
 import { rejectSavedAndCompletedTasks } from './reject_saved_and_completed_tasks';
-import { pickSavedTaskIds } from './pick_saved_task_ids';
-import { getRecommendedTasksFromSelectedAnswers } from './get_recommended_tasks_from_selected_answers';
-import { pickAnswers } from '../questionnaire/pick_answers';
-import { pickTasks } from './pick_tasks';
+import { filterTasksByTaxonomyTerms } from './filter_tasks_by_taxonomy_terms';
+import { getTaxonomyTermsForChosenAnswers } from '../taxonomies/get_taxonomy_terms_for_chosen_answers';
 
-export const getRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => (
-    rejectSavedAndCompletedTasks(
-        pickSavedTaskIds(appStore),
-        getRecommendedTasksFromSelectedAnswers(pickAnswers(appStore), pickTasks(appStore)),
+// TODO write tests
+export const getRecommendedTasks = (answers: AnswersMap, tasks: TaskMap, savedTaskIds: ReadonlyArray<Id>): ReadonlyArray<Task> => (
+    rejectSavedAndCompletedTasks(savedTaskIds,
+        // this one is already tested
+        filterTasksByTaxonomyTerms(
+            getTaxonomyTermsForChosenAnswers(answers),
+            tasks,
+        ),
     )
 );
