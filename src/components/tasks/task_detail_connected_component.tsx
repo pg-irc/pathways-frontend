@@ -46,18 +46,10 @@ type ComponentProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater &
 
 function mergeProps(stateProps: StateProps, dispatchProps: DispatchProps, routerProps: RouterProps): ComponentProps {
     return {
-        task: stateProps.task,
-        savedTasksIdList: stateProps.savedTasksIdList,
-        taskServices: stateProps.taskServices,
-        addToSavedList: dispatchProps.addToSavedList,
-        removeFromSavedList: dispatchProps.removeFromSavedList,
-        toggleCompleted: dispatchProps.toggleCompleted,
+        ...stateProps, ...dispatchProps, ...routerProps,
         requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
             return dispatchProps.requestUpdateTaskServices(stateProps.task);
         },
-        history: routerProps.history,
-        location: routerProps.location,
-        match: routerProps.match,
     };
 }
 
