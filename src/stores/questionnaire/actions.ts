@@ -4,6 +4,7 @@ import { ClearErrorAction } from '../clear_error';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { RouteChangedAction } from '../router_actions';
+import { SaveTheseTasksToMyPlanAction } from '../tasks/actions';
 
 export type ChooseAnswerAction = Readonly<ReturnType<typeof chooseAnswer>>;
 export type SetActiveQuestionAction = Readonly<ReturnType<typeof setActiveQuestion>>;
@@ -27,4 +28,4 @@ export const dismissNewlyAddedTasksPopup = () => (
 export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction
     | UserDataPersistence.SaveSuccessAction | UserDataPersistence.SaveFailureAction
     | UserDataPersistence.LoadRequestAction | UserDataPersistence.LoadSuccessAction | UserDataPersistence.LoadFailureAction
-    | ClearErrorAction | RouteChangedAction | DismissNewlyAddedTasksPopupAction;
+    | ClearErrorAction | RouteChangedAction | DismissNewlyAddedTasksPopupAction | SaveTheseTasksToMyPlanAction;
