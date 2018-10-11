@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
-import * as main from './main';
+import { MainComponentProps, MainComponent, MainComponentActions } from './main_component';
 import { LoaderProps, withLoader } from './loader';
 import { isApplicationLoading } from '../../selectors/is_application_loading';
 import { selectLocale } from '../../selectors/locale/select_locale';
@@ -10,7 +10,9 @@ import { Dispatch } from 'redux';
 import { Location, Action } from 'history';
 import { RouteChangedAction, routeChanged } from '../../stores/router_actions';
 
-const mapStateToProps = (store: Store, ownProps: RouterProps): LoaderProps & main.Props & RouterProps => ({
+type Props = LoaderProps & MainComponentProps & RouterProps;
+
+const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     currentLocale: selectLocale(store),
     loading: isApplicationLoading(store),
     history: ownProps.history,
@@ -19,10 +21,12 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): LoaderProps & mai
     staticContext: ownProps.staticContext,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): main.Actions => ({
+const mapDispatchToProps = (dispatch: Dispatch<Store>): MainComponentActions => ({
     routeChanged: (location: Location, _: Action): RouteChangedAction => dispatch(routeChanged(location)),
 });
 
-const MainComponent = withLoader<main.Props>(main.Component);
-const connector = connect(mapStateToProps, mapDispatchToProps);
-export const ConnectedComponent = withRouter(connector(MainComponent));
+const componentWithLoader = withLoader<MainComponentProps>(MainComponent);
+
+const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(componentWithLoader);
+
+export const MainConnectedComponent = withRouter(connectedComponent);
