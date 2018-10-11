@@ -12,6 +12,7 @@ export interface NewlyRecommendedTasksComponentProps {
 }
 
 export interface NewlyRecommendedTasksComponentActions {
+    readonly dismissPopup: () => void;
 }
 
 type Props = NewlyRecommendedTasksComponentProps & NewlyRecommendedTasksComponentActions;
@@ -36,7 +37,7 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
         <Button style={styles.button}>
             <Text style={styles.buttonText}>Add these tasks to My Plan</Text>
         </Button>
-        <Button style={styles.button}>
+        <Button style={styles.button} onPress={props.dismissPopup}>
             <Text style={styles.buttonText}>Close, do not add tasks to My Plan</Text>
         </Button>
     </View >;

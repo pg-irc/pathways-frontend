@@ -9,6 +9,7 @@ import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { UserDataPersistence } from '../user_data';
 import { routeChanged, RouteChangedAction } from '../router_actions';
 import { QuestionnaireRouteState } from '../../fixtures/types/questionnaire';
+import { dismissNewlyAddedTasksPopup } from '../questionnaire/actions';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -229,6 +230,14 @@ describe('questionnaire reducer', () => {
                     newStore = store.reducer(storeInQuestionnaire, enterQuestionnaire);
                     expect(toValidOrThrow(newStore).oldAnswers).toBe(storeInQuestionnaire.oldAnswers);
                 });
+            });
+        });
+
+        describe('when dismissing the new tasks popup', () => {
+            it('should set the state to NotInQuestionnaire', () => {
+                const storeWithPopupNeeded = new ValidStoreBuilder().withState(QuestionnaireRouteState.ShowQuestionnairePopup).build();
+                newStore = store.reducer(storeWithPopupNeeded, dismissNewlyAddedTasksPopup());
+                expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.NotInQuestionnairePage);
             });
         });
     });

@@ -15,6 +15,12 @@ export const reduceValidStore = (store: ValidQuestionnaireStore, action?: Questi
         case constants.ROUTE_CHANGED:
             return setRouteState(store, action);
 
+        case constants.DISMISS_NEWLY_ADDED_POPUP:
+            return new ValidQuestionnaireStore({
+                ...store,
+                questionnaireRouteState: QuestionnaireRouteState.NotInQuestionnairePage,
+            });
+
         case constants.SET_ACTIVE_QUESTION:
             return new ValidQuestionnaireStore({
                 ...store,
