@@ -3,10 +3,10 @@ import * as constants from '../../application/constants';
 import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import { Action } from 'redux';
-import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressJSON, FullAddress } from './types';
+import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressJSON, AddressWithType, Address } from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
-export { Id, Service, ServiceStore, PhoneNumber, FullAddress };
+export { Id, Service, ServiceStore, PhoneNumber, AddressWithType, Address };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
 export { serviceAtLocation, serviceAtLocationArray };
 
@@ -16,26 +16,30 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
          phoneNumber: phoneNumber.phone_number,
      }), data.location.phone_numbers);
 
-    const fullAddresses = R.map((address: ValidatedAddressJSON): FullAddress => ({
+    const addressesWithType = R.map((address: ValidatedAddressJSON): AddressWithType => ({
         type: address.address_type,
         address: address.address,
     }), data.location.addresses);
 
     const ADDRESS_TYPE_PHYSICAL = "physical_address";
-    var addressValue: FullAddress = null;
-    for (let index = 0; index < fullAddresses.length; index++) {
-        const element = fullAddresses[index];
+    const ADDRESS_TYPE_POSTAL = "postal_address";
+    var physicalAddress: Address = null;
+    var postalAddress: Address = null;
+    addressesWithType.forEach(element => {
         if (element.type.match(ADDRESS_TYPE_PHYSICAL)) {
-            addressValue = element;
+            physicalAddress = element.address;
+        }else if (element.type.match(ADDRESS_TYPE_POSTAL)) {
+            postalAddress = element.address;
         }
-    }
+    });
 
     return {
         id: data.service.id,
         name: data.service.name,
         description: data.service.description,
         phoneNumbers: phoneNumbers,
-        fullAddresses: addressValue,
+        physicalAddress: physicalAddress,
+        postalAddress: postalAddress,
     };
 }
 

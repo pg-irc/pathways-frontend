@@ -13,7 +13,7 @@ interface AddressJSON {
     readonly country?: string | null;
 }
 
-interface FullAddressJSON {
+interface AddressWithTypeJSON {
     readonly address_type?: string | null;
     readonly address?: AddressJSON | null;
 }
@@ -26,7 +26,7 @@ interface ServiceJSON {
 
 interface LocationJSON {
     readonly phone_numbers?: ReadonlyArray<PhoneNumberJSON>;
-    readonly addresses?: ReadonlyArray<FullAddressJSON>;
+    readonly addresses?: ReadonlyArray<AddressWithTypeJSON>;
 }
 
 interface ServiceAtLocationJSON {
@@ -156,34 +156,34 @@ export class AddressJSONBuilder {
     }
 }
 
-export class FullAddressJSONBuilder {
+export class AddressWithTypeJSONBuilder {
     address_type: string | null = aString();
     address: AddressJSON | null = new AddressJSONBuilder().build();
 
-    withAddressType(addressType: string | null): FullAddressJSONBuilder {
+    withAddressType(addressType: string | null): AddressWithTypeJSONBuilder {
         this.address_type = addressType;
         return this;
     }
 
-    withAddress(address: AddressJSON | null): FullAddressJSONBuilder {
+    withAddress(address: AddressJSON | null): AddressWithTypeJSONBuilder {
         this.address = address;
         return this;
     }
 
-    build(): FullAddressJSON {
+    build(): AddressWithTypeJSON {
         return {
             address_type: this.address_type,
             address: this.address,
         };
     }
 
-    buildWithoutAddressType(): FullAddressJSON {
+    buildWithoutAddressType(): AddressWithTypeJSON {
         return {
             address: this.address
         };
     }
 
-    buildWithoutAddress(): FullAddressJSON {
+    buildWithoutAddress(): AddressWithTypeJSON {
         return {
             address_type: this.address_type
         };
@@ -242,14 +242,14 @@ export class ServiceJSONBuilder {
 
 export class LocationJSONBuilder {
     phone_numbers: ReadonlyArray<PhoneNumberJSON> | null = [new PhoneNumberJSONBuilder().build()];
-    addresses: ReadonlyArray<FullAddressJSON> | null = [new FullAddressJSONBuilder().build()];
+    addresses: ReadonlyArray<AddressWithTypeJSON> | null = [new AddressWithTypeJSONBuilder().build()];
 
     withPhoneNumbers(phoneNumbers: ReadonlyArray<PhoneNumberJSON> | null): LocationJSONBuilder {
         this.phone_numbers = phoneNumbers;
         return this;
     }
 
-    withFullAddress(addresses: ReadonlyArray<FullAddressJSON> | null): LocationJSONBuilder {
+    addressWithType(addresses: ReadonlyArray<AddressWithTypeJSON> | null): LocationJSONBuilder {
         this.addresses = addresses;
         return this;
     }

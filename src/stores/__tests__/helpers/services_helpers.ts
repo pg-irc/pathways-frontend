@@ -2,7 +2,7 @@
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
 import { Id as TaskId } from '../../tasks';
-import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber, Address, FullAddress } from '../../services/types';
+import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber, Address, AddressWithType } from '../../services/types';
 
 
 export function buildNormalizedServices(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): ServiceStore {
@@ -53,93 +53,108 @@ export class PhoneNumberBuilder {
     }
 }
 
-export class FullAddressBuilder {
-    static buildArray(): FullAddress {
-        return new FullAddressBuilder().build();
+export class AddressBuilder {
+    static buildWithType(): AddressWithType {
+        return new AddressBuilder().buildWithType();
     }
 
     type: string = aString();
     address: Address;
 
-    withType(type: string): FullAddressBuilder {
+    withType(type: string): AddressBuilder {
         this.type = type;
         return this;
     }
 
-    withAddress(address: Address): FullAddressBuilder {
+    withAddress(address: Address): AddressBuilder {
         this.address = address;
         return this;
     }
 
-    build(): FullAddress {
+    buildWithType(): AddressWithType {
         return {
             type: this.type,
             address:  this.address,
         };
     }
-}
 
-export class AddressBuilder {
-    static buildArray(): Address {
-        return new AddressBuilder().build();
-    }
-
-    id: string = aString();
-    address: string = aString();
-    city: string = aString();
-    state_province: string = aString();
-    postal_code: string = aString();
-    country: string = aString();
-
-    withId(id: string): AddressBuilder {
-        this.id = id;
-        return this;
-    }
-
-    withAddress(address: string): AddressBuilder {
-        this.address = address;
-        return this;
-    }
-
-    withCity(city: string): AddressBuilder {
-        this.city = city;
-        return this;
-    }
-
-    withStateProvince(state_province: string): AddressBuilder {
-        this.state_province = state_province;
-        return this;
-    }
-
-    withPostalCode(postal_code: string): AddressBuilder {
-        this.postal_code = postal_code;
-        return this;
-    }
-
-    withCountry(country: string): AddressBuilder {
-        this.country = country;
-        return this;
-    }
-
-    build(): Address {
-        return {
-            // id: this.id,
-            address: this.address,
-            city: this.city,
-            state_province: this.state_province,
-            postal_code: this.postal_code,
-            country: this.country,
+    // build(): Address {
+    //     const physicalAddressWithType = new AddressBuilder().buildWithType();
+    //     return {
+    //         // id: this.id,
+    //         address: physicalAddressWithType.address.address,
+    //         city: physicalAddressWithType.address.city,
+    //         state_province: physicalAddressWithType.address.state_province,
+    //         postal_code: physicalAddressWithType.address.postal_code,
+    //         country: physicalAddressWithType.address.country,
             
-        };
-    }
+    //     };
+    // }
+    
 }
+
+// export class AddressBuilder {
+//     static buildArray(): Address {
+//         return new AddressBuilder().build();
+//     }
+
+//     id: string = aString();
+//     address: string = aString();
+//     city: string = aString();
+//     state_province: string = aString();
+//     postal_code: string = aString();
+//     country: string = aString();
+
+//     withId(id: string): AddressBuilder {
+//         this.id = id;
+//         return this;
+//     }
+
+//     withAddress(address: string): AddressBuilder {
+//         this.address = address;
+//         return this;
+//     }
+
+//     withCity(city: string): AddressBuilder {
+//         this.city = city;
+//         return this;
+//     }
+
+//     withStateProvince(state_province: string): AddressBuilder {
+//         this.state_province = state_province;
+//         return this;
+//     }
+
+//     withPostalCode(postal_code: string): AddressBuilder {
+//         this.postal_code = postal_code;
+//         return this;
+//     }
+
+//     withCountry(country: string): AddressBuilder {
+//         this.country = country;
+//         return this;
+//     }
+
+//     build(): Address {
+//         return {
+//             // id: this.id,
+//             address: this.address,
+//             city: this.city,
+//             state_province: this.state_province,
+//             postal_code: this.postal_code,
+//             country: this.country,
+            
+//         };
+//     }
+// }
 
 export class ServiceBuilder {
     id: Id = aString();
     name: string = aString();
     description: string = aString();
     phoneNumbers: ReadonlyArray<PhoneNumber> = PhoneNumberBuilder.buildArray();
-    fullAddresses: FullAddress = FullAddressBuilder.buildArray();
+    physicalAddressWithType: AddressWithType = AddressBuilder.buildWithType();
+    postalAddressWithType: AddressWithType = AddressBuilder.buildWithType();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -161,8 +176,13 @@ export class ServiceBuilder {
         return this;
     }
 
-    withFullAddresses(fullAddresses: FullAddress): ServiceBuilder {
-        this.fullAddresses = fullAddresses;
+    withPhysicalAddress(addressWithType: AddressWithType): ServiceBuilder {
+        this.physicalAddressWithType = addressWithType;
+        return this;
+    }
+
+    withPostalAddress(addressWithType: AddressWithType): ServiceBuilder {
+        this.postalAddressWithType = addressWithType;
         return this;
     }
 
@@ -172,7 +192,8 @@ export class ServiceBuilder {
             name: this.name,
             description: this.description,
             phoneNumbers: this.phoneNumbers,
-            fullAddresses: this.fullAddresses
+            physicalAddress: this.physicalAddressWithType.address,
+            postalAddress: this.postalAddressWithType.address
         };
     }
 }

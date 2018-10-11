@@ -14,7 +14,7 @@ export interface Address {
     readonly country: string;
 }
 
-export interface FullAddress {
+export interface AddressWithType {
     readonly type: string;
     readonly address: Address;
 }
@@ -24,7 +24,8 @@ export interface Service {
     readonly name: string;
     readonly description: string;
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
-    readonly fullAddresses: FullAddress;
+    readonly physicalAddress: Address;
+    readonly postalAddress: Address;
 }
 
 export interface TaskServices {

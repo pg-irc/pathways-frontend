@@ -1,11 +1,10 @@
 import React from 'react';
 import * as R from 'ramda';
 import { applicationStyles, colors } from '../../application/styles';
-import { Service } from '../../stores/services';
+import { Service, Address } from '../../stores/services';
 import { View } from 'native-base';
 import { Text } from 'react-native';
 import { PhoneNumber } from '../../stores/services';
-import { Trans } from '@lingui/react';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 
 interface Props {
@@ -16,15 +15,13 @@ export function ServiceComponent(props: Props): JSX.Element {
     const mapWithIndex = R.addIndex(R.map);
 
     
-    const fullAddress = props.service.fullAddresses;
-    
-    let mainAddress = "";
-    if (fullAddress != null ) {
-        const phyAddress = fullAddress.address;
-        if (phyAddress != null) {
-            mainAddress = phyAddress.address;
-        }
-    }
+    const capitalizeFirstLetter = (phoneType: String): string => (
+        `${phoneType.charAt(0).toUpperCase()}${phoneType.slice(1)}`
+    );
+
+    const getAddress = (address: Address): string => (
+        `${address===null? '': address.address}`
+    );
       
     return (
         <View>
@@ -34,18 +31,15 @@ export function ServiceComponent(props: Props): JSX.Element {
             ]}>
                 {props.service.name}
             </Text>
-            <View>
-                <Text>
-                    <Trans>{mainAddress}</Trans>
-                </Text>
-            </View>
+            {/* <Text>{address}</Text> */}
+            <Text>{getAddress(props.service.physicalAddress)}</Text>
             {/* Contact */}
             {
                 mapWithIndex((phoneNumber: PhoneNumber, index: number) =>
                     <View key={index}>
                         <Text>
                             <Text style={[{ color: colors.darkGrey }]}>
-                                <Trans>{phoneNumber.type.charAt(0).toUpperCase() + phoneNumber.type.slice(1)}:</Trans>
+                                {capitalizeFirstLetter(phoneNumber.type)}
                             </Text> <TextWithPhoneLinks text={phoneNumber.phoneNumber} />
                         </Text>
                             
