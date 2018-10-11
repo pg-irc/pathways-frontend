@@ -1,14 +1,13 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React from 'react';
-import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
 import { Image } from 'react-native';
+import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
 import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
 
 export interface WelcomeProps {
-    readonly isFirstRun: boolean;
     readonly currentLocale: Locale;
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
 }
@@ -70,12 +69,9 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & Route
                     </Picker>
                 </Item>
             </Form>
-            {props.isFirstRun ?
-                undefined :
-                <Button full onPress={goToRouteWithoutParameter(Routes.Home, props.history)}>
-                    <Text><Trans>Get started</Trans></Text>
-                </Button>
-            }
+            <Button full onPress={goToRouteWithoutParameter(Routes.Home, props.history)}>
+                <Text><Trans>Get started</Trans></Text>
+            </Button>
         </View>
     );
 }

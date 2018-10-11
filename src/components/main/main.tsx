@@ -35,7 +35,7 @@ export class Component extends React.Component<Props, DrawerState> {
                 <Container>
                     <HeaderComponent onLanguageSelect={this.openDrawer} {...this.props} />
                     <MainPageSwitcherComponent />
-                    <NotificationsConnectedComponent />
+                    <NotificationsConnectedComponent {...this.props} />
                     <FooterComponent {...this.props} />
                 </Container>
             </Drawer>
