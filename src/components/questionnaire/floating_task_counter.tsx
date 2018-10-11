@@ -19,25 +19,24 @@ interface State {
 type Props = FloatingTaskCounterProps;
 
 export class FloatingTaskCounter extends React.Component<Props, State> {
-    readonly taskCountChangeDefault: number = 0;
     timer: number;
 
     constructor(props: Props) {
         super(props);
         this.state = {
-            taskCountChange: this.taskCountChangeDefault,
+            taskCountChange: 0,
         };
     }
 
     componentDidUpdate(previousProps: Props): void {
         const difference = this.props.taskCount - previousProps.taskCount;
-        if (difference !== this.taskCountChangeDefault) {
+        if (difference !== 0) {
             this.setState({
                 taskCountChange: difference,
             });
             this.timer = setTimeout(() => {
                 this.setState({
-                    taskCountChange: this.taskCountChangeDefault,
+                    taskCountChange: 0,
                 });
             }, 1500);
         }
@@ -53,7 +52,7 @@ export class FloatingTaskCounter extends React.Component<Props, State> {
                 style={styles.floatingCount}
                 onPress={goToRouteWithoutParameter(Routes.MyPlan, this.props.history)}
             >
-                {this.shouldDisplayTaskCountChange() ? this.getTaskCountWithChangeText() : this.getTaskCountText()}
+                {this.getCountText()}
                 <Text style={styles.smallFloatingText}>
                     {this.props.taskCount === 1 ? <Trans>task</Trans> : <Trans>tasks</Trans>}
                 </Text>
@@ -64,25 +63,26 @@ export class FloatingTaskCounter extends React.Component<Props, State> {
         );
     }
 
-    private shouldDisplayTaskCountChange(): boolean {
-        return this.state.taskCountChange !== this.taskCountChangeDefault;
-    }
-
-    private getTaskCountWithChangeText(): JSX.Element {
-        const differenceText = this.state.taskCountChange < 0 ?
-            this.state.taskCountChange : '+' + this.state.taskCountChange;
+    private getCountText(): JSX.Element {
+        if (this.state.taskCountChange === 0) {
+            return this.getTaskCountText();
+        }
         return (
             <View>
-                <Text style={styles.smallFloatingText}>{differenceText}</Text>
-                <Text style={styles.largeFloatingText}>{this.props.taskCount} </Text>
+                {this.getTaskCountChangeText()}
+                {this.getTaskCountText()}
             </View>
         );
     }
 
+    private getTaskCountChangeText(): JSX.Element {
+        const differenceText = this.state.taskCountChange < 0 ?
+            this.state.taskCountChange : '+' + this.state.taskCountChange;
+        return <Text style={styles.smallFloatingText}>{differenceText}</Text>;
+    }
+
     private getTaskCountText(): JSX.Element {
-        return (
-            <Text style={styles.largeFloatingText}>{this.props.taskCount} </Text>
-        );
+        return <Text style={styles.largeFloatingText}>{this.props.taskCount} </Text>;
     }
 }
 
