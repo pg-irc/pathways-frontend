@@ -5,6 +5,9 @@ import { StyleSheet } from 'react-native';
 import { colors } from '../../application/styles';
 import * as R from 'ramda';
 import { emptyComponent } from '../empty_component/empty_component';
+import { DismissNewlyAddedTasksPopupAction } from '../../stores/questionnaire/actions';
+import { Id } from '../../stores/tasks';
+import { SaveTheseTasksToMyPlanAction } from '../../stores/tasks/actions';
 
 export interface NewlyRecommendedTasksComponentProps {
     readonly showQuestionnairePopup: boolean;
@@ -12,7 +15,8 @@ export interface NewlyRecommendedTasksComponentProps {
 }
 
 export interface NewlyRecommendedTasksComponentActions {
-    readonly dismissPopup: () => void;
+    readonly saveToMyPlan: (tasks: ReadonlyArray<Id>) => SaveTheseTasksToMyPlanAction;
+    readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction;
 }
 
 type Props = NewlyRecommendedTasksComponentProps & NewlyRecommendedTasksComponentActions;
@@ -23,6 +27,8 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
         return emptyComponent();
     }
     const tasks = props.newlyRecommendedTasks;
+    const taskIds = R.map((task: Task): Id => task.id, tasks);
+    const saveTasksToMyPlan = (): SaveTheseTasksToMyPlanAction => props.saveToMyPlan(taskIds);
 
     return <View style={styles.component}>
         <Text style={styles.heading}>New Tasks</Text>
@@ -34,7 +40,7 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
                 </Text>
             ), tasks)}
         </Content>
-        <Button style={styles.button}>
+        <Button style={styles.button} onPress={saveTasksToMyPlan}>
             <Text style={styles.buttonText}>Add these tasks to My Plan</Text>
         </Button>
         <Button style={styles.button} onPress={props.dismissPopup}>
