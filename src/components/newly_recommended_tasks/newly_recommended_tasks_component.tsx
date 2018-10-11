@@ -4,68 +4,7 @@ import { View, Text, Button, Content } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { colors } from '../../application/styles';
 import * as R from 'ramda';
-
-export const dummyTasks: ReadonlyArray<Task> = [{
-    id: 'id1', title: 'The first task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id2', title: 'The second task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id3', title: 'The third task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id4', title: 'The fourth task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id5', title: 'The fifth task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id6', title: 'The sixth task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id7', title: 'The seventh task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id8', title: 'The eighth task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id9', title: 'The ninth task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id10', title: 'The tenth task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id11', title: 'The eleventh task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id12', title: 'The twelfth task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id13', title: 'The thirteenth task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id14', title: 'The fourteenth task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}, {
-    id: 'id15', title: 'The fifteenth task', description: 'description',
-    taxonomyTerms: [], exploreSection: undefined, isRecommended: true,
-    relatedTasks: [], relatedArticles: [], serviceQuery: '', completed: false,
-}];
+import { emptyComponent } from '../empty_component/empty_component';
 
 export interface NewlyRecommendedTasksComponentProps {
     readonly showQuestionnairePopup: boolean;
@@ -77,16 +16,12 @@ export interface NewlyRecommendedTasksComponentActions {
 
 type Props = NewlyRecommendedTasksComponentProps & NewlyRecommendedTasksComponentActions;
 
-export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (_: Props): JSX.Element => {
-    // const status = `props.isPopupNeeded=${props.isPopupNeeded}\nnewlyRecommendedTasks=${props.newlyRecommendedTasks.length}`;
-    // // tslint:disable-next-line:no-expression-statement
-    // Alert.alert('status', status);
+export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
 
-    // if (!props.isPopupNeeded || R.isEmpty(props.newlyRecommendedTasks)) {
-    //     return emptyComponent();
-    // }
-    // const tasks = props.newlyRecommendedTasks;
-    const tasks = R.take(12, dummyTasks);
+    if (!props.showQuestionnairePopup || R.isEmpty(props.newlyRecommendedTasks)) {
+        return emptyComponent();
+    }
+    const tasks = props.newlyRecommendedTasks;
 
     return <View style={styles.component}>
         <Text style={styles.heading}>New Tasks</Text>
