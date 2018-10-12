@@ -252,7 +252,7 @@ export class LocationJSONBuilder {
         return this;
     }
 
-    addressWithType(addresses: ReadonlyArray<AddressWithTypeJSON> | null): LocationJSONBuilder {
+    withAddressesWithType(addresses: ReadonlyArray<AddressWithTypeJSON> | null): LocationJSONBuilder {
         this.addresses = addresses;
         return this;
     }

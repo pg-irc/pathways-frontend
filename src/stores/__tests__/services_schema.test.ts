@@ -148,7 +148,7 @@ describe('schema for services_at_location endpoint', () => {
         });
 
         test('location.addresses is of type array', () => {
-            const location = new helpers.LocationJSONBuilder().addressWithType(null).build();
+            const location = new helpers.LocationJSONBuilder().withAddressesWithType(null).build();
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
             ]);
@@ -159,7 +159,7 @@ describe('schema for services_at_location endpoint', () => {
         test('location.phone_numbers can be empty array', () => {
             const location = new helpers.LocationJSONBuilder()
                 .withPhoneNumbers([])
-                .addressWithType([])
+                .withAddressesWithType([])
                 .build();
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
@@ -168,7 +168,7 @@ describe('schema for services_at_location endpoint', () => {
         });
 
         test('location.addresses can be empty array', () => {
-            const location = new helpers.LocationJSONBuilder().addressWithType([]).build();
+            const location = new helpers.LocationJSONBuilder().withAddressesWithType([]).build();
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
             ]);
@@ -187,7 +187,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('location.addresses item is of type object', () => {
             const address: any = null;
-            const location = new helpers.LocationJSONBuilder().addressWithType([address]).build();
+            const location = new helpers.LocationJSONBuilder().withAddressesWithType([address]).build();
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
             ]);
@@ -207,7 +207,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('location.addresses item.address_type is required ', () => {
             const address = new helpers.AddressWithTypeJSONBuilder().buildWithoutAddressType();
-            const location = new helpers.LocationJSONBuilder().addressWithType([address]).build();
+            const location = new helpers.LocationJSONBuilder().withAddressesWithType([address]).build();
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
             ]);
@@ -227,7 +227,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('location.addresses item.address_type is of type string', () => {
             const address = new helpers.AddressWithTypeJSONBuilder().withAddressType(null).build();
-            const location = new helpers.LocationJSONBuilder().addressWithType([address]).build();
+            const location = new helpers.LocationJSONBuilder().withAddressesWithType([address]).build();
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
             ]);
@@ -247,7 +247,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('location.addresses item.address is required ', () => {
             const address = new helpers.AddressWithTypeJSONBuilder().buildWithoutAddress();
-            const location = new helpers.LocationJSONBuilder().addressWithType([address]).build();
+            const location = new helpers.LocationJSONBuilder().withAddressesWithType([address]).build();
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
             ]);
@@ -267,7 +267,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('location.addresses item.address is of type object', () => {
             const address = new helpers.AddressWithTypeJSONBuilder().withAddress(null).build();
-            const location = new helpers.LocationJSONBuilder().addressWithType([address]).build();
+            const location = new helpers.LocationJSONBuilder().withAddressesWithType([address]).build();
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
             ]);
