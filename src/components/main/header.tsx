@@ -3,13 +3,14 @@ import { Header, Text, Left, Button, Icon, Right } from 'native-base';
 import { Trans } from '@lingui/react';
 import { CurrentLocale } from '../language_switcher/current_locale';
 import { Locale } from '../../locale';
-import { I18nManager, StatusBar, Platform } from 'react-native';
+import { I18nManager } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
 import { routePathWithoutParameter, Routes, goBack, goToRouteWithoutParameter } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
 import * as R from 'ramda';
+import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -93,8 +94,4 @@ const HelpButton: React.StatelessComponent<ButtonActions> = (props: ButtonAction
         <Icon name='help-circle' style={[{ color: colors.white }]} />
         <Text style={[{ color: colors.white }]}><Trans>NEED HELP?</Trans></Text>
     </Button>
-);
-
-const getStatusBarHeightForPlatform = (): number => (
-    Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
 );

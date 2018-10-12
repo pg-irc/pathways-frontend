@@ -4,11 +4,12 @@ import { View, Text, Button, Content } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { colors } from '../../application/styles';
 import { emptyComponent } from '../empty_component/empty_component';
-import { DismissNewlyAddedTasksPopupAction } from '../../stores/questionnaire/actions';
 import { Id } from '../../stores/tasks';
-import { SaveTheseTasksToMyPlanAction } from '../../stores/tasks/actions';
 import { Trans } from '@lingui/react';
+import { DismissNewlyAddedTasksPopupAction } from '../../stores/questionnaire/actions';
+import { SaveTheseTasksToMyPlanAction } from '../../stores/tasks/actions';
 import * as R from 'ramda';
+import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 
 export interface NewlyRecommendedTasksComponentProps {
     readonly showQuestionnairePopup: boolean;
@@ -31,28 +32,44 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
     const taskIds = R.map((task: Task): Id => task.id, tasks);
     const saveTasksToMyPlan = (): SaveTheseTasksToMyPlanAction => props.saveToMyPlan(taskIds);
 
-    return <View style={styles.component}>
-        <Text style={styles.heading}><Trans>New tasks</Trans></Text>
-        <Text style={styles.intro}><Trans>Based on the answers you just gave, we have found these tasks that may be of interest to you</Trans></Text>
-        <Content padder style={styles.taskList}>
-            {R.map((task: Task) => (
-                <Text key={task.id} style={styles.task}>
-                    {task.title}
+    return <View style={styles.fadeout}>
+        <View style={styles.dialog}>
+            <Text style={styles.heading}><Trans>New tasks</Trans></Text>
+            <Text style={styles.intro}>
+                <Trans>Based on the answers you just gave, we have found these tasks that may be of interest to you</Trans>
+            </Text>
+            <Content padder style={styles.taskList}>
+                {R.map((task: Task) => (
+                    <Text key={task.id} style={styles.task}>
+                        {task.title}
+                    </Text>
+                ), tasks)}
+            </Content>
+            <Button style={styles.button} onPress={saveTasksToMyPlan}>
+                <Text style={styles.buttonText}>
+                    <Trans>Add these tasks to My Plan</Trans>
                 </Text>
-            ), tasks)}
-        </Content>
-        <Button style={styles.button} onPress={saveTasksToMyPlan}>
-            <Text style={styles.buttonText}><Trans>Add these tasks to My Plan</Trans></Text>
-        </Button>
-        <Button style={styles.button} onPress={props.dismissPopup}>
-            <Text style={styles.buttonText}><Trans>Close, do not add tasks to My Plan</Trans></Text>
-        </Button>
-    </View >;
+            </Button>
+            <Button style={styles.button} onPress={props.dismissPopup}>
+                <Text style={styles.buttonText}>
+                    <Trans>Close, do not add tasks to My Plan</Trans>
+                </Text>
+            </Button>
+        </View >
+    </View>;
 };
 
 const styles = StyleSheet.create({
-    component: {
-        backgroundColor: colors.lightGrey,
+    fadeout: {
+        backgroundColor: colors.darkGreyWithAlpha,
+        position: 'absolute',
+        bottom: 0,
+        top: getStatusBarHeightForPlatform(),
+        left: 0,
+        right: 0,
+    },
+    dialog: {
+        backgroundColor: colors.lighterGrey,
         padding: 10,
         position: 'absolute',
         bottom: 100,
