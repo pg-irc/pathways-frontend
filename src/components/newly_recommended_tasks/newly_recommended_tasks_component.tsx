@@ -3,11 +3,12 @@ import { Task } from '../../selectors/tasks/task';
 import { View, Text, Button, Content } from 'native-base';
 import { StyleSheet } from 'react-native';
 import { colors } from '../../application/styles';
-import * as R from 'ramda';
 import { emptyComponent } from '../empty_component/empty_component';
 import { DismissNewlyAddedTasksPopupAction } from '../../stores/questionnaire/actions';
 import { Id } from '../../stores/tasks';
 import { SaveTheseTasksToMyPlanAction } from '../../stores/tasks/actions';
+import { Trans } from '@lingui/react';
+import * as R from 'ramda';
 
 export interface NewlyRecommendedTasksComponentProps {
     readonly showQuestionnairePopup: boolean;
@@ -31,8 +32,8 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
     const saveTasksToMyPlan = (): SaveTheseTasksToMyPlanAction => props.saveToMyPlan(taskIds);
 
     return <View style={styles.component}>
-        <Text style={styles.heading}>New Tasks</Text>
-        <Text style={styles.intro}>Based on the answers you just gave, we have found these tasks that may be of interest to you</Text>
+        <Text style={styles.heading}><Trans>New tasks</Trans></Text>
+        <Text style={styles.intro}><Trans>Based on the answers you just gave, we have found these tasks that may be of interest to you</Trans></Text>
         <Content padder style={styles.taskList}>
             {R.map((task: Task) => (
                 <Text key={task.id} style={styles.task}>
@@ -41,10 +42,10 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
             ), tasks)}
         </Content>
         <Button style={styles.button} onPress={saveTasksToMyPlan}>
-            <Text style={styles.buttonText}>Add these tasks to My Plan</Text>
+            <Text style={styles.buttonText}><Trans>Add these tasks to My Plan</Trans></Text>
         </Button>
         <Button style={styles.button} onPress={props.dismissPopup}>
-            <Text style={styles.buttonText}>Close, do not add tasks to My Plan</Text>
+            <Text style={styles.buttonText}><Trans>Close, do not add tasks to My Plan</Trans></Text>
         </Button>
     </View >;
 };
