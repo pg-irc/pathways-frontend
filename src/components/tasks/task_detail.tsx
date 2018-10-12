@@ -29,6 +29,7 @@ export interface TaskDetailActions {
     readonly toggleCompleted: (taskId: TaskId) => ToggleCompletedAction;
     readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
     readonly removeFromSavedList: (taskId: TaskId) => RemoveFromSavedListAction;
+    readonly requestUpdateOfServicesForTask: (task: Task) => UpdateTaskServicesAsync.Request;
 }
 
 export interface TaskServiceUpdater {
