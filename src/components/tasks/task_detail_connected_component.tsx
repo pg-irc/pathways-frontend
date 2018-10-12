@@ -13,8 +13,8 @@ import { Task } from '../../selectors/tasks/task';
 import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
 import { selectTaskServices } from '../../selectors/services/select_task_services';
 
-const mapStateToProps = (store: Store, ownProps: RouterProps): TaskDetailProps => {
-    const task: Task = selectCurrentTask(store, ownProps);
+const mapStateToProps = (store: Store, route: RouterProps): TaskDetailProps => {
+    const task: Task = selectCurrentTask(store, route);
     return {
         task: task,
         savedTasksIdList: pickSavedTaskIds(store),
@@ -26,17 +26,17 @@ const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskDetailActions => ({
     addToSavedList: (taskId: TaskId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
     removeFromSavedList: (taskId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
     toggleCompleted: (taskId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(taskId)),
-    requestUpdateOfServicesForTask: (task: Task): UpdateTaskServicesAsync.Request => {
-        return dispatch(updateTaskServicesAsync.request(task.id, task.serviceQuery));
-    },
+    requestUpdateOfServicesForTask: (task: Task): UpdateTaskServicesAsync.Request => (
+        dispatch(updateTaskServicesAsync.request(task.id, task.serviceQuery))
+    ),
 });
 
 type ComponentProps = TaskDetailProps & TaskDetailActions & TaskServiceUpdater;
 
-const mergeProps = (stateProps: TaskDetailProps, dispatchProps: TaskDetailActions): ComponentProps => ({
-    ...stateProps, ...dispatchProps,
+const mergeProps = (props: TaskDetailProps, actions: TaskDetailActions): ComponentProps => ({
+    ...props, ...actions,
     requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
-        return dispatchProps.requestUpdateOfServicesForTask(stateProps.task);
+        return actions.requestUpdateOfServicesForTask(props.task);
     },
 });
 
