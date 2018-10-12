@@ -240,10 +240,29 @@ describe('questionnaire reducer', () => {
                 newStore = store.reducer(storeWithPopupNeeded, dismissNewlyAddedTasksPopup());
                 expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.NotInQuestionnairePage);
             });
+
+            it('should clear old answers when dismissing popup', () => {
+                const storeWithPopupNeeded = new ValidStoreBuilder().
+                    withState(QuestionnaireRouteState.ShowQuestionnairePopup).
+                    withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
+                    build();
+                newStore = store.reducer(storeWithPopupNeeded, dismissNewlyAddedTasksPopup());
+                expect(toValidOrThrow(newStore).oldAnswers).toEqual({});
+            });
+
             it('should set the state to NotInQuestionnaire when saving all tasks', () => {
                 const storeWithPopupNeeded = new ValidStoreBuilder().withState(QuestionnaireRouteState.ShowQuestionnairePopup).build();
                 newStore = store.reducer(storeWithPopupNeeded, saveTheseTasksToMyPlan([]));
                 expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.NotInQuestionnairePage);
+            });
+
+            it('should clear old answers when saving all tasks', () => {
+                const storeWithPopupNeeded = new ValidStoreBuilder().
+                    withState(QuestionnaireRouteState.ShowQuestionnairePopup).
+                    withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
+                    build();
+                newStore = store.reducer(storeWithPopupNeeded, saveTheseTasksToMyPlan([]));
+                expect(toValidOrThrow(newStore).oldAnswers).toEqual({});
             });
         });
     });

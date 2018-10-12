@@ -19,6 +19,7 @@ export const reduceValidStore = (store: ValidQuestionnaireStore, action?: Questi
         case constants.SAVE_THESE_TASKS_TO_MY_PLAN:
             return new ValidQuestionnaireStore({
                 ...store,
+                oldAnswers: {},
                 questionnaireRouteState: QuestionnaireRouteState.NotInQuestionnairePage,
             });
 
