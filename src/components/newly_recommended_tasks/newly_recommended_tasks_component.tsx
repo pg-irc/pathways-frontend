@@ -25,9 +25,12 @@ type Props = NewlyRecommendedTasksComponentProps & NewlyRecommendedTasksComponen
 
 export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
 
-    if (!props.showQuestionnairePopup || R.isEmpty(props.newlyRecommendedTasks)) {
+    const showPopup = props.showQuestionnairePopup && R.not(R.isEmpty(props.newlyRecommendedTasks));
+
+    if (!showPopup) {
         return emptyComponent();
     }
+
     const tasks = props.newlyRecommendedTasks;
     const taskIds = R.map((task: Task): Id => task.id, tasks);
     const saveTasksToMyPlan = (): SaveTheseTasksToMyPlanAction => props.saveToMyPlan(taskIds);
@@ -45,16 +48,18 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
                     </Text>
                 ), tasks)}
             </Content>
-            <Button style={styles.button} onPress={saveTasksToMyPlan}>
-                <Text style={styles.buttonText}>
-                    <Trans>Add these tasks to My Plan</Trans>
-                </Text>
-            </Button>
-            <Button style={styles.button} onPress={props.dismissPopup}>
-                <Text style={styles.buttonText}>
-                    <Trans>Close, do not add tasks to My Plan</Trans>
-                </Text>
-            </Button>
+            <View style={styles.buttonView}>
+                <Button style={styles.button} onPress={saveTasksToMyPlan}>
+                    <Text style={styles.buttonText}>
+                        <Trans>Add these tasks to My Plan</Trans>
+                    </Text>
+                </Button>
+                <Button style={styles.button} onPress={props.dismissPopup}>
+                    <Text style={styles.buttonText}>
+                        <Trans>Close, do not add tasks to My Plan</Trans>
+                    </Text>
+                </Button>
+            </View >
         </View >
     </View>;
 };
@@ -63,8 +68,8 @@ const styles = StyleSheet.create({
     fadeout: {
         backgroundColor: colors.darkGreyWithAlpha,
         position: 'absolute',
-        bottom: 0,
         top: getStatusBarHeightForPlatform(),
+        bottom: 0,
         left: 0,
         right: 0,
     },
@@ -72,8 +77,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.lighterGrey,
         padding: 10,
         position: 'absolute',
-        bottom: 100,
-        top: 100,
+        top: 50,
+        bottom: 50,
         left: 20,
         right: 20,
     },
@@ -97,9 +102,10 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
     buttonView: {
+        height: 100,
         flexDirection: 'column',
         alignItems: 'stretch',
-        padding: 10,
+        justifyContent: 'space-between',
     },
     button: {
         alignSelf: 'stretch',
