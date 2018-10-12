@@ -1,14 +1,14 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import * as R from 'ramda';
 import Accordion from 'react-native-collapsible/Accordion';
 import { Content, View, Text, ListItem } from 'native-base';
 import * as selector from '../../selectors/questionnaire/question';
 import { Question } from './question';
-import { applicationStyles, colors, values } from '../../application/styles';
+import { applicationStyles, colors } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
 import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
+import { FloatingTaskCounter } from './floating_task_counter';
 
 export interface QuestionnaireProps {
     readonly questionnaire: ReadonlyArray<selector.Question>;
@@ -43,16 +43,10 @@ export const Component: React.StatelessComponent<Props> = (props: Props): JSX.El
                 duration={400}
             />
         </Content>
-        <View style={styles.floatingCount}>
-            <Text style={[styles.floatingText, { fontSize: 20 }]}>
-                {props.recommendedTaskCount} <Text style={[styles.floatingText, { fontSize: values.smallTextSize }]}>
-                    {props.recommendedTaskCount === 1 ? <Trans>task</Trans> : <Trans>tasks</Trans>}
-                </Text>
-            </Text>
-            <Text style={[styles.floatingText, { fontSize: values.smallTextSize }]}>
-                <Trans>recommended</Trans>
-            </Text>
-        </View>
+        <FloatingTaskCounter
+            taskCount={props.recommendedTaskCount}
+            history={props.history}
+        />
     </View>
 );
 
@@ -115,21 +109,3 @@ const renderHeader = R.curry((props: Props, section: AccordionSection, _index: n
 const renderContent = (section: AccordionSection): JSX.Element => (
     section.content
 );
-
-const styles = StyleSheet.create({
-    floatingCount: {
-        backgroundColor: colors.darkGrey,
-        padding: 5,
-        flex: 1,
-        position: 'absolute',
-        bottom: 20,
-        right: 0,
-        justifyContent: 'center',
-        borderBottomLeftRadius: 10,
-        borderTopLeftRadius: 10,
-    },
-    floatingText: {
-        color: colors.white,
-        textAlign: 'center',
-    },
-});
