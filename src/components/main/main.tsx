@@ -9,6 +9,7 @@ import { ConnectedLanguageSwitcher } from '../language_switcher/connected_langua
 import { RouterProps } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
+import { TasksAddedConnectedComponent } from '../tasks_added/tasks_added_connected_component';
 
 interface DrawerState {
     readonly isDrawerOpen: boolean;
@@ -45,6 +46,7 @@ export class Component extends React.Component<MainComponentProps, DrawerState> 
                     <HeaderComponent onLanguageSelect={this.openDrawer} {...this.props} />
                     <MainPageSwitcherComponent />
                     <NotificationsConnectedComponent {...this.props} />
+                    <TasksAddedConnectedComponent />
                     <FooterComponent {...this.props} />
                 </Container>
             </Drawer>
