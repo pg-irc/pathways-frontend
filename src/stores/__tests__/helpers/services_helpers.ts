@@ -54,107 +54,44 @@ export class PhoneNumberBuilder {
 }
 
 export class AddressBuilder {
-    static buildWithType(): AddressWithType {
-        return new AddressBuilder().buildWithType();
-    }
-
     type: string = aString();
-    address: Address;
+
+    address: string = aString();
+    city: string = aString();
+    state_province: string = aString();
+    postal_code: string = aString();
+    country: string = aString();
 
     withType(type: string): AddressBuilder {
         this.type = type;
         return this;
     }
 
-    withAddress(address: Address): AddressBuilder {
-        this.address = address;
-        return this;
+    build(): Address {
+        return {
+            address: this.address,
+            city: this.city,
+            state_province: this.state_province,
+            postal_code: this.postal_code,
+            country: this.country,
+        };
     }
 
     buildWithType(): AddressWithType {
         return {
             type: this.type,
-            address:  this.address,
+            address: this.build(),
         };
     }
-
-    // build(): Address {
-    //     const physicalAddressWithType = new AddressBuilder().buildWithType();
-    //     return {
-    //         // id: this.id,
-    //         address: physicalAddressWithType.address.address,
-    //         city: physicalAddressWithType.address.city,
-    //         state_province: physicalAddressWithType.address.state_province,
-    //         postal_code: physicalAddressWithType.address.postal_code,
-    //         country: physicalAddressWithType.address.country,
-            
-    //     };
-    // }
-    
 }
-
-// export class AddressBuilder {
-//     static buildArray(): Address {
-//         return new AddressBuilder().build();
-//     }
-
-//     id: string = aString();
-//     address: string = aString();
-//     city: string = aString();
-//     state_province: string = aString();
-//     postal_code: string = aString();
-//     country: string = aString();
-
-//     withId(id: string): AddressBuilder {
-//         this.id = id;
-//         return this;
-//     }
-
-//     withAddress(address: string): AddressBuilder {
-//         this.address = address;
-//         return this;
-//     }
-
-//     withCity(city: string): AddressBuilder {
-//         this.city = city;
-//         return this;
-//     }
-
-//     withStateProvince(state_province: string): AddressBuilder {
-//         this.state_province = state_province;
-//         return this;
-//     }
-
-//     withPostalCode(postal_code: string): AddressBuilder {
-//         this.postal_code = postal_code;
-//         return this;
-//     }
-
-//     withCountry(country: string): AddressBuilder {
-//         this.country = country;
-//         return this;
-//     }
-
-//     build(): Address {
-//         return {
-//             // id: this.id,
-//             address: this.address,
-//             city: this.city,
-//             state_province: this.state_province,
-//             postal_code: this.postal_code,
-//             country: this.country,
-            
-//         };
-//     }
-// }
 
 export class ServiceBuilder {
     id: Id = aString();
     name: string = aString();
     description: string = aString();
     phoneNumbers: ReadonlyArray<PhoneNumber> = PhoneNumberBuilder.buildArray();
-    physicalAddressWithType: AddressWithType = AddressBuilder.buildWithType();
-    postalAddressWithType: AddressWithType = AddressBuilder.buildWithType();
+    physicalAddress: Address = new AddressBuilder().build();
+    postalAddress: Address = new AddressBuilder().build();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -176,13 +113,13 @@ export class ServiceBuilder {
         return this;
     }
 
-    withPhysicalAddress(addressWithType: AddressWithType): ServiceBuilder {
-        this.physicalAddressWithType = addressWithType;
+    withPhysicalAddress(address: Address): ServiceBuilder {
+        this.physicalAddress = address;
         return this;
     }
 
-    withPostalAddress(addressWithType: AddressWithType): ServiceBuilder {
-        this.postalAddressWithType = addressWithType;
+    withPostalAddress(address: Address): ServiceBuilder {
+        this.postalAddress = address;
         return this;
     }
 
@@ -192,8 +129,8 @@ export class ServiceBuilder {
             name: this.name,
             description: this.description,
             phoneNumbers: this.phoneNumbers,
-            physicalAddress: this.physicalAddressWithType.address,
-            postalAddress: this.postalAddressWithType.address
+            physicalAddress: this.physicalAddress,
+            postalAddress: this.postalAddress,
         };
     }
 }

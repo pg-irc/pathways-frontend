@@ -14,15 +14,14 @@ interface Props {
 export function ServiceComponent(props: Props): JSX.Element {
     const mapWithIndex = R.addIndex(R.map);
 
-    
-    const capitalizeFirstLetter = (phoneType: String): string => (
-        `${phoneType.charAt(0).toUpperCase()}${phoneType.slice(1)}`
+    const capitalizeFirstLetter = (phoneType: string): string => (
+        phoneType.charAt(0).toUpperCase() + phoneType.slice(1)
     );
 
     const getAddress = (address: Address): string => (
-        `${address===null? '': address.address}`
+        address === null ? '' : address.address
     );
-      
+
     return (
         <View>
             <Text style={[
@@ -31,9 +30,7 @@ export function ServiceComponent(props: Props): JSX.Element {
             ]}>
                 {props.service.name}
             </Text>
-            {/* <Text>{address}</Text> */}
             <Text>{getAddress(props.service.physicalAddress)}</Text>
-            {/* Contact */}
             {
                 mapWithIndex((phoneNumber: PhoneNumber, index: number) =>
                     <View key={index}>
@@ -42,7 +39,7 @@ export function ServiceComponent(props: Props): JSX.Element {
                                 {capitalizeFirstLetter(phoneNumber.type)}
                             </Text> <TextWithPhoneLinks text={phoneNumber.phoneNumber} />
                         </Text>
-                            
+
                     </View>, props.service.phoneNumbers)
             }
         </View>

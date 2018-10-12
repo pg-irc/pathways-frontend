@@ -7,9 +7,9 @@ interface PhoneNumberJSON {
 
 interface AddressJSON {
     readonly address?: string | null;
-    readonly city?: String | null;
+    readonly city?: string | null;
     readonly state_province?: string | null;
-    readonly postal_code?: String | null;
+    readonly postal_code?: string | null;
     readonly country?: string | null;
 }
 
@@ -262,11 +262,11 @@ export class LocationJSONBuilder {
     }
 
     buildWithoutPhoneNumbers(): LocationJSON {
-        return {addresses: this.addresses};
+        return { addresses: this.addresses };
     }
 
-    buildWithoutAddresseses(): LocationJSON {
-        return {phone_numbers: this.phone_numbers};
+    buildWithoutAddresses(): LocationJSON {
+        return { phone_numbers: this.phone_numbers };
     }
 }
 

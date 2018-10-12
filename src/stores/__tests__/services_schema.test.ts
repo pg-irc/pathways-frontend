@@ -16,7 +16,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('validation passes on array of ServiceAtLocationJSON items with an additional property', () => {
             const validator = servicesAtLocationValidator([
-                {...new helpers.ServiceAtLocationJSONBuilder().build(), anotherProp: aString()},
+                { ...new helpers.ServiceAtLocationJSONBuilder().build(), anotherProp: aString() },
             ]);
             expect(validator.isValid).toBe(false);
         });
@@ -130,7 +130,7 @@ describe('schema for services_at_location endpoint', () => {
         });
 
         test('location.addresses is required', () => {
-            const location = new helpers.LocationJSONBuilder().buildWithoutAddresseses();
+            const location = new helpers.LocationJSONBuilder().buildWithoutAddresses();
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
             ]);
@@ -158,9 +158,9 @@ describe('schema for services_at_location endpoint', () => {
 
         test('location.phone_numbers can be empty array', () => {
             const location = new helpers.LocationJSONBuilder()
-            .withPhoneNumbers([])
-            .addressWithType([])
-            .build();
+                .withPhoneNumbers([])
+                .addressWithType([])
+                .build();
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
             ]);

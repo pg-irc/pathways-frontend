@@ -54,7 +54,7 @@ const address = {
     },
     "required": ["id", "address", "city", "state_province", "postal_code", "country"]
 };
-const fullAddress = {
+const addressWithType = {
     "type": "object",
     "properties": {
         "address_type": {
@@ -66,7 +66,7 @@ const fullAddress = {
 };
 const addressArray = {
     "type": "array",
-    "items": fullAddress
+    "items": addressWithType
 };
 const location = {
     "type": "object",

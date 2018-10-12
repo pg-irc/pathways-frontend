@@ -6,7 +6,6 @@ export interface PhoneNumber {
 }
 
 export interface Address {
-    // readonly id: string;
     readonly address: string;
     readonly city: string;
     readonly state_province: string;
