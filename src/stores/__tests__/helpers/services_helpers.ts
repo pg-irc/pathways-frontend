@@ -2,7 +2,7 @@
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
 import { Id as TaskId } from '../../tasks';
-import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber } from '../../services/types';
+import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber, Address, AddressWithType } from '../../services/types';
 
 
 export function buildNormalizedServices(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): ServiceStore {
@@ -53,11 +53,45 @@ export class PhoneNumberBuilder {
     }
 }
 
+export class AddressBuilder {
+    type: string = aString();
+
+    address: string = aString();
+    city: string = aString();
+    state_province: string = aString();
+    postal_code: string = aString();
+    country: string = aString();
+
+    withType(type: string): AddressBuilder {
+        this.type = type;
+        return this;
+    }
+
+    build(): Address {
+        return {
+            address: this.address,
+            city: this.city,
+            state_province: this.state_province,
+            postal_code: this.postal_code,
+            country: this.country,
+        };
+    }
+
+    buildWithType(): AddressWithType {
+        return {
+            type: this.type,
+            address: this.build(),
+        };
+    }
+}
+
 export class ServiceBuilder {
     id: Id = aString();
     name: string = aString();
     description: string = aString();
     phoneNumbers: ReadonlyArray<PhoneNumber> = PhoneNumberBuilder.buildArray();
+    physicalAddress: Address = new AddressBuilder().build();
+    postalAddress: Address = new AddressBuilder().build();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -79,12 +113,24 @@ export class ServiceBuilder {
         return this;
     }
 
+    withPhysicalAddress(address: Address): ServiceBuilder {
+        this.physicalAddress = address;
+        return this;
+    }
+
+    withPostalAddress(address: Address): ServiceBuilder {
+        this.postalAddress = address;
+        return this;
+    }
+
     build(): Service {
         return {
             id: this.id,
             name: this.name,
             description: this.description,
             phoneNumbers: this.phoneNumbers,
+            physicalAddress: this.physicalAddress,
+            postalAddress: this.postalAddress,
         };
     }
 }

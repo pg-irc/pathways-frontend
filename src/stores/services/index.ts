@@ -3,10 +3,10 @@ import * as constants from '../../application/constants';
 import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import { Action } from 'redux';
-import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON } from './types';
+import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressJSON, AddressWithType, Address } from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
-export { Id, Service, ServiceStore, PhoneNumber };
+export { Id, Service, ServiceStore, PhoneNumber, AddressWithType, Address };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
 export { serviceAtLocation, serviceAtLocationArray };
 
@@ -15,11 +15,31 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
          type: phoneNumber.phone_number_type,
          phoneNumber: phoneNumber.phone_number,
      }), data.location.phone_numbers);
+
+    const addressesWithType = R.map((address: ValidatedAddressJSON): AddressWithType => ({
+        type: address.address_type,
+        address: address.address,
+    }), data.location.addresses);
+
+    const ADDRESS_TYPE_PHYSICAL = "physical_address";
+    const ADDRESS_TYPE_POSTAL = "postal_address";
+    var physicalAddress: Address = null;
+    var postalAddress: Address = null;
+    addressesWithType.forEach(element => {
+        if (element.type.match(ADDRESS_TYPE_PHYSICAL)) {
+            physicalAddress = element.address;
+        }else if (element.type.match(ADDRESS_TYPE_POSTAL)) {
+            postalAddress = element.address;
+        }
+    });
+
     return {
         id: data.service.id,
         name: data.service.name,
         description: data.service.description,
         phoneNumbers: phoneNumbers,
+        physicalAddress: physicalAddress,
+        postalAddress: postalAddress,
     };
 }
 

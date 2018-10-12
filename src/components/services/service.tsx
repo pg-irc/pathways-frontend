@@ -1,11 +1,10 @@
 import React from 'react';
 import * as R from 'ramda';
 import { applicationStyles, colors } from '../../application/styles';
-import { Service } from '../../stores/services';
+import { Service, Address } from '../../stores/services';
 import { View } from 'native-base';
 import { Text } from 'react-native';
 import { PhoneNumber } from '../../stores/services';
-import { Trans } from '@lingui/react';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 
 interface Props {
@@ -14,6 +13,15 @@ interface Props {
 
 export function ServiceComponent(props: Props): JSX.Element {
     const mapWithIndex = R.addIndex(R.map);
+
+    const capitalizeFirstLetter = (phoneType: string): string => (
+        phoneType.charAt(0).toUpperCase() + phoneType.slice(1)
+    );
+
+    const getAddress = (address: Address): string => (
+        address === null ? '' : address.address
+    );
+
     return (
         <View>
             <Text style={[
@@ -22,19 +30,16 @@ export function ServiceComponent(props: Props): JSX.Element {
             ]}>
                 {props.service.name}
             </Text>
+            <Text>{getAddress(props.service.physicalAddress)}</Text>
             {
                 mapWithIndex((phoneNumber: PhoneNumber, index: number) =>
                     <View key={index}>
                         <Text>
                             <Text style={[{ color: colors.darkGrey }]}>
-                                <Trans>Phone:</Trans>
+                                {capitalizeFirstLetter(phoneNumber.type)}
                             </Text> <TextWithPhoneLinks text={phoneNumber.phoneNumber} />
                         </Text>
-                        <Text>
-                            <Text style={[{ color: colors.darkGrey }]}>
-                                <Trans>Phone Type:</Trans>
-                            </Text> {phoneNumber.type}
-                        </Text>
+
                     </View>, props.service.phoneNumbers)
             }
         </View>

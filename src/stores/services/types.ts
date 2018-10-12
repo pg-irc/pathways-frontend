@@ -5,11 +5,26 @@ export interface PhoneNumber {
     readonly phoneNumber: string;
 }
 
+export interface Address {
+    readonly address: string;
+    readonly city: string;
+    readonly state_province: string;
+    readonly postal_code: string;
+    readonly country: string;
+}
+
+export interface AddressWithType {
+    readonly type: string;
+    readonly address: Address;
+}
+
 export interface Service {
     readonly id: Id;
     readonly name: string;
     readonly description: string;
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
+    readonly physicalAddress: Address;
+    readonly postalAddress: Address;
 }
 
 export interface TaskServices {
@@ -36,6 +51,11 @@ export interface ValidatedPhoneNumberJSON {
     readonly phone_number: string;
 }
 
+export interface ValidatedAddressJSON {
+    readonly address_type: string;
+    readonly address: Address;
+}
+
 export interface ValidatedServiceJSON {
     readonly id: string;
     readonly name: string;
@@ -44,6 +64,7 @@ export interface ValidatedServiceJSON {
 
 export interface ValidatedLocationJSON {
     readonly phone_numbers: ReadonlyArray<ValidatedPhoneNumberJSON>;
+    readonly addresses: ReadonlyArray<ValidatedAddressJSON>;
 }
 
 export interface ValidatedServiceAtLocationJSON {
