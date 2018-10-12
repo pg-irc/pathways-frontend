@@ -11,14 +11,14 @@ describe('schema for services_at_location endpoint', () => {
             const validator = servicesAtLocationValidator([
                 new helpers.ServiceAtLocationJSONBuilder().build(),
             ]);
-            expect(validator.isValid).toBe(false);
+            expect(validator.isValid).toBe(true);
         });
 
         test('validation passes on array of ServiceAtLocationJSON items with an additional property', () => {
             const validator = servicesAtLocationValidator([
                 { ...new helpers.ServiceAtLocationJSONBuilder().build(), anotherProp: aString() },
             ]);
-            expect(validator.isValid).toBe(false);
+            expect(validator.isValid).toBe(true);
         });
 
         test('validation passes on empty array', () => {

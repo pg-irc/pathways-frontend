@@ -1,11 +1,13 @@
 // tslint:disable:no-class readonly-keyword no-expression-statement no-this no-let
-import { aString } from '../../../application/__tests__/helpers/random_test_values';
+import { aString, anInteger } from '../../../application/__tests__/helpers/random_test_values';
+
 interface PhoneNumberJSON {
     readonly phone_number_type?: string | null;
     readonly phone_number?: string | null;
 }
 
 interface AddressJSON {
+    readonly id?: number | null;
     readonly address?: string | null;
     readonly city?: string | null;
     readonly state_province?: string | null;
@@ -69,6 +71,7 @@ export class PhoneNumberJSONBuilder {
 }
 
 export class AddressJSONBuilder {
+    id: number = anInteger();
     address: string | null = aString();
     city: string | null = aString();
     state_province: string | null = aString();
@@ -95,7 +98,6 @@ export class AddressJSONBuilder {
         return this;
     }
 
-
     withCountry(country: string | null): AddressJSONBuilder {
         this.country = country;
         return this;
@@ -103,11 +105,12 @@ export class AddressJSONBuilder {
 
     build(): AddressJSON {
         return {
+            id: this.id,
             address: this.address,
             city: this.city,
             state_province: this.state_province,
             postal_code: this.postal_code,
-            country: this.country
+            country: this.country,
         };
     }
 
@@ -116,7 +119,7 @@ export class AddressJSONBuilder {
             city: this.city,
             state_province: this.state_province,
             postal_code: this.postal_code,
-            country: this.country
+            country: this.country,
         };
     }
 
@@ -125,7 +128,7 @@ export class AddressJSONBuilder {
             address: this.address,
             state_province: this.state_province,
             postal_code: this.postal_code,
-            country: this.country
+            country: this.country,
         };
     }
 
@@ -134,7 +137,7 @@ export class AddressJSONBuilder {
             address: this.address,
             city: this.city,
             postal_code: this.postal_code,
-            country: this.country
+            country: this.country,
         };
     }
 
@@ -143,7 +146,7 @@ export class AddressJSONBuilder {
             address: this.address,
             city: this.city,
             state_province: this.state_province,
-            country: this.country
+            country: this.country,
         };
     }
     buildWithoutCountry(): AddressJSON {
@@ -179,13 +182,13 @@ export class AddressWithTypeJSONBuilder {
 
     buildWithoutAddressType(): AddressWithTypeJSON {
         return {
-            address: this.address
+            address: this.address,
         };
     }
 
     buildWithoutAddress(): AddressWithTypeJSON {
         return {
-            address_type: this.address_type
+            address_type: this.address_type,
         };
     }
 }
