@@ -1,4 +1,4 @@
-import { ValidQuestionnaireStore, Answer, State } from '../../fixtures/types/questionnaire';
+import { ValidQuestionnaireStore, Answer, QuestionnaireRouteState } from '../../fixtures/types/questionnaire';
 import { QuestionnaireAction } from './actions';
 import { QuestionnaireStore, LoadingQuestionnaireStore } from './stores';
 import { RouteChangedAction } from '../router_actions';
@@ -36,18 +36,18 @@ const setRouteState = (store: ValidQuestionnaireStore, action: RouteChangedActio
 
     const isNewRouteToQuestionnaire = action.payload.location.pathname === routePathWithoutParameter(Routes.Questionnaire);
 
-    if (store.state === State.NotInQuestionnaire && isNewRouteToQuestionnaire) {
+    if (store.questionnaireRouteState === QuestionnaireRouteState.NotInQuestionnairePage && isNewRouteToQuestionnaire) {
         return new ValidQuestionnaireStore({
             ...store,
             oldAnswers: store.answers,
-            state: State.InQuestionnaire,
+            questionnaireRouteState: QuestionnaireRouteState.InQuestionnairePage,
         });
     }
 
-    if (store.state === State.InQuestionnaire && !isNewRouteToQuestionnaire) {
+    if (store.questionnaireRouteState === QuestionnaireRouteState.InQuestionnairePage && !isNewRouteToQuestionnaire) {
         return new ValidQuestionnaireStore({
             ...store,
-            state: State.PopupNeeded,
+            questionnaireRouteState: QuestionnaireRouteState.ShowQuestionnairePopup,
         });
     }
 

@@ -1,7 +1,7 @@
 import { emptyComponent } from '../empty_component/empty_component';
 
 export interface TasksAddedProps {
-    readonly isPopupNeeded: boolean;
+    readonly showQuestionnairePopup: boolean;
 }
 
 export interface TasksAddedActions {

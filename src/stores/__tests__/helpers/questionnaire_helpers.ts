@@ -6,21 +6,22 @@ import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 import { ValidQuestionnaireStore, LoadingQuestionnaireStore } from '../../questionnaire/stores';
-import { State } from '../../../fixtures/types/questionnaire';
+import { QuestionnaireRouteState } from '../../../fixtures/types/questionnaire';
 
 export class ValidStoreBuilder {
     activeQuestion: string = aString();
     questionsBuilders: ReadonlyArray<QuestionBuilder> = [];
     oldAnswers: store.AnswersMap = {};
-    state: State = aBoolean() ? State.NotInQuestionnaire : State.InQuestionnaire;
+    questionnaireRouteState: QuestionnaireRouteState =
+        aBoolean() ? QuestionnaireRouteState.NotInQuestionnairePage : QuestionnaireRouteState.InQuestionnairePage;
 
     withQuestions(questionsBuilders: ReadonlyArray<QuestionBuilder>): ValidStoreBuilder {
         this.questionsBuilders = questionsBuilders;
         return this;
     }
 
-    withState(state: State): ValidStoreBuilder {
-        this.state = state;
+    withState(questionnaireRouteState: QuestionnaireRouteState): ValidStoreBuilder {
+        this.questionnaireRouteState = questionnaireRouteState;
         return this;
     }
 
@@ -35,7 +36,7 @@ export class ValidStoreBuilder {
             questions: buildQuestionMap(this.questionsBuilders),
             answers: buildAnswerMap(this.questionsBuilders),
             oldAnswers: this.oldAnswers,
-            state: this.state,
+            questionnaireRouteState: this.questionnaireRouteState,
         });
     }
 }

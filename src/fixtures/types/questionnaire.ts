@@ -26,10 +26,10 @@ export interface AnswersMap {
     readonly [key: string]: Answer;
 }
 
-export enum State {
-    InQuestionnaire,
-    NotInQuestionnaire,
-    PopupNeeded,
+export enum QuestionnaireRouteState {
+    InQuestionnairePage,
+    NotInQuestionnairePage,
+    ShowQuestionnairePopup,
 }
 
 export interface IStore {
@@ -37,7 +37,7 @@ export interface IStore {
     readonly answers: AnswersMap;
     readonly oldAnswers: AnswersMap;
     readonly activeQuestion: Id;
-    readonly state: State;
+    readonly questionnaireRouteState: QuestionnaireRouteState;
 }
 
 // tslint:disable:no-class no-this no-expression-statement
@@ -48,11 +48,11 @@ export class ValidQuestionnaireStore {
         this.answers = parameters.answers;
         this.oldAnswers = parameters.oldAnswers;
         this.activeQuestion = parameters.activeQuestion;
-        this.state = parameters.state;
+        this.questionnaireRouteState = parameters.questionnaireRouteState;
     }
     readonly questions: QuestionsMap;
     readonly answers: AnswersMap;
     readonly oldAnswers: AnswersMap;
     readonly activeQuestion: Id;
-    readonly state: State;
+    readonly questionnaireRouteState: QuestionnaireRouteState;
 }

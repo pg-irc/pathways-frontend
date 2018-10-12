@@ -177,7 +177,7 @@ describe('tasks selector', () => {
             incompleteTasks = { [incompleteTask.id]: incompleteTask };
         });
 
-        it('should include a tasks that was not recommended and is recommended', () => {
+        it('should include a task that was not previously recommended but is now recommended', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
@@ -186,7 +186,7 @@ describe('tasks selector', () => {
             expect(result).toEqual([incompleteTask]);
         });
 
-        it('should not include a tasks that was recommended and is recommended', () => {
+        it('should not include a tasks that was previously recommended and is still recommended', () => {
             const oldChosenAnswers = chosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
@@ -195,7 +195,7 @@ describe('tasks selector', () => {
             expect(result).toEqual([]);
         });
 
-        it('should not include a tasks that was not recommended and is not recommended', () => {
+        it('should not include a tasks that was not previously recommended and is still not recommended', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
@@ -204,7 +204,7 @@ describe('tasks selector', () => {
             expect(result).toEqual([]);
         });
 
-        it('should not include a tasks that was recommended and is not recommended', () => {
+        it('should not include a tasks that was previously recommended and is no longer recommended', () => {
             const oldChosenAnswers = chosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
