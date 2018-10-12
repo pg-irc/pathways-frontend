@@ -1,12 +1,12 @@
 import * as R from 'ramda';
 import * as constants from '../../application/constants';
-import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
+import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber, FullAddress } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import { Action } from 'redux';
-import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON } from './types';
+import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressJSON } from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
-export { Id, Service, ServiceStore, PhoneNumber };
+export { Id, Service, ServiceStore, PhoneNumber, FullAddress };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
 export { serviceAtLocation, serviceAtLocationArray };
 
@@ -15,11 +15,18 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
          type: phoneNumber.phone_number_type,
          phoneNumber: phoneNumber.phone_number,
      }), data.location.phone_numbers);
+
+     const fullAddresses = R.map((address: ValidatedAddressJSON): FullAddress => ({
+        type: address.address_type,
+        address: address.address,
+    }), data.location.addresses);
+
     return {
         id: data.service.id,
         name: data.service.name,
         description: data.service.description,
         phoneNumbers: phoneNumbers,
+        fullAddresses: fullAddresses,
     };
 }
 

@@ -5,6 +5,19 @@ interface PhoneNumberJSON {
     readonly phone_number?: string | null;
 }
 
+interface AddressJSON {
+    readonly address?: string | null;
+    readonly city?: String | null;
+    readonly state_province?: string | null;
+    readonly postal_code?: String | null;
+    readonly country?: string | null;
+}
+
+interface FullAddressJSON {
+    readonly address_type?: string | null;
+    readonly address?: AddressJSON | null;
+}
+
 interface ServiceJSON {
     readonly id?: string | null;
     readonly name?: string | null;
@@ -13,6 +26,7 @@ interface ServiceJSON {
 
 interface LocationJSON {
     readonly phone_numbers?: ReadonlyArray<PhoneNumberJSON>;
+    readonly addresses?: ReadonlyArray<FullAddressJSON>;
 }
 
 interface ServiceAtLocationJSON {
@@ -50,6 +64,128 @@ export class PhoneNumberJSONBuilder {
     buildWithoutPhoneNumber(): PhoneNumberJSON {
         return {
             phone_number_type: this.phone_number_type,
+        };
+    }
+}
+
+export class AddressJSONBuilder {
+    address: string | null = aString();
+    city: string | null = aString();
+    state_province: string | null = aString();
+    postal_code: string | null = aString();
+    country: string | null = aString();
+
+    withAddress(address: string | null): AddressJSONBuilder {
+        this.address = address;
+        return this;
+    }
+
+    withCity(city: string | null): AddressJSONBuilder {
+        this.city = city;
+        return this;
+    }
+
+    withStateProvince(stateProvince: string | null): AddressJSONBuilder {
+        this.state_province = stateProvince;
+        return this;
+    }
+
+    withPostalCode(postalCode: string | null): AddressJSONBuilder {
+        this.postal_code = postalCode;
+        return this;
+    }
+
+
+    withCountry(country: string | null): AddressJSONBuilder {
+        this.country = country;
+        return this;
+    }
+
+    build(): AddressJSON {
+        return {
+            address: this.address,
+            city: this.city,
+            state_province: this.state_province,
+            postal_code: this.postal_code,
+            country: this.country
+        };
+    }
+
+    buildWithoutAddress(): AddressJSON {
+        return {
+            city: this.city,
+            state_province: this.state_province,
+            postal_code: this.postal_code,
+            country: this.country
+        };
+    }
+
+    buildWithoutCity(): AddressJSON {
+        return {
+            address: this.address,
+            state_province: this.state_province,
+            postal_code: this.postal_code,
+            country: this.country
+        };
+    }
+
+    buildWithoutStateProvince(): AddressJSON {
+        return {
+            address: this.address,
+            city: this.city,
+            postal_code: this.postal_code,
+            country: this.country
+        };
+    }
+
+    buildWithoutPostalCode(): AddressJSON {
+        return {
+            address: this.address,
+            city: this.city,
+            state_province: this.state_province,
+            country: this.country
+        };
+    }
+    buildWithoutCountry(): AddressJSON {
+        return {
+            address: this.address,
+            city: this.city,
+            state_province: this.state_province,
+            postal_code: this.postal_code,
+        };
+    }
+}
+
+export class FullAddressJSONBuilder {
+    address_type: string | null = aString();
+    address: AddressJSON | null = new AddressJSONBuilder().build();
+
+    withAddressType(addressType: string | null): FullAddressJSONBuilder {
+        this.address_type = addressType;
+        return this;
+    }
+
+    withAddress(address: AddressJSON | null): FullAddressJSONBuilder {
+        this.address = address;
+        return this;
+    }
+
+    build(): FullAddressJSON {
+        return {
+            address_type: this.address_type,
+            address: this.address,
+        };
+    }
+
+    buildWithoutAddressType(): FullAddressJSON {
+        return {
+            address: this.address
+        };
+    }
+
+    buildWithoutAddress(): FullAddressJSON {
+        return {
+            address_type: this.address_type
         };
     }
 }
@@ -106,20 +242,31 @@ export class ServiceJSONBuilder {
 
 export class LocationJSONBuilder {
     phone_numbers: ReadonlyArray<PhoneNumberJSON> | null = [new PhoneNumberJSONBuilder().build()];
+    addresses: ReadonlyArray<FullAddressJSON> | null = [new FullAddressJSONBuilder().build()];
 
     withPhoneNumbers(phoneNumbers: ReadonlyArray<PhoneNumberJSON> | null): LocationJSONBuilder {
         this.phone_numbers = phoneNumbers;
         return this;
     }
 
+    withFullAddress(addresses: ReadonlyArray<FullAddressJSON> | null): LocationJSONBuilder {
+        this.addresses = addresses;
+        return this;
+    }
+
     build(): LocationJSON {
         return {
             phone_numbers: this.phone_numbers,
+            addresses: this.addresses,
         };
     }
 
     buildWithoutPhoneNumbers(): LocationJSON {
-        return {};
+        return {addresses: this.addresses};
+    }
+
+    buildWithoutAddresseses(): LocationJSON {
+        return {phone_numbers: this.phone_numbers};
     }
 }
 

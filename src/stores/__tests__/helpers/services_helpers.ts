@@ -2,7 +2,7 @@
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
 import { Id as TaskId } from '../../tasks';
-import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber } from '../../services/types';
+import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber, FullAddress, Address } from '../../services/types';
 
 
 export function buildNormalizedServices(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): ServiceStore {
@@ -53,11 +53,93 @@ export class PhoneNumberBuilder {
     }
 }
 
+export class FullAddressBuilder {
+    static buildArray(length: number = 3): ReadonlyArray<FullAddress> {
+        return Array(length).fill(new FullAddressBuilder().build());
+    }
+
+    type: string = aString();
+    address: Address;
+
+    withType(type: string): FullAddressBuilder {
+        this.type = type;
+        return this;
+    }
+
+    withAddress(address: Address): FullAddressBuilder {
+        this.address = address;
+        return this;
+    }
+
+    build(): FullAddress {
+        return {
+            type: this.type,
+            address:  this.address,
+        };
+    }
+}
+
+export class AddressBuilder {
+    static buildArray(length: number = 3): ReadonlyArray<Address> {
+        return Array(length).fill(new AddressBuilder().build());
+    }
+
+    id: string = aString();
+    address: string = aString();
+    city: string = aString();
+    state_province: string = aString();
+    postal_code: string = aString();
+    country: string = aString();
+
+    withId(id: string): AddressBuilder {
+        this.id = id;
+        return this;
+    }
+
+    withAddress(address: string): AddressBuilder {
+        this.address = address;
+        return this;
+    }
+
+    withCity(city: string): AddressBuilder {
+        this.city = city;
+        return this;
+    }
+
+    withStateProvince(state_province: string): AddressBuilder {
+        this.state_province = state_province;
+        return this;
+    }
+
+    withPostalCode(postal_code: string): AddressBuilder {
+        this.postal_code = postal_code;
+        return this;
+    }
+
+    withCountry(country: string): AddressBuilder {
+        this.country = country;
+        return this;
+    }
+
+    build(): Address {
+        return {
+            // id: this.id,
+            address: this.address,
+            city: this.city,
+            state_province: this.state_province,
+            postal_code: this.postal_code,
+            country: this.country,
+            
+        };
+    }
+}
+
 export class ServiceBuilder {
     id: Id = aString();
     name: string = aString();
     description: string = aString();
     phoneNumbers: ReadonlyArray<PhoneNumber> = PhoneNumberBuilder.buildArray();
+    fullAddresses: ReadonlyArray<FullAddress> = FullAddressBuilder.buildArray();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -79,12 +161,18 @@ export class ServiceBuilder {
         return this;
     }
 
+    withFullAddresses(fullAddresses: ReadonlyArray<FullAddress>): ServiceBuilder {
+        this.fullAddresses = fullAddresses;
+        return this;
+    }
+
     build(): Service {
         return {
             id: this.id,
             name: this.name,
             description: this.description,
             phoneNumbers: this.phoneNumbers,
+            fullAddresses: this.fullAddresses
         };
     }
 }
