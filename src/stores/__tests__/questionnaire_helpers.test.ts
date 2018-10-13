@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-let
 
-import * as helpers from './helpers/questionnaire_helpers';
+import { ValidStoreBuilder, AnswerBuilder, QuestionBuilder } from './helpers/questionnaire_helpers';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { Answer, Question } from '../questionnaire';
 import { toValidOrThrow } from '../questionnaire/stores';
@@ -18,7 +18,7 @@ describe('questionnaire test helper for', () => {
         beforeEach(() => {
             id = aString();
             text = aString();
-            question = new helpers.QuestionBuilder().
+            question = new QuestionBuilder().
                 withId(id).
                 withLocaleCode(localeCode).
                 withText(text).
@@ -34,7 +34,7 @@ describe('questionnaire test helper for', () => {
         });
 
         it('defaults to three answers', () => {
-            const aQuestion = new helpers.QuestionBuilder();
+            const aQuestion = new QuestionBuilder();
             expect(aQuestion.answers).toHaveLength(3);
         });
     });
@@ -56,7 +56,7 @@ describe('questionnaire test helper for', () => {
                 taxonomyId = aString();
                 taxonomyTermId = aString();
                 isChosen = aBoolean();
-                answer = new helpers.AnswerBuilder().
+                answer = new AnswerBuilder().
                     withLocaleCode(localeCode).
                     withId(id).
                     withQuestionId(questionId).
@@ -96,36 +96,36 @@ describe('questionnaire test helper for', () => {
 
         it('adds questions keyed on their ids', () => {
             const questionId = aString();
-            const builder = new helpers.QuestionBuilder().
+            const builder = new QuestionBuilder().
                 withId(questionId);
 
-            const store = helpers.buildValidStore([builder]);
+            const store = new ValidStoreBuilder().withQuestions([builder]).build();
 
             expect(toValidOrThrow(store).questions[questionId]).toHaveProperty('id', questionId);
         });
 
         it('adds answers keyed on their ids', () => {
             const answerId = aString();
-            const answerBuilder = new helpers.AnswerBuilder().
+            const answerBuilder = new AnswerBuilder().
                 withId(answerId);
-            const questionBuilder = new helpers.QuestionBuilder().
+            const questionBuilder = new QuestionBuilder().
                 withAnswers([answerBuilder]);
 
-            const store = helpers.buildValidStore([questionBuilder]);
+            const store = new ValidStoreBuilder().withQuestions([questionBuilder]).build();
 
             expect(toValidOrThrow(store).answers[answerId]).toHaveProperty('id', answerId);
         });
 
         it('sets question id on answers', () => {
             const answerId = aString();
-            const answerBuilder = new helpers.AnswerBuilder().
+            const answerBuilder = new AnswerBuilder().
                 withId(answerId);
             const questionId = aString();
-            const questionBuilder = new helpers.QuestionBuilder().
+            const questionBuilder = new QuestionBuilder().
                 withId(questionId).
                 withAnswers([answerBuilder]);
 
-            const store = helpers.buildValidStore([questionBuilder]);
+            const store = new ValidStoreBuilder().withQuestions([questionBuilder]).build();
 
             expect(toValidOrThrow(store).answers[answerId].questionId).toBe(questionId);
         });

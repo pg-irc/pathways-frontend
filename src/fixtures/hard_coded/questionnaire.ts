@@ -1,10 +1,12 @@
-import { ValidQuestionnaireStore } from '../types/questionnaire';
+import { ValidQuestionnaireStore, QuestionnaireRouteState } from '../types/questionnaire';
 import { Taxonomies } from '../../application/constants';
 
 const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
 export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
     return new ValidQuestionnaireStore({
+        questionnaireRouteState: QuestionnaireRouteState.NotInQuestionnairePage,
+        oldAnswers: {},
         activeQuestion: 'q1',
         questions: {
             'q1': {

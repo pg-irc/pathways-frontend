@@ -6,17 +6,43 @@ import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 import { ValidQuestionnaireStore, LoadingQuestionnaireStore } from '../../questionnaire/stores';
+import { QuestionnaireRouteState } from '../../../fixtures/types/questionnaire';
 
-export const buildValidStore = (questions: ReadonlyArray<QuestionBuilder>): store.ValidQuestionnaireStore => (
-    new ValidQuestionnaireStore({
-        activeQuestion: aString(),
-        questions: buildQuestionMap(questions),
-        answers: buildAnswerMap(questions),
-    })
-);
+export class ValidStoreBuilder {
+    activeQuestion: string = aString();
+    questionsBuilders: ReadonlyArray<QuestionBuilder> = [];
+    oldAnswers: store.AnswersMap = {};
+    questionnaireRouteState: QuestionnaireRouteState =
+        aBoolean() ? QuestionnaireRouteState.NotInQuestionnairePage : QuestionnaireRouteState.InQuestionnairePage;
+
+    withQuestions(questionsBuilders: ReadonlyArray<QuestionBuilder>): ValidStoreBuilder {
+        this.questionsBuilders = questionsBuilders;
+        return this;
+    }
+
+    withState(questionnaireRouteState: QuestionnaireRouteState): ValidStoreBuilder {
+        this.questionnaireRouteState = questionnaireRouteState;
+        return this;
+    }
+
+    withOldAnswers(oldAnswers: store.AnswersMap): ValidStoreBuilder {
+        this.oldAnswers = oldAnswers;
+        return this;
+    }
+
+    build(): store.ValidQuestionnaireStore {
+        return new ValidQuestionnaireStore({
+            activeQuestion: this.activeQuestion,
+            questions: buildQuestionMap(this.questionsBuilders),
+            answers: buildAnswerMap(this.questionsBuilders),
+            oldAnswers: this.oldAnswers,
+            questionnaireRouteState: this.questionnaireRouteState,
+        });
+    }
+}
 
 export const buildLoadingStore = (questions: ReadonlyArray<QuestionBuilder>): store.QuestionnaireStore => {
-    const lastValidState = buildValidStore(questions);
+    const lastValidState = new ValidStoreBuilder().withQuestions(questions).build();
     return new LoadingQuestionnaireStore(lastValidState);
 };
 

@@ -1,12 +1,14 @@
 // tslint:disable:no-expression-statement no-let
 
 import * as store from '../questionnaire';
-import * as helpers from './helpers/questionnaire_helpers';
+import { ValidStoreBuilder, QuestionBuilder, AnswerBuilder, buildLoadingStore } from './helpers/questionnaire_helpers';
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { toValidOrThrow, LoadingQuestionnaireStore, InvalidQuestionnaireStore } from '../questionnaire/stores';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { UserDataPersistence } from '../user_data';
+import { routeChanged, RouteChangedAction } from '../router_actions';
+import { QuestionnaireRouteState } from '../../fixtures/types/questionnaire';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -23,25 +25,25 @@ describe('choose answer action creator', () => {
 
 describe('questionnaire reducer', () => {
 
-    let chosenAnswer: helpers.AnswerBuilder;
-    let nonChosenAnswer: helpers.AnswerBuilder;
-    let secondChosenAnswer: helpers.AnswerBuilder;
-    let secondNonChosenAnswer: helpers.AnswerBuilder;
-    let chosenAnswerToSecondQuestion: helpers.AnswerBuilder;
-    let nonChosenAnswerToSecondQuestion: helpers.AnswerBuilder;
-    let question, secondQuestion: helpers.QuestionBuilder;
+    let chosenAnswer: AnswerBuilder;
+    let nonChosenAnswer: AnswerBuilder;
+    let secondChosenAnswer: AnswerBuilder;
+    let secondNonChosenAnswer: AnswerBuilder;
+    let chosenAnswerToSecondQuestion: AnswerBuilder;
+    let nonChosenAnswerToSecondQuestion: AnswerBuilder;
+    let question, secondQuestion: QuestionBuilder;
     let theStore: store.QuestionnaireStore;
     let newStore: store.QuestionnaireStore;
 
     it('should return original store if the action is undefined', () => {
-        theStore = helpers.buildValidStore([new helpers.QuestionBuilder()]);
+        theStore = new ValidStoreBuilder().withQuestions([new QuestionBuilder()]).build();
         const undefinedAction: store.ChooseAnswerAction = undefined;
         newStore = store.reducer(theStore, undefinedAction);
         expect(newStore).toEqual(theStore);
     });
 
     it('should allow the active question to be set', () => {
-        theStore = helpers.buildValidStore([new helpers.QuestionBuilder()]);
+        theStore = new ValidStoreBuilder().withQuestions([new QuestionBuilder()]).build();
         const activeQuestion = aString();
         newStore = store.reducer(theStore, store.setActiveQuestion(activeQuestion));
         expect(toValidOrThrow(newStore).activeQuestion).toEqual(activeQuestion);
@@ -50,21 +52,21 @@ describe('questionnaire reducer', () => {
     describe('for questions accepting at most one answer', () => {
 
         beforeEach(() => {
-            chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
-            nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
-            secondNonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
+            chosenAnswer = new AnswerBuilder().withIsChosen(true);
+            nonChosenAnswer = new AnswerBuilder().withIsChosen(false);
+            secondNonChosenAnswer = new AnswerBuilder().withIsChosen(false);
 
-            question = new helpers.QuestionBuilder().
+            question = new QuestionBuilder().
                 withAnswers([chosenAnswer, nonChosenAnswer, secondNonChosenAnswer]).
                 withAcceptsMultipleAnswers(false);
 
-            chosenAnswerToSecondQuestion = new helpers.AnswerBuilder().withIsChosen(true);
-            nonChosenAnswerToSecondQuestion = new helpers.AnswerBuilder().withIsChosen(false);
-            secondQuestion = new helpers.QuestionBuilder().
+            chosenAnswerToSecondQuestion = new AnswerBuilder().withIsChosen(true);
+            nonChosenAnswerToSecondQuestion = new AnswerBuilder().withIsChosen(false);
+            secondQuestion = new QuestionBuilder().
                 withAnswers([chosenAnswerToSecondQuestion, nonChosenAnswerToSecondQuestion]).
                 withAcceptsMultipleAnswers(false);
 
-            theStore = helpers.buildValidStore([question, secondQuestion]);
+            theStore = new ValidStoreBuilder().withQuestions([question, secondQuestion]).build();
         });
 
         describe('when choosing an non-chosen answer', () => {
@@ -107,22 +109,22 @@ describe('questionnaire reducer', () => {
 
     describe('for questions accepting more than one answer', () => {
         beforeEach(() => {
-            chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
-            nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
-            secondChosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
-            secondNonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
+            chosenAnswer = new AnswerBuilder().withIsChosen(true);
+            nonChosenAnswer = new AnswerBuilder().withIsChosen(false);
+            secondChosenAnswer = new AnswerBuilder().withIsChosen(true);
+            secondNonChosenAnswer = new AnswerBuilder().withIsChosen(false);
 
-            question = new helpers.QuestionBuilder().
+            question = new QuestionBuilder().
                 withAnswers([chosenAnswer, nonChosenAnswer, secondChosenAnswer, secondNonChosenAnswer]).
                 withAcceptsMultipleAnswers(true);
 
-            chosenAnswerToSecondQuestion = new helpers.AnswerBuilder().withIsChosen(true);
-            nonChosenAnswerToSecondQuestion = new helpers.AnswerBuilder().withIsChosen(false);
-            secondQuestion = new helpers.QuestionBuilder().
+            chosenAnswerToSecondQuestion = new AnswerBuilder().withIsChosen(true);
+            nonChosenAnswerToSecondQuestion = new AnswerBuilder().withIsChosen(false);
+            secondQuestion = new QuestionBuilder().
                 withAnswers([chosenAnswerToSecondQuestion, nonChosenAnswerToSecondQuestion]).
                 withAcceptsMultipleAnswers(true);
 
-            theStore = helpers.buildValidStore([question, secondQuestion]);
+            theStore = new ValidStoreBuilder().withQuestions([question, secondQuestion]).build();
         });
 
         describe('when choosing a non-chosen answer', () => {
@@ -164,14 +166,81 @@ describe('questionnaire reducer', () => {
         });
     });
 
+    const makeRouteAction = (pathname: string): RouteChangedAction => (
+        routeChanged({ pathname, search: '', state: '', hash: '' })
+    );
+
+    describe('when routing', () => {
+        const enterQuestionnaire = makeRouteAction('/questionnaire');
+        const leaveQuestionnaire = makeRouteAction('/home');
+
+        describe('from non-questionnaire route', () => {
+            const storeOutsideQuestionnaire = new ValidStoreBuilder().
+                withState(QuestionnaireRouteState.NotInQuestionnairePage).
+                withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
+                build();
+
+            describe('to non-questionnaire route', () => {
+                it('sets the state to NotInQuestionnaire', () => {
+                    newStore = store.reducer(storeOutsideQuestionnaire, leaveQuestionnaire);
+                    expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.NotInQuestionnairePage);
+                });
+                it('leaves old answers unchanged', () => {
+                    newStore = store.reducer(storeOutsideQuestionnaire, leaveQuestionnaire);
+                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeOutsideQuestionnaire.oldAnswers);
+                });
+            });
+
+            describe('to questionnaire route', () => {
+                it('sets the state to InQuestionnaire', () => {
+                    newStore = store.reducer(storeOutsideQuestionnaire, enterQuestionnaire);
+                    expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.InQuestionnairePage);
+                });
+                it('stores the current state of answers for later', () => {
+                    newStore = store.reducer(storeOutsideQuestionnaire, enterQuestionnaire);
+                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeOutsideQuestionnaire.answers);
+                });
+            });
+        });
+
+        describe('from questionnaire route', () => {
+            const storeInQuestionnaire = new ValidStoreBuilder().
+                withState(QuestionnaireRouteState.InQuestionnairePage).
+                withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
+                build();
+
+            describe('to non-questionnaire route', () => {
+                it('sets the state to PopupNeeded', () => {
+                    newStore = store.reducer(storeInQuestionnaire, leaveQuestionnaire);
+                    expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.ShowQuestionnairePopup);
+                });
+                it('leaves old answers unchanged', () => {
+                    newStore = store.reducer(storeInQuestionnaire, leaveQuestionnaire);
+                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeInQuestionnaire.oldAnswers);
+                });
+            });
+
+            describe('to questionnaire route', () => {
+                it('sets the state to InQuestionnaire', () => {
+                    newStore = store.reducer(storeInQuestionnaire, enterQuestionnaire);
+                    expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.InQuestionnairePage);
+                });
+                it('leaves old answers unchanged', () => {
+                    newStore = store.reducer(storeInQuestionnaire, enterQuestionnaire);
+                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeInQuestionnaire.oldAnswers);
+                });
+            });
+        });
+    });
+
     describe('when loading chosen answers from persistent storage', () => {
 
         let loadingStore: store.QuestionnaireStore = undefined;
 
         it('should set question with id in request to chosen', () => {
-            nonChosenAnswer = new helpers.AnswerBuilder().withIsChosen(false);
-            question = new helpers.QuestionBuilder().withAnswers([nonChosenAnswer]);
-            loadingStore = helpers.buildLoadingStore([question]);
+            nonChosenAnswer = new AnswerBuilder().withIsChosen(false);
+            question = new QuestionBuilder().withAnswers([nonChosenAnswer]);
+            loadingStore = buildLoadingStore([question]);
             const persistedData = new PersistedUserDataBuilder().addChosenAnswer(nonChosenAnswer.id).buildObject();
             const action = UserDataPersistence.loadSuccess(persistedData);
 
@@ -181,9 +250,9 @@ describe('questionnaire reducer', () => {
         });
 
         it('should set question with id not in request to not chosen', () => {
-            chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
-            question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
-            loadingStore = helpers.buildLoadingStore([question]);
+            chosenAnswer = new AnswerBuilder().withIsChosen(true);
+            question = new QuestionBuilder().withAnswers([chosenAnswer]);
+            loadingStore = buildLoadingStore([question]);
             const persistedData = new PersistedUserDataBuilder().buildObject();
             const action = UserDataPersistence.loadSuccess(persistedData);
 
@@ -195,9 +264,9 @@ describe('questionnaire reducer', () => {
         describe('when handling a load request', () => {
 
             beforeEach(() => {
-                const answer = new helpers.AnswerBuilder();
-                question = new helpers.QuestionBuilder().withAnswers([answer]);
-                theStore = helpers.buildValidStore([question]);
+                const answer = new AnswerBuilder();
+                question = new QuestionBuilder().withAnswers([answer]);
+                theStore = new ValidStoreBuilder().withQuestions([question]).build();
                 const action = UserDataPersistence.loadRequest();
 
                 newStore = store.reducer(theStore, action);
@@ -220,9 +289,9 @@ describe('questionnaire reducer', () => {
 
             let theError: string = aString();
             beforeEach(() => {
-                chosenAnswer = new helpers.AnswerBuilder().withIsChosen(true);
-                question = new helpers.QuestionBuilder().withAnswers([chosenAnswer]);
-                loadingStore = helpers.buildLoadingStore([question]);
+                chosenAnswer = new AnswerBuilder().withIsChosen(true);
+                question = new QuestionBuilder().withAnswers([chosenAnswer]);
+                loadingStore = buildLoadingStore([question]);
                 const action = UserDataPersistence.loadFailure(theError);
 
                 newStore = store.reducer(loadingStore, action);
