@@ -1,15 +1,13 @@
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
-import { MainComponentProps, MainComponent } from './main_component';
+import * as main from './main';
 import { LoaderProps, withLoader } from './loader';
 import { isApplicationLoading } from '../../selectors/is_application_loading';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { withRouter } from 'react-router-native';
 import { RouterProps } from '../../application/routing';
 
-type Props = LoaderProps & MainComponentProps & RouterProps;
-
-const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
+const mapStateToProps = (store: Store, ownProps: RouterProps): LoaderProps & main.Props & RouterProps => ({
     currentLocale: selectLocale(store),
     loading: isApplicationLoading(store),
     history: ownProps.history,
@@ -18,8 +16,6 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     staticContext: ownProps.staticContext,
 });
 
-const componentWithLoader = withLoader<MainComponentProps>(MainComponent);
-
-const connectedComponent = connect(mapStateToProps)(componentWithLoader);
-
-export const MainConnectedComponent = withRouter(connectedComponent);
+const MainComponent = withLoader<main.Props>(main.Component);
+const connector = connect(mapStateToProps, {});
+export const ConnectedComponent = withRouter(connector(MainComponent));
