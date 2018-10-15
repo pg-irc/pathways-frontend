@@ -37,9 +37,6 @@ export const ExploreSectionDetailComponent: React.StatelessComponent<Props> =
                         <Trans>Tasks:</Trans>
                     </Text>
                     <TaskListComponent {...props} tasks={props.tasks} emptyTaskListComponent={noTasksAddedYetTextComponent()} />
-                    <Text style={[{ fontWeight: 'bold', textAlign: 'left', fontSize: 20 }]}>
-                        <Trans>Tasks:</Trans>
-                    </Text>
                 </View>
             </Content>
         </Container >;
