@@ -1,6 +1,6 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import * as store from '../../tasks';
-import { Id as ArticleId } from '../../articles';
+import { Id as TaskId } from '../../tasks';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
@@ -13,8 +13,7 @@ export class TaskBuilder {
     title: string = aString();
     description: string = aString();
     taxonomyTerms: TaxonomyTermReference[] = [];
-    relatedTasks: ReadonlyArray<ArticleId> = [aString(), aString()];
-    relatedArticles: ReadonlyArray<store.Id> = [aString(), aString()];
+    relatedTasks: ReadonlyArray<TaskId> = [aString(), aString()];
     serviceQuery: string = aString();
     completed: boolean = aBoolean();
 
@@ -58,11 +57,6 @@ export class TaskBuilder {
         return this;
     }
 
-    withRelatedArticles(relatedArticles: ReadonlyArray<ArticleId>): TaskBuilder {
-        this.relatedArticles = relatedArticles;
-        return this;
-    }
-
     withServiceQuery(query: string): TaskBuilder {
         this.serviceQuery = query;
         return this;
@@ -75,8 +69,7 @@ export class TaskBuilder {
             title: this.createLocalizedText(this.title),
             description: this.createLocalizedText(this.description),
             taxonomyTerms: this.taxonomyTerms,
-            relatedArticles: this.relatedArticles,
-            relatedTasks: this.relatedArticles,
+            relatedTasks: this.relatedTasks,
             serviceQuery: this.serviceQuery,
             completed: this.completed,
         };

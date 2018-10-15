@@ -12,7 +12,6 @@ import { TaskServices } from '../../selectors/services/task_services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
 import { RelatedTasksComponent } from './related_tasks';
-import { RelatedArticlesComponent } from '../articles/related_articles';
 import { RouterProps } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { computeStateLabel, computeStateButtons, TaskStateLabel, TaskStateButton } from './task_states';
@@ -183,10 +182,6 @@ const InformationTab = (props: Props): JSX.Element => (
             <Row style={taskDetailStyles.row}>
                 <Markdown style={markdownStyles}>{props.task.description}</Markdown>
             </Row>
-            <RelatedArticlesComponent
-                {...props}
-                relatedArticles={props.task.relatedArticles}
-            />
             <RelatedTasksComponent
                 {...props}
                 relatedTasks={props.task.relatedTasks}

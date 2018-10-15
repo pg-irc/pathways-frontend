@@ -7,8 +7,6 @@ import { TaskListComponent, noTasksAddedYetTextComponent } from '../tasks/task_l
 import { RouterProps } from '../../application/routing';
 import { colors } from '../../application/styles';
 import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
-import { ArticleListItem } from '../../selectors/articles/article_list_item';
-import { ArticleListComponent } from '../articles/article_list';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { Task } from '../../selectors/tasks/task';
 import { ExpandableText } from '../expandable_text/expandable_text';
@@ -16,7 +14,6 @@ import { ExpandableText } from '../expandable_text/expandable_text';
 export interface ExploreSectionDetailProps {
     readonly section: ExploreSection;
     readonly tasks: ReadonlyArray<Task>;
-    readonly articles: ReadonlyArray<ArticleListItem>;
     readonly savedTasksIdList: ReadonlyArray<TaskId>;
 }
 
@@ -41,9 +38,8 @@ export const ExploreSectionDetailComponent: React.StatelessComponent<Props> =
                     </Text>
                     <TaskListComponent {...props} tasks={props.tasks} emptyTaskListComponent={noTasksAddedYetTextComponent()} />
                     <Text style={[{ fontWeight: 'bold', textAlign: 'left', fontSize: 20 }]}>
-                        <Trans>Articles:</Trans>
+                        <Trans>Tasks:</Trans>
                     </Text>
-                    <ArticleListComponent {...props} articles={props.articles} />
                 </View>
             </Content>
         </Container >;

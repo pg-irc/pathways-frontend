@@ -1,11 +1,9 @@
 import { RouteComponentProps } from 'react-router-native';
 import { History } from 'history';
-import { Id as ArticleId } from '../stores/articles';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TaskId } from '../stores/tasks';
 
 interface MatchParameters {
-    readonly articleId: ArticleId;
     readonly learnId: LearnId;
     readonly taskId: TaskId;
 }
@@ -20,7 +18,6 @@ export enum Routes {
     Learn,
     LearnDetail,
     TaskDetail,
-    ArticleDetail,
     Help,
 }
 
@@ -43,8 +40,6 @@ export const routePathDefinition = (route: Routes): string => {
             return '/learn/:learnId';
         case Routes.TaskDetail:
             return '/task/:taskId';
-        case Routes.ArticleDetail:
-            return '/article/:articleId';
     }
 };
 

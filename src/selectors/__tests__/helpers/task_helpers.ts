@@ -5,7 +5,6 @@ import { TaxonomyTermReference } from '../../../stores/taxonomies';
 import { ExploreSection } from '../../explore/types';
 import { Task } from '../../tasks/task';
 import { TaskListItem } from '../../tasks/task_list_item';
-import { ArticleListItem } from '../../articles/article_list_item';
 
 export class ViewTaskBuilder {
     id: string = aString();
@@ -15,7 +14,6 @@ export class ViewTaskBuilder {
     exploreSection: ExploreSection;
     isRecommended: boolean = aBoolean();
     relatedTasks: Array<TaskListItem> = [];
-    relatedArticles: Array<ArticleListItem> = [];
     serviceQuery: string = aString();
     completed: boolean = aBoolean();
 
@@ -38,7 +36,6 @@ export class ViewTaskBuilder {
             exploreSection: this.exploreSection,
             isRecommended: this.isRecommended,
             relatedTasks: this.relatedTasks,
-            relatedArticles: this.relatedArticles,
             serviceQuery: this.serviceQuery,
             completed: this.completed,
         };
