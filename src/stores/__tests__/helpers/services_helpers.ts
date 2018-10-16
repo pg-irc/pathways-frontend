@@ -2,8 +2,7 @@
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
 import { Id as TaskId } from '../../tasks';
-import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber, Address, AddressWithType } from '../../services/types';
-
+import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber, Address } from '../../services/types';
 
 export function buildNormalizedServices(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): ServiceStore {
     return {
@@ -28,10 +27,6 @@ function buildTaskServicesMap(tasks: ReadonlyArray<TaskServicesBuilder>, service
 }
 
 export class PhoneNumberBuilder {
-    static buildArray(length: number = 3): ReadonlyArray<PhoneNumber> {
-        return Array(length).fill(new PhoneNumberBuilder().build());
-    }
-
     type: string = aString();
     phoneNumber: string = aString();
 
@@ -55,32 +50,20 @@ export class PhoneNumberBuilder {
 
 export class AddressBuilder {
     type: string = aString();
-
     address: string = aString();
     city: string = aString();
-    state_province: string = aString();
-    postal_code: string = aString();
+    province: string = aString();
+    postalCode: string = aString();
     country: string = aString();
-
-    withType(type: string): AddressBuilder {
-        this.type = type;
-        return this;
-    }
 
     build(): Address {
         return {
+            type: this.type,
             address: this.address,
             city: this.city,
-            state_province: this.state_province,
-            postal_code: this.postal_code,
+            province: this.province,
+            postalCode: this.postalCode,
             country: this.country,
-        };
-    }
-
-    buildWithType(): AddressWithType {
-        return {
-            type: this.type,
-            address: this.build(),
         };
     }
 }
@@ -89,9 +72,8 @@ export class ServiceBuilder {
     id: Id = aString();
     name: string = aString();
     description: string = aString();
-    phoneNumbers: ReadonlyArray<PhoneNumber> = PhoneNumberBuilder.buildArray();
-    physicalAddress: Address = new AddressBuilder().build();
-    postalAddress: Address = new AddressBuilder().build();
+    phoneNumbers: ReadonlyArray<PhoneNumber> = [];
+    addresses: ReadonlyArray<Address> = [];
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -113,13 +95,8 @@ export class ServiceBuilder {
         return this;
     }
 
-    withPhysicalAddress(address: Address): ServiceBuilder {
-        this.physicalAddress = address;
-        return this;
-    }
-
-    withPostalAddress(address: Address): ServiceBuilder {
-        this.postalAddress = address;
+    withAddresses(addresses: ReadonlyArray<Address>): ServiceBuilder {
+        this.addresses = addresses;
         return this;
     }
 
@@ -129,8 +106,7 @@ export class ServiceBuilder {
             name: this.name,
             description: this.description,
             phoneNumbers: this.phoneNumbers,
-            physicalAddress: this.physicalAddress,
-            postalAddress: this.postalAddress,
+            addresses: this.addresses,
         };
     }
 }

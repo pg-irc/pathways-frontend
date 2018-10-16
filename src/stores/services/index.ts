@@ -3,10 +3,10 @@ import * as constants from '../../application/constants';
 import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
 import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
 import { Action } from 'redux';
-import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressJSON, AddressWithType, Address } from './types';
+import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressWithTypeJSON, Address } from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
-export { Id, Service, ServiceStore, PhoneNumber, AddressWithType, Address };
+export { Id, Service, ServiceStore, PhoneNumber, Address };
 export { UpdateTaskServicesAsync, updateTaskServicesAsync };
 export { serviceAtLocation, serviceAtLocationArray };
 
@@ -16,30 +16,23 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
          phoneNumber: phoneNumber.phone_number,
      }), data.location.phone_numbers);
 
-    const addressesWithType = R.map((address: ValidatedAddressJSON): AddressWithType => ({
-        type: address.address_type,
-        address: address.address,
+    const addresses = R.map((addressWithType: ValidatedAddressWithTypeJSON): Address => ({
+        type: addressWithType.address_type,
+        address: addressWithType.address.address,
+        city: addressWithType.address.city,
+        province: addressWithType.address.state_province,
+        postalCode: addressWithType.address.postal_code,
+        country: addressWithType.address.country,
     }), data.location.addresses);
 
-    const ADDRESS_TYPE_PHYSICAL = "physical_address";
-    const ADDRESS_TYPE_POSTAL = "postal_address";
-    var physicalAddress: Address = null;
-    var postalAddress: Address = null;
-    addressesWithType.forEach(element => {
-        if (element.type.match(ADDRESS_TYPE_PHYSICAL)) {
-            physicalAddress = element.address;
-        }else if (element.type.match(ADDRESS_TYPE_POSTAL)) {
-            postalAddress = element.address;
-        }
-    });
+    const physicalAddresses = R.filter(R.propEq('type', 'physical_address'), addresses);
 
     return {
         id: data.service.id,
         name: data.service.name,
         description: data.service.description,
         phoneNumbers: phoneNumbers,
-        physicalAddress: physicalAddress,
-        postalAddress: postalAddress,
+        addresses: physicalAddresses,
     };
 }
 

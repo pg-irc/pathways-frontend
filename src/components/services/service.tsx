@@ -1,10 +1,9 @@
 import React from 'react';
 import * as R from 'ramda';
 import { applicationStyles, colors } from '../../application/styles';
-import { Service, Address } from '../../stores/services';
+import { Service, PhoneNumber, Address } from '../../stores/services';
 import { View } from 'native-base';
 import { Text } from 'react-native';
-import { PhoneNumber } from '../../stores/services';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 
 interface Props {
@@ -18,10 +17,6 @@ export function ServiceComponent(props: Props): JSX.Element {
         phoneType.charAt(0).toUpperCase() + phoneType.slice(1)
     );
 
-    const getAddress = (address: Address): string => (
-        address === null ? '' : address.address
-    );
-
     return (
         <View>
             <Text style={[
@@ -30,7 +25,12 @@ export function ServiceComponent(props: Props): JSX.Element {
             ]}>
                 {props.service.name}
             </Text>
-            <Text>{getAddress(props.service.physicalAddress)}</Text>
+            {
+                mapWithIndex((address: Address, index: number) =>
+                    <View key={index}>
+                        <Text>{address.address}</Text>
+                    </View>, props.service.addresses)
+            }
             {
                 mapWithIndex((phoneNumber: PhoneNumber, index: number) =>
                     <View key={index}>
