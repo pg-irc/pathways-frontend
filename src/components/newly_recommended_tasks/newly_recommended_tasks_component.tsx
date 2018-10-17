@@ -50,12 +50,12 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
             </Content>
             <View style={styles.buttonView}>
                 <Button style={styles.button} onPress={saveTasksToMyPlan}>
-                    <Text style={styles.buttonText}>
+                    <Text>
                         <Trans>Add these tasks to My Plan</Trans>
                     </Text>
                 </Button>
                 <Button style={styles.button} onPress={props.dismissPopup}>
-                    <Text style={styles.buttonText}>
+                    <Text>
                         <Trans>Close, do not add tasks to My Plan</Trans>
                     </Text>
                 </Button>
@@ -104,14 +104,11 @@ const styles = StyleSheet.create({
     buttonView: {
         height: 100,
         flexDirection: 'column',
-        alignItems: 'stretch',
         justifyContent: 'space-between',
     },
     button: {
         alignSelf: 'stretch',
+        justifyContent: 'center',
         padding: 10,
-    },
-    buttonText: {
-        textAlign: 'center',
     },
 });
