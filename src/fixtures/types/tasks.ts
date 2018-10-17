@@ -1,5 +1,4 @@
 import { LocalizedText } from '../../locale';
-import { Id as ArticleId } from './articles';
 import { TaxonomyTermReference } from './taxonomies';
 
 export type Id = string;
@@ -11,7 +10,6 @@ export interface Task {
     readonly description: LocalizedText;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly relatedTasks: ReadonlyArray<Id>;
-    readonly relatedArticles: ReadonlyArray<ArticleId>;
     readonly serviceQuery: string;
     readonly completed: boolean;
 }

@@ -54,7 +54,7 @@ describe('tasks selector', () => {
                 build();
             exploreSection = new ExploreSectionBuilder().withName(exploreSectionName).build();
             isRecommended = aBoolean();
-            denormalizedTask = toSelectorTask(locale, task, exploreSection, isRecommended, [], []);
+            denormalizedTask = toSelectorTask(locale, task, exploreSection, isRecommended, []);
         });
 
         test('id property', () => {

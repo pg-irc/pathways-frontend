@@ -6,7 +6,6 @@ import * as tasks from './tasks';
 import * as services from './services';
 import * as explore from './explore';
 import * as taxonomies from './taxonomies';
-import * as articles from './articles';
 import * as notifications from './notifications';
 
 export interface Store {
@@ -17,7 +16,6 @@ export interface Store {
     readonly servicesInStore: services.ServiceStore;
     readonly exploreSectionsInStore: explore.ExploreStore;
     readonly taxonomiesInStore: taxonomies.TaxonomyStore;
-    readonly articlesInStore: articles.ArticleStore;
     readonly notificationsInStore: notifications.NotificationStore;
 }
 
@@ -29,6 +27,5 @@ export const reducer = combineReducers<Store>({
     servicesInStore: services.reducer,
     exploreSectionsInStore: explore.reducer,
     taxonomiesInStore: taxonomies.reducer,
-    articlesInStore: articles.reducer,
     notificationsInStore: notifications.reducer,
 });

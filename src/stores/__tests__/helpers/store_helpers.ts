@@ -7,7 +7,6 @@ import * as tasks from '../../tasks';
 import * as services from '../../services';
 import * as explore from '../../explore';
 import * as taxonomies from '../../taxonomies';
-import * as articles from '../../articles';
 import * as notifications from '../../notifications';
 
 export class ApplicationStoreBuilder {
@@ -18,7 +17,6 @@ export class ApplicationStoreBuilder {
     servicesInStore: services.ServiceStore;
     exploreSectionsInStore: explore.ExploreStore;
     taxonomiesInStore: taxonomies.TaxonomyStore;
-    articlesInStore: articles.ArticleStore;
     notificationsInStore: notifications.NotificationStore;
 
     withLocaleStore(store: locale.LocaleStore): ApplicationStoreBuilder {
@@ -35,7 +33,6 @@ export class ApplicationStoreBuilder {
             servicesInStore: this.servicesInStore,
             exploreSectionsInStore: this.exploreSectionsInStore,
             taxonomiesInStore: this.taxonomiesInStore,
-            articlesInStore: this.articlesInStore,
             notificationsInStore: this.notificationsInStore,
         };
     }
