@@ -3,7 +3,7 @@ import { stripMarkdown } from '../strip_markdown';
 
 describe('strip markdown', () => {
 
-    it ('strips number sign followed followed by a space', () => {
+    it ('strips number sign followed by a space', () => {
         expect(stripMarkdown('# Heading')).toEqual('Heading');
     });
 
