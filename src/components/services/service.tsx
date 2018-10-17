@@ -12,7 +12,7 @@ interface Props {
 
 export function ServiceComponent(props: Props): JSX.Element {
     const mapWithIndex = R.addIndex(R.map);
-
+    const physicalAddresses = R.filter(R.propEq('type', 'physical_address'), props.service.addresses);
     const capitalizeFirstLetter = (phoneType: string): string => (
         phoneType.charAt(0).toUpperCase() + phoneType.slice(1)
     );
@@ -29,7 +29,7 @@ export function ServiceComponent(props: Props): JSX.Element {
                 mapWithIndex((address: Address, index: number) =>
                     <View key={index}>
                         <Text>{address.address}</Text>
-                    </View>, props.service.addresses)
+                    </View>, physicalAddresses)
             }
             {
                 mapWithIndex((phoneNumber: PhoneNumber, index: number) =>

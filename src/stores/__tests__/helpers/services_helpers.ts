@@ -52,7 +52,7 @@ export class AddressBuilder {
     type: string = aString();
     address: string = aString();
     city: string = aString();
-    province: string = aString();
+    stateProvince: string = aString();
     postalCode: string = aString();
     country: string = aString();
 
@@ -61,7 +61,7 @@ export class AddressBuilder {
             type: this.type,
             address: this.address,
             city: this.city,
-            province: this.province,
+            stateProvince: this.stateProvince,
             postalCode: this.postalCode,
             country: this.country,
         };

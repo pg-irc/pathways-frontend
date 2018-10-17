@@ -9,7 +9,7 @@ export interface Address {
     readonly type: string;
     readonly address: string;
     readonly city: string;
-    readonly province: string;
+    readonly stateProvince: string;
     readonly postalCode: string;
     readonly country: string;
 }

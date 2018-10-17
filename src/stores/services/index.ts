@@ -20,19 +20,17 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
         type: addressWithType.address_type,
         address: addressWithType.address.address,
         city: addressWithType.address.city,
-        province: addressWithType.address.state_province,
+        stateProvince: addressWithType.address.state_province,
         postalCode: addressWithType.address.postal_code,
         country: addressWithType.address.country,
     }), data.location.addresses);
-
-    const physicalAddresses = R.filter(R.propEq('type', 'physical_address'), addresses);
 
     return {
         id: data.service.id,
         name: data.service.name,
         description: data.service.description,
         phoneNumbers: phoneNumbers,
-        addresses: physicalAddresses,
+        addresses: addresses,
     };
 }
 
