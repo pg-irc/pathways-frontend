@@ -11,25 +11,25 @@ import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { NewlyRecommendedTasksConnectedComponent } from '../newly_recommended_tasks/newly_recommended_tasks_connected_component';
 
-interface DrawerState {
-    readonly isDrawerOpen: boolean;
+interface LanguageSwitcherState {
+    readonly isLanguageSwitcherShowing: boolean;
 }
 
-export type Props = HeaderProps & FooterProps & RouterProps;
+export type MainComponentProps = HeaderProps & FooterProps & RouterProps;
 
-export interface Actions {
+export interface MainComponentActions {
     readonly routeChanged: (location: Location, action: Action) => RouteChangedAction;
 }
 
-export type MainComponentProps = Props & Actions;
+type Props = MainComponentProps & MainComponentActions;
 
-export class Component extends React.Component<MainComponentProps, DrawerState> {
+export class MainComponent extends React.Component<Props> {
 
-    readonly state: DrawerState = {
-        isDrawerOpen: false,
+    readonly state: LanguageSwitcherState = {
+        isLanguageSwitcherShowing: false,
     };
 
-    constructor(props: MainComponentProps) {
+    constructor(props: Props) {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
@@ -38,7 +38,7 @@ export class Component extends React.Component<MainComponentProps, DrawerState> 
 
     render(): JSX.Element {
         return (
-            <Drawer open={this.state.isDrawerOpen}
+            <Drawer open={this.state.isLanguageSwitcherShowing}
                 side='right'
                 content={<ConnectedLanguageSwitcher />}
                 onClose={this.closeDrawer} >
@@ -54,11 +54,11 @@ export class Component extends React.Component<MainComponentProps, DrawerState> 
     }
 
     private openDrawer(): void {
-        this.setState({ isDrawerOpen: true });
+        this.setState({ isLanguageSwitcherShowing: true });
     }
 
     private closeDrawer(): void {
-        this.setState({ isDrawerOpen: false });
+        this.setState({ isLanguageSwitcherShowing: false });
     }
 
 }
