@@ -14,6 +14,7 @@ const service = {
     },
     "required": ["id", "name", "description"]
 };
+
 const phoneNumber = {
     "type": "object",
     "properties": {
@@ -26,10 +27,12 @@ const phoneNumber = {
     },
     "required": ["phone_number_type", "phone_number"]
 };
+
 const phoneNumberArray = {
     "type": "array",
     "items": phoneNumber
 };
+
 const address = {
     "type": "object",
     "properties": {
@@ -54,6 +57,7 @@ const address = {
     },
     "required": ["id", "address", "city", "state_province", "postal_code", "country"]
 };
+
 const addressWithType = {
     "type": "object",
     "properties": {
@@ -64,18 +68,21 @@ const addressWithType = {
     },
     "required": ["address_type", "address"]
 };
-const addressArray = {
+
+const addressWithTypeArray = {
     "type": "array",
     "items": addressWithType
 };
+
 const location = {
     "type": "object",
     "properties": {
         "phone_numbers": phoneNumberArray,
-        "addresses": addressArray
+        "addresses": addressWithTypeArray
     },
     "required": ["phone_numbers", "addresses"]
 };
+
 export const serviceAtLocation = {
     "type": "object",
     "properties": {
@@ -84,8 +91,8 @@ export const serviceAtLocation = {
     },
     "required": ["service", "location"]
 };
+
 export const serviceAtLocationArray = {
     "type": "array",
     "items": serviceAtLocation
 };
-//# sourceMappingURL=schemas.js.map
