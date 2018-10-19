@@ -49,7 +49,7 @@ export const HelpComponent: React.StatelessComponent<AllProps> =
     (_: AllProps): JSX.Element => (
         <Content padder>
             <View style={[{ flexDirection: 'column' }]}>
-                <Text style={applicationStyles.pageTitle}><Trans>{'Help & Support'}</Trans></Text>
+                <Text style={applicationStyles.title}><Trans>{'Help & Support'}</Trans></Text>
                 <Text style={[{ textAlign: 'left' }]}>
                     <Trans>If you are having difficulty with settlement in Canada, get in touch with a settlement worker.</Trans>
                 </Text>

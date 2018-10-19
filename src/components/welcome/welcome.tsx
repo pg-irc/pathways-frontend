@@ -1,11 +1,12 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React from 'react';
-import { Image } from 'react-native';
+import { Dimensions } from 'react-native';
 import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
 import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
+import { colors, applicationStyles } from '../../application/styles';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
@@ -16,62 +17,62 @@ export interface WelcomeActions {
     readonly setLocale: (localeCode: string) => SetLocale.Request;
 }
 
-// @ts-ignore: React Native uses require() to load ImageBitmaps; it's best to do this once, outside of render.
-// tslint:disable-next-line:no-var-requires
-const logoImg = require('../../../assets/images/icon.png');
-
 export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & RouterProps): JSX.Element {
+    const screenWidth = Dimensions.get('screen').width;
+    const languagePickerWidth = Math.round(screenWidth / 1.25);
     return (
-        <View style={[
-            {
-                flex: 1,
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                padding: 20,
-            },
-        ]}>
-            <Image
-                source={logoImg}
-                style={[
-                    { flex: 1 },
-                    { width: 200, height: 200 },
-                    { marginTop: 50, marginBottom: 20 },
-                ]} />
-            <Text style={[
-                { fontWeight: 'bold', fontSize: 32 },
-                { marginBottom: 20 },
-            ]}><Trans>Arrival Advisor</Trans></Text>
-            <Text style={[
-                { textAlign: 'center' },
-                { marginBottom: 20 },
-            ]}>
-                <Trans>For immigrants and refugees new to Canada. Arrival Advisor is here
-                    to help you start your new life in Canada, every step of the way.</Trans>
+        <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: 20,
+            backgroundColor: colors.darkBlueGrey,
+        }}>
+            <Text style={{ fontWeight: 'bold', fontSize: 22, color: colors.white }}>
+                <Trans>Welcome to</Trans>
             </Text>
-            <Form style={[
-                { marginBottom: 20 },
-            ]}>
-                <Text style={[
-                    { textAlign: 'left' },
-                    { marginBottom: 20 },
-                ]}>
-                    <Trans>Select your language:</Trans>
+            <Text style={{ fontWeight: 'bold', fontSize: 32, color: colors.white, marginBottom: 10 }}>
+                <Trans>Arrival Advisor</Trans>
+            </Text>
+            <Text style={{ textAlign: 'center', color: colors.white, marginBottom: 40 }}>
+                <Trans>For newcomers to Canada. Helping you start your new life in Canada, every step of the way.</Trans>
+            </Text>
+            <Form style={{ marginBottom: 20 }}>
+                <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 15, color: colors.white, marginBottom: 5 }}>
+                    <Trans>Select your language</Trans>
                 </Text>
-                <Item style={{ marginLeft: 0, width: '100%' }}>
+                <Item style={{ marginLeft: 0, width: '100%', borderColor: 'transparent' }}>
                     <Picker
                         mode='dropdown'
-                        iosIcon={<Icon name='ios-arrow-down-outline' />}
+                        iosIcon={<Icon name='ios-arrow-down-outline' style={{ color: colors.white }} />}
                         selectedValue={props.currentLocale.code}
-                        onValueChange={props.setLocale}>
+                        onValueChange={props.setLocale}
+                        textStyle={{ color: colors.white, fontWeight: 'bold' }}
+                        style={[
+                            applicationStyles.roundedButton,
+                            { width: languagePickerWidth },
+                        ]}
+                    >
                         {props.availableLocales.map((locale: LocaleInfo) => (
                             <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
                         ))}
                     </Picker>
                 </Item>
             </Form>
-            <Button full onPress={goToRouteWithoutParameter(Routes.Home, props.history)}>
-                <Text><Trans>Get started</Trans></Text>
-            </Button>
+            <View>
+                <Button
+                    full
+                    onPress={goToRouteWithoutParameter(Routes.Home, props.history)}
+                    style={[
+                        applicationStyles.roundedButton,
+                        { width: languagePickerWidth, backgroundColor: colors.lightGrey },
+                    ]}
+                >
+                    <Text style={{ fontWeight: 'bold', color: colors.black }}>
+                        <Trans>Get started</Trans>
+                    </Text>
+                </Button>
+            </View>
         </View>
     );
 }

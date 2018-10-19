@@ -17,7 +17,7 @@ export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
     (props: AllExploreProps): JSX.Element => {
         const sectionsGroupedIntoThrees = R.splitEvery(3, props.sections);
         return <Content padder>
-            <Text style={applicationStyles.pageTitle}><Trans>Learn about:</Trans></Text>
+            <Text style={applicationStyles.title}><Trans>Learn about:</Trans></Text>
             <View style={[{flex: 1}]}>
                 {sectionsGroupedIntoThrees.map((sections: ReadonlyArray<ExploreSection>) => (
                     <RowOfSectionButtons

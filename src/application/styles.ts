@@ -1,21 +1,31 @@
 import { StyleSheet, Platform } from 'react-native';
 
 export const colors = {
-    black: 'black',
-    lightGrey: 'lightgrey',
+    // Phasing out:
     lighterGrey: '#F5F5F5',
     darkGrey: '#666666',
-    darkGreyWithAlpha: 'rgba(0, 0, 0, 0.4)',
-    blue: '#6666ff',
     brightBlue: '#0066ff',
-    white: 'white',
     urlColor: 'blue',
+    // Keeping:
+    topaz: '#11CAC0',
+    blueGreen: '#0D9790',
+    darkBlueGrey: '#1D4A48',
+    white: '#FFFFFF',
+    lightGrey: '#EAEAE3',
+    lightGrey2: '#D0D0C5',
+    black: '#313131',
+    greyishBrown: '#595959',
+    darkGreyWithAlpha: 'rgba(0, 0, 0, 0.4)',
 };
 
 export const values = {
+    largeIconSize: 30,
+    navigationIconSize: 28,
     smallIconSize: 20,
     smallerIconSize: 18,
     smallTextSize: 12,
+    roundedBorderRadius: 25,
+    lessRoundedBorderRadius: 10,
 };
 
 export const applicationStyles = StyleSheet.create({
@@ -37,15 +47,34 @@ export const applicationStyles = StyleSheet.create({
         marginLeft: -10,
         marginRight: -10,
     },
-    pageTitle: {
+    title: {
+        color: colors.black,
         fontWeight: 'bold',
-        fontSize: 22,
+        fontSize: 30,
+        marginTop: 15,
+        marginBottom: 10,
+        textAlign: 'left',
+    },
+    subTitle: {
+        color: colors.black,
+        fontWeight: 'bold',
+        fontSize: 20,
         marginTop: 10,
-        marginBottom: 20,
+        marginBottom: 7,
         textAlign: 'left',
     },
     divider: {
         marginTop: 20,
+    },
+    roundedButton: {
+        backgroundColor: colors.topaz,
+        borderRadius: values.roundedBorderRadius,
+    },
+    boxShadow: {
+        shadowColor: colors.black,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 4,
     },
 });
 

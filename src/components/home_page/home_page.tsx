@@ -1,46 +1,23 @@
 import React from 'react';
-import { Trans } from '@lingui/react';
-import { View, Content, Text } from 'native-base';
-import { applicationStyles } from '../../application/styles';
+import { Content } from 'native-base';
+import { colors } from '../../application/styles';
 import { CopyrightComponent } from './copyright';
-import { HomePageProps } from './props';
-import { LearnSectionComponent } from './learn_section_component';
-import { MyPlanComponent } from './my_plan_component';
-import { RouterProps } from '../../application/routing';
-import { TaskListItemActions } from '../tasks/task_list_item';
+import { IntroComponent } from './intro';
+import { PersonalizeComponent } from './personalize';
+import { MyToolsComponent } from './my_tools';
+import { History } from 'history';
 
-export { HomePageProps } from './props';
+export interface HomePageProps {
+    readonly history: History;
+}
 
-type AllHomePageProps = I18nProps & HomePageProps & TaskListItemActions & RouterProps;
-
-export const HomePageComponent: React.StatelessComponent<AllHomePageProps> = (props: AllHomePageProps): JSX.Element => {
+export const HomePageComponent: React.StatelessComponent<HomePageProps> = (props: HomePageProps): JSX.Element => {
     return (
-        <Content padder>
-            {introduction()}
-            <LearnSectionComponent {...props} />
-            <MyPlanComponent {...props} />
+        <Content padder style={{ backgroundColor: colors.lightGrey }}>
+            <IntroComponent />
+            <PersonalizeComponent history={props.history} />
+            <MyToolsComponent history={props.history} />
             <CopyrightComponent />
         </Content >
     );
 };
-
-const introduction = (): JSX.Element => (
-    <View style={[
-        { backgroundColor: 'darkblue' },
-    ]}>
-        <Text style={[
-            applicationStyles.bold,
-            { color: 'white' },
-            { textAlign: 'left' },
-            { fontWeight: 'bold' },
-            { fontSize: 22 },
-            { marginTop: 20 },
-            { marginLeft: 20 },
-            { marginRight: 20 },
-            { marginBottom: 20 },
-        ]}>
-            <Trans>Arrival Advisor helps you start your new life in Canada, every step of the way.</Trans>
-        </Text>
-        <View style={applicationStyles.hr} />
-    </View>
-);

@@ -28,7 +28,7 @@ export const Component: React.StatelessComponent<Props> = (props: Props): JSX.El
         { flex: 1 },
     ]}>
         <Content padder>
-            <Text style={applicationStyles.pageTitle}><Trans>Personalize My Plan</Trans></Text>
+            <Text style={applicationStyles.title}><Trans>Personalize My Plan</Trans></Text>
             <Text style={[
                 { marginBottom: 20 },
                 { textAlign: 'left' },

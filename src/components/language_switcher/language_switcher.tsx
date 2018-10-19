@@ -22,7 +22,7 @@ export const LanguageSwitcher = (props: LanguageSwitcherProps): JSX.Element => {
     const currentLocaleSection = buildLocaleSectionListData(currentLocale, availableLocales, localeListItemBuilder);
 
     return (
-        <Container style={{ height: '100%', backgroundColor: colors.blue }}>
+        <Container style={{ height: '100%', backgroundColor: colors.lightGrey }}>
             <Header>
                 <Body><Title><Trans>Select language</Trans></Title></Body>
             </Header>

@@ -161,7 +161,7 @@ function buildHeader(taskTitle: string, stateTitle: JSX.Element, stateButtons: R
         <View style={[
             { flexDirection: 'column' },
         ]}>
-            <Text style={applicationStyles.pageTitle}>{taskTitle}</Text>
+            <Text style={applicationStyles.title}>{taskTitle}</Text>
             <Text style={[
                 applicationStyles.bold,
                 { marginBottom: 5 },

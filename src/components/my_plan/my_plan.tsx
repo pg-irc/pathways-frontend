@@ -179,7 +179,7 @@ interface HeaderActions {
 const Header: React.StatelessComponent<HeaderProps & HeaderActions> = (props: HeaderProps & HeaderActions): JSX.Element => {
     return (
         <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }]}>
-            <Text style={[applicationStyles.pageTitle]}><Trans>My Plan</Trans></Text>
+            <Text style={[applicationStyles.title]}><Trans>My Plan</Trans></Text>
             <Button onPress={(): void => props.completedButtonOnPress()} rounded small style={[{ backgroundColor: colors.darkGrey }]}>
                 <Text><Trans>COMPLETED</Trans> {props.completedCount}</Text>
             </Button>
