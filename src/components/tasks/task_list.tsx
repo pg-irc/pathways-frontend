@@ -15,7 +15,7 @@ export interface TaskListProps extends TaskListItemStyleProps {
 
 export const noTasksAddedYetTextComponent = (): JSX.Element => (
     <Text style={[
-        { textAlign: 'left' },
+        { textAlign: 'center' },
     ]}>
         <Trans>No tasks added yet</Trans>
     </Text>
@@ -23,14 +23,18 @@ export const noTasksAddedYetTextComponent = (): JSX.Element => (
 
 export const noTasksRecommendedTextComponent = (): JSX.Element => (
     <Text style={[
-        { textAlign: 'left' },
+        { textAlign: 'center' },
     ]}>
         <Trans>No tasks to recommend</Trans>
     </Text>
 );
 
 export const noTasksCompletedTextComponent = (): JSX.Element => (
-    <Text><Trans>No tasks completed</Trans></Text>
+    <Text style={[
+        { textAlign: 'center' },
+    ]}>
+        <Trans>No tasks completed</Trans>
+    </Text>
 );
 
 type Props = TaskListProps & TaskListItemActions & RouterProps;
