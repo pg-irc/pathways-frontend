@@ -24,7 +24,7 @@ export const PersonalizeComponent: React.StatelessComponent<PersonalizeProps> = 
         <Text style={[applicationStyles.subTitle, { color: colors.white }]}>
             <Trans>Personalize My Plan</Trans>
         </Text>
-        <Text style={{ color: colors.white, marginBottom: 15, textAlign: 'left' }}>
+        <Text style={[ applicationStyles.p, { color: colors.white, marginBottom: 15 } ]}>
             <Trans>Get recommended tasks and services for settling in Canada </Trans>
         </Text>
         <Button

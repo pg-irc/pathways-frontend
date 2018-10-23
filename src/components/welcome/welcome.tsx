@@ -37,21 +37,17 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & Route
             <Text style={{ textAlign: 'center', color: colors.white, marginBottom: 40 }}>
                 <Trans>For newcomers to Canada. Helping you start your new life in Canada, every step of the way.</Trans>
             </Text>
-            <Form style={{ marginBottom: 20 }}>
-                <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 15, color: colors.white, marginBottom: 5 }}>
+            <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
+                <Text style={{textAlign: 'center', fontWeight: 'bold', fontSize: 15, color: colors.white, marginBottom: 10 }}>
                     <Trans>Select your language</Trans>
                 </Text>
-                <Item style={{ marginLeft: 0, width: '100%', borderColor: 'transparent' }}>
+                <Item style={{ marginLeft: 0, borderColor: 'transparent', justifyContent: 'center' }}>
                     <Picker
                         mode='dropdown'
-                        iosIcon={<Icon name='ios-arrow-down-outline' style={{ color: colors.white }} />}
+                        iosIcon={<Icon name='ios-arrow-down-outline' />}
                         selectedValue={props.currentLocale.code}
                         onValueChange={props.setLocale}
-                        textStyle={{ color: colors.white, fontWeight: 'bold' }}
-                        style={[
-                            applicationStyles.roundedButton,
-                            { width: languagePickerWidth },
-                        ]}
+                        style={{ backgroundColor: colors.lightGrey }}
                     >
                         {props.availableLocales.map((locale: LocaleInfo) => (
                             <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
@@ -65,10 +61,10 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & Route
                     onPress={goToRouteWithoutParameter(Routes.Home, props.history)}
                     style={[
                         applicationStyles.roundedButton,
-                        { width: languagePickerWidth, backgroundColor: colors.lightGrey },
+                        { width: languagePickerWidth },
                     ]}
                 >
-                    <Text style={{ fontWeight: 'bold', color: colors.black }}>
+                    <Text style={{ fontWeight: 'bold' }}>
                         <Trans>Get started</Trans>
                     </Text>
                 </Button>

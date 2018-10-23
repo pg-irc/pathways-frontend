@@ -1,9 +1,9 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
-import { StyleSheet, Dimensions, LayoutChangeEvent } from 'react-native';
-import { View, Icon, Button } from 'native-base';
+import { StyleSheet, Dimensions, LayoutChangeEvent, TouchableOpacity } from 'react-native';
+import { View, Icon } from 'native-base';
 import { Notification } from '../../stores/notifications';
-import { colors } from '../../application/styles';
+import { colors, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface ModalNotificationProps {
@@ -92,9 +92,9 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
         return (
             <View>
                 <View style={styles.modalHeader}>
-                    <Button onPress={onPress} small>
+                    <TouchableOpacity onPress={onPress}>
                         <Icon name='close' />
-                    </Button>
+                    </TouchableOpacity>
                 </View>
                 <View>{content}</View>
             </View>
@@ -112,10 +112,10 @@ const styles = StyleSheet.create({
         right: 0,
     },
     modal: {
-        borderRadius: 5,
+        borderRadius: values.lessRoundedBorderRadius,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.white,
+        backgroundColor: colors.lightGrey,
         position: 'absolute',
         padding: 10,
         bottom: '50%',

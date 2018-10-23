@@ -2,7 +2,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { I18nManager, StyleSheet } from 'react-native';
-import { Content, Text, View, Icon, Button } from 'native-base';
+import { Content, Text, View, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { applicationStyles, colors, values } from '../../application/styles';
 import { CollapsibleContent } from '../collapsible_content/collapsible_content';
@@ -15,7 +15,6 @@ import {
 } from '../tasks/task_list';
 import { TaskListItemActions } from '../tasks/task_list_item';
 import { RouterProps } from '../../application/routing';
-import { MyPlanIntroComponent, EmptyMyPlanIntroComponent } from './my_plan_intro_component';
 
 export interface MyPlanProps {
     readonly savedTasks: ReadonlyArray<TaskListItem>;
@@ -57,36 +56,37 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
 
     render(): JSX.Element {
         return (
-            <Content padder ref={(component: ContentComponentRef): ContentComponentRef => this.contentComponent = component}>
-                <Header
-                    completedCount={this.props.completedTasks.length}
-                    completedButtonOnPress={this.getCompletedButtonOnPress}
-                />
-                <Intro {...this.props} />
+            <Content
+                padder
+                ref={(component: ContentComponentRef): ContentComponentRef => this.contentComponent = component}
+                style={applicationStyles.body}
+            >
+                <Intro />
                 <CollapsibleContent
                     collapsedHeader={this.getHeading(this.getSavedTasksHeading(), this.collapsedIcon())}
                     expandedHeader={this.getHeading(this.getSavedTasksHeading(), this.expandedIcon())}
                     content={this.getContent(this.props.savedTasks, noTasksAddedYetTextComponent())}
                     onHeaderPress={this.toggleSavedTasksCollapsed}
                     isCollapsed={this.state.savedTasksIsCollapsed}
+                    style={styles.clickableHeading}
                 />
                 <View style={applicationStyles.divider} />
                 <CollapsibleContent
                     collapsedHeader={this.getHeading(this.getRecommendedTasksHeading(), this.collapsedIcon())}
                     expandedHeader={this.getHeading(this.getRecommendedTasksHeading(), this.expandedIcon())}
-                    content={this.getContent(this.props.recommendedTasks, noTasksRecommendedTextComponent(), styles.greyBackground)}
+                    content={this.getContent(this.props.recommendedTasks, noTasksRecommendedTextComponent())}
                     onHeaderPress={this.toggleRecommendedTasksCollapsed}
                     isCollapsed={this.state.recommendedTasksIsCollapsed}
-                    style={styles.greyBackground}
+                    style={styles.clickableHeading}
                 />
                 <View style={applicationStyles.divider} />
                 <CollapsibleContent
                     collapsedHeader={this.getHeading(this.getCompletedTasksHeading(), this.collapsedIcon())}
                     expandedHeader={this.getHeading(this.getCompletedTasksHeading(), this.expandedIcon())}
-                    content={this.getContent(this.props.completedTasks, noTasksCompletedTextComponent(), styles.greyBackground)}
+                    content={this.getContent(this.props.completedTasks, noTasksCompletedTextComponent())}
                     onHeaderPress={this.toggleCompletedTasksCollapsed}
                     isCollapsed={this.state.completedTasksIsCollapsed}
-                    style={styles.greyBackground}
+                    style={styles.clickableHeading}
                 />
             </Content>
         );
@@ -103,16 +103,20 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     private getSavedTasksHeading(): JSX.Element {
         return (
             <View>
-                <Text style={[applicationStyles.bold]}><Trans>MY TASKS</Trans></Text>
+                <Text style={applicationStyles.roundedButtonText}>
+                    <Trans>MY TASKS</Trans>
+                </Text>
             </View>
         );
     }
 
     private getRecommendedTasksHeading(): JSX.Element {
         return (
-            <View style={[{ flexDirection: 'row' }]}>
-                <Text style={[applicationStyles.bold]}><Trans>RECOMMENDED FOR ME</Trans></Text>
-                <Icon style={styles.icon} name='star-circle' type='MaterialCommunityIcons' />
+            <View style={styles.recommendedTasksHeading}>
+                <Text style={applicationStyles.roundedButtonText}>
+                    <Trans>RECOMMENDED FOR ME</Trans>
+                </Text>
+                <Icon style={styles.headingYellowStar} name='star' type='FontAwesome' />
             </View>
         );
     }
@@ -120,27 +124,28 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     private getCompletedTasksHeading(): JSX.Element {
         return (
             <View>
-                <Text style={[applicationStyles.bold]}><Trans>COMPLETED TASKS</Trans></Text>
+                <Text style={applicationStyles.roundedButtonText}>
+                    <Trans>COMPLETED TASKS</Trans>
+                </Text>
             </View>
         );
     }
 
     private getHeading(heading: JSX.Element, icon: string): JSX.Element {
         return (
-            <View style={[styles.heading]}>
+            <View style={styles.heading}>
                 {heading}
-                <Icon style={styles.icon} name={icon} />
+                <Icon style={styles.headingIcon} name={icon} />
             </View>
         );
     }
 
-    private getContent(tasks: ReadonlyArray<TaskListItem>, emptyTaskListComponent: JSX.Element, style?: object): JSX.Element {
+    private getContent(tasks: ReadonlyArray<TaskListItem>, emptyTaskListComponent: JSX.Element): JSX.Element {
         return (
             <TaskListComponent
                 {...this.props}
                 tasks={tasks}
                 emptyTaskListComponent={emptyTaskListComponent}
-                listItemStyle={style}
                 savedTasksIdList={R.map((item: TaskListItem) => item.id, this.props.savedTasks)}
             />
         );
@@ -168,39 +173,41 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     }
 }
 
-interface HeaderProps {
-    readonly completedCount: number;
-}
-
-interface HeaderActions {
-    readonly completedButtonOnPress: () => void;
-}
-
-const Header: React.StatelessComponent<HeaderProps & HeaderActions> = (props: HeaderProps & HeaderActions): JSX.Element => {
-    return (
-        <View style={[{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }]}>
-            <Text style={[applicationStyles.title]}><Trans>My Plan</Trans></Text>
-            <Button onPress={(): void => props.completedButtonOnPress()} rounded small style={[{ backgroundColor: colors.darkGrey }]}>
-                <Text><Trans>COMPLETED</Trans> {props.completedCount}</Text>
-            </Button>
-        </View>
-    );
-};
-
-const Intro: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    R.isEmpty(props.recommendedTasks) ? <EmptyMyPlanIntroComponent {...props} /> : <MyPlanIntroComponent {...props} />
+const Intro = (): JSX.Element => (
+    <View style={styles.intro}>
+        <Text style={applicationStyles.title}><Trans>My Plan</Trans></Text>
+        <Text style={applicationStyles.p}>
+            <Trans>Keep track of everything I need to do to settle in Canada</Trans>
+        </Text>
+    </View>
 );
 
+
 const styles = StyleSheet.create({
+    intro: {
+        marginBottom: 10,
+    },
+    clickableHeading: {
+        backgroundColor: colors.topaz,
+        padding: 15,
+        borderRadius: values.lessRoundedBorderRadius,
+        marginBottom: 3,
+    },
+    recommendedTasksHeading: {
+        flexDirection: 'row',
+    },
     heading: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    icon: {
+    headingIcon: {
         fontSize: values.smallIconSize,
+        color: colors.white,
     },
-    greyBackground: {
-        backgroundColor: colors.lighterGrey,
+    headingYellowStar: {
+        fontSize: values.smallerIconSize,
+        color: colors.sunYellow,
+        marginLeft: 3,
     },
 });

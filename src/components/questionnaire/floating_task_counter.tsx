@@ -88,7 +88,7 @@ export class FloatingTaskCounter extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
     floatingCount: {
-        backgroundColor: colors.darkGrey,
+        backgroundColor: colors.lightGrey2,
         padding: 5,
         flex: 1,
         position: 'absolute',

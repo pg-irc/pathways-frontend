@@ -1,6 +1,6 @@
 import React from 'react';
 import { Content } from 'native-base';
-import { colors } from '../../application/styles';
+import { applicationStyles } from '../../application/styles';
 import { CopyrightComponent } from './copyright';
 import { IntroComponent } from './intro';
 import { PersonalizeComponent } from './personalize';
@@ -13,7 +13,7 @@ export interface HomePageProps {
 
 export const HomePageComponent: React.StatelessComponent<HomePageProps> = (props: HomePageProps): JSX.Element => {
     return (
-        <Content padder style={{ backgroundColor: colors.lightGrey }}>
+        <Content padder style={applicationStyles.body} >
             <IntroComponent />
             <PersonalizeComponent history={props.history} />
             <MyToolsComponent history={props.history} />

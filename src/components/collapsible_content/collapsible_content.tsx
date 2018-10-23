@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, ListItem } from 'native-base';
+import { View } from 'native-base';
 import Collapsible from 'react-native-collapsible';
+import { TouchableOpacity } from 'react-native';
 
 export interface CollapsibleComponentProps {
     readonly collapsedHeader: JSX.Element;
@@ -17,11 +18,11 @@ type Props = CollapsibleComponentProps & CollapsibleComponentActions;
 
 export const CollapsibleContent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View>
-        <ListItem
+        <TouchableOpacity
             style={props.style ? props.style : undefined}
-            noBorder button noIndent onPress={(): void => props.onHeaderPress()}>
+            onPress={(): void => props.onHeaderPress()}>
             {props.isCollapsed ? props.collapsedHeader : props.expandedHeader}
-        </ListItem>
+        </TouchableOpacity>
         <Collapsible collapsed={props.isCollapsed}>
             {props.content}
         </Collapsible>

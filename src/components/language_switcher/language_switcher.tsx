@@ -23,8 +23,8 @@ export const LanguageSwitcher = (props: LanguageSwitcherProps): JSX.Element => {
 
     return (
         <Container style={{ height: '100%', backgroundColor: colors.lightGrey }}>
-            <Header>
-                <Body><Title><Trans>Select language</Trans></Title></Body>
+            <Header style={{ backgroundColor: colors.blueGreen }}>
+                <Body><Title style={{ color: colors.white }}><Trans>Select your language</Trans></Title></Body>
             </Header>
             <Content>
                 <SectionList

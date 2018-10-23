@@ -62,7 +62,7 @@ export const HelpComponent: React.StatelessComponent<AllProps> =
 
 const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element => (
     <View style={[{ flexDirection: 'row', justifyContent: 'center', paddingTop: 10, paddingBottom: 40 }]}>
-        <Button style={[{ backgroundColor: colors.darkGrey }]}>
+        <Button style={[{ backgroundColor: colors.lightGrey2 }]}>
             <Text><Trans>CONTACT SETTLEMENT WORKER</Trans></Text>
         </Button>
     </View>

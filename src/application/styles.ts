@@ -1,12 +1,6 @@
 import { StyleSheet, Platform } from 'react-native';
 
 export const colors = {
-    // Phasing out:
-    lighterGrey: '#F5F5F5',
-    darkGrey: '#666666',
-    brightBlue: '#0066ff',
-    urlColor: 'blue',
-    // Keeping:
     topaz: '#11CAC0',
     blueGreen: '#0D9790',
     darkBlueGrey: '#1D4A48',
@@ -16,11 +10,12 @@ export const colors = {
     black: '#313131',
     greyishBrown: '#595959',
     darkGreyWithAlpha: 'rgba(0, 0, 0, 0.4)',
+    sunYellow: '#FFE22B',
 };
 
 export const values = {
-    largeIconSize: 30,
     navigationIconSize: 28,
+    largeIconSize: 30,
     smallIconSize: 20,
     smallerIconSize: 18,
     smallTextSize: 12,
@@ -29,6 +24,13 @@ export const values = {
 };
 
 export const applicationStyles = StyleSheet.create({
+    p: {
+        textAlign: 'left',
+        color: colors.black,
+    },
+    body: {
+        backgroundColor: colors.lightGrey,
+    },
     bold: {
         fontWeight: 'bold',
     },
@@ -70,11 +72,16 @@ export const applicationStyles = StyleSheet.create({
         backgroundColor: colors.topaz,
         borderRadius: values.roundedBorderRadius,
     },
+    roundedButtonText: {
+        fontWeight: 'bold',
+        color: colors.white,
+    },
     boxShadow: {
         shadowColor: colors.black,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.8,
         shadowRadius: 4,
+        elevation: 1,
     },
 });
 

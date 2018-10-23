@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         right: 0,
     },
     dialog: {
-        backgroundColor: colors.lighterGrey,
+        backgroundColor: colors.lightGrey,
         padding: 10,
         position: 'absolute',
         top: 50,

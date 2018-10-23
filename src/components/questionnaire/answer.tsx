@@ -24,7 +24,7 @@ export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Eleme
     const onPress = (): ChooseAnswerAction => props.chooseAnswer(props.answer.id);
     return (
         <ListItem button noIndent noBorder onPress={onPress} style={[
-            { backgroundColor: colors.lighterGrey },
+            { backgroundColor: colors.lightGrey },
             { borderTopColor: colors.white },
             { borderTopWidth: 1 },
         ]}>

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     notification: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.darkGrey,
+        backgroundColor: colors.lightGrey2,
         flex: 1,
         position: 'absolute',
         padding: 10,

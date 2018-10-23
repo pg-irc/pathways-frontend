@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { Text, View, Button } from 'native-base';
-import { colors } from '../../application/styles';
+import { colors, applicationStyles } from '../../application/styles';
 
 export const taskAddedNotification = (): JSX.Element => {
     return (
@@ -18,7 +18,7 @@ export const questionnaireInformationNotification = (goToQuestionnaire: () => vo
                 <Trans>Help us recommend you tasks by answering a few questions.</Trans>
             </Text>
             <View style={[{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }]}>
-                <Button onPress={goToQuestionnaire} rounded>
+                <Button onPress={goToQuestionnaire} style={applicationStyles.roundedButton}>
                     <Text><Trans>Go to questionnaire</Trans></Text>
                 </Button>
             </View>

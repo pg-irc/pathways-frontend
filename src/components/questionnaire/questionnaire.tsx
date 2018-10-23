@@ -100,7 +100,7 @@ const renderQuestionContent = (question: selector.Question, props: Props): JSX.E
 const renderHeader = R.curry((props: Props, section: AccordionSection, _index: number, isActive: boolean): JSX.Element => (
     <ListItem button noIndent noBorder
         onPress={(): SetActiveQuestionAction => props.setActiveQuestion(section.id)}
-        style={isActive ? [{ backgroundColor: colors.lighterGrey }] : [{ backgroundColor: colors.white }]}>
+        style={isActive ? [{ backgroundColor: colors.lightGrey }] : [{ backgroundColor: colors.white }]}>
         <Text style={isActive ? [{ padding: 10 }, applicationStyles.bold] : [{ padding: 10 }]}>
             {section.title}
         </Text>

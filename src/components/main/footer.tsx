@@ -5,7 +5,7 @@ import { History, Location } from 'history';
 import { Trans } from '@lingui/react';
 import { Routes, routePathWithoutParameter, goToRouteWithoutParameter } from '../../application/routing';
 import { emptyComponent } from '../empty_component/empty_component';
-import { colors, applicationStyles, values } from '../../application/styles';
+import { colors, values, applicationStyles } from '../../application/styles';
 
 export interface FooterProps {
     readonly history: History;
@@ -27,7 +27,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
 
     return (
         <Footer style={applicationStyles.boxShadow}>
-            <FooterTab>
+            <FooterTab style={[{ backgroundColor: colors.white }]}>
                 {navigationButton(props.history, Routes.Home, 'Home', 'home', isOnHomeScreen)}
                 {navigationButton(props.history, Routes.MyPlan, 'My plan', 'check', isOnMyPlanScreen)}
                 {navigationButton(props.history, Routes.Learn, 'Learn', 'book', isOnLearnScreen)}
@@ -37,7 +37,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
 };
 
 const navigationButton = (history: History, route: Routes, text: string, icon: string, isActive: boolean): JSX.Element => (
-    <Button onPress={goToRouteWithoutParameter(route, history)}>
+    <Button vertical onPress={goToRouteWithoutParameter(route, history)}>
         <Icon
             type='FontAwesome'
             name={icon}

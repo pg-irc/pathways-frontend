@@ -1,12 +1,11 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
 import * as R from 'ramda';
-import { FlatList, ListRenderItemInfo } from 'react-native';
+import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { applicationStyles, markdownStyles } from '../../application/styles';
-import { taskDetailStyles } from './styles';
 import { Trans } from '@lingui/react';
 import { TaskServices } from '../../selectors/services/task_services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
@@ -49,7 +48,7 @@ export class TaskDetailComponent extends React.Component<Props> {
         return (
             <View style={{ flex: 1 }}>
                 <TitleComponent {...this.props} />
-                <Tabs style={taskDetailStyles.tabs} onChangeTab={this.props.requestUpdateTaskServices}>
+                <Tabs style={styles.tabs} onChangeTab={this.props.requestUpdateTaskServices}>
                     <Tab heading={<TabHeading><Text><Trans>INFORMATION</Trans></Text></TabHeading>}>
                         <InformationTab {...this.props} />
                     </Tab>
@@ -176,10 +175,10 @@ function buildHeader(taskTitle: string, stateTitle: JSX.Element, stateButtons: R
 
 const InformationTab = (props: Props): JSX.Element => (
     <Content padder>
-        <Grid style={taskDetailStyles.tabContent}>
+        <Grid style={styles.tabContent}>
             {props.task.isRecommended ? <ThisTaskIsRecommended /> : <EmptyComponent />}
             <TaxonomyComponent {...props} />
-            <Row style={taskDetailStyles.row}>
+            <Row style={styles.row}>
                 <Markdown style={markdownStyles}>{props.task.description}</Markdown>
             </Row>
             <RelatedTasksComponent
@@ -191,22 +190,22 @@ const InformationTab = (props: Props): JSX.Element => (
 );
 
 const ThisTaskIsRecommended = (): JSX.Element => (
-    <Row style={taskDetailStyles.row}>
+    <Row style={styles.row}>
         <Col size={10}>
             <Icon type='MaterialCommunityIcons' name='star-circle' />
         </Col>
-        <Col size={90} style={taskDetailStyles.iconText}>
+        <Col size={90} style={styles.iconText}>
             <Text style={[{ textAlign: 'left' }]}>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
         </Col>
     </Row>
 );
 
 const TaxonomyComponent = ({ task }: Props): JSX.Element => (
-    <Row style={taskDetailStyles.row}>
+    <Row style={styles.row}>
         <Col size={10}>
             <Icon type='MaterialCommunityIcons' name={task.exploreSection.icon} />
         </Col>
-        <Col size={90} style={taskDetailStyles.iconText}>
+        <Col size={90} style={styles.iconText}>
             <Text style={[{ textAlign: 'left' }]}>This task helps with <Text style={applicationStyles.bold}>{task.exploreSection.name}</Text>.</Text>
         </Col>
     </Row>
@@ -239,3 +238,24 @@ function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
 }
 
 interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
+
+const styles = StyleSheet.create({
+    actions: {
+        marginTop: 15,
+        marginBottom: 10,
+    },
+    iconText: {
+        justifyContent: 'center',
+    },
+    tabs: {
+        marginLeft: -10,
+        marginRight: -10,
+    },
+    tabContent: {
+        padding: 10,
+    },
+    row: {
+        height: 'auto',
+        marginBottom: 10,
+    },
+});
