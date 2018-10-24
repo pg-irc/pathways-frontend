@@ -60,8 +60,9 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
                     onPocketButtonPress={this.onPocketButtonPress}
                 />
                 <ScrollView
-                    style={[applicationStyles.body, { padding: 10 } ]}
+                    style={[applicationStyles.body, { padding: values.contentPadding } ]}
                     onScroll={this.onScroll}
+                    scrollEventThrottle={8}
                 >
                     <IntroComponent />
                     <CollapsibleContent

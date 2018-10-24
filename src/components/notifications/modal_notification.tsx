@@ -91,11 +91,9 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
         const onPress = (): void => this.props.removeNotification();
         return (
             <View>
-                <View style={styles.modalHeader}>
-                    <TouchableOpacity onPress={onPress}>
-                        <Icon name='close' />
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity onPress={onPress} style={styles.modalHeader}>
+                    <Icon name='close' />
+                </TouchableOpacity>
                 <View>{content}</View>
             </View>
         );
@@ -104,6 +102,7 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
     modalOverlay: {
+        alignItems: 'center',
         backgroundColor: colors.darkGreyWithAlpha,
         position: 'absolute',
         height: Dimensions.get('screen').height,
@@ -120,8 +119,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         padding: 10,
         bottom: '50%',
-        left: '5%',
-        right: '5%',
     },
     modalHeader: {
         flex: 1,

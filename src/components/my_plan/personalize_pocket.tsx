@@ -35,7 +35,7 @@ export const PersonalizePocketComponent: React.StatelessComponent<Props> = (prop
 
 const getOpenPocket = (props: Props): JSX.Element => (
     <View style={{ paddingHorizontal: 30, alignItems: 'center' }}>
-        <Icon name='user' type='FontAwesome' style={{ marginTop: 15, marginBottom: 5 }}/>
+        <Icon name='user' type='FontAwesome' style={{ marginTop: 15, marginBottom: 5, color: colors.black }}/>
         <Text style={{
             color: colors.black,
             fontSize: values.smallTextSize,

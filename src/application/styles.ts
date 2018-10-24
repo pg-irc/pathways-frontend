@@ -7,6 +7,7 @@ export const colors = {
     white: '#FFFFFF',
     lightGrey: '#EAEAE3',
     lightGrey2: '#D0D0C5',
+    deepBlack: '#000000',
     black: '#313131',
     greyishBrown: '#595959',
     darkGreyWithAlpha: 'rgba(0, 0, 0, 0.4)',
@@ -21,6 +22,7 @@ export const values = {
     smallTextSize: 12,
     roundedBorderRadius: 25,
     lessRoundedBorderRadius: 10,
+    contentPadding: 10,
 };
 
 export const applicationStyles = StyleSheet.create({

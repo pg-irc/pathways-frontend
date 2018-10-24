@@ -1,8 +1,9 @@
 import React from 'react';
-import { ListItem, Body, Right, Text, CheckBox, Radio } from 'native-base';
+import { TouchableOpacity } from 'react-native';
+import { View,  Text, Icon } from 'native-base';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { Id } from '../../stores/questionnaire';
-import { colors } from '../../application/styles';
+import { applicationStyles, colors, values } from '../../application/styles';
 import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
 
 export interface AnswerProps {
@@ -14,40 +15,52 @@ export interface AnswerActions {
 }
 
 type Props = AnswerProps & AnswerActions;
-enum AnswerType {
-    CheckboxAnswer,
-    RadioAnswer,
-}
 
 export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const answerType = props.answer.acceptMultipleAnswers ? AnswerType.CheckboxAnswer : AnswerType.RadioAnswer;
     const onPress = (): ChooseAnswerAction => props.chooseAnswer(props.answer.id);
     return (
-        <ListItem button noIndent noBorder onPress={onPress} style={[
-            { backgroundColor: colors.lightGrey },
-            { borderTopColor: colors.white },
-            { borderTopWidth: 1 },
-        ]}>
-            <Body>
-                <Text style={[
-                    { textAlign: 'left' },
-                ]}>
+        <TouchableOpacity
+            onPress={onPress}
+            style={{
+                padding: 10,
+                backgroundColor: colors.white,
+                borderRadius: values.lessRoundedBorderRadius,
+                margin: 5,
+                flex: 4,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+            }}
+        >
+            <View style={{ flex: 4 }}>
+                <Text style={[applicationStyles.p, { fontWeight: 'bold' }]}>
                     {props.answer.text}
                 </Text>
-            </Body>
-            <Right style={[{ paddingHorizontal: 7 }]}>
-                {renderComponentForAnswerType(props, answerType, onPress)}
-            </Right>
-        </ListItem>
+            </View>
+            <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center', paddingRight: 5 }}>
+                {renderComponentForAnswerType(props, answerType)}
+            </View>
+        </TouchableOpacity>
     );
 };
 
-const renderComponentForAnswerType = (props: Props, answerType: AnswerType, onPress: () => void): JSX.Element => {
+enum AnswerType {
+    CheckboxAnswer,
+    RadioAnswer,
+}
+
+const renderComponentForAnswerType = (props: Props, answerType: AnswerType): JSX.Element => {
+    const type = 'MaterialCommunityIcons';
+    const style = { color: colors.topaz };
     switch (answerType) {
         case AnswerType.CheckboxAnswer:
-            return <CheckBox checked={props.answer.isChosen} onPress={onPress} />;
+            return props.answer.isChosen ?
+                <Icon type={type} name='checkbox-marked' style={style} /> :
+                <Icon type={type} name='checkbox-blank-outline' style={style} />;
         case AnswerType.RadioAnswer:
         default:
-            return <Radio selected={props.answer.isChosen} onPress={onPress} />;
+            return props.answer.isChosen ?
+                <Icon type={type} name='checkbox-blank-circle' style={style}/> :
+                <Icon type={type} name='checkbox-blank-circle-outline' style={style} />;
     }
 };

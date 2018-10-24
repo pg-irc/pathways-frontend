@@ -1,5 +1,5 @@
 import React from 'react';
-import { colors, values } from '../../application/styles';
+import { values, applicationStyles } from '../../application/styles';
 import { Button, View, Text } from 'native-base';
 import { Answer } from './answer';
 import { Trans } from '@lingui/react';
@@ -47,13 +47,13 @@ export const Question: React.StatelessComponent<Props> = (props: Props): JSX.Ele
 };
 
 const renderFinalQuestionButton = (history: History): JSX.Element => (
-    <Button style={[{ backgroundColor: colors.lightGrey2 }]} small onPress={goToRouteWithoutParameter(Routes.MyPlan, history)}>
-        <Text><Trans>GO TO MY PLAN</Trans></Text>
+    <Button style={applicationStyles.roundedButton} small onPress={goToRouteWithoutParameter(Routes.MyPlan, history)}>
+        <Text style={applicationStyles.roundedButtonText}><Trans>GO TO MY PLAN</Trans></Text>
     </Button>
 );
 
 const renderNextQuestionButton = (onPress: () => SetActiveQuestionAction): JSX.Element => (
-    <Button style={[{ backgroundColor: colors.lightGrey2 }]} small onPress={onPress}>
-        <Text><Trans>NEXT</Trans></Text>
+    <Button style={applicationStyles.roundedButton} small onPress={onPress}>
+        <Text style={applicationStyles.roundedButtonText}><Trans>NEXT</Trans></Text>
     </Button>
 );

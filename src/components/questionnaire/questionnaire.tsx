@@ -1,7 +1,8 @@
 import React from 'react';
 import * as R from 'ramda';
 import Accordion from 'react-native-collapsible/Accordion';
-import { Content, View, Text, ListItem } from 'native-base';
+import { TouchableOpacity } from 'react-native';
+import { Content, View, Text } from 'native-base';
 import * as selector from '../../selectors/questionnaire/question';
 import { Question } from './question';
 import { applicationStyles, colors } from '../../application/styles';
@@ -9,6 +10,7 @@ import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
 import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
 import { FloatingTaskCounter } from './floating_task_counter';
+import { values } from '../../application/styles';
 
 export interface QuestionnaireProps {
     readonly questionnaire: ReadonlyArray<selector.Question>;
@@ -24,21 +26,22 @@ export interface QuestionnaireActions {
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
 export const Component: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: colors.lightGrey}}>
         <Content padder>
             <Text style={applicationStyles.title}><Trans>Personalize My Plan</Trans></Text>
             <Text style={[
-                { marginBottom: 20 },
-                { textAlign: 'left' },
+                applicationStyles.p,
+                { marginBottom: 15 },
             ]}>
                 <Trans>There is no requirement to answer any of the following questions
-                but in doing so you help us recommend tasks and articles for you.</Trans>
+                but in doing so you help us recommend tasks for you.</Trans>
             </Text>
             <Accordion
                 activeSection={findIndexForQuestion(props.activeQuestion, props.questionnaire)}
                 sections={getAccordionSections(props)}
                 renderHeader={renderHeader(props)}
                 renderContent={renderContent}
+                touchableComponent={TouchableOpacity}
                 duration={400}
             />
         </Content>
@@ -95,14 +98,20 @@ const renderQuestionContent = (question: selector.Question, props: Props): JSX.E
     );
 };
 
-const renderHeader = R.curry((props: Props, section: AccordionSection, _index: number, isActive: boolean): JSX.Element => (
-    <ListItem button noIndent noBorder
+const renderHeader = R.curry((props: Props, section: AccordionSection, _index: number): JSX.Element => (
+    <TouchableOpacity
         onPress={(): SetActiveQuestionAction => props.setActiveQuestion(section.id)}
-        style={isActive ? [{ backgroundColor: colors.lightGrey }] : [{ backgroundColor: colors.white }]}>
-        <Text style={isActive ? [{ padding: 10 }, applicationStyles.bold] : [{ padding: 10 }]}>
+        style={{
+            backgroundColor: colors.topaz,
+            borderRadius: values.lessRoundedBorderRadius,
+            marginBottom: 7,
+            padding: 15,
+        }}
+    >
+        <Text style={applicationStyles.roundedButtonText}>
             {section.title}
         </Text>
-    </ListItem>
+    </TouchableOpacity>
 ));
 
 const renderContent = (section: AccordionSection): JSX.Element => (
