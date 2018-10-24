@@ -4,10 +4,10 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
     return new ValidQuestionnaireStore({
         questionnaireRouteState: QuestionnaireRouteState.NotInQuestionnairePage,
         oldAnswers: {},
-        activeQuestion: 'q1',
+        activeQuestion: 'questionHowLongInCanada',
         questions: {
-            'q1': {
-                id: 'q1',
+            'questionHowLongInCanada': {
+                id: 'questionHowLongInCanada',
                 text: {
                     'en': 'How long have you been in Canada?',
                     'ar': 'منذ متى وأنت في كندا؟',
@@ -15,8 +15,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: false,
             },
-            'q2': {
-                id: 'q2',
+            'questionAloneOrWithFamily': {
+                id: 'questionAloneOrWithFamily',
                 text: {
                     'en': 'You are settling in Canada ...',
                     'ar': 'انت تستقر في كندا ...',
@@ -42,6 +42,23 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: true,
             },
+
+
+
+
+            'questionConnectingWithOthers': {
+                id: 'questionConnectingWithOthers',
+                text: {
+                    'en': 'Are you interested in information about how to connect with others?',
+                },
+                acceptMultipleAnswers: true,
+            },
+
+
+
+
+
+
             'questionImmigrantType': {
                 id: 'questionImmigrantType',
                 text: {
@@ -51,8 +68,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: false,
             },
-            'q7': {
-                id: 'q7',
+            'questionStageInRefugeeProcess': {
+                id: 'questionStageInRefugeeProcess',
                 text: {
                     'en': 'What is your current stage in the refugee claim process?',
                     'ar': 'ما هو مستواك في اللغة الإنجليزية؟',
@@ -60,8 +77,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: false,
             },
-            'q8': {
-                id: 'q8',
+            'questionEnglishLevel': {
+                id: 'questionEnglishLevel',
                 text: {
                     'en': 'What is your level of English?',
                     'ar': 'ما هو مستواك في اللغة الإنجليزية؟',
@@ -69,8 +86,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: true,
             },
-            'q9': {
-                id: 'q9',
+            'questionGroups': {
+                id: 'questionGroups',
                 text: {
                     'en': 'Finally, are you interested in learning about services for special groups?',
                     'ar': 'وأخيرًا ، هل أنت مهتم بالتعرف على الخدمات الخاصة بالمجموعات الخاصة؟',
@@ -82,7 +99,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
         answers: {
             'a1': {
                 id: 'a1',
-                questionId: 'q1',
+                questionId: 'questionHowLongInCanada',
                 text: {
                     'en': 'I am planning to move to Canada',
                     'ar': 'أخطط للانتقال إلى كندا',
@@ -96,7 +113,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a2': {
                 id: 'a2',
-                questionId: 'q1',
+                questionId: 'questionHowLongInCanada',
                 text: {
                     'en': 'I just arrived less than 1 month ago',
                     'ar': 'لقد وصلت للتو قبل أقل من شهر',
@@ -110,7 +127,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a3': {
                 id: 'a3',
-                questionId: 'q1',
+                questionId: 'questionHowLongInCanada',
                 text: {
                     'en': 'Less than 6 months',
                     'ar': 'أقل من 6 أشهر',
@@ -124,7 +141,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a4': {
                 id: 'a4',
-                questionId: 'q1',
+                questionId: 'questionHowLongInCanada',
                 text: {
                     'en': 'Less than 1 year',
                     'ar': 'أقل من 1 سنة',
@@ -138,7 +155,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a5': {
                 id: 'a5',
-                questionId: 'q1',
+                questionId: 'questionHowLongInCanada',
                 text: {
                     'en': 'Less than 2 years',
                     'ar': 'أقل من سنتين',
@@ -152,7 +169,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a6': {
                 id: 'a6',
-                questionId: 'q1',
+                questionId: 'questionHowLongInCanada',
                 text: {
                     'en': 'More than 2 years',
                     'ar': 'أكثر من 2 سنوات',
@@ -166,7 +183,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a7': {
                 id: 'a7',
-                questionId: 'q2',
+                questionId: 'questionAloneOrWithFamily',
                 text: {
                     'en': 'by yourself',
                     'ar': 'بنفسك',
@@ -180,7 +197,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a8': {
                 id: 'a8',
-                questionId: 'q2',
+                questionId: 'questionAloneOrWithFamily',
                 text: {
                     'en': 'with your family',
                     'ar': 'مع عائلتك',
@@ -310,6 +327,102 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'taxonomyTermId': 'substanceUse',
                 }],
             },
+
+
+
+
+
+
+            'answerConnectLibraries': {
+                id: 'answerConnectLibraries',
+                questionId: 'questionConnectingWithOthers',
+                text: {
+                    'en': 'Libraries and community centres',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'communicating',
+                    taxonomyTermId: 'libraries',
+                }],
+            },
+            'answerConnectOrganizations': {
+                id: 'answerConnectOrganizations',
+                questionId: 'questionConnectingWithOthers',
+                text: {
+                    'en': 'Joining organizations and communities',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'communicating',
+                    taxonomyTermId: 'join_organizations',
+                }],
+            },
+            'answerConnectInternet': {
+                id: 'answerConnectInternet',
+                questionId: 'questionConnectingWithOthers',
+                text: {
+                    'en': 'Internet',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'communicating',
+                    taxonomyTermId: 'internet',
+                }],
+            },
+            'answerConnectPhone': {
+                id: 'answerConnectPhone',
+                questionId: 'questionConnectingWithOthers',
+                text: {
+                    'en': 'Telephones',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'communicating',
+                    taxonomyTermId: 'telephones',
+                }],
+            },
+            'answerConnectMail': {
+                id: 'answerConnectMail',
+                questionId: 'questionConnectingWithOthers',
+                text: {
+                    'en': 'Mail',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'communicating',
+                    taxonomyTermId: 'mail',
+                }],
+            },
+            'answerConnectSendMoneyAbroad': {
+                id: 'answerConnectSendMoneyAbroad',
+                questionId: 'questionConnectingWithOthers',
+                text: {
+                    'en': 'Sending money to other countries',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'money',
+                    taxonomyTermId: 'sendingMoneyAbroad',
+                }],
+            },
+            'answerConnectSocialCustoms': {
+                id: 'answerConnectSocialCustoms',
+                questionId: 'questionConnectingWithOthers',
+                text: {
+                    'en': 'Candian social customs',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'communicating',
+                    taxonomyTermId: 'social_customs',
+                }],
+            },
+
+
+
+
+
+
             'answerRefugeeClaimant': {
                 id: 'answerRefugeeClaimant',
                 questionId: 'questionImmigrantType',
@@ -392,7 +505,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a32': {
                 id: 'a32',
-                questionId: 'q7',
+                questionId: 'questionStageInRefugeeProcess',
                 text: {
                     'en': 'I just claimed at an airport, seaport, or land border crossing',
                     'ar': 'لقد ادعت للتو في مطار أو ميناء بحري أو معبر للحدود البرية',
@@ -406,7 +519,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a33': {
                 id: 'a33',
-                questionId: 'q7',
+                questionId: 'questionStageInRefugeeProcess',
                 text: {
                     'en': 'I have not yet started but will claim at a CIC office inside Canada',
                     'ar': 'لم أبدأ بعد ولكن سوف ادعي في مكتب CIC داخل كندا',
@@ -420,7 +533,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a34': {
                 id: 'a34',
-                questionId: 'q7',
+                questionId: 'questionStageInRefugeeProcess',
                 text: {
                     'en': 'I just claimed at a CIC office inside Canada',
                     'ar': 'أنا فقط ادعى في مكتب CIC داخل كندا',
@@ -434,7 +547,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a35': {
                 id: 'a35',
-                questionId: 'q7',
+                questionId: 'questionStageInRefugeeProcess',
                 text: {
                     'en': 'I am waiting for my refugee hearing',
                     'ar': 'أنا في انتظار جلسة استماع للاجئين',
@@ -448,7 +561,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a36': {
                 id: 'a36',
-                questionId: 'q7',
+                questionId: 'questionStageInRefugeeProcess',
                 text: {
                     'en': 'I received a positive decision and can apply or have applied to be a Permanent Resident',
                     'ar': 'لقد تلقيت قرارًا إيجابيًا ويمكنني تقديم طلب أو تقدمت بطلب ليكون مقيمًا دائمًا',
@@ -462,7 +575,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a37': {
                 id: 'a37',
-                questionId: 'q7',
+                questionId: 'questionStageInRefugeeProcess',
                 text: {
                     'en': 'I received a negative decision and want to learn about my options',
                     'ar': 'تلقيت قرارًا سلبيًا وتريد التعرف على خياراتي',
@@ -476,7 +589,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a38': {
                 id: 'a38',
-                questionId: 'q8',
+                questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'None',
                     'ar': 'لا شيء',
@@ -490,7 +603,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a39': {
                 id: 'a39',
-                questionId: 'q8',
+                questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Beginner',
                     'ar': 'مبتدئ',
@@ -504,7 +617,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a40': {
                 id: 'a40',
-                questionId: 'q8',
+                questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Intermediate',
                     'ar': 'متوسط',
@@ -518,7 +631,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a41': {
                 id: 'a41',
-                questionId: 'q8',
+                questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Fluent',
                     'ar': 'بطلاقة',
@@ -532,7 +645,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a42': {
                 id: 'a42',
-                questionId: 'q9',
+                questionId: 'questionGroups',
                 text: {
                     'en': 'Women’s services',
                     'ar': 'خدمات النساء',
@@ -546,7 +659,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a43': {
                 id: 'a43',
-                questionId: 'q9',
+                questionId: 'questionGroups',
                 text: {
                     'en': 'Services for people with disabilities',
                     'ar': 'خدمات لذوي الاحتياجات الخاصة',
@@ -560,7 +673,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a44': {
                 id: 'a44',
-                questionId: 'q9',
+                questionId: 'questionGroups',
                 text: {
                     'en': 'LGBTQ2 services',
                     'ar': 'خدمات LGBTQ2',
@@ -574,7 +687,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a45': {
                 id: 'a45',
-                questionId: 'q9',
+                questionId: 'questionGroups',
                 text: {
                     'en': 'Services offered in French',
                     'ar': 'الخدمات المقدمة باللغة الفرنسية',
@@ -588,7 +701,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
             'a46': {
                 id: 'a46',
-                questionId: 'q9',
+                questionId: 'questionGroups',
                 text: {
                     'en': 'Services for low income people',
                     'ar': 'خدمات لذوي الدخل المحدود',
