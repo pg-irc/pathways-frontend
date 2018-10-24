@@ -265,18 +265,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'taxonomyTermId': 'over_65',
                 }],
             },
-            'answerHelpWithChildren': {
-                id: 'answerHelpWithChildren',
-                questionId: 'questionWhatHelpDoYouNeed',
-                text: {
-                    'en': 'Child care and other services for parents',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': 'helpWith',
-                    'taxonomyTermId': 'childrenAndYouth',
-                }],
-            },
             'answerHelpFindingServices': {
                 id: 'answerHelpFindingServices',
                 questionId: 'questionWhatHelpDoYouNeed',
