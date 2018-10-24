@@ -57,9 +57,16 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 acceptMultipleAnswers: true,
             },
             'questionEducation': {
-                id: 'questionHealth',
+                id: 'questionEducation',
                 text: {
                     'en': 'What is your situation regarding language skills and education?',
+                },
+                acceptMultipleAnswers: true,
+            },
+            'questionTransportation': {
+                id: 'questionTransportation',
+                text: {
+                    'en': 'What is your situation regarding transportation and driving?',
                 },
                 acceptMultipleAnswers: true,
             },
@@ -308,8 +315,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'social_customs',
                 }],
             },
-
-
             'answerHousingSituationLooking': {
                 id: 'answerHousingSituationLooking',
                 questionId: 'questionCurrentHousingSituation',
@@ -672,6 +677,105 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'costs',
                 }],
             },
+
+            'answerTravelLocally': {
+                id: 'answerTravelLocally',
+                questionId: 'questionTransportation',
+                text: {
+                    'en': 'I need to travel within the city or town where I live',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'travel',
+                    taxonomyTermId: 'local',
+                }],
+            },
+            'answerTravelLongDistance': {
+                id: 'answerTravelLongDistance',
+                questionId: 'questionTransportation',
+                text: {
+                    'en': 'I need to travel longer distances (between cities)',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'travel',
+                    taxonomyTermId: 'longDistance',
+                }],
+            },
+            'answerTravelByCar': {
+                id: 'answerTravelByCar',
+                questionId: 'questionTransportation',
+                text: {
+                    'en': 'I want to know more about driving in British Columbia',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'travel',
+                    taxonomyTermId: 'cars',
+                }],
+            },
+            'answerDriversLicence': {
+                id: 'answerDriversLicence',
+                questionId: 'questionTransportation',
+                text: {
+                    'en': 'I need to get a drivers licence',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'driving',
+                    taxonomyTermId: 'driversLicence',
+                }],
+            },
+            'answerBuyingACar': {
+                id: 'answerBuyingACar',
+                questionId: 'questionTransportation',
+                text: {
+                    'en': 'I need to buy a car',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'driving',
+                    taxonomyTermId: 'buyingVehicle',
+                }],
+            },
+            'answerCarSharing': {
+                id: 'answerCarSharing',
+                questionId: 'questionTransportation',
+                text: {
+                    'en': 'I want to drive without buying a car (car sharing)',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'driving',
+                    taxonomyTermId: 'carSharing',
+                }],
+            },
+            'answerDrivingLaws': {
+                id: 'answerDrivingLaws',
+                questionId: 'questionTransportation',
+                text: {
+                    'en': 'I want to know more about the laws related to driving',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'driving',
+                    taxonomyTermId: 'laws',
+                }],
+            },
+            'answerDrivingCosts': {
+                id: 'answerDrivingCosts',
+                questionId: 'questionTransportation',
+                text: {
+                    'en': 'I want to know more about the costs of owning a car',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'driving',
+                    taxonomyTermId: 'cost',
+                }],
+            },
+
+
 
 
 
