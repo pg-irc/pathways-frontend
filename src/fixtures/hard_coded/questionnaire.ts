@@ -53,6 +53,20 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: true,
             },
+            'questionCurrentHousingSituation': {
+                id: 'questionCurrentHousingSituation',
+                text: {
+                    'en': 'What is your current housing situation?',
+                },
+                acceptMultipleAnswers: true,
+            },
+            'questionMoneyAndBanking': {
+                id: 'questionMoneyAndBanking',
+                text: {
+                    'en': 'Information about money and banking',
+                },
+                acceptMultipleAnswers: true,
+            },
 
 
 
@@ -417,6 +431,166 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'social_customs',
                 }],
             },
+
+
+            'answerHousingSituationLooking': {
+                id: 'answerHousingSituationLooking',
+                questionId: 'questionCurrentHousingSituation',
+                text: {
+                    'en': 'I am currently looking for somewhere to live',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'housingStatus',
+                    taxonomyTermId: 'looking',
+                }],
+            },
+            'answerHousingSituationMovingIn': {
+                id: 'answerHousingSituationLooking',
+                questionId: 'questionCurrentHousingSituation',
+                text: {
+                    'en': 'I have found a place, I am about to move in',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'housingStatus',
+                    taxonomyTermId: 'movingIn',
+                }],
+            },
+            'answerHousingSituationHoused': {
+                id: 'answerHousingSituationHoused',
+                questionId: 'questionCurrentHousingSituation',
+                text: {
+                    'en': 'I have a home',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'housingStatus',
+                    taxonomyTermId: 'housed',
+                }],
+            },
+            'answerHousingSituationMovingOut': {
+                id: 'answerHousingSituationMovingOut',
+                questionId: 'questionCurrentHousingSituation',
+                text: {
+                    'en': 'I need to move out',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'housingStatus',
+                    taxonomyTermId: 'movingOut',
+                }],
+            },
+            'answerHousingSituationHomeless': {
+                id: 'answerHousingSituationHomeless',
+                questionId: 'questionCurrentHousingSituation',
+                text: {
+                    'en': 'I am curretly homeless',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'housingStatus',
+                    taxonomyTermId: 'homeless',
+                }],
+            },
+            'answerHousingPreferToRent': {
+                id: 'answerHousingPreferToRent',
+                questionId: 'questionCurrentHousingSituation',
+                text: {
+                    'en': 'I would prefer to rent my home',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'housing',
+                    taxonomyTermId: 'renting',
+                }],
+            },
+            'answerHousingPreferToOwn': {
+                id: 'answerHousingPreferToOwn',
+                questionId: 'questionCurrentHousingSituation',
+                text: {
+                    'en': 'I would prefer to buy a home',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'housing',
+                    taxonomyTermId: 'owning',
+                }],
+            },
+
+            'answerBanks': {
+                id: 'answerBanks',
+                questionId: 'questionMoneyAndBanking',
+                text: {
+                    'en': 'Banks, bank accounts, loans',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'money',
+                    taxonomyTermId: 'banking',
+                }],
+            },
+            'answerShopping': {
+                id: 'answerBanks',
+                questionId: 'questionMoneyAndBanking',
+                text: {
+                    'en': 'Shopping',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'money',
+                    taxonomyTermId: 'shopping',
+                }],
+            },
+            'answerBusiness': {
+                id: 'answerBusiness',
+                questionId: 'questionMoneyAndBanking',
+                text: {
+                    'en': 'Doing business with private companies',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'money',
+                    taxonomyTermId: 'business',
+                }],
+            },
+            'answerMoneyTaxes': {
+                id: 'answerMoneyTaxes',
+                questionId: 'questionMoneyAndBanking',
+                text: {
+                    'en': 'Paying taxes',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'money',
+                    taxonomyTermId: 'taxes',
+                }],
+            },
+            'answerMoneyBenefits': {
+                id: 'answerMoneyBenefits',
+                questionId: 'questionMoneyAndBanking',
+                text: {
+                    'en': 'Government financial support and tax credits',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'money',
+                    taxonomyTermId: 'benefits',
+                }],
+            },
+            'answerMoneySendingMoneyAbroad': {
+                id: 'answerMoneySendingMoneyAbroad',
+                questionId: 'questionMoneyAndBanking',
+                text: {
+                    'en': 'Sending money to other countries',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'money',
+                    taxonomyTermId: 'sendingMoneyAbroad',
+                }],
+            },
+
 
 
 
