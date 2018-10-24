@@ -6,15 +6,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
         oldAnswers: {},
         activeQuestion: 'questionHowLongInCanada',
         questions: {
-            'questionAloneOrWithFamily': {
-                id: 'questionAloneOrWithFamily',
-                text: {
-                    'en': 'You are settling in Canada ...',
-                    'ar': 'انت تستقر في كندا ...',
-                    'fr': 'Vous vous installez au Canada ...',
-                },
-                acceptMultipleAnswers: false,
-            },
             'questionAgeGroup': {
                 id: 'questionAgeGroup',
                 text: {
@@ -109,34 +100,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
         },
         answers: {
-            'a7': {
-                id: 'a7',
-                questionId: 'questionAloneOrWithFamily',
-                text: {
-                    'en': 'by yourself',
-                    'ar': 'بنفسك',
-                    'fr': 'par vous-même',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': 'user',
-                    'taxonomyTermId': 'alone',
-                }],
-            },
-            'a8': {
-                id: 'a8',
-                questionId: 'questionAloneOrWithFamily',
-                text: {
-                    'en': 'with your family',
-                    'ar': 'مع عائلتك',
-                    'fr': 'avec ta famille',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': 'user',
-                    'taxonomyTermId': 'with_family',
-                }],
-            },
             'answerAgeUnder5': {
                 id: 'answerAgeUnder5',
                 questionId: 'questionAgeGroup',
