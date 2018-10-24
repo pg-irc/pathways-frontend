@@ -67,6 +67,13 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: true,
             },
+            'questionHealth': {
+                id: 'questionHealth',
+                text: {
+                    'en': 'What is your current health situation?',
+                },
+                acceptMultipleAnswers: true,
+            },
 
 
 
@@ -592,6 +599,140 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
 
 
+
+
+            'answerHealthEmergency': {
+                id: 'answerHealthEmergency',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I have a health emergency (if urgent, call 9-1-1 and ask for an ambulance)',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'emergency',
+                }],
+            },
+            'answerNeedDoctor': {
+                id: 'answerNeedDoctor',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I need to see a doctor or specialist',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'needDoctor',
+                }],
+            },
+            'answerNeedFamilyDoctor': {
+                id: 'answerNeedFamilyDoctor',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I want to find a doctor I can visit regularly',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'needFamilyDoctor',
+                }],
+            },
+            'answerNeedDentist': {
+                id: 'answerNeedDentist',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I have problems with my teeth',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'needDentist',
+                }],
+            },
+            'answerHealthEyeExam': {
+                id: 'answerHealthEyeExam',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I need eye glasses or have other problems with my eyes',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'needEyeExam',
+                }],
+            },
+            'answerHealthMentalHealth': {
+                id: 'answerHealthMentalHealth',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'Mental health TODO phrase question',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'mentalHealth',
+                }],
+            },
+            'answerHealthTakeMedication': {
+                id: 'answerHealthTakeMedication',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I take medication',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'needMedication',
+                }],
+            },
+            'answerHealthNeedHospital': {
+                id: 'answerHealthNeedHospital',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I need treatment in a hospital',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'needHospital',
+                }],
+            },
+            'answerHealthOutOfProvince': {
+                id: 'answerHealthNeedHospital',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I need to access health care outside of British Columbia',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'needOutOfProvinceCare',
+                }],
+            },
+            'answerHealthCosts': {
+                id: 'answerHealthCosts',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I want to learn more about health care cost and insurance',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'costs',
+                }],
+            },
+            'answerHealthQuestions': {
+                id: 'answerHealthQuestions',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I have questions relating to my health',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'information',
+                }],
+            },
 
 
 
