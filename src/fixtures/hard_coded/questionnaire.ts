@@ -24,10 +24,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: true,
             },
-
-
-
-
             'questionConnectingWithOthers': {
                 id: 'questionConnectingWithOthers',
                 text: {
@@ -84,8 +80,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: true,
             },
-
-
             'questionLegalSystem': {
                 id: 'questionLegalSystem',
                 text: {
@@ -93,8 +87,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: true,
             },
-
-
             'questionImmigrantType': {
                 id: 'questionImmigrantType',
                 text: {
@@ -242,12 +234,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'taxonomyTermId': 'substanceUse',
                 }],
             },
-
-
-
-
-
-
             'answerConnectLibraries': {
                 id: 'answerConnectLibraries',
                 questionId: 'questionConnectingWithOthers',
@@ -416,7 +402,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'owning',
                 }],
             },
-
             'answerBanks': {
                 id: 'answerBanks',
                 questionId: 'questionMoneyAndBanking',
@@ -489,7 +474,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'sendingMoneyAbroad',
                 }],
             },
-
             'answerHealthEmergency': {
                 id: 'answerHealthEmergency',
                 questionId: 'questionHealth',
@@ -887,8 +871,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'startingABusiness',
                 }],
             },
-
-
             'answerImmigrationLaws': {
                 id: 'answerImmigrationLaws',
                 questionId: 'questionLegalSystem',
@@ -925,9 +907,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'importantLaws',
                 }],
             },
-
-
-
             'answerRefugeeClaimant': {
                 id: 'answerRefugeeClaimant',
                 questionId: 'questionImmigrantType',
