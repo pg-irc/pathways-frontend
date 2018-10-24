@@ -36,8 +36,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: false,
             },
-            'q4': {
-                id: 'q4',
+            'questionWhatHelpDoYouNeed': {
+                id: 'questionWhatHelpDoYouNeed',
                 text: {
                     'en': 'What do you need help with in Canada?',
                     'ar': 'ما الذي تحتاجه للمساعدة في كندا؟',
@@ -265,144 +265,64 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'taxonomyTermId': 'over_65',
                 }],
             },
-            'a13': {
-                id: 'a13',
-                questionId: 'q4',
+            'answerHelpWithChildren': {
+                id: 'answerHelpWithChildren',
+                questionId: 'questionWhatHelpDoYouNeed',
                 text: {
-                    'en': 'Getting employed',
-                    'ar': 'الحصول على موظف',
-                    'fr': 'Trouver un emploi',
+                    'en': 'Child care and other services for parents',
                 },
                 isChosen: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': exploreTaxonomyId,
-                    'taxonomyTermId': 'employment',
+                    'taxonomyId': 'helpWith',
+                    'taxonomyTermId': 'childrenAndYouth',
                 }],
             },
-            'a14': {
-                id: 'a14',
-                questionId: 'q4',
+            'answerHelpFindingServices': {
+                id: 'answerHelpFindingServices',
+                questionId: 'questionWhatHelpDoYouNeed',
                 text: {
-                    'en': 'Learning English',
-                    'ar': 'تعلم الانجليزية',
-                    'fr': 'Apprendre l\'anglais',
+                    'en': 'Help finding information about services',
                 },
                 isChosen: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': exploreTaxonomyId,
-                    'taxonomyTermId': 'education',
+                    'taxonomyId': 'helpWith',
+                    'taxonomyTermId': 'findingServices',
                 }],
             },
-            'a15': {
-                id: 'a15',
-                questionId: 'q4',
+            'answerHelpWithMentalHealth': {
+                id: 'answerHelpWithMentalHealth',
+                questionId: 'questionWhatHelpDoYouNeed',
                 text: {
-                    'en': 'Enrolling my children in school',
-                    'ar': 'تسجيل أطفالي في المدرسة',
-                    'fr': 'Inscription de mes enfants à l\'école',
+                    'en': 'Mental health TODO rephrace question',
                 },
                 isChosen: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': exploreTaxonomyId,
-                    'taxonomyTermId': 'education',
+                    'taxonomyId': 'helpWith',
+                    'taxonomyTermId': 'mentalHealth',
                 }],
             },
-            'a16': {
-                id: 'a16',
-                questionId: 'q4',
+            'answerHelpWithViolence': {
+                id: 'answerHelpWithViolence',
+                questionId: 'questionWhatHelpDoYouNeed',
                 text: {
-                    'en': 'Accessing health care',
-                    'ar': 'الوصول إلى الرعاية الصحية',
-                    'fr': 'Accès aux soins de santé',
+                    'en': 'Have you suffered from violence, abuse or neglect, now or in the past',
                 },
                 isChosen: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': exploreTaxonomyId,
-                    'taxonomyTermId': 'health',
+                    'taxonomyId': 'helpWith',
+                    'taxonomyTermId': 'violence',
                 }],
             },
-            'a17': {
-                id: 'a17',
-                questionId: 'q4',
+            'answerHelpWithSubstanceUse': {
+                id: 'answerHelpWithSubstanceUse',
+                questionId: 'questionWhatHelpDoYouNeed',
                 text: {
-                    'en': 'Finances, taxes, banking',
-                    'ar': 'المالية والضرائب والخدمات المصرفية',
-                    'fr': 'Finances, impôts, opérations bancaires',
+                    'en': 'Do you need help related to alcohol, substance use or gambling?',
                 },
                 isChosen: false,
                 'taxonomyTerms': [{
-                    'taxonomyId': exploreTaxonomyId,
-                    'taxonomyTermId': 'money',
-                }],
-            },
-            'a18': {
-                id: 'a18',
-                questionId: 'q4',
-                text: {
-                    'en': 'Finding a place to live',
-                    'ar': 'العثور على مكان للعيش فيه',
-                    'fr': 'Trouver un endroit pour vivre',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': exploreTaxonomyId,
-                    'taxonomyTermId': 'housing',
-                }],
-            },
-            'a19': {
-                id: 'a19',
-                questionId: 'q4',
-                text: {
-                    'en': 'Bringing my family to Canada',
-                    'ar': 'جلب عائلتي إلى كندا',
-                    'fr': 'Amener ma famille au Canada',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': exploreTaxonomyId,
-                    'taxonomyTermId': 'legal',
-                }],
-            },
-            'a20': {
-                id: 'a20',
-                questionId: 'q4',
-                text: {
-                    'en': 'Getting mental health support',
-                    'ar': 'الحصول على دعم الصحة العقلية',
-                    'fr': 'Obtenir un soutien en santé mentale',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': exploreTaxonomyId,
-                    'taxonomyTermId': 'health',
-                }],
-            },
-            'a21': {
-                id: 'a21',
-                questionId: 'q4',
-                text: {
-                    'en': 'Legal assistance and protection',
-                    'ar': 'المساعدة القانونية والحماية',
-                    'fr': 'Assistance juridique et protection',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': exploreTaxonomyId,
-                    'taxonomyTermId': 'legal',
-                }],
-            },
-            'a22': {
-                id: 'a22',
-                questionId: 'q4',
-                text: {
-                    'en': 'Enrolling myself in education',
-                    'ar': 'تسجيل نفسي في التعليم',
-                    'fr': 'M\'inscrire à l\'éducation',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': exploreTaxonomyId,
-                    'taxonomyTermId': 'education',
+                    'taxonomyId': 'helpWith',
+                    'taxonomyTermId': 'substanceUse',
                 }],
             },
             'a27': {
