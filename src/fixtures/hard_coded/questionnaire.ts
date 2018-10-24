@@ -1,7 +1,4 @@
 import { ValidQuestionnaireStore, QuestionnaireRouteState } from '../types/questionnaire';
-import { Taxonomies } from '../../application/constants';
-
-const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
 export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
     return new ValidQuestionnaireStore({
@@ -45,8 +42,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: true,
             },
-            'q6': {
-                id: 'q6',
+            'questionImmigrantType': {
+                id: 'questionImmigrantType',
                 text: {
                     'en': 'Which immigrant type do you currently identify as?',
                     'ar': 'ما نوع المهاجر الذي تعرفه حاليا؟',
@@ -313,9 +310,9 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'taxonomyTermId': 'substanceUse',
                 }],
             },
-            'a27': {
-                id: 'a27',
-                questionId: 'q6',
+            'answerRefugeeClaimant': {
+                id: 'answerRefugeeClaimant',
+                questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Refugee claimant',
                     'ar': 'طالب اللجوء',
@@ -327,9 +324,33 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'refugee_claimant',
                 }],
             },
-            'a28': {
-                id: 'a28',
-                questionId: 'q6',
+            'answerProtectedPerson': {
+                id: 'answerProtectedPerson',
+                questionId: 'questionImmigrantType',
+                text: {
+                    'en': 'Protected person',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'immigrant_type',
+                    taxonomyTermId: 'protected_person',
+                }],
+            },
+            'answerResettledRefugee': {
+                id: 'answerResettledRefugee',
+                questionId: 'questionImmigrantType',
+                text: {
+                    'en': 'Resettled refugee',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'immigrant_type',
+                    taxonomyTermId: 'resettled_refugee',
+                }],
+            },
+            'answerTemporaryResident': {
+                id: 'answerTemporaryResident',
+                questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Temporary resident',
                     'ar': 'سكن مؤقت',
@@ -341,9 +362,9 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'temporary_resident',
                 }],
             },
-            'a29': {
-                id: 'a29',
-                questionId: 'q6',
+            'answerPermanentResident': {
+                id: 'answerPermanentResident',
+                questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Permanent resident',
                     'ar': 'مقيم دائم',
@@ -355,9 +376,9 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'permanent_resident',
                 }],
             },
-            'a31': {
-                id: 'a31',
-                questionId: 'q6',
+            'answerImmigrantTypeNone': {
+                id: 'answerImmigrantTypeNone',
+                questionId: 'questionImmigrantType',
                 text: {
                     'en': 'None of the above, or I’m not sure',
                     'ar': 'لا شيء مما سبق ، أو لست متأكداx',
