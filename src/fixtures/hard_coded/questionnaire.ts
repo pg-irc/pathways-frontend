@@ -71,15 +71,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: false,
             },
-            'questionStageInRefugeeProcess': {
-                id: 'questionStageInRefugeeProcess',
-                text: {
-                    'en': 'What is your current stage in the refugee claim process?',
-                    'ar': 'ما هو مستواك في اللغة الإنجليزية؟',
-                    'fr': 'Quelle est votre étape actuelle dans le processus de demande d\'asile?',
-                },
-                acceptMultipleAnswers: false,
-            },
             'questionEnglishLevel': {
                 id: 'questionEnglishLevel',
                 text: {
@@ -686,90 +677,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 taxonomyTerms: [{
                     taxonomyId: 'immigrant_type',
                     taxonomyTermId: 'unknown',
-                }],
-            },
-            'a32': {
-                id: 'a32',
-                questionId: 'questionStageInRefugeeProcess',
-                text: {
-                    'en': 'I just claimed at an airport, seaport, or land border crossing',
-                    'ar': 'لقد ادعت للتو في مطار أو ميناء بحري أو معبر للحدود البرية',
-                    'fr': 'Je viens de réclamer dans un aéroport, un port maritime ou un poste frontalier terrestre',
-                },
-                isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'refugee_claim_stage',
-                    taxonomyTermId: 'claim_at_border',
-                }],
-            },
-            'a33': {
-                id: 'a33',
-                questionId: 'questionStageInRefugeeProcess',
-                text: {
-                    'en': 'I have not yet started but will claim at a CIC office inside Canada',
-                    'ar': 'لم أبدأ بعد ولكن سوف ادعي في مكتب CIC داخل كندا',
-                    'fr': 'Je n\'ai pas encore commencé mais je vais réclamer dans un bureau de CIC à l\'intérieur du Canada',
-                },
-                isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'refugee_claim_stage',
-                    taxonomyTermId: 'not_started',
-                }],
-            },
-            'a34': {
-                id: 'a34',
-                questionId: 'questionStageInRefugeeProcess',
-                text: {
-                    'en': 'I just claimed at a CIC office inside Canada',
-                    'ar': 'أنا فقط ادعى في مكتب CIC داخل كندا',
-                    'fr': 'Je viens de réclamer dans un bureau de CIC à l\'intérieur du Canada',
-                },
-                isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'refugee_claim_stage',
-                    taxonomyTermId: 'claim_at_cic_office',
-                }],
-            },
-            'a35': {
-                id: 'a35',
-                questionId: 'questionStageInRefugeeProcess',
-                text: {
-                    'en': 'I am waiting for my refugee hearing',
-                    'ar': 'أنا في انتظار جلسة استماع للاجئين',
-                    'fr': 'J\'attends mon audience sur le statut de réfugié',
-                },
-                isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'refugee_claim_stage',
-                    taxonomyTermId: 'hearing',
-                }],
-            },
-            'a36': {
-                id: 'a36',
-                questionId: 'questionStageInRefugeeProcess',
-                text: {
-                    'en': 'I received a positive decision and can apply or have applied to be a Permanent Resident',
-                    'ar': 'لقد تلقيت قرارًا إيجابيًا ويمكنني تقديم طلب أو تقدمت بطلب ليكون مقيمًا دائمًا',
-                    'fr': 'J\'ai reçu une décision positive et je peux demander ou être inscrit comme résident(e) permanent',
-                },
-                isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'refugee_claim_stage',
-                    taxonomyTermId: 'positive_decision',
-                }],
-            },
-            'a37': {
-                id: 'a37',
-                questionId: 'questionStageInRefugeeProcess',
-                text: {
-                    'en': 'I received a negative decision and want to learn about my options',
-                    'ar': 'تلقيت قرارًا سلبيًا وتريد التعرف على خياراتي',
-                    'fr': 'J\'ai reçu une décision négative et je veux en savoir plus sur mes options',
-                },
-                isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'refugee_claim_stage',
-                    taxonomyTermId: 'negative_decision',
                 }],
             },
             'a38': {
