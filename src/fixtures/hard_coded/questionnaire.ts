@@ -86,10 +86,13 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
 
 
-
-
-
-
+            'questionLegalSystem': {
+                id: 'questionLegalSystem',
+                text: {
+                    'en': 'Information about Canada\'s government and legal system',
+                },
+                acceptMultipleAnswers: true,
+            },
 
 
             'questionImmigrantType': {
@@ -882,6 +885,44 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 taxonomyTerms: [{
                     taxonomyId: 'employment',
                     taxonomyTermId: 'startingABusiness',
+                }],
+            },
+
+
+            'answerImmigrationLaws': {
+                id: 'answerImmigrationLaws',
+                questionId: 'questionLegalSystem',
+                text: {
+                    'en': 'Immigration',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'legalSystem',
+                    taxonomyTermId: 'immigration',
+                }],
+            },
+            'answerCanadasGovernment': {
+                id: 'answerCanadasGovernment',
+                questionId: 'questionLegalSystem',
+                text: {
+                    'en': 'How Canada\'s government works',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'legalSystem',
+                    taxonomyTermId: 'government',
+                }],
+            },
+            'answerSomeImportantLaws': {
+                id: 'answerSomeImportantLaws',
+                questionId: 'questionLegalSystem',
+                text: {
+                    'en': 'Some important laws',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'legalSystem',
+                    taxonomyTermId: 'importantLaws',
                 }],
             },
 
