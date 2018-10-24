@@ -6,15 +6,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
         oldAnswers: {},
         activeQuestion: 'questionHowLongInCanada',
         questions: {
-            'questionHowLongInCanada': {
-                id: 'questionHowLongInCanada',
-                text: {
-                    'en': 'How long have you been in Canada?',
-                    'ar': 'منذ متى وأنت في كندا؟',
-                    'fr': 'Depuis combien de temps êtes-vous au Canada?',
-                },
-                acceptMultipleAnswers: false,
-            },
             'questionAloneOrWithFamily': {
                 id: 'questionAloneOrWithFamily',
                 text: {
@@ -118,90 +109,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             },
         },
         answers: {
-            'a1': {
-                id: 'a1',
-                questionId: 'questionHowLongInCanada',
-                text: {
-                    'en': 'I am planning to move to Canada',
-                    'ar': 'أخطط للانتقال إلى كندا',
-                    'fr': 'Je prévois déménager au Canada',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': 'time_in_canada',
-                    'taxonomyTermId': 'not_yet_arrived',
-                }],
-            },
-            'a2': {
-                id: 'a2',
-                questionId: 'questionHowLongInCanada',
-                text: {
-                    'en': 'I just arrived less than 1 month ago',
-                    'ar': 'لقد وصلت للتو قبل أقل من شهر',
-                    'fr': 'Je viens d\'arriver il y a moins d\'un mois',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': 'time_in_canada',
-                    'taxonomyTermId': 'under_1_month',
-                }],
-            },
-            'a3': {
-                id: 'a3',
-                questionId: 'questionHowLongInCanada',
-                text: {
-                    'en': 'Less than 6 months',
-                    'ar': 'أقل من 6 أشهر',
-                    'fr': 'Moins de 6 mois',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': 'time_in_canada',
-                    'taxonomyTermId': 'under_6_months',
-                }],
-            },
-            'a4': {
-                id: 'a4',
-                questionId: 'questionHowLongInCanada',
-                text: {
-                    'en': 'Less than 1 year',
-                    'ar': 'أقل من 1 سنة',
-                    'fr': 'Moins d\'un an',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': 'time_in_canada',
-                    'taxonomyTermId': 'under_1_year',
-                }],
-            },
-            'a5': {
-                id: 'a5',
-                questionId: 'questionHowLongInCanada',
-                text: {
-                    'en': 'Less than 2 years',
-                    'ar': 'أقل من سنتين',
-                    'fr': 'Moins de 2 ans',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': 'time_in_canada',
-                    'taxonomyTermId': 'under_2_years',
-                }],
-            },
-            'a6': {
-                id: 'a6',
-                questionId: 'questionHowLongInCanada',
-                text: {
-                    'en': 'More than 2 years',
-                    'ar': 'أكثر من 2 سنوات',
-                    'fr': 'Plus de 2 ans',
-                },
-                isChosen: false,
-                'taxonomyTerms': [{
-                    'taxonomyId': 'time_in_canada',
-                    'taxonomyTermId': 'over_2_years',
-                }],
-            },
             'a7': {
                 id: 'a7',
                 questionId: 'questionAloneOrWithFamily',
