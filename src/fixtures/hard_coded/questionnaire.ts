@@ -27,8 +27,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: false,
             },
-            'q3': {
-                id: 'q3',
+            'questionAgeGroup': {
+                id: 'questionAgeGroup',
                 text: {
                     'en': 'Which age group do you belong to?',
                     'ar': 'ما هي الفئة العمرية التي تنتمي إليها؟',
@@ -195,23 +195,37 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'taxonomyTermId': 'with_family',
                 }],
             },
-            'a9': {
-                id: 'a9',
-                questionId: 'q3',
+            'answerAgeUnder5': {
+                id: 'answerAgeUnder5',
+                questionId: 'questionAgeGroup',
                 text: {
-                    'en': 'Under 13 years old',
-                    'ar': 'تحت 13 سنة',
-                    'fr': 'Moins de 13 ans',
+                    'en': 'Under 5 years old',
+                    'ar': 'تحت 5 سنة',
+                    'fr': 'Moins de 5 ans',
                 },
                 isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
-                    'taxonomyTermId': 'under_13',
+                    'taxonomyTermId': 'under_5',
                 }],
             },
-            'a10': {
-                id: 'a10',
-                questionId: 'q3',
+            'answerAge5to12': {
+                id: 'answerAge5to12',
+                questionId: 'questionAgeGroup',
+                text: {
+                    'en': '5-12 years old',
+                    'ar': '5-12 سنة',
+                    'fr': '5-12 ans',
+                },
+                isChosen: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'age',
+                    'taxonomyTermId': '5_to_12',
+                }],
+            },
+            'answerAge13to18': {
+                id: 'answerAge13to18',
+                questionId: 'questionAgeGroup',
                 text: {
                     'en': '13-18 years old',
                     'ar': '13-18 سنة',
@@ -223,23 +237,23 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'taxonomyTermId': '13_to_18',
                 }],
             },
-            'a11': {
-                id: 'a11',
-                questionId: 'q3',
+            'answerAge18to65': {
+                id: 'answerAge18to65',
+                questionId: 'questionAgeGroup',
                 text: {
-                    'en': '18-64 years old',
-                    'ar': '18-64 سنة',
-                    'fr': '18-64 ans',
+                    'en': '18-65 years old',
+                    'ar': '18-65 سنة',
+                    'fr': '18-65 ans',
                 },
                 isChosen: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
-                    'taxonomyTermId': '18_to_64',
+                    'taxonomyTermId': '18_to_65',
                 }],
             },
-            'a12': {
-                id: 'a12',
-                questionId: 'q3',
+            'answerAgeOver65': {
+                id: 'answerAgeOver65',
+                questionId: 'questionAgeGroup',
                 text: {
                     'en': '65+ years old',
                     'ar': '65+ سنة',
