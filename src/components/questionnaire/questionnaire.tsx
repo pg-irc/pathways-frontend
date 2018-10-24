@@ -24,9 +24,7 @@ export interface QuestionnaireActions {
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
 export const Component: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <View style={[
-        { flex: 1 },
-    ]}>
+    <View style={{ flex: 1 }}>
         <Content padder>
             <Text style={applicationStyles.title}><Trans>Personalize My Plan</Trans></Text>
             <Text style={[

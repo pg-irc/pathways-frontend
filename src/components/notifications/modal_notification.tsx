@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
+        elevation: 1,
     },
     modal: {
         borderRadius: values.lessRoundedBorderRadius,

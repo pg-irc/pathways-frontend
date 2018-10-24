@@ -1,8 +1,8 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
 import * as R from 'ramda';
-import { I18nManager, StyleSheet } from 'react-native';
-import { Content, Text, View, Icon } from 'native-base';
+import { I18nManager, StyleSheet, NativeScrollEvent, NativeSyntheticEvent, ScrollView } from 'react-native';
+import { Text, View, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { applicationStyles, colors, values } from '../../application/styles';
 import { CollapsibleContent } from '../collapsible_content/collapsible_content';
@@ -14,7 +14,9 @@ import {
     noTasksCompletedTextComponent,
 } from '../tasks/task_list';
 import { TaskListItemActions } from '../tasks/task_list_item';
-import { RouterProps } from '../../application/routing';
+import { Routes, goToRouteWithoutParameter, RouterProps } from '../../application/routing';
+import { PersonalizePocketComponent, PersonalizePocketStates } from './personalize_pocket';
+import { IntroComponent } from './intro';
 
 export interface MyPlanProps {
     readonly savedTasks: ReadonlyArray<TaskListItem>;
@@ -26,20 +28,12 @@ interface MyPlanState {
     readonly savedTasksIsCollapsed: boolean;
     readonly recommendedTasksIsCollapsed: boolean;
     readonly completedTasksIsCollapsed: boolean;
+    readonly personalizePocketState: PersonalizePocketStates;
 }
 
 type Props = MyPlanProps & TaskListItemActions & RouterProps;
 
-interface HasScrollToEnd {
-    readonly scrollToEnd: () => void;
-}
-
-interface ContentComponentRef extends Content {
-    readonly _root: HasScrollToEnd;
-}
-
 export class MyPlanComponent extends React.Component<Props, MyPlanState> {
-    contentComponent: ContentComponentRef;
 
     constructor(props: Props) {
         super(props);
@@ -47,49 +41,83 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
             savedTasksIsCollapsed: false,
             recommendedTasksIsCollapsed: false,
             completedTasksIsCollapsed: true,
+            personalizePocketState: PersonalizePocketStates.Open,
         };
-        this.getCompletedButtonOnPress = this.getCompletedButtonOnPress.bind(this);
         this.toggleSavedTasksCollapsed = this.toggleSavedTasksCollapsed.bind(this);
         this.toggleRecommendedTasksCollapsed = this.toggleRecommendedTasksCollapsed.bind(this);
         this.toggleCompletedTasksCollapsed = this.toggleCompletedTasksCollapsed.bind(this);
+        this.onPocketPress = this.onPocketPress.bind(this);
+        this.onPocketButtonPress = this.onPocketButtonPress.bind(this);
+        this.onScroll = this.onScroll.bind(this);
     }
 
     render(): JSX.Element {
         return (
-            <Content
-                padder
-                ref={(component: ContentComponentRef): ContentComponentRef => this.contentComponent = component}
-                style={applicationStyles.body}
-            >
-                <Intro />
-                <CollapsibleContent
-                    collapsedHeader={this.getHeading(this.getSavedTasksHeading(), this.collapsedIcon())}
-                    expandedHeader={this.getHeading(this.getSavedTasksHeading(), this.expandedIcon())}
-                    content={this.getContent(this.props.savedTasks, noTasksAddedYetTextComponent())}
-                    onHeaderPress={this.toggleSavedTasksCollapsed}
-                    isCollapsed={this.state.savedTasksIsCollapsed}
-                    style={styles.clickableHeading}
+            <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
+                <PersonalizePocketComponent
+                    pocketState={this.state.personalizePocketState}
+                    onPocketPress={this.onPocketPress}
+                    onPocketButtonPress={this.onPocketButtonPress}
                 />
-                <View style={applicationStyles.divider} />
-                <CollapsibleContent
-                    collapsedHeader={this.getHeading(this.getRecommendedTasksHeading(), this.collapsedIcon())}
-                    expandedHeader={this.getHeading(this.getRecommendedTasksHeading(), this.expandedIcon())}
-                    content={this.getContent(this.props.recommendedTasks, noTasksRecommendedTextComponent())}
-                    onHeaderPress={this.toggleRecommendedTasksCollapsed}
-                    isCollapsed={this.state.recommendedTasksIsCollapsed}
-                    style={styles.clickableHeading}
-                />
-                <View style={applicationStyles.divider} />
-                <CollapsibleContent
-                    collapsedHeader={this.getHeading(this.getCompletedTasksHeading(), this.collapsedIcon())}
-                    expandedHeader={this.getHeading(this.getCompletedTasksHeading(), this.expandedIcon())}
-                    content={this.getContent(this.props.completedTasks, noTasksCompletedTextComponent())}
-                    onHeaderPress={this.toggleCompletedTasksCollapsed}
-                    isCollapsed={this.state.completedTasksIsCollapsed}
-                    style={styles.clickableHeading}
-                />
-            </Content>
+                <ScrollView
+                    style={[applicationStyles.body, { padding: 10 } ]}
+                    onScroll={this.onScroll}
+                >
+                    <IntroComponent />
+                    <CollapsibleContent
+                        collapsedHeader={this.getHeading(this.getSavedTasksHeading(), this.collapsedIcon())}
+                        expandedHeader={this.getHeading(this.getSavedTasksHeading(), this.expandedIcon())}
+                        content={this.getContent(this.props.savedTasks, noTasksAddedYetTextComponent())}
+                        onHeaderPress={this.toggleSavedTasksCollapsed}
+                        isCollapsed={this.state.savedTasksIsCollapsed}
+                        style={styles.clickableHeading}
+                    />
+                    <View style={applicationStyles.divider} />
+                    <CollapsibleContent
+                        collapsedHeader={this.getHeading(this.getRecommendedTasksHeading(), this.collapsedIcon())}
+                        expandedHeader={this.getHeading(this.getRecommendedTasksHeading(), this.expandedIcon())}
+                        content={this.getContent(this.props.recommendedTasks, noTasksRecommendedTextComponent())}
+                        onHeaderPress={this.toggleRecommendedTasksCollapsed}
+                        isCollapsed={this.state.recommendedTasksIsCollapsed}
+                        style={styles.clickableHeading}
+                    />
+                    <View style={applicationStyles.divider} />
+                    <CollapsibleContent
+                        collapsedHeader={this.getHeading(this.getCompletedTasksHeading(), this.collapsedIcon())}
+                        expandedHeader={this.getHeading(this.getCompletedTasksHeading(), this.expandedIcon())}
+                        content={this.getContent(this.props.completedTasks, noTasksCompletedTextComponent())}
+                        onHeaderPress={this.toggleCompletedTasksCollapsed}
+                        isCollapsed={this.state.completedTasksIsCollapsed}
+                        style={styles.clickableHeading}
+                    />
+                </ScrollView>
+            </View>
         );
+    }
+
+    private onPocketPress(): void {
+        if (this.state.personalizePocketState === PersonalizePocketStates.Closed) {
+            this.setState({
+                personalizePocketState: PersonalizePocketStates.Open,
+            });
+        }
+    }
+
+    private onPocketButtonPress(): void {
+        goToRouteWithoutParameter(Routes.Questionnaire, this.props.history)();
+    }
+
+    private onScroll(event: NativeSyntheticEvent<NativeScrollEvent>): void {
+        const eventScrollOffset = event.nativeEvent.contentOffset.y;
+        if (eventScrollOffset > 0) {
+            this.setState({
+                personalizePocketState: PersonalizePocketStates.Closed,
+            });
+        } else {
+            this.setState({
+                personalizePocketState: PersonalizePocketStates.Open,
+            });
+        }
     }
 
     private expandedIcon(): string {
@@ -151,15 +179,6 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
         );
     }
 
-    private getCompletedButtonOnPress(): void {
-        this.expandCompletedTasks();
-        this.contentComponent._root.scrollToEnd();
-    }
-
-    private expandCompletedTasks(): void {
-        this.setState({ ...this.state, completedTasksIsCollapsed: false });
-    }
-
     private toggleSavedTasksCollapsed(): void {
         this.setState({ ...this.state, savedTasksIsCollapsed: !this.state.savedTasksIsCollapsed });
     }
@@ -172,16 +191,6 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
         this.setState({ ...this.state, completedTasksIsCollapsed: !this.state.completedTasksIsCollapsed });
     }
 }
-
-const Intro = (): JSX.Element => (
-    <View style={styles.intro}>
-        <Text style={applicationStyles.title}><Trans>My Plan</Trans></Text>
-        <Text style={applicationStyles.p}>
-            <Trans>Keep track of everything I need to do to settle in Canada</Trans>
-        </Text>
-    </View>
-);
-
 
 const styles = StyleSheet.create({
     intro: {

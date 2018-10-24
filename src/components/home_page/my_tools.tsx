@@ -12,7 +12,7 @@ export interface MyToolsProps {
 
 export const MyToolsComponent: React.StatelessComponent<MyToolsProps> = (props: MyToolsProps): JSX.Element => (
     <View>
-        <Text style={styles.sectionTitle}>
+        <Text style={[ applicationStyles.p, styles.sectionTitle ]}>
             <Trans>MY TOOLS</Trans>
         </Text>
         <View style={styles.buttonsWrapper}>
@@ -86,8 +86,6 @@ const getMyPrivacyButtonContent = (): JSX.Element => (
 
 const styles = StyleSheet.create({
     sectionTitle: {
-        color: colors.black,
-        fontSize: values.smallTextSize,
         fontWeight: 'bold',
         marginLeft: 10,
         marginTop: 10,
