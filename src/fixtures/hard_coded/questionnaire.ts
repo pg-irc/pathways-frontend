@@ -70,6 +70,20 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: true,
             },
+            'questionWorkStatus': {
+                id: 'questionWorkStatus',
+                text: {
+                    'en': 'What is your current work situation?',
+                },
+                acceptMultipleAnswers: true,
+            },
+            'questionWorkInformation': {
+                id: 'questionWorkInformation',
+                text: {
+                    'en': 'I would like to see information about working',
+                },
+                acceptMultipleAnswers: true,
+            },
 
 
 
@@ -774,10 +788,102 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'cost',
                 }],
             },
-
-
-
-
+            'answerLookingForWork': {
+                id: 'answerLookingForWork',
+                questionId: 'questionWorkStatus',
+                text: {
+                    'en': 'I am currently looking for work',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'employmentStatus',
+                    taxonomyTermId: 'looking',
+                }],
+            },
+            'answerIAmEmployed': {
+                id: 'answerIAmEmployed',
+                questionId: 'questionWorkStatus',
+                text: {
+                    'en': 'I have a job',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'employmentStatus',
+                    taxonomyTermId: 'employed',
+                }],
+            },
+            'answerIAmSelfEmployed': {
+                id: 'answerIAmSelfEmployed',
+                questionId: 'questionWorkStatus',
+                text: {
+                    'en': 'I work for myself',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'employmentStatus',
+                    taxonomyTermId: 'selfEmployed',
+                }],
+            },
+            'answerLeavingMyJob': {
+                id: 'answerLeavingMyJob',
+                questionId: 'questionWorkStatus',
+                text: {
+                    'en': 'I want to leave my current job',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'employmentStatus',
+                    taxonomyTermId: 'leaving',
+                }],
+            },
+            'answerLeaveAndVacation': {
+                id: 'answerLeaveAndVacation',
+                questionId: 'questionWorkInformation',
+                text: {
+                    'en': 'Taking time off from work',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'employment',
+                    taxonomyTermId: 'leaveAndVacation',
+                }],
+            },
+            'answerPayAndDeductions': {
+                id: 'answerPayAndDeductions',
+                questionId: 'questionWorkInformation',
+                text: {
+                    'en': 'Getting paid and paying taxes',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'employment',
+                    taxonomyTermId: 'payAndDeductions',
+                }],
+            },
+            'answerEmploymentLaws': {
+                id: 'answerEmploymentLaws',
+                questionId: 'questionWorkInformation',
+                text: {
+                    'en': 'Laws relating to work',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'employment',
+                    taxonomyTermId: 'laws',
+                }],
+            },
+            'answerStargingABusiness': {
+                id: 'answerStargingABusiness',
+                questionId: 'questionWorkInformation',
+                text: {
+                    'en': 'Starting your own business',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'employment',
+                    taxonomyTermId: 'startingABusiness',
+                }],
+            },
 
 
 
