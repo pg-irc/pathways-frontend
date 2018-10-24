@@ -56,6 +56,15 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 },
                 acceptMultipleAnswers: true,
             },
+            'questionEducation': {
+                id: 'questionHealth',
+                text: {
+                    'en': 'What is your situation regarding language skills and education?',
+                },
+                acceptMultipleAnswers: true,
+            },
+
+
 
 
 
@@ -459,9 +468,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 }],
             },
 
-
-
-
             'answerHealthEmergency': {
                 id: 'answerHealthEmergency',
                 questionId: 'questionHealth',
@@ -592,6 +598,78 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'information',
+                }],
+            },
+            'answerLearnEnglish': {
+                id: 'answerLearnEnglish',
+                questionId: 'questionEducation',
+                text: {
+                    'en': 'I want to take courses to improve my English skills',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'education',
+                    taxonomyTermId: 'language',
+                }],
+            },
+            'answerImproveReadingAndMath': {
+                id: 'answerImproveReadingAndMath',
+                questionId: 'questionEducation',
+                text: {
+                    'en': 'I want to take courses to improve reading or math skills',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'education',
+                    taxonomyTermId: 'continuingEducation',
+                }],
+            },
+            'answerFinishHighSchoolAsAnAdult': {
+                id: 'answerFinishHighSchoolAsAnAdult',
+                questionId: 'questionEducation',
+                text: {
+                    'en': 'I am an adult and I want to finish high school',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'education',
+                    taxonomyTermId: 'continuingEducation',
+                }],
+            },
+            'answerLearnNewJobSkills': {
+                id: 'answerLearnNewJobSkills',
+                questionId: 'questionEducation',
+                text: {
+                    'en': 'I want to learn new job skills',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'education',
+                    taxonomyTermId: 'continuingEducation',
+                }],
+            },
+            'answerGoToUniversity': {
+                id: 'answerGoToUniversity',
+                questionId: 'questionEducation',
+                text: {
+                    'en': 'I want to go to university or college',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'education',
+                    taxonomyTermId: 'postSecondaryEducation',
+                }],
+            },
+            'answerEducationCosts': {
+                id: 'answerEducationCosts',
+                questionId: 'questionEducation',
+                text: {
+                    'en': 'I want to learn more about education costs',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'education',
+                    taxonomyTermId: 'costs',
                 }],
             },
 
