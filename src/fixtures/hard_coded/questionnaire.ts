@@ -4,16 +4,14 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
     return new ValidQuestionnaireStore({
         questionnaireRouteState: QuestionnaireRouteState.NotInQuestionnairePage,
         oldAnswers: {},
-        activeQuestion: 'questionHowLongInCanada',
+        activeQuestion: 'questionAgeGroup',
         questions: {
             'questionAgeGroup': {
                 id: 'questionAgeGroup',
                 text: {
-                    'en': 'Which age group do you belong to?',
-                    'ar': 'ما هي الفئة العمرية التي تنتمي إليها؟',
-                    'fr': 'De quoi avez-vous besoin pour aider au Canada?',
+                    'en': 'Which age group(s) do you (and your family members) belong to?',
                 },
-                acceptMultipleAnswers: false,
+                acceptMultipleAnswers: true,
             },
             'questionWhatHelpDoYouNeed': {
                 id: 'questionWhatHelpDoYouNeed',
