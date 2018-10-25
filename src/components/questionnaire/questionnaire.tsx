@@ -119,5 +119,5 @@ const invalidAnswersWarningIfNeeded = (props: Props): JSX.Element => {
         return emptyComponent();
     }
     const ids = R.map((answer: Answer): Id => answer.id, props.invalidAnswers).join(', ');
-    return <Text>Answers with invalid taxonomy terms: {ids}</Text>;
+    return <Text>Warning: These answers have no corresponding content: {ids}</Text>;
 };
