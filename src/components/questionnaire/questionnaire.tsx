@@ -7,14 +7,17 @@ import { Question } from './question';
 import { applicationStyles, colors } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
-import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
+import { Id, ChooseAnswerAction, SetActiveQuestionAction, Answer } from '../../stores/questionnaire';
 import { FloatingTaskCounter } from './floating_task_counter';
+import { emptyComponent } from '../empty_component/empty_component';
 
 export interface QuestionnaireProps {
     readonly questionnaire: ReadonlyArray<selector.Question>;
     readonly activeQuestion: Id;
     readonly recommendedTaskCount: number;
+    readonly invalidAnswers: ReadonlyArray<Answer>;
 }
+
 export interface QuestionnaireActions {
     readonly chooseAnswer: (answerId: Id) => ChooseAnswerAction;
     readonly setActiveQuestion: (activeQuestion: Id) => SetActiveQuestionAction;
@@ -35,6 +38,7 @@ export const Component: React.StatelessComponent<Props> = (props: Props): JSX.El
                 <Trans>There is no requirement to answer any of the following questions
                 but in doing so you help us recommend tasks and articles for you.</Trans>
             </Text>
+            {invalidAnswersWarningIfNeeded(props)}
             <Accordion
                 activeSection={findIndexForQuestion(props.activeQuestion, props.questionnaire)}
                 sections={getAccordionSections(props)}
@@ -109,3 +113,11 @@ const renderHeader = R.curry((props: Props, section: AccordionSection, _index: n
 const renderContent = (section: AccordionSection): JSX.Element => (
     section.content
 );
+
+const invalidAnswersWarningIfNeeded = (props: Props): JSX.Element => {
+    if (props.invalidAnswers.length === 0) {
+        return emptyComponent();
+    }
+    const ids = R.map((answer: Answer): Id => answer.id, props.invalidAnswers).join(', ');
+    return <Text>Answers with invalid taxonomy terms: {ids}</Text>;
+};

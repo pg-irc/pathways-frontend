@@ -5,7 +5,7 @@ import { Answer } from '../../stores/questionnaire';
 import { getAllTaxonomyTermsFromTasks } from '../tasks/get_all_taxonomy_terms_from_tasks';
 import { getAllAnswersWithTaxonomyTermsNotIn } from './get_all_answers_with_taxonomy_terms_not_in';
 
-export const selectInvalidQuestions = (appStore: Store): ReadonlyArray<Answer> => {
+export const selectInvalidAnswers = (appStore: Store): ReadonlyArray<Answer> => {
     const tasks = pickTasks(appStore);
     const answers = pickAnswers(appStore);
     const validTaxonomyTerms = getAllTaxonomyTermsFromTasks(tasks);
