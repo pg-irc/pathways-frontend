@@ -857,8 +857,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'laws',
                 }],
             },
-            'answerStargingABusiness': {
-                id: 'answerStargingABusiness',
+            'answerStartingABusiness': {
+                id: 'answerStartingABusiness',
                 questionId: 'questionWorkInformation',
                 text: {
                     'en': 'Starting your own business',
@@ -952,10 +952,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Résident(e) temporaire',
                 },
                 isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'immigrant_type',
-                    taxonomyTermId: 'temporary_resident',
-                }],
+                taxonomyTerms: [],
             },
             'answerPermanentResident': {
                 id: 'answerPermanentResident',
@@ -966,10 +963,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Résident(e) permanent',
                 },
                 isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'immigrant_type',
-                    taxonomyTermId: 'permanent_resident',
-                }],
+                taxonomyTerms: [],
             },
             'answerImmigrantTypeNone': {
                 id: 'answerImmigrantTypeNone',
@@ -980,13 +974,10 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Rien de ce qui précède, ou je ne suis pas sûr',
                 },
                 isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'immigrant_type',
-                    taxonomyTermId: 'unknown',
-                }],
+                taxonomyTerms: [],
             },
-            'a38': {
-                id: 'a38',
+            'answerEnglishLevelNone': {
+                id: 'answerEnglishLevelNone',
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'None',
@@ -999,8 +990,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'none',
                 }],
             },
-            'a39': {
-                id: 'a39',
+            'answerEnglishLevelBeginner': {
+                id: 'answerEnglishLevelBeginner',
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Beginner',
@@ -1013,8 +1004,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'beginner',
                 }],
             },
-            'a40': {
-                id: 'a40',
+            'answerEnglishLevelIntermediate': {
+                id: 'answerEnglishLevelIntermediate',
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Intermediate',
@@ -1022,13 +1013,10 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Intermédiaire',
                 },
                 isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'english_level',
-                    taxonomyTermId: 'intermediate',
-                }],
+                taxonomyTerms: [],
             },
-            'a41': {
-                id: 'a41',
+            'answerEnglishLevelFluent': {
+                id: 'answerEnglishLevelFluent',
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Fluent',
@@ -1036,13 +1024,10 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Couramment',
                 },
                 isChosen: false,
-                taxonomyTerms: [{
-                    taxonomyId: 'english_level',
-                    taxonomyTermId: 'fluent',
-                }],
+                taxonomyTerms: [],
             },
-            'a42': {
-                id: 'a42',
+            'answerGroupWomen': {
+                id: 'answerGroupWomen',
                 questionId: 'questionGroups',
                 text: {
                     'en': 'Women’s services',
@@ -1055,8 +1040,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'women',
                 }],
             },
-            'a43': {
-                id: 'a43',
+            'answerGroupWithDisabilities': {
+                id: 'answerGroupWithDisabilities',
                 questionId: 'questionGroups',
                 text: {
                     'en': 'Services for people with disabilities',
@@ -1069,8 +1054,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'disability',
                 }],
             },
-            'a44': {
-                id: 'a44',
+            'answerGroupLGBT': {
+                id: 'answerGroupLGBT',
                 questionId: 'questionGroups',
                 text: {
                     'en': 'LGBTQ2 services',
@@ -1083,8 +1068,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'lgbtq2',
                 }],
             },
-            'a45': {
-                id: 'a45',
+            'answerGroupFrench': {
+                id: 'answerGroupFrench',
                 questionId: 'questionGroups',
                 text: {
                     'en': 'Services offered in French',
@@ -1097,8 +1082,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     taxonomyTermId: 'services_in_french',
                 }],
             },
-            'a46': {
-                id: 'a46',
+            'answerGroupLowIncome': {
+                id: 'answerGroupLowIncome',
                 questionId: 'questionGroups',
                 text: {
                     'en': 'Services for low income people',

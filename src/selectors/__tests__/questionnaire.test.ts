@@ -154,4 +154,10 @@ describe('get answer with taxonomy terms not in set of valid terms', () => {
         const result = getAllAnswersWithTaxonomyTermsNotIn([taxonomyTerm], { 'id': answer });
         expect(result).not.toContain(answer);
     });
+
+    it('should not include answers with no taxonomy term', () => {
+        const answerWithNoTaxonomyTerm = new AnswerBuilder().withId('id').build();
+        const result = getAllAnswersWithTaxonomyTermsNotIn([taxonomyTerm], { 'id': answerWithNoTaxonomyTerm });
+        expect(result).not.toContain(answerWithNoTaxonomyTerm);
+    });
 });
