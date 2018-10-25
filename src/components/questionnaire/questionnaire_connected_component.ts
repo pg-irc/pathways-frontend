@@ -7,13 +7,11 @@ import { Id, ChooseAnswerAction, chooseAnswer, SetActiveQuestionAction, setActiv
 import { selectActiveQuestion } from '../../selectors/questionnaire/select_active_question';
 import { selectRecommendedTasks } from '../../selectors/tasks/select_recommended_tasks';
 import { selectQuestionList } from '../../selectors/questionnaire/select_question_list';
-import { selectInvalidAnswers } from '../../selectors/questionnaire/select_invalid_answers';
 
 const mapStateToProps = (store: Store): QuestionnaireProps => ({
     questionnaire: selectQuestionList(store),
     activeQuestion: selectActiveQuestion(store),
     recommendedTaskCount: selectRecommendedTasks(store).length,
-    invalidAnswers: selectInvalidAnswers(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<Store>): QuestionnaireActions => ({
