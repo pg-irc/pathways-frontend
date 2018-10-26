@@ -72,7 +72,7 @@ export class PhoneNumberJSONBuilder {
 
 export class AddressJSONBuilder {
     id: any = anInteger();
-    address: any | number = aString();
+    address: any = aString();
     city: any = aString();
     state_province: any = aString();
     postal_code: any = aString();
