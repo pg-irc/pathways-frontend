@@ -1,12 +1,12 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Image } from 'react-native';
 import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
 import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
-import { colors, applicationStyles } from '../../application/styles';
+import { colors, applicationStyles, textStyles } from '../../application/styles';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
@@ -17,24 +17,29 @@ export interface WelcomeActions {
     readonly setLocale: (localeCode: string) => SetLocale.Request;
 }
 
+// tslint:disable-next-line:no-var-requires
+const arrivalAdvisorLogo = require('../../../assets/images/aa_logo.png');
+
 export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & RouterProps): JSX.Element {
     const screenWidth = Dimensions.get('screen').width;
-    const languagePickerWidth = Math.round(screenWidth / 1.25);
     return (
         <View style={{
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
             padding: 20,
-            backgroundColor: colors.orange,
+            backgroundColor: colors.topaz,
         }}>
-            <Text style={{ fontWeight: 'bold', fontSize: 22, color: colors.white }}>
-                <Trans>Welcome to</Trans>
-            </Text>
-            <Text style={{ fontWeight: 'bold', fontSize: 32, color: colors.white, marginBottom: 10 }}>
-                <Trans>Arrival Advisor</Trans>
-            </Text>
-            <Text style={{ textAlign: 'center', color: colors.white, marginBottom: 40 }}>
+            <Image
+                source={arrivalAdvisorLogo}
+                resizeMode={'contain'}
+                style={{
+                    width: screenWidth / 2.15,
+                    height: screenWidth / 2.15,
+                    marginBottom: 20,
+                }}
+            />
+            <Text style={[ textStyles.paragraphStyleWhiteCenter, { marginBottom: 30  } ]}>
                 <Trans>For newcomers to Canada. Helping you start your new life in Canada, every step of the way.</Trans>
             </Text>
             <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
@@ -59,13 +64,10 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & Route
                 <Button
                     full
                     onPress={goToRouteWithoutParameter(Routes.Home, props.history)}
-                    style={[
-                        applicationStyles.roundedButton,
-                        { width: languagePickerWidth },
-                    ]}
+                    style={[ applicationStyles.orangeButton, { paddingHorizontal: 20 } ]}
                 >
-                    <Text style={{ fontWeight: 'bold' }}>
-                        <Trans>Get started</Trans>
+                    <Text style={textStyles.orangeButton}>
+                        <Trans>Start</Trans>
                     </Text>
                 </Button>
             </View>
