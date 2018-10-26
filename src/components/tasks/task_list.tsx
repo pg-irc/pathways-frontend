@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     noTaskText: {
-        color: colors.lightGrey2,
+        color: colors.darkerGrey,
     },
 });

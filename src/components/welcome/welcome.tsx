@@ -26,7 +26,7 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & Route
             justifyContent: 'center',
             alignItems: 'center',
             padding: 20,
-            backgroundColor: colors.darkBlueGrey,
+            backgroundColor: colors.orange,
         }}>
             <Text style={{ fontWeight: 'bold', fontSize: 22, color: colors.white }}>
                 <Trans>Welcome to</Trans>

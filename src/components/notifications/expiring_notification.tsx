@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         borderRadius: values.lessRoundedBorderRadius,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.lightGrey2,
+        backgroundColor: colors.darkerGrey,
         position: 'absolute',
         padding: 10,
         bottom: 20,

@@ -1,18 +1,21 @@
 import { StyleSheet, Platform } from 'react-native';
 
 export const colors = {
-    topaz: '#11CAC0',
-    blueGreen: '#0D9790',
-    darkBlueGrey: '#1D4A48',
-    white: '#FFFFFF',
-    lightGrey: '#EAEAE3',
-    lightGrey2: '#D0D0C5',
-    deepBlack: '#000000',
-    black: '#313131',
+    pale: '#ffebcb',
+    buttonPressedOrange: '#f8c065',
+    orange: '#f5a623',
+    topaz: '#11cac0',
+    buttonPressedTopaz: '#58dad3',
+    blueGreen: '#0d9790',
+    buttonPressedWhite: '#f4f4f4',
+    lightGrey: '#eaeae3',
+    darkerGrey: '#d0d0c5',
     greyishBrown: '#595959',
+    black: '#313131',
+    sunYellow: '#ffe22b',
+    white: '#ffffff',
     darkGreyWithAlpha: 'rgba(0, 0, 0, 0.4)',
-    sunYellow: '#FFE22B',
-};
+  };
 
 export const values = {
     navigationIconSize: 28,

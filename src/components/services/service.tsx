@@ -35,7 +35,7 @@ export function ServiceComponent(props: Props): JSX.Element {
                 mapWithIndex((phoneNumber: PhoneNumber, index: number) =>
                     <View key={index}>
                         <Text>
-                            <Text style={[{ color: colors.lightGrey2 }]}>
+                            <Text style={[{ color: colors.darkerGrey }]}>
                                 {capitalizeFirstLetter(phoneNumber.type)}
                             </Text> <TextWithPhoneLinks text={phoneNumber.phoneNumber} />
                         </Text>

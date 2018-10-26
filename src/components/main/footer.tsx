@@ -54,5 +54,5 @@ const navigationButton = (history: History, route: Routes, text: string, icon: s
 );
 
 const textStyle = (isActive: boolean): StyleProp<TextStyle> => (
-    isActive ? { color: colors.topaz } : { color: colors.lightGrey2 }
+    isActive ? { color: colors.topaz } : { color: colors.darkerGrey }
 );

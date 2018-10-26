@@ -13,7 +13,7 @@ export const PersonalizeComponent: React.StatelessComponent<PersonalizeProps> = 
     <View style={[
         applicationStyles.boxShadow,
         {
-            backgroundColor: colors.darkBlueGrey,
+            backgroundColor: colors.orange,
             borderRadius: values.lessRoundedBorderRadius,
             paddingHorizontal: 20,
             paddingTop: 20,

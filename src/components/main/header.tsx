@@ -59,7 +59,7 @@ const isBackButtonShown = (pathname: string): boolean => (
 
 const backButtonComponent = (pathname: string, history: History): JSX.Element => (
     <Button transparent onPress={(): void => goBack(history)}>
-        <Icon name={getBackButtonIcon(pathname)} style={{ color: colors.deepBlack }}/>
+        <Icon name={getBackButtonIcon(pathname)} style={{ color: colors.black }}/>
     </Button>
 );
 
