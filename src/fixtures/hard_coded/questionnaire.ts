@@ -200,7 +200,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'answerHelpWithMentalHealth',
                 questionId: 'questionWhatHelpDoYouNeed',
                 text: {
-                    'en': 'Mental health TODO rephrace question',
+                    'en': 'Help managing stress',
                 },
                 isChosen: false,
                 'taxonomyTerms': [{
@@ -536,7 +536,19 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'answerHealthMentalHealth',
                 questionId: 'questionHealth',
                 text: {
-                    'en': 'Mental health TODO phrase question',
+                    'en': 'I am interested in information about mental health',
+                },
+                isChosen: false,
+                taxonomyTerms: [{
+                    taxonomyId: 'healthCare',
+                    taxonomyTermId: 'mentalHealth',
+                }],
+            },
+            'answerHealthSurvivorOfTorture': {
+                id: 'answerHealthSurvivorOfTorture',
+                questionId: 'questionHealth',
+                text: {
+                    'en': 'I am a survivor of torture or other violence',
                 },
                 isChosen: false,
                 taxonomyTerms: [{
