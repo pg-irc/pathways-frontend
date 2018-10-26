@@ -1,5 +1,5 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import { aString } from '../../../application/__tests__/helpers/random_test_values';
+import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
 import { Id as TaskId } from '../../tasks';
 import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber, Address } from '../../services/types';
@@ -49,6 +49,7 @@ export class PhoneNumberBuilder {
 }
 
 export class AddressBuilder {
+    id: number = aNumber();
     type: string = aString();
     address: string = aString();
     city: string = aString();
@@ -58,6 +59,7 @@ export class AddressBuilder {
 
     build(): Address {
         return {
+            id: this.id,
             type: this.type,
             address: this.address,
             city: this.city,
