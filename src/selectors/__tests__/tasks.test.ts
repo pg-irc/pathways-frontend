@@ -19,6 +19,7 @@ import { getRecommendedTasks } from '../tasks/get_recommended_tasks';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
 import { getNewlyRecommendedTasks } from '../tasks/get_newly_recommended_tasks';
 import { AnswersMap } from '../../stores/questionnaire';
+import { getAllTaxonomyTermsFromTasks } from '../tasks/get_all_taxonomy_terms_from_tasks';
 
 let locale: Locale = undefined;
 
@@ -285,6 +286,27 @@ describe('tasks selector', () => {
             const sorted = sortTaskList([firstByIdLastByRecommended, lastByIdFirstByRecommended]);
             expect(sorted[0]).toBe(lastByIdFirstByRecommended);
             expect(sorted[1]).toBe(firstByIdLastByRecommended);
+        });
+    });
+
+    describe('getting taxonomy terms from tasks', () => {
+        const aTaxonomyTerm = aTaxonomyTermReference();
+
+        it('should return taxonomy term', () => {
+            const aTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id').build();
+
+            const result = getAllTaxonomyTermsFromTasks({ 'id': aTask });
+
+            expect(result).toEqual([aTaxonomyTerm]);
+        });
+
+        it('should return terms without duplicates', () => {
+            const aTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id1').build();
+            const aSecondTaskWithSameTaxonomyTerm = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id2').build();
+
+            const result = getAllTaxonomyTermsFromTasks({ 'id1': aTask, 'id2': aSecondTaskWithSameTaxonomyTerm });
+
+            expect(result).toEqual([aTaxonomyTerm]);
         });
     });
 });

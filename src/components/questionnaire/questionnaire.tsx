@@ -15,6 +15,7 @@ export interface QuestionnaireProps {
     readonly activeQuestion: Id;
     readonly recommendedTaskCount: number;
 }
+
 export interface QuestionnaireActions {
     readonly chooseAnswer: (answerId: Id) => ChooseAnswerAction;
     readonly setActiveQuestion: (activeQuestion: Id) => SetActiveQuestionAction;

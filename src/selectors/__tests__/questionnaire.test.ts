@@ -9,6 +9,7 @@ import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
 import { toSelectorQuestionList } from '../questionnaire/to_selector_question_list';
 import { getTaxonomyTermsForChosenAnswers } from '../taxonomies/get_taxonomy_terms_for_chosen_answers';
+import { getAllAnswersWithTaxonomyTermsNotIn } from '../questionnaire/get_all_answers_with_taxonomy_terms_not_in';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
@@ -137,5 +138,26 @@ describe('getting ids of all chosen answers', () => {
         const result = getIdsOfChosenAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).not.toContain(aNonChosenAnswer.id);
+    });
+});
+
+describe('get answer with taxonomy terms not in set of valid terms', () => {
+    const taxonomyTerm = aTaxonomyTermReference();
+    const answer = new AnswerBuilder().withTaxonomyTerm(taxonomyTerm).withId('id').build();
+
+    it('should include answers with taxonoy terms not in set', () => {
+        const result = getAllAnswersWithTaxonomyTermsNotIn([], { 'id': answer });
+        expect(result).toContain(answer);
+    });
+
+    it('should not include answers with taxonoy terms in set', () => {
+        const result = getAllAnswersWithTaxonomyTermsNotIn([taxonomyTerm], { 'id': answer });
+        expect(result).not.toContain(answer);
+    });
+
+    it('should not include answers with no taxonomy term', () => {
+        const answerWithNoTaxonomyTerm = new AnswerBuilder().withId('id').build();
+        const result = getAllAnswersWithTaxonomyTermsNotIn([taxonomyTerm], { 'id': answerWithNoTaxonomyTerm });
+        expect(result).not.toContain(answerWithNoTaxonomyTerm);
     });
 });
