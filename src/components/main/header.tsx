@@ -2,7 +2,7 @@ import React from 'react';
 import { Header, Left, Button, Icon, Right } from 'native-base';
 import { CurrentLocale } from '../language_switcher/current_locale';
 import { Locale } from '../../locale';
-import { I18nManager } from 'react-native';
+import { I18nManager, Image, Dimensions } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
 import { routePathWithoutParameter, Routes, goBack } from '../../application/routing';
@@ -20,6 +20,9 @@ export interface HeaderProps {
 export interface UiActions {
     readonly onLanguageSelect: () => void;
 }
+
+// tslint:disable-next-line:no-var-requires
+const arrivalAdvisorLogo = require('../../../assets/images/aa_logoglyph.png');
 
 export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> = (props: HeaderProps & UiActions): JSX.Element => {
     const { onLanguageSelect, currentLocale }: HeaderProps & UiActions = props;
@@ -39,10 +42,12 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
     const reactRouterBackButtonHack: JSX.Element = <ReactRouterBackButtonHack />;
 
     return (
-        <Header style={{ marginTop, backgroundColor: colors.blueGreen }}>
-            <Left>{backButton}</Left>
-            {reactRouterBackButtonHack}
-            <Right style={[{ alignItems: 'center' }]}>
+        <Header style={{ marginTop, backgroundColor: colors.topaz }}>
+            <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
+                {backButton}
+                {reactRouterBackButtonHack}
+            </Left>
+            <Right style={{ alignItems: 'center' }}>
                 {localeButton}
             </Right>
         </Header>
@@ -50,7 +55,7 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
 };
 
 const backButtonComponentIfShown = (pathname: string, history: History): JSX.Element => (
-    isBackButtonShown(pathname) ? backButtonComponent(pathname, history) : <EmptyComponent />
+    isBackButtonShown(pathname) ? backButtonComponent(pathname, history) : arrivalAdvisorLogoComponent()
 );
 
 const isBackButtonShown = (pathname: string): boolean => (
@@ -62,6 +67,20 @@ const backButtonComponent = (pathname: string, history: History): JSX.Element =>
         <Icon name={getBackButtonIcon(pathname)} style={{ color: colors.black }}/>
     </Button>
 );
+
+const arrivalAdvisorLogoComponent = (): JSX.Element => {
+    const aaLogoWidthAndHeight = Dimensions.get('screen').width / 15;
+    return (
+        <Image
+            source={arrivalAdvisorLogo}
+            resizeMode={'contain'}
+            style={{
+                width: aaLogoWidthAndHeight,
+                height: aaLogoWidthAndHeight,
+            }}
+        />
+    );
+};
 
 const getBackButtonIcon = (pathname: string): string => {
     if (pathname === routePathWithoutParameter(Routes.Help)) {

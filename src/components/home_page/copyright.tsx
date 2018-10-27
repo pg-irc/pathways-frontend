@@ -22,6 +22,7 @@ export const CopyrightComponent: React.StatelessComponent = (): JSX.Element => {
     return (
         <View style={[{ marginTop: 40 }]}>
             <Text style={{
+                fontFamily: 'Avenir',
                 fontSize: values.smallTextSize,
                 color: colors.greyishBrown,
                 textAlign: 'center',

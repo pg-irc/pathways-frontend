@@ -21,7 +21,7 @@ export interface WelcomeActions {
 const arrivalAdvisorLogo = require('../../../assets/images/aa_logo.png');
 
 export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & RouterProps): JSX.Element {
-    const screenWidth = Dimensions.get('screen').width;
+    const aaLogoWidthAndHeight = Dimensions.get('screen').width / 2.15;
     return (
         <View style={{
             flex: 1,
@@ -34,8 +34,8 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & Route
                 source={arrivalAdvisorLogo}
                 resizeMode={'contain'}
                 style={{
-                    width: screenWidth / 2.15,
-                    height: screenWidth / 2.15,
+                    width: aaLogoWidthAndHeight,
+                    height: aaLogoWidthAndHeight,
                     marginBottom: 20,
                 }}
             />

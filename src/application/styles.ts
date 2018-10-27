@@ -145,6 +145,16 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         color: colors.white,
     },
+    whiteButton: {
+        fontFamily: 'Avenir',
+        fontSize: 16,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        lineHeight: 20,
+        letterSpacing: 0.2,
+        textAlign: 'center',
+        color: colors.black,
+    },
 });
 
 // PHASE OUT
@@ -163,6 +173,28 @@ export const applicationStyles = StyleSheet.create({
         backgroundColor: colors.orange,
         borderRadius: values.roundedBorderRadius,
     },
+    whiteButton: {
+        backgroundColor: colors.white,
+        borderRadius: values.roundedBorderRadius,
+    },
+    boxShadowBelow: {
+        shadowColor: colors.black,
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        elevation: 1,
+    },
+    boxShadowAbove: {
+        shadowColor: colors.black,
+        shadowOffset: { width: 0, height: -2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        elevation: 1,
+    },
+    body: {
+        backgroundColor: colors.lightGrey,
+    },
+    // PHASE OUT
     boxShadow: {
         shadowColor: colors.black,
         shadowOffset: { width: 0, height: 2 },
@@ -170,7 +202,6 @@ export const applicationStyles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 1,
     },
-    // PHASE OUT
     divider: {
         marginTop: 20,
     },
@@ -185,9 +216,6 @@ export const applicationStyles = StyleSheet.create({
     p: {
         textAlign: 'left',
         color: colors.black,
-    },
-    body: {
-        backgroundColor: colors.lightGrey,
     },
     bold: {
         fontWeight: 'bold',
