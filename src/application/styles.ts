@@ -202,9 +202,6 @@ export const applicationStyles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 1,
     },
-    divider: {
-        marginTop: 20,
-    },
     roundedButton: {
         backgroundColor: colors.orange,
         borderRadius: values.roundedBorderRadius,

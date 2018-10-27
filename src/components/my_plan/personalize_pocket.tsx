@@ -1,8 +1,8 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import { TouchableOpacity } from 'react-native';
-import { Text, View, Button, Icon } from 'native-base';
-import { applicationStyles, colors, values } from '../../application/styles';
+import { TouchableOpacity, Dimensions, Image } from 'react-native';
+import { Text, View, Button } from 'native-base';
+import { applicationStyles, colors, values, textStyles } from '../../application/styles';
 
 export enum PersonalizePocketStates {
     Open,
@@ -20,6 +20,9 @@ export interface PersonalizePocketActions {
 
 type Props = PersonalizePocketProps & PersonalizePocketActions;
 
+// tslint:disable-next-line:no-var-requires
+const patLogo = require('../../../assets/images/pat.png');
+
 export const PersonalizePocketComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <TouchableOpacity
         onPress={props.onPocketPress}
@@ -33,45 +36,51 @@ export const PersonalizePocketComponent: React.StatelessComponent<Props> = (prop
     </TouchableOpacity>
 );
 
-const getOpenPocket = (props: Props): JSX.Element => (
-    <View style={{ paddingHorizontal: 30, alignItems: 'center' }}>
-        <Icon name='user' type='FontAwesome' style={{ marginTop: 15, marginBottom: 5, color: colors.black }}/>
-        <Text style={{
-            color: colors.black,
-            fontSize: values.smallTextSize,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            marginBottom: 15,
-        }}>
-            <Trans>PERSONALIZE MY PLAN</Trans>
-        </Text>
-        <Button
-            full
-            onPress={props.onPocketButtonPress}
-            style={[applicationStyles.roundedButton, { marginBottom: 15 } ]}
-        >
-            <Text style={{ fontWeight: 'bold', color: colors.white }}>
-                <Trans>Start</Trans>
+const getOpenPocket = (props: Props): JSX.Element => {
+    const patLogoWidthAndHeight = Dimensions.get('screen').width / 5;
+    return (
+        <View style={{ alignItems: 'center', paddingHorizontal: 30, marginVertical: 20 }}>
+            <Image
+                source={patLogo}
+                resizeMode={'contain'}
+                style={{
+                    width: patLogoWidthAndHeight,
+                    height: patLogoWidthAndHeight,
+                }}
+            />
+            <Text style={textStyles.headlineH5StyleBlackCenter}>
+                <Trans>PERSONALIZE MY PLAN</Trans>
             </Text>
-        </Button>
-    </View>
-);
+            <Button
+                full
+                onPress={props.onPocketButtonPress}
+                style={[
+                    applicationStyles.orangeButton,
+                    {
+                        marginTop: 10,
+                    },
+                ]}
+            >
+                <Text style={textStyles.orangeButton}>
+                    <Trans>Start</Trans>
+                </Text>
+            </Button>
+        </View>
+    );
+};
 
-const getClosedPocket = (): JSX.Element => (
-    <View style={{
-        backgroundColor: colors.topaz,
-        alignItems: 'center',
-        borderBottomLeftRadius: values.roundedBorderRadius,
-        borderBottomRightRadius: values.roundedBorderRadius,
-    }}>
-        <Icon
-            name='user'
-            type='FontAwesome'
-            style={{
-                fontSize: values.smallerIconSize,
-                padding: 3,
-                color: colors.white,
-            }}
-        />
-    </View>
-);
+const getClosedPocket = (): JSX.Element => {
+    const patLogoWidthAndHeight = Dimensions.get('screen').width / 9;
+    return (
+        <View style={{ alignItems: 'center', padding: 2 }}>
+            <Image
+                source={patLogo}
+                resizeMode={'contain'}
+                style={{
+                    width: patLogoWidthAndHeight,
+                    height: patLogoWidthAndHeight,
+                }}
+            />
+        </View>
+    );
+};

@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { I18nManager, StyleSheet, NativeScrollEvent, NativeSyntheticEvent, ScrollView } from 'react-native';
 import { Text, View, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import { applicationStyles, colors, values } from '../../application/styles';
+import { applicationStyles, colors, values, textStyles } from '../../application/styles';
 import { CollapsibleContent } from '../collapsible_content/collapsible_content';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import {
@@ -62,7 +62,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
                 <ScrollView
                     style={[applicationStyles.body, { padding: values.contentPadding } ]}
                     onScroll={this.onScroll}
-                    scrollEventThrottle={8}
+                    scrollEventThrottle={5}
                 >
                     <IntroComponent />
                     <CollapsibleContent
@@ -73,7 +73,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
                         isCollapsed={this.state.savedTasksIsCollapsed}
                         style={styles.clickableHeading}
                     />
-                    <View style={applicationStyles.divider} />
+                    <View style={styles.divider} />
                     <CollapsibleContent
                         collapsedHeader={this.getHeading(this.getRecommendedTasksHeading(), this.collapsedIcon())}
                         expandedHeader={this.getHeading(this.getRecommendedTasksHeading(), this.expandedIcon())}
@@ -82,7 +82,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
                         isCollapsed={this.state.recommendedTasksIsCollapsed}
                         style={styles.clickableHeading}
                     />
-                    <View style={applicationStyles.divider} />
+                    <View style={styles.divider} />
                     <CollapsibleContent
                         collapsedHeader={this.getHeading(this.getCompletedTasksHeading(), this.collapsedIcon())}
                         expandedHeader={this.getHeading(this.getCompletedTasksHeading(), this.expandedIcon())}
@@ -110,7 +110,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
 
     private onScroll(event: NativeSyntheticEvent<NativeScrollEvent>): void {
         const eventScrollOffset = event.nativeEvent.contentOffset.y;
-        if (eventScrollOffset > 0) {
+        if (eventScrollOffset > 100) {
             this.setState({
                 personalizePocketState: PersonalizePocketStates.Closed,
             });
@@ -132,7 +132,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     private getSavedTasksHeading(): JSX.Element {
         return (
             <View>
-                <Text style={applicationStyles.roundedButtonText}>
+                <Text style={textStyles.headlineH2StyleWhiteLeft}>
                     <Trans>MY TASKS</Trans>
                 </Text>
             </View>
@@ -142,7 +142,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     private getRecommendedTasksHeading(): JSX.Element {
         return (
             <View style={styles.recommendedTasksHeading}>
-                <Text style={applicationStyles.roundedButtonText}>
+                <Text style={textStyles.headlineH2StyleWhiteLeft}>
                     <Trans>RECOMMENDED FOR ME</Trans>
                 </Text>
                 <Icon style={styles.headingYellowStar} name='star' type='FontAwesome' />
@@ -153,7 +153,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     private getCompletedTasksHeading(): JSX.Element {
         return (
             <View>
-                <Text style={applicationStyles.roundedButtonText}>
+                <Text style={textStyles.headlineH2StyleWhiteLeft}>
                     <Trans>COMPLETED TASKS</Trans>
                 </Text>
             </View>
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     },
     clickableHeading: {
         backgroundColor: colors.topaz,
-        padding: 15,
+        padding: 10,
         borderRadius: values.lessRoundedBorderRadius,
         marginBottom: 3,
     },
@@ -219,5 +219,8 @@ const styles = StyleSheet.create({
         fontSize: values.smallerIconSize,
         color: colors.sunYellow,
         marginLeft: 3,
+    },
+    divider: {
+        marginVertical: 5,
     },
 });
