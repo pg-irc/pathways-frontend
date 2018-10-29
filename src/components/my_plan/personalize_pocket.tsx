@@ -61,7 +61,7 @@ const getOpenPocket = (props: Props): JSX.Element => {
                     },
                 ]}
             >
-                <Text style={textStyles.orangeButton}>
+                <Text style={textStyles.button}>
                     <Trans>Start</Trans>
                 </Text>
             </Button>

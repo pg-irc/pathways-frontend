@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'native-base';
-import { applicationStyles } from '../../application/styles';
+import { applicationStyles, textStyles } from '../../application/styles';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListComponent, noTasksAddedYetTextComponent } from './task_list';
 import { Trans } from '@lingui/react';
@@ -22,7 +22,7 @@ export const RelatedTasksComponent: React.StatelessComponent<AllRelatedTasksProp
     return (
         <View>
             <View style={applicationStyles.hr} />
-            <Text style={applicationStyles.bold}><Trans>RELATED TASKS</Trans></Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>RELATED TASKS</Trans></Text>
             <TaskListComponent
                 {...props}
                 tasks={props.relatedTasks}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { values, applicationStyles } from '../../application/styles';
+import { applicationStyles, textStyles } from '../../application/styles';
 import { Button, View, Text } from 'native-base';
 import { Answer } from './answer';
 import { Trans } from '@lingui/react';
@@ -27,7 +27,7 @@ export const Question: React.StatelessComponent<Props> = (props: Props): JSX.Ele
             { flex: 1 },
             { marginBottom: 10 },
         ]}>
-            {question.explanation ? <Text style={[{ fontSize: values.smallTextSize }]}>{question.explanation}</Text> : <EmptyComponent />}
+            {question.explanation ? <Text style={textStyles.paragraphSmallStyleLeft}>{question.explanation}</Text> : <EmptyComponent />}
             {question.answers.map((answer: SelectorAnswer) => (
                 <Answer
                     key={answer.id}
@@ -47,13 +47,13 @@ export const Question: React.StatelessComponent<Props> = (props: Props): JSX.Ele
 };
 
 const renderFinalQuestionButton = (history: History): JSX.Element => (
-    <Button style={applicationStyles.roundedButton} small onPress={goToRouteWithoutParameter(Routes.MyPlan, history)}>
-        <Text style={applicationStyles.roundedButtonText}><Trans>GO TO MY PLAN</Trans></Text>
+    <Button style={applicationStyles.orangeButton} small onPress={goToRouteWithoutParameter(Routes.MyPlan, history)}>
+        <Text style={textStyles.button}><Trans>GO TO MY PLAN</Trans></Text>
     </Button>
 );
 
 const renderNextQuestionButton = (onPress: () => SetActiveQuestionAction): JSX.Element => (
-    <Button style={applicationStyles.roundedButton} small onPress={onPress}>
-        <Text style={applicationStyles.roundedButtonText}><Trans>NEXT</Trans></Text>
+    <Button style={applicationStyles.orangeButton} small onPress={onPress}>
+        <Text style={textStyles.button}><Trans>NEXT</Trans></Text>
     </Button>
 );

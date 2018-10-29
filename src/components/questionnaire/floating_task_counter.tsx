@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from 'native-base';
 import { Trans } from '@lingui/react';
-import { colors, values } from '../../application/styles';
+import { colors } from '../../application/styles';
 import { History } from 'history';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
     },
     smallFloatingText: {
-        fontSize: values.smallTextSize,
+        fontSize: 12,
         color: colors.white,
         textAlign: 'center',
     },

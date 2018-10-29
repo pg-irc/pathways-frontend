@@ -26,7 +26,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     }
 
     return (
-        <Footer style={applicationStyles.boxShadow}>
+        <Footer style={applicationStyles.boxShadowAbove}>
             <FooterTab style={[{ backgroundColor: colors.white }]}>
                 {navigationButton(props.history, Routes.Home, 'Home', 'home', isOnHomeScreen)}
                 {navigationButton(props.history, Routes.MyPlan, 'My plan', 'check', isOnMyPlanScreen)}

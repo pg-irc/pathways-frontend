@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { View, Content, Button, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
 import { computeUniqueKeyForSections } from './compute_unique_key_for_sections';
-import { applicationStyles } from '../../application/styles';
+import { textStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 
@@ -17,7 +17,7 @@ export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
     (props: AllExploreProps): JSX.Element => {
         const sectionsGroupedIntoThrees = R.splitEvery(3, props.sections);
         return <Content padder>
-            <Text style={applicationStyles.title}><Trans>Learn about:</Trans></Text>
+            <Text style={textStyles.headlineH1StyleBlackLeft}><Trans>Learn about:</Trans></Text>
             <View style={[{flex: 1}]}>
                 {sectionsGroupedIntoThrees.map((sections: ReadonlyArray<ExploreSection>) => (
                     <RowOfSectionButtons

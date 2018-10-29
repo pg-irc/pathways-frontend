@@ -25,8 +25,6 @@ export const values = {
     roundedBorderRadius: 25,
     lessRoundedBorderRadius: 10,
     contentPadding: 10,
-    // PHASE OUT
-    smallTextSize: 12,
 };
 
 export const textStyles = StyleSheet.create({
@@ -107,6 +105,36 @@ export const textStyles = StyleSheet.create({
         textAlign: 'left',
         color: colors.greyishBrown,
     },
+    paragraphSmallStyleCenter: {
+        fontFamily: 'Avenir',
+        fontSize: 12,
+        fontWeight: 'normal',
+        fontStyle: 'normal',
+        lineHeight: 21,
+        letterSpacing: 0,
+        textAlign: 'center',
+        color: colors.greyishBrown,
+    },
+    paragraphSmallStyleLeft: {
+        fontFamily: 'Avenir',
+        fontSize: 12,
+        fontWeight: 'normal',
+        fontStyle: 'normal',
+        lineHeight: 21,
+        letterSpacing: 0,
+        textAlign: 'left',
+        color: colors.greyishBrown,
+    },
+    paragraphURL: {
+        fontFamily: 'Avenir',
+        fontSize: 12,
+        fontWeight: 'bold',
+        lineHeight: 21,
+        letterSpacing: 0,
+        textDecorationLine: 'underline',
+        textAlign: 'left',
+        color: colors.greyishBrown,
+    },
     paragraphStyleWhiteCenter: {
         fontFamily: 'Avenir',
         fontSize: 16,
@@ -135,7 +163,7 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         color: colors.black,
     },
-    orangeButton: {
+    button: {
         fontFamily: 'Avenir',
         fontSize: 16,
         fontWeight: '900',
@@ -157,7 +185,6 @@ export const textStyles = StyleSheet.create({
     },
 });
 
-// PHASE OUT
 export const applicationStyles = StyleSheet.create({
     hr: {
         borderTopWidth: 0.5,
@@ -193,50 +220,6 @@ export const applicationStyles = StyleSheet.create({
     },
     body: {
         backgroundColor: colors.lightGrey,
-    },
-    // PHASE OUT
-    boxShadow: {
-        shadowColor: colors.black,
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 4,
-        elevation: 1,
-    },
-    roundedButton: {
-        backgroundColor: colors.orange,
-        borderRadius: values.roundedBorderRadius,
-    },
-    roundedButtonText: {
-        fontWeight: 'bold',
-        color: colors.white,
-    },
-    p: {
-        textAlign: 'left',
-        color: colors.black,
-    },
-    bold: {
-        fontWeight: 'bold',
-    },
-    subHeading: {
-        fontWeight: 'bold',
-        marginBottom: 10,
-        textAlign: 'left',
-    },
-    title: {
-        color: colors.black,
-        fontWeight: 'bold',
-        fontSize: 30,
-        marginTop: 15,
-        marginBottom: 10,
-        textAlign: 'left',
-    },
-    subTitle: {
-        color: colors.black,
-        fontWeight: 'bold',
-        fontSize: 20,
-        marginTop: 10,
-        marginBottom: 7,
-        textAlign: 'left',
     },
 });
 

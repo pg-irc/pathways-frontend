@@ -3,7 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import { View,  Text, Icon } from 'native-base';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { Id } from '../../stores/questionnaire';
-import { applicationStyles, colors, values } from '../../application/styles';
+import { colors, values, textStyles } from '../../application/styles';
 import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
 
 export interface AnswerProps {
@@ -30,10 +30,11 @@ export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Eleme
                 flex: 4,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
+                alignItems: 'center',
             }}
         >
             <View style={{ flex: 4 }}>
-                <Text style={[applicationStyles.p, { fontWeight: 'bold' }]}>
+                <Text style={textStyles.paragraphBoldBlackLeft}>
                     {props.answer.text}
                 </Text>
             </View>

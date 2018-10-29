@@ -2,6 +2,7 @@
 import React from 'react';
 import { Linking } from 'react-native';
 import { Text } from 'native-base';
+import { textStyles } from '../../application/styles';
 
 interface AnchorProps {
     readonly href: string;
@@ -20,13 +21,7 @@ const openURL = (url: string): void => {
 };
 
 export const Link: React.StatelessComponent<AnchorProps> = (props: AnchorProps): JSX.Element => (
-    <Text onPress={(): void => openURL(props.href)} style={[
-        {
-            fontWeight: 'bold',
-            textDecorationLine: 'underline',
-        },
-        { ...props.style },
-    ]}>
+    <Text onPress={(): void => openURL(props.href)} style={props.style ? props.style : textStyles.paragraphURL}>
         {props.text}
     </Text>
 );

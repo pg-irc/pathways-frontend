@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { Text, View, Icon, Button, Content } from 'native-base';
 import { Trans } from '@lingui/react';
 import { I18nManager } from 'react-native';
-import { applicationStyles, colors } from '../../application/styles';
+import { applicationStyles, colors, textStyles } from '../../application/styles';
 
 export interface HelpComponentProps {
 }
@@ -49,12 +49,14 @@ export const HelpComponent: React.StatelessComponent<AllProps> =
     (_: AllProps): JSX.Element => (
         <Content padder>
             <View style={[{ flexDirection: 'column' }]}>
-                <Text style={applicationStyles.title}><Trans>{'Help & Support'}</Trans></Text>
+                <Text style={textStyles.headlineH1StyleBlackLeft}><Trans>{'Help & Support'}</Trans></Text>
                 <Text style={[{ textAlign: 'left' }]}>
                     <Trans>If you are having difficulty with settlement in Canada, get in touch with a settlement worker.</Trans>
                 </Text>
                 <ContactSettlementWorkerButton />
-                <Text style={applicationStyles.subHeading}><Trans>FOR ADDITIONAL ASSISTANCE</Trans></Text>
+                <Text style={[textStyles.paragraphBoldBlackLeft, {marginBottom: 10} ]}>
+                    <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
+                </Text>
                 {R.map(createContactComponent, fixture)}
             </View>
         </Content>

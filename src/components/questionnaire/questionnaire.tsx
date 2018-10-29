@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native';
 import { Content, View, Text } from 'native-base';
 import * as selector from '../../selectors/questionnaire/question';
 import { Question } from './question';
-import { applicationStyles, colors } from '../../application/styles';
+import { colors, textStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
 import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
@@ -28,9 +28,9 @@ type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 export const Component: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: colors.lightGrey}}>
         <Content padder>
-            <Text style={applicationStyles.title}><Trans>Personalize My Plan</Trans></Text>
+            <Text style={textStyles.headlineH1StyleBlackLeft}><Trans>Personalize My Plan</Trans></Text>
             <Text style={[
-                applicationStyles.p,
+                textStyles.headlineH4StyleBlackLeft,
                 { marginBottom: 15 },
             ]}>
                 <Trans>There is no requirement to answer any of the following questions
@@ -105,10 +105,10 @@ const renderHeader = R.curry((props: Props, section: AccordionSection, _index: n
             backgroundColor: colors.topaz,
             borderRadius: values.lessRoundedBorderRadius,
             marginBottom: 7,
-            padding: 15,
+            padding: 10,
         }}
     >
-        <Text style={applicationStyles.roundedButtonText}>
+        <Text style={textStyles.headlineH2StyleWhiteLeft}>
             {section.title}
         </Text>
     </TouchableOpacity>

@@ -5,7 +5,7 @@ import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 import { View, Button, Content, Text, Icon, Tab, Tabs, TabHeading, ListItem } from 'native-base';
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { applicationStyles, markdownStyles } from '../../application/styles';
+import { markdownStyles, textStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { TaskServices } from '../../selectors/services/task_services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
@@ -160,11 +160,10 @@ function buildHeader(taskTitle: string, stateTitle: JSX.Element, stateButtons: R
         <View style={[
             { flexDirection: 'column' },
         ]}>
-            <Text style={applicationStyles.title}>{taskTitle}</Text>
+            <Text style={textStyles.headlineH1StyleBlackLeft}>{taskTitle}</Text>
             <Text style={[
-                applicationStyles.bold,
+                textStyles.paragraphBoldBlackLeft,
                 { marginBottom: 5 },
-                { textAlign: 'left' },
             ]}>
                 {stateTitle}
             </Text>
@@ -195,7 +194,9 @@ const ThisTaskIsRecommended = (): JSX.Element => (
             <Icon type='MaterialCommunityIcons' name='star-circle' />
         </Col>
         <Col size={90} style={styles.iconText}>
-            <Text style={[{ textAlign: 'left' }]}>This task is <Text style={applicationStyles.bold}>recommended for you</Text>.</Text>
+            <Text style={textStyles.paragraphStyle}>
+                This task is <Text style={textStyles.paragraphBoldBlackLeft}>recommended for you</Text>.
+            </Text>
         </Col>
     </Row>
 );
@@ -206,7 +207,9 @@ const TaxonomyComponent = ({ task }: Props): JSX.Element => (
             <Icon type='MaterialCommunityIcons' name={task.exploreSection.icon} />
         </Col>
         <Col size={90} style={styles.iconText}>
-            <Text style={[{ textAlign: 'left' }]}>This task helps with <Text style={applicationStyles.bold}>{task.exploreSection.name}</Text>.</Text>
+            <Text style={textStyles.paragraphStyle}>
+                This task helps with <Text style={textStyles.paragraphBoldBlackLeft}>{task.exploreSection.name}</Text>.
+            </Text>
         </Col>
     </Row>
 );

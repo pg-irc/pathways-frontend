@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { computeStateListItemIcon, TaskStateListItemIcon } from './task_states';
 import { View, Text, Icon } from 'native-base';
-import { applicationStyles, values, colors } from '../../application/styles';
+import { values, colors, textStyles } from '../../application/styles';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { AddToSavedListAction, Id } from '../../stores/tasks';
 import { I18nManager, TouchableOpacity } from 'react-native';
@@ -40,7 +40,7 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                         <TaskInteractions {...props} />
                     </View>
                     <View>
-                        <Text numberOfLines={2} style={applicationStyles.p}>
+                        <Text numberOfLines={2} style={textStyles.headlineH4StyleBlackLeft}>
                             {props.task.title}
                         </Text>
                         <Text note numberOfLines={1} style={{ textAlign: 'left' }}>

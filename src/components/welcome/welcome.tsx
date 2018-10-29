@@ -66,7 +66,7 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & Route
                     onPress={goToRouteWithoutParameter(Routes.Home, props.history)}
                     style={[ applicationStyles.orangeButton, { paddingHorizontal: 20 } ]}
                 >
-                    <Text style={textStyles.orangeButton}>
+                    <Text style={textStyles.button}>
                         <Trans>Start</Trans>
                     </Text>
                 </Button>
