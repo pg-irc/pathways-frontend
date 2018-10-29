@@ -14,6 +14,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.CHOOSE_ANSWER,
             constants.ADD_TO_SAVED_TASKS,
             constants.REMOVE_FROM_SAVED_TASKS,
+            constants.TOGGLE_IS_TASK_COMPLETED,
         ],
         saveUserData);
 }
@@ -66,5 +67,5 @@ export async function loadUserDataAsync(): Promise<string> {
 }
 
 const deserialize = (serializedUserData: string): PersistedUserData => (
-    serializedUserData ? JSON.parse(serializedUserData) : { chosenAnswers: [], savedTasks: [] }
+    serializedUserData ? JSON.parse(serializedUserData) : { chosenAnswers: [], completedTasks: [], savedTasks: [] }
 );

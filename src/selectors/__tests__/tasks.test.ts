@@ -20,6 +20,7 @@ import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_help
 import { getNewlyRecommendedTasks } from '../tasks/get_newly_recommended_tasks';
 import { AnswersMap } from '../../stores/questionnaire';
 import { getAllTaxonomyTermsFromTasks } from '../tasks/get_all_taxonomy_terms_from_tasks';
+import { getIdsOfCompletedTasks } from '../tasks/get_ids_of_completed_tasks';
 
 let locale: Locale = undefined;
 
@@ -307,6 +308,25 @@ describe('tasks selector', () => {
             const result = getAllTaxonomyTermsFromTasks({ 'id1': aTask, 'id2': aSecondTaskWithSameTaxonomyTerm });
 
             expect(result).toEqual([aTaxonomyTerm]);
+        });
+    });
+
+    describe('get ids of completed tasks', () => {
+        it('includes the id of a completed task', () => {
+            const theId = aString();
+            const aTask = new TaskBuilder().withCompleted(true).withId(theId).build();
+
+            const result = getIdsOfCompletedTasks({ [theId]: aTask });
+
+            expect(result).toEqual([theId]);
+        });
+        it('does not include the id of a non-completed task', () => {
+            const theId = aString();
+            const aTask = new TaskBuilder().withCompleted(false).withId(theId).build();
+
+            const result = getIdsOfCompletedTasks({ [theId]: aTask });
+
+            expect(result).toEqual([]);
         });
     });
 });

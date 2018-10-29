@@ -6,6 +6,7 @@ import { PersistedUserData } from '../../user_data';
 export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];
     savedTasks: TaskId[] = [];
+    completedTasks: TaskId[] = [];
 
     addChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
         this.chosenAnswers.push(id);
@@ -21,6 +22,7 @@ export class PersistedUserDataBuilder {
         return {
             chosenAnswers: this.chosenAnswers,
             savedTasks: this.savedTasks,
+            completedTasks: this.completedTasks,
         };
     }
 
