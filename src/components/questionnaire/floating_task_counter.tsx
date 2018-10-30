@@ -88,9 +88,7 @@ export class FloatingTaskCounter extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
     floatingCount: {
-        borderColor: colors.lightGrey,
-        borderWidth: 1,
-        backgroundColor: colors.topaz,
+        backgroundColor: colors.orange,
         padding: 5,
         flex: 1,
         position: 'absolute',
@@ -101,11 +99,13 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
     },
     smallFloatingText: {
+        fontFamily: 'Avenir',
         fontSize: 12,
         color: colors.white,
         textAlign: 'center',
     },
     largeFloatingText: {
+        fontFamily: 'Avenir',
         fontSize: 20,
         color: colors.white,
         textAlign: 'center',

@@ -98,17 +98,17 @@ const renderQuestionContent = (question: selector.Question, props: Props): JSX.E
     );
 };
 
-const renderHeader = R.curry((props: Props, section: AccordionSection, _index: number): JSX.Element => (
+const renderHeader = R.curry((props: Props, section: AccordionSection, _index: number, isActive: Boolean): JSX.Element => (
     <TouchableOpacity
         onPress={(): SetActiveQuestionAction => props.setActiveQuestion(section.id)}
         style={{
-            backgroundColor: colors.topaz,
+            backgroundColor: isActive ? colors.orange : colors.topaz,
             borderRadius: values.lessRoundedBorderRadius,
-            marginBottom: 7,
+            marginBottom: 5,
             padding: 10,
         }}
     >
-        <Text style={textStyles.headlineH2StyleWhiteLeft}>
+        <Text style={textStyles.paragraphBoldWhiteLeft}>
             {section.title}
         </Text>
     </TouchableOpacity>

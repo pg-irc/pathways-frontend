@@ -20,6 +20,7 @@ export const colors = {
 export const values = {
     navigationIconSize: 28,
     largeIconSize: 30,
+    mediumIconSize: 25,
     smallIconSize: 20,
     smallerIconSize: 18,
     roundedBorderRadius: 25,
@@ -65,6 +66,16 @@ export const textStyles = StyleSheet.create({
         textAlign: 'left',
         color: colors.black,
     },
+    headlineH4StyleBlackLeft: {
+        fontFamily: 'Avenir',
+        fontSize: 16,
+        fontWeight: 'normal',
+        fontStyle: 'normal',
+        lineHeight: 21,
+        letterSpacing: 0,
+        textAlign: 'left',
+        color: colors.black,
+    },
     paragraphBoldBlackLeft: {
         fontFamily: 'Avenir',
         fontSize: 16,
@@ -75,15 +86,15 @@ export const textStyles = StyleSheet.create({
         textAlign: 'left',
         color: colors.greyishBrown,
     },
-    headlineH4StyleBlackLeft: {
+    paragraphBoldWhiteLeft: {
         fontFamily: 'Avenir',
         fontSize: 16,
-        fontWeight: 'normal',
+        fontWeight: '900',
         fontStyle: 'normal',
         lineHeight: 21,
         letterSpacing: 0,
         textAlign: 'left',
-        color: colors.black,
+        color: colors.white,
     },
     paragraphStyleWhiteleft: {
         fontFamily: 'Avenir',

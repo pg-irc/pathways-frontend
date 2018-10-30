@@ -26,7 +26,7 @@ export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Eleme
                 padding: 10,
                 backgroundColor: colors.white,
                 borderRadius: values.lessRoundedBorderRadius,
-                margin: 5,
+                margin: 3,
                 flex: 4,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -34,7 +34,7 @@ export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Eleme
             }}
         >
             <View style={{ flex: 4 }}>
-                <Text style={textStyles.paragraphBoldBlackLeft}>
+                <Text style={textStyles.paragraphStyle}>
                     {props.answer.text}
                 </Text>
             </View>
@@ -52,7 +52,7 @@ enum AnswerType {
 
 const renderComponentForAnswerType = (props: Props, answerType: AnswerType): JSX.Element => {
     const type = 'MaterialCommunityIcons';
-    const style = { color: colors.topaz };
+    const style = { color: colors.topaz, fontSize: values.mediumIconSize };
     switch (answerType) {
         case AnswerType.CheckboxAnswer:
             return props.answer.isChosen ?
