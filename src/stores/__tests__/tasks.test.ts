@@ -1,18 +1,11 @@
 // tslint:disable:no-expression-statement no-let
 
 import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
-import * as stores from '../tasks';
 import { UserDataPersistence } from '../user_data';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { addToSavedList, removeFromSavedList, toggleCompleted, saveTheseTasksToMyPlan } from '../tasks/actions';
-
-const asValid = (aStore: stores.TaskStore): stores.ValidTaskStore => {
-    if (aStore instanceof stores.ValidTaskStore) {
-        return aStore;
-    }
-    throw new Error('Store expected to be valid');
-};
+import * as stores from '../tasks';
 
 describe('tasks reducer', () => {
 
@@ -32,7 +25,7 @@ describe('tasks reducer', () => {
             const task = new TaskBuilder().build();
             const finalStore = stores.reducer(validStore, addToSavedList(task.id));
 
-            expect(asValid(finalStore).savedTasksList).toHaveLength(2);
+            expect(stores.toValidOrThrow(finalStore).savedTasksList).toHaveLength(2);
         });
 
         test('can add multiple tasks to saved task list', () => {
@@ -43,20 +36,20 @@ describe('tasks reducer', () => {
 
             const finalStore = stores.reducer(storeWithTwoTasks, saveTheseTasksToMyPlan([firstId, secondId]));
 
-            expect(asValid(finalStore).savedTasksList).toContain(firstId);
-            expect(asValid(finalStore).savedTasksList).toContain(secondId);
+            expect(stores.toValidOrThrow(finalStore).savedTasksList).toContain(firstId);
+            expect(stores.toValidOrThrow(finalStore).savedTasksList).toContain(secondId);
         });
 
         test('can remove task from saved tasks list', () => {
             const finalStore = stores.reducer(validStore, removeFromSavedList(validStore.savedTasksList[0]));
-            expect(asValid(finalStore).savedTasksList).toHaveLength(0);
+            expect(stores.toValidOrThrow(finalStore).savedTasksList).toHaveLength(0);
         });
 
         test('can toggle a task completed', () => {
             const taskId = Object.keys(validStore.taskMap)[0];
             const oldCompleted = validStore.taskMap[taskId].completed;
             const finalStore = stores.reducer(validStore, toggleCompleted(taskId));
-            expect(asValid(finalStore).taskMap[taskId].completed).toEqual(!oldCompleted);
+            expect(stores.toValidOrThrow(finalStore).taskMap[taskId].completed).toEqual(!oldCompleted);
         });
 
         describe('when handling a load request', () => {
@@ -102,7 +95,7 @@ describe('tasks reducer', () => {
                 });
             });
 
-            describe('when handling a load success', () => {
+            describe('when loading saved tasks', () => {
 
                 let firstTaskId = aString();
                 let secondTaskId = aString();
@@ -118,12 +111,12 @@ describe('tasks reducer', () => {
                     );
                     const theStore = new stores.LoadingTaskStore(validStoreWhereFirstTaskIsSaved);
 
-                    const dataWhereSecondTaskIsSaved = new PersistedUserDataBuilder().
+                    const persistedDataWhereSecondTaskIsSaved = new PersistedUserDataBuilder().
                         addSavedTask(secondTaskId).
                         buildObject();
-                    const theAction = UserDataPersistence.loadSuccess(dataWhereSecondTaskIsSaved);
+                    const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereSecondTaskIsSaved);
 
-                    resultStore = stores.reducer(theStore, theAction);
+                    resultStore = stores.reducer(theStore, loadAction);
                 });
 
                 it('should return a valid store', () => {
@@ -131,27 +124,56 @@ describe('tasks reducer', () => {
                 });
 
                 it('should return a store with task saved in loaded data marked as saved', () => {
-                    if (resultStore instanceof stores.ValidTaskStore) {
-                        expect(resultStore.savedTasksList).toContain(secondTaskId);
-                    }
+                    expect(stores.toValidOrThrow(resultStore).savedTasksList).toContain(secondTaskId);
                 });
 
                 it('should return a store with task not saved in loaded data not marked as saved', () => {
-                    if (resultStore instanceof stores.ValidTaskStore) {
-                        expect(resultStore.savedTasksList).not.toContain(firstTaskId);
-                    }
+                    expect(stores.toValidOrThrow(resultStore).savedTasksList).not.toContain(firstTaskId);
                 });
 
-                it('should ignore invalid task ids in the loaded data', () => {
-                    const taskBuilder = new TaskBuilder();
-                    const theValidStore = buildNormalizedStore([taskBuilder], []);
-                    const theStore = new stores.LoadingTaskStore(theValidStore);
-                    const dataWithInvalidId = new PersistedUserDataBuilder().
-                        addSavedTask(aString()).
+            });
+
+            it('should ignore invalid task ids in the loaded data', () => {
+                const taskBuilder = new TaskBuilder();
+                const theValidStore = buildNormalizedStore([taskBuilder], []);
+                const theLoadingStore = new stores.LoadingTaskStore(theValidStore);
+                const dataWithInvalidId = new PersistedUserDataBuilder().
+                    addSavedTask(aString()).
+                    buildObject();
+                const theAction = UserDataPersistence.loadSuccess(dataWithInvalidId);
+                const resultStore = stores.reducer(theLoadingStore, theAction);
+                expect(stores.toValidOrThrow(resultStore).savedTasksList).toHaveLength(0);
+            });
+
+            describe('when loading completed tasks', () => {
+                it('should set completed tasks to completed', () => {
+                    const taskId = aString();
+                    const theTask = new TaskBuilder().withId(taskId).withCompleted(false);
+                    const storeState = buildNormalizedStore([theTask], []);
+                    const theStore = new stores.LoadingTaskStore(storeState);
+                    const actionStateWithCompletedTask = new PersistedUserDataBuilder().
+                        addCompletedTask(taskId).
                         buildObject();
-                    const theAction = UserDataPersistence.loadSuccess(dataWithInvalidId);
-                    resultStore = stores.reducer(theStore, theAction);
-                    expect(asValid(resultStore).savedTasksList).toHaveLength(0);
+                    const theAction = UserDataPersistence.loadSuccess(actionStateWithCompletedTask);
+
+                    const resultStore = stores.reducer(theStore, theAction);
+                    const tasks = stores.toValidOrThrow(resultStore).taskMap;
+
+                    expect(tasks[taskId].completed).toBe(true);
+                });
+
+                it('should not set uncompleted tasks to completed', () => {
+                    const taskId = aString();
+                    const theTask = new TaskBuilder().withId(taskId).withCompleted(true);
+                    const storeState = buildNormalizedStore([theTask], []);
+                    const theStore = new stores.LoadingTaskStore(storeState);
+                    const actionStateWithNoCompletedTasks = new PersistedUserDataBuilder().buildObject();
+                    const theAction = UserDataPersistence.loadSuccess(actionStateWithNoCompletedTasks);
+
+                    const resultStore = stores.reducer(theStore, theAction);
+                    const tasks = stores.toValidOrThrow(resultStore).taskMap;
+
+                    expect(tasks[taskId].completed).toBe(false);
                 });
             });
         });

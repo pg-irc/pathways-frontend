@@ -1,7 +1,8 @@
 import { Id, Task } from '../../stores/tasks';
-import { rejectCompletedTasks } from './reject_completed_tasks';
-import { rejectTasksWithIdsInList } from './reject_tasks_with_ids_in_list';
+import { isCompleted } from './is_completed';
+import { idIsInList } from './id_is_in_list';
+import * as R from 'ramda';
 
 export const rejectSavedAndCompletedTasks = (savedTaskIds: ReadonlyArray<Id>, tasks: ReadonlyArray<Task>): ReadonlyArray<Task> => (
-    rejectCompletedTasks(rejectTasksWithIdsInList(savedTaskIds, tasks))
+    R.reject(isCompleted, R.reject(idIsInList(savedTaskIds), tasks))
 );
