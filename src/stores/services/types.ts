@@ -6,6 +6,7 @@ export interface PhoneNumber {
 }
 
 export interface Address {
+    readonly id: number;
     readonly type: string;
     readonly address: string;
     readonly city: string;
@@ -47,6 +48,7 @@ export interface ValidatedPhoneNumberJSON {
 }
 
 export interface ValidatedAddressJSON {
+    readonly id: number;
     readonly address: string;
     readonly city: string;
     readonly state_province: string;

@@ -17,6 +17,7 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
      }), data.location.phone_numbers);
 
     const addresses = R.map((addressWithType: ValidatedAddressWithTypeJSON): Address => ({
+        id: addressWithType.address.id,
         type: addressWithType.address_type,
         address: addressWithType.address.address,
         city: addressWithType.address.city,

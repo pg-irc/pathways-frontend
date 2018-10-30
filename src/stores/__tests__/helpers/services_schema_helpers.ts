@@ -1,29 +1,32 @@
-// tslint:disable:no-class readonly-keyword no-expression-statement no-this no-let
+// tslint:disable:no-class readonly-keyword no-expression-statement no-this no-let no-any
 import { aString, anInteger } from '../../../application/__tests__/helpers/random_test_values';
 
+// The following "JSON" types exist purely to allow us to test our schemas with invalid data.
+// The optional and any properties on these types ensure we can create invalid objects.
+
 interface PhoneNumberJSON {
-    readonly phone_number_type?: string | null;
-    readonly phone_number?: string | null;
+    readonly phone_number_type?: any;
+    readonly phone_number?: any;
 }
 
 interface AddressJSON {
-    readonly id?: number | null;
-    readonly address?: string | null;
-    readonly city?: string | null;
-    readonly state_province?: string | null;
-    readonly postal_code?: string | null;
-    readonly country?: string | null;
+    readonly id?: any;
+    readonly address?: any;
+    readonly city?: any;
+    readonly state_province?: any;
+    readonly postal_code?: any;
+    readonly country?: any;
 }
 
 interface AddressWithTypeJSON {
-    readonly address_type?: string | null;
+    readonly address_type?: any;
     readonly address?: AddressJSON | null;
 }
 
 interface ServiceJSON {
-    readonly id?: string | null;
-    readonly name?: string | null;
-    readonly description?: string | null;
+    readonly id?: any;
+    readonly name?: any;
+    readonly description?: any;
 }
 
 interface LocationJSON {
@@ -37,15 +40,15 @@ interface ServiceAtLocationJSON {
 }
 
 export class PhoneNumberJSONBuilder {
-    phone_number_type: string | null = aString();
-    phone_number: string | null = aString();
+    phone_number_type: any = aString();
+    phone_number: any = aString();
 
-    withPhoneNumberType(phoneNumberType: string | null): PhoneNumberJSONBuilder {
+    withPhoneNumberType(phoneNumberType: any): PhoneNumberJSONBuilder {
         this.phone_number_type = phoneNumberType;
         return this;
     }
 
-    withPhoneNumber(phoneNumber: string | null): PhoneNumberJSONBuilder {
+    withPhoneNumber(phoneNumber: any): PhoneNumberJSONBuilder {
         this.phone_number = phoneNumber;
         return this;
     }
@@ -71,34 +74,39 @@ export class PhoneNumberJSONBuilder {
 }
 
 export class AddressJSONBuilder {
-    id: number = anInteger();
-    address: string | null = aString();
-    city: string | null = aString();
-    state_province: string | null = aString();
-    postal_code: string | null = aString();
-    country: string | null = aString();
+    id: any = anInteger();
+    address: any = aString();
+    city: any = aString();
+    state_province: any = aString();
+    postal_code: any = aString();
+    country: any = aString();
 
-    withAddress(address: string | null): AddressJSONBuilder {
+    withId(id: any): AddressJSONBuilder {
+        this.id = id;
+        return this;
+    }
+
+    withAddress(address: any): AddressJSONBuilder {
         this.address = address;
         return this;
     }
 
-    withCity(city: string | null): AddressJSONBuilder {
+    withCity(city: any): AddressJSONBuilder {
         this.city = city;
         return this;
     }
 
-    withStateProvince(stateProvince: string | null): AddressJSONBuilder {
+    withStateProvince(stateProvince: any): AddressJSONBuilder {
         this.state_province = stateProvince;
         return this;
     }
 
-    withPostalCode(postalCode: string | null): AddressJSONBuilder {
+    withPostalCode(postalCode: any): AddressJSONBuilder {
         this.postal_code = postalCode;
         return this;
     }
 
-    withCountry(country: string | null): AddressJSONBuilder {
+    withCountry(country: any): AddressJSONBuilder {
         this.country = country;
         return this;
     }
@@ -114,8 +122,19 @@ export class AddressJSONBuilder {
         };
     }
 
+    buildWithoutId(): AddressJSON {
+        return {
+            address: this.address,
+            city: this.city,
+            state_province: this.state_province,
+            postal_code: this.postal_code,
+            country: this.country,
+        };
+    }
+
     buildWithoutAddress(): AddressJSON {
         return {
+            id: this.id,
             city: this.city,
             state_province: this.state_province,
             postal_code: this.postal_code,
@@ -125,6 +144,7 @@ export class AddressJSONBuilder {
 
     buildWithoutCity(): AddressJSON {
         return {
+            id: this.id,
             address: this.address,
             state_province: this.state_province,
             postal_code: this.postal_code,
@@ -134,6 +154,7 @@ export class AddressJSONBuilder {
 
     buildWithoutStateProvince(): AddressJSON {
         return {
+            id: this.id,
             address: this.address,
             city: this.city,
             postal_code: this.postal_code,
@@ -143,6 +164,7 @@ export class AddressJSONBuilder {
 
     buildWithoutPostalCode(): AddressJSON {
         return {
+            id: this.id,
             address: this.address,
             city: this.city,
             state_province: this.state_province,
@@ -151,6 +173,7 @@ export class AddressJSONBuilder {
     }
     buildWithoutCountry(): AddressJSON {
         return {
+            id: this.id,
             address: this.address,
             city: this.city,
             state_province: this.state_province,
@@ -160,10 +183,10 @@ export class AddressJSONBuilder {
 }
 
 export class AddressWithTypeJSONBuilder {
-    address_type: string | null = aString();
+    address_type: any = aString();
     address: AddressJSON | null = new AddressJSONBuilder().build();
 
-    withAddressType(addressType: string | null): AddressWithTypeJSONBuilder {
+    withAddressType(addressType: any): AddressWithTypeJSONBuilder {
         this.address_type = addressType;
         return this;
     }
@@ -194,21 +217,21 @@ export class AddressWithTypeJSONBuilder {
 }
 
 export class ServiceJSONBuilder {
-    id: string | null = aString();
-    name: string | null = aString();
-    description: string | null = aString();
+    id: any = aString();
+    name: any = aString();
+    description: any = aString();
 
-    withId(id: string | null): ServiceJSONBuilder {
+    withId(id: any): ServiceJSONBuilder {
         this.id = id;
         return this;
     }
 
-    withName(name: string | null): ServiceJSONBuilder {
+    withName(name: any): ServiceJSONBuilder {
         this.name = name;
         return this;
     }
 
-    withDescription(description: string | null): ServiceJSONBuilder {
+    withDescription(description: any): ServiceJSONBuilder {
         this.description = description;
         return this;
     }

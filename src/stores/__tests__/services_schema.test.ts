@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement no-any no-null-keyword
-import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { aString, aNumber } from '../../application/__tests__/helpers/random_test_values';
 import * as helpers from '../__tests__/helpers/services_schema_helpers';
 import { servicesAtLocationValidator } from '../../json_schemas/validators';
 
@@ -103,176 +103,306 @@ describe('schema for services_at_location endpoint', () => {
 
     describe('validating location properties', () => {
 
-        test('location is required', () => {
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().buildWithoutLocation(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0] should have required property \'location\'');
+        describe('location', () => {
+
+            test('location is required', () => {
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().buildWithoutLocation(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0] should have required property \'location\'');
+            });
+
+            test('location is of type object', () => {
+                const location: any = null;
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location should be object');
+            });
         });
 
-        test('location is of type object', () => {
-            const location: any = null;
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location should be object');
+        describe('addresses', () => {
+
+            test('location.addresses is required', () => {
+                const location = new helpers.LocationJSONBuilder().buildWithoutAddresses();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location should have required property \'addresses\'');
+            });
+
+            test('location.addresses is of type array', () => {
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType(null).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses should be array');
+            });
+
+            test('location.addresses can be empty array', () => {
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('location.addresses item is of type object', () => {
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([null]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0] should be object');
+            });
+
+            test('location.addresses item.address_type is required ', () => {
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().buildWithoutAddressType();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0] should have required property \'address_type\'');
+            });
+
+            test('location.addresses item.address_type is of type string', () => {
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddressType(null).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address_type should be string');
+            });
+
+            test('location.addresses item.address is required ', () => {
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().buildWithoutAddress();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0] should have required property \'address\'');
+            });
+
+            test('location.addresses item.address.id is required', () => {
+                const address = new helpers.AddressJSONBuilder().buildWithoutId();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'id\'');
+            });
+
+            test('location.addresses item.address.id is of type integer', () => {
+                const address = new helpers.AddressJSONBuilder().withId(null).build();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address.id should be integer');
+            });
+
+            test('location.addresses item.address.address is required', () => {
+                const address = new helpers.AddressJSONBuilder().buildWithoutAddress();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'address\'');
+            });
+
+            test('location.addresses item.address.address is of type string or null', () => {
+                const address = new helpers.AddressJSONBuilder().withAddress(aNumber()).build();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address.address should be string,null');
+            });
+
+            test('location.addresses item.address.city is required', () => {
+                const address = new helpers.AddressJSONBuilder().buildWithoutCity();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'city\'');
+            });
+
+            test('location.addresses item.address.city is of type string', () => {
+                const address = new helpers.AddressJSONBuilder().withCity(null).build();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address.city should be string');
+            });
+
+            test('location.addresses item.address.state_province is required', () => {
+                const address = new helpers.AddressJSONBuilder().buildWithoutStateProvince();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'state_province\'');
+            });
+
+            test('location.addresses item.address.state_province is of type string or null', () => {
+                const address = new helpers.AddressJSONBuilder().withStateProvince(aNumber()).build();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address.state_province should be string,null');
+            });
+
+            test('location.addresses item.address.postal_code is required', () => {
+                const address = new helpers.AddressJSONBuilder().buildWithoutPostalCode();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'postal_code\'');
+            });
+
+            test('location.addresses item.address.postal_code is of type string or null', () => {
+                const address = new helpers.AddressJSONBuilder().withPostalCode(aNumber()).build();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address.postal_code should be string,null');
+            });
+
+            test('location.addresses item.address.country is required', () => {
+                const address = new helpers.AddressJSONBuilder().buildWithoutCountry();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'country\'');
+            });
+
+            test('location.addresses item.address.country is of type string', () => {
+                const address = new helpers.AddressJSONBuilder().withCountry(null).build();
+                const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
+                const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.addresses[0].address.country should be string');
+            });
         });
 
-        test('location.phone_numbers is required', () => {
-            const location = new helpers.LocationJSONBuilder().buildWithoutPhoneNumbers();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location should have required property \'phone_numbers\'');
-        });
+        describe('phone_numbers', () => {
 
-        test('location.addresses is required', () => {
-            const location = new helpers.LocationJSONBuilder().buildWithoutAddresses();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location should have required property \'addresses\'');
-        });
+            test('location.phone_numbers is required', () => {
+                const location = new helpers.LocationJSONBuilder().buildWithoutPhoneNumbers();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location should have required property \'phone_numbers\'');
+            });
 
-        test('location.phone_numbers is of type array', () => {
-            const location = new helpers.LocationJSONBuilder().withPhoneNumbers(null).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.phone_numbers should be array');
-        });
+            test('location.phone_numbers is of type array', () => {
+                const location = new helpers.LocationJSONBuilder().withPhoneNumbers(null).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.phone_numbers should be array');
+            });
 
-        test('location.addresses is of type array', () => {
-            const location = new helpers.LocationJSONBuilder().withAddressesWithType(null).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.addresses should be array');
-        });
+            test('location.phone_numbers can be empty array', () => {
+                const location = new helpers.LocationJSONBuilder()
+                    .withPhoneNumbers([])
+                    .withAddressesWithType([])
+                    .build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(true);
+            });
 
-        test('location.phone_numbers can be empty array', () => {
-            const location = new helpers.LocationJSONBuilder()
-                .withPhoneNumbers([])
-                .withAddressesWithType([])
-                .build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(true);
-        });
+            test('location.phone_numbers item is of type object', () => {
+                const phoneNumber: any = null;
+                const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.phone_numbers[0] should be object');
+            });
 
-        test('location.addresses can be empty array', () => {
-            const location = new helpers.LocationJSONBuilder().withAddressesWithType([]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(true);
-        });
+            test('location.phone_numbers item.phone_number_type is required ', () => {
+                const phoneNumber = new helpers.PhoneNumberJSONBuilder().buildWithoutPhoneNumberType();
+                const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.phone_numbers[0] should have required property \'phone_number_type\'');
+            });
 
-        test('location.phone_numbers item is of type object', () => {
-            const phoneNumber: any = null;
-            const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.phone_numbers[0] should be object');
-        });
+            test('location.phone_numbers item.phone_number_type is of type string', () => {
+                const phoneNumber = new helpers.PhoneNumberJSONBuilder().withPhoneNumberType(null).build();
+                const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.phone_numbers[0].phone_number_type should be string');
+            });
 
-        test('location.addresses item is of type object', () => {
-            const address: any = null;
-            const location = new helpers.LocationJSONBuilder().withAddressesWithType([address]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.addresses[0] should be object');
-        });
+            test('location.phone_numbers item.phone_number is required ', () => {
+                const phoneNumber = new helpers.PhoneNumberJSONBuilder().buildWithoutPhoneNumber();
+                const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.phone_numbers[0] should have required property \'phone_number\'');
+            });
 
-        test('location.phone_numbers item.phone_number_type is required ', () => {
-            const phoneNumber = new helpers.PhoneNumberJSONBuilder().buildWithoutPhoneNumberType();
-            const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.phone_numbers[0] should have required property \'phone_number_type\'');
-        });
-
-        test('location.addresses item.address_type is required ', () => {
-            const address = new helpers.AddressWithTypeJSONBuilder().buildWithoutAddressType();
-            const location = new helpers.LocationJSONBuilder().withAddressesWithType([address]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.addresses[0] should have required property \'address_type\'');
-        });
-
-        test('location.phone_numbers item.phone_number_type is of type string', () => {
-            const phoneNumber = new helpers.PhoneNumberJSONBuilder().withPhoneNumberType(null).build();
-            const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.phone_numbers[0].phone_number_type should be string');
-        });
-
-        test('location.addresses item.address_type is of type string', () => {
-            const address = new helpers.AddressWithTypeJSONBuilder().withAddressType(null).build();
-            const location = new helpers.LocationJSONBuilder().withAddressesWithType([address]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.addresses[0].address_type should be string');
-        });
-
-        test('location.phone_numbers item.phone_number is required ', () => {
-            const phoneNumber = new helpers.PhoneNumberJSONBuilder().buildWithoutPhoneNumber();
-            const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.phone_numbers[0] should have required property \'phone_number\'');
-        });
-
-        test('location.addresses item.address is required ', () => {
-            const address = new helpers.AddressWithTypeJSONBuilder().buildWithoutAddress();
-            const location = new helpers.LocationJSONBuilder().withAddressesWithType([address]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.addresses[0] should have required property \'address\'');
-        });
-
-        test('location.phone_numbers item.phone_number is of type string', () => {
-            const phoneNumber = new helpers.PhoneNumberJSONBuilder().withPhoneNumber(null).build();
-            const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.phone_numbers[0].phone_number should be string');
-        });
-
-        test('location.addresses item.address is of type object', () => {
-            const address = new helpers.AddressWithTypeJSONBuilder().withAddress(null).build();
-            const location = new helpers.LocationJSONBuilder().withAddressesWithType([address]).build();
-            const validator = servicesAtLocationValidator([
-                new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
-            ]);
-            expect(validator.isValid).toBe(false);
-            expect(validator.errors).toBe('data[0].location.addresses[0].address should be object');
+            test('location.phone_numbers item.phone_number is of type string', () => {
+                const phoneNumber = new helpers.PhoneNumberJSONBuilder().withPhoneNumber(null).build();
+                const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.phone_numbers[0].phone_number should be string');
+            });
         });
     });
 });

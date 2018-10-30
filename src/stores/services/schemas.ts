@@ -40,16 +40,16 @@ const address = {
             "type": "integer"
         },
         "address": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "city": {
             "type": "string"
         },
         "state_province": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "postal_code": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "country": {
             "type": "string"
