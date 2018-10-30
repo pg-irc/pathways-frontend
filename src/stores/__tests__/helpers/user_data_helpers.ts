@@ -18,6 +18,11 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
+    addCompletedTask(id: TaskId): PersistedUserDataBuilder {
+        this.completedTasks.push(id);
+        return this;
+    }
+
     buildObject(): PersistedUserData {
         return {
             chosenAnswers: this.chosenAnswers,
