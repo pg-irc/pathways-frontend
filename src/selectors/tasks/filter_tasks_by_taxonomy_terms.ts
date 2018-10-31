@@ -1,23 +1,9 @@
-import * as R from 'ramda';
-import * as store from '../../stores/tasks';
-import { Taxonomies as TaxonomyConstants } from '../../application/constants';
+import { Task, TaskMap } from '../../stores/tasks';
 import { TaxonomyTermReference } from '../taxonomies/pull_explore_taxonomy';
+import { isTaskRecommended } from './is_task_recommended';
+import * as R from 'ramda';
 
 export const filterTasksByTaxonomyTerms =
-    R.curry((selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, taskMap: store.TaskMap): ReadonlyArray<store.Task> => {
-        return R.filter(isRecommended(selectedAnswerTaxonomyTerms), R.values(taskMap));
-    });
-
-const isRecommended = R.curry((selectedAnswerTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, task: store.Task): boolean => {
-    const taskContainsTaxonomyTerms = R.curry((targetTerms: ReadonlyArray<TaxonomyTermReference>, aTask: store.Task): boolean => (
-        R.not(R.isEmpty(R.intersection(targetTerms, aTask.taxonomyTerms)))
+    R.curry((taxonomyTerms: ReadonlyArray<TaxonomyTermReference>, tasks: TaskMap): ReadonlyArray<Task> => (
+        R.filter(isTaskRecommended(taxonomyTerms), R.values(tasks))
     ));
-
-    const taxonomyId = TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID;
-    const taxonomyTermId = TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID;
-
-    const isRecommendedToAll = taskContainsTaxonomyTerms([{ taxonomyId, taxonomyTermId }]);
-    const isRecommendedBecauseOfSelecedAnswers = taskContainsTaxonomyTerms(selectedAnswerTaxonomyTerms);
-
-    return isRecommendedToAll(task) || isRecommendedBecauseOfSelecedAnswers(task);
-});
