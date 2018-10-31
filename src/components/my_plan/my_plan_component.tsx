@@ -12,11 +12,11 @@ import {
     noTasksAddedYetTextComponent,
     noTasksRecommendedTextComponent,
     noTasksCompletedTextComponent,
-} from '../tasks/task_list';
-import { TaskListItemActions } from '../tasks/task_list_item';
+} from '../tasks/task_list_component';
+import { TaskListItemActions } from '../tasks/task_list_item_component';
 import { Routes, goToRouteWithoutParameter, RouterProps } from '../../application/routing';
-import { PersonalizePocketComponent, PersonalizePocketStates } from './personalize_pocket';
-import { IntroComponent } from './intro';
+import { QuestionnairePocketComponent } from './questionnaire_pocket_component';
+import { IntroComponent } from './intro_component';
 
 export interface MyPlanProps {
     readonly savedTasks: ReadonlyArray<TaskListItem>;
@@ -28,7 +28,7 @@ interface MyPlanState {
     readonly savedTasksIsCollapsed: boolean;
     readonly recommendedTasksIsCollapsed: boolean;
     readonly completedTasksIsCollapsed: boolean;
-    readonly personalizePocketState: PersonalizePocketStates;
+    readonly questionnairePocketIsOpen: boolean;
 }
 
 type Props = MyPlanProps & TaskListItemActions & RouterProps;
@@ -41,7 +41,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
             savedTasksIsCollapsed: false,
             recommendedTasksIsCollapsed: false,
             completedTasksIsCollapsed: true,
-            personalizePocketState: PersonalizePocketStates.Open,
+            questionnairePocketIsOpen: true,
         };
         this.toggleSavedTasksCollapsed = this.toggleSavedTasksCollapsed.bind(this);
         this.toggleRecommendedTasksCollapsed = this.toggleRecommendedTasksCollapsed.bind(this);
@@ -54,8 +54,8 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     render(): JSX.Element {
         return (
             <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
-                <PersonalizePocketComponent
-                    pocketState={this.state.personalizePocketState}
+                <QuestionnairePocketComponent
+                    isOpen={this.state.questionnairePocketIsOpen}
                     onPocketPress={this.onPocketPress}
                     onPocketButtonPress={this.onPocketButtonPress}
                 />
@@ -97,9 +97,9 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
     }
 
     private onPocketPress(): void {
-        if (this.state.personalizePocketState === PersonalizePocketStates.Closed) {
+        if (!this.state.questionnairePocketIsOpen) {
             this.setState({
-                personalizePocketState: PersonalizePocketStates.Open,
+                questionnairePocketIsOpen: true,
             });
         }
     }
@@ -112,11 +112,11 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
         const eventScrollOffset = event.nativeEvent.contentOffset.y;
         if (eventScrollOffset > 100) {
             this.setState({
-                personalizePocketState: PersonalizePocketStates.Closed,
+                questionnairePocketIsOpen: false,
             });
         } else {
             this.setState({
-                personalizePocketState: PersonalizePocketStates.Open,
+                questionnairePocketIsOpen: true,
             });
         }
     }

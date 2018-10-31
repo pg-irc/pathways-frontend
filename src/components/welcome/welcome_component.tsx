@@ -7,6 +7,7 @@ import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
 import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { colors, applicationStyles, textStyles } from '../../application/styles';
+import { arrivalAdvisorLogo } from '../../application/images';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
@@ -17,11 +18,8 @@ export interface WelcomeActions {
     readonly setLocale: (localeCode: string) => SetLocale.Request;
 }
 
-// tslint:disable-next-line:no-var-requires
-const arrivalAdvisorLogo = require('../../../assets/images/aa_logo.png');
-
-export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & RouterProps): JSX.Element {
-    const aaLogoWidthAndHeight = Dimensions.get('screen').width / 2.15;
+export function WelcomeComponent(props: I18nProps & WelcomeProps & WelcomeActions & RouterProps): JSX.Element {
+    const logoSize = Dimensions.get('screen').width / 2.15;
     return (
         <View style={{
             flex: 1,
@@ -34,8 +32,8 @@ export function Welcome(props: I18nProps & WelcomeProps & WelcomeActions & Route
                 source={arrivalAdvisorLogo}
                 resizeMode={'contain'}
                 style={{
-                    width: aaLogoWidthAndHeight,
-                    height: aaLogoWidthAndHeight,
+                    width: logoSize,
+                    height: logoSize,
                     marginBottom: 20,
                 }}
             />

@@ -3,27 +3,20 @@ import { Trans } from '@lingui/react';
 import { TouchableOpacity, Dimensions, Image } from 'react-native';
 import { Text, View, Button } from 'native-base';
 import { applicationStyles, colors, values, textStyles } from '../../application/styles';
+import { patLogo } from '../../application/images';
 
-export enum PersonalizePocketStates {
-    Open,
-    Closed,
+export interface QuestionnairePocketProps {
+    readonly isOpen: boolean;
 }
 
-export interface PersonalizePocketProps {
-    readonly pocketState: PersonalizePocketStates;
-}
-
-export interface PersonalizePocketActions {
+export interface QuestionnairePocketActions {
     readonly onPocketPress: () => void;
     readonly onPocketButtonPress: () => void;
 }
 
-type Props = PersonalizePocketProps & PersonalizePocketActions;
+type Props = QuestionnairePocketProps & QuestionnairePocketActions;
 
-// tslint:disable-next-line:no-var-requires
-const patLogo = require('../../../assets/images/pat.png');
-
-export const PersonalizePocketComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+export const QuestionnairePocketComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <TouchableOpacity
         onPress={props.onPocketPress}
         style={{
@@ -32,12 +25,12 @@ export const PersonalizePocketComponent: React.StatelessComponent<Props> = (prop
             borderBottomRightRadius: values.roundedBorderRadius,
         }}
     >
-        {props.pocketState === PersonalizePocketStates.Open ? getOpenPocket(props) : getClosedPocket()}
+        {props.isOpen ? getOpenPocket(props) : getClosedPocket()}
     </TouchableOpacity>
 );
 
 const getOpenPocket = (props: Props): JSX.Element => {
-    const patLogoWidthAndHeight = Dimensions.get('screen').width / 5;
+    const patLogoWidthAndHeight = getLargePatLogoSize();
     return (
         <View style={{ alignItems: 'center', paddingHorizontal: 30, marginVertical: 20 }}>
             <Image
@@ -70,7 +63,7 @@ const getOpenPocket = (props: Props): JSX.Element => {
 };
 
 const getClosedPocket = (): JSX.Element => {
-    const patLogoWidthAndHeight = Dimensions.get('screen').width / 9;
+    const patLogoWidthAndHeight = getSmallPatLogoSize();
     return (
         <View style={{ alignItems: 'center', padding: 2 }}>
             <Image
@@ -84,3 +77,7 @@ const getClosedPocket = (): JSX.Element => {
         </View>
     );
 };
+
+const getSmallPatLogoSize = (): number => Dimensions.get('screen').width / 9;
+
+const getLargePatLogoSize = (): number => Dimensions.get('screen').width / 5;

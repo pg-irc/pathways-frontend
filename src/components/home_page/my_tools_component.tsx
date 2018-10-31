@@ -37,50 +37,42 @@ const buildButton = (buttonContent: JSX.Element, buttonOnPress: () => void): JSX
 );
 
 const getMyPlanButtonContent = (): JSX.Element => (
-    <View>
-        <Icon type='FontAwesome' name='check' style={styles.buttonContentIcon}/>
-        <Text style={textStyles.headlineH2StyleBlackLeft}>
-            <Trans>My Plan</Trans>
-        </Text>
-        <Text style={textStyles.paragraphStyle}>
-            <Trans>Keep track of everything I need to do to settle in Canada</Trans>
-        </Text>
-    </View>
+    getButtonContent(
+        'check',
+        <Trans>My Plan</Trans>,
+        <Trans>Keep track of everything I need to do to settle in Canada</Trans>,
+    )
 );
 
 const getLearnButtonContent = (): JSX.Element => (
-    <View>
-        <Icon type='FontAwesome' name='book' style={styles.buttonContentIcon}/>
-        <Text style={textStyles.headlineH2StyleBlackLeft}>
-            <Trans>Learn</Trans>
-        </Text>
-        <Text style={textStyles.paragraphStyle}>
-            <Trans>Find out about my community and available services</Trans>
-        </Text>
-    </View>
+    getButtonContent(
+        'book',
+        <Trans>Learn</Trans>,
+        <Trans>Find out about my community and available services</Trans>,
+    )
 );
 
 const getNeedHelpButtonContent = (): JSX.Element => (
-    <View>
-        <Icon type='FontAwesome' name='phone' style={styles.buttonContentIcon}/>
-        <Text style={textStyles.headlineH2StyleBlackLeft}>
-            <Trans>Need Help?</Trans>
-        </Text>
-        <Text style={textStyles.paragraphStyle}>
-            <Trans>Contact a settlement agency near me</Trans>
-        </Text>
-    </View>
+    getButtonContent(
+        'phone',
+        <Trans>Need Help?</Trans>,
+        <Trans>Contact a settlement agency near me</Trans>,
+    )
 );
 
 const getMyPrivacyButtonContent = (): JSX.Element => (
+    getButtonContent(
+        'lock',
+        <Trans>My Privacy?</Trans>,
+        <Trans>Your data is never shared with anyone</Trans>,
+    )
+);
+
+const getButtonContent = (icon: string, title: JSX.Element, description: JSX.Element): JSX.Element => (
     <View>
-        <Icon type='FontAwesome' name='lock' style={styles.buttonContentIcon}/>
-        <Text style={textStyles.headlineH2StyleBlackLeft}>
-            <Trans>My Privacy?</Trans>
-        </Text>
-        <Text style={textStyles.paragraphStyle}>
-            <Trans>Your data is never shared with anyone</Trans>
-        </Text>
+        <Icon type='FontAwesome' name={icon} style={styles.buttonContentIcon}/>
+        <Text style={textStyles.headlineH2StyleBlackLeft}>{title}</Text>
+        <Text style={textStyles.paragraphStyle}>{description}</Text>
     </View>
 );
 

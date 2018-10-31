@@ -20,7 +20,7 @@ export const CollapsibleContent: React.StatelessComponent<Props> = (props: Props
     <View>
         <TouchableOpacity
             style={props.style ? props.style : undefined}
-            onPress={(): void => props.onHeaderPress()}>
+            onPress={props.onHeaderPress}>
             {props.isCollapsed ? props.collapsedHeader : props.expandedHeader}
         </TouchableOpacity>
         <Collapsible collapsed={props.isCollapsed}>

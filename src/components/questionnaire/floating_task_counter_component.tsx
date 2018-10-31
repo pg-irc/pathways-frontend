@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from 'native-base';
 import { Trans } from '@lingui/react';
-import { colors } from '../../application/styles';
+import { colors, fontFamily } from '../../application/styles';
 import { History } from 'history';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 
@@ -18,7 +18,7 @@ interface State {
 
 type Props = FloatingTaskCounterProps;
 
-export class FloatingTaskCounter extends React.Component<Props, State> {
+export class FloatingTaskCounterComponent extends React.Component<Props, State> {
     timer: number;
 
     constructor(props: Props) {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
     },
     smallFloatingText: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 12,
         color: colors.white,
         textAlign: 'center',

@@ -28,9 +28,12 @@ export const values = {
     contentPadding: 10,
 };
 
+// TODO Buy Avenir and load it for Android.
+export const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'Roboto';
+
 export const textStyles = StyleSheet.create({
     headlineH1StyleBlackLeft: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 24,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -40,7 +43,7 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
     },
     headlineH2StyleWhiteLeft: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 18,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -49,7 +52,7 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     headlineH2StyleBlackLeft: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 18,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -58,7 +61,7 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
     },
     headlineH3StyleBlackLeft: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -67,7 +70,7 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
     },
     headlineH4StyleBlackLeft: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -77,7 +80,7 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
     },
     paragraphBoldBlackLeft: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -87,7 +90,7 @@ export const textStyles = StyleSheet.create({
         color: colors.greyishBrown,
     },
     paragraphBoldWhiteLeft: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -97,7 +100,7 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     paragraphStyleWhiteleft: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -107,7 +110,7 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     paragraphStyle: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -117,7 +120,7 @@ export const textStyles = StyleSheet.create({
         color: colors.greyishBrown,
     },
     paragraphSmallStyleCenter: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 12,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -127,7 +130,7 @@ export const textStyles = StyleSheet.create({
         color: colors.greyishBrown,
     },
     paragraphSmallStyleLeft: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 12,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -137,7 +140,7 @@ export const textStyles = StyleSheet.create({
         color: colors.greyishBrown,
     },
     paragraphURL: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 12,
         fontWeight: 'bold',
         lineHeight: 21,
@@ -147,7 +150,7 @@ export const textStyles = StyleSheet.create({
         color: colors.greyishBrown,
     },
     paragraphStyleWhiteCenter: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -157,7 +160,7 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     headlineH5StyleBlackLeft: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 11,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -166,7 +169,7 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
     },
     headlineH5StyleBlackCenter: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 11,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -175,7 +178,7 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
     },
     button: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -185,7 +188,7 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     whiteButton: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 16,
         fontWeight: '900',
         fontStyle: 'normal',

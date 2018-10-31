@@ -16,7 +16,7 @@ export interface AnswerActions {
 
 type Props = AnswerProps & AnswerActions;
 
-export const Answer: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+export const AnswerComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const answerType = props.answer.acceptMultipleAnswers ? AnswerType.CheckboxAnswer : AnswerType.RadioAnswer;
     const onPress = (): ChooseAnswerAction => props.chooseAnswer(props.answer.id);
     return (
@@ -52,16 +52,14 @@ enum AnswerType {
 
 const renderComponentForAnswerType = (props: Props, answerType: AnswerType): JSX.Element => {
     const type = 'MaterialCommunityIcons';
+    const name = getIconName(answerType, props.answer.isChosen);
     const style = { color: colors.topaz, fontSize: values.mediumIconSize };
-    switch (answerType) {
-        case AnswerType.CheckboxAnswer:
-            return props.answer.isChosen ?
-                <Icon type={type} name='checkbox-marked' style={style} /> :
-                <Icon type={type} name='checkbox-blank-outline' style={style} />;
-        case AnswerType.RadioAnswer:
-        default:
-            return props.answer.isChosen ?
-                <Icon type={type} name='checkbox-blank-circle' style={style}/> :
-                <Icon type={type} name='checkbox-blank-circle-outline' style={style} />;
+    return <Icon type={type} name={name} style={style} />;
+};
+
+const getIconName = (answerType: AnswerType, isChosen: boolean): string => {
+    if (answerType === AnswerType.CheckboxAnswer) {
+        return isChosen ? 'checkbox-marked' : 'checkbox-blank-outline';
     }
+    return isChosen ? 'checkbox-blank-circle' : 'checkbox-blank-circle-outline';
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { applicationStyles, textStyles } from '../../application/styles';
 import { Button, View, Text } from 'native-base';
-import { Answer } from './answer';
+import { AnswerComponent } from './answer_component';
 import { Trans } from '@lingui/react';
 import { RouterProps, goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { History } from 'history';
@@ -22,13 +22,13 @@ export interface QuestionActions {
 
 type Props = QuestionProps & QuestionActions & RouterProps;
 
-export const Question: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+export const QuestionComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const { question, chooseAnswer, isFinalQuestion, history, nextButtonOnPress }: Props = props;
     return (
         <View style={{ flex: 1, marginBottom: 10 }}>
             {question.explanation ? <Text style={textStyles.paragraphSmallStyleLeft}>{question.explanation}</Text> : <EmptyComponent />}
             {question.answers.map((answer: SelectorAnswer) => (
-                <Answer
+                <AnswerComponent
                     key={answer.id}
                     answer={answer}
                     chooseAnswer={chooseAnswer}

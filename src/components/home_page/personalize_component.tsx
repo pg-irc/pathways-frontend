@@ -5,16 +5,14 @@ import { Image, Dimensions } from 'react-native';
 import { applicationStyles, colors, values, textStyles } from '../../application/styles';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { History } from 'history';
+import { patLogo } from '../../application/images';
 
 export interface PersonalizeProps {
     readonly history: History;
 }
 
-// tslint:disable-next-line:no-var-requires
-const patLogo = require('../../../assets/images/pat.png');
-
 export const PersonalizeComponent: React.StatelessComponent<PersonalizeProps> = (props: PersonalizeProps): JSX.Element => {
-    const patLogoWidthAndHeight = Dimensions.get('screen').width / 5;
+    const logoSize = Dimensions.get('screen').width / 5;
     return (
         <View style={[
             applicationStyles.boxShadowBelow,
@@ -39,8 +37,8 @@ export const PersonalizeComponent: React.StatelessComponent<PersonalizeProps> = 
                     resizeMode={'contain'}
                     style={{
                         flex: 1,
-                        width: patLogoWidthAndHeight,
-                        height: patLogoWidthAndHeight,
+                        width: logoSize,
+                        height: logoSize,
                         marginBottom: 20,
                     }}
                 />

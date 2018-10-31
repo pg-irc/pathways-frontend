@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Component, QuestionnaireProps } from './questionnaire';
-import { QuestionnaireActions } from './questionnaire';
+import { QuestionnaireComponent, QuestionnaireProps } from './questionnaire_component';
+import { QuestionnaireActions } from './questionnaire_component';
 import { Store } from '../../stores';
 import { Id, ChooseAnswerAction, chooseAnswer, SetActiveQuestionAction, setActiveQuestion } from '../../stores/questionnaire';
 import { selectActiveQuestion } from '../../selectors/questionnaire/select_active_question';
@@ -19,4 +19,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Store>): QuestionnaireActions => 
     setActiveQuestion: (activeQuestion: Id): SetActiveQuestionAction => dispatch(setActiveQuestion(activeQuestion)),
 });
 
-export const QuestionnaireConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Component);
+export const QuestionnaireConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(QuestionnaireComponent);

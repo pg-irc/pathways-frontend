@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native';
 import { Text, View } from 'native-base';
 import { Trans } from '@lingui/react';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
-import { TaskListItemComponent, TaskListItemActions } from './task_list_item';
+import { TaskListItemComponent, TaskListItemActions } from './task_list_item_component';
 import { Id } from '../../stores/tasks';
 import { RouterProps } from '../../application/routing';
 import { colors, values } from '../../application/styles';

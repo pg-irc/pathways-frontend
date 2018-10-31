@@ -10,7 +10,7 @@ import { Trans } from '@lingui/react';
 import { TaskServices } from '../../selectors/services/task_services';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { ServiceComponent } from '../services/service';
-import { RelatedTasksComponent } from './related_tasks';
+import { RelatedTasksComponent } from './related_tasks_component';
 import { RouterProps } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { computeStateLabel, computeStateButtons, TaskStateLabel, TaskStateButton } from './task_states';

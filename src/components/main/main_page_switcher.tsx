@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-native';
 import { WelcomeConnectedComponent } from '../welcome/welcome_connected_component';
-import { HomePageComponent } from '../home_page/home_page';
+import { HomePageComponent } from '../home_page/home_page_component';
 import { HelpConnectedComponent } from '../help/help_connected_component';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
 import { ExploreSectionDetailConnectedComponent } from '../explore/explore_section_detail_connected_component';

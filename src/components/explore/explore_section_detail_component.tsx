@@ -3,7 +3,7 @@ import { Container, Content, View, Icon, Text } from 'native-base';
 import { ImageBackground } from 'react-native';
 import { Trans } from '@lingui/react';
 import { ExploreSection } from '../../selectors/explore/types';
-import { TaskListComponent, noTasksAddedYetTextComponent } from '../tasks/task_list';
+import { TaskListComponent, noTasksAddedYetTextComponent } from '../tasks/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { colors } from '../../application/styles';
 import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';

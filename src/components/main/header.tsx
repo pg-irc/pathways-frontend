@@ -10,6 +10,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
 import * as R from 'ramda';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
+import { arrivalAdvisorLogo } from '../../application/images';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -20,9 +21,6 @@ export interface HeaderProps {
 export interface UiActions {
     readonly onLanguageSelect: () => void;
 }
-
-// tslint:disable-next-line:no-var-requires
-const arrivalAdvisorLogo = require('../../../assets/images/aa_logoglyph.png');
 
 export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> = (props: HeaderProps & UiActions): JSX.Element => {
     const { onLanguageSelect, currentLocale }: HeaderProps & UiActions = props;
@@ -69,14 +67,14 @@ const backButtonComponent = (pathname: string, history: History): JSX.Element =>
 );
 
 const arrivalAdvisorLogoComponent = (): JSX.Element => {
-    const aaLogoWidthAndHeight = Dimensions.get('screen').width / 15;
+    const logoSize = Dimensions.get('screen').width / 15;
     return (
         <Image
             source={arrivalAdvisorLogo}
             resizeMode={'contain'}
             style={{
-                width: aaLogoWidthAndHeight,
-                height: aaLogoWidthAndHeight,
+                width: logoSize,
+                height: logoSize,
             }}
         />
     );

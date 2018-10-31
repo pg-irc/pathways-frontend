@@ -4,12 +4,12 @@ import Accordion from 'react-native-collapsible/Accordion';
 import { TouchableOpacity } from 'react-native';
 import { Content, View, Text } from 'native-base';
 import * as selector from '../../selectors/questionnaire/question';
-import { Question } from './question';
+import { QuestionComponent } from './question_component';
 import { colors, textStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
 import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
-import { FloatingTaskCounter } from './floating_task_counter';
+import { FloatingTaskCounterComponent } from './floating_task_counter_component';
 import { values } from '../../application/styles';
 
 export interface QuestionnaireProps {
@@ -25,7 +25,7 @@ export interface QuestionnaireActions {
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
-export const Component: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+export const QuestionnaireComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: colors.lightGrey}}>
         <Content padder>
             <Text style={textStyles.headlineH1StyleBlackLeft}><Trans>Personalize My Plan</Trans></Text>
@@ -45,7 +45,7 @@ export const Component: React.StatelessComponent<Props> = (props: Props): JSX.El
                 duration={400}
             />
         </Content>
-        <FloatingTaskCounter
+        <FloatingTaskCounterComponent
             taskCount={props.recommendedTaskCount}
             history={props.history}
         />
@@ -89,7 +89,7 @@ const renderQuestionContent = (question: selector.Question, props: Props): JSX.E
     const nextButtonOnPress = (): SetActiveQuestionAction =>
         setActiveQuestion(findNextActiveQuestion(activeQuestion, questionnaire));
     return (
-        <Question
+        <QuestionComponent
             {...props}
             key={question.id}
             question={question}
@@ -98,7 +98,7 @@ const renderQuestionContent = (question: selector.Question, props: Props): JSX.E
     );
 };
 
-const renderHeader = R.curry((props: Props, section: AccordionSection, _index: number, isActive: Boolean): JSX.Element => (
+const renderHeader = R.curry((props: Props, section: AccordionSection, _index: number, isActive: boolean): JSX.Element => (
     <TouchableOpacity
         onPress={(): SetActiveQuestionAction => props.setActiveQuestion(section.id)}
         style={{
