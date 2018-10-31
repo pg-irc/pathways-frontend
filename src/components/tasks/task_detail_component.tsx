@@ -199,7 +199,7 @@ const ThisTaskIsRecommended = (): JSX.Element => (
 const TaxonomyComponent = ({ task }: Props): JSX.Element => (
     <Row style={styles.row}>
         <Col size={10}>
-            <Icon type='MaterialCommunityIcons' name={task.exploreSection.icon} />
+            <Icon type='FontAwesome' name={task.exploreSection.icon} />
         </Col>
         <Col size={90} style={styles.iconText}>
             <Text style={textStyles.paragraphStyle}>

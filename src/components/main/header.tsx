@@ -10,7 +10,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
 import * as R from 'ramda';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
-import { arrivalAdvisorLogo } from '../../application/images';
+import { arrivalAdvisorGlyphLogo } from '../../application/images';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -70,7 +70,7 @@ const arrivalAdvisorLogoComponent = (): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 15;
     return (
         <Image
-            source={arrivalAdvisorLogo}
+            source={arrivalAdvisorGlyphLogo}
             resizeMode={'contain'}
             style={{
                 width: logoSize,

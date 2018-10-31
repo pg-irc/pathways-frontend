@@ -68,7 +68,7 @@ const TitleComponent: React.StatelessComponent<Props> = (props: Props): JSX.Elem
 );
 
 const IconComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <Icon type='MaterialCommunityIcons' name={props.section.icon} style={[
+    <Icon type='FontAwesome' name={props.section.icon} style={[
         { color: colors.white },
         { fontSize: 40 },
         { marginTop: 20 },

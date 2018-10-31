@@ -15,6 +15,11 @@ export const buildExploreFixture = (): ExploreStore => (
                     'ar': 'تسوية في',
                     'fr': 'S\'installer',
                 },
+                description: {
+                    'en': 'Social customs and getting around your community',
+                    'ar': '',
+                    'fr': '',
+                },
                 introduction: {
                     'en': 'The provincial edition of the Newcomers’ Guide has information for people living anywhere in B.C. It has been translated into simplified and traditional Chinese, Punjabi, Tagalog, Arabic, Korean and French. It is available online and in print. Local editions have details and contact information for services in 26 different communities across B.C. They are available online, and in English only. www.welcomebc.ca/newcomersguides',
                     'ar': ' على دليل القادمين الجدد في بريتش كولومبيا يحتوي ستقرار في بريتش كولومبيا في إ معلومات ستساعدك على ال ولى من وصولك. أ شهر القليلة ال أال ت التي تتضمن معظم الفصول على قائمة بأسماء الوكال يمكنك الحصول منها على مزيد من المعلومات. سماء وأرقام قد تكون بعض المعلومات (مثل ال الهواتف والعناوين) قد تغيرت منذ وقت طباعة هذا الدليل. يجاد إستخدم الملحق في نهاية هذا الكتاب ل المعلومات في هذا الدليل. نترنت مكتوبة باللغة إ جميع المواقع على شبكة ال نجليزية. قد تقدم بعضها معلومات مكتوبة إ ال بلغات أخرى',
@@ -31,6 +36,11 @@ export const buildExploreFixture = (): ExploreStore => (
                     'en': 'Education',
                     'ar': 'التعليم',
                     'fr': 'Éducation',
+                },
+                description: {
+                    'en': 'Schools for children, youth and adults, learning English',
+                    'ar': '',
+                    'fr': '',
                 },
                 introduction: {
                     'en': 'In British Columbia, all children between the ages of five and 16 must go to school. The school system is made up of public schools and independent (private) schools. Public schools are fully funded by the B.C. government. There is no fee for your child to attend a public school. Independent schools are only partially funded by government. Parents are required to pay fees for their children to attend most independent schools. The provincial government (Ministry of Education), local boards of education, and independent school authorities manage the school system (Kindergarten to Grade 12). The provincial government funds the school system and sets the legislation, regulations, and policies to make sure that every school meets provincial standards and every student receives a high-quality education. [www.gov.bc.ca](http://www.gov.bc.ca/bced) Children can also learn at home.',
@@ -49,6 +59,11 @@ export const buildExploreFixture = (): ExploreStore => (
                     'ar': 'الرعاىة الصحية',
                     'fr': 'Soins de santé',
                 },
+                description: {
+                    'en': 'Medical insurance, finding a doctor, mental health',
+                    'ar': '',
+                    'fr': '',
+                },
                 introduction: {
                     'en': '',
                     'ar': '',
@@ -65,6 +80,11 @@ export const buildExploreFixture = (): ExploreStore => (
                     'en': 'Money & banking',
                     'ar': 'المال والبنوك',
                     'fr': 'Argent et banque',
+                },
+                description: {
+                    'en': 'Opening a bank account, filing taxes',
+                    'ar': '',
+                    'fr': '',
                 },
                 introduction: {
                     'en': '',
@@ -83,6 +103,11 @@ export const buildExploreFixture = (): ExploreStore => (
                     'ar': 'الإسكان',
                     'fr': 'Logement',
                 },
+                description: {
+                    'en': 'Finding a place to rent or buy, getting rental assistance',
+                    'ar': '',
+                    'fr': '',
+                },
                 introduction: {
                     'en': '',
                     'ar': '',
@@ -99,6 +124,11 @@ export const buildExploreFixture = (): ExploreStore => (
                     'en': 'Employment',
                     'ar': 'توظيف',
                     'fr': 'Emploi',
+                },
+                description: {
+                    'en': 'Finding a job, working and workers’ rights',
+                    'ar': '',
+                    'fr': '',
                 },
                 introduction: {
                     'en': '',
@@ -117,6 +147,11 @@ export const buildExploreFixture = (): ExploreStore => (
                     'ar': 'النظام القانوني والهجرة',
                     'fr': 'Système juridique et immigration',
                 },
+                description: {
+                    'en': 'Police, courts, immigration and citizenship',
+                    'ar': '',
+                    'fr': '',
+                },
                 introduction: {
                     'en': 'When you arrive in Canada, you should learn how Canadian laws work. They may be different from your own country’s laws.\nThe federal (Canadian) government manages laws that affect the whole country. Provincial and territorial governments manage laws for only one province or territory (like British Columbia). Municipal governments manage laws for towns and cities (like Victoria or Metro Vancouver). Canadians vote for all levels of government. Each level of government makes laws. The courts enforce the law, but they are separate from the government.\nCanada has a law called the Canadian Charter of Rights and Freedoms. These rights and freedoms are very important to Canadians. The charter says that all Canadians have the right to speak freely, practise their own religion, live and work anywhere in Canada, and participate in peaceful political activities. https://laws-lois.justice.gc.ca/eng/Const/page-15.html',
                     'ar': 'عندما تأتي إلى كندا، يجب عليك فهم كيفية عمل نها قد تكون مختلفة عن القوانينأ القوانين الكندية ل صلي.  أ في بلدك ال تتولى الحكومة الفدرالية (الكندية) مسؤولية القوانين قليمية وحكومة إ التي تخص الدولة بأكملها. أما الحكومة ال ن القوانين المتعلقة بأقليم واحد المقاطعة فإنهما تتول أو مقاطعة واحدة (مثل بريتش كولومبيا). أما الحكومات البلدية فإنها تتولى مسؤولية القوانين المتعلقة بالمدن والبلدات (مثل فكتوريا أو مترو فانكوفر). ينتخب الكنديون جميع هذه المستويات الحكومية والتي لها حق إصدار القوانين. أما المحاكم، فتتولى تطبيق القانون وتكون مستقلة عن الحكومة.  يسمى الميثاق الكندي للحقوق يوجد في كندا قانون Canadian Charter of Rights and( والحرياتً . تعتبر هذه الحقوق والحريات مهمة جدا (Freedoms) للكنديين وتشمل على: الحق في حرية التعبير وحرية العقيدة وحرية العيش والعمل في أي مكان في كندا والحق في المشاركة في النشاط السياسي السلمي. https://laws-lois.justice.gc.ca/eng/Const/page-15.htm',
@@ -134,6 +169,11 @@ export const buildExploreFixture = (): ExploreStore => (
                     'ar': 'القيادة',
                     'fr': 'Conduite',
                 },
+                description: {
+                    'en': 'Getting a drivers’ license, traffic laws, basic insurance',
+                    'ar': '',
+                    'fr': '',
+                },
                 introduction: {
                     'en': '',
                     'ar': '',
@@ -150,6 +190,11 @@ export const buildExploreFixture = (): ExploreStore => (
                     'en': 'Help for individuals & families',
                     'ar': 'مساعدة للأفراد والعائلات',
                     'fr': 'Aide pour les individus et les familles',
+                },
+                description: {
+                    'en': 'Eg. low-income, disabilities, youth',
+                    'ar': '',
+                    'fr': '',
                 },
                 introduction: {
                     'en': '',

@@ -7,6 +7,7 @@ export const colors = {
     topaz: '#11cac0',
     buttonPressedTopaz: '#58dad3',
     blueGreen: '#0d9790',
+    blueGreenDark: '#136f63',
     buttonPressedWhite: '#f4f4f4',
     lightGrey: '#eaeae3',
     darkerGrey: '#d0d0c5',
@@ -15,6 +16,12 @@ export const colors = {
     sunYellow: '#ffe22b',
     white: '#ffffff',
     darkGreyWithAlpha: 'rgba(0, 0, 0, 0.4)',
+    turquoiseBlue: '#07a0c3',
+    aquaMarine: '#03cea4',
+    vermillion: '#f34213',
+    melon: '#fc7a57',
+    sepia: '#8b572a',
+    purple: '#541388',
   };
 
 export const values = {

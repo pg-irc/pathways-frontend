@@ -3,7 +3,7 @@ import { I18nManager, TouchableOpacity, StyleSheet } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import { History } from 'history';
-import { colors, values, textStyles } from '../../application/styles';
+import { colors, values, textStyles, applicationStyles } from '../../application/styles';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 
 export interface MyToolsProps {
@@ -25,10 +25,7 @@ export const MyToolsComponent: React.StatelessComponent<MyToolsProps> = (props: 
 );
 
 const buildButton = (buttonContent: JSX.Element, buttonOnPress: () => void): JSX.Element => (
-    <TouchableOpacity
-        onPress={buttonOnPress}
-        style={styles.button}
-    >
+    <TouchableOpacity onPress={buttonOnPress} style={[applicationStyles.boxShadowBelow, styles.button]}>
         {buttonContent}
         <View style={styles.buttonArrowIconWrapper}>
             <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize }}/>
