@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     largeFloatingText: {
-        fontFamily: 'Avenir',
+        fontFamily: fontFamily,
         fontSize: 20,
         color: colors.white,
         textAlign: 'center',
