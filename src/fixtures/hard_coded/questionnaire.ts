@@ -368,7 +368,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'answerHousingSituationHomeless',
                 questionId: 'questionCurrentHousingSituation',
                 text: {
-                    'en': 'I am curretly homeless',
+                    'en': 'I am currently homeless',
                 },
                 isChosen: false,
                 taxonomyTerms: [{
@@ -596,7 +596,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'answerHealthCosts',
                 questionId: 'questionHealth',
                 text: {
-                    'en': 'I want to learn more about health care cost and insurance',
+                    'en': 'I want to learn more about health care costs and insurance',
                 },
                 isChosen: false,
                 taxonomyTerms: [{
@@ -729,7 +729,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'answerDriversLicence',
                 questionId: 'questionTransportation',
                 text: {
-                    'en': 'I need to get a drivers licence',
+                    'en': 'I need to get a driver\'s licence',
                 },
                 isChosen: false,
                 taxonomyTerms: [{
