@@ -60,7 +60,7 @@ const getNeedHelpButtonContent = (): JSX.Element => (
 const getMyPrivacyButtonContent = (): JSX.Element => (
     getButtonContent(
         'lock',
-        <Trans>My Privacy?</Trans>,
+        <Trans>My Privacy</Trans>,
         <Trans>Your data is never shared with anyone</Trans>,
     )
 );
