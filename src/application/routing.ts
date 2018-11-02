@@ -1,3 +1,4 @@
+import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
 import { History } from 'history';
 import { Id as LearnId } from '../stores/explore';
@@ -74,6 +75,10 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
 export const goBack = (history: History): void => (
     history.goBack()
 );
+
+export const pathMatchesRoute = (path: string, route: Routes): boolean => {
+    return Boolean(matchPath(path, { path: routePathDefinition(route), exact: true }));
+};
 
 const routeHasParameter = (route: Routes): boolean => (
     routePathDefinition(route).indexOf(':') !== -1
