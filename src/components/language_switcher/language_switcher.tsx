@@ -22,9 +22,9 @@ export const LanguageSwitcher = (props: LanguageSwitcherProps): JSX.Element => {
     const currentLocaleSection = buildLocaleSectionListData(currentLocale, availableLocales, localeListItemBuilder);
 
     return (
-        <Container style={{ height: '100%', backgroundColor: colors.blue }}>
-            <Header>
-                <Body><Title><Trans>Select language</Trans></Title></Body>
+        <Container style={{ height: '100%', backgroundColor: colors.lightGrey }}>
+            <Header style={{ backgroundColor: colors.topaz }}>
+                <Body><Title style={{ color: colors.white }}><Trans>Select your language</Trans></Title></Body>
             </Header>
             <Content>
                 <SectionList

@@ -6,6 +6,7 @@ import { aString } from '../../../application/__tests__/helpers/random_test_valu
 export class ExploreSectionBuilder {
     id: string = aString();
     name: string = aString();
+    description: string = aString();
     introduction: string = aString();
     icon: string = aString();
 
@@ -16,6 +17,11 @@ export class ExploreSectionBuilder {
 
     withName(name: string): ExploreSectionBuilder {
         this.name = name;
+        return this;
+    }
+
+    withDescription(description: string): ExploreSectionBuilder {
+        this.description = description;
         return this;
     }
 
@@ -33,6 +39,7 @@ export class ExploreSectionBuilder {
         return {
             id: this.id,
             name: this.name,
+            description: this.description,
             introduction: this.introduction,
             icon: this.icon,
         };

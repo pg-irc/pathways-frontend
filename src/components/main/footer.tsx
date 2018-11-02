@@ -1,11 +1,11 @@
 import React from 'react';
-import { ViewStyle, StyleProp, TextStyle } from 'react-native';
+import { StyleProp, TextStyle } from 'react-native';
 import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 import { History, Location } from 'history';
 import { Trans } from '@lingui/react';
 import { Routes, routePathWithoutParameter, goToRouteWithoutParameter } from '../../application/routing';
 import { emptyComponent } from '../empty_component/empty_component';
-import { colors } from '../../application/styles';
+import { colors, values, applicationStyles } from '../../application/styles';
 
 export interface FooterProps {
     readonly history: History;
@@ -26,28 +26,33 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     }
 
     return (
-        <Footer>
-            <FooterTab style={{ backgroundColor: colors.blue }}>
+        <Footer style={applicationStyles.boxShadowAbove}>
+            <FooterTab style={[{ backgroundColor: colors.white }]}>
                 {navigationButton(props.history, Routes.Home, 'Home', 'home', isOnHomeScreen)}
-                {navigationButton(props.history, Routes.MyPlan, 'My plan', 'clipboard-text', isOnMyPlanScreen)}
-                {navigationButton(props.history, Routes.Learn, 'Learn', 'book-open-page-variant', isOnLearnScreen)}
+                {navigationButton(props.history, Routes.MyPlan, 'My plan', 'check', isOnMyPlanScreen)}
+                {navigationButton(props.history, Routes.Learn, 'Learn', 'book', isOnLearnScreen)}
             </FooterTab>
         </Footer>
     );
 };
 
 const navigationButton = (history: History, route: Routes, text: string, icon: string, isActive: boolean): JSX.Element => (
-    <Button vertical style={buttonStyle(isActive)}
-        onPress={goToRouteWithoutParameter(route, history)}>
-        <Icon type='MaterialCommunityIcons' name={icon} active={isActive} style={textStyle(isActive)} />
+    <Button vertical onPress={goToRouteWithoutParameter(route, history)}>
+        <Icon
+            type='FontAwesome'
+            name={icon}
+            active={isActive}
+            style={[
+                {
+                    fontSize: values.navigationIconSize,
+                },
+                textStyle(isActive),
+            ]}
+       />
         <Text style={textStyle(isActive)}><Trans>{text}</Trans></Text>
     </Button>
 );
 
-const buttonStyle = (isActive: boolean): ViewStyle => (
-    isActive ? { backgroundColor: colors.white } : { backgroundColor: colors.blue }
-);
-
 const textStyle = (isActive: boolean): StyleProp<TextStyle> => (
-    isActive ? { color: colors.darkGrey } : { color: colors.white }
+    isActive ? { color: colors.topaz } : { color: colors.darkerGrey }
 );

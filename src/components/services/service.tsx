@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { applicationStyles, colors } from '../../application/styles';
+import { colors, textStyles } from '../../application/styles';
 import { Service, PhoneNumber, Address } from '../../stores/services';
 import { View } from 'native-base';
 import { Text } from 'react-native';
@@ -19,10 +19,7 @@ export function ServiceComponent(props: Props): JSX.Element {
 
     return (
         <View>
-            <Text style={[
-                applicationStyles.bold,
-                { textAlign: 'left' },
-            ]}>
+            <Text style={textStyles.paragraphStyle}>
                 {props.service.name}
             </Text>
             {
@@ -35,7 +32,7 @@ export function ServiceComponent(props: Props): JSX.Element {
                 mapWithIndex((phoneNumber: PhoneNumber, index: number) =>
                     <View key={index}>
                         <Text>
-                            <Text style={[{ color: colors.darkGrey }]}>
+                            <Text style={[{ color: colors.darkerGrey }]}>
                                 {capitalizeFirstLetter(phoneNumber.type)}
                             </Text> <TextWithPhoneLinks text={phoneNumber.phoneNumber} />
                         </Text>

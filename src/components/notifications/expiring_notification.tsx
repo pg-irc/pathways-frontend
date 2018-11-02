@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { View } from 'native-base';
 import { Notification } from '../../stores/notifications';
-import { colors } from '../../application/styles';
+import { colors, values } from '../../application/styles';
 
 export interface ExpiringNotificationProps {
     readonly notification: Notification;
@@ -41,14 +41,15 @@ export class ExpiringNotificationComponent extends React.Component<Props> {
 
 const styles = StyleSheet.create({
     notification: {
+        borderRadius: values.lessRoundedBorderRadius,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.darkGrey,
-        flex: 1,
+        backgroundColor: colors.darkerGrey,
         position: 'absolute',
         padding: 10,
         bottom: 20,
-        left: 0,
-        right: 0,
+        left: 10,
+        right: 10,
+        elevation: 1,
     },
 });

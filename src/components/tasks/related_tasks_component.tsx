@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text } from 'native-base';
-import { applicationStyles } from '../../application/styles';
+import { applicationStyles, textStyles } from '../../application/styles';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
-import { TaskListComponent, noTasksAddedYetTextComponent } from './task_list';
+import { TaskListComponent, noTasksAddedYetTextComponent } from './task_list_component';
 import { Trans } from '@lingui/react';
-import { TaskListItemActions } from './task_list_item';
+import { TaskListItemActions } from './task_list_item_component';
 import { RouterProps } from '../../application/routing';
 import { emptyComponent } from '../empty_component/empty_component';
 import { Id } from '../../stores/tasks';
@@ -22,7 +22,7 @@ export const RelatedTasksComponent: React.StatelessComponent<AllRelatedTasksProp
     return (
         <View>
             <View style={applicationStyles.hr} />
-            <Text style={applicationStyles.bold}><Trans>RELATED TASKS</Trans></Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>RELATED TASKS</Trans></Text>
             <TaskListComponent
                 {...props}
                 tasks={props.relatedTasks}

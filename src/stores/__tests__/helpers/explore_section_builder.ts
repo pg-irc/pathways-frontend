@@ -9,6 +9,7 @@ export class ExploreSectionBuilder {
     id: Id = aString();
     name: LocalizedText = new LocalizedTextBuilder().build();
     introduction: LocalizedText = new LocalizedTextBuilder().build();
+    description: LocalizedText = new LocalizedTextBuilder().build();
     taxonomyTerms: ReadonlyArray<TaxonomyTermReference> = [];
 
     withId(id: Id): ExploreSectionBuilder {
@@ -18,6 +19,11 @@ export class ExploreSectionBuilder {
 
     withName(name: LocalizedText): ExploreSectionBuilder {
         this.name = name;
+        return this;
+    }
+
+    withDescription(description: LocalizedText): ExploreSectionBuilder {
+        this.description = description;
         return this;
     }
 
@@ -35,6 +41,7 @@ export class ExploreSectionBuilder {
         return {
             id: this.id,
             name: this.name,
+            description: this.description,
             introduction: this.introduction,
             taxonomyTerms: this.taxonomyTerms,
         };

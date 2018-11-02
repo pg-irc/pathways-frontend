@@ -1,9 +1,9 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
-import { StyleSheet, Dimensions, LayoutChangeEvent } from 'react-native';
-import { View, Icon, Button } from 'native-base';
+import { StyleSheet, Dimensions, LayoutChangeEvent, TouchableOpacity } from 'react-native';
+import { View, Icon } from 'native-base';
 import { Notification } from '../../stores/notifications';
-import { colors } from '../../application/styles';
+import { colors, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface ModalNotificationProps {
@@ -91,11 +91,9 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
         const onPress = (): void => this.props.removeNotification();
         return (
             <View>
-                <View style={styles.modalHeader}>
-                    <Button onPress={onPress} small>
-                        <Icon name='close' />
-                    </Button>
-                </View>
+                <TouchableOpacity onPress={onPress} style={styles.modalHeader}>
+                    <Icon name='close' />
+                </TouchableOpacity>
                 <View>{content}</View>
             </View>
         );
@@ -104,23 +102,23 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
     modalOverlay: {
+        alignItems: 'center',
         backgroundColor: colors.darkGreyWithAlpha,
         position: 'absolute',
         height: Dimensions.get('screen').height,
         bottom: 0,
         left: 0,
         right: 0,
+        elevation: 1,
     },
     modal: {
-        borderRadius: 5,
+        borderRadius: values.lessRoundedBorderRadius,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.white,
+        backgroundColor: colors.lightGrey,
         position: 'absolute',
         padding: 10,
         bottom: '50%',
-        left: '5%',
-        right: '5%',
     },
     modalHeader: {
         flex: 1,

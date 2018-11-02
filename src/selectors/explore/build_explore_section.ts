@@ -5,7 +5,8 @@ import { Locale, getLocalizedText, getLocalizedTextOrDefault } from '../locale/g
 export const buildExploreSection = (locale: Locale, theSection: stores.ExploreSection, icon: string): select.ExploreSection => {
     const id = theSection.id;
     const name = getLocalizedText(locale, theSection.name);
+    const description = getLocalizedText(locale, theSection.description);
     const introduction = getLocalizedTextOrDefault('', locale, theSection.introduction);
 
-    return { id, name, introduction, icon };
+    return { id, name, description, introduction, icon };
 };
