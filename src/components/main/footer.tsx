@@ -18,8 +18,9 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     const isOnHomeScreen = pathMatchesRoute(path, Routes.Home);
     const isOnMyPlanScreen = pathMatchesRoute(path, Routes.MyPlan);
     const isOnLearnScreen = pathMatchesRoute(path, Routes.Learn);
+    const showFooter = isOnHomeScreen || isOnMyPlanScreen || isOnLearnScreen;
 
-    if (!(isOnHomeScreen || isOnMyPlanScreen || isOnLearnScreen)) {
+    if (!showFooter) {
         return emptyComponent();
     }
 

@@ -77,7 +77,7 @@ export const goBack = (history: History): void => (
 );
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {
-    return Boolean(matchPath(path, { path: routePathDefinition(route), exact: true }));
+    return !! matchPath(path, { path: routePathDefinition(route), exact: true });
 };
 
 const routeHasParameter = (route: Routes): boolean => (
