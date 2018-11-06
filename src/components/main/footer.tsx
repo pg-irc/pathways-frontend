@@ -3,7 +3,7 @@ import { StyleProp, TextStyle } from 'react-native';
 import { Footer, FooterTab, Button, Icon, Text } from 'native-base';
 import { History, Location } from 'history';
 import { Trans } from '@lingui/react';
-import { Routes, routePathWithoutParameter, goToRouteWithoutParameter } from '../../application/routing';
+import { Routes, goToRouteWithoutParameter, pathMatchesRoute } from '../../application/routing';
 import { emptyComponent } from '../empty_component/empty_component';
 import { colors, values, applicationStyles } from '../../application/styles';
 
@@ -15,13 +15,12 @@ export interface FooterProps {
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
     const path = props.location.pathname;
 
-    const isOnWelcomeScreen = path === routePathWithoutParameter(Routes.Welcome);
-    const isOnHelpScreen = path === routePathWithoutParameter(Routes.Help);
-    const isOnHomeScreen = path === routePathWithoutParameter(Routes.Home);
-    const isOnMyPlanScreen = path === routePathWithoutParameter(Routes.MyPlan);
-    const isOnLearnScreen = path === routePathWithoutParameter(Routes.Learn);
+    const isOnHomeScreen = pathMatchesRoute(path, Routes.Home);
+    const isOnMyPlanScreen = pathMatchesRoute(path, Routes.MyPlan);
+    const isOnLearnScreen = pathMatchesRoute(path, Routes.Learn);
+    const showFooter = isOnHomeScreen || isOnMyPlanScreen || isOnLearnScreen;
 
-    if (isOnWelcomeScreen || isOnHelpScreen) {
+    if (!showFooter) {
         return emptyComponent();
     }
 
