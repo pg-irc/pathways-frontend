@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { TaskListItemActions } from '../tasks/task_list_item_component';
+import { TaskListActions } from '../tasks/task_list_component';
 import { Store } from '../../stores';
 import { MyPlanComponent, MyPlanProps } from './my_plan_component';
 import { selectRecommendedTasks } from '../../selectors/tasks/select_recommended_tasks';
@@ -14,7 +14,7 @@ const mapStateToProps = (store: Store): MyPlanProps => ({
     completedTasks: selectCompletedTasks(store),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListItemActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListActions => ({
     addToSavedList: (taskId: Id): AddToSavedListAction => dispatch(addToSavedList(taskId)),
 });
 

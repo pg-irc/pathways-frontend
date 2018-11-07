@@ -32,6 +32,10 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.TaskDetail)).toEqual('/task/:taskId');
     });
 
+    it('For Routes.TaskDetailServices returns path: "/task-services/:taskId" with parameter', () => {
+        expect(routePathDefinition(Routes.TaskDetailServices)).toEqual('/task-services/:taskId');
+    });
+
 });
 
 describe('the routePathWithoutParameter function', () => {

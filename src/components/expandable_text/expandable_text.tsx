@@ -1,9 +1,10 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import { Dimensions, LayoutChangeEvent, TouchableOpacity } from 'react-native';
-import { View, Icon } from 'native-base';
+import { Dimensions, LayoutChangeEvent } from 'react-native';
+import { View, Text, Button } from 'native-base';
+import { Trans } from '@lingui/react';
 import Markdown from 'react-native-markdown-renderer';
-import { colors, values, markdownStyles } from '../../application/styles';
+import { colors, markdownStyles, textStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { toggleExpandedState, ExpandableTextStates, shouldShowButton, defaultExpandableTextState, isDefaultState } from './expandable_text_states';
 
@@ -79,25 +80,20 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
     private shouldHaveButton(): boolean {
         return shouldShowButton(this.state.expandableState);
     }
+
     private getButton(): JSX.Element {
         const onPress = (): void => this.toggleState();
-        const iconStyle = { fontSize: values.smallerIconSize, padding: 3 };
-        const icon = this.isCollapsed() ? 'arrow-dropdown' : 'arrow-dropup';
+        const text = this.isCollapsed() ? <Trans>Read more</Trans> : <Trans>Read less</Trans>;
         return (
-            <TouchableOpacity onPress={onPress}>
-                <View style={[
-                    { backgroundColor: colors.lightGrey },
-                    { marginTop: 5 },
-                    { borderRadius: 5 },
-                ]}>
-                    <View style={[
-                        { justifyContent: 'center' },
-                        { alignItems: 'center' },
-                    ]}>
-                        <Icon name={icon} style={iconStyle} />
-                    </View>
-                </View>
-            </TouchableOpacity>
+            <Button onPress={onPress} rounded style={{
+                backgroundColor: colors.darkerGrey,
+                alignSelf: 'center',
+                marginTop: 10,
+            }}>
+                <Text style={textStyles.paragraphBoldBlackLeft}>
+                    {text}
+                </Text>
+            </Button>
         );
     }
 

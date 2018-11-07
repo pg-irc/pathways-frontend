@@ -3,7 +3,7 @@ import { View, Text } from 'native-base';
 import { textStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
 
-export const IntroComponent: React.StatelessComponent = (): JSX.Element => (
+export const MyPlanIntroComponent: React.StatelessComponent = (): JSX.Element => (
     <View style={{ marginVertical: 15 }}>
         <Text style={textStyles.headlineH1StyleBlackLeft}><Trans>My Plan</Trans></Text>
         <Text style={textStyles.headlineH4StyleBlackLeft}>

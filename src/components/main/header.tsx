@@ -5,7 +5,7 @@ import { Locale } from '../../locale';
 import { I18nManager, Image, Dimensions } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
-import { routePathWithoutParameter, Routes, goBack } from '../../application/routing';
+import { routePathWithoutParameter, Routes, goBack, pathMatchesRoute } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
 import * as R from 'ramda';
@@ -24,13 +24,14 @@ export interface UiActions {
 
 export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> = (props: HeaderProps & UiActions): JSX.Element => {
     const { onLanguageSelect, currentLocale }: HeaderProps & UiActions = props;
+    const path = props.location.pathname;
 
-    if (props.location.pathname === routePathWithoutParameter(Routes.Welcome)) {
+    if (pathMatchesRoute(path, Routes.Welcome)) {
         return <EmptyComponent />;
     }
 
     const marginTop = getStatusBarHeightForPlatform();
-    const backButton = backButtonComponentIfShown(props.location.pathname, props.history);
+    const backButton = backButtonComponentIfShown(path, props.history);
     const localeButton: JSX.Element = <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />;
 
     // From the docs: "Connects the global back button on Android and tvOS to the router's history.
@@ -52,17 +53,17 @@ export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> 
     );
 };
 
-const backButtonComponentIfShown = (pathname: string, history: History): JSX.Element => (
-    isBackButtonShown(pathname) ? backButtonComponent(pathname, history) : arrivalAdvisorLogoComponent()
+const backButtonComponentIfShown = (path: string, history: History): JSX.Element => (
+    isBackButtonShown(path) ? backButtonComponent(path, history) : arrivalAdvisorLogoComponent()
 );
 
-const isBackButtonShown = (pathname: string): boolean => (
-    R.not(R.contains(pathname, R.map(routePathWithoutParameter, [Routes.Home, Routes.MyPlan, Routes.Learn])))
+const isBackButtonShown = (path: string): boolean => (
+    R.not(R.contains(path, R.map(routePathWithoutParameter, [Routes.Home, Routes.MyPlan, Routes.Learn])))
 );
 
-const backButtonComponent = (pathname: string, history: History): JSX.Element => (
+const backButtonComponent = (path: string, history: History): JSX.Element => (
     <Button transparent onPress={(): void => goBack(history)}>
-        <Icon name={getBackButtonIcon(pathname)} style={{ color: colors.white }}/>
+        <Icon name={getBackButtonIcon(path)} style={{ color: colors.white }}/>
     </Button>
 );
 
@@ -80,8 +81,11 @@ const arrivalAdvisorLogoComponent = (): JSX.Element => {
     );
 };
 
-const getBackButtonIcon = (pathname: string): string => {
-    if (pathname === routePathWithoutParameter(Routes.Help)) {
+const getBackButtonIcon = (path: string): string => {
+    const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
+    const isOnTaskDetailServicesScreen = pathMatchesRoute(path, Routes.TaskDetailServices);
+
+    if (isOnHelpScreen || isOnTaskDetailServicesScreen) {
         return 'close';
     }
     if (I18nManager.isRTL) {

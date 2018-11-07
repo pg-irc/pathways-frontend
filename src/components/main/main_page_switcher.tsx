@@ -6,6 +6,7 @@ import { HelpConnectedComponent } from '../help/help_connected_component';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
 import { ExploreSectionDetailConnectedComponent } from '../explore/explore_section_detail_connected_component';
 import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
+import { TaskDetailServicesConnectedComponent } from '../tasks/task_detail_services_connected_component';
 import { QuestionnaireConnectedComponent } from '../questionnaire/questionnaire_connected_component';
 import { MyPlanConnectedComponent } from '../my_plan/my_plan_connected_component';
 import { Routes, routePathDefinition } from '../../application/routing';
@@ -20,5 +21,6 @@ export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Eleme
         <Route exact path={routePathDefinition(Routes.Learn)} component={ExploreAllConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.LearnDetail)} component={ExploreSectionDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.TaskDetail)} component={TaskDetailConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.TaskDetailServices)} component={TaskDetailServicesConnectedComponent} />
     </Switch>
 );

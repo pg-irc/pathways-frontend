@@ -19,6 +19,7 @@ export enum Routes {
     Learn,
     LearnDetail,
     TaskDetail,
+    TaskDetailServices,
     Help,
 }
 
@@ -41,6 +42,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/learn/:learnId';
         case Routes.TaskDetail:
             return '/task/:taskId';
+        case Routes.TaskDetailServices:
+            return '/task-services/:taskId';
     }
 };
 
