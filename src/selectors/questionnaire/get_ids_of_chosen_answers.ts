@@ -1,7 +1,8 @@
 import { Id, AnswersMap } from '../../stores/questionnaire';
-import { filterChosenAnswers } from './filter_chosen_answers';
-import { getIdsFromAnswerMap } from './get_ids_from_answer_map';
+import { isChosen } from './is_chosen';
+import { getIdFromAnswer } from './get_id_from_answer';
+import * as R from 'ramda';
 
 export const getIdsOfChosenAnswers = (answers: AnswersMap): ReadonlyArray<Id> => (
-    getIdsFromAnswerMap(filterChosenAnswers(answers))
+    R.map(getIdFromAnswer, R.filter(isChosen, R.values(answers)))
 );
