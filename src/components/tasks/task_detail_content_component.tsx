@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
+import Markdown from 'react-native-markdown-renderer';
 import { Task } from '../../selectors/tasks/task';
-import { textStyles, colors, values } from '../../application/styles';
+import { textStyles, colors, values, markdownStyles } from '../../application/styles';
 import { getColorForExploreIcon } from '../explore/get_color_for_explore_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ExpandableText } from '../expandable_text/expandable_text';
@@ -16,21 +17,24 @@ export const TaskDetailContentComponent: React.StatelessComponent<TaskDetailHead
         const task = props.task;
         return (
             <View padder style={{ backgroundColor: colors.white }}>
-                <Text style={[textStyles.headlineH1StyleBlackLeft, { marginTop: 10 }]}>
-                    {task.title}
-                </Text>
                 <View style={{ marginVertical: 20, flexDirection: 'row' }}>
                     <TaxonomyComponent {...props} />
                     <RecommendedComponent {...props} />
                 </View>
+                <Text style={[textStyles.taskTitle, { marginBottom: 10 }]}>
+                    {task.title}
+                </Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={textStyles.headlineH5StyleBlackLeft}>
                         <Trans>ABOUT THIS TASK</Trans>
                     </Text>
                     <View style={{ height: 1, flex: 1, marginLeft: 10, backgroundColor: colors.lightGrey }}></View>
                 </View>
-
-                <ExpandableText text={props.task.description} />
+                {
+                    task.relatedTasks.length === 0 ?
+                        <Markdown style={markdownStyles}>{props.task.description}</Markdown> :
+                        <ExpandableText text={props.task.description} />
+                }
             </View>
         );
     };

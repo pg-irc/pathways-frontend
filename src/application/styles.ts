@@ -202,6 +202,15 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         color: colors.black,
     },
+    taskTitle: {
+        fontFamily: fontFamily,
+        fontSize: 22,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        letterSpacing: 0,
+        textAlign: 'left',
+        color: colors.black,
+    },
 });
 
 export const applicationStyles = StyleSheet.create({
