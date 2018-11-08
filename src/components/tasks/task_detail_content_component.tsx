@@ -31,9 +31,9 @@ export const TaskDetailContentComponent: React.StatelessComponent<TaskDetailHead
                     <View style={{ height: 1, flex: 1, marginLeft: 10, backgroundColor: colors.lightGrey }}></View>
                 </View>
                 {
-                    task.relatedTasks.length === 0 ?
-                        <Markdown style={markdownStyles}>{props.task.description}</Markdown> :
-                        <ExpandableText text={props.task.description} />
+                    task.relatedTasks.length > 0 ?
+                        <ExpandableText text={props.task.description} isMarkdown={true} /> :
+                        <Markdown style={markdownStyles}>{props.task.description}</Markdown>
                 }
             </View>
         );

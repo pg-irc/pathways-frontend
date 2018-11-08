@@ -26,7 +26,7 @@ export const ExploreDetailContentComponent: React.StatelessComponent<ExploreDeta
             </Text>
             {
                 props.collapseIntroduction ?
-                    <ExpandableText text={props.section.introduction} /> :
+                    <ExpandableText text={props.section.introduction} isMarkdown={false}/> :
                     <Text>{props.section.introduction}</Text>
             }
         </View>

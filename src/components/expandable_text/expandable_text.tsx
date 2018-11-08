@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import { Dimensions, LayoutChangeEvent } from 'react-native';
+import { Dimensions, LayoutChangeEvent, StyleSheet } from 'react-native';
 import { View, Text, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import Markdown from 'react-native-markdown-renderer';
@@ -10,6 +10,7 @@ import { toggleExpandedState, ExpandableTextStates, shouldShowButton, defaultExp
 
 export interface ExpandableTextProps {
     readonly text: string;
+    readonly isMarkdown: boolean;
 }
 
 interface ExpandableTextState {
@@ -31,15 +32,54 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
     }
 
     render(): JSX.Element {
-        const style = this.isCollapsed() ? { ...markdownStyles, root: this.getRootStyles() } : markdownStyles;
         return (
             <View onLayout={this.onLayoutChange}>
-                <View>
-                    <Markdown style={style}>{this.props.text}</Markdown>
-                    {this.shouldHaveButton() ? this.getButton() : <EmptyComponent />}
-                </View>
+                {this.renderText()}
+                {this.renderButton()}
             </View >
         );
+    }
+
+    private renderText(): JSX.Element {
+        if (this.props.isMarkdown) {
+            return <Markdown style={this.getMarkdownStyle()}>{this.props.text}</Markdown>;
+        }
+        return <Text style={this.getTextStyle()}>{this.props.text}</Text>;
+    }
+
+    private renderButton(): JSX.Element {
+        return this.shouldHaveButton() ? this.getButton() : <EmptyComponent />;
+    }
+
+    private getTextStyle(): object {
+        if (this.isCollapsed()) {
+            return {
+                ...StyleSheet.flatten(textStyles.paragraphStyle),
+                height: this.state.collapsedHeight,
+            };
+        }
+        return textStyles.paragraphStyle;
+    }
+
+    // The type definitions for the Markdown library make breaking
+    // out style object creation into separate functions hard ... maybe impossible?
+    // The 'any' workaround seems cleanest here.
+    // tslint:disable-next-line:no-any
+    private getMarkdownStyle(): any {
+        if (this.isCollapsed()) {
+            return {
+                ...markdownStyles,
+                root: {
+                    // Cast string: 'scroll' to scroll type or we get same error as: https://github.com/Microsoft/TypeScript/issues/11465.
+                    // It's possible the type defintion for style.root is wrong.
+                    overflow: 'scroll' as 'scroll',
+                    // Applying a transparent background ensures our button falls below the markdown.
+                    backgroundColor: 'rgba(255, 255, 255, 1.0)',
+                    height: this.state.collapsedHeight,
+                },
+            };
+        }
+        return markdownStyles;
     }
 
     private onLayoutChange(event: LayoutChangeEvent): void {
@@ -64,17 +104,6 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
             ...this.state,
             expandableState: toggleExpandedState(this.state.expandableState),
         });
-    }
-
-    private getRootStyles(): object {
-        return {
-            // Cast string: 'scroll' to scroll type or we get same error as: https://github.com/Microsoft/TypeScript/issues/11465.
-            // It's possible the type defintion for style.root is wrong.
-            overflow: 'scroll' as 'scroll',
-            // Applying a transparent background ensures our button falls below the markdown.
-            backgroundColor: 'rgba(255, 255, 255, 1.0)',
-            height: this.state.collapsedHeight,
-        };
     }
 
     private shouldHaveButton(): boolean {
