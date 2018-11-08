@@ -1,5 +1,6 @@
 // tslint:disable:no-expression-statement
-import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter } from '../routing';
+import { Routes, routePathDefinition, routePathWithoutParameter,
+         isOnStartScreen, isOnParentScreen, isOnChildScreen, routePathWithParameter } from '../routing';
 import { aString } from './helpers/random_test_values';
 
 describe('the routePathDefinition function', () => {
@@ -57,4 +58,61 @@ describe('the routePathWithParameter function', () => {
         expect(() => routePathWithParameter(Routes.Learn, parameter)).toThrow();
     });
 
+});
+
+describe('the isOnStartScreen function', () => {
+
+    it('returns true on path: "/"', () => {
+        expect(isOnStartScreen('/')).toStrictEqual(true);
+    });
+
+    it('returns false on non start screen path', () => {
+        expect(isOnStartScreen('/' + aString())).toStrictEqual(false);
+    });
+});
+
+describe('the isOnParentScreen function', () => {
+
+    it('returns true on path: "/home"', () => {
+        expect(isOnParentScreen('/home')).toStrictEqual(true);
+    });
+
+    it('returns true on path: "/help"', () => {
+        expect(isOnParentScreen('/home')).toStrictEqual(true);
+    });
+
+    it('returns true on path: "/my-plan"', () => {
+        expect(isOnParentScreen('/my-plan')).toStrictEqual(true);
+    });
+
+    it('returns true on path: "/learn"', () => {
+        expect(isOnParentScreen('/learn')).toStrictEqual(true);
+    });
+
+    it('returns true on path: "/questionnaire"', () => {
+        expect(isOnParentScreen('/questionnaire')).toStrictEqual(true);
+    });
+
+    it('returns false on non parent screen path', () => {
+        expect(isOnParentScreen('/')).toStrictEqual(false);
+    });
+});
+
+describe('the isOnChildScreen function', () => {
+
+    it('returns true on path: "/task/A task"', () => {
+        expect(isOnChildScreen('/task/A task')).toStrictEqual(true);
+    });
+
+    it('returns true on path: "/task-services/A task service"', () => {
+        expect(isOnChildScreen('/task-services/A task service')).toStrictEqual(true);
+    });
+
+    it('returns true on path: "/learn/A learn section"', () => {
+        expect(isOnChildScreen('/learn/A learn section')).toStrictEqual(true);
+    });
+
+    it('returns false on non child screen path', () => {
+        expect(isOnChildScreen('/')).toStrictEqual(false);
+    });
 });

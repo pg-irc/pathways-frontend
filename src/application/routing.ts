@@ -86,3 +86,26 @@ export const pathMatchesRoute = (path: string, route: Routes): boolean => {
 const routeHasParameter = (route: Routes): boolean => (
     routePathDefinition(route).indexOf(':') !== -1
 );
+
+export const isOnStartScreen = (path: string): boolean => {
+    return pathMatchesRoute(path, Routes.Welcome);
+};
+
+export const isOnParentScreen = (path: string): boolean => {
+    const isOnHomeScreen = pathMatchesRoute(path, Routes.Home);
+    const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
+    const isOnMyPlanScreen = pathMatchesRoute(path, Routes.MyPlan);
+    const isOnLearnScreen = pathMatchesRoute(path, Routes.Learn);
+    const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
+
+    return isOnHomeScreen || isOnHelpScreen ||
+           isOnMyPlanScreen || isOnLearnScreen || isOnQuestionnaireScreen;
+};
+
+export const isOnChildScreen = (path: string): boolean => {
+    const isOnTaskDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
+    const isOnTaskDetailServicesScreen = pathMatchesRoute(path, Routes.TaskDetailServices);
+    const isOnLearnDetailScreen = pathMatchesRoute(path, Routes.LearnDetail);
+
+    return isOnTaskDetailScreen || isOnTaskDetailServicesScreen || isOnLearnDetailScreen;
+};
