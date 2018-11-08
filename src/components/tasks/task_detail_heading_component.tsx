@@ -5,7 +5,7 @@ import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { colors } from '../../application/styles';
 
 export const TaskDetailHeadingComponent: React.StatelessComponent = (): JSX.Element => {
-    const logoHeight = Dimensions.get('screen').width / 5;
+    const logoHeight = Dimensions.get('screen').height / 8;
     return (
         <View style={{
             alignItems: 'center',

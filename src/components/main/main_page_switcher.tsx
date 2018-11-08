@@ -4,7 +4,7 @@ import { WelcomeConnectedComponent } from '../welcome/welcome_connected_componen
 import { HomePageComponent } from '../home_page/home_page_component';
 import { HelpConnectedComponent } from '../help/help_connected_component';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
-import { ExploreSectionDetailConnectedComponent } from '../explore/explore_section_detail_connected_component';
+import { ExploreDetailConnectedComponent } from '../explore/explore_detail_connected_component';
 import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
 import { TaskDetailServicesConnectedComponent } from '../tasks/task_detail_services_connected_component';
 import { QuestionnaireConnectedComponent } from '../questionnaire/questionnaire_connected_component';
@@ -19,7 +19,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Eleme
         <Route exact path={routePathDefinition(Routes.Questionnaire)} component={QuestionnaireConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.MyPlan)} component={MyPlanConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Learn)} component={ExploreAllConnectedComponent} />
-        <Route exact path={routePathDefinition(Routes.LearnDetail)} component={ExploreSectionDetailConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.LearnDetail)} component={ExploreDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.TaskDetail)} component={TaskDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.TaskDetailServices)} component={TaskDetailServicesConnectedComponent} />
     </Switch>
