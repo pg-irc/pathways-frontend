@@ -12,6 +12,8 @@ export const TaskDetailHeadingComponent: React.StatelessComponent = (): JSX.Elem
             justifyContent: 'center',
             paddingVertical: 10,
             backgroundColor: colors.lightGrey,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.darkerGrey,
         }}>
             <Image
                 source={arrivalAdvisorGlyphLogo}
