@@ -24,10 +24,17 @@ export const ExploreDetailContentComponent: React.StatelessComponent<ExploreDeta
             <Text style={textStyles.headlineH1StyleBlackLeft}>
                 {props.section.name}
             </Text>
-            {
-                props.collapseIntroduction ?
-                    <ExpandableText text={props.section.introduction} isMarkdown={false}/> :
-                    <Text>{props.section.introduction}</Text>
-            }
+            { props.collapseIntroduction ? renderCollapsibleIntroduction(props) : renderPlainTextIntroduction(props) }
         </View>
     );
+
+const renderCollapsibleIntroduction = (props: ExploreDetailContentProps): JSX.Element => (
+    <ExpandableText
+        text={props.section.introduction}
+        isMarkdown={false}
+        textStyle={textStyles.headlineH4StyleBlackLeft} />
+);
+
+const renderPlainTextIntroduction = (props: ExploreDetailContentProps): JSX.Element => (
+    <Text style={textStyles.headlineH4StyleBlackLeft}>{props.section.introduction}</Text>
+);

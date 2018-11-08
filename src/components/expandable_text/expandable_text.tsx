@@ -11,6 +11,7 @@ import { toggleExpandedState, ExpandableTextStates, shouldShowButton, defaultExp
 export interface ExpandableTextProps {
     readonly text: string;
     readonly isMarkdown: boolean;
+    readonly textStyle?: object;
 }
 
 interface ExpandableTextState {
@@ -35,20 +36,28 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
         return (
             <View onLayout={this.onLayoutChange}>
                 {this.renderText()}
-                {this.renderButton()}
+                {this.renderButtonIfShown()}
             </View >
         );
     }
 
     private renderText(): JSX.Element {
         if (this.props.isMarkdown) {
-            return <Markdown style={this.getMarkdownStyle()}>{this.props.text}</Markdown>;
+            return (
+                <Markdown style={{ ...this.getMarkdownStyle(), ...this.props.textStyle }}>
+                    {this.props.text}
+                </Markdown>
+            );
         }
-        return <Text style={this.getTextStyle()}>{this.props.text}</Text>;
+        return (
+            <Text style={[ this.getTextStyle(), this.props.textStyle ]}>
+                {this.props.text}
+            </Text>
+        );
     }
 
-    private renderButton(): JSX.Element {
-        return this.shouldHaveButton() ? this.getButton() : <EmptyComponent />;
+    private renderButtonIfShown(): JSX.Element {
+        return shouldShowButton(this.state.expandableState) ? this.getButton() : <EmptyComponent />;
     }
 
     private getTextStyle(): object {
@@ -104,10 +113,6 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
             ...this.state,
             expandableState: toggleExpandedState(this.state.expandableState),
         });
-    }
-
-    private shouldHaveButton(): boolean {
-        return shouldShowButton(this.state.expandableState);
     }
 
     private getButton(): JSX.Element {
