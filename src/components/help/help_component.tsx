@@ -3,97 +3,94 @@ import * as R from 'ramda';
 import { Text, View, Icon, Button, Content } from 'native-base';
 import { Trans } from '@lingui/react';
 import { I18nManager } from 'react-native';
-import { applicationStyles, colors, textStyles } from '../../application/styles';
-
-export interface HelpComponentProps {
-}
-
-export interface HelpComponentActions {
-}
-
-type AllProps = HelpComponentProps & HelpComponentActions;
+import { applicationStyles, colors, textStyles, values } from '../../application/styles';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface HelpContact {
-    readonly icon: string;
-    readonly description: string;
+    readonly title: JSX.Element;
+    readonly subTitle?: JSX.Element;
 }
 
 const fixture: ReadonlyArray<HelpContact> = [
     {
-        icon: 'phone',
-        description: 'Emergencies (9-1-1)',
+        title: <Trans>Emergencies (9-1-1)</Trans>,
     },
     {
-        icon: 'phone',
-        description: 'HealthLinkBC: multilingual health information (8-1-1)',
+        title: <Trans>HealthLinkBC (8-1-1)</Trans>,
+        subTitle: <Trans>Mutlilingual health information</Trans>,
     },
     {
-        icon: 'phone',
-        description: 'Mental health & trauma support',
+        title: <Trans>Mental health & trauma support</Trans>,
     },
     {
-        icon: 'phone',
-        description: 'Legal aid help line',
+        title: <Trans>Legal aid helplines</Trans>,
     },
     {
-        icon: 'phone',
-        description: 'Other multilingual helplines',
+        title: <Trans>Other multilingual helplines</Trans>,
     },
     {
-        icon: 'email',
-        description: 'Contact app team for technical issues',
+        title: <Trans>Contact app team for technical issues</Trans>,
+        subTitle: <Trans>For technical issues and bugs</Trans>,
     },
 ];
 
-export const HelpComponent: React.StatelessComponent<AllProps> =
-    (_: AllProps): JSX.Element => (
-        <Content padder>
-            <View style={[{ flexDirection: 'column' }]}>
-                <Text style={textStyles.headlineH1StyleBlackLeft}><Trans>{'Help & Support'}</Trans></Text>
-                <Text style={[{ textAlign: 'left' }]}>
-                    <Trans>If you are having difficulty with settlement in Canada, get in touch with a settlement worker.</Trans>
-                </Text>
+export const HelpComponent: React.StatelessComponent = (): JSX.Element => {
+    const mapWithIndex = R.addIndex(R.map);
+    return (
+    <Content padder style={applicationStyles.body}>
+        <View
+            style={{
+                backgroundColor: colors.white,
+                marginTop: -10,
+                marginHorizontal: -10,
+                padding: 10,
+                marginBottom: 10,
+            }}
+        >
+            <Text style={textStyles.headlineH1StyleBlackLeft}><Trans>{'Help & Support'}</Trans></Text>
+            <Text style={textStyles.headlineH4StyleBlackLeft}>
+                <Trans>If you are having difficulty with settlement in Canada, we suggest getting in touch with a settlement worker.</Trans>
+            </Text>
+            <View style={{
+                marginTop: 15,
+                marginBottom: 20,
+            }}>
                 <ContactSettlementWorkerButton />
-                <Text style={[textStyles.paragraphBoldBlackLeft, {marginBottom: 10} ]}>
-                    <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
-                </Text>
-                {R.map(createContactComponent, fixture)}
             </View>
-        </Content>
+        </View>
+        <Text style={[textStyles.headlineH5StyleBlackLeft, { margin: 10 }]}>
+            <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
+        </Text>
+        {mapWithIndex(renderContactComponent, fixture)}
+    </Content>
     );
+        };
 
 const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element => (
-    <View style={[{ flexDirection: 'row', justifyContent: 'center', paddingTop: 10, paddingBottom: 40 }]}>
-        <Button style={[{ backgroundColor: colors.darkerGrey }]}>
-            <Text><Trans>CONTACT SETTLEMENT WORKER</Trans></Text>
-        </Button>
-    </View>
+    <Button style={[applicationStyles.orangeButton, { alignSelf: 'center' } ]}>
+        <Text style={textStyles.button}>
+            <Trans>Find a settlement agency near me</Trans>
+        </Text>
+    </Button>
 );
 
-const createContactComponent = (contact: HelpContact): JSX.Element => (
-    <View key={contact.description} style={[
-        { flexDirection: 'column' },
-    ]} >
-        <View style={[{ flexDirection: 'row' }]}>
-            <Icon style={[
-                { justifyContent: 'flex-start' },
-                { marginLeft: 10 },
-                { marginRight: 10 },
-            ]} type='MaterialCommunityIcons' name={contact.icon} />
-
-            <Text style={[
-                { flex: 1 },
-                { justifyContent: 'flex-start' },
-                { textAlign: 'left' },
-            ]}>{contact.description}</Text>
-
-            <Icon style={[
-                { justifyContent: 'flex-end' },
-                { marginLeft: 10 },
-                { marginRight: 10 },
-            ]} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
-
+const renderContactComponent = (contact: HelpContact, index: number): JSX.Element => (
+    <View
+        key={index}
+        style={{
+            backgroundColor: colors.white,
+            marginHorizontal: -10,
+            margin: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: 15,
+        }}
+    >
+        <View style={{ flexDirection: 'column' }}>
+            <Text style={textStyles.headlineH4StyleBlackLeft}>{contact.title}</Text>
+            {contact.subTitle ? <Text note>{contact.subTitle}</Text> : <EmptyComponent />}
         </View>
-        <View style={applicationStyles.hr} />
+        <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize }}/>
     </View>
 );

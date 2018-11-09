@@ -21,6 +21,7 @@ export enum Routes {
     TaskDetail,
     TaskDetailServices,
     Help,
+    About,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -44,6 +45,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/task/:taskId';
         case Routes.TaskDetailServices:
             return '/task-services/:taskId';
+        case Routes.About:
+            return '/about';
     }
 };
 
@@ -97,9 +100,10 @@ export const isOnParentScreen = (path: string): boolean => {
     const isOnMyPlanScreen = pathMatchesRoute(path, Routes.MyPlan);
     const isOnLearnScreen = pathMatchesRoute(path, Routes.Learn);
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
+    const isOnAboutScren = pathMatchesRoute(path, Routes.About);
 
-    return isOnHomeScreen || isOnHelpScreen ||
-           isOnMyPlanScreen || isOnLearnScreen || isOnQuestionnaireScreen;
+    return isOnHomeScreen || isOnHelpScreen || isOnMyPlanScreen ||
+           isOnLearnScreen || isOnQuestionnaireScreen || isOnAboutScren;
 };
 
 export const isOnChildScreen = (path: string): boolean => {

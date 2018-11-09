@@ -110,7 +110,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
 
     private onScroll(event: NativeSyntheticEvent<NativeScrollEvent>): void {
         const eventScrollOffset = event.nativeEvent.contentOffset.y;
-        if (eventScrollOffset > 100) {
+        if (eventScrollOffset > 50) {
             this.setState({
                 questionnairePocketIsOpen: false,
             });

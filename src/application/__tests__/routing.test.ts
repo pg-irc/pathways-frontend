@@ -93,6 +93,10 @@ describe('the isOnParentScreen function', () => {
         expect(isOnParentScreen('/questionnaire')).toStrictEqual(true);
     });
 
+    it('returns true on path: "/about"', () => {
+        expect(isOnParentScreen('/about')).toStrictEqual(true);
+    });
+
     it('returns false on non parent screen path', () => {
         expect(isOnParentScreen('/')).toStrictEqual(false);
     });
