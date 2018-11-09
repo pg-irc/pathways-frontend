@@ -2,13 +2,10 @@ import { StyleSheet, Platform } from 'react-native';
 
 export const colors = {
     pale: '#ffebcb',
-    buttonPressedOrange: '#f8c065',
     orange: '#f5a623',
     topaz: '#11cac0',
-    buttonPressedTopaz: '#58dad3',
     blueGreen: '#0d9790',
     blueGreenDark: '#136f63',
-    buttonPressedWhite: '#f4f4f4',
     lightGrey: '#eaeae3',
     darkerGrey: '#d0d0c5',
     greyishBrown: '#595959',

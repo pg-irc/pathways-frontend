@@ -30,15 +30,15 @@ export const QuestionnairePocketComponent: React.StatelessComponent<Props> = (pr
 );
 
 const getOpenPocket = (props: Props): JSX.Element => {
-    const patLogoWidthAndHeight = getLargePatLogoSize();
+    const patLogoSize = getLargePatLogoSize();
     return (
         <View style={{ alignItems: 'center', paddingHorizontal: 30, marginVertical: 20 }}>
             <Image
                 source={patLogo}
                 resizeMode={'contain'}
                 style={{
-                    width: patLogoWidthAndHeight,
-                    height: patLogoWidthAndHeight,
+                    width: patLogoSize,
+                    height: patLogoSize,
                 }}
             />
             <Text style={textStyles.headlineH5StyleBlackCenter}>
@@ -80,4 +80,4 @@ const getClosedPocket = (): JSX.Element => {
 
 const getSmallPatLogoSize = (): number => Dimensions.get('screen').width / 9;
 
-const getLargePatLogoSize = (): number => Dimensions.get('screen').width / 5;
+const getLargePatLogoSize = (): number => Dimensions.get('screen').width / 6;

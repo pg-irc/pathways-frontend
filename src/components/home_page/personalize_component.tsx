@@ -12,7 +12,7 @@ export interface PersonalizeProps {
 }
 
 export const PersonalizeComponent: React.StatelessComponent<PersonalizeProps> = (props: PersonalizeProps): JSX.Element => {
-    const logoSize = Dimensions.get('screen').width / 5;
+    const patLogoSize = Dimensions.get('screen').width / 6;
     return (
         <View style={[
             applicationStyles.boxShadowBelow,
@@ -37,8 +37,8 @@ export const PersonalizeComponent: React.StatelessComponent<PersonalizeProps> = 
                     resizeMode={'contain'}
                     style={{
                         flex: 1,
-                        width: logoSize,
-                        height: logoSize,
+                        width: patLogoSize,
+                        height: patLogoSize,
                         marginBottom: 20,
                     }}
                 />

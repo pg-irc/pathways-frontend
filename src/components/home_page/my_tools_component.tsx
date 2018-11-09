@@ -35,7 +35,7 @@ const buildButton = (buttonContent: JSX.Element, buttonOnPress: () => void): JSX
 
 const getMyPlanButtonContent = (): JSX.Element => (
     getButtonContent(
-        'check',
+        'th-list',
         <Trans>My Plan</Trans>,
         <Trans>Keep track of everything I need to do to settle in Canada</Trans>,
     )

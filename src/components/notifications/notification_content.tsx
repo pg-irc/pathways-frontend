@@ -1,15 +1,15 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { Text, View, Button } from 'native-base';
-import { colors, applicationStyles, textStyles } from '../../application/styles';
+import { applicationStyles, textStyles } from '../../application/styles';
 
 export const taskAddedNotification = (): JSX.Element => {
     return (
-        <Text style={[{ color: colors.white }]}>
+        <Text style={textStyles.button}>
             <Trans>Task added to plan</Trans>
         </Text>
     );
-}
+};
 
 export const questionnaireInformationNotification = (goToQuestionnaire: () => void): JSX.Element => {
     return (

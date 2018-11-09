@@ -83,7 +83,7 @@ export class ExpandableText extends React.Component<ExpandableTextProps, Expanda
                     // It's possible the type defintion for style.root is wrong.
                     overflow: 'scroll' as 'scroll',
                     // Applying a transparent background ensures our button falls below the markdown.
-                    backgroundColor: 'rgba(255, 255, 255, 1.0)',
+                    backgroundColor: 'transparent',
                     height: this.state.collapsedHeight,
                 },
             };

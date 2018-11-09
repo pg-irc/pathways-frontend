@@ -7,7 +7,7 @@ import { History, Location } from 'history';
 import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
 import { Routes, goBack, isOnParentScreen, isOnChildScreen, pathMatchesRoute} from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors, values } from '../../application/styles';
+import { colors } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 
