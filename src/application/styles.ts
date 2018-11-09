@@ -145,8 +145,7 @@ export const textStyles = StyleSheet.create({
     },
     paragraphURL: {
         fontFamily: fontFamily,
-        fontSize: 12,
-        fontWeight: 'bold',
+        fontSize: 16,
         lineHeight: 21,
         letterSpacing: 0,
         textDecorationLine: 'underline',
