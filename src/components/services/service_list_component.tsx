@@ -6,17 +6,17 @@ import { View, Text, Icon } from 'native-base';
 import { Service } from '../../stores/services';
 import { TaskServices } from '../../selectors/services/task_services';
 import { Task } from '../../selectors/tasks/task';
-import { ServiceComponent } from '../services/service_component';
+import { ServiceListItemComponent } from './service_list_item_component';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { textStyles, colors, values } from '../../application/styles';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 
-export interface TaskDetailServicesProps {
+export interface ServiceListProps {
     readonly task: Task;
     readonly taskServices: TaskServices;
 }
 
-export interface TaskDetailServicesActions {
+export interface ServiceListActions {
     readonly requestUpdateOfServicesForTask: (task: Task) => UpdateTaskServicesAsync.Request;
 }
 
@@ -24,9 +24,9 @@ export interface TaskServiceUpdater {
     readonly requestUpdateTaskServices: () => UpdateTaskServicesAsync.Request;
 }
 
-type Props = TaskDetailServicesProps & TaskDetailServicesActions & TaskServiceUpdater;
+type Props = ServiceListProps & ServiceListActions & TaskServiceUpdater;
 
-export class TaskDetailServicesComponent extends React.Component<Props> {
+export class ServiceListComponent extends React.Component<Props> {
 
     constructor(props: Props) {
         super(props);
@@ -84,7 +84,7 @@ interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
 function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
     return (
         <View style={{ marginBottom: 10 }}>
-            <ServiceComponent service={item} />
+            <ServiceListItemComponent service={item} />
         </View>
     );
 }

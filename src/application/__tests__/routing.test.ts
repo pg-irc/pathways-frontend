@@ -33,8 +33,8 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.TaskDetail)).toEqual('/task/:taskId');
     });
 
-    it('For Routes.TaskDetailServices returns path: "/task-services/:taskId" with parameter', () => {
-        expect(routePathDefinition(Routes.TaskDetailServices)).toEqual('/task-services/:taskId');
+    it('For Routes.Services returns path: "/services/:taskId" with parameter', () => {
+        expect(routePathDefinition(Routes.Services)).toEqual('/services/:taskId');
     });
 
 });
@@ -108,8 +108,8 @@ describe('the isOnChildScreen function', () => {
         expect(isOnChildScreen('/task/A task')).toStrictEqual(true);
     });
 
-    it('returns true on path: "/task-services/A task service"', () => {
-        expect(isOnChildScreen('/task-services/A task service')).toStrictEqual(true);
+    it('returns true on path: "/services/A task service"', () => {
+        expect(isOnChildScreen('/services/A task service')).toStrictEqual(true);
     });
 
     it('returns true on path: "/learn/A learn section"', () => {

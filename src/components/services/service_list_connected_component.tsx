@@ -6,10 +6,10 @@ import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { RouterProps } from '../../application/routing';
 import { Task } from '../../selectors/tasks/task';
 import { selectTaskServices } from '../../selectors/services/select_task_services';
-import { TaskDetailServicesComponent, TaskDetailServicesProps,
-         TaskDetailServicesActions, TaskServiceUpdater } from './task_detail_services_component';
+import { ServiceListComponent, ServiceListProps,
+         ServiceListActions, TaskServiceUpdater } from './service_list_component';
 
-const mapStateToProps = (store: Store, route: RouterProps): TaskDetailServicesProps => {
+const mapStateToProps = (store: Store, route: RouterProps): ServiceListProps => {
     const task: Task = selectCurrentTask(store, route);
     return {
         task: task,
@@ -17,19 +17,19 @@ const mapStateToProps = (store: Store, route: RouterProps): TaskDetailServicesPr
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskDetailServicesActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<Store>): ServiceListActions => ({
     requestUpdateOfServicesForTask: (task: Task): UpdateTaskServicesAsync.Request => {
         return dispatch(updateTaskServicesAsync.request(task.id, task.serviceQuery));
     },
 });
 
-type ComponentProps = TaskDetailServicesProps & TaskDetailServicesActions & TaskServiceUpdater;
+type ComponentProps = ServiceListProps & ServiceListActions & TaskServiceUpdater;
 
-const mergeProps = (props: TaskDetailServicesProps, actions: TaskDetailServicesActions): ComponentProps => ({
+const mergeProps = (props: ServiceListProps, actions: ServiceListActions): ComponentProps => ({
     ...props, ...actions,
     requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
         return actions.requestUpdateOfServicesForTask(props.task);
     },
 });
 
-export const TaskDetailServicesConnectedComponent = connect(mapStateToProps, mapDispatchToProps, mergeProps)(TaskDetailServicesComponent);
+export const ServicesConnectedComponent = connect(mapStateToProps, mapDispatchToProps, mergeProps)(ServiceListComponent);

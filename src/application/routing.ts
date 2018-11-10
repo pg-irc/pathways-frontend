@@ -19,7 +19,7 @@ export enum Routes {
     Learn,
     LearnDetail,
     TaskDetail,
-    TaskDetailServices,
+    Services,
     Help,
     About,
 }
@@ -43,8 +43,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/learn/:learnId';
         case Routes.TaskDetail:
             return '/task/:taskId';
-        case Routes.TaskDetailServices:
-            return '/task-services/:taskId';
+        case Routes.Services:
+            return '/services/:taskId';
         case Routes.About:
             return '/about';
     }
@@ -100,16 +100,16 @@ export const isOnParentScreen = (path: string): boolean => {
     const isOnMyPlanScreen = pathMatchesRoute(path, Routes.MyPlan);
     const isOnLearnScreen = pathMatchesRoute(path, Routes.Learn);
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
-    const isOnAboutScren = pathMatchesRoute(path, Routes.About);
+    const isOnAboutScreen = pathMatchesRoute(path, Routes.About);
 
     return isOnHomeScreen || isOnHelpScreen || isOnMyPlanScreen ||
-           isOnLearnScreen || isOnQuestionnaireScreen || isOnAboutScren;
+           isOnLearnScreen || isOnQuestionnaireScreen || isOnAboutScreen;
 };
 
 export const isOnChildScreen = (path: string): boolean => {
     const isOnTaskDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
-    const isOnTaskDetailServicesScreen = pathMatchesRoute(path, Routes.TaskDetailServices);
+    const isOnServicesScreen = pathMatchesRoute(path, Routes.Services);
     const isOnLearnDetailScreen = pathMatchesRoute(path, Routes.LearnDetail);
 
-    return isOnTaskDetailScreen || isOnTaskDetailServicesScreen || isOnLearnDetailScreen;
+    return isOnTaskDetailScreen || isOnServicesScreen || isOnLearnDetailScreen;
 };

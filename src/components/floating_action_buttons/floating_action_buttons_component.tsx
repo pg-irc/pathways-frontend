@@ -1,14 +1,20 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
 import * as R from 'ramda';
-import { Icon, View, Button } from 'native-base';
+import { Icon, View, Button, Text } from 'native-base';
 import { Dimensions } from 'react-native';
-import { colors, applicationStyles } from '../../application/styles';
+import { colors, applicationStyles, textStyles } from '../../application/styles';
+
+export type FloatingActionButton = {
+    readonly icon: string;
+    readonly content: JSX.Element;
+    readonly onPress: () => void;
+};
 
 export interface FloatingActionButtonsProps {
     readonly openIcon: string;
     readonly closedIcon: string;
-    readonly buttons: ReadonlyArray<JSX.Element>;
+    readonly buttons: ReadonlyArray<FloatingActionButton>;
 }
 
 interface FloatingActionButtonsState {
@@ -32,11 +38,25 @@ export class FloatingActionButtonsComponent extends React.Component<FloatingActi
         const mapWithIndex = R.addIndex(R.map);
         return (
             <View style={this.getWrapperStyles()}>
-                {mapWithIndex((button: JSX.Element, index: number) =>
-                    <View key={index} style={{ marginTop: 10 }}>{button}</View>, this.props.buttons)
+                {mapWithIndex((button: FloatingActionButton, index: number) =>
+                    <View key={index} style={{ marginTop: 10 }}>{this.buildButton(button)}</View>, this.props.buttons)
                 }
                 {this.renderOpenOrClosedButton()}
             </View>
+        );
+    }
+
+    private buildButton(button: FloatingActionButton): JSX.Element {
+        return (
+            <Button
+                onPress={button.onPress}
+                style={[applicationStyles.whiteButton, applicationStyles.boxShadowBelow]}
+            >
+                <Icon name={button.icon} type={'FontAwesome'} style={{ color: colors.topaz }} />
+                <Text style={textStyles.paragraphStyle}>
+                    {button.content}
+                </Text>
+            </Button>
         );
     }
 

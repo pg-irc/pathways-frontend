@@ -30,15 +30,15 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     return (
         <Footer style={applicationStyles.boxShadowAbove}>
             <FooterTab style={[{ backgroundColor: colors.white }]}>
-                {navigationButton(props.history, Routes.Home, 'Home', 'home', homeScreenIsActive)}
-                {navigationButton(props.history, Routes.MyPlan, 'My plan', 'th-list', myPlanScreenIsActive)}
-                {navigationButton(props.history, Routes.Learn, 'Learn', 'book', learnScreenIsActive)}
+                {navigationButton(props.history, Routes.Home, <Trans>Home</Trans>, 'home', homeScreenIsActive)}
+                {navigationButton(props.history, Routes.MyPlan, <Trans>My plan</Trans>, 'th-list', myPlanScreenIsActive)}
+                {navigationButton(props.history, Routes.Learn, <Trans>Learn</Trans>, 'book', learnScreenIsActive)}
             </FooterTab>
         </Footer>
     );
 };
 
-const navigationButton = (history: History, route: Routes, text: string, icon: string, isActive: boolean): JSX.Element => (
+const navigationButton = (history: History, route: Routes, label: JSX.Element, icon: string, isActive: boolean): JSX.Element => (
     <Button vertical onPress={goToRouteWithoutParameter(route, history)}>
         <Icon
             type='FontAwesome'
@@ -51,7 +51,7 @@ const navigationButton = (history: History, route: Routes, text: string, icon: s
                 textStyle(isActive),
             ]}
        />
-        <Text style={textStyle(isActive)}><Trans>{text}</Trans></Text>
+        <Text style={textStyle(isActive)}><Trans>{label}</Trans></Text>
     </Button>
 );
 

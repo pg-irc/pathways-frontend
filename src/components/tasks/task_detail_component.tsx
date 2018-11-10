@@ -30,7 +30,7 @@ type Props = TaskDetailProps & TaskDetailActions;
 
 export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const task = props.task;
-    const onServicesButtonPress = goToRouteWithParameter(Routes.TaskDetailServices, task.id, props.history);
+    const onServicesButtonPress = goToRouteWithParameter(Routes.Services, task.id, props.history);
     return (
         <View style={{ flex: 1 }}>
             <Content style={applicationStyles.body}>
@@ -60,7 +60,7 @@ const getTaskDetailMenuButtons = (props: Props): ReadonlyArray<TaskStateButton> 
     const task = props.task;
     const taskState = {
         isRecommended: task.isRecommended,
-        isSaved: R.any((id: TaskId) => id === task.id, props.savedTasksIdList),
+        isSaved: R.contains(task.id, props.savedTasksIdList),
         isCompleted: task.completed,
     };
     return computeStateButtons(taskState);
