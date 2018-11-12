@@ -5,10 +5,9 @@ import { Locale } from '../../locale';
 import { I18nManager, Image, Dimensions } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
-import { routePathWithoutParameter, Routes, goBack } from '../../application/routing';
+import { Routes, goBack, isOnParentScreen, isOnChildScreen, pathMatchesRoute} from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
-import * as R from 'ramda';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 
@@ -22,51 +21,66 @@ export interface UiActions {
     readonly onLanguageSelect: () => void;
 }
 
-export const HeaderComponent: React.StatelessComponent<HeaderProps & UiActions> = (props: HeaderProps & UiActions): JSX.Element => {
-    const { onLanguageSelect, currentLocale }: HeaderProps & UiActions = props;
+type Props = HeaderProps & UiActions;
 
-    if (props.location.pathname === routePathWithoutParameter(Routes.Welcome)) {
-        return <EmptyComponent />;
+export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+    const path = props.location.pathname;
+
+    if (isOnParentScreen(path)) {
+        return renderHeader(colors.topaz, renderArrivalAdvisorLogo(), props);
     }
 
-    const marginTop = getStatusBarHeightForPlatform();
-    const backButton = backButtonComponentIfShown(props.location.pathname, props.history);
-    const localeButton: JSX.Element = <CurrentLocale onPress={onLanguageSelect} locale={currentLocale} />;
+    if (isOnChildScreen(path)) {
+        return renderHeader(colors.lightGrey, renderBackButton(props), props);
+    }
 
+    return <EmptyComponent />;
+};
+
+const renderHeader = (backgroundColor: string, actionButton: JSX.Element, props: Props): JSX.Element => {
+    const marginTop = getStatusBarHeightForPlatform();
     // From the docs: "Connects the global back button on Android and tvOS to the router's history.
     // On Android, when the initial location is reached, the default back behavior takes over.
     // Just render one somewhere in your app."
     // Without this, the hardware back button on Android always minimizes the app.
     const reactRouterBackButtonHack: JSX.Element = <ReactRouterBackButtonHack />;
-
     return (
-        <Header style={{ marginTop, backgroundColor: colors.topaz }}>
+        <Header style={{ marginTop, backgroundColor: backgroundColor }}>
             <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
-                {backButton}
+                {actionButton}
                 {reactRouterBackButtonHack}
             </Left>
             <Right style={{ alignItems: 'center' }}>
-                {localeButton}
+                <CurrentLocale
+                    onPress={props.onLanguageSelect}
+                    locale={props.currentLocale}
+                    currentPath={props.location.pathname}
+                />
             </Right>
         </Header>
     );
 };
 
-const backButtonComponentIfShown = (pathname: string, history: History): JSX.Element => (
-    isBackButtonShown(pathname) ? backButtonComponent(pathname, history) : arrivalAdvisorLogoComponent()
-);
+const renderBackButton = (props: Props): JSX.Element => {
+    return (
+        <Button transparent onPress={(): void => goBack(props.history)}>
+            <Icon name={getIconForBackButton(props.location.pathname)} style={{ color: colors.black, fontWeight: 'bold' }} />
+        </Button>
+    );
+};
 
-const isBackButtonShown = (pathname: string): boolean => (
-    R.not(R.contains(pathname, R.map(routePathWithoutParameter, [Routes.Home, Routes.MyPlan, Routes.Learn])))
-);
+const getIconForBackButton = (path: string): string => {
+    const isLearnDetailScreen = pathMatchesRoute(path, Routes.LearnDetail);
+    if (isLearnDetailScreen) {
+        if (I18nManager.isRTL) {
+            return 'arrow-forward';
+        }
+        return 'arrow-back';
+    }
+    return 'close';
+};
 
-const backButtonComponent = (pathname: string, history: History): JSX.Element => (
-    <Button transparent onPress={(): void => goBack(history)}>
-        <Icon name={getBackButtonIcon(pathname)} style={{ color: colors.white }}/>
-    </Button>
-);
-
-const arrivalAdvisorLogoComponent = (): JSX.Element => {
+const renderArrivalAdvisorLogo = (): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 15;
     return (
         <Image
@@ -78,14 +92,4 @@ const arrivalAdvisorLogoComponent = (): JSX.Element => {
             }}
         />
     );
-};
-
-const getBackButtonIcon = (pathname: string): string => {
-    if (pathname === routePathWithoutParameter(Routes.Help)) {
-        return 'close';
-    }
-    if (I18nManager.isRTL) {
-        return 'arrow-forward';
-    }
-    return 'arrow-back';
 };

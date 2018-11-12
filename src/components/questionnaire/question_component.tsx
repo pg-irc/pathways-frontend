@@ -43,13 +43,13 @@ export const QuestionComponent: React.StatelessComponent<Props> = (props: Props)
 };
 
 const renderFinalQuestionButton = (history: History): JSX.Element => (
-    <Button style={applicationStyles.orangeButton} small onPress={goToRouteWithoutParameter(Routes.MyPlan, history)}>
+    <Button style={applicationStyles.orangeButton} onPress={goToRouteWithoutParameter(Routes.MyPlan, history)}>
         <Text style={textStyles.button}><Trans>Go to my plan</Trans></Text>
     </Button>
 );
 
 const renderNextQuestionButton = (onPress: () => SetActiveQuestionAction): JSX.Element => (
-    <Button style={applicationStyles.orangeButton} small onPress={onPress}>
+    <Button style={applicationStyles.orangeButton} onPress={onPress}>
         <Text style={textStyles.button}><Trans>Next</Trans></Text>
     </Button>
 );

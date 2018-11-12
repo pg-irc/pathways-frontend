@@ -6,7 +6,6 @@ import { values, colors, textStyles } from '../../application/styles';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { AddToSavedListAction, Id } from '../../stores/tasks';
 import { I18nManager, TouchableOpacity } from 'react-native';
-import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 
@@ -17,16 +16,16 @@ export interface TaskListItemProps {
 
 export interface TaskListItemActions {
     readonly addToSavedList: (taskId: Id) => AddToSavedListAction;
+    readonly goToTaskDetail: () => void;
 }
 
-type Props = TaskListItemProps & TaskListItemActions & RouterProps;
+type Props = TaskListItemProps & TaskListItemActions;
 
 export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const goToTaskDetail = goToRouteWithParameter(Routes.TaskDetail, props.task.id, props.history);
     const taskDescription = stripMarkdown(props.task.description);
     return (
         <TouchableOpacity
-            onPress={goToTaskDetail}
+            onPress={props.goToTaskDetail}
             style={{
                 backgroundColor: colors.white,
                 borderRadius: values.lessRoundedBorderRadius,

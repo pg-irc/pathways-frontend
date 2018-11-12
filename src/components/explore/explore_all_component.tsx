@@ -6,6 +6,7 @@ import { ExploreSection } from '../../selectors/explore/types';
 import { colors, values, textStyles, applicationStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
+import { getColorForExploreIcon } from './get_color_for_explore_icon';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -51,7 +52,7 @@ const getLearnButtonContent = (section: ExploreSection): JSX.Element => (
             style={[
                 styles.buttonContentIcon,
                 {
-                    color: getColorForIcon(section.icon),
+                    color: getColorForExploreIcon(section.icon),
                 },
             ]}
         />
@@ -59,31 +60,6 @@ const getLearnButtonContent = (section: ExploreSection): JSX.Element => (
         <Text style={textStyles.paragraphStyle}>{section.description}</Text>
     </View>
 );
-
-const getColorForIcon = (icon: string): string => {
-    switch (icon) {
-        case 'street-view':
-            return colors.turquoiseBlue;
-        case 'building':
-            return colors.orange;
-        case 'dollar':
-            return colors.aquaMarine;
-        case 'heartbeat':
-            return colors.vermillion;
-        case 'graduation-cap':
-            return colors.blueGreenDark;
-        case 'handshake-o':
-            return colors.melon;
-        case 'briefcase':
-            return colors.sepia;
-        case 'balance-scale':
-            return colors.purple;
-        default:
-        case 'car':
-            return colors.blueGreen;
-
-    }
-};
 
 const styles = StyleSheet.create({
     button: {

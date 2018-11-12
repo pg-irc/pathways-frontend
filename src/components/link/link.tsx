@@ -21,7 +21,7 @@ const openURL = (url: string): void => {
 };
 
 export const Link: React.StatelessComponent<AnchorProps> = (props: AnchorProps): JSX.Element => (
-    <Text onPress={(): void => openURL(props.href)} style={props.style ? props.style : textStyles.paragraphURL}>
+    <Text onPress={(): void => openURL(props.href)} style={[ textStyles.paragraphURL, props.style ]}>
         {props.text}
     </Text>
 );

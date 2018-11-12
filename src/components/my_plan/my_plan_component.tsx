@@ -16,7 +16,7 @@ import {
 import { TaskListItemActions } from '../tasks/task_list_item_component';
 import { Routes, goToRouteWithoutParameter, RouterProps } from '../../application/routing';
 import { QuestionnairePocketComponent } from './questionnaire_pocket_component';
-import { IntroComponent } from './intro_component';
+import { MyPlanIntroComponent } from './my_plan_intro_component';
 
 export interface MyPlanProps {
     readonly savedTasks: ReadonlyArray<TaskListItem>;
@@ -64,7 +64,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
                     onScroll={this.onScroll}
                     scrollEventThrottle={5}
                 >
-                    <IntroComponent />
+                    <MyPlanIntroComponent />
                     <CollapsibleContent
                         collapsedHeader={this.getHeading(this.getSavedTasksHeading(), this.collapsedIcon())}
                         expandedHeader={this.getHeading(this.getSavedTasksHeading(), this.expandedIcon())}
@@ -110,7 +110,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
 
     private onScroll(event: NativeSyntheticEvent<NativeScrollEvent>): void {
         const eventScrollOffset = event.nativeEvent.contentOffset.y;
-        if (eventScrollOffset > 100) {
+        if (eventScrollOffset > 50) {
             this.setState({
                 questionnairePocketIsOpen: false,
             });

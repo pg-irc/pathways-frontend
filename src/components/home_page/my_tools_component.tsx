@@ -19,7 +19,7 @@ export const MyToolsComponent: React.StatelessComponent<MyToolsProps> = (props: 
             {buildButton(getMyPlanButtonContent(), goToRouteWithoutParameter(Routes.MyPlan, props.history))}
             {buildButton(getLearnButtonContent(), goToRouteWithoutParameter(Routes.Learn, props.history))}
             {buildButton(getNeedHelpButtonContent(), goToRouteWithoutParameter(Routes.Help, props.history))}
-            {buildButton(getMyPrivacyButtonContent(), goToRouteWithoutParameter(Routes.Help, props.history))}
+            {buildButton(getAboutButtonContent(), goToRouteWithoutParameter(Routes.About, props.history))}
         </View>
     </View>
 );
@@ -35,7 +35,7 @@ const buildButton = (buttonContent: JSX.Element, buttonOnPress: () => void): JSX
 
 const getMyPlanButtonContent = (): JSX.Element => (
     getButtonContent(
-        'check',
+        'th-list',
         <Trans>My Plan</Trans>,
         <Trans>Keep track of everything I need to do to settle in Canada</Trans>,
     )
@@ -57,11 +57,11 @@ const getNeedHelpButtonContent = (): JSX.Element => (
     )
 );
 
-const getMyPrivacyButtonContent = (): JSX.Element => (
+const getAboutButtonContent = (): JSX.Element => (
     getButtonContent(
-        'lock',
-        <Trans>My Privacy</Trans>,
-        <Trans>Your data is never shared with anyone</Trans>,
+        'mobile',
+        <Trans>About the app</Trans>,
+        <Trans>Learn more about Arrival Advisor and how we help</Trans>
     )
 );
 
