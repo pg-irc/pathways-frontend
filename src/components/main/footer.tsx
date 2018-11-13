@@ -51,7 +51,7 @@ const navigationButton = (history: History, route: Routes, label: JSX.Element, i
                 textStyle(isActive),
             ]}
        />
-        <Text style={textStyle(isActive)}><Trans>{label}</Trans></Text>
+        <Text style={textStyle(isActive)}>{label}</Text>
     </Button>
 );
 
