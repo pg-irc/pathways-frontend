@@ -5,6 +5,7 @@ import { Service, PhoneNumber, Address } from '../../stores/services';
 import { View } from 'native-base';
 import { Text } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
+import { mapWithIndex } from '../../application/map_with_index';
 
 interface ServiceListItemProps {
     readonly service: Service;
@@ -12,7 +13,6 @@ interface ServiceListItemProps {
 
 export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
     (props: ServiceListItemProps): JSX.Element => {
-        const mapWithIndex = R.addIndex(R.map);
         const physicalAddresses = R.filter(R.propEq('type', 'physical_address'), props.service.addresses);
         const capitalizeFirstLetter = (phoneType: string): string => (
             phoneType.charAt(0).toUpperCase() + phoneType.slice(1)

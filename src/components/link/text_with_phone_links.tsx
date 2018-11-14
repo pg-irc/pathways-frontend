@@ -1,9 +1,9 @@
 // tslint:disable:no-let readonly-array no-expression-statement
 import React from 'react';
-import * as R from 'ramda';
 import { Text } from 'native-base';
 import { Link } from './link';
 import { phoneNumberRegex } from '../../application/regular_expressions';
+import { mapWithIndex } from '../../application/map_with_index';
 
 export interface TextWithPhoneLinksProps {
     readonly text: string;
@@ -12,7 +12,6 @@ export interface TextWithPhoneLinksProps {
 export const TextWithPhoneLinks: React.StatelessComponent<TextWithPhoneLinksProps> = (props: TextWithPhoneLinksProps): JSX.Element => {
     const words = props.text.split(' ');
     const lastIndex = words.length - 1;
-    const mapWithIndex = R.addIndex(R.map);
     return (
         <Text>
             {

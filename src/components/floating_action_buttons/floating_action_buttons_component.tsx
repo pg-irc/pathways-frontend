@@ -1,9 +1,9 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import * as R from 'ramda';
 import { Icon, View, Button, Text } from 'native-base';
 import { Dimensions } from 'react-native';
 import { colors, applicationStyles, textStyles } from '../../application/styles';
+import { mapWithIndex } from '../../application/map_with_index';
 
 export type FloatingActionButton = {
     readonly icon: string;
@@ -35,7 +35,6 @@ export class FloatingActionButtonsComponent extends React.Component<FloatingActi
     }
 
     private renderOpen(): JSX.Element {
-        const mapWithIndex = R.addIndex(R.map);
         return (
             <View style={this.getWrapperStyles()}>
                 {mapWithIndex((button: FloatingActionButton, index: number) =>

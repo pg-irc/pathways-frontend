@@ -1,10 +1,10 @@
 import React from 'react';
-import * as R from 'ramda';
 import { Text, View, Icon, Button, Content } from 'native-base';
 import { Trans } from '@lingui/react';
 import { I18nManager } from 'react-native';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { mapWithIndex } from '../../application/map_with_index';
 
 interface HelpContact {
     readonly title: JSX.Element;
@@ -34,9 +34,7 @@ const fixture: ReadonlyArray<HelpContact> = [
     },
 ];
 
-export const HelpComponent: React.StatelessComponent = (): JSX.Element => {
-    const mapWithIndex = R.addIndex(R.map);
-    return (
+export const HelpComponent: React.StatelessComponent = (): JSX.Element => (
     <Content padder style={applicationStyles.body}>
         <View
             style={{
@@ -63,8 +61,7 @@ export const HelpComponent: React.StatelessComponent = (): JSX.Element => {
         </Text>
         {mapWithIndex(renderContactComponent, fixture)}
     </Content>
-    );
-        };
+);
 
 const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element => (
     <Button style={[applicationStyles.orangeButton, { alignSelf: 'center' } ]}>

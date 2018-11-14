@@ -1,5 +1,4 @@
 import React from 'react';
-import * as R from 'ramda';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { View, Content, Icon, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
@@ -7,6 +6,7 @@ import { colors, values, textStyles, applicationStyles } from '../../application
 import { Trans } from '@lingui/react';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
+import { mapWithIndex } from '../../application/map_with_index';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -15,28 +15,25 @@ export interface ExploreAllProps {
 type AllExploreProps = ExploreAllProps & RouterProps;
 
 export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
-    (props: AllExploreProps): JSX.Element => {
-        const mapWithIndex = R.addIndex(R.map);
-        return (
-            <Content padder style={applicationStyles.body}>
-                <Text style={textStyles.headlineH1StyleBlackLeft}>
-                    <Trans>Learn</Trans>
-                </Text>
-                <Text style={textStyles.headlineH4StyleBlackLeft}>
-                    <Trans>Find out about my community and available services.</Trans>
-                </Text>
-                <View style={styles.buttonsWrapper}>
-                    {mapWithIndex((section: ExploreSection, index: number) => (
-                        buildButton(
-                            getLearnButtonContent(section),
-                            goToRouteWithParameter(Routes.LearnDetail, section.id, props.history),
-                            index,
-                        )
-                    ), props.sections)}
-                </View>
-            </Content>
-        );
-    };
+    (props: AllExploreProps): JSX.Element => (
+        <Content padder style={applicationStyles.body}>
+            <Text style={textStyles.headlineH1StyleBlackLeft}>
+                <Trans>Learn</Trans>
+            </Text>
+            <Text style={textStyles.headlineH4StyleBlackLeft}>
+                <Trans>Find out about my community and available services.</Trans>
+            </Text>
+            <View style={styles.buttonsWrapper}>
+                {mapWithIndex((section: ExploreSection, index: number) => (
+                    buildButton(
+                        getLearnButtonContent(section),
+                        goToRouteWithParameter(Routes.LearnDetail, section.id, props.history),
+                        index,
+                    )
+                ), props.sections)}
+            </View>
+        </Content>
+    );
 
 const buildButton = (buttonContent: JSX.Element, buttonOnPress: () => void, index: number): JSX.Element => (
     <TouchableOpacity onPress={buttonOnPress} style={[applicationStyles.boxShadowBelow, styles.button]} key={index}>
