@@ -3,7 +3,7 @@ import React from 'react';
 import { Text, Content, View } from 'native-base';
 import { Trans } from '@lingui/react';
 import { applicationStyles, textStyles, colors } from '../../application/styles';
-import { ExpandableText } from '../expandable_text/expandable_text';
+import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { mapWithIndex } from '../../application/map_with_index';
 
 const aboutTitle = <Trans>About</Trans>;
@@ -22,7 +22,7 @@ const disclaimerTextP2 = <Trans>Users of the Arrival Advisor app do so at their 
 const disclaimerParagraphs: ReadonlyArray<JSX.Element> = [disclaimerTextP1, disclaimerTextP2];
 
 export const AboutComponent: React.StatelessComponent = (): JSX.Element => {
-    const aboutSection = aboutText;
+    const aboutSection = <Text style={textStyles.paragraphStyle}>{aboutText}</Text>;
     const privacySection = <ParagraphContent paragraphs={privacyPolicyParagraphs} />;
     const disclaimerSection = <ParagraphContent paragraphs={disclaimerParagraphs} />;
     return (
@@ -37,12 +37,12 @@ export const AboutComponent: React.StatelessComponent = (): JSX.Element => {
 const Section = (props: { readonly title: JSX.Element, readonly content: JSX.Element }): JSX.Element => (
     <View style={{ backgroundColor: colors.white, marginHorizontal: -10, marginTop: -10, marginBottom: 30, padding: 10 }}>
         <Text style={textStyles.headlineH1StyleBlackLeft}>{props.title}</Text>
-        <ExpandableText text={props.content} isMarkdown={false} />
+        <ExpandableContentComponent content={props.content} />
     </View>
 );
 
 const ParagraphContent = (props: { readonly paragraphs: ReadonlyArray<JSX.Element> }): JSX.Element => (
-    <View style={{ overflow: 'hidden' }}>
+    <View>
         {
             mapWithIndex((paragraph: JSX.Element, index: number) =>
                 <Text key={index} style={[textStyles.paragraphStyle, { marginBottom: 20 }]}>{paragraph}</Text>,
