@@ -6,6 +6,7 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { addToSavedList, removeFromSavedList, toggleCompleted, saveTheseTasksToMyPlan } from '../tasks/actions';
 import * as stores from '../tasks';
+import { clearAllUserData } from '../questionnaire/actions';
 
 describe('tasks reducer', () => {
 
@@ -50,6 +51,17 @@ describe('tasks reducer', () => {
             const oldCompleted = validStore.taskMap[taskId].completed;
             const finalStore = stores.reducer(validStore, toggleCompleted(taskId));
             expect(stores.toValidOrThrow(finalStore).taskMap[taskId].completed).toEqual(!oldCompleted);
+        });
+
+        describe('clear all user data action', () => {
+            test('sets task to not completed', () => {
+                const aTask = new TaskBuilder().withCompleted(true);
+                const theStore = buildNormalizedStore([aTask], []);
+
+                const finalStore = stores.reducer(theStore, clearAllUserData());
+
+                expect(stores.toValidOrThrow(finalStore).taskMap[aTask.id].completed).toBe(false);
+            });
         });
 
         describe('when handling a load request', () => {
