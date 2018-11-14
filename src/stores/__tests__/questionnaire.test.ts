@@ -358,9 +358,20 @@ describe('questionnaire reducer', () => {
             chosenAnswer = new AnswerBuilder().withIsChosen(true);
             question = new QuestionBuilder().withAnswers([chosenAnswer]);
             theStore = new ValidStoreBuilder().withQuestions([question]).build();
+
             newStore = store.reducer(theStore, clearAllUserData());
 
             expect(toValidOrThrow(newStore).answers[chosenAnswer.id].isChosen).toBe(false);
+        });
+
+        it('clears old questions', () => {
+            theStore = new ValidStoreBuilder().
+                withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
+                build();
+
+            newStore = store.reducer(theStore, clearAllUserData());
+
+            expect(toValidOrThrow(newStore).oldAnswers).toEqual({});
         });
     });
 });
