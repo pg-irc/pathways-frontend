@@ -62,6 +62,16 @@ describe('tasks reducer', () => {
 
                 expect(stores.toValidOrThrow(finalStore).taskMap[aTask.id].completed).toBe(false);
             });
+
+            test('removes task from my plan', () => {
+                const aTask = new TaskBuilder();
+                const theStore = buildNormalizedStore([aTask], [aTask.id]);
+
+                const finalStore = stores.reducer(theStore, clearAllUserData());
+
+                expect(stores.toValidOrThrow(finalStore).savedTasksList).toEqual([]);
+            });
+
         });
 
         describe('when handling a load request', () => {

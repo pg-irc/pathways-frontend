@@ -31,6 +31,7 @@ export const reduceValidStore = (store: ValidTaskStore, action: TaskAction): Tas
             return new ValidTaskStore({
                 ...store,
                 taskMap: R.map((task: Task): Task => ({ ...task, completed: false }), store.taskMap),
+                savedTasksList: [],
             });
 
         default:
