@@ -9,6 +9,7 @@ import { SaveTheseTasksToMyPlanAction } from '../tasks/actions';
 export type ChooseAnswerAction = Readonly<ReturnType<typeof chooseAnswer>>;
 export type SetActiveQuestionAction = Readonly<ReturnType<typeof setActiveQuestion>>;
 export type DismissNewlyAddedTasksPopupAction = Readonly<ReturnType<typeof dismissNewlyAddedTasksPopup>>;
+export type ClearAllUserDataAction = Readonly<ReturnType<typeof clearAllUserData>>;
 
 // tslint:disable-next-line:typedef
 export const chooseAnswer = (answerId: Id) => (
@@ -25,7 +26,22 @@ export const dismissNewlyAddedTasksPopup = () => (
     helpers.makeAction(constants.DISMISS_NEWLY_ADDED_POPUP)
 );
 
-export type QuestionnaireAction = ChooseAnswerAction | SetActiveQuestionAction
-    | UserDataPersistence.SaveSuccessAction | UserDataPersistence.SaveFailureAction
-    | UserDataPersistence.LoadRequestAction | UserDataPersistence.LoadSuccessAction | UserDataPersistence.LoadFailureAction
-    | ClearErrorAction | RouteChangedAction | DismissNewlyAddedTasksPopupAction | SaveTheseTasksToMyPlanAction;
+// tslint:disable-next-line:typedef
+export const clearAllUserData = () => (
+    helpers.makeAction(constants.CLEAR_ALL_USER_DATA)
+);
+
+export type QuestionnaireAction =
+    ChooseAnswerAction |
+    SetActiveQuestionAction |
+    UserDataPersistence.SaveSuccessAction |
+    UserDataPersistence.SaveFailureAction |
+    UserDataPersistence.LoadRequestAction |
+    UserDataPersistence.LoadSuccessAction |
+    UserDataPersistence.LoadFailureAction |
+    ClearErrorAction |
+    ClearAllUserDataAction |
+    RouteChangedAction |
+    DismissNewlyAddedTasksPopupAction |
+    SaveTheseTasksToMyPlanAction
+    ;

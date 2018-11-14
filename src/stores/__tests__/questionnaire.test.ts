@@ -9,7 +9,7 @@ import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { UserDataPersistence } from '../user_data';
 import { routeChanged, RouteChangedAction } from '../router_actions';
 import { QuestionnaireRouteState } from '../../fixtures/types/questionnaire';
-import { dismissNewlyAddedTasksPopup } from '../questionnaire/actions';
+import { dismissNewlyAddedTasksPopup, clearAllUserData } from '../questionnaire/actions';
 import { saveTheseTasksToMyPlan } from '../tasks/actions';
 
 describe('choose answer action creator', () => {
@@ -350,6 +350,17 @@ describe('questionnaire reducer', () => {
                     fail();
                 }
             });
+        });
+    });
+
+    describe('clear all user data action', () => {
+        it('sets question state to not selected', () => {
+            chosenAnswer = new AnswerBuilder().withIsChosen(true);
+            question = new QuestionBuilder().withAnswers([chosenAnswer]);
+            theStore = new ValidStoreBuilder().withQuestions([question]).build();
+            newStore = store.reducer(theStore, clearAllUserData());
+
+            expect(toValidOrThrow(newStore).answers[chosenAnswer.id].isChosen).toBe(false);
         });
     });
 });
