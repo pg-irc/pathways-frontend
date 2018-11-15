@@ -7,7 +7,7 @@ import { getColorForExploreIcon } from './get_color_for_explore_icon';
 
 export interface ExploreDetailContentProps {
     readonly section: ExploreSection;
-    readonly collapseIntroduction: boolean;
+    readonly sectionHasTasks: boolean;
 }
 
 export const ExploreDetailContentComponent: React.StatelessComponent<ExploreDetailContentProps> =
@@ -24,7 +24,7 @@ export const ExploreDetailContentComponent: React.StatelessComponent<ExploreDeta
             <Text style={textStyles.headlineH1StyleBlackLeft}>
                 {props.section.name}
             </Text>
-            { props.collapseIntroduction ? renderCollapsibleIntroduction(props) : renderPlainTextIntroduction(props) }
+            { props.sectionHasTasks ? renderCollapsibleIntroduction(props) : renderPlainTextIntroduction(props) }
         </View>
     );
 

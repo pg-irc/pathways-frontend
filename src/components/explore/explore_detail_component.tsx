@@ -28,7 +28,7 @@ export const ExploreDetailComponent: React.StatelessComponent<Props> =
                 <ExploreDetailHeadingComponent />
                 <ExploreDetailContentComponent
                     section={props.section}
-                    collapseIntroduction={props.tasks.length > 0}
+                    sectionHasTasks={props.tasks.length > 0}
                 />
                 <ExploreDetailRelatedTasksComponent
                     relatedTasks={props.tasks}

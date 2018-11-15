@@ -27,17 +27,29 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     const path = props.location.pathname;
 
     if (isOnParentScreen(path)) {
-        return renderHeader(colors.topaz, renderArrivalAdvisorLogo(), props);
+        const languageSwitcher =
+            <CurrentLocale
+                onPress={props.onLanguageSelect}
+                locale={props.currentLocale}
+                textColor={colors.white}
+            />;
+        return renderHeader(colors.topaz, renderArrivalAdvisorLogo(), languageSwitcher);
     }
 
     if (isOnChildScreen(path)) {
-        return renderHeader(colors.lightGrey, renderBackButton(props), props);
+        const languageSwitcher =
+            <CurrentLocale
+                onPress={props.onLanguageSelect}
+                locale={props.currentLocale}
+                textColor={colors.topaz}
+            />;
+        return renderHeader(colors.lightGrey, renderBackButton(props), languageSwitcher);
     }
 
     return <EmptyComponent />;
 };
 
-const renderHeader = (backgroundColor: string, actionButton: JSX.Element, props: Props): JSX.Element => {
+const renderHeader = (backgroundColor: string, actionButton: JSX.Element, languageSwitcher: JSX.Element): JSX.Element => {
     const marginTop = getStatusBarHeightForPlatform();
     // From the docs: "Connects the global back button on Android and tvOS to the router's history.
     // On Android, when the initial location is reached, the default back behavior takes over.
@@ -51,11 +63,7 @@ const renderHeader = (backgroundColor: string, actionButton: JSX.Element, props:
                 {reactRouterBackButtonHack}
             </Left>
             <Right style={{ alignItems: 'center' }}>
-                <CurrentLocale
-                    onPress={props.onLanguageSelect}
-                    locale={props.currentLocale}
-                    currentPath={props.location.pathname}
-                />
+                {languageSwitcher}
             </Right>
         </Header>
     );
