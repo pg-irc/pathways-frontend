@@ -26,7 +26,7 @@ export interface QuestionnaireActions {
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
 export const QuestionnaireComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <View style={{ flex: 1, backgroundColor: colors.lightGrey}}>
+    <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
         <Content padder>
             <Text style={textStyles.headlineH1StyleBlackLeft}><Trans>Personalize My Plan</Trans></Text>
             <Text style={[
@@ -47,7 +47,6 @@ export const QuestionnaireComponent: React.StatelessComponent<Props> = (props: P
         </Content>
         <FloatingTaskCounterComponent
             taskCount={props.recommendedTaskCount}
-            history={props.history}
         />
     </View>
 );
