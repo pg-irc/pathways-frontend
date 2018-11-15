@@ -4,12 +4,9 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, fontFamily } from '../../application/styles';
-import { History } from 'history';
-import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 
 export interface FloatingTaskCounterProps {
     readonly taskCount: number;
-    readonly history: History;
 }
 
 interface State {
@@ -50,7 +47,6 @@ export class FloatingTaskCounterComponent extends React.Component<Props, State> 
         return (
             <TouchableOpacity
                 style={styles.floatingCount}
-                onPress={goToRouteWithoutParameter(Routes.MyPlan, this.props.history)}
             >
                 {this.getCountText()}
                 <Text style={styles.smallFloatingText}>
