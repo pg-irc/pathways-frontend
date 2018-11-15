@@ -1,10 +1,11 @@
 import React from 'react';
 import { Text, View, Icon, Button, Content } from 'native-base';
 import { Trans } from '@lingui/react';
-import { I18nManager } from 'react-native';
+import { I18nManager, Alert } from 'react-native';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/map_with_index';
+import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 
 interface HelpContact {
     readonly title: JSX.Element;
@@ -34,7 +35,16 @@ const fixture: ReadonlyArray<HelpContact> = [
     },
 ];
 
-export const HelpComponent: React.StatelessComponent = (): JSX.Element => (
+export interface HelpComponentProps {
+}
+
+export interface HelpComponentActions {
+    readonly clearAllUserState: () => ClearAllUserDataAction;
+}
+
+type Props = HelpComponentProps & HelpComponentActions;
+
+export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <Content padder style={applicationStyles.body}>
         <View
             style={{
@@ -60,16 +70,46 @@ export const HelpComponent: React.StatelessComponent = (): JSX.Element => (
             <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
         </Text>
         {mapWithIndex(renderContactComponent, fixture)}
+        <View style={{
+            marginTop: 15,
+            marginBottom: 20,
+        }}>
+            <ClearAppMemoryButton {...props} />
+        </View>
     </Content>
 );
 
 const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element => (
-    <Button style={[applicationStyles.orangeButton, { alignSelf: 'center' } ]}>
+    <Button style={[applicationStyles.orangeButton, { alignSelf: 'center' }]}>
         <Text style={textStyles.button}>
             <Trans>Find a settlement agency near me</Trans>
         </Text>
     </Button>
 );
+
+const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+    const onPress = (): void => {
+        const alertHeading = 'Delete user data';
+        const alertMessage = 'Do you want to delete all user data from this phone? This includes which ' +
+            'answers are chosen in the questionnaire, which tasks are in My Plan and which ' +
+            'tasks are marked as completed';
+
+        // tslint:disable-next-line:no-expression-statement
+        Alert.alert(alertHeading, alertMessage,
+            [
+                // tslint:disable-next-line:no-empty
+                { text: 'Cancel', onPress: (): void => { }, style: 'cancel' },
+                // tslint:disable-next-line:no-expression-statement
+                { text: 'Delete all user data', onPress: (): void => { props.clearAllUserState(); } },
+            ],
+        );
+    };
+    return <Button full onPress={onPress} style={[applicationStyles.orangeButton, { alignSelf: 'center' }]}>
+        <Text style={textStyles.button}>
+            <Trans>Clear app memory</Trans>
+        </Text>
+    </Button>;
+};
 
 const renderContactComponent = (contact: HelpContact, index: number): JSX.Element => (
     <View
@@ -88,6 +128,6 @@ const renderContactComponent = (contact: HelpContact, index: number): JSX.Elemen
             <Text style={textStyles.headlineH4StyleBlackLeft}>{contact.title}</Text>
             {contact.subTitle ? <Text note>{contact.subTitle}</Text> : <EmptyComponent />}
         </View>
-        <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize }}/>
+        <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize }} />
     </View>
 );
