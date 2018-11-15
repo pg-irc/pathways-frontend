@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, Icon } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
-import { textStyles } from '../../application/styles';
-import { ExpandableText } from '../expandable_text/expandable_text';
+import { textStyles, colors } from '../../application/styles';
+import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
 
 export interface ExploreDetailContentProps {
     readonly section: ExploreSection;
-    readonly collapseIntroduction: boolean;
+    readonly sectionHasTasks: boolean;
 }
 
 export const ExploreDetailContentComponent: React.StatelessComponent<ExploreDetailContentProps> =
@@ -24,15 +24,15 @@ export const ExploreDetailContentComponent: React.StatelessComponent<ExploreDeta
             <Text style={textStyles.headlineH1StyleBlackLeft}>
                 {props.section.name}
             </Text>
-            { props.collapseIntroduction ? renderCollapsibleIntroduction(props) : renderPlainTextIntroduction(props) }
+            { props.sectionHasTasks ? renderCollapsibleIntroduction(props) : renderPlainTextIntroduction(props) }
         </View>
     );
 
 const renderCollapsibleIntroduction = (props: ExploreDetailContentProps): JSX.Element => (
-    <ExpandableText
-        text={props.section.introduction}
-        isMarkdown={false}
-        textStyle={textStyles.headlineH4StyleBlackLeft} />
+    <ExpandableContentComponent
+        content={<Text style={textStyles.headlineH4StyleBlackLeft}>{props.section.introduction}</Text>}
+        contentBackgroundColor={colors.lightGrey}
+    />
 );
 
 const renderPlainTextIntroduction = (props: ExploreDetailContentProps): JSX.Element => (

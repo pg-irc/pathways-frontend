@@ -6,7 +6,7 @@ import { Task } from '../../selectors/tasks/task';
 import { textStyles, colors, values, markdownStyles } from '../../application/styles';
 import { getColorForExploreIcon } from '../explore/get_color_for_explore_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { ExpandableText } from '../expandable_text/expandable_text';
+import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 
 export interface TaskDetailHeadingProps {
     readonly task: Task;
@@ -15,6 +15,7 @@ export interface TaskDetailHeadingProps {
 export const TaskDetailContentComponent: React.StatelessComponent<TaskDetailHeadingProps> =
     (props: TaskDetailHeadingProps): JSX.Element => {
         const task = props.task;
+        const taskDescription = <Markdown style={markdownStyles}>{props.task.description}</Markdown>;
         return (
             <View padder style={{ backgroundColor: colors.white }}>
                 <View style={{ marginVertical: 20, flexDirection: 'row' }}>
@@ -32,8 +33,8 @@ export const TaskDetailContentComponent: React.StatelessComponent<TaskDetailHead
                 </View>
                 {
                     task.relatedTasks.length > 0 ?
-                        <ExpandableText text={props.task.description} isMarkdown={true} /> :
-                        <Markdown style={markdownStyles}>{props.task.description}</Markdown>
+                        <ExpandableContentComponent content={taskDescription} /> :
+                        taskDescription
                 }
             </View>
         );
