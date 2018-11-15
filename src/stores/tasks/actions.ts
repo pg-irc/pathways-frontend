@@ -3,6 +3,7 @@ import * as constants from '../../application/constants';
 import { ClearErrorAction } from '../clear_error';
 import { UserDataPersistence } from '../user_data';
 import * as helpers from '../helpers/make_action';
+import { ClearAllUserDataAction } from '../questionnaire/actions';
 
 export type AddToSavedListAction = Readonly<ReturnType<typeof addToSavedList>>;
 
@@ -19,6 +20,7 @@ export type TaskAction = AddToSavedListAction |
     UserDataPersistence.LoadSuccessAction |
     UserDataPersistence.LoadFailureAction |
     ClearErrorAction |
+    ClearAllUserDataAction |
     SaveTheseTasksToMyPlanAction;
 
 // tslint:disable-next-line:typedef

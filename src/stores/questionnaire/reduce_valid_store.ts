@@ -35,6 +35,13 @@ export const reduceValidStore = (store: ValidQuestionnaireStore, action?: Questi
         case constants.LOAD_USER_DATA_REQUEST:
             return new LoadingQuestionnaireStore(store);
 
+        case constants.CLEAR_ALL_USER_DATA:
+            return new ValidQuestionnaireStore({
+                ...store,
+                oldAnswers: {},
+                answers: R.map((answer: Answer): Answer => ({ ...answer, isChosen: false }), store.answers),
+            });
+
         default:
             return store;
     }
