@@ -88,7 +88,7 @@ const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element 
 );
 
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const onPress = (): void => {
+    const alertToClearAllUserData = (): void => {
         const alertHeading = 'Delete user data';
         const alertMessage = 'Do you want to delete all user data from this phone? This includes which ' +
             'answers are chosen in the questionnaire, which tasks are in My Plan and which ' +
@@ -97,16 +97,14 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
         // tslint:disable-next-line:no-expression-statement
         Alert.alert(alertHeading, alertMessage,
             [
-                // tslint:disable-next-line:no-empty
-                { text: 'Cancel', onPress: (): void => { }, style: 'cancel' },
-                // tslint:disable-next-line:no-expression-statement
-                { text: 'Delete all user data', onPress: (): void => { props.clearAllUserState(); } },
+                { text: 'Cancel', style: 'cancel' },
+                { text: 'Delete all user data', onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
             ],
         );
     };
-    return <Button full onPress={onPress} style={[applicationStyles.orangeButton, { alignSelf: 'center' }]}>
+    return <Button full onPress={alertToClearAllUserData} style={[applicationStyles.orangeButton, { alignSelf: 'center' }]}>
         <Text style={textStyles.button}>
-            <Trans>Clear app memory</Trans>
+            <Trans>Delete all user data</Trans>
         </Text>
     </Button>;
 };
