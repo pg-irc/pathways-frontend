@@ -15,7 +15,7 @@ const mapStateToProps = (store: Store): Props => {
     return { currentLocale, availableLocales };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): Actions => ({
+const mapDispatchToProps = (dispatch: Dispatch<SetLocale.Request>): Actions => ({
     setLocale: (localeCode: string): SetLocale.Request => dispatch(setLocaleActions.request(localeCode)),
 });
 

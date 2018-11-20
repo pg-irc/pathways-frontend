@@ -1,3 +1,4 @@
+import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { MainComponentProps, MainComponent, MainComponentActions } from './main_component';
@@ -6,7 +7,6 @@ import { isApplicationLoading } from '../../selectors/is_application_loading';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { withRouter } from 'react-router-native';
 import { RouterProps } from '../../application/routing';
-import { Dispatch } from 'redux';
 import { Location, Action } from 'history';
 import { RouteChangedAction, routeChanged } from '../../stores/router_actions';
 
@@ -21,7 +21,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     staticContext: ownProps.staticContext,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): MainComponentActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<RouteChangedAction>): MainComponentActions => ({
     routeChanged: (location: Location, _: Action): RouteChangedAction => dispatch(routeChanged(location)),
 });
 

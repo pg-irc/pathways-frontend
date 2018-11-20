@@ -17,7 +17,7 @@ const mapStateToProps = (store: Store, route: RouterProps): ServiceListProps => 
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): ServiceListActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<UpdateTaskServicesAsync.Request>): ServiceListActions => ({
     requestUpdateOfServicesForTask: (task: Task): UpdateTaskServicesAsync.Request => {
         return dispatch(updateTaskServicesAsync.request(task.id, task.serviceQuery));
     },

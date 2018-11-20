@@ -20,7 +20,9 @@ const mapStateToProps = (store: Store, routerProps: RouterProps): TaskDetailProp
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskDetailActions => ({
+type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction | ToggleCompletedAction;
+
+const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActions => ({
     addToSavedList: (taskId: TaskId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
     removeFromSavedList: (taskId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
     toggleCompleted: (taskId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(taskId)),
