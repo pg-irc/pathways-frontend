@@ -1,4 +1,5 @@
-import { connect, Dispatch } from 'react-redux';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { HelpComponentActions, HelpComponent, HelpComponentProps } from './help_component';
 import { clearAllUserData, ClearAllUserDataAction } from '../../stores/questionnaire/actions';
@@ -6,7 +7,7 @@ import { clearAllUserData, ClearAllUserDataAction } from '../../stores/questionn
 const mapStateToProps = (_: Store): HelpComponentProps => ({
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): HelpComponentActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<ClearAllUserDataAction>): HelpComponentActions => ({
     clearAllUserState: (): ClearAllUserDataAction => dispatch(clearAllUserData()),
 });
 

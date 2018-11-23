@@ -17,7 +17,9 @@ const mapStateToProps = (store: Store): NewlyRecommendedTasksComponentProps => (
     newlyRecommendedTasks: selectNewlyRecommendedTasks(store),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): NewlyRecommendedTasksComponentActions => ({
+type DispatchActions = SaveTheseTasksToMyPlanAction | DismissNewlyAddedTasksPopupAction;
+
+const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): NewlyRecommendedTasksComponentActions => ({
     saveToMyPlan: (tasks: ReadonlyArray<Id>): SaveTheseTasksToMyPlanAction => dispatch(saveTheseTasksToMyPlan(tasks)),
     dismissPopup: (): DismissNewlyAddedTasksPopupAction => dispatch(dismissNewlyAddedTasksPopup()),
 });

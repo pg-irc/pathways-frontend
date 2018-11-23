@@ -14,7 +14,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProp
     savedTasksIdList: pickSavedTaskIds(store),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): ExploreDetailActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<AddToSavedListAction>): ExploreDetailActions => ({
     addToSavedList: (taskId: Id): AddToSavedListAction => dispatch(addToSavedList(taskId)),
 });
 

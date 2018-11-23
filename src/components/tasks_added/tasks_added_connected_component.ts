@@ -8,7 +8,7 @@ const mapStateToProps = (store: Store): TasksAddedProps => ({
     showQuestionnairePopup: selectShowQuestionnairePopup(store),
 });
 
-const mapDispatchToProps = (_: Dispatch<Store>): TasksAddedActions => ({
+const mapDispatchToProps = (_: Dispatch): TasksAddedActions => ({
 });
 
 export const TasksAddedConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TasksAddedComponent);

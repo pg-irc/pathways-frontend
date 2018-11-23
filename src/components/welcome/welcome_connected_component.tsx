@@ -1,5 +1,6 @@
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import { withI18n } from '@lingui/react';
-import { connect, Dispatch } from 'react-redux';
 import { WelcomeComponent, WelcomeProps, WelcomeActions } from './welcome_component';
 import { Store } from '../../stores';
 import { pullAvailableLocales } from '../../selectors/locale/pull_available_locales';
@@ -13,7 +14,7 @@ function mapStateToProps(store: Store): WelcomeProps {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<Store>): WelcomeActions {
+function mapDispatchToProps(dispatch: Dispatch<SetLocale.Request>): WelcomeActions {
     return {
         setLocale: (localeCode: string): SetLocale.Request => dispatch(setLocaleActions.request(localeCode)),
     };

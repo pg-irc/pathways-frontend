@@ -9,7 +9,7 @@ const mapStateToProps = (store: Store): NotificationsProps => ({
     notifications: selectNotifications(store),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): NotificationsActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<RemoveNotificationAction>): NotificationsActions => ({
     removeNotification: (notificationId: Id): RemoveNotificationAction => dispatch(removeNotification(notificationId)),
 });
 

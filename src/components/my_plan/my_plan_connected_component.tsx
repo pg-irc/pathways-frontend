@@ -14,7 +14,7 @@ const mapStateToProps = (store: Store): MyPlanProps => ({
     completedTasks: selectCompletedTasks(store),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): TaskListActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<AddToSavedListAction>): TaskListActions => ({
     addToSavedList: (taskId: Id): AddToSavedListAction => dispatch(addToSavedList(taskId)),
 });
 

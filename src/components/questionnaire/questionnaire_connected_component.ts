@@ -14,7 +14,9 @@ const mapStateToProps = (store: Store): QuestionnaireProps => ({
     recommendedTaskCount: selectRecommendedTasks(store).length,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Store>): QuestionnaireActions => ({
+type DispatchActions = ChooseAnswerAction | SetActiveQuestionAction;
+
+const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): QuestionnaireActions => ({
     chooseAnswer: (answerId: Id): ChooseAnswerAction => dispatch(chooseAnswer(answerId)),
     setActiveQuestion: (activeQuestion: Id): SetActiveQuestionAction => dispatch(setActiveQuestion(activeQuestion)),
 });
