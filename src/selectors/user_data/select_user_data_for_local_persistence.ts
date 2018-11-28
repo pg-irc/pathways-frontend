@@ -5,9 +5,13 @@ import { pickSavedTaskIds } from '../tasks/pick_saved_task_ids';
 import { pickAnswers } from '../questionnaire/pick_answers';
 import { pickTasks } from '../tasks/pick_tasks';
 import { getIdsOfCompletedTasks } from '../tasks/get_ids_of_completed_tasks';
+import { CURRENT_USER_DATA_VERSION } from '../../stores/user_data';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedUserData => ({
+    version: CURRENT_USER_DATA_VERSION,
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
     savedTasks: pickSavedTaskIds(appStore),
     completedTasks: getIdsOfCompletedTasks(pickTasks(appStore)),
+    newProp: false,
+    secondNewProp: false,
 });

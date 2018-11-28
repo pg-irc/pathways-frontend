@@ -14,6 +14,10 @@ export const aString = (): string => {
     return uuid.v4();
 };
 
+export const manyStrings = (count: number = 3): ReadonlyArray<string> => (
+    new Array(count).fill(0).map(() => aString())
+);
+
 export const aBoolean = (): boolean => {
     return Math.random() > 0.5;
 };
