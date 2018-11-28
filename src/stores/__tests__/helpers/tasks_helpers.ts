@@ -14,7 +14,6 @@ export class TaskBuilder {
     description: string = aString();
     taxonomyTerms: TaxonomyTermReference[] = [];
     relatedTasks: ReadonlyArray<TaskId> = [aString(), aString()];
-    serviceQuery: string = aString();
     completed: boolean = aBoolean();
 
     withLocaleCode(localeCode: string): TaskBuilder {
@@ -57,11 +56,6 @@ export class TaskBuilder {
         return this;
     }
 
-    withServiceQuery(query: string): TaskBuilder {
-        this.serviceQuery = query;
-        return this;
-    }
-
     build(): store.Task {
         return {
             id: this.id,
@@ -70,7 +64,6 @@ export class TaskBuilder {
             description: this.createLocalizedText(this.description),
             taxonomyTerms: this.taxonomyTerms,
             relatedTasks: this.relatedTasks,
-            serviceQuery: this.serviceQuery,
             completed: this.completed,
         };
     }
