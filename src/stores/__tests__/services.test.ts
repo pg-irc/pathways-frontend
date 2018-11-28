@@ -17,10 +17,9 @@ describe('services reducer', () => {
 
     describe('on UPDATE_SERVICES_REQUEST', () => {
         const task = new TaskBuilder().build();
-        const query = aString();
         const action: UpdateTaskServicesAsync.Request = {
             type: constants.LOAD_SERVICES_REQUEST,
-            payload: { taskId: task.id, query },
+            payload: { taskId: task.id },
         };
         const store = reducer(theStore, action);
         const taskServices = store.taskServicesMap[task.id];

@@ -10,6 +10,5 @@ export interface Task {
     readonly exploreSection: ExploreSection;
     readonly isRecommended: boolean;
     readonly relatedTasks: ReadonlyArray<TaskListItem>;
-    readonly serviceQuery: string;
     readonly completed: boolean;
 }

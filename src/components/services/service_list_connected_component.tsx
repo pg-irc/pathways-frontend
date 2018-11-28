@@ -6,8 +6,10 @@ import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { RouterProps } from '../../application/routing';
 import { Task } from '../../selectors/tasks/task';
 import { selectTaskServices } from '../../selectors/services/select_task_services';
-import { ServiceListComponent, ServiceListProps,
-         ServiceListActions, TaskServiceUpdater } from './service_list_component';
+import {
+    ServiceListComponent, ServiceListProps,
+    ServiceListActions, TaskServiceUpdater,
+} from './service_list_component';
 
 const mapStateToProps = (store: Store, route: RouterProps): ServiceListProps => {
     const task: Task = selectCurrentTask(store, route);
@@ -19,7 +21,7 @@ const mapStateToProps = (store: Store, route: RouterProps): ServiceListProps => 
 
 const mapDispatchToProps = (dispatch: Dispatch<UpdateTaskServicesAsync.Request>): ServiceListActions => ({
     requestUpdateOfServicesForTask: (task: Task): UpdateTaskServicesAsync.Request => {
-        return dispatch(updateTaskServicesAsync.request(task.id, task.serviceQuery));
+        return dispatch(updateTaskServicesAsync.request(task.id));
     },
 });
 

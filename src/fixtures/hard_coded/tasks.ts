@@ -25,7 +25,6 @@ export const buildTasksFixture = (): ValidTaskStore => {
                 }],
                 'completed': false,
                 'relatedTasks': ['t2'],
-                'serviceQuery': 'elementary,school',
             },
             't2': {
                 'id': 't2',
@@ -46,7 +45,6 @@ export const buildTasksFixture = (): ValidTaskStore => {
                 }],
                 'completed': false,
                 'relatedTasks': ['t1'],
-                'serviceQuery': 'linc',
             },
             't3': {
                 'id': 't3',
@@ -67,7 +65,6 @@ export const buildTasksFixture = (): ValidTaskStore => {
                 }],
                 'completed': false,
                 'relatedTasks': ['t2'],
-                'serviceQuery': 'child,english,language,learning',
             },
             't4': {
                 'id': 't4',
@@ -88,7 +85,6 @@ export const buildTasksFixture = (): ValidTaskStore => {
                 }],
                 'completed': false,
                 'relatedTasks': [],
-                'serviceQuery': 'bank,account',
             },
             't5': {
                 'id': 't5',
@@ -109,7 +105,6 @@ export const buildTasksFixture = (): ValidTaskStore => {
                 }],
                 'completed': false,
                 'relatedTasks': [],
-                'serviceQuery': 'social,insurance,number',
             },
         },
         savedTasksList: [],

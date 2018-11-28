@@ -13,9 +13,8 @@ export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
 
 type UpdateResult = IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAsync.Result>>;
 export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): UpdateResult {
-    const query = action.payload.query;
     const taskId = action.payload.taskId;
-    const response: APIResponse = yield call([API, API.searchServices], query);
+    const response: APIResponse = yield call([API, API.searchServices], taskId);
     if (response.hasError) {
         yield put(updateTaskServicesAsync.failure(response.message, taskId));
     } else {

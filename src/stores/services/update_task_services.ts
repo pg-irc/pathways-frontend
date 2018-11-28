@@ -10,7 +10,7 @@ interface UpdateTaskServicesAction<P extends {} = {}> extends ReduxAction {
 
 export namespace UpdateTaskServicesAsync {
     export interface Request extends UpdateTaskServicesAction {
-        readonly payload: { readonly taskId: TaskId; readonly query: string; };
+        readonly payload: { readonly taskId: TaskId; };
     }
     export interface Success extends UpdateTaskServicesAction {
         readonly payload: { readonly taskId: TaskId; readonly services: ReadonlyArray<Service>; };
@@ -23,8 +23,8 @@ export namespace UpdateTaskServicesAsync {
 }
 
 export const updateTaskServicesAsync = {
-    request(taskId: TaskId, query: string): UpdateTaskServicesAsync.Request {
-        return helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { taskId, query });
+    request(taskId: TaskId): UpdateTaskServicesAsync.Request {
+        return helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { taskId });
     },
     success(taskId: TaskId, services: ReadonlyArray<Service>): UpdateTaskServicesAsync.Success {
         return helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { taskId, services });
