@@ -3,7 +3,7 @@
 import { call, CallEffect, PutEffect, put, ForkEffect, takeLatest, select, SelectEffect } from 'redux-saga/effects';
 import { AsyncStorage } from 'react-native';
 import { USER_DATA_STORAGE_KEY } from '../application/constants';
-import { UserDataPersistence, PersistedUserData } from '../stores/user_data';
+import { UserDataPersistence, PersistedUserData, migrateToCurrentUserDataFormat, VersionedUserData } from '../stores/user_data';
 import * as constants from '../application/constants';
 import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
 
@@ -66,7 +66,16 @@ export async function loadUserDataAsync(): Promise<string> {
 }
 
 const deserialize = (serializedUserData: string): PersistedUserData => (
-    serializedUserData ? JSON.parse(serializedUserData) : {
+    serializedUserData ? parseData(serializedUserData) : defaultUserData()
+);
+
+const parseData = (serializedUserData: string): PersistedUserData => {
+    const parsedData: VersionedUserData = JSON.parse(serializedUserData); // TODO validation
+    return migrateToCurrentUserDataFormat(parsedData);
+};
+
+const defaultUserData = (): PersistedUserData => (
+    {
         chosenAnswers: [],
         completedTasks: [],
         savedTasks: [],
