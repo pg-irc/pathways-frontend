@@ -4,6 +4,7 @@ import { ExploreSection } from '../../selectors/explore/types';
 import { textStyles, colors } from '../../application/styles';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
+import { SelectableText } from '../selectable_text';
 
 export interface ExploreDetailContentProps {
     readonly section: ExploreSection;
@@ -24,17 +25,17 @@ export const ExploreDetailContentComponent: React.StatelessComponent<ExploreDeta
             <Text style={textStyles.headlineH1StyleBlackLeft}>
                 {props.section.name}
             </Text>
-            { props.sectionHasTasks ? renderCollapsibleIntroduction(props) : renderPlainTextIntroduction(props) }
+            {props.sectionHasTasks ? renderCollapsibleIntroduction(props) : renderPlainTextIntroduction(props)}
         </View>
     );
 
 const renderCollapsibleIntroduction = (props: ExploreDetailContentProps): JSX.Element => (
     <ExpandableContentComponent
-        content={<Text style={textStyles.headlineH4StyleBlackLeft}>{props.section.introduction}</Text>}
+        content={<SelectableText style={textStyles.headlineH4StyleBlackLeft}>{props.section.introduction}</SelectableText>}
         contentBackgroundColor={colors.lightGrey}
     />
 );
 
 const renderPlainTextIntroduction = (props: ExploreDetailContentProps): JSX.Element => (
-    <Text style={textStyles.headlineH4StyleBlackLeft}>{props.section.introduction}</Text>
+    <SelectableText style={textStyles.headlineH4StyleBlackLeft}>{props.section.introduction}</SelectableText>
 );

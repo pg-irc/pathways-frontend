@@ -5,6 +5,7 @@ import { Trans } from '@lingui/react';
 import { applicationStyles, textStyles, colors } from '../../application/styles';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { mapWithIndex } from '../../application/map_with_index';
+import { SelectableText } from '../selectable_text';
 
 const aboutTitle = <Trans>About</Trans>;
 const aboutText = <Trans>Arrival Advisor is an app that fast-tracks newcomers in Canada to successful resettlement, by connecting newcomers with a personalized directory of settlement services tailored to their needs, circumstances and stages of settlement. Designed alongside immigrants, refugees, community service providers and coordinating organizations, the app helps newcomers more effectively navigate their resettlement experience in Canada, bridging current gaps in timely and actionable information.</Trans>;
@@ -22,7 +23,7 @@ const disclaimerTextP2 = <Trans>Users of the Arrival Advisor app do so at their 
 const disclaimerParagraphs: ReadonlyArray<JSX.Element> = [disclaimerTextP1, disclaimerTextP2];
 
 export const AboutComponent: React.StatelessComponent = (): JSX.Element => {
-    const aboutSection = <Text style={textStyles.paragraphStyle}>{aboutText}</Text>;
+    const aboutSection = <SelectableText style={textStyles.paragraphStyle}>{aboutText}</SelectableText>;
     const privacySection = <ParagraphContent paragraphs={privacyPolicyParagraphs} />;
     const disclaimerSection = <ParagraphContent paragraphs={disclaimerParagraphs} />;
     return (
@@ -45,7 +46,7 @@ const ParagraphContent = (props: { readonly paragraphs: ReadonlyArray<JSX.Elemen
     <View>
         {
             mapWithIndex((paragraph: JSX.Element, index: number) =>
-                <Text key={index} style={[textStyles.paragraphStyle, { marginBottom: 20 }]}>{paragraph}</Text>,
+                <SelectableText key={index} style={[textStyles.paragraphStyle, { marginBottom: 20 }]}>{paragraph}</SelectableText>,
                 props.paragraphs)
         }
     </View>
