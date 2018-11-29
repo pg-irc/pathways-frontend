@@ -14,23 +14,20 @@ describe('The update task services saga', () => {
 
     it('should dispatch a call effect for api.getRelatedServicesForTask', () => {
         const task = new TaskBuilder().withLocaleCode(locale.code).build();
-        const query = aString();
-        const action = updateTaskServicesAsync.request(task.id, query);
+        const action = updateTaskServicesAsync.request(task.id);
         const saga = updateTaskServices(action);
         const value = saga.next().value;
-        expect(value).toEqual(call([API, 'searchServices'], query));
+        expect(value).toEqual(call([API, 'searchServices'], task.id));
     });
 
     describe('after making request for related services, should', () => {
         let task: Task;
-        let query: string;
         let saga: IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAsync.Action>>;
         let action: UpdateTaskServicesAsync.Request;
 
         beforeEach(() => {
             task = new TaskBuilder().withLocaleCode(locale.code).build();
-            query = aString();
-            action = updateTaskServicesAsync.request(task.id, query);
+            action = updateTaskServicesAsync.request(task.id);
             saga = updateTaskServices(action);
             saga.next();
         });

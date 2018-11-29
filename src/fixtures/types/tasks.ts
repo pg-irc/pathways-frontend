@@ -10,7 +10,6 @@ export interface Task {
     readonly description: LocalizedText;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly relatedTasks: ReadonlyArray<Id>;
-    readonly serviceQuery: string;
     readonly completed: boolean;
 }
 

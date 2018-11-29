@@ -1,5 +1,6 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import qs from 'query-string';
+import { Id } from '../stores/tasks';
 
 export interface APIResponse {
     readonly hasError: boolean;
@@ -20,9 +21,9 @@ export class APIClient {
         this.host = host;
     }
 
-    async searchServices(query: string): Promise<APIResponse> {
+    async searchServices(taskId: Id): Promise<APIResponse> {
         const endpoint = 'services_at_location';
-        const servicesResponse = await this.fetch(endpoint, { search: query });
+        const servicesResponse = await this.fetch(endpoint, { related_to_task: taskId });
         return servicesResponse;
     }
 
