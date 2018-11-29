@@ -1,80 +1,65 @@
 // tslint:disable:no-expression-statement
-import { manyStrings, aBoolean } from '../../application/__tests__/helpers/random_test_values';
+import { manyStrings } from '../../application/__tests__/helpers/random_test_values';
 import { PersistedUserData, migrateUserData } from '../user_data';
 import {
-    PersistedUserDataVersion1, migrateFromVersion1,
-    PersistedUserDataVersion2, migrateFromVersion2,
+    PersistedUserDataVersion1, migrateFromVersion_0_1,
+    PersistedUserDataVersion2, migrateFromVersion_0_2,
 } from '../user_data/legacy_data/legacy_types';
 
 describe('user data migration', () => {
     const chosenAnswers = manyStrings();
     const savedTasks = manyStrings();
-    const completedTasks = manyStrings();
 
     describe('stepwise', () => {
 
-        test('from version 1 to 2', () => {
-            const version1data: PersistedUserDataVersion1 = {
-                version: 'version1',
+        test('from version 0.1 to 0.2', () => {
+            const oldData: PersistedUserDataVersion1 = {
+                version: 'version 0.1',
                 chosenAnswers,
-                savedTasks,
-                completedTasks,
             };
-            const expectedVersion2data: PersistedUserDataVersion2 = {
-                version: 'version2',
+            const expectedNewData: PersistedUserDataVersion2 = {
+                version: 'version 0.2',
                 chosenAnswers,
-                savedTasks,
-                completedTasks,
-                newProp: false,
+                savedTasks: [],
             };
 
-            const result = migrateFromVersion1(version1data);
+            const result = migrateFromVersion_0_1(oldData);
 
-            expect(result).toEqual(expectedVersion2data);
+            expect(result).toEqual(expectedNewData);
         });
 
-        test('from version 2 to 3', () => {
-            const prop = aBoolean();
-
-            const version2data: PersistedUserDataVersion2 = {
-                version: 'version2',
+        test('from version 0.2 to 1.0', () => {
+            const oldData: PersistedUserDataVersion2 = {
+                version: 'version 0.2',
                 chosenAnswers,
                 savedTasks,
-                completedTasks,
-                newProp: prop,
             };
-            const expectedVersion3data: PersistedUserData = {
-                version: 'version3',
+            const expectedNewData: PersistedUserData = {
+                version: 'version 1.0',
                 chosenAnswers,
                 savedTasks,
-                completedTasks,
-                newProp: prop,
-                secondNewProp: false,
+                completedTasks: [],
             };
 
-            const result = migrateFromVersion2(version2data);
+            const result = migrateFromVersion_0_2(oldData);
 
-            expect(result).toEqual(expectedVersion3data);
+            expect(result).toEqual(expectedNewData);
         });
     });
     test('from first to current version', () => {
-        const version1data: PersistedUserDataVersion1 = {
-            version: 'version1',
+        const oldData: PersistedUserDataVersion1 = {
+            version: 'version 0.1',
             chosenAnswers,
-            savedTasks,
-            completedTasks,
         };
-        const expectedData: PersistedUserData = {
-            version: 'version3',
+        const expectedNewData: PersistedUserData = {
+            version: 'version 1.0',
             chosenAnswers,
-            savedTasks,
-            completedTasks,
-            newProp: false,
-            secondNewProp: false,
+            savedTasks: [],
+            completedTasks: [],
         };
 
-        const result = migrateUserData(version1data);
+        const result = migrateUserData(oldData);
 
-        expect(result).toEqual(expectedData);
+        expect(result).toEqual(expectedNewData);
     });
 });

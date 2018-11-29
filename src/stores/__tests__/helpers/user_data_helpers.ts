@@ -30,8 +30,6 @@ export class PersistedUserDataBuilder {
             chosenAnswers: this.chosenAnswers,
             savedTasks: this.savedTasks,
             completedTasks: this.completedTasks,
-            newProp: false,
-            secondNewProp: false,
         };
     }
 

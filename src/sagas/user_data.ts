@@ -67,7 +67,9 @@ export async function loadUserDataAsync(): Promise<string> {
 
 const deserialize = (serializedUserData: string): PersistedUserData => (
     serializedUserData ? JSON.parse(serializedUserData) : {
-        chosenAnswers: [], completedTasks: [], savedTasks: [],
-        newProp: false, secondNewProp: false, version: 'version3',
+        chosenAnswers: [],
+        completedTasks: [],
+        savedTasks: [],
+        version: 'version 1.0',
     }
 );

@@ -12,6 +12,4 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedUse
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
     savedTasks: pickSavedTaskIds(appStore),
     completedTasks: getIdsOfCompletedTasks(pickTasks(appStore)),
-    newProp: false,
-    secondNewProp: false,
 });
