@@ -16,7 +16,7 @@ Install dependencies
 yarn install
 ```
 
-Copy example configuration file and modify accordingly (set your own API host, etc).
+Copy example configuration file and modify accordingly (set your own API host, Sentry auth token etc).
 ```
 cp .env.example .env
 ```

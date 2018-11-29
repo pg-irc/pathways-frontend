@@ -15,6 +15,17 @@
       "assets/images/*",
       "assets/fonts/*",
       "node_modules/native-base/Fonts"
-    ]
+    ],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "peacegeeks",
+            "project": "pathways"
+          }
+        }
+      ]
+    }
   }
 }
