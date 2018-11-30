@@ -14,36 +14,46 @@ interface ServiceListItemProps {
 }
 
 export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
-    (props: ServiceListItemProps): JSX.Element => {
-        const physicalAddresses = R.filter(R.propEq('type', 'physical_address'), props.service.addresses);
-        const capitalizeFirstLetter = (phoneType: string): string => (
-            phoneType.charAt(0).toUpperCase() + phoneType.slice(1)
-        );
+    (props: ServiceListItemProps): JSX.Element => (
+        <View style={{ backgroundColor: colors.white, padding: 10, borderRadius: values.lessRoundedBorderRadius }}>
+            {renderName(props.service.name)}
+            {renderDescription(props.service.description)}
+            {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
+            {renderPhoneNumbers(props.service.phoneNumbers)}
+        </View>
+    );
 
-        return (
-            <View style={{ backgroundColor: colors.white, padding: 10, borderRadius: values.lessRoundedBorderRadius }}>
-                <Text style={textStyles.headlineH3StyleBlackLeft}>
-                    {props.service.name}
-                </Text>
-                <ExpandableContentComponent content={<Text style={textStyles.paragraphStyle}>{props.service.description}</Text>} />
-                {
-                    mapWithIndex((address: Address, index: number) =>
-                        <View key={index}>
-                            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address:</Trans></Text>
-                            <Text style={textStyles.paragraphStyle}>{address.address}</Text>
-                            <Text style={textStyles.paragraphStyle}>{address.city + ' ' + address.stateProvince + ' ' + address.postalCode}</Text>
-                        </View>, physicalAddresses)
-                }
-                {
-                    mapWithIndex((phoneNumber: PhoneNumber, index: number) =>
-                        <View key={index}>
-                            <Text>
-                                <Text style={textStyles.paragraphBoldBlackLeft}>
-                                    {capitalizeFirstLetter(phoneNumber.type)}:
-                            </Text> <TextWithPhoneLinks text={phoneNumber.phoneNumber} />
-                            </Text>
-                        </View>, props.service.phoneNumbers)
-                }
-            </View>
-        );
-    };
+const renderName = (name: string): JSX.Element => (
+    <Text style={textStyles.headlineH3StyleBlackLeft}>{name}</Text>
+);
+
+const renderDescription = (description: string): JSX.Element => (
+    <ExpandableContentComponent content={<Text style={textStyles.paragraphStyle}>{description}</Text>} />
+);
+
+const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));
+
+// tslint:disable-next-line:typedef
+const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
+    mapWithIndex((address: Address, index: number) =>
+        <View key={index}>
+            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address:</Trans></Text>
+            <Text style={textStyles.paragraphStyle}>{address.address}</Text>
+            <Text style={textStyles.paragraphStyle}>{address.city + ' ' + address.stateProvince + ' ' + address.postalCode}</Text>
+        </View>, physicalAddresses)
+);
+
+// tslint:disable-next-line:typedef
+const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>) => (
+    (mapWithIndex((phoneNumber: PhoneNumber, index: number): JSX.Element => (<View key={index}>
+        <Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}>
+                {capitalizeFirstLetter(phoneNumber.type)}:
+            </Text> <TextWithPhoneLinks text={phoneNumber.phoneNumber} />
+        </Text>
+    </View>), phoneNumbers))
+);
+
+const capitalizeFirstLetter = (s: string): string => (
+    s.charAt(0).toUpperCase() + s.slice(1)
+);
