@@ -20,19 +20,19 @@ LocaleInfoManager.register([
 ]);
 
 type InitialState = { readonly localeInStore: locale.LocaleStore };
+type Store = Readonly<ReturnType<typeof createStore>>;
 
-export function buildStore(saga: ApplicationSaga): ReturnType<typeof createStore> {
+export const buildStore = (saga: ApplicationSaga): Store => {
     const middleware = applyMiddleware(saga.middleware);
     const preloadedState: InitialState = {
-        localeInStore: {
-            ...locale.buildDefaultStore(),
-            availableLocales: LocaleInfoManager.all,
-            fallback: LocaleInfoManager.getFallback().code,
-        },
+        localeInStore: locale.buildDefaultStoreWithAvailableLocalesAndFallback(
+            LocaleInfoManager.all,
+            LocaleInfoManager.getFallback().code,
+        ),
     };
     const enhancers = compose(middleware);
     return createStore(reducer, preloadedState, enhancers);
-}
+};
 
 export function startApplication(saga: ApplicationSaga, store: ReturnType<typeof createStore>): void {
     // tslint:disable:no-expression-statement
