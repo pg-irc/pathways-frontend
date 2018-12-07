@@ -19,20 +19,13 @@ export interface LocaleStore {
     readonly errorMessage: string;
 }
 
-const buildDefaultStore = (): LocaleStore => ({
+export const buildDefaultStore = (): LocaleStore => ({
     availableLocales: [],
     code: undefined,
     fallback: undefined,
     loading: false,
     errorMessage: '',
 });
-
-export const buildStore =
-    (availableLocales: ReadonlyArray<LocaleInfo>, fallback: string): LocaleStore => ({
-        ...buildDefaultStore(),
-        availableLocales,
-        fallback,
-    });
 
 export const setLocaleActions = setLocale;
 export const loadCurrentLocaleActions = loadCurrentLocale;
