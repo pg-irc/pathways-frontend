@@ -27,7 +27,7 @@ const buildDefaultStore = (): LocaleStore => ({
     errorMessage: '',
 });
 
-export const buildDefaultStoreWithAvailableLocalesAndFallback =
+export const buildStore =
     (availableLocales: ReadonlyArray<LocaleInfo>, fallback: string): LocaleStore => ({
         ...buildDefaultStore(),
         availableLocales,

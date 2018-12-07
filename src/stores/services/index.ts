@@ -12,9 +12,9 @@ export { serviceAtLocation, serviceAtLocationArray };
 
 export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): Service {
     const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): PhoneNumber => ({
-         type: phoneNumber.phone_number_type,
-         phoneNumber: phoneNumber.phone_number,
-     }), data.location.phone_numbers);
+        type: phoneNumber.phone_number_type,
+        phoneNumber: phoneNumber.phone_number,
+    }), data.location.phone_numbers);
 
     const addresses = R.map((addressWithType: ValidatedAddressWithTypeJSON): Address => ({
         id: addressWithType.address.id,
@@ -35,7 +35,7 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
     };
 }
 
-function buildDefaultStore(): ServiceStore {
+export function buildDefaultStore(): ServiceStore {
     return {
         serviceMap: {},
         taskServicesMap: {},

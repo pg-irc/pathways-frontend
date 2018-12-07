@@ -4,7 +4,7 @@ export { TaxonomyStore, TaxonomyTermReference, Taxonomy, ExploreTaxonomyId } fro
 
 export type Id = string;
 
-const buildDefaultStore = (): TaxonomyStore => (
+export const buildDefaultStore = (): TaxonomyStore => (
     buildTaxonomyFixture()
 );
 

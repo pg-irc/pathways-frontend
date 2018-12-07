@@ -1,10 +1,18 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 
-import { reducer } from '../stores';
+import { reducer, Store } from '../stores';
 import { runSaga, ApplicationSaga } from '../sagas';
 
-import { loadFontsActions } from '../stores/fonts';
+import * as fonts from '../stores/fonts';
 import * as locale from '../stores/locale';
+import * as questionnaire from '../stores/questionnaire';
+import * as tasks from '../stores/tasks';
+import * as services from '../stores/services';
+import * as explore from '../stores/explore';
+import * as taxonomies from '../stores/taxonomies';
+import * as notifications from '../stores/notifications';
+
+import { loadFontsActions } from '../stores/fonts';
 import { UserDataPersistence } from '../stores/user_data';
 
 import { LocaleInfoManager } from '../locale';
@@ -19,22 +27,27 @@ LocaleInfoManager.register([
     { code: 'fr', label: 'Français', catalog: frMessages, isRTL: false },
 ]);
 
-type InitialState = { readonly localeInStore: locale.LocaleStore };
-type Store = Readonly<ReturnType<typeof createStore>>;
+const buildDefaultStore = (): Store => ({
+    localeInStore: locale.buildStore(LocaleInfoManager.all, LocaleInfoManager.getFallback().code),
+    fontsInStore: fonts.buildDefaultStore(),
+    questionnaireInStore: questionnaire.buildDefaultStore(),
+    tasksInStore: tasks.buildDefaultStore(),
+    servicesInStore: services.buildDefaultStore(),
+    exploreSectionsInStore: explore.buildDefaultStore(),
+    taxonomiesInStore: taxonomies.buildDefaultStore(),
+    notificationsInStore: notifications.buildDefaultStore(),
+});
 
-export const buildStore = (saga: ApplicationSaga): Store => {
+type CreatedStore = Readonly<ReturnType<typeof createStore>>;
+
+export const buildStore = (saga: ApplicationSaga): CreatedStore => {
     const middleware = applyMiddleware(saga.middleware);
-    const preloadedState: InitialState = {
-        localeInStore: locale.buildDefaultStoreWithAvailableLocalesAndFallback(
-            LocaleInfoManager.all,
-            LocaleInfoManager.getFallback().code,
-        ),
-    };
+    const defaultStore: Store = buildDefaultStore();
     const enhancers = compose(middleware);
-    return createStore(reducer, preloadedState, enhancers);
+    return createStore(reducer, defaultStore, enhancers);
 };
 
-export function startApplication(saga: ApplicationSaga, store: ReturnType<typeof createStore>): void {
+export function startApplication(saga: ApplicationSaga, store: CreatedStore): void {
     // tslint:disable:no-expression-statement
     runSaga(saga.middleware);
     store.dispatch(loadFontsActions.request({
