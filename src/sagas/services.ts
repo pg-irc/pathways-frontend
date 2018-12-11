@@ -15,13 +15,12 @@ type UpdateResult = IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAs
 export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): UpdateResult {
     const taskId = action.payload.taskId;
     const response: APIResponse = yield call([API, API.searchServices], taskId);
+    const validator = servicesAtLocationValidator(response.results);
     if (response.hasError) {
         yield put(updateTaskServicesAsync.failure(response.message, taskId));
+    } else if (!validator.isValid) {
+        yield put(updateTaskServicesAsync.failure(validator.errors, taskId));
     } else {
-        const validator = servicesAtLocationValidator(response.results);
-        if (!validator.isValid) {
-            throw new Error(validator.errors);
-        }
         yield put(updateTaskServicesAsync.success(taskId, R.map(serviceFromValidatedJSON, response.results)));
     }
 }
