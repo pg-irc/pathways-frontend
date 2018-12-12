@@ -42,3 +42,7 @@ export namespace Taxonomies {
   export const RECOMMENDATION_TAXONOMY_ID = 'recommendation';
   export const RECOMMEND_TO_ALL_TAXONOMY_TERM_ID = 'recommendToAll';
 }
+
+export const ANALYTICS_ASYNC_REQUEST = 'ASYNC:ANALYTICS:REQUEST';
+export const ANALYTICS_ASYNC_SUCCESS = 'ASYNC:ANALYTICS:SUCCESS';
+export const ANALYTICS_ASYNC_FAILURE = 'ASYNC:ANALYTICS:FAILURE';
