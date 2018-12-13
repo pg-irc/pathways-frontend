@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 
 import { ForkEffect, takeLatest } from 'redux-saga/effects';
-import { sendAnalyticsData } from './async';
+import { sendAnalyticsData } from './send_analytics_data';
 
 import * as constants from '../../application/constants';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
@@ -13,8 +13,9 @@ export type WatchedAction = RouteChangedAction | ChooseAnswerAction | AddToSaved
 export function* watchAnalytics(): IterableIterator<ForkEffect> {
     yield takeLatest(
         [
-            constants.SET_ACTIVE_QUESTION,
+            constants.ROUTE_CHANGED,
             constants.CHOOSE_ANSWER,
+            constants.ADD_TO_SAVED_TASKS,
         ],
         sendAnalyticsData);
 }

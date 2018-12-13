@@ -25,8 +25,7 @@ export type TaskAction = AddToSavedListAction |
 
 // tslint:disable-next-line:typedef
 export const addToSavedList = (taskId: Id) => {
-    const notificationText = 'Task added to my plan';
-    return helpers.makeAction(constants.ADD_TO_SAVED_TASKS, { taskId, notificationText });
+    return helpers.makeAction(constants.ADD_TO_SAVED_TASKS, { taskId });
 };
 
 // tslint:disable-next-line:typedef

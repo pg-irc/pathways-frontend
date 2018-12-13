@@ -5,7 +5,7 @@ import { watchLoadLocale, watchSetLocale } from './locale';
 import { watchLoadFonts } from './fonts';
 import { watchUpdateTaskServices } from './services';
 import { watchLoadUserData, watchUserStateChangesToSaveUserData } from './user_data';
-import { watchAnalytics } from './analytics/watch';
+import { watchAnalytics } from './analytics/watch_analytics';
 
 export const sagaMiddleware = createSagaMiddleware();
 
