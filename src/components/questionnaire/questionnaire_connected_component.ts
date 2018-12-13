@@ -9,7 +9,7 @@ import { selectRecommendedTasks } from '../../selectors/tasks/select_recommended
 import { selectQuestionList } from '../../selectors/questionnaire/select_question_list';
 
 const mapStateToProps = (store: Store): QuestionnaireProps => ({
-    questionnaire: selectQuestionList(store),
+    questions: selectQuestionList(store),
     activeQuestion: selectActiveQuestion(store),
     recommendedTaskCount: selectRecommendedTasks(store).length,
 });

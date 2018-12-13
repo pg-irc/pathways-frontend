@@ -64,6 +64,15 @@ export const textStyles = StyleSheet.create({
         textAlign: 'left',
         color: colors.black,
     },
+    headlineH2StyleBlackCenter: {
+        fontFamily: fontFamily,
+        fontSize: 18,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        letterSpacing: 0,
+        textAlign: 'center',
+        color: colors.black,
+    },
     headlineH3StyleBlackLeft: {
         fontFamily: fontFamily,
         fontSize: 16,
@@ -71,6 +80,15 @@ export const textStyles = StyleSheet.create({
         fontStyle: 'normal',
         letterSpacing: 0,
         textAlign: 'left',
+        color: colors.black,
+    },
+    headlineH3StyleBlackCenter: {
+        fontFamily: fontFamily,
+        fontSize: 16,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        letterSpacing: 0,
+        textAlign: 'center',
         color: colors.black,
     },
     headlineH4StyleBlackLeft: {
@@ -198,6 +216,15 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         color: colors.black,
     },
+    whiteTopazButton: {
+        fontFamily: fontFamily,
+        fontSize: 18,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        letterSpacing: 0.2,
+        textAlign: 'center',
+        color: colors.topaz,
+    },
     taskTitle: {
         fontFamily: fontFamily,
         fontSize: 22,
@@ -227,6 +254,12 @@ export const applicationStyles = StyleSheet.create({
     whiteButton: {
         backgroundColor: colors.white,
         borderRadius: values.roundedBorderRadius,
+    },
+    whiteTopazButton: {
+        backgroundColor: colors.white,
+        borderRadius: values.roundedBorderRadius,
+        borderColor: colors.topaz,
+        borderWidth: 2,
     },
     boxShadowBelow: {
         shadowColor: colors.black,
