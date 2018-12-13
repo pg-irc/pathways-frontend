@@ -24,7 +24,8 @@ export function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
 }
 
 export async function sendAnalyticsDataAsync(_data: AnalyticsData): Promise<void> {
+    const debug = true;
     // tslint:disable-next-line:no-null-keyword
-    const analytics = new ExpoAnalytics(GOOGLE_ANALYTICS_TRACKING_ID, null, { debug: true });
+    const analytics = new ExpoAnalytics(GOOGLE_ANALYTICS_TRACKING_ID, null, { debug });
     return analytics.hit(new PageHit('Home'));
 }

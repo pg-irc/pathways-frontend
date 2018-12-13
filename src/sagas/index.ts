@@ -5,7 +5,7 @@ import { watchLoadLocale, watchSetLocale } from './locale';
 import { watchLoadFonts } from './fonts';
 import { watchUpdateTaskServices } from './services';
 import { watchLoadUserData, watchUserStateChangesToSaveUserData } from './user_data';
-import { watchForAnalytics } from './analytics/watch';
+import { watchAnalytics } from './analytics/watch';
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -26,5 +26,5 @@ export function runSaga(middleware: SagaMiddleware<object>): void {
     middleware.run(watchUserStateChangesToSaveUserData);
     middleware.run(watchLoadUserData);
     middleware.run(watchUpdateTaskServices);
-    middleware.run(watchForAnalytics);
+    middleware.run(watchAnalytics);
 }

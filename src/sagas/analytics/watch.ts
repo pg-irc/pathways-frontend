@@ -8,7 +8,7 @@ import { SetActiveQuestionAction, ChooseAnswerAction } from '../../stores/questi
 
 export type WatchedAction = SetActiveQuestionAction | ChooseAnswerAction;
 
-export function* watchForAnalytics(): IterableIterator<ForkEffect> {
+export function* watchAnalytics(): IterableIterator<ForkEffect> {
     yield takeLatest(
         [
             constants.SET_ACTIVE_QUESTION,

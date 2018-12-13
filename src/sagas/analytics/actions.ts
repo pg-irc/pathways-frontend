@@ -1,21 +1,20 @@
-import * as constants from '../../application/constants';
+// tslint:disable:typedef
+
+import { AnalyticsAsync as constants } from '../../application/constants';
 import * as helpers from '../../stores/helpers/make_action';
 
 export namespace AnalyticsAsync {
 
-    // tslint:disable-next-line:typedef
     export const request = () => (
-        helpers.makeAction(constants.ANALYTICS_ASYNC_REQUEST)
+        helpers.makeAction(constants.REQUEST)
     );
 
-    // tslint:disable-next-line:typedef
     export const success = () => (
-        helpers.makeAction(constants.ANALYTICS_ASYNC_SUCCESS)
+        helpers.makeAction(constants.SUCCESS)
     );
 
-    // tslint:disable-next-line:typedef
     export const failure = (error: string) => (
-        helpers.makeAction(constants.ANALYTICS_ASYNC_FAILURE, { error })
+        helpers.makeAction(constants.FAILURE, { error })
     );
 
     export type RequestAction = Readonly<ReturnType<typeof request>>;
