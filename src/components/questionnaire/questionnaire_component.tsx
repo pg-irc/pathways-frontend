@@ -3,7 +3,8 @@ import React from 'react';
 import { I18nManager, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Button, Content, View, Text, Icon } from 'native-base';
 import * as R from 'ramda';
-import * as selector from '../../selectors/questionnaire/question';
+import { Question as SelectorQuestion } from '../../selectors/questionnaire/question';
+import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
 import { QuestionComponent } from './question_component';
 import { applicationStyles, textStyles, colors, values } from '../../application/styles';
 import { Trans } from '@lingui/react';
@@ -11,9 +12,10 @@ import { RouterProps } from '../../application/routing';
 import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface QuestionnaireProps {
-    readonly questions: ReadonlyArray<selector.Question>;
+    readonly questions: ReadonlyArray<SelectorQuestion>;
     readonly activeQuestion: Id;
     readonly recommendedTaskCount: number;
 }
@@ -77,7 +79,7 @@ export class QuestionnaireComponent extends React.Component<Props> {
                         borderRadius: values.roundedBorderRadius,
                         backgroundColor: colors.topaz,
                         width: `${barWidth}%`,
-                        height: 10,
+                        height: 8,
                     }}
                     />
                 </View>
@@ -94,27 +96,22 @@ export class QuestionnaireComponent extends React.Component<Props> {
     }
 
     private renderButtons(): JSX.Element {
-        const activeQuestionIndex = this.findIndexForQuestion(this.props.activeQuestion);
-        const isFinalQuestion = this.props.questions.length === activeQuestionIndex + 1;
+        const activeQuestion = this.fetchActiveQuestionFromProps();
+        const isFinalQuestion = activeQuestion.number === this.props.questions.length;
+        const isFirstQuestion = activeQuestion.number === 1;
         return (
             <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                {this.renderPreviousButton()}
+                {isFirstQuestion ? <EmptyComponent /> : this.renderPreviousButton()}
                 {isFinalQuestion ? this.renderGotoPlanButton() : this.renderNextButton()}
             </View>
         );
     }
 
-    private scrollToTop(): void {
-        this.contentComponent._root.scrollIntoView(this.headingComponent);
-    }
-
     private renderNextButton(): JSX.Element {
-        const activeQuestionIndex = this.findIndexForQuestion(this.props.activeQuestion);
-        const nextQuestionIndex = activeQuestionIndex + 1;
-        const nextQuestion = this.fetchQuestionWithFallbackIndex(nextQuestionIndex, activeQuestionIndex);
-        const onPress = (): void => { this.props.setActiveQuestion(nextQuestion.id); this.scrollToTop(); };
+        const nextQuestion = this.fetchQuestionRelativeToActiveQuestion(1);
+        const onPress = this.getQuestionButtonOnPress(nextQuestion.id);
         const icon = I18nManager.isRTL ? 'arrow-back' : 'arrow-forward';
-        const text = <Trans>Next</Trans>;
+        const text = this.activeQuestionHasBeenAnswered() ? <Trans>Next</Trans> : <Trans>Skip</Trans>;
         return (
             <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
                 <Text style={textStyles.whiteTopazButton}>{text}</Text>
@@ -123,22 +120,9 @@ export class QuestionnaireComponent extends React.Component<Props> {
         );
     }
 
-    private renderGotoPlanButton(): JSX.Element {
-        const onPress = goToRouteWithoutParameter(Routes.MyPlan, this.props.history);
-        const text = <Trans>Go to My plan</Trans>;
-        return (
-            <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
-                <Text style={textStyles.whiteTopazButton}>{text}</Text>
-                <Icon name={'th-list'} type={'FontAwesome'} style={{ color: colors.topaz }} />
-            </Button>
-        );
-    }
-
     private renderPreviousButton(): JSX.Element {
-        const activeQuestionIndex = this.findIndexForQuestion(this.props.activeQuestion);
-        const previousQuestionIndex = activeQuestionIndex - 1;
-        const previousQuestion = this.fetchQuestionWithFallbackIndex(previousQuestionIndex, activeQuestionIndex);
-        const onPress = (): void => { this.props.setActiveQuestion(previousQuestion.id); this.scrollToTop(); };
+        const previousQuestion = this.fetchQuestionRelativeToActiveQuestion(-1);
+        const onPress = this.getQuestionButtonOnPress(previousQuestion.id);
         const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
         const text = <Trans>Back</Trans>;
         return (
@@ -149,18 +133,47 @@ export class QuestionnaireComponent extends React.Component<Props> {
         );
     }
 
+    private renderGotoPlanButton(): JSX.Element {
+        const onPress = goToRouteWithoutParameter(Routes.MyPlan, this.props.history);
+        const text = <Trans>Go to My plan</Trans>;
+        return (
+            <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
+                <Text style={textStyles.whiteTopazButton}>{text}</Text>
+            </Button>
+        );
+    }
+
+    private getQuestionButtonOnPress(questionId: Id): () => void {
+        return (): void => { this.props.setActiveQuestion(questionId); this.scrollToTop(); };
+    }
+
+    private scrollToTop(): void {
+        this.contentComponent._root.scrollIntoView(this.headingComponent);
+    }
+
     private findIndexForQuestion(questionId: Id): number {
         return R.findIndex(R.propEq('id', questionId), this.props.questions);
     }
 
-    private fetchActiveQuestionFromProps(): selector.Question {
+    private fetchActiveQuestionFromProps(): SelectorQuestion {
         return this.props.questions[this.findIndexForQuestion(this.props.activeQuestion)];
     }
 
-    private fetchQuestionWithFallbackIndex(indexToFetch: number, fallbackIndex: number): selector.Question {
+    private fetchQuestionRelativeToActiveQuestion(offset: number): SelectorQuestion {
+        const activeQuestionIndex = this.findIndexForQuestion(this.props.activeQuestion);
+        const targetQuestionIndex = activeQuestionIndex + offset;
+        return this.fetchQuestionWithFallbackIndex(targetQuestionIndex, activeQuestionIndex);
+    }
+
+    private fetchQuestionWithFallbackIndex(indexToFetch: number, fallbackIndex: number): SelectorQuestion {
         if (this.props.questions[indexToFetch]) {
             return this.props.questions[indexToFetch];
         }
         return this.props.questions[fallbackIndex];
+    }
+
+    private activeQuestionHasBeenAnswered(): boolean {
+        const activeQuestion = this.fetchActiveQuestionFromProps();
+        return R.any((answer: SelectorAnswer) => answer.isChosen, activeQuestion.answers);
     }
 }

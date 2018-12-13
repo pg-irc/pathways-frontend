@@ -91,6 +91,15 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         color: colors.black,
     },
+    headlineH3StyleWhiteCenter: {
+        fontFamily: fontFamily,
+        fontSize: 16,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        letterSpacing: 0,
+        textAlign: 'center',
+        color: colors.white,
+    },
     headlineH4StyleBlackLeft: {
         fontFamily: fontFamily,
         fontSize: 16,

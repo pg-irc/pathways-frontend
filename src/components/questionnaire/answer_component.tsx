@@ -23,15 +23,15 @@ export const AnswerComponent: React.StatelessComponent<Props> = (props: Props): 
             onPress={onPress}
             style={{
                 padding: 10,
-                backgroundColor: colors.white,
+                backgroundColor: props.answer.isChosen ? colors.orange : colors.white,
                 borderRadius: values.roundedBorderRadius,
                 borderWidth: 3,
-                borderColor: props.answer.isChosen ? colors.topaz : colors.lightGrey,
+                borderColor: props.answer.isChosen ? colors.orange : colors.lightGrey,
                 margin: 3,
                 width: '100%',
             }}
         >
-            <Text style={textStyles.headlineH3StyleBlackCenter}>
+            <Text style={props.answer.isChosen ? textStyles.headlineH3StyleWhiteCenter : textStyles.headlineH3StyleBlackCenter}>
                 {props.answer.text}
             </Text>
         </TouchableOpacity>

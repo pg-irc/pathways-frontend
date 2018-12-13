@@ -25,6 +25,11 @@ type Props = HeaderProps & UiActions;
 
 export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const path = props.location.pathname;
+    const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
+
+    if (isOnQuestionnaireScreen) {
+        return <EmptyComponent />;
+    }
 
     if (isOnParentScreen(path)) {
         const languageSwitcher =
