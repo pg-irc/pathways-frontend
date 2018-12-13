@@ -39,7 +39,7 @@
     "postinstall": "bin/postinstall.sh",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "build": "bin/buildFixtures.sh && tsc",
-    "test": "yarn run build && yarn run jest --maxWorkers=4",
+    "test": "yarn run jest --maxWorkers=4",
     "clean": "rimraf 'lib/**/*.js' 'lib/**/*.js.map' 'locale/_build/**/*.json'",
     "extract-strings": "yarn run build && lingui extract",
     "build-strings": "lingui compile --strict",
