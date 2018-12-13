@@ -1,4 +1,5 @@
 // tslint:disable:no-expression-statement no-let
+import * as R from 'ramda';
 import * as selector from '../questionnaire/question';
 import { getIdsOfChosenAnswers } from '../questionnaire/get_ids_of_chosen_answers';
 import { anInteger } from '../../application/__tests__/helpers/random_test_values';
@@ -7,7 +8,7 @@ import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
-import { toSelectorQuestionList } from '../questionnaire/to_selector_question_list';
+import { toSelectorQuestion } from '../questionnaire/to_selector_question';
 import { getTaxonomyTermsForChosenAnswers } from '../taxonomies/get_taxonomy_terms_for_chosen_answers';
 import { getAllAnswersWithTaxonomyTermsNotIn } from '../questionnaire/get_all_answers_with_taxonomy_terms_not_in';
 
@@ -15,55 +16,72 @@ const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
 );
 
-describe('questionnaire selector', () => {
+describe('toSelectorQuestion selector', () => {
 
     let locale = aLocale();
 
     describe('should map properties', () => {
 
-        let anAnswer: AnswerBuilder;
-        let aQuestion: QuestionBuilder;
-        let denormalizedData: ReadonlyArray<selector.Question>;
+        let firstAnswer: AnswerBuilder;
+        let firstQuestion: QuestionBuilder;
+        let secondAnswer: AnswerBuilder;
+        let secondQuestion: QuestionBuilder;
+        let firstDenormalizedQuestion: selector.Question;
 
         beforeEach(() => {
-            anAnswer = new AnswerBuilder().withLocaleCode(locale.code);
-            aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([anAnswer]);
-            const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
+            const firstQuestionId = aString();
+            const secondQuestionId = aString();
 
-            denormalizedData = toSelectorQuestionList(locale, normalizedData);
+            firstAnswer = new AnswerBuilder().withLocaleCode(locale.code).withQuestionId(firstQuestionId);
+            firstQuestion = new QuestionBuilder().withLocaleCode(locale.code).withId(firstQuestionId).withAnswers([firstAnswer]);
+
+            secondAnswer = new AnswerBuilder().withLocaleCode(locale.code).withQuestionId(secondQuestionId);
+            secondQuestion = new QuestionBuilder().withLocaleCode(locale.code).withId(secondQuestionId).withAnswers([secondAnswer]);
+
+            const normalizedData = new ValidStoreBuilder().withQuestions([firstQuestion, secondQuestion]).build();
+            firstDenormalizedQuestion = toSelectorQuestion(locale, normalizedData.questions[firstQuestion.id],
+                                                           normalizedData.questions, normalizedData.answers);
         });
 
         it('question id', () => {
-            expect(denormalizedData[0].id).toBe(aQuestion.id);
+            expect(firstDenormalizedQuestion.id).toBe(firstQuestion.id);
         });
 
         it('question text', () => {
-            expect(denormalizedData[0].text).toBe(aQuestion.text);
+            expect(firstDenormalizedQuestion.text).toBe(firstQuestion.text);
+        });
+
+        it('question explanation', () => {
+            expect(firstDenormalizedQuestion.explanation).toBe(undefined);
         });
 
         it('should nest answers inside questions', () => {
-            expect(denormalizedData[0].answers[0].id).toBe(anAnswer.id);
+            expect(firstDenormalizedQuestion.answers[0].id).toBe(firstAnswer.id);
         });
 
         it('answer text', () => {
-            expect(denormalizedData[0].answers[0].text).toBe(anAnswer.text);
+            expect(firstDenormalizedQuestion.answers[0].text).toBe(firstAnswer.text);
         });
 
         it('answer isChosen flag', () => {
-            expect(denormalizedData[0].answers[0].isChosen).toBe(anAnswer.isChosen);
+            expect(firstDenormalizedQuestion.answers[0].isChosen).toBe(firstAnswer.isChosen);
         });
-    });
 
-    it('should return all the questions', () => {
-        const questionCount = anInteger();
-        const questions = new Array(questionCount).fill(0).map(() => (
-            new QuestionBuilder().withLocaleCode(locale.code)),
-        );
-        const normalizedData = new ValidStoreBuilder().withQuestions(questions).build();
+        it('position in questionnaire', () => {
+            expect(firstDenormalizedQuestion.positionInQuestionnaire).toBe(1);
+        });
 
-        const denormalizedData = toSelectorQuestionList(locale, normalizedData);
+        it('length of questionnaire', () => {
+            expect(firstDenormalizedQuestion.lengthOfQuestionnaire).toBe(2);
+        });
 
-        expect(denormalizedData).toHaveLength(questionCount);
+        it('next question id', () => {
+            expect(firstDenormalizedQuestion.nextQuestionId).toBe(secondQuestion.id);
+        });
+
+        it('previous question id', () => {
+            expect(firstDenormalizedQuestion.previousQuestionId).toBe(undefined);
+        });
     });
 
     it('should return all the answers to a question', () => {
@@ -73,10 +91,10 @@ describe('questionnaire selector', () => {
         );
         const theQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers(answers);
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
-
-        const denormalizedData = toSelectorQuestionList(locale, normalizedData);
-
-        expect(denormalizedData[0].answers).toHaveLength(answerCount);
+        const firstQuestionKey = R.keys(normalizedData.questions)[0];
+        const denormalizedData = toSelectorQuestion(locale, normalizedData.questions[firstQuestionKey],
+                                                    normalizedData.questions, normalizedData.answers);
+        expect(denormalizedData.answers).toHaveLength(answerCount);
     });
 
     // TODO move tests for filterTaxonomyTermsForChosenAnswers to a different test suite

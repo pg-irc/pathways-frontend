@@ -5,13 +5,9 @@ import { QuestionnaireActions } from './questionnaire_component';
 import { Store } from '../../stores';
 import { Id, ChooseAnswerAction, chooseAnswer, SetActiveQuestionAction, setActiveQuestion } from '../../stores/questionnaire';
 import { selectActiveQuestion } from '../../selectors/questionnaire/select_active_question';
-import { selectRecommendedTasks } from '../../selectors/tasks/select_recommended_tasks';
-import { selectQuestionList } from '../../selectors/questionnaire/select_question_list';
 
 const mapStateToProps = (store: Store): QuestionnaireProps => ({
-    questions: selectQuestionList(store),
     activeQuestion: selectActiveQuestion(store),
-    recommendedTaskCount: selectRecommendedTasks(store).length,
 });
 
 type DispatchActions = ChooseAnswerAction | SetActiveQuestionAction;

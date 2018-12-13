@@ -15,9 +15,7 @@ import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface QuestionnaireProps {
-    readonly questions: ReadonlyArray<SelectorQuestion>;
-    readonly activeQuestion: Id;
-    readonly recommendedTaskCount: number;
+    readonly activeQuestion: SelectorQuestion;
 }
 
 export interface QuestionnaireActions {
@@ -68,10 +66,9 @@ export class QuestionnaireComponent extends React.Component<Props> {
     }
 
     private renderProgress(): JSX.Element {
-        const activeQuestion = this.fetchActiveQuestionFromProps();
-        const currentQuestionCount = activeQuestion.number;
-        const totalQuestionCount = this.props.questions.length;
-        const barWidth = totalQuestionCount > 0 ? Math.round(currentQuestionCount / totalQuestionCount * 100) : 100;
+        const activeQuestionPosition = this.props.activeQuestion.positionInQuestionnaire;
+        const lengthOfQuestionnaire = this.props.activeQuestion.lengthOfQuestionnaire;
+        const barWidth = lengthOfQuestionnaire > 0 ? Math.round(activeQuestionPosition / lengthOfQuestionnaire * 100) : 100;
         return (
             <View style={{ marginBottom: 15 }}>
                 <View style={{ flex: 1, borderRadius: values.roundedBorderRadius, backgroundColor: colors.lightGrey }}>
@@ -84,32 +81,29 @@ export class QuestionnaireComponent extends React.Component<Props> {
                     />
                 </View>
                 <Text style={textStyles.headlineH5StyleBlackCenter}>
-                    {currentQuestionCount} <Trans>OF</Trans> {totalQuestionCount}
+                    {activeQuestionPosition} <Trans>OF</Trans> {lengthOfQuestionnaire}
                 </Text>
             </View>
         );
     }
 
     private renderQuestion(): JSX.Element {
-        const activeQuestion = this.fetchActiveQuestionFromProps();
-        return <QuestionComponent question={activeQuestion} chooseAnswer={this.props.chooseAnswer} />;
+        return <QuestionComponent question={this.props.activeQuestion} chooseAnswer={this.props.chooseAnswer} />;
     }
 
     private renderButtons(): JSX.Element {
-        const activeQuestion = this.fetchActiveQuestionFromProps();
-        const isFinalQuestion = activeQuestion.number === this.props.questions.length;
-        const isFirstQuestion = activeQuestion.number === 1;
+        const hasNextQuestion = this.props.activeQuestion.nextQuestionId !== undefined;
+        const hasPreviousQuestion = this.props.activeQuestion.previousQuestionId !== undefined;
         return (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                {isFirstQuestion ? <EmptyComponent /> : this.renderPreviousButton()}
-                {isFinalQuestion ? this.renderGotoPlanButton() : this.renderNextButton()}
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10 }}>
+                {hasPreviousQuestion ? this.renderPreviousButton() : <EmptyComponent />}
+                {hasNextQuestion ? this.renderNextButton() : this.renderGotoPlanButton()}
             </View>
         );
     }
 
     private renderNextButton(): JSX.Element {
-        const nextQuestion = this.fetchQuestionRelativeToActiveQuestion(1);
-        const onPress = this.getQuestionButtonOnPress(nextQuestion.id);
+        const onPress = this.getQuestionButtonOnPress(this.props.activeQuestion.nextQuestionId);
         const icon = I18nManager.isRTL ? 'arrow-back' : 'arrow-forward';
         const text = this.activeQuestionHasBeenAnswered() ? <Trans>Next</Trans> : <Trans>Skip</Trans>;
         return (
@@ -121,8 +115,7 @@ export class QuestionnaireComponent extends React.Component<Props> {
     }
 
     private renderPreviousButton(): JSX.Element {
-        const previousQuestion = this.fetchQuestionRelativeToActiveQuestion(-1);
-        const onPress = this.getQuestionButtonOnPress(previousQuestion.id);
+        const onPress = this.getQuestionButtonOnPress(this.props.activeQuestion.previousQuestionId);
         const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
         const text = <Trans>Back</Trans>;
         return (
@@ -151,29 +144,7 @@ export class QuestionnaireComponent extends React.Component<Props> {
         this.contentComponent._root.scrollIntoView(this.headingComponent);
     }
 
-    private findIndexForQuestion(questionId: Id): number {
-        return R.findIndex(R.propEq('id', questionId), this.props.questions);
-    }
-
-    private fetchActiveQuestionFromProps(): SelectorQuestion {
-        return this.props.questions[this.findIndexForQuestion(this.props.activeQuestion)];
-    }
-
-    private fetchQuestionRelativeToActiveQuestion(offset: number): SelectorQuestion {
-        const activeQuestionIndex = this.findIndexForQuestion(this.props.activeQuestion);
-        const targetQuestionIndex = activeQuestionIndex + offset;
-        return this.fetchQuestionWithFallbackIndex(targetQuestionIndex, activeQuestionIndex);
-    }
-
-    private fetchQuestionWithFallbackIndex(indexToFetch: number, fallbackIndex: number): SelectorQuestion {
-        if (this.props.questions[indexToFetch]) {
-            return this.props.questions[indexToFetch];
-        }
-        return this.props.questions[fallbackIndex];
-    }
-
     private activeQuestionHasBeenAnswered(): boolean {
-        const activeQuestion = this.fetchActiveQuestionFromProps();
-        return R.any((answer: SelectorAnswer) => answer.isChosen, activeQuestion.answers);
+        return R.any((answer: SelectorAnswer) => answer.isChosen, this.props.activeQuestion.answers);
     }
 }
