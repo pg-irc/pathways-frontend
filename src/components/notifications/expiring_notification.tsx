@@ -17,7 +17,8 @@ export interface ExpiringNotificationActions {
 type Props = ExpiringNotificationProps & ExpiringNotificationActions;
 
 export class ExpiringNotificationComponent extends React.Component<Props> {
-    timer: number;
+    // tslint:disable-next-line:no-any
+    timer: any;
     onePointFiveSecondsInMilliSeconds: number = 1500;
 
     componentDidMount(): void {
