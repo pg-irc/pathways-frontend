@@ -5,7 +5,7 @@ export { ExploreStore, ExploreSection, ExploreSectionMap } from '../fixtures/typ
 
 export type Id = string;
 
-const buildDefaultStore = (): ExploreStore => (
+export const buildDefaultStore = (): ExploreStore => (
     buildExploreFixture()
 );
 

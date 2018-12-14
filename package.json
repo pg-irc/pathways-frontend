@@ -1,6 +1,6 @@
 {
   "name": "pathways-frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "devDependencies": {
     "@lingui/babel-preset-react": "2.7.0",
@@ -39,7 +39,8 @@
     "postinstall": "bin/postinstall.sh",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "build": "bin/buildFixtures.sh && tsc",
-    "test": "yarn run build && yarn run jest --maxWorkers=4",
+    "test": "yarn run jest --maxWorkers=4",
+    "bt": "yarn run build && yarn run test",
     "clean": "rimraf 'lib/**/*.js' 'lib/**/*.js.map' 'locale/_build/**/*.json'",
     "extract-strings": "yarn run build && lingui extract",
     "build-strings": "lingui compile --strict",
@@ -76,6 +77,7 @@
     "@types/query-string": "^6.1.0",
     "@types/ramda": "^0.25.38",
     "expo": "28.0.0",
+    "expo-analytics": "^1.0.7",
     "history": "^4.7.2",
     "intl": "^1.2.5",
     "native-base": "^2.8.0",

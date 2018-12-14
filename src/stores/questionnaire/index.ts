@@ -22,7 +22,7 @@ export const reducer = (store: QuestionnaireStore = buildDefaultStore(), action?
     return store;
 };
 
-const buildDefaultStore = (): ValidQuestionnaireStore => (
+export const buildDefaultStore = (): ValidQuestionnaireStore => (
     buildQuestionnaireFixture()
 );
 

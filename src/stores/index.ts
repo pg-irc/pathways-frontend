@@ -19,6 +19,17 @@ export interface Store {
     readonly notificationsInStore: notifications.NotificationStore;
 }
 
+export const buildDefaultStore = (): Store => ({
+    localeInStore: locale.buildDefaultStore(),
+    fontsInStore: fonts.buildDefaultStore(),
+    questionnaireInStore: questionnaire.buildDefaultStore(),
+    tasksInStore: tasks.buildDefaultStore(),
+    servicesInStore: services.buildDefaultStore(),
+    exploreSectionsInStore: explore.buildDefaultStore(),
+    taxonomiesInStore: taxonomies.buildDefaultStore(),
+    notificationsInStore: notifications.buildDefaultStore(),
+});
+
 export const reducer = combineReducers<Store>({
     fontsInStore: fonts.reducer,
     localeInStore: locale.reducer,

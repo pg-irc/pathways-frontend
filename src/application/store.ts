@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 
-import { reducer } from '../stores';
+import { reducer, Store, buildDefaultStore } from '../stores';
 import { runSaga, ApplicationSaga } from '../sagas';
 
 import { loadFontsActions } from '../stores/fonts';
-import * as locale from '../stores/locale';
+import { loadCurrentLocaleActions } from '../stores/locale';
 import { UserDataPersistence } from '../stores/user_data';
 
 import { LocaleInfoManager } from '../locale';
@@ -19,28 +19,34 @@ LocaleInfoManager.register([
     { code: 'fr', label: 'Français', catalog: frMessages, isRTL: false },
 ]);
 
-type InitialState = { readonly localeInStore: locale.LocaleStore };
-
-export function buildStore(saga: ApplicationSaga): ReturnType<typeof createStore> {
-    const middleware = applyMiddleware(saga.middleware);
-    const preloadedState: InitialState = {
+const buildStoreWithLocaleData = (): Store => {
+    const defaultStore = buildDefaultStore();
+    return {
+        ...defaultStore,
         localeInStore: {
-            ...locale.buildDefaultStore(),
+            ...defaultStore.localeInStore,
             availableLocales: LocaleInfoManager.all,
             fallback: LocaleInfoManager.getFallback().code,
         },
     };
-    const enhancers = compose(middleware);
-    return createStore(reducer, preloadedState, enhancers);
-}
+};
 
-export function startApplication(saga: ApplicationSaga, store: ReturnType<typeof createStore>): void {
+type CreatedStore = Readonly<ReturnType<typeof createStore>>;
+
+export const buildStore = (saga: ApplicationSaga): CreatedStore => {
+    const middleware = applyMiddleware(saga.middleware);
+    const store = buildStoreWithLocaleData();
+    const enhancers = compose(middleware);
+    return createStore(reducer, store, enhancers);
+};
+
+export function startApplication(saga: ApplicationSaga, store: CreatedStore): void {
     // tslint:disable:no-expression-statement
     runSaga(saga.middleware);
     store.dispatch(loadFontsActions.request({
         Roboto: require('../../assets/fonts/Roboto.ttf'),
         Roboto_medium: require('../../assets/fonts/Roboto_medium.ttf'),
     }));
-    store.dispatch(locale.loadCurrentLocaleActions.request());
+    store.dispatch(loadCurrentLocaleActions.request());
     store.dispatch(UserDataPersistence.loadRequest());
 }
