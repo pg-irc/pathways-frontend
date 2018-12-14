@@ -12,7 +12,6 @@ import { Task } from '../../selectors/tasks/task';
 import { Routes } from '../../application/routing';
 import { TaskDetailHeadingComponent } from './task_detail_heading_component';
 import { TaskDetailContentComponent } from './task_detail_content_component';
-import { TaskDetailServicesButtonComponent } from './task_detail_services_button_component';
 import { TaskDetailMenuComponent } from './task_detail_menu_component';
 
 export interface TaskDetailProps {
@@ -35,16 +34,17 @@ export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Prop
         <View style={{ flex: 1 }}>
             <Content style={applicationStyles.body}>
                 <TaskDetailHeadingComponent />
-                <TaskDetailContentComponent task={task} />
+                <TaskDetailContentComponent
+                    task={task}
+                    onServicesTextPress={onServicesButtonPress}
+                />
                 <TaskDetailRelatedTasksComponent
                     savedTasksIdList={props.savedTasksIdList}
                     addToSavedList={props.addToSavedList}
                     history={props.history}
-                    relatedTasks={task.relatedTasks} />
+                    relatedTasks={task.relatedTasks}
+                />
             </Content>
-            <TaskDetailServicesButtonComponent
-                onServicesButtonPress={onServicesButtonPress}
-            />
             <TaskDetailMenuComponent
                 buttons={getTaskDetailMenuButtons(props)}
                 addButtonOnPress={(): void => { props.addToSavedList(task.id); }}
