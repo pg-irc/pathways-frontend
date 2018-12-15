@@ -1,5 +1,5 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import qs from 'query-string';
+import { stringify } from 'query-string';
 import { Id } from '../stores/tasks';
 import { Location } from 'expo';
 
@@ -8,10 +8,6 @@ export interface APIResponse {
     readonly message: string;
     readonly response?: Response;
     readonly results?: any; // tslint:disable-line:no-any
-}
-
-interface APIQuery {
-    readonly [property: string]: string;
 }
 
 export type MaybeLocation = Location.LocationData | undefined;
@@ -31,23 +27,24 @@ export class APIClient {
         return servicesResponse;
     }
 
-    private async fetch(endpoint: string, query: APIQuery = {}): Promise<APIResponse> {
-        const queryString = qs.stringify(query);
-        const url = `${this.host}/${endpoint}?${queryString}`;
+    private async fetch(endpoint: string, query: string = ''): Promise<APIResponse> {
+        const url = `${this.host}/${endpoint}?${query}`;
         const response = await fetch(url);
         return createAPIResponse(response);
     }
 }
 
-const buildParameters = (taskId: Id, location: MaybeLocation): APIQuery => (
-    location ?
+export const buildParameters = (taskId: Id, location: MaybeLocation): string => {
+    const data = location ?
         {
-            user_location: `${location.coords.latitude},${location.coords.longitude}`,
+            user_location: `${location.coords.longitude},${location.coords.latitude}`,
             related_to_task: taskId,
         }
         :
-        { related_to_task: taskId }
-);
+        { related_to_task: taskId };
+
+    return stringify(data);
+};
 
 async function createAPIResponse(response: Response): Promise<APIResponse> {
     const message = `(${response.status}) ${response.statusText}`;

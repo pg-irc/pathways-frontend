@@ -8,6 +8,7 @@ export class API {
     private static apiClient: APIClient = undefined;
 
     static configure(url: string): void {
+        console.log(`Using URL: ${url}`);
         this.apiClient = new APIClient(url);
     }
 

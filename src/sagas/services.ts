@@ -15,17 +15,21 @@ export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
 type UpdateResult = IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAsync.Result>>;
 
 export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): UpdateResult {
-    const maybeLocation = yield call(getLocationIfPermittedAsync);
     const taskId = action.payload.taskId;
-    const response: APIResponse = yield call([API, API.searchServices], taskId, maybeLocation);
-    const validator = servicesAtLocationValidator(response.results);
+    try {
+        const maybeLocation = yield call(getLocationIfPermittedAsync);
+        const response: APIResponse = yield call([API, API.searchServices], taskId, maybeLocation);
+        const validator = servicesAtLocationValidator(response.results);
 
-    if (response.hasError) {
-        yield put(updateTaskServicesAsync.failure(response.message, taskId));
-    } else if (!validator.isValid) {
-        yield put(updateTaskServicesAsync.failure(validator.errors, taskId));
-    } else {
-        yield put(updateTaskServicesAsync.success(taskId, R.map(serviceFromValidatedJSON, response.results)));
+        if (response.hasError) {
+            yield put(updateTaskServicesAsync.failure(response.message, taskId));
+        } else if (!validator.isValid) {
+            yield put(updateTaskServicesAsync.failure(validator.errors, taskId));
+        } else {
+            yield put(updateTaskServicesAsync.success(taskId, R.map(serviceFromValidatedJSON, response.results)));
+        }
+    } catch (error) {
+        yield put(updateTaskServicesAsync.failure(error.message, taskId));
     }
 }
 
