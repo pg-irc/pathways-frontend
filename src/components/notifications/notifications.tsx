@@ -5,10 +5,9 @@ import { Id, RemoveNotificationAction, NotificationType } from '../../stores/not
 import { Notification } from '../../stores/notifications';
 import { View } from 'native-base';
 import { ExpiringNotificationComponent } from './expiring_notification';
-import { ModalNotificationComponent } from './modal_notification';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
-import { questionnaireInformationNotification, taskAddedNotification } from './notification_content';
+import { RouterProps } from '../../application/routing';
+import { taskAddedNotification } from './notification_content';
 
 export interface NotificationsProps {
     readonly notifications: ReadonlyArray<Notification>;
@@ -36,15 +35,6 @@ const getComponentForNotification = (notification: Notification, props: Props): 
         const notificationContent = taskAddedNotification();
         const notificationProps = { notification, removeNotification, notificationContent };
         return <ExpiringNotificationComponent {...notificationProps}/>;
-    }
-    if (notification.type === NotificationType.QuestionnaireInformation) {
-        const goToQuestionnaire = (): void => {
-            goToRouteWithoutParameter(Routes.Questionnaire, props.history)();
-            removeNotification();
-        };
-        const notificationContent = questionnaireInformationNotification(goToQuestionnaire);
-        const notificationProps = { notification, removeNotification, notificationContent };
-        return <ModalNotificationComponent {...notificationProps} />;
     }
     return <EmptyComponent />;
 };
