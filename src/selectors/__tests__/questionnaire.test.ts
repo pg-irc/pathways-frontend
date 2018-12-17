@@ -43,15 +43,15 @@ describe('toSelectorQuestion selector', () => {
                                                            normalizedData.questions, normalizedData.answers);
         });
 
-        it('question id', () => {
+        it('should map question id', () => {
             expect(firstDenormalizedQuestion.id).toBe(firstQuestion.id);
         });
 
-        it('question text', () => {
+        it('should map question text', () => {
             expect(firstDenormalizedQuestion.text).toBe(firstQuestion.text);
         });
 
-        it('question explanation', () => {
+        it('should map question explanation', () => {
             expect(firstDenormalizedQuestion.explanation).toBe(undefined);
         });
 
@@ -59,27 +59,27 @@ describe('toSelectorQuestion selector', () => {
             expect(firstDenormalizedQuestion.answers[0].id).toBe(firstAnswer.id);
         });
 
-        it('answer text', () => {
+        it('should map answer text', () => {
             expect(firstDenormalizedQuestion.answers[0].text).toBe(firstAnswer.text);
         });
 
-        it('answer isChosen flag', () => {
+        it('should map answer isChosen flag', () => {
             expect(firstDenormalizedQuestion.answers[0].isChosen).toBe(firstAnswer.isChosen);
         });
 
-        it('position in questionnaire', () => {
+        it('should map position in questionnaire', () => {
             expect(firstDenormalizedQuestion.positionInQuestionnaire).toBe(1);
         });
 
-        it('length of questionnaire', () => {
+        it('should map length of questionnaire', () => {
             expect(firstDenormalizedQuestion.lengthOfQuestionnaire).toBe(2);
         });
 
-        it('next question id', () => {
+        it('should map next question id', () => {
             expect(firstDenormalizedQuestion.nextQuestionId).toBe(secondQuestion.id);
         });
 
-        it('previous question id', () => {
+        it('should map previous question id', () => {
             expect(firstDenormalizedQuestion.previousQuestionId).toBe(undefined);
         });
     });

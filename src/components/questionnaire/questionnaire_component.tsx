@@ -33,9 +33,15 @@ export class QuestionnaireComponent extends React.Component<Props> {
     contentComponent: ContentRef = undefined;
     headingComponent: JSX.Element = undefined;
 
+    constructor(props: Props) {
+        super(props);
+        this.setContentComponentRef = this.setContentComponentRef.bind(this);
+        this.setHeadingComponentRef = this.setHeadingComponentRef.bind(this);
+    }
+
     render(): JSX.Element {
         return (
-            <Content padder ref={(component: object): object => this.contentComponent = component as ContentRef}>
+            <Content padder ref={this.setContentComponentRef}>
                 {this.renderHeading()}
                 {this.renderProgress()}
                 {this.renderQuestion()}
@@ -44,11 +50,19 @@ export class QuestionnaireComponent extends React.Component<Props> {
         );
     }
 
+    private setContentComponentRef(component: object): void {
+        this.contentComponent = component as ContentRef;
+    }
+
+    private setHeadingComponentRef(component: object): void {
+        this.headingComponent = component as JSX.Element;
+    }
+
     private renderHeading(): JSX.Element {
         const logoSize = Dimensions.get('screen').width / 6;
         const closeButtonOnPress = goToRouteWithoutParameter(Routes.MyPlan, this.props.history);
         return (
-            <View ref={(component: object): object => this.headingComponent = component as JSX.Element}>
+            <View ref={this.setHeadingComponentRef}>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                     <TouchableOpacity onPress={closeButtonOnPress}>
                         <Icon name='close' style={{ color: colors.black, padding: 10 }} />

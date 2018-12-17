@@ -8,14 +8,16 @@ import { toSelectorAnswerListForQuestion } from './to_selector_answer_list_for_q
 export const toSelectorQuestion = (locale: Locale, question: model.Question, questions: model.QuestionsMap, answers: model.AnswersMap): Question => {
     const questionsList = R.values(questions);
     const questionIndex = R.findIndex(R.propEq('id', question.id), questionsList);
+    const nextQuestionIndex = questionIndex + 1;
+    const previousQuestionIndex = questionIndex - 1;
     return {
         id: question.id,
         text: getLocalizedText(locale, question.text),
         explanation: question.explanation ? getLocalizedText(locale, question.explanation) : undefined,
         answers: toSelectorAnswerListForQuestion(locale, question, answers),
-        positionInQuestionnaire: questionIndex + 1,
+        positionInQuestionnaire: nextQuestionIndex,
         lengthOfQuestionnaire: questionsList.length,
-        nextQuestionId: questionsList[questionIndex + 1] ? questionsList[questionIndex + 1].id : undefined,
-        previousQuestionId: questionsList[questionIndex - 1] ? questionsList[questionIndex - 1].id : undefined,
+        nextQuestionId: nextQuestionIndex < questionsList.length ? questionsList[nextQuestionIndex].id : undefined,
+        previousQuestionId: previousQuestionIndex >= 0 ? questionsList[previousQuestionIndex].id : undefined,
     };
 };
