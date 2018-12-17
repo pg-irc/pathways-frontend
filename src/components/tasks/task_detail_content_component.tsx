@@ -26,8 +26,8 @@ export const TaskDetailContentComponent: React.StatelessComponent<Props> = (prop
             <RecommendedComponent {...props} />
         </View>
         <TitleComponent {...props} />
-        <TinyHeadingWithContent text={<Trans>ABOUT</Trans>} content={<TaskDescription {...props} />} />
-        <TinyHeadingWithContent text={<Trans>WHO CAN HELP?</Trans>} content={<ServicesLink {...props} />} />
+        <TinyHeadingWithContentComponent text={<Trans>ABOUT</Trans>} content={<TaskDescription {...props} />} />
+        <TinyHeadingWithContentComponent text={<Trans>WHO CAN HELP?</Trans>} content={<ServicesLink {...props} />} />
     </View>
 );
 
@@ -82,17 +82,18 @@ const TitleComponent = (props: Props): JSX.Element => (
     </Text>
 );
 
-const TinyHeadingWithContent = (props: { readonly text: JSX.Element, readonly content: JSX.Element }): JSX.Element => (
-    <View style={{ marginTop: 10 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={textStyles.headlineH5StyleBlackLeft}>
-                {props.text}
-            </Text>
-            <View style={{ height: 1, flex: 1, marginLeft: 10, backgroundColor: colors.lightGrey }}></View>
+const TinyHeadingWithContentComponent = (props: { readonly text: JSX.Element, readonly content: JSX.Element }):
+    JSX.Element => (
+        <View style={{ marginTop: 10 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={textStyles.headlineH5StyleBlackLeft}>
+                    {props.text}
+                </Text>
+                <View style={{ height: 1, flex: 1, marginLeft: 10, backgroundColor: colors.lightGrey }}></View>
+            </View>
+            {props.content}
         </View>
-        {props.content}
-    </View>
-);
+    );
 
 const TaskDescription = (props: Props): JSX.Element => {
     const task = props.task;

@@ -7,12 +7,11 @@ import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSa
 import { applicationStyles } from '../../application/styles';
 import { TaskDetailRelatedTasksComponent } from './task_detail_related_tasks_component';
 import { goToRouteWithParameter } from '../../application/routing';
-import { computeStateButtons, TaskStateButton } from './task_states';
 import { Task } from '../../selectors/tasks/task';
 import { Routes } from '../../application/routing';
 import { TaskDetailHeadingComponent } from './task_detail_heading_component';
 import { TaskDetailContentComponent } from './task_detail_content_component';
-import { TaskDetailMenuComponent } from './task_detail_menu_component';
+import { BookmarkButtonComponent } from './bookmark_button_component';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -30,6 +29,8 @@ type Props = TaskDetailProps & TaskDetailActions;
 export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const task = props.task;
     const onServicesButtonPress = goToRouteWithParameter(Routes.Services, task.id, props.history);
+    const isBookmarked = R.contains(props.task.id, props.savedTasksIdList);
+    const bookmarkOnPress = isBookmarked ? getRemoveBookmarkOnPress(props) : getAddBookmarkOnPress(props);
     return (
         <View style={{ flex: 1 }}>
             <Content style={applicationStyles.body}>
@@ -45,23 +46,18 @@ export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Prop
                     relatedTasks={task.relatedTasks}
                 />
             </Content>
-            <TaskDetailMenuComponent
-                buttons={getTaskDetailMenuButtons(props)}
-                addButtonOnPress={(): void => { props.addToSavedList(task.id); }}
-                removeButtonOnPress={(): void => { props.removeFromSavedList(task.id); }}
-                doneButtonOnPress={(): void => { props.toggleCompleted(task.id); props.removeFromSavedList(task.id); }}
-                notDoneButtonOnPress={(): void => { props.toggleCompleted(task.id); props.addToSavedList(task.id); }}
+            <BookmarkButtonComponent
+                isBookmarked={isBookmarked}
+                bookmarkupButtonOnPress={bookmarkOnPress}
             />
         </View>
     );
 };
 
-const getTaskDetailMenuButtons = (props: Props): ReadonlyArray<TaskStateButton> => {
-    const task = props.task;
-    const taskState = {
-        isRecommended: task.isRecommended,
-        isSaved: R.contains(task.id, props.savedTasksIdList),
-        isCompleted: task.completed,
-    };
-    return computeStateButtons(taskState);
-};
+const getAddBookmarkOnPress = (props: Props): () => void => (
+    (): void => { props.addToSavedList(props.task.id); }
+);
+
+const getRemoveBookmarkOnPress = (props: Props): () => void => (
+    (): void => { props.removeFromSavedList(props.task.id); }
+);
