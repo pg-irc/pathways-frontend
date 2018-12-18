@@ -1,13 +1,6 @@
-import * as constants from '../application/constants';
-import * as helpers from './helpers/make_action';
-import { Id as AnswerId } from './questionnaire';
-import { Id as TaskId } from './tasks';
-
-export interface PersistedUserData {
-    readonly chosenAnswers: ReadonlyArray<AnswerId>;
-    readonly savedTasks: ReadonlyArray<TaskId>;
-    readonly completedTasks: ReadonlyArray<TaskId>;
-}
+import * as constants from '../../application/constants';
+import * as helpers from '../helpers/make_action';
+import { PersistedUserData } from './types';
 
 export namespace UserDataPersistence {
 
