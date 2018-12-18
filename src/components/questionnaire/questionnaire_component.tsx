@@ -1,21 +1,21 @@
+// tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
+import { I18nManager, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { Button, Content, View, Text, Icon } from 'native-base';
 import * as R from 'ramda';
-import Accordion from 'react-native-collapsible/Accordion';
-import { TouchableOpacity } from 'react-native';
-import { Content, View, Text } from 'native-base';
-import * as selector from '../../selectors/questionnaire/question';
+import { Question as SelectorQuestion } from '../../selectors/questionnaire/question';
+import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
 import { QuestionComponent } from './question_component';
-import { colors, textStyles } from '../../application/styles';
+import { applicationStyles, textStyles, colors, values } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
 import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
-import { FloatingTaskCounterComponent } from './floating_task_counter_component';
-import { values } from '../../application/styles';
+import { goToRouteWithoutParameter, Routes } from '../../application/routing';
+import { arrivalAdvisorGlyphLogo } from '../../application/images';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface QuestionnaireProps {
-    readonly questionnaire: ReadonlyArray<selector.Question>;
-    readonly activeQuestion: Id;
-    readonly recommendedTaskCount: number;
+    readonly activeQuestion: SelectorQuestion;
 }
 
 export interface QuestionnaireActions {
@@ -25,94 +25,140 @@ export interface QuestionnaireActions {
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
-export const QuestionnaireComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
-        <Content padder>
-            <Text style={textStyles.headlineH1StyleBlackLeft}><Trans>Personalize My Plan</Trans></Text>
-            <Text style={[
-                textStyles.headlineH4StyleBlackLeft,
-                { marginBottom: 15 },
-            ]}>
-                <Trans>There is no requirement to answer any of the following questions
-                but in doing so you help us recommend tasks for you.</Trans>
-            </Text>
-            <Accordion
-                activeSection={findIndexForQuestion(props.activeQuestion, props.questionnaire)}
-                sections={getAccordionSections(props)}
-                renderHeader={renderHeader(props)}
-                renderContent={renderContent}
-                touchableComponent={TouchableOpacity}
-                duration={400}
-            />
-        </Content>
-        <FloatingTaskCounterComponent
-            taskCount={props.recommendedTaskCount}
-        />
-    </View>
-);
-
-const findIndexForQuestion = (questionId: Id, questions: ReadonlyArray<selector.Question>): number => (
-    R.findIndex(R.propEq('id', questionId), questions)
-);
-
-const findNextActiveQuestion = (currentActiveQuestionId: Id, questions: ReadonlyArray<selector.Question>): Id => {
-    const nextActiveQuestionIndex = findIndexForQuestion(currentActiveQuestionId, questions) + 1;
-    return questions[nextActiveQuestionIndex].id;
+type ContentRef = {
+    readonly _root: { scrollIntoView: (element: JSX.Element) => void };
 };
 
-interface AccordionSection {
-    readonly id: Id;
-    readonly title: string;
-    readonly content: JSX.Element;
+export class QuestionnaireComponent extends React.Component<Props> {
+    contentComponent: ContentRef = undefined;
+    headingComponent: JSX.Element = undefined;
+
+    constructor(props: Props) {
+        super(props);
+        this.setContentComponentRef = this.setContentComponentRef.bind(this);
+        this.setHeadingComponentRef = this.setHeadingComponentRef.bind(this);
+    }
+
+    render(): JSX.Element {
+        return (
+            <Content padder ref={this.setContentComponentRef}>
+                {this.renderHeading()}
+                {this.renderProgress()}
+                {this.renderQuestion()}
+                {this.renderButtons()}
+            </Content>
+        );
+    }
+
+    private setContentComponentRef(component: object): void {
+        this.contentComponent = component as ContentRef;
+    }
+
+    private setHeadingComponentRef(component: object): void {
+        this.headingComponent = component as JSX.Element;
+    }
+
+    private renderHeading(): JSX.Element {
+        const logoSize = Dimensions.get('screen').width / 6;
+        const closeButtonOnPress = goToRouteWithoutParameter(Routes.MyPlan, this.props.history);
+        return (
+            <View ref={this.setHeadingComponentRef}>
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    <TouchableOpacity onPress={closeButtonOnPress}>
+                        <Icon name='close' style={{ color: colors.black, padding: 10 }} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: colors.white }}>
+                    <Image
+                        source={arrivalAdvisorGlyphLogo}
+                        resizeMode={'contain'}
+                        style={{ width: logoSize, height: logoSize, marginBottom: 5 }}
+                    />
+                </View>
+            </View>
+        );
+    }
+
+    private renderProgress(): JSX.Element {
+        const activeQuestionPosition = this.props.activeQuestion.positionInQuestionnaire;
+        const lengthOfQuestionnaire = this.props.activeQuestion.lengthOfQuestionnaire;
+        const barWidth = lengthOfQuestionnaire > 0 ? Math.round(activeQuestionPosition / lengthOfQuestionnaire * 100) : 100;
+        return (
+            <View style={{ marginBottom: 15 }}>
+                <View style={{ flex: 1, borderRadius: values.roundedBorderRadius, backgroundColor: colors.lightGrey }}>
+                    <View style={{
+                        borderRadius: values.roundedBorderRadius,
+                        backgroundColor: colors.topaz,
+                        width: `${barWidth}%`,
+                        height: 8,
+                    }}
+                    />
+                </View>
+                <Text style={textStyles.headlineH5StyleBlackCenter}>
+                    {activeQuestionPosition} <Trans>OF</Trans> {lengthOfQuestionnaire}
+                </Text>
+            </View>
+        );
+    }
+
+    private renderQuestion(): JSX.Element {
+        return <QuestionComponent question={this.props.activeQuestion} chooseAnswer={this.props.chooseAnswer} />;
+    }
+
+    private renderButtons(): JSX.Element {
+        const hasNextQuestion = this.props.activeQuestion.nextQuestionId !== undefined;
+        const hasPreviousQuestion = this.props.activeQuestion.previousQuestionId !== undefined;
+        return (
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10 }}>
+                {hasPreviousQuestion ? this.renderPreviousButton() : <EmptyComponent />}
+                {hasNextQuestion ? this.renderNextButton() : this.renderGotoPlanButton()}
+            </View>
+        );
+    }
+
+    private renderNextButton(): JSX.Element {
+        const onPress = this.getQuestionButtonOnPress(this.props.activeQuestion.nextQuestionId);
+        const icon = I18nManager.isRTL ? 'arrow-back' : 'arrow-forward';
+        const text = this.activeQuestionHasBeenAnswered() ? <Trans>Next</Trans> : <Trans>Skip</Trans>;
+        return (
+            <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
+                <Text style={textStyles.whiteTopazButton}>{text}</Text>
+                <Icon name={icon} style={{ color: colors.topaz }} />
+            </Button>
+        );
+    }
+
+    private renderPreviousButton(): JSX.Element {
+        const onPress = this.getQuestionButtonOnPress(this.props.activeQuestion.previousQuestionId);
+        const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
+        const text = <Trans>Back</Trans>;
+        return (
+            <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconLeft>
+                <Icon name={icon} style={{ color: colors.topaz }} />
+                <Text style={textStyles.whiteTopazButton}>{text}</Text>
+            </Button>
+        );
+    }
+
+    private renderGotoPlanButton(): JSX.Element {
+        const onPress = goToRouteWithoutParameter(Routes.MyPlan, this.props.history);
+        const text = <Trans>Go to My plan</Trans>;
+        return (
+            <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
+                <Text style={textStyles.whiteTopazButton}>{text}</Text>
+            </Button>
+        );
+    }
+
+    private getQuestionButtonOnPress(questionId: Id): () => void {
+        return (): void => { this.props.setActiveQuestion(questionId); this.scrollToTop(); };
+    }
+
+    private scrollToTop(): void {
+        this.contentComponent._root.scrollIntoView(this.headingComponent);
+    }
+
+    private activeQuestionHasBeenAnswered(): boolean {
+        return R.any((answer: SelectorAnswer) => answer.isChosen, this.props.activeQuestion.answers);
+    }
 }
-
-// tslint:disable-next-line:readonly-array
-type AccordionSectionArray = Array<AccordionSection>;
-
-const getAccordionSections = (props: Props): AccordionSectionArray => (
-    R.map((question: selector.Question) => (
-        {
-            id: question.id,
-            title: renderQuestionTitle(question),
-            content: renderQuestionContent(question, props),
-        }
-    ), props.questionnaire)
-);
-
-const renderQuestionTitle = (question: selector.Question): string => (
-    `${question.number}. ${question.text}`
-);
-
-const renderQuestionContent = (question: selector.Question, props: Props): JSX.Element => {
-    const { activeQuestion, questionnaire, setActiveQuestion }: Props = props;
-    const nextButtonOnPress = (): SetActiveQuestionAction =>
-        setActiveQuestion(findNextActiveQuestion(activeQuestion, questionnaire));
-    return (
-        <QuestionComponent
-            {...props}
-            key={question.id}
-            question={question}
-            nextButtonOnPress={nextButtonOnPress}
-            isFinalQuestion={question.number === questionnaire.length} />
-    );
-};
-
-const renderHeader = R.curry((props: Props, section: AccordionSection, _index: number, isActive: boolean): JSX.Element => (
-    <TouchableOpacity
-        onPress={(): SetActiveQuestionAction => props.setActiveQuestion(section.id)}
-        style={{
-            backgroundColor: isActive ? colors.orange : colors.topaz,
-            borderRadius: values.lessRoundedBorderRadius,
-            marginBottom: 5,
-            padding: 10,
-        }}
-    >
-        <Text style={textStyles.paragraphBoldWhiteLeft}>
-            {section.title}
-        </Text>
-    </TouchableOpacity>
-));
-
-const renderContent = (section: AccordionSection): JSX.Element => (
-    section.content
-);

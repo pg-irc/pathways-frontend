@@ -37,7 +37,7 @@ export const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'Roboto';
 
 export const textStyles = StyleSheet.create({
     headlineH1StyleBlackLeft: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 24,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -47,7 +47,7 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
     },
     headlineH2StyleWhiteLeft: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 18,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -56,7 +56,7 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     headlineH2StyleBlackLeft: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 18,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -64,8 +64,17 @@ export const textStyles = StyleSheet.create({
         textAlign: 'left',
         color: colors.black,
     },
+    headlineH2StyleBlackCenter: {
+        fontFamily,
+        fontSize: 18,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        letterSpacing: 0,
+        textAlign: 'center',
+        color: colors.black,
+    },
     headlineH3StyleBlackLeft: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 16,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -73,8 +82,26 @@ export const textStyles = StyleSheet.create({
         textAlign: 'left',
         color: colors.black,
     },
+    headlineH3StyleBlackCenter: {
+        fontFamily,
+        fontSize: 16,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        letterSpacing: 0,
+        textAlign: 'center',
+        color: colors.black,
+    },
+    headlineH3StyleWhiteCenter: {
+        fontFamily,
+        fontSize: 16,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        letterSpacing: 0,
+        textAlign: 'center',
+        color: colors.white,
+    },
     headlineH4StyleBlackLeft: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 16,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -84,7 +111,7 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
     },
     paragraphBoldBlackLeft: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 16,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -94,7 +121,7 @@ export const textStyles = StyleSheet.create({
         color: colors.greyishBrown,
     },
     paragraphBoldWhiteLeft: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 16,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -104,7 +131,7 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     paragraphStyleWhiteleft: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 16,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -114,7 +141,7 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     paragraphStyle: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 16,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -124,7 +151,7 @@ export const textStyles = StyleSheet.create({
         color: colors.greyishBrown,
     },
     paragraphSmallStyleCenter: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 12,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -134,7 +161,7 @@ export const textStyles = StyleSheet.create({
         color: colors.greyishBrown,
     },
     paragraphSmallStyleLeft: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 12,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -144,7 +171,7 @@ export const textStyles = StyleSheet.create({
         color: colors.greyishBrown,
     },
     paragraphURL: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 16,
         lineHeight: 21,
         letterSpacing: 0,
@@ -153,7 +180,7 @@ export const textStyles = StyleSheet.create({
         color: colors.greyishBrown,
     },
     paragraphStyleWhiteCenter: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 16,
         fontWeight: 'normal',
         fontStyle: 'normal',
@@ -163,7 +190,7 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     headlineH5StyleBlackLeft: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 11,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -172,7 +199,7 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
     },
     headlineH5StyleBlackCenter: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 11,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -181,7 +208,7 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
     },
     button: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 18,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -190,7 +217,7 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     whiteButton: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 18,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -198,8 +225,17 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         color: colors.black,
     },
+    whiteTopazButton: {
+        fontFamily,
+        fontSize: 18,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        letterSpacing: 0.2,
+        textAlign: 'center',
+        color: colors.topaz,
+    },
     taskTitle: {
-        fontFamily: fontFamily,
+        fontFamily,
         fontSize: 22,
         fontWeight: '900',
         fontStyle: 'normal',
@@ -227,6 +263,12 @@ export const applicationStyles = StyleSheet.create({
     whiteButton: {
         backgroundColor: colors.white,
         borderRadius: values.roundedBorderRadius,
+    },
+    whiteTopazButton: {
+        backgroundColor: colors.white,
+        borderRadius: values.roundedBorderRadius,
+        borderColor: colors.topaz,
+        borderWidth: 2,
     },
     boxShadowBelow: {
         shadowColor: colors.black,

@@ -1,31 +1,27 @@
 import React from 'react';
-import { applicationStyles, textStyles } from '../../application/styles';
-import { Button, View, Text } from 'native-base';
+import { textStyles } from '../../application/styles';
+import { View, Text } from 'native-base';
 import { AnswerComponent } from './answer_component';
-import { Trans } from '@lingui/react';
-import { RouterProps, goToRouteWithoutParameter, Routes } from '../../application/routing';
-import { History } from 'history';
-import { SetActiveQuestionAction, ChooseAnswerAction, Id } from '../../stores/questionnaire';
+import { ChooseAnswerAction, Id } from '../../stores/questionnaire';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
 import { Question as SelectorQuestion } from '../../selectors/questionnaire/question';
 
 export interface QuestionProps {
     readonly question: SelectorQuestion;
-    readonly isFinalQuestion: boolean;
 }
 
 export interface QuestionActions {
     readonly chooseAnswer: (answerId: Id) => ChooseAnswerAction;
-    readonly nextButtonOnPress: () => SetActiveQuestionAction;
 }
 
-type Props = QuestionProps & QuestionActions & RouterProps;
+type Props = QuestionProps & QuestionActions;
 
 export const QuestionComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const { question, chooseAnswer, isFinalQuestion, history, nextButtonOnPress }: Props = props;
+    const { question, chooseAnswer }: Props = props;
     return (
-        <View style={{ flex: 1, marginBottom: 10 }}>
+        <View style={{ flex: 1, alignItems: 'center', marginBottom: 15 }}>
+            <Text style={[textStyles.headlineH2StyleBlackCenter, { marginBottom: 15 }]}>{question.text}</Text>
             {question.explanation ? <Text style={textStyles.paragraphSmallStyleLeft}>{question.explanation}</Text> : <EmptyComponent />}
             {question.answers.map((answer: SelectorAnswer) => (
                 <AnswerComponent
@@ -35,21 +31,6 @@ export const QuestionComponent: React.StatelessComponent<Props> = (props: Props)
                     acceptMultipleAnswers={answer.acceptMultipleAnswers}
                 />
             ))}
-            <View style={{ marginTop: 5, marginLeft: 5 }}>
-                {isFinalQuestion ? renderFinalQuestionButton(history) : renderNextQuestionButton(nextButtonOnPress)}
-            </View>
         </View>
     );
 };
-
-const renderFinalQuestionButton = (history: History): JSX.Element => (
-    <Button style={applicationStyles.orangeButton} onPress={goToRouteWithoutParameter(Routes.MyPlan, history)}>
-        <Text style={textStyles.button}><Trans>Go to my plan</Trans></Text>
-    </Button>
-);
-
-const renderNextQuestionButton = (onPress: () => SetActiveQuestionAction): JSX.Element => (
-    <Button style={applicationStyles.orangeButton} onPress={onPress}>
-        <Text style={textStyles.button}><Trans>Next</Trans></Text>
-    </Button>
-);
