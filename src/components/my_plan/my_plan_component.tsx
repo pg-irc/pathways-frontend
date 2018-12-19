@@ -11,7 +11,6 @@ import {
     TaskListComponent,
     noTasksAddedYetTextComponent,
     noTasksRecommendedTextComponent,
-    noTasksCompletedTextComponent,
 } from '../tasks/task_list_component';
 import { TaskListItemActions } from '../tasks/task_list_item_component';
 import { Routes, goToRouteWithoutParameter, RouterProps } from '../../application/routing';
@@ -21,13 +20,11 @@ import { MyPlanIntroComponent } from './my_plan_intro_component';
 export interface MyPlanProps {
     readonly savedTasks: ReadonlyArray<TaskListItem>;
     readonly recommendedTasks: ReadonlyArray<TaskListItem>;
-    readonly completedTasks: ReadonlyArray<TaskListItem>;
 }
 
 interface MyPlanState {
     readonly savedTasksIsCollapsed: boolean;
     readonly recommendedTasksIsCollapsed: boolean;
-    readonly completedTasksIsCollapsed: boolean;
     readonly questionnairePocketIsOpen: boolean;
 }
 
@@ -40,12 +37,10 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
         this.state = {
             savedTasksIsCollapsed: false,
             recommendedTasksIsCollapsed: false,
-            completedTasksIsCollapsed: true,
             questionnairePocketIsOpen: true,
         };
         this.toggleSavedTasksCollapsed = this.toggleSavedTasksCollapsed.bind(this);
         this.toggleRecommendedTasksCollapsed = this.toggleRecommendedTasksCollapsed.bind(this);
-        this.toggleCompletedTasksCollapsed = this.toggleCompletedTasksCollapsed.bind(this);
         this.onPocketPress = this.onPocketPress.bind(this);
         this.onPocketButtonPress = this.onPocketButtonPress.bind(this);
         this.onScroll = this.onScroll.bind(this);
@@ -83,14 +78,6 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
                         style={styles.clickableHeading}
                     />
                     <View style={styles.divider} />
-                    <CollapsibleContent
-                        collapsedHeader={this.getHeading(this.getCompletedTasksHeading(), this.collapsedIcon())}
-                        expandedHeader={this.getHeading(this.getCompletedTasksHeading(), this.expandedIcon())}
-                        content={this.getContent(this.props.completedTasks, noTasksCompletedTextComponent())}
-                        onHeaderPress={this.toggleCompletedTasksCollapsed}
-                        isCollapsed={this.state.completedTasksIsCollapsed}
-                        style={styles.clickableHeading}
-                    />
                 </ScrollView>
             </View>
         );
@@ -133,7 +120,7 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
         return (
             <View>
                 <Text style={textStyles.headlineH2StyleWhiteLeft}>
-                    <Trans>MY TASKS</Trans>
+                    <Trans>BOOKMARKED TOPICS</Trans>
                 </Text>
             </View>
         );
@@ -146,16 +133,6 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
                     <Trans>RECOMMENDED FOR ME</Trans>
                 </Text>
                 <Icon style={styles.headingYellowStar} name='star' type='FontAwesome' />
-            </View>
-        );
-    }
-
-    private getCompletedTasksHeading(): JSX.Element {
-        return (
-            <View>
-                <Text style={textStyles.headlineH2StyleWhiteLeft}>
-                    <Trans>COMPLETED TASKS</Trans>
-                </Text>
             </View>
         );
     }
@@ -186,10 +163,6 @@ export class MyPlanComponent extends React.Component<Props, MyPlanState> {
 
     private toggleRecommendedTasksCollapsed(): void {
         this.setState({ ...this.state, recommendedTasksIsCollapsed: !this.state.recommendedTasksIsCollapsed });
-    }
-
-    private toggleCompletedTasksCollapsed(): void {
-        this.setState({ ...this.state, completedTasksIsCollapsed: !this.state.completedTasksIsCollapsed });
     }
 }
 

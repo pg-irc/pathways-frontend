@@ -72,7 +72,7 @@ const HeaderComponent =
 
 const HeaderContentComponent = (props: { readonly tasksCount: number }): JSX.Element => (
     <Text style={[textStyles.headlineH2StyleBlackLeft, styles.headerContent]}>
-        <Trans>Number of new tasks recommended based on your answers:</Trans>
+        <Trans>Number of new topics recommended based on your answers:</Trans>
         <Text style={[textStyles.headlineH2StyleBlackLeft, styles.taskCount]}> {props.tasksCount}</Text>
     </Text>
 );
@@ -120,7 +120,7 @@ const AddTasksButtonComponent = (props: { readonly saveTasksToMyPlan: () => Save
     <View style={styles.buttonWrapper}>
         <Button style={[applicationStyles.orangeButton, applicationStyles.boxShadowBelow]} onPress={props.saveTasksToMyPlan}>
             <Text style={textStyles.button}>
-                <Trans>Add these tasks to My Plan</Trans>
+                <Trans>Bookmark these topics</Trans>
             </Text>
         </Button>
     </View >

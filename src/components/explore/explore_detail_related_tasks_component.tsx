@@ -23,7 +23,7 @@ export const ExploreDetailRelatedTasksComponent: React.StatelessComponent<Props>
     return (
         <View padder>
             <Text style={[textStyles.headlineH5StyleBlackLeft, { marginBottom: 3 } ]}>
-                <Trans>EXPLORE TASKS</Trans>
+                <Trans>EXPLORE TOPICS</Trans>
             </Text>
             <TaskListComponent
                 tasks={props.relatedTasks}

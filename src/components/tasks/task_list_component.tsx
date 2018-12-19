@@ -22,15 +22,11 @@ export interface TaskListActions {
 }
 
 export const noTasksAddedYetTextComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No tasks added yet</Trans>} />
+    <EmptyListComponent message={<Trans>No topics bookmarked yet</Trans>} />
 );
 
 export const noTasksRecommendedTextComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No tasks to recommend</Trans>} />
-);
-
-export const noTasksCompletedTextComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No tasks completed</Trans>} />
+    <EmptyListComponent message={<Trans>No topics to recommend</Trans>} />
 );
 
 type Props = TaskListProps & TaskListActions;

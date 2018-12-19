@@ -6,12 +6,10 @@ import { MyPlanComponent, MyPlanProps } from './my_plan_component';
 import { selectRecommendedTasks } from '../../selectors/tasks/select_recommended_tasks';
 import { Id, AddToSavedListAction, addToSavedList, RemoveFromSavedListAction, removeFromSavedList } from '../../stores/tasks';
 import { selectSavedTasks } from '../../selectors/tasks/select_saved_tasks';
-import { selectCompletedTasks } from '../../selectors/tasks/select_completed_tasks';
 
 const mapStateToProps = (store: Store): MyPlanProps => ({
     savedTasks: selectSavedTasks(store),
     recommendedTasks: selectRecommendedTasks(store),
-    completedTasks: selectCompletedTasks(store),
 });
 
 type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction;
