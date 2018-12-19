@@ -10,7 +10,7 @@ import { Trans } from '@lingui/react';
 import { DismissNewlyAddedTasksPopupAction } from '../../stores/questionnaire/actions';
 import { SaveTheseTasksToMyPlanAction } from '../../stores/tasks/actions';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
-import { patWhiteBorderLogo } from '../../application/images';
+import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 
 export interface NewlyRecommendedTasksComponentProps {
@@ -50,16 +50,16 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
 
 const HeaderComponent =
     (props: { readonly taskIds: ReadonlyArray<Id>, readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }): JSX.Element => {
-    const patLogoSize = Dimensions.get('screen').width / 7;
+    const logoSize = Dimensions.get('screen').width / 7;
     return (
         <View style={styles.header}>
             <View style={styles.headerImagesWrapper}>
                 <Image
-                    source={patWhiteBorderLogo}
+                    source={arrivalAdvisorGlyphLogo}
                     resizeMode={'contain'}
                     style={{
-                        width: patLogoSize,
-                        height: patLogoSize,
+                        width: logoSize,
+                        height: logoSize,
                     }}
                 />
                 <TouchableOpacity onPress={props.dismissPopup}>
