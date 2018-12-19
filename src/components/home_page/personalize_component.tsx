@@ -29,7 +29,7 @@ export const PersonalizeComponent: React.StatelessComponent<PersonalizeProps> = 
                         <Trans>Personalize My Plan</Trans>
                     </Text>
                     <Text style={textStyles.paragraphStyleWhiteleft}>
-                        <Trans>Get recommended tasks and services for settling in Canada </Trans>
+                        <Trans>Get recommended topics for settling in Canada </Trans>
                     </Text>
                 </View>
                 <Image

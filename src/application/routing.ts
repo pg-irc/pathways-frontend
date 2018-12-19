@@ -22,6 +22,7 @@ export enum Routes {
     Services,
     Help,
     About,
+    RecommendedTopics,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -47,6 +48,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/services/:taskId';
         case Routes.About:
             return '/about';
+        case Routes.RecommendedTopics:
+            return '/recommended-topics';
     }
 };
 
@@ -101,9 +104,11 @@ export const isOnParentScreen = (path: string): boolean => {
     const isOnLearnScreen = pathMatchesRoute(path, Routes.Learn);
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
     const isOnAboutScreen = pathMatchesRoute(path, Routes.About);
+    const isOnRecommendedTopicsScreen = pathMatchesRoute(path, Routes.RecommendedTopics);
 
     return isOnHomeScreen || isOnHelpScreen || isOnMyPlanScreen ||
-           isOnLearnScreen || isOnQuestionnaireScreen || isOnAboutScreen;
+           isOnLearnScreen || isOnQuestionnaireScreen || isOnAboutScreen ||
+           isOnRecommendedTopicsScreen;
 };
 
 export const isOnChildScreen = (path: string): boolean => {

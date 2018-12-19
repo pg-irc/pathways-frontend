@@ -23,25 +23,25 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
         return <EmptyComponent />;
     }
 
-    const homeScreenIsActive = pathMatchesRoute(path, Routes.Home);
-    const myPlanScreenIsActive = pathMatchesRoute(path, Routes.MyPlan);
-    const learnScreenIsActive = pathMatchesRoute(path, Routes.Learn);
-    const helpScreenIsActive = pathMatchesRoute(path, Routes.Help);
+    const homeIsActive = pathMatchesRoute(path, Routes.Home);
+    const recommendedTopicsActive = pathMatchesRoute(path, Routes.RecommendedTopics);
+    const learnIsActive = pathMatchesRoute(path, Routes.Learn);
+    const helpIsActive = pathMatchesRoute(path, Routes.Help);
 
     return (
         <Footer style={applicationStyles.boxShadowAbove}>
             <FooterTab style={[{ backgroundColor: colors.white }]}>
-                {navigationButton(props.history, Routes.Home, <Trans>Home</Trans>, 'home', homeScreenIsActive)}
-                {navigationButton(props.history, Routes.MyPlan, <Trans>My plan</Trans>, 'th-list', myPlanScreenIsActive)}
-                {navigationButton(props.history, Routes.Learn, <Trans>Learn</Trans>, 'book', learnScreenIsActive)}
-                {navigationButton(props.history, Routes.Help, <Trans>Help</Trans>, 'question', helpScreenIsActive)}
+                {navigationButton(props.history, Routes.RecommendedTopics, <Trans>Rec..</Trans>, 'th-list', recommendedTopicsActive)}
+                {navigationButton(props.history, Routes.Home, <Trans>Home</Trans>, 'home', homeIsActive)}
+                {navigationButton(props.history, Routes.Learn, <Trans>Learn</Trans>, 'book', learnIsActive)}
+                {navigationButton(props.history, Routes.Help, <Trans>Help</Trans>, 'question', helpIsActive)}
             </FooterTab>
         </Footer>
     );
 };
 
 const navigationButton = (history: History, route: Routes, label: JSX.Element, icon: string, isActive: boolean): JSX.Element => (
-    <Button vertical onPress={goToRouteWithoutParameter(route, history)}>
+    <Button vertical onPress={goToRouteWithoutParameter(route, history)} style={{ flexWrap: 'nowrap' }}>
         <Icon
             type='FontAwesome'
             name={icon}
