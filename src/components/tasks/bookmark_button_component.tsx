@@ -69,17 +69,11 @@ type ButtonConfiguration = {
 };
 
 const getButtonConfiguration = (props: Props): ButtonConfiguration => {
+    const addBookmark = (): AddToSavedListAction => props.addBookmark(props.taskId);
+    const removeBookmark = (): RemoveFromSavedListAction => props.removeBookmark(props.taskId);
     const isBookmarked = R.contains(props.taskId, props.savedTasksIdList);
     return {
-        onPress: isBookmarked ? getRemoveBookmarkOnPress(props) : getAddBookmarkOnPress(props),
+        onPress: isBookmarked ? removeBookmark : addBookmark,
         icon: isBookmarked ? 'bookmark' : 'bookmark-o',
     };
 };
-
-const getAddBookmarkOnPress = (props: Props): () => AddToSavedListAction => (
-    (): AddToSavedListAction => props.addBookmark(props.taskId)
-);
-
-const getRemoveBookmarkOnPress = (props: Props): () => RemoveFromSavedListAction => (
-    (): RemoveFromSavedListAction => props.removeBookmark(props.taskId)
-);

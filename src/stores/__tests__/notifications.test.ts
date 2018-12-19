@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let
 import * as model from '../notifications';
 import * as R from 'ramda';
-import { addToSavedList } from '../tasks';
+import { addToSavedList, removeFromSavedList } from '../tasks';
 import { TaskBuilder } from './helpers/tasks_helpers';
 import { NotificationBuilder }  from './helpers/notification_helpers';
 
@@ -25,6 +25,13 @@ describe('notifications store', () => {
             const finalStore = model.reducer(store, addToSavedList(task.id));
             const lastKey = R.keys(finalStore.notifications)[1];
             expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TaskAddedToPlan);
+        });
+
+        it('creates notification of type "TaskRemovedFromPlan" when removing a task from my plan', () => {
+            const task = new TaskBuilder().build();
+            const finalStore = model.reducer(store, removeFromSavedList(task.id));
+            const lastKey = R.keys(finalStore.notifications)[1];
+            expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TaskRemovedFromPlan);
         });
 
         it ('allows for the removal of a notification', () => {

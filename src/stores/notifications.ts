@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import * as uuid from 'uuid';
 import * as constants from '../application/constants';
-import { AddToSavedListAction } from './tasks';
+import { AddToSavedListAction, RemoveFromSavedListAction } from './tasks';
 import { UserDataPersistence } from './user_data';
 import * as helpers from './helpers/make_action';
 import { Id, NotificationType, Notification, NotificationStore } from '../fixtures/types/notifications';
@@ -9,7 +9,9 @@ import { Id, NotificationType, Notification, NotificationStore } from '../fixtur
 export { Id, NotificationType, Notification, NotificationStore } from '../fixtures/types/notifications';
 
 export type RemoveNotificationAction = Readonly<ReturnType<typeof removeNotification>>;
-type NotificationAction = AddToSavedListAction |
+type NotificationAction =
+    AddToSavedListAction |
+    RemoveFromSavedListAction |
     UserDataPersistence.LoadSuccessAction |
     RemoveNotificationAction;
 
@@ -31,6 +33,8 @@ export const reducer = (store: NotificationStore = buildDefaultStore(), action?:
     switch (action.type) {
         case constants.ADD_TO_SAVED_TASKS:
             return addNotificationToStore(store, NotificationType.TaskAddedToPlan);
+        case constants.REMOVE_FROM_SAVED_TASKS:
+            return addNotificationToStore(store, NotificationType.TaskRemovedFromPlan);
         case constants.LOAD_USER_DATA_SUCCESS:
             if (R.isEmpty(action.payload.chosenAnswers)) {
                 return addNotificationToStore(store, NotificationType.QuestionnaireInformation);
