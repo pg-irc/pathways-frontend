@@ -1,13 +1,12 @@
 import React from 'react';
-import * as R from 'ramda';
-import { computeStateListItemIcon, TaskStateListItemIcon } from './task_states';
 import { View, Text, Icon } from 'native-base';
 import { values, colors, textStyles } from '../../application/styles';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
-import { AddToSavedListAction, Id } from '../../stores/tasks';
+import { AddToSavedListAction, RemoveFromSavedListAction, Id } from '../../stores/tasks';
 import { I18nManager, TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
+import { ListItemBookmarkComponent } from '../tasks/bookmark_button_component';
 
 export interface TaskListItemProps {
     readonly task: TaskListItem;
@@ -16,6 +15,7 @@ export interface TaskListItemProps {
 
 export interface TaskListItemActions {
     readonly addToSavedList: (taskId: Id) => AddToSavedListAction;
+    readonly removeFromSavedList: (taskId: Id) => RemoveFromSavedListAction;
     readonly goToTaskDetail: () => void;
 }
 
@@ -36,7 +36,12 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
             <View style={{ flex: 4, flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                     <View style={{ marginRight: 20 }}>
-                        <TaskInteractions {...props} />
+                        <ListItemBookmarkComponent
+                            taskId={props.task.id}
+                            savedTasksIdList={props.savedTasksIdList}
+                            addBookmark={props.addToSavedList}
+                            removeBookmark={props.removeFromSavedList}
+                        />
                     </View>
                     <View>
                         <Text numberOfLines={2} style={textStyles.headlineH4StyleBlackLeft}>
@@ -58,34 +63,4 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
 
 const IsRecommendedComponent = (): JSX.Element => (
     <Icon style={{ fontSize: values.smallerIconSize, color: colors.sunYellow, marginRight: 3 }} name='star' type='FontAwesome' />
-);
-
-const TaskInteractions = (props: Props): JSX.Element => {
-    const state = {
-        isRecommended: props.task.isRecommended,
-        isSaved: R.any((id: Id) => id === props.task.id, props.savedTasksIdList),
-        isCompleted: props.task.completed,
-    };
-    return renderFromListItemIcon(props, computeStateListItemIcon(state));
-};
-
-const renderFromListItemIcon = (props: Props, listItemIcon: TaskStateListItemIcon): JSX.Element => {
-    if (listItemIcon === TaskStateListItemIcon.Checked) {
-        return renderCheckBox('check-square-o');
-    }
-    if (listItemIcon === TaskStateListItemIcon.UnChecked) {
-        return renderCheckBox('square-o');
-    }
-
-    return renderAddButton((): AddToSavedListAction => props.addToSavedList(props.task.id), 'plus');
-};
-
-const renderCheckBox = (icon: string): JSX.Element => (
-    <Icon style={{ fontSize: values.smallerIconSize, color: colors.topaz }} name={icon} type='FontAwesome' />
-);
-
-const renderAddButton = (onPress: () => void, icon: string): JSX.Element => (
-    <TouchableOpacity onPress={onPress}>
-        <Icon style={{ fontSize: values.smallIconSize, color: colors.topaz }} name={icon} type='FontAwesome' />
-    </TouchableOpacity>
 );

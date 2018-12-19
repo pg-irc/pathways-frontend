@@ -23,13 +23,14 @@ export const TaskDetailRelatedTasksComponent: React.StatelessComponent<Props> = 
     return (
         <View padder>
             <Text style={[textStyles.headlineH5StyleBlackLeft, { marginBottom: 3 } ]}>
-                <Trans>RELATED TASKS</Trans>
+                <Trans>RELATED TOPICS</Trans>
             </Text>
             <TaskListComponent
                 tasks={props.relatedTasks}
                 emptyTaskListComponent={noTasksAddedYetTextComponent()}
                 savedTasksIdList={props.savedTasksIdList}
                 addToSavedList={props.addToSavedList}
+                removeFromSavedList={props.removeFromSavedList}
                 history={props.history}
             />
         </View>

@@ -10,7 +10,7 @@ import { Trans } from '@lingui/react';
 import { DismissNewlyAddedTasksPopupAction } from '../../stores/questionnaire/actions';
 import { SaveTheseTasksToMyPlanAction } from '../../stores/tasks/actions';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
-import { patWhiteBorderLogo } from '../../application/images';
+import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 
 export interface NewlyRecommendedTasksComponentProps {
@@ -50,16 +50,16 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
 
 const HeaderComponent =
     (props: { readonly taskIds: ReadonlyArray<Id>, readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }): JSX.Element => {
-    const patLogoSize = Dimensions.get('screen').width / 7;
+    const logoSize = Dimensions.get('screen').width / 7;
     return (
         <View style={styles.header}>
             <View style={styles.headerImagesWrapper}>
                 <Image
-                    source={patWhiteBorderLogo}
+                    source={arrivalAdvisorGlyphLogo}
                     resizeMode={'contain'}
                     style={{
-                        width: patLogoSize,
-                        height: patLogoSize,
+                        width: logoSize,
+                        height: logoSize,
                     }}
                 />
                 <TouchableOpacity onPress={props.dismissPopup}>
@@ -72,7 +72,7 @@ const HeaderComponent =
 
 const HeaderContentComponent = (props: { readonly tasksCount: number }): JSX.Element => (
     <Text style={[textStyles.headlineH2StyleBlackLeft, styles.headerContent]}>
-        <Trans>Number of new tasks recommended based on your answers:</Trans>
+        <Trans>Number of new topics recommended based on your answers:</Trans>
         <Text style={[textStyles.headlineH2StyleBlackLeft, styles.taskCount]}> {props.tasksCount}</Text>
     </Text>
 );
@@ -120,7 +120,7 @@ const AddTasksButtonComponent = (props: { readonly saveTasksToMyPlan: () => Save
     <View style={styles.buttonWrapper}>
         <Button style={[applicationStyles.orangeButton, applicationStyles.boxShadowBelow]} onPress={props.saveTasksToMyPlan}>
             <Text style={textStyles.button}>
-                <Trans>Add these tasks to My Plan</Trans>
+                <Trans>Bookmark these topics</Trans>
             </Text>
         </Button>
     </View >

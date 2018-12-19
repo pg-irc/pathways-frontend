@@ -3,7 +3,7 @@ import { Trans } from '@lingui/react';
 import { TouchableOpacity, Dimensions, Image } from 'react-native';
 import { Text, View, Button } from 'native-base';
 import { applicationStyles, colors, values, textStyles } from '../../application/styles';
-import { patLogo } from '../../application/images';
+import { arrivalAdvisorGlyphLogo } from '../../application/images';
 
 export interface QuestionnairePocketProps {
     readonly isOpen: boolean;
@@ -30,15 +30,15 @@ export const QuestionnairePocketComponent: React.StatelessComponent<Props> = (pr
 );
 
 const getOpenPocket = (props: Props): JSX.Element => {
-    const patLogoSize = getLargePatLogoSize();
+    const logoSize = getLargeLogoSize();
     return (
         <View style={{ alignItems: 'center', paddingHorizontal: 30, marginVertical: 20 }}>
             <Image
-                source={patLogo}
+                source={arrivalAdvisorGlyphLogo}
                 resizeMode={'contain'}
                 style={{
-                    width: patLogoSize,
-                    height: patLogoSize,
+                    width: logoSize,
+                    height: logoSize,
                 }}
             />
             <Text style={textStyles.headlineH5StyleBlackCenter}>
@@ -63,21 +63,21 @@ const getOpenPocket = (props: Props): JSX.Element => {
 };
 
 const getClosedPocket = (): JSX.Element => {
-    const patLogoWidthAndHeight = getSmallPatLogoSize();
+    const logoSize = getSmallLogoSize();
     return (
         <View style={{ alignItems: 'center', padding: 2 }}>
             <Image
-                source={patLogo}
+                source={arrivalAdvisorGlyphLogo}
                 resizeMode={'contain'}
                 style={{
-                    width: patLogoWidthAndHeight,
-                    height: patLogoWidthAndHeight,
+                    width: logoSize,
+                    height: logoSize,
                 }}
             />
         </View>
     );
 };
 
-const getSmallPatLogoSize = (): number => Dimensions.get('screen').width / 9;
+const getSmallLogoSize = (): number => Dimensions.get('screen').width / 9;
 
-const getLargePatLogoSize = (): number => Dimensions.get('screen').width / 6;
+const getLargeLogoSize = (): number => Dimensions.get('screen').width / 6;

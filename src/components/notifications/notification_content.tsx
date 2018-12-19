@@ -10,3 +10,11 @@ export const taskAddedNotification = (): JSX.Element => {
         </Text>
     );
 };
+
+export const taskRemovedNotification = (): JSX.Element => {
+    return (
+        <Text style={textStyles.paragraphBoldWhiteLeft}>
+            <Trans>Bookmark removed</Trans>
+        </Text>
+    );
+};

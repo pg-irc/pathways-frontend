@@ -5,14 +5,14 @@ import { Image, Dimensions } from 'react-native';
 import { applicationStyles, colors, values, textStyles } from '../../application/styles';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { History } from 'history';
-import { patLogo } from '../../application/images';
+import { arrivalAdvisorGlyphLogo } from '../../application/images';
 
 export interface PersonalizeProps {
     readonly history: History;
 }
 
 export const PersonalizeComponent: React.StatelessComponent<PersonalizeProps> = (props: PersonalizeProps): JSX.Element => {
-    const patLogoSize = Dimensions.get('screen').width / 6;
+    const logoSize = Dimensions.get('screen').width / 6;
     return (
         <View style={[
             applicationStyles.boxShadowBelow,
@@ -33,12 +33,12 @@ export const PersonalizeComponent: React.StatelessComponent<PersonalizeProps> = 
                     </Text>
                 </View>
                 <Image
-                    source={patLogo}
+                    source={arrivalAdvisorGlyphLogo}
                     resizeMode={'contain'}
                     style={{
                         flex: 1,
-                        width: patLogoSize,
-                        height: patLogoSize,
+                        width: logoSize,
+                        height: logoSize,
                         marginBottom: 20,
                     }}
                 />

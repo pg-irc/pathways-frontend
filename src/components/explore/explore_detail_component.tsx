@@ -2,7 +2,7 @@ import React from 'react';
 import { Content } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
 import { RouterProps } from '../../application/routing';
-import { Id as TaskId, AddToSavedListAction } from '../../stores/tasks';
+import { Id as TaskId, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/tasks';
 import { ExploreDetailHeadingComponent } from './explore_detail_heading_component';
 import { ExploreDetailContentComponent } from './explore_detail_content_component';
 import { ExploreDetailRelatedTasksComponent } from './explore_detail_related_tasks_component';
@@ -17,6 +17,7 @@ export interface ExploreDetailProps {
 
 export interface ExploreDetailActions {
     readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
+    readonly removeFromSavedList: (taskId: TaskId) => RemoveFromSavedListAction;
 }
 
 type Props = ExploreDetailProps & ExploreDetailActions & RouterProps;
@@ -35,6 +36,7 @@ export const ExploreDetailComponent: React.StatelessComponent<Props> =
                     history={props.history}
                     savedTasksIdList={props.savedTasksIdList}
                     addToSavedList={props.addToSavedList}
+                    removeFromSavedList={props.removeFromSavedList}
                 />
             </Content>
         );

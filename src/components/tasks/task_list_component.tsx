@@ -6,7 +6,7 @@ import { Trans } from '@lingui/react';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListItemComponent } from './task_list_item_component';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
-import { Id, AddToSavedListAction } from '../../stores/tasks';
+import { Id, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/tasks';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 
 export interface TaskListProps {
@@ -18,18 +18,15 @@ export interface TaskListProps {
 
 export interface TaskListActions {
     readonly addToSavedList: (taskId: Id) => AddToSavedListAction;
+    readonly removeFromSavedList: (taskId: Id) => RemoveFromSavedListAction;
 }
 
 export const noTasksAddedYetTextComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No tasks added yet</Trans>} />
+    <EmptyListComponent message={<Trans>No topics bookmarked yet</Trans>} />
 );
 
 export const noTasksRecommendedTextComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No tasks to recommend</Trans>} />
-);
-
-export const noTasksCompletedTextComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No tasks completed</Trans>} />
+    <EmptyListComponent message={<Trans>No topics to recommend</Trans>} />
 );
 
 type Props = TaskListProps & TaskListActions;
@@ -46,6 +43,7 @@ const NonEmptyTaskListComponent: React.StatelessComponent<Props> = (props: Props
                 task={task}
                 savedTasksIdList={props.savedTasksIdList}
                 addToSavedList={props.addToSavedList}
+                removeFromSavedList={props.removeFromSavedList}
                 goToTaskDetail={goToRouteWithParameter(Routes.TaskDetail, task.id, props.history)}
             />, props.tasks)}
     </View>

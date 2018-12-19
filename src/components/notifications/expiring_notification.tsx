@@ -2,11 +2,9 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { View } from 'native-base';
-import { Notification } from '../../stores/notifications';
 import { colors } from '../../application/styles';
 
 export interface ExpiringNotificationProps {
-    readonly notification: Notification;
     readonly notificationContent: JSX.Element;
 }
 

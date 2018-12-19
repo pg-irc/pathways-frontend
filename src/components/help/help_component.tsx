@@ -91,8 +91,7 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
     const alertToClearAllUserData = (): void => {
         const alertHeading = 'Delete user data';
         const alertMessage = 'Do you want to delete all user data from this phone? This includes which ' +
-            'answers are chosen in the questionnaire, which tasks are in My Plan and which ' +
-            'tasks are marked as completed';
+            'answers are chosen in the questionnaire and which topics are bookmarked.';
 
         // tslint:disable-next-line:no-expression-statement
         Alert.alert(alertHeading, alertMessage,

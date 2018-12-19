@@ -26,6 +26,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     const homeScreenIsActive = pathMatchesRoute(path, Routes.Home);
     const myPlanScreenIsActive = pathMatchesRoute(path, Routes.MyPlan);
     const learnScreenIsActive = pathMatchesRoute(path, Routes.Learn);
+    const helpScreenIsActive = pathMatchesRoute(path, Routes.Help);
 
     return (
         <Footer style={applicationStyles.boxShadowAbove}>
@@ -33,6 +34,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
                 {navigationButton(props.history, Routes.Home, <Trans>Home</Trans>, 'home', homeScreenIsActive)}
                 {navigationButton(props.history, Routes.MyPlan, <Trans>My plan</Trans>, 'th-list', myPlanScreenIsActive)}
                 {navigationButton(props.history, Routes.Learn, <Trans>Learn</Trans>, 'book', learnScreenIsActive)}
+                {navigationButton(props.history, Routes.Help, <Trans>Help</Trans>, 'question', helpScreenIsActive)}
             </FooterTab>
         </Footer>
     );
