@@ -1,6 +1,5 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
-import * as R from 'ramda';
 import { History } from 'history';
 import { View, Content } from 'native-base';
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
@@ -11,7 +10,7 @@ import { Task } from '../../selectors/tasks/task';
 import { Routes } from '../../application/routing';
 import { TaskDetailHeadingComponent } from './task_detail_heading_component';
 import { TaskDetailContentComponent } from './task_detail_content_component';
-import { BookmarkButtonComponent } from './bookmark_button_component';
+import { DetailBookmarkComponent } from './bookmark_button_component';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -29,8 +28,6 @@ type Props = TaskDetailProps & TaskDetailActions;
 export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const task = props.task;
     const onServicesButtonPress = goToRouteWithParameter(Routes.Services, task.id, props.history);
-    const isBookmarked = R.contains(props.task.id, props.savedTasksIdList);
-    const bookmarkOnPress = isBookmarked ? getRemoveBookmarkOnPress(props) : getAddBookmarkOnPress(props);
     return (
         <View style={{ flex: 1 }}>
             <Content style={applicationStyles.body}>
@@ -42,22 +39,17 @@ export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Prop
                 <TaskDetailRelatedTasksComponent
                     savedTasksIdList={props.savedTasksIdList}
                     addToSavedList={props.addToSavedList}
+                    removeFromSavedList={props.removeFromSavedList}
                     history={props.history}
                     relatedTasks={task.relatedTasks}
                 />
             </Content>
-            <BookmarkButtonComponent
-                isBookmarked={isBookmarked}
-                bookmarkupButtonOnPress={bookmarkOnPress}
+            <DetailBookmarkComponent
+                taskId={task.id}
+                savedTasksIdList={props.savedTasksIdList}
+                addBookmark={props.addToSavedList}
+                removeBookmark={props.removeFromSavedList}
             />
         </View>
     );
 };
-
-const getAddBookmarkOnPress = (props: Props): () => void => (
-    (): void => { props.addToSavedList(props.task.id); }
-);
-
-const getRemoveBookmarkOnPress = (props: Props): () => void => (
-    (): void => { props.removeFromSavedList(props.task.id); }
-);

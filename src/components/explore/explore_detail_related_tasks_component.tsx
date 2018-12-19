@@ -30,6 +30,7 @@ export const ExploreDetailRelatedTasksComponent: React.StatelessComponent<Props>
                 emptyTaskListComponent={noTasksAddedYetTextComponent()}
                 savedTasksIdList={props.savedTasksIdList}
                 addToSavedList={props.addToSavedList}
+                removeFromSavedList={props.removeFromSavedList}
                 history={props.history}
             />
         </View>
