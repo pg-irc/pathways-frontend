@@ -73,7 +73,6 @@ To remove cached strings, this is usually needed when switching between branches
 ```
 yarn clean-strings
 ```
-
 ## Contributing
 
 If you want to help out, get in touch at dev@peacegeeks.org.
@@ -81,6 +80,21 @@ If you want to help out, get in touch at dev@peacegeeks.org.
 ### Commit messages
 
 All commits are labelled with the issue they are being done under. This ensures that we don't do work that is not tracked, and history of why every change is made is maintained. Most front end and back end work is tracked by issues in their respective repositories, in which case the commit message should start with "Issue #N", e.g. "Issue #13". Occasionally, front end work may be tracked under backend issues, in which case each commits message should start with "Issue pg-irc/pathways-backend#13".
+
+## Versioning
+
+* Client and server are versioned independently.
+* Client specifies the minimum server version required for proper client operation.
+* We use [semantic versioning](https://semver.org/) of the form X.Y.Z.
+* We start with version 1.0.0 for client and server.
+* Versioning happens at the end of each sprint.
+* We bump the Z each sprint, except for sprints where no changes went in. We also bump Z for any hotfixes that may go in independenty of the sprint cadence.
+* We bump the Y when we add features that are backwards compatible as per semantic versioning.
+* We bump the X when we add features that are backwards incompatible, i.e. when the client would fail to operate correctly with an older server version, as per [semantic versioning](https://semver.org/).
+* Versions are stored as git tags in each git repo (client and server).
+* TODO: On the server side, the version is stored in VERSION.txt.
+* On the client side, the version is stored in VERSION.txt and several other files, with unit tests making sure that all version strings are the same.
+* Client About screen shows the version of the client.
 
 ## Big Thanks
 
