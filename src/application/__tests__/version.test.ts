@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement no-string-literal no-let typedef
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import { EOL } from 'os';
 import * as R from 'ramda';
 
@@ -21,11 +21,19 @@ describe('version id in VERSION.txt', () => {
     it('matches with version id in .env', () => {
 
         const filename = '.env';
-        const content = readFileSync(filename).toString();
-        const lines = content.split(EOL);
-        const versionLine = R.head(R.filter(line => line.startsWith('VERSION'), lines));
+        if (existsSync(filename)) {
+            const content = readFileSync(filename).toString();
+            const lines = content.split(EOL);
+            const versionLine = R.head(R.filter(line => line.startsWith('VERSION'), lines));
 
-        expect(versionLine).toBe(`VERSION=${version}`);
+            expect(versionLine).toBe(`VERSION=${version}`);
+        }
+    });
+
+    it('matches with version id environment variable', () => {
+        if (process.env.VERSION) {
+            expect(process.env.VERSION).toBe(version);
+        }
     });
 
     it('matches with version id in package.json', () => {
