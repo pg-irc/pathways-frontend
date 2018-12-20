@@ -10,7 +10,7 @@ import { getIdsOfChosenAnswers } from '../../selectors/questionnaire/get_ids_of_
 import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
 
 const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
-    chosenAnswers: getIdsOfChosenAnswers(pickAnswers(store)),
+    hasChosenAnswers: getIdsOfChosenAnswers(pickAnswers(store)).length > 0,
     savedTopicsIdList: pickSavedTaskIds(store),
     recommendedTopics: selectRecommendedTasks(store),
 });

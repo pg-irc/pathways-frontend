@@ -15,7 +15,7 @@ import { stripMarkdown } from '../strip_markdown/strip_markdown';
 
 export interface NewlyRecommendedTasksComponentProps {
     readonly showQuestionnairePopup: boolean;
-    readonly newlyRecommendedTasks: ReadonlyArray<Task>;
+    readonly newlyRecommendedUnsavedTasks: ReadonlyArray<Task>;
 }
 
 export interface NewlyRecommendedTasksComponentActions {
@@ -26,14 +26,13 @@ export interface NewlyRecommendedTasksComponentActions {
 type Props = NewlyRecommendedTasksComponentProps & NewlyRecommendedTasksComponentActions;
 
 export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-
-    const showPopup = props.showQuestionnairePopup && R.not(R.isEmpty(props.newlyRecommendedTasks));
+    const tasks = props.newlyRecommendedUnsavedTasks;
+    const showPopup = props.showQuestionnairePopup && R.not(R.isEmpty(tasks));
 
     if (!showPopup) {
         return <EmptyComponent />;
     }
 
-    const tasks = props.newlyRecommendedTasks;
     const taskIds = R.map((task: Task): Id => task.id, tasks);
     const saveTasksToMyPlan = (): SaveTheseTasksToMyPlanAction => props.saveToMyPlan(taskIds);
     const dismissPopup = (): DismissNewlyAddedTasksPopupAction => props.dismissPopup();

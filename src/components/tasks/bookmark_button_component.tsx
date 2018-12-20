@@ -16,28 +16,24 @@ export interface BookmarkButtonActions {
 type Props = BookmarkButtonProps & BookmarkButtonActions;
 
 export const ListItemAddBookmarkComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    buildBookmarkForListItem((): AddToSavedListAction => props.addBookmark(props.taskId), getAddBookmarkIcon())
+    buildBookmarkForListItem((): AddToSavedListAction => props.addBookmark(props.taskId), addBookmarkIcon)
 );
 
 export const ListItemRemoveBookmarkComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    buildBookmarkForListItem((): RemoveFromSavedListAction => props.removeBookmark(props.taskId), getRemoveBookmarkIcon())
+    buildBookmarkForListItem((): RemoveFromSavedListAction => props.removeBookmark(props.taskId), removeBookmarkIcon)
 );
 
 export const DetailAddBookmarkComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    buildBookmarkForDetail((): AddToSavedListAction => props.addBookmark(props.taskId), getAddBookmarkIcon())
+    buildBookmarkForDetail((): AddToSavedListAction => props.addBookmark(props.taskId), addBookmarkIcon)
 );
 
 export const DetailRemoveBookmarkComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    buildBookmarkForDetail((): RemoveFromSavedListAction => props.removeBookmark(props.taskId), getRemoveBookmarkIcon())
+    buildBookmarkForDetail((): RemoveFromSavedListAction => props.removeBookmark(props.taskId), removeBookmarkIcon)
 );
 
-const getAddBookmarkIcon = (): JSX.Element => (
-    <Icon type='FontAwesome' style={{ color: colors.topaz }} name={'bookmark-o'} />
-);
+const addBookmarkIcon = <Icon type='FontAwesome' style={{ color: colors.topaz }} name={'bookmark-o'} />;
 
-const getRemoveBookmarkIcon = (): JSX.Element => (
-    <Icon type='FontAwesome' style={{ color: colors.topaz }} name={'bookmark'} />
-);
+const removeBookmarkIcon = <Icon type='FontAwesome' style={{ color: colors.topaz }} name={'bookmark'} />;
 
 const buildBookmarkForListItem = (onPress: () => void, content: JSX.Element): JSX.Element => (
     <TouchableOpacity onPress={onPress}>

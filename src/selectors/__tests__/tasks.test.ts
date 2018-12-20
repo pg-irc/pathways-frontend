@@ -17,7 +17,7 @@ import { ViewTaskBuilder } from './helpers/task_helpers';
 import { Id } from '../../stores/tasks';
 import { getRecommendedTasks } from '../tasks/get_recommended_tasks';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
-import { getNewlyRecommendedTasks } from '../tasks/get_newly_recommended_tasks';
+import { getNewlyRecommendedUnsavedTasks } from '../tasks/get_newly_recommended_unsaved_tasks';
 import { AnswersMap } from '../../stores/questionnaire';
 import { getAllTaxonomyTermsFromTasks } from '../tasks/get_all_taxonomy_terms_from_tasks';
 import { getIdsOfCompletedTasks } from '../tasks/get_ids_of_completed_tasks';
@@ -157,7 +157,7 @@ describe('tasks selector', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newChosenAnswers, incompleteTasks, noSavedTaskIds);
+            const result = getNewlyRecommendedUnsavedTasks(oldNonChosenAnswers, newChosenAnswers, incompleteTasks, noSavedTaskIds);
 
             expect(result).toEqual([incompleteTask]);
         });
@@ -166,7 +166,7 @@ describe('tasks selector', () => {
             const oldChosenAnswers = chosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldChosenAnswers, newChosenAnswers, incompleteTasks, noSavedTaskIds);
+            const result = getNewlyRecommendedUnsavedTasks(oldChosenAnswers, newChosenAnswers, incompleteTasks, noSavedTaskIds);
 
             expect(result).toEqual([]);
         });
@@ -175,7 +175,7 @@ describe('tasks selector', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newNonChosenAnswers, incompleteTasks, noSavedTaskIds);
+            const result = getNewlyRecommendedUnsavedTasks(oldNonChosenAnswers, newNonChosenAnswers, incompleteTasks, noSavedTaskIds);
 
             expect(result).toEqual([]);
         });
@@ -184,7 +184,7 @@ describe('tasks selector', () => {
             const oldChosenAnswers = chosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldChosenAnswers, newNonChosenAnswers, incompleteTasks, noSavedTaskIds);
+            const result = getNewlyRecommendedUnsavedTasks(oldChosenAnswers, newNonChosenAnswers, incompleteTasks, noSavedTaskIds);
 
             expect(result).toEqual([]);
         });

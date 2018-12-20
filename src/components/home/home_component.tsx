@@ -22,50 +22,58 @@ export const HomeComponent: React.StatelessComponent<HomeProps> = (props: HomePr
     );
 };
 
-export const PersonalizeComponent = (props: HomeProps): JSX.Element => {
+export const PersonalizeComponent = (props: HomeProps): JSX.Element => (
+    <View style={[
+        applicationStyles.boxShadowBelow,
+        {
+            backgroundColor: colors.orange,
+            borderRadius: values.lessRoundedBorderRadius,
+            padding: 20,
+            marginBottom: 15,
+        },
+    ]}>
+        <PersonalizeComponentContent />
+        <PersonalizeComponentButton {...props} />
+    </View>
+);
+
+const PersonalizeComponentContent = (): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 6;
     return (
-        <View style={[
-            applicationStyles.boxShadowBelow,
-            {
-                backgroundColor: colors.orange,
-                borderRadius: values.lessRoundedBorderRadius,
-                padding: 20,
-                marginBottom: 15,
-            },
-        ]}>
-            <View style={{ flex: 4, flexDirection: 'row', marginBottom: 15 }}>
-                <View style={{ flex: 3 }}>
-                    <Text style={textStyles.headlineH2StyleWhiteLeft}>
-                        <Trans>Personalize Your Recommended Topics</Trans>
-                    </Text>
-                    <Text style={textStyles.paragraphStyleWhiteleft}>
-                        <Trans>Get recommended topics for settling in Canada </Trans>
-                    </Text>
-                </View>
-                <Image
-                    source={arrivalAdvisorGlyphLogo}
-                    resizeMode={'contain'}
-                    style={{
-                        flex: 1,
-                        width: logoSize,
-                        height: logoSize,
-                        marginBottom: 20,
-                    }}
-                />
-            </View>
-            <Button
-                full
-                onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)}
-                style={[applicationStyles.whiteButton, applicationStyles.boxShadowBelow]}
-            >
-                <Text style={textStyles.whiteButton}>
-                    <Trans>Start</Trans>
+        <View style={{ flex: 4, flexDirection: 'row', marginBottom: 15 }}>
+            <View style={{ flex: 3 }}>
+                <Text style={textStyles.headlineH2StyleWhiteLeft}>
+                    <Trans>Personalize Your Recommended Topics</Trans>
                 </Text>
-            </Button>
+                <Text style={textStyles.paragraphStyleWhiteleft}>
+                    <Trans>Get recommended topics for settling in Canada </Trans>
+                </Text>
+            </View>
+            <Image
+                source={arrivalAdvisorGlyphLogo}
+                resizeMode={'contain'}
+                style={{
+                    flex: 1,
+                    width: logoSize,
+                    height: logoSize,
+                    marginBottom: 20,
+                }}
+            />
         </View>
     );
 };
+
+const PersonalizeComponentButton = (props: HomeProps): JSX.Element => (
+    <Button
+        full
+        onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)}
+        style={[applicationStyles.whiteButton, applicationStyles.boxShadowBelow]}
+    >
+        <Text style={textStyles.whiteButton}>
+            <Trans>Start</Trans>
+        </Text>
+    </Button>
+);
 
 export const AboutButtonComponent = (props: HomeProps): JSX.Element => (
     <TouchableOpacity

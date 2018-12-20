@@ -29,7 +29,11 @@ type Props = TaskDetailProps & TaskDetailActions;
 export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const task = props.task;
     const onServicesButtonPress = goToRouteWithParameter(Routes.Services, task.id, props.history);
-    const bookmarkProps = { taskId: props.task.id, addBookmark: props.addToSavedList, removeBookmark: props.removeFromSavedList };
+    const bookmarkProps = {
+        taskId: props.task.id,
+        addBookmark: props.addToSavedList,
+        removeBookmark: props.removeFromSavedList,
+    };
     return (
         <View style={{ flex: 1 }}>
             <Content style={applicationStyles.body}>

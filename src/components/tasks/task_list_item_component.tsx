@@ -23,7 +23,11 @@ type Props = TaskListItemProps & TaskListItemActions;
 
 export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const taskDescription = stripMarkdown(props.task.description);
-    const bookmarkProps = { taskId: props.task.id, addBookmark: props.addToSavedList, removeBookmark: props.removeFromSavedList };
+    const bookmarkProps = {
+        taskId: props.task.id,
+        addBookmark: props.addToSavedList,
+        removeBookmark: props.removeFromSavedList,
+    };
     return (
         <TouchableOpacity
             onPress={props.goToTaskDetail}
