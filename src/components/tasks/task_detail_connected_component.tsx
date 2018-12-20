@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import * as R from 'ramda';
 import { Store } from '../../stores';
 import { TaskDetailProps, TaskDetailActions, TaskDetailComponent } from './task_detail_component';
 import {
@@ -13,9 +14,12 @@ import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
 
 const mapStateToProps = (store: Store, routerProps: RouterProps): TaskDetailProps => {
     const task: Task = selectCurrentTask(store, routerProps);
+    const savedTasksIdList = pickSavedTaskIds(store);
+    const taskIsBookmarked = R.contains(task.id, savedTasksIdList);
     return {
-        task: task,
-        savedTasksIdList: pickSavedTaskIds(store),
+        task,
+        taskIsBookmarked,
+        savedTasksIdList,
         history: routerProps.history,
     };
 };

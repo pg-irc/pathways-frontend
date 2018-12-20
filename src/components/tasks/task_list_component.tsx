@@ -41,7 +41,7 @@ const NonEmptyTaskListComponent: React.StatelessComponent<Props> = (props: Props
             <TaskListItemComponent
                 key={task.id}
                 task={task}
-                savedTasksIdList={props.savedTasksIdList}
+                taskIsBookmarked={R.contains(task.id, props.savedTasksIdList)}
                 addToSavedList={props.addToSavedList}
                 removeFromSavedList={props.removeFromSavedList}
                 goToTaskDetail={goToRouteWithParameter(Routes.TaskDetail, task.id, props.history)}
