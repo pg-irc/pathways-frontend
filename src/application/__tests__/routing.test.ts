@@ -17,10 +17,6 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.Questionnaire)).toEqual('/questionnaire');
     });
 
-    it('For Routes.MyPlan returns path: "/my-plan"', () => {
-        expect(routePathDefinition(Routes.MyPlan)).toEqual('/my-plan');
-    });
-
     it('For Routes.Learn returns path: "/learn"', () => {
         expect(routePathDefinition(Routes.Learn)).toEqual('/learn');
     });
@@ -35,6 +31,14 @@ describe('the routePathDefinition function', () => {
 
     it('For Routes.Services returns path: "/services/:taskId" with parameter', () => {
         expect(routePathDefinition(Routes.Services)).toEqual('/services/:taskId');
+    });
+
+    it('For Routes.RecommendedTopics returns path: "/recommended-topics"', () => {
+        expect(routePathDefinition(Routes.RecommendedTopics)).toEqual('/recommended-topics');
+    });
+
+    it('For Routes.BookmarkedTopics returns path: "/bookmarked-topics"', () => {
+        expect(routePathDefinition(Routes.BookmarkedTopics)).toEqual('/bookmarked-topics');
     });
 
 });
@@ -79,10 +83,6 @@ describe('the isOnParentScreen function', () => {
 
     it('returns true on path: "/help"', () => {
         expect(isOnParentScreen('/home')).toStrictEqual(true);
-    });
-
-    it('returns true on path: "/my-plan"', () => {
-        expect(isOnParentScreen('/my-plan')).toStrictEqual(true);
     });
 
     it('returns true on path: "/learn"', () => {

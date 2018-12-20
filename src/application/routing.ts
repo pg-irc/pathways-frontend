@@ -15,7 +15,6 @@ export enum Routes {
     Welcome,
     Home,
     Questionnaire,
-    MyPlan,
     Learn,
     LearnDetail,
     TaskDetail,
@@ -37,8 +36,6 @@ export const routePathDefinition = (route: Routes): string => {
             return '/help';
         case Routes.Questionnaire:
             return '/questionnaire';
-        case Routes.MyPlan:
-            return '/my-plan';
         case Routes.Learn:
             return '/learn';
         case Routes.LearnDetail:
@@ -103,15 +100,14 @@ export const isOnStartScreen = (path: string): boolean => {
 export const isOnParentScreen = (path: string): boolean => {
     const isOnHomeScreen = pathMatchesRoute(path, Routes.Home);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
-    const isOnMyPlanScreen = pathMatchesRoute(path, Routes.MyPlan);
     const isOnLearnScreen = pathMatchesRoute(path, Routes.Learn);
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
     const isOnAboutScreen = pathMatchesRoute(path, Routes.About);
     const isOnRecommendedTopicsScreen = pathMatchesRoute(path, Routes.RecommendedTopics);
     const isOnBookmarkedTopicsScreen = pathMatchesRoute(path, Routes.BookmarkedTopics);
 
-    return isOnHomeScreen || isOnHelpScreen || isOnMyPlanScreen ||
-           isOnLearnScreen || isOnQuestionnaireScreen || isOnAboutScreen ||
+    return isOnHomeScreen || isOnHelpScreen || isOnLearnScreen ||
+           isOnQuestionnaireScreen || isOnAboutScreen ||
            isOnRecommendedTopicsScreen || isOnBookmarkedTopicsScreen;
 };
 
