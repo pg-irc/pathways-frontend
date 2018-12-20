@@ -7,7 +7,7 @@ import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListActions } from '../tasks/task_list_component';
 import { TaskListComponent, noTasksRecommendedTextComponent } from '../tasks/task_list_component';
 import { RouterProps } from '../../application/routing';
-import { PersonalizeComponent } from '../home_page/personalize_component';
+import { PersonalizeComponent } from '../home/home_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { textStyles, applicationStyles } from '../../application/styles';
 
