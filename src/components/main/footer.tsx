@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { History, Location } from 'history';
-import { Routes, goToRouteWithoutParameter, pathMatchesRoute, isOnStartScreen, isOnChildScreen } from '../../application/routing';
+import { Routes, goToRouteWithoutParameter, pathMatchesRoute, isOnStartScreen } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, values, applicationStyles } from '../../application/styles';
 
@@ -15,10 +15,6 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     const path = props.location.pathname;
 
     if (isOnStartScreen(path)) {
-        return <EmptyComponent />;
-    }
-
-    if (isOnChildScreen(path)) {
         return <EmptyComponent />;
     }
 
@@ -51,7 +47,7 @@ const navigationButton = (history: History, route: Routes, icon: string, isActiv
                 },
                 textStyle(isActive),
             ]}
-       />
+        />
     </Button>
 );
 

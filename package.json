@@ -40,6 +40,7 @@
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "build": "bin/buildFixtures.sh && tsc",
     "test": "yarn run jest --maxWorkers=4",
+    "cbt": "yarn run clean && yarn run build && yarn run test",
     "bt": "yarn run build && yarn run test",
     "clean": "rimraf 'lib/**/*.js' 'lib/**/*.js.map' 'locale/_build/**/*.json'",
     "extract-strings": "yarn run build && lingui extract",
