@@ -101,6 +101,10 @@ describe('the isOnParentScreen function', () => {
         expect(isOnParentScreen('/recommended-topics')).toStrictEqual(true);
     });
 
+    it('returns true on path: "/recommended-bookmarks"', () => {
+        expect(isOnParentScreen('/recommended-bookmarks')).toStrictEqual(true);
+    });
+
     it('returns false on non parent screen path', () => {
         expect(isOnParentScreen('/')).toStrictEqual(false);
     });

@@ -11,7 +11,7 @@ import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
 
 const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(store)),
-    savedTasksIdList: pickSavedTaskIds(store),
+    savedTopicsIdList: pickSavedTaskIds(store),
     recommendedTopics: selectRecommendedTasks(store),
 });
 

@@ -23,6 +23,7 @@ export enum Routes {
     Help,
     About,
     RecommendedTopics,
+    BookmarkedTopics,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -50,6 +51,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/about';
         case Routes.RecommendedTopics:
             return '/recommended-topics';
+        case Routes.BookmarkedTopics:
+            return '/bookmarked-topics';
     }
 };
 
@@ -105,10 +108,11 @@ export const isOnParentScreen = (path: string): boolean => {
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
     const isOnAboutScreen = pathMatchesRoute(path, Routes.About);
     const isOnRecommendedTopicsScreen = pathMatchesRoute(path, Routes.RecommendedTopics);
+    const isOnBookmarkedTopicsScreen = pathMatchesRoute(path, Routes.BookmarkedTopics);
 
     return isOnHomeScreen || isOnHelpScreen || isOnMyPlanScreen ||
            isOnLearnScreen || isOnQuestionnaireScreen || isOnAboutScreen ||
-           isOnRecommendedTopicsScreen;
+           isOnRecommendedTopicsScreen || isOnBookmarkedTopicsScreen;
 };
 
 export const isOnChildScreen = (path: string): boolean => {

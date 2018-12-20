@@ -26,7 +26,7 @@ export const PersonalizeComponent: React.StatelessComponent<PersonalizeProps> = 
             <View style={{ flex: 4, flexDirection: 'row', marginBottom: 15 }}>
                 <View style={{ flex: 3 }}>
                     <Text style={textStyles.headlineH2StyleWhiteLeft}>
-                        <Trans>Personalize My Plan</Trans>
+                        <Trans>Personalized Recommendations</Trans>
                     </Text>
                     <Text style={textStyles.paragraphStyleWhiteleft}>
                         <Trans>Get recommended topics for settling in Canada </Trans>
