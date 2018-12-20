@@ -12,12 +12,7 @@ export interface MyToolsProps {
 
 export const MyToolsComponent: React.StatelessComponent<MyToolsProps> = (props: MyToolsProps): JSX.Element => (
     <View>
-        <Text style={[ textStyles.headlineH5StyleBlackLeft, styles.sectionTitle ]}>
-            <Trans>MY TOOLS</Trans>
-        </Text>
         <View style={styles.buttonsWrapper}>
-            {buildButton(getMyPlanButtonContent(), goToRouteWithoutParameter(Routes.MyPlan, props.history))}
-            {buildButton(getLearnButtonContent(), goToRouteWithoutParameter(Routes.Learn, props.history))}
             {buildButton(getNeedHelpButtonContent(), goToRouteWithoutParameter(Routes.Help, props.history))}
             {buildButton(getAboutButtonContent(), goToRouteWithoutParameter(Routes.About, props.history))}
         </View>
@@ -31,22 +26,6 @@ const buildButton = (buttonContent: JSX.Element, buttonOnPress: () => void): JSX
             <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize }}/>
         </View>
     </TouchableOpacity>
-);
-
-const getMyPlanButtonContent = (): JSX.Element => (
-    getButtonContent(
-        'th-list',
-        <Trans>My Plan</Trans>,
-        <Trans>Keep track of everything I need to do to settle in Canada</Trans>,
-    )
-);
-
-const getLearnButtonContent = (): JSX.Element => (
-    getButtonContent(
-        'book',
-        <Trans>Learn</Trans>,
-        <Trans>Find out about my community and available services</Trans>,
-    )
 );
 
 const getNeedHelpButtonContent = (): JSX.Element => (

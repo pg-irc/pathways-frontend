@@ -5,7 +5,7 @@ import { Locale } from '../../locale';
 import { I18nManager, Image, Dimensions } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
-import { Routes, goBack, isOnParentScreen, isOnChildScreen, pathMatchesRoute} from '../../application/routing';
+import { Routes, goBack, isOnParentScreen, isOnChildScreen, pathMatchesRoute, goToRouteWithoutParameter} from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
@@ -38,7 +38,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
                 locale={props.currentLocale}
                 textColor={colors.white}
             />;
-        return renderHeader(colors.topaz, renderArrivalAdvisorLogo(), languageSwitcher);
+        return renderHeader(colors.topaz, renderArrivalAdvisorLogo(props), languageSwitcher);
     }
 
     if (isOnChildScreen(path)) {
@@ -93,16 +93,18 @@ const getIconForBackButton = (path: string): string => {
     return 'close';
 };
 
-const renderArrivalAdvisorLogo = (): JSX.Element => {
+const renderArrivalAdvisorLogo = (props: Props): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 15;
     return (
-        <Image
-            source={arrivalAdvisorGlyphLogo}
-            resizeMode={'contain'}
-            style={{
-                width: logoSize,
-                height: logoSize,
-            }}
-        />
+        <Button onPress={goToRouteWithoutParameter(Routes.Home, props.history)} transparent>
+            <Image
+                source={arrivalAdvisorGlyphLogo}
+                resizeMode={'contain'}
+                style={{
+                    width: logoSize,
+                    height: logoSize,
+                }}
+            />
+        </Button>
     );
 };
