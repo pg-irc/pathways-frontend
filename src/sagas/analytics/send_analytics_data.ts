@@ -2,7 +2,7 @@
 
 import { Analytics as ExpoAnalytics, PageHit, Event } from 'expo-analytics';
 import { call, CallEffect, PutEffect, put } from 'redux-saga/effects';
-import { GOOGLE_ANALYTICS_TRACKING_ID } from 'react-native-dotenv';
+import { GOOGLE_ANALYTICS_TRACKING_ID, DEBUG_GOOGLE_ANALYTICS } from 'react-native-dotenv';
 import { AnalyticsAsync } from './actions';
 import { WatchedAction } from './watch_analytics';
 import * as constants from '../../application/constants';
@@ -21,8 +21,9 @@ export function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
 }
 
 async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
+    const debug = DEBUG_GOOGLE_ANALYTICS === 'true';
     // tslint:disable-next-line:no-null-keyword
-    const analytics = new ExpoAnalytics(GOOGLE_ANALYTICS_TRACKING_ID, null, { debug: true });
+    const analytics = new ExpoAnalytics(GOOGLE_ANALYTICS_TRACKING_ID, null, { debug });
     const pageHit = buildPageHitData(action);
     if (pageHit) {
         return analytics.hit(pageHit);

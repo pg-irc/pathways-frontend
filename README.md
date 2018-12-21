@@ -36,15 +36,10 @@ yarn test [--watch]
 Build and start Expo to run the app in a simulator or on an actual Android or Apple device:
 
 ```
-yarn start
+yarn start [--reset-cache]
 ```
 
-and follow instructions to open app in Expo, or to open the app on either android or ios, do either of these
-
-```
-yarn android
-yarn ios
-```
+To clear out cached values from `.env`, use `--reset-cache`.
 
 ## Internationalization (i18n)
 

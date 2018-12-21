@@ -1,6 +1,7 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import qs from 'query-string';
+import { stringify } from 'query-string';
 import { Id } from '../stores/tasks';
+import { Location } from 'expo';
 
 export interface APIResponse {
     readonly hasError: boolean;
@@ -9,9 +10,7 @@ export interface APIResponse {
     readonly results?: any; // tslint:disable-line:no-any
 }
 
-interface APIQuery {
-    readonly [property: string]: string;
-}
+export type MaybeLocation = Location.LocationData | undefined;
 
 export class APIClient {
 
@@ -21,23 +20,31 @@ export class APIClient {
         this.host = host;
     }
 
-    async searchServices(taskId: Id): Promise<APIResponse> {
+    async searchServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
+        const parameters = buildParameters(taskId, location);
         const endpoint = 'services_at_location';
-        const servicesResponse = await this.fetch(endpoint, { related_to_task: taskId });
+        const servicesResponse = await this.fetch(endpoint, parameters);
         return servicesResponse;
     }
 
-    private async fetch(endpoint: string, query: APIQuery = {}): Promise<APIResponse> {
-        const queryString = qs.stringify(query);
-        // TODO: Should use something a bit more robust to build urls: nodejs's
-        //       URL module is a good example.
-        const url = `${this.host}/${endpoint}?${queryString}`;
+    private async fetch(endpoint: string, query: string = ''): Promise<APIResponse> {
+        const url = `${this.host}/${endpoint}?${query}`;
         const response = await fetch(url);
-        // TODO: Handle fetching paged results.
         return createAPIResponse(response);
     }
-
 }
+
+export const buildParameters = (taskId: Id, location: MaybeLocation): string => {
+    const data = location ?
+        {
+            user_location: `${location.coords.longitude},${location.coords.latitude}`,
+            related_to_task: taskId,
+        }
+        :
+        { related_to_task: taskId };
+
+    return stringify(data);
+};
 
 async function createAPIResponse(response: Response): Promise<APIResponse> {
     const message = `(${response.status}) ${response.statusText}`;

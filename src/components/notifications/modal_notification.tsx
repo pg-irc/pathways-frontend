@@ -23,7 +23,8 @@ interface State {
 }
 
 export class ModalNotificationComponent extends React.Component<Props, State> {
-    timer: number;
+    // tslint:disable-next-line:no-any
+    timer: any;
     threeMinutesInMilliSeconds: number = 180000;
 
     constructor(props: Props) {
