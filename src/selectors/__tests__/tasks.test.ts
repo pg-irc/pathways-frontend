@@ -15,7 +15,7 @@ import { isTaskRecommended } from '../tasks/is_task_recommended';
 import { sortTaskList } from '../tasks/sort_task_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';
 import { getRecommendedTasks } from '../tasks/get_recommended_tasks';
-import { rejectTaskIds } from '../tasks/reject_task_ids';
+import { rejectTasksWithIds } from '../tasks/reject_tasks_with_ids';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
 import { getNewlyRecommendedTasks } from '../tasks/get_newly_recommended_tasks';
 import { AnswersMap } from '../../stores/questionnaire';
@@ -308,14 +308,14 @@ describe('tasks selector', () => {
         it('excludes rejected task ids', () => {
             const aTaskIdToReject = aString();
             const aTaskWithRejectedId = new TaskBuilder().withId(aTaskIdToReject).build();
-            expect(rejectTaskIds([aTaskWithRejectedId], [aTaskIdToReject])).toHaveLength(0);
+            expect(rejectTasksWithIds([aTaskWithRejectedId], [aTaskIdToReject])).toHaveLength(0);
         });
 
         it('includes non rejected task ids', () => {
             const aTaskIdToReject = aString();
             const aTaskWithRejectedId = new TaskBuilder().withId(aTaskIdToReject).build();
             const aTaskToInclude = new TaskBuilder().build();
-            expect(rejectTaskIds([aTaskWithRejectedId, aTaskToInclude], [aTaskIdToReject])).toHaveLength(1);
+            expect(rejectTasksWithIds([aTaskWithRejectedId, aTaskToInclude], [aTaskIdToReject])).toHaveLength(1);
         });
     });
 });
