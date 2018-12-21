@@ -1,13 +1,11 @@
 import React from 'react';
 import { Dimensions, TouchableOpacity } from 'react-native';
-import * as R from 'ramda';
 import { Id as TaskId, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/tasks';
 import { Icon, View, Button } from 'native-base';
 import { colors, applicationStyles } from '../../application/styles';
 
 export interface BookmarkButtonProps {
     readonly taskId: TaskId;
-    readonly savedTasksIdList: ReadonlyArray<TaskId>;
 }
 
 export interface BookmarkButtonActions {
@@ -17,21 +15,33 @@ export interface BookmarkButtonActions {
 
 type Props = BookmarkButtonProps & BookmarkButtonActions;
 
-export const ListItemBookmarkComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const configuration = getButtonConfiguration(props);
-    return (
-        <TouchableOpacity onPress={configuration.onPress}>
-            <Icon
-                type='FontAwesome'
-                style={{ color: colors.topaz }}
-                name={configuration.icon}
-            />
-        </TouchableOpacity>
-    );
-};
+export const ListItemAddBookmarkComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    buildBookmarkForListItem((): AddToSavedListAction => props.addBookmark(props.taskId), addBookmarkIcon)
+);
 
-export const DetailBookmarkComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const configuration = getButtonConfiguration(props);
+export const ListItemRemoveBookmarkComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    buildBookmarkForListItem((): RemoveFromSavedListAction => props.removeBookmark(props.taskId), removeBookmarkIcon)
+);
+
+export const DetailAddBookmarkComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    buildBookmarkForDetail((): AddToSavedListAction => props.addBookmark(props.taskId), addBookmarkIcon)
+);
+
+export const DetailRemoveBookmarkComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    buildBookmarkForDetail((): RemoveFromSavedListAction => props.removeBookmark(props.taskId), removeBookmarkIcon)
+);
+
+const addBookmarkIcon = <Icon type='FontAwesome' style={{ color: colors.topaz }} name={'bookmark-o'} />;
+
+const removeBookmarkIcon = <Icon type='FontAwesome' style={{ color: colors.topaz }} name={'bookmark'} />;
+
+const buildBookmarkForListItem = (onPress: () => void, content: JSX.Element): JSX.Element => (
+    <TouchableOpacity onPress={onPress}>
+        {content}
+    </TouchableOpacity>
+);
+
+const buildBookmarkForDetail = (onPress: () => void, content: JSX.Element): JSX.Element => {
     const height = Dimensions.get('screen').height;
     const position = Math.round(height / 25);
     return (
@@ -43,7 +53,7 @@ export const DetailBookmarkComponent: React.StatelessComponent<Props> = (props: 
             bottom: position,
         }}>
             <Button
-                onPress={configuration.onPress}
+                onPress={onPress}
                 style={[
                     applicationStyles.boxShadowBelow,
                     {
@@ -53,27 +63,8 @@ export const DetailBookmarkComponent: React.StatelessComponent<Props> = (props: 
                     },
                 ]}
             >
-                <Icon
-                    type='FontAwesome'
-                    style={{ color: colors.topaz, fontSize: 30 }}
-                    name={configuration.icon}
-                />
+                {content}
             </Button>
         </View>
     );
-};
-
-type ButtonConfiguration = {
-    readonly onPress: () => void;
-    readonly icon: string;
-};
-
-const getButtonConfiguration = (props: Props): ButtonConfiguration => {
-    const addBookmark = (): AddToSavedListAction => props.addBookmark(props.taskId);
-    const removeBookmark = (): RemoveFromSavedListAction => props.removeBookmark(props.taskId);
-    const isBookmarked = R.contains(props.taskId, props.savedTasksIdList);
-    return {
-        onPress: isBookmarked ? removeBookmark : addBookmark,
-        icon: isBookmarked ? 'bookmark' : 'bookmark-o',
-    };
 };

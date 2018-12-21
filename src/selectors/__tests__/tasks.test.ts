@@ -14,8 +14,8 @@ import { Task } from '../tasks/task';
 import { isTaskRecommended } from '../tasks/is_task_recommended';
 import { sortTaskList } from '../tasks/sort_task_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';
-import { Id } from '../../stores/tasks';
 import { getRecommendedTasks } from '../tasks/get_recommended_tasks';
+import { rejectTasksWithIds } from '../tasks/reject_tasks_with_ids';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
 import { getNewlyRecommendedTasks } from '../tasks/get_newly_recommended_tasks';
 import { AnswersMap } from '../../stores/questionnaire';
@@ -91,10 +91,8 @@ describe('tasks selector', () => {
             const aTaxonomyTerm = aTaxonomyTermReference();
             const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withTaxonomyTerm(aTaxonomyTerm).build();
             const anIncompleteTask = new TaskBuilder().withCompleted(false).build();
-            const noSavedTaskIds: ReadonlyArray<Id> = [];
 
-            const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask },
-                noSavedTaskIds);
+            const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
 
             expect(result).toEqual([]);
         });
@@ -106,10 +104,8 @@ describe('tasks selector', () => {
             };
             const aTaskRecommendedToAll = new TaskBuilder().withTaxonomyTerm(recommendedToAllTaxonomyTerm).withCompleted(false).build();
             const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).build();
-            const noSavedTaskIds: ReadonlyArray<Id> = [];
 
-            const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [aTaskRecommendedToAll.id]: aTaskRecommendedToAll },
-                noSavedTaskIds);
+            const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [aTaskRecommendedToAll.id]: aTaskRecommendedToAll });
 
             expect(result).toEqual([aTaskRecommendedToAll]);
         });
@@ -118,10 +114,8 @@ describe('tasks selector', () => {
             const aTaxonomyTerm = aTaxonomyTermReference();
             const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
             const anIncompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
-            const noSavedTaskIds: ReadonlyArray<Id> = [];
 
-            const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask },
-                noSavedTaskIds);
+            const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
 
             expect(result).toEqual([anIncompleteTask]);
         });
@@ -130,25 +124,12 @@ describe('tasks selector', () => {
             const aTaxonomyTerm = aTaxonomyTermReference();
             const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
             const aCompleteTask = new TaskBuilder().withCompleted(true).withTaxonomyTerm(aTaxonomyTerm).build();
-            const noSavedTaskIds: ReadonlyArray<Id> = [];
 
-            const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [aCompleteTask.id]: aCompleteTask },
-                noSavedTaskIds);
+            const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [aCompleteTask.id]: aCompleteTask });
 
             expect(result).toEqual([]);
         });
 
-        it('should not recommend a saved task', () => {
-            const aTaxonomyTerm = aTaxonomyTermReference();
-            const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
-            const anIncompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
-            const savedTaskIds: ReadonlyArray<Id> = [anIncompleteTask.id];
-
-            const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask },
-                savedTaskIds);
-
-            expect(result).toEqual([]);
-        });
     });
 
     describe('getting newly recommended tasks', () => {
@@ -157,7 +138,6 @@ describe('tasks selector', () => {
         let nonChosenAnswers: AnswersMap = undefined;
         let incompleteTask: stores.Task = undefined;
         let incompleteTasks: stores.TaskMap = undefined;
-        const noSavedTaskIds: ReadonlyArray<Id> = [];
 
         beforeEach(() => {
             const aTaxonomyTerm = aTaxonomyTermReference();
@@ -176,7 +156,7 @@ describe('tasks selector', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newChosenAnswers, incompleteTasks, noSavedTaskIds);
+            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newChosenAnswers, incompleteTasks);
 
             expect(result).toEqual([incompleteTask]);
         });
@@ -185,7 +165,7 @@ describe('tasks selector', () => {
             const oldChosenAnswers = chosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldChosenAnswers, newChosenAnswers, incompleteTasks, noSavedTaskIds);
+            const result = getNewlyRecommendedTasks(oldChosenAnswers, newChosenAnswers, incompleteTasks);
 
             expect(result).toEqual([]);
         });
@@ -194,7 +174,7 @@ describe('tasks selector', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newNonChosenAnswers, incompleteTasks, noSavedTaskIds);
+            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newNonChosenAnswers, incompleteTasks);
 
             expect(result).toEqual([]);
         });
@@ -203,7 +183,7 @@ describe('tasks selector', () => {
             const oldChosenAnswers = chosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldChosenAnswers, newNonChosenAnswers, incompleteTasks, noSavedTaskIds);
+            const result = getNewlyRecommendedTasks(oldChosenAnswers, newNonChosenAnswers, incompleteTasks);
 
             expect(result).toEqual([]);
         });
@@ -320,6 +300,22 @@ describe('tasks selector', () => {
             const result = getIdsOfCompletedTasks({ [theId]: aTask });
 
             expect(result).toEqual([]);
+        });
+    });
+
+    describe('rejecting task ids', () => {
+
+        it('excludes rejected task ids', () => {
+            const aTaskIdToReject = aString();
+            const aTaskWithRejectedId = new TaskBuilder().withId(aTaskIdToReject).build();
+            expect(rejectTasksWithIds([aTaskWithRejectedId], [aTaskIdToReject])).toHaveLength(0);
+        });
+
+        it('includes non rejected task ids', () => {
+            const aTaskIdToReject = aString();
+            const aTaskWithRejectedId = new TaskBuilder().withId(aTaskIdToReject).build();
+            const aTaskToInclude = new TaskBuilder().build();
+            expect(rejectTasksWithIds([aTaskWithRejectedId, aTaskToInclude], [aTaskIdToReject])).toHaveLength(1);
         });
     });
 });

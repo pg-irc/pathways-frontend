@@ -60,7 +60,7 @@ export class QuestionnaireComponent extends React.Component<Props> {
 
     private renderHeading(): JSX.Element {
         const logoSize = Dimensions.get('screen').width / 6;
-        const closeButtonOnPress = goToRouteWithoutParameter(Routes.MyPlan, this.props.history);
+        const closeButtonOnPress = goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history);
         return (
             <View ref={this.setHeadingComponentRef}>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -111,7 +111,7 @@ export class QuestionnaireComponent extends React.Component<Props> {
         return (
             <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10 }}>
                 {hasPreviousQuestion ? this.renderPreviousButton() : <EmptyComponent />}
-                {hasNextQuestion ? this.renderNextButton() : this.renderGotoPlanButton()}
+                {hasNextQuestion ? this.renderNextButton() : this.renderGotoRecommendedButton()}
             </View>
         );
     }
@@ -140,9 +140,9 @@ export class QuestionnaireComponent extends React.Component<Props> {
         );
     }
 
-    private renderGotoPlanButton(): JSX.Element {
-        const onPress = goToRouteWithoutParameter(Routes.MyPlan, this.props.history);
-        const text = <Trans>Go to My plan</Trans>;
+    private renderGotoRecommendedButton(): JSX.Element {
+        const onPress = goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history);
+        const text = <Trans>Go to Recommended Topics</Trans>;
         return (
             <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
                 <Text style={textStyles.whiteTopazButton}>{text}</Text>
