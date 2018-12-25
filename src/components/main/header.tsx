@@ -5,7 +5,7 @@ import { Locale } from '../../locale';
 import { I18nManager, Image, Dimensions } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
-import { Routes, goBack, isOnParentScreen, isOnChildScreen, pathMatchesRoute, goToRouteWithoutParameter} from '../../application/routing';
+import { Routes, goBack, isOnParentScreen, isOnChildScreen, pathMatchesRoute, goToRouteWithoutParameter } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
@@ -77,20 +77,16 @@ const renderHeader = (backgroundColor: string, actionButton: JSX.Element, langua
 const renderBackButton = (props: Props): JSX.Element => {
     return (
         <Button transparent onPress={(): void => goBack(props.history)}>
-            <Icon name={getIconForBackButton(props.location.pathname)} style={{ color: colors.black, fontWeight: 'bold' }} />
+            <Icon name={getIconForBackButton()} style={{ color: colors.black, fontWeight: 'bold' }} />
         </Button>
     );
 };
 
-const getIconForBackButton = (path: string): string => {
-    const isLearnDetailScreen = pathMatchesRoute(path, Routes.LearnDetail);
-    if (isLearnDetailScreen) {
-        if (I18nManager.isRTL) {
-            return 'arrow-forward';
-        }
-        return 'arrow-back';
+const getIconForBackButton = (): string => {
+    if (I18nManager.isRTL) {
+        return 'arrow-forward';
     }
-    return 'close';
+    return 'arrow-back';
 };
 
 const renderArrivalAdvisorLogo = (props: Props): JSX.Element => {
