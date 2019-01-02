@@ -88,6 +88,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-28.0.0.tar.gz",
     "react-native-collapsible": "0.12.0",
     "react-native-dotenv": "^0.2.0",
+    "react-native-map-link": "^2.1.4",
     "react-native-markdown-renderer": "^3.2.8",
     "react-redux": "^5.0.7",
     "react-router-native": "^4.3.0",

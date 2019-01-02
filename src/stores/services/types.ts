@@ -17,6 +17,8 @@ export interface Address {
 
 export interface Service {
     readonly id: Id;
+    readonly latitude: number;
+    readonly longitude: number;
     readonly name: string;
     readonly description: string;
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
@@ -68,6 +70,8 @@ export interface ValidatedServiceJSON {
 }
 
 export interface ValidatedLocationJSON {
+    readonly latitude: number;
+    readonly longitude: number;
     readonly phone_numbers: ReadonlyArray<ValidatedPhoneNumberJSON>;
     readonly addresses: ReadonlyArray<ValidatedAddressWithTypeJSON>;
 }

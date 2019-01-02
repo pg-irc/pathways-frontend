@@ -28,6 +28,8 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
 
     return {
         id: data.service.id,
+        latitude: data.location.longitude,
+        longitude: data.location.latitude,
         name: data.service.name,
         description: data.service.description,
         phoneNumbers: phoneNumbers,

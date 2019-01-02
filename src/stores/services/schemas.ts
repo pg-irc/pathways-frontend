@@ -77,10 +77,16 @@ const addressWithTypeArray = {
 const location = {
     "type": "object",
     "properties": {
+        "latitude": {
+            "type": "number"
+        },
+        "longitude": {
+            "type": "number"
+        },
         "phone_numbers": phoneNumberArray,
         "addresses": addressWithTypeArray
     },
-    "required": ["phone_numbers", "addresses"]
+    "required": ["latitude", "longitude", "phone_numbers", "addresses"]
 };
 
 export const serviceAtLocation = {

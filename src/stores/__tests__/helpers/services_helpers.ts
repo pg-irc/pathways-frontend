@@ -72,6 +72,8 @@ export class AddressBuilder {
 
 export class ServiceBuilder {
     id: Id = aString();
+    latitude: number = aNumber();
+    longitude: number = aNumber();
     name: string = aString();
     description: string = aString();
     phoneNumbers: ReadonlyArray<PhoneNumber> = [];
@@ -102,9 +104,21 @@ export class ServiceBuilder {
         return this;
     }
 
+    withLatitude(latitude: number): ServiceBuilder {
+        this.latitude = latitude;
+        return this;
+    }
+
+    withLongitude(longitude: number): ServiceBuilder {
+        this.longitude = longitude;
+        return this;
+    }
+
     build(): Service {
         return {
             id: this.id,
+            latitude: this.latitude,
+            longitude: this.longitude,
             name: this.name,
             description: this.description,
             phoneNumbers: this.phoneNumbers,

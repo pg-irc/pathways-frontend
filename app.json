@@ -6,7 +6,12 @@
     "version": "1.0.0",
     "slug": "arrival_advisor",
     "ios": {
-      "bundleIdentifier": "org.peacegeeks.arrivalAdvisor"
+      "bundleIdentifier": "org.peacegeeks.arrivalAdvisor",
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": [
+          "comgooglemaps"
+        ]
+      }
     },
     "android": {
       "package": "org.peacegeeks.arrivalAdvisor"

@@ -8,20 +8,25 @@ import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { Trans } from '@lingui/react';
+import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_application_popup_component';
 
 interface ServiceListItemProps {
     readonly service: Service;
 }
 
 export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
-    (props: ServiceListItemProps): JSX.Element => (
-        <View style={{ backgroundColor: colors.white, padding: 10, borderRadius: values.lessRoundedBorderRadius }}>
-            {renderName(props.service.name)}
-            {renderDescription(props.service.description)}
-            {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
-            {renderPhoneNumbers(props.service.phoneNumbers)}
-        </View>
-    );
+    (props: ServiceListItemProps): JSX.Element => {
+        const physicalAddresses = filterPhysicalAddresses(props.service.addresses);
+        return (
+            <View style={{ backgroundColor: colors.white, padding: 10, borderRadius: values.lessRoundedBorderRadius }}>
+                {renderName(props.service.name)}
+                {renderDescription(props.service.description)}
+                {renderAddresses(physicalAddresses)}
+                {renderPhoneNumbers(props.service.phoneNumbers)}
+                {renderMapButton(props.service.latitude, props.service.longitude, physicalAddresses)}
+            </View>
+        );
+    };
 
 const renderName = (name: string): JSX.Element => (
     <Text style={textStyles.headlineH3StyleBlackLeft}>{name}</Text>
@@ -53,6 +58,15 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>) => (
         </Text>
     </View>), phoneNumbers))
 );
+
+const renderMapButton = (latitude: number, longitude: number, physicalAddresses: ReadonlyArray<Address>): JSX.Element => {
+    const locationTitle = physicalAddresses.length === 1 ? physicalAddresses[0].address : undefined;
+    return (
+        <View style={{ marginTop: 5 }}>
+            <MapsApplicationPopupComponent {...{ latitude, longitude, locationTitle}} />
+        </View>
+    );
+};
 
 const capitalizeFirstLetter = (s: string): string => (
     s.charAt(0).toUpperCase() + s.slice(1)

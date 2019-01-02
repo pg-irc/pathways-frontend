@@ -123,6 +123,50 @@ describe('schema for services_at_location endpoint', () => {
             });
         });
 
+        describe('latitude', () => {
+
+            test('location.latitude is required', () => {
+                const location = new helpers.LocationJSONBuilder().buildWithoutLatitude();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location should have required property \'latitude\'');
+            });
+
+            test('location.latitude is of type number', () => {
+                const location = new helpers.LocationJSONBuilder().withLatitude(null).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.latitude should be number');
+            });
+
+        });
+
+        describe('longitude', () => {
+
+            test('location.longitude is required', () => {
+                const location = new helpers.LocationJSONBuilder().buildWithoutLongitude();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location should have required property \'longitude\'');
+            });
+
+            test('location.longitude is of type number', () => {
+                const location = new helpers.LocationJSONBuilder().withLongitude(null).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.longitude should be number');
+            });
+
+        });
+
         describe('addresses', () => {
 
             test('location.addresses is required', () => {
