@@ -82,7 +82,7 @@ All commits are labelled with the issue they are being done under. This ensures 
 * Client specifies the minimum server version required for proper client operation.
 * We use [semantic versioning](https://semver.org/) of the form X.Y.Z.
 * We start with version 1.0.0 for client and server.
-* Versioning happens at the end of each sprint.
+* The version string of the client or server is done in the same pull request that contains the changes that require the version to change.
 * We bump the Z each sprint, except for sprints where no changes went in. We also bump Z for any hotfixes that may go in independenty of the sprint cadence.
 * We bump the Y when we add features that are backwards compatible as per semantic versioning.
 * We bump the X when we add features that are backwards incompatible, i.e. when the client would fail to operate correctly with an older server version, as per [semantic versioning](https://semver.org/).
