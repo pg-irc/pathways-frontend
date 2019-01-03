@@ -9,24 +9,22 @@ import { mapWithIndex } from '../../application/map_with_index';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { Trans } from '@lingui/react';
 import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_application_popup_component';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface ServiceListItemProps {
     readonly service: Service;
 }
 
 export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
-    (props: ServiceListItemProps): JSX.Element => {
-        const physicalAddresses = filterPhysicalAddresses(props.service.addresses);
-        return (
-            <View style={{ backgroundColor: colors.white, padding: 10, borderRadius: values.lessRoundedBorderRadius }}>
-                {renderName(props.service.name)}
-                {renderDescription(props.service.description)}
-                {renderAddresses(physicalAddresses)}
-                {renderPhoneNumbers(props.service.phoneNumbers)}
-                {renderMapButton(props.service.latitude, props.service.longitude, physicalAddresses)}
-            </View>
-        );
-    };
+    (props: ServiceListItemProps): JSX.Element => (
+        <View style={{ backgroundColor: colors.white, padding: 10, borderRadius: values.lessRoundedBorderRadius }}>
+            {renderName(props.service.name)}
+            {renderDescription(props.service.description)}
+            {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
+            {renderPhoneNumbers(props.service.phoneNumbers)}
+            {renderMapButtonIfLocation(props.service)}
+        </View>
+    );
 
 const renderName = (name: string): JSX.Element => (
     <Text style={textStyles.headlineH3StyleBlackLeft}>{name}</Text>
@@ -59,13 +57,26 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>) => (
     </View>), phoneNumbers))
 );
 
-const renderMapButton = (latitude: number, longitude: number, physicalAddresses: ReadonlyArray<Address>): JSX.Element => {
-    const locationTitle = physicalAddresses.length === 1 ? physicalAddresses[0].address : undefined;
+const renderMapButtonIfLocation = (service: Service): JSX.Element => {
+    if (R.not(service.latitude && service.longitude)) {
+        return <EmptyComponent />;
+    }
     return (
         <View style={{ marginTop: 5 }}>
-            <MapsApplicationPopupComponent {...{ latitude, longitude, locationTitle}} />
+            <MapsApplicationPopupComponent
+                latitude={service.latitude}
+                longitude={service.longitude}
+                locationTitle={getLocationTitleFromAddresses(filterPhysicalAddresses(service.addresses))}
+            />
         </View>
     );
+};
+
+const getLocationTitleFromAddresses = (addresses: ReadonlyArray<Address>): string => {
+    if (addresses.length !== 1) {
+        return undefined;
+    }
+    return addresses[0].address === 'n/a' ? undefined : addresses[0].address;
 };
 
 const capitalizeFirstLetter = (s: string): string => (

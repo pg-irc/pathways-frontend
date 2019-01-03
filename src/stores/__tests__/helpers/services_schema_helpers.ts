@@ -274,12 +274,12 @@ export class LocationJSONBuilder {
     phone_numbers: ReadonlyArray<PhoneNumberJSON> | null = [new PhoneNumberJSONBuilder().build()];
     addresses: ReadonlyArray<AddressWithTypeJSON> | null = [new AddressWithTypeJSONBuilder().build()];
 
-    withLatitude(latitude: number): LocationJSONBuilder {
+    withLatitude(latitude: number | null): LocationJSONBuilder {
         this.latitude = latitude;
         return this;
     }
 
-    withLongitude(longitude: number): LocationJSONBuilder {
+    withLongitude(longitude: number | null): LocationJSONBuilder {
         this.longitude = longitude;
         return this;
     }

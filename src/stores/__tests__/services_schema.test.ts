@@ -125,16 +125,15 @@ describe('schema for services_at_location endpoint', () => {
 
         describe('latitude', () => {
 
-            test('location.latitude is required', () => {
+            test('location.latitude is optional', () => {
                 const location = new helpers.LocationJSONBuilder().buildWithoutLatitude();
                 const validator = servicesAtLocationValidator([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
-                expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location should have required property \'latitude\'');
+                expect(validator.isValid).toBe(true);
             });
 
-            test('location.latitude is of type number', () => {
+            test('location.latitude, if provided, is of type number', () => {
                 const location = new helpers.LocationJSONBuilder().withLatitude(null).build();
                 const validator = servicesAtLocationValidator([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
@@ -147,16 +146,15 @@ describe('schema for services_at_location endpoint', () => {
 
         describe('longitude', () => {
 
-            test('location.longitude is required', () => {
+            test('location.longitude is optional', () => {
                 const location = new helpers.LocationJSONBuilder().buildWithoutLongitude();
                 const validator = servicesAtLocationValidator([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
-                expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location should have required property \'longitude\'');
+                expect(validator.isValid).toBe(true);
             });
 
-            test('location.longitude is of type number', () => {
+            test('location.longitude, if provided, is of type number', () => {
                 const location = new helpers.LocationJSONBuilder().withLongitude(null).build();
                 const validator = servicesAtLocationValidator([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),

@@ -86,7 +86,7 @@ const location = {
         "phone_numbers": phoneNumberArray,
         "addresses": addressWithTypeArray
     },
-    "required": ["latitude", "longitude", "phone_numbers", "addresses"]
+    "required": ["phone_numbers", "addresses"]
 };
 
 export const serviceAtLocation = {
