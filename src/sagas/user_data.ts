@@ -15,6 +15,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.ADD_TO_SAVED_TASKS,
             constants.REMOVE_FROM_SAVED_TASKS,
             constants.TOGGLE_IS_TASK_COMPLETED,
+            constants.CLEAR_ALL_USER_DATA,
         ],
         saveUserData);
 }
@@ -23,7 +24,7 @@ type SaveActions = IterableIterator<
     SelectEffect |
     CallEffect |
     PutEffect<UserDataPersistence.SaveSuccessAction | UserDataPersistence.SaveFailureAction>
-    >;
+>;
 
 export function* saveUserData(): SaveActions {
     try {
