@@ -32,8 +32,7 @@ export const values = {
     contentPadding: 10,
 };
 
-// TODO Buy Avenir and load it for Android.
-export const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'Roboto';
+export const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'AvenirBook';
 
 export const textStyles = StyleSheet.create({
     headlineH1StyleBlackLeft: {

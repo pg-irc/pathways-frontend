@@ -44,6 +44,7 @@ export function startApplication(saga: ApplicationSaga, store: CreatedStore): vo
     // tslint:disable:no-expression-statement
     runSaga(saga.middleware);
     store.dispatch(loadFontsActions.request({
+        AvenirBook: require('../../assets/fonts/Avenir-Book.ttf'),
         Roboto: require('../../assets/fonts/Roboto.ttf'),
         Roboto_medium: require('../../assets/fonts/Roboto_medium.ttf'),
     }));
