@@ -21,15 +21,13 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     const bookmarkedIsActive = pathMatchesRoute(path, Routes.BookmarkedTopics);
     const recommendedTopicsActive = pathMatchesRoute(path, Routes.RecommendedTopics);
     const learnIsActive = pathMatchesRoute(path, Routes.Learn);
-    const helpIsActive = pathMatchesRoute(path, Routes.Help);
 
     return (
         <Footer style={applicationStyles.boxShadowAbove}>
             <FooterTab style={[{ backgroundColor: colors.white }]}>
                 {navigationButton(props.history, Routes.RecommendedTopics, 'star', recommendedTopicsActive)}
-                {navigationButton(props.history, Routes.BookmarkedTopics, 'bookmark', bookmarkedIsActive)}
                 {navigationButton(props.history, Routes.Learn, 'book', learnIsActive)}
-                {navigationButton(props.history, Routes.Help, 'question', helpIsActive)}
+                {navigationButton(props.history, Routes.BookmarkedTopics, 'bookmark', bookmarkedIsActive)}
             </FooterTab>
         </Footer>
     );
