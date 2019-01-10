@@ -77,6 +77,12 @@ const addressWithTypeArray = {
 const location = {
     "type": "object",
     "properties": {
+        "latitude": {
+            "type": "number"
+        },
+        "longitude": {
+            "type": "number"
+        },
         "phone_numbers": phoneNumberArray,
         "addresses": addressWithTypeArray
     },

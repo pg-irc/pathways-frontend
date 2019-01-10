@@ -1,5 +1,5 @@
 // tslint:disable:no-class readonly-keyword no-expression-statement no-this no-let no-any
-import { aString, anInteger } from '../../../application/__tests__/helpers/random_test_values';
+import { aString, anInteger, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 
 // The following "JSON" types exist purely to allow us to test our schemas with invalid data.
 // The optional and any properties on these types ensure we can create invalid objects.
@@ -30,6 +30,8 @@ interface ServiceJSON {
 }
 
 interface LocationJSON {
+    readonly latitude?: any;
+    readonly longitude?: any;
     readonly phone_numbers?: ReadonlyArray<PhoneNumberJSON>;
     readonly addresses?: ReadonlyArray<AddressWithTypeJSON>;
 }
@@ -267,8 +269,20 @@ export class ServiceJSONBuilder {
 }
 
 export class LocationJSONBuilder {
+    latitude: number | null = aNumber();
+    longitude: number | null = aNumber();
     phone_numbers: ReadonlyArray<PhoneNumberJSON> | null = [new PhoneNumberJSONBuilder().build()];
     addresses: ReadonlyArray<AddressWithTypeJSON> | null = [new AddressWithTypeJSONBuilder().build()];
+
+    withLatitude(latitude: number | null): LocationJSONBuilder {
+        this.latitude = latitude;
+        return this;
+    }
+
+    withLongitude(longitude: number | null): LocationJSONBuilder {
+        this.longitude = longitude;
+        return this;
+    }
 
     withPhoneNumbers(phoneNumbers: ReadonlyArray<PhoneNumberJSON> | null): LocationJSONBuilder {
         this.phone_numbers = phoneNumbers;
@@ -282,17 +296,43 @@ export class LocationJSONBuilder {
 
     build(): LocationJSON {
         return {
+            latitude: this.latitude,
+            longitude: this.longitude,
             phone_numbers: this.phone_numbers,
             addresses: this.addresses,
         };
     }
 
+    buildWithoutLatitude(): LocationJSON {
+        return {
+            longitude: this.longitude,
+            addresses: this.addresses,
+            phone_numbers: this.phone_numbers,
+        };
+    }
+
+    buildWithoutLongitude(): LocationJSON {
+        return {
+            latitude: this.latitude,
+            addresses: this.addresses,
+            phone_numbers: this.phone_numbers,
+        };
+    }
+
     buildWithoutPhoneNumbers(): LocationJSON {
-        return { addresses: this.addresses };
+        return {
+            latitude: this.latitude,
+            longitude: this.longitude,
+            addresses: this.addresses,
+        };
     }
 
     buildWithoutAddresses(): LocationJSON {
-        return { phone_numbers: this.phone_numbers };
+        return {
+            latitude: this.latitude,
+            longitude: this.longitude,
+            phone_numbers: this.phone_numbers,
+        };
     }
 }
 

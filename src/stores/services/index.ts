@@ -28,6 +28,9 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
 
     return {
         id: data.service.id,
+        // These values come in the wrong order from the server
+        latitude: data.location.longitude,
+        longitude: data.location.latitude,
         name: data.service.name,
         description: data.service.description,
         phoneNumbers: phoneNumbers,

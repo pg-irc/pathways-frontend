@@ -8,6 +8,8 @@ import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { Trans } from '@lingui/react';
+import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_application_popup_component';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface ServiceListItemProps {
     readonly service: Service;
@@ -20,6 +22,7 @@ export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemP
             {renderDescription(props.service.description)}
             {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
             {renderPhoneNumbers(props.service.phoneNumbers)}
+            {renderMapButtonIfLocation(props.service)}
         </View>
     );
 
@@ -53,6 +56,28 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>) => (
         </Text>
     </View>), phoneNumbers))
 );
+
+const renderMapButtonIfLocation = (service: Service): JSX.Element => {
+    if (R.not(service.latitude && service.longitude)) {
+        return <EmptyComponent />;
+    }
+    return (
+        <View style={{ marginTop: 5 }}>
+            <MapsApplicationPopupComponent
+                latitude={service.latitude}
+                longitude={service.longitude}
+                locationTitle={getLocationTitleFromAddresses(filterPhysicalAddresses(service.addresses))}
+            />
+        </View>
+    );
+};
+
+const getLocationTitleFromAddresses = (addresses: ReadonlyArray<Address>): string => {
+    if (addresses.length !== 1) {
+        return undefined;
+    }
+    return addresses[0].address === 'n/a' ? undefined : addresses[0].address;
+};
 
 const capitalizeFirstLetter = (s: string): string => (
     s.charAt(0).toUpperCase() + s.slice(1)

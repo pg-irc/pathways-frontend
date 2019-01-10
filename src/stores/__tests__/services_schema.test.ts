@@ -123,6 +123,48 @@ describe('schema for services_at_location endpoint', () => {
             });
         });
 
+        describe('latitude', () => {
+
+            test('location.latitude is optional', () => {
+                const location = new helpers.LocationJSONBuilder().buildWithoutLatitude();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('location.latitude, if provided, is of type number', () => {
+                const location = new helpers.LocationJSONBuilder().withLatitude(null).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.latitude should be number');
+            });
+
+        });
+
+        describe('longitude', () => {
+
+            test('location.longitude is optional', () => {
+                const location = new helpers.LocationJSONBuilder().buildWithoutLongitude();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('location.longitude, if provided, is of type number', () => {
+                const location = new helpers.LocationJSONBuilder().withLongitude(null).build();
+                const validator = servicesAtLocationValidator([
+                    new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
+                ]);
+                expect(validator.isValid).toBe(false);
+                expect(validator.errors).toBe('data[0].location.longitude should be number');
+            });
+
+        });
+
         describe('addresses', () => {
 
             test('location.addresses is required', () => {
