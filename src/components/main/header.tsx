@@ -31,26 +31,35 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     }
 
     if (isOnParentScreen(path)) {
-        const headerMenuButton =
-            <HeaderMenuButtonComponent
-                onPress={props.onHeaderMenuButtonPress}
-                locale={props.currentLocale}
-                textColor={colors.white}
-            />;
-        return renderHeader(colors.topaz, renderHelpButton(props), headerMenuButton);
+        return <ParentScreenHeader {...props} />;
     }
 
     if (isOnChildScreen(path)) {
-        const headerMenuButton =
-            <HeaderMenuButtonComponent
-                onPress={props.onHeaderMenuButtonPress}
-                locale={props.currentLocale}
-                textColor={colors.topaz}
-            />;
-        return renderHeader(colors.lightGrey, renderBackButton(props), headerMenuButton);
+        return <ChildScreenHeader {...props} />;
     }
 
     return <EmptyComponent />;
+};
+
+const ParentScreenHeader = (props: Props): JSX.Element => {
+    const headerMenuButton =
+        <HeaderMenuButtonComponent
+            onPress={props.onHeaderMenuButtonPress}
+            locale={props.currentLocale}
+            textColor={colors.white}
+        />;
+
+    return renderHeader(colors.topaz, <HelpButton {...props} />, headerMenuButton);
+};
+
+const ChildScreenHeader = (props: Props): JSX.Element => {
+    const headerMenuButton =
+        <HeaderMenuButtonComponent
+            onPress={props.onHeaderMenuButtonPress}
+            locale={props.currentLocale}
+            textColor={colors.topaz}
+        />;
+    return renderHeader(colors.lightGrey, <BackButton {...props} />, headerMenuButton);
 };
 
 const renderHeader = (backgroundColor: string, actionButton: JSX.Element, headerMenuButton: JSX.Element): JSX.Element => {
@@ -73,7 +82,7 @@ const renderHeader = (backgroundColor: string, actionButton: JSX.Element, header
     );
 };
 
-const renderBackButton = (props: Props): JSX.Element => {
+const BackButton = (props: Props): JSX.Element => {
     return (
         <Button transparent onPress={(): void => goBack(props.history)}>
             <Icon name={getIconForBackButton()} style={{ color: colors.black, fontWeight: 'bold' }} />
@@ -88,7 +97,7 @@ const getIconForBackButton = (): string => {
     return 'arrow-back';
 };
 
-const renderHelpButton = (props: Props): JSX.Element => (
+const HelpButton = (props: Props): JSX.Element => (
     <Button onPress={goToRouteWithoutParameter(Routes.Help, props.history)} transparent icon>
         <Icon
             type='FontAwesome'
