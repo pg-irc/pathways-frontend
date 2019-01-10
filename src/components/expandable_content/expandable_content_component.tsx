@@ -1,12 +1,13 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
 import { Dimensions, LayoutChangeEvent } from 'react-native';
-import { View, Text, Button } from 'native-base';
+import { View, Text, Button, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { toggleExpandedState, ExpandableContentStates, shouldShowButton,
          defaultExpandableContentState, isDefaultState } from './expandable_content_states';
+import { values } from '../../application/styles';
 
 export interface ExpandableContentProps {
     readonly content: JSX.Element;
@@ -43,7 +44,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     private renderContent(): JSX.Element {
         const style = {
             paddingHorizontal: 5,
-            paddingBottom: 20,
+            paddingBottom: 5,
         };
         return (
             <View style={this.isCollapsed() ? { ...this.getCollapsedStyle(), ...style  } : style}>
@@ -90,20 +91,25 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     private getButton(): JSX.Element {
         const onPress = (): void => this.toggleState();
         const text = this.isCollapsed() ? <Trans>Read more</Trans> : <Trans>Read less</Trans>;
-        const paddingTop = this.isCollapsed() ? 3 : 0;
+        // const paddingTop = this.isCollapsed() ? 3 : 0;
         const backgroundColor = this.props.contentBackgroundColor ? this.props.contentBackgroundColor : colors.white;
         return (
-            <View style={{ backgroundColor, paddingTop }}>
+            <View style={{ backgroundColor }}>
                 <Button
                     onPress={onPress}
-                    rounded
-                    style={{
-                        backgroundColor: colors.darkerGrey,
-                        alignSelf: 'center',
-                    }}>
-                    <Text style={textStyles.paragraphBoldBlackLeft}>
+                    transparent
+                    iconRight
+                >
+                    <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.topaz, paddingLeft: 6 }]}>
                         {text}
                     </Text>
+                    <Icon
+                        name={this.isCollapsed() ? 'arrow-down' : 'arrow-up'}
+                        style={{
+                            fontSize: values.smallIconSize,
+                            color: colors.topaz,
+                        }}
+                    />
                 </Button>
             </View>
         );
