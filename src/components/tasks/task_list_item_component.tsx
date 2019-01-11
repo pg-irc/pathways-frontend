@@ -6,7 +6,7 @@ import { AddToSavedListAction, RemoveFromSavedListAction, Id } from '../../store
 import { I18nManager, TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
-import { ListItemAddBookmarkComponent, ListItemRemoveBookmarkComponent } from '../tasks/bookmark_button_component';
+import { BookmarkButtonComponent, BookmarkButtonDisplay } from '../bookmark_button/bookmark_button_component';
 
 export interface TaskListItemProps {
     readonly task: TaskListItem;
@@ -23,11 +23,6 @@ type Props = TaskListItemProps & TaskListItemActions;
 
 export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const taskDescription = stripMarkdown(props.task.description);
-    const bookmarkProps = {
-        taskId: props.task.id,
-        addBookmark: props.addToSavedList,
-        removeBookmark: props.removeFromSavedList,
-    };
     return (
         <TouchableOpacity
             onPress={props.goToTaskDetail}
@@ -41,12 +36,13 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
             <View style={{ flex: 4, flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                     <View style={{ marginRight: 20 }}>
-                    {
-                        props.taskIsBookmarked ?
-                            <ListItemRemoveBookmarkComponent {...bookmarkProps} />
-                            :
-                            <ListItemAddBookmarkComponent {...bookmarkProps}/>
-                    }
+                    <BookmarkButtonComponent
+                        isBookmarked={props.taskIsBookmarked}
+                        addBookmark={(): AddToSavedListAction => props.addToSavedList(props.task.id)}
+                        removeBookmark={(): RemoveFromSavedListAction => props.removeFromSavedList(props.task.id)}
+                        textColor={colors.topaz}
+                        display={BookmarkButtonDisplay.ListItem}
+                    />
                     </View>
                     <View>
                         <Text numberOfLines={2} style={textStyles.headlineH4StyleBlackLeft}>
