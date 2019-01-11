@@ -100,7 +100,7 @@
   },
   "lingui": {
     "sourceLocale": "en",
-    "format": "lingui",
+    "format": "po",
     "srcPathDirs": [
       "<rootDir>/lib"
     ]
