@@ -10,7 +10,7 @@ export const colors = {
     darkerGrey: '#d0d0c5',
     greyishBrown: '#595959',
     black: '#313131',
-    sunYellow: '#ffe22b',
+    sunYellow: '#ffca28',
     white: '#ffffff',
     darkGreyWithAlpha: 'rgba(0, 0, 0, 0.4)',
     turquoiseBlue: '#07a0c3',

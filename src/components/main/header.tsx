@@ -57,7 +57,7 @@ const ChildScreenHeader = (props: Props): JSX.Element => {
         <HeaderMenuButtonComponent
             onPress={props.onHeaderMenuButtonPress}
             locale={props.currentLocale}
-            textColor={colors.topaz}
+            textColor={colors.black}
         />;
     return renderHeader(colors.lightGrey, <BackButton {...props} />, headerMenuButton);
 };
