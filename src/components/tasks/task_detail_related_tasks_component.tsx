@@ -1,3 +1,4 @@
+// tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
 import { History } from 'history';
 import { View, Text } from 'native-base';

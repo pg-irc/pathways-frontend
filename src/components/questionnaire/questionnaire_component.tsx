@@ -13,6 +13,7 @@ import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/qu
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { scrollToComponent } from '../main/main_page_switcher';
 
 export interface QuestionnaireProps {
     readonly activeQuestion: SelectorQuestion;
@@ -155,7 +156,7 @@ export class QuestionnaireComponent extends React.Component<Props> {
     }
 
     private scrollToTop(): void {
-        this.contentComponent._root.scrollIntoView(this.headingComponent);
+        scrollToComponent(this.contentComponent, this.headingComponent);
     }
 
     private activeQuestionHasBeenAnswered(): boolean {

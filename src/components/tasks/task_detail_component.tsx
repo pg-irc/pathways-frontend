@@ -10,6 +10,7 @@ import { Task } from '../../selectors/tasks/task';
 import { Routes } from '../../application/routing';
 import { TaskDetailHeadingComponent } from './task_detail_heading_component';
 import { TaskDetailContentComponent } from './task_detail_content_component';
+import { scrollToComponent } from '../main/main_page_switcher';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -28,9 +29,10 @@ type Props = TaskDetailProps & TaskDetailActions;
 export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const task = props.task;
     const onServicesButtonPress = goToRouteWithParameter(Routes.Services, task.id, props.history);
+    const taskHead = <TaskDetailHeadingComponent />;
     return (
-        <Content style={applicationStyles.body}>
-            <TaskDetailHeadingComponent />
+        <Content style={applicationStyles.body} ref={(ref: any): void => scrollToComponent(ref, taskHead)}>
+            {taskHead}
             <TaskDetailContentComponent
                 task={task}
                 onServicesTextPress={onServicesButtonPress}

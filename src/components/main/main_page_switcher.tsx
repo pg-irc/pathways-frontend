@@ -28,3 +28,13 @@ export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Eleme
         <Route exact path={routePathDefinition(Routes.BookmarkedTopics)} component={BookmarkedTopicsConnectedComponent} />
     </Switch>
 );
+
+type ScrollViewRef = {
+    readonly _root: {
+        readonly scrollIntoView: (element: JSX.Element) => void,
+    };
+};
+
+export const scrollToComponent = (scrollViewRef: ScrollViewRef, targetComponent: JSX.Element): void => (
+    scrollViewRef._root.scrollIntoView(targetComponent)
+);
