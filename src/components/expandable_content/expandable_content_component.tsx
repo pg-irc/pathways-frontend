@@ -5,7 +5,7 @@ import { View, Text, Button, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { toggleExpandedState, ExpandableContentStates, shouldShowButton,
+import { toggleExpandedState, ExpandableContentStates, shouldShowReadMoreButton,
          defaultExpandableContentState, isDefaultState } from './expandable_content_states';
 import { values } from '../../application/styles';
 
@@ -15,7 +15,7 @@ export interface ExpandableContentProps {
 }
 
 interface ExpandableContentState {
-    readonly collapsedHeight: number;
+    readonly collapseAtHeight: number;
     readonly expandableState: ExpandableContentStates;
 }
 
@@ -26,7 +26,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         const screenHeight = Dimensions.get('screen').height;
         const oneEighthTheScreen = Math.round(screenHeight / 8);
         this.state = {
-            collapsedHeight: oneEighthTheScreen,
+            collapseAtHeight: oneEighthTheScreen,
             expandableState: defaultExpandableContentState,
         };
         this.onLayoutChange = this.onLayoutChange.bind(this);
@@ -36,7 +36,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         return (
             <View onLayout={this.onLayoutChange}>
                 {this.renderContent()}
-                {this.renderButtonIfShown()}
+                {this.renderReadMoreButtonIfShown()}
             </View >
         );
     }
@@ -44,7 +44,6 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     private renderContent(): JSX.Element {
         const style = {
             paddingHorizontal: 5,
-            paddingBottom: 5,
         };
         return (
             <View style={this.isCollapsed() ? { ...this.getCollapsedStyle(), ...style  } : style}>
@@ -55,22 +54,22 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
 
     private getCollapsedStyle(): object {
         return {
-            height: this.state.collapsedHeight,
-            overflow: 'hidden',
+            height: this.state.collapseAtHeight,
+            overflow: 'scroll',
         };
     }
 
-    private renderButtonIfShown(): JSX.Element {
-        return shouldShowButton(this.state.expandableState) ? this.getButton() : <EmptyComponent />;
+    private renderReadMoreButtonIfShown(): JSX.Element {
+        return shouldShowReadMoreButton(this.state.expandableState) ? this.getReadMoreButton() : <EmptyComponent />;
     }
 
     private onLayoutChange(event: LayoutChangeEvent): void {
         const isUninitialized = isDefaultState(this.state.expandableState);
         const viewHeight = event.nativeEvent.layout.height;
         const readMoreButtonHeight = 45;
-        const isHeighAboveLimit = viewHeight > this.state.collapsedHeight + readMoreButtonHeight;
+        const heightIsAboveLimit = viewHeight > this.state.collapseAtHeight + readMoreButtonHeight;
 
-        if (isUninitialized && isHeighAboveLimit) {
+        if (isUninitialized && heightIsAboveLimit) {
             this.enableExpansion();
         }
     }
@@ -89,7 +88,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         });
     }
 
-    private getButton(): JSX.Element {
+    private getReadMoreButton(): JSX.Element {
         const onPress = (): void => this.toggleState();
         const text = this.isCollapsed() ? <Trans>Read more</Trans> : <Trans>Read less</Trans>;
         // const paddingTop = this.isCollapsed() ? 3 : 0;

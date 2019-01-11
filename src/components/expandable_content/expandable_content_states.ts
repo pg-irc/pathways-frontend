@@ -11,7 +11,7 @@ export const isDefaultState = (currentState: ExpandableContentStates): boolean =
     currentState === defaultExpandableContentState
 );
 
-export const shouldShowButton = (currentState: ExpandableContentStates): boolean => (
+export const shouldShowReadMoreButton = (currentState: ExpandableContentStates): boolean => (
     currentState === ExpandableContentStates.isCollapsed ||
     currentState === ExpandableContentStates.isExpanded
 );
