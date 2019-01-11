@@ -5,8 +5,8 @@ import { Id as LearnId } from '../stores/explore';
 import { Id as TaskId } from '../stores/tasks';
 
 interface MatchParameters {
-    readonly learnId: LearnId;
-    readonly taskId: TaskId;
+    readonly learnId?: LearnId;
+    readonly taskId?: TaskId;
 }
 
 export type RouterProps = RouteComponentProps<MatchParameters>;
@@ -113,4 +113,16 @@ export const isOnChildScreen = (path: string): boolean => {
     const isOnLearnDetailScreen = pathMatchesRoute(path, Routes.LearnDetail);
 
     return isOnTaskDetailScreen || isOnServicesScreen || isOnLearnDetailScreen;
+};
+
+// By (arguably poor) design the router's match.params is empty when trying to access it outside a "Route" component.
+// This makes it impossible to access params in components like the Header and Footer.
+// This helper function remedies this by parsing the parameters from the route url which is always available globally.
+// For more details see: https://github.com/ReactTraining/react-router/issues/5870.
+export const getMatchParamsFromPathandRoute = (pathName: string, route: Routes): MatchParameters => {
+    const match = matchPath(pathName, {
+        path: routePathDefinition(route),
+        exact: true,
+    });
+    return match.params;
 };

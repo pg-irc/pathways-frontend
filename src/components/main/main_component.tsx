@@ -1,10 +1,10 @@
 // tslint:disable:no-class no-this no-expression-statement
 import React from 'react';
 import { Container, Drawer } from 'native-base';
-import { HeaderComponent, HeaderProps } from './header';
+import { HeaderConnectedComponent } from './header_connected_component';
 import { MainPageSwitcherComponent } from './main_page_switcher';
 import { NotificationsConnectedComponent } from '../notifications/notifications_connected_component';
-import { FooterComponent, FooterProps } from './footer';
+import { FooterComponent, FooterProps } from './footer_component';
 import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connected_component';
 import { RouterProps } from '../../application/routing';
 import { Location, Action } from 'history';
@@ -15,7 +15,7 @@ interface HeaderMenuState {
     readonly isHeaderMenuShowing: boolean;
 }
 
-export type MainComponentProps = HeaderProps & FooterProps & RouterProps;
+export type MainComponentProps = FooterProps & RouterProps;
 
 export interface MainComponentActions {
     readonly routeChanged: (location: Location, action: Action) => RouteChangedAction;
@@ -39,13 +39,22 @@ export class MainComponent extends React.Component<Props> {
     render(): JSX.Element {
         return (
             <Drawer
-                open={this.state.isHeaderMenuShowing}
                 side='right'
-                content={<HeaderMenuConnectedComponent history={this.props.history} closeMenu={this.closeDrawer} />}
                 onClose={this.closeDrawer}
+                open={this.state.isHeaderMenuShowing}
+                content={
+                    <HeaderMenuConnectedComponent
+                        history={this.props.history}
+                        closeMenu={this.closeDrawer}
+                    />
+                }
             >
                 <Container>
-                    <HeaderComponent onHeaderMenuButtonPress={this.openDrawer} {...this.props} />
+                    <HeaderConnectedComponent
+                        history={this.props.history}
+                        location={this.props.location}
+                        onHeaderMenuButtonPress={this.openDrawer}
+                    />
                     <MainPageSwitcherComponent />
                     <FooterComponent {...this.props} />
                     <NotificationsConnectedComponent {...this.props} />
