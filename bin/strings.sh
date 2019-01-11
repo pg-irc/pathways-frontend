@@ -46,7 +46,7 @@ extract_changed() {
 
     for locale in "${locales[@]}"
     do
-        echo "Filtering PO files for strings needing translation ${locale}..."
+        echo "Filtering strings needing translation for ${locale}..."
         # Use msggrep to get the strings needing translation
         #   -v invert the result
         #   -T match msgstr entries, i.e. the translated strings
@@ -61,6 +61,7 @@ extract_changed() {
 
     echo "Please send files locale/*/new-messages.csv or locale/*/new-messages.po for translation"
 }
+
 
 build_changed() {
     for locale in "${locales[@]}"
@@ -81,22 +82,23 @@ build_changed() {
     yarn cbt
 }
 
-# translate
-
-#strings.sh --build-changed
-
-# Convert CVS files back to po files with "csv2po locale/fr/messages.csv locale/fr/messages.po"
-# Combine old and new translations with "msgcat locale/ar/messages.po locale/ar/new-messages.po > locale/ar/joined-messages.po"
-# Rename new files to replace the old po files
-# Clean up temp files
 
 clean() {
-    rm locale/*/new-messages.* locale/*/merged-messages.po locale/*/*.
+    rm -f locale/*/messages.csv
+    rm -f locale/*/new-messages.*
+    rm -f locale/*/merged-messages.po
+    rm -f locale/*/*.backup
 }
 
+
 help() {
-    echo "Help"
+    echo "./bin/strings.sh --extract-all        Extract all strings from source code to PO and CVS files"
+    echo "./bin/strings.sh --build-all          Import all strings from CVS files and build the app"
+    echo "./bin/strings.sh --extract-changed    Extract just the changed strings from source code to PO and CVS files"
+    echo "./bin/strings.sh --build-changed      Import just the changed strings from CVS files and build the app"
+    echo "./bin/strings.sh --clean              Remove temporary files"
 }
+
 
 if [ "$1" == "--extract-all" ]; then
     extract_all
@@ -109,6 +111,9 @@ elif [ "$1" == "--extract-changed" ]; then
 
 elif [ "$1" == "--build-changed" ]; then
     build_changed
+
+elif [ "$1" == "--clean" ]; then
+    clean
 
 else
     help
