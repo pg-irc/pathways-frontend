@@ -1,15 +1,14 @@
 import React from 'react';
 import { Header, Left, Button, Icon, Right } from 'native-base';
-import { CurrentLocale } from '../language_switcher/current_locale';
+import { HeaderMenuButtonComponent } from '../header_menu/header_menu_button_component';
 import { Locale } from '../../locale';
-import { I18nManager, Image, Dimensions } from 'react-native';
+import { I18nManager } from 'react-native';
 import { History, Location } from 'history';
 import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
 import { Routes, goBack, isOnParentScreen, isOnChildScreen, pathMatchesRoute, goToRouteWithoutParameter } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors } from '../../application/styles';
+import { colors, values } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
-import { arrivalAdvisorGlyphLogo } from '../../application/images';
 
 export interface HeaderProps {
     readonly currentLocale: Locale;
@@ -18,7 +17,7 @@ export interface HeaderProps {
 }
 
 export interface UiActions {
-    readonly onLanguageSelect: () => void;
+    readonly onHeaderMenuButtonPress: () => void;
 }
 
 type Props = HeaderProps & UiActions;
@@ -32,29 +31,38 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     }
 
     if (isOnParentScreen(path)) {
-        const languageSwitcher =
-            <CurrentLocale
-                onPress={props.onLanguageSelect}
-                locale={props.currentLocale}
-                textColor={colors.white}
-            />;
-        return renderHeader(colors.topaz, renderArrivalAdvisorLogo(props), languageSwitcher);
+        return <ParentScreenHeader {...props} />;
     }
 
     if (isOnChildScreen(path)) {
-        const languageSwitcher =
-            <CurrentLocale
-                onPress={props.onLanguageSelect}
-                locale={props.currentLocale}
-                textColor={colors.topaz}
-            />;
-        return renderHeader(colors.lightGrey, renderBackButton(props), languageSwitcher);
+        return <ChildScreenHeader {...props} />;
     }
 
     return <EmptyComponent />;
 };
 
-const renderHeader = (backgroundColor: string, actionButton: JSX.Element, languageSwitcher: JSX.Element): JSX.Element => {
+const ParentScreenHeader = (props: Props): JSX.Element => {
+    const headerMenuButton =
+        <HeaderMenuButtonComponent
+            onPress={props.onHeaderMenuButtonPress}
+            locale={props.currentLocale}
+            textColor={colors.white}
+        />;
+
+    return renderHeader(colors.topaz, <HelpButton {...props} />, headerMenuButton);
+};
+
+const ChildScreenHeader = (props: Props): JSX.Element => {
+    const headerMenuButton =
+        <HeaderMenuButtonComponent
+            onPress={props.onHeaderMenuButtonPress}
+            locale={props.currentLocale}
+            textColor={colors.topaz}
+        />;
+    return renderHeader(colors.lightGrey, <BackButton {...props} />, headerMenuButton);
+};
+
+const renderHeader = (backgroundColor: string, actionButton: JSX.Element, headerMenuButton: JSX.Element): JSX.Element => {
     const marginTop = getStatusBarHeightForPlatform();
     // From the docs: "Connects the global back button on Android and tvOS to the router's history.
     // On Android, when the initial location is reached, the default back behavior takes over.
@@ -68,13 +76,13 @@ const renderHeader = (backgroundColor: string, actionButton: JSX.Element, langua
                 {reactRouterBackButtonHack}
             </Left>
             <Right style={{ alignItems: 'center' }}>
-                {languageSwitcher}
+                {headerMenuButton}
             </Right>
         </Header>
     );
 };
 
-const renderBackButton = (props: Props): JSX.Element => {
+const BackButton = (props: Props): JSX.Element => {
     return (
         <Button transparent onPress={(): void => goBack(props.history)}>
             <Icon name={getIconForBackButton()} style={{ color: colors.black, fontWeight: 'bold' }} />
@@ -89,18 +97,12 @@ const getIconForBackButton = (): string => {
     return 'arrow-back';
 };
 
-const renderArrivalAdvisorLogo = (props: Props): JSX.Element => {
-    const logoSize = Dimensions.get('screen').width / 15;
-    return (
-        <Button onPress={goToRouteWithoutParameter(Routes.Home, props.history)} transparent>
-            <Image
-                source={arrivalAdvisorGlyphLogo}
-                resizeMode={'contain'}
-                style={{
-                    width: logoSize,
-                    height: logoSize,
-                }}
-            />
-        </Button>
-    );
-};
+const HelpButton = (props: Props): JSX.Element => (
+    <Button onPress={goToRouteWithoutParameter(Routes.Help, props.history)} transparent icon>
+        <Icon
+            type='FontAwesome'
+            name='question-circle'
+            style={{ color: colors.white, fontSize: values.mediumIconSize }}
+        />
+    </Button>
+);
