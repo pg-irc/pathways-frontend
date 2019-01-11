@@ -67,7 +67,8 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     private onLayoutChange(event: LayoutChangeEvent): void {
         const isUninitialized = isDefaultState(this.state.expandableState);
         const viewHeight = event.nativeEvent.layout.height;
-        const isHeighAboveLimit = viewHeight > this.state.collapsedHeight;
+        const readMoreButtonHeight = 45;
+        const isHeighAboveLimit = viewHeight > this.state.collapsedHeight + readMoreButtonHeight;
 
         if (isUninitialized && isHeighAboveLimit) {
             this.enableExpansion();
