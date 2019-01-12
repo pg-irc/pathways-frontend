@@ -3,6 +3,7 @@ import { APIClient, APIResponse, MaybeLocation } from './api_client';
 export { APIClient };
 import { Id } from '../stores/tasks';
 
+// TODO this is really a namespace with a global variable in it
 export class API {
 
     private static apiClient: APIClient = undefined;
@@ -12,11 +13,16 @@ export class API {
         this.apiClient = new APIClient(url);
     }
 
-    static async searchServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
-        return await this.client.searchServices(taskId, location);
+    static async getServerVersion(): Promise<APIResponse> {
+        return await this.client().serverVersion();
     }
 
-    private static get client(): APIClient {
+    // TODO rename to something that implies get from server
+    static async searchServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
+        return await this.client().searchServices(taskId, location);
+    }
+
+    private static client(): APIClient {
         if (this.apiClient === undefined) {
             throw new Error('APIClient initialized, API.configure(...) must be called first');
         }

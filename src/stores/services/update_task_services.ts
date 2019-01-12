@@ -4,6 +4,8 @@ import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { Action as ReduxAction } from 'redux';
 
+// TODO use makeAction helper instead
+// TODO rename this file to actions.ts
 interface UpdateTaskServicesAction<P extends {} = {}> extends ReduxAction {
     readonly payload: P;
 }

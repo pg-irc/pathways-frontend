@@ -20,6 +20,11 @@ export class APIClient {
         this.host = host;
     }
 
+    async serverVersion(): Promise<APIResponse> {
+        const endpoint = 'version';
+        return await this.fetch(endpoint);
+    }
+
     async searchServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
         const parameters = buildParameters(taskId, location);
         const endpoint = 'services_at_location';
@@ -27,7 +32,9 @@ export class APIClient {
         return servicesResponse;
     }
 
+    // TODO this should be the only function in this class
     private async fetch(endpoint: string, query: string = ''): Promise<APIResponse> {
+        // TODO clean this up
         const url = `${this.host}/${endpoint}?${query}`;
         const response = await fetch(url);
         return createAPIResponse(response);
