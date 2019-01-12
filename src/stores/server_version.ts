@@ -25,7 +25,7 @@ export namespace GetServerVersionAsync {
     export type Action = RequestAction | ResultAction;
 }
 
-enum StoreState {
+export enum StoreState {
     Empty,
     Valid,
     Invalid,
