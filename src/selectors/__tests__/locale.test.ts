@@ -15,6 +15,7 @@ describe('locale selectors fetch', () => {
 
     beforeEach(() => {
         aLocaleStore = new LocaleStoreBuilder().build();
+        // TODO fix this test to not need the entire store
         theStore = new ApplicationStoreBuilder().withLocaleStore(aLocaleStore).build();
     });
 

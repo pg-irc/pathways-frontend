@@ -3,7 +3,7 @@ import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-
 import * as constants from '../application/constants';
 import { API } from '../api';
 import { APIResponse } from '../api/api_client';
-import { GetServerVersionAsync } from '../stores/server_version/actions';
+import { GetServerVersionAsync } from '../stores/server_version';
 
 export function* watchGetServerVersion(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.GET_SERVER_VERSION_REQUEST, getServerVersion);

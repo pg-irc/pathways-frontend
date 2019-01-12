@@ -8,7 +8,9 @@ import * as services from '../../services';
 import * as explore from '../../explore';
 import * as taxonomies from '../../taxonomies';
 import * as notifications from '../../notifications';
+import * as serverVersion from '../../server_version';
 
+// TODO remove this file
 export class ApplicationStoreBuilder {
     fontsInStore: fonts.Store;
     localeInStore: locale.LocaleStore;
@@ -18,6 +20,8 @@ export class ApplicationStoreBuilder {
     exploreSectionsInStore: explore.ExploreStore;
     taxonomiesInStore: taxonomies.TaxonomyStore;
     notificationsInStore: notifications.NotificationStore;
+    serverVersionInStore: serverVersion.ServerVersionStore;
+
 
     withLocaleStore(store: locale.LocaleStore): ApplicationStoreBuilder {
         this.localeInStore = store;
@@ -34,6 +38,7 @@ export class ApplicationStoreBuilder {
             exploreSectionsInStore: this.exploreSectionsInStore,
             taxonomiesInStore: this.taxonomiesInStore,
             notificationsInStore: this.notificationsInStore,
+            serverVersionInStore: this.serverVersionInStore,
         };
     }
 }

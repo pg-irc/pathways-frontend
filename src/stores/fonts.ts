@@ -20,6 +20,7 @@ export const buildDefaultStore = () => ({
     loading: false,
 });
 
+// TODO combine this class and namespace above into one
 export const loadFontsActions = {
     // tslint:disable-next-line:typedef
     request(fonts: Fonts) {
