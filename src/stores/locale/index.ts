@@ -1,5 +1,6 @@
 import * as constants from '../../application/constants';
 import * as setLocale from './set_locale';
+// TODO don't do this
 import * as loadCurrentLocale from './load_current_locale';
 import { SetLocale } from './set_locale';
 import { LoadCurrentLocale } from './load_current_locale';
@@ -28,6 +29,7 @@ export const buildDefaultStore = (): LocaleStore => ({
 });
 
 export const setLocaleActions = setLocale;
+// TODO don't do this
 export const loadCurrentLocaleActions = loadCurrentLocale;
 
 export const reducer = (store: LocaleStore = buildDefaultStore(), action?: ReducerActions): LocaleStore => {

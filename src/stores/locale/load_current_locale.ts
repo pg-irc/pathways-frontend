@@ -1,6 +1,8 @@
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 
+// TODO rename file to actions.ts, put everuthing into the namespace, rename the namespace to be LoadCurrentLocaleAsync
+
 export namespace LoadCurrentLocale {
     export type Request = Readonly<ReturnType<typeof request>>;
     export type Success = Readonly<ReturnType<typeof success>>;

@@ -41,9 +41,17 @@ export type ServerVersionStore = Readonly<ReturnType<typeof buildDefaultStore>>;
 export const reducer = (store: ServerVersionStore, action: GetServerVersionAsync.ResultAction): ServerVersionStore => {
     switch (action.type) {
         case constants.GET_SERVER_VERSION_SUCCESS:
-            return { ...store, serverVersion: action.payload.version, state: StoreState.Valid };
+            return {
+                ...store,
+                serverVersion: action.payload.version,
+                state: StoreState.Valid,
+            };
         case constants.GET_SERVER_VERSION_FAILURE:
-            return { ...store, serverVersion: '', state: StoreState.Invalid };
+            return {
+                ...store,
+                serverVersion: '',
+                state: StoreState.Invalid,
+            };
         default:
             return store;
     }
