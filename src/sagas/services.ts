@@ -2,7 +2,7 @@
 import * as R from 'ramda';
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
-import { UpdateTaskServicesAsync, updateTaskServicesAsync, serviceFromValidatedJSON } from '../stores/services';
+import { UpdateTaskServicesAsync, serviceFromValidatedJSON } from '../stores/services';
 import { API } from '../api';
 import { APIResponse } from '../api/api_client';
 import { servicesAtLocationValidator } from '../json_schemas/validators';
@@ -22,14 +22,14 @@ export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): Up
         const validator = servicesAtLocationValidator(response.results);
 
         if (response.hasError) {
-            yield put(updateTaskServicesAsync.failure(response.message, taskId));
+            yield put(UpdateTaskServicesAsync.failure(response.message, taskId));
         } else if (!validator.isValid) {
-            yield put(updateTaskServicesAsync.failure(validator.errors, taskId));
+            yield put(UpdateTaskServicesAsync.failure(validator.errors, taskId));
         } else {
-            yield put(updateTaskServicesAsync.success(taskId, R.map(serviceFromValidatedJSON, response.results)));
+            yield put(UpdateTaskServicesAsync.success(taskId, R.map(serviceFromValidatedJSON, response.results)));
         }
     } catch (error) {
-        yield put(updateTaskServicesAsync.failure(error.message, taskId));
+        yield put(UpdateTaskServicesAsync.failure(error.message, taskId));
     }
 }
 

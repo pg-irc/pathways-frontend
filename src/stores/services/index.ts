@@ -1,13 +1,13 @@
 import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
-import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
+import { UpdateTaskServicesAsync } from './update_task_services';
 import { Action } from 'redux';
 import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressWithTypeJSON, Address } from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
 export { Id, Service, ServiceStore, PhoneNumber, Address };
-export { UpdateTaskServicesAsync, updateTaskServicesAsync };
+export { UpdateTaskServicesAsync };
 export { serviceAtLocation, serviceAtLocationArray };
 
 export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): Service {

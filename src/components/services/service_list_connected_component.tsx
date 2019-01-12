@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { Store } from '../../stores';
-import { updateTaskServicesAsync, UpdateTaskServicesAsync } from '../../stores/services';
+import { UpdateTaskServicesAsync } from '../../stores/services';
 import { connect } from 'react-redux';
 import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { RouterProps } from '../../application/routing';
@@ -21,7 +21,7 @@ const mapStateToProps = (store: Store, route: RouterProps): ServiceListProps => 
 
 const mapDispatchToProps = (dispatch: Dispatch<UpdateTaskServicesAsync.Request>): ServiceListActions => ({
     requestUpdateOfServicesForTask: (task: Task): UpdateTaskServicesAsync.Request => {
-        return dispatch(updateTaskServicesAsync.request(task.id));
+        return dispatch(UpdateTaskServicesAsync.request(task.id));
     },
 });
 

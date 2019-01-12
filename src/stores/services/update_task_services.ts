@@ -12,24 +12,27 @@ export namespace UpdateTaskServicesAsync {
     export interface Request extends UpdateTaskServicesAction {
         readonly payload: { readonly taskId: TaskId; };
     }
+
     export interface Success extends UpdateTaskServicesAction {
         readonly payload: { readonly taskId: TaskId; readonly services: ReadonlyArray<Service>; };
     }
+
     export interface Failure extends UpdateTaskServicesAction {
         readonly payload: { readonly taskId: TaskId; readonly message: string; };
     }
+
     export type Result = Success | Failure;
     export type Action = Request | Result;
-}
 
-export const updateTaskServicesAsync = {
-    request(taskId: TaskId): UpdateTaskServicesAsync.Request {
+    export const request = (taskId: TaskId): UpdateTaskServicesAsync.Request => {
         return helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { taskId });
-    },
-    success(taskId: TaskId, services: ReadonlyArray<Service>): UpdateTaskServicesAsync.Success {
+    };
+
+    export const success = (taskId: TaskId, services: ReadonlyArray<Service>): UpdateTaskServicesAsync.Success => {
         return helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { taskId, services });
-    },
-    failure(message: string, taskId: TaskId): UpdateTaskServicesAsync.Failure {
+    };
+
+    export const failure = (message: string, taskId: TaskId): UpdateTaskServicesAsync.Failure => {
         return helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { message, taskId });
-    },
-};
+    };
+}
