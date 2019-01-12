@@ -11,6 +11,7 @@ import { LocaleInfoManager } from '../locale';
 import enMessages from '../../locale/en/messages';
 import arMessages from '../../locale/ar/messages';
 import frMessages from '../../locale/fr/messages';
+import { GetServerVersionAsync } from '../stores/server_version';
 
 // tslint:disable-next-line:no-expression-statement
 LocaleInfoManager.register([
@@ -50,4 +51,5 @@ export function startApplication(saga: ApplicationSaga, store: CreatedStore): vo
     }));
     store.dispatch(loadCurrentLocaleActions.request());
     store.dispatch(UserDataPersistence.loadRequest());
+    store.dispatch(GetServerVersionAsync.request());
 }
