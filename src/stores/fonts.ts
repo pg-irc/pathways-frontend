@@ -1,14 +1,29 @@
+// tslint:disable:typedef
+
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 
-export namespace LoadFonts {
-    export type Request = Readonly<ReturnType<typeof loadFontsActions.request>>;
-    export type Success = Readonly<ReturnType<typeof loadFontsActions.success>>;
-    export type Failure = Readonly<ReturnType<typeof loadFontsActions.failure>>;
+export namespace LoadFontsAsync {
+
+    export const request = (fonts: Fonts) => (
+        helpers.makeAction(constants.LOAD_FONTS_REQUEST, { fonts })
+    );
+
+    export const success = (fonts: Fonts) => (
+        helpers.makeAction(constants.LOAD_FONTS_SUCCESS, { fonts })
+    );
+
+    export const failure = (message: string, fonts: Fonts) => (
+        helpers.makeAction(constants.LOAD_FONTS_FAILURE, { message, fonts })
+    );
+
+    export type Request = Readonly<ReturnType<typeof request>>;
+    export type Success = Readonly<ReturnType<typeof success>>;
+    export type Failure = Readonly<ReturnType<typeof failure>>;
     export type Result = Success | Failure;
 }
 
-type ReducerActions = LoadFonts.Request | LoadFonts.Result;
+type ReducerActions = LoadFontsAsync.Request | LoadFontsAsync.Result;
 export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
 
 interface Fonts {
@@ -19,22 +34,6 @@ interface Fonts {
 export const buildDefaultStore = () => ({
     loading: false,
 });
-
-// TODO combine this class and namespace above into one
-export const loadFontsActions = {
-    // tslint:disable-next-line:typedef
-    request(fonts: Fonts) {
-        return helpers.makeAction(constants.LOAD_FONTS_REQUEST, { fonts });
-    },
-    // tslint:disable-next-line:typedef
-    success(fonts: Fonts) {
-        return helpers.makeAction(constants.LOAD_FONTS_SUCCESS, { fonts });
-    },
-    // tslint:disable-next-line:typedef
-    failure(message: string, fonts: Fonts) {
-        return helpers.makeAction(constants.LOAD_FONTS_FAILURE, { message, fonts });
-    },
-};
 
 export const reducer = (store: Store = buildDefaultStore(), action?: ReducerActions): Store => {
     if (!action) {

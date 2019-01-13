@@ -12,12 +12,12 @@ describe('the setLocaleAction for', () => {
     describe('request', () => {
 
         it('should create action with type LOAD_FONTS_REQUEST', () => {
-            const theLoadFontsAction = fonts.loadFontsActions.request(someFonts);
+            const theLoadFontsAction = fonts.LoadFontsAsync.request(someFonts);
             expect(theLoadFontsAction.type).toBe(constants.LOAD_FONTS_REQUEST);
         });
 
         it('should create action with payload containing the locale', () => {
-            const theLoadFontsAction = fonts.loadFontsActions.request(someFonts);
+            const theLoadFontsAction = fonts.LoadFontsAsync.request(someFonts);
             expect(theLoadFontsAction.payload.fonts).toBe(someFonts);
         });
 
@@ -26,12 +26,12 @@ describe('the setLocaleAction for', () => {
     describe('success', () => {
 
         it('should create action with type LOAD_FONTS_SUCCESS', () => {
-            const theLoadFontsAction = fonts.loadFontsActions.success(someFonts);
+            const theLoadFontsAction = fonts.LoadFontsAsync.success(someFonts);
             expect(theLoadFontsAction.type).toBe(constants.LOAD_FONTS_SUCCESS);
         });
 
         it('should create action with payload containing the locale', () => {
-            const theLoadFontsAction = fonts.loadFontsActions.success(someFonts);
+            const theLoadFontsAction = fonts.LoadFontsAsync.success(someFonts);
             expect(theLoadFontsAction.payload.fonts).toBe(someFonts);
         });
 
@@ -42,12 +42,12 @@ describe('the setLocaleAction for', () => {
         const errorMessage = aString();
 
         it('should create action with type LOAD_FONTS_FAILURE', () => {
-            const theLoadFontsAction = fonts.loadFontsActions.failure(errorMessage, someFonts);
+            const theLoadFontsAction = fonts.LoadFontsAsync.failure(errorMessage, someFonts);
             expect(theLoadFontsAction.type).toBe(constants.LOAD_FONTS_FAILURE);
         });
 
         it('should create action with payload containing an error message and the fonts', () => {
-            const theLoadFontsAction = fonts.loadFontsActions.failure(errorMessage, someFonts);
+            const theLoadFontsAction = fonts.LoadFontsAsync.failure(errorMessage, someFonts);
             expect(theLoadFontsAction.payload.message).toBe(errorMessage);
             expect(theLoadFontsAction.payload.fonts).toBe(someFonts);
         });

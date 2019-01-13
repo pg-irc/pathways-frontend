@@ -3,7 +3,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { reducer, Store, buildDefaultStore } from '../stores';
 import { runSaga, ApplicationSaga } from '../sagas';
 
-import { loadFontsActions } from '../stores/fonts';
+import { LoadFontsAsync } from '../stores/fonts';
 import { loadCurrentLocaleActions } from '../stores/locale';
 import { UserDataPersistence } from '../stores/user_data';
 
@@ -44,7 +44,7 @@ export const buildStore = (saga: ApplicationSaga): CreatedStore => {
 export function startApplication(saga: ApplicationSaga, store: CreatedStore): void {
     // tslint:disable:no-expression-statement
     runSaga(saga.middleware);
-    store.dispatch(loadFontsActions.request({
+    store.dispatch(LoadFontsAsync.request({
         AvenirBook: require('../../assets/fonts/Avenir-Book.ttf'),
         Roboto: require('../../assets/fonts/Roboto.ttf'),
         Roboto_medium: require('../../assets/fonts/Roboto_medium.ttf'),
