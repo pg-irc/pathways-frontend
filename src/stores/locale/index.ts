@@ -1,16 +1,11 @@
 import * as constants from '../../application/constants';
-import * as setLocale from './set_locale';
-// TODO don't do this
-import * as loadCurrentLocale from './load_current_locale';
-import { SetLocale } from './set_locale';
-import { LoadCurrentLocale } from './load_current_locale';
+import { LoadCurrentLocaleAsync, SaveCurrentLocaleAsync } from './actions';
 import { LocaleInfo } from '../../locale';
 
-export { SetLocale };
-export { LoadCurrentLocale };
+export { LoadCurrentLocaleAsync, SaveCurrentLocaleAsync };
 
-export type ReducerActions = SetLocale.Request | SetLocale.Result |
-    LoadCurrentLocale.Request | LoadCurrentLocale.Result;
+export type ReducerActions = SaveCurrentLocaleAsync.Request | SaveCurrentLocaleAsync.Result |
+    LoadCurrentLocaleAsync.Request | LoadCurrentLocaleAsync.Result;
 
 export interface LocaleStore {
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
@@ -27,10 +22,6 @@ export const buildDefaultStore = (): LocaleStore => ({
     loading: false,
     errorMessage: '',
 });
-
-export const setLocaleActions = setLocale;
-// TODO don't do this
-export const loadCurrentLocaleActions = loadCurrentLocale;
 
 export const reducer = (store: LocaleStore = buildDefaultStore(), action?: ReducerActions): LocaleStore => {
     if (!action) {

@@ -4,7 +4,7 @@ import { withI18n } from '@lingui/react';
 import { WelcomeComponent, WelcomeProps, WelcomeActions } from './welcome_component';
 import { Store } from '../../stores';
 import { pullAvailableLocales } from '../../selectors/locale/pull_available_locales';
-import { setLocaleActions, SetLocale } from '../../stores/locale';
+import { SaveCurrentLocaleAsync } from '../../stores/locale';
 import { selectLocale } from '../../selectors/locale/select_locale';
 
 function mapStateToProps(store: Store): WelcomeProps {
@@ -14,9 +14,9 @@ function mapStateToProps(store: Store): WelcomeProps {
     };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<SetLocale.Request>): WelcomeActions {
+function mapDispatchToProps(dispatch: Dispatch<SaveCurrentLocaleAsync.Request>): WelcomeActions {
     return {
-        setLocale: (localeCode: string): SetLocale.Request => dispatch(setLocaleActions.request(localeCode)),
+        setLocale: (localeCode: string): SaveCurrentLocaleAsync.Request => dispatch(SaveCurrentLocaleAsync.request(localeCode)),
     };
 }
 

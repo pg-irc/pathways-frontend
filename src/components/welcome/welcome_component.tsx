@@ -4,7 +4,7 @@ import { Dimensions, Image, ImageBackground } from 'react-native';
 import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
-import { SetLocale } from '../../stores/locale';
+import { SaveCurrentLocaleAsync } from '../../stores/locale';
 import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { colors, applicationStyles, textStyles } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto } from '../../application/images';
@@ -15,7 +15,7 @@ export interface WelcomeProps {
 }
 
 export interface WelcomeActions {
-    readonly setLocale: (localeCode: string) => SetLocale.Request;
+    readonly setLocale: (localeCode: string) => SaveCurrentLocaleAsync.Request;
 }
 
 export function WelcomeComponent(props: I18nProps & WelcomeProps & WelcomeActions & RouterProps): JSX.Element {
