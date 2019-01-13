@@ -38,7 +38,10 @@ export const buildDefaultStore = () => ({
 
 export type ServerVersionStore = Readonly<ReturnType<typeof buildDefaultStore>>;
 
-export const reducer = (store: ServerVersionStore, action: GetServerVersionAsync.ResultAction): ServerVersionStore => {
+export const reducer = (store: ServerVersionStore = buildDefaultStore(), action?: GetServerVersionAsync.ResultAction): ServerVersionStore => {
+    if (!action) {
+        return store;
+    }
     switch (action.type) {
         case constants.GET_SERVER_VERSION_SUCCESS:
             return {

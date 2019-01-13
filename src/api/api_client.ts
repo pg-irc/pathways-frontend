@@ -27,15 +27,15 @@ export class APIClient {
 
     async searchServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
         const parameters = buildParameters(taskId, location);
-        const endpoint = 'services_at_location';
+        const endpoint = 'v1/services_at_location';
         const servicesResponse = await this.fetch(endpoint, parameters);
         return servicesResponse;
     }
 
     // TODO this should be the only function in this class
-    private async fetch(endpoint: string, query: string = ''): Promise<APIResponse> {
+    private async fetch(endpoint: string, query: string = undefined): Promise<APIResponse> {
         // TODO clean this up
-        const url = `${this.host}/${endpoint}?${query}`;
+        const url = query ? `${this.host}/${endpoint}?${query}` : `${this.host}/${endpoint}`;
         const response = await fetch(url);
         return createAPIResponse(response);
     }

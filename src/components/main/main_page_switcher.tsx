@@ -8,7 +8,7 @@ import { ExploreDetailConnectedComponent } from '../explore/explore_detail_conne
 import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
 import { ServicesConnectedComponent } from '../services/service_list_connected_component';
 import { QuestionnaireConnectedComponent } from '../questionnaire/questionnaire_connected_component';
-import { AboutComponent } from '../about/about_component';
+import { AboutConnectedComponent } from '../about/about_connected_component';
 import { RecommendedTopicsConnectedComponent } from '../recommended_topics/recommended_topics_connected_component';
 import { BookmarkedTopicsConnectedComponent } from '../bookmarked_topics/bookmarked_topics_connected_component';
 import { Routes, routePathDefinition } from '../../application/routing';
@@ -23,7 +23,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Eleme
         <Route exact path={routePathDefinition(Routes.LearnDetail)} component={ExploreDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.TaskDetail)} component={TaskDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Services)} component={ServicesConnectedComponent} />
-        <Route exact path={routePathDefinition(Routes.About)} component={AboutComponent} />
+        <Route exact path={routePathDefinition(Routes.About)} component={AboutConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.RecommendedTopics)} component={RecommendedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.BookmarkedTopics)} component={BookmarkedTopicsConnectedComponent} />
     </Switch>
