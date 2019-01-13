@@ -1,31 +1,65 @@
-// tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import { APIClient, APIResponse, MaybeLocation } from './api_client';
-export { APIClient };
+// tslint:disable:no-expression-statement
+import { Location } from 'expo';
 import { Id } from '../stores/tasks';
+import { stringify } from 'query-string';
 
-// TODO this is really a namespace with a global variable in it
-export class API {
+export interface APIResponse {
+    readonly hasError: boolean;
+    readonly message: string;
+    readonly response?: Response;
+    readonly results?: any; // tslint:disable-line:no-any
+}
 
-    private static apiClient: APIClient = undefined;
+// TODO every function should call client().fetch()
+export namespace API {
 
-    static configure(url: string): void {
+    // tslint:disable-next-line:no-let
+    let host: string = undefined;
+
+    export const configure = (url: string): void => {
         console.log(`Using URL: ${url}`);
-        this.apiClient = new APIClient(url);
+        host = url;
+    };
+
+    export async function getServerVersion(): Promise<APIResponse> {
+        const endpoint = 'version';
+        return await fetchXX(endpoint);
     }
 
-    static async getServerVersion(): Promise<APIResponse> {
-        return await this.client().serverVersion();
+    export type MaybeLocation = Location.LocationData | undefined;
+
+    export async function findRelatedServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
+        const parameters = buildParameters(taskId, location);
+        const endpoint = 'v1/services_at_location';
+        const servicesResponse = await fetchXX(endpoint, parameters);
+        return servicesResponse;
     }
 
-    static async findRelatedServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
-        return await this.client().findRelatedServices(taskId, location);
+    export const buildParameters = (taskId: Id, location: MaybeLocation): string => {
+        const data = location ?
+            {
+                user_location: `${location.coords.longitude},${location.coords.latitude}`,
+                related_to_task: taskId,
+            }
+            :
+            { related_to_task: taskId };
+
+        return stringify(data);
+    };
+
+    export async function fetchXX(endpoint: string, query: string = undefined): Promise<APIResponse> {
+        // TODO clean this up
+        const url = query ? `${host}/${endpoint}?${query}` : `${host}/${endpoint}`;
+        const response = await fetch(url);
+        return createAPIResponse(response);
     }
 
-    private static client(): APIClient {
-        if (this.apiClient === undefined) {
-            throw new Error('APIClient initialized, API.configure(...) must be called first');
+    async function createAPIResponse(response: Response): Promise<APIResponse> {
+        const message = `(${response.status}) ${response.statusText}`;
+        if (!response.ok) {
+            return { hasError: true, message, response };
         }
-        return this.apiClient;
+        const results = await response.json();
+        return { hasError: false, message, response, results };
     }
-
 }

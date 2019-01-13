@@ -2,7 +2,7 @@
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import { API } from '../api';
-import { APIResponse } from '../api/api_client';
+import { APIResponse } from '../api';
 import { GetServerVersionAsync } from '../stores/server_version';
 
 export function* watchGetServerVersion(): IterableIterator<ForkEffect> {
@@ -13,7 +13,7 @@ type UpdateResult = IterableIterator<CallEffect | PutEffect<GetServerVersionAsyn
 
 export function* getServerVersion(): UpdateResult {
     try {
-        const response: APIResponse = yield call([API, API.getServerVersion]);
+        const response: APIResponse = yield call(API.getServerVersion);
 
         if (response.hasError) {
             yield put(GetServerVersionAsync.failure(response.message));

@@ -4,7 +4,7 @@ import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-
 import * as constants from '../application/constants';
 import { UpdateTaskServicesAsync, serviceFromValidatedJSON } from '../stores/services';
 import { API } from '../api';
-import { APIResponse } from '../api/api_client';
+import { APIResponse } from '../api';
 import { servicesAtLocationValidator } from '../json_schemas/validators';
 import { Location, Permissions } from 'expo';
 
@@ -18,7 +18,7 @@ export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): Up
     const taskId = action.payload.taskId;
     try {
         const maybeLocation = yield call(getLocationIfPermittedAsync);
-        const response: APIResponse = yield call([API, API.findRelatedServices], taskId, maybeLocation);
+        const response: APIResponse = yield call(API.findRelatedServices, taskId, maybeLocation);
         const validator = servicesAtLocationValidator(response.results);
 
         if (response.hasError) {

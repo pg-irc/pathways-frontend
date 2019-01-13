@@ -1,12 +1,12 @@
 // tslint:disable:no-expression-statement
-import { buildParameters } from '../api_client';
 import { aString, aNumber } from '../../application/__tests__/helpers/random_test_values';
 import { Location } from 'expo';
+import { API } from '..';
 
 describe('build parameters', () => {
     it('with just a task id', () => {
         const taskId = aString();
-        const result = buildParameters(taskId, undefined);
+        const result = API.buildParameters(taskId, undefined);
         expect(result).toEqual(`related_to_task=${taskId}`);
     });
 
@@ -15,7 +15,7 @@ describe('build parameters', () => {
         const x = aNumber();
         const y = aNumber();
         const location = makeLocation(x, y);
-        const result = buildParameters(taskId, location);
+        const result = API.buildParameters(taskId, location);
         expect(result).toEqual(`related_to_task=${taskId}&user_location=${x}%2C${y}`);
     });
 });
