@@ -17,9 +17,8 @@ export class API {
         return await this.client().serverVersion();
     }
 
-    // TODO rename to something that implies get from server
-    static async searchServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
-        return await this.client().searchServices(taskId, location);
+    static async findRelatedServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
+        return await this.client().findRelatedServices(taskId, location);
     }
 
     private static client(): APIClient {

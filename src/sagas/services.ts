@@ -18,7 +18,7 @@ export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): Up
     const taskId = action.payload.taskId;
     try {
         const maybeLocation = yield call(getLocationIfPermittedAsync);
-        const response: APIResponse = yield call([API, API.searchServices], taskId, maybeLocation);
+        const response: APIResponse = yield call([API, API.findRelatedServices], taskId, maybeLocation);
         const validator = servicesAtLocationValidator(response.results);
 
         if (response.hasError) {

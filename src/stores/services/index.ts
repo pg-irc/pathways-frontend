@@ -1,13 +1,12 @@
 import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
-import { UpdateTaskServicesAsync } from './update_task_services';
-import { Action } from 'redux';
+import { UpdateServicesAsync } from './actions';
 import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressWithTypeJSON, Address } from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
 export { Id, Service, ServiceStore, PhoneNumber, Address };
-export { UpdateTaskServicesAsync };
+export { UpdateServicesAsync as UpdateTaskServicesAsync };
 export { serviceAtLocation, serviceAtLocationArray };
 
 export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): Service {
@@ -28,7 +27,7 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
 
     return {
         id: data.service.id,
-        // These values come in the wrong order from the server
+        // backend issue #291: These values come in the wrong order from the server
         latitude: data.location.longitude,
         longitude: data.location.latitude,
         name: data.service.name,
@@ -53,20 +52,23 @@ export function buildDefaultTaskServices(): TaskServices {
     };
 }
 
-export function reducer(store: ServiceStore = buildDefaultStore(), action: Action): ServiceStore {
+export function reducer(store: ServiceStore = buildDefaultStore(), action?: UpdateServicesAsync.Action): ServiceStore {
+    if (!action) {
+        return store;
+    }
     switch (action.type) {
         case constants.LOAD_SERVICES_REQUEST:
-            return updateServicesRequest(store, action as UpdateTaskServicesAsync.Request);
+            return updateServicesRequest(store, action);
         case constants.LOAD_SERVICES_SUCCESS:
-            return updateServicesSuccess(store, action as UpdateTaskServicesAsync.Success);
+            return updateServicesSuccess(store, action);
         case constants.LOAD_SERVICES_FAILURE:
-            return updateServicesFailure(store, action as UpdateTaskServicesAsync.Failure);
+            return updateServicesFailure(store, action);
         default:
             return store;
     }
 }
 
-function updateServicesRequest(store: ServiceStore, action: UpdateTaskServicesAsync.Request): ServiceStore {
+function updateServicesRequest(store: ServiceStore, action: UpdateServicesAsync.Request): ServiceStore {
     const taskId = action.payload.taskId;
     const taskServices = store.taskServicesMap[taskId] || buildDefaultTaskServices();
     return {
@@ -78,7 +80,7 @@ function updateServicesRequest(store: ServiceStore, action: UpdateTaskServicesAs
     };
 }
 
-function updateServicesSuccess(store: ServiceStore, action: UpdateTaskServicesAsync.Success): ServiceStore {
+function updateServicesSuccess(store: ServiceStore, action: UpdateServicesAsync.Success): ServiceStore {
     const services = action.payload.services;
     const taskId = action.payload.taskId;
     const serviceMap = createServiceMap(services);
@@ -91,7 +93,7 @@ function updateServicesSuccess(store: ServiceStore, action: UpdateTaskServicesAs
     };
 }
 
-function updateServicesFailure(store: ServiceStore, action: UpdateTaskServicesAsync.Failure): ServiceStore {
+function updateServicesFailure(store: ServiceStore, action: UpdateServicesAsync.Failure): ServiceStore {
     const taskId = action.payload.taskId;
     const message = action.payload.message;
     return {

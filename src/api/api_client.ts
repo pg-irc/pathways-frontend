@@ -25,7 +25,7 @@ export class APIClient {
         return await this.fetch(endpoint);
     }
 
-    async searchServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
+    async findRelatedServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
         const parameters = buildParameters(taskId, location);
         const endpoint = 'v1/services_at_location';
         const servicesResponse = await this.fetch(endpoint, parameters);

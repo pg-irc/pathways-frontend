@@ -12,7 +12,7 @@ describe('services reducer', () => {
     const theStore = buildNormalizedServices([loadedTask, loadingTask], [initialService]);
 
     it('returns a unmodified store when the action is unknown', () => {
-        expect(reducer(theStore, { type: '' })).toBe(theStore);
+        expect(reducer(theStore, undefined)).toBe(theStore);
     });
 
     describe('on UPDATE_SERVICES_REQUEST', () => {
