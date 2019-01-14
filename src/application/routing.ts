@@ -119,7 +119,7 @@ export const isOnChildScreen = (path: string): boolean => {
 // This makes it impossible to access params in components like the Header and Footer.
 // This helper function remedies this by parsing the parameters from the route url which is always available globally.
 // For more details see: https://github.com/ReactTraining/react-router/issues/5870.
-export const getMatchParamsFromPathandRoute = (pathName: string, route: Routes): MatchParameters => {
+export const getMatchParamsFromPathAndRoute = (pathName: string, route: Routes): MatchParameters => {
     const match = matchPath(pathName, {
         path: routePathDefinition(route),
         exact: true,

@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
+import { Location } from 'history';
 import { Store } from '../../stores';
 import { updateTaskServicesAsync, UpdateTaskServicesAsync } from '../../stores/services';
 import { connect } from 'react-redux';
 import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
-import { RouterProps } from '../../application/routing';
 import { Task } from '../../selectors/tasks/task';
 import { selectTaskServices } from '../../selectors/services/select_task_services';
 import {
@@ -11,8 +11,12 @@ import {
     ServiceListActions, TaskServiceUpdater,
 } from './service_list_component';
 
-const mapStateToProps = (store: Store, route: RouterProps): ServiceListProps => {
-    const task: Task = selectCurrentTask(store, route);
+type OwnProps = {
+    readonly location: Location;
+};
+
+const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => {
+    const task: Task = selectCurrentTask(store, ownProps.location);
     return {
         task: task,
         taskServices: selectTaskServices(task.id, store),
