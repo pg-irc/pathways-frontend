@@ -13,8 +13,13 @@ export interface FooterProps {
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
     const path = props.location.pathname;
+    const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
 
     if (isOnStartScreen(path)) {
+        return <EmptyComponent />;
+    }
+
+    if (isOnQuestionnaireScreen) {
         return <EmptyComponent />;
     }
 
