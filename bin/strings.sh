@@ -12,7 +12,7 @@ extract_all() {
 
     for locale in "${locales[@]}"
     do
-        echo "Converting PO files to CVS for ${locale}..."
+        echo "Converting PO files to CSV for ${locale}..."
         po2csv --progress none locale/$locale/messages.po > locale/$locale/messages.csv
 
         echo "Fixing line breaks in PO file for ${locale}..."
@@ -26,7 +26,7 @@ extract_all() {
 build_all() {
     for locale in "${locales[@]}"
     do
-        echo "Converting CVS to PO files for ${locale} ..."
+        echo "Converting CSV to PO files for ${locale} ..."
         csv2po --progress none locale/$locale/messages.csv locale/$locale/messages.po
     done
 
@@ -55,7 +55,7 @@ extract_changed() {
         echo "Filtering strings needing translation for ${locale} ..."
         msggrep -v -T -e "." locale/$locale/messages.po > locale/$locale/new-messages.po
 
-        echo "Converting PO files to CVS for ${locale} ..."
+        echo "Converting PO files to CSV for ${locale} ..."
         po2csv --progress none locale/$locale/new-messages.po > locale/$locale/new-messages.csv
 
         echo "Fixing line breaks in PO file for ${locale}..."
@@ -69,7 +69,7 @@ extract_changed() {
 build_changed() {
     for locale in "${locales[@]}"
     do
-        echo "Converting CVS to PO files for ${locale} ..."
+        echo "Converting CSV to PO files for ${locale} ..."
         csv2po --progress none locale/$locale/new-messages.csv locale/$locale/new-messages.po
 
         echo "Merging new translations into existing message file for ${locale} ..."
@@ -95,10 +95,10 @@ clean() {
 
 
 help() {
-    echo "$0 --extract-all        Extract all strings from source code to PO and CVS files"
-    echo "$0 --build-all          Import all strings from CVS files and build the app"
-    echo "$0 --extract-changed    Extract just the changed strings from source code to PO and CVS files"
-    echo "$0 --build-changed      Import just the changed strings from CVS files and build the app"
+    echo "$0 --extract-all        Extract all strings from source code to PO and CSV files"
+    echo "$0 --build-all          Import all strings from CSV files and build the app"
+    echo "$0 --extract-changed    Extract just the changed strings from source code to PO and CSV files"
+    echo "$0 --build-changed      Import just the changed strings from CSV files and build the app"
     echo "$0 --clean              Remove temporary files"
     echo
 
