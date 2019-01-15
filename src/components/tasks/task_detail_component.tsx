@@ -45,7 +45,7 @@ export class TaskDetailComponent extends React.Component<Props> {
         const onServicesButtonPress = goToRouteWithParameter(Routes.Services, task.id, this.props.history);
         return (
             <Content style={applicationStyles.body} ref={this.setScrollViewRef}>
-                <TaskDetailHeadingComponent />;
+                <TaskDetailHeadingComponent />
                 <TaskDetailContentComponent
                     task={task}
                     onServicesTextPress={onServicesButtonPress}
