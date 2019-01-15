@@ -6,7 +6,7 @@ import { AddToSavedListAction, RemoveFromSavedListAction, Id } from '../../store
 import { I18nManager, TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
-import { BookmarkButtonComponent, BookmarkButtonDisplay } from '../bookmark_button/bookmark_button_component';
+import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
 
 export interface TaskListItemProps {
     readonly task: TaskListItem;
@@ -29,21 +29,20 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
             style={{
                 backgroundColor: colors.white,
                 borderRadius: values.lessRoundedBorderRadius,
-                padding: 10,
+                paddingVertical: 10,
+                paddingRight: 10,
+                paddingLeft: 0,
                 marginVertical: 3,
             }}
         >
             <View style={{ flex: 4, flexDirection: 'row', alignItems: 'center' }}>
                 <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                    <View style={{ marginRight: 20 }}>
                     <BookmarkButtonComponent
                         isBookmarked={props.taskIsBookmarked}
                         addBookmark={(): AddToSavedListAction => props.addToSavedList(props.task.id)}
                         removeBookmark={(): RemoveFromSavedListAction => props.removeFromSavedList(props.task.id)}
                         textColor={colors.topaz}
-                        display={BookmarkButtonDisplay.ListItem}
                     />
-                    </View>
                     <View>
                         <Text numberOfLines={2} style={textStyles.headlineH4StyleBlackLeft}>
                             {props.task.title}

@@ -8,7 +8,7 @@ import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction } from '.
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { HelpButtonComponent } from '../header_button/help_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { BookmarkButtonComponent, BookmarkButtonDisplay } from '../bookmark_button/bookmark_button_component';
+import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
 import { Locale } from '../../locale';
 import {
     Routes, isOnParentScreen, isOnChildScreen, pathMatchesRoute, getMatchParamsFromPathAndRoute,
@@ -69,7 +69,6 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
             addBookmark={(): AddToSavedListAction => props.addBookmark(taskId)}
             removeBookmark={(): RemoveFromSavedListAction => props.removeBookmark(taskId)}
             textColor={textColor}
-            display={BookmarkButtonDisplay.Default}
         />,
         <MenuButtonComponent
             onPress={props.onHeaderMenuButtonPress}

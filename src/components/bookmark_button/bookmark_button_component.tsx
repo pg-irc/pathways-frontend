@@ -1,18 +1,11 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { Icon, Button } from 'native-base';
 import { AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/tasks';
 import { values } from '../../application/styles';
 
-export enum BookmarkButtonDisplay {
-    Default,
-    ListItem,
-}
-
 export interface BookmarkButtonProps {
     readonly isBookmarked: boolean;
     readonly textColor: string;
-    readonly display: BookmarkButtonDisplay;
 }
 
 export interface BookmarkButtonActions {
@@ -23,8 +16,9 @@ export interface BookmarkButtonActions {
 type Props = BookmarkButtonProps & BookmarkButtonActions;
 
 export const BookmarkButtonComponent = (props: Props): JSX.Element => (
-    props.display === BookmarkButtonDisplay.Default ?
-        <DefaultButton {...props} /> : <ListItemButton {...props} />
+    <Button onPress={getButtonOnPress(props)} transparent icon>
+        <BookmarkIcon {...props} />
+    </Button>
 );
 
 const BookmarkIcon = (props: Props): JSX.Element => (
@@ -35,18 +29,6 @@ const BookmarkIcon = (props: Props): JSX.Element => (
             color: props.textColor,
             fontSize: values.mediumIconSize,
         }} />
-);
-
-const DefaultButton = (props: Props): JSX.Element => (
-    <Button onPress={getButtonOnPress(props)} transparent icon>
-        <BookmarkIcon {...props} />
-    </Button>
-);
-
-const ListItemButton = (props: Props): JSX.Element => (
-    <TouchableOpacity onPress={getButtonOnPress(props)} >
-        <BookmarkIcon {...props} />
-    </TouchableOpacity>
 );
 
 const getButtonOnPress = (props: Props): () => AddToSavedListAction | RemoveFromSavedListAction => (
