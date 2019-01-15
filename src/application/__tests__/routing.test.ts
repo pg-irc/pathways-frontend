@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { Routes, routePathDefinition, routePathWithoutParameter,
-         isOnStartScreen, isOnParentScreen, isOnChildScreen, routePathWithParameter } from '../routing';
+         isOnParentScreen, isOnChildScreen, routePathWithParameter } from '../routing';
 import { aString } from './helpers/random_test_values';
 
 describe('the routePathDefinition function', () => {
@@ -62,17 +62,6 @@ describe('the routePathWithParameter function', () => {
         expect(() => routePathWithParameter(Routes.Learn, parameter)).toThrow();
     });
 
-});
-
-describe('the isOnStartScreen function', () => {
-
-    it('returns true on path: "/"', () => {
-        expect(isOnStartScreen('/')).toStrictEqual(true);
-    });
-
-    it('returns false on non start screen path', () => {
-        expect(isOnStartScreen('/' + aString())).toStrictEqual(false);
-    });
 });
 
 describe('the isOnParentScreen function', () => {
