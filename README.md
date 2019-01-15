@@ -51,17 +51,9 @@ To add a new locale, this generates an empty messages catalog for the new locale
 yarn lingui add-locale [locales...]
 ```
 
-To extract all strings from codebase into catalogs (per-locale messages.json files). The json files should be the starting point for translation. Use the option `--clean` to remove strings that are no longer found in the source code, by default these strings are retained but marked as obsolete.
+Also, update `bin/strings.sh` with the new locale.
 
-```
-yarn extract-strings [--clean]
-```
-
-To compile messages catalogs into optimized & importable javascript modules, this should be done after translations have been completed:
-
-```
-yarn build-strings
-```
+To export strings for translation and importing the strings after translation, use the script `bin/strings.sh`. Files are exported as both po and comma separated values (CSV, i.e. spreadsheets), and imported from CSV only. The scripts supports both bulk translation of all strings, and incremental translation of strings that have no translation currently.
 
 To remove cached strings, this is usually needed when switching between branches:
 
