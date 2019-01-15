@@ -6,7 +6,7 @@ import { API } from '..';
 describe('build parameters', () => {
     it('with just a task id', () => {
         const taskId = aString();
-        const result = API.buildParameters(taskId, undefined);
+        const result = API.relatedServicesParameters(taskId, undefined);
         expect(result).toEqual(`related_to_task=${taskId}`);
     });
 
@@ -15,7 +15,7 @@ describe('build parameters', () => {
         const x = aNumber();
         const y = aNumber();
         const location = makeLocation(x, y);
-        const result = API.buildParameters(taskId, location);
+        const result = API.relatedServicesParameters(taskId, location);
         expect(result).toEqual(`related_to_task=${taskId}&user_location=${x}%2C${y}`);
     });
 });

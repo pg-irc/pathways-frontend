@@ -16,34 +16,25 @@ export namespace API {
     // tslint:disable-next-line:no-let
     let host: string = undefined;
 
-    export const configure = (theHost: string): void => {
+    export function configure(theHost: string): void {
         console.log(`Using URL: ${theHost}`);
         host = theHost;
-    };
+    }
 
     export async function getServerVersion(): Promise<APIResponse> {
-        if (!host) {
-            throw new Error('APIClient initialized, API.configure(...) must be called first');
-        }
         const endpoint = 'version';
-        const url = `${host}/${endpoint}`;
-        const response = await fetch(url);
-
-        const message = `(${response.status}) ${response.statusText}`;
-        if (!response.ok) {
-            return { hasError: true, message, response };
-        }
-        const results = await response.text();
-        return { hasError: false, message, response, results };
+        const response = await fetchFromHost(endpoint);
+        return await handleTextResponse(response);
     }
 
     export async function findRelatedServices(taskId: Id, location?: Location.LocationData): Promise<APIResponse> {
-        const parameters = buildParameters(taskId, location);
+        const parameters = relatedServicesParameters(taskId, location);
         const endpoint = 'v1/services_at_location';
-        return await fetchFromHost(endpoint, parameters);
+        const response = await fetchFromHost(endpoint, parameters);
+        return await handleJsonResponse(response);
     }
 
-    export const buildParameters = (taskId: Id, location?: Location.LocationData): string => {
+    export function relatedServicesParameters(taskId: Id, location?: Location.LocationData): string {
         const data = location ?
             {
                 user_location: `${location.coords.longitude},${location.coords.latitude}`,
@@ -53,24 +44,43 @@ export namespace API {
             { related_to_task: taskId };
 
         return stringify(data);
-    };
+    }
 
-    async function fetchFromHost(endpoint: string, query: string = undefined): Promise<APIResponse> {
+    async function fetchFromHost(endpoint: string, query: string = undefined): Promise<Response> {
         if (!host) {
             throw new Error('APIClient initialized, API.configure(...) must be called first');
         }
         // TODO clean this up
         const url = query ? `${host}/${endpoint}?${query}` : `${host}/${endpoint}`;
-        const response = await fetch(url);
-        return createAPIResponse(response);
+        return await fetch(url);
     }
 
-    async function createAPIResponse(response: Response): Promise<APIResponse> {
-        const message = `(${response.status}) ${response.statusText}`;
-        if (!response.ok) {
-            return { hasError: true, message, response };
-        }
+    async function handleJsonResponse(response: Response): Promise<APIResponse> {
+        return response.ok ? buildApiResponseFromJson(response) : buildApiErrorResponse(response);
+    }
+
+    async function handleTextResponse(response: Response): Promise<APIResponse> {
+        return response.ok ? buildApiResponseFromText(response) : buildApiErrorResponse(response);
+    }
+
+    async function buildApiErrorResponse(response: Response): Promise<APIResponse> {
+        const message = buildMessage(response);
+        return { hasError: true, message, response };
+    }
+
+    async function buildApiResponseFromJson(response: Response): Promise<APIResponse> {
         const results = await response.json();
-        return { hasError: false, message, response, results };
+        const message = buildMessage(response);
+        return { results, hasError: false, message, response };
+    }
+
+    async function buildApiResponseFromText(response: Response): Promise<APIResponse> {
+        const results = await response.text();
+        const message = buildMessage(response);
+        return { results, hasError: false, message, response };
+    }
+
+    function buildMessage(response: Response): string {
+        return `(${response.status}) ${response.statusText}`;
     }
 }
