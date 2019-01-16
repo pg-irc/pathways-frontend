@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { History, Location } from 'history';
-import { Routes, goToRouteWithoutParameter, pathMatchesRoute, isOnStartScreen } from '../../application/routing';
+import { Routes, goToRouteWithoutParameter, pathMatchesRoute } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, values, applicationStyles } from '../../application/styles';
 
@@ -13,8 +13,14 @@ export interface FooterProps {
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
     const path = props.location.pathname;
+    const isOnWelcomeScreen = pathMatchesRoute(path, Routes.Welcome);
+    const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
 
-    if (isOnStartScreen(path)) {
+    if (isOnWelcomeScreen) {
+        return <EmptyComponent />;
+    }
+
+    if (isOnQuestionnaireScreen) {
         return <EmptyComponent />;
     }
 

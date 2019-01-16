@@ -93,10 +93,6 @@ const routeHasParameter = (route: Routes): boolean => (
     routePathDefinition(route).indexOf(':') !== -1
 );
 
-export const isOnStartScreen = (path: string): boolean => {
-    return pathMatchesRoute(path, Routes.Welcome);
-};
-
 export const isOnParentScreen = (path: string): boolean => {
     const isOnHomeScreen = pathMatchesRoute(path, Routes.Home);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
