@@ -23,13 +23,21 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
 
     constructor(props: ExpandableContentProps) {
         super(props);
+        this.state = ExpandableContentComponent.getDefaultState();
+        this.onLayoutChange = this.onLayoutChange.bind(this);
+    }
+
+    static getDerivedStateFromProps(): ExpandableContentState {
+        return ExpandableContentComponent.getDefaultState();
+    }
+
+    static getDefaultState(): ExpandableContentState {
         const screenHeight = Dimensions.get('screen').height;
         const oneEighthTheScreen = Math.round(screenHeight / 8);
-        this.state = {
+        return {
             collapseAtHeight: oneEighthTheScreen,
             expandableState: defaultExpandableContentState,
         };
-        this.onLayoutChange = this.onLayoutChange.bind(this);
     }
 
     render(): JSX.Element {
@@ -91,7 +99,6 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     private getReadMoreButton(): JSX.Element {
         const onPress = (): void => this.toggleState();
         const text = this.isCollapsed() ? <Trans>Read more</Trans> : <Trans>Read less</Trans>;
-        // const paddingTop = this.isCollapsed() ? 3 : 0;
         const backgroundColor = this.props.contentBackgroundColor ? this.props.contentBackgroundColor : colors.white;
         return (
             <View style={{ backgroundColor }}>
