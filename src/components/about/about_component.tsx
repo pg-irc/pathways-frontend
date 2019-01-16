@@ -24,9 +24,13 @@ const disclaimerTextP2 = <Trans>Users of the Arrival Advisor app do so at their 
 const disclaimerParagraphs: ReadonlyArray<JSX.Element> = [disclaimerTextP1, disclaimerTextP2];
 
 const versionTitle = <Trans>Version</Trans>;
-const versionText = <Text><Trans>This is Arrival Advisor version</Trans> {VERSION}</Text>;
 
-export const AboutComponent: React.StatelessComponent = (): JSX.Element => {
+export interface Props {
+    readonly serverVersion: string;
+}
+
+export const AboutComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+    const versionText = <Text><Trans>This is Arrival Advisor version</Trans> {VERSION}, <Trans>server version</Trans> {props.serverVersion}</Text>;
     const aboutSection = <SelectableText style={textStyles.paragraphStyle}>{aboutText}</SelectableText>;
     const privacySection = <ParagraphContent paragraphs={privacyPolicyParagraphs} />;
     const disclaimerSection = <ParagraphContent paragraphs={disclaimerParagraphs} />;
