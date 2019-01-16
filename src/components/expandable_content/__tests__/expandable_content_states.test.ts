@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { toggleExpandedState, ExpandableContentStates, shouldShowButton } from '../expandable_content_states';
+import { toggleExpandedState, ExpandableContentStates, shouldShowReadMoreButton } from '../expandable_content_states';
 
 describe('toggleExpandedState', () => {
 
@@ -21,14 +21,14 @@ describe('toggleExpandedState', () => {
 
 describe('the expand button', () => {
     it('does not appear when expansion is disabled', () => {
-        expect(shouldShowButton(ExpandableContentStates.doesNotCollapse)).toBeFalsy();
+        expect(shouldShowReadMoreButton(ExpandableContentStates.doesNotCollapse)).toBeFalsy();
     });
 
     it('appears when expandable component is collapsed', () => {
-        expect(shouldShowButton(ExpandableContentStates.isCollapsed)).toBeTruthy();
+        expect(shouldShowReadMoreButton(ExpandableContentStates.isCollapsed)).toBeTruthy();
     });
 
     it('appears when expandable component is expanded', () => {
-        expect(shouldShowButton(ExpandableContentStates.isExpanded)).toBeTruthy();
+        expect(shouldShowReadMoreButton(ExpandableContentStates.isExpanded)).toBeTruthy();
     });
 });

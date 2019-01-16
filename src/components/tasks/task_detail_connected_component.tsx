@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { History, Location } from 'history';
 import * as R from 'ramda';
 import { Store } from '../../stores';
 import { TaskDetailProps, TaskDetailActions, TaskDetailComponent } from './task_detail_component';
@@ -8,28 +9,32 @@ import {
 } from '../../stores/tasks';
 import { connect } from 'react-redux';
 import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
-import { RouterProps } from '../../application/routing';
 import { Task } from '../../selectors/tasks/task';
 import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
 
-const mapStateToProps = (store: Store, routerProps: RouterProps): TaskDetailProps => {
-    const task: Task = selectCurrentTask(store, routerProps);
+type OwnProps = {
+    readonly history: History;
+    readonly location?: Location;
+};
+
+const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
+    const task: Task = selectCurrentTask(store, ownProps.location);
     const savedTasksIdList = pickSavedTaskIds(store);
     const taskIsBookmarked = R.contains(task.id, savedTasksIdList);
     return {
         task,
         taskIsBookmarked,
         savedTasksIdList,
-        history: routerProps.history,
+        history: ownProps.history,
     };
 };
 
 type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction | ToggleCompletedAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActions => ({
+    toggleCompleted: (taskId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(taskId)),
     addToSavedList: (taskId: TaskId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
     removeFromSavedList: (taskId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
-    toggleCompleted: (taskId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(taskId)),
 });
 
 export const TaskDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TaskDetailComponent);

@@ -25,23 +25,19 @@ export interface QuestionnaireActions {
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
-type ContentRef = {
-    readonly _root: { scrollIntoView: (element: JSX.Element) => void };
-};
-
 export class QuestionnaireComponent extends React.Component<Props> {
-    contentComponent: ContentRef = undefined;
+    scrollViewRef: ScrollViewRef = undefined;
     headingComponent: JSX.Element = undefined;
 
     constructor(props: Props) {
         super(props);
-        this.setContentComponentRef = this.setContentComponentRef.bind(this);
+        this.setScrollViewRef = this.setScrollViewRef.bind(this);
         this.setHeadingComponentRef = this.setHeadingComponentRef.bind(this);
     }
 
     render(): JSX.Element {
         return (
-            <Content padder ref={this.setContentComponentRef}>
+            <Content padder ref={this.setScrollViewRef}>
                 {this.renderHeading()}
                 {this.renderProgress()}
                 {this.renderQuestion()}
@@ -50,8 +46,8 @@ export class QuestionnaireComponent extends React.Component<Props> {
         );
     }
 
-    private setContentComponentRef(component: object): void {
-        this.contentComponent = component as ContentRef;
+    private setScrollViewRef(component: object): void {
+        this.scrollViewRef = component as ScrollViewRef;
     }
 
     private setHeadingComponentRef(component: object): void {
@@ -151,11 +147,11 @@ export class QuestionnaireComponent extends React.Component<Props> {
     }
 
     private getQuestionButtonOnPress(questionId: Id): () => void {
-        return (): void => { this.props.setActiveQuestion(questionId); this.scrollToTop(); };
+        return (): void => { this.props.setActiveQuestion(questionId); this.scrollToHeading(); };
     }
 
-    private scrollToTop(): void {
-        this.contentComponent._root.scrollIntoView(this.headingComponent);
+    private scrollToHeading(): void {
+        this.scrollViewRef._root.scrollIntoView(this.headingComponent)
     }
 
     private activeQuestionHasBeenAnswered(): boolean {

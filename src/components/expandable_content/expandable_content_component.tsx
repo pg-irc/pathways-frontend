@@ -1,12 +1,13 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
 import { Dimensions, LayoutChangeEvent } from 'react-native';
-import { View, Text, Button } from 'native-base';
+import { View, Text, Button, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { toggleExpandedState, ExpandableContentStates, shouldShowButton,
+import { toggleExpandedState, ExpandableContentStates, shouldShowReadMoreButton,
          defaultExpandableContentState, isDefaultState } from './expandable_content_states';
+import { values } from '../../application/styles';
 
 export interface ExpandableContentProps {
     readonly content: JSX.Element;
@@ -14,7 +15,7 @@ export interface ExpandableContentProps {
 }
 
 interface ExpandableContentState {
-    readonly collapsedHeight: number;
+    readonly collapseAtHeight: number;
     readonly expandableState: ExpandableContentStates;
 }
 
@@ -22,20 +23,28 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
 
     constructor(props: ExpandableContentProps) {
         super(props);
+        this.state = ExpandableContentComponent.getDefaultState();
+        this.onLayoutChange = this.onLayoutChange.bind(this);
+    }
+
+    static getDerivedStateFromProps(): ExpandableContentState {
+        return ExpandableContentComponent.getDefaultState();
+    }
+
+    static getDefaultState(): ExpandableContentState {
         const screenHeight = Dimensions.get('screen').height;
         const oneEighthTheScreen = Math.round(screenHeight / 8);
-        this.state = {
-            collapsedHeight: oneEighthTheScreen,
+        return {
+            collapseAtHeight: oneEighthTheScreen,
             expandableState: defaultExpandableContentState,
         };
-        this.onLayoutChange = this.onLayoutChange.bind(this);
     }
 
     render(): JSX.Element {
         return (
             <View onLayout={this.onLayoutChange}>
                 {this.renderContent()}
-                {this.renderButtonIfShown()}
+                {this.renderReadMoreButtonIfShown()}
             </View >
         );
     }
@@ -43,7 +52,6 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     private renderContent(): JSX.Element {
         const style = {
             paddingHorizontal: 5,
-            paddingBottom: 20,
         };
         return (
             <View style={this.isCollapsed() ? { ...this.getCollapsedStyle(), ...style  } : style}>
@@ -54,21 +62,22 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
 
     private getCollapsedStyle(): object {
         return {
-            height: this.state.collapsedHeight,
-            overflow: 'hidden',
+            height: this.state.collapseAtHeight,
+            overflow: 'scroll',
         };
     }
 
-    private renderButtonIfShown(): JSX.Element {
-        return shouldShowButton(this.state.expandableState) ? this.getButton() : <EmptyComponent />;
+    private renderReadMoreButtonIfShown(): JSX.Element {
+        return shouldShowReadMoreButton(this.state.expandableState) ? this.getReadMoreButton() : <EmptyComponent />;
     }
 
     private onLayoutChange(event: LayoutChangeEvent): void {
         const isUninitialized = isDefaultState(this.state.expandableState);
         const viewHeight = event.nativeEvent.layout.height;
-        const isHeighAboveLimit = viewHeight > this.state.collapsedHeight;
+        const readMoreButtonHeight = 45;
+        const heightIsAboveLimit = viewHeight > this.state.collapseAtHeight + readMoreButtonHeight;
 
-        if (isUninitialized && isHeighAboveLimit) {
+        if (isUninitialized && heightIsAboveLimit) {
             this.enableExpansion();
         }
     }
@@ -87,23 +96,27 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         });
     }
 
-    private getButton(): JSX.Element {
+    private getReadMoreButton(): JSX.Element {
         const onPress = (): void => this.toggleState();
         const text = this.isCollapsed() ? <Trans>Read more</Trans> : <Trans>Read less</Trans>;
-        const paddingTop = this.isCollapsed() ? 3 : 0;
         const backgroundColor = this.props.contentBackgroundColor ? this.props.contentBackgroundColor : colors.white;
         return (
-            <View style={{ backgroundColor, paddingTop }}>
+            <View style={{ backgroundColor }}>
                 <Button
                     onPress={onPress}
-                    rounded
-                    style={{
-                        backgroundColor: colors.darkerGrey,
-                        alignSelf: 'center',
-                    }}>
-                    <Text style={textStyles.paragraphBoldBlackLeft}>
+                    transparent
+                    iconRight
+                >
+                    <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.topaz, paddingLeft: 6 }]}>
                         {text}
                     </Text>
+                    <Icon
+                        name={this.isCollapsed() ? 'arrow-down' : 'arrow-up'}
+                        style={{
+                            fontSize: values.smallIconSize,
+                            color: colors.topaz,
+                        }}
+                    />
                 </Button>
             </View>
         );

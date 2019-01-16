@@ -1,7 +1,7 @@
-// tslint:disable:no-expression-statement
+// tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
 import { History } from 'history';
-import { View, Content } from 'native-base';
+import { Content } from 'native-base';
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
 import { applicationStyles } from '../../application/styles';
 import { TaskDetailRelatedTasksComponent } from './task_detail_related_tasks_component';
@@ -10,7 +10,6 @@ import { Task } from '../../selectors/tasks/task';
 import { Routes } from '../../application/routing';
 import { TaskDetailHeadingComponent } from './task_detail_heading_component';
 import { TaskDetailContentComponent } from './task_detail_content_component';
-import { DetailAddBookmarkComponent, DetailRemoveBookmarkComponent } from './bookmark_button_component';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -26,36 +25,47 @@ export interface TaskDetailActions {
 
 type Props = TaskDetailProps & TaskDetailActions;
 
-export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const task = props.task;
-    const onServicesButtonPress = goToRouteWithParameter(Routes.Services, task.id, props.history);
-    const bookmarkProps = {
-        taskId: props.task.id,
-        addBookmark: props.addToSavedList,
-        removeBookmark: props.removeFromSavedList,
-    };
-    return (
-        <View style={{ flex: 1 }}>
-            <Content style={applicationStyles.body}>
+export class TaskDetailComponent extends React.Component<Props> {
+    scrollViewRef: ScrollViewRef = undefined;
+
+    constructor(props: Props) {
+        super(props);
+        this.setScrollViewRef = this.setScrollViewRef.bind(this);
+        this.scrollToTop = this.scrollToTop.bind(this);
+    }
+
+    componentDidUpdate(previousProps: Props): void {
+        if (previousProps.task.id !== this.props.task.id) {
+            this.scrollToTop();
+        }
+    }
+
+    render(): JSX.Element {
+        const task = this.props.task;
+        const onServicesButtonPress = goToRouteWithParameter(Routes.Services, task.id, this.props.history);
+        return (
+            <Content style={applicationStyles.body} ref={this.setScrollViewRef}>
                 <TaskDetailHeadingComponent />
                 <TaskDetailContentComponent
                     task={task}
                     onServicesTextPress={onServicesButtonPress}
                 />
                 <TaskDetailRelatedTasksComponent
-                    savedTasksIdList={props.savedTasksIdList}
-                    addToSavedList={props.addToSavedList}
-                    removeFromSavedList={props.removeFromSavedList}
-                    history={props.history}
+                    savedTasksIdList={this.props.savedTasksIdList}
+                    addToSavedList={this.props.addToSavedList}
+                    removeFromSavedList={this.props.removeFromSavedList}
+                    history={this.props.history}
                     relatedTasks={task.relatedTasks}
                 />
             </Content>
-            {
-                props.taskIsBookmarked ?
-                    <DetailRemoveBookmarkComponent {...bookmarkProps} />
-                    :
-                    <DetailAddBookmarkComponent {...bookmarkProps} />
-            }
-        </View>
-    );
-};
+        );
+    }
+
+    private setScrollViewRef(component: object): void {
+        this.scrollViewRef = component as ScrollViewRef;
+    }
+
+    private scrollToTop(): void {
+        this.scrollViewRef._root.scrollToPosition(0, 0, false);
+    }
+}

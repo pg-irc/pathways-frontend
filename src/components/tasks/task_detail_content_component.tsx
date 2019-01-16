@@ -1,11 +1,10 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { View, Text, Icon } from 'native-base';
+import * as R from 'ramda';
+import { View, Text, Icon, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import Markdown from 'react-native-markdown-renderer';
 import { Task } from '../../selectors/tasks/task';
-import { textStyles, colors, values, markdownStyles } from '../../application/styles';
-import { getColorForExploreIcon } from '../explore/get_color_for_explore_icon';
+import { textStyles, colors, values, markdownStyles, applicationStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 
@@ -21,60 +20,55 @@ type Props = TaskDetailContentProps & TaskDetailContentActions;
 
 export const TaskDetailContentComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View padder style={{ backgroundColor: colors.white }}>
-        <View style={{ marginVertical: 20, flexDirection: 'row' }}>
-            <TaxonomyComponent {...props} />
-            <RecommendedComponent {...props} />
-        </View>
+        <TaxonomyComponent {...props} />
         <TitleComponent {...props} />
-        <TinyHeadingWithContentComponent text={<Trans>ABOUT</Trans>} content={<TaskDescription {...props} />} />
-        <TinyHeadingWithContentComponent text={<Trans>WHO CAN HELP?</Trans>} content={<ServicesLink {...props} />} />
+        <RecommendedComponent {...props} />
+        <Divider />
+        <TaskDescription {...props} />
+        <Divider />
+        <ServicesButton {...props} />
     </View>
 );
 
 const TaxonomyComponent = (props: Props): JSX.Element => (
-    <RoundedBadge
-        iconName={props.task.exploreSection.icon}
-        iconColor={getColorForExploreIcon(props.task.exploreSection.icon)}
-        text={props.task.exploreSection.name}
-    />
+    <Text style={[
+        textStyles.headlineH5StyleBlackLeft,
+        {
+            color: colors.greyishBrown,
+            marginTop: 20,
+            marginBottom: 5,
+        },
+    ]}
+    >
+        {props.task.exploreSection.name.toUpperCase()}
+    </Text>
 );
 
-const RecommendedComponent = (props: Props): JSX.Element => (
-    props.task.isRecommended ?
-        <RoundedBadge
-            iconName={'star'}
-            iconColor={colors.sunYellow}
-            text={<Trans>Recommended for me</Trans>}
-        />
-        :
-        <EmptyComponent />
-);
-
-const RoundedBadge = (props: { readonly iconName: string, readonly iconColor: string, readonly text: string | JSX.Element }):
-    JSX.Element => (
-        <View
-            style={{
-                backgroundColor: colors.lightGrey,
-                borderRadius: values.roundedBorderRadius,
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingVertical: 8,
-                paddingHorizontal: 12,
-                marginRight: 5,
-            }}
-        >
+const RecommendedComponent = (props: Props): JSX.Element => {
+    if (R.not(props.task.isRecommended)) {
+        return <EmptyComponent />;
+    }
+    return (
+        <View style={{ flexDirection: 'row', marginVertical: 5 }}>
             <Icon
                 type='FontAwesome'
-                name={props.iconName}
+                name={'star'}
                 style={{
                     fontSize: values.smallerIconSize,
-                    color: props.iconColor,
+                    color: colors.sunYellow,
                     marginRight: 5,
                 }}
             />
-            <Text style={textStyles.paragraphStyle}>{props.text}</Text>
+            <Text style={[textStyles.paragraphStyle, { color: colors.greyishBrown, fontSize: 14, fontStyle: 'italic' }]}>
+                <Trans>Recommended for me</Trans>
+            </Text>
         </View>
     );
+};
+
+const Divider = (): JSX.Element => (
+    <View style={{ height: 1, flex: 1, marginVertical: 20, backgroundColor: colors.lightGrey }}></View>
+);
 
 const TitleComponent = (props: Props): JSX.Element => (
     <Text style={textStyles.taskTitle}>
@@ -82,36 +76,27 @@ const TitleComponent = (props: Props): JSX.Element => (
     </Text>
 );
 
-const TinyHeadingWithContentComponent = (props: { readonly text: JSX.Element, readonly content: JSX.Element }):
-    JSX.Element => (
-        <View style={{ marginTop: 10 }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={textStyles.headlineH5StyleBlackLeft}>
-                    {props.text}
-                </Text>
-                <View style={{ height: 1, flex: 1, marginLeft: 10, backgroundColor: colors.lightGrey }}></View>
-            </View>
-            {props.content}
-        </View>
-    );
-
 const TaskDescription = (props: Props): JSX.Element => {
     const task = props.task;
     const taskDescription = <Markdown style={markdownStyles}>{task.description}</Markdown>;
     return task.relatedTasks.length > 0 ? <ExpandableContentComponent content={taskDescription} /> : taskDescription;
 };
 
-const ServicesLink = (props: Props): JSX.Element => (
-    <TouchableOpacity
+const ServicesButton = (props: Props): JSX.Element => (
+    <Button
         onPress={props.onServicesTextPress}
-        style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 5,
-        }}>
-        <Text style={[textStyles.headlineH3StyleBlackLeft, { color: colors.orange, textDecorationLine: 'underline' }]}>
-            <Trans>Find nearest services that can help</Trans>
+        style={[
+            applicationStyles.orangeButton,
+            applicationStyles.boxShadowBelow,
+            {
+                paddingHorizontal: 15,
+                alignSelf: 'center',
+                marginBottom: 15,
+            },
+        ]}
+    >
+        <Text style={textStyles.button}>
+            <Trans>Find related service near me</Trans>
         </Text>
-        <Icon name={'arrow-forward'} style={{ color: colors.orange, fontSize: values.smallerIconSize, marginLeft: 5 }} />
-    </TouchableOpacity>
+    </Button>
 );
