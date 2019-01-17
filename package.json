@@ -38,7 +38,7 @@
   "scripts": {
     "postinstall": "bin/postinstall.sh",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
-    "build": "bin/buildFixtures.sh && tsc",
+    "build": "bin/generateTopicsImages.sh && bin/buildFixtures.sh && tsc",
     "test": "yarn run jest --maxWorkers=4",
     "cbt": "yarn run clean && yarn run build && yarn run test",
     "bt": "yarn run build && yarn run test",
