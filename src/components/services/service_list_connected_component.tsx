@@ -10,13 +10,15 @@ import {
     ServiceListComponent, ServiceListProps,
     ServiceListActions, TaskServiceUpdater,
 } from './service_list_component';
+import { Routes, getMatchParamsFromPathAndRoute } from '../../application/routing';
 
 type OwnProps = {
     readonly location: Location;
 };
 
 const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => {
-    const task: Task = selectCurrentTask(store, ownProps.location);
+    const matchParams = getMatchParamsFromPathAndRoute(ownProps.location.pathname, Routes.Services);
+    const task: Task = selectCurrentTask(store, matchParams.taskId);
     return {
         task: task,
         taskServices: selectTaskServices(task.id, store),

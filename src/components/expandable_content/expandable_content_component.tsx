@@ -10,6 +10,7 @@ import { toggleExpandedState, ExpandableContentStates, shouldShowReadMoreButton,
 import { values } from '../../application/styles';
 
 export interface ExpandableContentProps {
+    readonly contentId?: string | number;
     readonly content: JSX.Element;
     readonly contentBackgroundColor?: string;
 }
@@ -23,21 +24,14 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
 
     constructor(props: ExpandableContentProps) {
         super(props);
-        this.state = ExpandableContentComponent.getDefaultState();
+        this.state = this.getDefaultState();
         this.onLayoutChange = this.onLayoutChange.bind(this);
     }
 
-    static getDerivedStateFromProps(): ExpandableContentState {
-        return ExpandableContentComponent.getDefaultState();
-    }
-
-    static getDefaultState(): ExpandableContentState {
-        const screenHeight = Dimensions.get('screen').height;
-        const oneEighthTheScreen = Math.round(screenHeight / 8);
-        return {
-            collapseAtHeight: oneEighthTheScreen,
-            expandableState: defaultExpandableContentState,
-        };
+    componentDidUpdate(prevProps: ExpandableContentProps): void {
+        if (prevProps.contentId !== this.props.contentId) {
+            this.setState(this.getDefaultState());
+        }
     }
 
     render(): JSX.Element {
@@ -47,6 +41,15 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                 {this.renderReadMoreButtonIfShown()}
             </View >
         );
+    }
+
+    getDefaultState(): ExpandableContentState {
+        const screenHeight = Dimensions.get('screen').height;
+        const oneEighthTheScreen = Math.round(screenHeight / 8);
+        return {
+            collapseAtHeight: oneEighthTheScreen,
+            expandableState: defaultExpandableContentState,
+        };
     }
 
     private renderContent(): JSX.Element {
