@@ -1,10 +1,16 @@
 import React from 'react';
 import { Image, Dimensions } from 'react-native';
 import { View } from 'native-base';
-import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { colors } from '../../application/styles';
+import { topicsImages } from '../../application/topicsImages';
+export interface TaskDetailHeadingComponent {
+    readonly taskId: string;
+}
 
-export const TaskDetailHeadingComponent: React.StatelessComponent = (): JSX.Element => {
+type Props = TaskDetailHeadingComponent;
+
+
+export const TaskDetailHeadingComponent: React.StatelessComponent<Props> = (props:Props): JSX.Element => {
     const logoHeight = Dimensions.get('screen').height / 8;
     return (
         <View style={{
@@ -16,7 +22,7 @@ export const TaskDetailHeadingComponent: React.StatelessComponent = (): JSX.Elem
             borderBottomColor: colors.darkerGrey,
         }}>
             <Image
-                source={arrivalAdvisorGlyphLogo}
+                source={topicsImages[props.taskId]}
                 resizeMode={'contain'}
                 style={{ height: logoHeight }}
             />
