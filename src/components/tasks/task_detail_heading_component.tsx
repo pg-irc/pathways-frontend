@@ -3,11 +3,11 @@ import { Image, Dimensions } from 'react-native';
 import { View } from 'native-base';
 import { colors } from '../../application/styles';
 import { topicsImages } from '../../application/topicsImages';
-export interface TaskDetailHeadingComponent {
+export interface TaskDetailHeadingProps {
     readonly taskId: string;
 }
 
-type Props = TaskDetailHeadingComponent;
+type Props = TaskDetailHeadingProps;
 
 
 export const TaskDetailHeadingComponent: React.StatelessComponent<Props> = (props:Props): JSX.Element => {
