@@ -94,6 +94,8 @@ function updateServicesSuccess(store: ServiceStore, action: UpdateTaskServicesAs
 function updateServicesFailure(store: ServiceStore, action: UpdateTaskServicesAsync.Failure): ServiceStore {
     const taskId = action.payload.taskId;
     const message = action.payload.message;
+    // tslint:disable-next-line:no-expression-statement
+    console.log('Failed to load services: ' + message);
     return {
         ...store,
         taskServicesMap: {
