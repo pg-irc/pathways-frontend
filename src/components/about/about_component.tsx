@@ -25,11 +25,11 @@ const disclaimerParagraphs: ReadonlyArray<JSX.Element> = [disclaimerTextP1, disc
 
 const versionTitle = <Trans>Version</Trans>;
 
-export interface Props {
+export interface AboutComponentProps {
     readonly serverVersion: string;
 }
 
-export const AboutComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (props: AboutComponentProps): JSX.Element => {
     const versionText = <Text><Trans>This is Arrival Advisor version</Trans> {VERSION}, <Trans>server version</Trans> {props.serverVersion}</Text>;
     const aboutSection = <SelectableText style={textStyles.paragraphStyle}>{aboutText}</SelectableText>;
     const privacySection = <ParagraphContent paragraphs={privacyPolicyParagraphs} />;
