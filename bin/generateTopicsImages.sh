@@ -1,8 +1,9 @@
 #!/bin/sh
 
-echo "export const topicsImages: any = {"
-for f in $1; do
+echo "export const images: any = {"
+for f in $@; do
     filename=$(basename $f .png)
-    echo "'$filename' : require('../../assets/images/topics/$filename.png'),"
+    dirname=$(dirname $f)
+    echo -e "\t'$filename' : require('../../$dirname/$filename.png'),"
 done
 echo "};"
