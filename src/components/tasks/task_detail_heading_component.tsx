@@ -11,7 +11,6 @@ export interface TaskDetailHeadingProps {
 
 type Props = TaskDetailHeadingProps;
 
-
 export const TaskDetailHeadingComponent: React.StatelessComponent<Props> = (props:Props): JSX.Element => {
     const logoHeight = Dimensions.get('screen').height / 8;
     return (
