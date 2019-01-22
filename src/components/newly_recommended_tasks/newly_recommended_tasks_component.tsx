@@ -1,8 +1,8 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Task } from '../../selectors/tasks/task';
-import { View, Text, Button, Content, Icon } from 'native-base';
-import { StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Icon } from 'native-base';
+import { StyleSheet, Image, Dimensions, TouchableOpacity, FlatList, ListRenderItemInfo } from 'react-native';
 import { colors, values, textStyles, applicationStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { Id } from '../../stores/tasks';
@@ -76,15 +76,15 @@ const HeaderContentComponent = (props: { readonly tasksCount: number }): JSX.Ele
     </Text>
 );
 
-const TaskListComponent = (props: { readonly tasks: ReadonlyArray<Task>}): JSX.Element => (
-    <Content padder style={styles.taskList}>
-        {R.map((task: Task) => (
-            <TaskComponent key={task.id} task={task} />
-        ), props.tasks)}
-    </Content>
+const TaskListComponent = (props: { readonly tasks: ReadonlyArray<Task> }): JSX.Element => (
+    <FlatList style={styles.taskList}
+        data={props.tasks}
+        renderItem={renderTaskItem}
+        keyExtractor={(task: Task): string => task.id}
+    />
 );
 
-const TaskComponent = (props: { readonly task: Task }): JSX.Element => (
+const renderTaskItem = ({ item }: ListRenderItemInfo<Task>): JSX.Element => (
     <View
         style={{
             backgroundColor: colors.white,
@@ -97,15 +97,15 @@ const TaskComponent = (props: { readonly task: Task }): JSX.Element => (
             <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <View>
                     <Text numberOfLines={2} style={textStyles.headlineH4StyleBlackLeft}>
-                        {props.task.title}
+                        {item.title}
                     </Text>
                     <Text note numberOfLines={1} style={{ textAlign: 'left' }}>
-                        {stripMarkdown(props.task.description)}
+                        {stripMarkdown(item.description)}
                     </Text>
                 </View>
             </View>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                {props.task.isRecommended ? <IsRecommendedComponent /> : <EmptyComponent />}
+                {item.isRecommended ? <IsRecommendedComponent /> : <EmptyComponent />}
             </View>
         </View>
     </View>

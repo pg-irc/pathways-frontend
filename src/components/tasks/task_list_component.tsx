@@ -1,7 +1,7 @@
 import React from 'react';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 import * as R from 'ramda';
 import { History } from 'history';
-import { View } from 'native-base';
 import { Trans } from '@lingui/react';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListItemComponent } from './task_list_item_component';
@@ -36,15 +36,19 @@ export const TaskListComponent: React.StatelessComponent<Props> = (props: Props)
 );
 
 const NonEmptyTaskListComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <View>
-        {R.map((task: TaskListItem) =>
-            <TaskListItemComponent
-                key={task.id}
-                task={task}
-                taskIsBookmarked={R.contains(task.id, props.savedTasksIdList)}
-                addToSavedList={props.addToSavedList}
-                removeFromSavedList={props.removeFromSavedList}
-                goToTaskDetail={goToRouteWithParameter(Routes.TaskDetail, task.id, props.history)}
-            />, props.tasks)}
-    </View>
+    <FlatList
+        data={props.tasks}
+        renderItem={({ item }: ListRenderItemInfo<TaskListItem>): JSX.Element => renderTaskListItem(item, props)}
+        keyExtractor={(task: TaskListItem): string => task.id}
+    />
+);
+
+const renderTaskListItem = (item: TaskListItem, props: Props): JSX.Element => (
+    <TaskListItemComponent
+        task={item}
+        taskIsBookmarked={R.contains(item.id, props.savedTasksIdList)}
+        addToSavedList={props.addToSavedList}
+        removeFromSavedList={props.removeFromSavedList}
+        goToTaskDetail={goToRouteWithParameter(Routes.TaskDetail, item.id, props.history)}
+    />
 );
