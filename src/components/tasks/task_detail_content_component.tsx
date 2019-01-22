@@ -79,7 +79,7 @@ const TitleComponent = (props: Props): JSX.Element => (
 const TaskDescription = (props: Props): JSX.Element => {
     const task = props.task;
     const taskDescription = <Markdown style={markdownStyles}>{task.description}</Markdown>;
-    return task.relatedTasks.length > 0 ? <ExpandableContentComponent content={taskDescription} /> : taskDescription;
+    return task.relatedTasks.length > 0 ? <ExpandableContentComponent contentId={task.id} content={taskDescription} /> : taskDescription;
 };
 
 const ServicesButton = (props: Props): JSX.Element => (
