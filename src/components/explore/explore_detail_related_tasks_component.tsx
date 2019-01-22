@@ -21,7 +21,7 @@ export const ExploreDetailRelatedTasksComponent: React.StatelessComponent<Props>
         return emptyComponent();
     }
     return (
-        <View padder>
+        <View>
             <Text style={[textStyles.headlineH5StyleBlackLeft, { marginBottom: 3 } ]}>
                 <Trans>EXPLORE TOPICS</Trans>
             </Text>
