@@ -10,8 +10,8 @@ import { toggleExpandedState, ExpandableContentStates, shouldShowReadMoreButton,
 import { values } from '../../application/styles';
 
 export interface ExpandableContentProps {
-    readonly contentId?: string | number;
     readonly content: JSX.Element;
+    readonly contentId?: string;
     readonly contentBackgroundColor?: string;
 }
 

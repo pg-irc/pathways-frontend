@@ -11,7 +11,7 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
 import { Locale } from '../../locale';
 import {
-    Routes, isOnParentScreen, isOnChildScreen, pathMatchesRoute, getMatchParamsFromPathAndRoute,
+    Routes, isOnParentScreen, isOnChildScreen, pathMatchesRoute, getParametersFromPath,
 } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
@@ -58,7 +58,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 };
 
 const TopicDetailScreenHeader = (props: Props): JSX.Element => {
-    const params = getMatchParamsFromPathAndRoute(props.location.pathname, Routes.TaskDetail);
+    const params = getParametersFromPath(props.location, Routes.TaskDetail);
     const taskId = params.taskId;
     const textColor = colors.black;
     const backgroundColor = colors.lightGrey;

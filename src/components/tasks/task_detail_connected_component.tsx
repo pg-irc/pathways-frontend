@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { Task } from '../../selectors/tasks/task';
 import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
-import { Routes, getMatchParamsFromPathAndRoute } from '../../application/routing';
+import { Routes, getParametersFromPath } from '../../application/routing';
 
 type OwnProps = {
     readonly history: History;
@@ -19,7 +19,7 @@ type OwnProps = {
 };
 
 const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
-    const matchParams = getMatchParamsFromPathAndRoute(ownProps.location.pathname, Routes.TaskDetail);
+    const matchParams = getParametersFromPath(ownProps.location, Routes.TaskDetail);
     const task: Task = selectCurrentTask(store, matchParams.taskId);
     const savedTasksIdList = pickSavedTaskIds(store);
     const taskIsBookmarked = R.contains(task.id, savedTasksIdList);
