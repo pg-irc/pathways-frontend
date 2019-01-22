@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import { Dimensions, LayoutChangeEvent } from 'react-native';
+import { Dimensions, LayoutChangeEvent, Animated } from 'react-native';
 import { View, Text, Button, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
@@ -18,6 +18,7 @@ export interface ExpandableContentProps {
 interface ExpandableContentState {
     readonly collapseAtHeight: number;
     readonly expandableState: ExpandableContentStates;
+    readonly fadeAnimation: Animated.Value;
 }
 
 export class ExpandableContentComponent extends React.Component<ExpandableContentProps, ExpandableContentState> {
@@ -28,18 +29,22 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         this.onLayoutChange = this.onLayoutChange.bind(this);
     }
 
+    componentDidMount(): void {
+        this.fadeInContent();
+    }
+
     componentDidUpdate(prevProps: ExpandableContentProps): void {
         if (prevProps.contentId !== this.props.contentId) {
-            this.setState(this.getDefaultState());
+            this.setState(this.getDefaultState(), () => this.fadeInContent());
         }
     }
 
     render(): JSX.Element {
         return (
-            <View onLayout={this.onLayoutChange}>
+            <Animated.View onLayout={this.onLayoutChange} style={{ opacity: this.state.fadeAnimation }}>
                 {this.renderContent()}
                 {this.renderReadMoreButtonIfShown()}
-            </View >
+            </Animated.View >
         );
     }
 
@@ -49,7 +54,18 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         return {
             collapseAtHeight: oneEighthTheScreen,
             expandableState: defaultExpandableContentState,
+            fadeAnimation: new Animated.Value(0),
         };
+    }
+
+    private fadeInContent(): void {
+        Animated.timing(
+            this.state.fadeAnimation,
+            {
+                toValue: 1,
+                duration: 300,
+            },
+        ).start();
     }
 
     private renderContent(): JSX.Element {
