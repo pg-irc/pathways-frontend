@@ -7,7 +7,7 @@ describe('build parameters', () => {
     it('with just a task id', () => {
         const taskId = aString();
         const result = buildParameters(taskId, undefined);
-        expect(result).toEqual(`related_to_task=${taskId}`);
+        expect(result).toEqual({ related_to_task: `${taskId}` });
     });
 
     it('with a task id and location', () => {
@@ -16,7 +16,11 @@ describe('build parameters', () => {
         const y = aNumber();
         const location = makeLocation(x, y);
         const result = buildParameters(taskId, location);
-        expect(result).toEqual(`related_to_task=${taskId}&user_location=${x}%2C${y}`);
+        expect(result).toEqual({
+            proximity: `${x},${y}`,
+            related_to_task: taskId,
+            user_location: `${x},${y}`,
+        });
     });
 });
 
