@@ -3,7 +3,7 @@
     "sdkVersion": "28.0.0",
     "name": "Arrival Advisor",
     "icon": "./assets/images/aa_logoglyph.png",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "slug": "arrival_advisor",
     "ios": {
       "bundleIdentifier": "org.peacegeeks.arrivalAdvisor",
