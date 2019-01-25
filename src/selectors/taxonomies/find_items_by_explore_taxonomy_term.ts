@@ -10,7 +10,7 @@ export interface MapOfHasTaxonomyTerms<T extends HasTaxonomyTerms> {
     readonly [property: string]: T;
 }
 
-export function findItemsByLearnTaxonomyTerm<T extends HasTaxonomyTerms>(needle: ReadonlyArray<TaxonomyTermReference>,
+export function findItemsByExploreTaxonomyTerm<T extends HasTaxonomyTerms>(needle: ReadonlyArray<TaxonomyTermReference>,
     haystack: MapOfHasTaxonomyTerms<T>): ReadonlyArray<T> {
 
     const needleTerms = filterExploreTaxonomyTerms(needle);

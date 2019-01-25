@@ -3,7 +3,7 @@ import { ExploreTaxonomyId, TaxonomyTermReference } from '../../stores/taxonomie
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
 import { TaskMap } from '../../stores/tasks';
-import { findItemsByLearnTaxonomyTerm } from '../taxonomies/find_items_by_explore_taxonomy_term';
+import { findItemsByExploreTaxonomyTerm } from '../taxonomies/find_items_by_explore_taxonomy_term';
 
 describe('find task by explore taxonomy term', () => {
     let exploreTerm: TaxonomyTermReference;
@@ -22,7 +22,7 @@ describe('find task by explore taxonomy term', () => {
     });
 
     it('should return a task tagged with the given taxonomy term', () => {
-        const found = findItemsByLearnTaxonomyTerm([exploreTerm], tasks);
+        const found = findItemsByExploreTaxonomyTerm([exploreTerm], tasks);
         expect(found[0].id).toBe(taskId);
     });
 
@@ -31,7 +31,7 @@ describe('find task by explore taxonomy term', () => {
             taxonomyId: ExploreTaxonomyId,
             taxonomyTermId: aString(),
         };
-        const found = findItemsByLearnTaxonomyTerm([aDifferentExploreTerm], tasks);
+        const found = findItemsByExploreTaxonomyTerm([aDifferentExploreTerm], tasks);
         expect(found).toHaveLength(0);
     });
 
@@ -44,12 +44,12 @@ describe('find task by explore taxonomy term', () => {
         tasks = {
             [taskId]: new TaskBuilder().withId(taskId).withTaxonomyTerm(aNonExploreTerm).build(),
         };
-        const found = findItemsByLearnTaxonomyTerm([aNonExploreTerm], tasks);
+        const found = findItemsByExploreTaxonomyTerm([aNonExploreTerm], tasks);
         expect(found).toHaveLength(0);
     });
 
     it('should not return a task when called with no expore terms', () => {
-        const found = findItemsByLearnTaxonomyTerm([], tasks);
+        const found = findItemsByExploreTaxonomyTerm([], tasks);
         expect(found).toHaveLength(0);
     });
 });
