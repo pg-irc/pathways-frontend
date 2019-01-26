@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 import { textStyles } from '../../application/styles';
 import { View, Text } from 'native-base';
 import { AnswerComponent } from './answer_component';
@@ -18,19 +19,25 @@ export interface QuestionActions {
 type Props = QuestionProps & QuestionActions;
 
 export const QuestionComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const { question, chooseAnswer }: Props = props;
+    const { question }: Props = props;
     return (
-        <View style={{ flex: 1, alignItems: 'center', marginBottom: 15 }}>
+        <View style={{ flex: 1, alignItems: 'stretch', marginBottom: 15 }}>
             <Text style={[textStyles.headlineH2StyleBlackCenter, { marginBottom: 15 }]}>{question.text}</Text>
             {question.explanation ? <Text style={textStyles.paragraphSmallStyleLeft}>{question.explanation}</Text> : <EmptyComponent />}
-            {question.answers.map((answer: SelectorAnswer) => (
-                <AnswerComponent
-                    key={answer.id}
-                    answer={answer}
-                    chooseAnswer={chooseAnswer}
-                    acceptMultipleAnswers={answer.acceptMultipleAnswers}
-                />
-            ))}
+            <FlatList
+                data={props.question.answers}
+                renderItem={({ item }: ListRenderItemInfo<SelectorAnswer>): JSX.Element => renderAnswer(item, props)}
+                keyExtractor={(answer: SelectorAnswer): string => answer.id}
+            />
         </View>
     );
 };
+
+const renderAnswer = (item: SelectorAnswer, props: Props): JSX.Element => (
+    <AnswerComponent
+        key={item.id}
+        answer={item}
+        chooseAnswer={props.chooseAnswer}
+        acceptMultipleAnswers={item.acceptMultipleAnswers}
+    />
+);
