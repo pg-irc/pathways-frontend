@@ -28,7 +28,6 @@ export const AnswerComponent: React.StatelessComponent<Props> = (props: Props): 
                 borderWidth: 3,
                 borderColor: props.answer.isChosen ? colors.orange : colors.lightGrey,
                 margin: 3,
-                width: '100%',
             }}
         >
             <Text style={props.answer.isChosen ? textStyles.headlineH3StyleWhiteCenter : textStyles.headlineH3StyleBlackCenter}>
