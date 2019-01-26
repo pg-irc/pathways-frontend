@@ -4,10 +4,41 @@ import { Taxonomies } from '../../application/constants';
 import * as R from 'ramda';
 
 export const isTaskRecommended = R.curry((chosenTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, task: Task): boolean => {
-    const taxonomyId = Taxonomies.RECOMMENDATION_TAXONOMY_ID;
-    const taxonomyTermId = Taxonomies.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID;
+    if (isRecommendedToAll(task)) {
+        return true;
+    }
 
-    const taxonomyTermsWithDefault = R.append({ taxonomyId, taxonomyTermId }, chosenTaxonomyTerms);
+    const groupedTermsFromTask = R.values(R.reduce(groupTermsByTaxonomy, {}, task.taxonomyTerms));
 
-    return R.not(R.isEmpty(R.intersection(taxonomyTermsWithDefault, task.taxonomyTerms)));
+    if (R.isEmpty(chosenTaxonomyTerms) || R.isEmpty(groupedTermsFromTask)) {
+        return false;
+    }
+
+    return R.all(atLeastOneTermsMatches(chosenTaxonomyTerms), groupedTermsFromTask);
 });
+
+const isRecommendedToAll = (task: Task): boolean => (
+    R.any(matchesRecommendedToAll, task.taxonomyTerms)
+);
+
+const matchesRecommendedToAll = (term: TaxonomyTermReference): boolean => (
+    term.taxonomyId === Taxonomies.RECOMMENDATION_TAXONOMY_ID &&
+    term.taxonomyTermId === Taxonomies.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID
+);
+
+interface GroupedTerms {
+    readonly [taxonomyId: string]: ReadonlyArray<TaxonomyTermReference>;
+}
+
+const groupTermsByTaxonomy = (accumulator: GroupedTerms, element: TaxonomyTermReference): GroupedTerms => {
+    const taxonomyId = element.taxonomyId;
+    const group = accumulator[taxonomyId] || [];
+    return {
+        ...accumulator,
+        [taxonomyId]: [...group, element],
+    };
+};
+
+const atLeastOneTermsMatches = R.curry((t1: ReadonlyArray<TaxonomyTermReference>, t2: ReadonlyArray<TaxonomyTermReference>): boolean => (
+    R.not(R.isEmpty(R.intersection(t2, t1)))
+));
