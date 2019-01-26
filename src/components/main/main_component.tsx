@@ -9,13 +9,18 @@ import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connect
 import { RouterProps } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
+import { EmptyComponent } from '../empty_component/empty_component';
 import { NewlyRecommendedTasksConnectedComponent } from '../newly_recommended_tasks/newly_recommended_tasks_connected_component';
 
 interface HeaderMenuState {
     readonly isHeaderMenuShowing: boolean;
 }
 
-export type MainComponentProps = FooterProps & RouterProps;
+interface MainProps {
+    readonly showQuestionnairePopup: boolean;
+}
+
+export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
 export interface MainComponentActions {
     readonly routeChanged: (location: Location, action: Action) => RouteChangedAction;
@@ -58,7 +63,11 @@ export class MainComponent extends React.Component<Props> {
                     <MainPageSwitcherComponent />
                     <FooterComponent {...this.props} />
                     <NotificationsConnectedComponent {...this.props} />
-                    <NewlyRecommendedTasksConnectedComponent />
+                    {this.props.showQuestionnairePopup ?
+                        <NewlyRecommendedTasksConnectedComponent />
+                        :
+                        <EmptyComponent />
+                    }
                 </Container>
             </Drawer>
         );

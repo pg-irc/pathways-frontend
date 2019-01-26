@@ -14,7 +14,6 @@ import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 
 export interface NewlyRecommendedTasksComponentProps {
-    readonly showQuestionnairePopup: boolean;
     readonly newlyRecommendedUnsavedTasks: ReadonlyArray<Task>;
 }
 
@@ -27,7 +26,7 @@ type Props = NewlyRecommendedTasksComponentProps & NewlyRecommendedTasksComponen
 
 export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const tasks = props.newlyRecommendedUnsavedTasks;
-    const showPopup = props.showQuestionnairePopup && R.not(R.isEmpty(tasks));
+    const showPopup = R.not(R.isEmpty(tasks));
 
     if (!showPopup) {
         return <EmptyComponent />;

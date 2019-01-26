@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-native';
 import { RouterProps } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction, routeChanged } from '../../stores/router_actions';
+import { selectShowQuestionnairePopup } from '../../selectors/questionnaire/select_show_questionnaire_popup';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 
@@ -17,6 +18,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     location: ownProps.location,
     match: ownProps.match,
     staticContext: ownProps.staticContext,
+    showQuestionnairePopup: selectShowQuestionnairePopup(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RouteChangedAction>): MainComponentActions => ({
