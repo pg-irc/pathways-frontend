@@ -25,6 +25,7 @@ export const BookmarkedTopicsComponent: React.StatelessComponent<Props> = (props
                 tasks={props.bookmarkedTopics}
                 emptyTaskListComponent={noTasksAddedYetTextComponent()}
                 savedTasksIdList={R.map((topic: TaskListItem) => topic.id, props.bookmarkedTopics)}
+                loadOnDemand={true}
             />
         </View>
     );
