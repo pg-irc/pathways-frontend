@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { Id as TaskId } from '../../stores/tasks';
-import { Content, Text } from 'native-base';
+import { View, Text } from 'native-base';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListActions } from '../tasks/task_list_component';
 import { TaskListComponent, noTasksRecommendedTextComponent } from '../tasks/task_list_component';
@@ -20,7 +20,7 @@ type Props = RecommendedTopicsProps & TaskListActions & RouterProps;
 
 export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     return (
-        <Content padder style={applicationStyles.body}>
+        <View padder style={[applicationStyles.body, { flex: 1 }]}>
             {props.hasChosenAnswers ? <EmptyComponent /> : <PersonalizeComponent history={props.history} />}
             <Text style={textStyles.headlineH1StyleBlackLeft}>
                 <Trans>Recommended Topics</Trans>
@@ -31,6 +31,6 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
                 emptyTaskListComponent={noTasksRecommendedTextComponent()}
                 savedTasksIdList={props.savedTopicsIdList}
             />
-        </Content>
+        </View>
     );
 };
