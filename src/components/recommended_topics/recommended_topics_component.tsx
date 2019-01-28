@@ -30,6 +30,7 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
                 tasks={props.recommendedTopics}
                 emptyTaskListComponent={noTasksRecommendedTextComponent()}
                 savedTasksIdList={props.savedTopicsIdList}
+                loadOnDemand={true}
             />
         </View>
     );
