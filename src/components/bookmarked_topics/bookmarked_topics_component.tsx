@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Trans } from '@lingui/react';
-import { Content, Text } from 'native-base';
+import { Text, View } from 'native-base';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListActions } from '../tasks/task_list_component';
 import { TaskListComponent, noTasksAddedYetTextComponent } from '../tasks/task_list_component';
@@ -16,7 +16,7 @@ type Props = BookmarkedTopicsProps & TaskListActions & RouterProps;
 
 export const BookmarkedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     return (
-        <Content padder style={applicationStyles.body}>
+        <View padder style={[applicationStyles.body, { flex: 1 }]}>
             <Text style={textStyles.headlineH1StyleBlackLeft}>
                 <Trans>Bookmarked Topics</Trans>
             </Text>
@@ -26,6 +26,6 @@ export const BookmarkedTopicsComponent: React.StatelessComponent<Props> = (props
                 emptyTaskListComponent={noTasksAddedYetTextComponent()}
                 savedTasksIdList={R.map((topic: TaskListItem) => topic.id, props.bookmarkedTopics)}
             />
-        </Content>
+        </View>
     );
 };
