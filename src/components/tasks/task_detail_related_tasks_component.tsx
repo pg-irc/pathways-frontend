@@ -33,6 +33,7 @@ export const TaskDetailRelatedTasksComponent: React.StatelessComponent<Props> = 
                 addToSavedList={props.addToSavedList}
                 removeFromSavedList={props.removeFromSavedList}
                 history={props.history}
+                loadOnDemand={false}
             />
         </View>
     );
