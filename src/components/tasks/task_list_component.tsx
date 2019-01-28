@@ -15,6 +15,7 @@ export interface TaskListProps {
     readonly emptyTaskListComponent: JSX.Element;
     readonly savedTasksIdList: ReadonlyArray<Id>;
     readonly history: History;
+    readonly loadOnDemand: boolean;
 }
 
 export interface TaskListActions {
@@ -55,16 +56,18 @@ class NonEmptyTaskListComponent extends React.PureComponent<Props, State> {
     }
 
     render(): JSX.Element {
-        return (
-            <FlatList
-                data={this.state.data}
-                renderItem={({ item }: ListRenderItemInfo<TaskListItem>): JSX.Element => renderTaskListItem(item, this.props)}
-                keyExtractor={(task: TaskListItem): string => task.id}
-                onEndReached={this.loadMoreData}
-                onEndReachedThreshold={0.5}
-                extraData={this.props.tasks}
-            />
-        );
+        const defaultListProps = {
+            data: this.state.data,
+            renderItem: ({ item }: ListRenderItemInfo<TaskListItem>): JSX.Element => renderTaskListItem(item, this.props),
+            keyExtractor: (task: TaskListItem): string => task.id,
+            extraData: this.props.tasks,
+        };
+        const onDemandListProps = {
+            onEndReached: this.loadMoreData,
+            onEndReachedThreshold: 0.5,
+        };
+        const listProps = this.props.loadOnDemand ? { ...defaultListProps, ...onDemandListProps } : defaultListProps;
+        return <FlatList {...listProps} />;
     }
 
     private loadMoreData(): void {
