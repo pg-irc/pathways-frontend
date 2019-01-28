@@ -1,3 +1,4 @@
+// tslint:disable:no-class no-this no-expression-statement
 import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import * as R from 'ramda';
@@ -29,19 +30,58 @@ export const noTasksRecommendedTextComponent = (): JSX.Element => (
     <EmptyListComponent message={<Trans>No topics to recommend</Trans>} />
 );
 
-type Props = TaskListProps & TaskListActions;
-
 export const TaskListComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     R.isEmpty(props.tasks) ? props.emptyTaskListComponent : <NonEmptyTaskListComponent {...props} />
 );
 
-const NonEmptyTaskListComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <FlatList
-        data={props.tasks}
-        renderItem={({ item }: ListRenderItemInfo<TaskListItem>): JSX.Element => renderTaskListItem(item, props)}
-        keyExtractor={(task: TaskListItem): string => task.id}
-    />
-);
+type Props = TaskListProps & TaskListActions;
+
+type State = {
+    readonly sectionNumber: number;
+    readonly sections: ReadonlyArray<ReadonlyArray<TaskListItem>>;
+    readonly data: ReadonlyArray<TaskListItem>;
+};
+
+class NonEmptyTaskListComponent extends React.PureComponent<Props, State> {
+    readonly numberOfItemsPerSection: number = 10;
+
+    constructor(props: Props) {
+        super(props);
+        const sectionNumber = 0;
+        const sections = R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
+        const data = sections[sectionNumber];
+        this.state = { sectionNumber, sections, data };
+        this.loadMoreData = this.loadMoreData.bind(this);
+    }
+
+    render(): JSX.Element {
+        return (
+            <FlatList
+                data={this.state.data}
+                renderItem={({ item }: ListRenderItemInfo<TaskListItem>): JSX.Element => renderTaskListItem(item, this.props)}
+                keyExtractor={(task: TaskListItem): string => task.id}
+                onEndReached={this.loadMoreData}
+                onEndReachedThreshold={0.5}
+                extraData={this.props.tasks}
+            />
+        );
+    }
+
+    private loadMoreData(): void {
+        const nextSectionNumber = this.getNextSectionNumber();
+        const nextSection = this.state.sections[nextSectionNumber];
+        if (nextSection) {
+            this.setState({
+                sectionNumber: nextSectionNumber,
+                data: R.concat(this.state.data, nextSection),
+            });
+        }
+    }
+
+    private getNextSectionNumber(): number {
+        return this.state.sectionNumber + 1;
+    }
+}
 
 const renderTaskListItem = (item: TaskListItem, props: Props): JSX.Element => (
     <TaskListItemComponent
