@@ -80,7 +80,7 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
 );
 
 const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element => (
-    <Button style={[applicationStyles.orangeButton, { alignSelf: 'center' }]}>
+    <Button style={[applicationStyles.tealButton, { alignSelf: 'center' }]}>
         <Text style={textStyles.button}>
             <Trans>Find a settlement agency near me</Trans>
         </Text>
@@ -101,7 +101,7 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
             ],
         );
     };
-    return <Button full onPress={alertToClearAllUserData} style={[applicationStyles.orangeButton, { alignSelf: 'center' }]}>
+    return <Button full onPress={alertToClearAllUserData} style={[applicationStyles.tealButton, { alignSelf: 'center' }]}>
         <Text style={textStyles.button}>
             <Trans>Delete all user data</Trans>
         </Text>

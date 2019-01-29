@@ -23,10 +23,10 @@ export const AnswerComponent: React.StatelessComponent<Props> = (props: Props): 
             onPress={onPress}
             style={{
                 padding: 10,
-                backgroundColor: props.answer.isChosen ? colors.orange : colors.white,
+                backgroundColor: props.answer.isChosen ? colors.teal : colors.white,
                 borderRadius: values.roundedBorderRadius,
                 borderWidth: 3,
-                borderColor: props.answer.isChosen ? colors.orange : colors.lightGrey,
+                borderColor: props.answer.isChosen ? colors.teal : colors.lightGrey,
                 margin: 3,
             }}
         >

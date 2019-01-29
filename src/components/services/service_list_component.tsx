@@ -40,7 +40,7 @@ export class ServiceListComponent extends React.Component<Props> {
         return (
             <View padder style={{ flex: 1, backgroundColor: colors.lightGrey }}>
                 <View style={{
-                    backgroundColor: colors.orange,
+                    backgroundColor: colors.teal,
                     marginHorizontal: -10,
                     marginTop: -10,
                     marginBottom: 10,

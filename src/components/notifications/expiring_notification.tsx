@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     notification: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colors.orange,
+        backgroundColor: colors.teal,
         position: 'absolute',
         bottom: 0,
         left: 0,

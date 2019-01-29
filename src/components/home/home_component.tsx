@@ -26,7 +26,7 @@ export const PersonalizeComponent = (props: HomeProps): JSX.Element => (
     <View style={[
         applicationStyles.boxShadowBelow,
         {
-            backgroundColor: colors.orange,
+            backgroundColor: colors.teal,
             borderRadius: values.lessRoundedBorderRadius,
             padding: 20,
             marginBottom: 15,

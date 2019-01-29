@@ -116,7 +116,7 @@ const ServicesButton = (props: Props): JSX.Element => (
     <Button
         onPress={props.onServicesTextPress}
         style={[
-            applicationStyles.orangeButton,
+            applicationStyles.tealButton,
             applicationStyles.boxShadowBelow,
             {
                 paddingHorizontal: 15,

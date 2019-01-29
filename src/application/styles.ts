@@ -2,15 +2,16 @@ import { StyleSheet, Platform } from 'react-native';
 
 export const colors = {
     pale: '#ffebcb',
-    orange: '#f5a623',
-    topaz: '#11cac0',
+    teal: '#00838f',
+    // TODO this is the same as teal, clean up references and delete
+    topaz: '#00838f',
     blueGreen: '#0d9790',
     blueGreenDark: '#136f63',
-    lightGrey: '#eaeae3',
+    lightGrey: '#eee5d9',
     darkerGrey: '#d0d0c5',
     greyishBrown: '#595959',
     black: '#313131',
-    sunYellow: '#ffca28',
+    sunYellow: '#f2b134',
     white: '#ffffff',
     darkGreyWithAlpha: 'rgba(0, 0, 0, 0.4)',
     turquoiseBlue: '#07a0c3',
@@ -255,8 +256,8 @@ export const applicationStyles = StyleSheet.create({
         marginLeft: -10,
         marginRight: -10,
     },
-    orangeButton: {
-        backgroundColor: colors.orange,
+    tealButton: {
+        backgroundColor: colors.teal,
         borderRadius: values.roundedBorderRadius,
     },
     whiteButton: {

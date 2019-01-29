@@ -116,7 +116,7 @@ const IsRecommendedComponent = (): JSX.Element => (
 
 const AddTasksButtonComponent = (props: { readonly saveTasksToMyPlan: () => SaveTheseTasksToMyPlanAction }): JSX.Element => (
     <View style={styles.buttonWrapper}>
-        <Button style={[applicationStyles.orangeButton, applicationStyles.boxShadowBelow]} onPress={props.saveTasksToMyPlan}>
+        <Button style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow]} onPress={props.saveTasksToMyPlan}>
             <Text style={textStyles.button}>
                 <Trans>Bookmark these topics</Trans>
             </Text>

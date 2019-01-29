@@ -24,7 +24,7 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
                     }).catch((): void => alert('Supported applications include Apple or Google maps.'))
                 }
                 iconLeft
-                style={applicationStyles.orangeButton}
+                style={applicationStyles.tealButton}
             >
                 <Icon
                     type={'FontAwesome'}
