@@ -3,8 +3,15 @@ import { Image, Dimensions } from 'react-native';
 import { View } from 'native-base';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { colors } from '../../application/styles';
+import { images as topicImages } from '../../application/topicImages';
 
-export const TaskDetailHeadingComponent: React.StatelessComponent = (): JSX.Element => {
+export interface TaskDetailHeadingProps {
+    readonly taskId: string;
+}
+
+type Props = TaskDetailHeadingProps;
+
+export const TaskDetailHeadingComponent: React.StatelessComponent<Props> = (props:Props): JSX.Element => {
     const logoHeight = Dimensions.get('screen').height / 8;
     return (
         <View style={{
@@ -16,7 +23,7 @@ export const TaskDetailHeadingComponent: React.StatelessComponent = (): JSX.Elem
             borderBottomColor: colors.darkerGrey,
         }}>
             <Image
-                source={arrivalAdvisorGlyphLogo}
+                source={topicImages[props.taskId] ? topicImages[props.taskId] : arrivalAdvisorGlyphLogo}
                 resizeMode={'contain'}
                 style={{ height: logoHeight }}
             />
