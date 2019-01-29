@@ -40,7 +40,7 @@ export const PersonalizeComponent = (props: HomeProps): JSX.Element => (
 const PersonalizeComponentContent = (): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 6;
     return (
-        <View style={{ flex: 4, flexDirection: 'row', marginBottom: 15 }}>
+        <View style={{ flexDirection: 'row', marginBottom: 15 }}>
             <View style={{ flex: 3 }}>
                 <Text style={textStyles.headlineH2StyleWhiteLeft}>
                     <Trans>Personalize Your Recommended Topics</Trans>
