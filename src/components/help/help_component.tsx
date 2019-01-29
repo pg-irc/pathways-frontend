@@ -80,7 +80,7 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
 );
 
 const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element => (
-    <Button style={[applicationStyles.tealButton, { alignSelf: 'center' }]}>
+    <Button style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow, { alignSelf: 'center' }]}>
         <Text style={textStyles.button}>
             <Trans>Find a settlement agency near me</Trans>
         </Text>
@@ -122,7 +122,7 @@ const renderContactComponent = (contact: HelpContact, index: number): JSX.Elemen
         }}
     >
         <View style={{ flexDirection: 'column' }}>
-            <Text style={textStyles.headlineH4StyleBlackLeft}>{contact.title}</Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}>{contact.title}</Text>
             {contact.subTitle ? <Text note>{contact.subTitle}</Text> : <EmptyComponent />}
         </View>
         <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize }} />

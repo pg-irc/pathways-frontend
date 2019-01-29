@@ -15,12 +15,17 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     const path = props.location.pathname;
     const isOnWelcomeScreen = pathMatchesRoute(path, Routes.Welcome);
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
+    const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
 
     if (isOnWelcomeScreen) {
         return <EmptyComponent />;
     }
 
     if (isOnQuestionnaireScreen) {
+        return <EmptyComponent />;
+    }
+
+    if (isOnHelpScreen) {
         return <EmptyComponent />;
     }
 

@@ -120,7 +120,7 @@ export const textStyles = StyleSheet.create({
         lineHeight: 21,
         letterSpacing: 0,
         textAlign: 'left',
-        color: colors.greyishBrown,
+        color: colors.black,
     },
     paragraphBoldWhiteLeft: {
         fontFamily,
@@ -150,7 +150,7 @@ export const textStyles = StyleSheet.create({
         lineHeight: 21,
         letterSpacing: 0,
         textAlign: 'left',
-        color: colors.greyishBrown,
+        color: colors.black,
     },
     paragraphSmallStyleCenter: {
         fontFamily,

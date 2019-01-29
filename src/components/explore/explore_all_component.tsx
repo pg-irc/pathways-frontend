@@ -51,7 +51,7 @@ const getLearnButtonContent = (section: ExploreSection): JSX.Element => (
             ]}
         />
         <Text style={textStyles.headlineH2StyleBlackLeft}>{section.name}</Text>
-        <Text style={textStyles.paragraphStyle}>{section.description}</Text>
+        <Text style={[textStyles.paragraphStyle, { color: colors.greyishBrown }]}>{section.description}</Text>
     </View>
 );
 

@@ -38,6 +38,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
     const isOnTopicDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
     const isOnTopicServicesScreen = pathMatchesRoute(path, Routes.Services);
+    const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
 
     if (isOnQuestionnaireScreen) {
         return <EmptyComponent />;
@@ -48,7 +49,21 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     }
 
     if (isOnTopicServicesScreen) {
-        return <TopicServicesScreenHeader {...props} />;
+        return (
+            <BackAndMenuButtonsHeader
+                {...props}
+                {...{ textColor: colors.white, backgroundColor: colors.teal }}
+            />
+        );
+    }
+
+    if (isOnHelpScreen) {
+        return (
+            <BackAndMenuButtonsHeader
+                {...props}
+                {...{ textColor: colors.teal, backgroundColor: colors.white }}
+            />
+        );
     }
 
     if (isOnParentScreen(path)) {
@@ -83,17 +98,20 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
     return renderHeader(backgroundColor, leftButton, rightButtons);
 };
 
-const TopicServicesScreenHeader = (props: Props): JSX.Element => {
-    const textColor = colors.white;
-    const backgroundColor = colors.teal;
-    const leftButton = <BackButtonComponent history={props.history} textColor={textColor}/>;
+interface BackAndMenuButtonsHeaderProps extends Props {
+    readonly textColor: string;
+    readonly backgroundColor: string;
+}
+
+const BackAndMenuButtonsHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
+    const leftButton = <BackButtonComponent history={props.history} textColor={props.textColor}/>;
     const rightButton =
         <MenuButtonComponent
             onPress={props.onHeaderMenuButtonPress}
             locale={props.currentLocale}
-            textColor={textColor}
+            textColor={props.textColor}
         />;
-    return renderHeader(backgroundColor, leftButton, [rightButton]);
+    return renderHeader(props.backgroundColor, leftButton, [rightButton]);
 };
 
 const ParentScreenHeader = (props: Props): JSX.Element => {
