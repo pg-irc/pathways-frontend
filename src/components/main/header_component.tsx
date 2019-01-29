@@ -37,6 +37,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     const path = props.location.pathname;
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
     const isOnTopicDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
+    const isOnTopicServicesScreen = pathMatchesRoute(path, Routes.Services);
 
     if (isOnQuestionnaireScreen) {
         return <EmptyComponent />;
@@ -44,6 +45,10 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
     if (isOnTopicDetailScreen) {
         return <TopicDetailScreenHeader {...props} />;
+    }
+
+    if (isOnTopicServicesScreen) {
+        return <TopicServicesScreenHeader {...props} />;
     }
 
     if (isOnParentScreen(path)) {
@@ -61,7 +66,7 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.TaskDetail);
     const taskId = params.taskId;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} />;
+    const leftButton = <BackButtonComponent history={props.history} textColor={colors.black}/>;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={R.contains(taskId, props.savedTasksIdList)}
@@ -76,6 +81,19 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
         />,
     ];
     return renderHeader(backgroundColor, leftButton, rightButtons);
+};
+
+const TopicServicesScreenHeader = (props: Props): JSX.Element => {
+    const textColor = colors.white;
+    const backgroundColor = colors.teal;
+    const leftButton = <BackButtonComponent history={props.history} textColor={textColor}/>;
+    const rightButton =
+        <MenuButtonComponent
+            onPress={props.onHeaderMenuButtonPress}
+            locale={props.currentLocale}
+            textColor={textColor}
+        />;
+    return renderHeader(backgroundColor, leftButton, [rightButton]);
 };
 
 const ParentScreenHeader = (props: Props): JSX.Element => {
@@ -94,7 +112,7 @@ const ParentScreenHeader = (props: Props): JSX.Element => {
 const ChildScreenHeader = (props: Props): JSX.Element => {
     const textColor = colors.black;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} />;
+    const leftButton = <BackButtonComponent history={props.history} textColor={textColor}/>;
     const rightButton =
         <MenuButtonComponent
             onPress={props.onHeaderMenuButtonPress}

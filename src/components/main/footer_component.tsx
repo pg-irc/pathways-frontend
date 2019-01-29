@@ -4,7 +4,7 @@ import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { History, Location } from 'history';
 import { Routes, goToRouteWithoutParameter, pathMatchesRoute } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors, values, applicationStyles } from '../../application/styles';
+import { colors, values } from '../../application/styles';
 
 export interface FooterProps {
     readonly history: History;
