@@ -9,7 +9,7 @@ import { buildSelectorTask } from './build_selector_task';
 import { Task } from './task';
 import R from 'ramda';
 
-export const selectNewlyRecommendedUnsavedTasks = (appStore: Store): ReadonlyArray<Task> => {
+export const computeNewlyRecommendedUnsavedTasks = (appStore: Store): ReadonlyArray<Task> => {
     const oldAnswers = pickQuestionnaire(appStore).oldAnswers;
     const newAnswers = pickAnswers(appStore);
     const tasks = pickTasks(appStore);
