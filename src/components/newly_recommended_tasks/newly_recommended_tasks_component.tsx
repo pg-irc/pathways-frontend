@@ -14,7 +14,6 @@ import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 
 export interface NewlyRecommendedTasksComponentProps {
-    readonly showQuestionnairePopup: boolean;
     readonly newlyRecommendedUnsavedTasks: ReadonlyArray<Task>;
 }
 
@@ -27,7 +26,7 @@ type Props = NewlyRecommendedTasksComponentProps & NewlyRecommendedTasksComponen
 
 export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const tasks = props.newlyRecommendedUnsavedTasks;
-    const showPopup = props.showQuestionnairePopup && R.not(R.isEmpty(tasks));
+    const showPopup = R.not(R.isEmpty(tasks));
 
     if (!showPopup) {
         return <EmptyComponent />;
@@ -39,9 +38,9 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
 
     return <View style={styles.fadeout}>
         <View style={styles.dialog}>
-            <HeaderComponent taskIds={taskIds} dismissPopup={dismissPopup}/>
+            <HeaderComponent taskIds={taskIds} dismissPopup={dismissPopup} />
             <HeaderContentComponent tasksCount={tasks.length} />
-            <TaskListComponent tasks={tasks}/>
+            <TaskListComponent tasks={tasks} />
             <AddTasksButtonComponent saveTasksToMyPlan={saveTasksToMyPlan} />
         </View >
     </View>;
@@ -49,25 +48,25 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
 
 const HeaderComponent =
     (props: { readonly taskIds: ReadonlyArray<Id>, readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }): JSX.Element => {
-    const logoSize = Dimensions.get('screen').width / 7;
-    return (
-        <View style={styles.header}>
-            <View style={styles.headerImagesWrapper}>
-                <Image
-                    source={arrivalAdvisorGlyphLogo}
-                    resizeMode={'contain'}
-                    style={{
-                        width: logoSize,
-                        height: logoSize,
-                    }}
-                />
-                <TouchableOpacity onPress={props.dismissPopup}>
-                    <Icon name='close' />
-                </TouchableOpacity>
+        const logoSize = Dimensions.get('screen').width / 7;
+        return (
+            <View style={styles.header}>
+                <View style={styles.headerImagesWrapper}>
+                    <Image
+                        source={arrivalAdvisorGlyphLogo}
+                        resizeMode={'contain'}
+                        style={{
+                            width: logoSize,
+                            height: logoSize,
+                        }}
+                    />
+                    <TouchableOpacity onPress={props.dismissPopup}>
+                        <Icon name='close' />
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
-    );
-};
+        );
+    };
 
 const HeaderContentComponent = (props: { readonly tasksCount: number }): JSX.Element => (
     <Text style={[textStyles.headlineH2StyleBlackLeft, styles.headerContent]}>
