@@ -126,7 +126,15 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                     transparent
                     iconRight
                 >
-                    <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.topaz, paddingLeft: 6 }]}>
+                    <Text style={[
+                        textStyles.paragraphBoldBlackLeft,
+                        {
+                            color: colors.topaz,
+                            paddingLeft: 6,
+                            paddingRight: 8,
+                        },
+                    ]}
+                    >
                         {text}
                     </Text>
                     <Icon

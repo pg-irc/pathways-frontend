@@ -25,7 +25,7 @@ type Props = HeaderMenuProps & HeaderMenuActions;
 export const HeaderMenuComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
         <Content>
-            <Header style={{ backgroundColor: colors.topaz }} />
+            <Header style={{ backgroundColor: colors.lightTeal }} />
             <LocaleSection {...props} />
             <AboutSection {...props} />
         </Content>
