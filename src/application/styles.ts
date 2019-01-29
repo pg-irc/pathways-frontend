@@ -2,11 +2,13 @@ import { StyleSheet, Platform } from 'react-native';
 
 export const colors = {
     pale: '#ffebcb',
+    lightTeal: '#4fb3bf',
     teal: '#00838f',
-    // TODO this is the same as teal, clean up references and delete
+    // This is the same as teal, clean up references and delete
     topaz: '#00838f',
     blueGreen: '#0d9790',
     blueGreenDark: '#136f63',
+    // Rename to surface
     lightGrey: '#eee5d9',
     darkerGrey: '#d0d0c5',
     greyishBrown: '#595959',

@@ -16,12 +16,9 @@ type AllExploreProps = ExploreAllProps & RouterProps;
 
 export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
     (props: AllExploreProps): JSX.Element => (
-        <Content padder style={applicationStyles.body}>
+        <Content padder style={{ backgroundColor: colors.white }}>
             <Text style={textStyles.headlineH1StyleBlackLeft}>
-                <Trans>Learn</Trans>
-            </Text>
-            <Text style={textStyles.headlineH4StyleBlackLeft}>
-                <Trans>Find out about my community and available services.</Trans>
+                <Trans>Learn all about B.C.</Trans>
             </Text>
             <View style={styles.buttonsWrapper}>
                 {mapWithIndex((section: ExploreSection, index: number) => (
@@ -61,10 +58,11 @@ const getLearnButtonContent = (section: ExploreSection): JSX.Element => (
 const styles = StyleSheet.create({
     button: {
         justifyContent: 'space-between',
-        width: '48%',
-        backgroundColor: colors.white,
+        width: '47%',
+        backgroundColor: colors.lightGrey,
         borderRadius: values.lessRoundedBorderRadius,
-        marginTop: 10,
+        marginHorizontal: 3,
+        marginTop: 15,
         padding: 15,
     },
     buttonContentIcon: {

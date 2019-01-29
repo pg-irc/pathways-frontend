@@ -13,7 +13,7 @@ export const HelpButtonComponent = (props: HelpButtonProps): JSX.Element => (
         <Icon
             type='FontAwesome'
             name='question-circle'
-            style={{ color: colors.white, fontSize: values.mediumIconSize }}
+            style={{ color: colors.teal, fontSize: values.mediumIconSize }}
         />
     </Button>
 );

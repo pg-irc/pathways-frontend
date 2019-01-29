@@ -29,8 +29,8 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     const learnIsActive = pathMatchesRoute(path, Routes.Learn);
 
     return (
-        <Footer style={applicationStyles.boxShadowAbove}>
-            <FooterTab style={[{ backgroundColor: colors.white }]}>
+        <Footer>
+            <FooterTab style={[{ backgroundColor: colors.lightTeal }]}>
                 {navigationButton(props.history, Routes.RecommendedTopics, 'star', recommendedTopicsActive)}
                 {navigationButton(props.history, Routes.Learn, 'book', learnIsActive)}
                 {navigationButton(props.history, Routes.BookmarkedTopics, 'bookmark', bookmarkedIsActive)}
@@ -56,5 +56,5 @@ const navigationButton = (history: History, route: Routes, icon: string, isActiv
 );
 
 const textStyle = (isActive: boolean): StyleProp<TextStyle> => (
-    isActive ? { color: colors.topaz } : { color: colors.darkerGrey }
+    isActive ? { color: colors.white } : { color: colors.teal }
 );

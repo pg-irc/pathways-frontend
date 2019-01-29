@@ -60,7 +60,6 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 const TopicDetailScreenHeader = (props: Props): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.TaskDetail);
     const taskId = params.taskId;
-    const textColor = colors.black;
     const backgroundColor = colors.lightGrey;
     const leftButton = <BackButtonComponent history={props.history} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [
@@ -68,20 +67,20 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
             isBookmarked={R.contains(taskId, props.savedTasksIdList)}
             addBookmark={(): AddToSavedListAction => props.addBookmark(taskId)}
             removeBookmark={(): RemoveFromSavedListAction => props.removeBookmark(taskId)}
-            textColor={textColor}
+            textColor={colors.teal}
         />,
         <MenuButtonComponent
             onPress={props.onHeaderMenuButtonPress}
             locale={props.currentLocale}
-            textColor={textColor}
+            textColor={colors.black}
         />,
     ];
     return renderHeader(backgroundColor, leftButton, rightButtons);
 };
 
 const ParentScreenHeader = (props: Props): JSX.Element => {
-    const textColor = colors.white;
-    const backgroundColor = colors.topaz;
+    const textColor = colors.teal;
+    const backgroundColor = colors.white;
     const leftButton = <HelpButtonComponent history={props.history} />;
     const rightButton =
         <MenuButtonComponent
@@ -119,7 +118,7 @@ const renderHeader = (backgroundColor: string, leftButton: JSX.Element, rightBut
     // Without this, the hardware back button on Android always minimizes the app.
     const reactRouterBackButtonHack: JSX.Element = <ReactRouterBackButtonHack />;
     return (
-        <Header style={{ marginTop, backgroundColor: backgroundColor }}>
+        <Header style={{ marginTop, backgroundColor: backgroundColor, borderBottomColor: 'transparent' }}>
             <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
                 {leftButton}
                 {reactRouterBackButtonHack}
