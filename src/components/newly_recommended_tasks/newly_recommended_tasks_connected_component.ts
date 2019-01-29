@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
-import { computeNewlyRecommendedUnsavedTasks } from '../../selectors/tasks/compute_newly_recommended_unsaved_tasks';
+import { selectNewlyRecommendedUnsavedTasks } from '../../selectors/tasks/select_newly_recommended_unsaved_tasks';
 import { Id } from '../../stores/tasks';
 import { SaveTheseTasksToMyPlanAction, saveTheseTasksToMyPlan } from '../../stores/tasks/actions';
 import { DismissNewlyAddedTasksPopupAction, dismissNewlyAddedTasksPopup } from '../../stores/questionnaire/actions';
@@ -10,11 +10,11 @@ import {
     NewlyRecommendedTasksComponentActions,
     NewlyRecommendedTasksComponent,
 } from './newly_recommended_tasks_component';
-import { getShowQuestionnairePopup } from '../../selectors/questionnaire/get_show_questionnaire_popup';
+import { isQuestionnairePopupShown } from '../../selectors/questionnaire/is_questionnaire_popup_shown';
 
 const mapStateToProps = (store: Store): NewlyRecommendedTasksComponentProps => ({
-    showQuestionnairePopup: getShowQuestionnairePopup(store),
-    newlyRecommendedUnsavedTasks: computeNewlyRecommendedUnsavedTasks(store),
+    showQuestionnairePopup: isQuestionnairePopupShown(store),
+    newlyRecommendedUnsavedTasks: selectNewlyRecommendedUnsavedTasks(store),
 });
 
 type DispatchActions = SaveTheseTasksToMyPlanAction | DismissNewlyAddedTasksPopupAction;
