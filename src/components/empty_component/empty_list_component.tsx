@@ -8,10 +8,12 @@ export interface EmptyListProps {
 }
 
 export const EmptyListComponent: React.StatelessComponent<EmptyListProps> = (props: EmptyListProps): JSX.Element => (
-    <View style={styles.wrapper}>
-        <Text style={styles.message}>
-            {props.message}
-        </Text>
+    <View style={{ flex: 1 }}>
+        <View style={styles.wrapper}>
+            <Text style={styles.message}>
+                {props.message}
+            </Text>
+        </View>
     </View>
 );
 

@@ -40,7 +40,7 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
         <View style={styles.dialog}>
             <HeaderComponent taskIds={taskIds} dismissPopup={dismissPopup} />
             <HeaderContentComponent tasksCount={tasks.length} />
-            <TaskListComponent tasks={tasks} />
+            <TasksComponent tasks={tasks} />
             <AddTasksButtonComponent saveTasksToMyPlan={saveTasksToMyPlan} />
         </View >
     </View>;
@@ -75,7 +75,7 @@ const HeaderContentComponent = (props: { readonly tasksCount: number }): JSX.Ele
     </Text>
 );
 
-const TaskListComponent = (props: { readonly tasks: ReadonlyArray<Task> }): JSX.Element => (
+const TasksComponent = (props: { readonly tasks: ReadonlyArray<Task> }): JSX.Element => (
     <FlatList style={styles.taskList}
         data={props.tasks}
         renderItem={renderTaskItem}

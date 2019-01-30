@@ -4,11 +4,11 @@ import { Id as TaskId } from '../../stores/tasks';
 import { View, Text } from 'native-base';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListActions } from '../tasks/task_list_component';
-import { TaskListComponent, noTasksRecommendedTextComponent } from '../tasks/task_list_component';
+import { TaskListComponent, NoTasksRecommendedComponent } from '../tasks/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { PersonalizeComponent } from '../home/home_component';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { textStyles, applicationStyles } from '../../application/styles';
+import { textStyles } from '../../application/styles';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -18,20 +18,21 @@ export interface RecommendedTopicsProps {
 
 type Props = RecommendedTopicsProps & TaskListActions & RouterProps;
 
-export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    return (
-        <View padder style={[applicationStyles.body, { flex: 1 }]}>
-            {props.hasChosenAnswers ? <EmptyComponent /> : <PersonalizeComponent history={props.history} />}
-            <Text style={textStyles.headlineH1StyleBlackLeft}>
-                <Trans>Recommended Topics</Trans>
-            </Text>
-            <TaskListComponent
-                {...props}
-                tasks={props.recommendedTopics}
-                emptyTaskListComponent={noTasksRecommendedTextComponent()}
-                savedTasksIdList={props.savedTopicsIdList}
-                loadOnDemand={true}
-            />
-        </View>
-    );
-};
+export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    <TaskListComponent
+        {...props}
+        tasks={props.recommendedTopics}
+        savedTasksIdList={props.savedTopicsIdList}
+        emptyTaskListContent={<NoTasksRecommendedComponent />}
+        headerContent={<TaskListHeaderComponent {...props} />}
+    />
+);
+
+const TaskListHeaderComponent = (props: Props): JSX.Element => (
+    <View>
+        {props.hasChosenAnswers ? <EmptyComponent /> : <PersonalizeComponent history={props.history} />}
+        <Text style={textStyles.headlineH1StyleBlackLeft}>
+            <Trans>Recommended Topics</Trans>
+        </Text>
+    </View>
+);

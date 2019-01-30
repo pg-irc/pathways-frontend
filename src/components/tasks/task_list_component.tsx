@@ -9,31 +9,20 @@ import { TaskListItemComponent } from './task_list_item_component';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
 import { Id, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/tasks';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
+import { colors } from '../../application/styles';
 
 export interface TaskListProps {
-    readonly tasks: ReadonlyArray<TaskListItem>;
-    readonly emptyTaskListComponent: JSX.Element;
-    readonly savedTasksIdList: ReadonlyArray<Id>;
     readonly history: History;
-    readonly loadOnDemand: boolean;
+    readonly tasks: ReadonlyArray<TaskListItem>;
+    readonly savedTasksIdList: ReadonlyArray<Id>;
+    readonly emptyTaskListContent: JSX.Element;
+    readonly headerContent: JSX.Element;
 }
 
 export interface TaskListActions {
     readonly addToSavedList: (taskId: Id) => AddToSavedListAction;
     readonly removeFromSavedList: (taskId: Id) => RemoveFromSavedListAction;
 }
-
-export const noTasksAddedYetTextComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No topics bookmarked yet</Trans>} />
-);
-
-export const noTasksRecommendedTextComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No topics to recommend</Trans>} />
-);
-
-export const TaskListComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    R.isEmpty(props.tasks) ? props.emptyTaskListComponent : <NonEmptyTaskListComponent {...props} />
-);
 
 type Props = TaskListProps & TaskListActions;
 
@@ -43,7 +32,7 @@ type State = {
     readonly data: ReadonlyArray<TaskListItem>;
 };
 
-class NonEmptyTaskListComponent extends React.PureComponent<Props, State> {
+export class TaskListComponent extends React.PureComponent<Props, State> {
     readonly numberOfItemsPerSection: number = 10;
 
     constructor(props: Props) {
@@ -56,18 +45,19 @@ class NonEmptyTaskListComponent extends React.PureComponent<Props, State> {
     }
 
     render(): JSX.Element {
-        const defaultListProps = {
-            data: this.state.data,
-            renderItem: ({ item }: ListRenderItemInfo<TaskListItem>): JSX.Element => renderTaskListItem(item, this.props),
-            keyExtractor: (task: TaskListItem): string => task.id,
-            extraData: this.props.tasks,
-        };
-        const onDemandListProps = {
-            onEndReached: this.loadMoreData,
-            onEndReachedThreshold: 0.5,
-        };
-        const listProps = this.props.loadOnDemand ? { ...defaultListProps, ...onDemandListProps } : defaultListProps;
-        return <FlatList {...listProps} />;
+        return (
+            <FlatList
+                style={{ padding: 10, backgroundColor: colors.lightGrey }}
+                data={this.state.data}
+                renderItem={({ item }: ListRenderItemInfo<TaskListItem>): JSX.Element => renderTaskListItem(item, this.props)}
+                keyExtractor={(task: TaskListItem): string => task.id}
+                extraData={this.props.tasks}
+                onEndReached={this.loadMoreData}
+                onEndReachedThreshold={0.5}
+                ListEmptyComponent={this.props.emptyTaskListContent}
+                ListHeaderComponent={this.props.headerContent}
+            />
+        );
     }
 
     private loadMoreData(): void {
@@ -94,4 +84,12 @@ const renderTaskListItem = (item: TaskListItem, props: Props): JSX.Element => (
         removeFromSavedList={props.removeFromSavedList}
         goToTaskDetail={goToRouteWithParameter(Routes.TaskDetail, item.id, props.history)}
     />
+);
+
+export const NoTasksAddedComponent = (): JSX.Element => (
+    <EmptyListComponent message={<Trans>No topics bookmarked yet</Trans>} />
+);
+
+export const NoTasksRecommendedComponent = (): JSX.Element => (
+    <EmptyListComponent message={<Trans>No topics to recommend</Trans>} />
 );
