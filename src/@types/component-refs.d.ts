@@ -1,6 +1,8 @@
-declare type ScrollViewRef = {
-    readonly _root: {
-        readonly scrollIntoView: (element: JSX.Element) => void,
-        readonly scrollToPosition: (x: number, y: number, animated: boolean) => void,
-    };
+interface ScrollToOffsetParams {
+    readonly animated: boolean;
+    readonly offset: number;
+}
+
+declare type FlatListRef = {
+    readonly scrollToOffset: (params: ScrollToOffsetParams) => void,
 };

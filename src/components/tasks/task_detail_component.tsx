@@ -1,4 +1,3 @@
-// tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { History } from 'history';
@@ -17,6 +16,7 @@ export interface TaskDetailProps {
     readonly savedTasksIdList: ReadonlyArray<TaskId>;
     readonly history: History;
 }
+
 export interface TaskDetailActions {
     readonly toggleCompleted: (taskId: TaskId) => ToggleCompletedAction;
     readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
@@ -25,35 +25,18 @@ export interface TaskDetailActions {
 
 type Props = TaskDetailProps & TaskDetailActions;
 
-export class TaskDetailComponent extends React.Component<Props> {
-    scrollViewRef: ScrollViewRef = undefined;
-
-    constructor(props: Props) {
-        super(props);
-        this.setScrollViewRef = this.setScrollViewRef.bind(this);
-        this.scrollToTop = this.scrollToTop.bind(this);
-    }
-
-    componentDidUpdate(previousProps: Props): void {
-        if (previousProps.task.id !== this.props.task.id) {
-            this.scrollToTop();
-        }
-    }
-
-    render(): JSX.Element {
-        return (
-            <TaskListComponent
-                tasks={this.props.task.relatedTasks}
-                savedTasksIdList={this.props.savedTasksIdList}
-                addToSavedList={this.props.addToSavedList}
-                removeFromSavedList={this.props.removeFromSavedList}
-                history={this.props.history}
-                emptyTaskListContent={<NoTasksAddedComponent />}
-                headerContent={<TaskListHeaderComponent {...this.props} />}
-            />
-        );
-    }
-}
+export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    <TaskListComponent
+        tasks={props.task.relatedTasks}
+        savedTasksIdList={props.savedTasksIdList}
+        addToSavedList={props.addToSavedList}
+        removeFromSavedList={props.removeFromSavedList}
+        history={props.history}
+        emptyTaskListContent={<NoTasksAddedComponent />}
+        headerContent={<TaskListHeaderComponent {...props} />}
+        headerContentIdentifier={props.task.id}
+    />
+);
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View>
