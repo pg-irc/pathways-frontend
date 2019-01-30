@@ -36,6 +36,10 @@ export const TaskDetailContentComponent: React.StatelessComponent<Props> = (prop
 
 const ImageComponent = (props: Props): JSX.Element => {
     const logoHeight = Dimensions.get('screen').height / 8;
+    const imageSource = topicImages[props.task.id] ?
+        topicImages[props.task.id]
+        :
+        arrivalAdvisorGlyphLogo;
     return (
         <View style={{
             alignItems: 'center',
@@ -48,7 +52,7 @@ const ImageComponent = (props: Props): JSX.Element => {
             marginTop: -10,
         }}>
             <Image
-                source={topicImages[props.task.id] ? topicImages[props.task.id] : arrivalAdvisorGlyphLogo}
+                source={imageSource}
                 resizeMode={'contain'}
                 style={{ height: logoHeight }}
             />
