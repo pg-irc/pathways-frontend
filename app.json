@@ -6,7 +6,7 @@
     "version": "1.0.2",
     "slug": "arrival_advisor",
     "ios": {
-      "bundleIdentifier": "org.peacegeeks.arrivalAdvisor",
+      "bundleIdentifier": "org.peacegeeks.ArrivalAdvisor",
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "comgooglemaps"
@@ -14,7 +14,7 @@
       }
     },
     "android": {
-      "package": "org.peacegeeks.arrivalAdvisor"
+      "package": "org.peacegeeks.ArrivalAdvisor"
     },
     "assetBundlePatterns": [
       "assets/images/*",
@@ -27,7 +27,8 @@
           "file": "sentry-expo/upload-sourcemaps",
           "config": {
             "organization": "peacegeeks",
-            "project": "pathways"
+            "project": "pathways",
+            "authToken": "get the sentry auth token from the web site"
           }
         }
       ]
