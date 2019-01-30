@@ -119,6 +119,7 @@ export class AnswerBuilder {
     questionId: string = aString();
     text: string = aString();
     isChosen: boolean = aBoolean();
+    isInverted: boolean = aBoolean();
     taxonomyTerms: TaxonomyTermReference[] = [];
 
     withLocaleCode(localeCode: string): AnswerBuilder {
@@ -146,6 +147,11 @@ export class AnswerBuilder {
         return this;
     }
 
+    withIsInverted(isInverted: boolean): AnswerBuilder {
+        this.isInverted = isInverted;
+        return this;
+    }
+
     withTaxonomyTerm(taxonomyTerm: TaxonomyTermReference): AnswerBuilder {
         this.taxonomyTerms = [...this.taxonomyTerms, taxonomyTerm];
         return this;
@@ -157,6 +163,7 @@ export class AnswerBuilder {
             questionId: this.questionId,
             text: this.createLocalizedText(this.text),
             isChosen: this.isChosen,
+            isInverted: this.isInverted,
             taxonomyTerms: this.taxonomyTerms,
         };
     }

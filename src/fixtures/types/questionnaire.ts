@@ -19,6 +19,7 @@ export interface Answer {
     readonly questionId: Id;
     readonly text: LocalizedText;
     readonly isChosen: boolean;
+    readonly isInverted: boolean;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
 }
 
