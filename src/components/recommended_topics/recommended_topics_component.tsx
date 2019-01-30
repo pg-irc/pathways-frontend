@@ -6,8 +6,7 @@ import { View, Text, Button } from 'native-base';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListActions } from '../tasks/task_list_component';
 import { TaskListComponent, NoTasksRecommendedComponent } from '../tasks/task_list_component';
-import { RouterProps } from '../../application/routing';
-import { PersonalizeComponent } from '../home/home_component';
+import { RouterProps, goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { textStyles, applicationStyles, colors, values } from '../../application/styles';
 import { recommendationBubble } from '../../application/images';
@@ -32,7 +31,10 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View padder>
-        {props.hasChosenAnswers ? <EmptyComponent /> : <PersonalizeComponent history={props.history} />}
+        {props.hasChosenAnswers ?
+            <CallToActionCollapsedComponent {...props} />
+            :
+            <CallToActionFullComponent {...props} />}
         <Text style={textStyles.headlineH1StyleBlackLeft}>
             <Trans>Recommended Topics</Trans>
         </Text>
