@@ -100,7 +100,8 @@ describe('toSelectorQuestion selector', () => {
     // TODO move tests for filterTaxonomyTermsForChosenAnswers to a different test suite
     it('should return the taxonomy terms for a chosen answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
-        const chosenAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(true).withIsInverted(false);
+        const chosenAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
+            withIsChosen(true).withIsInverted(false);
         const theQuestion = new QuestionBuilder().withAnswers([chosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
 
@@ -111,7 +112,8 @@ describe('toSelectorQuestion selector', () => {
 
     it('should return the taxonomy terms for a non-chosen inverted answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
-        const nonChosenInvertedAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(false).withIsInverted(true);
+        const nonChosenInvertedAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
+            withIsChosen(false).withIsInverted(true);
         const theQuestion = new QuestionBuilder().withAnswers([nonChosenInvertedAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
 
@@ -119,21 +121,11 @@ describe('toSelectorQuestion selector', () => {
 
         expect(result).toEqual([theTaxonomyTerm]);
     });
-
-    it('should return the taxonomy terms for a chosen non-inverted answer', () => {
-        const theTaxonomyTerm = aTaxonomyTermReference();
-        const chosenNonInvertedAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(true).withIsInverted(false);
-        const theQuestion = new QuestionBuilder().withAnswers([chosenNonInvertedAnswer]);
-        const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
-
-        const result = getTaxonomyTermsForRelevantAnswers(toValidOrThrow(normalizedData).answers);
-
-        expect(result).toEqual([theTaxonomyTerm]);
-    });
-
+    
     it('should not return the taxonomy terms for a chosen inverted answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
-        const chosenInvertedAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(true).withIsInverted(true);
+        const chosenInvertedAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
+            withIsChosen(true).withIsInverted(true);
         const theQuestion = new QuestionBuilder().withAnswers([chosenInvertedAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
 
@@ -144,7 +136,8 @@ describe('toSelectorQuestion selector', () => {
 
     it('should not return the taxonomy terms for a non-chosen answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
-        const nonChosenAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(false).withIsInverted(false);
+        const nonChosenAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
+            withIsChosen(false).withIsInverted(false);
         const theQuestion = new QuestionBuilder().withAnswers([nonChosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
 
@@ -171,7 +164,8 @@ describe('toSelectorQuestion selector', () => {
 describe('getting ids of all chosen answers', () => {
     it('should include ids for chosen answers', () => {
         const locale = aLocale();
-        const aChosenAnswer = new AnswerBuilder().withIsChosen(true).withIsInverted(false).withLocaleCode(locale.code);
+        const aChosenAnswer = new AnswerBuilder().withIsChosen(true).withIsInverted(false).
+            withLocaleCode(locale.code);
         const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([aChosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 
@@ -182,7 +176,8 @@ describe('getting ids of all chosen answers', () => {
 
     it('should not include ids for non-chosen questions', () => {
         const locale = aLocale();
-        const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withIsInverted(false).withLocaleCode(locale.code);
+        const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withIsInverted(false).
+            withLocaleCode(locale.code);
         const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 
