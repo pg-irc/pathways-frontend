@@ -28,7 +28,7 @@ export const QuestionnaireComponent: React.StatelessComponent<Props> = (props: P
     <Content padder>
         <HeadingComponent {...props} />
         <ProgressComponent {...props} />
-        <QuestionComponent question={props.activeQuestion} chooseAnswer={props.chooseAnswer} />;
+        <QuestionComponent question={props.activeQuestion} chooseAnswer={props.chooseAnswer} />
         <ButtonsComponent {...props} />
     </Content>
 );

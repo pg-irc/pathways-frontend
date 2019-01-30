@@ -33,6 +33,7 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                 paddingRight: 10,
                 paddingLeft: 0,
                 marginVertical: 3,
+                marginHorizontal: 10,
             }}
         >
             <View style={{ flex: 4, flexDirection: 'row', alignItems: 'center' }}>

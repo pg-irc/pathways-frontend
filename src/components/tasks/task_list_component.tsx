@@ -63,7 +63,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         return (
             <FlatList
                 ref={this.setFlatListRef}
-                style={{ padding: 10, backgroundColor: colors.lightGrey }}
+                style={{ backgroundColor: colors.lightGrey }}
                 data={this.state.data}
                 renderItem={({ item }: TaskItemInfo): JSX.Element => this.renderTaskListItem(item, this.props)}
                 keyExtractor={(task: TaskListItem): string => task.id}

@@ -29,7 +29,7 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
 );
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
-    <View>
+    <View padder>
         {props.hasChosenAnswers ? <EmptyComponent /> : <PersonalizeComponent history={props.history} />}
         <Text style={textStyles.headlineH1StyleBlackLeft}>
             <Trans>Recommended Topics</Trans>

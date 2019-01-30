@@ -39,12 +39,12 @@ export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Prop
 );
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
-    <View>
+    <View padder>
         <TaskDetailContentComponent
             task={props.task}
             onServicesTextPress={goToRouteWithParameter(Routes.Services, props.task.id, props.history)}
         />
-        <Text style={[textStyles.headlineH5StyleBlackLeft, { marginBottom: 3 }]}>
+        <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingTop: 10 }]}>
             <Trans>RELATED TOPICS</Trans>
         </Text>
     </View>

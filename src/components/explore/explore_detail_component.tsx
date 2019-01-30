@@ -38,7 +38,7 @@ export const ExploreDetailComponent: React.StatelessComponent<Props> =
     };
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
-    <View>
+    <View padder>
         <ExploreDetailContentComponent
             section={props.section}
             sectionHasTasks={props.tasks.length > 0}

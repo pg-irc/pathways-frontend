@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Trans } from '@lingui/react';
-import { Text } from 'native-base';
+import { Text, View } from 'native-base';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListActions } from '../tasks/task_list_component';
 import { TaskListComponent, NoTasksAddedComponent } from '../tasks/task_list_component';
@@ -27,7 +27,9 @@ export const BookmarkedTopicsComponent: React.StatelessComponent<Props> = (props
 };
 
 const TaskListHeaderComponent = (): JSX.Element => (
-    <Text style={textStyles.headlineH1StyleBlackLeft}>
-        <Trans>Bookmarked Topics</Trans>
-    </Text>
+    <View padder>
+        <Text style={textStyles.headlineH1StyleBlackLeft}>
+            <Trans>Bookmarked Topics</Trans>
+        </Text>
+    </View>
 );
