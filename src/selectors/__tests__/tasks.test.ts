@@ -193,7 +193,7 @@ describe('tasks selector', () => {
                 });
             });
 
-            describe('three terms from two taxonomies', () => {
+            describe('with three terms from two taxonomies, colour and size', () => {
 
                 const aRedBlueSmallTask = new TaskBuilder().
                     withTaxonomyTerm(redTerm).
