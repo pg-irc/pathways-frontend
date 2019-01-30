@@ -121,7 +121,7 @@ describe('tasks selector', () => {
             expect(result).toEqual([anIncompleteTask]);
         });
 
-        describe('taxonomy boolean algebra', () => {
+        xdescribe('taxonomy boolean algebra', () => {
 
             const redTerm: TaxonomyTermReference = { taxonomyId: 'colour', taxonomyTermId: 'red' };
             const blueTerm: TaxonomyTermReference = { taxonomyId: 'colour', taxonomyTermId: 'blue' };
