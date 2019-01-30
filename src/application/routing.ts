@@ -13,7 +13,6 @@ export type RouterProps = RouteComponentProps<MatchParameters>;
 
 export enum Routes {
     Welcome,
-    Home,
     Questionnaire,
     Learn,
     LearnDetail,
@@ -30,8 +29,6 @@ export const routePathDefinition = (route: Routes): string => {
         default:
         case Routes.Welcome:
             return '/';
-        case Routes.Home:
-            return '/home';
         case Routes.Help:
             return '/help';
         case Routes.Questionnaire:
@@ -94,7 +91,6 @@ const routeHasParameter = (route: Routes): boolean => (
 );
 
 export const isOnParentScreen = (path: string): boolean => {
-    const isOnHomeScreen = pathMatchesRoute(path, Routes.Home);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
     const isOnLearnScreen = pathMatchesRoute(path, Routes.Learn);
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
@@ -102,7 +98,7 @@ export const isOnParentScreen = (path: string): boolean => {
     const isOnRecommendedTopicsScreen = pathMatchesRoute(path, Routes.RecommendedTopics);
     const isOnBookmarkedTopicsScreen = pathMatchesRoute(path, Routes.BookmarkedTopics);
 
-    return isOnHomeScreen || isOnHelpScreen || isOnLearnScreen ||
+    return isOnHelpScreen || isOnLearnScreen ||
            isOnQuestionnaireScreen || isOnAboutScreen ||
            isOnRecommendedTopicsScreen || isOnBookmarkedTopicsScreen;
 };

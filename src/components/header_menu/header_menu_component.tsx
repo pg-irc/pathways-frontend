@@ -126,7 +126,7 @@ const AboutListItems = (props: Props): JSX.Element => {
             <AboutItem
                 icon={<AboutIcon name='comments' fontSize={22} marginRight={4}/>}
                 text={<Trans>Send Feedback</Trans>}
-                onPress={buildAboutItemOnPress(props, Routes.Home)}
+                onPress={buildAboutItemOnPress(props, Routes.RecommendedTopics)}
             />
         </View>
     );
