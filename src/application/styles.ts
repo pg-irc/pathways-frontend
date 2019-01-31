@@ -38,6 +38,15 @@ export const values = {
 export const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'AvenirBook';
 
 export const textStyles = StyleSheet.create({
+    headline6: {
+        fontFamily,
+        fontSize: 16,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        lineHeight: 21,
+        letterSpacing: 0,
+        color: colors.teal,
+    },
     headlineH1StyleBlackLeft: {
         fontFamily,
         fontSize: 24,
@@ -152,6 +161,16 @@ export const textStyles = StyleSheet.create({
         textAlign: 'left',
         color: colors.black,
     },
+    paragraphStyleBrown: {
+        fontFamily,
+        fontSize: 16,
+        fontWeight: 'normal',
+        fontStyle: 'normal',
+        lineHeight: 21,
+        letterSpacing: 0,
+        textAlign: 'left',
+        color: colors.greyishBrown,
+    },
     paragraphSmallStyleCenter: {
         fontFamily,
         fontSize: 12,
@@ -218,14 +237,14 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         color: colors.white,
     },
-    whiteButton: {
+    tealButton: {
         fontFamily,
         fontSize: 18,
         fontWeight: '900',
         fontStyle: 'normal',
         letterSpacing: 0.2,
         textAlign: 'center',
-        color: colors.black,
+        color: colors.white,
     },
     whiteTopazButton: {
         fontFamily,
@@ -260,10 +279,6 @@ export const applicationStyles = StyleSheet.create({
     },
     tealButton: {
         backgroundColor: colors.teal,
-        borderRadius: values.roundedBorderRadius,
-    },
-    whiteButton: {
-        backgroundColor: colors.white,
         borderRadius: values.roundedBorderRadius,
     },
     whiteTopazButton: {

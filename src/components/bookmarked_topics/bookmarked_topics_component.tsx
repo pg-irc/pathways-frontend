@@ -6,7 +6,7 @@ import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListActions } from '../tasks/task_list_component';
 import { TaskListComponent, NoTasksAddedComponent } from '../tasks/task_list_component';
 import { RouterProps } from '../../application/routing';
-import { textStyles } from '../../application/styles';
+import { textStyles, colors } from '../../application/styles';
 
 export interface BookmarkedTopicsProps {
     readonly bookmarkedTopics: ReadonlyArray<TaskListItem>;
@@ -27,7 +27,7 @@ export const BookmarkedTopicsComponent: React.StatelessComponent<Props> = (props
 };
 
 const TaskListHeaderComponent = (): JSX.Element => (
-    <View padder>
+    <View padder style={{ backgroundColor: colors.white }}>
         <Text style={textStyles.headlineH1StyleBlackLeft}>
             <Trans>Bookmarked Topics</Trans>
         </Text>
