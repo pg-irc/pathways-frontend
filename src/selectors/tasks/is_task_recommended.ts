@@ -10,6 +10,10 @@ export const isTaskRecommended = R.curry((chosenTaxonomyTerms: ReadonlyArray<Tax
 
     const groupedTermsFromTask = R.values(R.reduce(groupTermsByTaxonomy, {}, task.taxonomyTerms));
 
+    if (R.isEmpty(chosenTaxonomyTerms) || R.isEmpty(groupedTermsFromTask)) {
+        return false;
+    }
+
     return R.all(atLeastOneTermsMatches(chosenTaxonomyTerms), groupedTermsFromTask);
 });
 
