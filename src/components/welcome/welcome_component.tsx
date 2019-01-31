@@ -45,7 +45,7 @@ export function WelcomeComponent(props: I18nProps & WelcomeProps & WelcomeAction
                     }}
                 />
                 <Text style={[textStyles.paragraphStyleWhiteCenter, { marginBottom: 30 }]}>
-                    <Trans>For newcomers to Canada. Helping you start your new life in Canada, every step of the way.</Trans>
+                    <Trans>Your helpful companion from arrival to integration</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
                     <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 15, color: colors.white, marginBottom: 10 }}>
@@ -57,7 +57,7 @@ export function WelcomeComponent(props: I18nProps & WelcomeProps & WelcomeAction
                             iosIcon={<Icon name='ios-arrow-down-outline' />}
                             selectedValue={props.currentLocale.code}
                             onValueChange={props.setLocale}
-                            style={{ backgroundColor: colors.lightGrey }}
+                            style={{ backgroundColor: colors.white }}
                         >
                             {props.availableLocales.map((locale: LocaleInfo) => (
                                 <Picker.Item key={locale.code} label={locale.label} value={locale.code} />

@@ -44,7 +44,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             task={props.task}
             onServicesTextPress={goToRouteWithParameter(Routes.Services, props.task.id, props.history)}
         />
-        <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingTop: 10 }]}>
+        <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingTop: 18 }]}>
             <Trans>RELATED TOPICS</Trans>
         </Text>
     </View>
