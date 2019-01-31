@@ -32,10 +32,8 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View>
         <View
+            padder
             style={{
-                paddingHorizontal: 15,
-                paddingTop: 15,
-                paddingBottom: 10,
                 backgroundColor: colors.white,
             }}
         >
@@ -48,7 +46,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                 <CallToActionFullComponent {...props} />
             }
         </View>
-        <View style={{ padding: 15, backgroundColor: colors.lightGrey }}>
+        <View padder style={{ backgroundColor: colors.lightGrey }}>
             <Text style={[textStyles.headlineH2StyleBlackLeft, { marginVertical: 15 }]}>
                 <Trans>Recommended for You</Trans>
             </Text>
