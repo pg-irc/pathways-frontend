@@ -7,8 +7,10 @@ export const isTaskRecommended = R.curry((chosenTaxonomyTerms: ReadonlyArray<Tax
     if (isRecommendedToAll(task)) {
         return true;
     }
-    const groupedTerms = R.reduce(groupTermsByTaxonomy, {}, chosenTaxonomyTerms);
-    return R.any(atLeastOneTermsMatches(task), R.values(groupedTerms));
+
+    const groupedTermsFromTask = R.values(R.reduce(groupTermsByTaxonomy, {}, task.taxonomyTerms));
+
+    return R.all(atLeastOneTermsMatches(chosenTaxonomyTerms), groupedTermsFromTask);
 });
 
 const isRecommendedToAll = (task: Task): boolean => (
@@ -33,6 +35,6 @@ const groupTermsByTaxonomy = (accumulator: GroupedTerms, element: TaxonomyTermRe
     };
 };
 
-const atLeastOneTermsMatches = R.curry((aTask: Task, terms: ReadonlyArray<TaxonomyTermReference>): boolean => (
-    R.intersection(terms, aTask.taxonomyTerms) !== []
+const atLeastOneTermsMatches = R.curry((t1: ReadonlyArray<TaxonomyTermReference>, t2: ReadonlyArray<TaxonomyTermReference>): boolean => (
+    R.intersection(t2, t1) !== []
 ));
