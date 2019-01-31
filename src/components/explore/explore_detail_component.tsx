@@ -43,7 +43,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             section={props.section}
             sectionHasTasks={props.tasks.length > 0}
         />
-        <Text style={[textStyles.headlineH5StyleBlackLeft, { marginBottom: 3 }]}>
+        <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingTop: 18 }]}>
             <Trans>EXPLORE TOPICS</Trans>
         </Text>
     </View>
