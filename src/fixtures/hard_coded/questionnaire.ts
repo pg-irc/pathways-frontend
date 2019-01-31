@@ -41,7 +41,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'ar': 'ما هو مستواك في اللغة الإنجليزية؟',
                     'fr': 'Quel est votre niveau d\'anglais?',
                 },
-                acceptMultipleAnswers: true,
+                acceptMultipleAnswers: false,
             },
             'questionImmigrantType': {
                 id: 'questionImmigrantType',
@@ -69,7 +69,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 text: {
                     'en': 'Are you looking for financial assistance or low-income support?',
                 },
-                acceptMultipleAnswers: true,
+                acceptMultipleAnswers: false,
             },
             'questionOther': {
                 id: 'questionOther',
