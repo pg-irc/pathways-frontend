@@ -1,4 +1,3 @@
-// tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import React from 'react';
 import { I18nManager, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Button, Content, View, Text, Icon } from 'native-base';
@@ -25,136 +24,105 @@ export interface QuestionnaireActions {
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
-export class QuestionnaireComponent extends React.Component<Props> {
-    scrollViewRef: ScrollViewRef = undefined;
-    headingComponent: JSX.Element = undefined;
+export const QuestionnaireComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    <Content padder>
+        <HeadingComponent {...props} />
+        <ProgressComponent {...props} />
+        <QuestionComponent question={props.activeQuestion} chooseAnswer={props.chooseAnswer} />
+        <ButtonsComponent {...props} />
+    </Content>
+);
 
-    constructor(props: Props) {
-        super(props);
-        this.setScrollViewRef = this.setScrollViewRef.bind(this);
-        this.setHeadingComponentRef = this.setHeadingComponentRef.bind(this);
-    }
-
-    render(): JSX.Element {
-        return (
-            <Content padder ref={this.setScrollViewRef}>
-                {this.renderHeading()}
-                {this.renderProgress()}
-                {this.renderQuestion()}
-                {this.renderButtons()}
-            </Content>
-        );
-    }
-
-    private setScrollViewRef(component: object): void {
-        this.scrollViewRef = component as ScrollViewRef;
-    }
-
-    private setHeadingComponentRef(component: object): void {
-        this.headingComponent = component as JSX.Element;
-    }
-
-    private renderHeading(): JSX.Element {
-        const logoSize = Dimensions.get('screen').width / 6;
-        const closeButtonOnPress = goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history);
-        return (
-            <View ref={this.setHeadingComponentRef}>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    <TouchableOpacity onPress={closeButtonOnPress}>
-                        <Icon name='close' style={{ color: colors.black, padding: 10 }} />
-                    </TouchableOpacity>
-                </View>
-                <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: colors.white }}>
-                    <Image
-                        source={arrivalAdvisorGlyphLogo}
-                        resizeMode={'contain'}
-                        style={{ width: logoSize, height: logoSize, marginBottom: 5 }}
-                    />
-                </View>
+const HeadingComponent = (props: Props): JSX.Element => {
+    const logoSize = Dimensions.get('screen').width / 6;
+    const closeButtonOnPress = goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
+    return (
+        <View>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                <TouchableOpacity onPress={closeButtonOnPress}>
+                    <Icon name='close' style={{ color: colors.black, padding: 10 }} />
+                </TouchableOpacity>
             </View>
-        );
-    }
-
-    private renderProgress(): JSX.Element {
-        const activeQuestionPosition = this.props.activeQuestion.positionInQuestionnaire;
-        const lengthOfQuestionnaire = this.props.activeQuestion.lengthOfQuestionnaire;
-        const barWidth = lengthOfQuestionnaire > 0 ? Math.round(activeQuestionPosition / lengthOfQuestionnaire * 100) : 100;
-        return (
-            <View style={{ marginBottom: 15 }}>
-                <View style={{ flex: 1, borderRadius: values.roundedBorderRadius, backgroundColor: colors.lightGrey }}>
-                    <View style={{
-                        borderRadius: values.roundedBorderRadius,
-                        backgroundColor: colors.topaz,
-                        width: `${barWidth}%`,
-                        height: 8,
-                    }}
-                    />
-                </View>
-                <Text style={textStyles.headlineH5StyleBlackCenter}>
-                    {activeQuestionPosition} <Trans>OF</Trans> {lengthOfQuestionnaire}
-                </Text>
+            <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: colors.white }}>
+                <Image
+                    source={arrivalAdvisorGlyphLogo}
+                    resizeMode={'contain'}
+                    style={{ width: logoSize, height: logoSize, marginBottom: 5 }}
+                />
             </View>
-        );
-    }
+        </View>
+    );
+};
 
-    private renderQuestion(): JSX.Element {
-        return <QuestionComponent question={this.props.activeQuestion} chooseAnswer={this.props.chooseAnswer} />;
-    }
-
-    private renderButtons(): JSX.Element {
-        const hasNextQuestion = this.props.activeQuestion.nextQuestionId !== undefined;
-        const hasPreviousQuestion = this.props.activeQuestion.previousQuestionId !== undefined;
-        return (
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10 }}>
-                {hasPreviousQuestion ? this.renderPreviousButton() : <EmptyComponent />}
-                {hasNextQuestion ? this.renderNextButton() : this.renderGotoRecommendedButton()}
+const ProgressComponent = (props: Props): JSX.Element => {
+    const activeQuestionPosition = props.activeQuestion.positionInQuestionnaire;
+    const lengthOfQuestionnaire = props.activeQuestion.lengthOfQuestionnaire;
+    const barWidth = lengthOfQuestionnaire > 0 ? Math.round(activeQuestionPosition / lengthOfQuestionnaire * 100) : 100;
+    return (
+        <View style={{ marginBottom: 15 }}>
+            <View style={{ flex: 1, borderRadius: values.roundedBorderRadius, backgroundColor: colors.lightGrey }}>
+                <View style={{
+                    borderRadius: values.roundedBorderRadius,
+                    backgroundColor: colors.topaz,
+                    width: `${barWidth}%`,
+                    height: 8,
+                }}
+                />
             </View>
-        );
-    }
+            <Text style={textStyles.headlineH5StyleBlackCenter}>
+                {activeQuestionPosition} <Trans>OF</Trans> {lengthOfQuestionnaire}
+            </Text>
+        </View>
+    );
+};
 
-    private renderNextButton(): JSX.Element {
-        const onPress = this.getQuestionButtonOnPress(this.props.activeQuestion.nextQuestionId);
-        const icon = I18nManager.isRTL ? 'arrow-back' : 'arrow-forward';
-        const text = this.activeQuestionHasBeenAnswered() ? <Trans>Next</Trans> : <Trans>Skip</Trans>;
-        return (
-            <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
-                <Text style={textStyles.whiteTopazButton}>{text}</Text>
-                <Icon name={icon} style={{ color: colors.topaz }} />
-            </Button>
-        );
-    }
+const ButtonsComponent = (props: Props): JSX.Element => {
+    const hasNextQuestion = props.activeQuestion.nextQuestionId !== undefined;
+    const hasPreviousQuestion = props.activeQuestion.previousQuestionId !== undefined;
+    return (
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10 }}>
+            {hasPreviousQuestion ? renderPreviousButton(props) : <EmptyComponent />}
+            {hasNextQuestion ? renderNextButton(props) : renderGotoRecommendedButton(props)}
+        </View>
+    );
+};
 
-    private renderPreviousButton(): JSX.Element {
-        const onPress = this.getQuestionButtonOnPress(this.props.activeQuestion.previousQuestionId);
-        const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
-        const text = <Trans>Back</Trans>;
-        return (
-            <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconLeft>
-                <Icon name={icon} style={{ color: colors.topaz }} />
-                <Text style={textStyles.whiteTopazButton}>{text}</Text>
-            </Button>
-        );
-    }
+const renderNextButton = (props: Props): JSX.Element => {
+    // tslint:disable-next-line:no-expression-statement
+    const onPress = (): void => { props.setActiveQuestion(props.activeQuestion.nextQuestionId); };
+    const icon = I18nManager.isRTL ? 'arrow-back' : 'arrow-forward';
+    const text = activeQuestionHasBeenAnswered(props) ? <Trans>Next</Trans> : <Trans>Skip</Trans>;
+    return (
+        <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
+            <Text style={textStyles.whiteTopazButton}>{text}</Text>
+            <Icon name={icon} style={{ color: colors.topaz }} />
+        </Button>
+    );
+};
 
-    private renderGotoRecommendedButton(): JSX.Element {
-        const onPress = goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history);
-        const text = <Trans>Go to Recommended Topics</Trans>;
-        return (
-            <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
-                <Text style={textStyles.whiteTopazButton}>{text}</Text>
-            </Button>
-        );
-    }
+const renderPreviousButton = (props: Props): JSX.Element => {
+    // tslint:disable-next-line:no-expression-statement
+    const onPress = (): void => { props.setActiveQuestion(props.activeQuestion.previousQuestionId); };
+    const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
+    const text = <Trans>Back</Trans>;
+    return (
+        <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconLeft>
+            <Icon name={icon} style={{ color: colors.topaz }} />
+            <Text style={textStyles.whiteTopazButton}>{text}</Text>
+        </Button>
+    );
+};
 
-    private getQuestionButtonOnPress(questionId: Id): () => void {
-        return (): void => { this.props.setActiveQuestion(questionId); this.scrollToHeading(); };
-    }
+const renderGotoRecommendedButton = (props: Props): JSX.Element => {
+    const onPress = goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
+    const text = <Trans>Go to Recommended Topics</Trans>;
+    return (
+        <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
+            <Text style={textStyles.whiteTopazButton}>{text}</Text>
+        </Button>
+    );
+};
 
-    private scrollToHeading(): void {
-        this.scrollViewRef._root.scrollIntoView(this.headingComponent)
-    }
-
-    private activeQuestionHasBeenAnswered(): boolean {
-        return R.any((answer: SelectorAnswer) => answer.isChosen, this.props.activeQuestion.answers);
-    }
-}
+const activeQuestionHasBeenAnswered = (props: Props): boolean => {
+    return R.any((answer: SelectorAnswer) => answer.isChosen, props.activeQuestion.answers);
+};

@@ -1,20 +1,8 @@
-import { Store } from '../../stores';
-import { pickSavedTaskIds } from './pick_saved_task_ids';
-import { pickTasks } from './pick_tasks';
-import { pickQuestionnaire } from '../questionnaire/pick_questionnaire';
-import { pickAnswers } from '../questionnaire/pick_answers';
-import { getNewlyRecommendedTasks } from './get_newly_recommended_tasks';
-import { rejectTasksWithIds } from './reject_tasks_with_ids';
-import { buildSelectorTask } from './build_selector_task';
 import { Task } from './task';
-import R from 'ramda';
+import { Store } from '../../stores';
+import { isQuestionnairePopupShown } from '../questionnaire/is_questionnaire_popup_shown';
+import { computeNewlyRecommendedUnsavedTasks } from './compute_newly_recommended_unsaved_tasks';
 
-export const selectNewlyRecommendedUnsavedTasks = (appStore: Store): ReadonlyArray<Task> => {
-    const oldAnswers = pickQuestionnaire(appStore).oldAnswers;
-    const newAnswers = pickAnswers(appStore);
-    const tasks = pickTasks(appStore);
-    const newlyRecommendedTasks = getNewlyRecommendedTasks(oldAnswers, newAnswers, tasks);
-    const newlyRecommendedUnsaveTasks = rejectTasksWithIds(newlyRecommendedTasks, pickSavedTaskIds(appStore));
-
-    return R.map(buildSelectorTask(appStore), newlyRecommendedUnsaveTasks);
-};
+export const selectNewlyRecommendedUnsavedTasks = (appStore: Store): ReadonlyArray<Task> => (
+    isQuestionnairePopupShown(appStore) ? computeNewlyRecommendedUnsavedTasks(appStore) : []
+);

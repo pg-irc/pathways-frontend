@@ -1,5 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
+import { Image, Dimensions } from 'react-native';
 import { View, Text, Icon, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import Markdown from 'react-native-markdown-renderer';
@@ -7,6 +8,8 @@ import { Task } from '../../selectors/tasks/task';
 import { textStyles, colors, values, markdownStyles, applicationStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
+import { arrivalAdvisorGlyphLogo } from '../../application/images';
+import { images as topicImages } from '../../application/topicImages';
 
 export interface TaskDetailContentProps {
     readonly task: Task;
@@ -19,7 +22,8 @@ export interface TaskDetailContentActions {
 type Props = TaskDetailContentProps & TaskDetailContentActions;
 
 export const TaskDetailContentComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <View padder style={{ backgroundColor: colors.white }}>
+    <View padder style={{ backgroundColor: colors.white, marginHorizontal: -10 }}>
+        <ImageComponent {...props}/>
         <TaxonomyComponent {...props} />
         <TitleComponent {...props} />
         <RecommendedComponent {...props} />
@@ -29,6 +33,32 @@ export const TaskDetailContentComponent: React.StatelessComponent<Props> = (prop
         <ServicesButton {...props} />
     </View>
 );
+
+const ImageComponent = (props: Props): JSX.Element => {
+    const logoHeight = Dimensions.get('screen').height / 8;
+    const imageSource = topicImages[props.task.id] ?
+        topicImages[props.task.id]
+        :
+        arrivalAdvisorGlyphLogo;
+    return (
+        <View style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingVertical: 10,
+            backgroundColor: colors.lightGrey,
+            borderBottomWidth: 1,
+            borderBottomColor: colors.darkerGrey,
+            marginHorizontal: -10,
+            marginTop: -10,
+        }}>
+            <Image
+                source={imageSource}
+                resizeMode={'contain'}
+                style={{ height: logoHeight }}
+            />
+        </View>
+    );
+};
 
 const TaxonomyComponent = (props: Props): JSX.Element => (
     <Text style={[

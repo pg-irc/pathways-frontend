@@ -10,10 +10,8 @@ import {
     NewlyRecommendedTasksComponentActions,
     NewlyRecommendedTasksComponent,
 } from './newly_recommended_tasks_component';
-import { selectShowQuestionnairePopup } from '../../selectors/questionnaire/select_show_questionnaire_popup';
 
 const mapStateToProps = (store: Store): NewlyRecommendedTasksComponentProps => ({
-    showQuestionnairePopup: selectShowQuestionnairePopup(store),
     newlyRecommendedUnsavedTasks: selectNewlyRecommendedUnsavedTasks(store),
 });
 

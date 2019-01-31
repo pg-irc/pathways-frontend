@@ -1,8 +1,8 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Task } from '../../selectors/tasks/task';
-import { View, Text, Button, Content, Icon } from 'native-base';
-import { StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Icon } from 'native-base';
+import { StyleSheet, Image, Dimensions, TouchableOpacity, FlatList, ListRenderItemInfo } from 'react-native';
 import { colors, values, textStyles, applicationStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { Id } from '../../stores/tasks';
@@ -14,7 +14,6 @@ import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 
 export interface NewlyRecommendedTasksComponentProps {
-    readonly showQuestionnairePopup: boolean;
     readonly newlyRecommendedUnsavedTasks: ReadonlyArray<Task>;
 }
 
@@ -27,7 +26,7 @@ type Props = NewlyRecommendedTasksComponentProps & NewlyRecommendedTasksComponen
 
 export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const tasks = props.newlyRecommendedUnsavedTasks;
-    const showPopup = props.showQuestionnairePopup && R.not(R.isEmpty(tasks));
+    const showPopup = R.not(R.isEmpty(tasks));
 
     if (!showPopup) {
         return <EmptyComponent />;
@@ -39,9 +38,9 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
 
     return <View style={styles.fadeout}>
         <View style={styles.dialog}>
-            <HeaderComponent taskIds={taskIds} dismissPopup={dismissPopup}/>
+            <HeaderComponent taskIds={taskIds} dismissPopup={dismissPopup} />
             <HeaderContentComponent tasksCount={tasks.length} />
-            <TaskListComponent tasks={tasks}/>
+            <TasksComponent tasks={tasks} />
             <AddTasksButtonComponent saveTasksToMyPlan={saveTasksToMyPlan} />
         </View >
     </View>;
@@ -49,25 +48,25 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
 
 const HeaderComponent =
     (props: { readonly taskIds: ReadonlyArray<Id>, readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }): JSX.Element => {
-    const logoSize = Dimensions.get('screen').width / 7;
-    return (
-        <View style={styles.header}>
-            <View style={styles.headerImagesWrapper}>
-                <Image
-                    source={arrivalAdvisorGlyphLogo}
-                    resizeMode={'contain'}
-                    style={{
-                        width: logoSize,
-                        height: logoSize,
-                    }}
-                />
-                <TouchableOpacity onPress={props.dismissPopup}>
-                    <Icon name='close' />
-                </TouchableOpacity>
+        const logoSize = Dimensions.get('screen').width / 7;
+        return (
+            <View style={styles.header}>
+                <View style={styles.headerImagesWrapper}>
+                    <Image
+                        source={arrivalAdvisorGlyphLogo}
+                        resizeMode={'contain'}
+                        style={{
+                            width: logoSize,
+                            height: logoSize,
+                        }}
+                    />
+                    <TouchableOpacity onPress={props.dismissPopup}>
+                        <Icon name='close' />
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
-    );
-};
+        );
+    };
 
 const HeaderContentComponent = (props: { readonly tasksCount: number }): JSX.Element => (
     <Text style={[textStyles.headlineH2StyleBlackLeft, styles.headerContent]}>
@@ -76,15 +75,15 @@ const HeaderContentComponent = (props: { readonly tasksCount: number }): JSX.Ele
     </Text>
 );
 
-const TaskListComponent = (props: { readonly tasks: ReadonlyArray<Task>}): JSX.Element => (
-    <Content padder style={styles.taskList}>
-        {R.map((task: Task) => (
-            <TaskComponent key={task.id} task={task} />
-        ), props.tasks)}
-    </Content>
+const TasksComponent = (props: { readonly tasks: ReadonlyArray<Task> }): JSX.Element => (
+    <FlatList style={styles.taskList}
+        data={props.tasks}
+        renderItem={renderTaskItem}
+        keyExtractor={(task: Task): string => task.id}
+    />
 );
 
-const TaskComponent = (props: { readonly task: Task }): JSX.Element => (
+const renderTaskItem = ({ item }: ListRenderItemInfo<Task>): JSX.Element => (
     <View
         style={{
             backgroundColor: colors.white,
@@ -97,15 +96,15 @@ const TaskComponent = (props: { readonly task: Task }): JSX.Element => (
             <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <View>
                     <Text numberOfLines={2} style={textStyles.headlineH4StyleBlackLeft}>
-                        {props.task.title}
+                        {item.title}
                     </Text>
                     <Text note numberOfLines={1} style={{ textAlign: 'left' }}>
-                        {stripMarkdown(props.task.description)}
+                        {stripMarkdown(item.description)}
                     </Text>
                 </View>
             </View>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                {props.task.isRecommended ? <IsRecommendedComponent /> : <EmptyComponent />}
+                {item.isRecommended ? <IsRecommendedComponent /> : <EmptyComponent />}
             </View>
         </View>
     </View>
