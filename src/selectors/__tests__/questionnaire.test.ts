@@ -9,7 +9,7 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
 import { toSelectorQuestion } from '../questionnaire/to_selector_question';
-import { getTaxonomyTermsForChosenAnswers } from '../taxonomies/get_taxonomy_terms_for_chosen_answers';
+import { getTaxonomyTermsForRelevantAnswers } from '../taxonomies/get_taxonomy_terms_for_relevant_answers';
 import { getAllAnswersWithTaxonomyTermsNotIn } from '../questionnaire/get_all_answers_with_taxonomy_terms_not_in';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
@@ -100,22 +100,48 @@ describe('toSelectorQuestion selector', () => {
     // TODO move tests for filterTaxonomyTermsForChosenAnswers to a different test suite
     it('should return the taxonomy terms for a chosen answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
-        const chosenAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(true);
+        const chosenAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
+            withIsChosen(true).withIsInverted(false);
         const theQuestion = new QuestionBuilder().withAnswers([chosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
 
-        const result = getTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = getTaxonomyTermsForRelevantAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toEqual([theTaxonomyTerm]);
     });
 
+    it('should return the taxonomy terms for a non-chosen inverted answer', () => {
+        const theTaxonomyTerm = aTaxonomyTermReference();
+        const nonChosenInvertedAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
+            withIsChosen(false).withIsInverted(true);
+        const theQuestion = new QuestionBuilder().withAnswers([nonChosenInvertedAnswer]);
+        const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
+
+        const result = getTaxonomyTermsForRelevantAnswers(toValidOrThrow(normalizedData).answers);
+
+        expect(result).toEqual([theTaxonomyTerm]);
+    });
+    
+    it('should not return the taxonomy terms for a chosen inverted answer', () => {
+        const theTaxonomyTerm = aTaxonomyTermReference();
+        const chosenInvertedAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
+            withIsChosen(true).withIsInverted(true);
+        const theQuestion = new QuestionBuilder().withAnswers([chosenInvertedAnswer]);
+        const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
+
+        const result = getTaxonomyTermsForRelevantAnswers(toValidOrThrow(normalizedData).answers);
+
+        expect(result).toEqual([]);
+    });
+
     it('should not return the taxonomy terms for a non-chosen answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
-        const nonChosenAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).withIsChosen(false);
+        const nonChosenAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
+            withIsChosen(false).withIsInverted(false);
         const theQuestion = new QuestionBuilder().withAnswers([nonChosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
 
-        const result = getTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = getTaxonomyTermsForRelevantAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toEqual([]);
     });
@@ -124,11 +150,11 @@ describe('toSelectorQuestion selector', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
         const theSecondTaxonomyTerm = aTaxonomyTermReference();
         const chosendAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
-            withTaxonomyTerm(theSecondTaxonomyTerm).withIsChosen(true);
+            withTaxonomyTerm(theSecondTaxonomyTerm).withIsChosen(true).withIsInverted(false);
         const theQuestion = new QuestionBuilder().withAnswers([chosendAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
 
-        const result = getTaxonomyTermsForChosenAnswers(toValidOrThrow(normalizedData).answers);
+        const result = getTaxonomyTermsForRelevantAnswers(toValidOrThrow(normalizedData).answers);
 
         expect(result).toContain(theTaxonomyTerm);
         expect(result).toContain(theSecondTaxonomyTerm);
@@ -138,7 +164,8 @@ describe('toSelectorQuestion selector', () => {
 describe('getting ids of all chosen answers', () => {
     it('should include ids for chosen answers', () => {
         const locale = aLocale();
-        const aChosenAnswer = new AnswerBuilder().withIsChosen(true).withLocaleCode(locale.code);
+        const aChosenAnswer = new AnswerBuilder().withIsChosen(true).withIsInverted(false).
+            withLocaleCode(locale.code);
         const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([aChosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 
@@ -149,7 +176,8 @@ describe('getting ids of all chosen answers', () => {
 
     it('should not include ids for non-chosen questions', () => {
         const locale = aLocale();
-        const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withLocaleCode(locale.code);
+        const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withIsInverted(false).
+            withLocaleCode(locale.code);
         const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
 

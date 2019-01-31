@@ -112,7 +112,7 @@ describe('tasks selector', () => {
 
         it('should recommend tasks tagged with the same taxonomy term as a chosen answer', () => {
             const aTaxonomyTerm = aTaxonomyTermReference();
-            const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
+            const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).withIsInverted(false).build();
             const anIncompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
 
             const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
@@ -142,10 +142,10 @@ describe('tasks selector', () => {
         beforeEach(() => {
             const aTaxonomyTerm = aTaxonomyTermReference();
 
-            const notChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(false).build();
+            const notChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(false).withIsInverted(false).build();
             nonChosenAnswers = { [notChosenAnswer.id]: notChosenAnswer };
 
-            const chosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
+            const chosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).withIsInverted(false).build();
             chosenAnswers = { [chosenAnswer.id]: chosenAnswer };
 
             incompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();

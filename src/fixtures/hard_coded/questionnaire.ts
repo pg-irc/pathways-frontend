@@ -123,6 +123,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Moins de 5 ans',
                 },
                 isChosen: false,
+                isInverted: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
                     'taxonomyTermId': 'under_5',
@@ -137,6 +138,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': '5-12 ans',
                 },
                 isChosen: false,
+                isInverted: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
                     'taxonomyTermId': '5_to_12',
@@ -151,6 +153,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': '13-18 ans',
                 },
                 isChosen: false,
+                isInverted: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
                     'taxonomyTermId': '13_to_18',
@@ -165,6 +168,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': '18-65 ans',
                 },
                 isChosen: false,
+                isInverted: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
                     'taxonomyTermId': '18_to_65',
@@ -179,6 +183,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': '65+ ans',
                 },
                 isChosen: false,
+                isInverted: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'age',
                     'taxonomyTermId': 'over_65',
@@ -191,6 +196,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Help finding information about services',
                 },
                 isChosen: false,
+                isInverted: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'helpWith',
                     'taxonomyTermId': 'findingServices',
@@ -203,6 +209,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Help managing stress',
                 },
                 isChosen: false,
+                isInverted: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'helpWith',
                     'taxonomyTermId': 'mentalHealth',
@@ -215,6 +222,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Have you suffered from violence, abuse or neglect, now or in the past',
                 },
                 isChosen: false,
+                isInverted: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'helpWith',
                     'taxonomyTermId': 'violence',
@@ -227,6 +235,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Do you need help related to alcohol, substance use or gambling?',
                 },
                 isChosen: false,
+                isInverted: false,
                 'taxonomyTerms': [{
                     'taxonomyId': 'helpWith',
                     'taxonomyTermId': 'substanceUse',
@@ -239,6 +248,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Libraries and community centres',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'communicating',
                     taxonomyTermId: 'libraries',
@@ -251,6 +261,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Joining organizations and communities',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'communicating',
                     taxonomyTermId: 'join_organizations',
@@ -263,6 +274,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Internet',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'communicating',
                     taxonomyTermId: 'internet',
@@ -275,6 +287,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Telephones',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'communicating',
                     taxonomyTermId: 'telephones',
@@ -287,6 +300,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Mail',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'communicating',
                     taxonomyTermId: 'mail',
@@ -299,6 +313,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Sending money to other countries',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'money',
                     taxonomyTermId: 'sendingMoneyAbroad',
@@ -311,6 +326,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Candian social customs',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'communicating',
                     taxonomyTermId: 'social_customs',
@@ -323,6 +339,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I am currently looking for somewhere to live',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'housingStatus',
                     taxonomyTermId: 'looking',
@@ -335,6 +352,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I have found a place, I am about to move in',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'housingStatus',
                     taxonomyTermId: 'movingIn',
@@ -347,6 +365,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I have a home',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'housingStatus',
                     taxonomyTermId: 'housed',
@@ -359,6 +378,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I need to move out',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'housingStatus',
                     taxonomyTermId: 'movingOut',
@@ -371,6 +391,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I am currently homeless',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'housingStatus',
                     taxonomyTermId: 'homeless',
@@ -383,6 +404,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I would prefer to rent my home',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'housing',
                     taxonomyTermId: 'renting',
@@ -395,6 +417,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I would prefer to buy a home',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'housing',
                     taxonomyTermId: 'owning',
@@ -407,6 +430,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Banks, bank accounts, loans',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'money',
                     taxonomyTermId: 'banking',
@@ -419,6 +443,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Shopping',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'money',
                     taxonomyTermId: 'shopping',
@@ -431,6 +456,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Doing business with private companies',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'money',
                     taxonomyTermId: 'business',
@@ -443,6 +469,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Paying taxes',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'money',
                     taxonomyTermId: 'taxes',
@@ -455,6 +482,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Government financial support and tax credits',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'money',
                     taxonomyTermId: 'benefits',
@@ -467,6 +495,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Sending money to other countries',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'money',
                     taxonomyTermId: 'sendingMoneyAbroad',
@@ -479,6 +508,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I have a health emergency (if urgent, call 9-1-1 and ask for an ambulance)',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'emergency',
@@ -491,6 +521,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I need to see a doctor or specialist',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'needDoctor',
@@ -503,6 +534,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to find a doctor I can visit regularly',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'needFamilyDoctor',
@@ -515,6 +547,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I have problems with my teeth',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'needDentist',
@@ -527,6 +560,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I need eye glasses or have other problems with my eyes',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'needEyeExam',
@@ -539,6 +573,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I am interested in information about mental health',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'mentalHealth',
@@ -551,6 +586,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I am a survivor of torture or other violence',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'mentalHealth',
@@ -563,6 +599,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I take medication',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'needMedication',
@@ -575,6 +612,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I need treatment in a hospital',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'needHospital',
@@ -587,6 +625,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I need to access health care outside of British Columbia',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'needOutOfProvinceCare',
@@ -599,6 +638,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to learn more about health care costs and insurance',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'costs',
@@ -611,6 +651,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I have questions relating to my health',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'healthCare',
                     taxonomyTermId: 'information',
@@ -623,6 +664,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to take courses to improve my English skills',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'education',
                     taxonomyTermId: 'language',
@@ -635,6 +677,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to take courses to improve reading or math skills',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'education',
                     taxonomyTermId: 'continuingEducation',
@@ -647,6 +690,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I am an adult and I want to finish high school',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'education',
                     taxonomyTermId: 'continuingEducation',
@@ -659,6 +703,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to learn new job skills',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'education',
                     taxonomyTermId: 'continuingEducation',
@@ -671,6 +716,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to go to university or college',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'education',
                     taxonomyTermId: 'postSecondaryEducation',
@@ -683,6 +729,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to learn more about education costs',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'education',
                     taxonomyTermId: 'costs',
@@ -696,6 +743,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I need to travel within the city or town where I live',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'travel',
                     taxonomyTermId: 'local',
@@ -708,6 +756,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I need to travel longer distances (between cities)',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'travel',
                     taxonomyTermId: 'longDistance',
@@ -720,6 +769,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to know more about driving in British Columbia',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'travel',
                     taxonomyTermId: 'cars',
@@ -732,6 +782,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I need to get a driver\'s licence',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'driving',
                     taxonomyTermId: 'driversLicence',
@@ -744,6 +795,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I need to buy a car',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'driving',
                     taxonomyTermId: 'buyingVehicle',
@@ -756,6 +808,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to drive without buying a car (car sharing)',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'driving',
                     taxonomyTermId: 'carSharing',
@@ -768,6 +821,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to know more about the laws related to driving',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'driving',
                     taxonomyTermId: 'laws',
@@ -780,6 +834,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to know more about the costs of owning a car',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'driving',
                     taxonomyTermId: 'cost',
@@ -792,6 +847,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I am currently looking for work',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'employmentStatus',
                     taxonomyTermId: 'looking',
@@ -804,6 +860,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I have a job',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'employmentStatus',
                     taxonomyTermId: 'employed',
@@ -816,6 +873,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I work for myself',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'employmentStatus',
                     taxonomyTermId: 'selfEmployed',
@@ -828,6 +886,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'I want to leave my current job',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'employmentStatus',
                     taxonomyTermId: 'leaving',
@@ -840,6 +899,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Taking time off from work',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'employment',
                     taxonomyTermId: 'leaveAndVacation',
@@ -852,6 +912,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Getting paid and paying taxes',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'employment',
                     taxonomyTermId: 'payAndDeductions',
@@ -864,6 +925,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Laws relating to work',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'employment',
                     taxonomyTermId: 'laws',
@@ -876,6 +938,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Starting your own business',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'employment',
                     taxonomyTermId: 'startingABusiness',
@@ -888,6 +951,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Immigration',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'legalSystem',
                     taxonomyTermId: 'immigration',
@@ -900,6 +964,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'How Canada\'s government works',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'legalSystem',
                     taxonomyTermId: 'government',
@@ -912,6 +977,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Some important laws',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'legalSystem',
                     taxonomyTermId: 'importantLaws',
@@ -926,6 +992,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Demandeur d\'asile',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'immigrant_type',
                     taxonomyTermId: 'refugee_claimant',
@@ -938,6 +1005,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Protected person',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'immigrant_type',
                     taxonomyTermId: 'protected_person',
@@ -950,6 +1018,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'en': 'Resettled refugee',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'immigrant_type',
                     taxonomyTermId: 'resettled_refugee',
@@ -964,6 +1033,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Résident(e) temporaire',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [],
             },
             'answerPermanentResident': {
@@ -975,6 +1045,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Résident(e) permanent',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [],
             },
             'answerImmigrantTypeNone': {
@@ -986,6 +1057,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Rien de ce qui précède, ou je ne suis pas sûr',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [],
             },
             'answerEnglishLevelNone': {
@@ -997,6 +1069,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Aucun',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'english_level',
                     taxonomyTermId: 'none',
@@ -1011,6 +1084,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Débutant(e)',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'english_level',
                     taxonomyTermId: 'beginner',
@@ -1025,6 +1099,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Intermédiaire',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [],
             },
             'answerEnglishLevelFluent': {
@@ -1036,6 +1111,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Couramment',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [],
             },
             'answerGroupWomen': {
@@ -1047,6 +1123,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Les services aux femmes',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'group',
                     taxonomyTermId: 'women',
@@ -1061,6 +1138,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Services pour les personnes handicapées',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'group',
                     taxonomyTermId: 'disability',
@@ -1075,6 +1153,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'LGBTQ2 services',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'group',
                     taxonomyTermId: 'lgbtq2',
@@ -1089,6 +1168,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Services offerts en français',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'group',
                     taxonomyTermId: 'services_in_french',
@@ -1103,6 +1183,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                     'fr': 'Services pour les personnes à faible revenu',
                 },
                 isChosen: false,
+                isInverted: false,
                 taxonomyTerms: [{
                     taxonomyId: 'group',
                     taxonomyTermId: 'low_income',
