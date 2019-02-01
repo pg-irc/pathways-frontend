@@ -38,7 +38,7 @@ const HeadingComponent = (props: Props): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 6;
     const closeButtonOnPress = goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
     return (
-        <View>
+        <View style={{ marginTop: 5 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                 <CloseButtonComponent onPress={closeButtonOnPress} color={colors.teal}/>
             </View>
@@ -121,7 +121,7 @@ const renderPreviousButton = (props: Props): JSX.Element => {
 
 const renderGotoRecommendedButton = (props: Props): JSX.Element => {
     const onPress = goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
-    const text = <Trans>Leave questionnaire</Trans>;
+    const text = <Trans>Leave questions</Trans>;
     return (
         <Button style={applicationStyles.whiteTealButton} onPress={onPress} iconRight>
             <Text style={textStyles.whiteTealButton}>{text}</Text>

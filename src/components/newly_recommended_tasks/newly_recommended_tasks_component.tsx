@@ -38,7 +38,7 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
         <View style={styles.dialog}>
             <HeaderContentComponent tasksCount={tasks.length} />
             <TasksComponent tasks={tasks} />
-            <AddTasksButtonComponent dismissPopup={dismissPopup} />
+            <OkButtonComponent dismissPopup={dismissPopup} />
         </View >
     </View>;
 };
@@ -104,7 +104,7 @@ const IsRecommendedComponent = (): JSX.Element => (
     <Icon style={{ fontSize: values.smallerIconSize, color: colors.sunYellow, marginRight: 3 }} name='star' type='FontAwesome' />
 );
 
-const AddTasksButtonComponent = (props: { readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }):
+const OkButtonComponent = (props: { readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }):
     JSX.Element => (
     <View style={styles.buttonWrapper}>
         <Button style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow]} onPress={props.dismissPopup}>
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     buttonWrapper: {
         flexDirection: 'row',
         justifyContent: 'center',
-        padding: 15,
+        padding: 10,
     },
     taskCount: {
         color: colors.teal,
