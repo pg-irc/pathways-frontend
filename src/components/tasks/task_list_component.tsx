@@ -73,14 +73,29 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     private getFreshState(): State {
-        const sections = R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
-        const sectionIndex = this.state ? sections.length - 1 : 0;
-        const data = this.state ? this.props.tasks : sections[0];
+        return this.state ? this.getStateWithAllTasksLoaded() : this.getStateWithFirstTaskSectionLoaded();
+    }
+
+    private getStateWithAllTasksLoaded(): State {
+        const sections = this.getTaskSections();
         return {
-            sections,
-            sectionIndex,
-            data,
+            sections: sections,
+            sectionIndex: sections.length - 1,
+            data: this.props.tasks,
         };
+    }
+
+    private getStateWithFirstTaskSectionLoaded(): State {
+        const sections = this.getTaskSections();
+        return {
+            sections: sections,
+            sectionIndex: 0,
+            data: sections[0],
+        };
+    }
+
+    private getTaskSections(): ReadonlyArray<ReadonlyArray<TaskListItem>> {
+        return R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
     }
 
     private setFlatListRef(component: object): void {
