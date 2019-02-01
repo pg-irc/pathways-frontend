@@ -155,6 +155,6 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     taskCount: {
-        color: colors.topaz,
+        color: colors.teal,
     },
 });

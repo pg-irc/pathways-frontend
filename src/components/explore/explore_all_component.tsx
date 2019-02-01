@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         padding: 15,
     },
     buttonContentIcon: {
-        color: colors.topaz,
+        color: colors.teal,
         fontSize: values.smallIconSize,
         alignSelf: 'flex-start',
         marginBottom: 10,

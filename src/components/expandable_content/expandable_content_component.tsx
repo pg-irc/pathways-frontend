@@ -129,7 +129,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                     <Text style={[
                         textStyles.paragraphBoldBlackLeft,
                         {
-                            color: colors.topaz,
+                            color: colors.teal,
                             paddingLeft: 6,
                             paddingRight: 8,
                         },
@@ -141,7 +141,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                         name={this.isCollapsed() ? 'arrow-down' : 'arrow-up'}
                         style={{
                             fontSize: values.smallIconSize,
-                            color: colors.topaz,
+                            color: colors.teal,
                         }}
                     />
                 </Button>

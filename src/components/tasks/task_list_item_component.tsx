@@ -42,7 +42,7 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                         isBookmarked={props.taskIsBookmarked}
                         addBookmark={(): AddToSavedListAction => props.addToSavedList(props.task.id)}
                         removeBookmark={(): RemoveFromSavedListAction => props.removeFromSavedList(props.task.id)}
-                        textColor={colors.topaz}
+                        textColor={colors.teal}
                     />
                     <View>
                         <Text numberOfLines={2} style={textStyles.headlineH4StyleBlackLeft}>

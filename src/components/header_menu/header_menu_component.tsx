@@ -91,7 +91,7 @@ const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Elemen
             <Icon
                 name='check'
                 type='FontAwesome'
-                style={{ fontSize: values.mediumIconSize, marginRight: 10, color: colors.topaz }}
+                style={{ fontSize: values.mediumIconSize, marginRight: 10, color: colors.teal }}
             />
             <Text style={[ textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{section.label}</Text>
         </View>
