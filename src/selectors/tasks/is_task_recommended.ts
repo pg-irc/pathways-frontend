@@ -19,13 +19,13 @@ export const isTaskRecommended = R.curry((termsFromQuestionnaire: ReadonlyArray<
     return R.all(atLeastOneTermMatches(termsFromQuestionnaire), groupedTermsFromTask);
 });
 
-const isTaskRecommendedToAll = (task: Task): boolean => (
-    R.any(equalsRecommendedToAll, task.taxonomyTerms)
-);
+const recommendedToAll: TaxonomyTermReference = {
+    taxonomyId: Taxonomies.RECOMMENDATION_TAXONOMY_ID,
+    taxonomyTermId: Taxonomies.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID,
+};
 
-const equalsRecommendedToAll = (term: Term): boolean => (
-    term.taxonomyId === Taxonomies.RECOMMENDATION_TAXONOMY_ID &&
-    term.taxonomyTermId === Taxonomies.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID
+const isTaskRecommendedToAll = (task: Task): boolean => (
+    R.any(R.equals(recommendedToAll), task.taxonomyTerms)
 );
 
 const groupTermsByTaxonomy = (terms: ReadonlyArray<Term>): ReadonlyArray<ReadonlyArray<Term>> => (
