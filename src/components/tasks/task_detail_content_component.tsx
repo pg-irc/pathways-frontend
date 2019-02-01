@@ -67,6 +67,7 @@ const TaxonomyComponent = (props: Props): JSX.Element => (
             color: colors.greyishBrown,
             marginTop: 20,
             marginBottom: 5,
+            paddingHorizontal: values.backgroundTextPadding,
         },
     ]}
     >
@@ -79,7 +80,7 @@ const RecommendedComponent = (props: Props): JSX.Element => {
         return <EmptyComponent />;
     }
     return (
-        <View style={{ flexDirection: 'row', marginVertical: 5 }}>
+        <View style={{ flexDirection: 'row', marginVertical: 5, paddingHorizontal: values.backgroundTextPadding }}>
             <Icon
                 type='FontAwesome'
                 name={'star'}
@@ -101,7 +102,7 @@ const Divider = (): JSX.Element => (
 );
 
 const TitleComponent = (props: Props): JSX.Element => (
-    <Text style={textStyles.taskTitle}>
+    <Text style={[textStyles.taskTitle, { paddingHorizontal: values.backgroundTextPadding }]}>
         {props.task.title}
     </Text>
 );

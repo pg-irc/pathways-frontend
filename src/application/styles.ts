@@ -30,7 +30,7 @@ export const values = {
     smallerIconSize: 18,
     roundedBorderRadius: 25,
     lessRoundedBorderRadius: 10,
-    contentPadding: 10,
+    backgroundTextPadding: 5,
 };
 
 export const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'AvenirBook';

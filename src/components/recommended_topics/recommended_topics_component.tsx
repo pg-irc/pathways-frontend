@@ -37,7 +37,15 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                 backgroundColor: colors.white,
             }}
         >
-            <Text style={[textStyles.headlineH1StyleBlackLeft, { marginBottom: 10 }]}>
+            <Text
+                style={[
+                    textStyles.headlineH1StyleBlackLeft,
+                    {
+                        marginBottom: 10,
+                        paddingHorizontal: values.backgroundTextPadding,
+                    },
+                ]}
+            >
                 <Trans>Start settling in B.C.</Trans>
             </Text>
             {props.hasChosenAnswers ?
@@ -47,7 +55,15 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             }
         </View>
         <View padder style={{ backgroundColor: colors.lightGrey }}>
-            <Text style={[textStyles.headlineH2StyleBlackLeft, { marginVertical: 15 }]}>
+            <Text
+                style={[
+                    textStyles.headlineH2StyleBlackLeft,
+                    {
+                        marginVertical: 15,
+                        paddingHorizontal: values.backgroundTextPadding,
+                    },
+                ]}
+            >
                 <Trans>Recommended for You</Trans>
             </Text>
             {props.hasChosenAnswers ?
@@ -182,7 +198,7 @@ const CallToActionPartialComponent = (props: Props): JSX.Element => {
 
 const CallToActionPartialSubComponent = (): JSX.Element => {
     return (
-        <Text style={textStyles.paragraphStyleBrown}>
+        <Text style={[textStyles.paragraphStyleBrown, { paddingHorizontal: values.backgroundTextPadding }]}>
             <Trans>
                 Based on your answers, we recommend these topics for you:
             </Trans>

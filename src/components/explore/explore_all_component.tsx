@@ -17,7 +17,7 @@ type AllExploreProps = ExploreAllProps & RouterProps;
 export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
     (props: AllExploreProps): JSX.Element => (
         <Content padder style={{ backgroundColor: colors.white }}>
-            <Text style={textStyles.headlineH1StyleBlackLeft}>
+            <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding } ]}>
                 <Trans>Learn all about B.C.</Trans>
             </Text>
             <View style={styles.buttonsWrapper}>
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
         width: '47%',
         backgroundColor: colors.lightGrey,
         borderRadius: values.lessRoundedBorderRadius,
-        marginHorizontal: 3,
         marginTop: 15,
         padding: 15,
     },

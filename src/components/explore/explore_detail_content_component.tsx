@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Dimensions } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
-import { textStyles, colors } from '../../application/styles';
+import { textStyles, colors, values } from '../../application/styles';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
 import { SelectableText } from '../selectable_text';
@@ -15,7 +15,7 @@ export interface ExploreDetailContentProps {
 
 export const ExploreDetailContentComponent: React.StatelessComponent<ExploreDetailContentProps> =
     (props: ExploreDetailContentProps): JSX.Element => (
-        <View style={{ paddingHorizontal: 10 }}>
+        <View>
             <ImageComponent />
             <TitleComponent {...props} />
         </View>
@@ -44,7 +44,7 @@ const ImageComponent = (): JSX.Element => {
 };
 
 const TitleComponent = (props: ExploreDetailContentProps): JSX.Element => (
-    <View>
+    <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
         <Icon
             type={'FontAwesome'}
             name={props.section.icon}
