@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { Task } from '../../selectors/tasks/task';
 import { View, Text, Button, Icon } from 'native-base';
-import { StyleSheet, Image, Dimensions, TouchableOpacity, FlatList, ListRenderItemInfo } from 'react-native';
+import { StyleSheet, FlatList, ListRenderItemInfo } from 'react-native';
 import { colors, values, textStyles, applicationStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { Id } from '../../stores/tasks';
@@ -10,8 +10,8 @@ import { Trans } from '@lingui/react';
 import { DismissNewlyAddedTasksPopupAction } from '../../stores/questionnaire/actions';
 import { SaveTheseTasksToMyPlanAction } from '../../stores/tasks/actions';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
-import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
+import { CloseButtonComponent } from '../close_button/close_button_component';
 
 export interface NewlyRecommendedTasksComponentProps {
     readonly newlyRecommendedUnsavedTasks: ReadonlyArray<Task>;
@@ -48,22 +48,9 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
 
 const HeaderComponent =
     (props: { readonly taskIds: ReadonlyArray<Id>, readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }): JSX.Element => {
-        const logoSize = Dimensions.get('screen').width / 7;
         return (
             <View style={styles.header}>
-                <View style={styles.headerImagesWrapper}>
-                    <Image
-                        source={arrivalAdvisorGlyphLogo}
-                        resizeMode={'contain'}
-                        style={{
-                            width: logoSize,
-                            height: logoSize,
-                        }}
-                    />
-                    <TouchableOpacity onPress={props.dismissPopup}>
-                        <Icon name='close' />
-                    </TouchableOpacity>
-                </View>
+                <CloseButtonComponent onPress={props.dismissPopup} color={colors.teal} />
             </View>
         );
     };
@@ -144,12 +131,8 @@ const styles = StyleSheet.create({
         right: 20,
     },
     header: {
-        marginTop: -20,
-        marginBottom: 10,
-        marginHorizontal: 10,
-        backgroundColor: 'transparent',
-        borderTopLeftRadius: values.lessRoundedBorderRadius,
-        borderTopRightRadius: values.lessRoundedBorderRadius,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
     },
     headerContent: {
         paddingBottom: 10,

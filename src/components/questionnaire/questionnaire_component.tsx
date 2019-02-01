@@ -1,5 +1,5 @@
 import React from 'react';
-import { I18nManager, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { I18nManager, Image, Dimensions } from 'react-native';
 import { Button, Content, View, Text, Icon } from 'native-base';
 import * as R from 'ramda';
 import { Question as SelectorQuestion } from '../../selectors/questionnaire/question';
@@ -12,6 +12,7 @@ import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/qu
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { CloseButtonComponent } from '../close_button/close_button_component';
 
 export interface QuestionnaireProps {
     readonly activeQuestion: SelectorQuestion;
@@ -39,9 +40,7 @@ const HeadingComponent = (props: Props): JSX.Element => {
     return (
         <View>
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                <TouchableOpacity onPress={closeButtonOnPress}>
-                    <Icon name='close' style={{ color: colors.black, padding: 10 }} />
-                </TouchableOpacity>
+                <CloseButtonComponent onPress={closeButtonOnPress} color={colors.teal}/>
             </View>
             <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: colors.white }}>
                 <Image
