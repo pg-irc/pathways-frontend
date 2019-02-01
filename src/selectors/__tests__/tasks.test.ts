@@ -91,7 +91,7 @@ describe('tasks selector', () => {
         it('should not recommend tasks by default', () => {
             const aTaxonomyTerm = aTaxonomyTermReference();
             const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withTaxonomyTerm(aTaxonomyTerm).build();
-            const anIncompleteTask = new TaskBuilder().withCompleted(false).build();
+            const anIncompleteTask = new TaskBuilder().build();
 
             const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
 
@@ -103,7 +103,7 @@ describe('tasks selector', () => {
                 taxonomyId: TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID,
                 taxonomyTermId: TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID,
             };
-            const aTaskRecommendedToAll = new TaskBuilder().withTaxonomyTerm(recommendedToAllTaxonomyTerm).withCompleted(false).build();
+            const aTaskRecommendedToAll = new TaskBuilder().withTaxonomyTerm(recommendedToAllTaxonomyTerm).build();
             const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).build();
 
             const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [aTaskRecommendedToAll.id]: aTaskRecommendedToAll });
@@ -114,7 +114,7 @@ describe('tasks selector', () => {
         it('should recommend tasks tagged with the same taxonomy term as a chosen answer', () => {
             const aTaxonomyTerm = aTaxonomyTermReference();
             const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).withIsInverted(false).build();
-            const anIncompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
+            const anIncompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).build();
 
             const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
 
@@ -146,11 +146,7 @@ describe('tasks selector', () => {
 
             describe('terms from the same taxonomy imply OR', () => {
 
-                const aRedBlueTask = new TaskBuilder().
-                    withTaxonomyTerm(redTerm).
-                    withTaxonomyTerm(blueTerm).
-                    withCompleted(false).
-                    build();
+                const aRedBlueTask = new TaskBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(blueTerm).build();
 
                 const taskMap = toTaskMap([aRedBlueTask]);
 
@@ -172,11 +168,7 @@ describe('tasks selector', () => {
 
             describe('terms from different taxonomies imply AND', () => {
 
-                const aRedSmallTask = new TaskBuilder().
-                    withTaxonomyTerm(redTerm).
-                    withTaxonomyTerm(smallTerm).
-                    withCompleted(false).
-                    build();
+                const aRedSmallTask = new TaskBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(smallTerm).build();
 
                 const taskMap = toTaskMap([aRedSmallTask]);
 
@@ -198,12 +190,7 @@ describe('tasks selector', () => {
 
             describe('with three terms from two taxonomies, colour and size', () => {
 
-                const aRedBlueSmallTask = new TaskBuilder().
-                    withTaxonomyTerm(redTerm).
-                    withTaxonomyTerm(blueTerm).
-                    withTaxonomyTerm(smallTerm).
-                    withCompleted(false).
-                    build();
+                const aRedBlueSmallTask = new TaskBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(blueTerm).withTaxonomyTerm(smallTerm).build();
 
                 const taskMap = toTaskMap([aRedBlueSmallTask]);
 
@@ -239,7 +226,6 @@ describe('tasks selector', () => {
                 const aRedTaskWithAdditionalTaxonomyTerm = new TaskBuilder().
                     withTaxonomyTerm(redTerm).
                     withTaxonomyTerm(irrelevantTaxonomyTerm).
-                    withCompleted(false).
                     build();
 
                 const taskMap = toTaskMap([aRedTaskWithAdditionalTaxonomyTerm]);

@@ -1,7 +1,7 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import * as store from '../../tasks';
 import { Id as TaskId } from '../../tasks';
-import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
+import { aString } from '../../../application/__tests__/helpers/random_test_values';
 import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
@@ -14,7 +14,7 @@ export class TaskBuilder {
     description: string = aString();
     taxonomyTerms: TaxonomyTermReference[] = [];
     relatedTasks: ReadonlyArray<TaskId> = [aString(), aString()];
-    completed: boolean = aBoolean();
+    completed: boolean = false;
 
     withLocaleCode(localeCode: string): TaskBuilder {
         this.localeCode = localeCode;

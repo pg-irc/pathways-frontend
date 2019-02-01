@@ -8,7 +8,9 @@ export const getAllTaxonomyIdsFromAnswers = (answers: AnswersMap): ReadonlyArray
 
 const collectTaxonomyIdsFromAnswerMap = (answers: AnswersMap): ReadonlyArray<Id> => (
     R.reduce(
-        (accumulator: ReadonlyArray<Id>, element: Answer): ReadonlyArray<Id> => ([...accumulator, ...collectTaxonomyIdsFromAnswer(element)]),
+        (accumulator: ReadonlyArray<Id>, element: Answer): ReadonlyArray<Id> => (
+            [...accumulator, ...collectTaxonomyIdsFromAnswer(element)]
+        ),
         [],
         R.values(answers),
     )
