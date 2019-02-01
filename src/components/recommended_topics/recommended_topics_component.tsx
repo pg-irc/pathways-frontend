@@ -141,10 +141,10 @@ const CallToActionFullSubComponent = (): JSX.Element => {
 const CallToActionPartialComponent = (props: Props): JSX.Element => {
     const rightColumnContent = (
         <View>
-            <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.greyishBrown }]}>
+            <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.greyishBrown, paddingTop: 4 }]}>
                 <Trans>UPDATE MY RECOMMENDATIONS</Trans>
             </Text>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={[textStyles.headline6, { marginRight: 10 }]}>
                     <Trans>Go back to questions</Trans>
                 </Text>
@@ -153,7 +153,7 @@ const CallToActionPartialComponent = (props: Props): JSX.Element => {
                     name={I18nManager.isRTL ? 'arrow-left' : 'arrow-right'}
                     style={{
                         color: colors.teal,
-                        fontSize: values.smallerIconSize,
+                        fontSize: 15,
                     }}
                 />
             </View>
@@ -193,7 +193,7 @@ const CallToActionPartialSubComponent = (): JSX.Element => {
 const buildRecommendationContent = (rightColumnContent: JSX.Element): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 9;
     return (
-        <View style={{ flex: 4, flexDirection: 'row' }}>
+        <View style={{ flex: 4, flexDirection: 'row', alignItems: 'center' }}>
             <Image
                 source={recommendationBubble}
                 resizeMode={'contain'}

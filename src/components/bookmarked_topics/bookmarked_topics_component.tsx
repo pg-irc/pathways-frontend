@@ -3,8 +3,7 @@ import * as R from 'ramda';
 import { Trans } from '@lingui/react';
 import { Text, View } from 'native-base';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
-import { TaskListActions } from '../tasks/task_list_component';
-import { TaskListComponent, NoTasksAddedComponent } from '../tasks/task_list_component';
+import { TaskListActions, NoTasksAddedComponent, TaskListComponent } from '../tasks/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { textStyles, colors } from '../../application/styles';
 

@@ -36,7 +36,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     return (
         <Footer>
             <FooterTab style={[{ backgroundColor: colors.lightTeal }]}>
-                {navigationButton(props.history, Routes.RecommendedTopics, 'star', recommendedTopicsActive)}
+                {navigationButton(props.history, Routes.RecommendedTopics, 'home', recommendedTopicsActive)}
                 {navigationButton(props.history, Routes.Learn, 'book', learnIsActive)}
                 {navigationButton(props.history, Routes.BookmarkedTopics, 'bookmark', bookmarkedIsActive)}
             </FooterTab>
