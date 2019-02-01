@@ -101,11 +101,20 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
             ],
         );
     };
-    return <Button full onPress={alertToClearAllUserData} style={[applicationStyles.tealButton, { alignSelf: 'center' }]}>
+    return (
+    <Button
+        full
+        onPress={alertToClearAllUserData}
+            style={[
+                applicationStyles.tealButton,
+                applicationStyles.boxShadowBelow,
+                { alignSelf: 'center' },
+            ]}>
         <Text style={textStyles.button}>
             <Trans>Delete all user data</Trans>
         </Text>
-    </Button>;
+    </Button>
+    );
 };
 
 const renderContactComponent = (contact: HelpContact, index: number): JSX.Element => (

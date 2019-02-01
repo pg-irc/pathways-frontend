@@ -2,7 +2,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { Task } from '../../selectors/tasks/task';
 import { View, Text, Button, Icon } from 'native-base';
-import { StyleSheet, FlatList, ListRenderItemInfo } from 'react-native';
+import { Image, Dimensions, StyleSheet, FlatList, ListRenderItemInfo } from 'react-native';
 import { colors, values, textStyles, applicationStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { Id } from '../../stores/tasks';
@@ -11,7 +11,7 @@ import { DismissNewlyAddedTasksPopupAction } from '../../stores/questionnaire/ac
 import { SaveTheseTasksToMyPlanAction } from '../../stores/tasks/actions';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
-import { CloseButtonComponent } from '../close_button/close_button_component';
+import { arrivalAdvisorGlyphLogo } from '../../application/images';
 
 export interface NewlyRecommendedTasksComponentProps {
     readonly newlyRecommendedUnsavedTasks: ReadonlyArray<Task>;
@@ -32,35 +32,38 @@ export const NewlyRecommendedTasksComponent: React.StatelessComponent<Props> = (
         return <EmptyComponent />;
     }
 
-    const taskIds = R.map((task: Task): Id => task.id, tasks);
-    const saveTasksToMyPlan = (): SaveTheseTasksToMyPlanAction => props.saveToMyPlan(taskIds);
     const dismissPopup = (): DismissNewlyAddedTasksPopupAction => props.dismissPopup();
 
     return <View style={styles.fadeout}>
         <View style={styles.dialog}>
-            <HeaderComponent taskIds={taskIds} dismissPopup={dismissPopup} />
             <HeaderContentComponent tasksCount={tasks.length} />
             <TasksComponent tasks={tasks} />
-            <AddTasksButtonComponent saveTasksToMyPlan={saveTasksToMyPlan} />
+            <AddTasksButtonComponent dismissPopup={dismissPopup} />
         </View >
     </View>;
 };
 
-const HeaderComponent =
-    (props: { readonly taskIds: ReadonlyArray<Id>, readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }): JSX.Element => {
-        return (
-            <View style={styles.header}>
-                <CloseButtonComponent onPress={props.dismissPopup} color={colors.teal} />
-            </View>
-        );
-    };
-
-const HeaderContentComponent = (props: { readonly tasksCount: number }): JSX.Element => (
-    <Text style={[textStyles.headlineH2StyleBlackLeft, styles.headerContent]}>
-        <Trans>Number of new topics recommended based on your answers:</Trans>
-        <Text style={[textStyles.headlineH2StyleBlackLeft, styles.taskCount]}> {props.tasksCount}</Text>
-    </Text>
-);
+const HeaderContentComponent = (props: { readonly tasksCount: number }): JSX.Element => {
+    const logoSize = Dimensions.get('screen').width / 7;
+    return (
+        <View padder>
+            <Image
+                source={arrivalAdvisorGlyphLogo}
+                resizeMode={'contain'}
+                style={{
+                    width: logoSize,
+                    height: logoSize,
+                    marginVertical: 15,
+                    alignSelf: 'center',
+                }}
+            />
+            <Text style={textStyles.headlineH2StyleBlackLeft}>
+                <Trans>Number of new topics recommended based on your answers:</Trans>
+                <Text style={[textStyles.headlineH2StyleBlackLeft, styles.taskCount]}> {props.tasksCount}</Text>
+            </Text>
+        </View>
+    );
+};
 
 const TasksComponent = (props: { readonly tasks: ReadonlyArray<Task> }): JSX.Element => (
     <FlatList style={styles.taskList}
@@ -101,11 +104,12 @@ const IsRecommendedComponent = (): JSX.Element => (
     <Icon style={{ fontSize: values.smallerIconSize, color: colors.sunYellow, marginRight: 3 }} name='star' type='FontAwesome' />
 );
 
-const AddTasksButtonComponent = (props: { readonly saveTasksToMyPlan: () => SaveTheseTasksToMyPlanAction }): JSX.Element => (
+const AddTasksButtonComponent = (props: { readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }):
+    JSX.Element => (
     <View style={styles.buttonWrapper}>
-        <Button style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow]} onPress={props.saveTasksToMyPlan}>
+        <Button style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow]} onPress={props.dismissPopup}>
             <Text style={textStyles.button}>
-                <Trans>Bookmark these topics</Trans>
+                <Trans>Ok</Trans>
             </Text>
         </Button>
     </View >
@@ -133,10 +137,6 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-    },
-    headerContent: {
-        paddingBottom: 10,
-        paddingHorizontal: 15,
     },
     headerImagesWrapper: {
         flexDirection: 'row',

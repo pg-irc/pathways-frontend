@@ -42,7 +42,14 @@ const HeadingComponent = (props: Props): JSX.Element => {
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                 <CloseButtonComponent onPress={closeButtonOnPress} color={colors.teal}/>
             </View>
-            <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: colors.white }}>
+            <View
+                style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: colors.white,
+                    paddingVertical: 15,
+                }}
+            >
                 <Image
                     source={arrivalAdvisorGlyphLogo}
                     resizeMode={'contain'}
@@ -114,7 +121,7 @@ const renderPreviousButton = (props: Props): JSX.Element => {
 
 const renderGotoRecommendedButton = (props: Props): JSX.Element => {
     const onPress = goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
-    const text = <Trans>Go to Recommended Topics</Trans>;
+    const text = <Trans>Leave questionnaire</Trans>;
     return (
         <Button style={applicationStyles.whiteTealButton} onPress={onPress} iconRight>
             <Text style={textStyles.whiteTealButton}>{text}</Text>
