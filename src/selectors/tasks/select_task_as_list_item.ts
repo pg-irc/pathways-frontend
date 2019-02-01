@@ -12,6 +12,7 @@ export const selectTaskAsListItem = (appStore: Store, taskId: store.Id): TaskLis
     const taskMap = pickTasks(appStore);
     const task = taskMap[taskId];
     const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
-    const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
+    const relevantTaxonomies: ReadonlyArray<string> = [];
+    const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, task);
     return toSelectorTaskListItem(locale, task, isRecommended);
 };

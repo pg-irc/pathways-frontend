@@ -13,7 +13,8 @@ export const computeNewlyRecommendedUnsavedTasks = (appStore: Store): ReadonlyAr
     const oldAnswers = pickQuestionnaire(appStore).oldAnswers;
     const newAnswers = pickAnswers(appStore);
     const tasks = pickTasks(appStore);
-    const newlyRecommendedTasks = getNewlyRecommendedTasks(oldAnswers, newAnswers, tasks);
+    const relevantTaxonomies: ReadonlyArray<string> = [];
+    const newlyRecommendedTasks = getNewlyRecommendedTasks(relevantTaxonomies, oldAnswers, newAnswers, tasks);
     const newlyRecommendedUnsaveTasks = rejectTasksWithIds(newlyRecommendedTasks, pickSavedTaskIds(appStore));
 
     return R.map(buildSelectorTask(appStore), newlyRecommendedUnsaveTasks);

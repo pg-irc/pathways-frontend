@@ -9,6 +9,7 @@ import { getRecommendedTasks } from './get_recommended_tasks';
 export const selectRecommendedTasks = (appStore: Store): ReadonlyArray<Task> => {
     const tasks = pickTasks(appStore);
     const answers = pickAnswers(appStore);
+    const relevantTaxonomies: ReadonlyArray<string> = [];
 
-    return R.map(buildSelectorTask(appStore), getRecommendedTasks(answers, tasks));
+    return R.map(buildSelectorTask(appStore), getRecommendedTasks(relevantTaxonomies, answers, tasks));
 };

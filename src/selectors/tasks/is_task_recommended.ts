@@ -7,18 +7,21 @@ import * as R from 'ramda';
 type Term = TaxonomyTermReference;
 type TermList = ReadonlyArray<Term>;
 
-export const isTaskRecommended = R.curry((termsFromQuestionnaire: TermList, task: Task): boolean => {
+export const isTaskRecommended = R.curry((relevantTaxonomies: ReadonlyArray<string>, chosenTermsFromQuestionnaire: TermList, task: Task): boolean => {
+
     if (isTaskRecommendedToAll(task)) {
         return true;
     }
 
-    const groupedTermsFromTask = groupTermsByTaxonomy(task.taxonomyTerms);
+    const relevantTermsFromTask = R.filter((term: Term): boolean => (R.contains(term.taxonomyId, relevantTaxonomies)), task.taxonomyTerms);
+
+    const groupedTermsFromTask = groupTermsByTaxonomy(relevantTermsFromTask);
 
     if (R.isEmpty(groupedTermsFromTask)) {
         return false;
     }
 
-    return R.all(atLeastOneTermMatches(termsFromQuestionnaire), groupedTermsFromTask);
+    return R.all(atLeastOneTermMatches(chosenTermsFromQuestionnaire), groupedTermsFromTask);
 });
 
 const atLeastOneTermMatches = R.curry((left: TermList, right: TermList): boolean => (

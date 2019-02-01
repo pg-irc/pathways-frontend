@@ -15,7 +15,8 @@ export const selectCurrentTask = (appStore: Store, taskId: TaskId): Task => {
     const task = taskMap[taskId];
     const exploreSection = selectExploreSectionFromTask(appStore, task);
     const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
-    const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
+    const relevantTaxonomies: ReadonlyArray<string> = [];
+    const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, task);
     const relatedTasks = selectRelatedTasks(appStore, task.relatedTasks);
     return toSelectorTask(locale, task, exploreSection, isRecommended, relatedTasks);
 };

@@ -23,7 +23,8 @@ export const selectTaskForCurrentExploreSection = (appStore: Store, routerProps:
     const buildTask = (task: store.Task): Task => {
         const exploreSectionForTask = selectExploreSectionFromTask(appStore, task);
         const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
-        const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
+        const relevantTaxonomies: ReadonlyArray<string> = [];
+        const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, task);
         return toSelectorTaskWithoutRelatedEntities(locale, task, exploreSectionForTask, isRecommended);
     };
 
