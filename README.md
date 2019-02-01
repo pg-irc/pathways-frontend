@@ -79,7 +79,7 @@ All commits are labelled with the issue they are being done under. This ensures 
 * We bump the Y when we add features that are backwards compatible as per semantic versioning.
 * We bump the X when we add features that are backwards incompatible, i.e. when the client would fail to operate correctly with an older server version, as per [semantic versioning](https://semver.org/).
 * Versions are stored as git tags in each git repo (client and server).
-* TODO: On the server side, the version is stored in VERSION.txt.
+* On the server side, the version is stored in VERSION.txt.
 * On the client side, the version is stored in VERSION.txt and several other files, with unit tests making sure that all version strings are the same.
 * Client About screen shows the version of the client.
 

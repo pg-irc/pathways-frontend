@@ -369,7 +369,6 @@ describe('tasks selector', () => {
 
             expect(result).toBe(true);
         });
-        // TODO should also return true for a saved task (for once we refactor tasks to have a saved flag)
     });
 
     describe('sorting', () => {
