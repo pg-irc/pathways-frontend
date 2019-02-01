@@ -31,7 +31,7 @@ const TaskListHeaderComponent = (): JSX.Element => (
             <Trans>My bookmarks</Trans>
         </Text>
         <Text style={textStyles.paragraphStyle}>
-            <Trans>Keep track of your important topics and build your personal plan for settlement.</Trans>
+            <Trans>Save important topics to build your personal plan for settlement.</Trans>
         </Text>
     </View>
 );

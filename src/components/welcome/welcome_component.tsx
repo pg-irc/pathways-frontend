@@ -45,7 +45,7 @@ export function WelcomeComponent(props: I18nProps & WelcomeProps & WelcomeAction
                     }}
                 />
                 <Text style={[textStyles.paragraphStyleWhiteCenter, { marginBottom: 30 }]}>
-                    <Trans>Your helpful companion from arrival to integration</Trans>
+                    <Trans>Making settling in Canada easier</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
                     <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 15, color: colors.white, marginBottom: 10 }}>

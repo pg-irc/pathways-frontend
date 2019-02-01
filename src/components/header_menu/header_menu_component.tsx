@@ -8,6 +8,7 @@ import { Content, View, Icon, Header } from 'native-base';
 import { colors, values, textStyles } from '../../application/styles';
 import { goToRouteWithoutParameter } from '../../application/routing';
 import { Routes } from '../../application/routing';
+import { openURL } from '../link/link';
 
 export interface HeaderMenuProps {
     readonly currentLocale: LocaleInfo;
@@ -114,19 +115,14 @@ const AboutListItems = (props: Props): JSX.Element => {
                 onPress={buildAboutItemOnPress(props, Routes.About)}
             />
             <AboutItem
-                icon={<AboutIcon name='lock' fontSize={30} marginRight={5}/>}
-                text={<Trans>Privacy policy</Trans>}
-                onPress={buildAboutItemOnPress(props, Routes.About)}
-            />
-            <AboutItem
                 icon={<AboutIcon name='file' fontSize={20} marginRight={7}/>}
                 text={<Trans>Disclaimer</Trans>}
-                onPress={buildAboutItemOnPress(props, Routes.About)}
+                onPress={buildAboutItemOnPress(props, Routes.Disclaimer)}
             />
             <AboutItem
-                icon={<AboutIcon name='comments' fontSize={22} marginRight={4}/>}
-                text={<Trans>Send feedback</Trans>}
-                onPress={buildAboutItemOnPress(props, Routes.RecommendedTopics)}
+                icon={<AboutIcon name='lock' fontSize={30} marginRight={5}/>}
+                text={<Trans>Privacy policy</Trans>}
+                onPress={(): void => openURL('https://peacegeeks.org/privacy')}
             />
         </View>
     );

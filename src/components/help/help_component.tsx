@@ -16,22 +16,22 @@ interface HelpContact {
 
 const fixture: ReadonlyArray<HelpContact> = [
     {
-        title: <Trans>Emergencies (9-1-1)</Trans>,
+        title: <Trans>Information on emergency services (9-1-1)</Trans>,
         subTitle: <Trans>Police, fire and medical emergencies</Trans>,
         url: 'https://www.ecomm911.ca/',
     },
     {
-        title: <Trans>HealthLinkBC (8-1-1)</Trans>,
+        title: <Trans>Information on HealthLinkBC (8-1-1)</Trans>,
         subTitle: <Trans>Mutlilingual health information services</Trans>,
         url: 'https://www.healthlinkbc.ca/services-and-resources/about-8-1-1',
     },
     {
-        title: <Trans>BC211</Trans>,
+        title: <Trans>Information on BC211</Trans>,
         subTitle: <Trans>Services information and referral</Trans>,
         url: 'http://www.bc211.ca/',
     },
     {
-        title: <Trans>Helplines</Trans>,
+        title: <Trans>Information on helplines</Trans>,
         url: 'http://www.bc211.ca/help-lines/',
     },
     {
