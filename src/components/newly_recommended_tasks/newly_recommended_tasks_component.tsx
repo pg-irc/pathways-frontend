@@ -107,7 +107,16 @@ const IsRecommendedComponent = (): JSX.Element => (
 const OkButtonComponent = (props: { readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }):
     JSX.Element => (
     <View style={styles.buttonWrapper}>
-        <Button style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow]} onPress={props.dismissPopup}>
+            <Button
+                style={
+                    [
+                        applicationStyles.tealButton,
+                        applicationStyles.boxShadowBelow,
+                        { paddingHorizontal: 20 },
+                    ]
+                }
+                onPress={props.dismissPopup}
+            >
             <Text style={textStyles.button}>
                 <Trans>Ok</Trans>
             </Text>
