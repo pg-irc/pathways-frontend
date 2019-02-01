@@ -64,7 +64,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                     },
                 ]}
             >
-                <Trans>Recommended for You</Trans>
+                <Trans>Recommended for you</Trans>
             </Text>
             {props.hasChosenAnswers ?
                 <CallToActionPartialSubComponent />
@@ -122,8 +122,8 @@ const CallToActionFullComponentContent = (): JSX.Element => {
             </View>
             <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 20 }]}>
                 <Trans>
-                    Share a little about yourself to get personalized recommendations to
-                    help you from arrival to integration.
+                    Answer a few questions about your situation to get personalized
+                    recommendations of topics and services to help you settle in British Columbia.
                 </Trans>
             </Text>
         </View>

@@ -10,7 +10,7 @@ interface AnchorProps {
     readonly style?: object;
 }
 
-const openURL = (url: string): void => {
+export const openURL = (url: string): void => {
     Linking.canOpenURL(url).then((supported: boolean) => {
         if (supported) {
           Linking.openURL(url).catch((error: string) => console.error(error));

@@ -1,37 +1,42 @@
 import React from 'react';
 import { Text, View, Icon, Button, Content } from 'native-base';
 import { Trans } from '@lingui/react';
-import { I18nManager, Alert } from 'react-native';
+import { I18nManager, Alert, TouchableOpacity } from 'react-native';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
+import { openURL } from '../link/link';
 
 interface HelpContact {
     readonly title: JSX.Element;
+    readonly url: string;
     readonly subTitle?: JSX.Element;
 }
 
 const fixture: ReadonlyArray<HelpContact> = [
     {
         title: <Trans>Emergencies (9-1-1)</Trans>,
+        subTitle: <Trans>Police, fire and medical emergencies</Trans>,
+        url: 'https://www.ecomm911.ca/',
     },
     {
         title: <Trans>HealthLinkBC (8-1-1)</Trans>,
-        subTitle: <Trans>Mutlilingual health information</Trans>,
+        subTitle: <Trans>Mutlilingual health information services</Trans>,
+        url: 'https://www.healthlinkbc.ca/services-and-resources/about-8-1-1',
     },
     {
-        title: <Trans>Mental health & trauma support</Trans>,
+        title: <Trans>BC211</Trans>,
+        subTitle: <Trans>Services information and referral</Trans>,
+        url: 'http://www.bc211.ca/',
     },
     {
-        title: <Trans>Legal aid helplines</Trans>,
+        title: <Trans>Helplines</Trans>,
+        url: 'http://www.bc211.ca/help-lines/',
     },
     {
-        title: <Trans>Other multilingual helplines</Trans>,
-    },
-    {
-        title: <Trans>Contact app team for technical issues</Trans>,
-        subTitle: <Trans>For technical issues and bugs</Trans>,
+        title: <Trans>Contact Arrival Advisor team</Trans>,
+        url: 'mailto:hello@arrivaladvisor.ca',
     },
 ];
 
@@ -104,23 +109,24 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
         );
     };
     return (
-    <Button
-        full
-        onPress={alertToClearAllUserData}
+        <Button
+            full
+            onPress={alertToClearAllUserData}
             style={[
                 applicationStyles.tealButton,
                 applicationStyles.boxShadowBelow,
-                { alignSelf: 'center' },
-            ]}>
-        <Text style={textStyles.button}>
-            <Trans>Delete all user data</Trans>
-        </Text>
-    </Button>
+                { alignSelf: 'center' }]
+            }
+        >
+            <Text style={textStyles.button}>
+                <Trans>Delete all user data</Trans>
+            </Text>
+        </Button>
     );
 };
 
 const renderContactComponent = (contact: HelpContact, index: number): JSX.Element => (
-    <View
+    <TouchableOpacity
         key={index}
         style={{
             backgroundColor: colors.white,
@@ -131,11 +137,12 @@ const renderContactComponent = (contact: HelpContact, index: number): JSX.Elemen
             alignItems: 'center',
             padding: 15,
         }}
+        onPress={(): void => openURL(contact.url)}
     >
         <View style={{ flexDirection: 'column' }}>
             <Text style={textStyles.paragraphBoldBlackLeft}>{contact.title}</Text>
             {contact.subTitle ? <Text note>{contact.subTitle}</Text> : <EmptyComponent />}
         </View>
         <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize }} />
-    </View>
+    </TouchableOpacity>
 );
