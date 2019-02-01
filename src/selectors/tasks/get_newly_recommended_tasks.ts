@@ -4,9 +4,9 @@ import * as R from 'ramda';
 import { getRecommendedTasks } from './get_recommended_tasks';
 
 export const getNewlyRecommendedTasks =
-    (relevantTaxonomies: ReadonlyArray<string>, oldAnswers: AnswersMap, newAnswers: AnswersMap, tasks: TaskMap): ReadonlyArray<Task> => (
+    (oldAnswers: AnswersMap, newAnswers: AnswersMap, tasks: TaskMap): ReadonlyArray<Task> => (
         R.difference(
-            getRecommendedTasks(relevantTaxonomies, newAnswers, tasks),
-            getRecommendedTasks(relevantTaxonomies, oldAnswers, tasks),
+            getRecommendedTasks(newAnswers, tasks),
+            getRecommendedTasks(oldAnswers, tasks),
         )
     );

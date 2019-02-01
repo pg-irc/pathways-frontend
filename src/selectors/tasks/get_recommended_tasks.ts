@@ -1,13 +1,14 @@
 import { AnswersMap } from '../../stores/questionnaire';
 import { TaskMap, Task } from '../../stores/tasks';
+import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
 import { getTaxonomyTermsForRelevantAnswers } from '../taxonomies/get_taxonomy_terms_for_relevant_answers';
 import { isTaskRecommended } from './is_task_recommended';
 import { isCompleted } from './is_completed';
 import * as R from 'ramda';
 
-// TODO remove relevant taxonomies argument, can compute it itself from answer map
-export const getRecommendedTasks = (relevantTaxonomies: ReadonlyArray<string>, answers: AnswersMap, tasks: TaskMap): ReadonlyArray<Task> => {
+export const getRecommendedTasks = (answers: AnswersMap, tasks: TaskMap): ReadonlyArray<Task> => {
     const chosenTaxonomyTerms = getTaxonomyTermsForRelevantAnswers(answers);
+    const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(answers);
     const isRecommended = isTaskRecommended(relevantTaxonomies, chosenTaxonomyTerms);
 
     const isInRecommendedList = (task: Task): boolean => (
