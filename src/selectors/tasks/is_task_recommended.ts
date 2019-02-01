@@ -40,5 +40,5 @@ const groupTermsByTaxonomy = (accumulator: GroupedTerms, element: TaxonomyTermRe
 };
 
 const atLeastOneTermsMatches = R.curry((t1: ReadonlyArray<TaxonomyTermReference>, t2: ReadonlyArray<TaxonomyTermReference>): boolean => (
-    R.intersection(t2, t1) !== []
+    R.not(R.isEmpty(R.intersection(t2, t1)))
 ));

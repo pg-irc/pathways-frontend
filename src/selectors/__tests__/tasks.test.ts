@@ -127,9 +127,9 @@ describe('tasks selector', () => {
             const blueTerm: TaxonomyTermReference = { taxonomyId: 'colour', taxonomyTermId: 'blue' };
             const smallTerm: TaxonomyTermReference = { taxonomyId: 'size', taxonomyTermId: 'small' };
 
-            const redAnswer = new AnswerBuilder().withTaxonomyTerm(redTerm).withIsChosen(true).build();
-            const blueAnswer = new AnswerBuilder().withTaxonomyTerm(blueTerm).withIsChosen(true).build();
-            const smallAnswer = new AnswerBuilder().withTaxonomyTerm(smallTerm).withIsChosen(true).build();
+            const redAnswer = new AnswerBuilder().withTaxonomyTerm(redTerm).withIsChosen(true).withIsInverted(false).build();
+            const blueAnswer = new AnswerBuilder().withTaxonomyTerm(blueTerm).withIsChosen(true).withIsInverted(false).build();
+            const smallAnswer = new AnswerBuilder().withTaxonomyTerm(smallTerm).withIsChosen(true).withIsInverted(false).build();
 
             const toAnswerMap = (values: ReadonlyArray<Answer>): AnswersMap => {
                 const keys = R.map((answer: Answer): string => answer.id, values);
