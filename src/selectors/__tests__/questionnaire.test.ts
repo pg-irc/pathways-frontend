@@ -40,7 +40,7 @@ describe('toSelectorQuestion selector', () => {
 
             const normalizedData = new ValidStoreBuilder().withQuestions([firstQuestion, secondQuestion]).build();
             firstDenormalizedQuestion = toSelectorQuestion(locale, normalizedData.questions[firstQuestion.id],
-                                                           normalizedData.questions, normalizedData.answers);
+                normalizedData.questions, normalizedData.answers);
         });
 
         it('should map question id', () => {
@@ -93,7 +93,7 @@ describe('toSelectorQuestion selector', () => {
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
         const firstQuestionKey = R.keys(normalizedData.questions)[0];
         const denormalizedData = toSelectorQuestion(locale, normalizedData.questions[firstQuestionKey],
-                                                    normalizedData.questions, normalizedData.answers);
+            normalizedData.questions, normalizedData.answers);
         expect(denormalizedData.answers).toHaveLength(answerCount);
     });
 
@@ -121,7 +121,7 @@ describe('toSelectorQuestion selector', () => {
 
         expect(result).toEqual([theTaxonomyTerm]);
     });
-    
+
     it('should not return the taxonomy terms for a chosen inverted answer', () => {
         const theTaxonomyTerm = aTaxonomyTermReference();
         const chosenInvertedAnswer = new AnswerBuilder().withTaxonomyTerm(theTaxonomyTerm).
@@ -174,9 +174,21 @@ describe('getting ids of all chosen answers', () => {
         expect(result).toContain(aChosenAnswer.id);
     });
 
-    it('should not include ids for non-chosen questions', () => {
+    it('should not include ids for non-chosen answers', () => {
         const locale = aLocale();
         const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withIsInverted(false).
+            withLocaleCode(locale.code);
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
+        const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
+
+        const result = getIdsOfChosenAnswers(toValidOrThrow(normalizedData).answers);
+
+        expect(result).not.toContain(aNonChosenAnswer.id);
+    });
+
+    it('should not include ids for non-chosen answers even if inverted', () => {
+        const locale = aLocale();
+        const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withIsInverted(true).
             withLocaleCode(locale.code);
         const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([aNonChosenAnswer]);
         const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
