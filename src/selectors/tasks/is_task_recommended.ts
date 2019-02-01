@@ -3,34 +3,40 @@ import { TaxonomyTermReference } from '../taxonomies/pull_explore_taxonomy';
 import { Taxonomies } from '../../application/constants';
 import * as R from 'ramda';
 
-export const isTaskRecommended = R.curry((chosenTaxonomyTerms: ReadonlyArray<TaxonomyTermReference>, task: Task): boolean => {
-    if (isRecommendedToAll(task)) {
+type Term = TaxonomyTermReference;
+
+export const isTaskRecommended = R.curry((termsFromQuestionnaire: ReadonlyArray<Term>, task: Task): boolean => {
+    if (isTaskRecommendedToAll(task)) {
         return true;
     }
 
-    const groupedTermsFromTask = R.values(R.reduce(groupTermsByTaxonomy, {}, task.taxonomyTerms));
+    const groupedTermsFromTask = groupTermsByTaxonomy(task.taxonomyTerms);
 
-    if (R.isEmpty(chosenTaxonomyTerms) || R.isEmpty(groupedTermsFromTask)) {
+    if (R.isEmpty(groupedTermsFromTask)) {
         return false;
     }
 
-    return R.all(atLeastOneTermsMatches(chosenTaxonomyTerms), groupedTermsFromTask);
+    return R.all(atLeastOneTermMatches(termsFromQuestionnaire), groupedTermsFromTask);
 });
 
-const isRecommendedToAll = (task: Task): boolean => (
-    R.any(matchesRecommendedToAll, task.taxonomyTerms)
+const isTaskRecommendedToAll = (task: Task): boolean => (
+    R.any(equalsRecommendedToAll, task.taxonomyTerms)
 );
 
-const matchesRecommendedToAll = (term: TaxonomyTermReference): boolean => (
+const equalsRecommendedToAll = (term: Term): boolean => (
     term.taxonomyId === Taxonomies.RECOMMENDATION_TAXONOMY_ID &&
     term.taxonomyTermId === Taxonomies.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID
 );
 
+const groupTermsByTaxonomy = (terms: ReadonlyArray<Term>): ReadonlyArray<ReadonlyArray<Term>> => (
+    R.values(R.reduce(addToMapByTaxonomy, {}, terms))
+);
+
 interface GroupedTerms {
-    readonly [taxonomyId: string]: ReadonlyArray<TaxonomyTermReference>;
+    readonly [taxonomyId: string]: ReadonlyArray<Term>;
 }
 
-const groupTermsByTaxonomy = (accumulator: GroupedTerms, element: TaxonomyTermReference): GroupedTerms => {
+const addToMapByTaxonomy = (accumulator: GroupedTerms, element: Term): GroupedTerms => {
     const taxonomyId = element.taxonomyId;
     const group = accumulator[taxonomyId] || [];
     return {
@@ -39,6 +45,6 @@ const groupTermsByTaxonomy = (accumulator: GroupedTerms, element: TaxonomyTermRe
     };
 };
 
-const atLeastOneTermsMatches = R.curry((t1: ReadonlyArray<TaxonomyTermReference>, t2: ReadonlyArray<TaxonomyTermReference>): boolean => (
-    R.not(R.isEmpty(R.intersection(t2, t1)))
+const atLeastOneTermMatches = R.curry((left: ReadonlyArray<Term>, right: ReadonlyArray<Term>): boolean => (
+    R.not(R.isEmpty(R.intersection(left, right)))
 ));
