@@ -28,8 +28,8 @@ export interface TaskListActions {
 type Props = TaskListProps & TaskListActions;
 
 type State = {
-    readonly sectionNumber: number;
     readonly sections: ReadonlyArray<ReadonlyArray<TaskListItem>>;
+    readonly sectionIndex: number;
     readonly data: ReadonlyArray<TaskListItem>;
 };
 
@@ -41,14 +41,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        const sectionNumber = 0;
-        const sections = R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
-        const data = sections[sectionNumber];
-        this.state = {
-            sectionNumber,
-            sections,
-            data,
-        };
+        this.state = this.getFreshState();
         this.setFlatListRef = this.setFlatListRef.bind(this);
         this.loadMoreData = this.loadMoreData.bind(this);
     }
@@ -56,6 +49,9 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     componentDidUpdate(previousProps: Props): void {
         if (previousProps.headerContentIdentifier !== this.props.headerContentIdentifier) {
             this.flatListRef.scrollToOffset({ animated: false, offset: 0 });
+        }
+        if (previousProps.tasks.length !== this.props.tasks.length) {
+            this.setState(this.getFreshState());
         }
     }
 
@@ -67,7 +63,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 data={this.state.data}
                 renderItem={({ item }: TaskItemInfo): JSX.Element => this.renderTaskListItem(item, this.props)}
                 keyExtractor={(task: TaskListItem): string => task.id}
-                extraData={[this.props.tasks, this.props.headerContentIdentifier]}
                 onEndReached={this.loadMoreData}
                 onEndReachedThreshold={0.5}
                 ListEmptyComponent={this.props.emptyTaskListContent}
@@ -75,6 +70,32 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 initialNumToRender={this.numberOfItemsPerSection}
             />
         );
+    }
+
+    private getFreshState(): State {
+        return this.state ? this.getStateWithAllTasksLoaded() : this.getStateWithFirstTaskSectionLoaded();
+    }
+
+    private getStateWithAllTasksLoaded(): State {
+        const sections = this.getTaskSections();
+        return {
+            sections: sections,
+            sectionIndex: sections.length - 1,
+            data: this.props.tasks,
+        };
+    }
+
+    private getStateWithFirstTaskSectionLoaded(): State {
+        const sections = this.getTaskSections();
+        return {
+            sections: sections,
+            sectionIndex: 0,
+            data: sections[0],
+        };
+    }
+
+    private getTaskSections(): ReadonlyArray<ReadonlyArray<TaskListItem>> {
+        return R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
     }
 
     private setFlatListRef(component: object): void {
@@ -94,18 +115,18 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     private loadMoreData(): void {
-        const nextSectionNumber = this.getNextSectionNumber();
-        const nextSection = this.state.sections[nextSectionNumber];
+        const nextsectionIndex = this.getNextSectionIndex();
+        const nextSection = this.state.sections[nextsectionIndex];
         if (nextSection) {
             this.setState({
-                sectionNumber: nextSectionNumber,
+                sectionIndex: nextsectionIndex,
                 data: R.concat(this.state.data, nextSection),
             });
         }
     }
 
-    private getNextSectionNumber(): number {
-        return this.state.sectionNumber + 1;
+    private getNextSectionIndex(): number {
+        return this.state.sectionIndex + 1;
     }
 }
 
