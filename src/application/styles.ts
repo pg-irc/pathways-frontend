@@ -71,8 +71,8 @@ export const textStyles = StyleSheet.create({
     headline6: {
         fontSize: 16,
         lineHeight: 21,
-        letterSpacing: 0,
         color: colors.teal,
+        letterSpacing,
         ...getBoldFontStylesForOS(),
     },
     headlineH1StyleBlackLeft: {
@@ -166,9 +166,9 @@ export const textStyles = StyleSheet.create({
         ...getNormalFontStylesForOS(),
     },
     paragraphStyleBrown: {
-        fontSize: 12,
+        fontSize: 16,
         lineHeight: 21,
-        textAlign: 'center',
+        textAlign: 'left',
         color: colors.greyishBrown,
         letterSpacing,
         ...getNormalFontStylesForOS(),
@@ -177,18 +177,18 @@ export const textStyles = StyleSheet.create({
         fontSize: 12,
         lineHeight: 21,
         textAlign: 'left',
-        color: colors.greyishBrown,
+        color: colors.black,
         letterSpacing,
         ...getNormalFontStylesForOS(),
     },
     paragraphURL: {
-        fontSize: 16,
+        fontSize: 15,
         lineHeight: 21,
         textDecorationLine: 'underline',
         textAlign: 'left',
         color: colors.greyishBrown,
         letterSpacing,
-        ...getNormalFontStylesForOS(),
+        ...getBoldFontStylesForOS(),
     },
     paragraphStyleWhiteCenter: {
         fontSize: 16,
@@ -222,7 +222,7 @@ export const textStyles = StyleSheet.create({
     tealButton: {
         fontSize: 18,
         textAlign: 'center',
-        color: colors.black,
+        color: colors.white,
         letterSpacing: buttonLetterSpacing,
         ...getBoldFontStylesForOS(),
     },
