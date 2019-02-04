@@ -6,12 +6,15 @@ import { toSelectorTaskListItem } from './to_selector_task_list_item';
 import { TaskListItem } from './task_list_item';
 import { isTaskRecommended } from './is_task_recommended';
 import { pickTasks } from './pick_tasks';
+import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
+import { pickAnswers } from '../questionnaire/pick_answers';
 
 export const selectTaskAsListItem = (appStore: Store, taskId: store.Id): TaskListItem => {
     const locale = selectLocale(appStore);
     const taskMap = pickTasks(appStore);
     const task = taskMap[taskId];
     const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
-    const isRecommended = isTaskRecommended(termsFromQuestionnaire, task);
+    const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(pickAnswers(appStore));
+    const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, task);
     return toSelectorTaskListItem(locale, task, isRecommended);
 };

@@ -11,6 +11,7 @@ import { toValidOrThrow } from '../../stores/questionnaire/stores';
 import { toSelectorQuestion } from '../questionnaire/to_selector_question';
 import { getTaxonomyTermsForRelevantAnswers } from '../taxonomies/get_taxonomy_terms_for_relevant_answers';
 import { getAllAnswersWithTaxonomyTermsNotIn } from '../questionnaire/get_all_answers_with_taxonomy_terms_not_in';
+import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
 
 const aTaxonomyTermReference = (): TaxonomyTermReference => (
     { taxonomyId: aString(), taxonomyTermId: aString() }
@@ -158,6 +159,51 @@ describe('toSelectorQuestion selector', () => {
 
         expect(result).toContain(theTaxonomyTerm);
         expect(result).toContain(theSecondTaxonomyTerm);
+    });
+});
+
+describe('getting all taxonomy ids from questionnaire', () => {
+
+    const locale = aLocale();
+    const firstTerm = aTaxonomyTermReference();
+    const secondTerm = aTaxonomyTermReference();
+
+    const answerWithFirstTerm = new AnswerBuilder().withTaxonomyTerm(firstTerm).withLocaleCode(locale.code);
+    const answerWithSecondTerm = new AnswerBuilder().withTaxonomyTerm(secondTerm).withLocaleCode(locale.code);
+    const answerWithBothTerms = new AnswerBuilder().withTaxonomyTerm(firstTerm).withTaxonomyTerm(secondTerm).withLocaleCode(locale.code);
+
+    it('returns the taxonomy id from an answer in the questionnaire', () => {
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([answerWithFirstTerm]);
+        const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
+
+        const result = getAllTaxonomyIdsFromAnswers(normalizedData.answers);
+        expect(result).toEqual([firstTerm.taxonomyId]);
+    });
+
+    it('returns the taxonomy ids from different answers in the questionnaire', () => {
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([answerWithFirstTerm, answerWithSecondTerm]);
+        const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
+
+        const result = getAllTaxonomyIdsFromAnswers(normalizedData.answers);
+        expect(result).toContain(firstTerm.taxonomyId);
+        expect(result).toContain(secondTerm.taxonomyId);
+    });
+
+    it('returns the two taxonomy ids from the same answer in the questionnaire', () => {
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([answerWithBothTerms]);
+        const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
+
+        const result = getAllTaxonomyIdsFromAnswers(normalizedData.answers);
+        expect(result).toContain(firstTerm.taxonomyId);
+        expect(result).toContain(secondTerm.taxonomyId);
+    });
+
+    it('returns taxonomy ids without duplicates', () => {
+        const aQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers([answerWithFirstTerm, answerWithBothTerms]);
+        const normalizedData = new ValidStoreBuilder().withQuestions([aQuestion]).build();
+
+        const result = getAllTaxonomyIdsFromAnswers(normalizedData.answers);
+        expect(result).toHaveLength(2);
     });
 });
 
