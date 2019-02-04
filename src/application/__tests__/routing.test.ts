@@ -110,7 +110,7 @@ describe('the isOnChildScreen function', () => {
     });
 
     it('returns true on path: "/disclaimer"', () => {
-        expect(isOnChildScreen('/about')).toStrictEqual(true);
+        expect(isOnChildScreen('/disclaimer')).toStrictEqual(true);
     });
 
     it('returns false on non child screen path', () => {
