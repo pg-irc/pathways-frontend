@@ -1,4 +1,5 @@
 import React from 'react';
+import { History } from 'history';
 import { Text, View, Icon, Button, Content } from 'native-base';
 import { Trans } from '@lingui/react';
 import { I18nManager, Alert, TouchableOpacity } from 'react-native';
@@ -7,6 +8,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 import { openURL } from '../link/link';
+import { goToRouteWithParameter, Routes } from '../../application/routing';
 
 interface HelpContact {
     readonly title: JSX.Element;
@@ -41,6 +43,7 @@ const fixture: ReadonlyArray<HelpContact> = [
 ];
 
 export interface HelpComponentProps {
+    readonly history: History;
 }
 
 export interface HelpComponentActions {
@@ -70,7 +73,7 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
                 marginTop: 15,
                 marginBottom: 20,
             }}>
-                <ContactSettlementWorkerButton />
+                <ContactSettlementWorkerButton {...props} />
             </View>
         </View>
         <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
@@ -86,8 +89,10 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
     </Content>
 );
 
-const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element => (
-    <Button style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow, { alignSelf: 'center' }]}>
+const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    <Button
+        onPress={goToRouteWithParameter(Routes.Services, 'contact-workers-at-your-local-settlement-agency', props.history)}
+        style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow, { alignSelf: 'center' }]}>
         <Text style={textStyles.button}>
             <Trans>Find a settlement agency near me</Trans>
         </Text>
