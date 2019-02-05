@@ -48,7 +48,7 @@ export function WelcomeComponent(props: I18nProps & WelcomeProps & WelcomeAction
                     <Trans>Making settling in Canada easier</Trans>
                 </Text>
                 <Form style={{ marginBottom: 20, justifyContent: 'center' }}>
-                    <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 15, color: colors.white, marginBottom: 10 }}>
+                    <Text style={[textStyles.paragraphBoldWhiteLeft, { marginBottom: 10 }]}>
                         <Trans>Select your language</Trans>
                     </Text>
                     <Item style={{ marginLeft: 0, borderColor: 'transparent', justifyContent: 'center' }}>

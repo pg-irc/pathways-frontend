@@ -45,6 +45,7 @@ export function startApplication(saga: ApplicationSaga, store: CreatedStore): vo
     runSaga(saga.middleware);
     store.dispatch(loadFontsActions.request({
         AvenirBook: require('../../assets/fonts/Avenir-Book.ttf'),
+        AvenirBlack: require('../../assets/fonts/Avenir-Black.ttf'),
         Roboto: require('../../assets/fonts/Roboto.ttf'),
         Roboto_medium: require('../../assets/fonts/Roboto_medium.ttf'),
     }));
