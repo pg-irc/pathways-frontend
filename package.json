@@ -44,6 +44,7 @@
     "bt": "yarn run build && yarn run test",
     "clean": "rimraf 'lib/**/*.js' 'lib/**/*.js.map' 'locale/_build/**/*.json'",
     "extract-strings": "lingui extract",
+    "extract-strings-clean": "lingui extract --clean",
     "build-strings": "lingui compile --strict",
     "clean-strings": "rimraf 'locale/_build/**/*.json'",
     "start": "react-native-scripts start",
