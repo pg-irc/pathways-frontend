@@ -6,7 +6,7 @@ import { RouterProps } from '../../application/routing';
 import { Id as TaskId, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/tasks';
 import { ExploreDetailContentComponent } from './explore_detail_content_component';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
-import { textStyles } from '../../application/styles';
+import { textStyles, values } from '../../application/styles';
 import { TaskListComponent, NoTasksAddedComponent } from '../tasks/task_list_component';
 
 export interface ExploreDetailProps {
@@ -43,7 +43,15 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             section={props.section}
             sectionHasTasks={props.tasks.length > 0}
         />
-        <Text style={[textStyles.headlineH5StyleBlackLeft, { marginBottom: 3 }]}>
+        <Text
+            style={[
+                textStyles.headlineH5StyleBlackLeft,
+                {
+                    paddingHorizontal: values.backgroundTextPadding,
+                    paddingTop: 18,
+                },
+            ]}
+        >
             <Trans>EXPLORE TOPICS</Trans>
         </Text>
     </View>

@@ -42,7 +42,7 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                         isBookmarked={props.taskIsBookmarked}
                         addBookmark={(): AddToSavedListAction => props.addToSavedList(props.task.id)}
                         removeBookmark={(): RemoveFromSavedListAction => props.removeFromSavedList(props.task.id)}
-                        textColor={colors.topaz}
+                        textColor={colors.teal}
                     />
                     <View>
                         <Text numberOfLines={2} style={textStyles.headlineH4StyleBlackLeft}>
@@ -53,9 +53,9 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                         </Text>
                     </View>
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                     {props.task.isRecommended ? <IsRecommendedComponent /> : <EmptyComponent />}
-                    <Icon style={{ fontSize: values.smallIconSize }} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
+                    <Icon style={{ fontSize: 15 }} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
                 </View>
             </View>
         </TouchableOpacity>
@@ -63,5 +63,5 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
 };
 
 const IsRecommendedComponent = (): JSX.Element => (
-    <Icon style={{ fontSize: values.smallerIconSize, color: colors.sunYellow, marginRight: 3 }} name='star' type='FontAwesome' />
+    <Icon style={{ fontSize: 14, color: colors.sunYellow, marginRight: 5 }} name='star' type='FontAwesome' />
 );

@@ -37,6 +37,8 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     const path = props.location.pathname;
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
     const isOnTopicDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
+    const isOnTopicServicesScreen = pathMatchesRoute(path, Routes.Services);
+    const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
 
     if (isOnQuestionnaireScreen) {
         return <EmptyComponent />;
@@ -44,6 +46,24 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
     if (isOnTopicDetailScreen) {
         return <TopicDetailScreenHeader {...props} />;
+    }
+
+    if (isOnTopicServicesScreen) {
+        return (
+            <BackAndMenuButtonsHeader
+                {...props}
+                {...{ textColor: colors.white, backgroundColor: colors.teal }}
+            />
+        );
+    }
+
+    if (isOnHelpScreen) {
+        return (
+            <BackAndMenuButtonsHeader
+                {...props}
+                {...{ textColor: colors.teal, backgroundColor: colors.white }}
+            />
+        );
     }
 
     if (isOnParentScreen(path)) {
@@ -60,28 +80,43 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 const TopicDetailScreenHeader = (props: Props): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.TaskDetail);
     const taskId = params.taskId;
-    const textColor = colors.black;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} />;
+    const leftButton = <BackButtonComponent history={props.history} textColor={colors.black}/>;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={R.contains(taskId, props.savedTasksIdList)}
             addBookmark={(): AddToSavedListAction => props.addBookmark(taskId)}
             removeBookmark={(): RemoveFromSavedListAction => props.removeBookmark(taskId)}
-            textColor={textColor}
+            textColor={colors.teal}
         />,
         <MenuButtonComponent
             onPress={props.onHeaderMenuButtonPress}
             locale={props.currentLocale}
-            textColor={textColor}
+            textColor={colors.black}
         />,
     ];
     return renderHeader(backgroundColor, leftButton, rightButtons);
 };
 
+interface BackAndMenuButtonsHeaderProps extends Props {
+    readonly textColor: string;
+    readonly backgroundColor: string;
+}
+
+const BackAndMenuButtonsHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
+    const leftButton = <BackButtonComponent history={props.history} textColor={props.textColor}/>;
+    const rightButton =
+        <MenuButtonComponent
+            onPress={props.onHeaderMenuButtonPress}
+            locale={props.currentLocale}
+            textColor={props.textColor}
+        />;
+    return renderHeader(props.backgroundColor, leftButton, [rightButton]);
+};
+
 const ParentScreenHeader = (props: Props): JSX.Element => {
-    const textColor = colors.white;
-    const backgroundColor = colors.topaz;
+    const textColor = colors.teal;
+    const backgroundColor = colors.white;
     const leftButton = <HelpButtonComponent history={props.history} />;
     const rightButton =
         <MenuButtonComponent
@@ -95,7 +130,7 @@ const ParentScreenHeader = (props: Props): JSX.Element => {
 const ChildScreenHeader = (props: Props): JSX.Element => {
     const textColor = colors.black;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} />;
+    const leftButton = <BackButtonComponent history={props.history} textColor={textColor}/>;
     const rightButton =
         <MenuButtonComponent
             onPress={props.onHeaderMenuButtonPress}
@@ -119,7 +154,7 @@ const renderHeader = (backgroundColor: string, leftButton: JSX.Element, rightBut
     // Without this, the hardware back button on Android always minimizes the app.
     const reactRouterBackButtonHack: JSX.Element = <ReactRouterBackButtonHack />;
     return (
-        <Header style={{ marginTop, backgroundColor: backgroundColor }}>
+        <Header style={{ marginTop, backgroundColor: backgroundColor, borderBottomColor: 'transparent' }}>
             <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
                 {leftButton}
                 {reactRouterBackButtonHack}

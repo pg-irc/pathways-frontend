@@ -3,7 +3,7 @@ import { Trans } from '@lingui/react';
 import { History } from 'history';
 import { Text, View } from 'native-base';
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
-import { textStyles } from '../../application/styles';
+import { textStyles, values } from '../../application/styles';
 import { goToRouteWithParameter } from '../../application/routing';
 import { Task } from '../../selectors/tasks/task';
 import { Routes } from '../../application/routing';
@@ -44,7 +44,15 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             task={props.task}
             onServicesTextPress={goToRouteWithParameter(Routes.Services, props.task.id, props.history)}
         />
-        <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingTop: 10 }]}>
+        <Text
+            style={[
+                textStyles.headlineH5StyleBlackLeft,
+                {
+                    paddingHorizontal: values.backgroundTextPadding,
+                    paddingTop: 18,
+                },
+            ]}
+        >
             <Trans>RELATED TOPICS</Trans>
         </Text>
     </View>

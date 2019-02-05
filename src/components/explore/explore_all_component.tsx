@@ -16,12 +16,9 @@ type AllExploreProps = ExploreAllProps & RouterProps;
 
 export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
     (props: AllExploreProps): JSX.Element => (
-        <Content padder style={applicationStyles.body}>
-            <Text style={textStyles.headlineH1StyleBlackLeft}>
-                <Trans>Learn</Trans>
-            </Text>
-            <Text style={textStyles.headlineH4StyleBlackLeft}>
-                <Trans>Find out about my community and available services.</Trans>
+        <Content padder style={{ backgroundColor: colors.white }}>
+            <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding } ]}>
+                <Trans>Learn all about B.C.</Trans>
             </Text>
             <View style={styles.buttonsWrapper}>
                 {mapWithIndex((section: ExploreSection, index: number) => (
@@ -54,21 +51,21 @@ const getLearnButtonContent = (section: ExploreSection): JSX.Element => (
             ]}
         />
         <Text style={textStyles.headlineH2StyleBlackLeft}>{section.name}</Text>
-        <Text style={textStyles.paragraphStyle}>{section.description}</Text>
+        <Text style={[textStyles.paragraphStyle, { color: colors.greyishBrown }]}>{section.description}</Text>
     </View>
 );
 
 const styles = StyleSheet.create({
     button: {
         justifyContent: 'space-between',
-        width: '48%',
-        backgroundColor: colors.white,
+        width: '47%',
+        backgroundColor: colors.lightGrey,
         borderRadius: values.lessRoundedBorderRadius,
-        marginTop: 10,
+        marginTop: 15,
         padding: 15,
     },
     buttonContentIcon: {
-        color: colors.topaz,
+        color: colors.teal,
         fontSize: values.smallIconSize,
         alignSelf: 'flex-start',
         marginBottom: 10,

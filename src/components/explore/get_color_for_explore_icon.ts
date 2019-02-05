@@ -5,7 +5,7 @@ export const getColorForExploreIcon = (icon: string): string => {
         case 'street-view':
             return colors.turquoiseBlue;
         case 'building':
-            return colors.orange;
+            return colors.teal;
         case 'dollar':
             return colors.aquaMarine;
         case 'heartbeat':

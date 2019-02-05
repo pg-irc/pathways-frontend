@@ -1,5 +1,5 @@
 import React from 'react';
-import { I18nManager, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { I18nManager, Image, Dimensions } from 'react-native';
 import { Button, Content, View, Text, Icon } from 'native-base';
 import * as R from 'ramda';
 import { Question as SelectorQuestion } from '../../selectors/questionnaire/question';
@@ -12,6 +12,7 @@ import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/qu
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { CloseButtonComponent } from '../close_button/close_button_component';
 
 export interface QuestionnaireProps {
     readonly activeQuestion: SelectorQuestion;
@@ -38,12 +39,17 @@ const HeadingComponent = (props: Props): JSX.Element => {
     const closeButtonOnPress = goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
     return (
         <View>
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                <TouchableOpacity onPress={closeButtonOnPress}>
-                    <Icon name='close' style={{ color: colors.black, padding: 10 }} />
-                </TouchableOpacity>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingTop: 10 }}>
+                <CloseButtonComponent onPress={closeButtonOnPress} color={colors.black}/>
             </View>
-            <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: colors.white }}>
+            <View
+                style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: colors.white,
+                    paddingVertical: 15,
+                }}
+            >
                 <Image
                     source={arrivalAdvisorGlyphLogo}
                     resizeMode={'contain'}
@@ -63,7 +69,7 @@ const ProgressComponent = (props: Props): JSX.Element => {
             <View style={{ flex: 1, borderRadius: values.roundedBorderRadius, backgroundColor: colors.lightGrey }}>
                 <View style={{
                     borderRadius: values.roundedBorderRadius,
-                    backgroundColor: colors.topaz,
+                    backgroundColor: colors.teal,
                     width: `${barWidth}%`,
                     height: 8,
                 }}
@@ -93,9 +99,9 @@ const renderNextButton = (props: Props): JSX.Element => {
     const icon = I18nManager.isRTL ? 'arrow-back' : 'arrow-forward';
     const text = activeQuestionHasBeenAnswered(props) ? <Trans>Next</Trans> : <Trans>Skip</Trans>;
     return (
-        <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
-            <Text style={textStyles.whiteTopazButton}>{text}</Text>
-            <Icon name={icon} style={{ color: colors.topaz }} />
+        <Button style={applicationStyles.whiteTealButton} onPress={onPress} iconRight>
+            <Text style={textStyles.whiteTealButton}>{text}</Text>
+            <Icon name={icon} style={{ color: colors.teal }} />
         </Button>
     );
 };
@@ -106,19 +112,19 @@ const renderPreviousButton = (props: Props): JSX.Element => {
     const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
     const text = <Trans>Back</Trans>;
     return (
-        <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconLeft>
-            <Icon name={icon} style={{ color: colors.topaz }} />
-            <Text style={textStyles.whiteTopazButton}>{text}</Text>
+        <Button style={applicationStyles.whiteTealButton} onPress={onPress} iconLeft>
+            <Icon name={icon} style={{ color: colors.teal }} />
+            <Text style={textStyles.whiteTealButton}>{text}</Text>
         </Button>
     );
 };
 
 const renderGotoRecommendedButton = (props: Props): JSX.Element => {
     const onPress = goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
-    const text = <Trans>Go to Recommended Topics</Trans>;
+    const text = <Trans>Done</Trans>;
     return (
-        <Button style={applicationStyles.whiteTopazButton} onPress={onPress} iconRight>
-            <Text style={textStyles.whiteTopazButton}>{text}</Text>
+        <Button style={applicationStyles.whiteTealButton} onPress={onPress} iconRight>
+            <Text style={textStyles.whiteTealButton}>{text}</Text>
         </Button>
     );
 };

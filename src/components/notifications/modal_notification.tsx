@@ -1,10 +1,11 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
-import { StyleSheet, Dimensions, LayoutChangeEvent, TouchableOpacity } from 'react-native';
-import { View, Icon } from 'native-base';
+import { StyleSheet, Dimensions, LayoutChangeEvent } from 'react-native';
+import { View } from 'native-base';
 import { Notification } from '../../stores/notifications';
 import { colors, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { CloseButtonComponent } from '../close_button/close_button_component';
 
 export interface ModalNotificationProps {
     readonly notification: Notification;
@@ -92,10 +93,10 @@ export class ModalNotificationComponent extends React.Component<Props, State> {
         const onPress = (): void => this.props.removeNotification();
         return (
             <View>
-                <TouchableOpacity onPress={onPress} style={styles.modalHeader}>
-                    <Icon name='close' />
-                </TouchableOpacity>
-                <View>{content}</View>
+                <View style={styles.modalHeader}>
+                    <CloseButtonComponent onPress={onPress} color={colors.black} />
+                </View>
+               <View>{content}</View>
             </View>
         );
     }

@@ -55,8 +55,10 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
                 marginBottom: 10,
             }}
         >
-            <Text style={textStyles.headlineH1StyleBlackLeft}><Trans>{'Help & Support'}</Trans></Text>
-            <Text style={textStyles.headlineH4StyleBlackLeft}>
+            <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
+                <Trans>{'Help & Support'}</Trans>
+            </Text>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
                 <Trans>If you are having difficulty with settlement in Canada, we suggest getting in touch with a settlement worker.</Trans>
             </Text>
             <View style={{
@@ -66,7 +68,7 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
                 <ContactSettlementWorkerButton />
             </View>
         </View>
-        <Text style={[textStyles.headlineH5StyleBlackLeft, { margin: 10 }]}>
+        <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
             <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
         </Text>
         {mapWithIndex(renderContactComponent, fixture)}
@@ -80,7 +82,7 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
 );
 
 const ContactSettlementWorkerButton: React.StatelessComponent = (): JSX.Element => (
-    <Button style={[applicationStyles.orangeButton, { alignSelf: 'center' }]}>
+    <Button style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow, { alignSelf: 'center' }]}>
         <Text style={textStyles.button}>
             <Trans>Find a settlement agency near me</Trans>
         </Text>
@@ -101,11 +103,20 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
             ],
         );
     };
-    return <Button full onPress={alertToClearAllUserData} style={[applicationStyles.orangeButton, { alignSelf: 'center' }]}>
+    return (
+    <Button
+        full
+        onPress={alertToClearAllUserData}
+            style={[
+                applicationStyles.tealButton,
+                applicationStyles.boxShadowBelow,
+                { alignSelf: 'center' },
+            ]}>
         <Text style={textStyles.button}>
             <Trans>Delete all user data</Trans>
         </Text>
-    </Button>;
+    </Button>
+    );
 };
 
 const renderContactComponent = (contact: HelpContact, index: number): JSX.Element => (
@@ -122,7 +133,7 @@ const renderContactComponent = (contact: HelpContact, index: number): JSX.Elemen
         }}
     >
         <View style={{ flexDirection: 'column' }}>
-            <Text style={textStyles.headlineH4StyleBlackLeft}>{contact.title}</Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}>{contact.title}</Text>
             {contact.subTitle ? <Text note>{contact.subTitle}</Text> : <EmptyComponent />}
         </View>
         <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize }} />

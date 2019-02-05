@@ -38,12 +38,11 @@ export class ServiceListComponent extends React.Component<Props> {
 
     render(): JSX.Element {
         return (
-            <View padder style={{ flex: 1, backgroundColor: colors.lightGrey }}>
+            <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
                 <View style={{
-                    backgroundColor: colors.orange,
+                    backgroundColor: colors.teal,
                     marginHorizontal: -10,
                     marginTop: -10,
-                    marginBottom: 10,
                     padding: 20,
                 }}
                 >
@@ -83,8 +82,6 @@ interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
 
 function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
     return (
-        <View style={{ marginBottom: 10 }}>
-            <ServiceListItemComponent service={item} />
-        </View>
+        <ServiceListItemComponent service={item} />
     );
 }

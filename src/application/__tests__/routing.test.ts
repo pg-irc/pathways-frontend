@@ -5,12 +5,8 @@ import { aString } from './helpers/random_test_values';
 
 describe('the routePathDefinition function', () => {
 
-    it('For Routes.Home returns path: "/"', () => {
+    it('For Routes.Welcome returns path: "/"', () => {
         expect(routePathDefinition(Routes.Welcome)).toEqual('/');
-    });
-
-    it('For Routes.Welcome returns path: "/welcome"', () => {
-        expect(routePathDefinition(Routes.Home)).toEqual('/home');
     });
 
     it('For Routes.Questionnaire returns path: "/questionnaire"', () => {
@@ -66,12 +62,8 @@ describe('the routePathWithParameter function', () => {
 
 describe('the isOnParentScreen function', () => {
 
-    it('returns true on path: "/home"', () => {
-        expect(isOnParentScreen('/home')).toStrictEqual(true);
-    });
-
     it('returns true on path: "/help"', () => {
-        expect(isOnParentScreen('/home')).toStrictEqual(true);
+        expect(isOnParentScreen('/help')).toStrictEqual(true);
     });
 
     it('returns true on path: "/learn"', () => {

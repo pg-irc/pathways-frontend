@@ -25,7 +25,7 @@ type Props = HeaderMenuProps & HeaderMenuActions;
 export const HeaderMenuComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
         <Content>
-            <Header style={{ backgroundColor: colors.topaz }} />
+            <Header style={{ backgroundColor: colors.lightTeal }} />
             <LocaleSection {...props} />
             <AboutSection {...props} />
         </Content>
@@ -91,7 +91,7 @@ const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Elemen
             <Icon
                 name='check'
                 type='FontAwesome'
-                style={{ fontSize: values.mediumIconSize, marginRight: 10, color: colors.topaz }}
+                style={{ fontSize: values.mediumIconSize, marginRight: 10, color: colors.teal }}
             />
             <Text style={[ textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{section.label}</Text>
         </View>
@@ -126,7 +126,7 @@ const AboutListItems = (props: Props): JSX.Element => {
             <AboutItem
                 icon={<AboutIcon name='comments' fontSize={22} marginRight={4}/>}
                 text={<Trans>Send Feedback</Trans>}
-                onPress={buildAboutItemOnPress(props, Routes.Home)}
+                onPress={buildAboutItemOnPress(props, Routes.RecommendedTopics)}
             />
         </View>
     );

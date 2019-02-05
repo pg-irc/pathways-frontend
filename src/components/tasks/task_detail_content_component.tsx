@@ -67,6 +67,7 @@ const TaxonomyComponent = (props: Props): JSX.Element => (
             color: colors.greyishBrown,
             marginTop: 20,
             marginBottom: 5,
+            paddingHorizontal: values.backgroundTextPadding,
         },
     ]}
     >
@@ -79,7 +80,7 @@ const RecommendedComponent = (props: Props): JSX.Element => {
         return <EmptyComponent />;
     }
     return (
-        <View style={{ flexDirection: 'row', marginVertical: 5 }}>
+        <View style={{ flexDirection: 'row', marginVertical: 5, paddingHorizontal: values.backgroundTextPadding }}>
             <Icon
                 type='FontAwesome'
                 name={'star'}
@@ -97,11 +98,11 @@ const RecommendedComponent = (props: Props): JSX.Element => {
 };
 
 const Divider = (): JSX.Element => (
-    <View style={{ height: 1, flex: 1, marginVertical: 20, backgroundColor: colors.lightGrey }}></View>
+    <View style={{ height: 2, flex: 1, marginVertical: 20, backgroundColor: colors.lightGrey }}></View>
 );
 
 const TitleComponent = (props: Props): JSX.Element => (
-    <Text style={textStyles.taskTitle}>
+    <Text style={[textStyles.taskTitle, { paddingHorizontal: values.backgroundTextPadding }]}>
         {props.task.title}
     </Text>
 );
@@ -116,7 +117,7 @@ const ServicesButton = (props: Props): JSX.Element => (
     <Button
         onPress={props.onServicesTextPress}
         style={[
-            applicationStyles.orangeButton,
+            applicationStyles.tealButton,
             applicationStyles.boxShadowBelow,
             {
                 paddingHorizontal: 15,

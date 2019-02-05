@@ -2,15 +2,16 @@ import { StyleSheet, Platform } from 'react-native';
 
 export const colors = {
     pale: '#ffebcb',
-    orange: '#f5a623',
-    topaz: '#11cac0',
+    lightTeal: '#4fb3bf',
+    teal: '#00838f',
     blueGreen: '#0d9790',
     blueGreenDark: '#136f63',
-    lightGrey: '#eaeae3',
+    // Rename to surface
+    lightGrey: '#eee5d9',
     darkerGrey: '#d0d0c5',
     greyishBrown: '#595959',
     black: '#313131',
-    sunYellow: '#ffca28',
+    sunYellow: '#f2b134',
     white: '#ffffff',
     darkGreyWithAlpha: 'rgba(0, 0, 0, 0.4)',
     turquoiseBlue: '#07a0c3',
@@ -29,12 +30,21 @@ export const values = {
     smallerIconSize: 18,
     roundedBorderRadius: 25,
     lessRoundedBorderRadius: 10,
-    contentPadding: 10,
+    backgroundTextPadding: 5,
 };
 
 export const fontFamily = Platform.OS === 'ios' ? 'Avenir' : 'AvenirBook';
 
 export const textStyles = StyleSheet.create({
+    headline6: {
+        fontFamily,
+        fontSize: 16,
+        fontWeight: '900',
+        fontStyle: 'normal',
+        lineHeight: 21,
+        letterSpacing: 0,
+        color: colors.teal,
+    },
     headlineH1StyleBlackLeft: {
         fontFamily,
         fontSize: 24,
@@ -117,7 +127,7 @@ export const textStyles = StyleSheet.create({
         lineHeight: 21,
         letterSpacing: 0,
         textAlign: 'left',
-        color: colors.greyishBrown,
+        color: colors.black,
     },
     paragraphBoldWhiteLeft: {
         fontFamily,
@@ -140,6 +150,16 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
     },
     paragraphStyle: {
+        fontFamily,
+        fontSize: 16,
+        fontWeight: 'normal',
+        fontStyle: 'normal',
+        lineHeight: 21,
+        letterSpacing: 0,
+        textAlign: 'left',
+        color: colors.black,
+    },
+    paragraphStyleBrown: {
         fontFamily,
         fontSize: 16,
         fontWeight: 'normal',
@@ -215,23 +235,23 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         color: colors.white,
     },
-    whiteButton: {
+    tealButton: {
         fontFamily,
         fontSize: 18,
         fontWeight: '900',
         fontStyle: 'normal',
         letterSpacing: 0.2,
         textAlign: 'center',
-        color: colors.black,
+        color: colors.white,
     },
-    whiteTopazButton: {
+    whiteTealButton: {
         fontFamily,
         fontSize: 18,
         fontWeight: '900',
         fontStyle: 'normal',
         letterSpacing: 0.2,
         textAlign: 'center',
-        color: colors.topaz,
+        color: colors.teal,
     },
     taskTitle: {
         fontFamily,
@@ -255,18 +275,14 @@ export const applicationStyles = StyleSheet.create({
         marginLeft: -10,
         marginRight: -10,
     },
-    orangeButton: {
-        backgroundColor: colors.orange,
+    tealButton: {
+        backgroundColor: colors.teal,
         borderRadius: values.roundedBorderRadius,
     },
-    whiteButton: {
+    whiteTealButton: {
         backgroundColor: colors.white,
         borderRadius: values.roundedBorderRadius,
-    },
-    whiteTopazButton: {
-        backgroundColor: colors.white,
-        borderRadius: values.roundedBorderRadius,
-        borderColor: colors.topaz,
+        borderColor: colors.teal,
         borderWidth: 2,
     },
     boxShadowBelow: {

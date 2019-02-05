@@ -4,7 +4,7 @@ import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { History, Location } from 'history';
 import { Routes, goToRouteWithoutParameter, pathMatchesRoute } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors, values, applicationStyles } from '../../application/styles';
+import { colors, values } from '../../application/styles';
 
 export interface FooterProps {
     readonly history: History;
@@ -15,6 +15,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     const path = props.location.pathname;
     const isOnWelcomeScreen = pathMatchesRoute(path, Routes.Welcome);
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
+    const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
 
     if (isOnWelcomeScreen) {
         return <EmptyComponent />;
@@ -24,14 +25,18 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
         return <EmptyComponent />;
     }
 
+    if (isOnHelpScreen) {
+        return <EmptyComponent />;
+    }
+
     const bookmarkedIsActive = pathMatchesRoute(path, Routes.BookmarkedTopics);
     const recommendedTopicsActive = pathMatchesRoute(path, Routes.RecommendedTopics);
     const learnIsActive = pathMatchesRoute(path, Routes.Learn);
 
     return (
-        <Footer style={applicationStyles.boxShadowAbove}>
-            <FooterTab style={[{ backgroundColor: colors.white }]}>
-                {navigationButton(props.history, Routes.RecommendedTopics, 'star', recommendedTopicsActive)}
+        <Footer>
+            <FooterTab style={[{ backgroundColor: colors.lightTeal }]}>
+                {navigationButton(props.history, Routes.RecommendedTopics, 'home', recommendedTopicsActive)}
                 {navigationButton(props.history, Routes.Learn, 'book', learnIsActive)}
                 {navigationButton(props.history, Routes.BookmarkedTopics, 'bookmark', bookmarkedIsActive)}
             </FooterTab>
@@ -56,5 +61,5 @@ const navigationButton = (history: History, route: Routes, icon: string, isActiv
 );
 
 const textStyle = (isActive: boolean): StyleProp<TextStyle> => (
-    isActive ? { color: colors.topaz } : { color: colors.darkerGrey }
+    isActive ? { color: colors.white } : { color: colors.teal }
 );

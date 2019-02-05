@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { textStyles, colors, values } from '../../application/styles';
+import { textStyles, colors } from '../../application/styles';
 import { Service, PhoneNumber, Address } from '../../stores/services';
 import { View } from 'native-base';
 import { Text } from 'react-native';
@@ -17,7 +17,7 @@ interface ServiceListItemProps {
 
 export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
     (props: ServiceListItemProps): JSX.Element => (
-        <View style={{ backgroundColor: colors.white, padding: 10, borderRadius: values.lessRoundedBorderRadius }}>
+        <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
             {renderName(props.service.name)}
             {renderDescription(props.service.description)}
             {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
@@ -63,7 +63,7 @@ const renderMapButtonIfLocation = (service: Service): JSX.Element => {
         return <EmptyComponent />;
     }
     return (
-        <View style={{ marginTop: 5 }}>
+        <View style={{ marginTop: 10 }}>
             <MapsApplicationPopupComponent
                 latitude={service.latitude}
                 longitude={service.longitude}

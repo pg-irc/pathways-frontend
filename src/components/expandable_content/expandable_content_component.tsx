@@ -126,14 +126,22 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                     transparent
                     iconRight
                 >
-                    <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.topaz, paddingLeft: 6 }]}>
+                    <Text style={[
+                        textStyles.paragraphBoldBlackLeft,
+                        {
+                            color: colors.teal,
+                            paddingLeft: 6,
+                            paddingRight: 8,
+                        },
+                    ]}
+                    >
                         {text}
                     </Text>
                     <Icon
                         name={this.isCollapsed() ? 'arrow-down' : 'arrow-up'}
                         style={{
                             fontSize: values.smallIconSize,
-                            color: colors.topaz,
+                            color: colors.teal,
                         }}
                     />
                 </Button>
