@@ -8,6 +8,7 @@ import { Content, View, Icon, Header } from 'native-base';
 import { colors, values, textStyles } from '../../application/styles';
 import { goToRouteWithoutParameter } from '../../application/routing';
 import { Routes } from '../../application/routing';
+import { openURL } from '../link/link';
 
 export interface HeaderMenuProps {
     readonly currentLocale: LocaleInfo;
@@ -111,22 +112,17 @@ const AboutListItems = (props: Props): JSX.Element => {
             <AboutItem
                 icon={<AboutIcon name='mobile' fontSize={35} marginRight={10}/>}
                 text={<Trans>About Arrival Advisor</Trans>}
-                onPress={buildAboutItemOnPress(props, Routes.About)}
-            />
-            <AboutItem
-                icon={<AboutIcon name='lock' fontSize={30} marginRight={5}/>}
-                text={<Trans>Privacy</Trans>}
-                onPress={buildAboutItemOnPress(props, Routes.About)}
+                onPress={buildOnPressForRoute(props, Routes.About)}
             />
             <AboutItem
                 icon={<AboutIcon name='file' fontSize={20} marginRight={7}/>}
                 text={<Trans>Disclaimer</Trans>}
-                onPress={buildAboutItemOnPress(props, Routes.About)}
+                onPress={buildOnPressForRoute(props, Routes.Disclaimer)}
             />
             <AboutItem
-                icon={<AboutIcon name='comments' fontSize={22} marginRight={4}/>}
-                text={<Trans>Send Feedback</Trans>}
-                onPress={buildAboutItemOnPress(props, Routes.RecommendedTopics)}
+                icon={<AboutIcon name='lock' fontSize={30} marginRight={5}/>}
+                text={<Trans>Privacy policy</Trans>}
+                onPress={buildOnPressForURL('https://peacegeeks.org/privacy')}
             />
         </View>
     );
@@ -171,11 +167,15 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
         </TouchableOpacity>
     );
 
-const buildAboutItemOnPress = (props: Props, route: Routes): () => void => (
+const buildOnPressForRoute = (props: Props, route: Routes): () => void => (
     (): void => {
         props.closeMenu(); // tslint:disable-line:no-expression-statement
         goToRouteWithoutParameter(route, props.history)(); // tslint:disable-line:no-expression-statement
     }
+);
+
+const buildOnPressForURL = (url: string): () => void => (
+    (): void => openURL(url)
 );
 
 const styles = StyleSheet.create({

@@ -1,63 +1,71 @@
-// tslint:disable:max-line-length
 import React from 'react';
-import { Text, Content, View } from 'native-base';
+import { Text, Content } from 'native-base';
+import { ParagraphComponent } from '../paragraph/paragraph_component';
 import { Trans } from '@lingui/react';
-import { applicationStyles, textStyles, colors } from '../../application/styles';
-import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
-import { mapWithIndex } from '../../application/map_with_index';
-import { SelectableText } from '../selectable_text';
+import { values, textStyles, colors } from '../../application/styles';
+import { Link } from '../link/link';
 import { VERSION } from 'react-native-dotenv';
-
-const aboutTitle = <Trans>About</Trans>;
-const aboutText = <Trans>Arrival Advisor is an app that fast-tracks newcomers in Canada to successful resettlement, by connecting newcomers with a personalized directory of settlement services tailored to their needs, circumstances and stages of settlement. Designed alongside immigrants, refugees, community service providers and coordinating organizations, the app helps newcomers more effectively navigate their resettlement experience in Canada, bridging current gaps in timely and actionable information.</Trans>;
-
-const privacyTitle = <Trans>Privacy</Trans>;
-const privacyPolicyTextP1 = <Trans>The Arrival Advisor app does not collect any information about its users. In the future, users will have the ability to create accounts so they can access their Arrival Advisor data from multiple devices, such as both a phone and a computer, in which case their information will be stored on our servers.</Trans>;
-const privacyPolicyTextP2 = <Trans>Any change in the app that affect users’ privacy will be clearly indicated to the user through the app, and users will be able to opt out of collection of all personally identifiable information.</Trans>;
-const privacyPolicyTextP3 = <Trans>Our goal is that the app will always be useful without saving any personal information.</Trans>;
-const privacyPolicyTextP4 = <Trans>We do (soon) collect information about the performance of the Arrival Advisor app, including records of the app crahsing. We may also collect information about how often diferent app content is accessed by all our users.</Trans>;
-const privacyPolicyParagraphs: ReadonlyArray<JSX.Element> = [privacyPolicyTextP1, privacyPolicyTextP2, privacyPolicyTextP3, privacyPolicyTextP4];
-
-const disclaimerTitle = <Trans>Disclaimer</Trans>;
-const disclaimerTextP1 = <Trans>The Arrival Advisor app contains information from the BC government’s Newcomer’s Guide available at www.welcomebc.ca and the BC211 database of service providers (www.bc211.ca). The app provides links to services and information, however we do not guarantee the accuracy of the information or the quality of the services provided. The inclusion of any services, links to website does not imply an endorsement or recommendation of those services.</Trans>;
-const disclaimerTextP2 = <Trans>Users of the Arrival Advisor app do so at their own risk. PeaceGeeks will not be liable for any damages incurred as a result of or related to the use of the app.</Trans>;
-const disclaimerParagraphs: ReadonlyArray<JSX.Element> = [disclaimerTextP1, disclaimerTextP2];
-
-const versionTitle = <Trans>Version</Trans>;
 
 export interface AboutComponentProps {
     readonly serverVersion: string;
 }
 
 export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (props: AboutComponentProps): JSX.Element => {
-    const versionText = <Text><Trans>This is Arrival Advisor version</Trans> {VERSION}, <Trans>server version</Trans> {props.serverVersion}</Text>;
-    const aboutSection = <SelectableText style={textStyles.paragraphStyle}>{aboutText}</SelectableText>;
-    const privacySection = <ParagraphContent paragraphs={privacyPolicyParagraphs} />;
-    const disclaimerSection = <ParagraphContent paragraphs={disclaimerParagraphs} />;
-    const versionSection = <SelectableText style={textStyles.paragraphStyle}>{versionText}</SelectableText>;
+    const welcomeBcUrl = 'https://www.welcomebc.ca/Start-Your-Life-in-B-C/Newcomers-Guides/Newcomers-Guide-Provincial';
+    const welcomeBCLink = <Link href={welcomeBcUrl} text={'Newcomer\'s Guide to British Columbia'} style={textStyles.paragraphURL} />;
+    const githubUrl = 'https://github.com/pg-irc/pathways-frontend';
+    const githubLink = <Link href={githubUrl} text={'view it on GitHub'} style={textStyles.paragraphURL} />;
+    const contactUrl = 'https://peacegeeks.org/contact';
+    const contactLink = <Link href={contactUrl} text={'contact us'} style={textStyles.paragraphURL} />;
     return (
-        <Content padder style={applicationStyles.body}>
-            <Section title={aboutTitle} content={aboutSection} />
-            <Section title={privacyTitle} content={privacySection} />
-            <Section title={disclaimerTitle} content={disclaimerSection} />
-            <Section title={versionTitle} content={versionSection} />
+        <Content padder style={{ backgroundColor: colors.white }}>
+            <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
+                <Trans>About Arrival Advisor</Trans>
+            </Text>
+            <ParagraphComponent>
+                <Trans>
+                    Arrival Advisor is a free, multilingual, mobile app that helps immigrants and refugees in British Columbia,
+                    Canada find information and services to navigate their settlement journey. The app is currently available
+                    in English, French (Canadian), and Arabic. It will soon be available in Chinese Simplified, Chinese
+                    Traditional, Korean, Punjabi, and Tagalog.
+            </Trans>
+            </ParagraphComponent>
+            <ParagraphComponent>
+                <Trans>
+                    From finding a job to learning English, accessing health care, and more, Arrival Advisor has everything
+                    you need to get started in your new community. Explore newcomer topics and services without ever needing
+                    to create an account. Access important information no matter where you are: the newcomer topics provided
+                    by Arrival Advisor are saved to your phone so you can view them, even without internet. You can fill out
+                    some questions to get personalized recommendations of topics and services to settle in British Columbia.
+                    Arrival Advisor is anonymous and your answers are only used to operate the app's recommendations.
+                    We never save or share your personal data with funders or any third parties.
+            </Trans>
+            </ParagraphComponent>
+            <ParagraphComponent>
+                <Trans>
+                    The Arrival Advisor app is designed in partnership with settlement providers in Metro Vancouver, and
+                    immigrants and refugees like you. We gratefully acknowledge the financial support of the Province of
+                    British Columbia through the Ministry of Jobs, Trade and Technology, as well as Google.org Canada.
+                    Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an
+                    open-source project. You can {githubLink} and {contactLink} to learn how you can support this project.
+            </Trans>
+            </ParagraphComponent>
+            <ParagraphComponent>
+                <Trans>
+                    Information in this app is provided by the {welcomeBCLink} Copyright 2018 Province of British Columbia.
+                    All rights reserved.
+                </Trans>
+            </ParagraphComponent>
+            <ParagraphComponent>
+                <Trans>
+                    This is Arrival Advisor version: {VERSION}
+                </Trans>
+            </ParagraphComponent>
+            <ParagraphComponent>
+                <Trans>
+                    Server version: {props.serverVersion}
+                </Trans>
+            </ParagraphComponent>
         </Content>
     );
 };
-
-const Section = (props: { readonly title: JSX.Element, readonly content: JSX.Element }): JSX.Element => (
-    <View style={{ backgroundColor: colors.white, marginHorizontal: -10, marginTop: -10, marginBottom: 30, padding: 10 }}>
-        <Text style={textStyles.headlineH1StyleBlackLeft}>{props.title}</Text>
-        <ExpandableContentComponent content={props.content} />
-    </View>
-);
-
-const ParagraphContent = (props: { readonly paragraphs: ReadonlyArray<JSX.Element> }): JSX.Element => (
-    <View>
-        {
-            mapWithIndex((paragraph: JSX.Element, index: number) =>
-                <SelectableText key={index} style={[textStyles.paragraphStyle, { marginBottom: 20 }]}>{paragraph}</SelectableText>,
-                props.paragraphs)
-        }
-    </View>
-);

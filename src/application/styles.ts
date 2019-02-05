@@ -169,16 +169,6 @@ export const textStyles = StyleSheet.create({
         textAlign: 'left',
         color: colors.greyishBrown,
     },
-    paragraphSmallStyleCenter: {
-        fontFamily,
-        fontSize: 12,
-        fontWeight: 'normal',
-        fontStyle: 'normal',
-        lineHeight: 21,
-        letterSpacing: 0,
-        textAlign: 'center',
-        color: colors.greyishBrown,
-    },
     paragraphSmallStyleLeft: {
         fontFamily,
         fontSize: 12,
@@ -191,7 +181,8 @@ export const textStyles = StyleSheet.create({
     },
     paragraphURL: {
         fontFamily,
-        fontSize: 16,
+        fontSize: 15,
+        fontWeight: '900',
         lineHeight: 21,
         letterSpacing: 0,
         textDecorationLine: 'underline',

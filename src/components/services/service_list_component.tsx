@@ -56,7 +56,7 @@ export class ServiceListComponent extends React.Component<Props> {
                         }}
                     />
                     <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.white }]}>
-                        <Trans>FIND A SERVICE</Trans>
+                        <Trans>FIND A SERVICE NEAR YOU</Trans>
                     </Text>
                     <Text style={textStyles.headlineH2StyleWhiteLeft}>
                         {this.props.task.title}

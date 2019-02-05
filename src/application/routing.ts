@@ -22,6 +22,7 @@ export enum Routes {
     About,
     RecommendedTopics,
     BookmarkedTopics,
+    Disclaimer,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -47,6 +48,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/recommended-topics';
         case Routes.BookmarkedTopics:
             return '/bookmarked-topics';
+        case Routes.Disclaimer:
+            return '/disclaimer';
     }
 };
 
@@ -94,21 +97,23 @@ export const isOnParentScreen = (path: string): boolean => {
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
     const isOnLearnScreen = pathMatchesRoute(path, Routes.Learn);
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
-    const isOnAboutScreen = pathMatchesRoute(path, Routes.About);
     const isOnRecommendedTopicsScreen = pathMatchesRoute(path, Routes.RecommendedTopics);
     const isOnBookmarkedTopicsScreen = pathMatchesRoute(path, Routes.BookmarkedTopics);
 
     return isOnHelpScreen || isOnLearnScreen ||
-           isOnQuestionnaireScreen || isOnAboutScreen ||
-           isOnRecommendedTopicsScreen || isOnBookmarkedTopicsScreen;
+           isOnQuestionnaireScreen || isOnRecommendedTopicsScreen ||
+           isOnBookmarkedTopicsScreen;
 };
 
 export const isOnChildScreen = (path: string): boolean => {
     const isOnTaskDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
     const isOnServicesScreen = pathMatchesRoute(path, Routes.Services);
     const isOnLearnDetailScreen = pathMatchesRoute(path, Routes.LearnDetail);
+    const isOnAboutScreen = pathMatchesRoute(path, Routes.About);
+    const isOnDisclaimerScreen = pathMatchesRoute(path, Routes.Disclaimer);
 
-    return isOnTaskDetailScreen || isOnServicesScreen || isOnLearnDetailScreen;
+    return isOnTaskDetailScreen || isOnServicesScreen || isOnLearnDetailScreen ||
+           isOnAboutScreen || isOnDisclaimerScreen;
 };
 
 // By (arguably poor) design the router's match.params is empty when trying to access it outside a "Route" component.

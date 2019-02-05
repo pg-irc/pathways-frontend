@@ -91,7 +91,7 @@ const RecommendedComponent = (props: Props): JSX.Element => {
                 }}
             />
             <Text style={[textStyles.paragraphStyle, { color: colors.greyishBrown, fontSize: 14, fontStyle: 'italic' }]}>
-                <Trans>Recommended for me</Trans>
+                <Trans>Recommended for you</Trans>
             </Text>
         </View>
     );
@@ -127,7 +127,7 @@ const ServicesButton = (props: Props): JSX.Element => (
         ]}
     >
         <Text style={textStyles.button}>
-            <Trans>Find related service near me</Trans>
+            <Trans>Find related services near me</Trans>
         </Text>
     </Button>
 );

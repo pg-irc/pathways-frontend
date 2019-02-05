@@ -34,7 +34,7 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
                         fontSize: values.smallIconSize,
                     }}
                 />
-                <Text style={textStyles.button}><Trans>Open in map</Trans></Text>
+                <Text style={textStyles.button}><Trans>Open in maps</Trans></Text>
             </Button>
         </View>
     );

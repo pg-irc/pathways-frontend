@@ -131,7 +131,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 }
 
 export const NoTasksAddedComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No topics bookmarked yet</Trans>} />
+    <EmptyListComponent message={<Trans>No topics to show</Trans>} />
 );
 
 export const NoTasksRecommendedComponent = (): JSX.Element => (

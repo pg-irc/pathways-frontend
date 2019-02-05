@@ -26,9 +26,12 @@ export const BookmarkedTopicsComponent: React.StatelessComponent<Props> = (props
 };
 
 const TaskListHeaderComponent = (): JSX.Element => (
-    <View padder style={{ backgroundColor: colors.white }}>
-        <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
-            <Trans>Bookmarked Topics</Trans>
+    <View padder style={{ backgroundColor: colors.white, paddingHorizontal: values.backgroundTextPadding }}>
+        <Text style={textStyles.headlineH1StyleBlackLeft} >
+            <Trans>My bookmarks</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyle}>
+            <Trans>Save important topics to build your personal plan for settlement.</Trans>
         </Text>
     </View>
 );

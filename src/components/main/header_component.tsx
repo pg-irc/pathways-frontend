@@ -50,7 +50,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
     if (isOnTopicServicesScreen) {
         return (
-            <BackAndMenuButtonsHeader
+            <TwoButtonHeader
                 {...props}
                 {...{ textColor: colors.white, backgroundColor: colors.teal }}
             />
@@ -59,7 +59,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
     if (isOnHelpScreen) {
         return (
-            <BackAndMenuButtonsHeader
+            <TwoButtonHeader
                 {...props}
                 {...{ textColor: colors.teal, backgroundColor: colors.white }}
             />
@@ -103,7 +103,7 @@ interface BackAndMenuButtonsHeaderProps extends Props {
     readonly backgroundColor: string;
 }
 
-const BackAndMenuButtonsHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
+const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
     const leftButton = <BackButtonComponent history={props.history} textColor={props.textColor}/>;
     const rightButton =
         <MenuButtonComponent
