@@ -106,7 +106,7 @@ const IsRecommendedComponent = (): JSX.Element => (
 
 const OkButtonComponent = (props: { readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction }):
     JSX.Element => (
-    <View style={styles.buttonWrapper}>
+        <View style={styles.buttonWrapper}>
             <Button
                 style={
                     [
@@ -117,12 +117,12 @@ const OkButtonComponent = (props: { readonly dismissPopup: () => DismissNewlyAdd
                 }
                 onPress={props.dismissPopup}
             >
-            <Text style={textStyles.button}>
-                <Trans>Ok</Trans>
-            </Text>
-        </Button>
-    </View >
-);
+                <Text style={textStyles.button}>
+                    <Trans>OK</Trans>
+                </Text>
+            </Button>
+        </View >
+    );
 
 const styles = StyleSheet.create({
     fadeout: {
