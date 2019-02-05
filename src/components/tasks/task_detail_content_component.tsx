@@ -116,6 +116,7 @@ const TaskDescription = (props: Props): JSX.Element => {
 const ServicesButton = (props: Props): JSX.Element => (
     <Button
         onPress={props.onServicesTextPress}
+        iconLeft
         style={[
             applicationStyles.tealButton,
             applicationStyles.boxShadowBelow,
@@ -123,9 +124,18 @@ const ServicesButton = (props: Props): JSX.Element => (
                 paddingHorizontal: 15,
                 alignSelf: 'center',
                 marginBottom: 15,
+                justifyContent: 'center',
             },
         ]}
     >
+        <Icon
+            type={'FontAwesome'}
+            name={'map-marker'}
+            style={{
+                color: colors.white,
+                fontSize: values.smallIconSize,
+            }}
+        />
         <Text style={textStyles.button}>
             <Trans>Find related services near me</Trans>
         </Text>
