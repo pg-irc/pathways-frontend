@@ -8,7 +8,7 @@ extract_all() {
     yarn build
 
     echo "Generating PO files ..."
-    yarn extract-strings
+    yarn extract-strings-clean
 
     for locale in "${locales[@]}"
     do
@@ -95,7 +95,7 @@ clean() {
 
 
 help() {
-    echo "$0 --extract-all        Extract all strings from source code to PO and CSV files"
+    echo "$0 --extract-all        Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
     echo "$0 --build-all          Import all strings from CSV files and build the app"
     echo "$0 --extract-changed    Extract just the changed strings from source code to PO and CSV files"
     echo "$0 --build-changed      Import just the changed strings from CSV files and build the app"
