@@ -91,7 +91,7 @@ const RecommendedComponent = (props: Props): JSX.Element => {
                 }}
             />
             <Text style={[textStyles.paragraphStyle, { color: colors.greyishBrown, fontSize: 14, fontStyle: 'italic' }]}>
-                <Trans>Recommended for you</Trans>
+                <Trans>Recommended for me</Trans>
             </Text>
         </View>
     );
