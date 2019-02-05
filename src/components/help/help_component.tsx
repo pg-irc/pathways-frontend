@@ -10,6 +10,8 @@ import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 import { openURL } from '../link/link';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 
+const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
+
 interface HelpContact {
     readonly title: JSX.Element;
     readonly url: string;
@@ -91,7 +93,7 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
 
 const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <Button
-        onPress={goToRouteWithParameter(Routes.Services, 'contact-workers-at-your-local-settlement-agency', props.history)}
+        onPress={goToRouteWithParameter(Routes.Services, settlementWorkerTaskID, props.history)}
         style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow, { alignSelf: 'center' }]}>
         <Text style={textStyles.button}>
             <Trans>Find a settlement agency near me</Trans>
