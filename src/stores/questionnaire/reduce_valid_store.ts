@@ -5,6 +5,7 @@ import { RouteChangedAction } from '../router_actions';
 import { routePathWithoutParameter, Routes } from '../../application/routing';
 import * as constants from '../../application/constants';
 import * as R from 'ramda';
+import { buildDefaultStore } from '.';
 
 export const reduceValidStore = (store: ValidQuestionnaireStore, action?: QuestionnaireAction): QuestionnaireStore => {
     if (!action) {
@@ -36,11 +37,7 @@ export const reduceValidStore = (store: ValidQuestionnaireStore, action?: Questi
             return new LoadingQuestionnaireStore(store);
 
         case constants.CLEAR_ALL_USER_DATA:
-            return new ValidQuestionnaireStore({
-                ...store,
-                oldAnswers: {},
-                answers: R.map((answer: Answer): Answer => ({ ...answer, isChosen: false }), store.answers),
-            });
+            return new ValidQuestionnaireStore(buildDefaultStore());
 
         default:
             return store;

@@ -354,24 +354,9 @@ describe('questionnaire reducer', () => {
     });
 
     describe('clear all user data action', () => {
-        it('sets question state to not selected', () => {
-            chosenAnswer = new AnswerBuilder().withIsChosen(true);
-            question = new QuestionBuilder().withAnswers([chosenAnswer]);
-            theStore = new ValidStoreBuilder().withQuestions([question]).build();
-
+        it('sets store back to default', () => {
             newStore = store.reducer(theStore, clearAllUserData());
-
-            expect(toValidOrThrow(newStore).answers[chosenAnswer.id].isChosen).toBe(false);
-        });
-
-        it('clears old questions', () => {
-            theStore = new ValidStoreBuilder().
-                withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
-                build();
-
-            newStore = store.reducer(theStore, clearAllUserData());
-
-            expect(toValidOrThrow(newStore).oldAnswers).toEqual({});
+            expect(newStore).toEqual(store.buildDefaultStore());
         });
     });
 });

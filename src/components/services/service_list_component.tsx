@@ -26,10 +26,13 @@ export interface TaskServiceUpdater {
 
 type Props = ServiceListProps & ServiceListActions & TaskServiceUpdater;
 
+interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
+
 export class ServiceListComponent extends React.Component<Props> {
 
     constructor(props: Props) {
         super(props);
+        this.renderServiceListItem = this.renderServiceListItem.bind(this);
     }
 
     componentDidMount(): void {
@@ -38,50 +41,52 @@ export class ServiceListComponent extends React.Component<Props> {
 
     render(): JSX.Element {
         return (
-            <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
-                <View style={{
-                    backgroundColor: colors.teal,
-                    marginHorizontal: -10,
-                    marginTop: -10,
-                    padding: 20,
-                }}
-                >
-                    <Icon
-                        type={'FontAwesome'}
-                        name={'map-marker'}
-                        style={{
-                            color: colors.white,
-                            padding: 5,
-                            fontSize: values.smallIconSize,
-                        }}
-                    />
-                    <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.white }]}>
-                        <Trans>FIND A SERVICE NEAR YOU</Trans>
-                    </Text>
-                    <Text style={textStyles.headlineH2StyleWhiteLeft}>
-                        {this.props.task.title}
-                    </Text>
-                </View>
-                <FlatList
-                    ListEmptyComponent={ServiceListEmpty}
-                    refreshing={this.props.taskServices.loading}
-                    onRefresh={this.props.requestUpdateTaskServices}
-                    data={this.props.taskServices.services}
-                    keyExtractor={(service: Service): string => service.id}
-                    renderItem={renderServiceListItem} />
-            </View>
+            <FlatList
+                style={{ backgroundColor: colors.lightGrey }}
+                refreshing={this.props.taskServices.loading}
+                onRefresh={this.props.requestUpdateTaskServices}
+                data={this.props.taskServices.services}
+                keyExtractor={(service: Service): string => service.id}
+                renderItem={this.renderServiceListItem}
+                ListEmptyComponent={ServiceListEmpty}
+                ListHeaderComponent={<ServiceListHeaderComponent {...this.props} />}
+            />
+        );
+    }
+
+    renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
+        return (
+            <ServiceListItemComponent service={item} />
         );
     }
 }
 
+const ServiceListHeaderComponent = (props: Props): JSX.Element => (
+    <View style={{
+        backgroundColor: colors.teal,
+        marginHorizontal: -10,
+        marginTop: -10,
+        padding: 20,
+    }}
+    >
+        <Icon
+            type={'FontAwesome'}
+            name={'map-marker'}
+            style={{
+                color: colors.white,
+                padding: 5,
+                fontSize: values.smallIconSize,
+            }}
+        />
+        <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.white }]}>
+            <Trans>FIND A SERVICE NEAR YOU</Trans>
+        </Text>
+        <Text style={textStyles.headlineH2StyleWhiteLeft}>
+            {props.task.title}
+        </Text>
+    </View>
+);
+
 function ServiceListEmpty(): JSX.Element {
     return <EmptyListComponent message={<Trans>No related services found</Trans>} />;
-}
-
-interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
-
-function renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
-    return (
-        <ServiceListItemComponent service={item} />
-    );
 }
