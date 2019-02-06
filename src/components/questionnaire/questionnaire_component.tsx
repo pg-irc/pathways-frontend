@@ -1,4 +1,6 @@
+// tslint:disable:no-class no-this no-expression-statement
 import React from 'react';
+import { History } from 'history';
 import { I18nManager, Image, Dimensions } from 'react-native';
 import { Button, Content, View, Text, Icon } from 'native-base';
 import * as R from 'ramda';
@@ -13,6 +15,8 @@ import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { CloseButtonComponent } from '../close_button/close_button_component';
+import { NewTopicsModalConnectedComponent } from './new_topics_modal_connected_component';
+import { DismissNewlyAddedTasksPopupAction } from '../../stores/questionnaire/actions';
 
 export interface QuestionnaireProps {
     readonly activeQuestion: SelectorQuestion;
@@ -21,26 +25,70 @@ export interface QuestionnaireProps {
 export interface QuestionnaireActions {
     readonly chooseAnswer: (answerId: Id) => ChooseAnswerAction;
     readonly setActiveQuestion: (activeQuestion: Id) => SetActiveQuestionAction;
+    readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction;
 }
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
-export const QuestionnaireComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <Content padder>
-        <HeadingComponent {...props} />
-        <ProgressComponent {...props} />
-        <QuestionComponent question={props.activeQuestion} chooseAnswer={props.chooseAnswer} />
-        <ButtonsComponent {...props} />
-    </Content>
-);
+interface State {
+    readonly newTopicsModalIsVisible: boolean;
+}
 
-const HeadingComponent = (props: Props): JSX.Element => {
+export class QuestionnaireComponent extends React.Component<Props, State> {
+
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            newTopicsModalIsVisible: false,
+        };
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.getOnModalButtonPress = this.getOnModalButtonPress.bind(this);
+    }
+
+    render(): JSX.Element {
+        return (
+            <Content padder>
+                <HeadingComponent
+                    history={this.props.history}
+                    onCloseButtonPress={this.openModal}
+                />
+                <ProgressComponent {...this.props} />
+                <QuestionComponent
+                    question={this.props.activeQuestion}
+                    chooseAnswer={this.props.chooseAnswer}
+                />
+                <ButtonsComponent {...this.props} />
+                <NewTopicsModalConnectedComponent
+                    history={this.props.history}
+                    isVisible={this.state.newTopicsModalIsVisible}
+                    onModalButtonPress={this.getOnModalButtonPress}
+                />
+            </Content>
+        );
+    }
+
+    private openModal(): void {
+        this.setState({ newTopicsModalIsVisible: true });
+    }
+
+    private closeModal(): void {
+        this.setState({ newTopicsModalIsVisible: false });
+    }
+
+    private getOnModalButtonPress(): void {
+        this.props.dismissPopup();
+        this.closeModal();
+        goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history)();
+    }
+}
+
+const HeadingComponent = (props: { readonly history: History, readonly onCloseButtonPress: () => void }): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 6;
-    const closeButtonOnPress = goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
     return (
         <View>
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingTop: 10 }}>
-                <CloseButtonComponent onPress={closeButtonOnPress} color={colors.black}/>
+                <CloseButtonComponent onPress={props.onCloseButtonPress} color={colors.black}/>
             </View>
             <View
                 style={{
