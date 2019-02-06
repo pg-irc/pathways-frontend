@@ -1,6 +1,6 @@
 {
   "name": "pathways-frontend",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "devDependencies": {
     "@lingui/babel-preset-react": "2.7.0",
