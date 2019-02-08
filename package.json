@@ -6,8 +6,6 @@
     "@lingui/babel-preset-react": "2.7.0",
     "@lingui/cli": "2.7.0",
     "@lingui/react": "2.7.0",
-    "@types/enzyme": "^3.1.13",
-    "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/expo": "^32.0.0",
     "@types/history": "^4.7.0",
     "@types/jest": "^23.3.2",
@@ -22,14 +20,10 @@
     "ajv": "^6.5.3",
     "babel-plugin-macros": "^2.4.2",
     "babel-preset-expo": "^5.0.0",
-    "enzyme": "^3.6.0",
-    "enzyme-adapter-react-16": "^1.5.0",
-    "enzyme-to-json": "^3.3.3",
-    "jest": "^23.6.0",
-    "jest-expo": "32.0.0",
+    "jest-expo": "^32.0.0",
     "react-dom": "^16.5.0",
     "react-test-renderer": "^16.3.1",
-    "ts-jest": "^23.1.4",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.11.0",
     "tslint-immutable": "^4.7.0",
     "typescript": "^3.0.3"
@@ -39,9 +33,9 @@
     "postinstall": "bin/postinstall.sh",
     "lint": "tslint src/**/*.ts src/**/*.tsx",
     "build": "bin/buildFixtures.sh && tsc",
-    "test": "yarn run jest --maxWorkers=4",
-    "cbt": "yarn run clean && yarn run build && yarn run test",
-    "bt": "yarn run build && yarn run test",
+    "test": "node ./node_modules/jest/bin/jest.js",
+    "cbt": "yarn clean && yarn build && yarn test",
+    "bt": "yarn build && yarn test",
     "clean": "rimraf 'lib/**/*.js' 'lib/**/*.js.map' 'locale/_build/**/*.json'",
     "extract-strings": "lingui extract",
     "extract-strings-clean": "lingui extract --clean",
@@ -54,24 +48,13 @@
   },
   "jest": {
     "preset": "jest-expo",
-    "setupTestFrameworkScriptFile": "<rootDir>/lib/application/__tests__/helpers/setup_tests.js",
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "transformIgnorePatterns": [
-      "node_modules/(?!(react-native|expo|@expo/.*|native-base)/)"
-    ],
-    "testRegex": "/__tests__/[-a-zA-Z0-9_]+\\.(test|spec)\\.tsx?$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/lib/",
+      "/helpers/"
     ]
   },
   "dependencies": {
