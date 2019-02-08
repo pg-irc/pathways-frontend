@@ -3,13 +3,11 @@ import { UserDataPersistence } from '../user_data';
 import { ClearErrorAction } from '../clear_error';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { RouteChangedAction } from '../router_actions';
-import { SaveTheseTasksToMyPlanAction } from '../tasks/actions';
 
 export type ChooseAnswerAction = Readonly<ReturnType<typeof chooseAnswer>>;
 export type SetActiveQuestionAction = Readonly<ReturnType<typeof setActiveQuestion>>;
-export type DismissNewlyAddedTasksPopupAction = Readonly<ReturnType<typeof dismissNewlyAddedTasksPopup>>;
 export type ClearAllUserDataAction = Readonly<ReturnType<typeof clearAllUserData>>;
+export type UpdateOldAnswersFromStoreAnswersAction = Readonly<ReturnType<typeof updateOldAnswersFromStoreAnswers>>;
 
 // tslint:disable-next-line:typedef
 export const chooseAnswer = (answerId: Id) => (
@@ -22,13 +20,13 @@ export const setActiveQuestion = (activeQuestion: Id) => (
 );
 
 // tslint:disable-next-line:typedef
-export const dismissNewlyAddedTasksPopup = () => (
-    helpers.makeAction(constants.DISMISS_NEWLY_ADDED_POPUP)
+export const clearAllUserData = () => (
+    helpers.makeAction(constants.CLEAR_ALL_USER_DATA)
 );
 
 // tslint:disable-next-line:typedef
-export const clearAllUserData = () => (
-    helpers.makeAction(constants.CLEAR_ALL_USER_DATA)
+export const updateOldAnswersFromStoreAnswers = () => (
+    helpers.makeAction(constants.UPDATE_OLD_ANSWERS_FROM_STORE_ANSWERS)
 );
 
 export type QuestionnaireAction =
@@ -41,7 +39,4 @@ export type QuestionnaireAction =
     UserDataPersistence.LoadFailureAction |
     ClearErrorAction |
     ClearAllUserDataAction |
-    RouteChangedAction |
-    DismissNewlyAddedTasksPopupAction |
-    SaveTheseTasksToMyPlanAction
-    ;
+    UpdateOldAnswersFromStoreAnswersAction;

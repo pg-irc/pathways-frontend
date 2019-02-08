@@ -16,7 +16,7 @@ import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { NewTopicsModalConnectedComponent } from './new_topics_modal_connected_component';
-import { DismissNewlyAddedTasksPopupAction } from '../../stores/questionnaire/actions';
+import { UpdateOldAnswersFromStoreAnswersAction } from '../../stores/questionnaire/actions';
 
 export interface QuestionnaireProps {
     readonly activeQuestion: SelectorQuestion;
@@ -25,7 +25,7 @@ export interface QuestionnaireProps {
 export interface QuestionnaireActions {
     readonly chooseAnswer: (answerId: Id) => ChooseAnswerAction;
     readonly setActiveQuestion: (activeQuestion: Id) => SetActiveQuestionAction;
-    readonly dismissPopup: () => DismissNewlyAddedTasksPopupAction;
+    readonly updateOldAnswersFromStoreAnswers: () => UpdateOldAnswersFromStoreAnswersAction;
 }
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
@@ -76,9 +76,9 @@ export class QuestionnaireComponent extends React.Component<Props, State> {
         this.setState({ newTopicsModalIsVisible: false });
     }
 
-    private getOnModalButtonPress(): void {
-        this.props.dismissPopup();
-        this.closeModal();
+    private async getOnModalButtonPress(): Promise<void> {
+        await this.props.updateOldAnswersFromStoreAnswers();
+        await this.closeModal();
         goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history)();
     }
 }

@@ -11,8 +11,6 @@ export type RemoveFromSavedListAction = Readonly<ReturnType<typeof removeFromSav
 
 export type ToggleCompletedAction = Readonly<ReturnType<typeof toggleCompleted>>;
 
-export type SaveTheseTasksToMyPlanAction = Readonly<ReturnType<typeof saveTheseTasksToMyPlan>>;
-
 export type TaskAction = AddToSavedListAction |
     RemoveFromSavedListAction |
     ToggleCompletedAction |
@@ -20,8 +18,7 @@ export type TaskAction = AddToSavedListAction |
     UserDataPersistence.LoadSuccessAction |
     UserDataPersistence.LoadFailureAction |
     ClearErrorAction |
-    ClearAllUserDataAction |
-    SaveTheseTasksToMyPlanAction;
+    ClearAllUserDataAction;
 
 // tslint:disable-next-line:typedef
 export const addToSavedList = (taskId: Id) => {
@@ -36,9 +33,4 @@ export const removeFromSavedList = (taskId: Id) => (
 // tslint:disable-next-line:typedef
 export const toggleCompleted = (taskId: Id) => (
     helpers.makeAction(constants.TOGGLE_IS_TASK_COMPLETED, { taskId })
-);
-
-// tslint:disable-next-line:typedef
-export const saveTheseTasksToMyPlan = (taskIds: ReadonlyArray<Id>) => (
-    helpers.makeAction(constants.SAVE_THESE_TASKS_TO_MY_PLAN, { taskIds })
 );

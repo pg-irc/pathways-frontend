@@ -1,8 +1,6 @@
-import { ValidQuestionnaireStore, Answer, QuestionnaireRouteState } from '../../fixtures/types/questionnaire';
+import { ValidQuestionnaireStore, Answer } from '../../fixtures/types/questionnaire';
 import { QuestionnaireAction } from './actions';
 import { QuestionnaireStore, LoadingQuestionnaireStore } from './stores';
-import { RouteChangedAction } from '../router_actions';
-import { routePathWithoutParameter, Routes } from '../../application/routing';
 import * as constants from '../../application/constants';
 import * as R from 'ramda';
 import { buildDefaultStore } from '.';
@@ -13,15 +11,11 @@ export const reduceValidStore = (store: ValidQuestionnaireStore, action?: Questi
     }
 
     switch (action.type) {
-        case constants.ROUTE_CHANGED:
-            return setRouteState(store, action);
 
-        case constants.DISMISS_NEWLY_ADDED_POPUP:
-        case constants.SAVE_THESE_TASKS_TO_MY_PLAN:
+        case constants.UPDATE_OLD_ANSWERS_FROM_STORE_ANSWERS:
             return new ValidQuestionnaireStore({
                 ...store,
-                oldAnswers: {},
-                questionnaireRouteState: QuestionnaireRouteState.NotInQuestionnairePage,
+                oldAnswers: store.answers,
             });
 
         case constants.SET_ACTIVE_QUESTION:
@@ -42,28 +36,6 @@ export const reduceValidStore = (store: ValidQuestionnaireStore, action?: Questi
         default:
             return store;
     }
-};
-
-const setRouteState = (store: ValidQuestionnaireStore, action: RouteChangedAction): QuestionnaireStore => {
-
-    const isNewRouteToQuestionnaire = action.payload.location.pathname === routePathWithoutParameter(Routes.Questionnaire);
-
-    if (store.questionnaireRouteState === QuestionnaireRouteState.NotInQuestionnairePage && isNewRouteToQuestionnaire) {
-        return new ValidQuestionnaireStore({
-            ...store,
-            oldAnswers: store.answers,
-            questionnaireRouteState: QuestionnaireRouteState.InQuestionnairePage,
-        });
-    }
-
-    if (store.questionnaireRouteState === QuestionnaireRouteState.InQuestionnairePage && !isNewRouteToQuestionnaire) {
-        return new ValidQuestionnaireStore({
-            ...store,
-            questionnaireRouteState: QuestionnaireRouteState.ShowQuestionnairePopup,
-        });
-    }
-
-    return store;
 };
 
 const toggleIsChosenFlagForAnswer = (store: ValidQuestionnaireStore, answerId: string): ValidQuestionnaireStore => (
