@@ -1,6 +1,6 @@
 {
   "expo": {
-    "sdkVersion": "28.0.0",
+    "sdkVersion": "32.0.0",
     "name": "Arrival Advisor",
     "icon": "./assets/images/aa_icon.png",
     "version": "1.0.4",

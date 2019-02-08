@@ -1,7 +1,6 @@
 // tslint:disable:no-expression-statement
 import { buildParameters } from '../api_client';
 import { aString, aNumber } from '../../application/__tests__/helpers/random_test_values';
-import { Location } from 'expo';
 
 describe('build parameters', () => {
     it('with just a task id', () => {
@@ -24,7 +23,7 @@ describe('build parameters', () => {
     });
 });
 
-const makeLocation = (x: number, y: number): Location.LocationData => ({
+const makeLocation = (x: number, y: number): LocationData => ({
     coords: {
         longitude: x,
         latitude: y,

@@ -54,7 +54,7 @@ export function WelcomeComponent(props: I18nProps & WelcomeProps & WelcomeAction
                     <Item style={{ marginLeft: 0, borderColor: 'transparent', justifyContent: 'center' }}>
                         <Picker
                             mode='dropdown'
-                            iosIcon={<Icon name='ios-arrow-down-outline' />}
+                            iosIcon={<Icon name='ios-arrow-down' />}
                             selectedValue={props.currentLocale.code}
                             onValueChange={props.setLocale}
                             style={{ backgroundColor: colors.white }}

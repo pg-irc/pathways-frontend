@@ -33,7 +33,7 @@ export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): Up
     }
 }
 
-const getLocationIfPermittedAsync = async (): Promise<Location.LocationData | undefined> => {
+const getLocationIfPermittedAsync = async (): Promise<LocationData | undefined> => {
     try {
         const permissions = await Permissions.askAsync(Permissions.LOCATION);
         if (permissions.status !== 'granted') {

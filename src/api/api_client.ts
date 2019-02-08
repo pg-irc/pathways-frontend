@@ -1,7 +1,6 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { stringify } from 'query-string';
 import { Id } from '../stores/tasks';
-import { Location } from 'expo';
 
 export interface APIResponse {
     readonly hasError: boolean;
@@ -10,7 +9,7 @@ export interface APIResponse {
     readonly results?: any; // tslint:disable-line:no-any
 }
 
-export type MaybeLocation = Location.LocationData | undefined;
+export type MaybeLocation = LocationData | undefined;
 
 export class APIClient {
 
