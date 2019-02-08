@@ -4,7 +4,7 @@ import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
 import { UserDataPersistence } from '../user_data';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
-import { addToSavedList, removeFromSavedList, toggleCompleted, saveTheseTasksToMyPlan } from '../tasks/actions';
+import { addToSavedList, removeFromSavedList, toggleCompleted } from '../tasks/actions';
 import * as stores from '../tasks';
 import { clearAllUserData } from '../questionnaire/actions';
 
@@ -27,18 +27,6 @@ describe('tasks reducer', () => {
             const finalStore = stores.reducer(validStore, addToSavedList(task.id));
 
             expect(stores.toValidOrThrow(finalStore).savedTasksList).toHaveLength(2);
-        });
-
-        test('can add multiple tasks to saved task list', () => {
-            const firstId: stores.Id = aString();
-            const secondId: stores.Id = aString();
-            const twoTasks: ReadonlyArray<TaskBuilder> = [new TaskBuilder().withId(firstId), new TaskBuilder().withId(secondId)];
-            const storeWithTwoTasks = buildNormalizedStore(twoTasks, []);
-
-            const finalStore = stores.reducer(storeWithTwoTasks, saveTheseTasksToMyPlan([firstId, secondId]));
-
-            expect(stores.toValidOrThrow(finalStore).savedTasksList).toContain(firstId);
-            expect(stores.toValidOrThrow(finalStore).savedTasksList).toContain(secondId);
         });
 
         test('can remove task from saved tasks list', () => {

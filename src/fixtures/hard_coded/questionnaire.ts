@@ -1,8 +1,7 @@
-import { ValidQuestionnaireStore, QuestionnaireRouteState } from '../types/questionnaire';
+import { ValidQuestionnaireStore } from '../types/questionnaire';
 
 export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
     return new ValidQuestionnaireStore({
-        questionnaireRouteState: QuestionnaireRouteState.NotInQuestionnairePage,
         oldAnswers: {},
         activeQuestion: 'questionDurationInCanada',
         questions: {

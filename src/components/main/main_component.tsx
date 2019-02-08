@@ -9,7 +9,6 @@ import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connect
 import { RouterProps } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
-import { NewlyRecommendedTasksConnectedComponent } from '../newly_recommended_tasks/newly_recommended_tasks_connected_component';
 
 interface HeaderMenuState {
     readonly isHeaderMenuShowing: boolean;
@@ -58,7 +57,6 @@ export class MainComponent extends React.Component<Props> {
                     <MainPageSwitcherComponent />
                     <FooterComponent {...this.props} />
                     <NotificationsConnectedComponent {...this.props} />
-                    <NewlyRecommendedTasksConnectedComponent />
                 </Container>
             </Drawer>
         );

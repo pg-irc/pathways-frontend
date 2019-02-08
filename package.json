@@ -94,6 +94,7 @@
     "react-native-dotenv": "^0.2.0",
     "react-native-map-link": "^2.1.4",
     "react-native-markdown-renderer": "^3.2.8",
+    "react-native-modal": "^7.0.2",
     "react-redux": "^5.0.7",
     "react-router-native": "^4.3.0",
     "redux": "^4.0.0",

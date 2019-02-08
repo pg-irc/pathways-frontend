@@ -7,10 +7,7 @@ import { aString } from '../../application/__tests__/helpers/random_test_values'
 import { toValidOrThrow, LoadingQuestionnaireStore, InvalidQuestionnaireStore } from '../questionnaire/stores';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { UserDataPersistence } from '../user_data';
-import { routeChanged, RouteChangedAction } from '../router_actions';
-import { QuestionnaireRouteState } from '../../fixtures/types/questionnaire';
-import { dismissNewlyAddedTasksPopup, clearAllUserData } from '../questionnaire/actions';
-import { saveTheseTasksToMyPlan } from '../tasks/actions';
+import { clearAllUserData, updateOldAnswersFromStoreAnswers } from '../questionnaire/actions';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -168,105 +165,6 @@ describe('questionnaire reducer', () => {
         });
     });
 
-    const makeRouteAction = (pathname: string): RouteChangedAction => (
-        routeChanged({ pathname, search: '', state: '', hash: '' })
-    );
-
-    describe('when routing', () => {
-        const enterQuestionnaire = makeRouteAction('/questionnaire');
-        const leaveQuestionnaire = makeRouteAction('/home');
-
-        describe('from non-questionnaire route', () => {
-            const storeOutsideQuestionnaire = new ValidStoreBuilder().
-                withState(QuestionnaireRouteState.NotInQuestionnairePage).
-                withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
-                build();
-
-            describe('to non-questionnaire route', () => {
-                it('sets the state to NotInQuestionnaire', () => {
-                    newStore = store.reducer(storeOutsideQuestionnaire, leaveQuestionnaire);
-                    expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.NotInQuestionnairePage);
-                });
-                it('leaves old answers unchanged', () => {
-                    newStore = store.reducer(storeOutsideQuestionnaire, leaveQuestionnaire);
-                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeOutsideQuestionnaire.oldAnswers);
-                });
-            });
-
-            describe('to questionnaire route', () => {
-                it('sets the state to InQuestionnaire', () => {
-                    newStore = store.reducer(storeOutsideQuestionnaire, enterQuestionnaire);
-                    expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.InQuestionnairePage);
-                });
-                it('stores the current state of answers for later', () => {
-                    newStore = store.reducer(storeOutsideQuestionnaire, enterQuestionnaire);
-                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeOutsideQuestionnaire.answers);
-                });
-            });
-        });
-
-        describe('from questionnaire route', () => {
-            const storeInQuestionnaire = new ValidStoreBuilder().
-                withState(QuestionnaireRouteState.InQuestionnairePage).
-                withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
-                build();
-
-            describe('to non-questionnaire route', () => {
-                it('sets the state to PopupNeeded', () => {
-                    newStore = store.reducer(storeInQuestionnaire, leaveQuestionnaire);
-                    expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.ShowQuestionnairePopup);
-                });
-                it('leaves old answers unchanged', () => {
-                    newStore = store.reducer(storeInQuestionnaire, leaveQuestionnaire);
-                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeInQuestionnaire.oldAnswers);
-                });
-            });
-
-            describe('to questionnaire route', () => {
-                it('sets the state to InQuestionnaire', () => {
-                    newStore = store.reducer(storeInQuestionnaire, enterQuestionnaire);
-                    expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.InQuestionnairePage);
-                });
-                it('leaves old answers unchanged', () => {
-                    newStore = store.reducer(storeInQuestionnaire, enterQuestionnaire);
-                    expect(toValidOrThrow(newStore).oldAnswers).toBe(storeInQuestionnaire.oldAnswers);
-                });
-            });
-        });
-
-        describe('when showing the new tasks popup', () => {
-            it('should set the state to NotInQuestionnairePage when dismissing popup', () => {
-                const storeWithPopupNeeded = new ValidStoreBuilder().withState(QuestionnaireRouteState.ShowQuestionnairePopup).build();
-                newStore = store.reducer(storeWithPopupNeeded, dismissNewlyAddedTasksPopup());
-                expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.NotInQuestionnairePage);
-            });
-
-            it('should clear old answers when dismissing popup', () => {
-                const storeWithPopupNeeded = new ValidStoreBuilder().
-                    withState(QuestionnaireRouteState.ShowQuestionnairePopup).
-                    withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
-                    build();
-                newStore = store.reducer(storeWithPopupNeeded, dismissNewlyAddedTasksPopup());
-                expect(toValidOrThrow(newStore).oldAnswers).toEqual({});
-            });
-
-            it('should set the state to NotInQuestionnaire when saving all tasks', () => {
-                const storeWithPopupNeeded = new ValidStoreBuilder().withState(QuestionnaireRouteState.ShowQuestionnairePopup).build();
-                newStore = store.reducer(storeWithPopupNeeded, saveTheseTasksToMyPlan([]));
-                expect(toValidOrThrow(newStore).questionnaireRouteState).toBe(QuestionnaireRouteState.NotInQuestionnairePage);
-            });
-
-            it('should clear old answers when saving all tasks', () => {
-                const storeWithPopupNeeded = new ValidStoreBuilder().
-                    withState(QuestionnaireRouteState.ShowQuestionnairePopup).
-                    withOldAnswers({ 'id': new AnswerBuilder().withId('id').build() }).
-                    build();
-                newStore = store.reducer(storeWithPopupNeeded, saveTheseTasksToMyPlan([]));
-                expect(toValidOrThrow(newStore).oldAnswers).toEqual({});
-            });
-        });
-    });
-
     describe('when loading chosen answers from persistent storage', () => {
 
         let loadingStore: store.QuestionnaireStore = undefined;
@@ -357,6 +255,13 @@ describe('questionnaire reducer', () => {
         it('sets store back to default', () => {
             newStore = store.reducer(theStore, clearAllUserData());
             expect(newStore).toEqual(store.buildDefaultStore());
+        });
+    });
+
+    describe('update old answers from store answers action', () => {
+        it('sets old answers equal to store answers', () => {
+            newStore = store.reducer(theStore, updateOldAnswersFromStoreAnswers());
+            expect(toValidOrThrow(newStore).oldAnswers).toEqual(toValidOrThrow(theStore).answers);
         });
     });
 });
