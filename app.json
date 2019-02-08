@@ -14,7 +14,9 @@
       }
     },
     "android": {
-      "package": "org.peacegeeks.ArrivalAdvisor"
+      "package": "org.peacegeeks.ArrivalAdvisor",
+      "versionCode": 2,
+      "permissions": []
     },
     "assetBundlePatterns": [
       "assets/images/*",
