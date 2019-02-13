@@ -23,6 +23,8 @@ export interface Service {
     readonly description: string;
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
     readonly addresses: ReadonlyArray<Address>;
+    readonly website: string;
+    readonly email: string;
 }
 
 export interface TaskServices {
@@ -67,6 +69,8 @@ export interface ValidatedServiceJSON {
     readonly id: string;
     readonly name: string;
     readonly description: string;
+    readonly organization_url: string;
+    readonly organization_email: string;
 }
 
 export interface ValidatedLocationJSON {
