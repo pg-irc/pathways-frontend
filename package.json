@@ -53,7 +53,7 @@
     },
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/src/",
+      "/lib/",
       "/helpers/"
     ]
   },
