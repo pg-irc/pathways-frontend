@@ -43,7 +43,6 @@
     "build-strings": "lingui compile --strict",
     "clean-strings": "rimraf 'locale/_build/**/*.json'",
     "start": "expo start",
-    "eject": "expo eject",
     "android": "expo start --android",
     "ios": "expo start --ios"
   },
@@ -54,7 +53,7 @@
     },
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/lib/",
+      "/src/",
       "/helpers/"
     ]
   },

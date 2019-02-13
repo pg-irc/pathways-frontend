@@ -39,7 +39,8 @@ const getLocationIfPermittedAsync = async (): Promise<LocationData | undefined> 
         if (permissions.status !== 'granted') {
             return undefined;
         }
-        return await Location.getCurrentPositionAsync({ enableHighAccuracy: false });
+        const lowAccuracy = 1;
+        return await Location.getCurrentPositionAsync({ accuracy: lowAccuracy });
     } catch (error) {
         return undefined;
     }

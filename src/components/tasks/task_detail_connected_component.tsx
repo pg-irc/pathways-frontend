@@ -9,7 +9,6 @@ import {
 } from '../../stores/tasks';
 import { connect } from 'react-redux';
 import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
-import { Task } from '../../selectors/tasks/task';
 import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
 import { Routes, getParametersFromPath } from '../../application/routing';
 
@@ -20,7 +19,7 @@ type OwnProps = {
 
 const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.TaskDetail);
-    const task: Task = selectCurrentTask(store, matchParams.taskId);
+    const task = selectCurrentTask(store, matchParams.taskId);
     const savedTasksIdList = pickSavedTaskIds(store);
     const taskIsBookmarked = R.contains(task.id, savedTasksIdList);
     return {
