@@ -33,10 +33,10 @@ Run tests, optionally watch source files for changes and run the tests automatic
 yarn test [--watch]
 ```
 
-Build and start Expo to run the app in a simulator or on an actual Android or Apple device:
+Build and start Expo to run the app in a simulator or on an actual Android or Apple device, optionally clear cache
 
 ```
-yarn start [--reset-cache]
+yarn start [-c]
 ```
 
 To clear out cached values from `.env`, use `--reset-cache`.
