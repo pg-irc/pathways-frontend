@@ -31,7 +31,7 @@ export interface NewTopicsModalActions {
 type Props = NewTopicsModalProps & NewTopicsModalActions;
 
 const logoSize = Dimensions.get('screen').width / 7;
-const maxListHeight = Dimensions.get('screen').height / 1.85;
+const maxListHeight = Dimensions.get('window').height / 1.85;
 
 export const NewTopicsModalComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <Modal isVisible={props.isVisible}>

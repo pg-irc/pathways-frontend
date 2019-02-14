@@ -53,12 +53,18 @@ export class QuestionnaireComponent extends React.Component<Props, State> {
                     history={this.props.history}
                     onCloseButtonPress={this.openModal}
                 />
-                <ProgressComponent {...this.props} />
+                <ProgressComponent
+                    activeQuestion={this.props.activeQuestion}
+                />
                 <QuestionComponent
                     question={this.props.activeQuestion}
                     chooseAnswer={this.props.chooseAnswer}
                 />
-                <ButtonsComponent {...this.props} />
+                <ButtonsComponent
+                    activeQuestion={this.props.activeQuestion}
+                    setActiveQuestion={this.props.setActiveQuestion}
+                    onDoneButtonPress={this.openModal}
+                />
                 <NewTopicsModalConnectedComponent
                     history={this.props.history}
                     isVisible={this.state.newTopicsModalIsVisible}
@@ -76,9 +82,9 @@ export class QuestionnaireComponent extends React.Component<Props, State> {
         this.setState({ newTopicsModalIsVisible: false });
     }
 
-    private async getOnModalButtonPress(): Promise<void> {
-        await this.props.updateOldAnswersFromStoreAnswers();
-        await this.closeModal();
+    private getOnModalButtonPress(): void {
+        this.props.updateOldAnswersFromStoreAnswers();
+        this.closeModal();
         goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history)();
     }
 }
@@ -108,7 +114,7 @@ const HeadingComponent = (props: { readonly history: History, readonly onCloseBu
     );
 };
 
-const ProgressComponent = (props: Props): JSX.Element => {
+const ProgressComponent = (props: { readonly activeQuestion: SelectorQuestion }): JSX.Element => {
     const activeQuestionPosition = props.activeQuestion.positionInQuestionnaire;
     const lengthOfQuestionnaire = props.activeQuestion.lengthOfQuestionnaire;
     const barWidth = lengthOfQuestionnaire > 0 ? Math.round(activeQuestionPosition / lengthOfQuestionnaire * 100) : 100;
@@ -130,18 +136,24 @@ const ProgressComponent = (props: Props): JSX.Element => {
     );
 };
 
-const ButtonsComponent = (props: Props): JSX.Element => {
+type ButtonsProps = {
+    readonly activeQuestion: SelectorQuestion,
+    readonly setActiveQuestion: (activeQuestion: Id) => SetActiveQuestionAction;
+    readonly onDoneButtonPress: () => void,
+};
+
+const ButtonsComponent = (props: ButtonsProps): JSX.Element => {
     const hasNextQuestion = props.activeQuestion.nextQuestionId !== undefined;
     const hasPreviousQuestion = props.activeQuestion.previousQuestionId !== undefined;
     return (
         <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10 }}>
             {hasPreviousQuestion ? renderPreviousButton(props) : <EmptyComponent />}
-            {hasNextQuestion ? renderNextButton(props) : renderGotoRecommendedButton(props)}
+            {hasNextQuestion ? renderNextButton(props) : renderDoneButton(props)}
         </View>
     );
 };
 
-const renderNextButton = (props: Props): JSX.Element => {
+const renderNextButton = (props: ButtonsProps): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     const onPress = (): void => { props.setActiveQuestion(props.activeQuestion.nextQuestionId); };
     const icon = I18nManager.isRTL ? 'arrow-back' : 'arrow-forward';
@@ -154,7 +166,7 @@ const renderNextButton = (props: Props): JSX.Element => {
     );
 };
 
-const renderPreviousButton = (props: Props): JSX.Element => {
+const renderPreviousButton = (props: ButtonsProps): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     const onPress = (): void => { props.setActiveQuestion(props.activeQuestion.previousQuestionId); };
     const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
@@ -167,16 +179,15 @@ const renderPreviousButton = (props: Props): JSX.Element => {
     );
 };
 
-const renderGotoRecommendedButton = (props: Props): JSX.Element => {
-    const onPress = goToRouteWithoutParameter(Routes.RecommendedTopics, props.history);
+const renderDoneButton = (props: ButtonsProps): JSX.Element => {
     const text = <Trans>Done</Trans>;
     return (
-        <Button style={applicationStyles.whiteTealButton} onPress={onPress} iconRight>
+        <Button style={applicationStyles.whiteTealButton} onPress={props.onDoneButtonPress} iconRight>
             <Text style={textStyles.whiteTealButton}>{text}</Text>
         </Button>
     );
 };
 
-const activeQuestionHasBeenAnswered = (props: Props): boolean => {
+const activeQuestionHasBeenAnswered = (props: ButtonsProps): boolean => {
     return R.any((answer: SelectorAnswer) => answer.isChosen, props.activeQuestion.answers);
 };
