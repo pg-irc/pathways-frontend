@@ -1,0 +1,382 @@
+#. extracted from locale/ar/messages.csv
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-13 13:46-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.2.5\n"
+
+#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A17+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
+msgid "About Arrival Advisor"
+msgstr "نبذة عن Arrival Advisor"
+
+#: lib/components/about/about_component.js:20
+msgid ""
+"Arrival Advisor is a free, multilingual, mobile app that helps immigrants "
+"and refugees in British Columbia, Canada find information and services to "
+"navigate their settlement journey. The app is currently available in "
+"English, French (Canadian), and Arabic. It will soon be available in Chinese "
+"Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
+msgstr ""
+"تطبيق Arrival Advisor هو تطبيق مجاني متعدد اللغات للأجهزة المحمولة يساعد "
+"المهاجرين واللاجئين في إقليم بريتيش كولومبيا في كندا على البحث عن المعلومات "
+"والخدمات التي توجههم في سعيهم نحو الاستقرار. التطبيق متوفر حاليا باللغات "
+"الإنكليزية والفرنسية (الكندية) والعربية. سوف يتوفر التطبيق لاحقا بالصينية "
+"المبسطة والصينية والتقليدية والكورية والبنجابية والتاغلوغية."
+
+#: lib/components/about/about_component.js:28
+msgid ""
+"From finding a job to learning English, accessing health care, and more, "
+"Arrival Advisor has everything you need to get started in your new "
+"community. Explore newcomer topics and services without ever needing to "
+"create an account. Access important information no matter where you are: the "
+"newcomer topics provided by Arrival Advisor are saved to your phone so you "
+"can view them, even without internet. You can fill out some questions to get "
+"personalized recommendations of topics and services to settle in British "
+"Columbia. Arrival Advisor is anonymous and your answers are only used to "
+"operate the app's recommendations. We never save or share your personal data "
+"with funders or any third parties."
+msgstr ""
+"سواء كنت تبحث عن وظيفة أو ترغب في تعلم الإنجليزية أو الحصول على الرعاية "
+"الصحية أو غير ذلك، يحتوي Arrival Advisor على كل ما تحتاج إليه كي تستقر في "
+"مجتمعك الجديد. تجول بين الموضوعات والخدمات المخصصة للقادمين الجدد دون أن "
+"تحتاج لإنشاء حساب. أحصل على المعلومات المهمة في أي مكان كنت منذ أن الموضوعات "
+"الخاصة بالقادمين الجدد التي يقدمها Arrival Advisor محفوظة على هاتفك كي "
+"تستعرضها دون الاتصال بالإنترنت. يمكنك الإجابة على بعض الأسئلة كي تحصل على "
+"توصيات مخصصة للموضوعات والخدمات للاستقرار في بريتيش كولومبيا. تطبيق Arrival "
+"Advisor لا يحفظ بياناتك وسوف تستخدم إجاباتك في ترتيب توصيات التطبيق لا غير. "
+"نحن لا نحفظ مطلقا أو نشارك بياناتك الشخصية مع ممولين أو أي طرف آخر."
+
+#: lib/components/about/about_component.js:39
+msgid ""
+"The Arrival Advisor app is designed in partnership with settlement providers "
+"in Metro Vancouver, and immigrants and refugees like you. We gratefully "
+"acknowledge the financial support of the Province of British Columbia "
+"through the Ministry of Jobs, Trade and Technology, as well as Google.org "
+"Canada. Special thanks also goes to individual donors who make this project "
+"possible. Arrival Advisor is an open-source project. You can {githubLink} "
+"and {contactLink} to learn how you can support this project."
+msgstr ""
+"صمم تطبيق Arrival Advisor بالتعاون مع مقدمي خدمات الاستقرار في مترو فانكوفر "
+"ومهاجرين ولاجئين مثلك. نود أن نتوجه بالشكر الجزيل على الدعم المالي الذي "
+"قدمته مقاطعة بريتيش كولومبيا عن طريق وزارة الوظائف والتجارة والتقنية، وكذلك "
+"Google.org Canada. كما نتوجه بالشكر الخاص للمتبرعين من الأفراد الذين جعلوا "
+"من هذا المشروع حقيقة. تطبيق Arrival Advisor هو مشروع مفتوح المصدر. يمكنك "
+"زيارة {githubLink} وكذلك مراسلة {contactLink} كي تتعرف على المزيد عن كيفية "
+"تقديم المساندة لهذا المشروع."
+
+#: lib/components/about/about_component.js:48
+msgid ""
+"Information in this app is provided by the {welcomeBCLink} Copyright 2018 "
+"Province of British Columbia. All rights reserved."
+msgstr ""
+"قدم المعلومات المبينة في هذا التطبيق موقع {welcomeBCLink} حقوق الطبع 2018 "
+"ترجع إلى مقاطعة بريتيش كولومبيا. حقوق الطبع محفوظة."
+
+#: lib/components/about/about_component.js:54
+msgid "This is Arrival Advisor version: 1.0.3"
+msgstr "إصدار Arrival Advisor الحالي: 1.0.3"
+
+#: lib/components/about/about_component.js:59
+msgid "Server version: {0}"
+msgstr "إصدار الخادوم: {0}"
+
+#: lib/components/bookmarked_topics/bookmarked_topics_component.js:12
+msgid "My bookmarks"
+msgstr "علاماتي المرجعية"
+
+#: lib/components/bookmarked_topics/bookmarked_topics_component.js:15
+msgid "Save important topics to build your personal plan for settlement."
+msgstr "احفظ الموضوعات المهمة كي تنشئ خطتك للاستقرار المخصصة."
+
+#: lib/components/disclaimer/disclaimer_component.js:11
+msgid ""
+"Arrival Advisor contains information from the BC Government’s Newcomer’s "
+"Guide, available at: www.welcomebc.ca, and the BC211 database of service "
+"providers, available at: www.bc211.ca."
+msgstr ""
+"يحتوي تطبيق Arrival Advisor على معلومات من دليل القادمين الجدد الصادر عن "
+"حكومة بريتيش كولومبيا وهو متاح على الموقع: www.welcomebc.ca، وكذلك قاعدة "
+"بيانات BC211 لمزودي الخدمات المتاحة على الموقع: www.bc211.ca. "
+
+#: lib/components/disclaimer/disclaimer_component.js:17
+msgid ""
+"The app provides information about relevant newcomer services, and is "
+"intended for general guidance and reference only. While we aim to provide "
+"accurate and timely information, we do not have control over the ongoing "
+"accuracy of the information or the quality of the services provided. If you "
+"discover that a piece of information is outdated or not useful, please let "
+"us know in the feedback section of the app. The inclusion of services and "
+"resources in this app does not imply an endorsement or recommendation of "
+"those services over others. Utlization of services located through the app "
+"is undertaken at the risk of the user."
+msgstr ""
+"يقدم التطبيق معلومات عن خدمات مطلوبة للقادمين الجدد والغرض منها تقديم "
+"إرشادات عامة وأن تكون مرجع لا غير. نهدف إلى تقديم معلومات دقيقة وسريعة إلا "
+"أننا لا نتحكم في دقة المعلومات أو مستوى جودة الخدمات المقدمة. لو اكتشفت أن "
+"أي من المعلومات أصبح قديم أو غير مفيد، يرجى إبلاغنا بذلك في قسم الآراء "
+"والملاحظات الخاص بالتطبيق. لا يعني وجود الخدمات في هذا التطبيق تصديقا أو "
+"توصية لهذه الخدمات دون غيرها. كما أن مسؤولية الاستعانة بالخدمات التي وجدتها "
+"مستخدما هذا التطبيق يقع على المستخدم."
+
+#: lib/components/disclaimer/disclaimer_component.js:28
+msgid ""
+"Arrival Advisor respects and maintains the privacy and anonymity of its "
+"users. Users do not need to provide personal information in order to use the "
+"app. The questionnaire is designed to assist in personalizing services and "
+"resources required by the user, and answers are only saved to enhance the "
+"usability of the app over time. Users of the Arrival Advisor app do so at "
+"their own discretion. The answers you provide will be used for the operation "
+"of this tool to provide you with guidance on resources and services that can "
+"help you adjust to life in Canada. Users cannot be identified by their "
+"answers to the questionnaire. The information is not used by Immigration, "
+"Refugees and Citizenship Canada for any other purpose and is not used for "
+"any immigration decision making."
+msgstr ""
+"يحترم تطبيق Arrival Advisor ويصون خصوصية المستخدمين وبياناتهم. لا يحتاج "
+"المستخدمين لتقديم معلومات شخصية كي يستخدموا التطبيق. صمم الاستبيان كي يساعد "
+"في تخصيص الخدمات والموارد التي يحتاجها المستخدم وتحفظ الإجابات فقط بغرض "
+"تحسين مستوى استخدام التطبيق بمرور الوقت. يفعل مستخدمو تطبيق Arrival Advisor "
+"ذلك بمحض إرادتهم. سوف تستخدم الإجابات التي تقدمها لتشغيل هذه الأداة لتقدم لك "
+"توجيهات تتعلق بالموارد والخدمات التي قد تساعدك في التأقلم داخل كندا. لا يمكن "
+"تحديد هوية المستخدمين باستخدام إجاباتهم على الاستبيان. لا تستخدم وزارة "
+"الهجرة واللاجئين والجنسية الكندية المعلومات لأي غرض آخر كما أنها لا تستخدم "
+"في اتخاذ أي قرار يتعلق بالهجرة."
+
+#: lib/components/disclaimer/disclaimer_component.js:40
+msgid ""
+"PeaceGeeks is not liable for any damages incurred as a result of or related "
+"to the use of the app. PeaceGeeks is not an immigration consultancy network, "
+"and therefore cannot provide advice or support directly related to "
+"immigration. Arrival Advisor exists to offer newcomers a directory of "
+"services and resources to assist settlement in Metro Vancouver and does not "
+"exist in an official Immigration Service capacity."
+msgstr ""
+"لا تتحمل PeaceGeeks المسؤولية القانونية عن أي ضرر مادي حدث نتيجة لاستخدام "
+"التطبيق ومتعلق باستخدام التطبيق. PeaceGeeks ليست شبكة استشارات هجرة وبالتالي "
+"لا يمكنها تقديم المشورة أو المساندة المباشرة في أمور الهجرة. الغرض من "
+"Arrival Advisor هو تقديم دليل بالخدمات والموارد للقادمين الجدد ليساعدهم في "
+"الاستقرار في مترو فانكوفر وليس الغرض منه أن يقدم خدمات هجرة ذات طابع رسمي."
+
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A8+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+msgid "Disclaimer"
+msgstr "إخلاء مسؤولية"
+
+#: lib/components/expandable_content/expandable_content_component.js:79
+msgid "Read less"
+msgstr "تقليل النص"
+
+#: lib/components/expandable_content/expandable_content_component.js:79
+msgid "Read more"
+msgstr "زيادة النص"
+
+#: lib/components/explore/explore_all_component.js:11
+msgid "Learn all about B.C."
+msgstr "تعرف على كل شيء عن بريتيش كولومبيا"
+
+#: lib/components/explore/explore_detail_component.js:19
+msgid "EXPLORE TOPICS"
+msgstr "تصفح الموضوعات"
+
+#: lib/components/header_menu/header_menu_component.js:24
+msgid "SELECT YOUR LANGUAGE"
+msgstr "اختر لغتك"
+
+#: lib/components/header_menu/header_menu_component.js:45
+msgid "ABOUT THE APP"
+msgstr "نبذة عن التطبيق"
+
+#: lib/components/header_menu/header_menu_component.js:52
+msgid "Privacy policy"
+msgstr "سياسة الخصوصية"
+
+#: lib/components/help/help_component.js:11
+msgid "Information on emergency services (9-1-1)"
+msgstr "معلومات تتعلق بخدمات الطوارئ (911)"
+
+#: lib/components/help/help_component.js:12
+msgid "Police, fire and medical emergencies"
+msgstr "الشرطة والمطافئ والطوارئ الصحية"
+
+#: lib/components/help/help_component.js:16
+msgid "Information on HealthLinkBC (8-1-1)"
+msgstr "معلومات تتعلق بخدمات HealthLinkBC (811)"
+
+#: lib/components/help/help_component.js:17
+msgid "Mutlilingual health information services"
+msgstr "خدمات معلومات صحية مقدمة بعدة لغات"
+
+#: lib/components/help/help_component.js:21
+msgid "Information on BC211"
+msgstr "معلومات مقدمة على BC211"
+
+#: lib/components/help/help_component.js:22
+msgid "Services information and referral"
+msgstr "معلومات عن الخدمات وإحالات إلى خدمات"
+
+#: lib/components/help/help_component.js:26
+msgid "Information on helplines"
+msgstr "معلومات تتعلق بخطوط المساعدة على الهاتف"
+
+#: lib/components/help/help_component.js:30
+msgid "Contact Arrival Advisor team"
+msgstr "تواصل مع فريق Arrival Advisor"
+
+#: lib/components/help/help_component.js:43
+msgid "Help & Support"
+msgstr "للمساعدة والدعم"
+
+#: lib/components/help/help_component.js:46
+msgid ""
+"If you are having difficulty with settlement in Canada, we suggest getting "
+"in touch with a settlement worker."
+msgstr ""
+"لو كنت تواجه مصاعب في الاستقرار داخل كندا، نقترح عليك أن تتواصل مع موظف "
+"استقرار."
+
+#: lib/components/help/help_component.js:56
+msgid "FOR ADDITIONAL ASSISTANCE"
+msgstr "للمزيد من المساعدة."
+
+#: lib/components/help/help_component.js:68
+msgid "Find a settlement agency near me"
+msgstr "ابحث عن وكالة استقرار قريبة مني."
+
+#: lib/components/help/help_component.js:88
+msgid "Delete all user data"
+msgstr "مسح كافة بيانات المستخدم"
+
+#: lib/components/maps_application_popup/maps_application_popup_component.js:18
+msgid "Open in maps"
+msgstr "فتح في الخرائط"
+
+#: lib/components/newly_recommended_tasks/newly_recommended_tasks_component.js:36
+msgid "Number of new topics recommended based on your answers:"
+msgstr "عدد الموضوعات الجديدة التي نوصي بها استنادا إلى إجاباتك:"
+
+#: lib/components/newly_recommended_tasks/newly_recommended_tasks_component.js:72
+msgid "OK"
+msgstr "حسنا"
+
+#: lib/components/notifications/notification_content.js:12
+msgid "Bookmark removed"
+msgstr "محونا العلامة المرجعية"
+
+#: lib/components/notifications/notification_content.js:7
+msgid "Bookmark added"
+msgstr "أضفنا العلامة المرجعية"
+
+#: lib/components/questionnaire/questionnaire_component.js:49
+msgid "OF"
+msgstr "من"
+
+#: lib/components/questionnaire/questionnaire_component.js:65
+msgid "Next"
+msgstr "التالي"
+
+#: lib/components/questionnaire/questionnaire_component.js:65
+msgid "Skip"
+msgstr "تخطى"
+
+#: lib/components/questionnaire/questionnaire_component.js:75
+msgid "Back"
+msgstr "رجوع"
+
+#: lib/components/questionnaire/questionnaire_component.js:83
+msgid "Done"
+msgstr "انتهى"
+
+#: lib/components/recommended_topics/call_to_action.js:33
+msgid "GETTING STARTED"
+msgstr "بدء الاستخدام"
+
+#: lib/components/recommended_topics/call_to_action.js:36
+msgid "Get information based on your needs"
+msgstr "أحصل على المعلومات استنادا إلى احتياجاتك"
+
+#: lib/components/recommended_topics/call_to_action.js:46
+msgid ""
+"Answer a few questions about your situation to get personalized "
+"recommendations of topics and services to help you settle in British "
+"Columbia."
+msgstr ""
+"أجب عن بضع أسئلة تتعلق بموقفك كي تحصل على توصيات مخصصة بالموضوعات والخدمات "
+"التي تساعدك في الاستقرار في بريتيش كولومبيا."
+
+#: lib/components/recommended_topics/call_to_action.js:55
+msgid "Answer questions"
+msgstr "أجب عن الأسئلة"
+
+#: lib/components/recommended_topics/call_to_action.js:60
+msgid ""
+"Once you answer some questions, your recommendations will show up below. For "
+"now, here are some topics we recommend for everyone:"
+msgstr ""
+"حالما انتهيت من الإجابة عن بضع أسئلة، سوف تظهر توصياتك المخصصة تاليا. إليك "
+"في الوقت الراهن بعض الموضوعات التي نوصي بها للجميع:"
+
+#: lib/components/recommended_topics/call_to_action.js:70
+msgid "UPDATE MY RECOMMENDATIONS"
+msgstr "تحديث توصياتي"
+
+#: lib/components/recommended_topics/call_to_action.js:74
+msgid "Go back to questions"
+msgstr "العودة إلى الأسئلة"
+
+#: lib/components/recommended_topics/call_to_action.js:99
+msgid "Based on your answers, we recommend these topics for you:"
+msgstr "استنادا إلى إجاباتك، نوصي بهذه الموضوعات إليك:"
+
+#: lib/components/recommended_topics/recommended_topics_component.js:19
+msgid "Start settling in B.C."
+msgstr "بدء الاستقرار في بريتيش كولومبيا"
+
+#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A34+lib%2Fcomponents%2Ftasks%2Ftask_detail_content_component.js%3A63
+msgid "Recommended for you"
+msgstr "توصيات إليك"
+
+#: lib/components/services/service_list_component.js:30
+msgid "FIND A SERVICE NEAR YOU"
+msgstr "ابحث عن خدمة بالقرب منك"
+
+#: lib/components/services/service_list_component.js:41
+msgid "No related services found"
+msgstr "لم نجد خدمات متعلقة ببحثك"
+
+#: lib/components/services/service_list_item_component.js:24
+msgid "Address:"
+msgstr "العنوان:"
+
+#: lib/components/tasks/task_detail_component.js:19
+msgid "RELATED TOPICS"
+msgstr "موضوعات ذات صلة"
+
+#: lib/components/tasks/task_detail_content_component.js:86
+msgid "Find related services near me"
+msgstr "ابحث عن خدمات ذات صلة بالقرب مني"
+
+#: lib/components/tasks/task_list_component.js:71
+msgid "No topics to show"
+msgstr "لا توجد موضوعات كي نعرضها"
+
+#: lib/components/tasks/task_list_component.js:72
+msgid "No topics to recommend"
+msgstr "لا توجد موضوعات نوصي بها"
+
+#: lib/components/welcome/welcome_component.js:27
+msgid "Settling in Canada is now easier."
+msgstr "أصبح الاستقرار في كندا الآن أسهل من ذي قبل."
+
+#: lib/components/welcome/welcome_component.js:31
+msgid "Select your language"
+msgstr "اختر لغتك"
+
+#: lib/components/welcome/welcome_component.js:42
+msgid "Start"
+msgstr "ابدأ"
