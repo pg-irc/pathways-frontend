@@ -15,7 +15,7 @@
     },
     "android": {
       "package": "org.peacegeeks.ArrivalAdvisor",
-      "versionCode": 2,
+      "versionCode": 3,
       "permissions": []
     },
     "assetBundlePatterns": [
