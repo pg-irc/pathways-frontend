@@ -1,6 +1,5 @@
 // tslint:disable:no-class no-this no-expression-statement
 import React from 'react';
-import { History } from 'history';
 import { I18nManager, Image, Dimensions } from 'react-native';
 import { Button, Content, View, Text, Icon } from 'native-base';
 import * as R from 'ramda';
@@ -48,29 +47,29 @@ export class QuestionnaireComponent extends React.Component<Props, State> {
 
     render(): JSX.Element {
         return (
-            <Content padder>
-                <HeadingComponent
-                    history={this.props.history}
-                    onCloseButtonPress={this.openModal}
-                />
-                <ProgressComponent
-                    activeQuestion={this.props.activeQuestion}
-                />
-                <QuestionComponent
-                    question={this.props.activeQuestion}
-                    chooseAnswer={this.props.chooseAnswer}
-                />
-                <ButtonsComponent
-                    activeQuestion={this.props.activeQuestion}
-                    setActiveQuestion={this.props.setActiveQuestion}
-                    onDoneButtonPress={this.openModal}
-                />
-                <NewTopicsModalConnectedComponent
-                    history={this.props.history}
-                    isVisible={this.state.newTopicsModalIsVisible}
-                    onModalButtonPress={this.getOnModalButtonPress}
-                />
-            </Content>
+            <View style={{ flex: 1 }}>
+                <StickyCloseButton onCloseButtonPress={this.openModal} />
+                <Content padder>
+                    <HeadingComponent />
+                    <ProgressComponent
+                        activeQuestion={this.props.activeQuestion}
+                    />
+                    <QuestionComponent
+                        question={this.props.activeQuestion}
+                        chooseAnswer={this.props.chooseAnswer}
+                    />
+                    <ButtonsComponent
+                        activeQuestion={this.props.activeQuestion}
+                        setActiveQuestion={this.props.setActiveQuestion}
+                        onDoneButtonPress={this.openModal}
+                    />
+                    <NewTopicsModalConnectedComponent
+                        history={this.props.history}
+                        isVisible={this.state.newTopicsModalIsVisible}
+                        onModalButtonPress={this.getOnModalButtonPress}
+                    />
+                </Content>
+            </View>
         );
     }
 
@@ -89,13 +88,16 @@ export class QuestionnaireComponent extends React.Component<Props, State> {
     }
 }
 
-const HeadingComponent = (props: { readonly history: History, readonly onCloseButtonPress: () => void }): JSX.Element => {
+const StickyCloseButton = (props: { readonly onCloseButtonPress: () => void }): JSX.Element => (
+    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingTop: 15 }}>
+        <CloseButtonComponent onPress={props.onCloseButtonPress} color={colors.black} />
+    </View>
+);
+
+const HeadingComponent = (): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 6;
     return (
         <View>
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingTop: 10 }}>
-                <CloseButtonComponent onPress={props.onCloseButtonPress} color={colors.black}/>
-            </View>
             <View
                 style={{
                     alignItems: 'center',
@@ -146,7 +148,15 @@ const ButtonsComponent = (props: ButtonsProps): JSX.Element => {
     const hasNextQuestion = props.activeQuestion.nextQuestionId !== undefined;
     const hasPreviousQuestion = props.activeQuestion.previousQuestionId !== undefined;
     return (
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 10 }}>
+        <View
+            style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                marginBottom: 10,
+                flexWrap: 'wrap',
+            }}
+        >
             {hasPreviousQuestion ? renderPreviousButton(props) : <EmptyComponent />}
             {hasNextQuestion ? renderNextButton(props) : renderDoneButton(props)}
         </View>
@@ -172,7 +182,7 @@ const renderPreviousButton = (props: ButtonsProps): JSX.Element => {
     const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
     const text = <Trans>Back</Trans>;
     return (
-        <Button style={applicationStyles.whiteTealButton} onPress={onPress} iconLeft>
+        <Button style={[ applicationStyles.whiteTealButton, { marginBottom: 5 } ]} onPress={onPress} iconLeft>
             <Icon name={icon} style={{ color: colors.teal }} />
             <Text style={textStyles.whiteTealButton}>{text}</Text>
         </Button>

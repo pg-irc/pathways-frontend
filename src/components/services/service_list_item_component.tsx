@@ -42,8 +42,9 @@ const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
         <View key={index}>
             <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address:</Trans></Text>
             <Text style={textStyles.paragraphStyle}>{address.address}</Text>
-            <Text style={textStyles.paragraphStyle}>{address.city + ' ' + address.stateProvince + ' ' +
-                address.postalCode ? address.postalCode : ''}</Text>
+            <Text style={textStyles.paragraphStyle}>
+                {address.city} {address.stateProvince} {address.postalCode ? address.postalCode : ''}
+            </Text>
         </View>, physicalAddresses)
 );
 
