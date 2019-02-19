@@ -62,11 +62,11 @@ const TitleComponent = (props: ExploreDetailContentProps): JSX.Element => (
 
 const CollapsibleIntroduction = (props: ExploreDetailContentProps): JSX.Element => (
     <ExpandableContentComponent
-        content={<SelectableText style={textStyles.headlineH4StyleBlackLeft}>{props.section.introduction}</SelectableText>}
+        content={<SelectableText style={textStyles.headlineH4StyleBlackLeft}>{props.section.description}</SelectableText>}
         contentBackgroundColor={colors.lightGrey}
     />
 );
 
 const PlainTextIntroduction = (props: ExploreDetailContentProps): JSX.Element => (
-    <SelectableText style={textStyles.headlineH4StyleBlackLeft}>{props.section.introduction}</SelectableText>
+    <SelectableText style={textStyles.headlineH4StyleBlackLeft}>{props.section.description}</SelectableText>
 );
