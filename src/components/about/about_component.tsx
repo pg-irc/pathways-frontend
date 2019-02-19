@@ -12,11 +12,19 @@ export interface AboutComponentProps {
 
 export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (props: AboutComponentProps): JSX.Element => {
     const welcomeBcUrl = 'https://www.welcomebc.ca/Start-Your-Life-in-B-C/Newcomers-Guides/Newcomers-Guide-Provincial';
-    const welcomeBCLink = <Link href={welcomeBcUrl} text={'Newcomer\'s Guide to British Columbia'} style={textStyles.paragraphURL} />;
     const githubUrl = 'https://github.com/pg-irc/pathways-frontend';
-    const githubLink = <Link href={githubUrl} text={'view it on GitHub'} style={textStyles.paragraphURL} />;
     const contactUrl = 'https://peacegeeks.org/contact';
-    const contactLink = <Link href={contactUrl} text={'contact us'} style={textStyles.paragraphURL} />;
+    const welcomeBCLink = wrapWithSpace(
+        <Link href={welcomeBcUrl} text={'Newcomer\'s Guide to British Columbia'} style={textStyles.paragraphURL} />,
+    );
+    const githubLink = wrapWithSpace(
+        <Link href={githubUrl} text={'view it on GitHub'} style={textStyles.paragraphURL} />,
+    );
+    const contactLink = wrapWithSpace(
+        <Link href={contactUrl} text={'contact us'} style={textStyles.paragraphURL} />,
+    );
+    const appVersion = wrapWithSpace(VERSION);
+    const serverVersion = wrapWithSpace(props.serverVersion);
     return (
         <Content padder style={{ backgroundColor: colors.white }}>
             <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
@@ -28,7 +36,7 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
                     Canada find information and services to navigate their settlement journey. The app is currently available
                     in English, French (Canadian), and Arabic. It will soon be available in Chinese Simplified, Chinese
                     Traditional, Korean, Punjabi, and Tagalog.
-            </Trans>
+                </Trans>
             </ParagraphComponent>
             <ParagraphComponent>
                 <Trans>
@@ -39,7 +47,7 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
                     some questions to get personalized recommendations of topics and services to settle in British Columbia.
                     Arrival Advisor is anonymous and your answers are only used to operate the app's recommendations.
                     We never save or share your personal data with funders or any third parties.
-            </Trans>
+                </Trans>
             </ParagraphComponent>
             <ParagraphComponent>
                 <Trans>
@@ -47,25 +55,30 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
                     immigrants and refugees like you. We gratefully acknowledge the financial support of the Province of
                     British Columbia through the Ministry of Jobs, Trade and Technology, as well as Google.org Canada.
                     Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an
-                    open-source project. You can {githubLink} and {contactLink} to learn how you can support this project.
-            </Trans>
+                    open-source project. You can
+               </Trans>
+               {githubLink}
+               <Trans>and</Trans>
+               {contactLink}
+               <Trans>to learn how you can support this project.</Trans>
             </ParagraphComponent>
             <ParagraphComponent>
-                <Trans>
-                    Information in this app is provided by the {welcomeBCLink} Copyright 2018 Province of British Columbia.
-                    All rights reserved.
-                </Trans>
+                <Trans>Information in this app is provided by the</Trans>
+                {welcomeBCLink}
+                <Trans>Copyright 2018 Province of British Columbia. All rights reserved.</Trans>
             </ParagraphComponent>
             <ParagraphComponent>
-                <Trans>
-                    This is Arrival Advisor version: {VERSION}
-                </Trans>
+                <Trans>This is Arrival Advisor version:</Trans>
+                {appVersion}
             </ParagraphComponent>
             <ParagraphComponent>
-                <Trans>
-                    Server version: {props.serverVersion}
-                </Trans>
+                <Trans>Server version:</Trans>
+                {serverVersion}
             </ParagraphComponent>
         </Content>
     );
 };
+
+const wrapWithSpace = (textContent: JSX.Element | string): JSX.Element => (
+    <Text> {textContent} </Text>
+);

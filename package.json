@@ -19,6 +19,7 @@
     "@types/react-test-renderer": "^16.0.1",
     "@types/uuid": "^3.4.4",
     "ajv": "^6.5.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-plugin-macros": "^2.4.2",
     "babel-preset-expo": "^5.0.0",
     "jest-expo": "^32.0.0",
