@@ -82,7 +82,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     private getCollapsedStyle(): object {
         return {
             height: this.state.collapseAtHeight,
-            overflow: 'scroll',
+            overflow: 'hidden',
         };
     }
 
