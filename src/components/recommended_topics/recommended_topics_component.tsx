@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { Id as TaskId } from '../../stores/tasks';
-import { View, Text } from 'native-base';
+import { View, Text, Icon } from 'native-base';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListActions } from '../tasks/task_list_component';
 import { TaskListComponent, NoTasksRecommendedComponent } from '../tasks/task_list_component';
@@ -17,6 +17,10 @@ export interface RecommendedTopicsProps {
     readonly savedTopicsIdList: ReadonlyArray<TaskId>;
     readonly recommendedTopics: ReadonlyArray<TaskListItem>;
 }
+
+export const recommendedIconName = 'check-decagram';
+
+export const recommendedIconType = 'MaterialCommunityIcons';
 
 type Props = RecommendedTopicsProps & TaskListActions & RouterProps;
 
@@ -56,17 +60,28 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             }
         </View>
         <View padder style={{ backgroundColor: colors.lightGrey }}>
-            <Text
-                style={[
-                    textStyles.headlineH2StyleBlackLeft,
-                    {
-                        marginVertical: 15,
-                        paddingHorizontal: values.backgroundTextPadding,
-                    },
-                ]}
-            >
-                <Trans>Recommended for you</Trans>
-            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text
+                    style={[
+                        textStyles.headlineH2StyleBlackLeft,
+                        {
+                            marginVertical: 15,
+                            marginRight: 5,
+                            paddingHorizontal: values.backgroundTextPadding,
+                        },
+                    ]}
+                >
+                    <Trans>Recommended for you</Trans>
+                </Text>
+                <Icon
+                    style={{
+                        fontSize: 18,
+                        color: colors.lightTeal,
+                    }}
+                    name={recommendedIconName}
+                    type={recommendedIconType}
+                />
+            </View>
             {props.hasChosenAnswers ?
                 <CallToActionPartialSubComponent />
                 :

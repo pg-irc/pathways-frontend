@@ -7,6 +7,7 @@ import { I18nManager, TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
+import { recommendedIconName, recommendedIconType } from '../recommended_topics/recommended_topics_component';
 
 export interface TaskListItemProps {
     readonly task: TaskListItem;
@@ -63,5 +64,13 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
 };
 
 const IsRecommendedComponent = (): JSX.Element => (
-    <Icon style={{ fontSize: 14, color: colors.sunYellow, marginRight: 5 }} name='star' type='FontAwesome' />
+    <Icon
+        style={{
+            fontSize: 18,
+            color: colors.lightTeal,
+            marginRight: 5,
+        }}
+        name={recommendedIconName}
+        type={recommendedIconType}
+    />
 );

@@ -13,6 +13,7 @@ import { getLocalizedText, Locale } from '../../selectors/locale/get_localized_t
 import { textStyles, colors, values, applicationStyles } from '../../application/styles';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
+import { recommendedIconName, recommendedIconType } from '../recommended_topics/recommended_topics_component';
 
 export interface NewTopicsModalProps {
     readonly oldAnswers: AnswersMap;
@@ -146,11 +147,11 @@ const renderTopicItem = ({ item }: ListRenderItemInfo<PartialTopic>): JSX.Elemen
                 <Icon
                     style={{
                         fontSize: values.smallerIconSize,
-                        color: colors.sunYellow,
+                        color: colors.lightTeal,
                         marginRight: 3,
                     }}
-                    name='star'
-                    type='FontAwesome'
+                    name={recommendedIconName}
+                    type={recommendedIconType}
                 />
             </View>
         </View>

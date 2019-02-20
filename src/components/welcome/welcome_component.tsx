@@ -7,7 +7,7 @@ import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
 import { RouterProps, Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { colors, applicationStyles, textStyles } from '../../application/styles';
-import { arrivalAdvisorLogo, landingPhoto } from '../../application/images';
+import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
@@ -19,7 +19,7 @@ export interface WelcomeActions {
 }
 
 export function WelcomeComponent(props: I18nProps & WelcomeProps & WelcomeActions & RouterProps): JSX.Element {
-    const logoSize = Dimensions.get('screen').width / 2.15;
+    const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
     return (
         <ImageBackground
             source={landingPhoto}
@@ -39,8 +39,8 @@ export function WelcomeComponent(props: I18nProps & WelcomeProps & WelcomeAction
                     source={arrivalAdvisorLogo}
                     resizeMode={'contain'}
                     style={{
-                        width: logoSize,
-                        height: logoSize,
+                        width: arrivalAdvisorLogoSize,
+                        height: arrivalAdvisorLogoSize,
                         marginBottom: 20,
                     }}
                 />
@@ -76,6 +76,20 @@ export function WelcomeComponent(props: I18nProps & WelcomeProps & WelcomeAction
                         </Text>
                     </Button>
                 </View>
+            </View>
+            <View style={{ justifyContent: 'flex-end', alignItems: 'center' }}>
+                <Text style={textStyles.paragraphStyleWhiteleft}>
+                    <Trans>Created by</Trans>
+                </Text>
+                <Image
+                    source={peacegeeksLogo}
+                    resizeMode={'contain'}
+                    style={{
+                        height: 45,
+                        marginTop: 10,
+                        marginBottom: 20,
+                    }}
+                />
             </View>
         </ImageBackground>
     );
