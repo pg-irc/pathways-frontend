@@ -99,6 +99,40 @@ describe('schema for services_at_location endpoint', () => {
             expect(validator.isValid).toBe(false);
             expect(validator.errors).toBe('data[0].service.description should be string');
         });
+
+        test('service.website is optional', () => {
+            const service = new helpers.ServiceJSONBuilder().buildWithoutWebsite();
+            const validator = servicesAtLocationValidator([
+                new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
+            ]);
+            expect(validator.isValid).toBe(true);
+        });
+
+        test('service.email is optional', () => {
+            const service = new helpers.ServiceJSONBuilder().buildWithoutEmail();
+            const validator = servicesAtLocationValidator([
+                new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
+            ]);
+            expect(validator.isValid).toBe(true);
+        });
+
+        test('service.website, if provided, is of type string', () => {
+            const service = new helpers.ServiceJSONBuilder().withWebsite(null).build();
+            const validator = servicesAtLocationValidator([
+                new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
+            ]);
+            expect(validator.isValid).toBe(false);
+            expect(validator.errors).toBe('data[0].service.website should be string');
+        });
+        test('service.email, if provided, is of type string', () => {
+            const service = new helpers.ServiceJSONBuilder().withEmail(null).build();
+            const validator = servicesAtLocationValidator([
+                new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
+            ]);
+            expect(validator.isValid).toBe(false);
+            expect(validator.errors).toBe('data[0].service.email should be string');
+        });
+
     });
 
     describe('validating location properties', () => {

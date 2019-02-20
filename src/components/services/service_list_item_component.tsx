@@ -22,8 +22,8 @@ export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemP
             {renderDescription(props.service.description)}
             {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
             {renderPhoneNumbers(props.service.phoneNumbers)}
-            {renderWebsite(props.service.website)}
-            {renderEmail(props.service.email)}
+            {renderServiceField(<Trans>Web:</Trans>, props.service.website)}
+            {renderServiceField(<Trans>Email:</Trans>, props.service.email)}
             {renderMapButtonIfLocation(props.service)}
         </View>
     );
@@ -60,17 +60,10 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>) => (
     </View>), phoneNumbers))
 );
 
-const renderWebsite = (website: string): JSX.Element => (
+const renderServiceField = (label: JSX.Element, value: string): JSX.Element => (
     <Text>
-        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans>{' '}</Text>
-        <Text style={textStyles.paragraphStyle}>{website}</Text>
-    </Text>
-);
-
-const renderEmail = (email: string): JSX.Element => (
-    <Text>
-        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans>{' '}</Text>
-        <Text style={textStyles.paragraphStyle}>{email}</Text>
+        {value? <Text style={textStyles.paragraphBoldBlackLeft}>{label} </Text> : ''}
+        {value? <Text style={textStyles.paragraphStyle}>{value}</Text> : ''}
     </Text>
 );
 

@@ -27,6 +27,8 @@ interface ServiceJSON {
     readonly id?: any;
     readonly name?: any;
     readonly description?: any;
+    readonly website?: any;
+    readonly email?: any;
 }
 
 interface LocationJSON {
@@ -222,6 +224,8 @@ export class ServiceJSONBuilder {
     id: any = aString();
     name: any = aString();
     description: any = aString();
+    website: any = aString();
+    email: any = aString();
 
     withId(id: any): ServiceJSONBuilder {
         this.id = id;
@@ -238,11 +242,23 @@ export class ServiceJSONBuilder {
         return this;
     }
 
+    withWebsite(website: any): ServiceJSONBuilder {
+        this.website = website;
+        return this;
+    }
+
+    withEmail(email: any): ServiceJSONBuilder {
+        this.email = email;
+        return this;
+    }
+
     build(): ServiceJSON {
         return {
             id: this.id,
             name: this.name,
             description: this.description,
+            website: this.website,
+            email: this.email
         };
     }
 
@@ -250,6 +266,8 @@ export class ServiceJSONBuilder {
         return {
             name: this.name,
             description: this.description,
+            website: this.website,
+            email: this.email
         };
     }
 
@@ -257,6 +275,8 @@ export class ServiceJSONBuilder {
         return {
             id: this.id,
             description: this.description,
+            website: this.website,
+            email: this.email
         };
     }
 
@@ -264,6 +284,26 @@ export class ServiceJSONBuilder {
         return {
             id: this.id,
             name: this.name,
+            website: this.website,
+            email: this.email
+        };
+    }
+
+    buildWithoutWebsite(): ServiceJSON {
+        return {
+            id: this.id,
+            name: this.name,
+            description: this.description,
+            email: this.email
+        };
+    }
+
+    buildWithoutEmail(): ServiceJSON {
+        return {
+            id: this.id,
+            name: this.name,
+            description: this.description,
+            website: this.website
         };
     }
 }
