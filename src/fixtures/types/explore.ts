@@ -6,7 +6,6 @@ export type Id = string;
 export interface ExploreSection {
     readonly id: Id;
     readonly name: LocalizedText;
-    readonly introduction: LocalizedText;
     readonly description: LocalizedText;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
 }

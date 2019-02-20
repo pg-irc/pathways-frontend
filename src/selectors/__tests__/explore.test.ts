@@ -12,7 +12,6 @@ const englishLocale = { code: 'en', fallback: 'ar' };
 const theId = aString();
 const theNameInEnglish = aString();
 const theDescriptionInEnglish = aString();
-const theIntroductionInEnglish = aString();
 const theIcon = aString();
 
 const taxonomyId = ExploreTaxonomyId;
@@ -28,11 +27,6 @@ const theStore: ExploreSectionMap = {
         },
         description: {
             'en': theDescriptionInEnglish,
-            'ar': aString(),
-            'zh': aString(),
-        },
-        introduction: {
-            'en': theIntroductionInEnglish,
             'ar': aString(),
             'zh': aString(),
         },
@@ -63,9 +57,6 @@ describe('denormalize all explore sections', () => {
     it('should return object with description in correct locale', () => {
         expect(section.description).toBe(theDescriptionInEnglish);
     });
-    it('should return object with introduction in correct locale', () => {
-        expect(section.introduction).toBe(theIntroductionInEnglish);
-    });
     it('should return object with icon id', () => {
         expect(section.icon).toBe(theIcon);
     });
@@ -77,13 +68,11 @@ describe('build selector explore section', () => {
     beforeEach(() => {
         const localizedName = new LocalizedTextBuilder().addLocalizedText(englishLocale.code, theNameInEnglish).build();
         const localizedDescription = new LocalizedTextBuilder().addLocalizedText(englishLocale.code, theDescriptionInEnglish).build();
-        const localizedIntroduction = new LocalizedTextBuilder().addLocalizedText(englishLocale.code, theIntroductionInEnglish).build();
 
         const inputSection = new StoreExploreSectionBuilder().
             withId(theId).
             withName(localizedName).
             withDescription(localizedDescription).
-            withIntroduction(localizedIntroduction).
             build();
 
         section = buildExploreSection(englishLocale, inputSection, theIcon);
@@ -97,9 +86,6 @@ describe('build selector explore section', () => {
     });
     it('should return the description in the given locale', () => {
         expect(section.description).toBe(theDescriptionInEnglish);
-    });
-    it('should return the introduction in the given locale', () => {
-        expect(section.introduction).toBe(theIntroductionInEnglish);
     });
     it('should return the icon', () => {
         expect(section.icon).toBe(theIcon);

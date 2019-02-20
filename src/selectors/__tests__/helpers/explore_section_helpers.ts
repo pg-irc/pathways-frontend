@@ -7,7 +7,6 @@ export class ExploreSectionBuilder {
     id: string = aString();
     name: string = aString();
     description: string = aString();
-    introduction: string = aString();
     icon: string = aString();
 
     withId(id: string): ExploreSectionBuilder {
@@ -25,11 +24,6 @@ export class ExploreSectionBuilder {
         return this;
     }
 
-    withIntroduction(introduction: string): ExploreSectionBuilder {
-        this.introduction = introduction;
-        return this;
-    }
-
     withIcon(icon: string): ExploreSectionBuilder {
         this.icon = icon;
         return this;
@@ -40,7 +34,6 @@ export class ExploreSectionBuilder {
             id: this.id,
             name: this.name,
             description: this.description,
-            introduction: this.introduction,
             icon: this.icon,
         };
     }

@@ -8,7 +8,6 @@ import { LocalizedTextBuilder } from './locale_helpers';
 export class ExploreSectionBuilder {
     id: Id = aString();
     name: LocalizedText = new LocalizedTextBuilder().build();
-    introduction: LocalizedText = new LocalizedTextBuilder().build();
     description: LocalizedText = new LocalizedTextBuilder().build();
     taxonomyTerms: ReadonlyArray<TaxonomyTermReference> = [];
 
@@ -27,11 +26,6 @@ export class ExploreSectionBuilder {
         return this;
     }
 
-    withIntroduction(introduction: LocalizedText): ExploreSectionBuilder {
-        this.introduction = introduction;
-        return this;
-    }
-
     withTaxonomyTerms(taxonomyTerms: ReadonlyArray<TaxonomyTermReference>): ExploreSectionBuilder {
         this.taxonomyTerms = taxonomyTerms;
         return this;
@@ -42,7 +36,6 @@ export class ExploreSectionBuilder {
             id: this.id,
             name: this.name,
             description: this.description,
-            introduction: this.introduction,
             taxonomyTerms: this.taxonomyTerms,
         };
     }
