@@ -5,6 +5,7 @@
     "icon": "./assets/images/aa_icon.png",
     "version": "1.0.4",
     "slug": "arrival_advisor",
+    "orientation": "portrait",
     "ios": {
       "bundleIdentifier": "org.peacegeeks.ArrivalAdvisor",
       "infoPlist": {
