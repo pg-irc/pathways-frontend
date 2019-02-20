@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 
-import { Analytics as ExpoAnalytics, PageHit, Event } from 'expo-analytics';
+import { Analytics as ExpoAnalytics, ScreenHit, Event } from 'expo-analytics';
 import { call, CallEffect, PutEffect, put } from 'redux-saga/effects';
 import { GOOGLE_ANALYTICS_TRACKING_ID, DEBUG_GOOGLE_ANALYTICS } from 'react-native-dotenv';
 import { AnalyticsAsync } from './actions';
@@ -23,9 +23,9 @@ export function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
 async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
     const debug = DEBUG_GOOGLE_ANALYTICS === 'true';
     const analytics = new ExpoAnalytics(GOOGLE_ANALYTICS_TRACKING_ID, { aip: 1 }, { debug });
-    const pageHit = buildPageHitData(action);
-    if (pageHit) {
-        return analytics.hit(pageHit);
+    const screenHit = buildScreenHitData(action);
+    if (screenHit) {
+        return analytics.hit(screenHit);
     }
     const event = buildEventData(action);
     if (event) {
@@ -34,15 +34,15 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
 }
 
 // tslint:disable-next-line:no-any
-const buildPageHitData = (action: WatchedAction): any => {
+const buildScreenHitData = (action: WatchedAction): any => {
     if (action.type === constants.ROUTE_CHANGED) {
 
         const pathname = action.payload.location.pathname;
         if (pathMatchesRoute(pathname, Routes.TaskDetail)) {
-            return new PageHit('TaskDetail');
+            return new ScreenHit('TaskDetail');
         }
         if (pathMatchesRoute(pathname, Routes.Services)) {
-            return new PageHit('Services');
+            return new ScreenHit('Services');
         }
     }
     return undefined;
