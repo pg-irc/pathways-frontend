@@ -22,8 +22,7 @@ export function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
 
 async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
     const debug = DEBUG_GOOGLE_ANALYTICS === 'true';
-    // tslint:disable-next-line:no-null-keyword
-    const analytics = new ExpoAnalytics(GOOGLE_ANALYTICS_TRACKING_ID, null, { debug });
+    const analytics = new ExpoAnalytics(GOOGLE_ANALYTICS_TRACKING_ID, { aip: 1 }, { debug });
     const pageHit = buildPageHitData(action);
     if (pageHit) {
         return analytics.hit(pageHit);
