@@ -35,6 +35,10 @@
           }
         }
       ]
+    },
+    "updates": {
+      "enabled": false,
+      "checkAutomatically": "ON_ERROR_RECOVERY"
     }
   }
 }
