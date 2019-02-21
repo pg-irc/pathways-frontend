@@ -21,15 +21,18 @@ export interface RecommendedTopicsProps {
 
 type Props = RecommendedTopicsProps & TaskListActions & RouterProps;
 
-export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <TaskListComponent
-        {...props}
-        tasks={props.recommendedTopics}
-        savedTasksIdList={props.savedTopicsIdList}
-        emptyTaskListContent={<NoTasksRecommendedComponent />}
-        headerContent={<TaskListHeaderComponent {...props} />}
-    />
-);
+export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+    // const tasksGroupedByExploreTerms = R.groupBy((task: TaskListItem) => task)
+    return (
+        <TaskListComponent
+            {...props}
+            tasks={props.recommendedTopics}
+            savedTasksIdList={props.savedTopicsIdList}
+            emptyTaskListContent={<NoTasksRecommendedComponent />}
+            headerContent={<TaskListHeaderComponent {...props} />}
+        />
+    );
+};
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View>
