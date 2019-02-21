@@ -10,6 +10,7 @@ import { ExpandableContentComponent } from '../expandable_content/expandable_con
 import { Trans } from '@lingui/react';
 import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_application_popup_component';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { Link } from '../link/link';
 
 interface ServiceListItemProps {
     readonly service: Service;
@@ -22,8 +23,8 @@ export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemP
             {renderDescription(props.service.description)}
             {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
             {renderPhoneNumbers(props.service.phoneNumbers)}
-            {renderServiceField(<Trans>Web:</Trans>, props.service.website)}
-            {renderServiceField(<Trans>Email:</Trans>, props.service.email)}
+            {renderWebsite(props.service.website)}
+            {renderEmail(props.service.email)}
             {renderMapButtonIfLocation(props.service)}
         </View>
     );
@@ -60,10 +61,17 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>) => (
     </View>), phoneNumbers))
 );
 
-const renderServiceField = (label: JSX.Element, value: string): JSX.Element => (
+const renderWebsite = (website: string): JSX.Element => (
     <Text>
-        {value? <Text style={textStyles.paragraphBoldBlackLeft}>{label} </Text> : ''}
-        {value? <Text style={textStyles.paragraphStyle}>{value}</Text> : ''}
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans> </Text>
+        <Link href={website} text={website} style={textStyles.paragraphStyle} />
+    </Text>
+);
+
+const renderEmail = (email: string): JSX.Element => (
+    <Text>
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>
+        <Link href={"mailto:" + email} text={email} style={textStyles.paragraphStyle} />
     </Text>
 );
 
