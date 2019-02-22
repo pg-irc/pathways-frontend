@@ -20,7 +20,7 @@ export function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
 }
 
 async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
-    const analytics = buildExpoAnalytics(action);
+    const analytics = createExpoAnalyticsForAction(action);
     if (action.type === constants.ROUTE_CHANGED) {
         analytics.hit(createScreenHit(action.payload.location.pathname));
     }
@@ -32,7 +32,7 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
     }
 }
 
-const buildExpoAnalytics = (action: WatchedAction): any => {
+const createExpoAnalyticsForAction = (action: WatchedAction): any => {
     const parameters = createGoogleAnalyticsParameters(action);
     const debug = createExpoAnalyticsDebugValue();
     return createExpoAnalytics(parameters, debug);
