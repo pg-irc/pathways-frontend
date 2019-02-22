@@ -11,6 +11,12 @@ const service = {
         "description": {
             "type": "string"
         },
+        "website": {
+            "type": "string"
+        },
+        "email": {
+            "type": "string"
+        },
     },
     "required": ["id", "name", "description"]
 };

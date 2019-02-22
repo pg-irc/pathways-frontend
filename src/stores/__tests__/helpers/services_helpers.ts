@@ -78,6 +78,8 @@ export class ServiceBuilder {
     description: string = aString();
     phoneNumbers: ReadonlyArray<PhoneNumber> = [];
     addresses: ReadonlyArray<Address> = [];
+    website: string = aString();
+    email: string = aString();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -114,6 +116,16 @@ export class ServiceBuilder {
         return this;
     }
 
+    withWebsite(website: string): ServiceBuilder {
+        this.website = website;
+        return this;
+    }
+
+    withEmail(email: string): ServiceBuilder {
+        this.email = email;
+        return this;
+    }
+
     build(): Service {
         return {
             id: this.id,
@@ -123,6 +135,8 @@ export class ServiceBuilder {
             description: this.description,
             phoneNumbers: this.phoneNumbers,
             addresses: this.addresses,
+            website: this.website,
+            email: this.email
         };
     }
 }
