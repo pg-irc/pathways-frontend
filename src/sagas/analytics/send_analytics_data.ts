@@ -6,7 +6,6 @@ import { GOOGLE_ANALYTICS_TRACKING_ID, DEBUG_GOOGLE_ANALYTICS } from 'react-nati
 import { AnalyticsAsync } from './actions';
 import { WatchedAction } from './watch_analytics';
 import * as constants from '../../application/constants';
-import { pathMatchesRoute, Routes } from '../../application/routing';
 
 type AnalyticsActions = IterableIterator<CallEffect | PutEffect<AnalyticsAsync.SuccessAction | AnalyticsAsync.FailureAction>>;
 
@@ -36,14 +35,7 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
 // tslint:disable-next-line:no-any
 const buildScreenHitData = (action: WatchedAction): any => {
     if (action.type === constants.ROUTE_CHANGED) {
-
-        const pathname = action.payload.location.pathname;
-        if (pathMatchesRoute(pathname, Routes.TaskDetail)) {
-            return new ScreenHit('TaskDetail');
-        }
-        if (pathMatchesRoute(pathname, Routes.Services)) {
-            return new ScreenHit('Services');
-        }
+        return new ScreenHit(action.payload.location.pathname);
     }
     return undefined;
 };
