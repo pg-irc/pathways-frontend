@@ -20,33 +20,26 @@ export function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
 }
 
 async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
-    const debug = DEBUG_GOOGLE_ANALYTICS === 'true';
-    const analytics = new ExpoAnalytics(GOOGLE_ANALYTICS_TRACKING_ID, { aip: 1 }, { debug });
-    const screenHit = buildScreenHitData(action);
-    if (screenHit) {
-        return analytics.hit(screenHit);
+    const analytics = setupExpoAnalyticsForAction(action);
+    if (action.type === constants.ROUTE_CHANGED) {
+        analytics.hit(new ScreenHit(action.payload.location.pathname));
     }
-    const event = buildEventData(action);
-    if (event) {
-        return analytics.event(event);
+    if (action.type === constants.CHOOSE_ANSWER) {
+        analytics.hit(new Event('Questionnaire', 'ChooseAnswer', 'no answer id'));
+    }
+    if (action.type === constants.ADD_TO_SAVED_TASKS) {
+        analytics.hit(new Event('Bookmarks', 'SaveTopic', 'no topic id'));
     }
 }
 
 // tslint:disable-next-line:no-any
-const buildScreenHitData = (action: WatchedAction): any => {
-    if (action.type === constants.ROUTE_CHANGED) {
-        return new ScreenHit(action.payload.location.pathname);
-    }
-    return undefined;
-};
-
-// tslint:disable-next-line:no-any
-const buildEventData = (action: WatchedAction): any => {
-    if (action.type === constants.CHOOSE_ANSWER) {
-        return new Event('Questionnaire', 'ChooseAnswer', 'no answer id');
-    }
-    if (action.type === constants.ADD_TO_SAVED_TASKS) {
-        return new Event('Bookmarks', 'SaveTopic', 'no topic id');
-    }
-    return undefined;
+const setupExpoAnalyticsForAction = (action: WatchedAction): any => {
+    const additionalParameters = action.type === constants.ROUTE_CHANGED ?
+        { aip: 1, ul: action.payload.locale.code } : { aip: 1 };
+    const debug = { debug: DEBUG_GOOGLE_ANALYTICS === 'true' };
+    return new ExpoAnalytics(
+        GOOGLE_ANALYTICS_TRACKING_ID,
+        additionalParameters,
+        debug,
+    );
 };

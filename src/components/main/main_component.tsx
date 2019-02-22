@@ -9,15 +9,16 @@ import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connect
 import { RouterProps } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
+import { Locale } from '../../locale';
 
 interface HeaderMenuState {
     readonly isHeaderMenuShowing: boolean;
 }
 
-export type MainComponentProps = FooterProps & RouterProps;
+export type MainComponentProps = FooterProps & RouterProps & { readonly locale: Locale };
 
 export interface MainComponentActions {
-    readonly routeChanged: (location: Location, action: Action) => RouteChangedAction;
+    readonly routeChanged: (location: Location, locale: Locale) => RouteChangedAction;
 }
 
 type Props = MainComponentProps & MainComponentActions;
@@ -32,7 +33,9 @@ export class MainComponent extends React.Component<Props> {
         super(props);
         this.openDrawer = this.openDrawer.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
-        props.history.listen(props.routeChanged);
+        props.history.listen((location: Location, _: Action) =>
+            props.routeChanged(location, this.props.locale),
+        );
     }
 
     render(): JSX.Element {
