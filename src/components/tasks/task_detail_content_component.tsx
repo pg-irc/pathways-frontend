@@ -10,7 +10,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { images as topicImages } from '../../application/topicImages';
-import { recommendedIconName, recommendedIconType } from '../recommended_topics/recommended_topics_component';
+import { RecommendedIconComponent } from '../recommended_topics/recommended_icon_component';
 
 export interface TaskDetailContentProps {
     readonly task: Task;
@@ -82,12 +82,8 @@ const RecommendedComponent = (props: Props): JSX.Element => {
     }
     return (
         <View style={{ flexDirection: 'row', marginVertical: 5, paddingHorizontal: values.backgroundTextPadding }}>
-            <Icon
-                type={recommendedIconType}
-                name={recommendedIconName}
-                style={{
-                    fontSize: values.smallerIconSize,
-                    color: colors.lightTeal,
+            <RecommendedIconComponent
+                additionalStyles={{
                     marginRight: 5,
                 }}
             />

@@ -7,7 +7,7 @@ import { I18nManager, TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
-import { recommendedIconName, recommendedIconType } from '../recommended_topics/recommended_topics_component';
+import { RecommendedIconComponent } from '../recommended_topics/recommended_icon_component';
 
 export interface TaskListItemProps {
     readonly task: TaskListItem;
@@ -55,22 +55,13 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                     </View>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                    {props.task.isRecommended ? <IsRecommendedComponent /> : <EmptyComponent />}
+                    {props.task.isRecommended ?
+                        <RecommendedIconComponent additionalStyles={{ marginRight: 5 }} />
+                        :
+                        <EmptyComponent />}
                     <Icon style={{ fontSize: 15 }} name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} />
                 </View>
             </View>
         </TouchableOpacity>
     );
 };
-
-const IsRecommendedComponent = (): JSX.Element => (
-    <Icon
-        style={{
-            fontSize: 18,
-            color: colors.lightTeal,
-            marginRight: 5,
-        }}
-        name={recommendedIconName}
-        type={recommendedIconType}
-    />
-);

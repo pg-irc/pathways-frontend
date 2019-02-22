@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { Id as TaskId } from '../../stores/tasks';
-import { View, Text, Icon } from 'native-base';
+import { View, Text } from 'native-base';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListActions } from '../tasks/task_list_component';
 import { TaskListComponent, NoTasksRecommendedComponent } from '../tasks/task_list_component';
@@ -11,16 +11,13 @@ import {
     CallToActionFullComponent, CallToActionFullSubComponent,
     CallToActionPartialComponent, CallToActionPartialSubComponent,
 } from './call_to_action';
+import { RecommendedIconComponent } from './recommended_icon_component';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
     readonly savedTopicsIdList: ReadonlyArray<TaskId>;
     readonly recommendedTopics: ReadonlyArray<TaskListItem>;
 }
-
-export const recommendedIconName = 'check-decagram';
-
-export const recommendedIconType = 'MaterialCommunityIcons';
 
 type Props = RecommendedTopicsProps & TaskListActions & RouterProps;
 
@@ -73,14 +70,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                 >
                     <Trans>Recommended for you</Trans>
                 </Text>
-                <Icon
-                    style={{
-                        fontSize: 18,
-                        color: colors.lightTeal,
-                    }}
-                    name={recommendedIconName}
-                    type={recommendedIconType}
-                />
+                <RecommendedIconComponent />
             </View>
             {props.hasChosenAnswers ?
                 <CallToActionPartialSubComponent />
