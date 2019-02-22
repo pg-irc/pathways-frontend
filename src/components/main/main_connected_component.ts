@@ -23,7 +23,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RouteChangedAction>): MainComponentActions => ({
-    routeChanged: (location: Location, locale: Locale): RouteChangedAction => dispatch(routeChanged(location, locale)),
+    sendAnalyticsData: (location: Location, locale: Locale): RouteChangedAction => dispatch(routeChanged(location, locale)),
 });
 
 const componentWithLoader = withLoader<MainComponentProps>(MainComponent);

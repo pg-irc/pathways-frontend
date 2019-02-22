@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement
+// tslint:disable:no-expression-statement no-any
 
 import { Analytics as ExpoAnalytics, ScreenHit, Event } from 'expo-analytics';
 import { call, CallEffect, PutEffect, put } from 'redux-saga/effects';
@@ -20,26 +20,67 @@ export function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
 }
 
 async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
-    const analytics = setupExpoAnalyticsForAction(action);
+    const analytics = buildExpoAnalytics(action);
     if (action.type === constants.ROUTE_CHANGED) {
-        analytics.hit(new ScreenHit(action.payload.location.pathname));
+        analytics.hit(createScreenHit(action.payload.location.pathname));
     }
     if (action.type === constants.CHOOSE_ANSWER) {
-        analytics.hit(new Event('Questionnaire', 'ChooseAnswer', 'no answer id'));
+        analytics.hit(createAnswerChosenEvent());
     }
     if (action.type === constants.ADD_TO_SAVED_TASKS) {
-        analytics.hit(new Event('Bookmarks', 'SaveTopic', 'no topic id'));
+        analytics.hit(createBookmarkAddedEvent());
     }
 }
 
-// tslint:disable-next-line:no-any
-const setupExpoAnalyticsForAction = (action: WatchedAction): any => {
-    const additionalParameters = action.type === constants.ROUTE_CHANGED ?
-        { aip: 1, ul: action.payload.locale.code } : { aip: 1 };
-    const debug = { debug: DEBUG_GOOGLE_ANALYTICS === 'true' };
-    return new ExpoAnalytics(
-        GOOGLE_ANALYTICS_TRACKING_ID,
-        additionalParameters,
-        debug,
-    );
+const buildExpoAnalytics = (action: WatchedAction): any => {
+    const parameters = createGoogleAnalyticsParameters(action);
+    const debug = createExpoAnalyticsDebugValue();
+    return createExpoAnalytics(parameters, debug);
 };
+
+// See https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters for parameter reference.
+// Add any additionally required parameters to this interface.
+interface GoogleAnalyticsParameters {
+    readonly aip: number;
+    readonly ul?: string;
+}
+
+const createGoogleAnalyticsParameters = (action: WatchedAction): GoogleAnalyticsParameters => {
+    if (action.type === constants.ROUTE_CHANGED) {
+        return {
+            aip: 1,
+            ul: action.payload.locale.code,
+        };
+    }
+    return {
+        aip: 1,
+    };
+};
+
+interface ExpoAnalyticsDebugValue {
+    readonly debug: boolean;
+}
+
+const createExpoAnalyticsDebugValue = (): ExpoAnalyticsDebugValue => ({
+    debug: DEBUG_GOOGLE_ANALYTICS === 'true',
+});
+
+const createExpoAnalytics = (parameters: GoogleAnalyticsParameters, debug: ExpoAnalyticsDebugValue): any => (
+    new ExpoAnalytics(
+        GOOGLE_ANALYTICS_TRACKING_ID,
+        parameters,
+        debug,
+    )
+);
+
+const createScreenHit = (pathName: string): any => (
+    new ScreenHit(pathName)
+);
+
+const createAnswerChosenEvent = (): any => (
+    new Event('Questionnaire', 'ChooseAnswer', 'no answer id')
+);
+
+const createBookmarkAddedEvent = (): any => (
+    new Event('Bookmarks', 'SaveTopic', 'no topic id')
+);
