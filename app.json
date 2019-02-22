@@ -3,7 +3,7 @@
     "sdkVersion": "32.0.0",
     "name": "Arrival Advisor",
     "icon": "./assets/images/aa_icon.png",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "slug": "arrival_advisor",
     "orientation": "portrait",
     "ios": {
@@ -11,7 +11,9 @@
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
           "comgooglemaps"
-        ]
+        ],
+        "NSLocationWhenInUseUsageDescription":
+          "Arrival Advisor needs to access your location to find services near you."
       }
     },
     "android": {
