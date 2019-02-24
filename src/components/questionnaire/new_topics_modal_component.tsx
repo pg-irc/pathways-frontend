@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { History } from 'history';
 import { Dimensions, Image, FlatList, ListRenderItemInfo } from 'react-native';
 import Modal from 'react-native-modal';
-import { View, Button, Text, Icon } from 'native-base';
+import { View, Button, Text } from 'native-base';
 import { Trans } from '@lingui/react';
 import { AnswersMap } from '../../stores/questionnaire';
 import { TaskMap, Id as TaskId, Task } from '../../stores/tasks';
@@ -13,6 +13,7 @@ import { getLocalizedText, Locale } from '../../selectors/locale/get_localized_t
 import { textStyles, colors, values, applicationStyles } from '../../application/styles';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
+import { RecommendedIconComponent } from '../recommended_topics/recommended_icon_component';
 
 export interface NewTopicsModalProps {
     readonly oldAnswers: AnswersMap;
@@ -143,14 +144,10 @@ const renderTopicItem = ({ item }: ListRenderItemInfo<PartialTopic>): JSX.Elemen
                 </View>
             </View>
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                <Icon
-                    style={{
-                        fontSize: values.smallerIconSize,
-                        color: colors.sunYellow,
+                <RecommendedIconComponent
+                    additionalStyles={{
                         marginRight: 3,
                     }}
-                    name='star'
-                    type='FontAwesome'
                 />
             </View>
         </View>

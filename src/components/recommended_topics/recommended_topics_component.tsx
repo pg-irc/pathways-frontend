@@ -11,6 +11,7 @@ import {
     CallToActionFullComponent, CallToActionFullSubComponent,
     CallToActionPartialComponent, CallToActionPartialSubComponent,
 } from './call_to_action';
+import { RecommendedIconComponent } from './recommended_icon_component';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -56,17 +57,21 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             }
         </View>
         <View padder style={{ backgroundColor: colors.lightGrey }}>
-            <Text
-                style={[
-                    textStyles.headlineH2StyleBlackLeft,
-                    {
-                        marginVertical: 15,
-                        paddingHorizontal: values.backgroundTextPadding,
-                    },
-                ]}
-            >
-                <Trans>Recommended for you</Trans>
-            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text
+                    style={[
+                        textStyles.headlineH2StyleBlackLeft,
+                        {
+                            marginVertical: 15,
+                            marginRight: 5,
+                            paddingHorizontal: values.backgroundTextPadding,
+                        },
+                    ]}
+                >
+                    <Trans>Recommended for you</Trans>
+                </Text>
+                <RecommendedIconComponent />
+            </View>
             {props.hasChosenAnswers ?
                 <CallToActionPartialSubComponent />
                 :
