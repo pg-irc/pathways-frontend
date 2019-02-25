@@ -6,6 +6,7 @@ import { GOOGLE_ANALYTICS_TRACKING_ID, DEBUG_GOOGLE_ANALYTICS } from 'react-nati
 import { AnalyticsAsync } from './actions';
 import { WatchedAction } from './watch_analytics';
 import * as constants from '../../application/constants';
+import { RouteChangedAction } from '../../stores/router_actions';
 
 type AnalyticsActions = IterableIterator<CallEffect | PutEffect<AnalyticsAsync.SuccessAction | AnalyticsAsync.FailureAction>>;
 
@@ -20,67 +21,69 @@ export function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
 }
 
 async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
-    const analytics = createExpoAnalyticsForAction(action);
     if (action.type === constants.ROUTE_CHANGED) {
-        analytics.hit(createScreenHit(action.payload.location.pathname));
+        sendScreenHit(action);
     }
     if (action.type === constants.CHOOSE_ANSWER) {
-        analytics.hit(createAnswerChosenEvent());
+        sendAnswerChosenEvent();
     }
     if (action.type === constants.ADD_TO_SAVED_TASKS) {
-        analytics.hit(createBookmarkAddedEvent());
+        sendBookmarkAddedEvent();
     }
 }
 
-const createExpoAnalyticsForAction = (action: WatchedAction): any => {
-    const parameters = createGoogleAnalyticsParameters(action);
-    const debug = createExpoAnalyticsDebugValue();
-    return createExpoAnalytics(parameters, debug);
+const sendScreenHit = (action: RouteChangedAction): void => {
+    const additionalParameters = createGoogleAnalyticsLanguageParameter(action);
+    const analytics = createAnalytics(additionalParameters);
+    const screenHit = createScreenHit(action.payload.location.pathname);
+    analytics.hit(screenHit);
 };
 
-// See https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters for parameter reference.
-// Add any additionally required parameters to this interface.
-interface GoogleAnalyticsParameters {
-    readonly aip: number;
-    readonly ul?: string;
-}
-
-const createGoogleAnalyticsParameters = (action: WatchedAction): GoogleAnalyticsParameters => {
-    if (action.type === constants.ROUTE_CHANGED) {
-        return {
-            aip: 1,
-            ul: action.payload.locale.code,
-        };
-    }
-    return {
-        aip: 1,
-    };
+const sendAnswerChosenEvent = (): void => {
+    const analytics = createAnalytics();
+    const event = createEvent('Questionnaire', 'ChooseAnswer', 'no answer id');
+    analytics.hit(event);
 };
 
-interface ExpoAnalyticsDebugValue {
-    readonly debug: boolean;
+const sendBookmarkAddedEvent = (): void => {
+    const analytics = createAnalytics();
+    const event = createEvent('Bookmarks', 'SaveTopic', 'no topic id');
+    analytics.hit(event);
+};
+
+const createScreenHit = (path: string): any => (
+    new ScreenHit(path)
+);
+
+const createEvent = (category: string, action: string, label?: string, value?: number): any => (
+    new Event(category, action, label, value)
+);
+
+interface GoogleAnalyticsLanguageParameter {
+    readonly ul: string;
 }
 
-const createExpoAnalyticsDebugValue = (): ExpoAnalyticsDebugValue => ({
-    debug: DEBUG_GOOGLE_ANALYTICS === 'true',
+const createGoogleAnalyticsLanguageParameter = (action: RouteChangedAction): GoogleAnalyticsLanguageParameter => ({
+    ul: action.payload.locale.code,
 });
 
-const createExpoAnalytics = (parameters: GoogleAnalyticsParameters, debug: ExpoAnalyticsDebugValue): any => (
-    new ExpoAnalytics(
+interface GoogleAnalyticsAnonymizeIPParameter {
+    readonly aip: number;
+}
+
+const createGoogleAnalyticsAnonymizeIPParameter = (): GoogleAnalyticsAnonymizeIPParameter => ({
+    aip: 1,
+});
+
+const createAnalytics = (additionalParameters?: object): any => {
+    const parameters = additionalParameters ?
+        { ...createGoogleAnalyticsAnonymizeIPParameter(), ...additionalParameters }
+        :
+        createGoogleAnalyticsAnonymizeIPParameter();
+    const debug = { debug: DEBUG_GOOGLE_ANALYTICS === 'true' };
+    return new ExpoAnalytics(
         GOOGLE_ANALYTICS_TRACKING_ID,
         parameters,
         debug,
-    )
-);
-
-const createScreenHit = (pathName: string): any => (
-    new ScreenHit(pathName)
-);
-
-const createAnswerChosenEvent = (): any => (
-    new Event('Questionnaire', 'ChooseAnswer', 'no answer id')
-);
-
-const createBookmarkAddedEvent = (): any => (
-    new Event('Bookmarks', 'SaveTopic', 'no topic id')
-);
+    );
+};
