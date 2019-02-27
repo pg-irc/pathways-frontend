@@ -76,10 +76,10 @@ const createGoogleAnalyticsAnonymizeIPParameter = (): GoogleAnalyticsAnonymizeIP
 });
 
 const createAnalytics = (additionalParameters?: object): any => {
-    const parameters = additionalParameters ?
-        { ...createGoogleAnalyticsAnonymizeIPParameter(), ...additionalParameters }
-        :
-        createGoogleAnalyticsAnonymizeIPParameter();
+    const parameters = {
+        ...createGoogleAnalyticsAnonymizeIPParameter(),
+        ...additionalParameters,
+    };
     const debug = { debug: DEBUG_GOOGLE_ANALYTICS === 'true' };
     return new ExpoAnalytics(
         GOOGLE_ANALYTICS_TRACKING_ID,
