@@ -9,30 +9,39 @@ import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connect
 import { RouterProps } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
+import { Locale } from '../../locale';
 
-interface HeaderMenuState {
-    readonly isHeaderMenuShowing: boolean;
-}
-
-export type MainComponentProps = FooterProps & RouterProps;
+export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
 export interface MainComponentActions {
-    readonly routeChanged: (location: Location, action: Action) => RouteChangedAction;
+    readonly sendAnalyticsData: (location: Location, locale: Locale) => RouteChangedAction;
+}
+
+interface MainProps {
+    readonly locale: Locale;
 }
 
 type Props = MainComponentProps & MainComponentActions;
 
-export class MainComponent extends React.Component<Props> {
+interface State {
+    readonly isHeaderMenuShowing: boolean;
+}
 
-    readonly state: HeaderMenuState = {
-        isHeaderMenuShowing: false,
-    };
+export class MainComponent extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
+        this.state = {
+            isHeaderMenuShowing: false,
+        };
         this.openDrawer = this.openDrawer.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
-        props.history.listen(props.routeChanged);
+    }
+
+    componentDidMount(): void {
+        this.props.history.listen((location: Location, _: Action) =>
+            this.props.sendAnalyticsData(location, this.props.locale),
+        );
     }
 
     render(): JSX.Element {
