@@ -3,17 +3,19 @@ import React from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
-import { Service } from '../../stores/services';
+import { Service, TaskServicesError } from '../../stores/services';
 import { TaskServices } from '../../selectors/services/task_services';
 import { Task } from '../../selectors/tasks/task';
 import { ServiceListItemComponent } from './service_list_item_component';
 import { UpdateTaskServicesAsync } from '../../stores/services';
 import { textStyles, colors, values } from '../../application/styles';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
+import { ServiceListErrorComponent } from './service_list_error_component';
 
 export interface ServiceListProps {
     readonly task: Task;
     readonly taskServices: TaskServices;
+    readonly taskServicesError: TaskServicesError;
 }
 
 export interface ServiceListActions {
@@ -41,6 +43,9 @@ export class ServiceListComponent extends React.Component<Props> {
 
     render(): JSX.Element {
         return (
+            this.props.taskServicesError ?
+            <ServiceListErrorComponent error={this.props.taskServicesError} />
+            :
             <FlatList
                 style={{ backgroundColor: colors.lightGrey }}
                 refreshing={this.props.taskServices.loading}

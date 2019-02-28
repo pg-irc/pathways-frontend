@@ -11,6 +11,7 @@ import {
     ServiceListActions, TaskServiceUpdater,
 } from './service_list_component';
 import { Routes, getParametersFromPath } from '../../application/routing';
+import { selectTaskServicesError } from '../../selectors/services/select_task_services_error';
 
 type OwnProps = {
     readonly location: Location;
@@ -22,6 +23,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => 
     return {
         task: task,
         taskServices: selectTaskServices(task.id, store),
+        taskServicesError: selectTaskServicesError(task.id, store),
     };
 };
 
