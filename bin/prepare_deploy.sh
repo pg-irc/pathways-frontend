@@ -1,8 +1,15 @@
 #!/bin/bash
 
 VERSION=$1
-POSTGRES_USER=$2
-WORKING_DIRECTORY=$3
+ANDROID_VERSION_CODE=$2
+POSTGRES_USER=$3
+WORKING_DIRECTORY=$4
+
+usage() {
+    echo
+    echo "Usage: prepare_deploy.sh versionString androidVersionCode postgresUserId workingDirectory"
+    echo
+}
 
 validateExpoUser() {
     if expo whoami 2> /dev/null | grep -q 'Logged in as peacegeeks'; then
@@ -17,18 +24,28 @@ validateCommandLine () {
     if [ "$VERSION" == "" ]
     then
         echo "Error: Must specify version string"
+        usage
+        exit
+    fi
+
+    if [ "$ANDROID_VERSION_CODE" == "" ]
+    then
+        echo "Error: Must specify android version code"
+        usage
         exit
     fi
 
     if [ "$WORKING_DIRECTORY" == "" ]
     then
         echo "Error: Must specify working directory, which must not already exist"
+        usage
         exit
     fi
 
     if [ "$POSTGRES_USER" == "" ]
     then
         echo "Error: Must specify postgres user, as in pathways-backend/.env"
+        usage
         exit
     fi
 }
@@ -80,6 +97,13 @@ validateCheckedOutVersion() {
     if [ "$FILE_VERSION" != "$VERSION" ]
     then
         echo "Error: client VERSION.txt contains $FILE_VERSION, when $VERSION was expected"
+        exit
+    fi
+
+    FILE_CODE=$(grep versionCode "$WORKING_DIRECTORY/pathways-frontend/app.json")
+    if [ "$FILE_CODE" != "      \"versionCode\": $ANDROID_VERSION_CODE," ]
+    then
+        echo "Error: client app.json contains $FILE_CODE when $ANDROID_VERSION_CODE was expected"
         exit
     fi
 }
