@@ -4,11 +4,17 @@ VERSION=$1
 ANDROID_VERSION_CODE=$2
 POSTGRES_USER=$3
 WORKING_DIRECTORY=$4
+SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
+CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
+CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
 
 usage() {
     echo
-    echo "Usage: prepare_deploy.sh versionString androidVersionCode postgresUserId workingDirectory"
+    echo "Usage:"
     echo
+    echo "    prepare_deploy.sh versionString androidVersionCode postgresUserId workingDirectory"
+    echo
+    echo "workingDirectory should not already exist, it will be used to clone three git repositories and build the client"
 }
 
 validateExpoUser() {
@@ -50,10 +56,6 @@ validateCommandLine () {
     fi
 }
 
-createWorkingDirectory() {
-    mkdir "$WORKING_DIRECTORY"
-}
-
 checkForSuccess () {
     if [ "$?" != "0" ]
     then
@@ -62,45 +64,53 @@ checkForSuccess () {
     fi
 }
 
+createWorkingDirectory() {
+    mkdir "$WORKING_DIRECTORY"
+    checkForSuccess "create working directory"
+}
+
 checkOutContentByTag() {
     echo "Checking out content tagged with $VERSION"
     (cd "$WORKING_DIRECTORY" && git clone git@github.com:PeaceGeeksSociety/content.git)
+    checkForSuccess "clone content repo"
 
-    (cd "$WORKING_DIRECTORY/content" && git fetch --tags)
+    (cd "$CONTENT_DIRECTORY" && git fetch --tags)
     checkForSuccess "fetch tags for content"
 
-    (cd "$WORKING_DIRECTORY/content" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
+    (cd "$CONTENT_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
     checkForSuccess "check out tag for content"
 }
 
 checkOutClientByTag() {
     echo "Checking out client tagged with $VERSION"
     (cd "$WORKING_DIRECTORY" && git clone git@github.com:pg-irc/pathways-frontend.git)
+    checkForSuccess "clone client repo"
 
-    (cd "$WORKING_DIRECTORY/pathways-frontend" && git fetch --tags)
+    (cd "$CLIENT_DIRECTORY" && git fetch --tags)
     checkForSuccess "fetch tags for client"
 
-    (cd "$WORKING_DIRECTORY/pathways-frontend" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
+    (cd "$CLIENT_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
     checkForSuccess "check out tag for client"
 }
 
 checkOutServer() {
     echo "Checking out master for server"
     (cd "$WORKING_DIRECTORY" && git clone git@github.com:pg-irc/pathways-backend.git)
+    checkForSuccess "clone server repo"
 
-    (cd "$WORKING_DIRECTORY/pathways-backend" && git checkout master)
+    (cd "$SERVER_DIRECTORY" && git checkout master)
     checkForSuccess "check out master for server"
 }
 
 validateCheckedOutVersion() {
-    FILE_VERSION=$(cat "$WORKING_DIRECTORY/pathways-frontend/VERSION.txt")
+    FILE_VERSION=$(cat "$CLIENT_DIRECTORY/VERSION.txt")
     if [ "$FILE_VERSION" != "$VERSION" ]
     then
         echo "Error: client VERSION.txt contains $FILE_VERSION, when $VERSION was expected"
         exit
     fi
 
-    FILE_CODE=$(grep versionCode "$WORKING_DIRECTORY/pathways-frontend/app.json")
+    FILE_CODE=$(grep versionCode "$CLIENT_DIRECTORY/app.json")
     if [ "$FILE_CODE" != "      \"versionCode\": $ANDROID_VERSION_CODE," ]
     then
         echo "Error: client app.json contains $FILE_CODE when $ANDROID_VERSION_CODE was expected"
@@ -112,53 +122,73 @@ removeContentInUnsuppotedLanguages() {
     for language in ko tl zh_CN
     do
         echo "Removing Newcomers Guide content in language $language"
-        path="$WORKING_DIRECTORY/content/NewcomersGuide/Chapter*/topics/*/$language.*"
+        path="$CONTENT_DIRECTORY/NewcomersGuide/Chapter*/topics/*/$language.*"
         rm -f $path
+        checkForSuccess "remove files $path"
     done
 }
 
 getServerDependencies() {
-    (cd "$WORKING_DIRECTORY/pathways-backend" &&\
+    (cd "$SERVER_DIRECTORY" &&\
         python3 -m venv .venv &&\
         source .venv/bin/activate &&\
         pip install -r requirements/local.txt)
+    checkForSuccess "install requirements for the server"
 }
 
 getClientDependencies() {
-    (cd "$WORKING_DIRECTORY/pathways-frontend" && yarn)
+    (cd "$CLIENT_DIRECTORY" && yarn)
+    checkForSuccess "install requirements for the client"
 }
 
 createServerEnvironment() {
-    echo "POSTGRES_USER=$POSTGRES_USER" > "$WORKING_DIRECTORY/pathways-backend/.env"
+    echo "POSTGRES_USER=$POSTGRES_USER" > "$SERVER_DIRECTORY/.env"
+    checkForSuccess "create server environment"
 }
 
 createClientEnvironment() {
-    echo "VERSION=$VERSION"                                   > "$WORKING_DIRECTORY/pathways-frontend/.env"
-    echo "API_URL=https://pathways-production.herokuapp.com" >> "$WORKING_DIRECTORY/pathways-frontend/.env"
-    # TODO make this an argument
-    echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"      >> "$WORKING_DIRECTORY/pathways-frontend/.env"
-    echo "DEBUG_GOOGLE_ANALYTICS=false"                      >> "$WORKING_DIRECTORY/pathways-frontend/.env"
+    echo "VERSION=$VERSION"                                   > "$CLIENT_DIRECTORY/.env"
+    echo "API_URL=https://pathways-production.herokuapp.com" >> "$CLIENT_DIRECTORY/.env"
+    echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"      >> "$CLIENT_DIRECTORY/.env"
+    echo "DEBUG_GOOGLE_ANALYTICS=false"                      >> "$CLIENT_DIRECTORY/.env"
+    checkForSuccess "create client environment"
+}
+
+setSentryAuthToken() {
+    echo
+    echo "Manual step:"
+    echo
+    echo " edit $CLIENT_DIRECTORY/app.json"
+    echo
+    echo "and set the Sentry auth token. Log into our accont on https://sentry.io to retrieve an auth token."
+    echo
+    read -p "Press enter to continue"
 }
 
 buildContentFixture() {
-    (cd "$WORKING_DIRECTORY/pathways-backend" &&\
+    (cd "$SERVER_DIRECTORY" &&\
         source .venv/bin/activate &&\
         ./manage.py import_newcomers_guide ../content &&\
         mv *.ts ../pathways-frontend/src/fixtures/newcomers_guide/ )
+    checkForSuccess "build content fixture"
 }
 
 buildClientLocally() {
-    (cd "$WORKING_DIRECTORY/pathways-frontend" && yarn clean && yarn build)
+    (cd "$CLIENT_DIRECTORY" && yarn clean && yarn build)
+    checkForSuccess "build client"
 }
 
 testClient() {
-    (cd "$WORKING_DIRECTORY/pathways-frontend" && yarn test )
+    (cd "$CLIENT_DIRECTORY" && yarn test )
+    checkForSuccess "test client"
 }
 
-buildClientOnExpo() {
-    (cd "$WORKING_DIRECTORY/pathways-frontend" &&\
-        yarn run expo bi --release-channel release &&\
-        yarn run expo ba --release-channel release)
+buildClientForIOs() {
+    (cd "$CLIENT_DIRECTORY" && yarn run expo bi --release-channel release)
+}
+
+buildClientForAndroid() {
+    (cd "$CLIENT_DIRECTORY" && yarn run expo ba --release-channel release)
 }
 
 validateCommandLine
@@ -179,5 +209,8 @@ buildContentFixture
 getClientDependencies
 createClientEnvironment
 buildClientLocally
+setSentryAuthToken
 testClient
-buildClientOnExpo
+
+buildClientForIOs
+buildClientForAndroid
