@@ -8,7 +8,6 @@ export function selectTaskServices(taskId: TaskId, store: Store): TaskServices {
     const taskServices = servicesStore.taskServicesMap[taskId] || buildDefaultTaskServices();
     return {
         loading: taskServices.loading,
-        message: taskServices.message,
         services: taskServices.serviceIds.map((serviceId: ServiceId) => servicesStore.serviceMap[serviceId]),
     };
 }

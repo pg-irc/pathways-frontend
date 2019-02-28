@@ -1,15 +1,17 @@
 // tslint:disable:no-let no-expression-statement
 import * as constants from '../../application/constants';
-import { reducer, UpdateTaskServicesAsync, Service } from '../services';
+import { reducer, UpdateTaskServicesAsync, Service, ErrorMessageTypes } from '../services';
 import { TaskBuilder } from './helpers/tasks_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
-import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder } from './helpers/services_helpers';
+import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
 
 describe('services reducer', () => {
     const loadedTask = new TaskServicesBuilder();
     const loadingTask = new TaskServicesBuilder().withLoading(true);
+    const taskWithError = new TaskServicesBuilder();
     const initialService = new ServiceBuilder();
-    const theStore = buildNormalizedServices([loadedTask, loadingTask], [initialService]);
+    const initialErrors = new TaskServicesErrorBuilder().withTaskId(taskWithError.id);
+    const theStore = buildNormalizedServices([loadedTask, loadingTask], [initialService], [initialErrors]);
 
     it('returns a unmodified store when the action is unknown', () => {
         expect(reducer(theStore, { type: '' })).toBe(theStore);
@@ -32,8 +34,20 @@ describe('services reducer', () => {
             expect(taskServices.loading).toBe(true);
         });
 
-        it('clears the task services error message', () => {
-            expect(taskServices.message).toBe('');
+        it('does not add entry to errors map', () => {
+            expect(store.taskServicesErrors[task.id]).toBeUndefined();
+        });
+
+    });
+
+    describe('on UPDATE_SERVICES_REQUEST for tasks with errors', () => {
+        it('removes entry from errors map', () => {
+            const action: UpdateTaskServicesAsync.Request = {
+                type: constants.LOAD_SERVICES_REQUEST,
+                payload: { taskId: taskWithError.id },
+            };
+            const store = reducer(theStore, action);
+            expect(store.taskServicesErrors).toEqual({});
         });
     });
 
@@ -69,6 +83,21 @@ describe('services reducer', () => {
             const taskServices = store.taskServicesMap[task.id];
             expect(taskServices.serviceIds).not.toContain(initialService.id);
         });
+
+        it('does not add entry to errors map', () => {
+            expect(store.taskServicesErrors[task.id]).toBeUndefined();
+        });
+    });
+
+    describe('on UPDATE_SERVICES_SUCCESS for tasks with errors', () => {
+        it('removes entry from errors map', () => {
+            const action: UpdateTaskServicesAsync.Request = {
+                type: constants.LOAD_SERVICES_REQUEST,
+                payload: { taskId: taskWithError.id },
+            };
+            const store = reducer(theStore, action);
+            expect(store.taskServicesErrors).toEqual({});
+        });
     });
 
     describe('on UPDATE_SERVICES_FAILURE', () => {
@@ -76,16 +105,29 @@ describe('services reducer', () => {
         const message = aString();
         const action: UpdateTaskServicesAsync.Failure = {
             type: constants.LOAD_SERVICES_FAILURE,
-            payload: { taskId: task.id, message },
+            payload: {
+                errorMessage: message,
+                taskId: task.id,
+                errorMessageType: ErrorMessageTypes.Server,
+            },
         };
         const store = reducer(theStore, action);
+        const taskServicesErrors = store.taskServicesErrors[task.id];
 
         it('sets the task services as not loading', () => {
             expect(store.taskServicesMap[task.id].loading).toBe(false);
         });
 
         it('sets the task services error message', () => {
-            expect(store.taskServicesMap[task.id].message).toBe(message);
+            expect(taskServicesErrors.errorMessage).toBe(message);
+        });
+
+        it('sets the task services error message type', () => {
+            expect(taskServicesErrors.errorMessageType).toBe(ErrorMessageTypes.Server);
+        });
+
+        it('sets the task services error message task id', () => {
+            expect(taskServicesErrors.taskId).toBe(task.id);
         });
 
         it('doesn\'t modify existing (cached) task services', () => {

@@ -1,13 +1,16 @@
 import * as R from 'ramda';
 import * as constants from '../../application/constants';
-import { Id, Service, ServiceStore, ServiceMap, TaskServices, PhoneNumber } from './types';
-import { UpdateTaskServicesAsync, updateTaskServicesAsync } from './update_task_services';
+import {
+    Id, Service, ServiceStore, ServiceMap, TaskServices,
+    PhoneNumber, TaskServicesErrorsMap, TaskServicesError,
+} from './types';
+import { UpdateTaskServicesAsync, updateTaskServicesAsync, ErrorMessageTypes } from './update_task_services';
 import { Action } from 'redux';
 import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressWithTypeJSON, Address } from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
-export { Id, Service, ServiceStore, PhoneNumber, Address };
-export { UpdateTaskServicesAsync, updateTaskServicesAsync };
+export { Id, Service, ServiceStore, PhoneNumber, Address, TaskServicesErrorsMap, TaskServicesError };
+export { UpdateTaskServicesAsync, updateTaskServicesAsync, ErrorMessageTypes };
 export { serviceAtLocation, serviceAtLocationArray };
 
 export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): Service {
@@ -36,7 +39,7 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
         phoneNumbers: phoneNumbers,
         addresses: addresses,
         website: data.service.organization_url,
-        email: data.service.organization_email
+        email: data.service.organization_email,
     };
 }
 
@@ -44,13 +47,13 @@ export function buildDefaultStore(): ServiceStore {
     return {
         serviceMap: {},
         taskServicesMap: {},
+        taskServicesErrors: {},
     };
 }
 
 export function buildDefaultTaskServices(): TaskServices {
     return {
         loading: false,
-        message: '',
         serviceIds: [],
     };
 }
@@ -75,8 +78,9 @@ function updateServicesRequest(store: ServiceStore, action: UpdateTaskServicesAs
         ...store,
         taskServicesMap: {
             ...store.taskServicesMap,
-            [taskId]: { ...taskServices, message: '', loading: true },
+            [taskId]: { ...taskServices, loading: true },
         },
+        taskServicesErrors: buildErrorsWithoutTask(taskId, store.taskServicesErrors),
     };
 }
 
@@ -90,17 +94,23 @@ function updateServicesSuccess(store: ServiceStore, action: UpdateTaskServicesAs
         ...store,
         serviceMap: { ...store.serviceMap, ...serviceMap },
         taskServicesMap: { ...store.taskServicesMap, ...taskServicesMap },
+        taskServicesErrors: buildErrorsWithoutTask(taskId, store.taskServicesErrors),
     };
 }
 
 function updateServicesFailure(store: ServiceStore, action: UpdateTaskServicesAsync.Failure): ServiceStore {
     const taskId = action.payload.taskId;
-    const message = action.payload.message;
+    const errorMessage = action.payload.errorMessage;
+    const errorMessageType = action.payload.errorMessageType;
     return {
         ...store,
         taskServicesMap: {
             ...store.taskServicesMap,
-            [taskId]: { ...store.taskServicesMap[taskId], message, loading: false },
+            [taskId]: { ...store.taskServicesMap[taskId], loading: false },
+        },
+        taskServicesErrors: {
+            ...store.taskServicesErrors,
+            [taskId]: { taskId, errorMessage, errorMessageType },
         },
     };
 }
@@ -111,3 +121,7 @@ function createServiceMap(services: ReadonlyArray<Service>): ServiceMap {
     };
     return services.reduce(theReducer, {});
 }
+
+const buildErrorsWithoutTask = (taskId: Id, taskServicesErrors: TaskServicesErrorsMap): TaskServicesErrorsMap => (
+    R.reject(R.propEq('taskId', taskId), taskServicesErrors)
+);

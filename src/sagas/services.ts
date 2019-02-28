@@ -2,7 +2,7 @@
 import * as R from 'ramda';
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
-import { UpdateTaskServicesAsync, updateTaskServicesAsync, serviceFromValidatedJSON } from '../stores/services';
+import { UpdateTaskServicesAsync, updateTaskServicesAsync, serviceFromValidatedJSON, ErrorMessageTypes } from '../stores/services';
 import { API } from '../api';
 import { APIResponse } from '../api/api_client';
 import { servicesAtLocationValidator } from '../json_schemas/validators';
@@ -20,16 +20,21 @@ export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): Up
         const maybeLocation = yield call(getLocationIfPermittedAsync);
         const response: APIResponse = yield call([API, API.searchServices], taskId, maybeLocation);
         const validator = servicesAtLocationValidator(response.results);
+        const hasNoLocation = !maybeLocation;
+        const hasResponseErrors = response.hasError;
+        const hasValidationErrors = !validator.isValid;
 
-        if (response.hasError) {
-            yield put(updateTaskServicesAsync.failure(response.message, taskId));
-        } else if (!validator.isValid) {
-            yield put(updateTaskServicesAsync.failure(validator.errors, taskId));
+        if (hasNoLocation) {
+            yield put(updateTaskServicesAsync.failure('Location error', taskId, ErrorMessageTypes.Location));
+        } else if (hasResponseErrors) {
+            yield put(updateTaskServicesAsync.failure(response.message, taskId, ErrorMessageTypes.Server));
+        } else if (hasValidationErrors) {
+            yield put(updateTaskServicesAsync.failure(validator.errors, taskId, ErrorMessageTypes.Server));
         } else {
             yield put(updateTaskServicesAsync.success(taskId, R.map(serviceFromValidatedJSON, response.results)));
         }
     } catch (error) {
-        yield put(updateTaskServicesAsync.failure(error.message, taskId));
+        yield put(updateTaskServicesAsync.failure(error.message, taskId, ErrorMessageTypes.Exception));
     }
 }
 

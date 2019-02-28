@@ -8,6 +8,12 @@ interface UpdateTaskServicesAction<P extends {} = {}> extends ReduxAction {
     readonly payload: P;
 }
 
+export enum ErrorMessageTypes {
+    Location,
+    Server,
+    Exception,
+}
+
 export namespace UpdateTaskServicesAsync {
     export interface Request extends UpdateTaskServicesAction {
         readonly payload: { readonly taskId: TaskId; };
@@ -16,7 +22,11 @@ export namespace UpdateTaskServicesAsync {
         readonly payload: { readonly taskId: TaskId; readonly services: ReadonlyArray<Service>; };
     }
     export interface Failure extends UpdateTaskServicesAction {
-        readonly payload: { readonly taskId: TaskId; readonly message: string; };
+        readonly payload: {
+            readonly taskId: TaskId;
+            readonly errorMessage: string;
+            readonly errorMessageType: ErrorMessageTypes
+        };
     }
     export type Result = Success | Failure;
     export type Action = Request | Result;
@@ -29,7 +39,7 @@ export const updateTaskServicesAsync = {
     success(taskId: TaskId, services: ReadonlyArray<Service>): UpdateTaskServicesAsync.Success {
         return helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { taskId, services });
     },
-    failure(message: string, taskId: TaskId): UpdateTaskServicesAsync.Failure {
-        return helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { message, taskId });
+    failure(errorMessage: string, taskId: TaskId, errorMessageType: ErrorMessageTypes): UpdateTaskServicesAsync.Failure {
+        return helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { errorMessage, taskId, errorMessageType });
     },
 };

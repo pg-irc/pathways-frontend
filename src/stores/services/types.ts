@@ -1,3 +1,5 @@
+import { ErrorMessageTypes } from './update_task_services';
+
 export type Id = string;
 
 export interface PhoneNumber {
@@ -30,7 +32,12 @@ export interface Service {
 export interface TaskServices {
     readonly loading: boolean;
     readonly serviceIds: ReadonlyArray<Id>;
-    readonly message: string;
+}
+
+export interface TaskServicesError {
+    readonly taskId: string;
+    readonly errorMessage: string;
+    readonly errorMessageType: ErrorMessageTypes;
 }
 
 export interface ServiceMap {
@@ -41,9 +48,14 @@ export interface TaskServicesMap {
     readonly [taskId: string]: TaskServices;
 }
 
+export interface TaskServicesErrorsMap {
+    readonly [taskId: string]: TaskServicesError;
+}
+
 export interface ServiceStore {
     readonly serviceMap: ServiceMap;
     readonly taskServicesMap: TaskServicesMap;
+    readonly taskServicesErrors: TaskServicesErrorsMap;
 }
 
 export interface ValidatedPhoneNumberJSON {
