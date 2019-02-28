@@ -20,6 +20,7 @@ export const colors = {
     melon: '#fc7a57',
     sepia: '#8b572a',
     purple: '#541388',
+    burntSienna: '#ED604B',
   };
 
 export const values = {

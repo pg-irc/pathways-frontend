@@ -2,6 +2,8 @@ import { colors } from '../../application/styles';
 
 export const getColorForExploreIcon = (icon: string): string => {
     switch (icon) {
+        case 'check-square-o':
+            return colors.burntSienna;
         case 'street-view':
             return colors.turquoiseBlue;
         case 'building':
