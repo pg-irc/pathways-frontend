@@ -730,6 +730,22 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 isInverted: false,
                 'taxonomyTerms': [],
             },
+            'answerAlreadyHaveLowIncomeSupport': {
+                id: 'answerAlreadyHaveLowIncomeSupport',
+                questionId: 'questionLowIncome',
+                text: {
+                    'en': 'I have low income assistance',
+                },
+                isChosen: false,
+                isInverted: false,
+                'taxonomyTerms': [{
+                    'taxonomyId': 'group',
+                    'taxonomyTermId': 'low_income',
+                }, {
+                    'taxonomyId': 'housing',
+                    'taxonomyTermId': 'lowIncome',
+                }],
+            },
             'answerAdultEducationTraining': {
                 id: 'answerAdultEducationTraining',
                 questionId: 'questionOther',
