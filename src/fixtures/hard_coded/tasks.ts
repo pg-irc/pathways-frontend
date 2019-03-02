@@ -1,3 +1,4 @@
+//This file is only included in the build if 'newcomers_guide/tasks.ts' is not present
 import { ValidTaskStore } from '../types/tasks';
 import { Taxonomies } from '../../application/constants';
 

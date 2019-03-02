@@ -8,8 +8,8 @@ const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 export const buildExploreFixture = (): ExploreStore => (
     {
         sections: {
-            's1': {
-                id: 's1',
+            'rightaway': {
+                id: 'rightaway',
                 name: {
                     'en': 'Things to do right away',
                 },
@@ -21,8 +21,8 @@ export const buildExploreFixture = (): ExploreStore => (
                     'taxonomyTermId': 'rightaway',
                 }],
             },
-            's2': {
-                id: 's2',
+            'settling_in': {
+                id: 'settling_in',
                 name: {
                     'en': 'Settling in',
                     'ar': 'تستقر في',
@@ -38,8 +38,8 @@ export const buildExploreFixture = (): ExploreStore => (
                     'taxonomyTermId': 'settling_in',
                 }],
             },
-            's3': {
-                id: 's3',
+            'education': {
+                id: 'education',
                 name: {
                     'en': 'Education',
                     'ar': 'التعليم',
@@ -55,8 +55,8 @@ export const buildExploreFixture = (): ExploreStore => (
                     'taxonomyTermId': 'education',
                 }],
             },
-            's4': {
-                id: 's4',
+            'healthCare': {
+                id: 'healthCare',
                 name: {
                     'en': 'Health care',
                     'ar': 'الرعاية الصحية',
@@ -72,8 +72,8 @@ export const buildExploreFixture = (): ExploreStore => (
                     'taxonomyTermId': 'healthCare',
                 }],
             },
-            's5': {
-                id: 's5',
+            'money': {
+                id: 'money',
                 name: {
                     'en': 'Money & banking',
                     'ar': 'المال والبنوك',
@@ -89,8 +89,8 @@ export const buildExploreFixture = (): ExploreStore => (
                     'taxonomyTermId': 'money',
                 }],
             },
-            's6': {
-                id: 's6',
+            'housing': {
+                id: 'housing',
                 name: {
                     'en': 'Housing',
                     'ar': 'الإسكان',
@@ -106,8 +106,8 @@ export const buildExploreFixture = (): ExploreStore => (
                     'taxonomyTermId': 'housing',
                 }],
             },
-            's7': {
-                id: 's7',
+            'employment': {
+                id: 'employment',
                 name: {
                     'en': 'Employment',
                     'ar': 'توظيف',
@@ -123,8 +123,8 @@ export const buildExploreFixture = (): ExploreStore => (
                     'taxonomyTermId': 'employment',
                 }],
             },
-            's8': {
-                id: 's8',
+            'legal': {
+                id: 'legal',
                 name: {
                     'en': 'Legal system & immigration',
                     'ar': 'النظام القانوني والهجرة',
@@ -140,8 +140,8 @@ export const buildExploreFixture = (): ExploreStore => (
                     'taxonomyTermId': 'legal',
                 }],
             },
-            's9': {
-                id: 's9',
+            'driving': {
+                id: 'driving',
                 name: {
                     'en': 'Driving',
                     'ar': 'القيادة',
@@ -157,8 +157,8 @@ export const buildExploreFixture = (): ExploreStore => (
                     'taxonomyTermId': 'driving',
                 }],
             },
-            's10': {
-                id: 's10',
+            'helpForIndividualsAndFamilies': {
+                id: 'helpForIndividualsAndFamilies',
                 name: {
                     'en': 'Help for individuals & families',
                     'ar': 'مساعدة للأفراد والعائلات',

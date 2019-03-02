@@ -1,3 +1,4 @@
+//This file is only included in the build if 'newcomers_guide/taxonomies.ts' is not present
 import { TaxonomyStore } from '../types/taxonomies';
 import { Taxonomies } from '../../application/constants';
 
