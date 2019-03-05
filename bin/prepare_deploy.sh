@@ -1,7 +1,12 @@
 #!/bin/bash
 
+# This script completes the steps needed to publish the client to the App Store (Apple) and Play Store (Android)
+
 VERSION=$1
 ANDROID_VERSION_CODE=$2
+# The command "./manage.py import_newcomers_guide" requires database access in order to retrieve
+# related tasks from the database. The related tasks must already have been computed, see the
+# server side prepare deploy script
 POSTGRES_USER=$3
 WORKING_DIRECTORY=$4
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
