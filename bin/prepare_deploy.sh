@@ -184,6 +184,17 @@ buildContentFixture() {
     checkForSuccess "build content fixture"
 }
 
+checkContentFixture() {
+    # with related tasks, the file will contain "relatedTasks": [task_id],
+    # without related tasks it contains just "relatedTasks": []
+    if grep -q "\"relatedTasks\": \[\]" "$CLIENT_DIRECTORY/src/fixtures/newcomers_guide/tasks.ts"
+    then
+        echo "Error: tasks.ts does not contain related tasks"
+        echo "Run the server side prepare_deploy script to populate the db with related task scores"
+        exit
+    fi
+}
+
 buildClientLocally() {
     (cd "$CLIENT_DIRECTORY" && yarn clean && yarn build)
     checkForSuccess "build client"
@@ -222,6 +233,7 @@ removeContentInUnsuppotedLanguages
 getServerDependencies
 createServerEnvironment
 buildContentFixture
+checkContentFixture
 
 getClientDependencies
 createClientEnvironment
