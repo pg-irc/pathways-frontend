@@ -75,7 +75,9 @@ createWorkingDirectory() {
 }
 
 checkOutContentByTag() {
+    echo
     echo "Checking out content tagged with $VERSION"
+    echo
     (cd "$WORKING_DIRECTORY" && git clone git@github.com:PeaceGeeksSociety/content.git)
     checkForSuccess "clone content repo"
 
@@ -87,7 +89,9 @@ checkOutContentByTag() {
 }
 
 checkOutClientByTag() {
+    echo
     echo "Checking out client tagged with $VERSION"
+    echo
     (cd "$WORKING_DIRECTORY" && git clone git@github.com:pg-irc/pathways-frontend.git)
     checkForSuccess "clone client repo"
 
@@ -99,7 +103,9 @@ checkOutClientByTag() {
 }
 
 checkOutServer() {
+    echo
     echo "Checking out master for server"
+    echo
     (cd "$WORKING_DIRECTORY" && git clone git@github.com:pg-irc/pathways-backend.git)
     checkForSuccess "clone server repo"
 
@@ -188,12 +194,18 @@ testClient() {
     checkForSuccess "test client"
 }
 
-buildClientForIOs() {
-    (cd "$CLIENT_DIRECTORY" && yarn run expo bi --release-channel release)
+giveExpoCommandsForPublishing() {
+    echo "To publish the client for both platforms, run these commands: "
+    echo
+    echo "(cd $CLIENT_DIRECTORY && yarn run expo bi --release-channel release)"
+    echo "(cd $CLIENT_DIRECTORY && yarn run expo ba --release-channel release)"
+    echo
 }
 
-buildClientForAndroid() {
-    (cd "$CLIENT_DIRECTORY" && yarn run expo ba --release-channel release)
+runClientForFinalQA() {
+    echo "Confirm that the build is ready for release:"
+
+    (cd "$CLIENT_DIRECTORY" && yarn start -c)
 }
 
 validateCommandLine
@@ -217,5 +229,6 @@ buildClientLocally
 setSentryAuthToken
 testClient
 
-buildClientForIOs
-buildClientForAndroid
+giveExpoCommandsForPublishing
+
+runClientForFinalQA
