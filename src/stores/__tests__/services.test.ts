@@ -20,7 +20,7 @@ describe('services reducer', () => {
         expect(reducer(theStore)).toBe(theStore);
     });
 
-    describe('on UPDATE_SERVICES_REQUEST', () => {
+    describe('when sending a task services request', () => {
         const task = new TaskBuilder().build();
         const action: SendTaskServicesRequestAction = {
             type: constants.LOAD_SERVICES_REQUEST,
@@ -43,7 +43,7 @@ describe('services reducer', () => {
 
     });
 
-    describe('on UPDATE_SERVICES_REQUEST for tasks with errors', () => {
+    describe('when sending a task services request for tasks with errors', () => {
         it('removes entry from errors map', () => {
             const action: SendTaskServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
@@ -54,7 +54,7 @@ describe('services reducer', () => {
         });
     });
 
-    describe('on UPDATE_SERVICES_SUCCESS', () => {
+    describe('when populating task services from a success response', () => {
         const task = new TaskBuilder().withId(loadingTask.id).build();
         const services: ReadonlyArray<Service> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
         const action: PopulateTaskServicesFromSuccessAction = {
@@ -92,18 +92,19 @@ describe('services reducer', () => {
         });
     });
 
-    describe('on UPDATE_SERVICES_SUCCESS for tasks with errors', () => {
+    describe('when populating tasks services on a success response for tasks with errors', () => {
         it('removes entry from errors map', () => {
-            const action: SendTaskServicesRequestAction = {
-                type: constants.LOAD_SERVICES_REQUEST,
-                payload: { taskId: taskWithError.id },
+            const services: ReadonlyArray<Service> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
+            const action: PopulateTaskServicesFromSuccessAction = {
+                type: constants.LOAD_SERVICES_SUCCESS,
+                payload: { taskId: taskWithError.id, services },
             };
             const store = reducer(theStore, action);
             expect(store.taskServicesErrors).toEqual({});
         });
     });
 
-    describe('on UPDATE_SERVICES_FAILURE', () => {
+    describe('when populating task services from an error response', () => {
         const task = new TaskBuilder().withId(loadingTask.id).build();
         const message = aString();
         const action: PopulateTaskServicesFromErrorAction = {
