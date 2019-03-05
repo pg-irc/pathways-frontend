@@ -2,7 +2,11 @@
 import * as R from 'ramda';
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
-import { UpdateTaskServicesAsync, updateTaskServicesAsync, serviceFromValidatedJSON, ErrorMessageTypes } from '../stores/services';
+import {
+    SendTaskServicesRequestAction, PopulateTaskServicesFromSuccessAction,
+    populateTaskServicesFromSuccess, PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
+    ErrorMessageType, serviceFromValidatedJSON,
+} from '../stores/services';
 import { API } from '../api';
 import { APIResponse } from '../api/api_client';
 import { servicesAtLocationValidator } from '../json_schemas/validators';
@@ -12,9 +16,11 @@ export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
 }
 
-type UpdateResult = IterableIterator<CallEffect | PutEffect<UpdateTaskServicesAsync.Result>>;
+type SuccessOrFailureResult = PopulateTaskServicesFromSuccessAction | PopulateTaskServicesFromErrorAction;
 
-export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): UpdateResult {
+type UpdateResult = IterableIterator<CallEffect | PutEffect<SuccessOrFailureResult>>;
+
+export function* updateTaskServices(action: SendTaskServicesRequestAction): UpdateResult {
     const taskId = action.payload.taskId;
     try {
         const maybeLocation = yield call(getLocationIfPermittedAsync);
@@ -25,16 +31,16 @@ export function* updateTaskServices(action: UpdateTaskServicesAsync.Request): Up
         const hasValidationErrors = !validator.isValid;
 
         if (hasNoLocation) {
-            yield put(updateTaskServicesAsync.failure('Location error', taskId, ErrorMessageTypes.Location));
+            yield put(populateTaskServicesFromError('Location error', taskId, ErrorMessageType.Location));
         } else if (hasResponseErrors) {
-            yield put(updateTaskServicesAsync.failure(response.message, taskId, ErrorMessageTypes.Server));
+            yield put(populateTaskServicesFromError(response.message, taskId, ErrorMessageType.Server));
         } else if (hasValidationErrors) {
-            yield put(updateTaskServicesAsync.failure(validator.errors, taskId, ErrorMessageTypes.Server));
+            yield put(populateTaskServicesFromError(validator.errors, taskId, ErrorMessageType.Server));
         } else {
-            yield put(updateTaskServicesAsync.success(taskId, R.map(serviceFromValidatedJSON, response.results)));
+            yield put(populateTaskServicesFromSuccess(taskId, R.map(serviceFromValidatedJSON, response.results)));
         }
     } catch (error) {
-        yield put(updateTaskServicesAsync.failure(error.message, taskId, ErrorMessageTypes.Exception));
+        yield put(populateTaskServicesFromError(error.message, taskId, ErrorMessageType.Exception));
     }
 }
 

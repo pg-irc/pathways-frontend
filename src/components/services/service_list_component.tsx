@@ -7,7 +7,7 @@ import { Service, TaskServicesError } from '../../stores/services';
 import { TaskServices } from '../../selectors/services/task_services';
 import { Task } from '../../selectors/tasks/task';
 import { ServiceListItemComponent } from './service_list_item_component';
-import { UpdateTaskServicesAsync } from '../../stores/services';
+import { SendTaskServicesRequestAction } from '../../stores/services';
 import { textStyles, colors, values } from '../../application/styles';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { ServiceListErrorComponent } from './service_list_error_component';
@@ -19,11 +19,11 @@ export interface ServiceListProps {
 }
 
 export interface ServiceListActions {
-    readonly requestUpdateOfServicesForTask: (task: Task) => UpdateTaskServicesAsync.Request;
+    readonly requestUpdateOfServicesForTask: (task: Task) => SendTaskServicesRequestAction;
 }
 
 export interface TaskServiceUpdater {
-    readonly requestUpdateTaskServices: () => UpdateTaskServicesAsync.Request;
+    readonly requestUpdateTaskServices: () => SendTaskServicesRequestAction;
 }
 
 type Props = ServiceListProps & ServiceListActions & TaskServiceUpdater;

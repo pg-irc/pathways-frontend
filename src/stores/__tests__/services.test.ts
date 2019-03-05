@@ -1,6 +1,9 @@
 // tslint:disable:no-let no-expression-statement
 import * as constants from '../../application/constants';
-import { reducer, UpdateTaskServicesAsync, Service, ErrorMessageTypes } from '../services';
+import {
+    reducer, SendTaskServicesRequestAction, PopulateTaskServicesFromSuccessAction,
+    PopulateTaskServicesFromErrorAction, Service, ErrorMessageType,
+} from '../services';
 import { TaskBuilder } from './helpers/tasks_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
@@ -13,13 +16,13 @@ describe('services reducer', () => {
     const initialErrors = new TaskServicesErrorBuilder().withTaskId(taskWithError.id);
     const theStore = buildNormalizedServices([loadedTask, loadingTask], [initialService], [initialErrors]);
 
-    it('returns a unmodified store when the action is unknown', () => {
-        expect(reducer(theStore, { type: '' })).toBe(theStore);
+    it('returns a unmodified store when the action is missing', () => {
+        expect(reducer(theStore)).toBe(theStore);
     });
 
     describe('on UPDATE_SERVICES_REQUEST', () => {
         const task = new TaskBuilder().build();
-        const action: UpdateTaskServicesAsync.Request = {
+        const action: SendTaskServicesRequestAction = {
             type: constants.LOAD_SERVICES_REQUEST,
             payload: { taskId: task.id },
         };
@@ -42,7 +45,7 @@ describe('services reducer', () => {
 
     describe('on UPDATE_SERVICES_REQUEST for tasks with errors', () => {
         it('removes entry from errors map', () => {
-            const action: UpdateTaskServicesAsync.Request = {
+            const action: SendTaskServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { taskId: taskWithError.id },
             };
@@ -54,7 +57,7 @@ describe('services reducer', () => {
     describe('on UPDATE_SERVICES_SUCCESS', () => {
         const task = new TaskBuilder().withId(loadingTask.id).build();
         const services: ReadonlyArray<Service> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
-        const action: UpdateTaskServicesAsync.Success = {
+        const action: PopulateTaskServicesFromSuccessAction = {
             type: constants.LOAD_SERVICES_SUCCESS,
             payload: { taskId: task.id, services },
         };
@@ -91,7 +94,7 @@ describe('services reducer', () => {
 
     describe('on UPDATE_SERVICES_SUCCESS for tasks with errors', () => {
         it('removes entry from errors map', () => {
-            const action: UpdateTaskServicesAsync.Request = {
+            const action: SendTaskServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { taskId: taskWithError.id },
             };
@@ -103,12 +106,12 @@ describe('services reducer', () => {
     describe('on UPDATE_SERVICES_FAILURE', () => {
         const task = new TaskBuilder().withId(loadingTask.id).build();
         const message = aString();
-        const action: UpdateTaskServicesAsync.Failure = {
+        const action: PopulateTaskServicesFromErrorAction = {
             type: constants.LOAD_SERVICES_FAILURE,
             payload: {
                 errorMessage: message,
                 taskId: task.id,
-                errorMessageType: ErrorMessageTypes.Server,
+                errorMessageType: ErrorMessageType.Server,
             },
         };
         const store = reducer(theStore, action);
@@ -123,7 +126,7 @@ describe('services reducer', () => {
         });
 
         it('sets the task services error message type', () => {
-            expect(taskServicesErrors.errorMessageType).toBe(ErrorMessageTypes.Server);
+            expect(taskServicesErrors.errorMessageType).toBe(ErrorMessageType.Server);
         });
 
         it('sets the task services error message task id', () => {

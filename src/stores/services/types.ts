@@ -1,4 +1,4 @@
-import { ErrorMessageTypes } from './update_task_services';
+import { ErrorMessageType } from './actions';
 
 export type Id = string;
 
@@ -37,7 +37,7 @@ export interface TaskServices {
 export interface TaskServicesError {
     readonly taskId: string;
     readonly errorMessage: string;
-    readonly errorMessageType: ErrorMessageTypes;
+    readonly errorMessageType: ErrorMessageType;
 }
 
 export interface ServiceMap {

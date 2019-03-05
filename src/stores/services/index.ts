@@ -4,13 +4,21 @@ import {
     Id, Service, ServiceStore, ServiceMap, TaskServices,
     PhoneNumber, TaskServicesErrorsMap, TaskServicesError,
 } from './types';
-import { UpdateTaskServicesAsync, updateTaskServicesAsync, ErrorMessageTypes } from './update_task_services';
-import { Action } from 'redux';
+import {
+    SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
+    populateTaskServicesFromSuccess, PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
+    ErrorMessageType,
+    ServicesAction,
+} from './actions';
 import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressWithTypeJSON, Address } from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 
 export { Id, Service, ServiceStore, PhoneNumber, Address, TaskServicesErrorsMap, TaskServicesError };
-export { UpdateTaskServicesAsync, updateTaskServicesAsync, ErrorMessageTypes };
+export {
+    SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
+    populateTaskServicesFromSuccess, PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
+    ErrorMessageType,
+};
 export { serviceAtLocation, serviceAtLocationArray };
 
 export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): Service {
@@ -58,20 +66,23 @@ export function buildDefaultTaskServices(): TaskServices {
     };
 }
 
-export function reducer(store: ServiceStore = buildDefaultStore(), action: Action): ServiceStore {
+export function reducer(store: ServiceStore = buildDefaultStore(), action?: ServicesAction): ServiceStore {
+    if (!action) {
+        return store;
+    }
     switch (action.type) {
         case constants.LOAD_SERVICES_REQUEST:
-            return updateServicesRequest(store, action as UpdateTaskServicesAsync.Request);
+            return updateServicesRequest(store, action);
         case constants.LOAD_SERVICES_SUCCESS:
-            return updateServicesSuccess(store, action as UpdateTaskServicesAsync.Success);
+            return updateServicesSuccess(store, action);
         case constants.LOAD_SERVICES_FAILURE:
-            return updateServicesFailure(store, action as UpdateTaskServicesAsync.Failure);
+            return updateServicesFailure(store, action);
         default:
             return store;
     }
 }
 
-function updateServicesRequest(store: ServiceStore, action: UpdateTaskServicesAsync.Request): ServiceStore {
+function updateServicesRequest(store: ServiceStore, action: SendTaskServicesRequestAction): ServiceStore {
     const taskId = action.payload.taskId;
     const taskServices = store.taskServicesMap[taskId] || buildDefaultTaskServices();
     return {
@@ -84,7 +95,7 @@ function updateServicesRequest(store: ServiceStore, action: UpdateTaskServicesAs
     };
 }
 
-function updateServicesSuccess(store: ServiceStore, action: UpdateTaskServicesAsync.Success): ServiceStore {
+function updateServicesSuccess(store: ServiceStore, action: PopulateTaskServicesFromSuccessAction): ServiceStore {
     const services = action.payload.services;
     const taskId = action.payload.taskId;
     const serviceMap = createServiceMap(services);
@@ -98,7 +109,7 @@ function updateServicesSuccess(store: ServiceStore, action: UpdateTaskServicesAs
     };
 }
 
-function updateServicesFailure(store: ServiceStore, action: UpdateTaskServicesAsync.Failure): ServiceStore {
+function updateServicesFailure(store: ServiceStore, action: PopulateTaskServicesFromErrorAction): ServiceStore {
     const taskId = action.payload.taskId;
     const errorMessage = action.payload.errorMessage;
     const errorMessageType = action.payload.errorMessageType;

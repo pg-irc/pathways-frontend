@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
-import { Id, ErrorMessageTypes } from '../../services';
+import { Id, ErrorMessageType } from '../../services';
 import { Id as TaskId } from '../../tasks';
 import {
     TaskServices, Service, TaskServicesMap, ServiceMap,
@@ -182,7 +182,7 @@ export class TaskServicesBuilder {
 export class TaskServicesErrorBuilder {
     taskId: TaskId = aString();
     errorMessage: string = aString();
-    errorMessageType: ErrorMessageTypes = ErrorMessageTypes.Server;
+    errorMessageType: ErrorMessageType = ErrorMessageType.Server;
 
     withTaskId(id: string): TaskServicesErrorBuilder {
         this.taskId = id;
@@ -194,7 +194,7 @@ export class TaskServicesErrorBuilder {
         return this;
     }
 
-    withErrorMessageType(errorMessageType: ErrorMessageTypes): TaskServicesErrorBuilder {
+    withErrorMessageType(errorMessageType: ErrorMessageType): TaskServicesErrorBuilder {
         this.errorMessageType = errorMessageType;
         return this;
     }

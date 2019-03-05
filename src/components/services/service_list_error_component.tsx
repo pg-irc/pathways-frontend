@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { Text, View, Icon } from 'native-base';
-import { ErrorMessageTypes, TaskServicesError } from '../../stores/services';
+import { ErrorMessageType, TaskServicesError } from '../../stores/services';
 import { colors, textStyles } from '../../application/styles';
 
 export interface ServiceListErrorComponentProps {
@@ -28,8 +28,8 @@ export const ServiceListErrorComponent = (props: ServiceListErrorComponentProps)
     );
 };
 
-const getTextForErrorType = (errorMessageType: ErrorMessageTypes): JSX.Element => {
-    if (errorMessageType === ErrorMessageTypes.Location) {
+const getTextForErrorType = (errorMessageType: ErrorMessageType): JSX.Element => {
+    if (errorMessageType === ErrorMessageType.Location) {
         return <Trans>Please ensure location services are enabled for Arrival Advisor.</Trans>;
     }
     return <Trans>An error has occured.</Trans>;

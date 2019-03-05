@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { Location } from 'history';
 import { Store } from '../../stores';
-import { updateTaskServicesAsync, UpdateTaskServicesAsync } from '../../stores/services';
+import { sendTaskServicesRequest, SendTaskServicesRequestAction } from '../../stores/services';
 import { connect } from 'react-redux';
 import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { Task } from '../../selectors/tasks/task';
@@ -27,9 +27,9 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => 
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<UpdateTaskServicesAsync.Request>): ServiceListActions => ({
-    requestUpdateOfServicesForTask: (task: Task): UpdateTaskServicesAsync.Request => {
-        return dispatch(updateTaskServicesAsync.request(task.id));
+const mapDispatchToProps = (dispatch: Dispatch<SendTaskServicesRequestAction>): ServiceListActions => ({
+    requestUpdateOfServicesForTask: (task: Task): SendTaskServicesRequestAction => {
+        return dispatch(sendTaskServicesRequest(task.id));
     },
 });
 
@@ -37,7 +37,7 @@ type ComponentProps = ServiceListProps & ServiceListActions & TaskServiceUpdater
 
 const mergeProps = (props: ServiceListProps, actions: ServiceListActions): ComponentProps => ({
     ...props, ...actions,
-    requestUpdateTaskServices: (): UpdateTaskServicesAsync.Request => {
+    requestUpdateTaskServices: (): SendTaskServicesRequestAction => {
         return actions.requestUpdateOfServicesForTask(props.task);
     },
 });
