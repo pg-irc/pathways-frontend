@@ -18,7 +18,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionDocuments',
                 text: {
                     'en': 'Do you have any of the following important Canadian documents?',
-                    'fr': 'Possédez-vous l\'un ou l\'autre de ces documents canadiens importants?',
+                    'fr': 'Possédez-vous l’un ou l’autre de ces documents canadiens importants?',
                     'ar': 'هل لديك أي من الوثائق الكندية الهامة التالية؟',
                 },
                 acceptMultipleAnswers: true,
@@ -27,7 +27,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionAgeGroup',
                 text: {
                     'en': 'Are you arriving with children under 18 years? If yes, how old?',
-                    'fr': 'Êtes-vous accompagné(e) d\'enfants de moins de 18 ans? Si c\'est le cas, quel âge ont-ils?',
+                    'fr': 'Êtes-vous accompagné(e) d’enfants de moins de 18 ans? Si c’est le cas, quel âge ont-ils?',
                     'ar': 'هل وصلت معك أطفال أقل من 18 سنة؟ لو كانت الإجابة نعم، كم عمرهم؟',
                 },
                 acceptMultipleAnswers: true,
@@ -45,7 +45,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionEnglishLevel',
                 text: {
                     'en': 'What is your current level of English?',
-                    'fr': 'Quel est votre niveau d\'anglais actuel?',
+                    'fr': 'Quel est votre niveau d’anglais actuel?',
                     'ar': 'ما هو مستوى إجادتك الحالي للغة الإنكليزية؟',
                 },
                 acceptMultipleAnswers: false,
@@ -63,7 +63,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionWorkStatus',
                 text: {
                     'en': 'What is your current work situation?',
-                    'fr': 'Quelle est votre situation actuelle en matière d\'emploi?',
+                    'fr': 'Quelle est votre situation actuelle en matière d’emploi?',
                     'ar': 'ما هو وضعك الحالي من ناحية العمل؟',
                 },
                 acceptMultipleAnswers: true,
@@ -81,7 +81,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionLowIncome',
                 text: {
                     'en': 'Do you need financial assistance or low-income support?',
-                    'fr': 'Avez-vous besoin d\'aide financière ou de soutien pour gens à faible revenu?',
+                    'fr': 'Avez-vous besoin d’aide financière ou de soutien pour gens à faible revenu?',
                     'ar': 'هل تريد مساعدة مالية أو دعم موجه لأصحاب الدخل المتدني؟',
                 },
                 acceptMultipleAnswers: false,
@@ -90,7 +90,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionOther',
                 text: {
                     'en': 'Anything else you\'re interested in? Select all that apply',
-                    'fr': 'Y a-t-il d\'autres sujets qui vous intéressent? Sélectionnez toutes les réponses qui s\'appliquent.',
+                    'fr': 'Y a-t-il d’autres sujets qui vous intéressent? Sélectionnez toutes les réponses appropriées.',
                     'ar': 'هل يوجد شيء آخر يهمك؟ اختر كل ما ينطبق',
                 },
                 acceptMultipleAnswers: true,
