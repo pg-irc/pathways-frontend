@@ -1,5 +1,3 @@
-import { ErrorMessageType } from './actions';
-
 export type Id = string;
 
 export interface PhoneNumber {
@@ -29,33 +27,34 @@ export interface Service {
     readonly email: string;
 }
 
+export enum ErrorMessageType {
+    Location,
+    Server,
+    Exception,
+}
+
 export interface TaskServices {
     readonly loading: boolean;
     readonly serviceIds: ReadonlyArray<Id>;
 }
 
 export interface TaskServicesError {
-    readonly taskId: string;
+    readonly loading: boolean;
     readonly errorMessage: string;
     readonly errorMessageType: ErrorMessageType;
+}
+
+export interface TaskServicesOrErrorMap {
+    readonly [taskId: string]: TaskServices | TaskServicesError;
 }
 
 export interface ServiceMap {
     readonly [serviceId: string]: Service;
 }
 
-export interface TaskServicesMap {
-    readonly [taskId: string]: TaskServices;
-}
-
-export interface TaskServicesErrorsMap {
-    readonly [taskId: string]: TaskServicesError;
-}
-
 export interface ServiceStore {
-    readonly serviceMap: ServiceMap;
-    readonly taskServicesMap: TaskServicesMap;
-    readonly taskServicesErrors: TaskServicesErrorsMap;
+    readonly services: ServiceMap;
+    readonly taskServicesOrError: TaskServicesOrErrorMap;
 }
 
 export interface ValidatedPhoneNumberJSON {

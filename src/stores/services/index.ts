@@ -2,24 +2,30 @@ import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import {
     Id, Service, ServiceStore, ServiceMap, TaskServices,
-    PhoneNumber, TaskServicesErrorsMap, TaskServicesError,
+    PhoneNumber, TaskServicesError, ErrorMessageType,
 } from './types';
 import {
     SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
     populateTaskServicesFromSuccess, PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
-    ErrorMessageType,
     ServicesAction,
 } from './actions';
-import { ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON, ValidatedAddressWithTypeJSON, Address } from './types';
+import {
+    ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON,
+    ValidatedAddressWithTypeJSON, Address,
+} from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
+import { isTaskServices } from './is_task_services';
 
-export { Id, Service, ServiceStore, PhoneNumber, Address, TaskServicesErrorsMap, TaskServicesError };
+export {
+    Id, Service, ServiceStore, PhoneNumber, Address, TaskServicesError,
+    ErrorMessageType, TaskServices, ServiceMap,
+};
 export {
     SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
     populateTaskServicesFromSuccess, PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
-    ErrorMessageType,
 };
 export { serviceAtLocation, serviceAtLocationArray };
+export { isTaskServices };
 
 export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): Service {
     const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): PhoneNumber => ({
@@ -53,9 +59,8 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
 
 export function buildDefaultStore(): ServiceStore {
     return {
-        serviceMap: {},
-        taskServicesMap: {},
-        taskServicesErrors: {},
+        services: {},
+        taskServicesOrError: {},
     };
 }
 
@@ -84,14 +89,13 @@ export function reducer(store: ServiceStore = buildDefaultStore(), action?: Serv
 
 function updateServicesRequest(store: ServiceStore, action: SendTaskServicesRequestAction): ServiceStore {
     const taskId = action.payload.taskId;
-    const taskServices = store.taskServicesMap[taskId] || buildDefaultTaskServices();
+    const taskServicesOrError = store.taskServicesOrError[taskId] || buildDefaultTaskServices();
     return {
         ...store,
-        taskServicesMap: {
-            ...store.taskServicesMap,
-            [taskId]: { ...taskServices, loading: true },
+        taskServicesOrError: {
+            ...store.taskServicesOrError,
+            [taskId]: { ...taskServicesOrError, loading: true },
         },
-        taskServicesErrors: buildErrorsWithoutTask(taskId, store.taskServicesErrors),
     };
 }
 
@@ -100,12 +104,17 @@ function updateServicesSuccess(store: ServiceStore, action: PopulateTaskServices
     const taskId = action.payload.taskId;
     const serviceMap = createServiceMap(services);
     const serviceIds = Object.keys(serviceMap);
-    const taskServicesMap = { [taskId]: { ...store.taskServicesMap[taskId], serviceIds, loading: false } };
+    const taskServices = {
+        [taskId]: {
+            ...store.taskServicesOrError[taskId],
+            loading: false,
+            serviceIds,
+        },
+    };
     return {
         ...store,
-        serviceMap: { ...store.serviceMap, ...serviceMap },
-        taskServicesMap: { ...store.taskServicesMap, ...taskServicesMap },
-        taskServicesErrors: buildErrorsWithoutTask(taskId, store.taskServicesErrors),
+        services: { ...store.services, ...serviceMap },
+        taskServicesOrError: { ...store.taskServicesOrError, ...taskServices },
     };
 }
 
@@ -113,26 +122,22 @@ function updateServicesFailure(store: ServiceStore, action: PopulateTaskServices
     const taskId = action.payload.taskId;
     const errorMessage = action.payload.errorMessage;
     const errorMessageType = action.payload.errorMessageType;
+    const error = {
+        [taskId]: {
+            loading: false,
+            errorMessageType,
+            errorMessage,
+        },
+    };
     return {
         ...store,
-        taskServicesMap: {
-            ...store.taskServicesMap,
-            [taskId]: { ...store.taskServicesMap[taskId], loading: false },
-        },
-        taskServicesErrors: {
-            ...store.taskServicesErrors,
-            [taskId]: { taskId, errorMessage, errorMessageType },
-        },
+        taskServicesOrError: { ...store.taskServicesOrError, ...error },
     };
 }
 
-function createServiceMap(services: ReadonlyArray<Service>): ServiceMap {
+const createServiceMap = (services: ReadonlyArray<Service>): ServiceMap => {
     const theReducer = (serviceMap: ServiceMap, service: Service): ServiceMap => {
         return { ...serviceMap, [service.id]: service };
     };
     return services.reduce(theReducer, {});
-}
-
-const buildErrorsWithoutTask = (taskId: Id, taskServicesErrors: TaskServicesErrorsMap): TaskServicesErrorsMap => (
-    R.reject(R.propEq('taskId', taskId), taskServicesErrors)
-);
+};

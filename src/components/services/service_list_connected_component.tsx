@@ -5,7 +5,7 @@ import { sendTaskServicesRequest, SendTaskServicesRequestAction } from '../../st
 import { connect } from 'react-redux';
 import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { Task } from '../../selectors/tasks/task';
-import { selectTaskServices } from '../../selectors/services/select_task_services';
+import { selectTaskServices } from '../../selectors/services/select_task_services_or_error';
 import {
     ServiceListComponent, ServiceListProps,
     ServiceListActions, TaskServiceUpdater,

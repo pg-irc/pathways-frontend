@@ -1,7 +1,7 @@
 import { Id as TaskId } from '../../fixtures/types/tasks';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { Service } from './types';
+import { Service, ErrorMessageType } from './types';
 
 export type SendTaskServicesRequestAction = Readonly<ReturnType<typeof sendTaskServicesRequest>>;
 
@@ -13,12 +13,6 @@ export type ServicesAction =
     SendTaskServicesRequestAction |
     PopulateTaskServicesFromSuccessAction |
     PopulateTaskServicesFromErrorAction;
-
-export enum ErrorMessageType {
-    Location,
-    Server,
-    Exception,
-}
 
 // tslint:disable-next-line:typedef
 export const sendTaskServicesRequest = (taskId: TaskId) => (
