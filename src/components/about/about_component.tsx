@@ -13,7 +13,7 @@ export interface AboutComponentProps {
 export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (props: AboutComponentProps): JSX.Element => {
     const welcomeBcUrl = 'https://www.welcomebc.ca/Start-Your-Life-in-B-C/Newcomers-Guides/Newcomers-Guide-Provincial';
     const githubUrl = 'https://github.com/pg-irc/pathways-frontend';
-    const contactUrl = 'https://peacegeeks.org/contact';
+    const contactUrl = 'https://arrivaladvisor.ca/contact-us';
     const welcomeBCLink = wrapWithSpace(
         <Link href={welcomeBcUrl} text={'Newcomer\'s Guide to British Columbia'} style={textStyles.paragraphURL} />,
     );
