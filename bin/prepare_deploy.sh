@@ -20,6 +20,13 @@ usage() {
     echo "    prepare_deploy.sh versionString androidVersionCode postgresUserId workingDirectory"
     echo
     echo "workingDirectory should not already exist, it will be used to clone three git repositories and build the client"
+    echo
+    echo "Before running this script, both the client and content repos need to have the appropriate"
+    echo "commits tagged with the version that is about to be released. For the server, the master branch"
+    echo "will be used. The script will verify that the version matches the content of VERSION.txt."
+    echo
+    echo "This script will remove Newcomers' Guide content in unsupported languages. When the set of languages"
+    echo "changes, this script needs to be updated to reflect that, see removeContentInUnsuppotedLanguages()"
 }
 
 validateExpoUser() {
@@ -211,6 +218,8 @@ giveExpoCommandsForPublishing() {
     echo "(cd $CLIENT_DIRECTORY && yarn run expo bi --release-channel release)"
     echo "(cd $CLIENT_DIRECTORY && yarn run expo ba --release-channel release)"
     echo
+    echo "Checklist for publishing to App Store (iOS):"
+    echo "Checklist for publishing to Play Store (Android):"
 }
 
 runClientForFinalQA() {
