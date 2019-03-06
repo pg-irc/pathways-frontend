@@ -51,7 +51,7 @@ lib/components/recommended_topics/call_to_action.js:70,UPDATE MY RECOMMENDATIONS
 lib/components/recommended_topics/call_to_action.js:74,Go back to questions,Revenir aux questions
 lib/components/recommended_topics/call_to_action.js:99,"Based on your answers, we recommend these topics for you:","En nous appuyant sur vos réponses, nous vous recommandons les sujets suivants :"
 lib/components/recommended_topics/recommended_topics_component.js:19,Start settling in B.C.,Amorcer l’établissement en C.-B.
-lib/components/recommended_topics/recommended_topics_component.js:34 lib/components/tasks/task_detail_content_component.js:63,Recommended for you,Recommended for you
+lib/components/recommended_topics/recommended_topics_component.js:34 lib/components/tasks/task_detail_content_component.js:63,Recommended for you,Recommandé pour vous
 lib/components/services/service_list_component.js:30,FIND A SERVICE NEAR YOU,TROUVER UN SERVICE À PROXIMITÉ
 lib/components/services/service_list_component.js:41,No related services found,Nous n’avons pas trouvé de service connexe.
 lib/components/services/service_list_item_component.js:24,Address:,Adresse :
