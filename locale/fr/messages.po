@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 11:33-0700\n"
+"POT-Creation-Date: 2019-03-06 11:59-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -365,7 +365,7 @@ msgstr "Amorcer l’établissement en C.-B."
 
 #: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A34+lib%2Fcomponents%2Ftasks%2Ftask_detail_content_component.js%3A63
 msgid "Recommended for you"
-msgstr "Recommended for you"
+msgstr "Recommandé pour vous"
 
 #: lib/components/services/service_list_component.js:30
 msgid "FIND A SERVICE NEAR YOU"
