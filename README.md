@@ -62,7 +62,7 @@ yarn clean-strings
 ```
 ## Contributing
 
-If you want to help out, get in touch at dev@peacegeeks.org.
+If you want to help out, get in touch at info@peacegeeks.org.
 
 ### Commit messages
 
