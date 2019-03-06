@@ -22,7 +22,7 @@ export const DisclaimerComponent: React.StatelessComponent = (): JSX.Element => 
                 control over the ongoing accuracy of the information or the quality of the services provided.
                 If you discover that a piece of information is outdated or not useful, please let us know in the
                 feedback section of the app. The inclusion of services and resources in this app does not imply
-                an endorsement or recommendation of those services over others. Utlization of services located
+                an endorsement or recommendation of those services over others.  Utilization of services located
                 through the app is undertaken at the risk of the user.
             </Trans>
         </ParagraphComponent>
