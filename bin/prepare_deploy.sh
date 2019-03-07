@@ -3,12 +3,13 @@
 # This script completes the steps needed to publish the client to the App Store (Apple) and Play Store (Android)
 
 VERSION=$1
-ANDROID_VERSION_CODE=$2
+SERVER_VERSION=$2
+ANDROID_VERSION_CODE=$3
 # The command "./manage.py import_newcomers_guide" requires database access in order to retrieve
 # related tasks from the database. The related tasks must already have been computed, see the
 # server side prepare deploy script
-POSTGRES_USER=$3
-WORKING_DIRECTORY=$4
+POSTGRES_USER=$4
+WORKING_DIRECTORY=$5
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
 CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
@@ -17,13 +18,14 @@ usage() {
     echo
     echo "Usage:"
     echo
-    echo "    prepare_deploy.sh versionString androidVersionCode postgresUserId workingDirectory"
+    echo "    prepare_deploy.sh clientVersion serverVersion androidVersionCode postgresUserId workingDirectory"
     echo
     echo "workingDirectory should not already exist, it will be used to clone three git repositories and build the client"
     echo
     echo "Before running this script, both the client and content repos need to have the appropriate"
-    echo "commits tagged with the version that is about to be released. For the server, the master branch"
-    echo "will be used. The script will verify that the version matches the content of VERSION.txt."
+    echo "commits tagged with the client version that is about to be released, and the server repository "
+    echo "must be tagged with the server version to use. The script will verify that the version matches "
+    echo "the content of VERSION.txt."
     echo
     echo "This script will remove Newcomers' Guide content in unsupported languages. When the set of languages"
     echo "changes, this script needs to be updated to reflect that, see removeContentInUnsuppotedLanguages()"
@@ -109,18 +111,21 @@ checkOutClientByTag() {
     checkForSuccess "check out tag for client"
 }
 
-checkOutServer() {
+checkOutServerByTag() {
     echo
-    echo "Checking out master for server"
+    echo "Checking out server tagged with $SERVER_VERSION"
     echo
     (cd "$WORKING_DIRECTORY" && git clone git@github.com:pg-irc/pathways-backend.git)
     checkForSuccess "clone server repo"
 
-    (cd "$SERVER_DIRECTORY" && git checkout master)
-    checkForSuccess "check out master for server"
+    (cd "$SERVER_DIRECTORY" && git fetch --tags)
+    checkForSuccess "fetch tags for server"
+
+    (cd "$SERVER_DIRECTORY" && git checkout "tags/$SERVER_VERSION" -b "appRelease/$SERVER_VERSION")
+    checkForSuccess "check out tag for server"
 }
 
-validateCheckedOutVersion() {
+validateClientVersion() {
     FILE_VERSION=$(cat "$CLIENT_DIRECTORY/VERSION.txt")
     if [ "$FILE_VERSION" != "$VERSION" ]
     then
@@ -132,6 +137,15 @@ validateCheckedOutVersion() {
     if [ "$FILE_CODE" != "      \"versionCode\": $ANDROID_VERSION_CODE," ]
     then
         echo "Error: client app.json contains $FILE_CODE when $ANDROID_VERSION_CODE was expected"
+        exit
+    fi
+}
+
+validateServerVersion() {
+    FILE_VERSION=$(cat "$SERVER_DIRECTORY/VERSION.txt")
+    if [ "$FILE_VERSION" != "$SERVER_VERSION" ]
+    then
+        echo "Error: server VERSION.txt contains $FILE_VERSION, when $SERVER_VERSION was expected"
         exit
     fi
 }
@@ -172,13 +186,17 @@ createClientEnvironment() {
     checkForSuccess "create client environment"
 }
 
-setSentryAuthToken() {
+completeManualConfiguration() {
     echo
-    echo "Manual step:"
+    echo "Manual steps:"
     echo
     echo " edit $CLIENT_DIRECTORY/app.json"
     echo
-    echo "and set the Sentry auth token. Log into our accont on https://sentry.io to retrieve an auth token."
+    echo "and set the Sentry auth token, it's located in hooks/postPublish/config/authToken."
+    echo "Log into our account on https://sentry.io to retrieve the auth token"
+    echo "from https://sentry.io/settings/account/api/auth-tokens/"
+    echo
+    echo "Make any other configuration changes now, such as e.g. pointing the URL in .env to staging."
     echo
     read -p "Press enter to continue"
 }
@@ -191,7 +209,7 @@ buildContentFixture() {
     checkForSuccess "build content fixture"
 }
 
-checkContentFixture() {
+validateContentFixture() {
     # with related tasks, the file will contain "relatedTasks": [task_id],
     # without related tasks it contains just "relatedTasks": []
     if grep -q "\"relatedTasks\": \[\]" "$CLIENT_DIRECTORY/src/fixtures/newcomers_guide/tasks.ts"
@@ -213,7 +231,8 @@ testClient() {
 }
 
 giveExpoCommandsForPublishing() {
-    echo "To publish the client for both platforms, run these commands: "
+    echo "To publish the client for both platforms, ensure that the "
+    echo "build cache is cleared, then run these commands: "
     echo
     echo "(cd $CLIENT_DIRECTORY && yarn run expo bi --release-channel release)"
     echo "(cd $CLIENT_DIRECTORY && yarn run expo ba --release-channel release)"
@@ -232,22 +251,25 @@ validateCommandLine
 validateExpoUser
 createWorkingDirectory
 
-checkOutServer
+checkOutServerByTag
 checkOutClientByTag
 checkOutContentByTag
 
-validateCheckedOutVersion
+validateClientVersion
+validateServerVersion
+
 removeContentInUnsuppotedLanguages
 
 getServerDependencies
 createServerEnvironment
 buildContentFixture
-checkContentFixture
+validateContentFixture
 
 getClientDependencies
 createClientEnvironment
+completeManualConfiguration
+# TODO validate client environment: No trailing / on the URL, use https, debug analytics is false
 buildClientLocally
-setSentryAuthToken
 testClient
 
 giveExpoCommandsForPublishing
