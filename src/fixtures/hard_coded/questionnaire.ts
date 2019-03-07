@@ -18,7 +18,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionDocuments',
                 text: {
                     'en': 'Do you have any of the following important Canadian documents?',
-                    'fr': 'Possédez-vous l\'un ou l\'autre de ces documents canadiens importants?',
+                    'fr': 'Possédez-vous l’un ou l’autre de ces documents canadiens importants?',
                     'ar': 'هل لديك أي من الوثائق الكندية الهامة التالية؟',
                 },
                 acceptMultipleAnswers: true,
@@ -27,7 +27,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionAgeGroup',
                 text: {
                     'en': 'Are you arriving with children under 18 years? If yes, how old?',
-                    'fr': 'Êtes-vous accompagné(e) d\'enfants de moins de 18 ans? Si c\'est le cas, quel âge ont-ils?',
+                    'fr': 'Êtes-vous accompagné(e) d’enfants de moins de 18 ans? Si c’est le cas, quel âge ont-ils?',
                     'ar': 'هل وصلت معك أطفال أقل من 18 سنة؟ لو كانت الإجابة نعم، كم عمرهم؟',
                 },
                 acceptMultipleAnswers: true,
@@ -45,7 +45,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionEnglishLevel',
                 text: {
                     'en': 'What is your current level of English?',
-                    'fr': 'Quel est votre niveau d\'anglais actuel?',
+                    'fr': 'Quel est votre niveau d’anglais actuel?',
                     'ar': 'ما هو مستوى إجادتك الحالي للغة الإنكليزية؟',
                 },
                 acceptMultipleAnswers: false,
@@ -63,7 +63,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionWorkStatus',
                 text: {
                     'en': 'What is your current work situation?',
-                    'fr': 'Quelle est votre situation actuelle en matière d\'emploi?',
+                    'fr': 'Quelle est votre situation actuelle en matière d’emploi?',
                     'ar': 'ما هو وضعك الحالي من ناحية العمل؟',
                 },
                 acceptMultipleAnswers: true,
@@ -81,7 +81,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionLowIncome',
                 text: {
                     'en': 'Do you need financial assistance or low-income support?',
-                    'fr': 'Avez-vous besoin d\'aide financière ou de soutien pour gens à faible revenu?',
+                    'fr': 'Avez-vous besoin d’aide financière ou de soutien pour gens à faible revenu?',
                     'ar': 'هل تريد مساعدة مالية أو دعم موجه لأصحاب الدخل المتدني؟',
                 },
                 acceptMultipleAnswers: false,
@@ -90,7 +90,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionOther',
                 text: {
                     'en': 'Anything else you\'re interested in? Select all that apply',
-                    'fr': 'Y a-t-il d\'autres sujets qui vous intéressent? Sélectionnez toutes les réponses qui s\'appliquent.',
+                    'fr': 'Y a-t-il d’autres sujets qui vous intéressent? Sélectionnez toutes les réponses appropriées.',
                     'ar': 'هل يوجد شيء آخر يهمك؟ اختر كل ما ينطبق',
                 },
                 acceptMultipleAnswers: true,
@@ -102,7 +102,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDurationInCanada',
                 text: {
                     'en': 'More than 1 year',
-                    'fr': 'Plus d\'une année',
+                    'fr': 'Plus d’un an',
                     'ar': 'أكثر من سنة واحدة',
                 },
                 isChosen: false,
@@ -114,7 +114,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDurationInCanada',
                 text: {
                     'en': 'Less than 1 year',
-                    'fr': 'Moins d\'une année',
+                    'fr': 'Moins d’un an',
                     'ar': 'أقل من سنة واحدة',
                 },
                 isChosen: false,
@@ -126,7 +126,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDurationInCanada',
                 text: {
                     'en': 'I am planning to move to Canada',
-                    'fr': 'Je prévois déménager au Canada',
+                    'fr': 'Je prévois d’emménager au Canada',
                     'ar': 'أعتزم الانتقال إلى كندا',
                 },
                 isChosen: false,
@@ -138,7 +138,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a Social Insurance Number',
-                    'fr': 'J\'ai un numéro d\'assurance sociale',
+                    'fr': 'J’ai un numéro d\'assurance sociale',
                     'ar': 'لدي رقم ضمان اجتماعي',
                 },
                 isChosen: false,
@@ -153,7 +153,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a Canadian bank account',
-                    'fr': 'J\'ai un compte bancaire canadien',
+                    'fr': 'J’ai un compte bancaire canadien',
                     'ar': 'لدي حساب مصرفي كندي',
                 },
                 isChosen: false,
@@ -168,7 +168,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a Permanent Resident Card',
-                    'fr': 'J\'ai une carte de résident permanent',
+                    'fr': 'J’ai une carte de résident permanent',
                     'ar': 'لدي بطاقة مقيم دائم',
                 },
                 isChosen: false,
@@ -198,7 +198,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a BC Services Card (health card)',
-                    'fr': 'J\'ai une carte BC Services (carte santé)',
+                    'fr': 'J’ai une carte BC Services (carte santé)',
                     'ar': 'لدي بطاقة خدمات بريتيش كولومبيا (البطاقة الصحية)',
                 },
                 isChosen: false,
@@ -213,7 +213,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a BC Driver\'s Licence',
-                    'fr': 'J\'ai un permis de conduire de la C.-B.',
+                    'fr': 'J’ai un permis de conduire de la C.-B.',
                     'ar': 'لدي رخصة قيادة خاصة ببريتيش كولومبيا',
                 },
                 isChosen: false,
@@ -281,8 +281,8 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'answerPregnant',
                 questionId: 'questionAgeGroup',
                 text: {
-                    'en': 'Pregnant (not yet born)',
-                    'fr': 'Enceinte (l\'enfant n\'est pas encore né)',
+                    'en': 'Pregnant (the child is not yet born)',
+                    'fr': 'Enceinte (l’enfant n’est pas encore né)',
                     'ar': 'حبلى (لم يولد بعد)',
                 },
                 isChosen: false,
@@ -390,7 +390,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Beginner (Canadian Language Benchmarks 1-4)',
-                    'fr': 'Niveau de base (niveaux de compétence linguistique canadiens 1-4)',
+                    'fr': 'Niveau de base (niveaux de compétence linguistique canadiens 1 à 4)',
                     'ar': 'مبتدئ (بين 1 و4 على المعيار الكندي للغة)',
                 },
                 isChosen: false,
@@ -408,7 +408,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Intermediate (Canadian Language Benchmarks 5-8)',
-                    'fr': 'Niveau intermédiaire (niveaux de compétence linguistique canadiens 5-8)',
+                    'fr': 'Niveau intermédiaire (niveaux de compétence linguistique canadiens 5 à 8)',
                     'ar': 'متوسط (بين 5 و8 على المعيار الكندي للغة)',
                 },
                 isChosen: false,
@@ -426,7 +426,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Fluent (Canadian Language Benchmarks 9-12)',
-                    'fr': 'Niveau avancé (niveaux de compétence linguistique canadiens 9-12)',
+                    'fr': 'Niveau avancé (niveaux de compétence linguistique canadiens 9 à 12)',
                     'ar': 'فصيح (بين 9 و12 على المعيار الكندي للغة)',
                 },
                 isChosen: false,
@@ -468,7 +468,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Refugee claimant',
-                    'fr': 'Demandeur(euse) d\'asile',
+                    'fr': 'Demandeur(euse) d’asile',
                     'ar': 'طالب لجوء',
                 },
                 isChosen: false,
@@ -495,7 +495,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Student visa',
-                    'fr': 'Visa d\'étudiant(e)',
+                    'fr': 'Visa d’étudiant(e)',
                     'ar': 'تأشيرة طالب',
                 },
                 isChosen: false,
@@ -585,7 +585,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'I need urgent medical attention (for emergencies, call 9-1-1)',
-                    'fr': 'J\'ai besoin de soins médicaux immédiats (pour les urgences, appelez le 9-1-1)',
+                    'fr': 'J’ai besoin de soins médicaux immédiats (pour les urgences, appelez le 9-1-1)',
                     'ar': 'أريد رعاية صحية عاجلة (في حالات الطوارئ، اتصل بالرقم 911)',
                 },
                 isChosen: false,
@@ -600,7 +600,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Prescription medication',
-                    'fr': 'Médicament d\'ordonnance',
+                    'fr': 'Médicament sur ordonnance',
                     'ar': 'أدوية تصرف بوصفة طبية',
                 },
                 isChosen: false,
@@ -615,7 +615,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Mental health support',
-                    'fr': 'Soutien de santé mentale',
+                    'fr': 'Soin en matière de santé mentale',
                     'ar': 'مساعدة خاصة بالصحة النفسية',
                 },
                 isChosen: false,
@@ -630,7 +630,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Eye doctors',
-                    'fr': 'Optométriste',
+                    'fr': 'Ophtalmologue',
                     'ar': 'طبيب عيون',
                 },
                 isChosen: false,

@@ -13,7 +13,7 @@ export interface AboutComponentProps {
 export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (props: AboutComponentProps): JSX.Element => {
     const welcomeBcUrl = 'https://www.welcomebc.ca/Start-Your-Life-in-B-C/Newcomers-Guides/Newcomers-Guide-Provincial';
     const githubUrl = 'https://github.com/pg-irc/pathways-frontend';
-    const contactUrl = 'https://peacegeeks.org/contact';
+    const contactUrl = 'https://arrivaladvisor.ca/contact-us';
     const welcomeBCLink = wrapWithSpace(
         <Link href={welcomeBcUrl} text={'Newcomer\'s Guide to British Columbia'} style={textStyles.paragraphURL} />,
     );
@@ -51,16 +51,16 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
             </ParagraphComponent>
             <ParagraphComponent>
                 <Trans>
-                    The Arrival Advisor app is designed in partnership with settlement providers in Metro Vancouver, and
-                    immigrants and refugees like you. We gratefully acknowledge the financial support of the Province of
-                    British Columbia through the Ministry of Jobs, Trade and Technology, as well as Google.org Canada.
-                    Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an
-                    open-source project. You can
+                    The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations in Metro
+                    Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the
+                    Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact.
+                    Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source
+                    project. You can
                </Trans>
-               {githubLink}
-               <Trans>and</Trans>
-               {contactLink}
-               <Trans>to learn how you can support this project.</Trans>
+                {githubLink}
+                <Trans>and</Trans>
+                {contactLink}
+                <Trans>to learn how you can support this project.</Trans>
             </ParagraphComponent>
             <ParagraphComponent>
                 <Trans>Information in this app is provided by the</Trans>
