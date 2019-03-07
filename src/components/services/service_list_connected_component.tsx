@@ -5,13 +5,12 @@ import { sendTaskServicesRequest, SendTaskServicesRequestAction } from '../../st
 import { connect } from 'react-redux';
 import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
 import { Task } from '../../selectors/tasks/task';
-import { selectTaskServices } from '../../selectors/services/select_task_services_or_error';
+import { selectTaskServicesOrError } from '../../selectors/services/select_task_services_or_error';
 import {
     ServiceListComponent, ServiceListProps,
     ServiceListActions, TaskServiceUpdater,
 } from './service_list_component';
 import { Routes, getParametersFromPath } from '../../application/routing';
-import { selectTaskServicesError } from '../../selectors/services/select_task_services_error';
 
 type OwnProps = {
     readonly location: Location;
@@ -22,8 +21,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => 
     const task: Task = selectCurrentTask(store, matchParams.taskId);
     return {
         task: task,
-        taskServices: selectTaskServices(task.id, store),
-        taskServicesError: selectTaskServicesError(task.id, store),
+        taskServicesOrError: selectTaskServicesOrError(task.id, store),
     };
 };
 

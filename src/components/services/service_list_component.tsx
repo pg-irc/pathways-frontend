@@ -3,8 +3,10 @@ import React from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
-import { Service, TaskServicesError } from '../../stores/services';
-import { TaskServices } from '../../selectors/services/task_services';
+import { Service } from '../../stores/services';
+import { SelectorTaskServices } from '../../selectors/services/selector_task_services';
+import { SelectorTaskServicesError } from '../../selectors/services/selector_task_services_error';
+import { isSelectorTaskServices } from '../../selectors/services/is_selector_task_services';
 import { Task } from '../../selectors/tasks/task';
 import { ServiceListItemComponent } from './service_list_item_component';
 import { SendTaskServicesRequestAction } from '../../stores/services';
@@ -14,8 +16,7 @@ import { ServiceListErrorComponent } from './service_list_error_component';
 
 export interface ServiceListProps {
     readonly task: Task;
-    readonly taskServices: TaskServices;
-    readonly taskServicesError: TaskServicesError;
+    readonly taskServicesOrError: SelectorTaskServices | SelectorTaskServicesError;
 }
 
 export interface ServiceListActions {
@@ -42,15 +43,19 @@ export class ServiceListComponent extends React.Component<Props> {
     }
 
     render(): JSX.Element {
+        if (isSelectorTaskServices(this.props.taskServicesOrError)) {
+            return this.renderServiceList(this.props.taskServicesOrError);
+        }
+        return this.renderServiceListError(this.props.taskServicesOrError);
+    }
+
+    renderServiceList(selectorTaskServices: SelectorTaskServices): JSX.Element {
         return (
-            this.props.taskServicesError ?
-            <ServiceListErrorComponent error={this.props.taskServicesError} />
-            :
             <FlatList
                 style={{ backgroundColor: colors.lightGrey }}
-                refreshing={this.props.taskServices.loading}
+                refreshing={this.props.taskServicesOrError.loading}
                 onRefresh={this.props.requestUpdateTaskServices}
-                data={this.props.taskServices.services}
+                data={selectorTaskServices.services}
                 keyExtractor={(service: Service): string => service.id}
                 renderItem={this.renderServiceListItem}
                 ListEmptyComponent={ServiceListEmpty}
@@ -62,6 +67,12 @@ export class ServiceListComponent extends React.Component<Props> {
     renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
         return (
             <ServiceListItemComponent service={item} />
+        );
+    }
+
+    renderServiceListError(selectorTaskServicesError: SelectorTaskServicesError): JSX.Element {
+        return (
+            <ServiceListErrorComponent error={selectorTaskServicesError} />
         );
     }
 }
