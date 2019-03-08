@@ -1,8 +1,8 @@
 import { TaskServicesError } from '../../stores/services';
-import { SelectorTaskServicesError } from './selector_task_services_error';
+import { SelectorTaskServicesError } from './types';
 
 export const toSelectorTaskServicesError = (taskServicesError: TaskServicesError):
     SelectorTaskServicesError => ({
-        loading: taskServicesError.loading,
+        loading: false, // TODO remove
         errorMessageType: taskServicesError.errorMessageType,
     });

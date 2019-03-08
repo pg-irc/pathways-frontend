@@ -1,15 +1,17 @@
 import { Store } from '../../stores';
 import { Id as TaskId } from '../../stores/tasks';
-import { isTaskServices, buildEmptyTasksServices } from '../../stores/services';
-import { SelectorTaskServices } from './selector_task_services';
-import { SelectorTaskServicesError } from './selector_task_services_error';
+import { isTaskServices, isTaskServicesError, buildEmptyTasksServices } from '../../stores/services';
+import { SelectorTaskServicesOrError } from './types';
 import { toSelectorTaskServices } from './to_selector_task_services';
 import { toSelectorTaskServicesError } from './to_selector_task_services_error';
 
-export function selectTaskServicesOrError(taskId: TaskId, store: Store): SelectorTaskServices | SelectorTaskServicesError {
+export const selectTaskServicesOrError = (taskId: TaskId, store: Store): SelectorTaskServicesOrError => {
     const taskServicesOrError = store.servicesInStore.taskServicesOrError[taskId] || buildEmptyTasksServices();
     if (isTaskServices(taskServicesOrError)) {
         return toSelectorTaskServices(taskServicesOrError, store.servicesInStore.services);
     }
-    return toSelectorTaskServicesError(taskServicesOrError);
-}
+    if (isTaskServicesError(taskServicesOrError)) {
+        return toSelectorTaskServicesError(taskServicesOrError);
+    }
+    return { loading: true };
+};

@@ -1,5 +1,5 @@
 import { TaskServices, ServiceMap, Id as ServiceId } from '../../stores/services';
-import { SelectorTaskServices } from './selector_task_services';
+import { SelectorTaskServices } from './types';
 
 export const toSelectorTaskServices = (taskServices: TaskServices, services: ServiceMap):
     SelectorTaskServices => ({

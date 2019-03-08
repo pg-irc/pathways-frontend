@@ -4,8 +4,7 @@ import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import { Service } from '../../stores/services';
-import { SelectorTaskServices } from '../../selectors/services/selector_task_services';
-import { SelectorTaskServicesError } from '../../selectors/services/selector_task_services_error';
+import { SelectorTaskServices, SelectorTaskServicesError, SelectorTaskServicesOrError } from '../../selectors/services/types';
 import { isSelectorTaskServices } from '../../selectors/services/is_selector_task_services';
 import { Task } from '../../selectors/tasks/task';
 import { ServiceListItemComponent } from './service_list_item_component';
@@ -13,10 +12,12 @@ import { SendTaskServicesRequestAction } from '../../stores/services';
 import { textStyles, colors, values } from '../../application/styles';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { ServiceListErrorComponent } from './service_list_error_component';
+import { isSelectorTaskServicesError } from '../../selectors/services/is_selector_task_services_error';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface ServiceListProps {
     readonly task: Task;
-    readonly taskServicesOrError: SelectorTaskServices | SelectorTaskServicesError;
+    readonly taskServicesOrError: SelectorTaskServicesOrError;
 }
 
 export interface ServiceListActions {
@@ -46,7 +47,11 @@ export class ServiceListComponent extends React.Component<Props> {
         if (isSelectorTaskServices(this.props.taskServicesOrError)) {
             return this.renderServiceList(this.props.taskServicesOrError);
         }
-        return this.renderServiceListError(this.props.taskServicesOrError);
+        if (isSelectorTaskServicesError(this.props.taskServicesOrError)) {
+            return this.renderServiceListError(this.props.taskServicesOrError);
+        }
+        // TODO render loading here
+        return <EmptyComponent />;
     }
 
     renderServiceList(selectorTaskServices: SelectorTaskServices): JSX.Element {

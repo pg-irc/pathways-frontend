@@ -1,6 +1,7 @@
-import { TaskServices, TaskServicesError } from '.';
+import { TaskServicesError, TaskServicesOrError } from '.';
+import * as constants from '../../application/constants';
 
-export const isTaskServicesError = (taskServicesOrError: TaskServices | TaskServicesError):
+export const isTaskServicesError = (taskServicesOrError: TaskServicesOrError):
     taskServicesOrError is TaskServicesError => (
-        (<TaskServicesError>taskServicesOrError).errorMessage !== undefined
+        taskServicesOrError.type === constants.TASK_SERVICES_ERROR
     );

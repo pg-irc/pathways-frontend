@@ -1,3 +1,5 @@
+import * as constants from '../../application/constants';
+
 export type Id = string;
 
 export interface PhoneNumber {
@@ -34,19 +36,32 @@ export enum ErrorMessageType {
 }
 
 export interface TaskServices {
-    readonly loading: boolean;
+    readonly type: 'TaskServices:Valid';
+    readonly loading: boolean; // TODO remove
     readonly serviceIds: ReadonlyArray<Id>;
 }
 
+export interface TaskServicesLoading {
+    readonly type: 'TaskServices:Loading';
+}
+
 export interface TaskServicesError {
-    readonly loading: boolean;
+    readonly type: 'TaskServices:Error';
     readonly errorMessage: string;
     readonly errorMessageType: ErrorMessageType;
 }
 
+// TODO rename type
+export type TaskServicesOrError = TaskServices | TaskServicesLoading | TaskServicesError;
+
+// TODO rename
 export interface TaskServicesOrErrorMap {
-    readonly [taskId: string]: TaskServices | TaskServicesError;
+    readonly [taskId: string]: TaskServicesOrError;
 }
+
+export const isServiceLoading = (services: TaskServicesOrError): boolean => (
+    services.type === constants.TASK_SERVICES_LOADING
+);
 
 export interface ServiceMap {
     readonly [serviceId: string]: Service;

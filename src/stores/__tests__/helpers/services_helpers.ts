@@ -6,6 +6,7 @@ import {
     ServiceStore, PhoneNumber, Address, TaskServicesError,
     TaskServicesOrErrorMap,
 } from '../../services/types';
+import * as constants from '../../../application/constants';
 
 export const buildNormalizedServices = (
     services: ReadonlyArray<ServiceBuilder>,
@@ -24,7 +25,7 @@ const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap =>
 
 const buildTaskServicesOrErrorMap = (
     taskServicesOrError: ReadonlyArray<TaskServicesBuilder | TaskServicesErrorBuilder>,
- ): TaskServicesOrErrorMap => {
+): TaskServicesOrErrorMap => {
     const buildAndMapToId = (map: TaskServicesOrErrorMap, builder: TaskServicesBuilder | TaskServicesErrorBuilder):
         TaskServicesOrErrorMap => {
         return { ...map, [builder.taskId]: builder.build() };
@@ -142,7 +143,7 @@ export class ServiceBuilder {
             phoneNumbers: this.phoneNumbers,
             addresses: this.addresses,
             website: this.website,
-            email: this.email
+            email: this.email,
         };
     }
 }
@@ -165,6 +166,7 @@ export class TaskServicesBuilder {
 
     build(): TaskServices {
         return {
+            type: constants.TASK_SERVICES_VALID,
             loading: this.loading,
             serviceIds: this.serviceIds,
         };
@@ -194,7 +196,7 @@ export class TaskServicesErrorBuilder {
 
     build(): TaskServicesError {
         return {
-            loading: this.loading,
+            type: constants.TASK_SERVICES_ERROR,
             errorMessage: this.errorMessage,
             errorMessageType: this.errorMessageType,
         };

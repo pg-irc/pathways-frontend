@@ -3,12 +3,11 @@ import * as constants from '../../application/constants';
 import {
     reducer, SendTaskServicesRequestAction, PopulateTaskServicesFromSuccessAction,
     PopulateTaskServicesFromErrorAction, Service, ErrorMessageType, isTaskServices,
-    isTaskServicesError,
-    buildEmptyTasksServices,
 } from '../services';
 import { TaskBuilder } from './helpers/tasks_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
+import { isServiceLoading } from '../services/types';
 
 describe('services reducer', () => {
     const aService = new ServiceBuilder();
@@ -27,25 +26,25 @@ describe('services reducer', () => {
 
     describe('when sending a task services request', () => {
 
-        it('creates an empty task services object with loading true for non existent task service or error objects', () => {
-            const newTask = new TaskBuilder().build();
+        it('creates loading task services object', () => {
+            const taskId = aString();
             const action: SendTaskServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { taskId: newTask.id },
+                payload: { taskId },
             };
             const store = reducer(theStore, action);
-            const taskServicesOrError = store.taskServicesOrError[newTask.id];
-            expect(taskServicesOrError).toEqual({ ...buildEmptyTasksServices(), ...{ loading: true } });
+            const taskServicesOrError = store.taskServicesOrError[taskId];
+            expect(taskServicesOrError).toEqual({ type: constants.TASK_SERVICES_LOADING });
         });
 
-        it('sets loading to true on pre existing task services objects', () => {
+        it('sets state of the task service to loading', () => {
             const action: SendTaskServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { taskId: loadedTaskServices.taskId },
             };
             const store = reducer(theStore, action);
             const taskServices = store.taskServicesOrError[loadedTaskServices.taskId];
-            expect(taskServices.loading).toBe(true);
+            expect(isServiceLoading(taskServices)).toBe(true);
         });
 
         it('sets loading to true on pre existing task services error objects', () => {
@@ -55,7 +54,7 @@ describe('services reducer', () => {
             };
             const store = reducer(theStore, action);
             const taskServicesError = store.taskServicesOrError[loadedTaskServicesError.taskId];
-            expect(taskServicesError.loading).toBe(true);
+            expect(isServiceLoading(taskServicesError)).toBe(true);
         });
 
         it('does not update existing services', () => {
@@ -83,10 +82,6 @@ describe('services reducer', () => {
             services.forEach((service: Service) => {
                 expect(serviceMap[service.id]).toBe(service);
             });
-        });
-
-        it('sets loading to false on task services object', () => {
-            expect(taskServicesOrErrorEntry.loading).toBe(false);
         });
 
         it('sets service ids on task services object', () => {
@@ -118,20 +113,20 @@ describe('services reducer', () => {
         const store = reducer(theStore, action);
         const taskServicesOrErrorEntry = store.taskServicesOrError[task.id];
 
-        it('sets loading to false on the task services error object', () => {
-            expect(taskServicesOrErrorEntry.loading).toBe(false);
-        });
-
         it('sets the error message on the task services error object', () => {
-            const errorMessage = isTaskServicesError(taskServicesOrErrorEntry) ?
-                taskServicesOrErrorEntry.errorMessage : undefined;
-            expect(errorMessage).toBe(anErrorMessage);
+            if (taskServicesOrErrorEntry.type === constants.TASK_SERVICES_ERROR) {
+                expect(taskServicesOrErrorEntry.errorMessage).toBe(anErrorMessage);
+            } else {
+                fail();
+            }
         });
 
         it('sets the error message type on the task services error object', () => {
-            const errorMessageType = isTaskServicesError(taskServicesOrErrorEntry) ?
-                taskServicesOrErrorEntry.errorMessageType : undefined;
-            expect(errorMessageType).toBe(ErrorMessageType.Server);
+            if (taskServicesOrErrorEntry.type === constants.TASK_SERVICES_ERROR) {
+                expect(taskServicesOrErrorEntry.errorMessageType).toBe(ErrorMessageType.Server);
+            } else {
+                fail();
+            }
         });
 
         it('does not update existing services', () => {

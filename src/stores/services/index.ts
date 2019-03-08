@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import {
     Id, Service, ServiceStore, ServiceMap, TaskServices,
-    PhoneNumber, TaskServicesError, ErrorMessageType,
+    PhoneNumber, TaskServicesError, TaskServicesLoading, TaskServicesOrError, ErrorMessageType,
 } from './types';
 import {
     SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
@@ -18,8 +18,8 @@ import { isTaskServices } from './is_task_services';
 import { isTaskServicesError } from './is_task_services_error';
 
 export {
-    Id, Service, ServiceStore, PhoneNumber, Address, TaskServicesError,
-    ErrorMessageType, TaskServices, ServiceMap,
+    Id, Service, ServiceStore, PhoneNumber, Address,
+    ErrorMessageType, TaskServices, TaskServicesError, TaskServicesLoading, TaskServicesOrError, ServiceMap,
 };
 export {
     SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
@@ -69,6 +69,7 @@ export function buildDefaultStore(): ServiceStore {
 export const buildEmptyTasksServices = (): TaskServices => ({
     serviceIds: [],
     loading: false,
+    type: constants.TASK_SERVICES_VALID,
 });
 
 export function reducer(store: ServiceStore = buildDefaultStore(), action?: ServicesAction): ServiceStore {
@@ -89,17 +90,18 @@ export function reducer(store: ServiceStore = buildDefaultStore(), action?: Serv
 
 const updateServicesRequest = (store: ServiceStore, action: SendTaskServicesRequestAction): ServiceStore => {
     const taskId = action.payload.taskId;
-    const taskServicesOrError = store.taskServicesOrError[taskId] || buildEmptyTasksServices();
     return {
         ...store,
         taskServicesOrError: {
             ...store.taskServicesOrError,
-            [taskId]: { ...taskServicesOrError, ...{ loading: true } },
+            [taskId]: {
+                type: constants.TASK_SERVICES_LOADING,
+            },
         },
     };
 };
 
-const updateServicesSuccess = (store: ServiceStore, action: PopulateTaskServicesFromSuccessAction): ServiceStore  => {
+const updateServicesSuccess = (store: ServiceStore, action: PopulateTaskServicesFromSuccessAction): ServiceStore => {
     const services = action.payload.services;
     const taskId = action.payload.taskId;
     const serviceMap = createServiceMap(services);
@@ -122,16 +124,16 @@ const updateServicesFailure = (store: ServiceStore, action: PopulateTaskServices
     const taskId = action.payload.taskId;
     const errorMessage = action.payload.errorMessage;
     const errorMessageType = action.payload.errorMessageType;
-    const error = {
-        [taskId]: {
-            loading: false,
-            errorMessageType,
-            errorMessage,
-        },
-    };
     return {
         ...store,
-        taskServicesOrError: { ...store.taskServicesOrError, ...error },
+        taskServicesOrError: {
+            ...store.taskServicesOrError,
+            [taskId]: {
+                type: constants.TASK_SERVICES_ERROR,
+                errorMessageType,
+                errorMessage,
+            },
+        },
     };
 };
 

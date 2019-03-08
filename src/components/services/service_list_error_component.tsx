@@ -2,7 +2,7 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { Text, View, Icon } from 'native-base';
 import { ErrorMessageType } from '../../stores/services';
-import { SelectorTaskServicesError } from '../../selectors/services/selector_task_services_error';
+import { SelectorTaskServicesError } from '../../selectors/services/types';
 import { colors, textStyles } from '../../application/styles';
 
 export interface ServiceListErrorComponentProps {
@@ -20,7 +20,7 @@ export const ServiceListErrorComponent = (props: ServiceListErrorComponentProps)
                     alignItems: 'center',
                 }}
             >
-                <Icon type={'MaterialCommunityIcons'} name={'alert-circle'} style={{ color: colors.sunYellow }}/>
+                <Icon type={'MaterialCommunityIcons'} name={'alert-circle'} style={{ color: colors.sunYellow }} />
                 <Text style={[textStyles.paragraphStyleBrown, { textAlign: 'center' }]}>
                     {text}
                 </Text>

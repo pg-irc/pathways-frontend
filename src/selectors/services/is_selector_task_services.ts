@@ -1,7 +1,6 @@
-import { SelectorTaskServices } from './selector_task_services';
-import { SelectorTaskServicesError } from './selector_task_services_error';
+import { SelectorTaskServices, SelectorTaskServicesOrError } from './types';
 
-export const isSelectorTaskServices = (taskServicesOrError: SelectorTaskServices | SelectorTaskServicesError):
+export const isSelectorTaskServices = (taskServicesOrError: SelectorTaskServicesOrError):
     taskServicesOrError is SelectorTaskServices => (
         (<SelectorTaskServices>taskServicesOrError).services !== undefined
     );
