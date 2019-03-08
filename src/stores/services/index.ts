@@ -68,7 +68,6 @@ export function buildDefaultStore(): ServiceStore {
 
 export const buildEmptyTasksServices = (): TaskServices => ({
     serviceIds: [],
-    loading: false,
     type: constants.TASK_SERVICES_VALID,
 });
 
@@ -102,21 +101,23 @@ const updateServicesRequest = (store: ServiceStore, action: SendTaskServicesRequ
 };
 
 const updateServicesSuccess = (store: ServiceStore, action: PopulateTaskServicesFromSuccessAction): ServiceStore => {
-    const services = action.payload.services;
+    const newServices = action.payload.services;
     const taskId = action.payload.taskId;
-    const serviceMap = createServiceMap(services);
-    const serviceIds = Object.keys(serviceMap);
-    const taskServices = {
-        [taskId]: {
-            ...store.taskServicesOrError[taskId],
-            loading: false,
-            serviceIds,
-        },
-    };
+    const newServicesAsMap = createServiceMap(newServices);
+    const newServiceIds = Object.keys(newServicesAsMap);
     return {
         ...store,
-        services: { ...store.services, ...serviceMap },
-        taskServicesOrError: { ...store.taskServicesOrError, ...taskServices },
+        services: {
+            ...store.services,
+            ...newServicesAsMap,
+        },
+        taskServicesOrError: {
+            ...store.taskServicesOrError,
+            [taskId]: {
+                type: constants.TASK_SERVICES_VALID,
+                serviceIds: newServiceIds,
+            },
+        },
     };
 };
 

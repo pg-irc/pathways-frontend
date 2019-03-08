@@ -72,7 +72,10 @@ describe('services reducer', () => {
         const services: ReadonlyArray<Service> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
         const action: PopulateTaskServicesFromSuccessAction = {
             type: constants.LOAD_SERVICES_SUCCESS,
-            payload: { taskId: task.id, services },
+            payload: {
+                taskId: task.id,
+                services,
+            },
         };
         const store = reducer(theStore, action);
         const taskServicesOrErrorEntry = store.taskServicesOrError[task.id];
@@ -85,17 +88,23 @@ describe('services reducer', () => {
         });
 
         it('sets service ids on task services object', () => {
-            const serviceIds = isTaskServices(taskServicesOrErrorEntry) ?
-                taskServicesOrErrorEntry.serviceIds : undefined;
-            services.forEach((service: Service) => {
-                expect(serviceIds).toContain(service.id);
-            });
+            if (isTaskServices(taskServicesOrErrorEntry)) {
+                const serviceIds = taskServicesOrErrorEntry.serviceIds;
+                services.forEach((service: Service) => {
+                    expect(serviceIds).toContain(service.id);
+                });
+            } else {
+                fail();
+            }
         });
 
         it('replaces service ids on existing task services object', () => {
-            const serviceIds = isTaskServices(taskServicesOrErrorEntry) ?
-                taskServicesOrErrorEntry.serviceIds : undefined;
-            expect(serviceIds).not.toContain(aService.id);
+            if (isTaskServices(taskServicesOrErrorEntry)) {
+                const serviceIds = taskServicesOrErrorEntry.serviceIds;
+                expect(serviceIds).not.toContain(aService.id);
+            } else {
+                fail();
+            }
         });
     });
 

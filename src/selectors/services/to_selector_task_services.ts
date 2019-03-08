@@ -3,6 +3,6 @@ import { SelectorTaskServices } from './types';
 
 export const toSelectorTaskServices = (taskServices: TaskServices, services: ServiceMap):
     SelectorTaskServices => ({
-        loading: taskServices.loading,
+        loading: false, // TODO remove
         services: taskServices.serviceIds.map((serviceId: ServiceId) => services[serviceId]),
     });

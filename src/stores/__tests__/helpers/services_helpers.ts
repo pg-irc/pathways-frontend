@@ -2,7 +2,7 @@
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { Id, ErrorMessageType } from '../../services';
 import {
-    TaskServices, Service, ServiceMap,
+    TaskServices, TaskServicesLoading, Service, ServiceMap,
     ServiceStore, PhoneNumber, Address, TaskServicesError,
     TaskServicesOrErrorMap,
 } from '../../services/types';
@@ -164,10 +164,14 @@ export class TaskServicesBuilder {
         return this;
     }
 
-    build(): TaskServices {
+    build(): TaskServices | TaskServicesLoading {
+        if (this.loading) {
+            return {
+                type: constants.TASK_SERVICES_LOADING,
+            };
+        }
         return {
             type: constants.TASK_SERVICES_VALID,
-            loading: this.loading,
             serviceIds: this.serviceIds,
         };
     }

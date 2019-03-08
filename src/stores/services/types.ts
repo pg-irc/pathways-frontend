@@ -37,7 +37,6 @@ export enum ErrorMessageType {
 
 export interface TaskServices {
     readonly type: 'TaskServices:Valid';
-    readonly loading: boolean; // TODO remove
     readonly serviceIds: ReadonlyArray<Id>;
 }
 
