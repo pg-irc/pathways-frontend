@@ -2,13 +2,11 @@ import { Service } from '../../stores/services';
 import { ErrorMessageType } from '../../stores/services';
 
 export interface SelectorTaskServices {
-    readonly loading: boolean;
     readonly services: ReadonlyArray<Service>;
     readonly type: 'TaskServices:Valid';
 }
 
 export interface SelectorTaskServicesLoading {
-    readonly loading: boolean;
     readonly type: 'TaskServices:Loading';
 }
 

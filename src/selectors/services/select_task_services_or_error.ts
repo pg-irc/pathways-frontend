@@ -14,5 +14,5 @@ export const selectTaskServicesOrError = (taskId: TaskId, store: Store): Selecto
     if (isTaskServicesError(taskServicesOrError)) {
         return toSelectorTaskServicesError(taskServicesOrError);
     }
-    return { loading: true, type: constants.TASK_SERVICES_LOADING };
+    return { type: constants.TASK_SERVICES_LOADING };
 };
