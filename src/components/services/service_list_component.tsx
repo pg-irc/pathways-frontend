@@ -14,6 +14,7 @@ import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { ServiceListErrorComponent } from './service_list_error_component';
 import { isSelectorTaskServicesError } from '../../selectors/services/is_selector_task_services_error';
 import { EmptyComponent } from '../empty_component/empty_component';
+import * as constants from '../../application/constants';
 
 export interface ServiceListProps {
     readonly task: Task;
@@ -58,13 +59,13 @@ export class ServiceListComponent extends React.Component<Props> {
         return (
             <FlatList
                 style={{ backgroundColor: colors.lightGrey }}
-                refreshing={this.props.taskServicesOrError.loading}
+                refreshing={this.props.taskServicesOrError.type === constants.TASK_SERVICES_LOADING}
                 onRefresh={this.props.requestUpdateTaskServices}
                 data={selectorTaskServices.services}
                 keyExtractor={(service: Service): string => service.id}
                 renderItem={this.renderServiceListItem}
                 ListEmptyComponent={ServiceListEmpty}
-                ListHeaderComponent={<ServiceListHeaderComponent {...this.props} />}
+                ListHeaderComponent={< ServiceListHeaderComponent {...this.props} />}
             />
         );
     }

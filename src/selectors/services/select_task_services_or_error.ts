@@ -4,6 +4,7 @@ import { isTaskServices, isTaskServicesError, buildEmptyTasksServices } from '..
 import { SelectorTaskServicesOrError } from './types';
 import { toSelectorTaskServices } from './to_selector_task_services';
 import { toSelectorTaskServicesError } from './to_selector_task_services_error';
+import * as constants from '../../application/constants';
 
 export const selectTaskServicesOrError = (taskId: TaskId, store: Store): SelectorTaskServicesOrError => {
     const taskServicesOrError = store.servicesInStore.taskServicesOrError[taskId] || buildEmptyTasksServices();
@@ -13,5 +14,5 @@ export const selectTaskServicesOrError = (taskId: TaskId, store: Store): Selecto
     if (isTaskServicesError(taskServicesOrError)) {
         return toSelectorTaskServicesError(taskServicesOrError);
     }
-    return { loading: true };
+    return { loading: true, type: constants.TASK_SERVICES_LOADING };
 };
