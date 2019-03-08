@@ -14,8 +14,8 @@ const groupTopicsByExploreSection = (topics: ReadonlyArray<TaskListItem>): Group
     R.groupBy((topic: TaskListItem) => topic.exploreSection.name, topics)
 );
 
-const flattenGroupedTopics = (groupedTopics: GroupedTaskListItems): ReadonlyArray<TopicListItemOrHeading> => {
-    return R.reduce(
+const flattenGroupedTopics = (groupedTopics: GroupedTaskListItems): ReadonlyArray<TopicListItemOrHeading> => (
+    R.reduce(
         (accumulator: ReadonlyArray<TopicListItemOrHeading>, heading: string) =>
         [
             ...accumulator,
@@ -28,5 +28,5 @@ const flattenGroupedTopics = (groupedTopics: GroupedTaskListItems): ReadonlyArra
         ],
         [],
         R.keys(groupedTopics),
-    );
-};
+    )
+);
