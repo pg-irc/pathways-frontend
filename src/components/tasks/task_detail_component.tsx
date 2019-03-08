@@ -9,6 +9,7 @@ import { Task } from '../../selectors/tasks/task';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
 import { TaskListComponent, NoTasksAddedComponent } from './task_list_component';
+import { buildTopicsListItemsWithHeadings } from '../tasks/build_topic_list_items_with_headings';
 
 export interface TaskDetailProps {
     readonly task: Task;
@@ -27,7 +28,7 @@ type Props = TaskDetailProps & TaskDetailActions;
 
 export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <TaskListComponent
-        tasks={props.task.relatedTasks}
+        tasks={buildTopicsListItemsWithHeadings(props.task.relatedTasks)}
         savedTasksIdList={props.savedTasksIdList}
         addToSavedList={props.addToSavedList}
         removeFromSavedList={props.removeFromSavedList}

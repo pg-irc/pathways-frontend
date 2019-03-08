@@ -12,6 +12,7 @@ import {
     CallToActionPartialComponent, CallToActionPartialSubComponent,
 } from './call_to_action';
 import { RecommendedIconComponent } from './recommended_icon_component';
+import { buildTopicsListItemsWithHeadings } from '../tasks/build_topic_list_items_with_headings';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -21,18 +22,15 @@ export interface RecommendedTopicsProps {
 
 type Props = RecommendedTopicsProps & TaskListActions & RouterProps;
 
-export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    // const tasksGroupedByExploreTerms = R.groupBy((task: TaskListItem) => task)
-    return (
-        <TaskListComponent
-            {...props}
-            tasks={props.recommendedTopics}
-            savedTasksIdList={props.savedTopicsIdList}
-            emptyTaskListContent={<NoTasksRecommendedComponent />}
-            headerContent={<TaskListHeaderComponent {...props} />}
-        />
-    );
-};
+export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    <TaskListComponent
+        {...props}
+        tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
+        savedTasksIdList={props.savedTopicsIdList}
+        emptyTaskListContent={<NoTasksRecommendedComponent />}
+        headerContent={<TaskListHeaderComponent {...props} />}
+    />
+);
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View>
