@@ -302,4 +302,8 @@ export const markdownStyles = StyleSheet.create({
             },
         }),
     },
+    link: {
+        color: 'blue',
+        textDecorationLine: 'underline',
+    },
 });
