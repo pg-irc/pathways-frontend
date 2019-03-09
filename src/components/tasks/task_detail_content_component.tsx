@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { Image, Dimensions } from 'react-native';
 import { View, Text, Icon, Button } from 'native-base';
 import { Trans } from '@lingui/react';
-import Markdown from 'react-native-markdown-renderer';
+import Markdown, { openUrl } from 'react-native-markdown-renderer';
 import { Task } from '../../selectors/tasks/task';
 import { textStyles, colors, values, markdownStyles, applicationStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -104,9 +104,21 @@ const TitleComponent = (props: Props): JSX.Element => (
     </Text>
 );
 
+const markDownRules = {
+    link: (node:any, children:any) => {
+        return (
+            <Text key={node.key} style={markdownStyles.link} onPress={() => openUrl(node.attributes.href)}>
+                {children}
+                <Text>{' '}</Text>
+                <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: 'blue' }} />
+            </Text>
+        );
+    },
+}
+
 const TaskDescription = (props: Props): JSX.Element => {
     const task = props.task;
-    const taskDescription = <Markdown style={markdownStyles}>{task.description}</Markdown>;
+    const taskDescription = <Markdown rules={markDownRules} style={markdownStyles}>{task.description}</Markdown>;
     return task.relatedTasks.length > 0 ? <ExpandableContentComponent contentId={task.id} content={taskDescription} /> : taskDescription;
 };
 
