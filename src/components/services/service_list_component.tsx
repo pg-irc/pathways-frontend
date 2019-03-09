@@ -4,7 +4,7 @@ import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import { Service } from '../../stores/services';
-import { SelectorTaskServices, SelectorTaskServicesError, SelectorTaskServicesOrError } from '../../selectors/services/types';
+import { SelectorTaskServices, SelectorTaskServicesError, SelectorTaskServicesOrError, SelectorTaskServicesLoading } from '../../selectors/services/types';
 import { isSelectorTaskServices } from '../../selectors/services/is_selector_task_services';
 import { Task } from '../../selectors/tasks/task';
 import { ServiceListItemComponent } from './service_list_item_component';
@@ -13,7 +13,6 @@ import { textStyles, colors, values } from '../../application/styles';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { ServiceListErrorComponent } from './service_list_error_component';
 import { isSelectorTaskServicesError } from '../../selectors/services/is_selector_task_services_error';
-import { EmptyComponent } from '../empty_component/empty_component';
 import * as constants from '../../application/constants';
 
 export interface ServiceListProps {
@@ -52,16 +51,17 @@ export class ServiceListComponent extends React.Component<Props> {
             return this.renderServiceListError(this.props.taskServicesOrError);
         }
         // TODO render loading here
-        return <EmptyComponent />;
+        return this.renderServiceList(this.props.taskServicesOrError);
     }
 
-    renderServiceList(selectorTaskServices: SelectorTaskServices): JSX.Element {
+    renderServiceList(selectorTaskServices: SelectorTaskServices | SelectorTaskServicesLoading): JSX.Element {
+        const services = selectorTaskServices.type === constants.TASK_SERVICES_VALID ? selectorTaskServices.services : [];
         return (
             <FlatList
                 style={{ backgroundColor: colors.lightGrey }}
                 refreshing={this.props.taskServicesOrError.type === constants.TASK_SERVICES_LOADING}
                 onRefresh={this.props.requestUpdateTaskServices}
-                data={selectorTaskServices.services}
+                data={services}
                 keyExtractor={(service: Service): string => service.id}
                 renderItem={this.renderServiceListItem}
                 ListEmptyComponent={ServiceListEmpty}
