@@ -31,21 +31,16 @@ export function* updateTaskServices(action: SendTaskServicesRequestAction): Upda
         const hasValidationErrors = !validator.isValid;
 
         if (hasNoLocation) {
-            console.log('no location');
             yield put(populateTaskServicesFromError('Location error', taskId, ErrorMessageType.Location));
         } else if (hasResponseErrors) {
-            console.log('response error');
             yield put(populateTaskServicesFromError(response.message, taskId, ErrorMessageType.Server));
         } else if (hasValidationErrors) {
-            console.log('validation error');
             yield put(populateTaskServicesFromError(validator.errors, taskId, ErrorMessageType.Server));
         } else {
             const res = populateTaskServicesFromSuccess(taskId, R.map(serviceFromValidatedJSON, response.results));
-            console.log('success with ' + res.payload.services.length + ' services');
             yield put(res);
         }
     } catch (error) {
-        console.log('caught error in saga');
         yield put(populateTaskServicesFromError(error.message, taskId, ErrorMessageType.Exception));
     }
 }
@@ -54,13 +49,10 @@ const getLocationIfPermittedAsync = async (): Promise<LocationData | undefined> 
     try {
         const permissions = await Permissions.askAsync(Permissions.LOCATION);
         if (permissions.status !== 'granted') {
-            console.log('permission denied');
             return undefined;
         }
-        console.log('getting location');
         return await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low, timeout: 1000 });
     } catch (error) {
-        console.log('failed to get location');
         return undefined;
     }
 };

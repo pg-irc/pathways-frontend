@@ -29,7 +29,6 @@ export class APIClient {
     private async fetch(endpoint: string, query: string): Promise<APIResponse> {
         const version = 'v1';
         const url = `${this.host}/${version}/${endpoint}?${query}`;
-        console.log(url);
         const response = await fetch(url);
         return createAPIResponse(response);
     }
