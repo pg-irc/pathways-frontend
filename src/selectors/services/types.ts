@@ -1,18 +1,18 @@
 import { Service } from '../../stores/services';
 import { ErrorMessageType } from '../../stores/services';
 
-export interface SelectorTaskServices {
+export interface ValidSelectorTaskServices {
     readonly services: ReadonlyArray<Service>;
     readonly type: 'TaskServices:Valid';
 }
 
-export interface SelectorTaskServicesLoading {
+export interface LoadingSelectorTaskServices {
     readonly type: 'TaskServices:Loading';
 }
 
-export interface SelectorTaskServicesError {
+export interface ErrorSelectorTaskServices {
     readonly errorMessageType: ErrorMessageType;
     readonly type: 'TaskServices:Error';
 }
 
-export type SelectorTaskServicesOrError = SelectorTaskServices | SelectorTaskServicesLoading | SelectorTaskServicesError;
+export type SelectorTaskServices = ValidSelectorTaskServices | LoadingSelectorTaskServices | ErrorSelectorTaskServices;

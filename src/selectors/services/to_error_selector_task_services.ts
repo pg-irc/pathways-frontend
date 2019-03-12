@@ -1,9 +1,9 @@
 import { TaskServicesError } from '../../stores/services';
-import { SelectorTaskServicesError } from './types';
+import { ErrorSelectorTaskServices } from './types';
 import * as constants from '../../application/constants';
 
-export const toSelectorTaskServicesError = (taskServicesError: TaskServicesError):
-    SelectorTaskServicesError => ({
+export const toErrorSelectorTaskServices = (taskServicesError: TaskServicesError):
+    ErrorSelectorTaskServices => ({
         errorMessageType: taskServicesError.errorMessageType,
         type: constants.TASK_SERVICES_ERROR,
     });

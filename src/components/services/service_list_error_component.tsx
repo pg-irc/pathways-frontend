@@ -2,11 +2,11 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { Text, View, Icon } from 'native-base';
 import { ErrorMessageType } from '../../stores/services';
-import { SelectorTaskServicesError } from '../../selectors/services/types';
+import { ErrorSelectorTaskServices } from '../../selectors/services/types';
 import { colors, textStyles } from '../../application/styles';
 
 export interface ServiceListErrorComponentProps {
-    readonly error: SelectorTaskServicesError;
+    readonly error: ErrorSelectorTaskServices;
 }
 
 export const ServiceListErrorComponent = (props: ServiceListErrorComponentProps): JSX.Element => {

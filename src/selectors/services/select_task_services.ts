@@ -1,18 +1,18 @@
 import { Store } from '../../stores';
 import { Id as TaskId } from '../../stores/tasks';
 import { isTaskServices, isTaskServicesError, buildEmptyTasksServices } from '../../stores/services';
-import { SelectorTaskServicesOrError } from './types';
-import { toSelectorTaskServices } from './to_selector_task_services';
-import { toSelectorTaskServicesError } from './to_selector_task_services_error';
+import { SelectorTaskServices } from './types';
+import { toValidSelectorTaskServices } from './to_valid_selector_task_services';
+import { toErrorSelectorTaskServices } from './to_error_selector_task_services';
 import * as constants from '../../application/constants';
 
-export const selectTaskServicesOrError = (taskId: TaskId, store: Store): SelectorTaskServicesOrError => {
+export const selectTaskServices = (taskId: TaskId, store: Store): SelectorTaskServices => {
     const taskServicesOrError = store.servicesInStore.taskServicesOrError[taskId] || buildEmptyTasksServices();
     if (isTaskServices(taskServicesOrError)) {
-        return toSelectorTaskServices(taskServicesOrError, store.servicesInStore.services);
+        return toValidSelectorTaskServices(taskServicesOrError, store.servicesInStore.services);
     }
     if (isTaskServicesError(taskServicesOrError)) {
-        return toSelectorTaskServicesError(taskServicesOrError);
+        return toErrorSelectorTaskServices(taskServicesOrError);
     }
     return { type: constants.TASK_SERVICES_LOADING };
 };

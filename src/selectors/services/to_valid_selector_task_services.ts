@@ -1,9 +1,9 @@
 import { TaskServices, ServiceMap, Id as ServiceId } from '../../stores/services';
-import { SelectorTaskServices } from './types';
+import { ValidSelectorTaskServices } from './types';
 import * as constants from '../../application/constants';
 
-export const toSelectorTaskServices = (taskServices: TaskServices, services: ServiceMap):
-    SelectorTaskServices => ({
+export const toValidSelectorTaskServices = (taskServices: TaskServices, services: ServiceMap):
+    ValidSelectorTaskServices => ({
         services: taskServices.serviceIds.map((serviceId: ServiceId) => services[serviceId]),
         type: constants.TASK_SERVICES_VALID,
     });

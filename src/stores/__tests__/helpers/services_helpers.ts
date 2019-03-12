@@ -2,9 +2,9 @@
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { Id, ErrorMessageType } from '../../services';
 import {
-    TaskServices, TaskServicesLoading, Service, ServiceMap,
-    ServiceStore, PhoneNumber, Address, TaskServicesError,
-    TaskServicesOrErrorMap,
+    ValidTaskServices, LoadingTaskServices, Service, ServiceMap,
+    ServiceStore, PhoneNumber, Address, ErrorTaskServices,
+    TaskServicesMap,
 } from '../../services/types';
 import * as constants from '../../../application/constants';
 
@@ -25,9 +25,9 @@ const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap =>
 
 const buildTaskServicesOrErrorMap = (
     taskServicesOrError: ReadonlyArray<TaskServicesBuilder | TaskServicesErrorBuilder>,
-): TaskServicesOrErrorMap => {
-    const buildAndMapToId = (map: TaskServicesOrErrorMap, builder: TaskServicesBuilder | TaskServicesErrorBuilder):
-        TaskServicesOrErrorMap => {
+): TaskServicesMap => {
+    const buildAndMapToId = (map: TaskServicesMap, builder: TaskServicesBuilder | TaskServicesErrorBuilder):
+        TaskServicesMap => {
         return { ...map, [builder.taskId]: builder.build() };
     };
     return taskServicesOrError.reduce(buildAndMapToId, {});
@@ -164,7 +164,7 @@ export class TaskServicesBuilder {
         return this;
     }
 
-    build(): TaskServices | TaskServicesLoading {
+    build(): ValidTaskServices | LoadingTaskServices {
         if (this.loading) {
             return {
                 type: constants.TASK_SERVICES_LOADING,
@@ -198,7 +198,7 @@ export class TaskServicesErrorBuilder {
         return this;
     }
 
-    build(): TaskServicesError {
+    build(): ErrorTaskServices {
         return {
             type: constants.TASK_SERVICES_ERROR,
             errorMessage: this.errorMessage,

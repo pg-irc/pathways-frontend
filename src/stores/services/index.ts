@@ -1,8 +1,8 @@
 import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import {
-    Id, Service, ServiceStore, ServiceMap, TaskServices,
-    PhoneNumber, TaskServicesError, TaskServicesLoading, TaskServicesOrError, ErrorMessageType,
+    Id, Service, ServiceStore, ServiceMap, ValidTaskServices,
+    PhoneNumber, ErrorTaskServices, LoadingTaskServices, TaskServices, ErrorMessageType,
 } from './types';
 import {
     SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
@@ -19,7 +19,7 @@ import { isTaskServicesError } from './is_task_services_error';
 
 export {
     Id, Service, ServiceStore, PhoneNumber, Address,
-    ErrorMessageType, TaskServices, TaskServicesError, TaskServicesLoading, TaskServicesOrError, ServiceMap,
+    ErrorMessageType, ValidTaskServices as TaskServices, ErrorTaskServices as TaskServicesError, LoadingTaskServices as TaskServicesLoading, TaskServices as TaskServicesOrError, ServiceMap,
 };
 export {
     SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
@@ -66,7 +66,7 @@ export function buildDefaultStore(): ServiceStore {
     };
 }
 
-export const buildEmptyTasksServices = (): TaskServices => ({
+export const buildEmptyTasksServices = (): ValidTaskServices => ({
     serviceIds: [],
     type: constants.TASK_SERVICES_VALID,
 });

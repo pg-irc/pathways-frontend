@@ -35,30 +35,28 @@ export enum ErrorMessageType {
     Exception,
 }
 
-export interface TaskServices {
+export interface ValidTaskServices {
     readonly type: 'TaskServices:Valid';
     readonly serviceIds: ReadonlyArray<Id>;
 }
 
-export interface TaskServicesLoading {
+export interface LoadingTaskServices {
     readonly type: 'TaskServices:Loading';
 }
 
-export interface TaskServicesError {
+export interface ErrorTaskServices {
     readonly type: 'TaskServices:Error';
     readonly errorMessage: string;
     readonly errorMessageType: ErrorMessageType;
 }
 
-// TODO rename type
-export type TaskServicesOrError = TaskServices | TaskServicesLoading | TaskServicesError;
+export type TaskServices = ValidTaskServices | LoadingTaskServices | ErrorTaskServices;
 
-// TODO rename
-export interface TaskServicesOrErrorMap {
-    readonly [taskId: string]: TaskServicesOrError;
+export interface TaskServicesMap {
+    readonly [taskId: string]: TaskServices;
 }
 
-export const isServiceLoading = (services: TaskServicesOrError): boolean => (
+export const isServiceLoading = (services: TaskServices): boolean => (
     services.type === constants.TASK_SERVICES_LOADING
 );
 
@@ -68,7 +66,7 @@ export interface ServiceMap {
 
 export interface ServiceStore {
     readonly services: ServiceMap;
-    readonly taskServicesOrError: TaskServicesOrErrorMap;
+    readonly taskServicesOrError: TaskServicesMap;
 }
 
 export interface ValidatedPhoneNumberJSON {
