@@ -3,31 +3,34 @@ import * as constants from '../../application/constants';
 import {
     Id, Service, ServiceStore, ServiceMap, ValidTaskServices,
     PhoneNumber, ErrorTaskServices, LoadingTaskServices, TaskServices, ErrorMessageType,
+    ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON,
+    ValidatedAddressWithTypeJSON, Address,
 } from './types';
 import {
     SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
     populateTaskServicesFromSuccess, PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
     ServicesAction,
 } from './actions';
-import {
-    ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON,
-    ValidatedAddressWithTypeJSON, Address,
-} from './types';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
-import { isTaskServices } from './is_task_services';
+import { isValidTaskServices } from './is_valid_task_services';
 import { isTaskServicesError } from './is_task_services_error';
 
 export {
-    Id, Service, ServiceStore, PhoneNumber, Address,
-    ErrorMessageType, ValidTaskServices as TaskServices, ErrorTaskServices as TaskServicesError, LoadingTaskServices as TaskServicesLoading, TaskServices as TaskServicesOrError, ServiceMap,
+    Id, Service, ServiceStore,
+    PhoneNumber, Address,
+    TaskServices,
+    LoadingTaskServices,
+    ValidTaskServices,
+    ServiceMap,
+    ErrorTaskServices,
+    ErrorMessageType,
+    SendTaskServicesRequestAction, sendTaskServicesRequest,
+    PopulateTaskServicesFromSuccessAction, populateTaskServicesFromSuccess,
+    PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
+    isValidTaskServices, isTaskServicesError,
+    serviceAtLocation,
+    serviceAtLocationArray,
 };
-export {
-    SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
-    populateTaskServicesFromSuccess, PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
-};
-export { serviceAtLocation, serviceAtLocationArray };
-export { isTaskServices };
-export { isTaskServicesError };
 
 export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): Service {
     const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): PhoneNumber => ({

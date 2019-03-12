@@ -2,7 +2,7 @@
 import * as constants from '../../application/constants';
 import {
     reducer, SendTaskServicesRequestAction, PopulateTaskServicesFromSuccessAction,
-    PopulateTaskServicesFromErrorAction, Service, ErrorMessageType, isTaskServices,
+    PopulateTaskServicesFromErrorAction, Service, ErrorMessageType, isValidTaskServices,
 } from '../services';
 import { TaskBuilder } from './helpers/tasks_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
@@ -88,7 +88,7 @@ describe('services reducer', () => {
         });
 
         it('sets service ids on task services object', () => {
-            if (isTaskServices(taskServicesOrErrorEntry)) {
+            if (isValidTaskServices(taskServicesOrErrorEntry)) {
                 const serviceIds = taskServicesOrErrorEntry.serviceIds;
                 services.forEach((service: Service) => {
                     expect(serviceIds).toContain(service.id);
@@ -99,7 +99,7 @@ describe('services reducer', () => {
         });
 
         it('replaces service ids on existing task services object', () => {
-            if (isTaskServices(taskServicesOrErrorEntry)) {
+            if (isValidTaskServices(taskServicesOrErrorEntry)) {
                 const serviceIds = taskServicesOrErrorEntry.serviceIds;
                 expect(serviceIds).not.toContain(aService.id);
             } else {
