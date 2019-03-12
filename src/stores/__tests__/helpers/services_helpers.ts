@@ -1,30 +1,37 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
-import { Id } from '../../services';
-import { Id as TaskId } from '../../tasks';
-import { TaskServices, Service, TaskServicesMap, ServiceMap, ServiceStore, PhoneNumber, Address } from '../../services/types';
+import { Id, ErrorMessageType } from '../../services';
+import {
+    ValidTaskServices, LoadingTaskServices, Service, ServiceMap,
+    ServiceStore, PhoneNumber, Address, ErrorTaskServices,
+    TaskServicesMap,
+} from '../../services/types';
+import * as constants from '../../../application/constants';
 
-export function buildNormalizedServices(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): ServiceStore {
-    return {
-        serviceMap: buildServiceMap(services),
-        taskServicesMap: buildTaskServicesMap(tasks, services),
-    };
-}
+export const buildNormalizedServices = (
+    services: ReadonlyArray<ServiceBuilder>,
+    taskServicesOrError: ReadonlyArray<TaskServicesBuilder | TaskServicesErrorBuilder>,
+): ServiceStore => ({
+    services: buildServiceMap(services),
+    taskServicesOrError: buildTaskServicesOrErrorMap(taskServicesOrError),
+});
 
-function buildServiceMap(services: ReadonlyArray<ServiceBuilder>): ServiceMap {
+const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {
     const buildAndMapToId = (map: ServiceMap, builder: ServiceBuilder): ServiceMap => {
         return { ...map, [builder.id]: builder.build() };
     };
     return services.reduce(buildAndMapToId, {});
-}
+};
 
-function buildTaskServicesMap(tasks: ReadonlyArray<TaskServicesBuilder>, services: ReadonlyArray<ServiceBuilder>): TaskServicesMap {
-    const buildAndMapToId = (map: TaskServicesMap, builder: TaskServicesBuilder): TaskServicesMap => {
-        const serviceIds = services.map((service: ServiceBuilder) => service.id);
-        return { ...map, [builder.id]: builder.withServiceIds(serviceIds).build() };
+const buildTaskServicesOrErrorMap = (
+    taskServicesOrError: ReadonlyArray<TaskServicesBuilder | TaskServicesErrorBuilder>,
+): TaskServicesMap => {
+    const buildAndMapToId = (map: TaskServicesMap, builder: TaskServicesBuilder | TaskServicesErrorBuilder):
+        TaskServicesMap => {
+        return { ...map, [builder.taskId]: builder.build() };
     };
-    return tasks.reduce(buildAndMapToId, {});
-}
+    return taskServicesOrError.reduce(buildAndMapToId, {});
+};
 
 export class PhoneNumberBuilder {
     type: string = aString();
@@ -136,29 +143,19 @@ export class ServiceBuilder {
             phoneNumbers: this.phoneNumbers,
             addresses: this.addresses,
             website: this.website,
-            email: this.email
+            email: this.email,
         };
     }
 }
 
 export class TaskServicesBuilder {
-    id: TaskId = aString();
+    taskId: string = aString();
     loading: boolean = false;
     message: string = aString();
     serviceIds: ReadonlyArray<Id> = [];
 
-    withTaskId(id: TaskId): TaskServicesBuilder {
-        this.id = id;
-        return this;
-    }
-
     withLoading(loading: boolean): TaskServicesBuilder {
         this.loading = loading;
-        return this;
-    }
-
-    withMessage(message: string): TaskServicesBuilder {
-        this.message = message;
         return this;
     }
 
@@ -167,11 +164,45 @@ export class TaskServicesBuilder {
         return this;
     }
 
-    build(): TaskServices {
+    build(): ValidTaskServices | LoadingTaskServices {
+        if (this.loading) {
+            return {
+                type: constants.TASK_SERVICES_LOADING,
+            };
+        }
         return {
-            loading: this.loading,
-            message: this.message,
+            type: constants.TASK_SERVICES_VALID,
             serviceIds: this.serviceIds,
+        };
+    }
+}
+
+export class TaskServicesErrorBuilder {
+    taskId: string = aString();
+    loading: boolean = false;
+    errorMessage: string = aString();
+    errorMessageType: ErrorMessageType = ErrorMessageType.Server;
+
+    withLoading(loading: boolean): TaskServicesErrorBuilder {
+        this.loading = loading;
+        return this;
+    }
+
+    withErrorMessage(errorMessage: string): TaskServicesErrorBuilder {
+        this.errorMessage = errorMessage;
+        return this;
+    }
+
+    withErrorMessageType(errorMessageType: ErrorMessageType): TaskServicesErrorBuilder {
+        this.errorMessageType = errorMessageType;
+        return this;
+    }
+
+    build(): ErrorTaskServices {
+        return {
+            type: constants.TASK_SERVICES_ERROR,
+            errorMessage: this.errorMessage,
+            errorMessageType: this.errorMessageType,
         };
     }
 }

@@ -4,24 +4,33 @@ import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import { Service } from '../../stores/services';
-import { TaskServices } from '../../selectors/services/task_services';
+import {
+    ValidSelectorTaskServices,
+    ErrorSelectorTaskServices,
+    SelectorTaskServices,
+    LoadingSelectorTaskServices,
+} from '../../selectors/services/types';
+import { isValidSelectorTaskServices } from '../../selectors/services/is_valid_selector_task_services';
 import { Task } from '../../selectors/tasks/task';
 import { ServiceListItemComponent } from './service_list_item_component';
-import { UpdateTaskServicesAsync } from '../../stores/services';
+import { SendTaskServicesRequestAction } from '../../stores/services';
 import { textStyles, colors, values } from '../../application/styles';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
+import { ServiceListErrorComponent } from './service_list_error_component';
+import { isErrorSelectorTaskServices } from '../../selectors/services/is_error_selector_task_services';
+import * as constants from '../../application/constants';
 
 export interface ServiceListProps {
     readonly task: Task;
-    readonly taskServices: TaskServices;
+    readonly taskServicesOrError: SelectorTaskServices;
 }
 
 export interface ServiceListActions {
-    readonly requestUpdateOfServicesForTask: (task: Task) => UpdateTaskServicesAsync.Request;
+    readonly requestUpdateOfServicesForTask: (task: Task) => SendTaskServicesRequestAction;
 }
 
 export interface TaskServiceUpdater {
-    readonly requestUpdateTaskServices: () => UpdateTaskServicesAsync.Request;
+    readonly requestUpdateTaskServices: () => SendTaskServicesRequestAction;
 }
 
 type Props = ServiceListProps & ServiceListActions & TaskServiceUpdater;
@@ -40,16 +49,27 @@ export class ServiceListComponent extends React.Component<Props> {
     }
 
     render(): JSX.Element {
+        if (isValidSelectorTaskServices(this.props.taskServicesOrError)) {
+            return this.renderServiceList(this.props.taskServicesOrError);
+        }
+        if (isErrorSelectorTaskServices(this.props.taskServicesOrError)) {
+            return this.renderServiceListError(this.props.taskServicesOrError);
+        }
+        return this.renderServiceList(this.props.taskServicesOrError);
+    }
+
+    renderServiceList(selectorTaskServices: ValidSelectorTaskServices | LoadingSelectorTaskServices): JSX.Element {
+        const services = selectorTaskServices.type === constants.TASK_SERVICES_VALID ? selectorTaskServices.services : [];
         return (
             <FlatList
                 style={{ backgroundColor: colors.lightGrey }}
-                refreshing={this.props.taskServices.loading}
+                refreshing={this.props.taskServicesOrError.type === constants.TASK_SERVICES_LOADING}
                 onRefresh={this.props.requestUpdateTaskServices}
-                data={this.props.taskServices.services}
+                data={services}
                 keyExtractor={(service: Service): string => service.id}
                 renderItem={this.renderServiceListItem}
                 ListEmptyComponent={ServiceListEmpty}
-                ListHeaderComponent={<ServiceListHeaderComponent {...this.props} />}
+                ListHeaderComponent={< ServiceListHeaderComponent {...this.props} />}
             />
         );
     }
@@ -57,6 +77,12 @@ export class ServiceListComponent extends React.Component<Props> {
     renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
         return (
             <ServiceListItemComponent service={item} />
+        );
+    }
+
+    renderServiceListError(selectorTaskServicesError: ErrorSelectorTaskServices): JSX.Element {
+        return (
+            <ServiceListErrorComponent error={selectorTaskServicesError} />
         );
     }
 }

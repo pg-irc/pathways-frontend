@@ -47,3 +47,7 @@ export namespace AnalyticsAsync {
   export const SUCCESS = 'ASYNC:ANALYTICS:SUCCESS';
   export const FAILURE = 'ASYNC:ANALYTICS:FAILURE';
 }
+
+export const TASK_SERVICES_VALID = 'TaskServices:Valid';
+export const TASK_SERVICES_LOADING = 'TaskServices:Loading';
+export const TASK_SERVICES_ERROR = 'TaskServices:Error';
