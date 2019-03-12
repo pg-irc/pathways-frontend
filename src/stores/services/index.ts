@@ -13,7 +13,7 @@ import {
 } from './actions';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 import { isValidTaskServices } from './is_valid_task_services';
-import { isTaskServicesError } from './is_task_services_error';
+import { isErrorTaskServices } from './is_error_task_services';
 
 export {
     Id, Service, ServiceStore,
@@ -27,7 +27,7 @@ export {
     SendTaskServicesRequestAction, sendTaskServicesRequest,
     PopulateTaskServicesFromSuccessAction, populateTaskServicesFromSuccess,
     PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
-    isValidTaskServices, isTaskServicesError,
+    isValidTaskServices, isErrorTaskServices as isTaskServicesError,
     serviceAtLocation,
     serviceAtLocationArray,
 };
