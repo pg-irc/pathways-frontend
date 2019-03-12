@@ -3,7 +3,7 @@
     "sdkVersion": "32.0.0",
     "name": "Arrival Advisor",
     "icon": "./assets/images/aa_icon.png",
-    "version": "1.0.8",
+    "version": "1.0.8.0",
     "slug": "arrival_advisor",
     "orientation": "portrait",
     "ios": {
@@ -18,7 +18,7 @@
     },
     "android": {
       "package": "org.peacegeeks.ArrivalAdvisor",
-      "versionCode": 7,
+      "versionCode": 100080,
       "permissions": []
     },
     "assetBundlePatterns": [

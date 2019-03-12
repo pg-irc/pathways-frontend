@@ -44,10 +44,10 @@ describe('version id in VERSION.txt', () => {
         const filename = 'app.json';
         const content = readFileSync(filename).toString();
         const json = JSON.parse(content);
-        const androidVersionCode = json['expo']['android']['versionCode'];
-        const versionSplit = version.toString().split('.');
-        const code = 10000*Number(versionSplit[0])+100*Number(versionSplit[1])+Number(versionSplit[2]);
+        const versions = version.toString().split('.');
+        const major = versions[0], minor = versions[1], patch = versions[2], code = versions[3];
+        const versionCode = 100000*Number(major)+1000*Number(minor)+10*Number(patch)+Number(code);
 
-        expect(androidVersionCode).toBe(code);
+        expect(json['expo']['android']['versionCode']).toBe(versionCode);
     });
 });
