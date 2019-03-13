@@ -136,11 +136,10 @@ const ServicesButton = (props: Props): JSX.Element => (
             style={{
                 color: colors.white,
                 fontSize: values.smallIconSize,
-                flex: 1,
-                maxWidth: 25,
+                marginRight: 10,
             }}
         />
-        <Text style={[textStyles.button, { flex: 2, textAlign: 'left' }]}>
+        <Text style={[textStyles.button, { textAlign: 'left' }]}>
             <Trans>Find related services near me</Trans>
         </Text>
     </MultiLineButtonComponent>
