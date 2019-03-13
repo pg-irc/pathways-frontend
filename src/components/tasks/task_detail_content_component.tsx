@@ -1,16 +1,17 @@
 import React from 'react';
 import * as R from 'ramda';
 import { Image, Dimensions } from 'react-native';
-import { View, Text, Icon, Button } from 'native-base';
+import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import Markdown, { openUrl } from 'react-native-markdown-renderer';
 import { Task } from '../../selectors/tasks/task';
-import { textStyles, colors, values, markdownStyles, applicationStyles } from '../../application/styles';
+import { textStyles, colors, values, markdownStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { images as topicImages } from '../../application/topicImages';
 import { RecommendedIconComponent } from '../recommended_topics/recommended_icon_component';
+import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 export interface TaskDetailContentProps {
     readonly task: Task;
@@ -123,19 +124,11 @@ const TaskDescription = (props: Props): JSX.Element => {
 };
 
 const ServicesButton = (props: Props): JSX.Element => (
-    <Button
+    <MultiLineButtonComponent
         onPress={props.onServicesTextPress}
-        iconLeft
-        style={[
-            applicationStyles.tealButton,
-            applicationStyles.boxShadowBelow,
-            {
-                paddingHorizontal: 15,
-                alignSelf: 'center',
-                marginBottom: 15,
-                justifyContent: 'center',
-            },
-        ]}
+        additionalStyles={{
+            marginBottom: 15,
+        }}
     >
         <Icon
             type={'FontAwesome'}
@@ -143,10 +136,11 @@ const ServicesButton = (props: Props): JSX.Element => (
             style={{
                 color: colors.white,
                 fontSize: values.smallIconSize,
+                marginRight: 5,
             }}
         />
-        <Text style={textStyles.button}>
+        <Text style={[textStyles.button, { textAlign: 'left' }]}>
             <Trans>Find related services near me</Trans>
         </Text>
-    </Button>
+    </MultiLineButtonComponent>
 );

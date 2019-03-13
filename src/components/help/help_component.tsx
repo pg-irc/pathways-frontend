@@ -1,6 +1,6 @@
 import React from 'react';
 import { History } from 'history';
-import { Text, View, Icon, Button, Content } from 'native-base';
+import { Text, View, Icon, Content } from 'native-base';
 import { Trans } from '@lingui/react';
 import { I18nManager, Alert, TouchableOpacity } from 'react-native';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
@@ -115,19 +115,11 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
         );
     };
     return (
-        <Button
-            full
-            onPress={alertToClearAllUserData}
-            style={[
-                applicationStyles.tealButton,
-                applicationStyles.boxShadowBelow,
-                { alignSelf: 'center' }]
-            }
-        >
+        <MultiLineButtonComponent onPress={alertToClearAllUserData} >
             <Text style={textStyles.button}>
                 <Trans>Delete all user data</Trans>
             </Text>
-        </Button>
+        </MultiLineButtonComponent>
     );
 };
 

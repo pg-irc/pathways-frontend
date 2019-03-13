@@ -4,6 +4,7 @@ import { applicationStyles } from '../../application/styles';
 
 export interface MultiLineButtonProps {
     readonly children: any; // tslint:disable-line:no-any
+    readonly additionalStyles?: object;
 }
 
 export interface MultiLineButtonActions {
@@ -18,7 +19,17 @@ export const MultiLineButtonComponent: React.StatelessComponent<Props> = (props:
         style={[
             applicationStyles.tealButton,
             applicationStyles.boxShadowBelow,
-            { alignSelf: 'center', paddingHorizontal: 15, paddingVertical: 10, flexWrap: 'wrap' },
+            {
+                flex: 1,
+                flexDirection: 'row',
+                alignSelf: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingHorizontal: 15,
+                paddingVertical: 10,
+                flexWrap: 'wrap',
+            },
+            props.additionalStyles,
         ]}>
         {props.children}
     </TouchableOpacity>
