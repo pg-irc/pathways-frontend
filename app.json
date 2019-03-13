@@ -12,14 +12,13 @@
         "LSApplicationQueriesSchemes": [
           "comgooglemaps"
         ],
-        "NSLocationWhenInUseUsageDescription":
-          "Arrival Advisor needs to access your location to find services near you."
+        "NSLocationWhenInUseUsageDescription": "Arrival Advisor needs to access your location to find services near you."
       }
     },
     "android": {
       "icon": "./assets/images/phone_icon_android.png",
       "package": "org.peacegeeks.ArrivalAdvisor",
-      "versionCode": 7,
+      "versionCode": 100080,
       "permissions": []
     },
     "assetBundlePatterns": [
