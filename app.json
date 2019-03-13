@@ -2,7 +2,7 @@
   "expo": {
     "sdkVersion": "32.0.0",
     "name": "Arrival Advisor",
-    "version": "1.0.8.0",
+    "version": "1.0.8",
     "slug": "arrival_advisor",
     "orientation": "portrait",
     "ios": {
@@ -12,8 +12,7 @@
         "LSApplicationQueriesSchemes": [
           "comgooglemaps"
         ],
-        "NSLocationWhenInUseUsageDescription":
-          "Arrival Advisor needs to access your location to find services near you."
+        "NSLocationWhenInUseUsageDescription": "Arrival Advisor needs to access your location to find services near you."
       }
     },
     "android": {
