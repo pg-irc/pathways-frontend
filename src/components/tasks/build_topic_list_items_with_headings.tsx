@@ -2,9 +2,9 @@ import * as R from 'ramda';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TopicListHeading } from './topic_list_heading_component';
 
-export type TopicListItemOrHeading = TaskListItem | TopicListHeading;
+export type ListItem = TaskListItem | TopicListHeading;
 
-export const buildTopicsListItemsWithHeadings = (topics: ReadonlyArray<TaskListItem>): ReadonlyArray<TopicListItemOrHeading> => (
+export const buildTopicsListItemsWithHeadings = (topics: ReadonlyArray<TaskListItem>): ReadonlyArray<ListItem> => (
     flattenGroupedTopics(groupTopicsByExploreSection(topics))
 );
 
@@ -14,9 +14,9 @@ const groupTopicsByExploreSection = (topics: ReadonlyArray<TaskListItem>): Group
     R.groupBy((topic: TaskListItem) => topic.exploreSection.name, topics)
 );
 
-const flattenGroupedTopics = (groupedTopics: GroupedTaskListItems): ReadonlyArray<TopicListItemOrHeading> => (
+const flattenGroupedTopics = (groupedTopics: GroupedTaskListItems): ReadonlyArray<ListItem> => (
     R.reduce(
-        (accumulator: ReadonlyArray<TopicListItemOrHeading>, heading: string) =>
+        (accumulator: ReadonlyArray<ListItem>, heading: string) =>
         [
             ...accumulator,
             {
