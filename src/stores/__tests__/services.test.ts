@@ -87,6 +87,29 @@ describe('services reducer', () => {
             });
         });
 
+        it('maintains the ordering of the services in the tasks service vector', () => {
+            const servicesWithIds: ReadonlyArray<Service> = [
+                new ServiceBuilder().withId('1').build(),
+                new ServiceBuilder().withId('3').build(),
+                new ServiceBuilder().withId('2').build(),
+            ];
+            const theAction: PopulateTaskServicesFromSuccessAction = {
+                type: constants.LOAD_SERVICES_SUCCESS,
+                payload: {
+                    taskId: task.id,
+                    services: servicesWithIds,
+                },
+            };
+            const resultStore = reducer(theStore, theAction);
+            const servicesForTask = resultStore.taskServicesOrError[task.id];
+            if (isValidTaskServices(servicesForTask)) {
+                const serviceIds = servicesForTask.serviceIds;
+                expect(serviceIds).toBe(['1', '3', '2']);
+            } else {
+                fail();
+            }
+        });
+
         it('sets service ids on task services object', () => {
             if (isValidTaskServices(taskServicesOrErrorEntry)) {
                 const serviceIds = taskServicesOrErrorEntry.serviceIds;
