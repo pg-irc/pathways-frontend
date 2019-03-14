@@ -40,5 +40,26 @@ describe('Group topics by section', () => {
 
             expect(result[3]).toBe(secondTask);
         });
+        // TODO heading has icon from section
     });
+
+    // describe('puts the rightaway section first', () => {
+    //     const firstSection = new ExploreSectionBuilder().build();
+    //     const firstTask = new TaskListItemBuilder(firstSection).build();
+    //     const rightAwaySection = new ExploreSectionBuilder().withId('rightaway').build();
+    //     const rightAwayTask = new TaskListItemBuilder(rightAwaySection).build();
+    //     const result = buildTopicsListItemsWithHeadings([firstTask, rightAwayTask]);
+
+    //     it('groups topics with the different explore section after each heading', () => {
+    //         const firstTopicListHeading = result[0] as TopicListHeading;
+    //         expect(firstTopicListHeading.heading).toBe(rightAwaySection.name);
+
+    //         expect(result[1]).toBe(rightAwayTask);
+
+    //         const secondTopicListHeading = result[2] as TopicListHeading;
+    //         expect(secondTopicListHeading.heading).toBe(firstSection.name);
+
+    //         expect(result[3]).toBe(firstTask);
+    //     });
+    // });
 });
