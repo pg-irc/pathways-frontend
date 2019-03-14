@@ -1,11 +1,13 @@
 import * as R from 'ramda';
 import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TopicListHeading } from './topic_list_heading_component';
+import { ExploreSection } from '../../selectors/explore/types';
+import { rightAwaySectionId } from '../../fixtures/hard_coded/explore';
 
 export type ListItem = TaskListItem | TopicListHeading;
 
 export const buildTopicsListItemsWithHeadings = (topics: ReadonlyArray<TaskListItem>): ReadonlyArray<ListItem> => (
-    flattenGroupedTopics(R.groupBy(exploreSectionName, topics))
+    flattenGroupedTopics(moveRightAwayTopicsToTheTop(R.groupBy(exploreSectionName, topics)))
 );
 
 type GroupedTaskListItems = {
@@ -16,12 +18,22 @@ const exploreSectionName = (topic: TaskListItem): string => (
     topic.exploreSection.name
 );
 
-const flattenGroupedTopics = (groupedTopics: GroupedTaskListItems): ReadonlyArray<ListItem> => (
+const moveRightAwayTopicsToTheTop = (groupedTopics: GroupedTaskListItems): ReadonlyArray<ReadonlyArray<TaskListItem>> => (
     R.reduce(
-        (accumulator: ReadonlyArray<ListItem>, heading: string) => {
-            const topicsGroup = groupedTopics[heading];
-            const icon = topicsGroup[0].exploreSection.icon;
-            const topicListHeading = buildTopicListHeading(heading, icon);
+        (accumulator: ReadonlyArray<ReadonlyArray<TaskListItem>>, sectionName: string) => {
+            const topicsGroup = groupedTopics[sectionName];
+            const groupId = topicsGroup[0].exploreSection.id;
+            return groupId === rightAwaySectionId ? [topicsGroup, ...accumulator] : [...accumulator, topicsGroup];
+        },
+        [],
+        R.keys(groupedTopics),
+    )
+);
+
+const flattenGroupedTopics = (groupedTopics: ReadonlyArray<ReadonlyArray<TaskListItem>>): ReadonlyArray<ListItem> => (
+    R.reduce(
+        (accumulator: ReadonlyArray<ListItem>, topicsGroup: ReadonlyArray<TaskListItem>) => {
+            const topicListHeading = buildTopicListHeading(topicsGroup[0].exploreSection);
             return [
                 ...accumulator,
                 topicListHeading,
@@ -29,12 +41,12 @@ const flattenGroupedTopics = (groupedTopics: GroupedTaskListItems): ReadonlyArra
             ];
         },
         [],
-        R.keys(groupedTopics),
+        groupedTopics,
     )
 );
 
-const buildTopicListHeading = (heading: string, icon: string): TopicListHeading => ({
-    id: heading,
-    heading,
-    icon,
+const buildTopicListHeading = (exploreSection: ExploreSection): TopicListHeading => ({
+    id: exploreSection.name,
+    heading: exploreSection.name,
+    icon: exploreSection.icon,
 });
