@@ -12,6 +12,7 @@ import {
     CallToActionPartialComponent, CallToActionPartialSubComponent,
 } from './call_to_action';
 import { RecommendedIconComponent } from './recommended_icon_component';
+import { buildTopicsListItemsWithHeadings } from '../tasks/build_topic_list_items_with_headings';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -24,7 +25,7 @@ type Props = RecommendedTopicsProps & TaskListActions & RouterProps;
 export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <TaskListComponent
         {...props}
-        tasks={props.recommendedTopics}
+        tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
         savedTasksIdList={props.savedTopicsIdList}
         emptyTaskListContent={<NoTasksRecommendedComponent />}
         headerContent={<TaskListHeaderComponent {...props} />}

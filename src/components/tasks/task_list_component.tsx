@@ -4,16 +4,18 @@ import { FlatList, ListRenderItemInfo } from 'react-native';
 import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
-import { TaskListItem } from '../../selectors/tasks/task_list_item';
 import { TaskListItemComponent } from './task_list_item_component';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
 import { Id, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/tasks';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { colors } from '../../application/styles';
+import { isTopicListHeading } from './is_topic_list_heading';
+import { ListItem } from './build_topic_list_items_with_headings';
+import { TopicListHeadingComponent } from './topic_list_heading_component';
 
 export interface TaskListProps {
     readonly history: History;
-    readonly tasks: ReadonlyArray<TaskListItem>;
+    readonly tasks: ReadonlyArray<ListItem>;
     readonly savedTasksIdList: ReadonlyArray<Id>;
     readonly emptyTaskListContent: JSX.Element;
     readonly headerContent: JSX.Element;
@@ -28,12 +30,12 @@ export interface TaskListActions {
 type Props = TaskListProps & TaskListActions;
 
 type State = {
-    readonly sections: ReadonlyArray<ReadonlyArray<TaskListItem>>;
+    readonly sections: ReadonlyArray<ReadonlyArray<ListItem>>;
     readonly sectionIndex: number;
-    readonly data: ReadonlyArray<TaskListItem>;
+    readonly data: ReadonlyArray<ListItem>;
 };
 
-type TaskItemInfo = ListRenderItemInfo<TaskListItem>;
+type TaskListItemInfo = ListRenderItemInfo<ListItem>;
 
 export class TaskListComponent extends React.PureComponent<Props, State> {
     private flatListRef: FlatListRef;
@@ -61,8 +63,8 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 ref={this.setFlatListRef}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={this.state.data}
-                renderItem={({ item }: TaskItemInfo): JSX.Element => this.renderTaskListItem(item, this.props)}
-                keyExtractor={(task: TaskListItem): string => task.id}
+                renderItem={({ item }: TaskListItemInfo): JSX.Element => this.renderTaskListItem(item, this.props)}
+                keyExtractor={(item: ListItem): string => item.id}
                 onEndReached={this.loadMoreData}
                 onEndReachedThreshold={0.5}
                 ListEmptyComponent={this.props.emptyTaskListContent}
@@ -94,7 +96,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         };
     }
 
-    private getTaskSections(): ReadonlyArray<ReadonlyArray<TaskListItem>> {
+    private getTaskSections(): ReadonlyArray<ReadonlyArray<ListItem>> {
         return R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
     }
 
@@ -102,7 +104,10 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         this.flatListRef = component as FlatListRef;
     }
 
-    private renderTaskListItem(item: TaskListItem, props: Props): JSX.Element {
+    private renderTaskListItem(item: ListItem, props: Props): JSX.Element {
+        if (isTopicListHeading(item)) {
+            return <TopicListHeadingComponent heading={item.heading} icon={item.icon} />;
+        }
         return (
             <TaskListItemComponent
                 task={item}
