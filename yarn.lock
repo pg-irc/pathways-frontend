@@ -2689,6 +2689,13 @@ expo-localization@~2.0.0:
     moment-timezone "^0.5.23"
     rtl-detect "^1.0.2"
 
+expo-location@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-3.0.0.tgz#f154968b54a513599ccf30e6d60900d62b842ff4"
+  integrity sha512-aqbQ3RsxMp4U8iFX4YwzJ4RsIHqFOZTDJemIrlIONvPyWl3cIjVAxAa1ClJHbn8U659OT0V/rFUVnbr/Fb7w1A==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-location@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-2.0.1.tgz#44d5865640ce28a1683dec8ff9269e786b86aa2e"
