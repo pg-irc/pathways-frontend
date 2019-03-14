@@ -16,6 +16,11 @@ describe('Group topics by section', () => {
             expect(topicListHeading.heading).toBe(section.name);
         });
 
+        it('sets the icon on the heading', () => {
+            const topicListHeading = result[0] as TopicListHeading;
+            expect(topicListHeading.icon).toBe(section.icon);
+        });
+
         it('groups topics with the same explore section together', () => {
             expect(result[1]).toBe(firstTask);
             expect(result[2]).toBe(secondTask);
@@ -40,7 +45,6 @@ describe('Group topics by section', () => {
 
             expect(result[3]).toBe(secondTask);
         });
-        // TODO heading has icon from section
     });
 
     describe('puts the rightaway section first', () => {
