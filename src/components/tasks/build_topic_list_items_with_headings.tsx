@@ -5,15 +5,15 @@ import { TopicListHeading } from './topic_list_heading_component';
 export type ListItem = TaskListItem | TopicListHeading;
 
 export const buildTopicsListItemsWithHeadings = (topics: ReadonlyArray<TaskListItem>): ReadonlyArray<ListItem> => (
-    flattenGroupedTopics(groupTopicsByExploreSection(topics))
+    flattenGroupedTopics(R.groupBy(exploreSectionName, topics))
 );
 
 type GroupedTaskListItems = {
     readonly [heading: string]: ReadonlyArray<TaskListItem>,
 };
 
-const groupTopicsByExploreSection = (topics: ReadonlyArray<TaskListItem>): GroupedTaskListItems => (
-    R.groupBy((topic: TaskListItem) => topic.exploreSection.name, topics)
+const exploreSectionName = (topic: TaskListItem): string => (
+    topic.exploreSection.name
 );
 
 const flattenGroupedTopics = (groupedTopics: GroupedTaskListItems): ReadonlyArray<ListItem> => (
