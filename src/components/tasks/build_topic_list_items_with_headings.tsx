@@ -8,7 +8,9 @@ export const buildTopicsListItemsWithHeadings = (topics: ReadonlyArray<TaskListI
     flattenGroupedTopics(groupTopicsByExploreSection(topics))
 );
 
-type GroupedTaskListItems  = { readonly [heading: string]: ReadonlyArray<TaskListItem> };
+type GroupedTaskListItems = {
+    readonly [heading: string]: ReadonlyArray<TaskListItem>,
+};
 
 const groupTopicsByExploreSection = (topics: ReadonlyArray<TaskListItem>): GroupedTaskListItems => (
     R.groupBy((topic: TaskListItem) => topic.exploreSection.name, topics)
@@ -17,15 +19,15 @@ const groupTopicsByExploreSection = (topics: ReadonlyArray<TaskListItem>): Group
 const flattenGroupedTopics = (groupedTopics: GroupedTaskListItems): ReadonlyArray<ListItem> => (
     R.reduce(
         (accumulator: ReadonlyArray<ListItem>, heading: string) =>
-        [
-            ...accumulator,
-            {
-                id: heading,
-                heading: heading,
-                icon: groupedTopics[heading][0].exploreSection.icon,
-            },
-            ...groupedTopics[heading],
-        ],
+            [
+                ...accumulator,
+                {
+                    id: heading,
+                    heading: heading,
+                    icon: groupedTopics[heading][0].exploreSection.icon,
+                },
+                ...groupedTopics[heading],
+            ],
         [],
         R.keys(groupedTopics),
     )
