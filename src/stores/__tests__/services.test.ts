@@ -8,6 +8,7 @@ import { TaskBuilder } from './helpers/tasks_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
 import { isServiceLoading } from '../services/types';
+import { addUnderscoreToObjectKey } from '../helpers/add_underscore_to_key';
 
 describe('services reducer', () => {
     const aService = new ServiceBuilder();
@@ -83,7 +84,7 @@ describe('services reducer', () => {
         it('updates services', () => {
             const serviceMap = store.services;
             services.forEach((service: Service) => {
-                expect(serviceMap[service.id]).toBe(service);
+                expect(serviceMap[addUnderscoreToObjectKey(service.id)]).toBe(service);
             });
         });
 
@@ -91,7 +92,7 @@ describe('services reducer', () => {
             if (isValidTaskServices(taskServicesOrErrorEntry)) {
                 const serviceIds = taskServicesOrErrorEntry.serviceIds;
                 services.forEach((service: Service) => {
-                    expect(serviceIds).toContain(service.id);
+                    expect(serviceIds).toContain(addUnderscoreToObjectKey(service.id));
                 });
             } else {
                 fail();

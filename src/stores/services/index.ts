@@ -14,6 +14,7 @@ import {
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 import { isValidTaskServices } from './is_valid_task_services';
 import { isErrorTaskServices } from './is_error_task_services';
+import { addUnderscoreToObjectKey } from '../helpers/add_underscore_to_key';
 
 export {
     Id, Service, ServiceStore,
@@ -143,7 +144,7 @@ const updateServicesFailure = (store: ServiceStore, action: PopulateTaskServices
 
 const createServiceMap = (services: ReadonlyArray<Service>): ServiceMap => {
     const theReducer = (serviceMap: ServiceMap, service: Service): ServiceMap => {
-        return { ...serviceMap, [service.id]: service };
+        return { ...serviceMap, [addUnderscoreToObjectKey(service.id)]: service };
     };
     return services.reduce(theReducer, {});
 };
