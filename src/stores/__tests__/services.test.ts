@@ -104,7 +104,7 @@ describe('services reducer', () => {
             const servicesForTask = resultStore.taskServicesOrError[task.id];
             if (isValidTaskServices(servicesForTask)) {
                 const serviceIds = servicesForTask.serviceIds;
-                expect(serviceIds).toBe(['1', '3', '2']);
+                expect(serviceIds).toEqual(['1', '3', '2']);
             } else {
                 fail();
             }

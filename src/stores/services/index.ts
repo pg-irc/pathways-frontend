@@ -107,7 +107,7 @@ const updateServicesSuccess = (store: ServiceStore, action: PopulateTaskServices
     const newServices = action.payload.services;
     const taskId = action.payload.taskId;
     const newServicesAsMap = createServiceMap(newServices);
-    const newServiceIds = Object.keys(newServicesAsMap);
+    const newServiceIds = R.map((service: Service): string => service.id, newServices);
     return {
         ...store,
         services: {
