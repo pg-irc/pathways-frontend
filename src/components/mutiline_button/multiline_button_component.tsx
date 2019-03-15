@@ -25,7 +25,6 @@ export const MultiLineButtonComponent: React.StatelessComponent<Props> = (props:
                 alignSelf: 'center',
                 alignItems: 'center',
                 justifyContent: 'center',
-                paddingHorizontal: 15,
                 paddingVertical: 10,
             },
             props.additionalStyles,

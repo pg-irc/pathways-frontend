@@ -130,6 +130,14 @@ const ServicesButton = (props: Props): JSX.Element => (
             marginBottom: 15,
         }}
     >
+    <View style={{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginHorizontal: 50,
+    }}>
         <Icon
             type={'FontAwesome'}
             name={'map-marker'}
@@ -142,5 +150,6 @@ const ServicesButton = (props: Props): JSX.Element => (
         <Text style={[textStyles.button, { textAlign: 'left' }]}>
             <Trans>Find related services near me</Trans>
         </Text>
+    </View>
     </MultiLineButtonComponent>
 );
