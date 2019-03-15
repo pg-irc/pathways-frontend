@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^9.0.0",
-    "expo": "32.0.0",
+    "expo": "32.0.6",
     "expo-analytics": "^1.0.7",
     "expo-location": "^3.0.0",
     "extend": "^3.0.2",
