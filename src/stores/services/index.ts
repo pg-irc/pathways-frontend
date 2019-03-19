@@ -59,6 +59,7 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
         addresses: addresses,
         website: data.service.organization_url,
         email: data.service.organization_email,
+        organizationName: data.service.organization_name,
     };
 }
 

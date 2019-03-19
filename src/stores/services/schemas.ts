@@ -17,6 +17,9 @@ const service = {
         "email": {
             "type": "string"
         },
+        "organization_name": {
+            "type": "string"
+        }
     },
     "required": ["id", "name", "description"]
 };
