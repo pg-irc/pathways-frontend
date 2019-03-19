@@ -7,7 +7,7 @@
     "@lingui/babel-preset-react": "2.7.3",
     "@lingui/cli": "2.7.3",
     "@lingui/react": "2.7.3",
-    "@types/expo": "32.0.8",
+    "@types/expo": "31.0.0",
     "@types/history": "^4.7.0",
     "@types/jest": "^23.3.2",
     "@types/query-string": "^6.1.0",
@@ -22,7 +22,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-plugin-macros": "^2.4.2",
     "babel-preset-expo": "^5.0.0",
-    "jest-expo": "^32.0.0",
+    "jest-expo": "^31.0.0",
     "react-dom": "^16.5.0",
     "react-test-renderer": "^16.3.1",
     "ts-jest": "^23.10.5",
@@ -59,8 +59,8 @@
     ]
   },
   "dependencies": {
-    "@expo/vector-icons": "^9.0.0",
-    "expo": "32.0.6",
+    "@expo/vector-icons": "8.1.0",
+    "expo": "31.0.0",
     "expo-analytics": "^1.0.7",
     "expo-location": "^4.0.0",
     "extend": "^3.0.2",
@@ -73,7 +73,7 @@
     "query-string": "^6.1.0",
     "ramda": "^0.25.0",
     "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.1.tar.gz",
     "react-native-dotenv": "^0.2.0",
     "react-native-map-link": "^2.1.4",
     "react-native-markdown-renderer": "^3.2.8",
@@ -84,7 +84,7 @@
     "redux-persist": "^5.9.1",
     "redux-saga": "^0.16.0",
     "request": "^2.88.0",
-    "sentry-expo": "^1.10.0",
+    "sentry-expo": "~1.9.0",
     "uuid": "^3.3.2"
   },
   "lingui": {
