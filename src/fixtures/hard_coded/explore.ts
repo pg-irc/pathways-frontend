@@ -4,12 +4,13 @@ import { ExploreStore } from '../types/explore';
 import { Taxonomies } from '../../application/constants';
 
 const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
+export const rightAwaySectionId = 'rightaway';
 
 export const buildExploreFixture = (): ExploreStore => (
     {
         sections: {
-            'rightaway': {
-                id: 'rightaway',
+            [rightAwaySectionId]: {
+                id: rightAwaySectionId,
                 name: {
                     'en': 'Things to do right away',
                 },

@@ -39,4 +39,17 @@ describe('version id in VERSION.txt', () => {
 
         expect(json['version']).toBe(version);
     });
+
+    it('is tracked by android version code', () => {
+        const filename = 'app.json';
+        const content = readFileSync(filename).toString();
+        const json = JSON.parse(content);
+        const versions = version.toString().split(/[\.\-]/);
+        const major = versions[0], minor = versions[1], patch = versions[2];
+        const versionCode = 100000 * Number(major) + 1000 * Number(minor) + 10 * Number(patch);
+
+        expect(json['expo']['android']['versionCode']).toBeGreaterThanOrEqual(versionCode);
+        expect(json['expo']['android']['versionCode']).toBeLessThan(versionCode + 9);
+
+    });
 });
