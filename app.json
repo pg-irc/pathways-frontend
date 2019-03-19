@@ -19,7 +19,9 @@
       "icon": "./assets/images/phone_icon_android.png",
       "package": "org.peacegeeks.ArrivalAdvisor",
       "versionCode": 100090,
-      "permissions": []
+      "permissions": [
+        "ACCESS_FINE_LOCATION"
+      ]
     },
     "assetBundlePatterns": [
       "assets/images/*",
