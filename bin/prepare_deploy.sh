@@ -151,7 +151,7 @@ validateServerVersion() {
 }
 
 removeContentInUnsuppotedLanguages() {
-    for language in ko tl zh_CN
+    for language in ko tl zh_CN po tl zh_TW po tl zh_TW
     do
         echo "Removing Newcomers Guide content in language $language"
         path="$CONTENT_DIRECTORY/NewcomersGuide/Chapter*/topics/*/$language.*"
