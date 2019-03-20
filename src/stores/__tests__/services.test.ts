@@ -2,8 +2,9 @@
 import * as constants from '../../application/constants';
 import {
     reducer, SendTaskServicesRequestAction, PopulateTaskServicesFromSuccessAction,
-    PopulateTaskServicesFromErrorAction, Service, ErrorMessageType, isValidTaskServices,
+    PopulateTaskServicesFromErrorAction, Service, isValidTaskServices,
 } from '../services';
+import { AsyncGenericErrorType } from '../../async/error_types';
 import { TaskBuilder } from './helpers/tasks_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
@@ -139,7 +140,7 @@ describe('services reducer', () => {
             payload: {
                 errorMessage: anErrorMessage,
                 taskId: task.id,
-                errorMessageType: ErrorMessageType.Server,
+                errorMessageType: AsyncGenericErrorType.BadServerResponse,
             },
         };
         const store = reducer(theStore, action);
@@ -155,7 +156,7 @@ describe('services reducer', () => {
 
         it('sets the error message type on the task services error object', () => {
             if (taskServicesOrErrorEntry.type === constants.TASK_SERVICES_ERROR) {
-                expect(taskServicesOrErrorEntry.errorMessageType).toBe(ErrorMessageType.Server);
+                expect(taskServicesOrErrorEntry.errorMessageType).toBe(AsyncGenericErrorType.BadServerResponse);
             } else {
                 fail();
             }

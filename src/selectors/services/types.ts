@@ -1,5 +1,5 @@
 import { Service } from '../../stores/services';
-import { ErrorMessageType } from '../../stores/services';
+import { ServicesErrorType } from '../../sagas/services';
 
 export interface ValidSelectorTaskServices {
     readonly services: ReadonlyArray<Service>;
@@ -11,7 +11,7 @@ export interface LoadingSelectorTaskServices {
 }
 
 export interface ErrorSelectorTaskServices {
-    readonly errorMessageType: ErrorMessageType;
+    readonly errorMessageType: ServicesErrorType;
     readonly type: 'TaskServices:Error';
 }
 

@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import {
     Id, Service, ServiceStore, ServiceMap, ValidTaskServices,
-    PhoneNumber, ErrorTaskServices, LoadingTaskServices, TaskServices, ErrorMessageType,
+    PhoneNumber, ErrorTaskServices, LoadingTaskServices, TaskServices,
     ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON,
     ValidatedAddressWithTypeJSON, Address,
 } from './types';
@@ -23,7 +23,6 @@ export {
     ValidTaskServices,
     ServiceMap,
     ErrorTaskServices,
-    ErrorMessageType,
     SendTaskServicesRequestAction, sendTaskServicesRequest,
     PopulateTaskServicesFromSuccessAction, populateTaskServicesFromSuccess,
     PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,

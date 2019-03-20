@@ -1,4 +1,5 @@
 import * as constants from '../../application/constants';
+import { ServicesErrorType } from '../../sagas/services';
 
 export type Id = string;
 
@@ -29,12 +30,6 @@ export interface Service {
     readonly email: string;
 }
 
-export enum ErrorMessageType {
-    Location,
-    Server,
-    Exception,
-}
-
 export interface ValidTaskServices {
     readonly type: 'TaskServices:Valid';
     readonly serviceIds: ReadonlyArray<Id>;
@@ -47,7 +42,7 @@ export interface LoadingTaskServices {
 export interface ErrorTaskServices {
     readonly type: 'TaskServices:Error';
     readonly errorMessage: string;
-    readonly errorMessageType: ErrorMessageType;
+    readonly errorMessageType: ServicesErrorType;
 }
 
 export type TaskServices = ValidTaskServices | LoadingTaskServices | ErrorTaskServices;

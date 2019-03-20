@@ -1,7 +1,8 @@
 import { Id as TaskId } from '../../fixtures/types/tasks';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { Service, ErrorMessageType } from './types';
+import { Service } from './types';
+import { ServicesErrorType } from '../../sagas/services';
 
 export type SendTaskServicesRequestAction = Readonly<ReturnType<typeof sendTaskServicesRequest>>;
 
@@ -25,6 +26,9 @@ export const populateTaskServicesFromSuccess = (taskId: TaskId, services: Readon
 );
 
 // tslint:disable-next-line:typedef
-export const populateTaskServicesFromError = (errorMessage: string, taskId: TaskId, errorMessageType: ErrorMessageType) => (
+export const populateTaskServicesFromError = (
+    errorMessage: string,
+    taskId: TaskId,
+    errorMessageType: ServicesErrorType) => (
    helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { errorMessage, taskId, errorMessageType })
 );
