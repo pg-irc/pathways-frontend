@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Image, Dimensions } from 'react-native';
+import { Image, Dimensions, Platform } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import Markdown, { openUrl } from 'react-native-markdown-renderer';
@@ -128,6 +128,7 @@ const ServicesButton = (props: Props): JSX.Element => (
         onPress={props.onServicesTextPress}
         additionalStyles={{
             marginBottom: 15,
+            paddingHorizontal: Platform.OS === 'ios' ? 15 :  0,
         }}
     >
     <View style={{
@@ -136,7 +137,7 @@ const ServicesButton = (props: Props): JSX.Element => (
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
-        marginHorizontal: 50,
+        marginHorizontal: Platform.OS === 'ios' ? 0 :  20,
     }}>
         <Icon
             type={'FontAwesome'}
