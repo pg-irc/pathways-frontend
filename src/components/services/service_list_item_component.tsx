@@ -63,20 +63,26 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>) => (
 );
 
 const renderWebsite = (website: string): JSX.Element => {
-    return (website ?
+    if (R.not(website)) {
+        return <EmptyComponent />;
+    }
+    return (
         <Text>
             <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans> </Text>
             <Link href={website} text={website} style={textStyles.paragraphStyle} />
-        </Text> : <Text></Text>
+        </Text>
     );
 };
 
 const renderEmail = (email: string): JSX.Element => {
-    return (email ?
+    if (R.not(email)) {
+        return <EmptyComponent />;
+    }
+    return (
         <Text>
             <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>
             <Link href={"mailto:" + email} text={email} style={textStyles.paragraphStyle} />
-        </Text> : <Text></Text>
+        </Text>
     );
 };
 
