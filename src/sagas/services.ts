@@ -5,54 +5,50 @@ import * as constants from '../application/constants';
 import {
     SendTaskServicesRequestAction, PopulateTaskServicesFromSuccessAction,
     populateTaskServicesFromSuccess, PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
-    ErrorMessageType, serviceFromValidatedJSON,
+    serviceFromValidatedJSON,
 } from '../stores/services';
-import { API } from '../api';
-import { APIResponse } from '../api/api_client';
-import { servicesAtLocationValidator } from '../json_schemas/validators';
-import { Location, Permissions } from 'expo';
+import { API, isResponseError, APIResponse } from '../api';
+import { servicesAtLocationValidator, isValidationError } from '../json_schemas/validators';
+import { isAsyncLocationError, getLocationIfPermittedAsync } from '../async/location';
+import { AsyncGenericErrorType, AsyncLocationErrorType } from '../async/error_types';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
 }
 
-type SuccessOrFailureResult = PopulateTaskServicesFromSuccessAction | PopulateTaskServicesFromErrorAction;
-
-type UpdateResult = IterableIterator<CallEffect | PutEffect<SuccessOrFailureResult>>;
+export type ServicesErrorType = AsyncGenericErrorType | AsyncLocationErrorType;
 
 export function* updateTaskServices(action: SendTaskServicesRequestAction): UpdateResult {
     const taskId = action.payload.taskId;
     try {
         const maybeLocation = yield call(getLocationIfPermittedAsync);
-        const response: APIResponse = yield call([API, API.searchServices], taskId, maybeLocation);
-        const validator = servicesAtLocationValidator(response.results);
-        const hasNoLocation = !maybeLocation;
-        const hasResponseErrors = response.hasError;
-        const hasValidationErrors = !validator.isValid;
-
-        if (hasNoLocation) {
-            yield put(populateTaskServicesFromError('Location error', taskId, ErrorMessageType.Location));
-        } else if (hasResponseErrors) {
-            yield put(populateTaskServicesFromError(response.message, taskId, ErrorMessageType.Server));
-        } else if (hasValidationErrors) {
-            yield put(populateTaskServicesFromError(validator.errors, taskId, ErrorMessageType.Server));
-        } else {
-            const res = populateTaskServicesFromSuccess(taskId, R.map(serviceFromValidatedJSON, response.results));
-            yield put(res);
+        if (isAsyncLocationError(maybeLocation)) {
+            return yield put(
+                populateTaskServicesFromError(maybeLocation.message, taskId, maybeLocation.type)
+            );
         }
+        const response: APIResponse = yield call([API, API.searchServices], taskId, maybeLocation);
+        if (isResponseError(response)) {
+            return yield put(
+                populateTaskServicesFromError(response.message, taskId, AsyncGenericErrorType.BadServerResponse)
+            );
+        }
+        const validator = servicesAtLocationValidator(response.results);
+        if (isValidationError(validator)) {
+            return yield put(
+                populateTaskServicesFromError(validator.errors, taskId, AsyncGenericErrorType.ValidationFailure)
+            );
+        }
+        yield put(
+            populateTaskServicesFromSuccess(taskId, R.map(serviceFromValidatedJSON, response.results))
+        );
     } catch (error) {
-        yield put(populateTaskServicesFromError(error.message, taskId, ErrorMessageType.Exception));
+        yield put(
+            populateTaskServicesFromError(error.message, taskId, AsyncGenericErrorType.Exception)
+        );
     }
 }
 
-const getLocationIfPermittedAsync = async (): Promise<LocationData | undefined> => {
-    try {
-        const permissions = await Permissions.askAsync(Permissions.LOCATION);
-        if (permissions.status !== 'granted') {
-            return undefined;
-        }
-        return await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low, timeout: 1000 });
-    } catch (error) {
-        return undefined;
-    }
-};
+type SuccessOrFailureResult = PopulateTaskServicesFromSuccessAction | PopulateTaskServicesFromErrorAction;
+
+type UpdateResult = IterableIterator<CallEffect | PutEffect<SuccessOrFailureResult>>;
