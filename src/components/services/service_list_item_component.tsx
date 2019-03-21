@@ -62,19 +62,29 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>) => (
     </View>), phoneNumbers))
 );
 
-const renderWebsite = (website: string): JSX.Element => (
-    <Text>
-        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans> </Text>
-        <Link href={website} text={website} style={textStyles.paragraphStyle} />
-    </Text>
-);
+const renderWebsite = (website: string): JSX.Element => {
+    if (R.not(website)) {
+        return <EmptyComponent />;
+    }
+    return (
+        <Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans> </Text>
+            <Link href={website} text={website} style={textStyles.paragraphStyle} />
+        </Text>
+    );
+};
 
-const renderEmail = (email: string): JSX.Element => (
-    <Text>
-        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>
-        <Link href={"mailto:" + email} text={email} style={textStyles.paragraphStyle} />
-    </Text>
-);
+const renderEmail = (email: string): JSX.Element => {
+    if (R.not(email)) {
+        return <EmptyComponent />;
+    }
+    return (
+        <Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>
+            <Link href={"mailto:" + email} text={email} style={textStyles.paragraphStyle} />
+        </Text>
+    );
+};
 
 const renderMapButtonIfLocation = (service: Service): JSX.Element => {
     if (R.not(service.latitude && service.longitude)) {
