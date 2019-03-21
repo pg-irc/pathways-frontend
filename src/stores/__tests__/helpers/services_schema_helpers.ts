@@ -29,6 +29,7 @@ interface ServiceJSON {
     readonly description?: any;
     readonly website?: any;
     readonly email?: any;
+    readonly organizationName?: any;
 }
 
 interface LocationJSON {
@@ -226,6 +227,7 @@ export class ServiceJSONBuilder {
     description: any = aString();
     website: any = aString();
     email: any = aString();
+    organizationName: any = aString();
 
     withId(id: any): ServiceJSONBuilder {
         this.id = id;
@@ -252,13 +254,19 @@ export class ServiceJSONBuilder {
         return this;
     }
 
+    withOrganizationName(organizationName: any): ServiceJSONBuilder {
+        this.organizationName = organizationName;
+        return this;
+    }
+
     build(): ServiceJSON {
         return {
             id: this.id,
             name: this.name,
             description: this.description,
             website: this.website,
-            email: this.email
+            email: this.email,
+            organizationName: this.organizationName,
         };
     }
 
@@ -267,7 +275,8 @@ export class ServiceJSONBuilder {
             name: this.name,
             description: this.description,
             website: this.website,
-            email: this.email
+            email: this.email,
+            organizationName: this.organizationName,
         };
     }
 
@@ -276,7 +285,8 @@ export class ServiceJSONBuilder {
             id: this.id,
             description: this.description,
             website: this.website,
-            email: this.email
+            email: this.email,
+            organizationName: this.organizationName,
         };
     }
 
@@ -285,7 +295,8 @@ export class ServiceJSONBuilder {
             id: this.id,
             name: this.name,
             website: this.website,
-            email: this.email
+            email: this.email,
+            organizationName: this.organizationName,
         };
     }
 
@@ -294,7 +305,8 @@ export class ServiceJSONBuilder {
             id: this.id,
             name: this.name,
             description: this.description,
-            email: this.email
+            email: this.email,
+            organizationName: this.organizationName,
         };
     }
 
@@ -303,7 +315,18 @@ export class ServiceJSONBuilder {
             id: this.id,
             name: this.name,
             description: this.description,
-            website: this.website
+            website: this.website,
+            organizationName: this.organizationName,
+        };
+    }
+
+    buildWithoutOrganizationName(): ServiceJSON {
+        return {
+            id: this.id,
+            name: this.name,
+            description: this.description,
+            website: this.website,
+            email: this.email,
         };
     }
 }

@@ -27,6 +27,7 @@ export interface Service {
     readonly addresses: ReadonlyArray<Address>;
     readonly website: string;
     readonly email: string;
+    readonly organizationName: string;
 }
 
 export enum ErrorMessageType {
@@ -94,6 +95,7 @@ export interface ValidatedServiceJSON {
     readonly description: string;
     readonly organization_url: string;
     readonly organization_email: string;
+    readonly organization_name: string;
 }
 
 export interface ValidatedLocationJSON {

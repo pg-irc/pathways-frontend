@@ -87,6 +87,7 @@ export class ServiceBuilder {
     addresses: ReadonlyArray<Address> = [];
     website: string = aString();
     email: string = aString();
+    organizationName: string = aString();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -133,6 +134,11 @@ export class ServiceBuilder {
         return this;
     }
 
+    withOrganizationName(organizationName: string): ServiceBuilder {
+        this.organizationName = organizationName;
+        return this;
+    }
+
     build(): Service {
         return {
             id: this.id,
@@ -144,6 +150,7 @@ export class ServiceBuilder {
             addresses: this.addresses,
             website: this.website,
             email: this.email,
+            organizationName: this.organizationName,
         };
     }
 }

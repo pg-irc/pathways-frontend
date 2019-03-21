@@ -19,7 +19,7 @@ interface ServiceListItemProps {
 export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
     (props: ServiceListItemProps): JSX.Element => (
         <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
-            {renderName(props.service.name)}
+            {renderName(props.service.name, props.service.organizationName)}
             {renderDescription(props.service.description)}
             {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
             {renderPhoneNumbers(props.service.phoneNumbers)}
@@ -29,8 +29,8 @@ export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemP
         </View>
     );
 
-const renderName = (name: string): JSX.Element => (
-    <Text style={textStyles.headlineH3StyleBlackLeft}>{name}</Text>
+const renderName = (name: string, organizationName: string): JSX.Element => (
+    <Text style={textStyles.headlineH3StyleBlackLeft}>{organizationName} - {name}</Text>
 );
 
 const renderDescription = (description: string): JSX.Element => (
