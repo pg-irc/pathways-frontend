@@ -1,6 +1,7 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
-import { Id, ErrorMessageType } from '../../services';
+import { Id } from '../../services';
+import { AsyncGenericErrorType } from '../../../async/error_types';
 import {
     ValidTaskServices, LoadingTaskServices, Service, ServiceMap,
     ServiceStore, PhoneNumber, Address, ErrorTaskServices,
@@ -188,7 +189,7 @@ export class TaskServicesErrorBuilder {
     taskId: string = aString();
     loading: boolean = false;
     errorMessage: string = aString();
-    errorMessageType: ErrorMessageType = ErrorMessageType.Server;
+    errorMessageType: AsyncGenericErrorType = AsyncGenericErrorType.BadServerResponse;
 
     withLoading(loading: boolean): TaskServicesErrorBuilder {
         this.loading = loading;
@@ -200,7 +201,7 @@ export class TaskServicesErrorBuilder {
         return this;
     }
 
-    withErrorMessageType(errorMessageType: ErrorMessageType): TaskServicesErrorBuilder {
+    withErrorMessageType(errorMessageType: AsyncGenericErrorType): TaskServicesErrorBuilder {
         this.errorMessageType = errorMessageType;
         return this;
     }

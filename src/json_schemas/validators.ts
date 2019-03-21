@@ -15,3 +15,7 @@ export const servicesAtLocationValidator = (data: any): ValidatorResponse => {
     };
     return response.isValid ? response : { ...response, errors: ajv.errorsText(ajv.errors) };
 };
+
+export const isValidationError = (validator: ValidatorResponse): boolean => (
+    !validator.isValid
+);
