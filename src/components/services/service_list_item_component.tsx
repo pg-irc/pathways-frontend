@@ -53,7 +53,8 @@ const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
 
 // tslint:disable-next-line:typedef
 const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>) => (
-    (mapWithIndex((phoneNumber: PhoneNumber, index: number): JSX.Element => (<View key={index}>
+    (mapWithIndex((phoneNumber: PhoneNumber, index: number): JSX.Element => (
+    <View key={index} style={{ paddingVertical: 10 }} >
         <Text>
             <Text style={textStyles.paragraphBoldBlackLeft}>
                 {capitalizeFirstLetter(phoneNumber.type)}:
