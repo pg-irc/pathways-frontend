@@ -1,4 +1,4 @@
-import { Id as TaskId } from '../../fixtures/types/tasks';
+import { Id as TaskId } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { Service } from './types';

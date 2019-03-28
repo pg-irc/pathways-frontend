@@ -1,4 +1,4 @@
-import { Id } from '../../fixtures/types/tasks';
+import { Id } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import { ClearErrorAction } from '../clear_error';
 import { UserDataPersistence } from '../user_data';

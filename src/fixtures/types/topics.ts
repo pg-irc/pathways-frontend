@@ -3,34 +3,34 @@ import { TaxonomyTermReference } from './taxonomies';
 
 export type Id = string;
 
-export interface Task {
+export interface Topic {
     readonly id: Id;
     readonly chapter: string;
     readonly title: LocalizedText;
     readonly description: LocalizedText;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
-    readonly relatedTasks: ReadonlyArray<Id>;
+    readonly relatedTopics: ReadonlyArray<Id>;
     readonly completed: boolean;
 }
 
-export interface TaskMap {
-    readonly [property: string]: Task;
+export interface TopicMap {
+    readonly [property: string]: Topic;
 }
 
-export type TaskList = ReadonlyArray<Id>;
+export type TopicList = ReadonlyArray<Id>;
 
 export interface IStore {
-    readonly taskMap: TaskMap;
-    readonly savedTasksList: TaskList;
+    readonly topicMap: TopicMap;
+    readonly savedTopicsList: TopicList;
 }
 
 // tslint:disable:no-class no-this no-expression-statement
 
-export class ValidTaskStore {
+export class ValidTopicStore {
     constructor(parameters: IStore) {
-        this.taskMap = parameters.taskMap;
-        this.savedTasksList = parameters.savedTasksList;
+        this.topicMap = parameters.topicMap;
+        this.savedTopicsList = parameters.savedTopicsList;
     }
-    readonly taskMap: TaskMap;
-    readonly savedTasksList: TaskList;
+    readonly topicMap: TopicMap;
+    readonly savedTopicsList: TopicList;
 }

@@ -1,12 +1,12 @@
 //This file is only included in the build if 'newcomers_guide/tasks.ts' is not present
-import { ValidTaskStore } from '../types/tasks';
+import { ValidTopicStore } from '../types/topics';
 import { Taxonomies } from '../../application/constants';
 
 const exploreTaxonomyId = Taxonomies.EXPLORE_TAXONOMY_ID;
 
-export const buildTasksFixture = (): ValidTaskStore => {
-    return new ValidTaskStore({
-        taskMap: {
+export const buildTasksFixture = (): ValidTopicStore => {
+    return new ValidTopicStore({
+        topicMap: {
             't1': {
                 'id': 't1',
                 'chapter': '',
@@ -25,7 +25,7 @@ export const buildTasksFixture = (): ValidTaskStore => {
                     'taxonomyTermId': 'Education',
                 }],
                 'completed': false,
-                'relatedTasks': ['t2'],
+                'relatedTopics': ['t2'],
             },
             't2': {
                 'id': 't2',
@@ -45,7 +45,7 @@ export const buildTasksFixture = (): ValidTaskStore => {
                     'taxonomyTermId': 'Education',
                 }],
                 'completed': false,
-                'relatedTasks': ['t1'],
+                'relatedTopics': ['t1'],
             },
             't3': {
                 'id': 't3',
@@ -65,7 +65,7 @@ export const buildTasksFixture = (): ValidTaskStore => {
                     'taxonomyTermId': 'Education',
                 }],
                 'completed': false,
-                'relatedTasks': ['t2'],
+                'relatedTopics': ['t2'],
             },
             't4': {
                 'id': 't4',
@@ -85,7 +85,7 @@ export const buildTasksFixture = (): ValidTaskStore => {
                     'taxonomyTermId': 'Money',
                 }],
                 'completed': false,
-                'relatedTasks': [],
+                'relatedTopics': [],
             },
             't5': {
                 'id': 't5',
@@ -105,9 +105,9 @@ export const buildTasksFixture = (): ValidTaskStore => {
                     'taxonomyTermId': 'Money',
                 }],
                 'completed': false,
-                'relatedTasks': [],
+                'relatedTopics': [],
             },
         },
-        savedTasksList: [],
+        savedTopicsList: [],
     });
 };

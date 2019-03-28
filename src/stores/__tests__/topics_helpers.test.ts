@@ -52,15 +52,15 @@ describe('topics test helpers', () => {
             });
 
             test('topic map property', () => {
-                expect(validStore).toHaveProperty('taskMap');
+                expect(validStore).toHaveProperty('topicMap');
             });
 
             test('saved topics list property', () => {
-                expect(validStore).toHaveProperty('savedTasksList');
+                expect(validStore).toHaveProperty('savedTopicsList');
             });
 
             test('topics map keys are expected topic ids', () => {
-                expect(Object.keys(validStore.taskMap)).toEqual([firstTaskBuilder.build().id, secondTaskBuilder.build().id]);
+                expect(Object.keys(validStore.topicMap)).toEqual([firstTaskBuilder.build().id, secondTaskBuilder.build().id]);
             });
 
         });

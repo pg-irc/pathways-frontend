@@ -63,7 +63,7 @@ export class TopicBuilder {
             title: this.createLocalizedText(this.title),
             description: this.createLocalizedText(this.description),
             taxonomyTerms: this.taxonomyTerms,
-            relatedTasks: this.relatedTasks,
+            relatedTopics: this.relatedTasks,
             completed: this.completed,
         };
     }
@@ -76,8 +76,8 @@ export class TopicBuilder {
 export const buildNormalizedStore = (taskBuilders: ReadonlyArray<TopicBuilder>,
     savedTasks: ReadonlyArray<store.Id>): store.ValidTaskStore => (
         {
-            taskMap: buildTaskMap(taskBuilders),
-            savedTasksList: savedTasks,
+            topicMap: buildTaskMap(taskBuilders),
+            savedTopicsList: savedTasks,
         }
     );
 

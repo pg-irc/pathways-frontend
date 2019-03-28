@@ -26,19 +26,19 @@ describe('topics reducer', () => {
             const topic = new TopicBuilder().build();
             const finalStore = stores.reducer(validStore, addToSavedList(topic.id));
 
-            expect(stores.toValidOrThrow(finalStore).savedTasksList).toHaveLength(2);
+            expect(stores.toValidOrThrow(finalStore).savedTopicsList).toHaveLength(2);
         });
 
         test('can remove topic from saved topics list', () => {
-            const finalStore = stores.reducer(validStore, removeFromSavedList(validStore.savedTasksList[0]));
-            expect(stores.toValidOrThrow(finalStore).savedTasksList).toHaveLength(0);
+            const finalStore = stores.reducer(validStore, removeFromSavedList(validStore.savedTopicsList[0]));
+            expect(stores.toValidOrThrow(finalStore).savedTopicsList).toHaveLength(0);
         });
 
         test('can toggle a topic completed', () => {
-            const topicId = Object.keys(validStore.taskMap)[0];
-            const oldCompleted = validStore.taskMap[topicId].completed;
+            const topicId = Object.keys(validStore.topicMap)[0];
+            const oldCompleted = validStore.topicMap[topicId].completed;
             const finalStore = stores.reducer(validStore, toggleCompleted(topicId));
-            expect(stores.toValidOrThrow(finalStore).taskMap[topicId].completed).toEqual(!oldCompleted);
+            expect(stores.toValidOrThrow(finalStore).topicMap[topicId].completed).toEqual(!oldCompleted);
         });
 
         describe('clear all user data action', () => {
@@ -48,7 +48,7 @@ describe('topics reducer', () => {
 
                 const finalStore = stores.reducer(theStore, clearAllUserData());
 
-                expect(stores.toValidOrThrow(finalStore).taskMap[aTask.id].completed).toBe(false);
+                expect(stores.toValidOrThrow(finalStore).topicMap[aTask.id].completed).toBe(false);
             });
 
             test('removes topic from my plan', () => {
@@ -57,7 +57,7 @@ describe('topics reducer', () => {
 
                 const finalStore = stores.reducer(theStore, clearAllUserData());
 
-                expect(stores.toValidOrThrow(finalStore).savedTasksList).toEqual([]);
+                expect(stores.toValidOrThrow(finalStore).savedTopicsList).toEqual([]);
             });
 
         });
@@ -134,11 +134,11 @@ describe('topics reducer', () => {
                 });
 
                 it('should return a store with topic saved in loaded data marked as saved', () => {
-                    expect(stores.toValidOrThrow(resultStore).savedTasksList).toContain(secondTaskId);
+                    expect(stores.toValidOrThrow(resultStore).savedTopicsList).toContain(secondTaskId);
                 });
 
                 it('should return a store with topic not saved in loaded data not marked as saved', () => {
-                    expect(stores.toValidOrThrow(resultStore).savedTasksList).not.toContain(firstTaskId);
+                    expect(stores.toValidOrThrow(resultStore).savedTopicsList).not.toContain(firstTaskId);
                 });
 
             });
@@ -152,7 +152,7 @@ describe('topics reducer', () => {
                     buildObject();
                 const theAction = UserDataPersistence.loadSuccess(dataWithInvalidId);
                 const resultStore = stores.reducer(theLoadingStore, theAction);
-                expect(stores.toValidOrThrow(resultStore).savedTasksList).toHaveLength(0);
+                expect(stores.toValidOrThrow(resultStore).savedTopicsList).toHaveLength(0);
             });
 
             describe('when loading completed topics', () => {
@@ -167,7 +167,7 @@ describe('topics reducer', () => {
                     const theAction = UserDataPersistence.loadSuccess(actionStateWithCompletedTask);
 
                     const resultStore = stores.reducer(theStore, theAction);
-                    const topics = stores.toValidOrThrow(resultStore).taskMap;
+                    const topics = stores.toValidOrThrow(resultStore).topicMap;
 
                     expect(topics[topicId].completed).toBe(true);
                 });
@@ -181,7 +181,7 @@ describe('topics reducer', () => {
                     const theAction = UserDataPersistence.loadSuccess(actionStateWithNoCompletedTasks);
 
                     const resultStore = stores.reducer(theStore, theAction);
-                    const topics = stores.toValidOrThrow(resultStore).taskMap;
+                    const topics = stores.toValidOrThrow(resultStore).topicMap;
 
                     expect(topics[topicId].completed).toBe(false);
                 });

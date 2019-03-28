@@ -1,30 +1,30 @@
 // tslint:disable:no-class no-expression-statement no-this
 
-import { ValidTaskStore } from '../../fixtures/types/tasks';
-export { ValidTaskStore } from '../../fixtures/types/tasks';
+import { ValidTopicStore } from '../../fixtures/types/topics';
+export { ValidTopicStore as ValidTaskStore } from '../../fixtures/types/topics';
 
 export class InvalidTaskStore {
-    readonly lastValidState: ValidTaskStore;
+    readonly lastValidState: ValidTopicStore;
     readonly error: string;
 
-    constructor(lastValidState: ValidTaskStore, error: string) {
+    constructor(lastValidState: ValidTopicStore, error: string) {
         this.lastValidState = lastValidState;
         this.error = error;
     }
 }
 
 export class LoadingTaskStore {
-    readonly lastValidState: ValidTaskStore;
+    readonly lastValidState: ValidTopicStore;
 
-    constructor(lastValidState: ValidTaskStore) {
+    constructor(lastValidState: ValidTopicStore) {
         this.lastValidState = lastValidState;
     }
 }
 
-export type TaskStore = ValidTaskStore | InvalidTaskStore | LoadingTaskStore;
+export type TaskStore = ValidTopicStore | InvalidTaskStore | LoadingTaskStore;
 
-export const toValidOrThrow = (store: TaskStore): ValidTaskStore => {
-    if (store instanceof ValidTaskStore) {
+export const toValidOrThrow = (store: TaskStore): ValidTopicStore => {
+    if (store instanceof ValidTopicStore) {
         return store;
     }
     throw new Error('Tried to access invalid task store');
