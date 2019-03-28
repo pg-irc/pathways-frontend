@@ -2,7 +2,7 @@
 import * as model from '../notifications';
 import * as R from 'ramda';
 import { addToSavedList, removeFromSavedList } from '../topics';
-import { TaskBuilder } from './helpers/tasks_helpers';
+import { TopicBuilder } from './helpers/topics_helpers';
 import { NotificationBuilder } from './helpers/notification_helpers';
 
 describe('notifications store', () => {
@@ -20,16 +20,16 @@ describe('notifications store', () => {
             };
         });
 
-        it('creates notification of type "TaskAddedToPlan" when adding a task to my plan', () => {
-            const task = new TaskBuilder().build();
-            const finalStore = model.reducer(store, addToSavedList(task.id));
+        it('creates notification of type "TaskAddedToPlan" when adding a topic to my plan', () => {
+            const topic = new TopicBuilder().build();
+            const finalStore = model.reducer(store, addToSavedList(topic.id));
             const lastKey = R.keys(finalStore.notifications)[1];
             expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TaskAddedToPlan);
         });
 
-        it('creates notification of type "TaskRemovedFromPlan" when removing a task from my plan', () => {
-            const task = new TaskBuilder().build();
-            const finalStore = model.reducer(store, removeFromSavedList(task.id));
+        it('creates notification of type "TaskRemovedFromPlan" when removing a topic from my plan', () => {
+            const topic = new TopicBuilder().build();
+            const finalStore = model.reducer(store, removeFromSavedList(topic.id));
             const lastKey = R.keys(finalStore.notifications)[1];
             expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TaskRemovedFromPlan);
         });

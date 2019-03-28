@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-let no-any
 
-import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
+import { TopicBuilder } from '../../stores/__tests__/helpers/topics_helpers';
 import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
 import * as stores from '../../stores/topics';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
@@ -33,10 +33,10 @@ beforeEach(() => {
     locale = aLocale();
 });
 
-describe('tasks selector', () => {
+describe('topics selector', () => {
 
     describe('denormalization', () => {
-        let task: stores.Task;
+        let topic: stores.Task;
         let taxonomyId: string;
         let taxonomyTermId: string;
         let exploreSectionName: string;
@@ -48,29 +48,29 @@ describe('tasks selector', () => {
             taxonomyId = aString();
             taxonomyTermId = aString();
             exploreSectionName = aString();
-            task = new TaskBuilder().
+            topic = new TopicBuilder().
                 withLocaleCode(locale.code).
                 withTaxonomyTerm({ taxonomyId, taxonomyTermId }).
                 build();
             exploreSection = new ExploreSectionBuilder().withName(exploreSectionName).build();
             isRecommended = aBoolean();
-            denormalizedTask = toSelectorTask(locale, task, exploreSection, isRecommended, []);
+            denormalizedTask = toSelectorTask(locale, topic, exploreSection, isRecommended, []);
         });
 
         test('id property', () => {
-            expect(denormalizedTask.id).toBe(task.id);
+            expect(denormalizedTask.id).toBe(topic.id);
         });
 
         test('completed property', () => {
-            expect(denormalizedTask.completed).toBe(task.completed);
+            expect(denormalizedTask.completed).toBe(topic.completed);
         });
 
         test('title property', () => {
-            expect(denormalizedTask.title).toBe(task.title[locale.code]);
+            expect(denormalizedTask.title).toBe(topic.title[locale.code]);
         });
 
         test('description property', () => {
-            expect(denormalizedTask.description).toBe(task.description[locale.code]);
+            expect(denormalizedTask.description).toBe(topic.description[locale.code]);
         });
 
         test('taxonomy term reference', () => {
@@ -86,24 +86,24 @@ describe('tasks selector', () => {
         });
     });
 
-    describe('getting recommended tasks', () => {
+    describe('getting recommended topics', () => {
 
-        it('should not recommend tasks by default', () => {
+        it('should not recommend topics by default', () => {
             const aTaxonomyTerm = aTaxonomyTermReference();
             const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withTaxonomyTerm(aTaxonomyTerm).build();
-            const anIncompleteTask = new TaskBuilder().build();
+            const anIncompleteTask = new TopicBuilder().build();
 
             const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
 
             expect(result).toEqual([]);
         });
 
-        it('should recommend tasks tagged with the recommend to all taxonomy term', () => {
+        it('should recommend topics tagged with the recommend to all taxonomy term', () => {
             const recommendedToAllTaxonomyTerm = {
                 taxonomyId: TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID,
                 taxonomyTermId: TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID,
             };
-            const aTaskRecommendedToAll = new TaskBuilder().withTaxonomyTerm(recommendedToAllTaxonomyTerm).build();
+            const aTaskRecommendedToAll = new TopicBuilder().withTaxonomyTerm(recommendedToAllTaxonomyTerm).build();
             const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).build();
 
             const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [aTaskRecommendedToAll.id]: aTaskRecommendedToAll });
@@ -111,10 +111,10 @@ describe('tasks selector', () => {
             expect(result).toEqual([aTaskRecommendedToAll]);
         });
 
-        it('should recommend tasks tagged with the same taxonomy term as a chosen answer', () => {
+        it('should recommend topics tagged with the same taxonomy term as a chosen answer', () => {
             const aTaxonomyTerm = aTaxonomyTermReference();
             const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).withIsInverted(false).build();
-            const anIncompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).build();
+            const anIncompleteTask = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).build();
 
             const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
 
@@ -139,113 +139,113 @@ describe('tasks selector', () => {
                 return R.zipObj(keys, values);
             };
 
-            const toTaskMap = (tasks: ReadonlyArray<stores.Task>): stores.TaskMap => {
-                const keys = R.map((task: stores.Task): string => task.id, tasks);
-                return R.zipObj(keys, tasks);
+            const toTaskMap = (topics: ReadonlyArray<stores.Task>): stores.TaskMap => {
+                const keys = R.map((topic: stores.Task): string => topic.id, topics);
+                return R.zipObj(keys, topics);
             };
 
             describe('terms from the same taxonomy imply OR', () => {
 
-                const aRedBlueTask = new TaskBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(blueTerm).build();
+                const aRedBlueTask = new TopicBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(blueTerm).build();
 
-                const taskMap = toTaskMap([aRedBlueTask]);
+                const topicMap = toTaskMap([aRedBlueTask]);
 
                 it('recommends the topic if colour:red is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedBlueTask]);
                 });
 
                 it('recommends the topic if colour:blue is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([blueAnswerChosen]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([blueAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedBlueTask]);
                 });
 
                 it('recommends the topic if colour:red and colour:blue is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, blueAnswerChosen]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, blueAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedBlueTask]);
                 });
             });
 
             describe('terms from different taxonomies imply AND', () => {
 
-                const aRedSmallTask = new TaskBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(smallTerm).build();
+                const aRedSmallTask = new TopicBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(smallTerm).build();
 
-                const taskMap = toTaskMap([aRedSmallTask]);
+                const topicMap = toTaskMap([aRedSmallTask]);
 
                 it('does not recommend the topic if colour:red is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswer]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswer]), topicMap);
                     expect(result).toEqual([]);
                 });
 
                 it('does not recommend the topic if size:small is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswer, smallAnswerChosen]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswer, smallAnswerChosen]), topicMap);
                     expect(result).toEqual([]);
                 });
 
                 it('recommends the topic if both colour:red and size:small is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswerChosen]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedSmallTask]);
                 });
             });
 
             describe('with three terms from two taxonomies, colour and size', () => {
 
-                const aRedBlueSmallTask = new TaskBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(blueTerm).withTaxonomyTerm(smallTerm).build();
+                const aRedBlueSmallTask = new TopicBuilder().withTaxonomyTerm(redTerm).withTaxonomyTerm(blueTerm).withTaxonomyTerm(smallTerm).build();
 
-                const taskMap = toTaskMap([aRedBlueSmallTask]);
+                const topicMap = toTaskMap([aRedBlueSmallTask]);
 
                 it('does not recommend when one colour is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswer]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswer]), topicMap);
                     expect(result).toEqual([]);
                 });
 
                 it('does not recommend when one size is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswer, smallAnswerChosen]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswer, smallAnswerChosen]), topicMap);
                     expect(result).toEqual([]);
                 });
 
                 it('does not recommend when both colours are chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, blueAnswerChosen, smallAnswer]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, blueAnswerChosen, smallAnswer]), topicMap);
                     expect(result).toEqual([]);
                 });
 
                 it('does recommend if one colour and the size are chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswerChosen]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedBlueSmallTask]);
                 });
 
                 it('does recommend if both colours and the size are chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, blueAnswerChosen, smallAnswerChosen]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, blueAnswerChosen, smallAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedBlueSmallTask]);
                 });
             });
 
-            describe('tasks with irrelevant taxonomy terms', () => {
+            describe('topics with irrelevant taxonomy terms', () => {
                 const irrelevantTaxonomyTerm: TaxonomyTermReference = { taxonomyId: 'explore', taxonomyTermId: 'settling_in' };
 
-                const aRedTaskWithAdditionalTaxonomyTerm = new TaskBuilder().
+                const aRedTaskWithAdditionalTaxonomyTerm = new TopicBuilder().
                     withTaxonomyTerm(redTerm).
                     withTaxonomyTerm(irrelevantTaxonomyTerm).
                     build();
 
-                const taskMap = toTaskMap([aRedTaskWithAdditionalTaxonomyTerm]);
+                const topicMap = toTaskMap([aRedTaskWithAdditionalTaxonomyTerm]);
 
                 it('recommends the topic if colour:red is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedTaskWithAdditionalTaxonomyTerm]);
                 });
 
                 it('does not recommend the topic if just colour:blue is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([blueAnswerChosen]), taskMap);
+                    const result = getRecommendedTasks(toAnswerMap([blueAnswerChosen]), topicMap);
                     expect(result).toEqual([]);
                 });
             });
         });
 
-        it('should not recommend a completed task', () => {
+        it('should not recommend a completed topic', () => {
             const aTaxonomyTerm = aTaxonomyTermReference();
             const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
-            const aCompleteTask = new TaskBuilder().withCompleted(true).withTaxonomyTerm(aTaxonomyTerm).build();
+            const aCompleteTask = new TopicBuilder().withCompleted(true).withTaxonomyTerm(aTaxonomyTerm).build();
 
             const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [aCompleteTask.id]: aCompleteTask });
 
@@ -254,7 +254,7 @@ describe('tasks selector', () => {
 
     });
 
-    describe('getting newly recommended tasks', () => {
+    describe('getting newly recommended topics', () => {
 
         let aTaxonomyTerm: TaxonomyTermReference = undefined;
         let chosenAnswers: AnswersMap = undefined;
@@ -271,11 +271,11 @@ describe('tasks selector', () => {
             const chosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).withIsInverted(false).build();
             chosenAnswers = { [chosenAnswer.id]: chosenAnswer };
 
-            incompleteTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
+            incompleteTask = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
             incompleteTasks = { [incompleteTask.id]: incompleteTask };
         });
 
-        it('should include a task that was not previously recommended but is now recommended', () => {
+        it('should include a topic that was not previously recommended but is now recommended', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
@@ -284,7 +284,7 @@ describe('tasks selector', () => {
             expect(result).toEqual([incompleteTask]);
         });
 
-        it('should not include a tasks that was previously recommended and is still recommended', () => {
+        it('should not include a topics that was previously recommended and is still recommended', () => {
             const oldChosenAnswers = chosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
@@ -293,7 +293,7 @@ describe('tasks selector', () => {
             expect(result).toEqual([]);
         });
 
-        it('should not include a tasks that was not previously recommended and is still not recommended', () => {
+        it('should not include a topics that was not previously recommended and is still not recommended', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
@@ -302,7 +302,7 @@ describe('tasks selector', () => {
             expect(result).toEqual([]);
         });
 
-        it('should not include a tasks that was previously recommended and is no longer recommended', () => {
+        it('should not include a topics that was previously recommended and is no longer recommended', () => {
             const oldChosenAnswers = chosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
@@ -312,53 +312,53 @@ describe('tasks selector', () => {
         });
     });
 
-    describe('is task recommended', () => {
+    describe('is topic recommended', () => {
 
         it('returns false by default', () => {
-            const task = new TaskBuilder().build();
+            const topic = new TopicBuilder().build();
             const noTaxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [];
 
-            const result = isTaskRecommended([], noTaxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended([], noTaxonomyTermsFromQuestionnaire, topic);
 
             expect(result).toBe(false);
         });
 
-        it('returns true if task is recommended to all', () => {
+        it('returns true if topic is recommended to all', () => {
             const taxonomyId = TaxonomyConstants.RECOMMENDATION_TAXONOMY_ID;
             const taxonomyTermId = TaxonomyConstants.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID;
-            const task = new TaskBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
+            const topic = new TopicBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const noTaxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [];
 
-            const result = isTaskRecommended([], noTaxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended([], noTaxonomyTermsFromQuestionnaire, topic);
 
             expect(result).toBe(true);
         });
 
-        it('returns true if tasks is tagged with the same taxonomy term as a chosen answer', () => {
+        it('returns true if topics is tagged with the same taxonomy term as a chosen answer', () => {
             const taxonomyId = aString();
             const taxonomyTermId = aString();
-            const task = new TaskBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
+            const topic = new TopicBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
 
-            const result = isTaskRecommended([taxonomyId], taxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended([taxonomyId], taxonomyTermsFromQuestionnaire, topic);
 
             expect(result).toBe(true);
         });
 
-        it('returns true for a completed task', () => {
+        it('returns true for a completed topic', () => {
             const taxonomyId = aString();
             const taxonomyTermId = aString();
-            const task = new TaskBuilder().withCompleted(true).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
+            const topic = new TopicBuilder().withCompleted(true).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
 
-            const result = isTaskRecommended([taxonomyId], taxonomyTermsFromQuestionnaire, task);
+            const result = isTaskRecommended([taxonomyId], taxonomyTermsFromQuestionnaire, topic);
 
             expect(result).toBe(true);
         });
     });
 
     describe('sorting', () => {
-        it('sorts recommended tasks before non-recommended tasks', () => {
+        it('sorts recommended topics before non-recommended topics', () => {
             const theId = aString();
             const firstByRecommended = new ViewTaskBuilder().withId(theId).withIsRecommended(true).build();
             const lastByRecommended = new ViewTaskBuilder().withId(theId).withIsRecommended(false).build();
@@ -385,11 +385,11 @@ describe('tasks selector', () => {
         });
     });
 
-    describe('getting taxonomy terms from tasks', () => {
+    describe('getting taxonomy terms from topics', () => {
         const aTaxonomyTerm = aTaxonomyTermReference();
 
         it('should return taxonomy term', () => {
-            const aTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id').build();
+            const aTask = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id').build();
 
             const result = getAllTaxonomyTermsFromTasks({ 'id': aTask });
 
@@ -397,8 +397,8 @@ describe('tasks selector', () => {
         });
 
         it('should return terms without duplicates', () => {
-            const aTask = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id1').build();
-            const aSecondTaskWithSameTaxonomyTerm = new TaskBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id2').build();
+            const aTask = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id1').build();
+            const aSecondTaskWithSameTaxonomyTerm = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id2').build();
 
             const result = getAllTaxonomyTermsFromTasks({ 'id1': aTask, 'id2': aSecondTaskWithSameTaxonomyTerm });
 
@@ -406,18 +406,18 @@ describe('tasks selector', () => {
         });
     });
 
-    describe('get ids of completed tasks', () => {
-        it('includes the id of a completed task', () => {
+    describe('get ids of completed topics', () => {
+        it('includes the id of a completed topic', () => {
             const theId = aString();
-            const aTask = new TaskBuilder().withCompleted(true).withId(theId).build();
+            const aTask = new TopicBuilder().withCompleted(true).withId(theId).build();
 
             const result = getIdsOfCompletedTasks({ [theId]: aTask });
 
             expect(result).toEqual([theId]);
         });
-        it('does not include the id of a non-completed task', () => {
+        it('does not include the id of a non-completed topic', () => {
             const theId = aString();
-            const aTask = new TaskBuilder().withCompleted(false).withId(theId).build();
+            const aTask = new TopicBuilder().withCompleted(false).withId(theId).build();
 
             const result = getIdsOfCompletedTasks({ [theId]: aTask });
 
@@ -425,18 +425,18 @@ describe('tasks selector', () => {
         });
     });
 
-    describe('rejecting task ids', () => {
+    describe('rejecting topic ids', () => {
 
-        it('excludes rejected task ids', () => {
+        it('excludes rejected topic ids', () => {
             const aTaskIdToReject = aString();
-            const aTaskWithRejectedId = new TaskBuilder().withId(aTaskIdToReject).build();
+            const aTaskWithRejectedId = new TopicBuilder().withId(aTaskIdToReject).build();
             expect(rejectTasksWithIds([aTaskWithRejectedId], [aTaskIdToReject])).toHaveLength(0);
         });
 
-        it('includes non rejected task ids', () => {
+        it('includes non rejected topic ids', () => {
             const aTaskIdToReject = aString();
-            const aTaskWithRejectedId = new TaskBuilder().withId(aTaskIdToReject).build();
-            const aTaskToInclude = new TaskBuilder().build();
+            const aTaskWithRejectedId = new TopicBuilder().withId(aTaskIdToReject).build();
+            const aTaskToInclude = new TopicBuilder().build();
             expect(rejectTasksWithIds([aTaskWithRejectedId, aTaskToInclude], [aTaskIdToReject])).toHaveLength(1);
         });
     });

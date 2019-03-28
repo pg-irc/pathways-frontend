@@ -6,7 +6,7 @@ import { LocalizedText } from '../../../locale';
 import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 
-export class TaskBuilder {
+export class TopicBuilder {
     localeCode: string = aString();
     id: store.Id = aString();
     chapter: string = aString();
@@ -16,42 +16,42 @@ export class TaskBuilder {
     relatedTasks: ReadonlyArray<TaskId> = [aString(), aString()];
     completed: boolean = false;
 
-    withLocaleCode(localeCode: string): TaskBuilder {
+    withLocaleCode(localeCode: string): TopicBuilder {
         this.localeCode = localeCode;
         return this;
     }
 
-    withId(id: string): TaskBuilder {
+    withId(id: string): TopicBuilder {
         this.id = id;
         return this;
     }
 
-    withChapter(chapter: string): TaskBuilder {
+    withChapter(chapter: string): TopicBuilder {
         this.chapter = chapter;
         return this;
     }
 
-    withTitle(title: string): TaskBuilder {
+    withTitle(title: string): TopicBuilder {
         this.title = title;
         return this;
     }
 
-    withDescription(description: string): TaskBuilder {
+    withDescription(description: string): TopicBuilder {
         this.description = description;
         return this;
     }
 
-    withCompleted(completed: boolean): TaskBuilder {
+    withCompleted(completed: boolean): TopicBuilder {
         this.completed = completed;
         return this;
     }
 
-    withTaxonomyTerm(taxonomyTerm: TaxonomyTermReference): TaskBuilder {
+    withTaxonomyTerm(taxonomyTerm: TaxonomyTermReference): TopicBuilder {
         this.taxonomyTerms = [...this.taxonomyTerms, taxonomyTerm];
         return this;
     }
 
-    withRelatedTasks(relatedTasks: ReadonlyArray<store.Id>): TaskBuilder {
+    withRelatedTasks(relatedTasks: ReadonlyArray<store.Id>): TopicBuilder {
         this.relatedTasks = relatedTasks;
         return this;
     }
@@ -73,7 +73,7 @@ export class TaskBuilder {
     }
 }
 
-export const buildNormalizedStore = (taskBuilders: ReadonlyArray<TaskBuilder>,
+export const buildNormalizedStore = (taskBuilders: ReadonlyArray<TopicBuilder>,
     savedTasks: ReadonlyArray<store.Id>): store.ValidTaskStore => (
         {
             taskMap: buildTaskMap(taskBuilders),
@@ -81,8 +81,8 @@ export const buildNormalizedStore = (taskBuilders: ReadonlyArray<TaskBuilder>,
         }
     );
 
-const buildTaskMap = (tasks: ReadonlyArray<TaskBuilder>): store.TaskMap => {
-    const buildAndMapToIds = (map: store.TaskMap, builder: TaskBuilder): store.TaskMap => {
+const buildTaskMap = (tasks: ReadonlyArray<TopicBuilder>): store.TaskMap => {
+    const buildAndMapToIds = (map: store.TaskMap, builder: TopicBuilder): store.TaskMap => {
         return { ...map, [builder.id]: builder.build() };
     };
     return tasks.reduce(buildAndMapToIds, {});

@@ -5,13 +5,14 @@ import {
     computeStateListItemIcon,
     TaskStateLabel,
     TaskStateButton,
-    TaskStateListItemIcon }
-from '../task_states';
+    TaskStateListItemIcon,
+}
+    from '../task_states';
 import { aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 
-describe('task state', () => {
+describe('topic state', () => {
     describe('computeStateLabel', () => {
-        it('returns CompletedTask for completed tasks', () => {
+        it('returns CompletedTask for completed topics', () => {
             const state = {
                 isCompleted: true,
                 isRecommended: aBoolean(),
@@ -20,7 +21,7 @@ describe('task state', () => {
             expect(computeStateLabel(state)).toBe(TaskStateLabel.CompletedTask);
         });
 
-        it('returns TaskIPlanToDo for non-completed tasks in my plan', () => {
+        it('returns TaskIPlanToDo for non-completed topics in my plan', () => {
             const state = {
                 isCompleted: false,
                 isRecommended: aBoolean(),
@@ -29,7 +30,7 @@ describe('task state', () => {
             expect(computeStateLabel(state)).toBe(TaskStateLabel.TaskIPlanToDo);
         });
 
-        it('returns RecommendedTask for recommended non-completed tasks not in my plan', () => {
+        it('returns RecommendedTask for recommended non-completed topics not in my plan', () => {
             const state = {
                 isCompleted: false,
                 isRecommended: true,
@@ -38,7 +39,7 @@ describe('task state', () => {
             expect(computeStateLabel(state)).toBe(TaskStateLabel.RecommendedTask);
         });
 
-        it('returns None for non-recommended non-completed tasks not in my plan', () => {
+        it('returns None for non-recommended non-completed topics not in my plan', () => {
             const state = {
                 isCompleted: false,
                 isRecommended: false,
@@ -48,7 +49,7 @@ describe('task state', () => {
         });
     });
     describe('computeStateButtons', () => {
-        it('returns NotDoneButton for completed tasks', () => {
+        it('returns NotDoneButton for completed topics', () => {
             const state = {
                 isCompleted: true,
                 isRecommended: aBoolean(),
@@ -57,7 +58,7 @@ describe('task state', () => {
             expect(computeStateButtons(state)).toEqual([TaskStateButton.NotDoneButton]);
         });
 
-        it('returns RemoveFromPlanButton and DoneButton for non-completed tasks in my plan', () => {
+        it('returns RemoveFromPlanButton and DoneButton for non-completed topics in my plan', () => {
             const state = {
                 isCompleted: false,
                 isRecommended: aBoolean(),
@@ -66,7 +67,7 @@ describe('task state', () => {
             expect(computeStateButtons(state)).toEqual([TaskStateButton.RemoveFromPlanButton, TaskStateButton.DoneButton]);
         });
 
-        it('returns AddToPlanButton for non-completed tasks not in my plan', () => {
+        it('returns AddToPlanButton for non-completed topics not in my plan', () => {
             const state = {
                 isCompleted: false,
                 isRecommended: aBoolean(),
@@ -76,7 +77,7 @@ describe('task state', () => {
         });
     });
     describe('computeStateListItemIcon', () => {
-        it('returns Checked for completed tasks', () => {
+        it('returns Checked for completed topics', () => {
             const state = {
                 isCompleted: true,
                 isRecommended: aBoolean(),
@@ -85,7 +86,7 @@ describe('task state', () => {
             expect(computeStateListItemIcon(state)).toBe(TaskStateListItemIcon.Checked);
         });
 
-        it('returns UnChecked for non-completed tasks in my plan', () => {
+        it('returns UnChecked for non-completed topics in my plan', () => {
             const state = {
                 isCompleted: false,
                 isRecommended: aBoolean(),
@@ -94,7 +95,7 @@ describe('task state', () => {
             expect(computeStateListItemIcon(state)).toBe(TaskStateListItemIcon.UnChecked);
         });
 
-        it('returns Add for non-completed tasks not in my plan', () => {
+        it('returns Add for non-completed topics not in my plan', () => {
             const state = {
                 isCompleted: false,
                 isRecommended: aBoolean(),

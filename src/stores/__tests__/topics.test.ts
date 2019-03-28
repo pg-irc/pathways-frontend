@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-let
 
-import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
+import { TopicBuilder, buildNormalizedStore } from './helpers/topics_helpers';
 import { UserDataPersistence } from '../user_data';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
@@ -8,42 +8,42 @@ import { addToSavedList, removeFromSavedList, toggleCompleted } from '../topics/
 import * as stores from '../topics';
 import { clearAllUserData } from '../questionnaire/actions';
 
-describe('tasks reducer', () => {
+describe('topics reducer', () => {
 
     describe('with a valid store', () => {
 
         let validStore: stores.ValidTaskStore;
 
         beforeEach(() => {
-            const taskBuilder = new TaskBuilder();
+            const topicBuilder = new TopicBuilder();
             validStore = buildNormalizedStore(
-                [taskBuilder],
-                [taskBuilder.build().id],
+                [topicBuilder],
+                [topicBuilder.build().id],
             );
         });
 
-        test('can add task to saved tasks list', () => {
-            const task = new TaskBuilder().build();
-            const finalStore = stores.reducer(validStore, addToSavedList(task.id));
+        test('can add topic to saved topics list', () => {
+            const topic = new TopicBuilder().build();
+            const finalStore = stores.reducer(validStore, addToSavedList(topic.id));
 
             expect(stores.toValidOrThrow(finalStore).savedTasksList).toHaveLength(2);
         });
 
-        test('can remove task from saved tasks list', () => {
+        test('can remove topic from saved topics list', () => {
             const finalStore = stores.reducer(validStore, removeFromSavedList(validStore.savedTasksList[0]));
             expect(stores.toValidOrThrow(finalStore).savedTasksList).toHaveLength(0);
         });
 
-        test('can toggle a task completed', () => {
-            const taskId = Object.keys(validStore.taskMap)[0];
-            const oldCompleted = validStore.taskMap[taskId].completed;
-            const finalStore = stores.reducer(validStore, toggleCompleted(taskId));
-            expect(stores.toValidOrThrow(finalStore).taskMap[taskId].completed).toEqual(!oldCompleted);
+        test('can toggle a topic completed', () => {
+            const topicId = Object.keys(validStore.taskMap)[0];
+            const oldCompleted = validStore.taskMap[topicId].completed;
+            const finalStore = stores.reducer(validStore, toggleCompleted(topicId));
+            expect(stores.toValidOrThrow(finalStore).taskMap[topicId].completed).toEqual(!oldCompleted);
         });
 
         describe('clear all user data action', () => {
-            test('sets task to not completed', () => {
-                const aTask = new TaskBuilder().withCompleted(true);
+            test('sets topic to not completed', () => {
+                const aTask = new TopicBuilder().withCompleted(true);
                 const theStore = buildNormalizedStore([aTask], []);
 
                 const finalStore = stores.reducer(theStore, clearAllUserData());
@@ -51,8 +51,8 @@ describe('tasks reducer', () => {
                 expect(stores.toValidOrThrow(finalStore).taskMap[aTask.id].completed).toBe(false);
             });
 
-            test('removes task from my plan', () => {
-                const aTask = new TaskBuilder();
+            test('removes topic from my plan', () => {
+                const aTask = new TopicBuilder();
                 const theStore = buildNormalizedStore([aTask], [aTask.id]);
 
                 const finalStore = stores.reducer(theStore, clearAllUserData());
@@ -105,15 +105,15 @@ describe('tasks reducer', () => {
                 });
             });
 
-            describe('when loading saved tasks', () => {
+            describe('when loading saved topics', () => {
 
                 let firstTaskId = aString();
                 let secondTaskId = aString();
                 let resultStore: stores.TaskStore = undefined;
 
                 beforeEach(() => {
-                    const firstTaskBuilder = new TaskBuilder().withId(firstTaskId);
-                    const secondTaskBuilder = new TaskBuilder().withId(secondTaskId);
+                    const firstTaskBuilder = new TopicBuilder().withId(firstTaskId);
+                    const secondTaskBuilder = new TopicBuilder().withId(secondTaskId);
 
                     const validStoreWhereFirstTaskIsSaved = buildNormalizedStore(
                         [firstTaskBuilder, secondTaskBuilder],
@@ -133,19 +133,19 @@ describe('tasks reducer', () => {
                     expect(resultStore).toBeInstanceOf(stores.ValidTaskStore);
                 });
 
-                it('should return a store with task saved in loaded data marked as saved', () => {
+                it('should return a store with topic saved in loaded data marked as saved', () => {
                     expect(stores.toValidOrThrow(resultStore).savedTasksList).toContain(secondTaskId);
                 });
 
-                it('should return a store with task not saved in loaded data not marked as saved', () => {
+                it('should return a store with topic not saved in loaded data not marked as saved', () => {
                     expect(stores.toValidOrThrow(resultStore).savedTasksList).not.toContain(firstTaskId);
                 });
 
             });
 
-            it('should ignore invalid task ids in the loaded data', () => {
-                const taskBuilder = new TaskBuilder();
-                const theValidStore = buildNormalizedStore([taskBuilder], []);
+            it('should ignore invalid topic ids in the loaded data', () => {
+                const topicBuilder = new TopicBuilder();
+                const theValidStore = buildNormalizedStore([topicBuilder], []);
                 const theLoadingStore = new stores.LoadingTaskStore(theValidStore);
                 const dataWithInvalidId = new PersistedUserDataBuilder().
                     addSavedTask(aString()).
@@ -155,35 +155,35 @@ describe('tasks reducer', () => {
                 expect(stores.toValidOrThrow(resultStore).savedTasksList).toHaveLength(0);
             });
 
-            describe('when loading completed tasks', () => {
-                it('should set completed tasks to completed', () => {
-                    const taskId = aString();
-                    const theTask = new TaskBuilder().withId(taskId).withCompleted(false);
+            describe('when loading completed topics', () => {
+                it('should set completed topics to completed', () => {
+                    const topicId = aString();
+                    const theTask = new TopicBuilder().withId(topicId).withCompleted(false);
                     const storeState = buildNormalizedStore([theTask], []);
                     const theStore = new stores.LoadingTaskStore(storeState);
                     const actionStateWithCompletedTask = new PersistedUserDataBuilder().
-                        addCompletedTask(taskId).
+                        addCompletedTask(topicId).
                         buildObject();
                     const theAction = UserDataPersistence.loadSuccess(actionStateWithCompletedTask);
 
                     const resultStore = stores.reducer(theStore, theAction);
-                    const tasks = stores.toValidOrThrow(resultStore).taskMap;
+                    const topics = stores.toValidOrThrow(resultStore).taskMap;
 
-                    expect(tasks[taskId].completed).toBe(true);
+                    expect(topics[topicId].completed).toBe(true);
                 });
 
-                it('should not set uncompleted tasks to completed', () => {
-                    const taskId = aString();
-                    const theTask = new TaskBuilder().withId(taskId).withCompleted(true);
+                it('should not set uncompleted topics to completed', () => {
+                    const topicId = aString();
+                    const theTask = new TopicBuilder().withId(topicId).withCompleted(true);
                     const storeState = buildNormalizedStore([theTask], []);
                     const theStore = new stores.LoadingTaskStore(storeState);
                     const actionStateWithNoCompletedTasks = new PersistedUserDataBuilder().buildObject();
                     const theAction = UserDataPersistence.loadSuccess(actionStateWithNoCompletedTasks);
 
                     const resultStore = stores.reducer(theStore, theAction);
-                    const tasks = stores.toValidOrThrow(resultStore).taskMap;
+                    const topics = stores.toValidOrThrow(resultStore).taskMap;
 
-                    expect(tasks[taskId].completed).toBe(false);
+                    expect(topics[topicId].completed).toBe(false);
                 });
             });
         });

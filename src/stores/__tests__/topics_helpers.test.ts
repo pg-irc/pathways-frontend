@@ -1,65 +1,65 @@
 // tslint:disable:no-expression-statement no-let
 
-import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
+import { TopicBuilder, buildNormalizedStore } from './helpers/topics_helpers';
 import * as stores from '../topics';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 
-describe('tasks test helpers', () => {
+describe('topics test helpers', () => {
 
-    describe('building the task', () => {
+    describe('building the topic', () => {
 
         test('id property', () => {
             const id = aString();
-            const task = new TaskBuilder().withId(id).build();
-            expect(task.id).toBe(id);
+            const topic = new TopicBuilder().withId(id).build();
+            expect(topic.id).toBe(id);
         });
 
         test('title property', () => {
             const localeCode = aString();
             const title = aString();
-            const task = new TaskBuilder().withLocaleCode(localeCode).withTitle(title).build();
-            expect(task.title[localeCode]).toBe(title);
+            const topic = new TopicBuilder().withLocaleCode(localeCode).withTitle(title).build();
+            expect(topic.title[localeCode]).toBe(title);
         });
 
         test('description property', () => {
             const localeCode = aString();
             const description = aString();
-            const task = new TaskBuilder().withLocaleCode(localeCode).withDescription(description).build();
-            expect(task.description[localeCode]).toBe(description);
+            const topic = new TopicBuilder().withLocaleCode(localeCode).withDescription(description).build();
+            expect(topic.description[localeCode]).toBe(description);
         });
 
         test('completed property', () => {
             const completed = aBoolean();
-            const task = new TaskBuilder().withCompleted(completed).build();
-            expect(task.completed).toBe(completed);
+            const topic = new TopicBuilder().withCompleted(completed).build();
+            expect(topic.completed).toBe(completed);
         });
     });
 
     describe('the store', () => {
 
         describe('building a normalized store', () => {
-            let firstTaskBuilder: TaskBuilder;
-            let secondTaskBuilder: TaskBuilder;
+            let firstTaskBuilder: TopicBuilder;
+            let secondTaskBuilder: TopicBuilder;
             let validStore: stores.ValidTaskStore;
 
             beforeEach(() => {
-                firstTaskBuilder = new TaskBuilder();
-                secondTaskBuilder = new TaskBuilder();
+                firstTaskBuilder = new TopicBuilder();
+                secondTaskBuilder = new TopicBuilder();
                 validStore = buildNormalizedStore(
                     [firstTaskBuilder, secondTaskBuilder],
                     [firstTaskBuilder.build().id],
                 );
             });
 
-            test('task map property', () => {
+            test('topic map property', () => {
                 expect(validStore).toHaveProperty('taskMap');
             });
 
-            test('saved tasks list property', () => {
+            test('saved topics list property', () => {
                 expect(validStore).toHaveProperty('savedTasksList');
             });
 
-            test('tasks map keys are expected task ids', () => {
+            test('topics map keys are expected topic ids', () => {
                 expect(Object.keys(validStore.taskMap)).toEqual([firstTaskBuilder.build().id, secondTaskBuilder.build().id]);
             });
 

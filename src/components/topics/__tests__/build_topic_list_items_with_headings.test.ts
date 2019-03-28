@@ -5,7 +5,7 @@ import { buildTopicsListItemsWithHeadings } from '../build_topic_list_items_with
 import { TopicListHeading } from '../topic_list_heading_component';
 
 describe('Group topics by section', () => {
-    describe('tasks with the same section', () => {
+    describe('topics with the same section', () => {
         const section = new ExploreSectionBuilder().build();
         const firstTask = new TaskListItemBuilder(section).build();
         const secondTask = new TaskListItemBuilder(section).build();
@@ -27,7 +27,7 @@ describe('Group topics by section', () => {
         });
     });
 
-    describe('tasks with the different section', () => {
+    describe('topics with the different section', () => {
         const firstSection = new ExploreSectionBuilder().build();
         const firstTask = new TaskListItemBuilder(firstSection).build();
         const secondSection = new ExploreSectionBuilder().build();
