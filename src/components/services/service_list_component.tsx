@@ -59,11 +59,11 @@ export class ServiceListComponent extends React.Component<Props> {
     }
 
     renderServiceList(selectorTaskServices: ValidSelectorTaskServices | LoadingSelectorTaskServices): JSX.Element {
-        const services = selectorTaskServices.type === constants.TASK_SERVICES_VALID ? selectorTaskServices.services : [];
+        const services = selectorTaskServices.type === constants.TOPIC_SERVICES_VALID ? selectorTaskServices.services : [];
         return (
             <FlatList
                 style={{ backgroundColor: colors.lightGrey }}
-                refreshing={this.props.taskServicesOrError.type === constants.TASK_SERVICES_LOADING}
+                refreshing={this.props.taskServicesOrError.type === constants.TOPIC_SERVICES_LOADING}
                 onRefresh={this.props.requestUpdateTaskServices}
                 data={services}
                 keyExtractor={(service: Service): string => service.id}

@@ -6,13 +6,13 @@ import * as R from 'ramda';
 
 export const reduceValidStore = (store: ValidTaskStore, action: TaskAction): TaskStore => {
     switch (action.type) {
-        case constants.ADD_TO_SAVED_TASKS:
+        case constants.ADD_TO_SAVED_TOPICS:
             return addToTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
 
-        case constants.REMOVE_FROM_SAVED_TASKS:
+        case constants.REMOVE_FROM_SAVED_TOPICS:
             return removeFromTaskList(store, 'savedTasksList', store.savedTasksList, action.payload.taskId);
 
-        case constants.TOGGLE_IS_TASK_COMPLETED:
+        case constants.TOGGLE_IS_TOPIC_COMPLETED:
             return toggleCompletedValue(store, action.payload.taskId);
 
         case constants.LOAD_USER_DATA_REQUEST:

@@ -15,7 +15,7 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
         [
             constants.ROUTE_CHANGED,
             constants.CHOOSE_ANSWER,
-            constants.ADD_TO_SAVED_TASKS,
+            constants.ADD_TO_SAVED_TOPICS,
         ],
         sendAnalyticsData);
 }

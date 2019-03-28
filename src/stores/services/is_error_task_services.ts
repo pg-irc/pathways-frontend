@@ -1,7 +1,7 @@
-import { ErrorTaskServices, TaskServices } from '.';
+import { ErrorTaskServices, TopicServices } from '.';
 import * as constants from '../../application/constants';
 
-export const isErrorTaskServices = (taskServices: TaskServices):
+export const isErrorTaskServices = (taskServices: TopicServices):
     taskServices is ErrorTaskServices => (
-        taskServices.type === constants.TASK_SERVICES_ERROR
+        taskServices.type === constants.TOPIC_SERVICES_ERROR
     );

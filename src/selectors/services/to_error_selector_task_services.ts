@@ -5,5 +5,5 @@ import * as constants from '../../application/constants';
 export const toErrorSelectorTaskServices = (taskServicesError: ErrorTaskServices):
     ErrorSelectorTaskServices => ({
         errorMessageType: taskServicesError.errorMessageType,
-        type: constants.TASK_SERVICES_ERROR,
+        type: constants.TOPIC_SERVICES_ERROR,
     });

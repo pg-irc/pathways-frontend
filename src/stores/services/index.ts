@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import {
     Id, Service, ServiceStore, ServiceMap, ValidTaskServices,
-    PhoneNumber, ErrorTaskServices, LoadingTaskServices, TaskServices,
+    PhoneNumber, ErrorTaskServices, LoadingTaskServices, TopicServices,
     ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON,
     ValidatedAddressWithTypeJSON, Address,
 } from './types';
@@ -18,7 +18,7 @@ import { isErrorTaskServices } from './is_error_task_services';
 export {
     Id, Service, ServiceStore,
     PhoneNumber, Address,
-    TaskServices,
+    TopicServices,
     LoadingTaskServices,
     ValidTaskServices,
     ServiceMap,
@@ -71,7 +71,7 @@ export function buildDefaultStore(): ServiceStore {
 
 export const buildEmptyTasksServices = (): ValidTaskServices => ({
     serviceIds: [],
-    type: constants.TASK_SERVICES_VALID,
+    type: constants.TOPIC_SERVICES_VALID,
 });
 
 export function reducer(store: ServiceStore = buildDefaultStore(), action?: ServicesAction): ServiceStore {
@@ -97,7 +97,7 @@ const updateServicesRequest = (store: ServiceStore, action: SendTaskServicesRequ
         taskServicesOrError: {
             ...store.taskServicesOrError,
             [taskId]: {
-                type: constants.TASK_SERVICES_LOADING,
+                type: constants.TOPIC_SERVICES_LOADING,
             },
         },
     };
@@ -117,7 +117,7 @@ const updateServicesSuccess = (store: ServiceStore, action: PopulateTaskServices
         taskServicesOrError: {
             ...store.taskServicesOrError,
             [taskId]: {
-                type: constants.TASK_SERVICES_VALID,
+                type: constants.TOPIC_SERVICES_VALID,
                 serviceIds: newServiceIds,
             },
         },
@@ -133,7 +133,7 @@ const updateServicesFailure = (store: ServiceStore, action: PopulateTaskServices
         taskServicesOrError: {
             ...store.taskServicesOrError,
             [taskId]: {
-                type: constants.TASK_SERVICES_ERROR,
+                type: constants.TOPIC_SERVICES_ERROR,
                 errorMessageType,
                 errorMessage,
             },

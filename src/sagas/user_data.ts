@@ -12,9 +12,9 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
     yield takeLatest(
         [
             constants.CHOOSE_ANSWER,
-            constants.ADD_TO_SAVED_TASKS,
-            constants.REMOVE_FROM_SAVED_TASKS,
-            constants.TOGGLE_IS_TASK_COMPLETED,
+            constants.ADD_TO_SAVED_TOPICS,
+            constants.REMOVE_FROM_SAVED_TOPICS,
+            constants.TOGGLE_IS_TOPIC_COMPLETED,
             constants.CLEAR_ALL_USER_DATA,
         ],
         saveUserData);

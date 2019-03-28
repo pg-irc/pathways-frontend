@@ -27,7 +27,7 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
     if (action.type === constants.CHOOSE_ANSWER) {
         sendAnswerChosenEvent();
     }
-    if (action.type === constants.ADD_TO_SAVED_TASKS) {
+    if (action.type === constants.ADD_TO_SAVED_TOPICS) {
         sendBookmarkAddedEvent();
     }
 }

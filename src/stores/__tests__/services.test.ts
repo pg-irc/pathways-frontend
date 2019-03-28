@@ -35,7 +35,7 @@ describe('services reducer', () => {
             };
             const store = reducer(theStore, action);
             const taskServicesOrError = store.taskServicesOrError[taskId];
-            expect(taskServicesOrError).toEqual({ type: constants.TASK_SERVICES_LOADING });
+            expect(taskServicesOrError).toEqual({ type: constants.TOPIC_SERVICES_LOADING });
         });
 
         it('sets state of the task service to loading', () => {
@@ -147,7 +147,7 @@ describe('services reducer', () => {
         const taskServicesOrErrorEntry = store.taskServicesOrError[task.id];
 
         it('sets the error message on the task services error object', () => {
-            if (taskServicesOrErrorEntry.type === constants.TASK_SERVICES_ERROR) {
+            if (taskServicesOrErrorEntry.type === constants.TOPIC_SERVICES_ERROR) {
                 expect(taskServicesOrErrorEntry.errorMessage).toBe(anErrorMessage);
             } else {
                 fail();
@@ -155,7 +155,7 @@ describe('services reducer', () => {
         });
 
         it('sets the error message type on the task services error object', () => {
-            if (taskServicesOrErrorEntry.type === constants.TASK_SERVICES_ERROR) {
+            if (taskServicesOrErrorEntry.type === constants.TOPIC_SERVICES_ERROR) {
                 expect(taskServicesOrErrorEntry.errorMessageType).toBe(AsyncGenericErrorType.BadServerResponse);
             } else {
                 fail();

@@ -32,28 +32,28 @@ export interface Service {
 }
 
 export interface ValidTaskServices {
-    readonly type: 'TaskServices:Valid';
+    readonly type: 'TopicServices:Valid';
     readonly serviceIds: ReadonlyArray<Id>;
 }
 
 export interface LoadingTaskServices {
-    readonly type: 'TaskServices:Loading';
+    readonly type: 'TopicServices:Loading';
 }
 
 export interface ErrorTaskServices {
-    readonly type: 'TaskServices:Error';
+    readonly type: 'TopicServices:Error';
     readonly errorMessage: string;
     readonly errorMessageType: ServicesErrorType;
 }
 
-export type TaskServices = ValidTaskServices | LoadingTaskServices | ErrorTaskServices;
+export type TopicServices = ValidTaskServices | LoadingTaskServices | ErrorTaskServices;
 
 export interface TaskServicesMap {
-    readonly [taskId: string]: TaskServices;
+    readonly [taskId: string]: TopicServices;
 }
 
-export const isServiceLoading = (services: TaskServices): boolean => (
-    services.type === constants.TASK_SERVICES_LOADING
+export const isServiceLoading = (services: TopicServices): boolean => (
+    services.type === constants.TOPIC_SERVICES_LOADING
 );
 
 export interface ServiceMap {
