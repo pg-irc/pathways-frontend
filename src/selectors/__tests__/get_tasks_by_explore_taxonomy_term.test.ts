@@ -2,13 +2,13 @@
 import { ExploreTaxonomyId, TaxonomyTermReference } from '../../stores/taxonomies';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TopicBuilder } from '../../stores/__tests__/helpers/topics_helpers';
-import { TaskMap } from '../../stores/topics';
+import { TopicMap } from '../../stores/topics';
 import { findItemsByExploreTaxonomyTerm } from '../taxonomies/find_items_by_explore_taxonomy_term';
 
 describe('find topic by explore taxonomy term', () => {
     let exploreTerm: TaxonomyTermReference;
     let topicId: string;
-    let topics: TaskMap;
+    let topics: TopicMap;
 
     beforeEach(() => {
         exploreTerm = {

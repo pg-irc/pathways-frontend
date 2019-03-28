@@ -2,12 +2,12 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { Text, View, Icon } from 'native-base';
 import { ServicesErrorType } from '../../sagas/services';
-import { ErrorSelectorTaskServices } from '../../selectors/services/types';
+import { ErrorSelectorTopicServices } from '../../selectors/services/types';
 import { colors, textStyles } from '../../application/styles';
 import { AsyncLocationErrorType } from '../../async/error_types';
 
 export interface ServiceListErrorComponentProps {
-    readonly error: ErrorSelectorTaskServices;
+    readonly error: ErrorSelectorTopicServices;
 }
 
 export const ServiceListErrorComponent = (props: ServiceListErrorComponentProps): JSX.Element => {

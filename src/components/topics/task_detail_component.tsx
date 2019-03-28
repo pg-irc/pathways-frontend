@@ -5,13 +5,13 @@ import { Text, View } from 'native-base';
 import { Id as TaskId, ToggleCompletedAction, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/topics';
 import { textStyles, values } from '../../application/styles';
 import { goToRouteWithParameter } from '../../application/routing';
-import { Task } from '../../selectors/topics/task';
+import { Topic } from '../../selectors/topics/topic';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
 import { TaskListComponent, NoTasksAddedComponent } from './task_list_component';
 
 export interface TaskDetailProps {
-    readonly task: Task;
+    readonly topic: Topic;
     readonly taskIsBookmarked: boolean;
     readonly savedTasksIdList: ReadonlyArray<TaskId>;
     readonly history: History;
@@ -27,22 +27,22 @@ type Props = TaskDetailProps & TaskDetailActions;
 
 export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <TaskListComponent
-        tasks={props.task.relatedTasks}
+        tasks={props.topic.relatedTopics}
         savedTasksIdList={props.savedTasksIdList}
         addToSavedList={props.addToSavedList}
         removeFromSavedList={props.removeFromSavedList}
         history={props.history}
         emptyTaskListContent={<NoTasksAddedComponent />}
         headerContent={<TaskListHeaderComponent {...props} />}
-        headerContentIdentifier={props.task.id}
+        headerContentIdentifier={props.topic.id}
     />
 );
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View padder>
         <TaskDetailContentComponent
-            task={props.task}
-            onServicesTextPress={goToRouteWithParameter(Routes.Services, props.task.id, props.history)}
+            topic={props.topic}
+            onServicesTextPress={goToRouteWithParameter(Routes.Services, props.topic.id, props.history)}
         />
         <Text
             style={[

@@ -4,7 +4,7 @@ import { Image, Dimensions, Platform } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import Markdown, { openUrl } from 'react-native-markdown-renderer';
-import { Task } from '../../selectors/topics/task';
+import { Topic } from '../../selectors/topics/topic';
 import { textStyles, colors, values, markdownStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
@@ -14,7 +14,7 @@ import { RecommendedIconComponent } from '../recommended_topics/recommended_icon
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 export interface TaskDetailContentProps {
-    readonly task: Task;
+    readonly topic: Topic;
 }
 
 export interface TaskDetailContentActions {
@@ -38,8 +38,8 @@ export const TaskDetailContentComponent: React.StatelessComponent<Props> = (prop
 
 const ImageComponent = (props: Props): JSX.Element => {
     const logoHeight = Dimensions.get('screen').height / 8;
-    const imageSource = topicImages[props.task.id] ?
-        topicImages[props.task.id]
+    const imageSource = topicImages[props.topic.id] ?
+        topicImages[props.topic.id]
         :
         arrivalAdvisorGlyphLogo;
     return (
@@ -73,12 +73,12 @@ const TaxonomyComponent = (props: Props): JSX.Element => (
         },
     ]}
     >
-        {props.task.exploreSection.name.toUpperCase()}
+        {props.topic.exploreSection.name.toUpperCase()}
     </Text>
 );
 
 const RecommendedComponent = (props: Props): JSX.Element => {
-    if (R.not(props.task.isRecommended)) {
+    if (R.not(props.topic.isRecommended)) {
         return <EmptyComponent />;
     }
     return (
@@ -101,7 +101,7 @@ const Divider = (): JSX.Element => (
 
 const TitleComponent = (props: Props): JSX.Element => (
     <Text style={[textStyles.taskTitle, { paddingHorizontal: values.backgroundTextPadding }]}>
-        {props.task.title}
+        {props.topic.title}
     </Text>
 );
 
@@ -118,9 +118,9 @@ const markDownRules = {
 }
 
 const TaskDescription = (props: Props): JSX.Element => {
-    const task = props.task;
-    const taskDescription = <Markdown rules={markDownRules} style={markdownStyles}>{task.description}</Markdown>;
-    return task.relatedTasks.length > 0 ? <ExpandableContentComponent contentId={task.id} content={taskDescription} /> : taskDescription;
+    const topic = props.topic;
+    const taskDescription = <Markdown rules={markDownRules} style={markdownStyles}>{topic.description}</Markdown>;
+    return topic.relatedTopics.length > 0 ? <ExpandableContentComponent contentId={topic.id} content={taskDescription} /> : taskDescription;
 };
 
 const ServicesButton = (props: Props): JSX.Element => (

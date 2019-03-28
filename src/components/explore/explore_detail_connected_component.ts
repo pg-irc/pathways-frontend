@@ -10,8 +10,8 @@ import { pickSavedTaskIds } from '../../selectors/topics/pick_saved_task_ids';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProps => ({
     section: selectCurrentExploreSection(store, ownProps),
-    tasks: selectTaskForCurrentExploreSection(store, ownProps),
-    savedTasksIdList: pickSavedTaskIds(store),
+    topics: selectTaskForCurrentExploreSection(store, ownProps),
+    savedTopicsIdList: pickSavedTaskIds(store),
 });
 
 type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction;

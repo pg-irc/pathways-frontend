@@ -1,6 +1,6 @@
 import { Store } from '../../stores';
-import { TaskMap, toValidOrThrow } from '../../stores/topics';
+import { TopicMap, toValidOrThrow } from '../../stores/topics';
 
-export const pickTasks = (appStore: Store): TaskMap => (
+export const pickTasks = (appStore: Store): TopicMap => (
     toValidOrThrow(appStore.tasksInStore).topicMap
 );

@@ -1,4 +1,4 @@
-import { Task } from '../../stores/topics';
+import { Topic } from '../../stores/topics';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 
-export const getTaxonomyTerms = (task: Task): ReadonlyArray<TaxonomyTermReference> => task.taxonomyTerms;
+export const getTaxonomyTerms = (topic: Topic): ReadonlyArray<TaxonomyTermReference> => topic.taxonomyTerms;

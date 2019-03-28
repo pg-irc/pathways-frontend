@@ -3,8 +3,8 @@ import * as R from 'ramda';
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import {
-    SendTaskServicesRequestAction, PopulateTaskServicesFromSuccessAction,
-    populateTaskServicesFromSuccess, PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
+    SendTopicServicesRequestAction, PopulateTopicServicesFromSuccessAction,
+    populateTopicServicesFromSuccess, PopulateTopicServicesFromErrorAction, populateTopicServicesFromError,
     serviceFromValidatedJSON,
 } from '../stores/services';
 import { API, isResponseError, APIResponse } from '../api';
@@ -18,37 +18,37 @@ export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
 
 export type ServicesErrorType = AsyncGenericErrorType | AsyncLocationErrorType;
 
-export function* updateTaskServices(action: SendTaskServicesRequestAction): UpdateResult {
+export function* updateTaskServices(action: SendTopicServicesRequestAction): UpdateResult {
     const topicId = action.payload.topicId;
     try {
         const maybeLocation = yield call(getLocationIfPermittedAsync);
         if (isAsyncLocationError(maybeLocation)) {
             return yield put(
-                populateTaskServicesFromError(maybeLocation.message, topicId, maybeLocation.type),
+                populateTopicServicesFromError(maybeLocation.message, topicId, maybeLocation.type),
             );
         }
         const response: APIResponse = yield call([API, API.searchServices], topicId, maybeLocation);
         if (isResponseError(response)) {
             return yield put(
-                populateTaskServicesFromError(response.message, topicId, AsyncGenericErrorType.BadServerResponse),
+                populateTopicServicesFromError(response.message, topicId, AsyncGenericErrorType.BadServerResponse),
             );
         }
         const validator = servicesAtLocationValidator(response.results);
         if (isValidationError(validator)) {
             return yield put(
-                populateTaskServicesFromError(validator.errors, topicId, AsyncGenericErrorType.ValidationFailure),
+                populateTopicServicesFromError(validator.errors, topicId, AsyncGenericErrorType.ValidationFailure),
             );
         }
         yield put(
-            populateTaskServicesFromSuccess(topicId, R.map(serviceFromValidatedJSON, response.results)),
+            populateTopicServicesFromSuccess(topicId, R.map(serviceFromValidatedJSON, response.results)),
         );
     } catch (error) {
         yield put(
-            populateTaskServicesFromError(error.message, topicId, AsyncGenericErrorType.Exception),
+            populateTopicServicesFromError(error.message, topicId, AsyncGenericErrorType.Exception),
         );
     }
 }
 
-type SuccessOrFailureResult = PopulateTaskServicesFromSuccessAction | PopulateTaskServicesFromErrorAction;
+type SuccessOrFailureResult = PopulateTopicServicesFromSuccessAction | PopulateTopicServicesFromErrorAction;
 
 type UpdateResult = IterableIterator<CallEffect | PutEffect<SuccessOrFailureResult>>;

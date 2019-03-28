@@ -10,7 +10,7 @@ import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore/types';
 import { toSelectorTask } from '../topics/to_selector_task';
-import { Task } from '../topics/task';
+import { Topic } from '../topics/topic';
 import { isTaskRecommended } from '../topics/is_task_recommended';
 import { sortTaskList } from '../topics/sort_task_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';
@@ -36,13 +36,13 @@ beforeEach(() => {
 describe('topics selector', () => {
 
     describe('denormalization', () => {
-        let topic: stores.Task;
+        let topic: stores.Topic;
         let taxonomyId: string;
         let taxonomyTermId: string;
         let exploreSectionName: string;
         let isRecommended: boolean;
         let exploreSection: ExploreSection;
-        let denormalizedTask: Task;
+        let denormalizedTask: Topic;
 
         beforeEach(() => {
             taxonomyId = aString();
@@ -139,8 +139,8 @@ describe('topics selector', () => {
                 return R.zipObj(keys, values);
             };
 
-            const toTaskMap = (topics: ReadonlyArray<stores.Task>): stores.TaskMap => {
-                const keys = R.map((topic: stores.Task): string => topic.id, topics);
+            const toTaskMap = (topics: ReadonlyArray<stores.Topic>): stores.TopicMap => {
+                const keys = R.map((topic: stores.Topic): string => topic.id, topics);
                 return R.zipObj(keys, topics);
             };
 
@@ -259,8 +259,8 @@ describe('topics selector', () => {
         let aTaxonomyTerm: TaxonomyTermReference = undefined;
         let chosenAnswers: AnswersMap = undefined;
         let nonChosenAnswers: AnswersMap = undefined;
-        let incompleteTask: stores.Task = undefined;
-        let incompleteTasks: stores.TaskMap = undefined;
+        let incompleteTask: stores.Topic = undefined;
+        let incompleteTasks: stores.TopicMap = undefined;
 
         beforeEach(() => {
             aTaxonomyTerm = aTaxonomyTermReference();

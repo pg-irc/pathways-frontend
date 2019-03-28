@@ -1,4 +1,4 @@
-import { Task } from '../../stores/topics';
+import { Topic } from '../../stores/topics';
 import { TaxonomyTermReference, Id } from '../../stores/taxonomies';
 import { groupTermsByTaxonomy } from '../taxonomies/group_terms_by_taxonomy';
 import { isTaskRecommendedToAll } from './is_task_recommended_to_all';
@@ -7,13 +7,13 @@ import * as R from 'ramda';
 type Term = TaxonomyTermReference;
 type TermList = ReadonlyArray<Term>;
 
-export const isTaskRecommended = R.curry((relevantTaxonomyIds: ReadonlyArray<Id>, chosenTermsFromQuestionnaire: TermList, task: Task): boolean => {
+export const isTaskRecommended = R.curry((relevantTaxonomyIds: ReadonlyArray<Id>, chosenTermsFromQuestionnaire: TermList, topic: Topic): boolean => {
 
-    if (isTaskRecommendedToAll(task)) {
+    if (isTaskRecommendedToAll(topic)) {
         return true;
     }
 
-    const relevantTermsFromTask = filterTermsByTaxonomyIds(relevantTaxonomyIds, task.taxonomyTerms);
+    const relevantTermsFromTask = filterTermsByTaxonomyIds(relevantTaxonomyIds, topic.taxonomyTerms);
     const groupedTermsFromTask = groupTermsByTaxonomy(relevantTermsFromTask);
 
     if (R.isEmpty(groupedTermsFromTask)) {

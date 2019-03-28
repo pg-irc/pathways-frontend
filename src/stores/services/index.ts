@@ -7,8 +7,9 @@ import {
     ValidatedAddressWithTypeJSON, Address,
 } from './types';
 import {
-    SendTaskServicesRequestAction, sendTaskServicesRequest, PopulateTaskServicesFromSuccessAction,
-    populateTaskServicesFromSuccess, PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
+    SendTopicServicesRequestAction, sendTopicServicesRequest,
+    PopulateTopicServicesFromSuccessAction, populateTopicServicesFromSuccess,
+    PopulateTopicServicesFromErrorAction, populateTopicServicesFromError,
     ServicesAction,
 } from './actions';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
@@ -23,10 +24,10 @@ export {
     ValidTaskServices,
     ServiceMap,
     ErrorTaskServices,
-    SendTaskServicesRequestAction, sendTaskServicesRequest,
-    PopulateTaskServicesFromSuccessAction, populateTaskServicesFromSuccess,
-    PopulateTaskServicesFromErrorAction, populateTaskServicesFromError,
-    isValidTaskServices, isErrorTaskServices as isTaskServicesError,
+    SendTopicServicesRequestAction, sendTopicServicesRequest,
+    PopulateTopicServicesFromSuccessAction, populateTopicServicesFromSuccess,
+    PopulateTopicServicesFromErrorAction, populateTopicServicesFromError,
+    isValidTaskServices, isErrorTaskServices,
     serviceAtLocation,
     serviceAtLocationArray,
 };
@@ -90,7 +91,7 @@ export function reducer(store: ServiceStore = buildDefaultStore(), action?: Serv
     }
 }
 
-const updateServicesRequest = (store: ServiceStore, action: SendTaskServicesRequestAction): ServiceStore => {
+const updateServicesRequest = (store: ServiceStore, action: SendTopicServicesRequestAction): ServiceStore => {
     const topicId = action.payload.topicId;
     return {
         ...store,
@@ -103,7 +104,7 @@ const updateServicesRequest = (store: ServiceStore, action: SendTaskServicesRequ
     };
 };
 
-const updateServicesSuccess = (store: ServiceStore, action: PopulateTaskServicesFromSuccessAction): ServiceStore => {
+const updateServicesSuccess = (store: ServiceStore, action: PopulateTopicServicesFromSuccessAction): ServiceStore => {
     const newServices = action.payload.services;
     const topicId = action.payload.topicId;
     const newServicesAsMap = createServiceMap(newServices);
@@ -124,7 +125,7 @@ const updateServicesSuccess = (store: ServiceStore, action: PopulateTaskServices
     };
 };
 
-const updateServicesFailure = (store: ServiceStore, action: PopulateTaskServicesFromErrorAction): ServiceStore => {
+const updateServicesFailure = (store: ServiceStore, action: PopulateTopicServicesFromErrorAction): ServiceStore => {
     const topicId = action.payload.topicId;
     const errorMessage = action.payload.errorMessage;
     const errorMessageType = action.payload.errorMessageType;

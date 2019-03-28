@@ -6,7 +6,7 @@ import { reduceInvalidStore } from './reduce_invalid_store';
 import { reduceValidStore } from './reduce_valid_store';
 
 export { TaskStore, ValidTaskStore, LoadingTaskStore, InvalidTaskStore, toValidOrThrow } from './stores';
-export { Id, TopicList as TaskList, TopicMap as TaskMap, Topic as Task } from '../../fixtures/types/topics';
+export { Id, TopicList, TopicMap, Topic } from '../../fixtures/types/topics';
 export {
     addToSavedList, AddToSavedListAction, removeFromSavedList,
     RemoveFromSavedListAction, toggleCompleted, ToggleCompletedAction,

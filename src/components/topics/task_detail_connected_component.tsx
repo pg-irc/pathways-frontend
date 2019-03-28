@@ -19,11 +19,11 @@ type OwnProps = {
 
 const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.TaskDetail);
-    const task = selectCurrentTask(store, matchParams.topicId);
+    const topic = selectCurrentTask(store, matchParams.topicId);
     const savedTasksIdList = pickSavedTaskIds(store);
-    const taskIsBookmarked = R.contains(task.id, savedTasksIdList);
+    const taskIsBookmarked = R.contains(topic.id, savedTasksIdList);
     return {
-        task,
+        topic,
         taskIsBookmarked,
         savedTasksIdList,
         history: ownProps.history,

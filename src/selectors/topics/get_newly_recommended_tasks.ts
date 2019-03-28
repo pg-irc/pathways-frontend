@@ -1,12 +1,12 @@
 import { AnswersMap } from '../../stores/questionnaire';
-import { TaskMap, Task } from '../../stores/topics';
+import { TopicMap, Topic } from '../../stores/topics';
 import * as R from 'ramda';
 import { getRecommendedTasks } from './get_recommended_tasks';
 
 export const getNewlyRecommendedTasks =
-    (oldAnswers: AnswersMap, newAnswers: AnswersMap, tasks: TaskMap): ReadonlyArray<Task> => (
+    (oldAnswers: AnswersMap, newAnswers: AnswersMap, topics: TopicMap): ReadonlyArray<Topic> => (
         R.difference(
-            getRecommendedTasks(newAnswers, tasks),
-            getRecommendedTasks(oldAnswers, tasks),
+            getRecommendedTasks(newAnswers, topics),
+            getRecommendedTasks(oldAnswers, topics),
         )
     );

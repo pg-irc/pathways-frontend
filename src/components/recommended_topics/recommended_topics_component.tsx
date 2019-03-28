@@ -2,7 +2,7 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { Id as TaskId } from '../../stores/topics';
 import { View, Text } from 'native-base';
-import { TaskListItem } from '../../selectors/topics/task_list_item';
+import { TopicListItem } from '../../selectors/topics/topic_list_item';
 import { TaskListActions } from '../topics/task_list_component';
 import { TaskListComponent, NoTasksRecommendedComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
@@ -17,7 +17,7 @@ import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_ite
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
     readonly savedTopicsIdList: ReadonlyArray<TaskId>;
-    readonly recommendedTopics: ReadonlyArray<TaskListItem>;
+    readonly recommendedTopics: ReadonlyArray<TopicListItem>;
 }
 
 type Props = RecommendedTopicsProps & TaskListActions & RouterProps;

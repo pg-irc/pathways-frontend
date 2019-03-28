@@ -3,8 +3,8 @@
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../../stores/taxonomies';
 import { ExploreSection } from '../../explore/types';
-import { Task } from '../../topics/task';
-import { TaskListItem } from '../../topics/task_list_item';
+import { Topic } from '../../topics/topic';
+import { TopicListItem } from '../../topics/topic_list_item';
 
 export class ViewTaskBuilder {
     id: string = aString();
@@ -13,7 +13,7 @@ export class ViewTaskBuilder {
     taxonomyTerms: Array<TaxonomyTermReference>;
     exploreSection: ExploreSection;
     isRecommended: boolean = aBoolean();
-    relatedTasks: Array<TaskListItem> = [];
+    relatedTasks: Array<TopicListItem> = [];
     completed: boolean = aBoolean();
 
     withId(id: string): ViewTaskBuilder {
@@ -26,7 +26,7 @@ export class ViewTaskBuilder {
         return this;
     }
 
-    build(): Task {
+    build(): Topic {
         return {
             id: this.id,
             title: this.title,
@@ -34,7 +34,7 @@ export class ViewTaskBuilder {
             taxonomyTerms: this.taxonomyTerms,
             exploreSection: this.exploreSection,
             isRecommended: this.isRecommended,
-            relatedTasks: this.relatedTasks,
+            relatedTopics: this.relatedTasks,
             completed: this.completed,
         };
     }

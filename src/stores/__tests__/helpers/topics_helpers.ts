@@ -56,7 +56,7 @@ export class TopicBuilder {
         return this;
     }
 
-    build(): store.Task {
+    build(): store.Topic {
         return {
             id: this.id,
             chapter: this.chapter,
@@ -81,8 +81,8 @@ export const buildNormalizedStore = (taskBuilders: ReadonlyArray<TopicBuilder>,
         }
     );
 
-const buildTaskMap = (tasks: ReadonlyArray<TopicBuilder>): store.TaskMap => {
-    const buildAndMapToIds = (map: store.TaskMap, builder: TopicBuilder): store.TaskMap => {
+const buildTaskMap = (tasks: ReadonlyArray<TopicBuilder>): store.TopicMap => {
+    const buildAndMapToIds = (map: store.TopicMap, builder: TopicBuilder): store.TopicMap => {
         return { ...map, [builder.id]: builder.build() };
     };
     return tasks.reduce(buildAndMapToIds, {});

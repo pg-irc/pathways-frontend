@@ -1,4 +1,4 @@
-import { Task } from '../../stores/topics';
+import { Topic } from '../../stores/topics';
 import { Taxonomies } from '../../application/constants';
 import { TaxonomyTermReference } from '../taxonomies/pull_explore_taxonomy';
 import * as R from 'ramda';
@@ -8,6 +8,6 @@ const recommendedToAll: TaxonomyTermReference = {
     taxonomyTermId: Taxonomies.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID,
 };
 
-export const isTaskRecommendedToAll = (task: Task): boolean => (
-    R.any(R.equals(recommendedToAll), task.taxonomyTerms)
+export const isTaskRecommendedToAll = (topic: Topic): boolean => (
+    R.any(R.equals(recommendedToAll), topic.taxonomyTerms)
 );

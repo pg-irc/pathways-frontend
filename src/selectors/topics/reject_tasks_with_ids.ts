@@ -1,8 +1,8 @@
 import * as R from 'ramda';
-import { Task } from '../../stores/topics';
+import { Topic } from '../../stores/topics';
 import { Id } from '../../fixtures/types/explore';
 
-export const rejectTasksWithIds = (tasks: ReadonlyArray<Task>, taskIds: ReadonlyArray<Id>): ReadonlyArray<Task> => {
-    const taskIsBlacklisted = (task: Task): boolean => R.contains(task.id, taskIds);
-    return R.reject(taskIsBlacklisted, tasks);
+export const rejectTasksWithIds = (topics: ReadonlyArray<Topic>, topicIds: ReadonlyArray<Id>): ReadonlyArray<Topic> => {
+    const taskIsBlacklisted = (topic: Topic): boolean => R.contains(topic.id, topicIds);
+    return R.reject(taskIsBlacklisted, topics);
 };

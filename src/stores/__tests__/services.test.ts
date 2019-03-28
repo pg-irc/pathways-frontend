@@ -1,8 +1,8 @@
 // tslint:disable:no-let no-expression-statement
 import * as constants from '../../application/constants';
 import {
-    reducer, SendTaskServicesRequestAction, PopulateTaskServicesFromSuccessAction,
-    PopulateTaskServicesFromErrorAction, Service, isValidTaskServices,
+    reducer, SendTopicServicesRequestAction, PopulateTopicServicesFromSuccessAction,
+    PopulateTopicServicesFromErrorAction, Service, isValidTaskServices,
 } from '../services';
 import { AsyncGenericErrorType } from '../../async/error_types';
 import { TopicBuilder } from './helpers/topics_helpers';
@@ -29,7 +29,7 @@ describe('services reducer', () => {
 
         it('creates loading topic services object', () => {
             const topicId = aString();
-            const action: SendTaskServicesRequestAction = {
+            const action: SendTopicServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { topicId },
             };
@@ -39,7 +39,7 @@ describe('services reducer', () => {
         });
 
         it('sets state of the topic service to loading', () => {
-            const action: SendTaskServicesRequestAction = {
+            const action: SendTopicServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { topicId: loadedTaskServices.topicId },
             };
@@ -49,7 +49,7 @@ describe('services reducer', () => {
         });
 
         it('sets loading to true on pre existing topic services error objects', () => {
-            const action: SendTaskServicesRequestAction = {
+            const action: SendTopicServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { topicId: loadedTaskServicesError.topicId },
             };
@@ -59,7 +59,7 @@ describe('services reducer', () => {
         });
 
         it('does not update existing services', () => {
-            const action: SendTaskServicesRequestAction = {
+            const action: SendTopicServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { topicId: aString() },
             };
@@ -71,7 +71,7 @@ describe('services reducer', () => {
     describe('when populating topic services objects from a success response', () => {
         const topic = new TopicBuilder().withId(loadingTaskServices.topicId).build();
         const services: ReadonlyArray<Service> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
-        const action: PopulateTaskServicesFromSuccessAction = {
+        const action: PopulateTopicServicesFromSuccessAction = {
             type: constants.LOAD_SERVICES_SUCCESS,
             payload: {
                 topicId: topic.id,
@@ -94,7 +94,7 @@ describe('services reducer', () => {
                 new ServiceBuilder().withId('3').build(),
                 new ServiceBuilder().withId('2').build(),
             ];
-            const theAction: PopulateTaskServicesFromSuccessAction = {
+            const theAction: PopulateTopicServicesFromSuccessAction = {
                 type: constants.LOAD_SERVICES_SUCCESS,
                 payload: {
                     topicId: topic.id,
@@ -135,7 +135,7 @@ describe('services reducer', () => {
     describe('when populating topic services error object from an error response', () => {
         const topic = new TopicBuilder().withId(loadingTaskServicesError.topicId).build();
         const anErrorMessage = aString();
-        const action: PopulateTaskServicesFromErrorAction = {
+        const action: PopulateTopicServicesFromErrorAction = {
             type: constants.LOAD_SERVICES_FAILURE,
             payload: {
                 errorMessage: anErrorMessage,

@@ -1,6 +1,6 @@
 import { ExploreSection } from '../explore/types';
 
-export interface TaskListItem {
+export interface TopicListItem {
     readonly id: string;
     readonly title: string;
     readonly description: string;

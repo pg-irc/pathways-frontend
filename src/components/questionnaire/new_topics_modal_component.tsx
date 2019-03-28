@@ -6,7 +6,7 @@ import Modal from 'react-native-modal';
 import { View, Button, Text } from 'native-base';
 import { Trans } from '@lingui/react';
 import { AnswersMap } from '../../stores/questionnaire';
-import { TaskMap, Id as TaskId, Task } from '../../stores/topics';
+import { TopicMap, Id as TaskId, Topic } from '../../stores/topics';
 import { getNewlyRecommendedTasks } from '../../selectors/topics/get_newly_recommended_tasks';
 import { rejectTasksWithIds } from '../../selectors/topics/reject_tasks_with_ids';
 import { getLocalizedText, Locale } from '../../selectors/locale/get_localized_text';
@@ -18,7 +18,7 @@ import { RecommendedIconComponent } from '../recommended_topics/recommended_icon
 export interface NewTopicsModalProps {
     readonly oldAnswers: AnswersMap;
     readonly newAnswers: AnswersMap;
-    readonly topics: TaskMap;
+    readonly topics: TopicMap;
     readonly savedTopicIds: ReadonlyArray<TaskId>;
     readonly locale: Locale;
     readonly history: History;
@@ -86,7 +86,7 @@ const ContentWithTopicsComponent = (props: { readonly topics: ReadonlyArray<Part
             <FlatList
                 data={props.topics}
                 renderItem={renderTopicItem}
-                keyExtractor={(topic: Task): string => topic.id}
+                keyExtractor={(topic: Topic): string => topic.id}
             />
         </View>
     </View>
@@ -163,10 +163,10 @@ interface PartialTopic {
 const getTopicsForModal = (props: Props): ReadonlyArray<PartialTopic> => {
     const newlyRecommendedTopics = getNewlyRecommendedTasks(props.oldAnswers, props.newAnswers, props.topics);
     const newlyRecommendedUnsavedTopics = rejectTasksWithIds(newlyRecommendedTopics, props.savedTopicIds);
-    return R.map((topic: Task) => buildPartialTopic(topic, props.locale), newlyRecommendedUnsavedTopics);
+    return R.map((topic: Topic) => buildPartialTopic(topic, props.locale), newlyRecommendedUnsavedTopics);
 };
 
-const buildPartialTopic = (topic: Task, locale: Locale): PartialTopic => (
+const buildPartialTopic = (topic: Topic, locale: Locale): PartialTopic => (
     {
         id: topic.id,
         title: getLocalizedText(locale, topic.title),

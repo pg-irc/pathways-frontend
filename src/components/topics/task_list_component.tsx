@@ -110,7 +110,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         }
         return (
             <TaskListItemComponent
-                task={item}
+                topic={item}
                 taskIsBookmarked={R.contains(item.id, props.savedTasksIdList)}
                 addToSavedList={props.addToSavedList}
                 removeFromSavedList={props.removeFromSavedList}

@@ -1,10 +1,10 @@
 import * as store from '../../stores/topics';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
-import { TaskListItem } from './task_list_item';
+import { TopicListItem } from './topic_list_item';
 import { ExploreSection } from '../explore/types';
 
-export const toSelectorTaskListItem = (locale: Locale, task: store.Task, isRecommended: boolean, exploreSection: ExploreSection): TaskListItem => (
+export const toSelectorTaskListItem = (locale: Locale, task: store.Topic, isRecommended: boolean, exploreSection: ExploreSection): TopicListItem => (
     {
         id: task.id,
         title: getLocalizedText(locale, task.title),

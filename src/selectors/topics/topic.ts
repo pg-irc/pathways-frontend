@@ -1,14 +1,14 @@
 import { TaxonomyTermReference } from '../taxonomies/pull_explore_taxonomy';
 import { ExploreSection } from '../explore/types';
-import { TaskListItem } from './task_list_item';
+import { TopicListItem } from './topic_list_item';
 
-export interface Task {
+export interface Topic {
     readonly id: string;
     readonly title: string;
     readonly description: string;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly exploreSection: ExploreSection;
     readonly isRecommended: boolean;
-    readonly relatedTasks: ReadonlyArray<TaskListItem>;
+    readonly relatedTopics: ReadonlyArray<TopicListItem>;
     readonly completed: boolean;
 }

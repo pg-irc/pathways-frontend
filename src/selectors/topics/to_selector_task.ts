@@ -2,12 +2,12 @@ import * as store from '../../stores/topics';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { ExploreSection } from '../explore/types';
-import { TaskListItem } from './task_list_item';
-import { Task } from './task';
+import { TopicListItem } from './topic_list_item';
+import { Topic } from './topic';
 
 export const toSelectorTask =
-    (locale: Locale, task: store.Task, exploreSection: ExploreSection, isRecommended: boolean,
-        relatedTasks: ReadonlyArray<TaskListItem>): Task => (
+    (locale: Locale, task: store.Topic, exploreSection: ExploreSection, isRecommended: boolean,
+        relatedTopics: ReadonlyArray<TopicListItem>): Topic => (
             {
                 id: task.id,
                 title: getLocalizedText(locale, task.title),
@@ -15,7 +15,7 @@ export const toSelectorTask =
                 taxonomyTerms: task.taxonomyTerms,
                 exploreSection,
                 isRecommended,
-                relatedTasks,
+                relatedTopics,
                 completed: task.completed,
             }
         );
