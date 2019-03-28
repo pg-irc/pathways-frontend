@@ -2,7 +2,7 @@ import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
 import { History, Location } from 'history';
 import { Id as LearnId } from '../stores/explore';
-import { Id as TaskId } from '../stores/tasks';
+import { Id as TaskId } from '../stores/topics';
 
 interface MatchParameters {
     readonly learnId?: LearnId;
@@ -86,7 +86,7 @@ export const goBack = (history: History): void => (
 );
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {
-    return !! matchPath(path, { path: routePathDefinition(route), exact: true });
+    return !!matchPath(path, { path: routePathDefinition(route), exact: true });
 };
 
 const routeHasParameter = (route: Routes): boolean => (
@@ -101,8 +101,8 @@ export const isOnParentScreen = (path: string): boolean => {
     const isOnBookmarkedTopicsScreen = pathMatchesRoute(path, Routes.BookmarkedTopics);
 
     return isOnHelpScreen || isOnLearnScreen ||
-           isOnQuestionnaireScreen || isOnRecommendedTopicsScreen ||
-           isOnBookmarkedTopicsScreen;
+        isOnQuestionnaireScreen || isOnRecommendedTopicsScreen ||
+        isOnBookmarkedTopicsScreen;
 };
 
 export const isOnChildScreen = (path: string): boolean => {
@@ -113,7 +113,7 @@ export const isOnChildScreen = (path: string): boolean => {
     const isOnDisclaimerScreen = pathMatchesRoute(path, Routes.Disclaimer);
 
     return isOnTaskDetailScreen || isOnServicesScreen || isOnLearnDetailScreen ||
-           isOnAboutScreen || isOnDisclaimerScreen;
+        isOnAboutScreen || isOnDisclaimerScreen;
 };
 
 // By (arguably poor) design the router's match.params is empty when trying to access it outside a "Route" component.

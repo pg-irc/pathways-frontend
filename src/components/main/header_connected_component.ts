@@ -7,8 +7,8 @@ import { selectLocale } from '../../selectors/locale/select_locale';
 import {
     Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction,
     addToSavedList, removeFromSavedList,
-} from '../../stores/tasks';
-import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
+} from '../../stores/topics';
+import { pickSavedTaskIds } from '../../selectors/topics/pick_saved_task_ids';
 
 type OwnProps = {
     readonly history: History,

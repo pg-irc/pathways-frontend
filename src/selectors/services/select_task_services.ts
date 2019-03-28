@@ -1,5 +1,5 @@
 import { Store } from '../../stores';
-import { Id as TaskId } from '../../stores/tasks';
+import { Id as TaskId } from '../../stores/topics';
 import { isValidTaskServices, isTaskServicesError, buildEmptyTasksServices } from '../../stores/services';
 import { SelectorTaskServices } from './types';
 import { toValidSelectorTaskServices } from './to_valid_selector_task_services';

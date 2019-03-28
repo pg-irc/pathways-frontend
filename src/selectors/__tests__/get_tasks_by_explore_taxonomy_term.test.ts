@@ -2,7 +2,7 @@
 import { ExploreTaxonomyId, TaxonomyTermReference } from '../../stores/taxonomies';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
-import { TaskMap } from '../../stores/tasks';
+import { TaskMap } from '../../stores/topics';
 import { findItemsByExploreTaxonomyTerm } from '../taxonomies/find_items_by_explore_taxonomy_term';
 
 describe('find task by explore taxonomy term', () => {

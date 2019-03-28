@@ -1,4 +1,4 @@
-import * as store from '../../stores/tasks';
+import * as store from '../../stores/topics';
 import { Locale } from '../../locale/types';
 import { ExploreSection } from '../explore/types';
 import { toSelectorTask } from './to_selector_task';

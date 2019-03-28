@@ -2,8 +2,8 @@ import React from 'react';
 import * as R from 'ramda';
 import { Trans } from '@lingui/react';
 import { Text, View } from 'native-base';
-import { TaskListItem } from '../../selectors/tasks/task_list_item';
-import { TaskListActions, NoTasksAddedComponent, TaskListComponent } from '../tasks/task_list_component';
+import { TaskListItem } from '../../selectors/topics/task_list_item';
+import { TaskListActions, NoTasksAddedComponent, TaskListComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { textStyles, colors, values } from '../../application/styles';
 

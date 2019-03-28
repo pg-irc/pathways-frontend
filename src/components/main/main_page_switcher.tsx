@@ -4,7 +4,7 @@ import { WelcomeConnectedComponent } from '../welcome/welcome_connected_componen
 import { HelpConnectedComponent } from '../help/help_connected_component';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
 import { ExploreDetailConnectedComponent } from '../explore/explore_detail_connected_component';
-import { TaskDetailConnectedComponent } from '../tasks/task_detail_connected_component';
+import { TaskDetailConnectedComponent } from '../topics/task_detail_connected_component';
 import { ServicesConnectedComponent } from '../services/service_list_connected_component';
 import { QuestionnaireConnectedComponent } from '../questionnaire/questionnaire_connected_component';
 import { AboutComponentWithServerVersion } from '../about/about_component_with_server_version';

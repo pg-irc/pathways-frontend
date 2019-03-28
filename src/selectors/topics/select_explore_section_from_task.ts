@@ -1,5 +1,5 @@
 import { Store } from '../../stores';
-import * as store from '../../stores/tasks';
+import * as store from '../../stores/topics';
 import * as taskDetails from '../explore/find_explore_section_by';
 import { ExploreSection } from '../explore/types';
 import { selectIconFromExploreTaxonomy } from '../explore/select_icon_from_explore_taxonomy';

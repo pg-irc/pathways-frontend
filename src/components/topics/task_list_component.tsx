@@ -6,7 +6,7 @@ import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { TaskListItemComponent } from './task_list_item_component';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
-import { Id, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/tasks';
+import { Id, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/topics';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { colors } from '../../application/styles';
 import { isTopicListHeading } from './is_topic_list_heading';

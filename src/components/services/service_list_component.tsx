@@ -11,7 +11,7 @@ import {
     LoadingSelectorTaskServices,
 } from '../../selectors/services/types';
 import { isValidSelectorTaskServices } from '../../selectors/services/is_valid_selector_task_services';
-import { Task } from '../../selectors/tasks/task';
+import { Task } from '../../selectors/topics/task';
 import { ServiceListItemComponent } from './service_list_item_component';
 import { SendTaskServicesRequestAction } from '../../stores/services';
 import { textStyles, colors, values } from '../../application/styles';

@@ -3,8 +3,8 @@ import { Location } from 'history';
 import { Store } from '../../stores';
 import { sendTaskServicesRequest, SendTaskServicesRequestAction } from '../../stores/services';
 import { connect } from 'react-redux';
-import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
-import { Task } from '../../selectors/tasks/task';
+import { selectCurrentTask } from '../../selectors/topics/select_current_task';
+import { Task } from '../../selectors/topics/task';
 import { selectTaskServices } from '../../selectors/services/select_task_services';
 import {
     ServiceListComponent, ServiceListProps,

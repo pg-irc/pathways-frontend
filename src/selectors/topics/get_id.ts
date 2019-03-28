@@ -1,3 +1,3 @@
-import { Task, Id } from '../../stores/tasks';
+import { Task, Id } from '../../stores/topics';
 
 export const getId = (task: Task): Id => task.id;

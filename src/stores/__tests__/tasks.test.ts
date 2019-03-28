@@ -4,8 +4,8 @@ import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
 import { UserDataPersistence } from '../user_data';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
-import { addToSavedList, removeFromSavedList, toggleCompleted } from '../tasks/actions';
-import * as stores from '../tasks';
+import { addToSavedList, removeFromSavedList, toggleCompleted } from '../topics/actions';
+import * as stores from '../topics';
 import { clearAllUserData } from '../questionnaire/actions';
 
 describe('tasks reducer', () => {

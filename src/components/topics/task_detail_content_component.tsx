@@ -4,7 +4,7 @@ import { Image, Dimensions, Platform } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import Markdown, { openUrl } from 'react-native-markdown-renderer';
-import { Task } from '../../selectors/tasks/task';
+import { Task } from '../../selectors/topics/task';
 import { textStyles, colors, values, markdownStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
@@ -25,7 +25,7 @@ type Props = TaskDetailContentProps & TaskDetailContentActions;
 
 export const TaskDetailContentComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View padder style={{ backgroundColor: colors.white, marginHorizontal: -10 }}>
-        <ImageComponent {...props}/>
+        <ImageComponent {...props} />
         <TaxonomyComponent {...props} />
         <TitleComponent {...props} />
         <RecommendedComponent {...props} />
@@ -106,7 +106,7 @@ const TitleComponent = (props: Props): JSX.Element => (
 );
 
 const markDownRules = {
-    link: (node:any, children:any) => {
+    link: (node: any, children: any) => {
         return (
             <Text key={node.key} style={markdownStyles.link} onPress={() => openUrl(node.attributes.href)}>
                 {children}
@@ -128,29 +128,29 @@ const ServicesButton = (props: Props): JSX.Element => (
         onPress={props.onServicesTextPress}
         additionalStyles={{
             marginBottom: 15,
-            paddingHorizontal: Platform.OS === 'ios' ? 15 :  0,
+            paddingHorizontal: Platform.OS === 'ios' ? 15 : 0,
         }}
     >
-    <View style={{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-        marginHorizontal: Platform.OS === 'ios' ? 0 :  20,
-    }}>
-        <Icon
-            type={'FontAwesome'}
-            name={'map-marker'}
-            style={{
-                color: colors.white,
-                fontSize: values.smallIconSize,
-                marginRight: 10,
-            }}
-        />
-        <Text style={[textStyles.button, { textAlign: 'left' }]}>
-            <Trans>Find related services near me</Trans>
-        </Text>
-    </View>
+        <View style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignSelf: 'center',
+            marginHorizontal: Platform.OS === 'ios' ? 0 : 20,
+        }}>
+            <Icon
+                type={'FontAwesome'}
+                name={'map-marker'}
+                style={{
+                    color: colors.white,
+                    fontSize: values.smallIconSize,
+                    marginRight: 10,
+                }}
+            />
+            <Text style={[textStyles.button, { textAlign: 'left' }]}>
+                <Trans>Find related services near me</Trans>
+            </Text>
+        </View>
     </MultiLineButtonComponent>
 );

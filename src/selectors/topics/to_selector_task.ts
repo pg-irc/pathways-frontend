@@ -1,4 +1,4 @@
-import * as store from '../../stores/tasks';
+import * as store from '../../stores/topics';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { ExploreSection } from '../explore/types';

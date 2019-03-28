@@ -1,8 +1,8 @@
 import { Store } from '../../stores';
-import { pickTasks } from '../tasks/pick_tasks';
+import { pickTasks } from '../topics/pick_tasks';
 import { pickAnswers } from './pick_answers';
 import { Answer } from '../../stores/questionnaire';
-import { getAllTaxonomyTermsFromTasks } from '../tasks/get_all_taxonomy_terms_from_tasks';
+import { getAllTaxonomyTermsFromTasks } from '../topics/get_all_taxonomy_terms_from_tasks';
 import { getAllAnswersWithTaxonomyTermsNotIn } from './get_all_answers_with_taxonomy_terms_not_in';
 
 export const selectInvalidAnswers = (appStore: Store): ReadonlyArray<Answer> => {

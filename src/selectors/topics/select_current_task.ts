@@ -1,5 +1,5 @@
 import { Store } from '../../stores';
-import { Id as TaskId } from '../../stores/tasks';
+import { Id as TaskId } from '../../stores/topics';
 import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_chosen_answers';
 import { selectLocale } from '../locale/select_locale';
 import { toSelectorTask } from './to_selector_task';

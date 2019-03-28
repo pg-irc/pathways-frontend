@@ -1,4 +1,4 @@
-import { Task } from '../../stores/tasks';
+import { Task } from '../../stores/topics';
 import { Taxonomies } from '../../application/constants';
 import { TaxonomyTermReference } from '../taxonomies/pull_explore_taxonomy';
 import * as R from 'ramda';

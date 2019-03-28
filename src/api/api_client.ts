@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { stringify } from 'query-string';
-import { Id } from '../stores/tasks';
+import { Id } from '../stores/topics';
 
 export interface APIResponse {
     readonly hasError: boolean;

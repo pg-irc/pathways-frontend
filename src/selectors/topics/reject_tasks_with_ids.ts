@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { Task } from '../../stores/tasks';
+import { Task } from '../../stores/topics';
 import { Id } from '../../fixtures/types/explore';
 
 export const rejectTasksWithIds = (tasks: ReadonlyArray<Task>, taskIds: ReadonlyArray<Id>): ReadonlyArray<Task> => {

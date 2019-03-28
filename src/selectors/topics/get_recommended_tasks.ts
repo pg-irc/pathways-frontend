@@ -1,5 +1,5 @@
 import { AnswersMap } from '../../stores/questionnaire';
-import { TaskMap, Task } from '../../stores/tasks';
+import { TaskMap, Task } from '../../stores/topics';
 import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
 import { getTaxonomyTermsForRelevantAnswers } from '../taxonomies/get_taxonomy_terms_for_relevant_answers';
 import { isTaskRecommended } from './is_task_recommended';

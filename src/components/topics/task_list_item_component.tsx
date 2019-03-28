@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, Icon } from 'native-base';
 import { values, colors, textStyles } from '../../application/styles';
-import { TaskListItem } from '../../selectors/tasks/task_list_item';
-import { AddToSavedListAction, RemoveFromSavedListAction, Id } from '../../stores/tasks';
+import { TaskListItem } from '../../selectors/topics/task_list_item';
+import { AddToSavedListAction, RemoveFromSavedListAction, Id } from '../../stores/topics';
 import { I18nManager, TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';

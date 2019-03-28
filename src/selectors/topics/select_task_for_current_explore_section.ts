@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { Store } from '../../stores';
-import * as store from '../../stores/tasks';
+import * as store from '../../stores/topics';
 import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_chosen_answers';
 import { RouterProps } from '../../application/routing';
 import { selectLocale } from '../locale/select_locale';

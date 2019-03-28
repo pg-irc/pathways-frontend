@@ -3,11 +3,11 @@ import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
 import { RouterProps } from '../../application/routing';
-import { Id as TaskId, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/tasks';
+import { Id as TaskId, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/topics';
 import { ExploreDetailContentComponent } from './explore_detail_content_component';
-import { TaskListItem } from '../../selectors/tasks/task_list_item';
+import { TaskListItem } from '../../selectors/topics/task_list_item';
 import { textStyles, values } from '../../application/styles';
-import { TaskListComponent, NoTasksAddedComponent } from '../tasks/task_list_component';
+import { TaskListComponent, NoTasksAddedComponent } from '../topics/task_list_component';
 
 export interface ExploreDetailProps {
     readonly section: ExploreSection;

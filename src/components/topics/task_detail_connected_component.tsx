@@ -6,10 +6,10 @@ import { TaskDetailProps, TaskDetailActions, TaskDetailComponent } from './task_
 import {
     Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
     toggleCompleted, RemoveFromSavedListAction, removeFromSavedList,
-} from '../../stores/tasks';
+} from '../../stores/topics';
 import { connect } from 'react-redux';
-import { selectCurrentTask } from '../../selectors/tasks/select_current_task';
-import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
+import { selectCurrentTask } from '../../selectors/topics/select_current_task';
+import { pickSavedTaskIds } from '../../selectors/topics/pick_saved_task_ids';
 import { Routes, getParametersFromPath } from '../../application/routing';
 
 type OwnProps = {

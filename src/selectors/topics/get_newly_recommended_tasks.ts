@@ -1,5 +1,5 @@
 import { AnswersMap } from '../../stores/questionnaire';
-import { TaskMap, Task } from '../../stores/tasks';
+import { TaskMap, Task } from '../../stores/topics';
 import * as R from 'ramda';
 import { getRecommendedTasks } from './get_recommended_tasks';
 

@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import * as uuid from 'uuid';
 import * as constants from '../application/constants';
-import { AddToSavedListAction, RemoveFromSavedListAction } from './tasks';
+import { AddToSavedListAction, RemoveFromSavedListAction } from './topics';
 import { UserDataPersistence } from './user_data';
 import * as helpers from './helpers/make_action';
 import { Id, NotificationType, Notification, NotificationStore } from '../fixtures/types/notifications';

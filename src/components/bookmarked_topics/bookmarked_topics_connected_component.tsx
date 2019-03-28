@@ -1,10 +1,10 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { TaskListActions } from '../tasks/task_list_component';
+import { TaskListActions } from '../topics/task_list_component';
 import { Store } from '../../stores';
 import { BookmarkedTopicsComponent, BookmarkedTopicsProps } from './bookmarked_topics_component';
-import { Id, RemoveFromSavedListAction, removeFromSavedList, AddToSavedListAction, addToSavedList } from '../../stores/tasks';
-import { selectSavedTasks } from '../../selectors/tasks/select_saved_tasks';
+import { Id, RemoveFromSavedListAction, removeFromSavedList, AddToSavedListAction, addToSavedList } from '../../stores/topics';
+import { selectSavedTasks } from '../../selectors/topics/select_saved_tasks';
 
 const mapStateToProps = (store: Store): BookmarkedTopicsProps => ({
     bookmarkedTopics: selectSavedTasks(store),

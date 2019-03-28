@@ -1,7 +1,7 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { APIClient, APIResponse, MaybeLocation } from './api_client';
 import { isResponseError } from './is_response_error';
-import { Id } from '../stores/tasks';
+import { Id } from '../stores/topics';
 
 export { APIClient, APIResponse };
 export { isResponseError };

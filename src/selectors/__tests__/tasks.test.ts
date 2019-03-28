@@ -2,25 +2,25 @@
 
 import { TaskBuilder } from '../../stores/__tests__/helpers/tasks_helpers';
 import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
-import * as stores from '../../stores/tasks';
+import * as stores from '../../stores/topics';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
 import { Locale } from '../../locale/types';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore/types';
-import { toSelectorTask } from '../tasks/to_selector_task';
-import { Task } from '../tasks/task';
-import { isTaskRecommended } from '../tasks/is_task_recommended';
-import { sortTaskList } from '../tasks/sort_task_list';
+import { toSelectorTask } from '../topics/to_selector_task';
+import { Task } from '../topics/task';
+import { isTaskRecommended } from '../topics/is_task_recommended';
+import { sortTaskList } from '../topics/sort_task_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';
-import { getRecommendedTasks } from '../tasks/get_recommended_tasks';
-import { rejectTasksWithIds } from '../tasks/reject_tasks_with_ids';
+import { getRecommendedTasks } from '../topics/get_recommended_tasks';
+import { rejectTasksWithIds } from '../topics/reject_tasks_with_ids';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
-import { getNewlyRecommendedTasks } from '../tasks/get_newly_recommended_tasks';
+import { getNewlyRecommendedTasks } from '../topics/get_newly_recommended_tasks';
 import { AnswersMap, Answer } from '../../stores/questionnaire';
-import { getAllTaxonomyTermsFromTasks } from '../tasks/get_all_taxonomy_terms_from_tasks';
-import { getIdsOfCompletedTasks } from '../tasks/get_ids_of_completed_tasks';
+import { getAllTaxonomyTermsFromTasks } from '../topics/get_all_taxonomy_terms_from_tasks';
+import { getIdsOfCompletedTasks } from '../topics/get_ids_of_completed_tasks';
 import * as R from 'ramda';
 
 let locale: Locale = undefined;

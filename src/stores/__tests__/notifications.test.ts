@@ -1,9 +1,9 @@
 // tslint:disable:no-expression-statement no-let
 import * as model from '../notifications';
 import * as R from 'ramda';
-import { addToSavedList, removeFromSavedList } from '../tasks';
+import { addToSavedList, removeFromSavedList } from '../topics';
 import { TaskBuilder } from './helpers/tasks_helpers';
-import { NotificationBuilder }  from './helpers/notification_helpers';
+import { NotificationBuilder } from './helpers/notification_helpers';
 
 describe('notifications store', () => {
 
@@ -34,9 +34,9 @@ describe('notifications store', () => {
             expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TaskRemovedFromPlan);
         });
 
-        it ('allows for the removal of a notification', () => {
+        it('allows for the removal of a notification', () => {
             const finalStore = model.reducer(store, model.removeNotification(aNotification.id));
-            expect (R.keys(finalStore.notifications).length).toBe(0);
+            expect(R.keys(finalStore.notifications).length).toBe(0);
         });
 
     });
@@ -45,11 +45,11 @@ describe('notifications store', () => {
         const notification = model.createNotification(model.NotificationType.TaskAddedToPlan);
 
         it('creates a notification with a generated id', () => {
-            expect (notification).toHaveProperty('id');
+            expect(notification).toHaveProperty('id');
         });
 
         it('creates a notification with expected type', () => {
-            expect (notification.type).toBe(model.NotificationType.TaskAddedToPlan);
+            expect(notification.type).toBe(model.NotificationType.TaskAddedToPlan);
         });
 
     });

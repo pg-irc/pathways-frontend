@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import * as fonts from './fonts';
 import * as locale from './locale';
 import * as questionnaire from './questionnaire';
-import * as tasks from './tasks';
+import * as tasks from './topics';
 import * as services from './services';
 import * as explore from './explore';
 import * as taxonomies from './taxonomies';

@@ -1,4 +1,4 @@
-import { Task } from '../../stores/tasks';
+import { Task } from '../../stores/topics';
 import { TaxonomyTermReference, Id } from '../../stores/taxonomies';
 import { groupTermsByTaxonomy } from '../taxonomies/group_terms_by_taxonomy';
 import { isTaskRecommendedToAll } from './is_task_recommended_to_all';

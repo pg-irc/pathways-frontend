@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let
 
 import { TaskBuilder, buildNormalizedStore } from './helpers/tasks_helpers';
-import * as stores from '../tasks';
+import * as stores from '../topics';
 import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 
 describe('tasks test helpers', () => {

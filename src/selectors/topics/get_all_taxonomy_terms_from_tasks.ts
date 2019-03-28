@@ -1,4 +1,4 @@
-import { TaskMap } from '../../stores/tasks';
+import { TaskMap } from '../../stores/topics';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { getTaxonomyTerms } from './get_taxonomy_terms';
 import { flattenOneLevel } from '../questionnaire/flatten_one_level';

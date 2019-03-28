@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { Store } from '../../stores';
-import * as store from '../../stores/tasks';
+import * as store from '../../stores/topics';
 import { selectLocale } from '../locale/select_locale';
 import { Task } from './task';
 import { toSelectorTaskWithoutRelatedEntities } from './to_selector_task_without_related_entities';
