@@ -18,7 +18,7 @@ type OwnProps = {
 
 const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.Services);
-    const task: Task = selectCurrentTask(store, matchParams.taskId);
+    const task: Task = selectCurrentTask(store, matchParams.topicId);
     return {
         task: task,
         taskServicesOrError: selectTaskServices(task.id, store),

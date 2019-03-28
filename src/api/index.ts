@@ -15,8 +15,8 @@ export class API {
         this.apiClient = new APIClient(url);
     }
 
-    static async searchServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
-        return await this.client.searchServices(taskId, location);
+    static async searchServices(topicId: Id, location: MaybeLocation): Promise<APIResponse> {
+        return await this.client.searchServices(topicId, location);
     }
 
     private static get client(): APIClient {

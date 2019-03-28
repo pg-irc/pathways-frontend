@@ -17,8 +17,8 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProp
 type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): ExploreDetailActions => ({
-    addToSavedList: (taskId: Id): AddToSavedListAction => dispatch(addToSavedList(taskId)),
-    removeFromSavedList: (taskId: Id): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
+    addToSavedList: (topicId: Id): AddToSavedListAction => dispatch(addToSavedList(topicId)),
+    removeFromSavedList: (topicId: Id): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
 });
 
 export const ExploreDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ExploreDetailComponent);

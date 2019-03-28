@@ -18,9 +18,9 @@ export interface TaskDetailProps {
 }
 
 export interface TaskDetailActions {
-    readonly toggleCompleted: (taskId: TaskId) => ToggleCompletedAction;
-    readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
-    readonly removeFromSavedList: (taskId: TaskId) => RemoveFromSavedListAction;
+    readonly toggleCompleted: (topicId: TaskId) => ToggleCompletedAction;
+    readonly addToSavedList: (topicId: TaskId) => AddToSavedListAction;
+    readonly removeFromSavedList: (topicId: TaskId) => RemoveFromSavedListAction;
 }
 
 type Props = TaskDetailProps & TaskDetailActions;

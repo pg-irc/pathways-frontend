@@ -49,7 +49,7 @@ export interface ErrorTaskServices {
 export type TopicServices = ValidTaskServices | LoadingTaskServices | ErrorTaskServices;
 
 export interface TaskServicesMap {
-    readonly [taskId: string]: TopicServices;
+    readonly [topicId: string]: TopicServices;
 }
 
 export const isServiceLoading = (services: TopicServices): boolean => (

@@ -21,16 +21,16 @@ export type TaskAction = AddToSavedListAction |
     ClearAllUserDataAction;
 
 // tslint:disable-next-line:typedef
-export const addToSavedList = (taskId: Id) => {
-    return helpers.makeAction(constants.ADD_TO_SAVED_TOPICS, { taskId });
+export const addToSavedList = (topicId: Id) => {
+    return helpers.makeAction(constants.ADD_TO_SAVED_TOPICS, { topicId });
 };
 
 // tslint:disable-next-line:typedef
-export const removeFromSavedList = (taskId: Id) => (
-    helpers.makeAction(constants.REMOVE_FROM_SAVED_TOPICS, { taskId })
+export const removeFromSavedList = (topicId: Id) => (
+    helpers.makeAction(constants.REMOVE_FROM_SAVED_TOPICS, { topicId })
 );
 
 // tslint:disable-next-line:typedef
-export const toggleCompleted = (taskId: Id) => (
-    helpers.makeAction(constants.TOGGLE_IS_TOPIC_COMPLETED, { taskId })
+export const toggleCompleted = (topicId: Id) => (
+    helpers.makeAction(constants.TOGGLE_IS_TOPIC_COMPLETED, { topicId })
 );

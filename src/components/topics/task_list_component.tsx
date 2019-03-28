@@ -23,8 +23,8 @@ export interface TaskListProps {
 }
 
 export interface TaskListActions {
-    readonly addToSavedList: (taskId: Id) => AddToSavedListAction;
-    readonly removeFromSavedList: (taskId: Id) => RemoveFromSavedListAction;
+    readonly addToSavedList: (topicId: Id) => AddToSavedListAction;
+    readonly removeFromSavedList: (topicId: Id) => RemoveFromSavedListAction;
 }
 
 type Props = TaskListProps & TaskListActions;

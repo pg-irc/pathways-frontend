@@ -31,7 +31,7 @@ describe('services reducer', () => {
             const topicId = aString();
             const action: SendTaskServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { taskId: topicId },
+                payload: { topicId },
             };
             const store = reducer(theStore, action);
             const topicServicesOrError = store.taskServicesOrError[topicId];
@@ -41,27 +41,27 @@ describe('services reducer', () => {
         it('sets state of the topic service to loading', () => {
             const action: SendTaskServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { taskId: loadedTaskServices.taskId },
+                payload: { topicId: loadedTaskServices.topicId },
             };
             const store = reducer(theStore, action);
-            const topicServices = store.taskServicesOrError[loadedTaskServices.taskId];
+            const topicServices = store.taskServicesOrError[loadedTaskServices.topicId];
             expect(isServiceLoading(topicServices)).toBe(true);
         });
 
         it('sets loading to true on pre existing topic services error objects', () => {
             const action: SendTaskServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { taskId: loadedTaskServicesError.taskId },
+                payload: { topicId: loadedTaskServicesError.topicId },
             };
             const store = reducer(theStore, action);
-            const topicServicesError = store.taskServicesOrError[loadedTaskServicesError.taskId];
+            const topicServicesError = store.taskServicesOrError[loadedTaskServicesError.topicId];
             expect(isServiceLoading(topicServicesError)).toBe(true);
         });
 
         it('does not update existing services', () => {
             const action: SendTaskServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { taskId: aString() },
+                payload: { topicId: aString() },
             };
             const store = reducer(theStore, action);
             expect(store.services).toEqual(theStore.services);
@@ -69,12 +69,12 @@ describe('services reducer', () => {
     });
 
     describe('when populating topic services objects from a success response', () => {
-        const topic = new TopicBuilder().withId(loadingTaskServices.taskId).build();
+        const topic = new TopicBuilder().withId(loadingTaskServices.topicId).build();
         const services: ReadonlyArray<Service> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
         const action: PopulateTaskServicesFromSuccessAction = {
             type: constants.LOAD_SERVICES_SUCCESS,
             payload: {
-                taskId: topic.id,
+                topicId: topic.id,
                 services,
             },
         };
@@ -97,7 +97,7 @@ describe('services reducer', () => {
             const theAction: PopulateTaskServicesFromSuccessAction = {
                 type: constants.LOAD_SERVICES_SUCCESS,
                 payload: {
-                    taskId: topic.id,
+                    topicId: topic.id,
                     services: servicesWithIds,
                 },
             };
@@ -133,13 +133,13 @@ describe('services reducer', () => {
     });
 
     describe('when populating topic services error object from an error response', () => {
-        const topic = new TopicBuilder().withId(loadingTaskServicesError.taskId).build();
+        const topic = new TopicBuilder().withId(loadingTaskServicesError.topicId).build();
         const anErrorMessage = aString();
         const action: PopulateTaskServicesFromErrorAction = {
             type: constants.LOAD_SERVICES_FAILURE,
             payload: {
                 errorMessage: anErrorMessage,
-                taskId: topic.id,
+                topicId: topic.id,
                 errorMessageType: AsyncGenericErrorType.BadServerResponse,
             },
         };

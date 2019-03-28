@@ -15,8 +15,8 @@ export interface TaskListItemProps {
 }
 
 export interface TaskListItemActions {
-    readonly addToSavedList: (taskId: Id) => AddToSavedListAction;
-    readonly removeFromSavedList: (taskId: Id) => RemoveFromSavedListAction;
+    readonly addToSavedList: (topicId: Id) => AddToSavedListAction;
+    readonly removeFromSavedList: (topicId: Id) => RemoveFromSavedListAction;
     readonly goToTaskDetail: () => void;
 }
 

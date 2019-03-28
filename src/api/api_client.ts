@@ -19,8 +19,8 @@ export class APIClient {
         this.host = host;
     }
 
-    async searchServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
-        const parameters = stringify(buildParameters(taskId, location));
+    async searchServices(topicId: Id, location: MaybeLocation): Promise<APIResponse> {
+        const parameters = stringify(buildParameters(topicId, location));
         const endpoint = 'services_at_location';
         const servicesResponse = await this.fetch(endpoint, parameters);
         return servicesResponse;
@@ -40,15 +40,15 @@ interface Parameters {
     user_location?: string;
 }
 
-export const buildParameters = (taskId: Id, location: MaybeLocation): Parameters => {
+export const buildParameters = (topicId: Id, location: MaybeLocation): Parameters => {
     if (!location) {
-        return { related_to_task: taskId };
+        return { related_to_task: topicId };
     }
     const user_location = `${location.coords.longitude},${location.coords.latitude}`;
     return {
         user_location: user_location,
         proximity: user_location,
-        related_to_task: taskId,
+        related_to_task: topicId,
     };
 };
 

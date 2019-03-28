@@ -7,13 +7,13 @@ import * as R from 'ramda';
 export const reduceValidStore = (store: ValidTaskStore, action: TaskAction): TaskStore => {
     switch (action.type) {
         case constants.ADD_TO_SAVED_TOPICS:
-            return addToTaskList(store, 'savedTopicsList', store.savedTopicsList, action.payload.taskId);
+            return addToTaskList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
 
         case constants.REMOVE_FROM_SAVED_TOPICS:
-            return removeFromTaskList(store, 'savedTopicsList', store.savedTopicsList, action.payload.taskId);
+            return removeFromTaskList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
 
         case constants.TOGGLE_IS_TOPIC_COMPLETED:
-            return toggleCompletedValue(store, action.payload.taskId);
+            return toggleCompletedValue(store, action.payload.topicId);
 
         case constants.LOAD_USER_DATA_REQUEST:
             return new LoadingTaskStore(store);
@@ -44,13 +44,13 @@ const removeFromTaskList = (store: ValidTaskStore, property: keyof (ValidTaskSto
     return new ValidTaskStore({ ...store, [property]: taskList.filter((id: Id) => id !== value) });
 };
 
-const toggleCompletedValue = (store: ValidTaskStore, taskId: Id): ValidTaskStore => {
-    const task = store.topicMap[taskId];
+const toggleCompletedValue = (store: ValidTaskStore, topicId: Id): ValidTaskStore => {
+    const task = store.topicMap[topicId];
     return new ValidTaskStore({
         ...store,
         topicMap: {
             ...store.topicMap,
-            [taskId]: {
+            [topicId]: {
                 ...task,
                 completed: !task.completed,
             },

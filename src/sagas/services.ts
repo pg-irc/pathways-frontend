@@ -19,32 +19,32 @@ export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
 export type ServicesErrorType = AsyncGenericErrorType | AsyncLocationErrorType;
 
 export function* updateTaskServices(action: SendTaskServicesRequestAction): UpdateResult {
-    const taskId = action.payload.taskId;
+    const topicId = action.payload.topicId;
     try {
         const maybeLocation = yield call(getLocationIfPermittedAsync);
         if (isAsyncLocationError(maybeLocation)) {
             return yield put(
-                populateTaskServicesFromError(maybeLocation.message, taskId, maybeLocation.type)
+                populateTaskServicesFromError(maybeLocation.message, topicId, maybeLocation.type),
             );
         }
-        const response: APIResponse = yield call([API, API.searchServices], taskId, maybeLocation);
+        const response: APIResponse = yield call([API, API.searchServices], topicId, maybeLocation);
         if (isResponseError(response)) {
             return yield put(
-                populateTaskServicesFromError(response.message, taskId, AsyncGenericErrorType.BadServerResponse)
+                populateTaskServicesFromError(response.message, topicId, AsyncGenericErrorType.BadServerResponse),
             );
         }
         const validator = servicesAtLocationValidator(response.results);
         if (isValidationError(validator)) {
             return yield put(
-                populateTaskServicesFromError(validator.errors, taskId, AsyncGenericErrorType.ValidationFailure)
+                populateTaskServicesFromError(validator.errors, topicId, AsyncGenericErrorType.ValidationFailure),
             );
         }
         yield put(
-            populateTaskServicesFromSuccess(taskId, R.map(serviceFromValidatedJSON, response.results))
+            populateTaskServicesFromSuccess(topicId, R.map(serviceFromValidatedJSON, response.results)),
         );
     } catch (error) {
         yield put(
-            populateTaskServicesFromError(error.message, taskId, AsyncGenericErrorType.Exception)
+            populateTaskServicesFromError(error.message, topicId, AsyncGenericErrorType.Exception),
         );
     }
 }

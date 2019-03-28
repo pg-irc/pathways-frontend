@@ -91,12 +91,12 @@ export function reducer(store: ServiceStore = buildDefaultStore(), action?: Serv
 }
 
 const updateServicesRequest = (store: ServiceStore, action: SendTaskServicesRequestAction): ServiceStore => {
-    const taskId = action.payload.taskId;
+    const topicId = action.payload.topicId;
     return {
         ...store,
         taskServicesOrError: {
             ...store.taskServicesOrError,
-            [taskId]: {
+            [topicId]: {
                 type: constants.TOPIC_SERVICES_LOADING,
             },
         },
@@ -105,7 +105,7 @@ const updateServicesRequest = (store: ServiceStore, action: SendTaskServicesRequ
 
 const updateServicesSuccess = (store: ServiceStore, action: PopulateTaskServicesFromSuccessAction): ServiceStore => {
     const newServices = action.payload.services;
-    const taskId = action.payload.taskId;
+    const topicId = action.payload.topicId;
     const newServicesAsMap = createServiceMap(newServices);
     const newServiceIds = R.map((service: Service): string => service.id, newServices);
     return {
@@ -116,7 +116,7 @@ const updateServicesSuccess = (store: ServiceStore, action: PopulateTaskServices
         },
         taskServicesOrError: {
             ...store.taskServicesOrError,
-            [taskId]: {
+            [topicId]: {
                 type: constants.TOPIC_SERVICES_VALID,
                 serviceIds: newServiceIds,
             },
@@ -125,14 +125,14 @@ const updateServicesSuccess = (store: ServiceStore, action: PopulateTaskServices
 };
 
 const updateServicesFailure = (store: ServiceStore, action: PopulateTaskServicesFromErrorAction): ServiceStore => {
-    const taskId = action.payload.taskId;
+    const topicId = action.payload.topicId;
     const errorMessage = action.payload.errorMessage;
     const errorMessageType = action.payload.errorMessageType;
     return {
         ...store,
         taskServicesOrError: {
             ...store.taskServicesOrError,
-            [taskId]: {
+            [topicId]: {
                 type: constants.TOPIC_SERVICES_ERROR,
                 errorMessageType,
                 errorMessage,

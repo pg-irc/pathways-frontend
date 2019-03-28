@@ -18,8 +18,8 @@ const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
 type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskListActions => ({
-    addToSavedList: (taskId: Id): AddToSavedListAction => dispatch(addToSavedList(taskId)),
-    removeFromSavedList: (taskId: Id): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
+    addToSavedList: (topicId: Id): AddToSavedListAction => dispatch(addToSavedList(topicId)),
+    removeFromSavedList: (topicId: Id): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
 });
 
 export const RecommendedTopicsConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(RecommendedTopicsComponent);

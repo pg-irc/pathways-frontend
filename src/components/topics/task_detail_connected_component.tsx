@@ -19,7 +19,7 @@ type OwnProps = {
 
 const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.TaskDetail);
-    const task = selectCurrentTask(store, matchParams.taskId);
+    const task = selectCurrentTask(store, matchParams.topicId);
     const savedTasksIdList = pickSavedTaskIds(store);
     const taskIsBookmarked = R.contains(task.id, savedTasksIdList);
     return {
@@ -33,9 +33,9 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
 type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction | ToggleCompletedAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActions => ({
-    toggleCompleted: (taskId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(taskId)),
-    addToSavedList: (taskId: TaskId): AddToSavedListAction => dispatch(addToSavedList(taskId)),
-    removeFromSavedList: (taskId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
+    toggleCompleted: (topicId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(topicId)),
+    addToSavedList: (topicId: TaskId): AddToSavedListAction => dispatch(addToSavedList(topicId)),
+    removeFromSavedList: (topicId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
 });
 
 export const TaskDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TaskDetailComponent);

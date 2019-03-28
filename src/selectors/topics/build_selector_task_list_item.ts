@@ -11,10 +11,10 @@ import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_
 import { pickAnswers } from '../questionnaire/pick_answers';
 import { selectExploreSectionFromTask } from './select_explore_section_from_task';
 
-export const buildSelectorTaskListItem = R.curry((appStore: Store, taskId: store.Id): TaskListItem => {
+export const buildSelectorTaskListItem = R.curry((appStore: Store, topicId: store.Id): TaskListItem => {
     const locale = selectLocale(appStore);
-    const taskMap = pickTasks(appStore);
-    const task = taskMap[taskId];
+    const topicMap = pickTasks(appStore);
+    const task = topicMap[topicId];
     const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
     const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(pickAnswers(appStore));
     const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, task);

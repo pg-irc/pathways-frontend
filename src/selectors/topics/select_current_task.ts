@@ -11,10 +11,10 @@ import { pickTasks } from './pick_tasks';
 import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
 import { pickAnswers } from '../questionnaire/pick_answers';
 
-export const selectCurrentTask = (appStore: Store, taskId: TaskId): Task => {
+export const selectCurrentTask = (appStore: Store, topicId: TaskId): Task => {
     const locale = selectLocale(appStore);
     const taskMap = pickTasks(appStore);
-    const task = taskMap[taskId];
+    const task = taskMap[topicId];
     const exploreSection = selectExploreSectionFromTask(appStore, task);
     const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
     const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(pickAnswers(appStore));

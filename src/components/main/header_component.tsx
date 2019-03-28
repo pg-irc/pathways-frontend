@@ -27,8 +27,8 @@ export interface HeaderProps {
 
 export interface HeaderActions {
     readonly onHeaderMenuButtonPress: () => void;
-    readonly addBookmark: (taskId: TaskId) => AddToSavedListAction;
-    readonly removeBookmark: (taskId: TaskId) => RemoveFromSavedListAction;
+    readonly addBookmark: (topicId: TaskId) => AddToSavedListAction;
+    readonly removeBookmark: (topicId: TaskId) => RemoveFromSavedListAction;
 }
 
 type Props = HeaderProps & HeaderActions;
@@ -79,14 +79,14 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
 const TopicDetailScreenHeader = (props: Props): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.TaskDetail);
-    const taskId = params.taskId;
+    const topicId = params.topicId;
     const backgroundColor = colors.lightGrey;
     const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
-            isBookmarked={R.contains(taskId, props.savedTasksIdList)}
-            addBookmark={(): AddToSavedListAction => props.addBookmark(taskId)}
-            removeBookmark={(): RemoveFromSavedListAction => props.removeBookmark(taskId)}
+            isBookmarked={R.contains(topicId, props.savedTasksIdList)}
+            addBookmark={(): AddToSavedListAction => props.addBookmark(topicId)}
+            removeBookmark={(): RemoveFromSavedListAction => props.removeBookmark(topicId)}
             textColor={colors.teal}
         />,
         <MenuButtonComponent

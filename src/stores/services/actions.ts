@@ -1,4 +1,4 @@
-import { Id as TaskId } from '../../fixtures/types/topics';
+import { Id as TopicId } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { Service } from './types';
@@ -16,19 +16,19 @@ export type ServicesAction =
     PopulateTaskServicesFromErrorAction;
 
 // tslint:disable-next-line:typedef
-export const sendTaskServicesRequest = (taskId: TaskId) => (
-    helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { taskId })
+export const sendTaskServicesRequest = (topicId: TopicId) => (
+    helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { topicId })
 );
 
 // tslint:disable-next-line:typedef
-export const populateTaskServicesFromSuccess = (taskId: TaskId, services: ReadonlyArray<Service>) => (
-    helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { taskId, services })
+export const populateTaskServicesFromSuccess = (topicId: TopicId, services: ReadonlyArray<Service>) => (
+    helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { topicId, services })
 );
 
 // tslint:disable-next-line:typedef
 export const populateTaskServicesFromError = (
     errorMessage: string,
-    taskId: TaskId,
+    topicId: TopicId,
     errorMessageType: ServicesErrorType) => (
-   helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { errorMessage, taskId, errorMessageType })
-);
+        helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { errorMessage, topicId, errorMessageType })
+    );

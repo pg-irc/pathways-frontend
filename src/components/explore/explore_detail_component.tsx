@@ -16,8 +16,8 @@ export interface ExploreDetailProps {
 }
 
 export interface ExploreDetailActions {
-    readonly addToSavedList: (taskId: TaskId) => AddToSavedListAction;
-    readonly removeFromSavedList: (taskId: TaskId) => RemoveFromSavedListAction;
+    readonly addToSavedList: (topicId: TaskId) => AddToSavedListAction;
+    readonly removeFromSavedList: (topicId: TaskId) => RemoveFromSavedListAction;
 }
 
 type Props = ExploreDetailProps & ExploreDetailActions & RouterProps;

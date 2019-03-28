@@ -2,11 +2,11 @@ import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
 import { History, Location } from 'history';
 import { Id as LearnId } from '../stores/explore';
-import { Id as TaskId } from '../stores/topics';
+import { Id as TopicId } from '../stores/topics';
 
 interface MatchParameters {
     readonly learnId?: LearnId;
-    readonly taskId?: TaskId;
+    readonly topicId?: TopicId;
 }
 
 export type RouterProps = RouteComponentProps<MatchParameters>;
@@ -39,9 +39,9 @@ export const routePathDefinition = (route: Routes): string => {
         case Routes.LearnDetail:
             return '/learn/:learnId';
         case Routes.TaskDetail:
-            return '/task/:taskId';
+            return '/task/:topicId';
         case Routes.Services:
-            return '/services/:taskId';
+            return '/services/:topicId';
         case Routes.About:
             return '/about';
         case Routes.RecommendedTopics:
