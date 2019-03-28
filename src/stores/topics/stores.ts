@@ -27,5 +27,5 @@ export const toValidOrThrow = (store: TaskStore): ValidTopicStore => {
     if (store instanceof ValidTopicStore) {
         return store;
     }
-    throw new Error('Tried to access invalid task store');
+    throw new Error('Tried to access invalid topic store');
 };

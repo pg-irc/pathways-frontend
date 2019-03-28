@@ -22,7 +22,7 @@ const filterValidIds = (tasks: TopicMap, ids: ReadonlyArray<Id>): ReadonlyArray<
     R.filter((id: string): boolean => R.has(id, tasks), ids)
 );
 
-const setCompleted = R.curry((completedTaskIds: ReadonlyArray<Id>, task: Topic): Topic => ({
-    ...task,
-    completed: R.contains(task.id, completedTaskIds),
+const setCompleted = R.curry((completedTaskIds: ReadonlyArray<Id>, topic: Topic): Topic => ({
+    ...topic,
+    completed: R.contains(topic.id, completedTaskIds),
 }));

@@ -13,12 +13,12 @@ import { pickAnswers } from '../questionnaire/pick_answers';
 
 export const selectCurrentTask = (appStore: Store, topicId: TaskId): Topic => {
     const locale = selectLocale(appStore);
-    const taskMap = pickTasks(appStore);
-    const task = taskMap[topicId];
-    const exploreSection = selectExploreSectionFromTask(appStore, task);
+    const topicMap = pickTasks(appStore);
+    const topic = topicMap[topicId];
+    const exploreSection = selectExploreSectionFromTask(appStore, topic);
     const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
     const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(pickAnswers(appStore));
-    const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, task);
-    const relatedTasks = selectRelatedTasks(appStore, task.relatedTopics);
-    return toSelectorTask(locale, task, exploreSection, isRecommended, relatedTasks);
+    const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, topic);
+    const relatedTasks = selectRelatedTasks(appStore, topic.relatedTopics);
+    return toSelectorTask(locale, topic, exploreSection, isRecommended, relatedTasks);
 };

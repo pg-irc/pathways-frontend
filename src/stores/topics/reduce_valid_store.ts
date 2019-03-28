@@ -21,7 +21,7 @@ export const reduceValidStore = (store: ValidTaskStore, action: TaskAction): Tas
         case constants.CLEAR_ALL_USER_DATA:
             return new ValidTaskStore({
                 ...store,
-                topicMap: R.map((task: Topic): Topic => ({ ...task, completed: false }), store.topicMap),
+                topicMap: R.map((topic: Topic): Topic => ({ ...topic, completed: false }), store.topicMap),
                 savedTopicsList: [],
             });
 
@@ -45,14 +45,14 @@ const removeFromTaskList = (store: ValidTaskStore, property: keyof (ValidTaskSto
 };
 
 const toggleCompletedValue = (store: ValidTaskStore, topicId: Id): ValidTaskStore => {
-    const task = store.topicMap[topicId];
+    const topic = store.topicMap[topicId];
     return new ValidTaskStore({
         ...store,
         topicMap: {
             ...store.topicMap,
             [topicId]: {
-                ...task,
-                completed: !task.completed,
+                ...topic,
+                completed: !topic.completed,
             },
         },
     });

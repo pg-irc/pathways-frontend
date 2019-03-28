@@ -6,7 +6,7 @@ import { Topic } from './topic';
 import { TopicListItem } from './topic_list_item';
 
 export const toSelectorTaskWithoutRelatedEntities =
-    (locale: Locale, task: store.Topic, exploreSection: ExploreSection, isRecommended: boolean): Topic => {
+    (locale: Locale, topic: store.Topic, exploreSection: ExploreSection, isRecommended: boolean): Topic => {
         const noRelatedTopics: ReadonlyArray<TopicListItem> = [];
-        return toSelectorTask(locale, task, exploreSection, isRecommended, noRelatedTopics);
+        return toSelectorTask(locale, topic, exploreSection, isRecommended, noRelatedTopics);
     };

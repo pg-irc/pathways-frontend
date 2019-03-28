@@ -4,13 +4,13 @@ import { Locale } from '../../locale/types';
 import { TopicListItem } from './topic_list_item';
 import { ExploreSection } from '../explore/types';
 
-export const toSelectorTaskListItem = (locale: Locale, task: store.Topic, isRecommended: boolean, exploreSection: ExploreSection): TopicListItem => (
+export const toSelectorTaskListItem = (locale: Locale, topic: store.Topic, isRecommended: boolean, exploreSection: ExploreSection): TopicListItem => (
     {
-        id: task.id,
-        title: getLocalizedText(locale, task.title),
-        description: getLocalizedText(locale, task.description),
+        id: topic.id,
+        title: getLocalizedText(locale, topic.title),
+        description: getLocalizedText(locale, topic.description),
         isRecommended: isRecommended,
-        completed: task.completed,
+        completed: topic.completed,
         exploreSection: exploreSection,
     }
 );

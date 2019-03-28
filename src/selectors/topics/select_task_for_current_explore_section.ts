@@ -22,12 +22,12 @@ export const selectTaskForCurrentExploreSection = (appStore: Store, routerProps:
 
     const locale = selectLocale(appStore);
 
-    const buildTask = (task: store.Topic): Topic => {
-        const exploreSectionForTask = selectExploreSectionFromTask(appStore, task);
+    const buildTask = (topic: store.Topic): Topic => {
+        const exploreSectionForTask = selectExploreSectionFromTask(appStore, topic);
         const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
         const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(pickAnswers(appStore));
-        const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, task);
-        return toSelectorTaskWithoutRelatedEntities(locale, task, exploreSectionForTask, isRecommended);
+        const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, topic);
+        return toSelectorTaskWithoutRelatedEntities(locale, topic, exploreSectionForTask, isRecommended);
     };
 
     return sortTaskList(R.map(buildTask, matchingTasks));
