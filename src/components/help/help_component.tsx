@@ -1,6 +1,6 @@
 import React from 'react';
 import { History } from 'history';
-import { Text, View, Icon, Button, Content } from 'native-base';
+import { Text, View, Icon, Content } from 'native-base';
 import { Trans } from '@lingui/react';
 import { I18nManager, Alert, TouchableOpacity } from 'react-native';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
@@ -9,6 +9,7 @@ import { mapWithIndex } from '../../application/map_with_index';
 import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 import { openURL } from '../link/link';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
+import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -92,13 +93,11 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
 );
 
 const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <Button
-        onPress={goToRouteWithParameter(Routes.Services, settlementWorkerTaskID, props.history)}
-        style={[applicationStyles.tealButton, applicationStyles.boxShadowBelow, { alignSelf: 'center' }]}>
+    <MultiLineButtonComponent onPress={goToRouteWithParameter(Routes.Services, settlementWorkerTaskID, props.history)}>
         <Text style={textStyles.button}>
             <Trans>Find a settlement agency near me</Trans>
         </Text>
-    </Button>
+    </MultiLineButtonComponent>
 );
 
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
@@ -116,19 +115,11 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
         );
     };
     return (
-        <Button
-            full
-            onPress={alertToClearAllUserData}
-            style={[
-                applicationStyles.tealButton,
-                applicationStyles.boxShadowBelow,
-                { alignSelf: 'center' }]
-            }
-        >
+        <MultiLineButtonComponent onPress={alertToClearAllUserData} >
             <Text style={textStyles.button}>
                 <Trans>Delete all user data</Trans>
             </Text>
-        </Button>
+        </MultiLineButtonComponent>
     );
 };
 
