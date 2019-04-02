@@ -13,5 +13,5 @@ lib/components/about/about_component.js:63,Server version:,إصدار الخاد
 lib/components/about/about_component.js:41,"The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations in Metro Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact. Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source project. You can",صممت تطبيق Arrival Advisor جمعية PeaceGeeks بالتعاون مع منظمات الاستقرار في مترو فانكوفر وكذلك مهاجرين ولاجئين مثلك. تحقق هذا المشروع بفضل تمويل مقاطعة بريتش كولومبيا و Google.org Canada بالتعاون مع مركز LEAP | Pecaut Centre for Social Impact. نتوجه بالشكر الخاص إلى متبرعين أفراد جعلوا من هذا المشروع حقيقة. تطبيق Arrival Advisor هو مشروع مفتوح المصدر. يمكنك
 lib/components/about/about_component.js:59,This is Arrival Advisor version:,هذا الإصدار من تطبيق Arrival Advisor هو:
 lib/components/services/service_list_item_component.js:46,Web:,الموقع الشبكي:
-lib/components/about/about_component.js:49,and,
-lib/components/about/about_component.js:51,to learn how you can support this project.,
+lib/components/about/about_component.js:49,and,and
+lib/components/about/about_component.js:51,to learn how you can support this project.,to learn how you can support this project.
