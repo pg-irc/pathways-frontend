@@ -1,0 +1,99 @@
+#. extracted from locale/fr/new-messages.csv
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-02 16:23-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.2.5\n"
+
+#: lib/components/services/service_list_error_component.js:33
+msgid "An error has occured."
+msgstr ""
+
+#: lib/components/disclaimer/disclaimer_component.js:18
+msgid ""
+"Arrival Advisor contains information from the BC Government’s Newcomer’s "
+"Guide, available at: {welcomeBCLink}, and the BC211 database of service "
+"providers, available at: {bc211Link}."
+msgstr ""
+
+#: lib/components/about/about_component.js:56
+msgid "Copyright 2018 Province of British Columbia. All rights reserved."
+msgstr ""
+
+#: lib/components/welcome/welcome_component.js:49
+msgid "Created by"
+msgstr ""
+
+#: lib/components/services/service_list_item_component.js:55
+msgid "Email:"
+msgstr ""
+
+#: lib/components/services/service_list_error_component.js:28
+msgid ""
+"Fetching your location timed out. On Android devices you may need to set "
+"your location mode to \"High accuracy\"."
+msgstr ""
+
+#: lib/components/about/about_component.js:30
+msgid ""
+"From finding a job to learning English, accessing health care, and more, "
+"Arrival Advisor has everything you need to get started in your new "
+"community. Explore topics and services without ever needing to create an "
+"account. Access important information no matter where you are: the newcomer "
+"topics provided by Arrival Advisor are saved to your phone so you can view "
+"them, even without internet. You can fill out some questions to get "
+"personalized recommendations of topics and services to settle in British "
+"Columbia. Arrival Advisor is anonymous and your answers are only used to "
+"operate the app's recommendations. We never save or share your personal data "
+"with funders or any third parties."
+msgstr ""
+
+#: lib/components/about/about_component.js:54
+msgid "Information in this app is provided by the"
+msgstr ""
+
+#: lib/components/questionnaire/new_topics_modal_component.js:55
+msgid "No new topics recommended based on your answers."
+msgstr ""
+
+#: lib/components/services/service_list_error_component.js:23
+msgid "Please ensure location services are enabled for Arrival Advisor."
+msgstr ""
+
+#: lib/components/about/about_component.js:63
+msgid "Server version:"
+msgstr ""
+
+#: lib/components/about/about_component.js:41
+msgid ""
+"The Arrival Advisor app is created by PeaceGeeks in partnership with "
+"settlement organizations in Metro Vancouver, as well as immigrants and "
+"refugees like you. This project is possible thanks to funding by the "
+"Province of British Columbia and Google.org Canada in partnership with LEAP |"
+" Pecaut Centre for Social Impact. Special thanks also goes to individual "
+"donors who make this project possible. Arrival Advisor is an open-source "
+"project. You can"
+msgstr ""
+
+#: lib/components/about/about_component.js:59
+msgid "This is Arrival Advisor version:"
+msgstr ""
+
+#: lib/components/services/service_list_item_component.js:46
+msgid "Web:"
+msgstr ""
+
+#: lib/components/about/about_component.js:49
+msgid "and"
+msgstr ""
+
+#: lib/components/about/about_component.js:51
+msgid "to learn how you can support this project."
+msgstr ""
