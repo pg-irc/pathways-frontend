@@ -41,7 +41,7 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
             <ParagraphComponent>
                 <Trans>
                     From finding a job to learning English, accessing health care, and more, Arrival Advisor has everything
-                    you need to get started in your new community. Explore newcomer topics and services without ever needing
+                    you need to get started in your new community. Explore topics and services without ever needing
                     to create an account. Access important information no matter where you are: the newcomer topics provided
                     by Arrival Advisor are saved to your phone so you can view them, even without internet. You can fill out
                     some questions to get personalized recommendations of topics and services to settle in British Columbia.

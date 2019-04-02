@@ -734,7 +734,9 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'answerAlreadyHaveLowIncomeSupport',
                 questionId: 'questionLowIncome',
                 text: {
-                    'en': 'I have low income assistance',
+                    'ar': 'أحصل على دعم موجه لأصحاب الدخل المحدود',
+                    'en': 'I have low income support',
+                    'fr': 'J’ai droit à du soutien pour gens à faible revenu.',
                 },
                 isChosen: false,
                 isInverted: false,
