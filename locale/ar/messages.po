@@ -1,42 +1,9 @@
-#. #-#-#-#-#  messages.po (PACKAGE VERSION)  #-#-#-#-#
-#. #-#-#-#-#  messages.po (PACKAGE VERSION)  #-#-#-#-#
 #. extracted from locale/ar/messages.csv
-#. #-#-#-#-#  new-messages.po (PACKAGE VERSION)  #-#-#-#-#
-#. extracted from locale/ar/new-messages.csv
-#. #-#-#-#-#  new-messages.po (PACKAGE VERSION)  #-#-#-#-#
-#. extracted from locale/ar/new-messages.csv
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  messages.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  messages.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-13 13:46-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
-"Language: \n"
-"Plural-Forms: \n"
-"#-#-#-#-#  new-messages.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-02 16:48-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
-"#-#-#-#-#  new-messages.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-02 16:48-0700\n"
+"POT-Creation-Date: 2019-04-03 10:41-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,8 +16,7 @@ msgstr ""
 msgid "ABOUT THE APP"
 msgstr "نبذة عن التطبيق"
 
-#: lib/components/about/about_component.js:19
-#: lib/components/header_menu/header_menu_component.js:50
+#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A19+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
 msgid "About Arrival Advisor"
 msgstr "نبذة عن Arrival Advisor"
 
@@ -157,8 +123,7 @@ msgstr "صممته"
 msgid "Delete all user data"
 msgstr "مسح كافة بيانات المستخدم"
 
-#: lib/components/disclaimer/disclaimer_component.js:15
-#: lib/components/header_menu/header_menu_component.js:51
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A15+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
 msgid "Disclaimer"
 msgstr "إخلاء مسؤولية"
 
@@ -361,8 +326,7 @@ msgstr "تقليل النص"
 msgid "Read more"
 msgstr "زيادة النص"
 
-#: lib/components/recommended_topics/recommended_topics_component.js:38
-#: lib/components/tasks/task_detail_content_component.js:63
+#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftasks%2Ftask_detail_content_component.js%3A63
 msgid "Recommended for you"
 msgstr "توصيات إليك"
 
@@ -407,8 +371,8 @@ msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
 "refugees like you. This project is possible thanks to funding by the "
-"Province of British Columbia and Google.org Canada in partnership with LEAP "
-"| Pecaut Centre for Social Impact. Special thanks also goes to individual "
+"Province of British Columbia and Google.org Canada in partnership with LEAP |"
+" Pecaut Centre for Social Impact. Special thanks also goes to individual "
 "donors who make this project possible. Arrival Advisor is an open-source "
 "project. You can"
 msgstr ""
@@ -457,71 +421,3 @@ msgstr "and"
 #: lib/components/about/about_component.js:51
 msgid "to learn how you can support this project."
 msgstr "to learn how you can support this project."
-
-#: lib/components/disclaimer/disclaimer_component.js:11
-#~ msgid ""
-#~ "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-#~ "Guide, available at: www.welcomebc.ca, and the BC211 database of service "
-#~ "providers, available at: www.bc211.ca."
-#~ msgstr ""
-#~ "يحتوي تطبيق Arrival Advisor على معلومات من دليل القادمين الجدد الصادر عن "
-#~ "حكومة بريتيش كولومبيا وهو متاح على الموقع: www.welcomebc.ca، وكذلك قاعدة "
-#~ "بيانات BC211 لمزودي الخدمات المتاحة على الموقع: www.bc211.ca. "
-
-#: lib/components/about/about_component.js:28
-#~ msgid ""
-#~ "From finding a job to learning English, accessing health care, and more, "
-#~ "Arrival Advisor has everything you need to get started in your new "
-#~ "community. Explore newcomer topics and services without ever needing to "
-#~ "create an account. Access important information no matter where you are: "
-#~ "the newcomer topics provided by Arrival Advisor are saved to your phone "
-#~ "so you can view them, even without internet. You can fill out some "
-#~ "questions to get personalized recommendations of topics and services to "
-#~ "settle in British Columbia. Arrival Advisor is anonymous and your answers "
-#~ "are only used to operate the app's recommendations. We never save or "
-#~ "share your personal data with funders or any third parties."
-#~ msgstr ""
-#~ "سواء كنت تبحث عن وظيفة أو ترغب في تعلم الإنجليزية أو الحصول على الرعاية "
-#~ "الصحية أو غير ذلك، يحتوي Arrival Advisor على كل ما تحتاج إليه كي تستقر في "
-#~ "مجتمعك الجديد. تجول بين الموضوعات والخدمات المخصصة للقادمين الجدد دون أن "
-#~ "تحتاج لإنشاء حساب. أحصل على المعلومات المهمة في أي مكان كنت منذ أن "
-#~ "الموضوعات الخاصة بالقادمين الجدد التي يقدمها Arrival Advisor محفوظة على "
-#~ "هاتفك كي تستعرضها دون الاتصال بالإنترنت. يمكنك الإجابة على بعض الأسئلة كي "
-#~ "تحصل على توصيات مخصصة للموضوعات والخدمات للاستقرار في بريتيش كولومبيا. "
-#~ "تطبيق Arrival Advisor لا يحفظ بياناتك وسوف تستخدم إجاباتك في ترتيب توصيات "
-#~ "التطبيق لا غير. نحن لا نحفظ مطلقا أو نشارك بياناتك الشخصية مع ممولين أو "
-#~ "أي طرف آخر."
-
-#: lib/components/about/about_component.js:48
-#~ msgid ""
-#~ "Information in this app is provided by the {welcomeBCLink} Copyright 2018 "
-#~ "Province of British Columbia. All rights reserved."
-#~ msgstr ""
-#~ "قدم المعلومات المبينة في هذا التطبيق موقع {welcomeBCLink} حقوق الطبع 2018 "
-#~ "ترجع إلى مقاطعة بريتيش كولومبيا. حقوق الطبع محفوظة."
-
-#: lib/components/about/about_component.js:59
-#~ msgid "Server version: {0}"
-#~ msgstr "إصدار الخادوم: {0}"
-
-#: lib/components/about/about_component.js:39
-#~ msgid ""
-#~ "The Arrival Advisor app is designed in partnership with settlement "
-#~ "providers in Metro Vancouver, and immigrants and refugees like you. We "
-#~ "gratefully acknowledge the financial support of the Province of British "
-#~ "Columbia through the Ministry of Jobs, Trade and Technology, as well as "
-#~ "Google.org Canada. Special thanks also goes to individual donors who make "
-#~ "this project possible. Arrival Advisor is an open-source project. You can "
-#~ "{githubLink} and {contactLink} to learn how you can support this project."
-#~ msgstr ""
-#~ "صمم تطبيق Arrival Advisor بالتعاون مع مقدمي خدمات الاستقرار في مترو "
-#~ "فانكوفر ومهاجرين ولاجئين مثلك. نود أن نتوجه بالشكر الجزيل على الدعم "
-#~ "المالي الذي قدمته مقاطعة بريتيش كولومبيا عن طريق وزارة الوظائف والتجارة "
-#~ "والتقنية، وكذلك Google.org Canada. كما نتوجه بالشكر الخاص للمتبرعين من "
-#~ "الأفراد الذين جعلوا من هذا المشروع حقيقة. تطبيق Arrival Advisor هو مشروع "
-#~ "مفتوح المصدر. يمكنك زيارة {githubLink} وكذلك مراسلة {contactLink} كي "
-#~ "تتعرف على المزيد عن كيفية تقديم المساندة لهذا المشروع."
-
-#: lib/components/about/about_component.js:54
-#~ msgid "This is Arrival Advisor version: 1.0.3"
-#~ msgstr "إصدار Arrival Advisor الحالي: 1.0.3"
