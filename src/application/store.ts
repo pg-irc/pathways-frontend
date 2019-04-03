@@ -11,10 +11,12 @@ import { LocaleInfoManager } from '../locale';
 import enMessages from '../../locale/en/messages';
 import arMessages from '../../locale/ar/messages';
 import frMessages from '../../locale/fr/messages';
+import zhCnMessages from '../../locale/zh_CN/messages';
 
 // tslint:disable-next-line:no-expression-statement
 LocaleInfoManager.register([
     { code: 'en', label: 'English', catalog: enMessages, isRTL: false },
+    { code: 'zh_CN', label: 'Chinese simplified', catalog: zhCnMessages, isRTL: false },
     { code: 'ar', label: 'عربى', catalog: arMessages, isRTL: true },
     { code: 'fr', label: 'Français', catalog: frMessages, isRTL: false },
 ]);
