@@ -9,6 +9,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionDurationInCanada',
                 text: {
                     'en': 'How long have you been living in Canada?',
+                    'ko': '귀하의 캐나다 거주 기간은 얼마입니까?',
                     'fr': 'Depuis combien de temps habitez-vous au Canada?',
                     'ar': 'كم مضى عليك من الوقت مقيما في كندا؟',
                     'zh_CN': '您在加拿大生活多久了？',
@@ -19,6 +20,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionDocuments',
                 text: {
                     'en': 'Do you have any of the following important Canadian documents?',
+                    'ko': '다음의 캐나다 공식 문서들 가운데 귀하가 현재 보유하고 있는 것은 무엇입니까?',
                     'fr': 'Possédez-vous l’un ou l’autre de ces documents canadiens importants?',
                     'ar': 'هل لديك أي من الوثائق الكندية الهامة التالية؟',
                     'zh_CN': '您有下列重要的加拿大文件吗？',
@@ -29,6 +31,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionAgeGroup',
                 text: {
                     'en': 'Are you arriving with children under 18 years? If yes, how old?',
+                    'ko': '귀하는 18세 미만의 자녀와 함께 입국하였습니까? 만일 그렇다면, 자녀의 나이는 몇 살입니까?',
                     'fr': 'Êtes-vous accompagné(e) d’enfants de moins de 18 ans? Si c’est le cas, quel âge ont-ils?',
                     'ar': 'هل وصلت معك أطفال أقل من 18 سنة؟ لو كانت الإجابة نعم، كم عمرهم؟',
                     'zh_CN': '您是和未满18岁的子女一起来的吗？如果是，您孩子几岁？',
@@ -39,6 +42,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionCurrentHousingSituation',
                 text: {
                     'en': 'What is your current housing situation?',
+                    'ko': '귀하의 현재 주거 상태는 무엇입니까?',
                     'fr': 'Quelle est votre situation actuelle en matière de logement?',
                     'ar': 'ما هو موقفك الحالي من السكن؟',
                     'zh_CN': '您目前的住房状况如何？',
@@ -49,6 +53,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionEnglishLevel',
                 text: {
                     'en': 'What is your current level of English?',
+                    'ko': '귀하의 현재 영어 구사력은 어느 수준입니까?',
                     'fr': 'Quel est votre niveau d’anglais actuel?',
                     'ar': 'ما هو مستوى إجادتك الحالي للغة الإنكليزية؟',
                     'zh_CN': '您目前的英语水平如何？',
@@ -59,6 +64,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionImmigrantType',
                 text: {
                     'en': 'What is your status in Canada?',
+                    'ko': '귀하의 현재 캐나다 체류 자격은 무엇입니까?',
                     'fr': 'De quel statut bénéficiez-vous au Canada?',
                     'ar': 'ما هو وضعك في كندا؟',
                     'zh_CN': '您在加拿大的身份是什么？',
@@ -69,6 +75,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionWorkStatus',
                 text: {
                     'en': 'What is your current work situation?',
+                    'ko': '귀하의 현재 직업 상태는 무엇입니까?',
                     'fr': 'Quelle est votre situation actuelle en matière d’emploi?',
                     'ar': 'ما هو وضعك الحالي من ناحية العمل؟',
                     'zh_CN': '您目前的工作状况如何？',
@@ -79,6 +86,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionHealth',
                 text: {
                     'en': 'What kinds of health care are you looking for?',
+                    'ko': '귀하가 필요로 하는 의료 서비스는 무엇입니까?',
                     'fr': 'De quel type de soins de santé avez-vous besoin?',
                     'ar': 'ما هي أنواع الرعاية الصحية التي تبحث عنها؟',
                     'zh_CN': '您在找哪一种的医疗保健服务？',
@@ -89,6 +97,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionLowIncome',
                 text: {
                     'en': 'Do you need financial assistance or low-income support?',
+                    'ko': '귀하는 재정적 도움이나 저소득층 지원이 필요합니까?',
                     'fr': 'Avez-vous besoin d’aide financière ou de soutien pour gens à faible revenu?',
                     'ar': 'هل تريد مساعدة مالية أو دعم موجه لأصحاب الدخل المتدني؟',
                     'zh_CN': '您需要经济资助还是低收入支持？',
@@ -99,6 +108,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionOther',
                 text: {
                     'en': 'Anything else you\'re interested in? Select all that apply',
+                    'ko': '그 밖에 관심이 있는 사항이 있습니까? 관심사에 해당하는 모든 항목을 선택해주세요.',
                     'fr': 'Y a-t-il d’autres sujets qui vous intéressent? Sélectionnez toutes les réponses appropriées.',
                     'ar': 'هل يوجد شيء آخر يهمك؟ اختر كل ما ينطبق',
                     'zh_CN': '您还对其他什么主题感兴趣吗？请选择所有适用项。',
@@ -112,6 +122,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDurationInCanada',
                 text: {
                     'en': 'More than 1 year',
+                    'ko': '1년 이상',
                     'fr': 'Plus d’un an',
                     'ar': 'أكثر من سنة واحدة',
                     'zh_CN': '1年以上',
@@ -125,6 +136,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDurationInCanada',
                 text: {
                     'en': 'Less than 1 year',
+                    'ko': '1년 미만',
                     'fr': 'Moins d’un an',
                     'ar': 'أقل من سنة واحدة',
                     'zh_CN': '未满1年',
@@ -138,6 +150,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDurationInCanada',
                 text: {
                     'en': 'I am planning to move to Canada',
+                    'ko': '캐나다로 이주를 계획 중입니다.',
                     'fr': 'Je prévois d’emménager au Canada',
                     'ar': 'أعتزم الانتقال إلى كندا',
                     'zh_CN': '我打算移居加拿大',
@@ -151,6 +164,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a Social Insurance Number',
+                    'ko': '사회보험번호(SIN)가 있습니다.',
                     'fr': 'J’ai un numéro d\'assurance sociale',
                     'ar': 'لدي رقم ضمان اجتماعي',
                     'zh_CN': '我有社会保险号码（Social Insurance Number，英文简称“SIN”）',
@@ -167,6 +181,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a Canadian bank account',
+                    'ko': '캐나다 은행 계좌를 보유하고 있습니다.',
                     'fr': 'J’ai un compte bancaire canadien',
                     'ar': 'لدي حساب مصرفي كندي',
                     'zh_CN': '我有加拿大的银行账户',
@@ -183,6 +198,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a Permanent Resident Card',
+                    'ko': '영주권 카드를 보유하고 있습니다.',
                     'fr': 'J’ai une carte de résident permanent',
                     'ar': 'لدي بطاقة مقيم دائم',
                     'zh_CN': '我有永久居民卡（俗称“枫叶卡”）',
@@ -199,6 +215,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have registered for MSP (Medical Services Plan)',
+                    'ko': '의료 서비스 플랜(MSP)에 가입되어 있습니다.',
                     'fr': 'Je me suis inscrit(e) au régime de Services médicaux (MSP)',
                     'ar': 'لقد سجلت نفسي في خطة الخدمات الطبية (Medical Services Plan)',
                     'zh_CN': '我注册了医疗服务计划（Medical Services Plan，英文简称“MSP”）',
@@ -215,6 +232,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a BC Services Card (health card)',
+                    'ko': 'BC 서비스 카드(의료 카드)를 보유하고 있습니다',
                     'fr': 'J’ai une carte BC Services (carte santé)',
                     'ar': 'لدي بطاقة خدمات بريتيش كولومبيا (البطاقة الصحية)',
                     'zh_CN': '我有BC服务卡（俗称“医保卡”）',
@@ -231,6 +249,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a BC Driver\'s Licence',
+                    'ko': 'BC주 운전면허증을 보유하고 있습니다.',
                     'fr': 'J’ai un permis de conduire de la C.-B.',
                     'ar': 'لدي رخصة قيادة خاصة ببريتيش كولومبيا',
                     'zh_CN': '我有BC驾驶执照',
@@ -247,6 +266,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionAgeGroup',
                 text: {
                     'en': 'Under 5 years old',
+                    'ko': '5세 미만',
                     'fr': 'Moins de 5 ans',
                     'ar': 'أقل من 5 سنوات',
                     'zh_CN': '未满5岁',
@@ -266,6 +286,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionAgeGroup',
                 text: {
                     'en': '5-12 years old',
+                    'ko': '5세 이상 12세 이하',
                     'fr': 'Entre 5 et 12 ans',
                     'ar': 'من 5 إلى 12 سنة',
                     'zh_CN': '5-12岁',
@@ -285,6 +306,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionAgeGroup',
                 text: {
                     'en': '13-18 years old',
+                    'ko': '13세 이상 18세 미만',
                     'fr': 'Entre 13 et 18 ans',
                     'ar': 'من 13 إلى 18 سنة',
                     'zh_CN': '13-18岁',
@@ -304,6 +326,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionAgeGroup',
                 text: {
                     'en': 'Pregnant (the child is not yet born)',
+                    'ko': '임신 중 (출생 이전)',
                     'fr': 'Enceinte (l’enfant n’est pas encore né)',
                     'ar': 'حبلى (لم يولد بعد)',
                     'zh_CN': '怀孕（待产）',
@@ -323,6 +346,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionAgeGroup',
                 text: {
                     'en': 'No children',
+                    'ko': '아이 없음',
                     'fr': 'Pas d\'enfant',
                     'ar': 'لا يوجد أطفال',
                     'zh_CN': '没有孩子',
@@ -336,6 +360,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionCurrentHousingSituation',
                 text: {
                     'en': 'I want to rent a place to live',
+                    'ko': '주거용 공간의 임차를 희망합니다.',
                     'fr': 'Je veux louer un logement',
                     'ar': 'أرغب في تأجير مسكن',
                     'zh_CN': '我想租房',
@@ -352,6 +377,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionCurrentHousingSituation',
                 text: {
                     'en': 'I want to buy a home',
+                    'ko': '주택 구매를 희망합니다.',
                     'fr': 'Je veux acheter un logement',
                     'ar': 'أرغب في شراء منزل',
                     'zh_CN': '我想买房',
@@ -368,6 +394,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionCurrentHousingSituation',
                 text: {
                     'en': 'I am already renting a home',
+                    'ko': '이미 주택을 임차하였습니다.',
                     'fr': 'Je loue déjà un logement',
                     'ar': 'لقد استأجرت مسكن بالفعل',
                     'zh_CN': '我已经租了房',
@@ -384,6 +411,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionCurrentHousingSituation',
                 text: {
                     'en': 'I already own a home',
+                    'ko': '이미 주택을 보유하고 있습니다.',
                     'fr': 'Je possède déjà un logement',
                     'ar': 'أملك منزل بالفعل',
                     'zh_CN': '我已经拥有了住房',
@@ -400,6 +428,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'None',
+                    'ko': '전혀 못 함',
                     'fr': 'Je ne parle pas anglais',
                     'ar': 'لا شيء',
                     'zh_CN': '无',
@@ -419,6 +448,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Beginner (Canadian Language Benchmarks 1-4)',
+                    'ko': '초급자 (캐나다 언어 기준 1~4급)',
                     'fr': 'Niveau de base (niveaux de compétence linguistique canadiens 1 à 4)',
                     'ar': 'مبتدئ (بين 1 و4 على المعيار الكندي للغة)',
                     'zh_CN': '初学者（加拿大语言基准1-4）',
@@ -438,6 +468,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Intermediate (Canadian Language Benchmarks 5-8)',
+                    'ko': '중급자 (캐나다 언어 기준 5~8급)',
                     'fr': 'Niveau intermédiaire (niveaux de compétence linguistique canadiens 5 à 8)',
                     'ar': 'متوسط (بين 5 و8 على المعيار الكندي للغة)',
                     'zh_CN': '中级（加拿大语言基准5-8）',
@@ -457,6 +488,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Fluent (Canadian Language Benchmarks 9-12)',
+                    'ko': '유창함 (캐나다 언어 기준 9~12급)',
                     'fr': 'Niveau avancé (niveaux de compétence linguistique canadiens 9 à 12)',
                     'ar': 'فصيح (بين 9 و12 على المعيار الكندي للغة)',
                     'zh_CN': '流利（加拿大语言基准9-12）',
@@ -470,6 +502,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Permanent resident',
+                    'ko': '영주권자',
                     'fr': 'Résident(e) permanent(e)',
                     'ar': 'مقيم دائم',
                     'zh_CN': '永久居民',
@@ -483,6 +516,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Permanent Resident - Refugee Class or Protected Person',
+                    'ko': '영주권자 - 난민 지위 혹은 피보호자',
                     'fr': 'Résident(e) permanent(e) - catégorie de réfugié ou personne protégée',
                     'ar': 'مقيم دائم – فئة لاجئ أو متمتع بالحماية',
                     'zh_CN': '永久居民——难民类或受保护的人',
@@ -502,6 +536,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Refugee claimant',
+                    'ko': '난민 신청자',
                     'fr': 'Demandeur(euse) d’asile',
                     'ar': 'طالب لجوء',
                     'zh_CN': '难民申请人',
@@ -518,6 +553,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Temporary Foreign Worker',
+                    'ko': '임시 외국인 근로자',
                     'fr': 'Travailleur(euse) étranger(ère) temporaire',
                     'ar': 'عامل أجنبي مؤقت',
                     'zh_CN': '外籍临时工',
@@ -531,6 +567,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Student visa',
+                    'ko': '학생 비자',
                     'fr': 'Visa d’étudiant(e)',
                     'ar': 'تأشيرة طالب',
                     'zh_CN': '学生签证',
@@ -544,6 +581,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Other',
+                    'ko': '기타',
                     'fr': 'Autre',
                     'ar': 'أخرى',
                     'zh_CN': '其他',
@@ -557,6 +595,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionWorkStatus',
                 text: {
                     'en': 'I am looking for work',
+                    'ko': '구직 중입니다',
                     'fr': 'Je cherche du travail',
                     'ar': 'أبحث عن عمل',
                     'zh_CN': '我在找工作',
@@ -573,6 +612,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionWorkStatus',
                 text: {
                     'en': 'I want to learn about my rights at work',
+                    'ko': '직장 내 근로자의 권리에 대해 알고 싶습니다',
                     'fr': 'Je veux en apprendre davantage sur mes droits au travail',
                     'ar': 'أرغب في التعرف على المزيد عن حقوقي في مكان العمل',
                     'zh_CN': '我想了解我在工作中的权利',
@@ -589,6 +629,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionWorkStatus',
                 text: {
                     'en': 'I have my own business or want to start my own business',
+                    'ko': '개인사업을 운영하고 있거나 시작하기를 원합니다',
                     'fr': 'Je possède ma propre entreprise ou je veux démarrer ma propre entreprise',
                     'ar': 'أملك نشاطي التجاري الخاص أو أرغب في تأسيس نشاطي التجاري',
                     'zh_CN': '我有自己的生意，或者想自己创业',
@@ -605,6 +646,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'General health care and learning about health care costs',
+                    'ko': '일반 의료 및 의료비에 관한 정보',
                     'fr': 'Soins de santé généraux. Renseignements quant aux coûts des soins de santé',
                     'ar': 'رعاية صحية عامة والتعرف على تكلفة الرعاية الصحية',
                     'zh_CN': '一般的医疗保健服务与费用',
@@ -627,6 +669,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'I need urgent medical attention (for emergencies, call 9-1-1)',
+                    'ko': '긴급 치료가 필요합니다. (비상시 911 신고)',
                     'fr': 'J’ai besoin de soins médicaux immédiats (pour les urgences, appelez le 9-1-1)',
                     'ar': 'أريد رعاية صحية عاجلة (في حالات الطوارئ، اتصل بالرقم 911)',
                     'zh_CN': '我需要紧急医疗服务（看急症，请拨打9-1-1）',
@@ -643,6 +686,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Prescription medication',
+                    'ko': '처방 약품',
                     'fr': 'Médicament sur ordonnance',
                     'ar': 'أدوية تصرف بوصفة طبية',
                     'zh_CN': '处方药',
@@ -659,6 +703,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Mental health support',
+                    'ko': '정신 건강 의료 지원',
                     'fr': 'Soin en matière de santé mentale',
                     'ar': 'مساعدة خاصة بالصحة النفسية',
                     'zh_CN': '心理健康支持',
@@ -675,6 +720,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Eye doctors',
+                    'ko': '안과',
                     'fr': 'Ophtalmologue',
                     'ar': 'طبيب عيون',
                     'zh_CN': '眼科医生',
@@ -691,6 +737,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Dentists',
+                    'ko': '치과',
                     'fr': 'Dentiste',
                     'ar': 'طبيب أسنان',
                     'zh_CN': '牙科医生',
@@ -707,6 +754,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Support for disabilities',
+                    'ko': '장애인 지원',
                     'fr': 'Soutien pour personnes handicapées',
                     'ar': 'مساعدة موجهة لأصحاب الاحتياجات الخاصة',
                     'zh_CN': '支持残疾人',
@@ -723,9 +771,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionWhatHelpDoYouNeed',
                 text: {
                     'en': 'Help finding information about services',
-                    'fr': '',
-                    'ar': '',
-                    'zh_CN': '',
                 },
                 isChosen: false,
                 isInverted: false,
@@ -739,9 +784,6 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionWhatHelpDoYouNeed',
                 text: {
                     'en': 'Help managing stress',
-                    'fr': '',
-                    'ar': '',
-                    'zh_CN': '',
                 },
                 isChosen: false,
                 isInverted: false,
@@ -755,6 +797,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionLowIncome',
                 text: {
                     'en': 'Yes',
+                    'ko': '네',
                     'fr': 'Oui',
                     'ar': 'نعم',
                     'zh_CN': '是',
@@ -774,6 +817,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionLowIncome',
                 text: {
                     'en': 'No',
+                    'ko': '아니요',
                     'fr': 'Non',
                     'ar': 'لا',
                     'zh_CN': '不是',
@@ -788,6 +832,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 text: {
                     'ar': 'أحصل على دعم موجه لأصحاب الدخل المحدود',
                     'en': 'I have low income support',
+                    'ko': '',
                     'fr': 'J’ai droit à du soutien pour gens à faible revenu.',
                     'zh_CN': '我有低收入支持。',
                 },
@@ -806,6 +851,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Adult education and training',
+                    'ko': '성인 교육과 연수',
                     'fr': 'Éducation et formation des adultes',
                     'ar': 'تعليم الكبار وتدريبهم',
                     'zh_CN': '成人教育与培训',
@@ -825,6 +871,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Becoming a Canadian citizen',
+                    'ko': '캐나다 시민권 취득법',
                     'fr': 'Devenir citoyen(ne) canadien(ne)',
                     'ar': 'أن أصبح مواطنا كنديا',
                     'zh_CN': '成为加拿大公民',
@@ -844,6 +891,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Legal help',
+                    'ko': '법률 자문',
                     'fr': 'Aide juridique',
                     'ar': 'مساعدة قانونية',
                     'zh_CN': '法律援助',
@@ -860,6 +908,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Banking and financial management',
+                    'ko': '은행 업무 및 금융 관리',
                     'fr': 'Gestion bancaire et financière',
                     'ar': 'أمور مصرفية وإدارة الأموال',
                     'zh_CN': '理财与财务管理',
@@ -876,6 +925,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Taxes',
+                    'ko': '세금',
                     'fr': 'Taxes et impôts',
                     'ar': 'الضرائب',
                     'zh_CN': '税务',
@@ -892,6 +942,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'LGBTQ2 services',
+                    'ko': 'LGBTQ2 서비스',
                     'fr': 'Services pour les personnes LGBTQ2',
                     'ar': 'خدمات LGBTQ2',
                     'zh_CN': '非异性恋者服务（译注：LGBTQ2是女同性恋者、男同性恋者、双性恋者、跨性别者、性向复杂者和双灵人的英文首字母缩写）',
@@ -908,6 +959,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Francophone services',
+                    'ko': '프랑스어 사용자 서비스',
                     'fr': 'Services pour les francophones',
                     'ar': 'خدمات للناطقين باللغة الفرنسية',
                     'zh_CN': '法语服务',
@@ -924,6 +976,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Support for seniors (age 65+)',
+                    'ko': '고령자 지원 (65세 이상) ',
                     'fr': 'Aide pour personnes âgées (plus de 65 ans)',
                     'ar': 'مساندة موجهة لكبار السن (أكبر من 65 سنة)',
                     'zh_CN': '支持老年人（65岁以上）',
@@ -940,6 +993,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Driving in BC',
+                    'ko': 'BC주 내 운전',
                     'fr': 'Conduire en Colombie-Britannique',
                     'ar': 'القيادة في بريتيش كولومبيا',
                     'zh_CN': '在B.C.省开车',
@@ -959,6 +1013,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Public transportation',
+                    'ko': '대중교통',
                     'fr': 'Transports publics',
                     'ar': 'المواصلات العامة',
                     'zh_CN': '公共交通',
@@ -975,6 +1030,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Help with abuse and violence',
+                    'ko': '학대와 폭행 피해자 지원',
                     'fr': 'Aide dans le cas de mauvais traitements et de violence',
                     'ar': 'مساعدة متعلقة بالعنف والإساءة',
                     'zh_CN': '帮助解决虐待和暴力问题',
@@ -997,6 +1053,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Community services and organizations',
+                    'ko': '커뮤니티 서비스 및 기관',
                     'fr': 'Services et organisations communautaires',
                     'ar': 'خدمات المجتمع ومنظمات المجتمع المدني',
                     'zh_CN': '社区服务和组织',
