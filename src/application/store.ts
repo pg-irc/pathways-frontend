@@ -17,10 +17,10 @@ import zhCnMessages from '../../locale/zh_CN/messages';
 // tslint:disable-next-line:no-expression-statement
 LocaleInfoManager.register([
     { code: 'en', label: 'English', catalog: enMessages, isRTL: false },
-    { code: 'ko', label: 'Korean', catalog: koMessages, isRTL: false },
+    { code: 'ko', label: '한국어', catalog: koMessages, isRTL: false },
     { code: 'ar', label: 'عربى', catalog: arMessages, isRTL: true },
     { code: 'fr', label: 'Français', catalog: frMessages, isRTL: false },
-    { code: 'zh_CN', label: 'Chinese simplified', catalog: zhCnMessages, isRTL: false },
+    { code: 'zh_CN', label: '简体中文', catalog: zhCnMessages, isRTL: false },
 ]);
 
 const buildStoreWithLocaleData = (): Store => {
