@@ -26,6 +26,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'settling_in',
                 name: {
                     'en': 'Settling in',
+                    'pa': 'ਸੈਟਲ ਹੋਣਾ',
                     'ko': '새로운 환경에의 적응',
                     'zh_CN': '安家落户',
                     'ar': 'تستقر في',
@@ -33,6 +34,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Social customs and getting around your community',
+                    'pa': 'ਸਮਾਜਕ ਰੀਤੀ-ਰਿਵਾਜ ਅਤੇ ਤੁਹਾਡੇ ਭਾਈਚਾਰੇ ਦੁਆਲੇ ਮਿਲਣਾ',
                     'ko': '사회적 풍습과 지역 사회 둘러보기',
                     'zh_CN': '社会习俗与融入社区',
                     'fr': 'Coutumes sociales et déplacements dans votre communauté',
@@ -47,6 +49,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'education',
                 name: {
                     'en': 'Education',
+                    'pa': 'ਸਿੱਖਿਆ',
                     'ko': '교육',
                     'zh_CN': '教育',
                     'ar': 'التعليم',
@@ -54,6 +57,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Learning English, schools for children, youth and adults',
+                    'pa': 'ਅੰਗਰੇਜੀ ਸਿੱਖਣਾ, ਬੱਚਿਆਂ, ਨੌਜਵਾਨਾਂ ਅਤੇ ਬਾਲਗਾਂ ਲਈ ਸਕੂਲ',
                     'ko': '영어 학습, 아동과 청소년 또는 성인을 위한 교육 기관',
                     'zh_CN': '学习英语，适合儿童、青少年和成人上的学校',
                     'fr': 'Cours d\'anglais, écoles pour enfants, jeunes et adultes',
@@ -68,6 +72,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'healthCare',
                 name: {
                     'en': 'Health care',
+                    'pa': 'ਸਿਹਤ ਦੇਖਭਾਲ',
                     'ko': '의료 보건',
                     'zh_CN': '医疗保健',
                     'ar': 'الرعاية الصحية',
@@ -75,6 +80,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Medical insurance, finding a doctor, mental health',
+                    'pa': 'ਮੈਡੀਕਲ ਇੰਸ਼ੋਅਰੈਂਸ, ਡਾਕਟਰ ਲੱਭਣਾ, ਦਿਮਾਗੀ ਸਿਹਤ',
                     'ko': '의료 보험, 병원 검색, 정신 건강',
                     'zh_CN': '医疗保险、找医生、心理健康',
                     'fr': 'Assurance médicale, recherche d\'un médecin, santé mentale',
@@ -89,6 +95,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'money',
                 name: {
                     'en': 'Money & banking',
+                    'pa': 'ਧਨ ਤੇ ਬੈਂਕਿੰਗ',
                     'ko': '화폐와 금융',
                     'zh_CN': '货币与理财',
                     'ar': 'المال والبنوك',
@@ -96,6 +103,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Opening a bank account, filing taxes',
+                    'pa': 'ਬੈਂਕ ਖਾਤਾ ਖੋਲ੍ਹਣਾ, ਟੈਕਸਾਂ ਦੀ ਅਦਾਇਗੀ',
                     'ko': '은행 계좌 개설, 세금 신고서 제출',
                     'zh_CN': '开银行账户、报税',
                     'fr': 'Ouvrir un compte bancaire, produire une déclaration de revenus',
@@ -110,6 +118,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'housing',
                 name: {
                     'en': 'Housing',
+                    'pa': 'ਘਰ',
                     'ko': '주거',
                     'zh_CN': '住房',
                     'ar': 'الإسكان',
@@ -117,6 +126,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Finding a place to rent or buy, getting rental assistance',
+                    'pa': 'ਕਿਰਾਏ ਉੱਤੇ ਥਾਂ ਲੱਭਣਾ ਜਾਂ ਖਰੀਦਣਾ, ਕਿਰਾਏ ਦੇ ਮਕਾਨ ਲਈ ਸਹਾਇਤਾ',
                     'ko': '공간 임차 또는 구매, 임차 지원 프로그램 이용',
                     'zh_CN': '找租房或买房、寻求租金资助',
                     'fr': 'Trouver un logement à louer ou à acheter, accéder au programme de subvention aux logements locatifs',
@@ -131,6 +141,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'employment',
                 name: {
                     'en': 'Employment',
+                    'pa': 'ਰੁਜ਼ਗਾਰ',
                     'ko': '고용',
                     'zh_CN': '就业',
                     'ar': 'توظيف',
@@ -138,6 +149,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Finding a job, working and workers’ rights',
+                    'pa': 'ਨੌਕਰੀ ਲੱਭਣੀ, ਕੰਮ ਕਰਨਾ ਅਤੇ ਵਰਕਰਜ਼ ਦੇ ਹੱਕ',
                     'ko': '구직, 근로와 근로자 권리',
                     'zh_CN': '找工作、工作和工作者的权利',
                     'fr': 'Trouver un emploi, travailler, se prévaloir de ses droits comme travailleur',
@@ -152,6 +164,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'legal',
                 name: {
                     'en': 'Legal system & immigration',
+                    'pa': 'ਕਾਨੂੰਨੀ ਸਿਸਟਮ ਅਤੇ ਇਮੀਗਰੇਸ਼ਨ',
                     'ko': '사법 제도와 이민',
                     'zh_CN': '法律制度和移民',
                     'ar': 'النظام القانوني والهجرة',
@@ -159,6 +172,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Immigration and citizenship, legal support, police',
+                    'pa': 'ਇੰਮੀਗਰੇਸ਼ਨ ਅਤੇ ਸਿਟੀਜ਼ਨਸ਼ਿਪ, ਬਾਲ, ਨੌਜਵਾਨ ਤੇ ਬਾਲਗ',
                     'ko': '이민과 시민권, 법률 자문, 경찰',
                     'zh_CN': '移民和公民、法律支持、警察',
                     'fr': 'Immigration et citoyenneté, aide juridique, police',
@@ -173,6 +187,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'driving',
                 name: {
                     'en': 'Driving',
+                    'pa': 'ਡਰਾਇਵ ਕਰਨਾ',
                     'ko': '운전',
                     'zh_CN': '汽车驾驶',
                     'ar': 'القيادة',
@@ -180,6 +195,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Getting a driver\'s licence, traffic laws, basic insurance',
+                    'pa': 'ਡਰਾਇਵਰ ਲਾਇਸੈਂਸ, ਟਰੈਫਿਕ ਕਨੂੰਨ, ਮੁੱਢਲਾ ਇੰਸ਼ੋਰੈਂਸ',
                     'ko': '운전면허증 취득, 도로교통법, 기본 보험',
                     'zh_CN': '申办驾驶执照、交通法规、基本保险',
                     'fr': 'Permis de conduire, code de la route, assurance de base',
@@ -194,6 +210,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'helpForIndividualsAndFamilies',
                 name: {
                     'en': 'Help for individuals & families',
+                    'pa': 'ਨਿੱਜੀ ਤੇ ਪਰਿਵਰਾਂ ਲਈ ਮਦਦ',
                     'ko': '개인과 가족을 위한 지원',
                     'zh_CN': '帮助个人与家庭',
                     'ar': 'مساعدة للأفراد والعائلات',
@@ -201,6 +218,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'For example low-income, disabilities, youth',
+                    'pa': 'ਜਿਵੇਂ ਘੱਟ-ਆਮਦਨ, ਅਪੰਗਤਾ, ਨੌਜਵਾਨ',
                     'ko': '예: 저소득층, 장애인, 청소년',
                     'zh_CN': '例如：低收入、残疾人、青少年',
                     'fr': 'Exemples : personnes à faibles revenus, personnes handicapées, jeunes',
