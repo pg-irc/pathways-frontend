@@ -1,4 +1,4 @@
-location,source,target
+"location","source","target"
 lib/components/header_menu/header_menu_component.js:45,ABOUT THE APP,ਐਪ ਬਾਰੇ
 lib/components/about/about_component.js:19 lib/components/header_menu/header_menu_component.js:50,About Arrival Advisor,Arrival Advisor ਬਾਰੇ
 lib/components/services/service_list_item_component.js:27,Address:,ਪਤਾ:
