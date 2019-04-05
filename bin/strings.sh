@@ -1,6 +1,6 @@
 #!/bin/bash
 
-locales=(ar fr ko pa zh_CN)
+locales=(ar fr ko pa tl zh_CN)
 
 checkForSuccess () {
     if [ "$?" != "0" ]
