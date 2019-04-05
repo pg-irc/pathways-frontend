@@ -9,6 +9,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionDurationInCanada',
                 text: {
                     'en': 'How long have you been living in Canada?',
+                    'tl': 'Gaano ka na katagal naninirahan sa Canada?',
                     'pa': 'ਤੁਸੀਂ ਕੈਨੇਡਾ ਵਿੱਚ ਕਦੋਂ ਤੋ ਰਹਿ ਰਹੇ ਹੋ?',
                     'ko': '귀하의 캐나다 거주 기간은 얼마입니까?',
                     'fr': 'Depuis combien de temps habitez-vous au Canada?',
@@ -21,6 +22,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionDocuments',
                 text: {
                     'en': 'Do you have any of the following important Canadian documents?',
+                    'tl': 'Mayroon ka bang alinman sa sumusunod na mahahalagang dokumentong Pang-Canadian?',
                     'pa': 'ਕੀ ਤੁਹਾਡੇ ਕੋਲ ਅੱਗੇ ਦਿੱਤਿਆਂ ਖਾਸ ਕੈਨੇਡੀਅਨ ਦਸਤਾਵੇਜਾਂ ਵਿੱਚੋਂ ਕੀ ਹੈ?',
                     'ko': '다음의 캐나다 공식 문서들 가운데 귀하가 현재 보유하고 있는 것은 무엇입니까?',
                     'fr': 'Possédez-vous l’un ou l’autre de ces documents canadiens importants?',
@@ -33,6 +35,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionAgeGroup',
                 text: {
                     'en': 'Are you arriving with children under 18 years? If yes, how old?',
+                    'tl': 'Dumating ka ba kasama ang mga anak na wala pang 18 taong gulang? Kung oo, ilang taon?',
                     'pa': 'ਕੀ ਤੁਸੀਂ 18 ਸਾਲ ਤੋਂ ਘੱਟ ਉਮਰ ਦੇ ਬੱਚਿਆਂ ਨਾਲ ਆਏ ਹੋ? ਜੇ ਹਾਂ ਤਾਂ ਕਿੰਨੀ ਉਮਰ ਹੈ?',
                     'ko': '귀하는 18세 미만의 자녀와 함께 입국하였습니까? 만일 그렇다면, 자녀의 나이는 몇 살입니까?',
                     'fr': 'Êtes-vous accompagné(e) d’enfants de moins de 18 ans? Si c’est le cas, quel âge ont-ils?',
@@ -45,6 +48,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionCurrentHousingSituation',
                 text: {
                     'en': 'What is your current housing situation?',
+                    'tl': 'Ano ang kasalukuyan mong sitwasyon sa pabahay?',
                     'pa': 'ਤੁਹਾਡੀ ਰਿਹਾਇਸ਼ ਦੀ ਸਥਿਤੀ ਕੀ ਹੈ?',
                     'ko': '귀하의 현재 주거 상태는 무엇입니까?',
                     'fr': 'Quelle est votre situation actuelle en matière de logement?',
@@ -57,6 +61,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionEnglishLevel',
                 text: {
                     'en': 'What is your current level of English?',
+                    'tl': 'Ano ang kasalukuyan mong antas sa English?',
                     'pa': 'ਤੁਹਾਡੀ ਅੰਗਰੇਜੀ ਦਾ ਪੱਧਰ ਕੀ ਹੈ?',
                     'ko': '귀하의 현재 영어 구사력은 어느 수준입니까?',
                     'fr': 'Quel est votre niveau d’anglais actuel?',
@@ -69,6 +74,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionImmigrantType',
                 text: {
                     'en': 'What is your status in Canada?',
+                    'tl': 'Ano ang katayuan mo sa Canada?',
                     'pa': 'ਕੈਨੇਡਾ ਵਿੱਚ ਤੁਹਾਡੀ ਸਥਿਤੀ ਕੀ ਹੈ?',
                     'ko': '귀하의 현재 캐나다 체류 자격은 무엇입니까?',
                     'fr': 'De quel statut bénéficiez-vous au Canada?',
@@ -81,6 +87,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionWorkStatus',
                 text: {
                     'en': 'What is your current work situation?',
+                    'tl': 'Ano ang kasalukuyan mong kalagayan sa trabaho?',
                     'pa': 'ਤੁਹਾਡੇ ਕੰਮ ਦੀ ਸਥਿਤੀ ਕੀ ਹੈ?',
                     'ko': '귀하의 현재 직업 상태는 무엇입니까?',
                     'fr': 'Quelle est votre situation actuelle en matière d’emploi?',
@@ -93,6 +100,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionHealth',
                 text: {
                     'en': 'What kinds of health care are you looking for?',
+                    'tl': 'Anong mga uri ng pangangalang pangkalusugan ang hinahanap mo?',
                     'pa': 'ਤੁਸੀਂ ਕਿਸ ਕਿਸਮ ਦੀ ਹੈਲਥ ਕੇਅਰ ਲੱਭ ਰਹੇ ਹੋ?',
                     'ko': '귀하가 필요로 하는 의료 서비스는 무엇입니까?',
                     'fr': 'De quel type de soins de santé avez-vous besoin?',
@@ -105,6 +113,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionLowIncome',
                 text: {
                     'en': 'Do you need financial assistance or low-income support?',
+                    'tl': 'Kailangan mo ba ng pinansiyal na tulong o suporta sa mababang kita?',
                     'pa': 'ਕੀ ਤੁਹਾਨੂੰ ਵਿੱਤੀ ਸਹਾਇਤਾ ਜਾਂ ਘੱਟ-ਆਮਦਨ ਸਹਿਯੋਗ ਦੀ ਲੋੜ ਹੈ?',
                     'ko': '귀하는 재정적 도움이나 저소득층 지원이 필요합니까?',
                     'fr': 'Avez-vous besoin d’aide financière ou de soutien pour gens à faible revenu?',
@@ -117,6 +126,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 id: 'questionOther',
                 text: {
                     'en': 'Anything else you\'re interested in? Select all that apply',
+                    'tl': 'Kailangan mo ba ng pinansiyal na tulong o suporta sa mababang kita?',
                     'pa': 'ਕਿਸੇ ਹੋਰ ਚੀਜ਼ ਵਿੱਚ ਤੁਹਾਡੀ ਦਿਲਚਸਪੀ ਹੈ? ਜੋ ਵੀ ਲਾਗੂ ਹੋਵੇ, ਸਭ ਚੁਣੋ',
                     'ko': '그 밖에 관심이 있는 사항이 있습니까? 관심사에 해당하는 모든 항목을 선택해주세요.',
                     'fr': 'Y a-t-il d’autres sujets qui vous intéressent? Sélectionnez toutes les réponses appropriées.',
@@ -132,6 +142,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDurationInCanada',
                 text: {
                     'en': 'More than 1 year',
+                    'tl': 'Mahigit 1 taon',
                     'pa': '1 ਸਾਲ ਤੋਂ ਵੱਧ',
                     'ko': '1년 이상',
                     'fr': 'Plus d’un an',
@@ -147,6 +158,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDurationInCanada',
                 text: {
                     'en': 'Less than 1 year',
+                    'tl': 'Kulang 1 taon',
                     'pa': '1 ਸਾਲ ਤੋਂ ਘੱਟ',
                     'ko': '1년 미만',
                     'fr': 'Moins d’un an',
@@ -162,6 +174,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDurationInCanada',
                 text: {
                     'en': 'I am planning to move to Canada',
+                    'tl': 'Binabalak kong lumipat sa Canada',
                     'pa': 'ਮੈਂ ਕੈਨੇਡਾ ਆਉਣ ਬਾਰੇ ਸੋਚ ਰਿਹਾ/ਰਹੀ ਹਾਂ',
                     'ko': '캐나다로 이주를 계획 중입니다.',
                     'fr': 'Je prévois d’emménager au Canada',
@@ -177,6 +190,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a Social Insurance Number',
+                    'tl': 'May Social Insurance Number ako',
                     'pa': 'ਮੇਰੇ ਕੋਲ ਸ਼ੋਸ਼ਲ ਇੰਸ਼ੋਰੈਂਸ ਨੰਬਰ ਹੈ',
                     'ko': '사회보험번호(SIN)가 있습니다.',
                     'fr': 'J’ai un numéro d\'assurance sociale',
@@ -195,6 +209,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a Canadian bank account',
+                    'tl': 'May Canadian bank account ako',
                     'pa': 'ਮੇਰੇ ਕੋਲ ਕੈਨੇਡੀਅਨ ਬੈਂਕ ਖਾਤਾ ਹੈ',
                     'ko': '캐나다 은행 계좌를 보유하고 있습니다.',
                     'fr': 'J’ai un compte bancaire canadien',
@@ -213,6 +228,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a Permanent Resident Card',
+                    'tl': 'May Permanent Resident card ako',
                     'pa': 'ਮੇਰੇ ਕੋਲ ਪਰਮਾਨੈਂਟ ਰੈਜੀਡੈਂਟ ਕਾਰਡ ਹੈ',
                     'ko': '영주권 카드를 보유하고 있습니다.',
                     'fr': 'J’ai une carte de résident permanent',
@@ -231,6 +247,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have registered for MSP (Medical Services Plan)',
+                    'tl': 'Nagparehistro ako sa MSP (Medical Services Plan)',
                     'pa': 'ਮੈਂ ਐਮਐਸਪੀ (ਮੈਡੀਕਲ ਸਰਵਿਸਜ਼ ਪਲੈਨ) ਲਈ ਰਜਿਸਟਰ ਕੀਤਾ ਹੈ',
                     'ko': '의료 서비스 플랜(MSP)에 가입되어 있습니다.',
                     'fr': 'Je me suis inscrit(e) au régime de Services médicaux (MSP)',
@@ -249,6 +266,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a BC Services Card (health card)',
+                    'tl': 'May BC Services Card (health card) ako',
                     'pa': 'ਮੇਰੇ ਕੋਲ ਬੀ.ਸੀ. ਸਰਵਿਸਜ਼ ਕਾਰਡ (ਹੈਲਥ ਕਾਰਡ) ਹੈ',
                     'ko': 'BC 서비스 카드(의료 카드)를 보유하고 있습니다',
                     'fr': 'J’ai une carte BC Services (carte santé)',
@@ -267,6 +285,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionDocuments',
                 text: {
                     'en': 'I have a BC Driver\'s Licence',
+                    'tl': 'May Lisensya ako sa Pagmamaneho sa BC',
                     'pa': 'ਮੇਰੇ ਕੋਲ ਬੀ.ਸੀ. ਡਰਾਇਵਰਜ਼ ਲਾਇਸੈਂਸ ਹੈ',
                     'ko': 'BC주 운전면허증을 보유하고 있습니다.',
                     'fr': 'J’ai un permis de conduire de la C.-B.',
@@ -285,6 +304,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionAgeGroup',
                 text: {
                     'en': 'Under 5 years old',
+                    'tl': 'May Lisensya ako sa Pagmamaneho sa BC',
                     'pa': '5 ਸਾਲ ਤੋਂ ਘੱਟ ਉਮਰ',
                     'ko': '5세 미만',
                     'fr': 'Moins de 5 ans',
@@ -306,6 +326,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionAgeGroup',
                 text: {
                     'en': '5-12 years old',
+                    'tl': '5-12 taong gulang',
                     'pa': '5-12 ਸਾਲਾਂ ਦੀ ਉਮਰ',
                     'ko': '5세 이상 12세 이하',
                     'fr': 'Entre 5 et 12 ans',
@@ -327,6 +348,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionAgeGroup',
                 text: {
                     'en': '13-18 years old',
+                    'tl': '13-18 taong gulang',
                     'pa': '13-18 ਸਾਲਾਂ ਦੀ ਉਮਰ',
                     'ko': '13세 이상 18세 미만',
                     'fr': 'Entre 13 et 18 ans',
@@ -348,6 +370,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionAgeGroup',
                 text: {
                     'en': 'Pregnant (the child is not yet born)',
+                    'tl': 'Buntis (hindi pa naisisilang)',
                     'pa': 'ਗਰਭਵਰਤੀ (ਹਾਲੇ ਪੈਦਾ ਨਹੀਂ ਹੋਇਆ)',
                     'ko': '임신 중 (출생 이전)',
                     'fr': 'Enceinte (l’enfant n’est pas encore né)',
@@ -369,6 +392,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionAgeGroup',
                 text: {
                     'en': 'No children',
+                    'tl': 'Walang mga anak',
                     'pa': 'ਕੋਈ ਬੱਚਾ ਨਹੀਂ ਹੈ',
                     'ko': '아이 없음',
                     'fr': 'Pas d\'enfant',
@@ -384,6 +408,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionCurrentHousingSituation',
                 text: {
                     'en': 'I want to rent a place to live',
+                    'tl': 'Nais kong magrenta ng lugar na titirhan',
                     'pa': 'ਮੈਂ ਰਹਿਣ ਲਈ ਕਿਰਾਏ ਦੀ ਥਾਂ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ',
                     'ko': '주거용 공간의 임차를 희망합니다.',
                     'fr': 'Je veux louer un logement',
@@ -402,6 +427,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionCurrentHousingSituation',
                 text: {
                     'en': 'I want to buy a home',
+                    'tl': 'Nais kong bumili ng bahay',
                     'pa': 'ਮੈਂ ਘਰ ਖਰੀਦਣਾ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ',
                     'ko': '주택 구매를 희망합니다.',
                     'fr': 'Je veux acheter un logement',
@@ -420,6 +446,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionCurrentHousingSituation',
                 text: {
                     'en': 'I am already renting a home',
+                    'tl': 'Nagrerenta na ako ng bahay',
                     'pa': 'ਮੈਂ ਪਹਿਲਾਂ ਹੀ ਘਰ ਕਿਰਾਏ ਉੱਤੇ ਲੈ ਲਿਆ ਹੈ',
                     'ko': '이미 주택을 임차하였습니다.',
                     'fr': 'Je loue déjà un logement',
@@ -438,6 +465,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionCurrentHousingSituation',
                 text: {
                     'en': 'I already own a home',
+                    'tl': 'May sarili na akong bahay',
                     'pa': 'ਮੈਂ ਪਹਿਲਾਂ ਹੀ ਘਰ ਖਰੀਦ ਲਿਆ ਹੈ',
                     'ko': '이미 주택을 보유하고 있습니다.',
                     'fr': 'Je possède déjà un logement',
@@ -456,6 +484,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'None',
+                    'tl': 'Wala',
                     'pa': 'ਕੋਈ ਨਹੀਂ',
                     'ko': '전혀 못 함',
                     'fr': 'Je ne parle pas anglais',
@@ -477,6 +506,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Beginner (Canadian Language Benchmarks 1-4)',
+                    'tl': 'Baguhan (Canadian Language Benchmarks 1-4)',
                     'pa': 'ਸੁਰੂਆਤੀ (ਕੈਨੇਡੀਅਨ ਲੈਂਗੂਏਜ ਬੈਂਚਮਾਰਕਸ 1-4)',
                     'ko': '초급자 (캐나다 언어 기준 1~4급)',
                     'fr': 'Niveau de base (niveaux de compétence linguistique canadiens 1 à 4)',
@@ -498,6 +528,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Intermediate (Canadian Language Benchmarks 5-8)',
+                    'tl': 'Katamtaman (Canadian Language Benchmarks 5-8)',
                     'pa': 'ਇੰਟਰਮਿਡੀਏਟ (ਕੈਨੇਡੀਅਨ ਲੈਂਗੂਏਜ ਬੈਂਚਮਾਰਕਸ 5-8)',
                     'ko': '중급자 (캐나다 언어 기준 5~8급)',
                     'fr': 'Niveau intermédiaire (niveaux de compétence linguistique canadiens 5 à 8)',
@@ -519,6 +550,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionEnglishLevel',
                 text: {
                     'en': 'Fluent (Canadian Language Benchmarks 9-12)',
+                    'tl': 'Matatas (Canadian Language Benchmarks 9-12)',
                     'pa': 'ਫਲੁਏਂਟ (ਕੈਨੇਡੀਅਨ ਲੈਂਗਗੂਏਜ ਬੈਂਚਮਾਰਕਸ 9-12)',
                     'ko': '유창함 (캐나다 언어 기준 9~12급)',
                     'fr': 'Niveau avancé (niveaux de compétence linguistique canadiens 9 à 12)',
@@ -534,6 +566,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Permanent resident',
+                    'tl': 'Permanenteng Residente',
                     'pa': 'ਪੱਕੇ ਨਿਵਾਸੀ',
                     'ko': '영주권자',
                     'fr': 'Résident(e) permanent(e)',
@@ -549,6 +582,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Permanent Resident - Refugee Class or Protected Person',
+                    'tl': 'Permanenteng Residente - Uring Takas o Pinoprotektahang Tao',
                     'pa': 'ਪੱਕੇ ਨਿਵਾਸੀ - ਰਿਫ਼ਿਊਜੀ ਕਲਾਸ ਜਾਂ ਸੁਰੱਖਿਅਤ ਵਿਅਕਤੀ',
                     'ko': '영주권자 - 난민 지위 혹은 피보호자',
                     'fr': 'Résident(e) permanent(e) - catégorie de réfugié ou personne protégée',
@@ -570,6 +604,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Refugee claimant',
+                    'tl': 'Naghahabol na Takas',
                     'pa': 'ਰਿਫਿਊਜੀ',
                     'ko': '난민 신청자',
                     'fr': 'Demandeur(euse) d’asile',
@@ -588,6 +623,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Temporary Foreign Worker',
+                    'tl': 'Pansamantalang Banyagang Manggagawa',
                     'pa': 'ਆਰਜ਼ੀ ਵਿਦੇਸ਼ੀ ਵਰਕਰ',
                     'ko': '임시 외국인 근로자',
                     'fr': 'Travailleur(euse) étranger(ère) temporaire',
@@ -603,6 +639,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Student visa',
+                    'tl': 'Student visa',
                     'pa': 'ਸਟੂਡੈਂਟ ਵੀਜ਼ਾ',
                     'ko': '학생 비자',
                     'fr': 'Visa d’étudiant(e)',
@@ -618,6 +655,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionImmigrantType',
                 text: {
                     'en': 'Other',
+                    'tl': 'Iba pa',
                     'pa': 'ਹੋਰ',
                     'ko': '기타',
                     'fr': 'Autre',
@@ -633,6 +671,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionWorkStatus',
                 text: {
                     'en': 'I am looking for work',
+                    'tl': 'Naghahanap ako ng trabaho',
                     'pa': 'ਮੈਂ ਕੰਮ ਲੱਭ ਰਿਹਾ/ਰਹੀ ਹਾਂ',
                     'ko': '구직 중입니다',
                     'fr': 'Je cherche du travail',
@@ -651,6 +690,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionWorkStatus',
                 text: {
                     'en': 'I want to learn about my rights at work',
+                    'tl': 'Gusto kong malaman ang mga karapatan ko sa trabaho',
                     'pa': 'ਮੈਂ ਕੰਮ ਉੱਤੇ ਆਪਣੇ ਅਧਿਕਾਰਾਂ ਬਾਰੇ ਜਾਣਨਾ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ',
                     'ko': '직장 내 근로자의 권리에 대해 알고 싶습니다',
                     'fr': 'Je veux en apprendre davantage sur mes droits au travail',
@@ -669,6 +709,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionWorkStatus',
                 text: {
                     'en': 'I have my own business or want to start my own business',
+                    'tl': 'May sarili akong negosyo o nais kong magsimula ng sariling negosyo',
                     'pa': 'ਮੇਰਾ ਖੁਦ ਦਾ ਕਾਰੋਬਾਰ ਹੈ ਜਾਂ ਖੁਦ ਦਾ ਕਾਰੋਬਾਰ ਸ਼ੁਰੂ ਕਰਨਾ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ',
                     'ko': '개인사업을 운영하고 있거나 시작하기를 원합니다',
                     'fr': 'Je possède ma propre entreprise ou je veux démarrer ma propre entreprise',
@@ -687,6 +728,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'General health care and learning about health care costs',
+                    'tl': 'Pangkalahatang pangangalaga sa kalusugan at pag-alam tungkol sa halaga ng pangangalagang pangkalusugan',
                     'pa': 'ਜਨਰਲ ਹੈਲਥ ਕੇਅਰ ਅਤੇ ਹੈਲਥ ਕੇਅਰ ਖ਼ਰਚਿਆਂ ਬਾਰੇ ਸਿੱਖਣਾ',
                     'ko': '일반 의료 및 의료비에 관한 정보',
                     'fr': 'Soins de santé généraux. Renseignements quant aux coûts des soins de santé',
@@ -711,6 +753,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'I need urgent medical attention (for emergencies, call 9-1-1)',
+                    'tl': 'Kailangan ko ng agarang medikal na atensyon (para sa mga emergency, tumawag sa 9-1-1)',
                     'pa': 'ਮੈਨੂੰ ਜ਼ਰੂਰੀ ਮੈਡੀਕਲ ਧਿਆਨ ਦੀ ਲੋੜ ਹੈ (ਐਮਰਜੈਂਸੀ ਲਈ 9-1-1 ਕਾਲ ਕਰੋ)',
                     'ko': '긴급 치료가 필요합니다. (비상시 911 신고)',
                     'fr': 'J’ai besoin de soins médicaux immédiats (pour les urgences, appelez le 9-1-1)',
@@ -729,6 +772,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Prescription medication',
+                    'tl': 'Resita ng gamot',
                     'pa': 'ਪ੍ਰਿਸਕ੍ਰਿਪਸ਼ਨ ਡ੍ਰੱਗਜ਼',
                     'ko': '처방 약품',
                     'fr': 'Médicament sur ordonnance',
@@ -747,6 +791,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Mental health support',
+                    'tl': 'Tulong sa kalusugang pangkaisipan',
                     'pa': 'ਦਿਮਾਗੀ ਸਿਹਤ ਸਹਿਯੋਗ',
                     'ko': '정신 건강 의료 지원',
                     'fr': 'Soin en matière de santé mentale',
@@ -765,6 +810,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Eye doctors',
+                    'tl': 'Mga doktor sa mata',
                     'pa': 'ਅੱਖਾਂ ਦੇ ਡਾਕਟਰ',
                     'ko': '안과',
                     'fr': 'Ophtalmologue',
@@ -783,6 +829,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Dentists',
+                    'tl': 'Mga dentista',
                     'pa': 'ਡੈਂਟਿਸਟ',
                     'ko': '치과',
                     'fr': 'Dentiste',
@@ -801,6 +848,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionHealth',
                 text: {
                     'en': 'Support for disabilities',
+                    'tl': 'Suporta sa mga kapansanan',
                     'pa': 'ਅਪੰਗਤਾ ਲਈ ਸਹਿਯੋਗ',
                     'ko': '장애인 지원',
                     'fr': 'Soutien pour personnes handicapées',
@@ -845,6 +893,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionLowIncome',
                 text: {
                     'en': 'Yes',
+                    'tl': 'Oo',
                     'pa': 'ਹਾਂ',
                     'ko': '네',
                     'fr': 'Oui',
@@ -866,6 +915,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionLowIncome',
                 text: {
                     'en': 'No',
+                    'tl': 'Hindi',
                     'pa': 'ਨਹੀਂ',
                     'ko': '아니요',
                     'fr': 'Non',
@@ -882,6 +932,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 text: {
                     'ar': 'أحصل على دعم موجه لأصحاب الدخل المحدود',
                     'en': 'I have low income support',
+                    'tl': 'May suporta ako sa mababang kita',
                     'pa': 'ਮੇਰੇ ਕੋਲ ਘੱਟ ਆਮਦਨ ਸਹਿਯੋਗ ਹੈ',
                     'ko': '저소득층 지원을 받고 있습니다.',
                     'fr': 'J’ai droit à du soutien pour gens à faible revenu.',
@@ -902,6 +953,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Adult education and training',
+                    'tl': 'Edukasyon ng adulto at pagsasanay',
                     'pa': 'ਬਾਲਗ ਸਿੱਖਿਆ ਅਤੇ ਸਿਖਲਾਈ',
                     'ko': '성인 교육과 연수',
                     'fr': 'Éducation et formation des adultes',
@@ -923,6 +975,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Becoming a Canadian citizen',
+                    'tl': 'Pagiging mamamayan ng Canada',
                     'pa': 'ਕੈਨੇਡੀਅਨ ਸਿਟੀਜ਼ਨ ਬਣਨਾ',
                     'ko': '캐나다 시민권 취득법',
                     'fr': 'Devenir citoyen(ne) canadien(ne)',
@@ -944,6 +997,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Legal help',
+                    'tl': 'Legal na tulong',
                     'pa': 'ਕਨੂੰਨੀ ਮਦਦ',
                     'ko': '법률 자문',
                     'fr': 'Aide juridique',
@@ -962,6 +1016,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Banking and financial management',
+                    'tl': 'Pangangasiwa sa Pagbabangko at pananalapi',
                     'pa': 'ਬੈਂਕਿੰਗ ਅਤੇ ਵਿੱਤੀ ਪ੍ਰਬੰਧ',
                     'ko': '은행 업무 및 금융 관리',
                     'fr': 'Gestion bancaire et financière',
@@ -980,6 +1035,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Taxes',
+                    'tl': 'Mga buwis',
                     'pa': 'ਟੈਕਸਜ਼',
                     'ko': '세금',
                     'fr': 'Taxes et impôts',
@@ -998,6 +1054,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'LGBTQ2 services',
+                    'tl': 'Mga serbisyo ng LGBTQ2',
                     'pa': 'LGBTQ2 ਸੇਵਾਵਾਂ',
                     'ko': 'LGBTQ2 서비스',
                     'fr': 'Services pour les personnes LGBTQ2',
@@ -1016,6 +1073,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Francophone services',
+                    'tl': 'Mga serbisyo ng Francophone',
                     'pa': 'ਫ੍ਰੈਂਕੋਫੋਨ ਸੇਵਾਵਾਂ',
                     'ko': '프랑스어 사용자 서비스',
                     'fr': 'Services pour les francophones',
@@ -1034,6 +1092,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Support for seniors (age 65+)',
+                    'tl': 'Tulong para sa mga senyor (edad 65+)',
                     'pa': 'ਸੀਨੀਅਰਜ਼ ਲਈ ਸਹਾਇਤਾ (65+ ਉਮਰ)',
                     'ko': '고령자 지원 (65세 이상) ',
                     'fr': 'Aide pour personnes âgées (plus de 65 ans)',
@@ -1052,6 +1111,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Driving in BC',
+                    'tl': 'Pagmamaneho sa BC',
                     'pa': 'ਬੀ.ਸੀ. ਵਿੱਚ ਡਰਾਇਵਿੰਗ',
                     'ko': 'BC주 내 운전',
                     'fr': 'Conduire en Colombie-Britannique',
@@ -1073,6 +1133,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Public transportation',
+                    'tl': 'Pampublikong transportasyon',
                     'pa': 'ਪਬਲਿਕ ਟਰਾਂਸਪੋਰਟ',
                     'ko': '대중교통',
                     'fr': 'Transports publics',
@@ -1091,6 +1152,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Help with abuse and violence',
+                    'tl': 'Pagtulong sa pang-aabuso at karahasan',
                     'pa': 'ਦੁਰਵਿਹਾਰ ਅਤੇ ਹਿੰਸਾ ਵਿਰਧ ਮਦਦ',
                     'ko': '학대와 폭행 피해자 지원',
                     'fr': 'Aide dans le cas de mauvais traitements et de violence',
@@ -1115,6 +1177,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionOther',
                 text: {
                     'en': 'Community services and organizations',
+                    'tl': 'Mga serbisyo ng komunidad at mga organisasyon',
                     'pa': 'ਕਮਿਊਨਟੀ ਸੇਵਾਵਾਂ ਅਤੇ ਸੰਸਥਾਵਾਂ',
                     'ko': '커뮤니티 서비스 및 기관',
                     'fr': 'Services et organisations communautaires',

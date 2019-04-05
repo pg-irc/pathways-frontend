@@ -26,6 +26,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'settling_in',
                 name: {
                     'en': 'Settling in',
+                    'tl': 'Paninirahan',
                     'pa': 'ਸੈਟਲ ਹੋਣਾ',
                     'ko': '새로운 환경에의 적응',
                     'zh_CN': '安家落户',
@@ -34,6 +35,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Social customs and getting around your community',
+                    'tl': 'Panlipunang kustombre at pag-iikot sa iyong komunidad',
                     'pa': 'ਸਮਾਜਕ ਰੀਤੀ-ਰਿਵਾਜ ਅਤੇ ਤੁਹਾਡੇ ਭਾਈਚਾਰੇ ਦੁਆਲੇ ਮਿਲਣਾ',
                     'ko': '사회적 풍습과 지역 사회 둘러보기',
                     'zh_CN': '社会习俗与融入社区',
@@ -49,6 +51,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'education',
                 name: {
                     'en': 'Education',
+                    'tl': 'Edukasyon',
                     'pa': 'ਸਿੱਖਿਆ',
                     'ko': '교육',
                     'zh_CN': '教育',
@@ -57,6 +60,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Learning English, schools for children, youth and adults',
+                    'tl': 'Pag-aaral ng English, mga paaralan para sa mga bata, kabataan at mga adulto',
                     'pa': 'ਅੰਗਰੇਜੀ ਸਿੱਖਣਾ, ਬੱਚਿਆਂ, ਨੌਜਵਾਨਾਂ ਅਤੇ ਬਾਲਗਾਂ ਲਈ ਸਕੂਲ',
                     'ko': '영어 학습, 아동과 청소년 또는 성인을 위한 교육 기관',
                     'zh_CN': '学习英语，适合儿童、青少年和成人上的学校',
@@ -72,6 +76,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'healthCare',
                 name: {
                     'en': 'Health care',
+                    'tl': 'Pangangalagang pangkalusugan',
                     'pa': 'ਸਿਹਤ ਦੇਖਭਾਲ',
                     'ko': '의료 보건',
                     'zh_CN': '医疗保健',
@@ -80,6 +85,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Medical insurance, finding a doctor, mental health',
+                    'tl': 'Segurong medikal, paghahanap ng doktor, kalusugan ng pag-iisip',
                     'pa': 'ਮੈਡੀਕਲ ਇੰਸ਼ੋਅਰੈਂਸ, ਡਾਕਟਰ ਲੱਭਣਾ, ਦਿਮਾਗੀ ਸਿਹਤ',
                     'ko': '의료 보험, 병원 검색, 정신 건강',
                     'zh_CN': '医疗保险、找医生、心理健康',
@@ -95,6 +101,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'money',
                 name: {
                     'en': 'Money & banking',
+                    'tl': 'Pera at Pagbabangko',
                     'pa': 'ਧਨ ਤੇ ਬੈਂਕਿੰਗ',
                     'ko': '화폐와 금융',
                     'zh_CN': '货币与理财',
@@ -103,6 +110,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Opening a bank account, filing taxes',
+                    'tl': 'Pagbubukas ng bank account, paghahain ng buwis',
                     'pa': 'ਬੈਂਕ ਖਾਤਾ ਖੋਲ੍ਹਣਾ, ਟੈਕਸਾਂ ਦੀ ਅਦਾਇਗੀ',
                     'ko': '은행 계좌 개설, 세금 신고서 제출',
                     'zh_CN': '开银行账户、报税',
@@ -118,6 +126,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'housing',
                 name: {
                     'en': 'Housing',
+                    'tl': 'Pabahay',
                     'pa': 'ਘਰ',
                     'ko': '주거',
                     'zh_CN': '住房',
@@ -126,6 +135,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Finding a place to rent or buy, getting rental assistance',
+                    'tl': 'Paghahanap ng lugar upang rentahan o bilhin, pagkuha ng tulong sa pagrenta',
                     'pa': 'ਕਿਰਾਏ ਉੱਤੇ ਥਾਂ ਲੱਭਣਾ ਜਾਂ ਖਰੀਦਣਾ, ਕਿਰਾਏ ਦੇ ਮਕਾਨ ਲਈ ਸਹਾਇਤਾ',
                     'ko': '공간 임차 또는 구매, 임차 지원 프로그램 이용',
                     'zh_CN': '找租房或买房、寻求租金资助',
@@ -141,6 +151,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'employment',
                 name: {
                     'en': 'Employment',
+                    'tl': 'Pagtatrabaho',
                     'pa': 'ਰੁਜ਼ਗਾਰ',
                     'ko': '고용',
                     'zh_CN': '就业',
@@ -149,6 +160,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Finding a job, working and workers’ rights',
+                    'tl': 'Paghahanap ng trabaho, pagtatrabaho at mga karapatan ng mga manggagawa',
                     'pa': 'ਨੌਕਰੀ ਲੱਭਣੀ, ਕੰਮ ਕਰਨਾ ਅਤੇ ਵਰਕਰਜ਼ ਦੇ ਹੱਕ',
                     'ko': '구직, 근로와 근로자 권리',
                     'zh_CN': '找工作、工作和工作者的权利',
@@ -164,6 +176,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'legal',
                 name: {
                     'en': 'Legal system & immigration',
+                    'tl': 'Ligal na sistema at imigrasyon',
                     'pa': 'ਕਾਨੂੰਨੀ ਸਿਸਟਮ ਅਤੇ ਇਮੀਗਰੇਸ਼ਨ',
                     'ko': '사법 제도와 이민',
                     'zh_CN': '法律制度和移民',
@@ -172,6 +185,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Immigration and citizenship, legal support, police',
+                    'tl': 'Imigrasyon at pagkamamamayan, legal na tulong, pulis',
                     'pa': 'ਇੰਮੀਗਰੇਸ਼ਨ ਅਤੇ ਸਿਟੀਜ਼ਨਸ਼ਿਪ, ਬਾਲ, ਨੌਜਵਾਨ ਤੇ ਬਾਲਗ',
                     'ko': '이민과 시민권, 법률 자문, 경찰',
                     'zh_CN': '移民和公民、法律支持、警察',
@@ -187,6 +201,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'driving',
                 name: {
                     'en': 'Driving',
+                    'tl': 'Pagmamaneho',
                     'pa': 'ਡਰਾਇਵ ਕਰਨਾ',
                     'ko': '운전',
                     'zh_CN': '汽车驾驶',
@@ -195,6 +210,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Getting a driver\'s licence, traffic laws, basic insurance',
+                    'tl': 'Pagkuha ng lisensya sa pagmamaneho, mga batas trapiko, pangunahing seguro',
                     'pa': 'ਡਰਾਇਵਰ ਲਾਇਸੈਂਸ, ਟਰੈਫਿਕ ਕਨੂੰਨ, ਮੁੱਢਲਾ ਇੰਸ਼ੋਰੈਂਸ',
                     'ko': '운전면허증 취득, 도로교통법, 기본 보험',
                     'zh_CN': '申办驾驶执照、交通法规、基本保险',
@@ -210,6 +226,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: 'helpForIndividualsAndFamilies',
                 name: {
                     'en': 'Help for individuals & families',
+                    'tl': 'Tulong sa mga indibidwal at pamilya',
                     'pa': 'ਨਿੱਜੀ ਤੇ ਪਰਿਵਰਾਂ ਲਈ ਮਦਦ',
                     'ko': '개인과 가족을 위한 지원',
                     'zh_CN': '帮助个人与家庭',
@@ -218,6 +235,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'For example low-income, disabilities, youth',
+                    'tl': 'Hal. mababa ang sahod, mga kapansanan, kabataan',
                     'pa': 'ਜਿਵੇਂ ਘੱਟ-ਆਮਦਨ, ਅਪੰਗਤਾ, ਨੌਜਵਾਨ',
                     'ko': '예: 저소득층, 장애인, 청소년',
                     'zh_CN': '例如：低收入、残疾人、青少年',
