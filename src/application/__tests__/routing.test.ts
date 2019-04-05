@@ -1,6 +1,8 @@
 // tslint:disable:no-expression-statement
-import { Routes, routePathDefinition, routePathWithoutParameter,
-         isOnParentScreen, isOnChildScreen, routePathWithParameter } from '../routing';
+import {
+    Routes, routePathDefinition, routePathWithoutParameter,
+    isOnParentScreen, isOnChildScreen, routePathWithParameter
+} from '../routing';
 import { aString } from './helpers/random_test_values';
 
 describe('the routePathDefinition function', () => {
@@ -22,11 +24,11 @@ describe('the routePathDefinition function', () => {
     });
 
     it('For Routes.TaskDetail returns path: "/task/:taskId" with parameter', () => {
-        expect(routePathDefinition(Routes.TaskDetail)).toEqual('/task/:taskId');
+        expect(routePathDefinition(Routes.TaskDetail)).toEqual('/task/:topicId');
     });
 
     it('For Routes.Services returns path: "/services/:taskId" with parameter', () => {
-        expect(routePathDefinition(Routes.Services)).toEqual('/services/:taskId');
+        expect(routePathDefinition(Routes.Services)).toEqual('/services/:topicId');
     });
 
     it('For Routes.RecommendedTopics returns path: "/recommended-topics"', () => {

@@ -1,7 +1,7 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { APIClient, APIResponse, MaybeLocation } from './api_client';
 import { isResponseError } from './is_response_error';
-import { Id } from '../stores/tasks';
+import { Id } from '../stores/topics';
 
 export { APIClient, APIResponse };
 export { isResponseError };
@@ -15,8 +15,8 @@ export class API {
         this.apiClient = new APIClient(url);
     }
 
-    static async searchServices(taskId: Id, location: MaybeLocation): Promise<APIResponse> {
-        return await this.client.searchServices(taskId, location);
+    static async searchServices(topicId: Id, location: MaybeLocation): Promise<APIResponse> {
+        return await this.client.searchServices(topicId, location);
     }
 
     private static get client(): APIClient {

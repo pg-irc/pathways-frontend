@@ -2,13 +2,13 @@ import React from 'react';
 import * as R from 'ramda';
 import { Trans } from '@lingui/react';
 import { Text, View } from 'native-base';
-import { TaskListItem } from '../../selectors/tasks/task_list_item';
-import { TaskListActions, NoTasksAddedComponent, TaskListComponent } from '../tasks/task_list_component';
+import { TopicListItem } from '../../selectors/topics/topic_list_item';
+import { TaskListActions, NoTasksAddedComponent, TaskListComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { textStyles, colors, values } from '../../application/styles';
 
 export interface BookmarkedTopicsProps {
-    readonly bookmarkedTopics: ReadonlyArray<TaskListItem>;
+    readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
 }
 
 type Props = BookmarkedTopicsProps & TaskListActions & RouterProps;
@@ -18,7 +18,7 @@ export const BookmarkedTopicsComponent: React.StatelessComponent<Props> = (props
         <TaskListComponent
             {...props}
             tasks={props.bookmarkedTopics}
-            savedTasksIdList={R.map((topic: TaskListItem) => topic.id, props.bookmarkedTopics)}
+            savedTasksIdList={R.map((topic: TopicListItem) => topic.id, props.bookmarkedTopics)}
             emptyTaskListContent={<NoTasksAddedComponent />}
             headerContent={<TaskListHeaderComponent />}
         />

@@ -1,34 +1,34 @@
-import { Id as TaskId } from '../../fixtures/types/tasks';
+import { Id as TopicId } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { Service } from './types';
 import { ServicesErrorType } from '../../sagas/services';
 
-export type SendTaskServicesRequestAction = Readonly<ReturnType<typeof sendTaskServicesRequest>>;
+export type SendTopicServicesRequestAction = Readonly<ReturnType<typeof sendTopicServicesRequest>>;
 
-export type PopulateTaskServicesFromSuccessAction = Readonly<ReturnType<typeof populateTaskServicesFromSuccess>>;
+export type PopulateTopicServicesFromSuccessAction = Readonly<ReturnType<typeof populateTopicServicesFromSuccess>>;
 
-export type PopulateTaskServicesFromErrorAction = Readonly<ReturnType<typeof populateTaskServicesFromError>>;
+export type PopulateTopicServicesFromErrorAction = Readonly<ReturnType<typeof populateTopicServicesFromError>>;
 
 export type ServicesAction =
-    SendTaskServicesRequestAction |
-    PopulateTaskServicesFromSuccessAction |
-    PopulateTaskServicesFromErrorAction;
+    SendTopicServicesRequestAction |
+    PopulateTopicServicesFromSuccessAction |
+    PopulateTopicServicesFromErrorAction;
 
 // tslint:disable-next-line:typedef
-export const sendTaskServicesRequest = (taskId: TaskId) => (
-    helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { taskId })
+export const sendTopicServicesRequest = (topicId: TopicId) => (
+    helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { topicId })
 );
 
 // tslint:disable-next-line:typedef
-export const populateTaskServicesFromSuccess = (taskId: TaskId, services: ReadonlyArray<Service>) => (
-    helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { taskId, services })
+export const populateTopicServicesFromSuccess = (topicId: TopicId, services: ReadonlyArray<Service>) => (
+    helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { topicId, services })
 );
 
 // tslint:disable-next-line:typedef
-export const populateTaskServicesFromError = (
+export const populateTopicServicesFromError = (
     errorMessage: string,
-    taskId: TaskId,
+    topicId: TopicId,
     errorMessageType: ServicesErrorType) => (
-   helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { errorMessage, taskId, errorMessageType })
-);
+        helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { errorMessage, topicId, errorMessageType })
+    );

@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { History, Location } from 'history';
 import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
 import { Header, Left, Right } from 'native-base';
-import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/tasks';
+import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/topics';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { HelpButtonComponent } from '../header_button/help_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
@@ -27,8 +27,8 @@ export interface HeaderProps {
 
 export interface HeaderActions {
     readonly onHeaderMenuButtonPress: () => void;
-    readonly addBookmark: (taskId: TaskId) => AddToSavedListAction;
-    readonly removeBookmark: (taskId: TaskId) => RemoveFromSavedListAction;
+    readonly addBookmark: (topicId: TaskId) => AddToSavedListAction;
+    readonly removeBookmark: (topicId: TaskId) => RemoveFromSavedListAction;
 }
 
 type Props = HeaderProps & HeaderActions;
@@ -79,14 +79,14 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
 const TopicDetailScreenHeader = (props: Props): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.TaskDetail);
-    const taskId = params.taskId;
+    const topicId = params.topicId;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} textColor={colors.black}/>;
+    const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
-            isBookmarked={R.contains(taskId, props.savedTasksIdList)}
-            addBookmark={(): AddToSavedListAction => props.addBookmark(taskId)}
-            removeBookmark={(): RemoveFromSavedListAction => props.removeBookmark(taskId)}
+            isBookmarked={R.contains(topicId, props.savedTasksIdList)}
+            addBookmark={(): AddToSavedListAction => props.addBookmark(topicId)}
+            removeBookmark={(): RemoveFromSavedListAction => props.removeBookmark(topicId)}
             textColor={colors.teal}
         />,
         <MenuButtonComponent
@@ -104,7 +104,7 @@ interface BackAndMenuButtonsHeaderProps extends Props {
 }
 
 const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
-    const leftButton = <BackButtonComponent history={props.history} textColor={props.textColor}/>;
+    const leftButton = <BackButtonComponent history={props.history} textColor={props.textColor} />;
     const rightButton =
         <MenuButtonComponent
             onPress={props.onHeaderMenuButtonPress}
@@ -130,7 +130,7 @@ const ParentScreenHeader = (props: Props): JSX.Element => {
 const ChildScreenHeader = (props: Props): JSX.Element => {
     const textColor = colors.black;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} textColor={textColor}/>;
+    const leftButton = <BackButtonComponent history={props.history} textColor={textColor} />;
     const rightButton =
         <MenuButtonComponent
             onPress={props.onHeaderMenuButtonPress}
@@ -160,7 +160,7 @@ const renderHeader = (backgroundColor: string, leftButton: JSX.Element, rightBut
                 {reactRouterBackButtonHack}
             </Left>
             <Right style={{ alignItems: 'center' }}>
-                {mapWithIndex(renderRightButton , rightButtons)}
+                {mapWithIndex(renderRightButton, rightButtons)}
             </Right>
         </Header>
     );

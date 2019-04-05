@@ -1,10 +1,10 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { TaskListActions } from '../tasks/task_list_component';
+import { TaskListActions } from '../topics/task_list_component';
 import { Store } from '../../stores';
 import { BookmarkedTopicsComponent, BookmarkedTopicsProps } from './bookmarked_topics_component';
-import { Id, RemoveFromSavedListAction, removeFromSavedList, AddToSavedListAction, addToSavedList } from '../../stores/tasks';
-import { selectSavedTasks } from '../../selectors/tasks/select_saved_tasks';
+import { Id, RemoveFromSavedListAction, removeFromSavedList, AddToSavedListAction, addToSavedList } from '../../stores/topics';
+import { selectSavedTasks } from '../../selectors/topics/select_saved_tasks';
 
 const mapStateToProps = (store: Store): BookmarkedTopicsProps => ({
     bookmarkedTopics: selectSavedTasks(store),
@@ -13,8 +13,8 @@ const mapStateToProps = (store: Store): BookmarkedTopicsProps => ({
 type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskListActions => ({
-    addToSavedList: (taskId: Id): AddToSavedListAction => dispatch(addToSavedList(taskId)),
-    removeFromSavedList: (taskId: Id): RemoveFromSavedListAction => dispatch(removeFromSavedList(taskId)),
+    addToSavedList: (topicId: Id): AddToSavedListAction => dispatch(addToSavedList(topicId)),
+    removeFromSavedList: (topicId: Id): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
 });
 
 export const BookmarkedTopicsConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(BookmarkedTopicsComponent);

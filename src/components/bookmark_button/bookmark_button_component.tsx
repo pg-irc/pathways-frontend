@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Button } from 'native-base';
-import { AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/tasks';
+import { AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/topics';
 import { values } from '../../application/styles';
 
 export interface BookmarkButtonProps {

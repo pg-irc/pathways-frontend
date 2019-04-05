@@ -1,18 +1,18 @@
 import { Service } from '../../stores/services';
 import { ServicesErrorType } from '../../sagas/services';
 
-export interface ValidSelectorTaskServices {
+export interface ValidSelectorTopicServices {
     readonly services: ReadonlyArray<Service>;
-    readonly type: 'TaskServices:Valid';
+    readonly type: 'TopicServices:Valid';
 }
 
-export interface LoadingSelectorTaskServices {
-    readonly type: 'TaskServices:Loading';
+export interface LoadingSelectorTopicServices {
+    readonly type: 'TopicServices:Loading';
 }
 
-export interface ErrorSelectorTaskServices {
+export interface ErrorSelectorTopicServices {
     readonly errorMessageType: ServicesErrorType;
-    readonly type: 'TaskServices:Error';
+    readonly type: 'TopicServices:Error';
 }
 
-export type SelectorTaskServices = ValidSelectorTaskServices | LoadingSelectorTaskServices | ErrorSelectorTaskServices;
+export type SelectorTopicServices = ValidSelectorTopicServices | LoadingSelectorTopicServices | ErrorSelectorTopicServices;

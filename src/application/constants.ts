@@ -26,9 +26,9 @@ export const LOAD_USER_DATA_FAILURE = 'LOAD_USER_DATA_FAILURE';
 export const CLEAR_ERROR_STATE = 'REDUCERS:CLEAR_ERROR_STATE';
 export const CLEAR_ALL_USER_DATA = 'CLEAR_ALL_USER_DATA';
 
-export const ADD_TO_SAVED_TASKS = 'ADD_TO_SAVED_TASKS';
-export const REMOVE_FROM_SAVED_TASKS = 'REMOVE_FROM_SAVED_TASKS';
-export const TOGGLE_IS_TASK_COMPLETED = 'TOGGLE_IS_TASK_COMPLETED';
+export const ADD_TO_SAVED_TOPICS = 'ADD_TO_SAVED_TOPICS';
+export const REMOVE_FROM_SAVED_TOPICS = 'REMOVE_FROM_SAVED_TOPICS';
+export const TOGGLE_IS_TOPIC_COMPLETED = 'TOGGLE_IS_TOPIC_COMPLETED';
 export const LOAD_SERVICES_REQUEST = 'LOAD_SERVICES_REQUEST';
 export const LOAD_SERVICES_SUCCESS = 'LOAD_SERVICES_SUCCESS';
 export const LOAD_SERVICES_FAILURE = 'LOAD_SERVICES_FAILURE';
@@ -48,6 +48,6 @@ export namespace AnalyticsAsync {
   export const FAILURE = 'ASYNC:ANALYTICS:FAILURE';
 }
 
-export const TASK_SERVICES_VALID = 'TaskServices:Valid';
-export const TASK_SERVICES_LOADING = 'TaskServices:Loading';
-export const TASK_SERVICES_ERROR = 'TaskServices:Error';
+export const TOPIC_SERVICES_VALID = 'TopicServices:Valid';
+export const TOPIC_SERVICES_LOADING = 'TopicServices:Loading';
+export const TOPIC_SERVICES_ERROR = 'TopicServices:Error';

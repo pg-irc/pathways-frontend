@@ -1,10 +1,10 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import { Id as TaskId } from '../../stores/tasks';
+import { Id as TaskId } from '../../stores/topics';
 import { View, Text } from 'native-base';
-import { TaskListItem } from '../../selectors/tasks/task_list_item';
-import { TaskListActions } from '../tasks/task_list_component';
-import { TaskListComponent, NoTasksRecommendedComponent } from '../tasks/task_list_component';
+import { TopicListItem } from '../../selectors/topics/topic_list_item';
+import { TaskListActions } from '../topics/task_list_component';
+import { TaskListComponent, NoTasksRecommendedComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { textStyles, colors, values } from '../../application/styles';
 import {
@@ -12,12 +12,12 @@ import {
     CallToActionPartialComponent, CallToActionPartialSubComponent,
 } from './call_to_action';
 import { RecommendedIconComponent } from './recommended_icon_component';
-import { buildTopicsListItemsWithHeadings } from '../tasks/build_topic_list_items_with_headings';
+import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
     readonly savedTopicsIdList: ReadonlyArray<TaskId>;
-    readonly recommendedTopics: ReadonlyArray<TaskListItem>;
+    readonly recommendedTopics: ReadonlyArray<TopicListItem>;
 }
 
 type Props = RecommendedTopicsProps & TaskListActions & RouterProps;

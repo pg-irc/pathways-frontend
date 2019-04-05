@@ -29,7 +29,7 @@ const buildTaskServicesOrErrorMap = (
 ): TaskServicesMap => {
     const buildAndMapToId = (map: TaskServicesMap, builder: TaskServicesBuilder | TaskServicesErrorBuilder):
         TaskServicesMap => {
-        return { ...map, [builder.taskId]: builder.build() };
+        return { ...map, [builder.topicId]: builder.build() };
     };
     return taskServicesOrError.reduce(buildAndMapToId, {});
 };
@@ -157,7 +157,7 @@ export class ServiceBuilder {
 }
 
 export class TaskServicesBuilder {
-    taskId: string = aString();
+    topicId: string = aString();
     loading: boolean = false;
     message: string = aString();
     serviceIds: ReadonlyArray<Id> = [];
@@ -175,18 +175,18 @@ export class TaskServicesBuilder {
     build(): ValidTaskServices | LoadingTaskServices {
         if (this.loading) {
             return {
-                type: constants.TASK_SERVICES_LOADING,
+                type: constants.TOPIC_SERVICES_LOADING,
             };
         }
         return {
-            type: constants.TASK_SERVICES_VALID,
+            type: constants.TOPIC_SERVICES_VALID,
             serviceIds: this.serviceIds,
         };
     }
 }
 
 export class TaskServicesErrorBuilder {
-    taskId: string = aString();
+    topicId: string = aString();
     loading: boolean = false;
     errorMessage: string = aString();
     errorMessageType: AsyncGenericErrorType = AsyncGenericErrorType.BadServerResponse;
@@ -208,7 +208,7 @@ export class TaskServicesErrorBuilder {
 
     build(): ErrorTaskServices {
         return {
-            type: constants.TASK_SERVICES_ERROR,
+            type: constants.TOPIC_SERVICES_ERROR,
             errorMessage: this.errorMessage,
             errorMessageType: this.errorMessageType,
         };

@@ -1,6 +1,6 @@
 // tslint:disable:no-class readonly-keyword readonly-array no-expression-statement no-this
 import { Id as AnswerId } from '../../questionnaire';
-import { Id as TaskId } from '../../tasks';
+import { Id as TaskId } from '../../topics';
 import { PersistedUserData } from '../../user_data';
 
 export class PersistedUserDataBuilder {

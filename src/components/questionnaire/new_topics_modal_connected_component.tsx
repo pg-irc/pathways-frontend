@@ -5,8 +5,8 @@ import { Store } from '../../stores';
 import { NewTopicsModalProps, NewTopicsModalComponent, NewTopicsModalActions } from './new_topics_modal_component';
 import { pickQuestionnaire } from '../../selectors/questionnaire/pick_questionnaire';
 import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
-import { pickTasks } from '../../selectors/tasks/pick_tasks';
-import { pickSavedTaskIds } from '../../selectors/tasks/pick_saved_task_ids';
+import { pickTasks } from '../../selectors/topics/pick_tasks';
+import { pickSavedTaskIds } from '../../selectors/topics/pick_saved_task_ids';
 import { selectLocale } from '../../selectors/locale/select_locale';
 
 type OwnProps = {
@@ -25,7 +25,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): NewTopicsModalProps 
     isVisible: ownProps.isVisible,
 });
 
-const mapDispatchToProps = (_: Dispatch, ownProps: OwnProps ): NewTopicsModalActions => ({
+const mapDispatchToProps = (_: Dispatch, ownProps: OwnProps): NewTopicsModalActions => ({
     onModalButtonPress: ownProps.onModalButtonPress,
 });
 
