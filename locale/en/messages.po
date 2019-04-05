@@ -115,7 +115,7 @@ msgstr "Fetching your location timed out. On Android devices you may need to set
 msgid "Find a settlement agency near me"
 msgstr "Find a settlement agency near me"
 
-#: lib/components/tasks/task_detail_content_component.js:103
+#: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
 msgstr "Find related services near me"
 
@@ -187,11 +187,11 @@ msgstr "No new topics recommended based on your answers."
 msgid "No related services found"
 msgstr "No related services found"
 
-#: lib/components/tasks/task_list_component.js:77
+#: lib/components/topics/task_list_component.js:77
 msgid "No topics to recommend"
 msgstr "No topics to recommend"
 
-#: lib/components/tasks/task_list_component.js:76
+#: lib/components/topics/task_list_component.js:76
 msgid "No topics to show"
 msgstr "No topics to show"
 
@@ -231,7 +231,7 @@ msgstr "Police, fire and medical emergencies"
 msgid "Privacy policy"
 msgstr "Privacy policy"
 
-#: lib/components/tasks/task_detail_component.js:19
+#: lib/components/topics/task_detail_component.js:19
 msgid "RELATED TOPICS"
 msgstr "RELATED TOPICS"
 
@@ -244,7 +244,7 @@ msgid "Read more"
 msgstr "Read more"
 
 #: lib/components/recommended_topics/recommended_topics_component.js:38
-#: lib/components/tasks/task_detail_content_component.js:63
+#: lib/components/topics/task_detail_content_component.js:63
 msgid "Recommended for you"
 msgstr "Recommended for you"
 

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-04 16:14-0700\n"
+"POT-Creation-Date: 2019-04-05 13:50-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,7 +159,7 @@ msgstr ""
 msgid "Find a settlement agency near me"
 msgstr "ابحث عن وكالة استقرار قريبة مني."
 
-#: lib/components/tasks/task_detail_content_component.js:103
+#: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
 msgstr "ابحث عن خدمات ذات صلة بالقرب مني"
 
@@ -255,11 +255,11 @@ msgstr "لا توجد مواضيع جديدة نوصي بها استنادا إ�
 msgid "No related services found"
 msgstr "لم نجد خدمات متعلقة ببحثك"
 
-#: lib/components/tasks/task_list_component.js:77
+#: lib/components/topics/task_list_component.js:77
 msgid "No topics to recommend"
 msgstr "لا توجد موضوعات نوصي بها"
 
-#: lib/components/tasks/task_list_component.js:76
+#: lib/components/topics/task_list_component.js:76
 msgid "No topics to show"
 msgstr "لا توجد موضوعات كي نعرضها"
 
@@ -314,7 +314,7 @@ msgstr "الشرطة والمطافئ والطوارئ الصحية"
 msgid "Privacy policy"
 msgstr "سياسة الخصوصية"
 
-#: lib/components/tasks/task_detail_component.js:19
+#: lib/components/topics/task_detail_component.js:19
 msgid "RELATED TOPICS"
 msgstr "موضوعات ذات صلة"
 
@@ -326,7 +326,7 @@ msgstr "تقليل النص"
 msgid "Read more"
 msgstr "زيادة النص"
 
-#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftasks%2Ftask_detail_content_component.js%3A63
+#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftopics%2Ftask_detail_content_component.js%3A63
 msgid "Recommended for you"
 msgstr "توصيات إليك"
 

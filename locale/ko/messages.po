@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-04 16:14-0700\n"
+"POT-Creation-Date: 2019-04-05 13:50-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -149,7 +149,7 @@ msgstr ""
 msgid "Find a settlement agency near me"
 msgstr "내 주변 이민자 봉사 단체 찾기"
 
-#: lib/components/tasks/task_detail_content_component.js:103
+#: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
 msgstr "내 주변 연관 서비스 찾기"
 
@@ -240,11 +240,11 @@ msgstr "답변에 기반해 추천된 새로운 주제가 없습니다. "
 msgid "No related services found"
 msgstr "관련 서비스를 찾을 수 없습니다"
 
-#: lib/components/tasks/task_list_component.js:77
+#: lib/components/topics/task_list_component.js:77
 msgid "No topics to recommend"
 msgstr "추천할 주제가 없습니다"
 
-#: lib/components/tasks/task_list_component.js:76
+#: lib/components/topics/task_list_component.js:76
 msgid "No topics to show"
 msgstr "보여드릴 주제가 없습니다"
 
@@ -295,7 +295,7 @@ msgstr "경찰, 소방 및 의료 관련 응급상황"
 msgid "Privacy policy"
 msgstr "개인정보 정책"
 
-#: lib/components/tasks/task_detail_component.js:19
+#: lib/components/topics/task_detail_component.js:19
 msgid "RELATED TOPICS"
 msgstr "연관 주제들"
 
@@ -307,7 +307,7 @@ msgstr "간단히 보기"
 msgid "Read more"
 msgstr "자세히 보기"
 
-#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftasks%2Ftask_detail_content_component.js%3A63
+#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftopics%2Ftask_detail_content_component.js%3A63
 msgid "Recommended for you"
 msgstr "나만을 위한 추천"
 
