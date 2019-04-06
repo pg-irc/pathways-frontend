@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 13:50-0700\n"
+"POT-Creation-Date: 2019-04-05 17:09-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,19 +14,19 @@ msgstr ""
 
 #: lib/components/header_menu/header_menu_component.js:45
 msgid "ABOUT THE APP"
-msgstr ""
+msgstr "ABOUT THE APP"
 
 #: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A19+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
 msgid "About Arrival Advisor"
-msgstr ""
+msgstr "Tungkol sa Arrival Advisor"
 
 #: lib/components/services/service_list_item_component.js:27
 msgid "Address:"
-msgstr ""
+msgstr "Address:"
 
 #: lib/components/services/service_list_error_component.js:33
 msgid "An error has occured."
-msgstr ""
+msgstr "An error has occured."
 
 #: lib/components/recommended_topics/call_to_action.js:46
 msgid ""
@@ -34,10 +34,13 @@ msgid ""
 "recommendations of topics and services to help you settle in British "
 "Columbia."
 msgstr ""
+"Sagutin ang ilan sa mga katanungan tungkol sa sitwasyon mo para makakuha ng "
+"personalisadong mga rekomendasyon ng mga paksa at serbisyo upang tulungan "
+"kang manirahan sa British Columbia."
 
 #: lib/components/recommended_topics/call_to_action.js:55
 msgid "Answer questions"
-msgstr ""
+msgstr "Sagutin ang mga tanong"
 
 #: lib/components/disclaimer/disclaimer_component.js:18
 msgid ""
@@ -45,6 +48,9 @@ msgid ""
 "Guide, available at: {welcomeBCLink}, and the BC211 database of service "
 "providers, available at: {bc211Link}."
 msgstr ""
+"Ang Arrival Advisor ay naglalaman ng impormasyon mula sa Gabay ng Bagong "
+"Dating sa Gobyerno ng BC, na makukuha sa: www.welcomebc.ca, at ang BC211 "
+"database ng mga tagapaglaan ng serbisyo, na makukuha sa: www.bc211.ca."
 
 #: lib/components/about/about_component.js:22
 msgid ""
@@ -54,6 +60,12 @@ msgid ""
 "English, French (Canadian), and Arabic. It will soon be available in Chinese "
 "Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
 msgstr ""
+"Ang Arrival Advisor ay isang libre, maramihang wikang mobile app na "
+"tumutulong sa mga imigrante at takas sa British Columbia, Canada na humanap "
+"ng impormasyon at mga serbisyo upang galugarin ang kanilang byahe sa "
+"paninirahan. Ang app ay kasalukuyang magagamit sa English, Pranses (Canadian)"
+", at Arabe. Malapit na rin itong magamit sa Pinasimpleng Chinese, "
+"Tradisyonal na Chinese, Koreano, Punjabi, at Tagalog."
 
 #: lib/components/disclaimer/disclaimer_component.js:35
 msgid ""
@@ -69,76 +81,95 @@ msgid ""
 "Refugees and Citizenship Canada for any other purpose and is not used for "
 "any immigration decision making."
 msgstr ""
+"Ang Arrival Advisor ay gumagalang at nagpapanatili ng pagkapribado at pagka-"
+"anonimo ng mga user nito. Hindi na kailangang magbigay ng mga user ng "
+"personal na impormasyon upang magamit ang app. Ang kuwestiyunaryo ay "
+"dinisenyo upang makatulong sa pagpersonalisado ng mga serbisyo at mga "
+"mapagkukunang kinakailangan ng user, at ang mga sagot ay sini-save lamang "
+"upang paghusayin ang paggamit ng app sa paglipas ng panahon. Ginagawa iyon "
+"ng mga user ng Arrival Advisor sa kanilang sariling pagpapasya. Ang mga "
+"sagot na iyong ibinigay ay gagamitin para sa operasyon ng tool na ito upang "
+"magbigay sa iyo ng gabay sa mga mapagkukunan at serbsiyo na makatutulong sa "
+"iyo na makaangkop sa pamumuhay sa Canada. Ang mga user ay hindi matutukoy sa "
+"pamamagitan ng kanilang mga sagot sa kuwestiyunaryo. Ang impormasyon ay "
+"hindi ginagamit ng Imigrasyon, Immigration, Refugees and Citizenship Canada "
+"para sa anumang layunin at hindi ginagamit sa anumang paggawa ng desisyon sa "
+"imigrasyon."
 
 #: lib/components/questionnaire/questionnaire_component.js:110
 msgid "Back"
-msgstr ""
+msgstr "Bumalik"
 
 #: lib/components/recommended_topics/call_to_action.js:99
 msgid "Based on your answers, we recommend these topics for you:"
 msgstr ""
+"Batay sa mga sagot, inirerekomenda namin ang mga paksang ito para sa iyo:"
 
 #: lib/components/notifications/notification_content.js:7
 msgid "Bookmark added"
-msgstr ""
+msgstr "Dinagdag ang bookmark"
 
 #: lib/components/notifications/notification_content.js:12
 msgid "Bookmark removed"
-msgstr ""
+msgstr "Tinanggal ang bookmark"
 
 #: lib/components/help/help_component.js:33
 msgid "Contact Arrival Advisor team"
-msgstr ""
+msgstr "Kontakin ang Arrival Advisor team"
 
 #: lib/components/about/about_component.js:56
 msgid "Copyright 2018 Province of British Columbia. All rights reserved."
 msgstr ""
+"Copyright 2018 Province of British Columbia. Ang lahat ng karapatan ay "
+"reserbado."
 
 #: lib/components/welcome/welcome_component.js:49
 msgid "Created by"
-msgstr ""
+msgstr "Nilikha ng"
 
 #: lib/components/help/help_component.js:87
 msgid "Delete all user data"
-msgstr ""
+msgstr "Burahin ang lahat ng user data"
 
 #: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A15+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
 msgid "Disclaimer"
-msgstr ""
+msgstr "Pagtatatuwa"
 
 #: lib/components/questionnaire/questionnaire_component.js:117
 msgid "Done"
-msgstr ""
+msgstr "Tapos na"
 
 #: lib/components/explore/explore_detail_component.js:19
 msgid "EXPLORE TOPICS"
-msgstr ""
+msgstr "GALUGARIN ANG MGA PAKSA"
 
 #: lib/components/services/service_list_item_component.js:55
 msgid "Email:"
-msgstr ""
+msgstr "Email:"
 
 #: lib/components/services/service_list_component.js:53
 msgid "FIND A SERVICE NEAR YOU"
-msgstr ""
+msgstr "HUMANAP NG SERBISYONG MALAPIT SA IYO"
 
 #: lib/components/help/help_component.js:59
 msgid "FOR ADDITIONAL ASSISTANCE"
-msgstr ""
+msgstr "PARA SA KARAGDAGANG TULONG"
 
 #: lib/components/services/service_list_error_component.js:28
 msgid ""
 "Fetching your location timed out. On Android devices you may need to set "
 "your location mode to \"High accuracy\"."
 msgstr ""
+"Fetching your location timed out. On Android devices you may need to set "
+"your location mode to \"High accuracy\"."
 
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
-msgstr ""
+msgstr "Humanap ng ahensiya ng paninirahang malapit sa akin"
 
 #: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
-msgstr ""
+msgstr "Humanap ng mga kaugnay na serbisyo malapit sa akin"
 
 #: lib/components/about/about_component.js:30
 msgid ""
@@ -153,102 +184,121 @@ msgid ""
 "operate the app's recommendations. We never save or share your personal data "
 "with funders or any third parties."
 msgstr ""
+"Mula sa paghahanap ng trabaho hanggang sa pag-aaral ng English, pagkuha ng "
+"health care, at higit pa, nasa Arrival Advisor ang lahat ng kailangan mo "
+"para magsimula sa bagong komunidad mo. Galugarin ang mga paksa at mga "
+"serbisyo nang hindi kinakailangang gumawa ng account. I-access ang "
+"mahalagang impormasyon nasaan ka man\" Ang mga paksa ng bagong dating na "
+"ibinigay ng Arrival Advisor ay naka-save sa telepono para makita mo sila, "
+"kahit wala kang internet. Maaari mong punan ang ilan sa mga tanong upang "
+"maging personalisado ang mga rekomendasyon ng mga paksa at mga serbisyo "
+"upang manirahan sa British Columbia. Hindi nakikilala ang Arrival Advisor at "
+"ang mga sagot mo ay gagamitin lamang upang paganahin ang mga rekomendasyon "
+"ng app. Sa tuwing sini-save namin o ibinabahagi ang personal na data mo sa "
+"mga tagapagpondo o sa sinumang ikatlong partido."
 
 #: lib/components/recommended_topics/call_to_action.js:33
 msgid "GETTING STARTED"
-msgstr ""
+msgstr "PAGSISIMULA"
 
 #: lib/components/recommended_topics/call_to_action.js:36
 msgid "Get information based on your needs"
-msgstr ""
+msgstr "Makakuha ng impormasyon batay sa pangangailangan mo"
 
 #: lib/components/recommended_topics/call_to_action.js:74
 msgid "Go back to questions"
-msgstr ""
+msgstr "Bumalik sa mga tanong"
 
 #: lib/components/help/help_component.js:46
 msgid "Help & Support"
-msgstr ""
+msgstr "Tulong at Suporta"
 
 #: lib/components/help/help_component.js:49
 msgid ""
 "If you are having difficulty with settlement in Canada, we suggest getting "
 "in touch with a settlement worker."
 msgstr ""
+"Kung nahihirapan ka sa paninirahan sa Canada, minumungkahi namin na makipag-"
+"ugnayan sa worker ng paninirahan."
 
 #: lib/components/about/about_component.js:54
 msgid "Information in this app is provided by the"
 msgstr ""
+"Ang impormasyon sa app na ito ay inilalaan ng {welcomeBCLink} Copyright 2018 "
+"Province of British Columbia. Ang lahat ng karapatan ay reserbado."
 
 #: lib/components/help/help_component.js:24
 msgid "Information on BC211"
-msgstr ""
+msgstr "Impormasyon sa BC211"
 
 #: lib/components/help/help_component.js:19
 msgid "Information on HealthLinkBC (8-1-1)"
-msgstr ""
+msgstr "Impormasyon sa HealthLinkBC (8-1-1)"
 
 #: lib/components/help/help_component.js:14
 msgid "Information on emergency services (9-1-1)"
-msgstr ""
+msgstr "Impormasyon sa serbisyong pang-emergency (9-1-1)"
 
 #: lib/components/help/help_component.js:29
 msgid "Information on helplines"
-msgstr ""
+msgstr "Impormasyon sa mga helpline"
 
 #: lib/components/explore/explore_all_component.js:11
 msgid "Learn all about B.C."
-msgstr ""
+msgstr "Alamin lahat ang tungkol sa B.C."
 
 #: lib/components/help/help_component.js:20
 msgid "Mutlilingual health information services"
-msgstr ""
+msgstr "Maramihang wika na mga serbisyo sa impormasyon sa kalusugan"
 
 #: lib/components/bookmarked_topics/bookmarked_topics_component.js:12
 msgid "My bookmarks"
-msgstr ""
+msgstr "Mga bookmark ko"
 
 #: lib/components/questionnaire/questionnaire_component.js:100
 msgid "Next"
-msgstr ""
+msgstr "Susunod"
 
 #: lib/components/questionnaire/new_topics_modal_component.js:55
 msgid "No new topics recommended based on your answers."
-msgstr ""
+msgstr "Mga bagong paksang nirekomenda batay sa mga sagot mo."
 
 #: lib/components/services/service_list_component.js:60
 msgid "No related services found"
-msgstr ""
+msgstr "Walang kaugnay na mga serbisyong matatagpuan"
 
 #: lib/components/topics/task_list_component.js:77
 msgid "No topics to recommend"
-msgstr ""
+msgstr "Walang mga paksang irerekomenda"
 
 #: lib/components/topics/task_list_component.js:76
 msgid "No topics to show"
-msgstr ""
+msgstr "Walang mga paksang ipapakita"
 
 #: lib/components/questionnaire/new_topics_modal_component.js:43
 msgid "Number of new topics recommended based on your answers:"
-msgstr ""
+msgstr "Bilang ng mga bagong paksang nirekomenda batay sa iyong mga sagot:"
 
 #: lib/components/questionnaire/questionnaire_component.js:78
 msgid "OF"
-msgstr ""
+msgstr "NG"
 
 #: lib/components/questionnaire/new_topics_modal_component.js:69
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: lib/components/recommended_topics/call_to_action.js:60
 msgid ""
 "Once you answer some questions, your recommendations will show up below. For "
 "now, here are some topics we recommend for everyone:"
 msgstr ""
+"Sa oras na masagot mo ang ilan sa mga tanong, ang mga rekomendasyon mo ay "
+"ipakikita sa ibaba. Sa ngayon, narito ang ilang paksa na nirerekomenda namin "
+"sa lahat:"
 
 #: lib/components/maps_application_popup/maps_application_popup_component.js:18
 msgid "Open in maps"
-msgstr ""
+msgstr "Buksan sa mga mapa"
 
 #: lib/components/disclaimer/disclaimer_component.js:47
 msgid ""
@@ -259,70 +309,79 @@ msgid ""
 "services and resources to assist settlement in Metro Vancouver and does not "
 "exist in an official Immigration Service capacity."
 msgstr ""
+"Ang PeaceGeeks ay walang pananagutan sa anumang mga pinsalang natamo bilang "
+"resulta ng o kaugnay sa paggamit ng app. Ang PeaceGeeks ay hindi network ng "
+"pagkonsulta sa imigrasyon, at kung kaya hindi makapaglalaan ng direktang "
+"payo o suporta may kaugnayan sa imigrasyon. Ang Arrival Advisor ay umiiral "
+"upang mag-alok sa mga bagong dating ng direktoryo ng mga serbisyo at "
+"mapagkukunan upang makatulong sa paninirahan sa Metro Vancouver at hindi "
+"umiiral sa opisyal na kapasidad ng Serbisyo ng Imigrasyon."
 
 #: lib/components/services/service_list_error_component.js:23
 msgid "Please ensure location services are enabled for Arrival Advisor."
-msgstr ""
+msgstr "Please ensure location services are enabled for Arrival Advisor."
 
 #: lib/components/help/help_component.js:15
 msgid "Police, fire and medical emergencies"
-msgstr ""
+msgstr "Pulis, sunog at medikal na mga emergency"
 
 #: lib/components/header_menu/header_menu_component.js:52
 msgid "Privacy policy"
-msgstr ""
+msgstr "Patakaran sa Pagkapribado"
 
 #: lib/components/topics/task_detail_component.js:19
 msgid "RELATED TOPICS"
-msgstr ""
+msgstr "KAUGNAY NA MGA PAKSA"
 
 #: lib/components/expandable_content/expandable_content_component.js:79
 msgid "Read less"
-msgstr ""
+msgstr "Basahin ang kaunti"
 
 #: lib/components/expandable_content/expandable_content_component.js:79
 msgid "Read more"
-msgstr ""
+msgstr "Basahin ang higit"
 
 #: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftopics%2Ftask_detail_content_component.js%3A63
 msgid "Recommended for you"
-msgstr ""
+msgstr "Nirerekomenda para sa iyo"
 
 #: lib/components/header_menu/header_menu_component.js:24
 msgid "SELECT YOUR LANGUAGE"
-msgstr ""
+msgstr "PUMILI NG IYONG WIKA"
 
 #: lib/components/bookmarked_topics/bookmarked_topics_component.js:15
 msgid "Save important topics to build your personal plan for settlement."
 msgstr ""
+"Itago ang mahahalagang paksa upang bumuo ng iyong personal na plano sa "
+"paninirahan."
 
 #: lib/components/welcome/welcome_component.js:31
 msgid "Select your language"
-msgstr ""
+msgstr "Pumili ng wika mo"
 
 #: lib/components/about/about_component.js:63
 msgid "Server version:"
-msgstr ""
+msgstr "Bersyon ng server: "
 
 #: lib/components/help/help_component.js:25
 msgid "Services information and referral"
-msgstr ""
+msgstr "Mga serbisyong impormasyon at referral"
 
 #: lib/components/welcome/welcome_component.js:27
 msgid "Settling in Canada is now easier."
-msgstr ""
+msgstr "Mas madali na ngayon ang paninirahan sa Canada."
 
 #: lib/components/questionnaire/questionnaire_component.js:100
 msgid "Skip"
-msgstr ""
+msgstr "Laktawan"
 
 #: lib/components/welcome/welcome_component.js:42
 msgid "Start"
-msgstr ""
+msgstr "Magsimula"
 
 #: lib/components/recommended_topics/recommended_topics_component.js:21
 msgid "Start settling in B.C."
-msgstr ""
+msgstr "Simulan ang paninirahan sa B.C."
 
 #: lib/components/about/about_component.js:41
 msgid ""
@@ -334,6 +393,14 @@ msgid ""
 "donors who make this project possible. Arrival Advisor is an open-source "
 "project. You can"
 msgstr ""
+"Ang Arrival Advisor app ay nilikha ng PeaceGeeks sa pakikipagtulungan ng mga "
+"organisasyon sa paninirahan sa Metro Vancouver, gayundin sa mga imigrante at "
+"takas na tulad mo. Gayundin sa mga imigrante at takas na tulad mo. Ang "
+"proyektong ito ay nagawa dahil sa pondo ng Probinsya ng British Columbia at "
+"Google.org Canada sa pakikipagtulungan ng LEAP | Pecaut Centre for Social "
+"Impact. Espesyal na pasasalamat din sa mga indibidwal na donor na dahilan "
+"upang magawa ang proyektong ito. Ang Arrival Advisor ay isang open-source na "
+"proyekto. Maaari kang"
 
 #: lib/components/disclaimer/disclaimer_component.js:24
 msgid ""
@@ -347,23 +414,33 @@ msgid ""
 "those services over others.  Utilization of services located through the app "
 "is undertaken at the risk of the user."
 msgstr ""
+"Ang app ay nagbibigay ng impormasyon tungkol sa kaugnay na mga serbisyo ng "
+"bagong dating, at para sa pangkalahatang gabay at reperensya lamang. Habang "
+"layunin naming maglaan ng angkop at napapanahong impormasyon, hindi namin "
+"kontrolado ang isinasagawang katumpakan ng impormasyon o ang kalidad ng mga "
+"serbisyong inilaan. Kung natuklasan mo na ang bahagi ng impormasyon ay luma "
+"na o hindi kapaki-pakinabang, mangyaring ipaalam sa akin sa seksyon ng "
+"feedback ng app. Ang kabilang na mga serbisyo at mapagkukunan sa app na "
+"hindi ay hindi nagpapakita ng pag-endorso o rekomendasyon ng mga serbisyong "
+"iyon laban sa iba. Ang paggamit ng mga serbisyong matatagpuan sa app ay "
+"isinasagawa sa pananagutan ng user."
 
 #: lib/components/about/about_component.js:59
 msgid "This is Arrival Advisor version:"
-msgstr ""
+msgstr "Ito ay bersyon ng Arrival Advisor:"
 
 #: lib/components/recommended_topics/call_to_action.js:70
 msgid "UPDATE MY RECOMMENDATIONS"
-msgstr ""
+msgstr "I-UPDATE ANG REKOMENDASYON KO"
 
 #: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
-msgstr ""
+msgstr "Web:"
 
 #: lib/components/about/about_component.js:49
 msgid "and"
-msgstr ""
+msgstr "and"
 
 #: lib/components/about/about_component.js:51
 msgid "to learn how you can support this project."
-msgstr ""
+msgstr "to learn how you can support this project."
