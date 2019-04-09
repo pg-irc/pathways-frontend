@@ -2,7 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import * as R from 'ramda';
 import { History, Location } from 'history';
-import { BackButton as ReactRouterBackButtonHack } from 'react-router-native';
 import { Header, Left, Right } from 'native-base';
 import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/topics';
 import { BackButtonComponent } from '../header_button/back_button_component';
@@ -148,16 +147,10 @@ const renderHeader = (backgroundColor: string, leftButton: JSX.Element, rightBut
             {button}
         </View>
     );
-    // From the docs: "Connects the global back button on Android and tvOS to the router's history.
-    // On Android, when the initial location is reached, the default back behavior takes over.
-    // Just render one somewhere in your app."
-    // Without this, the hardware back button on Android always minimizes the app.
-    const reactRouterBackButtonHack: JSX.Element = <ReactRouterBackButtonHack />;
     return (
         <Header style={{ marginTop, backgroundColor: backgroundColor, borderBottomColor: 'transparent' }}>
             <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
                 {leftButton}
-                {reactRouterBackButtonHack}
             </Left>
             <Right style={{ alignItems: 'center' }}>
                 {mapWithIndex(renderRightButton, rightButtons)}
