@@ -10,10 +10,10 @@ export const DisclaimerComponent: React.StatelessComponent = (): JSX.Element => 
     const welcomeBcUrl = 'https://www.welcomebc.ca';
     const bc211Url = 'https://www.bc211.ca';
     const welcomeBCLink = wrapWithSpace(
-        <Link href={welcomeBcUrl} text={'www.welcomebc.ca'} style={textStyles.paragraphURL} />,
+        <Link href={welcomeBcUrl} text={'www.welcomebc.ca, '} style={textStyles.paragraphURL} />,
     );
     const bc211Link = wrapWithSpace(
-        <Link href={bc211Url} text={'www.bc211.ca'} style={textStyles.paragraphURL} />,
+        <Link href={bc211Url} text={'www.bc211.ca.'} style={textStyles.paragraphURL} />,
     );
     return (
         <Content padder style={{ backgroundColor: colors.white }}>
@@ -23,8 +23,10 @@ export const DisclaimerComponent: React.StatelessComponent = (): JSX.Element => 
             <ParagraphComponent>
                 <Trans>
                     Arrival Advisor contains information from the BC Government’s Newcomer’s Guide, available at:
-                    {welcomeBCLink}, and the BC211 database of service providers, available at: {bc211Link}.
-            </Trans>
+                </Trans>
+                {welcomeBCLink}
+                <Trans>and the BC211 database of service providers, available at: </Trans>
+                {bc211Link}
             </ParagraphComponent>
             <ParagraphComponent>
                 <Trans>
