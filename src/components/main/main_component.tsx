@@ -83,9 +83,10 @@ export class MainComponent extends React.Component<Props, State> {
     }
 
     onHardwareBackButtonPress(): boolean {
-        goBack(this.props.history);
         if (this.state.isHeaderMenuShowing) {
             this.closeDrawer();
+        } else {
+            goBack(this.props.history);
         }
         return true;
     }
