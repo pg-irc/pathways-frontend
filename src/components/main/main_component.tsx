@@ -6,10 +6,11 @@ import { MainPageSwitcherComponent } from './main_page_switcher';
 import { NotificationsConnectedComponent } from '../notifications/notifications_connected_component';
 import { FooterComponent, FooterProps } from './footer_component';
 import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connected_component';
-import { RouterProps } from '../../application/routing';
+import { RouterProps, goBack } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { Locale } from '../../locale';
+import { HardwareBackButtonHandlerComponent } from './hardware_back_button_handler_component';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -36,6 +37,7 @@ export class MainComponent extends React.Component<Props, State> {
         };
         this.openDrawer = this.openDrawer.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
+        this.onHardwareBackButtonPress = this.onHardwareBackButtonPress.bind(this);
     }
 
     componentDidMount(): void {
@@ -66,6 +68,7 @@ export class MainComponent extends React.Component<Props, State> {
                     <MainPageSwitcherComponent />
                     <FooterComponent {...this.props} />
                     <NotificationsConnectedComponent {...this.props} />
+                    <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={this.onHardwareBackButtonPress} />
                 </Container>
             </Drawer>
         );
@@ -77,5 +80,14 @@ export class MainComponent extends React.Component<Props, State> {
 
     openDrawer(): void {
         this.setState({ isHeaderMenuShowing: true });
+    }
+
+    onHardwareBackButtonPress(): boolean {
+        if (this.state.isHeaderMenuShowing) {
+            this.closeDrawer();
+        } else {
+            goBack(this.props.history);
+        }
+        return true;
     }
 }
