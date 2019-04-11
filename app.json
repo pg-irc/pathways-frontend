@@ -2,7 +2,7 @@
   "expo": {
     "sdkVersion": "32.0.0",
     "name": "Arrival Advisor",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "slug": "arrival_advisor",
     "orientation": "portrait",
     "ios": {
@@ -18,7 +18,7 @@
     "android": {
       "icon": "./assets/images/phone_icon_android.png",
       "package": "org.peacegeeks.ArrivalAdvisor",
-      "versionCode": 100120,
+      "versionCode": 100130,
       "permissions": [
         "ACCESS_FINE_LOCATION"
       ]
