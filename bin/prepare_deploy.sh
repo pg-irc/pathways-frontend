@@ -1,15 +1,33 @@
 #!/bin/bash
 
-# This script completes the steps needed to publish the client to the App Store (Apple) and Play Store (Android)
+while (( "$#" )); do
+    if [ "$1" == "--clientVersion" ]
+    then
+        VERSION=$2
+        shift 2
+    elif [ "$1" == "--serverVersion" ]
+    then
+        SERVER_VERSION=$2
+        shift 2
+    elif [ "$1" == "--androidVersionCode" ]
+    then
+        ANDROID_VERSION_CODE=$2
+        shift 2
+    elif [ "$1" == "--postgresUser" ]
+    then
+        POSTGRES_USER=$2
+        shift 2
+    elif [ "$1" == "--workingDirectory" ]
+    then
+        WORKING_DIRECTORY=$2
+        shift 2
+    elif [ "$1" == "--staging" ]
+    then
+        STAGING=1
+        shift 1
+    fi
+done
 
-VERSION=$1
-SERVER_VERSION=$2
-ANDROID_VERSION_CODE=$3
-# The command "./manage.py import_newcomers_guide" requires database access in order to retrieve
-# related tasks from the database. The related tasks must already have been computed, see the
-# server side prepare deploy script
-POSTGRES_USER=$4
-WORKING_DIRECTORY=$5
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
 CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
@@ -18,9 +36,34 @@ usage() {
     echo
     echo "Usage:"
     echo
-    echo "    prepare_deploy.sh clientVersion serverVersion androidVersionCode postgresUserId workingDirectory"
+    echo "    $0 [arguments]"
     echo
-    echo "workingDirectory should not already exist, it will be used to clone three git repositories and build the client"
+    echo "Mandatory arguments:"
+    echo
+    echo "    --clientVersion"
+    echo "                The client version string, must match tags on the client and content repositories."
+    echo
+    echo "    --serverVersion"
+    echo "                The server version string, must match tag on the server repository."
+    echo
+    echo "    --androidVersionCode"
+    echo "                The version code for the android build, should match the client version string as"
+    echo "                verified by the client unit tests."
+    echo
+    echo "    --postgresUser"
+    echo "                The command './manage.py import_newcomers_guide' requires database access"
+    echo "                in order to retrieve related tasks from the database. The related tasks must"
+    echo "                already have been computed, see the server side prepare deploy script."
+    echo
+    echo "    --workingDirectory"
+    echo "                Path to a directory to be created by the script. WorkingDirectory should not already"
+    echo "                exist, it will be used to clone three git repositories and build the client."
+    echo
+    echo "Optional arguments:"
+    echo
+    echo "    --staging"
+    echo "                Pass this argument if this is a staging build, affect the URL, icon and app name to be set."
+    echo
     echo
     echo "Before running this script, both the client and content repos need to have the appropriate"
     echo "commits tagged with the client version that is about to be released, and the server repository "
