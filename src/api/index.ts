@@ -27,17 +27,6 @@ export async function searchServices(topicId: Id, location: MaybeLocation): Prom
     return createAPIResponse(response);
 }
 
-const buildUrl = (endpoint: string, query: string): string => {
-    const version = 'v1';
-    return `${baseUrl}/${version}/${endpoint}?${query}`;
-};
-
-interface Parameters {
-    related_to_task: Id;
-    proximity?: string;
-    user_location?: string;
-}
-
 export const buildParameters = (topicId: Id, location: MaybeLocation): Parameters => {
     if (!location) {
         return { related_to_task: topicId };
@@ -48,6 +37,17 @@ export const buildParameters = (topicId: Id, location: MaybeLocation): Parameter
         proximity: user_location,
         related_to_task: topicId,
     };
+};
+
+interface Parameters {
+    related_to_task: Id;
+    proximity?: string;
+    user_location?: string;
+}
+
+const buildUrl = (endpoint: string, query: string): string => {
+    const version = 'v1';
+    return `${baseUrl}/${version}/${endpoint}?${query}`;
 };
 
 async function createAPIResponse(response: Response): Promise<APIResponse> {
