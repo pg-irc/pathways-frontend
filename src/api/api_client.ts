@@ -12,25 +12,25 @@ export interface APIResponse {
 export type MaybeLocation = LocationData | undefined;
 
 // tslint:disable-next-line:no-let
-let host = '';
+let baseUrl = '';
 
-export const setHost = (url: string): void => {
-    host = url;
+export const setUrl = (url: string): void => {
+    baseUrl = url;
 };
 
 export async function searchServices(topicId: Id, location: MaybeLocation): Promise<APIResponse> {
-    const parameters = stringify(buildParameters(topicId, location));
     const endpoint = 'services_at_location';
-    const servicesResponse = await fooFetch(endpoint, parameters);
-    return servicesResponse;
-}
-
-async function fooFetch(endpoint: string, query: string): Promise<APIResponse> {
-    const version = 'v1';
-    const url = `${host}/${version}/${endpoint}?${query}`;
+    const parameters = buildParameters(topicId, location);
+    const parameterString = stringify(parameters);
+    const url = buildUrl(endpoint, parameterString);
     const response = await fetch(url);
     return createAPIResponse(response);
 }
+
+const buildUrl = (endpoint: string, query: string): string => {
+    const version = 'v1';
+    return `${baseUrl}/${version}/${endpoint}?${query}`;
+};
 
 interface Parameters {
     related_to_task: Id;
