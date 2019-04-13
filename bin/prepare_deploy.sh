@@ -1,5 +1,6 @@
 #!/bin/bash
 
+BUILD="production"
 while (( "$#" )); do
     if [ "$1" == "--clientVersion" ]
     then
@@ -23,7 +24,7 @@ while (( "$#" )); do
         shift 2
     elif [ "$1" == "--staging" ]
     then
-        STAGING=1
+        BUILD="staging"
         shift 1
     fi
 done
@@ -221,11 +222,33 @@ createServerEnvironment() {
     checkForSuccess "create server environment"
 }
 
+setStagingValuesInAppJson() {
+    ( cd "$CLIENT_DIRECTORY" && \
+        cat app.json | \
+        sed s/phone_icon_android.png/phone_icon_android_staging.png/ | \
+        sed s/org.peacegeeks.ArrivalAdvisor/org.peacegeeks.ArrivalAdvisorStaging/ \
+        > temp.json && \
+        mv temp.json app.json
+    )
+    checkForSuccess "set staging parameters is app.json"
+}
+
 createClientEnvironment() {
-    echo "VERSION=$VERSION"                                   > "$CLIENT_DIRECTORY/.env"
-    echo "API_URL=https://pathways-production.herokuapp.com" >> "$CLIENT_DIRECTORY/.env"
-    echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"      >> "$CLIENT_DIRECTORY/.env"
-    echo "DEBUG_GOOGLE_ANALYTICS=false"                      >> "$CLIENT_DIRECTORY/.env"
+    PRODUCTION_URL="https://pathways-production.herokuapp.com"
+    STAGING_URL="https://fierce-ravine-89308.herokuapp.com"
+
+    echo "VERSION=$VERSION"                              >  "$CLIENT_DIRECTORY/.env"
+    echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"  >> "$CLIENT_DIRECTORY/.env"
+    echo "DEBUG_GOOGLE_ANALYTICS=false"                  >> "$CLIENT_DIRECTORY/.env"
+
+    if [ "$BUILD" == "staging" ]
+    then
+        echo "API_URL=$STAGING_URL" >> "$CLIENT_DIRECTORY/.env"
+        setStagingValuesInAppJson
+    else
+        echo "API_URL=$PRODUCTION_URL" >> "$CLIENT_DIRECTORY/.env"
+    fi
+
     checkForSuccess "create client environment"
 }
 
@@ -239,7 +262,7 @@ completeManualConfiguration() {
     echo "Log into our account on https://sentry.io to retrieve the auth token"
     echo "from https://sentry.io/settings/account/api/auth-tokens/"
     echo
-    echo "Make any other configuration changes now, such as e.g. pointing the URL in .env to staging."
+    echo "Make any other client side configuration changes now."
     echo
     read -p "Press enter to continue"
 }
@@ -280,8 +303,6 @@ giveExpoCommandsForPublishing() {
     echo "(cd $CLIENT_DIRECTORY && yarn run expo bi --release-channel release)"
     echo "(cd $CLIENT_DIRECTORY && yarn run expo ba --release-channel release)"
     echo
-    echo "Checklist for publishing to App Store (iOS):"
-    echo "Checklist for publishing to Play Store (Android):"
 }
 
 runClientForFinalQA() {
