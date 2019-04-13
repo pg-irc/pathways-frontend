@@ -15,7 +15,17 @@ export type MaybeLocation = LocationData | undefined;
 let baseUrl = '';
 
 export const setUrl = (url: string): void => {
-    baseUrl = url;
+    baseUrl = validateUrl(url);
+};
+
+const validateUrl = (url: string): string => {
+    if (!url.startsWith('https://')) {
+        throw new Error('URL must start with https://');
+    }
+    if (url.endsWith('/')) {
+        throw new Error('URL must not end with /');
+    }
+    return url;
 };
 
 export async function searchServices(topicId: Id, location: MaybeLocation): Promise<APIResponse> {

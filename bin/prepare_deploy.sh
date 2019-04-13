@@ -332,7 +332,6 @@ validateContentFixture
 getClientDependencies
 createClientEnvironment
 completeManualConfiguration
-# TODO validate client environment: No trailing / on the URL, use https, debug analytics is false
 buildClientLocally
 testClient
 
