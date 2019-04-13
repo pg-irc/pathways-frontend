@@ -7,7 +7,7 @@ import {
     populateTopicServicesFromSuccess, PopulateTopicServicesFromErrorAction, populateTopicServicesFromError,
     serviceFromValidatedJSON,
 } from '../stores/services';
-import { searchServices, APIResponse } from '../api/api_client';
+import { searchServices, APIResponse } from '../api';
 import { isResponseError } from '../api/is_response_error';
 import { servicesAtLocationValidator, isValidationError } from '../json_schemas/validators';
 import { isAsyncLocationError, getLocationIfPermittedAsync } from '../async/location';

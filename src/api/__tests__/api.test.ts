@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { buildParameters } from '../api_client';
+import { buildParameters } from '..';
 import { aString, aNumber } from '../../application/__tests__/helpers/random_test_values';
 
 describe('build parameters', () => {

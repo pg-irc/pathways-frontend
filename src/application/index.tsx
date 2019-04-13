@@ -8,7 +8,7 @@ import { ConnectedI18nProvider } from '../components/i18n_provider';
 import { buildSaga } from '../sagas';
 
 import { API_URL } from 'react-native-dotenv';
-import { setUrl } from '../api/api_client';
+import { setUrl } from '../api';
 
 // tslint:disable-next-line:no-expression-statement
 setUrl(API_URL);
