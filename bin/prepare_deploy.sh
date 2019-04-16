@@ -26,6 +26,9 @@ while (( "$#" )); do
     then
         BUILD="staging"
         shift 1
+    else
+        echo "$1: Invalid command argument"
+        exit
     fi
 done
 
@@ -226,8 +229,8 @@ setStagingValuesInAppJson() {
     ( cd "$CLIENT_DIRECTORY" && \
         cat app.json | \
         sed s/phone_icon_android.png/phone_icon_android_staging.png/ | \
-        sed s/org.peacegeeks.ArrivalAdvisor/org.peacegeeks.ArrivalAdvisorStaging/ \
-        > temp.json && \
+        sed s/phone_icon_ios.png/phone_icon_ios_staging.png/ | \
+        sed s/org.peacegeeks.ArrivalAdvisor/org.peacegeeks.ArrivalAdvisorStaging/ > temp.json && \
         mv temp.json app.json
     )
     checkForSuccess "set staging parameters is app.json"
