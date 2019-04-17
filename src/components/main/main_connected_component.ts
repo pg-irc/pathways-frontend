@@ -10,8 +10,13 @@ import { Location } from 'history';
 import { RouteChangedAction, routeChanged } from '../../stores/router_actions';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { Locale } from '../../locale';
+import { pickShowOnboarding } from '../../selectors/onboarding/pick_show_onboarding';
 
-type Props = LoaderProps & MainComponentProps & RouterProps;
+type Props = LoaderProps & MainComponentProps & RouterProps & OnboardingProps;
+
+export interface OnboardingProps {
+    readonly showOnboarding: boolean;
+}
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     loading: isApplicationLoading(store),
@@ -20,6 +25,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     match: ownProps.match,
     staticContext: ownProps.staticContext,
     locale: selectLocale(store),
+    showOnboarding: pickShowOnboarding(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RouteChangedAction>): MainComponentActions => ({

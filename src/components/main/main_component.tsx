@@ -11,6 +11,7 @@ import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { Locale } from '../../locale';
 import { HardwareBackButtonHandlerComponent } from './hardware_back_button_handler_component';
+import { OnBoardingComponent } from '../onboarding/onboarding_component';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -20,6 +21,7 @@ export interface MainComponentActions {
 
 interface MainProps {
     readonly locale: Locale;
+    readonly showOnboarding: boolean;
 }
 
 type Props = MainComponentProps & MainComponentActions;
@@ -46,7 +48,13 @@ export class MainComponent extends React.Component<Props, State> {
         );
     }
 
-    render(): JSX.Element {
+    renderOnboarding(): JSX.Element {
+        return (
+            <OnBoardingComponent />
+        );
+    }
+
+    renderMainApp(): JSX.Element {
         return (
             <Drawer
                 side='right'
@@ -72,6 +80,10 @@ export class MainComponent extends React.Component<Props, State> {
                 </Container>
             </Drawer>
         );
+    }
+
+    render(): JSX.Element {
+        return this.props.showOnboarding ? this.renderOnboarding() : this.renderMainApp();
     }
 
     closeDrawer(): void {

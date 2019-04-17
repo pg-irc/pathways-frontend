@@ -21,6 +21,7 @@ export const colors = {
     sepia: '#8b572a',
     purple: '#541388',
     burntSienna: '#ED604B',
+    sunshine: '#f2b134',
   };
 
 export const values = {

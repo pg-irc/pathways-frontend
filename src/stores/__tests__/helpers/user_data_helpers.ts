@@ -7,6 +7,7 @@ export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];
     savedTasks: TaskId[] = [];
     completedTasks: TaskId[] = [];
+    showOnboarding: boolean = true;
 
     addChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
         this.chosenAnswers.push(id);
@@ -23,11 +24,17 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
+    addShowOnboarding(showOnboarding: boolean): PersistedUserDataBuilder {
+        this.showOnboarding = showOnboarding;
+        return this;
+    }
+
     buildObject(): PersistedUserData {
         return {
             chosenAnswers: this.chosenAnswers,
             savedTasks: this.savedTasks,
             completedTasks: this.completedTasks,
+            showOnboarding: this.showOnboarding,
         };
     }
 

@@ -16,6 +16,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.REMOVE_FROM_SAVED_TOPICS,
             constants.TOGGLE_IS_TOPIC_COMPLETED,
             constants.CLEAR_ALL_USER_DATA,
+            constants.SET_ONBOARDING,
         ],
         saveUserData);
 }
@@ -67,6 +68,15 @@ export async function loadUserDataAsync(): Promise<string> {
     return await AsyncStorage.getItem(USER_DATA_STORAGE_KEY);
 }
 
-const deserialize = (serializedUserData: string): PersistedUserData => (
-    serializedUserData ? JSON.parse(serializedUserData) : { chosenAnswers: [], completedTasks: [], savedTasks: [] }
-);
+const deserialize = (serializedUserData: string): PersistedUserData => {
+   return  serializedUserData ? mapStorageDataToUserData(JSON.parse(serializedUserData)) : mapStorageDataToUserData({});
+};
+
+export const mapStorageDataToUserData = (data: any): PersistedUserData => {
+    return {
+        chosenAnswers: data.chosenAnswers || [],
+        savedTasks: data.savedTasks || [],
+        completedTasks: data.completedTasks || [],
+        showOnboarding: data.showOnboarding || true,
+    };
+};
