@@ -15,12 +15,14 @@ export const buildExploreFixture = (): ExploreStore => (
                     'en': 'Things to do right away',
                     'ar': 'أمور يجب عملها على الفور',
                     'fr': 'Tâches à effectuer tout de suite',
+                    'ko': '지금 바로 해야 할 일들',
                     'zh_CN': '需要立即做的事情',
                 },
                 description: {
                     'en': 'Important tasks for settling in your community',
                     'ar': 'مهام لا غنى عنها نحو الاستقرار في مجتمعك',
                     'fr': 'Tâches importantes en vue de l\'établissement dans votre communauté',
+                    'ko': '커뮤니티 정착에 필요한 중요 과제들',
                     'zh_CN': '在您的社区安顿下来需要做的重要事项',
                 },
                 'taxonomyTerms': [{
