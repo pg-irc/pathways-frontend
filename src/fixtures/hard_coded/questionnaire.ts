@@ -916,6 +916,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 text: {
                     'en': 'Help finding information about services',
                     'ar': 'أبحث عن المساعدة في إيجاد معلومات عن الخدمات',
+                    'zh_CN': '帮助查询有关服务的信息',
                 },
                 isChosen: false,
                 isInverted: false,
@@ -930,6 +931,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 text: {
                     'en': 'Help managing stress',
                     'ar': 'أبحث عن المساعدة في التعامل مع الإجهاد',
+                    'zh_CN': '帮助管理情绪压力',
                 },
                 isChosen: false,
                 isInverted: false,
