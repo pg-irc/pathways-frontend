@@ -14,10 +14,12 @@ export const buildExploreFixture = (): ExploreStore => (
                 name: {
                     'en': 'Things to do right away',
                     'ar': 'أمور يجب عملها على الفور',
+                    'zh_CN': '需要立即做的事情',
                 },
                 description: {
                     'en': 'Important tasks for settling in your community',
                     'ar': 'مهام لا غنى عنها نحو الاستقرار في مجتمعك',
+                    'zh_CN': '在您的社区安顿下来需要做的重要事项',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
