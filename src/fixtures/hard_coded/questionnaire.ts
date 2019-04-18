@@ -915,6 +915,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionWhatHelpDoYouNeed',
                 text: {
                     'en': 'Help finding information about services',
+                    'ar': 'أبحث عن المساعدة في إيجاد معلومات عن الخدمات',
                 },
                 isChosen: false,
                 isInverted: false,
@@ -928,6 +929,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
                 questionId: 'questionWhatHelpDoYouNeed',
                 text: {
                     'en': 'Help managing stress',
+                    'ar': 'أبحث عن المساعدة في التعامل مع الإجهاد',
                 },
                 isChosen: false,
                 isInverted: false,

@@ -13,9 +13,11 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: rightAwaySectionId,
                 name: {
                     'en': 'Things to do right away',
+                    'ar': 'أمور يجب عملها على الفور',
                 },
                 description: {
                     'en': 'Important tasks for settling in your community',
+                    'ar': 'مهام لا غنى عنها نحو الاستقرار في مجتمعك',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
