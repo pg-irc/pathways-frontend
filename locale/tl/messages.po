@@ -1,20 +1,20 @@
-#. extracted from locale/tl/messages.csv
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-18 10:24-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2019-04-18 14:48-0700\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"X-Generator: Poedit 2.0.6\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: tl\n"
 
 #: lib/components/header_menu/header_menu_component.js:45
 msgid "ABOUT THE APP"
-msgstr "ABOUT THE APP"
+msgstr "TUNGKOL SA APP"
 
 #: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A19+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
 msgid "About Arrival Advisor"
@@ -26,7 +26,7 @@ msgstr "Address:"
 
 #: lib/components/services/service_list_error_component.js:33
 msgid "An error has occured."
-msgstr "An error has occured."
+msgstr "Nagkaproblema."
 
 #: lib/components/recommended_topics/call_to_action.js:46
 msgid ""
@@ -59,8 +59,8 @@ msgstr ""
 "Ang Arrival Advisor ay isang libre, maramihang wikang mobile app na "
 "tumutulong sa mga imigrante at takas sa British Columbia, Canada na humanap "
 "ng impormasyon at mga serbisyo upang galugarin ang kanilang byahe sa "
-"paninirahan. Ang app ay kasalukuyang magagamit sa English, Pranses (Canadian)"
-", at Arabe. Malapit na rin itong magamit sa Pinasimpleng Chinese, "
+"paninirahan. Ang app ay kasalukuyang magagamit sa English, Pranses "
+"(Canadian), at Arabe. Malapit na rin itong magamit sa Pinasimpleng Chinese, "
 "Tradisyonal na Chinese, Koreano, Punjabi, at Tagalog."
 
 #: lib/components/disclaimer/disclaimer_component.js:37
@@ -156,8 +156,8 @@ msgid ""
 "Fetching your location timed out. On Android devices you may need to set "
 "your location mode to \"High accuracy\"."
 msgstr ""
-"Fetching your location timed out. On Android devices you may need to set "
-"your location mode to \"High accuracy\"."
+"Natapos na ang oras ng pagkuha ng lokasyon mo. Sa mga Android device "
+"kakailanganin mong itakda ang mode ng lokasyon sa \"Mataas na katumpakan\"."
 
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
@@ -315,7 +315,9 @@ msgstr ""
 
 #: lib/components/services/service_list_error_component.js:23
 msgid "Please ensure location services are enabled for Arrival Advisor."
-msgstr "Please ensure location services are enabled for Arrival Advisor."
+msgstr ""
+"Mangyaring tiyakin na ang mga serbisyo ng lokasyon ay ginagagana para "
+"Arrival Advisor."
 
 #: lib/components/help/help_component.js:15
 msgid "Police, fire and medical emergencies"
@@ -357,7 +359,7 @@ msgstr "Pumili ng wika mo"
 
 #: lib/components/about/about_component.js:63
 msgid "Server version:"
-msgstr "Bersyon ng server: "
+msgstr "Bersyon ng server:"
 
 #: lib/components/help/help_component.js:25
 msgid "Services information and referral"
@@ -384,8 +386,8 @@ msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
 "refugees like you. This project is possible thanks to funding by the "
-"Province of British Columbia and Google.org Canada in partnership with LEAP |"
-" Pecaut Centre for Social Impact. Special thanks also goes to individual "
+"Province of British Columbia and Google.org Canada in partnership with LEAP "
+"| Pecaut Centre for Social Impact. Special thanks also goes to individual "
 "donors who make this project possible. Arrival Advisor is an open-source "
 "project. You can"
 msgstr ""
