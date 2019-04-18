@@ -19,6 +19,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'pa': 'ਹੁਣੇ ਕਰਨ ਵਾਲੇ ਕੰਮ',
                     'tl': 'Mga bagay na gagawin agad',
                     'zh_CN': '需要立即做的事情',
+                    'zh_TW': '需要立刻做的事情',
                 },
                 description: {
                     'en': 'Important tasks for settling in your community',
@@ -28,6 +29,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'pa': 'ਤੁਹਾਡੀ ਕਮਿਊਨਟੀ ਵਿੱਚ ਸੈਟਲ ਹੋਣ ਲਈ ਖਾਸ ਕੰਮ',
                     'tl': 'Mahahalagang gawain para manirahan sa komunidad mo',
                     'zh_CN': '在您的社区安顿下来需要做的重要事项',
+                    'zh_TW': '對於在您的社區安頓下來所需的重要任務',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
