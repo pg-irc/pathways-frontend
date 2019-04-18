@@ -16,6 +16,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'ar': 'أمور يجب عملها على الفور',
                     'fr': 'Tâches à effectuer tout de suite',
                     'ko': '지금 바로 해야 할 일들',
+                    'pa': 'ਹੁਣੇ ਕਰਨ ਵਾਲੇ ਕੰਮ',
                     'zh_CN': '需要立即做的事情',
                 },
                 description: {
@@ -23,6 +24,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'ar': 'مهام لا غنى عنها نحو الاستقرار في مجتمعك',
                     'fr': 'Tâches importantes en vue de l\'établissement dans votre communauté',
                     'ko': '커뮤니티 정착에 필요한 중요 과제들',
+                    'pa': 'ਤੁਹਾਡੀ ਕਮਿਊਨਟੀ ਵਿੱਚ ਸੈਟਲ ਹੋਣ ਲਈ ਖਾਸ ਕੰਮ',
                     'zh_CN': '在您的社区安顿下来需要做的重要事项',
                 },
                 'taxonomyTerms': [{
