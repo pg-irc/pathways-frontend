@@ -35,6 +35,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Social customs and getting around your community',
+                    'zh_TW': '社會習俗與社區融入',
                     'tl': 'Panlipunang kustombre at pag-iikot sa iyong komunidad',
                     'pa': 'ਸਮਾਜਕ ਰੀਤੀ-ਰਿਵਾਜ ਅਤੇ ਤੁਹਾਡੇ ਭਾਈਚਾਰੇ ਦੁਆਲੇ ਮਿਲਣਾ',
                     'ko': '사회적 풍습과 지역 사회 둘러보기',
@@ -60,6 +61,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Learning English, schools for children, youth and adults',
+                    'zh_TW': '適合兒童、青少年和成人的英語學校',
                     'tl': 'Pag-aaral ng English, mga paaralan para sa mga bata, kabataan at mga adulto',
                     'pa': 'ਅੰਗਰੇਜੀ ਸਿੱਖਣਾ, ਬੱਚਿਆਂ, ਨੌਜਵਾਨਾਂ ਅਤੇ ਬਾਲਗਾਂ ਲਈ ਸਕੂਲ',
                     'ko': '영어 학습, 아동과 청소년 또는 성인을 위한 교육 기관',
@@ -85,6 +87,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Medical insurance, finding a doctor, mental health',
+                    'zh_TW': '醫療保險、尋找家庭醫生、精神健康等資源',
                     'tl': 'Segurong medikal, paghahanap ng doktor, kalusugan ng pag-iisip',
                     'pa': 'ਮੈਡੀਕਲ ਇੰਸ਼ੋਅਰੈਂਸ, ਡਾਕਟਰ ਲੱਭਣਾ, ਦਿਮਾਗੀ ਸਿਹਤ',
                     'ko': '의료 보험, 병원 검색, 정신 건강',
@@ -110,6 +113,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Opening a bank account, filing taxes',
+                    'zh_TW': '設立銀行帳戶，報稅',
                     'tl': 'Pagbubukas ng bank account, paghahain ng buwis',
                     'pa': 'ਬੈਂਕ ਖਾਤਾ ਖੋਲ੍ਹਣਾ, ਟੈਕਸਾਂ ਦੀ ਅਦਾਇਗੀ',
                     'ko': '은행 계좌 개설, 세금 신고서 제출',
@@ -135,6 +139,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Finding a place to rent or buy, getting rental assistance',
+                    'zh_TW': '尋求租屋或買屋，尋找租屋相關協助',
                     'tl': 'Paghahanap ng lugar upang rentahan o bilhin, pagkuha ng tulong sa pagrenta',
                     'pa': 'ਕਿਰਾਏ ਉੱਤੇ ਥਾਂ ਲੱਭਣਾ ਜਾਂ ਖਰੀਦਣਾ, ਕਿਰਾਏ ਦੇ ਮਕਾਨ ਲਈ ਸਹਾਇਤਾ',
                     'ko': '공간 임차 또는 구매, 임차 지원 프로그램 이용',
@@ -160,6 +165,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Finding a job, working and workers’ rights',
+                    'zh_TW': '找工作，上班和員工的權利',
                     'tl': 'Paghahanap ng trabaho, pagtatrabaho at mga karapatan ng mga manggagawa',
                     'pa': 'ਨੌਕਰੀ ਲੱਭਣੀ, ਕੰਮ ਕਰਨਾ ਅਤੇ ਵਰਕਰਜ਼ ਦੇ ਹੱਕ',
                     'ko': '구직, 근로와 근로자 권리',
@@ -185,6 +191,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Immigration and citizenship, legal support, police',
+                    'zh_TW': '移民與公民，法律支援，警政系統協助',
                     'tl': 'Imigrasyon at pagkamamamayan, legal na tulong, pulis',
                     'pa': 'ਇੰਮੀਗਰੇਸ਼ਨ ਅਤੇ ਸਿਟੀਜ਼ਨਸ਼ਿਪ, ਬਾਲ, ਨੌਜਵਾਨ ਤੇ ਬਾਲਗ',
                     'ko': '이민과 시민권, 법률 자문, 경찰',
@@ -210,6 +217,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'Getting a driver\'s licence, traffic laws, basic insurance',
+                    'zh_TW': '申辦駕駛執照，交通法規，基本保險',
                     'tl': 'Pagkuha ng lisensya sa pagmamaneho, mga batas trapiko, pangunahing seguro',
                     'pa': 'ਡਰਾਇਵਰ ਲਾਇਸੈਂਸ, ਟਰੈਫਿਕ ਕਨੂੰਨ, ਮੁੱਢਲਾ ਇੰਸ਼ੋਰੈਂਸ',
                     'ko': '운전면허증 취득, 도로교통법, 기본 보험',
@@ -235,6 +243,7 @@ export const buildExploreFixture = (): ExploreStore => (
                 },
                 description: {
                     'en': 'For example low-income, disabilities, youth',
+                    'zh_TW': '例如：低收入戶、殘障人士、青少年',
                     'tl': 'Hal. mababa ang sahod, mga kapansanan, kabataan',
                     'pa': 'ਜਿਵੇਂ ਘੱਟ-ਆਮਦਨ, ਅਪੰਗਤਾ, ਨੌਜਵਾਨ',
                     'ko': '예: 저소득층, 장애인, 청소년',

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 17:09-0700\n"
+"POT-Creation-Date: 2019-04-18 10:16-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,11 +42,8 @@ msgstr "回答问题"
 #: lib/components/disclaimer/disclaimer_component.js:18
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at: {welcomeBCLink}, and the BC211 database of service "
-"providers, available at: {bc211Link}."
-msgstr ""
-"Arrival Advisor包含了B.C.省政府的《新移民指南》（Newcomer’s Guide）和BC211服务提供商数据库的信息，要查阅《新移民指"
-"南》，请访问网站：{welcomeBCLink}，要查阅BC211服务提供商数据库，请访问网站：{bc211Link}。"
+"Guide, available at:"
+msgstr "TODO 2"
 
 #: lib/components/about/about_component.js:22
 msgid ""
@@ -59,7 +56,7 @@ msgstr ""
 "Arrival Advisor是一个免费的多语种手机应用，它可帮助在加拿大不列颠哥伦比亚省（又译作“卑诗省”或简称“B.C.省”）的移民和难民查找他们在安"
 "家落户过程中所需的信息和服务，该应用目前提供英语、法语（加拿大）和阿拉伯语版本，简体中文、繁体中文、韩语、旁遮普语和塔加路语版本即将推出。"
 
-#: lib/components/disclaimer/disclaimer_component.js:35
+#: lib/components/disclaimer/disclaimer_component.js:37
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -264,7 +261,7 @@ msgstr "一旦您回答了一些问题，向您推荐的信息就会在下方显
 msgid "Open in maps"
 msgstr "在地图上打开"
 
-#: lib/components/disclaimer/disclaimer_component.js:47
+#: lib/components/disclaimer/disclaimer_component.js:49
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -355,7 +352,7 @@ msgstr ""
 "Technology）提供的不列颠哥伦比亚省资助和加拿大Google.org提供的资助表示感谢，我们还要特别感谢那些使这个项目成为可能的个人捐赠者。"
 "Arrival Advisor 是一个开源项目，您可以占击{githubLink}和{contactLink}，了解您可以如何支持该项目。"
 
-#: lib/components/disclaimer/disclaimer_component.js:24
+#: lib/components/disclaimer/disclaimer_component.js:26
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -386,6 +383,10 @@ msgstr "网站："
 #: lib/components/about/about_component.js:49
 msgid "and"
 msgstr "and"
+
+#: lib/components/disclaimer/disclaimer_component.js:22
+msgid "and the BC211 database of service providers, available at:"
+msgstr "TODO 1"
 
 #: lib/components/about/about_component.js:51
 msgid "to learn how you can support this project."

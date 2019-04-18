@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 17:09-0700\n"
+"POT-Creation-Date: 2019-04-18 10:16-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,11 +42,8 @@ msgstr "질문에 답하기"
 #: lib/components/disclaimer/disclaimer_component.js:18
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at: {welcomeBCLink}, and the BC211 database of service "
-"providers, available at: {bc211Link}."
-msgstr ""
-"Arrival Advisor는 브리티시컬럼비아주 새 이민자 안내서(www.welcomebc.ca에서 확인 가능)와 BC211 서비스 "
-"제공자 데이터베이스(www.bc211.ca에서 확인 가능)에 수록된 정보를 포함하고 있습니다."
+"Guide, available at:"
+msgstr "TODO 1"
 
 #: lib/components/about/about_component.js:22
 msgid ""
@@ -60,7 +57,7 @@ msgstr ""
 "도와주는 다국어 지원 무료 모바일 앱입니다. 현재 앱에서 지원되는 언어는 영어와 프랑스어(캐나다), 아랍어입니다. 조만간 중국어 간체자와 "
 "번체자, 한국어, 펀자브어와 타갈로그어가 추가로 지원될 예정입니다."
 
-#: lib/components/disclaimer/disclaimer_component.js:35
+#: lib/components/disclaimer/disclaimer_component.js:37
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -270,7 +267,7 @@ msgstr "질문에 답하면 아래 추천이 나타납니다. 현재, 모두에�
 msgid "Open in maps"
 msgstr "지도에서 열기"
 
-#: lib/components/disclaimer/disclaimer_component.js:47
+#: lib/components/disclaimer/disclaimer_component.js:49
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -362,7 +359,7 @@ msgstr ""
 "개인 기부자분들께 특별한 감사의 인사를 드립니다. Arrival Advisor는 오픈 소스 프로젝트입니다. 본 프로젝트에 참여를 원하시는 "
 "분은 {githubLink}와 {contactLink}에서 필요한 정보를 얻을 수 있습니다."
 
-#: lib/components/disclaimer/disclaimer_component.js:24
+#: lib/components/disclaimer/disclaimer_component.js:26
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -395,6 +392,10 @@ msgstr "웹:"
 #: lib/components/about/about_component.js:49
 msgid "and"
 msgstr "and"
+
+#: lib/components/disclaimer/disclaimer_component.js:22
+msgid "and the BC211 database of service providers, available at:"
+msgstr "TODO 2"
 
 #: lib/components/about/about_component.js:51
 msgid "to learn how you can support this project."
