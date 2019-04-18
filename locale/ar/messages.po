@@ -1,16 +1,16 @@
-#. extracted from locale/ar/messages.csv
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-18 10:24-0700\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2019-04-18 14:18-0700\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"X-Generator: Poedit 2.0.6\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
 
 #: lib/components/header_menu/header_menu_component.js:45
 msgid "ABOUT THE APP"
@@ -148,12 +148,12 @@ msgid ""
 "Fetching your location timed out. On Android devices you may need to set "
 "your location mode to \"High accuracy\"."
 msgstr ""
-"Fetching your location timed out. On Android devices you may need to set "
-"your location mode to \"High accuracy\"."
+"استغرق تحديد موقعك أكثر من اللازم. قد تحتاج إلى ضبط وضع تحديد الموقع إلى "
+"«دقة شديدة» على أجهزة أندرويد."
 
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
-msgstr "ابحث عن وكالة استقرار قريبة مني."
+msgstr "ابحث عن وكالة استقرار قريبة من."
 
 #: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
@@ -229,7 +229,7 @@ msgstr "معلومات تتعلق بخطوط المساعدة على الهات�
 
 #: lib/components/explore/explore_all_component.js:11
 msgid "Learn all about B.C."
-msgstr "تعرف على كل شيء عن بريتيش كولومبيا"
+msgstr "تعرف على كل شيء عن بريتيش كولومبيا."
 
 #: lib/components/help/help_component.js:20
 msgid "Mutlilingual health information services"
@@ -300,7 +300,7 @@ msgstr ""
 
 #: lib/components/services/service_list_error_component.js:23
 msgid "Please ensure location services are enabled for Arrival Advisor."
-msgstr "Please ensure location services are enabled for Arrival Advisor."
+msgstr "يرجى التأكد من تفعيل خدمات الموقع لتطبيق Arrival Advisor."
 
 #: lib/components/help/help_component.js:15
 msgid "Police, fire and medical emergencies"
@@ -360,15 +360,15 @@ msgstr "ابدأ"
 
 #: lib/components/recommended_topics/recommended_topics_component.js:21
 msgid "Start settling in B.C."
-msgstr "بدء الاستقرار في بريتيش كولومبيا"
+msgstr "بدء الاستقرار في بريتيش كولومبيا."
 
 #: lib/components/about/about_component.js:41
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
 "refugees like you. This project is possible thanks to funding by the "
-"Province of British Columbia and Google.org Canada in partnership with LEAP |"
-" Pecaut Centre for Social Impact. Special thanks also goes to individual "
+"Province of British Columbia and Google.org Canada in partnership with LEAP "
+"| Pecaut Centre for Social Impact. Special thanks also goes to individual "
 "donors who make this project possible. Arrival Advisor is an open-source "
 "project. You can"
 msgstr ""
@@ -415,6 +415,7 @@ msgid "and"
 msgstr "and"
 
 #: lib/components/disclaimer/disclaimer_component.js:22
+#, fuzzy
 msgid "and the BC211 database of service providers, available at:"
 msgstr "TODO 2"
 
