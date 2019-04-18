@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 17:09-0700\n"
+"POT-Creation-Date: 2019-04-18 10:24-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,12 +45,8 @@ msgstr "Sagutin ang mga tanong"
 #: lib/components/disclaimer/disclaimer_component.js:18
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at: {welcomeBCLink}, and the BC211 database of service "
-"providers, available at: {bc211Link}."
-msgstr ""
-"Ang Arrival Advisor ay naglalaman ng impormasyon mula sa Gabay ng Bagong "
-"Dating sa Gobyerno ng BC, na makukuha sa: www.welcomebc.ca, at ang BC211 "
-"database ng mga tagapaglaan ng serbisyo, na makukuha sa: www.bc211.ca."
+"Guide, available at:"
+msgstr "TODO 1"
 
 #: lib/components/about/about_component.js:22
 msgid ""
@@ -67,7 +63,7 @@ msgstr ""
 ", at Arabe. Malapit na rin itong magamit sa Pinasimpleng Chinese, "
 "Tradisyonal na Chinese, Koreano, Punjabi, at Tagalog."
 
-#: lib/components/disclaimer/disclaimer_component.js:35
+#: lib/components/disclaimer/disclaimer_component.js:37
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -300,7 +296,7 @@ msgstr ""
 msgid "Open in maps"
 msgstr "Buksan sa mga mapa"
 
-#: lib/components/disclaimer/disclaimer_component.js:47
+#: lib/components/disclaimer/disclaimer_component.js:49
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -402,7 +398,7 @@ msgstr ""
 "upang magawa ang proyektong ito. Ang Arrival Advisor ay isang open-source na "
 "proyekto. Maaari kang"
 
-#: lib/components/disclaimer/disclaimer_component.js:24
+#: lib/components/disclaimer/disclaimer_component.js:26
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -440,6 +436,10 @@ msgstr "Web:"
 #: lib/components/about/about_component.js:49
 msgid "and"
 msgstr "and"
+
+#: lib/components/disclaimer/disclaimer_component.js:22
+msgid "and the BC211 database of service providers, available at:"
+msgstr "TODO 2"
 
 #: lib/components/about/about_component.js:51
 msgid "to learn how you can support this project."

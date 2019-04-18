@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 17:09-0700\n"
+"POT-Creation-Date: 2019-04-18 10:24-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,12 +44,8 @@ msgstr "ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ"
 #: lib/components/disclaimer/disclaimer_component.js:18
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at: {welcomeBCLink}, and the BC211 database of service "
-"providers, available at: {bc211Link}."
-msgstr ""
-"Arrival Advisor ਵਿੱਚ ਬੀ.ਸੀ. ਸਰਕਾਰੀ ਦੀ ਨਵੇ ਆਇਆ ਲਈ ਗਾਈਡ www.welcomebc.ca ਅਤੇ "
-"www.bc211.ca ਉੱਤੇ ਮੌਜੂਦ ਸੇਵਾ ਦੇਣ ਵਾਲਿਆਂ ਦੇ BC211 ਡਾਟਾਬੇਸ ਤੋਂ ਜਾਣਕਾਰੀ ਲਈ ਗਈ "
-"ਹੈ।"
+"Guide, available at:"
+msgstr "TODO 2"
 
 #: lib/components/about/about_component.js:22
 msgid ""
@@ -65,7 +61,7 @@ msgstr ""
 "ਇਹ ਛੇਤੀ ਹੀ ਚੀਨੀ ਸਰਲ, ਚੀਨੀ ਰਿਵਾਇਤੀ, ਕੋਰੀਆਈ, ਪੰਜਾਬੀ ਅਤੇ ਟਾਗਾਲੋਗ ਵਿੱਚ ਉਪਲਬਧ "
 "ਹੋਵੇਗੀ।"
 
-#: lib/components/disclaimer/disclaimer_component.js:35
+#: lib/components/disclaimer/disclaimer_component.js:37
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -290,7 +286,7 @@ msgstr ""
 msgid "Open in maps"
 msgstr "ਨਕਸ਼ੇ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
-#: lib/components/disclaimer/disclaimer_component.js:47
+#: lib/components/disclaimer/disclaimer_component.js:49
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -388,7 +384,7 @@ msgstr ""
 "ਆਜ਼ਾਦ-ਸਰੋਤ ਵਾਲਾ ਪ੍ਰੋਜੈਕਟ ਹੈ। ਤੁਸੀਂ ਇਸ ਪ੍ਰੋਜੈਕਟ ਲਈ ਕਿਵੇਂ ਸਹਿਯੋਗ ਦੇ ਸਕਦੇ ਹੋ, "
 "ਇਹ ਜਾਣਨ ਲਈ {githubLink} ਅਤੇ {contactLink} ਵੇਖ ਸਕਦੇ ਹੋ।"
 
-#: lib/components/disclaimer/disclaimer_component.js:24
+#: lib/components/disclaimer/disclaimer_component.js:26
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -423,6 +419,10 @@ msgstr "ਵੈੱਬ:"
 #: lib/components/about/about_component.js:49
 msgid "and"
 msgstr "and"
+
+#: lib/components/disclaimer/disclaimer_component.js:22
+msgid "and the BC211 database of service providers, available at:"
+msgstr "TODO 1"
 
 #: lib/components/about/about_component.js:51
 msgid "to learn how you can support this project."

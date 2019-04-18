@@ -15,6 +15,7 @@ import koMessages from '../../locale/ko/messages';
 import paMessages from '../../locale/pa/messages';
 import tlMessages from '../../locale/tl/messages';
 import zhCnMessages from '../../locale/zh_CN/messages';
+import zhTwMessages from '../../locale/zh_TW/messages';
 
 // tslint:disable-next-line:no-expression-statement
 LocaleInfoManager.register([
@@ -25,6 +26,7 @@ LocaleInfoManager.register([
     { code: 'pa', label: 'ਪੰਜਾਬੀ', catalog: paMessages, isRTL: false },
     { code: 'tl', label: 'Tagalog', catalog: tlMessages, isRTL: false },
     { code: 'zh_CN', label: '简体中文', catalog: zhCnMessages, isRTL: false },
+    { code: 'zh_TW', label: '繁體中文', catalog: zhTwMessages, isRTL: false },
 ]);
 
 const buildStoreWithLocaleData = (): Store => {
