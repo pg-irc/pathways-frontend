@@ -15,13 +15,13 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
     const githubUrl = 'https://github.com/pg-irc/pathways-frontend';
     const contactUrl = 'https://arrivaladvisor.ca/contact-us';
     const welcomeBCLink = wrapWithSpace(
-        <Link href={welcomeBcUrl} text={'Newcomer\'s Guide to British Columbia'} style={textStyles.paragraphURL} />,
+        <Link href={welcomeBcUrl} style={textStyles.paragraphURL} >Newcomer\'s Guide to British Columbia</Link>,
     );
     const githubLink = wrapWithSpace(
-        <Link href={githubUrl} text={'view it on GitHub'} style={textStyles.paragraphURL} />,
+        <Link href={githubUrl} style={textStyles.paragraphURL} >view it on GitHub</Link>,
     );
     const contactLink = wrapWithSpace(
-        <Link href={contactUrl} text={'contact us'} style={textStyles.paragraphURL} />,
+        <Link href={contactUrl} style={textStyles.paragraphURL} >contact us</Link>,
     );
     const appVersion = wrapWithSpace(VERSION);
     const serverVersion = wrapWithSpace(props.serverVersion);

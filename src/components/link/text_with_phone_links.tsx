@@ -18,7 +18,7 @@ export const TextWithPhoneLinks: React.StatelessComponent<TextWithPhoneLinksProp
                 mapWithIndex((word: string, currentIndex: number): string | JSX.Element => {
                     const wordForSentence = currentIndex === lastIndex ? word : word + ' ';
                     if (phoneNumberRegex.test(word)) {
-                        return <Link key={currentIndex} href={'tel:' + word} text={wordForSentence} />;
+                        return <Link key={currentIndex} href={'tel:' + word} >{wordForSentence}</Link>;
                     }
                     return wordForSentence;
                 }, words)
