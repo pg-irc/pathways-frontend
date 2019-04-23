@@ -144,8 +144,8 @@ msgid "If you are having difficulty with settlement in Canada, we suggest gettin
 msgstr "캐나다 정착에 어려움을 겪고 있다면, 정착 서비스 담당자에게 연락할 것을 추천합니다."
 
 #: lib/components/about/about_component.js:47
-msgid "Information in this app is provided by the <0>Newcomer's Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr "이 앱에 포함된 정보들은 <0>Newcomer's Guide to British Columbia</0> 에서 제공받았으며, 2018 브리티시컬럼비아주가 소유한 저작권의 보호를 받습니다."
+msgid "Information in this app is provided by the <0>Newcomers Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
+msgstr "이 앱에 포함된 정보들은 <0>Newcomers Guide to British Columbia</0> 에서 제공받았으며, 2018 브리티시컬럼비아주가 소유한 저작권의 보호를 받습니다."
 
 #: lib/components/help/help_component.js:24
 msgid "Information on BC211"

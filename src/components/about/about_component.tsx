@@ -52,7 +52,7 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
             </ParagraphComponent>
             <ParagraphComponent>
                 <Trans>Information in this app is provided by the <Link href={welcomeBcUrl}
-                    style={textStyles.paragraphURL} >Newcomer's Guide to British Columbia</Link> Copyright
+                    style={textStyles.paragraphURL} >Newcomers Guide to British Columbia</Link> Copyright
                     2018 Province of British Columbia. All rights reserved.
                 </Trans>
             </ParagraphComponent>
