@@ -143,13 +143,9 @@ msgstr "Aide et soutien"
 msgid "If you are having difficulty with settlement in Canada, we suggest getting in touch with a settlement worker."
 msgstr "Si vous éprouvez de la difficulté à vous établir au Canada, nous vous suggérons de communiquer avec un travailleur en établissement."
 
-#: lib/components/about/about_component.js:54
-#~ msgid "Information in this app is provided by the"
-#~ msgstr "Les renseignements fournis par cette application sont tirés du"
-
 #: lib/components/about/about_component.js:47
-msgid "Information in this app is provided by the <0>Newcomer\\'s Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr ""
+#~ msgid "Information in this app is provided by the <0>Newcomers Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
+#~ msgstr "Les renseignements fournis par cette application sont tirés du <0>Newcomers Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
 
 #: lib/components/help/help_component.js:24
 msgid "Information on BC211"

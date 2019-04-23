@@ -11,12 +11,14 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pa\n"
+"Plural-Forms: \n"
 
 #: lib/components/header_menu/header_menu_component.js:45
 msgid "ABOUT THE APP"
 msgstr "ਐਪ ਬਾਰੇ"
 
-#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A19+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
+#: lib/components/about/about_component.js:16
+#: lib/components/header_menu/header_menu_component.js:50
 msgid "About Arrival Advisor"
 msgstr "Arrival Advisor ਬਾਰੇ"
 
@@ -29,60 +31,24 @@ msgid "An error has occured."
 msgstr "ਗਲਤੀ ਹੋਈ ਹੈ।"
 
 #: lib/components/recommended_topics/call_to_action.js:46
-msgid ""
-"Answer a few questions about your situation to get personalized "
-"recommendations of topics and services to help you settle in British Columbia."
-msgstr ""
-"ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆਂ ਵਿੱਚ ਤੁਹਾਨੂੰ ਸੈਟਲ ਹੋਣ ਲਈ ਮਦਦ ਕਰਨ ਵਾਸਤੇ ਵਿਸ਼ਿਆਂ ਤੇ ਸੇਵਾਵਾਂ ਦੀ ਤੁਹਾਡੇ ਲਈ ਸਿਫਾਰਸ਼ਾਂ "
-"ਲੈਣ ਲਈ ਆਪਣੇ ਹਾਲਤ ਬਾਰੇ ਕੁਝ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ।"
+msgid "Answer a few questions about your situation to get personalized recommendations of topics and services to help you settle in British Columbia."
+msgstr "ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆਂ ਵਿੱਚ ਤੁਹਾਨੂੰ ਸੈਟਲ ਹੋਣ ਲਈ ਮਦਦ ਕਰਨ ਵਾਸਤੇ ਵਿਸ਼ਿਆਂ ਤੇ ਸੇਵਾਵਾਂ ਦੀ ਤੁਹਾਡੇ ਲਈ ਸਿਫਾਰਸ਼ਾਂ ਲੈਣ ਲਈ ਆਪਣੇ ਹਾਲਤ ਬਾਰੇ ਕੁਝ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ।"
 
 #: lib/components/recommended_topics/call_to_action.js:55
 msgid "Answer questions"
 msgstr "ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ"
 
 #: lib/components/disclaimer/disclaimer_component.js:18
-msgid ""
-"Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at:"
+msgid "Arrival Advisor contains information from the BC Government’s Newcomer’s Guide, available at:"
 msgstr "TODO 2"
 
-#: lib/components/about/about_component.js:22
-msgid ""
-"Arrival Advisor is a free, multilingual, mobile app that helps immigrants and "
-"refugees in British Columbia, Canada find information and services to "
-"navigate their settlement journey. The app is currently available in English, "
-"French (Canadian), and Arabic. It will soon be available in Chinese "
-"Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
-msgstr ""
-"Arrival Advisor ਮੁਫ਼ਤ, ਬਹੁ-ਭਾਸਾਈ ਮੋਬਾਈਲ ਐਪ ਹੈ, ਜੋ ਕਿ ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ, ਕੈਨੇਡਾ ਦੇ ਆਵਾਸੀਆਂ ਅਤੇ "
-"ਰਿਫਿਊਜੀਆਂ ਨੂੰ ਉਹਨਾਂ ਦੀ ਸੈਟਲਮੈਂਟ ਯਾਤਰਾ ਲਈ ਜਾਣਕਾਰੀ ਅਤੇ ਸੇਵਾਵਾਂ ਲੱਭਣ ਲਈ ਮਦਦ ਕਰਦੀ ਹੈ। ਇਹ ਐਪ "
-"ਇਸ ਵੇਲੇ ਅੰਗਰੇਜੀ, ਫਰੈਂਚ (ਕੈਨੇਡਾ) ਅਤੇ ਅਰਬੀ ਵਿੱਚ ਹੈ। ਇਹ ਛੇਤੀ ਹੀ ਚੀਨੀ ਸਰਲ, ਚੀਨੀ ਰਿਵਾਇਤੀ, "
-"ਕੋਰੀਆਈ, ਪੰਜਾਬੀ ਅਤੇ ਟਾਗਾਲੋਗ ਵਿੱਚ ਉਪਲਬਧ ਹੋਵੇਗੀ।"
+#: lib/components/about/about_component.js:19
+msgid "Arrival Advisor is a free, multilingual, mobile app that helps immigrants and refugees in British Columbia, Canada find information and services to navigate their settlement journey. The app is currently available in English, French (Canadian), and Arabic. It will soon be available in Chinese Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
+msgstr "Arrival Advisor ਮੁਫ਼ਤ, ਬਹੁ-ਭਾਸਾਈ ਮੋਬਾਈਲ ਐਪ ਹੈ, ਜੋ ਕਿ ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ, ਕੈਨੇਡਾ ਦੇ ਆਵਾਸੀਆਂ ਅਤੇ ਰਿਫਿਊਜੀਆਂ ਨੂੰ ਉਹਨਾਂ ਦੀ ਸੈਟਲਮੈਂਟ ਯਾਤਰਾ ਲਈ ਜਾਣਕਾਰੀ ਅਤੇ ਸੇਵਾਵਾਂ ਲੱਭਣ ਲਈ ਮਦਦ ਕਰਦੀ ਹੈ। ਇਹ ਐਪ ਇਸ ਵੇਲੇ ਅੰਗਰੇਜੀ, ਫਰੈਂਚ (ਕੈਨੇਡਾ) ਅਤੇ ਅਰਬੀ ਵਿੱਚ ਹੈ। ਇਹ ਛੇਤੀ ਹੀ ਚੀਨੀ ਸਰਲ, ਚੀਨੀ ਰਿਵਾਇਤੀ, ਕੋਰੀਆਈ, ਪੰਜਾਬੀ ਅਤੇ ਟਾਗਾਲੋਗ ਵਿੱਚ ਉਪਲਬਧ ਹੋਵੇਗੀ।"
 
 #: lib/components/disclaimer/disclaimer_component.js:37
-msgid ""
-"Arrival Advisor respects and maintains the privacy and anonymity of its "
-"users. Users do not need to provide personal information in order to use the "
-"app. The questionnaire is designed to assist in personalizing services and "
-"resources required by the user, and answers are only saved to enhance the "
-"usability of the app over time. Users of the Arrival Advisor app do so at "
-"their own discretion. The answers you provide will be used for the operation "
-"of this tool to provide you with guidance on resources and services that can "
-"help you adjust to life in Canada. Users cannot be identified by their "
-"answers to the questionnaire. The information is not used by Immigration, "
-"Refugees and Citizenship Canada for any other purpose and is not used for any "
-"immigration decision making."
-msgstr ""
-"Arrival Advisor ਇਸ ਦੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀ ਪਰਦੇਦਾਰੀ ਅਤੇ ਗੁਮਨਾਮੀ ਦਾ ਖ਼ਿਆਲ ਰੱਖਦੀ ਹੈ ਤੇ ਉਹਨਾਂ ਨੂੰ "
-"ਬਣਾਈ ਰੱਖਦੀ ਹੈ। ਵਰਤੋਂਕਾਰਾਂ ਨੂੰ ਐਪ ਵਰਤਣ ਲਈ ਕੋਈ ਵੀ ਨਿੱਜੀ ਜਾਣਕਾਰੀ ਦੇਣ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ। ਸਵਾਲਨਾਮੇ "
-"ਨੂੰ ਵਰਤੋਂਕਾਰ ਵਲੋਂ ਲੋੜੀਦੀਆਂ ਸੇਵਾਵਾਂ ਤੇ ਸਰੋਤਾਂ ਨੂੰ ਨਿੱਜੀ ਲੋੜ ਮੁਤਾਬਕ ਬਣਾਉਣ ਲਈ ਸਹਾਇਤਾ ਵਾਸਤੇ ਡਿਜ਼ਾਇਨ "
-"ਕੀਤਾ ਗਿਆ ਹੈ ਅਤੇ ਜਵਾਬਾਂ ਨੂੰ ਸਮੇਂ ਨਾਲ ਐਪ ਦੀ ਵਰਤੋਂ ਯੋਗਤਾ ਸੁਧਾਰਨ ਲਈ ਹੀ ਸੰਭਾਲਿਆ ਜਾਂਦਾ ਹੈ। "
-"Arrival Advisor ਦੇ ਵਰਤੋਂਕਾਰ ਆਪਣੇ ਖੁਦ ਦੀ ਮਰਜ਼ੀ ਨਾਲ ਅਜਿਹਾ ਕਰ ਸਕਦੇ ਹੋ। ਤੁਹਾਡੇ ਵਲੋਂ ਦਿੱਤੇ ਗਏ "
-"ਜਵਾਬਾਂ ਨੂੰ ਇਸ ਸਾਧਨ ਦੀ ਕਾਰਵਾਈ ਦੌਰਾਨ ਵਰਤਿਆ ਜਾਵੇਗਾ ਤਾਂ ਕਿ ਕੈਨੇਡਾ ਦੀ ਜ਼ਿੰਦਗੀ ਵਿੱਚ ਅਨੁਕੂਲ ਬਣਾਉਣ "
-"ਲਈ ਤੁਹਾਡੀ ਮਦਦ ਵਾਸਤੇ ਸਰੋਤਾਂ ਤੇ ਸੇਵਾਵਾਂ ਲਈ ਤੁਹਾਨੂੰ ਸੇਧ ਦਿੱਤੀ ਜਾ ਸਕੇ। ਵਰਤੋਂਕਾਰਾਂ ਨੂੰ ਸਵਾਲਨਾਮੇ ਵਿੱਚ "
-"ਉਹਨਾਂ ਦੇ ਦਿੱਤੇ ਜਵਾਬਾਂ ਰਾਹੀਂ ਪਛਾਣਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਜਾਣਕਾਰੀ ਨੂੰ ਇੰਮੀਗਰੇਸ਼ਨ, ਰਿਫ਼ਿਊਜ਼ੀ ਅਤੇ "
-"ਸਿਟੀਜ਼ਨਸ਼ਿਪ ਕੈਨੇਡਾ ਵਲੋਂ ਕਿਸੇ ਵੀ ਹੋਰ ਮਕਸਦ ਨਹੀਂ ਨਹੀਂ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ ਅਤੇ ਨਾ ਹੀ ਕਿਸੇ ਵੀ ਇੰਮੀਗਰੇਸ਼ਨ "
-"ਫੈਸਲੇ ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ।"
+msgid "Arrival Advisor respects and maintains the privacy and anonymity of its users. Users do not need to provide personal information in order to use the app. The questionnaire is designed to assist in personalizing services and resources required by the user, and answers are only saved to enhance the usability of the app over time. Users of the Arrival Advisor app do so at their own discretion. The answers you provide will be used for the operation of this tool to provide you with guidance on resources and services that can help you adjust to life in Canada. Users cannot be identified by their answers to the questionnaire. The information is not used by Immigration, Refugees and Citizenship Canada for any other purpose and is not used for any immigration decision making."
+msgstr "Arrival Advisor ਇਸ ਦੇ ਵਰਤੋਂਕਾਰਾਂ ਦੀ ਪਰਦੇਦਾਰੀ ਅਤੇ ਗੁਮਨਾਮੀ ਦਾ ਖ਼ਿਆਲ ਰੱਖਦੀ ਹੈ ਤੇ ਉਹਨਾਂ ਨੂੰ ਬਣਾਈ ਰੱਖਦੀ ਹੈ। ਵਰਤੋਂਕਾਰਾਂ ਨੂੰ ਐਪ ਵਰਤਣ ਲਈ ਕੋਈ ਵੀ ਨਿੱਜੀ ਜਾਣਕਾਰੀ ਦੇਣ ਦੀ ਲੋੜ ਨਹੀਂ ਹੈ। ਸਵਾਲਨਾਮੇ ਨੂੰ ਵਰਤੋਂਕਾਰ ਵਲੋਂ ਲੋੜੀਦੀਆਂ ਸੇਵਾਵਾਂ ਤੇ ਸਰੋਤਾਂ ਨੂੰ ਨਿੱਜੀ ਲੋੜ ਮੁਤਾਬਕ ਬਣਾਉਣ ਲਈ ਸਹਾਇਤਾ ਵਾਸਤੇ ਡਿਜ਼ਾਇਨ ਕੀਤਾ ਗਿਆ ਹੈ ਅਤੇ ਜਵਾਬਾਂ ਨੂੰ ਸਮੇਂ ਨਾਲ ਐਪ ਦੀ ਵਰਤੋਂ ਯੋਗਤਾ ਸੁਧਾਰਨ ਲਈ ਹੀ ਸੰਭਾਲਿਆ ਜਾਂਦਾ ਹੈ। Arrival Advisor ਦੇ ਵਰਤੋਂਕਾਰ ਆਪਣੇ ਖੁਦ ਦੀ ਮਰਜ਼ੀ ਨਾਲ ਅਜਿਹਾ ਕਰ ਸਕਦੇ ਹੋ। ਤੁਹਾਡੇ ਵਲੋਂ ਦਿੱਤੇ ਗਏ ਜਵਾਬਾਂ ਨੂੰ ਇਸ ਸਾਧਨ ਦੀ ਕਾਰਵਾਈ ਦੌਰਾਨ ਵਰਤਿਆ ਜਾਵੇਗਾ ਤਾਂ ਕਿ ਕੈਨੇਡਾ ਦੀ ਜ਼ਿੰਦਗੀ ਵਿੱਚ ਅਨੁਕੂਲ ਬਣਾਉਣ ਲਈ ਤੁਹਾਡੀ ਮਦਦ ਵਾਸਤੇ ਸਰੋਤਾਂ ਤੇ ਸੇਵਾਵਾਂ ਲਈ ਤੁਹਾਨੂੰ ਸੇਧ ਦਿੱਤੀ ਜਾ ਸਕੇ। ਵਰਤੋਂਕਾਰਾਂ ਨੂੰ ਸਵਾਲਨਾਮੇ ਵਿੱਚ ਉਹਨਾਂ ਦੇ ਦਿੱਤੇ ਜਵਾਬਾਂ ਰਾਹੀਂ ਪਛਾਣਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ। ਜਾਣਕਾਰੀ ਨੂੰ ਇੰਮੀਗਰੇਸ਼ਨ, ਰਿਫ਼ਿਊਜ਼ੀ ਅਤੇ ਸਿਟੀਜ਼ਨਸ਼ਿਪ ਕੈਨੇਡਾ ਵਲੋਂ ਕਿਸੇ ਵੀ ਹੋਰ ਮਕਸਦ ਨਹੀਂ ਨਹੀਂ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ ਅਤੇ ਨਾ ਹੀ ਕਿਸੇ ਵੀ ਇੰਮੀਗਰੇਸ਼ਨ ਫੈਸਲੇ ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ।"
 
 #: lib/components/questionnaire/questionnaire_component.js:110
 msgid "Back"
@@ -105,8 +71,8 @@ msgid "Contact Arrival Advisor team"
 msgstr "Arrival Advisor ਟੀਮ ਨਾਲ ਸੰਪਰਕ ਕਰੋ"
 
 #: lib/components/about/about_component.js:56
-msgid "Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr "ਕਾਪੀਰਾਈਟ 2018 ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਸੂਬਾ। ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।"
+#~ msgid "Copyright 2018 Province of British Columbia. All rights reserved."
+#~ msgstr "ਕਾਪੀਰਾਈਟ 2018 ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਸੂਬਾ। ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।"
 
 #: lib/components/welcome/welcome_component.js:49
 msgid "Created by"
@@ -116,7 +82,8 @@ msgstr "ਬਣਾਇਆ"
 msgid "Delete all user data"
 msgstr "ਸਾਰਾ ਵਰਤੋਂਕਾਰ ਡਾਟਾ ਮਿਟਾਓ"
 
-#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A15+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+#: lib/components/disclaimer/disclaimer_component.js:15
+#: lib/components/header_menu/header_menu_component.js:51
 msgid "Disclaimer"
 msgstr "ਬੇਦਾਅਵਾ"
 
@@ -141,12 +108,8 @@ msgid "FOR ADDITIONAL ASSISTANCE"
 msgstr "ਹੋਰ ਸਹਾਇਤਾ ਲਈ"
 
 #: lib/components/services/service_list_error_component.js:28
-msgid ""
-"Fetching your location timed out. On Android devices you may need to set your "
-"location mode to \"High accuracy\"."
-msgstr ""
-"ਤੁਹਾਡੇ ਟਿਕਾਣੇ ਨੂੰ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਸਮਾਂ ਸਮਾਪਤ ਹੋਇਆ। ਐਂਡਰਾਇਡ (Android) ਡਿਵਾਈਸਾਂ ਉੱਤੇ ਤੁਹਾਨੂੰ ਆਪਣੇ "
-"ਟਿਕਾਣੇ ਮੋਡ ਨੂੰ \"ਉੱਚ ਸਟੀਕਤਾ\" ਨਿਯਤ ਕਰਨ ਦੀ ਲੋੜ ਹੈ।"
+msgid "Fetching your location timed out. On Android devices you may need to set your location mode to \"High accuracy\"."
+msgstr "ਤੁਹਾਡੇ ਟਿਕਾਣੇ ਨੂੰ ਪ੍ਰਾਪਤ ਕਰਨ ਲਈ ਸਮਾਂ ਸਮਾਪਤ ਹੋਇਆ। ਐਂਡਰਾਇਡ (Android) ਡਿਵਾਈਸਾਂ ਉੱਤੇ ਤੁਹਾਨੂੰ ਆਪਣੇ ਟਿਕਾਣੇ ਮੋਡ ਨੂੰ \"ਉੱਚ ਸਟੀਕਤਾ\" ਨਿਯਤ ਕਰਨ ਦੀ ਲੋੜ ਹੈ।"
 
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
@@ -156,27 +119,9 @@ msgstr "ਮੇਰੇ ਨੇੜੇ ਸੈਟਲਮੈਂਟ ਏਜੰਸੀ ਲ�
 msgid "Find related services near me"
 msgstr "ਮੇਰੇ ਨੇੜੇ ਸੰਬੰਧਿਤ ਸੇਵਾਵਾਂ ਲੱਭੋ"
 
-#: lib/components/about/about_component.js:30
-msgid ""
-"From finding a job to learning English, accessing health care, and more, "
-"Arrival Advisor has everything you need to get started in your new community. "
-"Explore topics and services without ever needing to create an account. Access "
-"important information no matter where you are: the newcomer topics provided "
-"by Arrival Advisor are saved to your phone so you can view them, even without "
-"internet. You can fill out some questions to get personalized recommendations "
-"of topics and services to settle in British Columbia. Arrival Advisor is "
-"anonymous and your answers are only used to operate the app's "
-"recommendations. We never save or share your personal data with funders or "
-"any third parties."
-msgstr ""
-"ਨੌਕਰੀ ਲੱਭਣ ਤੋਂ ਲੈ ਕੇ ਅੰਗਰੇਜ਼ੀ ਸਿੱਖਣ, ਸਿਹਤ ਦੇਖਭਾਲ ਲਈ ਪਹੁੰਚ ਅਤੇ ਹੋਰ ਕਈ ਕੁਝ ਲਈ ਤੁਹਾਨੂੰ ਤੁਹਾਡੇ ਨਵੇਂ ਸਮਾਜ "
-"ਵਿੱਚ ਸ਼ੁਰੂਆਤ ਕਰਨ ਲਈ ਲੋੜੀਂਦਾ ਸਭ ਕੁਝ Arrival Advisor ਵਿੱਚ ਹੈ। ਬਿਨਾਂ ਖਾਤਾ ਬਣਾਏ ਵਿਸ਼ਿਆਂ ਅਤੇ "
-"ਸੇਵਾਵਾਂ ਦੀ ਪੜਤਾਲ ਕਰੋ। ਜਿੱਥੇ ਵੀ ਤੁਸੀਂ ਹੋਵੋ, ਖਾਸ ਜਾਣਕਾਰੀ ਲਈ ਪਹੁੰਚ ਬਣਾਈ ਰੱਖੋ: Arrival Advisor "
-"ਵਲੋਂ ਦਿੱਤੇ ਜਾਂਦੇ ਨਵੇਂ ਆਇਆਂ ਲਈ ਵਿਸ਼ੇ ਤੁਹਾਡੇ ਫ਼ੋਨ ਉੱਤੇ ਸੰਭਾਲੇ ਜਾਂਦੇ ਹਨ ਤਾਂ ਕਿ ਤੁਸੀਂ ਉਹਨਾਂ ਨੂੰ ਬਿਨਾਂ ਇੰਟਰਨੈੱਟ ਦੇ "
-"ਵੇਖ ਸਕੋ। ਤੁਸੀਂ ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਵਿੱਚ ਸੈਟਲ ਹੋਣ ਲਈ ਵਿਸ਼ਿਆਂ ਤੇ ਸੇਵਾਵਾਂ ਨੂੰ ਆਪਣੇ ਲਈ ਨਿੱਜੀ ਬਣਾਈਆਂ "
-"ਸਿਫਾਰਸ਼ਾਂ ਲੈਣ ਵਾਸਤੇ ਕੁਝ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ ਦੇ ਸਕਦੇ ਹੋ। Arrival Advisor ਅਣਪਛਾਤੇ ਵਜੋਂ ਕੰਮ ਕਰਦਾ ਹੈ "
-"ਅਤੇ ਤੁਹਾਡੇ ਜਵਾਬਾਂ ਨੂੰ ਐਪ ਦੀਆਂ ਸਿਫਾਰਸ਼ਾਂ ਦੇਣ ਲਈ ਹੀ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ। ਅਸੀਂ ਤੁਹਾਡੇ ਨਿੱਜੀ ਡਾਟੇ ਨੂੰ "
-"ਸੰਭਾਲ ਦੇ ਜਾਂ ਫੰਡ ਦੇਣ ਵਾਲਿਆਂ ਜਾਂ ਕਿਸੇ ਵੀ ਸੁਤੰਤਰ ਧਿਰਾਂ ਨਾਲ ਸਾਂਝਾ ਨਹੀਂ ਕਰਦੇ ਹਾਂ।"
+#: lib/components/about/about_component.js:27
+msgid "From finding a job to learning English, accessing health care, and more, Arrival Advisor has everything you need to get started in your new community. Explore topics and services without ever needing to create an account. Access important information no matter where you are: the newcomer topics provided by Arrival Advisor are saved to your phone so you can view them, even without internet. You can fill out some questions to get personalized recommendations of topics and services to settle in British Columbia. Arrival Advisor is anonymous and your answers are only used to operate the app's recommendations. We never save or share your personal data with funders or any third parties."
+msgstr "ਨੌਕਰੀ ਲੱਭਣ ਤੋਂ ਲੈ ਕੇ ਅੰਗਰੇਜ਼ੀ ਸਿੱਖਣ, ਸਿਹਤ ਦੇਖਭਾਲ ਲਈ ਪਹੁੰਚ ਅਤੇ ਹੋਰ ਕਈ ਕੁਝ ਲਈ ਤੁਹਾਨੂੰ ਤੁਹਾਡੇ ਨਵੇਂ ਸਮਾਜ ਵਿੱਚ ਸ਼ੁਰੂਆਤ ਕਰਨ ਲਈ ਲੋੜੀਂਦਾ ਸਭ ਕੁਝ Arrival Advisor ਵਿੱਚ ਹੈ। ਬਿਨਾਂ ਖਾਤਾ ਬਣਾਏ ਵਿਸ਼ਿਆਂ ਅਤੇ ਸੇਵਾਵਾਂ ਦੀ ਪੜਤਾਲ ਕਰੋ। ਜਿੱਥੇ ਵੀ ਤੁਸੀਂ ਹੋਵੋ, ਖਾਸ ਜਾਣਕਾਰੀ ਲਈ ਪਹੁੰਚ ਬਣਾਈ ਰੱਖੋ: Arrival Advisor ਵਲੋਂ ਦਿੱਤੇ ਜਾਂਦੇ ਨਵੇਂ ਆਇਆਂ ਲਈ ਵਿਸ਼ੇ ਤੁਹਾਡੇ ਫ਼ੋਨ ਉੱਤੇ ਸੰਭਾਲੇ ਜਾਂਦੇ ਹਨ ਤਾਂ ਕਿ ਤੁਸੀਂ ਉਹਨਾਂ ਨੂੰ ਬਿਨਾਂ ਇੰਟਰਨੈੱਟ ਦੇ ਵੇਖ ਸਕੋ। ਤੁਸੀਂ ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਵਿੱਚ ਸੈਟਲ ਹੋਣ ਲਈ ਵਿਸ਼ਿਆਂ ਤੇ ਸੇਵਾਵਾਂ ਨੂੰ ਆਪਣੇ ਲਈ ਨਿੱਜੀ ਬਣਾਈਆਂ ਸਿਫਾਰਸ਼ਾਂ ਲੈਣ ਵਾਸਤੇ ਕੁਝ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ ਦੇ ਸਕਦੇ ਹੋ। Arrival Advisor ਅਣਪਛਾਤੇ ਵਜੋਂ ਕੰਮ ਕਰਦਾ ਹੈ ਅਤੇ ਤੁਹਾਡੇ ਜਵਾਬਾਂ ਨੂੰ ਐਪ ਦੀਆਂ ਸਿਫਾਰਸ਼ਾਂ ਦੇਣ ਲਈ ਹੀ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ। ਅਸੀਂ ਤੁਹਾਡੇ ਨਿੱਜੀ ਡਾਟੇ ਨੂੰ ਸੰਭਾਲ ਦੇ ਜਾਂ ਫੰਡ ਦੇਣ ਵਾਲਿਆਂ ਜਾਂ ਕਿਸੇ ਵੀ ਸੁਤੰਤਰ ਧਿਰਾਂ ਨਾਲ ਸਾਂਝਾ ਨਹੀਂ ਕਰਦੇ ਹਾਂ।"
 
 #: lib/components/recommended_topics/call_to_action.js:33
 msgid "GETTING STARTED"
@@ -195,18 +140,12 @@ msgid "Help & Support"
 msgstr "ਮਦਦ ਤੇ ਸਹਿਯੋਗ"
 
 #: lib/components/help/help_component.js:49
-msgid ""
-"If you are having difficulty with settlement in Canada, we suggest getting in "
-"touch with a settlement worker."
-msgstr ""
-"ਜੇ ਤੁਹਾਨੂੰ ਕੈਨੇਡਾ ਵਿੱਚ ਸੈਟਲਮੈਂਟ ਨਾਲ ਔਖਿਆਈ ਆ ਰਹੀ ਹੈ ਤਾਂ ਅਸੀਂ ਤੁਹਾਨੂੰ ਸੈਟਲਮੈਂਟ ਵਰਕਰ ਨਾਲ ਸੰਪਰਕ ਕਰਨ "
-"ਦਾ ਸੁਝਾਅ ਦਿੰਦੇ ਹਾਂ।"
+msgid "If you are having difficulty with settlement in Canada, we suggest getting in touch with a settlement worker."
+msgstr "ਜੇ ਤੁਹਾਨੂੰ ਕੈਨੇਡਾ ਵਿੱਚ ਸੈਟਲਮੈਂਟ ਨਾਲ ਔਖਿਆਈ ਆ ਰਹੀ ਹੈ ਤਾਂ ਅਸੀਂ ਤੁਹਾਨੂੰ ਸੈਟਲਮੈਂਟ ਵਰਕਰ ਨਾਲ ਸੰਪਰਕ ਕਰਨ ਦਾ ਸੁਝਾਅ ਦਿੰਦੇ ਹਾਂ।"
 
-#: lib/components/about/about_component.js:54
-msgid "Information in this app is provided by the"
-msgstr ""
-"ਇਸ ਐਪ ਵਿੱਚ ਜਾਣਕਾਰੀ {welcomeBCLink} ਵਲੋਂ ਦਿੱਤੀ ਗਈ ਹੈ, ਕਾਪੀਰਾਈਟ 2018 ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ "
-"ਸੂਬਾ। ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।"
+#: lib/components/about/about_component.js:47
+msgid "Information in this app is provided by the <0>Newcomer\\'s Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
+msgstr "ਇਸ ਐਪ ਵਿੱਚ ਜਾਣਕਾਰੀ <0>Newcomer\\'s Guide to British Columbia</0> ਵਲੋਂ ਦਿੱਤੀ ਗਈ ਹੈ, ਕਾਪੀਰਾਈਟ 2018 ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਸੂਬਾ। ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।"
 
 #: lib/components/help/help_component.js:24
 msgid "Information on BC211"
@@ -269,31 +208,16 @@ msgid "OK"
 msgstr "ਠੀਕ ਹੈ"
 
 #: lib/components/recommended_topics/call_to_action.js:60
-msgid ""
-"Once you answer some questions, your recommendations will show up below. For "
-"now, here are some topics we recommend for everyone:"
-msgstr ""
-"ਜਦੋਂ ਤੁਸੀਂ ਕੁਝ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ ਦੇ ਦਿੱਤੇ ਤਾਂ ਤੁਹਾਡੀਆਂ ਸਿਫਾਰਸ਼ਾਂ ਹੇਠਾਂ ਦਿਖਾਈਆਂ ਜਾਣਗੀਆਂ। ਹੁਣ ਇਹ ਕੁਝ "
-"ਵਿਸ਼ੇ ਹਨ, ਜੋ ਕਿ ਅਸੀਂ ਹਰੇਕ ਲਈ ਸਿਫਾਰਸ਼ ਕਰਦੇ ਹਾਂ:"
+msgid "Once you answer some questions, your recommendations will show up below. For now, here are some topics we recommend for everyone:"
+msgstr "ਜਦੋਂ ਤੁਸੀਂ ਕੁਝ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ ਦੇ ਦਿੱਤੇ ਤਾਂ ਤੁਹਾਡੀਆਂ ਸਿਫਾਰਸ਼ਾਂ ਹੇਠਾਂ ਦਿਖਾਈਆਂ ਜਾਣਗੀਆਂ। ਹੁਣ ਇਹ ਕੁਝ ਵਿਸ਼ੇ ਹਨ, ਜੋ ਕਿ ਅਸੀਂ ਹਰੇਕ ਲਈ ਸਿਫਾਰਸ਼ ਕਰਦੇ ਹਾਂ:"
 
 #: lib/components/maps_application_popup/maps_application_popup_component.js:18
 msgid "Open in maps"
 msgstr "ਨਕਸ਼ੇ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
 #: lib/components/disclaimer/disclaimer_component.js:49
-msgid ""
-"PeaceGeeks is not liable for any damages incurred as a result of or related "
-"to the use of the app. PeaceGeeks is not an immigration consultancy network, "
-"and therefore cannot provide advice or support directly related to "
-"immigration. Arrival Advisor exists to offer newcomers a directory of "
-"services and resources to assist settlement in Metro Vancouver and does not "
-"exist in an official Immigration Service capacity."
-msgstr ""
-"ਪੀਸਗੀਕਸ (PeaceGeeks) ਐਪ ਦੀ ਵਰਤੋਂ ਦੇ ਨਤੀਜੇ ਵਜੋਂ ਜਾਂ ਕਿਸੇ ਵੀ ਵਰਤੋਂ ਦੇ ਕਰਕੇ ਹੋਣ ਵਾਲੇ ਨੁਕਸਾਨ ਦੀ "
-"ਦੇਣਦਾਰ ਨਹੀਂ ਹੈ। ਪੀਸਗੀਕਸ (PeaceGeeks)ਕੋਈ ਇੰਮੀਗਰੇਸ਼ਨ ਸਲਾਹਕਾਰ ਨੈੱਟਵਰਕ ਨਹੀਂ ਹੈ ਅਤੇ ਇਸਕਰਕੇ "
-"ਇੰਮੀਗਰੇਸ਼ਨ ਸੰਬੰਧੀ ਕੋਈ ਵੀ ਸਿੱਧੀ ਸਲਾਹ ਜਾਂ ਸਹਿਯੋਗ ਨਹੀਂ ਦਿੰਦੀ। Arrival Advisor ਨਵੇਂ ਆਉਣ ਵਾਲਿਆਂ "
-"ਨੂੰ ਮੈਟਰੋ ਵੈਨਕੂਵਰ ਵਿੱਚ ਸੈਟਲ ਹੋਣ ਲਈ ਸਹਾਇਤਾ ਵਾਸਤੇ ਸੇਵਾਵਾਂ ਤੇ ਸਰੋਤਾਂ ਦੀ ਡਾਇਰੈਕਟਰੀ ਦੇਣ ਲਈ ਮੌਜੂਦ ਹੈ ਅਤੇ "
-"ਅਧਿਕਾਰਿਤ ਇੰਮੀਗਰੇਸ਼ਨ ਸੇਵਾ ਸਮਰੱਥਾ ਵਿੱਚ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
+msgid "PeaceGeeks is not liable for any damages incurred as a result of or related to the use of the app. PeaceGeeks is not an immigration consultancy network, and therefore cannot provide advice or support directly related to immigration. Arrival Advisor exists to offer newcomers a directory of services and resources to assist settlement in Metro Vancouver and does not exist in an official Immigration Service capacity."
+msgstr "ਪੀਸਗੀਕਸ (PeaceGeeks) ਐਪ ਦੀ ਵਰਤੋਂ ਦੇ ਨਤੀਜੇ ਵਜੋਂ ਜਾਂ ਕਿਸੇ ਵੀ ਵਰਤੋਂ ਦੇ ਕਰਕੇ ਹੋਣ ਵਾਲੇ ਨੁਕਸਾਨ ਦੀ ਦੇਣਦਾਰ ਨਹੀਂ ਹੈ। ਪੀਸਗੀਕਸ (PeaceGeeks)ਕੋਈ ਇੰਮੀਗਰੇਸ਼ਨ ਸਲਾਹਕਾਰ ਨੈੱਟਵਰਕ ਨਹੀਂ ਹੈ ਅਤੇ ਇਸਕਰਕੇ ਇੰਮੀਗਰੇਸ਼ਨ ਸੰਬੰਧੀ ਕੋਈ ਵੀ ਸਿੱਧੀ ਸਲਾਹ ਜਾਂ ਸਹਿਯੋਗ ਨਹੀਂ ਦਿੰਦੀ। Arrival Advisor ਨਵੇਂ ਆਉਣ ਵਾਲਿਆਂ ਨੂੰ ਮੈਟਰੋ ਵੈਨਕੂਵਰ ਵਿੱਚ ਸੈਟਲ ਹੋਣ ਲਈ ਸਹਾਇਤਾ ਵਾਸਤੇ ਸੇਵਾਵਾਂ ਤੇ ਸਰੋਤਾਂ ਦੀ ਡਾਇਰੈਕਟਰੀ ਦੇਣ ਲਈ ਮੌਜੂਦ ਹੈ ਅਤੇ ਅਧਿਕਾਰਿਤ ਇੰਮੀਗਰੇਸ਼ਨ ਸੇਵਾ ਸਮਰੱਥਾ ਵਿੱਚ ਮੌਜੂਦ ਨਹੀਂ ਹੈ।"
 
 #: lib/components/services/service_list_error_component.js:23
 msgid "Please ensure location services are enabled for Arrival Advisor."
@@ -319,7 +243,8 @@ msgstr "ਘੱਟ ਪੜ੍ਹੋ"
 msgid "Read more"
 msgstr "ਵੱਧ ਪੜ੍ਹੋ"
 
-#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftopics%2Ftask_detail_content_component.js%3A63
+#: lib/components/recommended_topics/recommended_topics_component.js:38
+#: lib/components/topics/task_detail_content_component.js:63
 msgid "Recommended for you"
 msgstr "ਤੁਹਾਡੇ ਲਈ ਸਿਫਾਰਸ਼ਾਂ ਹਨ"
 
@@ -335,7 +260,7 @@ msgstr "ਸੈਟਲਮੈਂਟ ਲਈ ਤੁਹਾਡੀ ਨਿੱਜੀ ਵ�
 msgid "Select your language"
 msgstr "ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ"
 
-#: lib/components/about/about_component.js:63
+#: lib/components/about/about_component.js:56
 msgid "Server version:"
 msgstr "ਸਰਵਰ ਵਰਜ਼ਨ: {0}"
 
@@ -359,42 +284,15 @@ msgstr "ਸ਼ੁਰੂ ਕਰੋ"
 msgid "Start settling in B.C."
 msgstr "ਬੀ.ਸੀ. ਵਿੱਚ ਸੈਟਲ ਹੋਣਾ ਸ਼ੁਰੂ ਕਰੋ"
 
-#: lib/components/about/about_component.js:41
-msgid ""
-"The Arrival Advisor app is created by PeaceGeeks in partnership with "
-"settlement organizations in Metro Vancouver, as well as immigrants and "
-"refugees like you. This project is possible thanks to funding by the Province "
-"of British Columbia and Google.org Canada in partnership with LEAP | Pecaut "
-"Centre for Social Impact. Special thanks also goes to individual donors who "
-"make this project possible. Arrival Advisor is an open-source project. You can"
-msgstr ""
-"Arrival Advisor ਨੂੰ ਮੈਟਰੋ ਵੈਨਕੂਵਰ ਵਿੱਚ ਸੈਟਲਮੈਂਟ ਦੇਣ ਵਾਲਿਆਂ ਅਤੇ ਤੁਹਾਡੇ ਵਲੋਂ ਆਵਾਸੀਆਂ ਤੇ ਰਿਫ਼ਿਊਜ਼ੀਆਂ "
-"ਨਾਲ ਮਿਲ ਕੇ ਡਿਜਾਇਨ ਕੀਤਾ ਗਿਆ ਹੈ। ਅਸੀਂ ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ ਸੂਬੇ ਵਲੋਂ ਨੌਕਰੀਆਂ, ਵਪਾਰ ਅਤੇ ਤਕਨੀਕ "
-"ਮੰਤਰਾਲੇ ਦੇ ਨਾਲ ਨਾਲ Google.org Canada ਵਲੋਂ ਵਿੱਤੀ ਸਹਿਯੋਗ ਦੇਣ ਲਈ ਸ਼ੁਕਰਗੁਜ਼ਾਰ ਹੋ ਕੇ ਕਦਰ ਕਰਦੇ ਹਾਂ। "
-"ਨਿੱਜੀ ਦਾਨ ਦੇਣ ਵਲਿਆਂ ਦਾ ਵੀ ਖਾਸ ਧੰਨਵਾਦ ਹੈ, ਜਿਹਨਾਂ ਨੇ ਇਸ ਪ੍ਰੋਜੈਕਟ ਨੂੰ ਸੰਭਵ ਬਣਾਇਆ। Arrival "
-"Advisor ਆਜ਼ਾਦ-ਸਰੋਤ ਵਾਲਾ ਪ੍ਰੋਜੈਕਟ ਹੈ। ਤੁਸੀਂ ਇਸ ਪ੍ਰੋਜੈਕਟ ਲਈ ਕਿਵੇਂ ਸਹਿਯੋਗ ਦੇ ਸਕਦੇ ਹੋ, ਇਹ ਜਾਣਨ ਲਈ "
-"{githubLink} ਅਤੇ {contactLink} ਵੇਖ ਸਕਦੇ ਹੋ।"
+#: lib/components/about/about_component.js:38
+msgid "The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations in Metro Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact. Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how you can support this project."
+msgstr "The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations in Metro Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact. Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how you can support this project."
 
 #: lib/components/disclaimer/disclaimer_component.js:26
-msgid ""
-"The app provides information about relevant newcomer services, and is "
-"intended for general guidance and reference only. While we aim to provide "
-"accurate and timely information, we do not have control over the ongoing "
-"accuracy of the information or the quality of the services provided. If you "
-"discover that a piece of information is outdated or not useful, please let us "
-"know in the feedback section of the app. The inclusion of services and "
-"resources in this app does not imply an endorsement or recommendation of "
-"those services over others.  Utilization of services located through the app "
-"is undertaken at the risk of the user."
-msgstr ""
-"ਐਪ ਢੁੱਕਵੀਆਂ ਨਵੇਂ ਆਉਣ ਵਾਲਿਆਂ ਲਈ ਸੇਵਾਵਾਂ ਬਾਰੇ ਜਾਣਕਾਰੀ ਦਿੰਦੀ ਹੈ ਅਤੇ ਆਮ ਸੇਧ ਦੇਣ ਤੇ ਹਵਾਲੇ ਲਈ ਹੀ ਹੈ। "
-"ਜਦੋਂ ਕਿ ਸਾਡਾ ਮਕਸਦ ਦਰੁਸਤ ਅਤੇ ਸਮੇਂ ਸਿਰ ਜਾਣਕਾਰੀ ਦੇਣਾ ਹੈ, ਪਰ ਸਾਡਾ ਜਾਣਕਾਰੀ ਦੀ ਮੌਜੂਦਾ ਦਰੁਸਤਾ "
-"ਜਾਂ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਸੇਵਾਵਾਂ ਦੀ ਕੁਆਲਟੀ ਉੱਤੇ ਕੰਟਰੋਲ ਨਹੀਂ ਹੈ। ਜੇ ਤੁਸੀਂ ਜਾਣਕਾਰੀ ਦੇ ਹਿੱਸੇ ਦੇ ਪੁਰਾਣਾ ਹੋਣ "
-"ਜਾਂ ਫਾਇਦੇਮੰਦ ਨਾ ਹੋਣ ਦਾ ਪਤਾ ਲਗਾਉਂਦੇ ਹੋ ਤਾਂ ਐਪ ਦੇ ਸੁਝਾਅ ਖੇਤਰ ਵਿੱਚ ਸਾਨੂੰ ਦੱਸੋ। ਇਸ ਐਪ ਵਿੱਚ ਸੇਵਾਵਾਂ ਤੇ "
-"ਸਰੋਤਾਂ ਦੇ ਸ਼ਾਮਲ ਹੋਣ ਦਾ ਅਰਥ ਉਹਨਾਂ ਦੀ ਹੋਰਨਾਂ ਦੀ ਬਜਾਏ ਤਸਦੀਕ ਜਾਂ ਸਿਫਾਰਸ਼ ਕਰਨਾ ਨਹੀਂ ਹੈ। ਐਪ "
-"ਰਾਹੀਂ ਲੱਭੀਆਂ ਗਈਆਂ ਸੇਵਾਵਾਂ ਦੀ ਵਰਤੋਂ ਕਰਨਾ ਵਰਤੋਂਕਾਰ ਦੇ ਖ਼ਤਰੇ ਦੇ ਅਧੀਨ ਹੈ।"
+msgid "The app provides information about relevant newcomer services, and is intended for general guidance and reference only. While we aim to provide accurate and timely information, we do not have control over the ongoing accuracy of the information or the quality of the services provided. If you discover that a piece of information is outdated or not useful, please let us know in the feedback section of the app. The inclusion of services and resources in this app does not imply an endorsement or recommendation of those services over others.  Utilization of services located through the app is undertaken at the risk of the user."
+msgstr "ਐਪ ਢੁੱਕਵੀਆਂ ਨਵੇਂ ਆਉਣ ਵਾਲਿਆਂ ਲਈ ਸੇਵਾਵਾਂ ਬਾਰੇ ਜਾਣਕਾਰੀ ਦਿੰਦੀ ਹੈ ਅਤੇ ਆਮ ਸੇਧ ਦੇਣ ਤੇ ਹਵਾਲੇ ਲਈ ਹੀ ਹੈ। ਜਦੋਂ ਕਿ ਸਾਡਾ ਮਕਸਦ ਦਰੁਸਤ ਅਤੇ ਸਮੇਂ ਸਿਰ ਜਾਣਕਾਰੀ ਦੇਣਾ ਹੈ, ਪਰ ਸਾਡਾ ਜਾਣਕਾਰੀ ਦੀ ਮੌਜੂਦਾ ਦਰੁਸਤਾ ਜਾਂ ਦਿੱਤੀਆਂ ਜਾਂਦੀਆਂ ਸੇਵਾਵਾਂ ਦੀ ਕੁਆਲਟੀ ਉੱਤੇ ਕੰਟਰੋਲ ਨਹੀਂ ਹੈ। ਜੇ ਤੁਸੀਂ ਜਾਣਕਾਰੀ ਦੇ ਹਿੱਸੇ ਦੇ ਪੁਰਾਣਾ ਹੋਣ ਜਾਂ ਫਾਇਦੇਮੰਦ ਨਾ ਹੋਣ ਦਾ ਪਤਾ ਲਗਾਉਂਦੇ ਹੋ ਤਾਂ ਐਪ ਦੇ ਸੁਝਾਅ ਖੇਤਰ ਵਿੱਚ ਸਾਨੂੰ ਦੱਸੋ। ਇਸ ਐਪ ਵਿੱਚ ਸੇਵਾਵਾਂ ਤੇ ਸਰੋਤਾਂ ਦੇ ਸ਼ਾਮਲ ਹੋਣ ਦਾ ਅਰਥ ਉਹਨਾਂ ਦੀ ਹੋਰਨਾਂ ਦੀ ਬਜਾਏ ਤਸਦੀਕ ਜਾਂ ਸਿਫਾਰਸ਼ ਕਰਨਾ ਨਹੀਂ ਹੈ। ਐਪ ਰਾਹੀਂ ਲੱਭੀਆਂ ਗਈਆਂ ਸੇਵਾਵਾਂ ਦੀ ਵਰਤੋਂ ਕਰਨਾ ਵਰਤੋਂਕਾਰ ਦੇ ਖ਼ਤਰੇ ਦੇ ਅਧੀਨ ਹੈ।"
 
-#: lib/components/about/about_component.js:59
+#: lib/components/about/about_component.js:52
 msgid "This is Arrival Advisor version:"
 msgstr "ਇਹ Arrival Advisor ਦਾ ਵਰਜ਼ਨ: "
 
@@ -407,13 +305,13 @@ msgid "Web:"
 msgstr "ਵੈੱਬ:"
 
 #: lib/components/about/about_component.js:49
-msgid "and"
-msgstr "and"
+#~ msgid "and"
+#~ msgstr "and"
 
 #: lib/components/disclaimer/disclaimer_component.js:22
 msgid "and the BC211 database of service providers, available at:"
 msgstr "TODO 1"
 
 #: lib/components/about/about_component.js:51
-msgid "to learn how you can support this project."
-msgstr "to learn how you can support this project."
+#~ msgid "to learn how you can support this project."
+#~ msgstr "to learn how you can support this project."
