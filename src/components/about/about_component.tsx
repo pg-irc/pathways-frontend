@@ -14,15 +14,6 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
     const welcomeBcUrl = 'https://www.welcomebc.ca/Start-Your-Life-in-B-C/Newcomers-Guides/Newcomers-Guide-Provincial';
     const githubUrl = 'https://github.com/pg-irc/pathways-frontend';
     const contactUrl = 'https://arrivaladvisor.ca/contact-us';
-    const welcomeBCLink = wrapWithSpace(
-        <Link href={welcomeBcUrl} style={textStyles.paragraphURL} >Newcomer\'s Guide to British Columbia</Link>,
-    );
-    const githubLink = wrapWithSpace(
-        <Link href={githubUrl} style={textStyles.paragraphURL} >view it on GitHub</Link>,
-    );
-    const contactLink = wrapWithSpace(
-        <Link href={contactUrl} style={textStyles.paragraphURL} >contact us</Link>,
-    );
     const appVersion = wrapWithSpace(VERSION);
     const serverVersion = wrapWithSpace(props.serverVersion);
     return (
@@ -55,17 +46,15 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
                     Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the
                     Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact.
                     Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source
-                    project. You can
-               </Trans>
-                {githubLink}
-                <Trans>and</Trans>
-                {contactLink}
-                <Trans>to learn how you can support this project.</Trans>
+                    project. You can <Link href={githubUrl} style={textStyles.paragraphURL} >view it on GitHub</Link> and <Link
+                        href={contactUrl} style={textStyles.paragraphURL} >contact us</Link> to learn how you can support this project.
+                </Trans>
             </ParagraphComponent>
             <ParagraphComponent>
-                <Trans>Information in this app is provided by the</Trans>
-                {welcomeBCLink}
-                <Trans>Copyright 2018 Province of British Columbia. All rights reserved.</Trans>
+                <Trans>Information in this app is provided by the <Link href={welcomeBcUrl}
+                    style={textStyles.paragraphURL} >Newcomer's Guide to British Columbia</Link> Copyright
+                    2018 Province of British Columbia. All rights reserved.
+                </Trans>
             </ParagraphComponent>
             <ParagraphComponent>
                 <Trans>This is Arrival Advisor version:</Trans>
