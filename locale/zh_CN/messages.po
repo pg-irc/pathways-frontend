@@ -144,8 +144,8 @@ msgid "If you are having difficulty with settlement in Canada, we suggest gettin
 msgstr "如果您在加拿大安家落户有困难，我们建议您联系安置服务人员。"
 
 #: lib/components/about/about_component.js:47
-msgid "Information in this app is provided by the <0>Newcomer\\'s Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr "本应用中的信息是由<0>Newcomer\\'s Guide to British Columbia</0>提供，2018年不列颠哥伦比亚省版权所有。"
+msgid "Information in this app is provided by the <0>Newcomers Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
+msgstr "本应用中的信息是由<0>Newcomers Guide to British Columbia</0>提供，2018年不列颠哥伦比亚省版权所有。"
 
 #: lib/components/help/help_component.js:24
 msgid "Information on BC211"

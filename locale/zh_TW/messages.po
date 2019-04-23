@@ -39,12 +39,8 @@ msgid "Answer questions"
 msgstr "回答問題"
 
 #: lib/components/disclaimer/disclaimer_component.js:18
-#~ msgid "Arrival Advisor contains information from the BC Governmentâ€™s Newcomerâ€™s Guide, available at:"
-#~ msgstr "Arrival Advisor 的內容整合自不列顛哥倫比亞省（BC省）政府新移民指南（www. welcomebc.ca），以及BC211數據資料庫（www.bc211.ca）"
-
-#: lib/components/disclaimer/disclaimer_component.js:18
 msgid "Arrival Advisor contains information from the BC Government’s Newcomer’s Guide, available at:"
-msgstr ""
+msgstr "Arrival Advisor 的內容整合自不列顛哥倫比亞省（BC省）政府新移民指南（www. welcomebc.ca），以及BC211數據資料庫（www.bc211.ca）"
 
 #: lib/components/about/about_component.js:19
 msgid "Arrival Advisor is a free, multilingual, mobile app that helps immigrants and refugees in British Columbia, Canada find information and services to navigate their settlement journey. The app is currently available in English, French (Canadian), and Arabic. It will soon be available in Chinese Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
@@ -148,8 +144,8 @@ msgid "If you are having difficulty with settlement in Canada, we suggest gettin
 msgstr "幫助和支持"
 
 #: lib/components/about/about_component.js:47
-msgid "Information in this app is provided by the <0>Newcomer\\'s Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr "本應用程式資訊由<0>Newcomer\\'s Guide to British Columbia</0>所提供；不列顛哥倫比亞省（BC省）2018 版權所有"
+msgid "Information in this app is provided by the <0>Newcomers Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
+msgstr "本應用程式資訊由<0>Newcomers Guide to British Columbia</0>所提供；不列顛哥倫比亞省（BC省）2018 版權所有"
 
 #: lib/components/help/help_component.js:24
 msgid "Information on BC211"

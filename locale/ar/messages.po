@@ -148,7 +148,7 @@ msgstr "لو كنت تواجه مصاعب في الاستقرار داخل كن�
 #~ msgstr "المعلومات المذكورة في هذا التطبيق من تقديم"
 
 #: lib/components/about/about_component.js:47
-msgid "Information in this app is provided by the <0>Newcomer\\'s Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
+msgid "Information in this app is provided by the <0>Newcomers Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
 msgstr "TODO 1 <0>TODO 2</0> TODO 3"
 
 #: lib/components/help/help_component.js:24
