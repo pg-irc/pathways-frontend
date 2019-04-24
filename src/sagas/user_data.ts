@@ -68,15 +68,15 @@ export async function loadUserDataAsync(): Promise<string> {
     return await AsyncStorage.getItem(USER_DATA_STORAGE_KEY);
 }
 
-const deserialize = (serializedUserData: string): PersistedUserData => {
-   return  serializedUserData ? mapStorageDataToUserData(JSON.parse(serializedUserData)) : mapStorageDataToUserData({});
-};
+const deserialize = (serializedUserData: string): PersistedUserData => (
+    serializedUserData ? setUserDataDefaultValues(JSON.parse(serializedUserData)) : setUserDataDefaultValues({})
+);
 
-export const mapStorageDataToUserData = (data: any): PersistedUserData => {
-    return {
+export const setUserDataDefaultValues = (data: any): PersistedUserData => (
+    {
         chosenAnswers: data.chosenAnswers || [],
         savedTasks: data.savedTasks || [],
         completedTasks: data.completedTasks || [],
-        showOnboarding: data.showOnboarding || true,
-    };
-};
+        showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
+    }
+);

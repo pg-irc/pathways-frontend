@@ -5,9 +5,9 @@ export interface OnboardingStore {
     readonly showOnboarding: boolean;
 }
 
-export function buildDefaultStore(): OnboardingStore {
-    return {showOnboarding: false};
-}
+export const buildDefaultStore = (): OnboardingStore  => ({
+    showOnboarding: false,
+});
 
 export const reducer = (store: OnboardingStore = buildDefaultStore(), action?: OnboardingAction): OnboardingStore => {
     if (!action) {
@@ -17,14 +17,19 @@ export const reducer = (store: OnboardingStore = buildDefaultStore(), action?: O
         case constants.SET_ONBOARDING:
             return ({
                 ...store,
-                showOnboarding: action.payload.showOnboarding,
+                showOnboarding: false,
             });
         case constants.LOAD_USER_DATA_SUCCESS:
             return ({
                 ...store,
                 showOnboarding: action.payload.showOnboarding,
             });
+        case constants.CLEAR_ALL_USER_DATA:
+        return ({
+            ...store,
+            showOnboarding: true,
+        });
         default:
             return store;
     }
-}
+};

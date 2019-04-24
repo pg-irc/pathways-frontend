@@ -11,7 +11,7 @@ import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { Locale } from '../../locale';
 import { HardwareBackButtonHandlerComponent } from './hardware_back_button_handler_component';
-import { OnBoardingComponent } from '../onboarding/onboarding_component';
+import { OnboardingConnectedComponent } from '../onboarding/onboarding_connected_component';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -50,7 +50,7 @@ export class MainComponent extends React.Component<Props, State> {
 
     renderOnboarding(): JSX.Element {
         return (
-            <OnBoardingComponent />
+            <OnboardingConnectedComponent history={this.props.history}/>
         );
     }
 

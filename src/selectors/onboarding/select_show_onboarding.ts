@@ -1,5 +1,5 @@
 import { Store } from '../../stores';
 
-export const pickShowOnboarding = (appStore: Store): boolean => {
+export const selectShowOnboarding = (appStore: Store): boolean => {
     return appStore.onboardingInStore.showOnboarding;
 };
