@@ -1,4 +1,4 @@
-import { APIResponse } from './api_client';
+import { APIResponse } from '.';
 
 export const isResponseError = (response: APIResponse): boolean => (
     response.hasError

@@ -7,7 +7,8 @@ import {
     populateTopicServicesFromSuccess, PopulateTopicServicesFromErrorAction, populateTopicServicesFromError,
     serviceFromValidatedJSON,
 } from '../stores/services';
-import { API, isResponseError, APIResponse } from '../api';
+import { searchServices, APIResponse } from '../api';
+import { isResponseError } from '../api/is_response_error';
 import { servicesAtLocationValidator, isValidationError } from '../json_schemas/validators';
 import { isAsyncLocationError, getLocationIfPermittedAsync } from '../async/location';
 import { AsyncGenericErrorType, AsyncLocationErrorType } from '../async/error_types';
@@ -27,7 +28,7 @@ export function* updateTaskServices(action: SendTopicServicesRequestAction): Upd
                 populateTopicServicesFromError(maybeLocation.message, topicId, maybeLocation.type),
             );
         }
-        const response: APIResponse = yield call([API, API.searchServices], topicId, maybeLocation);
+        const response: APIResponse = yield call(searchServices, topicId, maybeLocation);
         if (isResponseError(response)) {
             return yield put(
                 populateTopicServicesFromError(response.message, topicId, AsyncGenericErrorType.BadServerResponse),
