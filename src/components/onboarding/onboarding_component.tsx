@@ -12,8 +12,8 @@ import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 
 export interface OnBoardingPageProps {
     readonly key: string;
-    readonly title: string;
-    readonly subtitle: string;
+    readonly title: JSX.Element;
+    readonly subtitle: JSX.Element;
     readonly image: any;
 }
 
@@ -28,28 +28,28 @@ export interface OnboardingAction {
 const pages: ReadonlyArray<OnBoardingPageProps> = [
     {
         key: '0',
-        title: 'Get trusted information',
-        subtitle: 'Learn about employment, health care, and everything else to start your new life in British Columbia',
+        title: <Trans>Get trusted information</Trans>,
+        subtitle: <Trans>Learn about employment, health care, and everything else to start your new life in British Columbia</Trans>,
         image: onBoardingPhoto,
     },
     {
         key: '1',
-        title: 'Find helpful services nearby',
-        subtitle: 'Find organizations that can help you settle into your new community.',
+        title: <Trans>Find helpful services nearby</Trans>,
+        subtitle: <Trans>Find organizations that can help you settle into your new community.</Trans>,
         image: onBoardingPhoto,
     },
     {
         key: '2',
-        title: 'Get information based on your needs',
-        subtitle: `Answer a few questions about your situation to get personalized
-         recommendations of topics and services to help you settle in British Columbia.`,
+        title: <Trans>Get information based on your needs</Trans>,
+        subtitle: <Trans>Answer a few questions about your situation to get personalized
+         recommendations of topics and services to help you settle in British Columbia.</Trans>,
         image: onBoardingPhoto,
     },
 ];
 
 const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 1.5;
 
-export type Props = OnboardingAction & OnboardingComponentProps;
+type Props = OnboardingAction & OnboardingComponentProps;
 interface State {
     readonly pageIndex: number;
 }
@@ -61,24 +61,17 @@ export class OnboardingComponent extends React.Component<Props, State> {
         };
     }
 
-    onNextButtonPress(): void {
-        let page = this.state.pageIndex;
-        this.setState({pageIndex: page += 1});
-    }
-
-    onBackButtonPress(): void {
-        let page = this.state.pageIndex;
-        this.setState({pageIndex: page -= 1 });
-    }
-
-    onPersonalizationButtonPress(): void {
-        this.props.setOnboarding();
-        goToRouteWithoutParameter(Routes.Questionnaire, this.props.history);
-    }
-
-    onSkipPersonalizationButtonPress(): void {
-        this.props.setOnboarding();
-        goToRouteWithoutParameter(Routes.Welcome, this.props.history);
+    render(): JSX.Element {
+        return (
+            <View style={{
+                flex: 1,
+                flexDirection: 'column',
+            }}>
+                {this.renderPage(this.state.pageIndex)}
+                {this.renderPersonalizationButtons()}
+                {this.renderNavigationButtons()}
+            </View>
+        );
     }
 
     renderPage(pageIndex: number): JSX.Element {
@@ -86,7 +79,7 @@ export class OnboardingComponent extends React.Component<Props, State> {
         return <OnBoardingPage {...activePage} />;
     }
 
-    renderPersonalizationButton(): JSX.Element {
+    renderPersonalizationButtons(): JSX.Element {
         const isLastPage = this.state.pageIndex === pages.length - 1;
         return (
             <View style={{
@@ -94,29 +87,51 @@ export class OnboardingComponent extends React.Component<Props, State> {
                 alignItems: 'center',
             }}>
                 {isLastPage ? <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                    <Button
-                        full
-                        style={[applicationStyles.tealButton, { paddingHorizontal: 30, paddingVertical: 30, marginBottom: 30 }]}
-                        onPress={() => this.onPersonalizationButtonPress()}
-                    >
-                        <Text style={textStyles.button}>
-                            <Trans>Start personalization</Trans>
-                        </Text>
-                    </Button>
-                    <Button
-                        style={{ backgroundColor: 'transparent', paddingHorizontal: 35 }}
-                        onPress={() => this.onSkipPersonalizationButtonPress()}
-                    >
-                        <Text style={{
-                            color: colors.sunshine,
-                            fontSize: 16, fontFamily: 'AvenirBlack'
-                        }}>
-                            <Trans>Skip personalization</Trans>
-                        </Text>
-                    </Button>
+                   {this.renderStartPersonalizationButton()}
+                   {this.renderSkipPersonalizationButton()}
                 </View> : <EmptyComponent />}
             </View>
         );
+    }
+
+    renderStartPersonalizationButton(): JSX.Element {
+        return (
+            <Button
+                full
+                style={[applicationStyles.tealButton, { paddingHorizontal: 30, paddingVertical: 30, marginBottom: 30 }]}
+                onPress={() => this.onPersonalizationButtonPress()}
+            >
+                <Text style={textStyles.button}>
+                    <Trans>Start personalization</Trans>
+                </Text>
+            </Button>
+        );
+    }
+
+    onPersonalizationButtonPress(): void {
+        this.props.setOnboarding();
+        goToRouteWithoutParameter(Routes.Questionnaire, this.props.history);
+    }
+
+    renderSkipPersonalizationButton(): JSX.Element {
+        return (
+            <Button
+            style={{ backgroundColor: 'transparent', paddingHorizontal: 35 }}
+            onPress={() => this.onSkipPersonalizationButtonPress()}
+        >
+            <Text style={{
+                color: colors.sunshine,
+                fontSize: 16, fontFamily: 'AvenirBlack',
+            }}>
+                <Trans>Skip personalization</Trans>
+            </Text>
+        </Button>
+        );
+    }
+
+    onSkipPersonalizationButtonPress(): void {
+        this.props.setOnboarding();
+        goToRouteWithoutParameter(Routes.Welcome, this.props.history);
     }
 
     renderNavigationButtons(): JSX.Element {
@@ -138,17 +153,14 @@ export class OnboardingComponent extends React.Component<Props, State> {
         );
     }
 
-    render(): JSX.Element {
-        return (
-            <View style={{
-                flex: 1,
-                flexDirection: 'column',
-            }}>
-                {this.renderPage(this.state.pageIndex)}
-                {this.renderPersonalizationButton()}
-                {this.renderNavigationButtons()}
-            </View>
-        );
+    onNextButtonPress(): void {
+        let page = this.state.pageIndex;
+        this.setState({pageIndex: page + 1});
+    }
+
+    onBackButtonPress(): void {
+        let page = this.state.pageIndex;
+        this.setState({pageIndex: page - 1 });
     }
 }
 
@@ -174,13 +186,13 @@ const OnBoardingPage = (props: OnBoardingPageProps): JSX.Element => (
                 alignSelf: 'center',
             }}
         />
-        <Text style={textStyles.headlineH2StyleBlackCenter}><Trans>{props.title}</Trans></Text>
+        <Text style={textStyles.headlineH2StyleBlackCenter}>{props.title}</Text>
         <Text style={{
             fontSize: 16,
             textAlign: 'center',
             lineHeight: 21,
             marginTop: 22,
             marginBottom: 30,
-        }}><Trans>{props.subtitle}</Trans></Text>
+        }}>{props.subtitle}</Text>
     </View>
 );

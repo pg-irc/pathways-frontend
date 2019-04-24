@@ -10,7 +10,7 @@ type OwnProps = {
     readonly history: History;
 };
 
-const mapStateToProps = (store: Store, ownProps: OwnProps): OnboardingComponentProps => {
+const mapStateToProps = (_: Store, ownProps: OwnProps): OnboardingComponentProps => {
     return { history: ownProps.history };
 };
 
