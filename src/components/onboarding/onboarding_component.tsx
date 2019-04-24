@@ -81,15 +81,16 @@ export class OnboardingComponent extends React.Component<Props, State> {
 
     renderPersonalizationButtons(): JSX.Element {
         const isLastPage = this.state.pageIndex === pages.length - 1;
+        const personalizationButtons = <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+            {this.renderStartPersonalizationButton()}
+            {this.renderSkipPersonalizationButton()}
+        </View>;
         return (
             <View style={{
                 justifyContent: 'center',
                 alignItems: 'center',
             }}>
-                {isLastPage ? <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                   {this.renderStartPersonalizationButton()}
-                   {this.renderSkipPersonalizationButton()}
-                </View> : <EmptyComponent />}
+                {isLastPage ? personalizationButtons : <EmptyComponent />}
             </View>
         );
     }
@@ -137,29 +138,31 @@ export class OnboardingComponent extends React.Component<Props, State> {
     renderNavigationButtons(): JSX.Element {
         const hasNextPage = this.state.pageIndex < pages.length - 1;
         const hasPrevPage = this.state.pageIndex > 0;
+        const backButton = <Button style={{backgroundColor: 'transparent', alignSelf: 'flex-start'}} onPress={() => this.onBackButtonPress()}>
+                                 <Trans><Text style={{ color: colors.teal }}>Back</Text></Trans>
+                            </Button>;
+        const nextButton = <Button style={{backgroundColor: 'transparent', alignSelf: 'flex-end'}} onPress={() => this.onNextButtonPress()}>
+                                <Trans><Text style={{ color: colors.teal }}>Next</Text></Trans>
+                            </Button>;
         return (<View style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             margin: 10,
         }}>
 
-            {hasPrevPage ? <Button style={{backgroundColor: 'transparent', alignSelf: 'flex-start'}} onPress={() => this.onBackButtonPress()}>
-                <Trans><Text style={{ color: colors.teal }}>Back</Text></Trans>
-            </Button> : <View/>}
-            {hasNextPage ? <Button style={{backgroundColor: 'transparent', alignSelf: 'flex-end'}} onPress={() => this.onNextButtonPress()}>
-                <Trans><Text style={{ color: colors.teal }}>Next</Text></Trans>
-            </Button> : <View/>}
+            {hasPrevPage ? backButton : <View/>}
+            {hasNextPage ? nextButton : <View/>}
         </View>
         );
     }
 
     onNextButtonPress(): void {
-        let page = this.state.pageIndex;
+        const page = this.state.pageIndex;
         this.setState({pageIndex: page + 1});
     }
 
     onBackButtonPress(): void {
-        let page = this.state.pageIndex;
+        const page = this.state.pageIndex;
         this.setState({pageIndex: page - 1 });
     }
 }
