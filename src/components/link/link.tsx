@@ -3,12 +3,14 @@ import React from 'react';
 import { Linking } from 'react-native';
 import { Text } from 'native-base';
 import { textStyles } from '../../application/styles';
+import { sendLinkPressedEvent } from '../../application/google_analytics';
 
-interface AnchorProps {
-  readonly children: string;
-  readonly href: string;
-  readonly style?: object;
-}
+type LinkProps = {
+    readonly children: string;
+    readonly href: string;
+    readonly style?: object;
+    readonly onPress?: () => void;
+};
 
 export const openURL = (url: string): void => {
   Linking.canOpenURL(url).then((supported: boolean) => {
@@ -20,8 +22,16 @@ export const openURL = (url: string): void => {
   }).catch((error: string) => console.error(error));
 };
 
-export const Link: React.StatelessComponent<AnchorProps> = (props: AnchorProps): JSX.Element => (
-  <Text onPress={(): void => openURL(props.href)} style={[textStyles.paragraphURL, props.style]}>
-    {props.children}
-  </Text>
-);
+export const openURLWithAnalytics = (url: string, currentPath: string, linkValue: string): void => {
+    sendLinkPressedEvent(currentPath, linkValue);
+    openURL(url);
+};
+
+export const Link = (props: LinkProps): JSX.Element => {
+    const onPress = props.onPress ? props.onPress : (): void => openURL(props.href);
+    return (
+        <Text onPress={onPress} style={[ textStyles.paragraphURL, props.style ]}>
+            {props.children}
+        </Text>
+    );
+};
