@@ -1,3 +1,4 @@
+// tslint:disable:no-expression-statement
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { History } from 'history';
@@ -9,12 +10,14 @@ import { Topic } from '../../selectors/topics/topic';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
 import { TaskListComponent, NoTasksAddedComponent } from './task_list_component';
+import { sendLinkPressedEvent } from '../../application/google_analytics';
 
 export interface TaskDetailProps {
     readonly topic: Topic;
     readonly taskIsBookmarked: boolean;
     readonly savedTasksIdList: ReadonlyArray<TaskId>;
     readonly history: History;
+    readonly currentPath: string;
 }
 
 export interface TaskDetailActions {
@@ -42,7 +45,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View padder>
         <TaskDetailContentComponent
             topic={props.topic}
-            onServicesTextPress={goToRouteWithParameter(Routes.Services, props.topic.id, props.history)}
+            onServicesTextPress={onServicesTextPress(props)}
         />
         <Text
             style={[
@@ -57,3 +60,13 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
         </Text>
     </View>
 );
+
+const onServicesTextPress = (props: Props): () => void => {
+    return (): void => {
+        const linkContext = 'Topic detail';
+        const linkType = 'Button';
+        const linkValue = 'Find related services near me';
+        sendLinkPressedEvent(props.currentPath, linkContext, linkType, linkValue);
+        goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
+    };
+};

@@ -36,9 +36,9 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
 
 const onMapsButtonPress = (props: MapsApplicationPopupProps): () => Promise<void> => (
     (): Promise<void> => {
-        const linkSource = 'Button';
+        const linkType = 'Button';
         const linkValue = 'Open in maps';
-        sendLinkPressedEvent(props.currentPath, props.linkContext, linkSource, linkValue);
+        sendLinkPressedEvent(props.currentPath, props.linkContext, linkType, linkValue);
         return (
             showLocation({
                 title: props.locationTitle,

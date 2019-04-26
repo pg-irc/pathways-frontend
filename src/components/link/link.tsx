@@ -16,7 +16,7 @@ interface AnalyticsLinkProps {
     readonly href: string;
     readonly currentPath: string;
     readonly linkContext: string;
-    readonly linkSource: string;
+    readonly linkType: string;
     readonly style?: object;
 }
 
@@ -43,7 +43,7 @@ export const Link = (props: LinkProps): JSX.Element => {
 
 export const AnalyticsLink = (props: AnalyticsLinkProps): JSX.Element => {
     const onPress = (): void => {
-        sendLinkPressedEvent(props.currentPath, props.linkContext, props.linkSource, props.href);
+        sendLinkPressedEvent(props.currentPath, props.linkContext, props.linkType, props.href);
         openURL(props.href);
     };
     return renderLink(onPress, props.style, props.children);
