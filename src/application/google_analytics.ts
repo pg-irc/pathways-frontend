@@ -10,15 +10,15 @@ export const sendScreenHit = (action: RouteChangedAction): void => {
     analytics.hit(screenHit);
 };
 
-export const sendAnswerChosenEvent = (): void => {
+export const sendAnswerChosenEvent = (answerId: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Questionnaire', 'AnswerChosen', 'no answer id');
+    const event = createEvent('Questionnaire', 'AnswerChosen', answerId);
     analytics.hit(event);
 };
 
-export const sendBookmarkAddedEvent = (): void => {
+export const sendBookmarkAddedEvent = (topicId: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Bookmarks', 'BookmarkAdded', 'no topic id');
+    const event = createEvent('Bookmarks', 'BookmarkAdded', topicId);
     analytics.hit(event);
 };
 
