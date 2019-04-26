@@ -5,33 +5,46 @@ import { Text } from 'native-base';
 import { textStyles } from '../../application/styles';
 import { sendLinkPressedEvent } from '../../application/google_analytics';
 
-type LinkProps = {
+interface LinkProps {
     readonly children: string;
     readonly href: string;
     readonly style?: object;
-    readonly onPress?: () => void;
-};
+}
+
+interface AnalyticsLinkProps {
+    readonly children: string;
+    readonly href: string;
+    readonly currentPath: string;
+    readonly linkContext: string;
+    readonly linkSource: string;
+    readonly style?: object;
+}
+
+const renderLink = (onPress: () => void, style: object, text: string): JSX.Element => (
+    <Text onPress={onPress} style={[textStyles.paragraphURL, style]}>
+        {text}
+    </Text>
+);
 
 export const openURL = (url: string): void => {
-  Linking.canOpenURL(url).then((supported: boolean) => {
-    if (supported) {
-      Linking.openURL(url).catch((error: string) => console.error(error));
-    } else {
-      console.log('Can\'t handle url: ' + url);
-    }
-  }).catch((error: string) => console.error(error));
-};
-
-export const openURLWithAnalytics = (url: string, currentPath: string, linkValue: string): void => {
-    sendLinkPressedEvent(currentPath, linkValue);
-    openURL(url);
+    Linking.canOpenURL(url).then((supported: boolean) => {
+        if (supported) {
+            Linking.openURL(url).catch((error: string) => console.error(error));
+        } else {
+            console.log('Can\'t handle url: ' + url);
+        }
+    }).catch((error: string) => console.error(error));
 };
 
 export const Link = (props: LinkProps): JSX.Element => {
-    const onPress = props.onPress ? props.onPress : (): void => openURL(props.href);
-    return (
-        <Text onPress={onPress} style={[ textStyles.paragraphURL, props.style ]}>
-            {props.children}
-        </Text>
-    );
+    const onPress = (): void => openURL(props.href);
+    return renderLink(onPress, props.style, props.children);
+};
+
+export const AnalyticsLink = (props: AnalyticsLinkProps): JSX.Element => {
+    const onPress = (): void => {
+        sendLinkPressedEvent(props.currentPath, props.linkContext, props.linkSource, props.href);
+        openURL(props.href);
+    };
+    return renderLink(onPress, props.style, props.children);
 };

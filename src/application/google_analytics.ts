@@ -12,19 +12,21 @@ export const sendScreenHit = (action: RouteChangedAction): void => {
 
 export const sendAnswerChosenEvent = (): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Questionnaire', 'ChooseAnswer', 'no answer id');
+    const event = createEvent('Questionnaire', 'AnswerChosen', 'no answer id');
     analytics.hit(event);
 };
 
 export const sendBookmarkAddedEvent = (): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Bookmarks', 'SaveTopic', 'no topic id');
+    const event = createEvent('Bookmarks', 'BookmarkAdded', 'no topic id');
     analytics.hit(event);
 };
 
-export const sendLinkPressedEvent = (currentPath: string, linkValue: string): void => {
-    const analytics = createAnalytics();
-    const event = createEvent('Links', `PressLinkOnScreen: ${currentPath}`, `value: ${linkValue}`);
+export const sendLinkPressedEvent = (currentPath: string, linkContext: string, linkSource: string, linkValue: string)
+    : void => {
+    const additionalParameters = createGoogleAnalyticsScreenNameParameter(currentPath);
+    const analytics = createAnalytics(additionalParameters);
+    const event = createEvent('Links', `LinkPressed:${linkContext}`, `${linkSource}:${linkValue}`);
     analytics.hit(event);
 };
 
@@ -55,6 +57,14 @@ interface GoogleAnalyticsLanguageParameter {
 
 const createGoogleAnalyticsLanguageParameter = (action: RouteChangedAction): GoogleAnalyticsLanguageParameter => ({
     ul: action.payload.locale.code,
+});
+
+interface GoogleAnalyticsScreenNameParameter {
+    readonly cd: string;
+}
+
+const createGoogleAnalyticsScreenNameParameter = (screenName: string): GoogleAnalyticsScreenNameParameter => ({
+    cd: screenName,
 });
 
 interface GoogleAnalyticsAnonymizeIPParameter {
