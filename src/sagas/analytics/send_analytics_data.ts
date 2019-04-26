@@ -22,9 +22,9 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
         sendScreenHit(action);
     }
     if (action.type === constants.CHOOSE_ANSWER) {
-        sendAnswerChosenEvent();
+        sendAnswerChosenEvent(action.payload.answerId);
     }
     if (action.type === constants.ADD_TO_SAVED_TOPICS) {
-        sendBookmarkAddedEvent();
+        sendBookmarkAddedEvent(action.payload.topicId);
     }
 }
