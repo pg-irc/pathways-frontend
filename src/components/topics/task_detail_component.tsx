@@ -10,7 +10,7 @@ import { Topic } from '../../selectors/topics/topic';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
 import { TaskListComponent, NoTasksAddedComponent } from './task_list_component';
-import { sendLinkPressedEvent } from '../../application/google_analytics';
+import { sendLinkPressedEvent, buildLinkContext } from '../../application/google_analytics';
 
 export interface TaskDetailProps {
     readonly topic: Topic;
@@ -63,7 +63,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
 
 const onServicesTextPress = (props: Props): () => void => {
     return (): void => {
-        const linkContext = 'Topic detail';
+        const linkContext = buildLinkContext('Topic', props.topic.title);
         const linkType = 'Button';
         const linkValue = 'Find related services near me';
         sendLinkPressedEvent(props.currentPath, linkContext, linkType, linkValue);

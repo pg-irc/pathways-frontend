@@ -30,6 +30,10 @@ export const sendLinkPressedEvent = (currentPath: string, linkContext: string, l
     analytics.hit(event);
 };
 
+export const buildLinkContext = (model: string, title: string): string => (
+    `${model} - ${title}`
+);
+
 const createAnalytics = (additionalParameters?: object): any => {
     const parameters = {
         ...createGoogleAnalyticsAnonymizeIPParameter(),
