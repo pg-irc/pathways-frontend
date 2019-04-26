@@ -22,11 +22,11 @@ export const sendBookmarkAddedEvent = (): void => {
     analytics.hit(event);
 };
 
-export const sendLinkPressedEvent = (currentPath: string, linkContext: string, linkSource: string, linkValue: string)
+export const sendLinkPressedEvent = (currentPath: string, linkContext: string, linkType: string, linkValue: string)
     : void => {
     const additionalParameters = createGoogleAnalyticsScreenNameParameter(currentPath);
     const analytics = createAnalytics(additionalParameters);
-    const event = createEvent('Links', `LinkPressed:${linkContext}`, `${linkSource}:${linkValue}`);
+    const event = createEvent('Links', `LinkPressed:${linkValue}`, `${linkContext}:${linkType}`);
     analytics.hit(event);
 };
 

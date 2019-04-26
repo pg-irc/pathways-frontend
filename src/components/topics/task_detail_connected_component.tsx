@@ -27,6 +27,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
         taskIsBookmarked,
         savedTasksIdList,
         history: ownProps.history,
+        currentPath: ownProps.location.pathname,
     };
 };
 
