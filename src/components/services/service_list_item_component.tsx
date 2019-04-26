@@ -12,6 +12,7 @@ import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_ap
 import { EmptyComponent } from '../empty_component/empty_component';
 import { getLocationTitleFromAddresses } from './get_location_title_from_addresses';
 import { AnalyticsLink } from '../link/link';
+import { buildLinkContext } from '../../application/google_analytics';
 
 interface ServiceListItemProps {
     readonly service: Service;
@@ -21,15 +22,16 @@ interface ServiceListItemProps {
 export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
     (props: ServiceListItemProps): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
+        const linkContext = buildLinkContext('Service', serviceName);
         return (
             <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
                 {renderName(serviceName)}
                 {renderDescription(props.service.description)}
                 {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
-                {renderPhoneNumbers(props.service.phoneNumbers, props.currentPath, serviceName)}
-                {renderWebsite(props.service.website, props.currentPath, serviceName)}
-                {renderEmail(props.service.email, props.currentPath, serviceName)}
-                {renderMapButtonIfLocation(props.service, props.currentPath, serviceName)}
+                {renderPhoneNumbers(props.service.phoneNumbers, props.currentPath, linkContext)}
+                {renderWebsite(props.service.website, props.currentPath, linkContext)}
+                {renderEmail(props.service.email, props.currentPath, linkContext)}
+                {renderMapButtonIfLocation(props.service, props.currentPath, linkContext)}
             </View>
         );
     };
@@ -64,14 +66,14 @@ const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
 );
 
 // tslint:disable-next-line:typedef
-const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>, currentPath: string, serviceName: string) => (
+const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>, currentPath: string, linkContext: string) => (
     mapWithIndex((phoneNumber: PhoneNumber, index: number): JSX.Element => {
         const fieldLabel = capitalizeFirstLetter(phoneNumber.type);
         const textWithPhoneLinks = (
             <TextWithPhoneLinks
                 text={phoneNumber.phoneNumber}
                 currentPath={currentPath}
-                linkContext={serviceName}
+                linkContext={linkContext}
                 linkType={fieldLabel} />
         );
         return (
@@ -84,7 +86,7 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>, currentPat
     }, phoneNumbers)
 );
 
-const renderWebsite = (website: string, currentPath: string, serviceName: string): JSX.Element => {
+const renderWebsite = (website: string, currentPath: string, linkContext: string): JSX.Element => {
     if (R.not(website)) {
         return <EmptyComponent />;
     }
@@ -94,7 +96,7 @@ const renderWebsite = (website: string, currentPath: string, serviceName: string
             <AnalyticsLink
                 href={website}
                 currentPath={currentPath}
-                linkContext={serviceName}
+                linkContext={linkContext}
                 linkType={'Website'}
                 style={textStyles.paragraphStyle}
             >
@@ -104,7 +106,7 @@ const renderWebsite = (website: string, currentPath: string, serviceName: string
     );
 };
 
-const renderEmail = (email: string, currentPath: string, serviceName: string): JSX.Element => {
+const renderEmail = (email: string, currentPath: string, linkContext: string): JSX.Element => {
     if (R.not(email)) {
         return <EmptyComponent />;
     }
@@ -114,7 +116,7 @@ const renderEmail = (email: string, currentPath: string, serviceName: string): J
             <AnalyticsLink
                 href={`mailto: ${email}`}
                 currentPath={currentPath}
-                linkContext={serviceName}
+                linkContext={linkContext}
                 linkType={'Email'}
                 style={textStyles.paragraphStyle}
             >
@@ -124,7 +126,7 @@ const renderEmail = (email: string, currentPath: string, serviceName: string): J
     );
 };
 
-const renderMapButtonIfLocation = (service: Service, currentPath: string, serviceName: string): JSX.Element => {
+const renderMapButtonIfLocation = (service: Service, currentPath: string, linkContext: string): JSX.Element => {
     if (R.not(service.latitude && service.longitude)) {
         return <EmptyComponent />;
     }
@@ -135,7 +137,7 @@ const renderMapButtonIfLocation = (service: Service, currentPath: string, servic
                 longitude={service.longitude}
                 locationTitle={getLocationTitleFromAddresses(filterPhysicalAddresses(service.addresses))}
                 currentPath={currentPath}
-                linkContext={serviceName}
+                linkContext={linkContext}
             />
         </View>
     );
