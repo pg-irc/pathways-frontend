@@ -51,6 +51,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     componentDidUpdate(previousProps: Props): void {
         if (previousProps.headerContentIdentifier !== this.props.headerContentIdentifier) {
             this.flatListRef.scrollToOffset({ animated: false, offset: 0 });
+            this.setState(this.getFreshState());
         }
         if (previousProps.tasks.length !== this.props.tasks.length) {
             this.setState(this.getFreshState());
