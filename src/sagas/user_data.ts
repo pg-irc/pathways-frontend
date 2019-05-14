@@ -16,6 +16,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.REMOVE_FROM_SAVED_TOPICS,
             constants.TOGGLE_IS_TOPIC_COMPLETED,
             constants.CLEAR_ALL_USER_DATA,
+            constants.SET_ONBOARDING,
         ],
         saveUserData);
 }
@@ -68,5 +69,14 @@ export async function loadUserDataAsync(): Promise<string> {
 }
 
 const deserialize = (serializedUserData: string): PersistedUserData => (
-    serializedUserData ? JSON.parse(serializedUserData) : { chosenAnswers: [], completedTasks: [], savedTasks: [] }
+    serializedUserData ? setUserDataDefaultValues(JSON.parse(serializedUserData)) : setUserDataDefaultValues({})
+);
+
+export const setUserDataDefaultValues = (data: any): PersistedUserData => (
+    {
+        chosenAnswers: data.chosenAnswers || [],
+        savedTasks: data.savedTasks || [],
+        completedTasks: data.completedTasks || [],
+        showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
+    }
 );

@@ -7,6 +7,7 @@ export interface PersistedUserData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
     readonly savedTasks: ReadonlyArray<TaskId>;
     readonly completedTasks: ReadonlyArray<TaskId>;
+    readonly showOnboarding: boolean;
 }
 
 export namespace UserDataPersistence {
