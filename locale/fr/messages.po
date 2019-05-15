@@ -47,7 +47,7 @@ msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
 "Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of "
 "service providers, available at <1>www.bc211.ca</1>."
-msgstr ""
+msgstr "Arrival Advisor contient des renseignements tirés du guide à l’intention des nouveaux arrivants en Colombie-Britannique : <0>www.welcomebc.ca</0>, et de la base de données de fournisseurs de services BC211 : <1>www.bc211.ca</1>"
 
 #: lib/components/about/about_component.js:19
 msgid ""
