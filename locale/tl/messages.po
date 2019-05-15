@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 13:32-0700\n"
+"POT-Creation-Date: 2019-05-15 14:40-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,13 +42,12 @@ msgstr ""
 msgid "Answer questions"
 msgstr "Sagutin ang mga tanong"
 
-#: lib/components/disclaimer/disclaimer_component.js:18
+#: lib/components/disclaimer/disclaimer_component.js:15
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at:"
+"Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of "
+"service providers, available at <1>www.bc211.ca</1>."
 msgstr ""
-"Ang Arrival Advisor ay naglalaman ng impormasyon mula sa Gabay ng Bagong "
-"Dating sa Gobyerno ng BC, na makukuha sa:"
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -65,7 +64,7 @@ msgstr ""
 ", at Arabe. Malapit na rin itong magamit sa Pinasimpleng Chinese, "
 "Tradisyonal na Chinese, Koreano, Punjabi, at Tagalog."
 
-#: lib/components/disclaimer/disclaimer_component.js:37
+#: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -115,11 +114,6 @@ msgstr "Tinanggal ang bookmark"
 msgid "Contact Arrival Advisor team"
 msgstr "Kontakin ang Arrival Advisor team"
 
-msgid "Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr ""
-"Copyright 2018 Province of British Columbia. Ang lahat ng karapatan ay "
-"reserbado."
-
 #: lib/components/welcome/welcome_component.js:49
 msgid "Created by"
 msgstr "Nilikha ng"
@@ -128,7 +122,7 @@ msgstr "Nilikha ng"
 msgid "Delete all user data"
 msgstr "Burahin ang lahat ng user data"
 
-#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A15+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
 msgid "Disclaimer"
 msgstr "Pagtatatuwa"
 
@@ -301,7 +295,7 @@ msgstr ""
 msgid "Open in maps"
 msgstr "Buksan sa mga mapa"
 
-#: lib/components/disclaimer/disclaimer_component.js:49
+#: lib/components/disclaimer/disclaimer_component.js:45
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -407,7 +401,7 @@ msgstr ""
 "proyekto. Maaari mong tingnan ito sa <0>Github</0> at <1>contact us</1> para "
 "malaman kung paano ka tutulong sa proyektong ito."
 
-#: lib/components/disclaimer/disclaimer_component.js:26
+#: lib/components/disclaimer/disclaimer_component.js:22
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -441,13 +435,3 @@ msgstr "I-UPDATE ANG REKOMENDASYON KO"
 #: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "Web:"
-
-msgid "and"
-msgstr "and"
-
-#: lib/components/disclaimer/disclaimer_component.js:22
-msgid "and the BC211 database of service providers, available at:"
-msgstr "at ang BC211 database ng mga tagapaglaan ng serbisyo, na makukuha sa:"
-
-msgid "to learn how you can support this project."
-msgstr "to learn how you can support this project."

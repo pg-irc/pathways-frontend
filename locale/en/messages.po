@@ -38,15 +38,15 @@ msgstr "Answer a few questions about your situation to get personalized recommen
 msgid "Answer questions"
 msgstr "Answer questions"
 
-#: lib/components/disclaimer/disclaimer_component.js:18
-msgid "Arrival Advisor contains information from the BC Government’s Newcomer’s Guide, available at:"
-msgstr "Arrival Advisor contains information from the BC Government’s Newcomer’s Guide, available at:"
+#: lib/components/disclaimer/disclaimer_component.js:15
+msgid "Arrival Advisor contains information from the BC Government’s Newcomer’s Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of service providers, available at <1>www.bc211.ca</1>."
+msgstr "Arrival Advisor contains information from the BC Government’s Newcomer’s Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of service providers, available at <1>www.bc211.ca</1>."
 
 #: lib/components/about/about_component.js:19
 msgid "Arrival Advisor is a free, multilingual, mobile app that helps immigrants and refugees in British Columbia, Canada find information and services to navigate their settlement journey. The app is currently available in English, French (Canadian), and Arabic. It will soon be available in Chinese Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
 msgstr "Arrival Advisor is a free, multilingual, mobile app that helps immigrants and refugees in British Columbia, Canada find information and services to navigate their settlement journey. The app is currently available in English, French (Canadian), and Arabic. It will soon be available in Chinese Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
 
-#: lib/components/disclaimer/disclaimer_component.js:37
+#: lib/components/disclaimer/disclaimer_component.js:33
 msgid "Arrival Advisor respects and maintains the privacy and anonymity of its users. Users do not need to provide personal information in order to use the app. The questionnaire is designed to assist in personalizing services and resources required by the user, and answers are only saved to enhance the usability of the app over time. Users of the Arrival Advisor app do so at their own discretion. The answers you provide will be used for the operation of this tool to provide you with guidance on resources and services that can help you adjust to life in Canada. Users cannot be identified by their answers to the questionnaire. The information is not used by Immigration, Refugees and Citizenship Canada for any other purpose and is not used for any immigration decision making."
 msgstr "Arrival Advisor respects and maintains the privacy and anonymity of its users. Users do not need to provide personal information in order to use the app. The questionnaire is designed to assist in personalizing services and resources required by the user, and answers are only saved to enhance the usability of the app over time. Users of the Arrival Advisor app do so at their own discretion. The answers you provide will be used for the operation of this tool to provide you with guidance on resources and services that can help you adjust to life in Canada. Users cannot be identified by their answers to the questionnaire. The information is not used by Immigration, Refugees and Citizenship Canada for any other purpose and is not used for any immigration decision making."
 
@@ -70,10 +70,6 @@ msgstr "Bookmark removed"
 msgid "Contact Arrival Advisor team"
 msgstr "Contact Arrival Advisor team"
 
-#: lib/components/about/about_component.js:56
-#~ msgid "Copyright 2018 Province of British Columbia. All rights reserved."
-#~ msgstr "Copyright 2018 Province of British Columbia. All rights reserved."
-
 #: lib/components/welcome/welcome_component.js:49
 msgid "Created by"
 msgstr "Created by"
@@ -82,7 +78,7 @@ msgstr "Created by"
 msgid "Delete all user data"
 msgstr "Delete all user data"
 
-#: lib/components/disclaimer/disclaimer_component.js:15
+#: lib/components/disclaimer/disclaimer_component.js:12
 #: lib/components/header_menu/header_menu_component.js:51
 msgid "Disclaimer"
 msgstr "Disclaimer"
@@ -142,10 +138,6 @@ msgstr "Help & Support"
 #: lib/components/help/help_component.js:49
 msgid "If you are having difficulty with settlement in Canada, we suggest getting in touch with a settlement worker."
 msgstr "If you are having difficulty with settlement in Canada, we suggest getting in touch with a settlement worker."
-
-#: lib/components/about/about_component.js:54
-#~ msgid "Information in this app is provided by the"
-#~ msgstr "Information in this app is provided by the"
 
 #: lib/components/about/about_component.js:47
 msgid "Information in this app is provided by the <0>Newcomers Guide to British Columbia</0> Copyright 2018 Province of British Columbia. All rights reserved."
@@ -219,7 +211,7 @@ msgstr "Once you answer some questions, your recommendations will show up below.
 msgid "Open in maps"
 msgstr "Open in maps"
 
-#: lib/components/disclaimer/disclaimer_component.js:49
+#: lib/components/disclaimer/disclaimer_component.js:45
 msgid "PeaceGeeks is not liable for any damages incurred as a result of or related to the use of the app. PeaceGeeks is not an immigration consultancy network, and therefore cannot provide advice or support directly related to immigration. Arrival Advisor exists to offer newcomers a directory of services and resources to assist settlement in Metro Vancouver and does not exist in an official Immigration Service capacity."
 msgstr "PeaceGeeks is not liable for any damages incurred as a result of or related to the use of the app. PeaceGeeks is not an immigration consultancy network, and therefore cannot provide advice or support directly related to immigration. Arrival Advisor exists to offer newcomers a directory of services and resources to assist settlement in Metro Vancouver and does not exist in an official Immigration Service capacity."
 
@@ -288,15 +280,11 @@ msgstr "Start"
 msgid "Start settling in B.C."
 msgstr "Start settling in B.C."
 
-#: lib/components/about/about_component.js:41
-#~ msgid "The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations in Metro Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact. Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source project. You can"
-#~ msgstr "The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations in Metro Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact. Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source project. You can"
-
 #: lib/components/about/about_component.js:38
 msgid "The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations in Metro Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact. Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how you can support this project."
 msgstr "The Arrival Advisor app is created by PeaceGeeks in partnership with settlement organizations in Metro Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact. Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how you can support this project."
 
-#: lib/components/disclaimer/disclaimer_component.js:26
+#: lib/components/disclaimer/disclaimer_component.js:22
 msgid "The app provides information about relevant newcomer services, and is intended for general guidance and reference only. While we aim to provide accurate and timely information, we do not have control over the ongoing accuracy of the information or the quality of the services provided. If you discover that a piece of information is outdated or not useful, please let us know in the feedback section of the app. The inclusion of services and resources in this app does not imply an endorsement or recommendation of those services over others.  Utilization of services located through the app is undertaken at the risk of the user."
 msgstr "The app provides information about relevant newcomer services, and is intended for general guidance and reference only. While we aim to provide accurate and timely information, we do not have control over the ongoing accuracy of the information or the quality of the services provided. If you discover that a piece of information is outdated or not useful, please let us know in the feedback section of the app. The inclusion of services and resources in this app does not imply an endorsement or recommendation of those services over others.  Utilization of services located through the app is undertaken at the risk of the user."
 
@@ -311,15 +299,3 @@ msgstr "UPDATE MY RECOMMENDATIONS"
 #: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "Web:"
-
-#: lib/components/about/about_component.js:49
-#~ msgid "and"
-#~ msgstr "and"
-
-#: lib/components/disclaimer/disclaimer_component.js:22
-msgid "and the BC211 database of service providers, available at:"
-msgstr "and the BC211 database of service providers, available at:"
-
-#: lib/components/about/about_component.js:51
-#~ msgid "to learn how you can support this project."
-#~ msgstr "to learn how you can support this project."
