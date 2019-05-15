@@ -68,6 +68,6 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
     );
 };
 
-export const wrapWithSpace = (textContent: JSX.Element | string): JSX.Element => (
+const wrapWithSpace = (textContent: JSX.Element | string): JSX.Element => (
     <Text> {textContent} </Text>
 );
