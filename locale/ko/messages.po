@@ -43,7 +43,7 @@ msgstr "질문에 답하기"
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
 "Guide, available at:"
-msgstr "TODO 1"
+msgstr "Arrival Advisor는 브리티시컬럼비아주 새 이민자 안내서("
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -396,7 +396,7 @@ msgstr "and"
 
 #: lib/components/disclaimer/disclaimer_component.js:22
 msgid "and the BC211 database of service providers, available at:"
-msgstr "TODO 2"
+msgstr "에서 확인 가능)와 BC211 서비스 제공자 데이터베이스(www.bc211.ca 에서 확인 가능)에 수록된 정보를 포함하고 있습니다."
 
 msgid "to learn how you can support this project."
 msgstr "to learn how you can support this project."
