@@ -18,7 +18,7 @@ msgstr "關於此應用程式"
 
 #: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A16+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
 msgid "About Arrival Advisor"
-msgstr "TO DO 1"
+msgstr "有關 Arrival Advisor"
 
 #: lib/components/services/service_list_item_component.js:27
 msgid "Address:"
@@ -44,8 +44,7 @@ msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
 "Guide, available at:"
 msgstr ""
-"Arrival Advisor 的內容整合自不列顛哥倫比亞省（BC省）政府新移民指南（www. "
-"welcomebc.ca），以及BC211數據資料庫（www.bc211.ca）"
+"Arrival Advisor 的內容整合自不列顛哥倫比亞省（BC省）政府新移民指南（"
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -381,11 +380,11 @@ msgid "Web:"
 msgstr "網址："
 
 msgid "and"
-msgstr "TO DO 3 "
+msgstr "TODO 3 "
 
 #: lib/components/disclaimer/disclaimer_component.js:22
 msgid "and the BC211 database of service providers, available at:"
-msgstr "TO DO 4"
+msgstr "），以及服務者所提供的BC211數據資料庫（"
 
 msgid "to learn how you can support this project."
-msgstr "TO DO 7"
+msgstr "來了解如何支持此專案。"
