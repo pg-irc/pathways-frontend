@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 09:42-0700\n"
+"POT-Creation-Date: 2019-05-15 14:07-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr "이 앱에 관하여"
 
 #: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A16+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
 msgid "About Arrival Advisor"
-msgstr "About Arrival Advisor"
+msgstr "Arrival Advisor에 대하여"
 
 #: lib/components/services/service_list_item_component.js:27
 msgid "Address:"
@@ -355,8 +355,12 @@ msgid ""
 "donors who make this project possible. Arrival Advisor is an open-source "
 "project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how "
 "you can support this project."
-msgstr "Arrival Advisor는 PeaceGeeks가 광역 밴쿠버의 정착 서비스 기관 및 이민자, 난민과 협력하여 제작한 앱입니다. 본 프로젝트는 브리티시컬럼비아주 정부, LEAP | Pecaut Centre for Social Impact와 제휴한 Google.org Canada의 재정적 지원 덕분에 완성되었습니다. 무엇보다 본 프로젝트의 실현에 도움을 주신 개인 후원자분들께 특별한 감사의 인사를 드립니다. 
-Arrival Advisor는 오픈 소스 프로젝트입니다. 본 정보의 확인은 <0>Github에서도</0> 가능하며, <1>저희에게 연락해주시면</1> 본 프로젝트를 위한 후원 방법을 알아보실 수 있습니다."
+msgstr ""
+"Arrival Advisor는 PeaceGeeks가 광역 밴쿠버의 정착 서비스 기관 및 이민자, 난민과 협력하여 제작한 앱입니다. 본 "
+"프로젝트는 브리티시컬럼비아주 정부, LEAP | Pecaut Centre for Social Impact와 제휴한 Google.org "
+"Canada의 재정적 지원 덕분에 완성되었습니다. 무엇보다 본 프로젝트의 실현에 도움을 주신 개인 후원자분들께 특별한 감사의 인사를 "
+"드립니다. Arrival Advisor는 오픈 소스 프로젝트입니다. 본 정보의 확인은 <0>Github에서도</0> 가능하며, <1>"
+"저희에게 연락해주시면</1> 본 프로젝트를 위한 후원 방법을 알아보실 수 있습니다."
 
 #: lib/components/disclaimer/disclaimer_component.js:26
 msgid ""
@@ -393,7 +397,8 @@ msgstr "and"
 
 #: lib/components/disclaimer/disclaimer_component.js:22
 msgid "and the BC211 database of service providers, available at:"
-msgstr "에서 확인 가능)와 BC211 서비스 제공자 데이터베이스(www.bc211.ca 에서 확인 가능)에 수록된 정보를 포함하고 있습니다."
+msgstr ""
+"에서 확인 가능)와 BC211 서비스 제공자 데이터베이스(www.bc211.ca 에서 확인 가능)에 수록된 정보를 포함하고 있습니다."
 
 msgid "to learn how you can support this project."
 msgstr "to learn how you can support this project."
