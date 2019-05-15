@@ -43,7 +43,7 @@ msgstr "回答问题"
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
 "Guide, available at:"
-msgstr "TODO 2"
+msgstr "Arrival Advisor包含了B.C.省政府的《新移民指南》（Newcomer’s Guide）和BC211服务提供商数据库的信息，要查阅《新移民指南》，请访问网站："
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -383,7 +383,7 @@ msgstr "and"
 
 #: lib/components/disclaimer/disclaimer_component.js:22
 msgid "and the BC211 database of service providers, available at:"
-msgstr "TODO 1"
+msgstr "，要查阅BC211服务提供商数据库，请访问网站："
 
 msgid "to learn how you can support this project."
 msgstr "to learn how you can support this project."
