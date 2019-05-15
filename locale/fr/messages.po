@@ -46,7 +46,9 @@ msgstr "Répondre aux questions"
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
 "Guide, available at:"
-msgstr "TODO 8"
+msgstr ""
+"Arrival Advisor contient des renseignements tirés du guide à l’intention "
+"des nouveaux arrivants en Colombie-Britannique : "
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -154,8 +156,7 @@ msgid ""
 "Fetching your location timed out. On Android devices you may need to set "
 "your location mode to \"High accuracy\"."
 msgstr ""
-"Dans le cas des appareils Android, vous devrez peut-être régler le mode de "
-"localisation à « haute précision »."
+"La géolocalisation a expiré. Dans le cas des appareils Android, vous devrez peut-être régler le mode de localisation à « haute précision »."
 
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
@@ -441,11 +442,11 @@ msgid "Web:"
 msgstr "Site Web :"
 
 msgid "and"
-msgstr "TODO 5"
+msgstr "et"
 
 #: lib/components/disclaimer/disclaimer_component.js:22
 msgid "and the BC211 database of service providers, available at:"
-msgstr "TODO 7"
+msgstr "et de la base de données de fournisseurs de services BC211"
 
 msgid "to learn how you can support this project."
-msgstr "TODO 6"
+msgstr "pour savoir comment soutenir ce projet."
