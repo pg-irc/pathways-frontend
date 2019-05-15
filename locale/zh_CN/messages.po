@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 13:32-0700\n"
+"POT-Creation-Date: 2019-05-15 14:40-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,13 +39,12 @@ msgstr "您回答一些有关您情况的问题，即可获得个性化地推荐
 msgid "Answer questions"
 msgstr "回答问题"
 
-#: lib/components/disclaimer/disclaimer_component.js:18
+#: lib/components/disclaimer/disclaimer_component.js:15
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at:"
+"Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of "
+"service providers, available at <1>www.bc211.ca</1>."
 msgstr ""
-"Arrival Advisor包含了B.C.省政府的《新移民指南》（Newcomer’s "
-"Guide）和BC211服务提供商数据库的信息，要查阅《新移民指南》，请访问网站："
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -58,7 +57,7 @@ msgstr ""
 "Arrival Advisor是一个免费的多语种手机应用，它可帮助在加拿大不列颠哥伦比亚省（又译作“卑诗省”或简称“B.C.省”）的移民和难民查找他们在安"
 "家落户过程中所需的信息和服务，该应用目前提供英语、法语（加拿大）和阿拉伯语版本，简体中文、繁体中文、韩语、旁遮普语和塔加路语版本即将推出。"
 
-#: lib/components/disclaimer/disclaimer_component.js:37
+#: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -97,9 +96,6 @@ msgstr "网页书签已清除"
 msgid "Contact Arrival Advisor team"
 msgstr "联系Arrival Advisor团队"
 
-msgid "Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr "2018不列颠哥伦比亚省版权所有，并保留所有权利。"
-
 #: lib/components/welcome/welcome_component.js:49
 msgid "Created by"
 msgstr "创建者"
@@ -108,7 +104,7 @@ msgstr "创建者"
 msgid "Delete all user data"
 msgstr "删除所有用户数据"
 
-#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A15+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
 msgid "Disclaimer"
 msgstr "免责声明"
 
@@ -264,7 +260,7 @@ msgstr "一旦您回答了一些问题，向您推荐的信息就会在下方显
 msgid "Open in maps"
 msgstr "在地图上打开"
 
-#: lib/components/disclaimer/disclaimer_component.js:49
+#: lib/components/disclaimer/disclaimer_component.js:45
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -356,7 +352,7 @@ msgstr ""
 "Impact合作提供的资助。同时也要特别感谢个人捐赠者的捐款。Arrival "
 "Advisor是开源项目。欲了解如何支持该项目，您可以查阅<0>Github网站</0>并<1>联系我们。</1>"
 
-#: lib/components/disclaimer/disclaimer_component.js:26
+#: lib/components/disclaimer/disclaimer_component.js:22
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -383,13 +379,3 @@ msgstr "更新向我推荐的信息"
 #: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "网站："
-
-msgid "and"
-msgstr "and"
-
-#: lib/components/disclaimer/disclaimer_component.js:22
-msgid "and the BC211 database of service providers, available at:"
-msgstr "，要查阅BC211服务提供商数据库，请访问网站："
-
-msgid "to learn how you can support this project."
-msgstr "to learn how you can support this project."

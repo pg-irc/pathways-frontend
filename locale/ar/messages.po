@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 13:32-0700\n"
+"POT-Creation-Date: 2019-05-15 14:40-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,13 +41,12 @@ msgstr ""
 msgid "Answer questions"
 msgstr "أجب عن الأسئلة"
 
-#: lib/components/disclaimer/disclaimer_component.js:18
+#: lib/components/disclaimer/disclaimer_component.js:15
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at:"
+"Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of "
+"service providers, available at <1>www.bc211.ca</1>."
 msgstr ""
-"يحتوي تطبيق Arrival Advisor على معلومات من دليل القادمين الجدد الصادر عن "
-"حكومة بريتيش كولومبيا وهو متاح على الموقع:"
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -63,7 +62,7 @@ msgstr ""
 "الإنكليزية والفرنسية (الكندية) والعربية. سوف يتوفر التطبيق لاحقا بالصينية "
 "المبسطة والصينية والتقليدية والكورية والبنجابية والتاغلوغية."
 
-#: lib/components/disclaimer/disclaimer_component.js:37
+#: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -107,11 +106,6 @@ msgstr "محونا العلامة المرجعية"
 msgid "Contact Arrival Advisor team"
 msgstr "تواصل مع فريق Arrival Advisor"
 
-msgid "Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr ""
-"حقوق الطبع والنشر 2018 محفوظة لمقاطعة بريتش كولومبيا. جميع حقوق الطبع والنشر "
-"محفوظة."
-
 #: lib/components/welcome/welcome_component.js:49
 msgid "Created by"
 msgstr "صممته"
@@ -120,7 +114,7 @@ msgstr "صممته"
 msgid "Delete all user data"
 msgstr "مسح كافة بيانات المستخدم"
 
-#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A15+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
 msgid "Disclaimer"
 msgstr "إخلاء مسؤولية"
 
@@ -208,9 +202,6 @@ msgstr ""
 "لو كنت تواجه مصاعب في الاستقرار داخل كندا، نقترح عليك أن تتواصل مع موظف "
 "استقرار."
 
-msgid "Information in this app is provided by the"
-msgstr "المعلومات المذكورة في هذا التطبيق من تقديم"
-
 #: lib/components/about/about_component.js:47
 msgid ""
 "Information in this app is provided by the <0>Newcomers Guide to British "
@@ -293,7 +284,7 @@ msgstr ""
 msgid "Open in maps"
 msgstr "فتح في الخرائط"
 
-#: lib/components/disclaimer/disclaimer_component.js:49
+#: lib/components/disclaimer/disclaimer_component.js:45
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -372,21 +363,6 @@ msgstr "ابدأ"
 msgid "Start settling in B.C."
 msgstr "بدء الاستقرار في بريتيش كولومبيا."
 
-msgid ""
-"The Arrival Advisor app is created by PeaceGeeks in partnership with "
-"settlement organizations in Metro Vancouver, as well as immigrants and "
-"refugees like you. This project is possible thanks to funding by the "
-"Province of British Columbia and Google.org Canada in partnership with LEAP |"
-" Pecaut Centre for Social Impact. Special thanks also goes to individual "
-"donors who make this project possible. Arrival Advisor is an open-source "
-"project. You can"
-msgstr ""
-"صممت تطبيق Arrival Advisor جمعية PeaceGeeks بالتعاون مع منظمات الاستقرار في "
-"مترو فانكوفر وكذلك مهاجرين ولاجئين مثلك. تحقق هذا المشروع بفضل تمويل مقاطعة "
-"بريتش كولومبيا و Google.org Canada بالتعاون مع مركز LEAP | Pecaut Centre for "
-"Social Impact. نتوجه بالشكر الخاص إلى متبرعين أفراد جعلوا من هذا المشروع "
-"حقيقة. تطبيق Arrival Advisor هو مشروع مفتوح المصدر. يمكنك"
-
 #: lib/components/about/about_component.js:38
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
@@ -403,10 +379,10 @@ msgstr ""
 "قدمته مقاطعة بريتيش كولومبيا عن طريق وزارة الوظائف والتجارة والتقنية، وكذلك "
 "Google.org Canada. كما نتوجه بالشكر الخاص للمتبرعين من الأفراد الذين جعلوا "
 "من هذا المشروع حقيقة. تطبيق Arrival Advisor هو مشروع مفتوح المصدر. يمكنك "
-"زيارة <0>view it on GitHub</0> وكذلك مراسلة <1>contact us</1> كي تتعرف على "
+"زيارة <0>view it on GitHub</0> وكذلك مراسلة <1>التواصل معنا</1> كي تتعرف على "
 "المزيد عن كيفية تقديم المساندة لهذا المشروع."
 
-#: lib/components/disclaimer/disclaimer_component.js:26
+#: lib/components/disclaimer/disclaimer_component.js:22
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -437,13 +413,3 @@ msgstr "تحديث توصياتي"
 #: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "الموقع الشبكي:"
-
-msgid "and"
-msgstr "and"
-
-#: lib/components/disclaimer/disclaimer_component.js:22
-msgid "and the BC211 database of service providers, available at:"
-msgstr "وكذلك قاعدة بيانات BC211 لمزودي الخدمات المتاحة على الموقع:"
-
-msgid "to learn how you can support this project."
-msgstr "كي تتعرف على المزيد عن كيفية تقديم المساندة لهذا المشروع."

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 14:07-0700\n"
+"POT-Creation-Date: 2019-05-15 14:40-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,11 +39,12 @@ msgstr "몇 가지 질문에 답한 다음, 브리티시컬럼비아주 정착�
 msgid "Answer questions"
 msgstr "질문에 답하기"
 
-#: lib/components/disclaimer/disclaimer_component.js:18
+#: lib/components/disclaimer/disclaimer_component.js:15
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at:"
-msgstr "Arrival Advisor는 브리티시컬럼비아주 새 이민자 안내서("
+"Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of "
+"service providers, available at <1>www.bc211.ca</1>."
+msgstr ""
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -57,7 +58,7 @@ msgstr ""
 "도와주는 다국어 지원 무료 모바일 앱입니다. 현재 앱에서 지원되는 언어는 영어와 프랑스어(캐나다), 아랍어입니다. 조만간 중국어 간체자와 "
 "번체자, 한국어, 펀자브어와 타갈로그어가 추가로 지원될 예정입니다."
 
-#: lib/components/disclaimer/disclaimer_component.js:37
+#: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -98,9 +99,6 @@ msgstr "삭제된 북마크"
 msgid "Contact Arrival Advisor team"
 msgstr "Arrival Advisor 팀에 연락하기"
 
-msgid "Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr "2018 브리티시컬럼비아주가 소유한 저작권의 보호를 받습니다."
-
 #: lib/components/welcome/welcome_component.js:49
 msgid "Created by"
 msgstr "제작"
@@ -109,7 +107,7 @@ msgstr "제작"
 msgid "Delete all user data"
 msgstr "모든 사용자 데이터 삭제하기"
 
-#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A15+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
 msgid "Disclaimer"
 msgstr "법적 책임 고지"
 
@@ -268,7 +266,7 @@ msgstr "질문에 답하면 아래 추천이 나타납니다. 현재, 모두에�
 msgid "Open in maps"
 msgstr "지도에서 열기"
 
-#: lib/components/disclaimer/disclaimer_component.js:49
+#: lib/components/disclaimer/disclaimer_component.js:45
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -362,7 +360,7 @@ msgstr ""
 "드립니다. Arrival Advisor는 오픈 소스 프로젝트입니다. 본 정보의 확인은 <0>Github에서도</0> 가능하며, <1>"
 "저희에게 연락해주시면</1> 본 프로젝트를 위한 후원 방법을 알아보실 수 있습니다."
 
-#: lib/components/disclaimer/disclaimer_component.js:26
+#: lib/components/disclaimer/disclaimer_component.js:22
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -391,14 +389,3 @@ msgstr "나의 추천 업데이트하기"
 #: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "웹:"
-
-msgid "and"
-msgstr "and"
-
-#: lib/components/disclaimer/disclaimer_component.js:22
-msgid "and the BC211 database of service providers, available at:"
-msgstr ""
-"에서 확인 가능)와 BC211 서비스 제공자 데이터베이스(www.bc211.ca 에서 확인 가능)에 수록된 정보를 포함하고 있습니다."
-
-msgid "to learn how you can support this project."
-msgstr "to learn how you can support this project."

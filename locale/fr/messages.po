@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 13:32-0700\n"
+"POT-Creation-Date: 2019-05-15 14:40-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,13 +42,12 @@ msgstr ""
 msgid "Answer questions"
 msgstr "Répondre aux questions"
 
-#: lib/components/disclaimer/disclaimer_component.js:18
+#: lib/components/disclaimer/disclaimer_component.js:15
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at:"
+"Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of "
+"service providers, available at <1>www.bc211.ca</1>."
 msgstr ""
-"Arrival Advisor contient des renseignements tirés du guide à l’intention des "
-"nouveaux arrivants en Colombie-Britannique : "
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -65,7 +64,7 @@ msgstr ""
 "bientôt disponible en chinois (simplifié et traditionnel), en coréen, en "
 "punjabi et en tagalog."
 
-#: lib/components/disclaimer/disclaimer_component.js:37
+#: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -115,10 +114,6 @@ msgstr "Retiré des favoris"
 msgid "Contact Arrival Advisor team"
 msgstr "Contacter l’équipe d’Arrival Advisor"
 
-msgid "Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr ""
-"Copyright 2018 Province de la Colombie-Britannique. Tous droits réservés."
-
 #: lib/components/welcome/welcome_component.js:49
 msgid "Created by"
 msgstr "Créé par"
@@ -127,7 +122,7 @@ msgstr "Créé par"
 msgid "Delete all user data"
 msgstr "Supprimer toutes les données de l’utilisateur(trice)"
 
-#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A15+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
 msgid "Disclaimer"
 msgstr "Avertissement"
 
@@ -218,6 +213,7 @@ msgstr ""
 "Si vous éprouvez de la difficulté à vous établir au Canada, nous vous "
 "suggérons de communiquer avec un travailleur en établissement."
 
+#: lib/components/about/about_component.js:47
 msgid ""
 "Information in this app is provided by the <0>Newcomers Guide to British "
 "Columbia</0> Copyright 2018 Province of British Columbia. All rights "
@@ -300,7 +296,7 @@ msgstr ""
 msgid "Open in maps"
 msgstr "Voir sur une carte"
 
-#: lib/components/disclaimer/disclaimer_component.js:49
+#: lib/components/disclaimer/disclaimer_component.js:45
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -406,7 +402,7 @@ msgstr ""
 "libre. Consultez <0>Github</0> et <1>communiquez avec nous</1> pour savoir "
 "comment soutenir ce projet."
 
-#: lib/components/disclaimer/disclaimer_component.js:26
+#: lib/components/disclaimer/disclaimer_component.js:22
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -441,13 +437,3 @@ msgstr "METTRE À JOUR MES RECOMMANDATIONS"
 #: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "Site Web :"
-
-msgid "and"
-msgstr "et"
-
-#: lib/components/disclaimer/disclaimer_component.js:22
-msgid "and the BC211 database of service providers, available at:"
-msgstr "et de la base de données de fournisseurs de services BC211"
-
-msgid "to learn how you can support this project."
-msgstr "pour savoir comment soutenir ce projet."
