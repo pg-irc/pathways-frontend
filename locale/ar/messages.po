@@ -1,9 +1,9 @@
-#. extracted from /tmp/messages-ar.csv
+#. extracted from /tmp/normalize-messages.csv
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 09:42-0700\n"
+"POT-Creation-Date: 2019-05-15 10:27-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -45,7 +45,9 @@ msgstr "أجب عن الأسئلة"
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
 "Guide, available at:"
-msgstr "TODO 1"
+msgstr ""
+"يحتوي تطبيق Arrival Advisor على معلومات من دليل القادمين الجدد الصادر عن "
+"حكومة بريتيش كولومبيا وهو متاح على الموقع:"
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -214,7 +216,10 @@ msgid ""
 "Information in this app is provided by the <0>Newcomers Guide to British "
 "Columbia</0> Copyright 2018 Province of British Columbia. All rights "
 "reserved."
-msgstr "TODO 1 <0>TODO 2</0> TODO 3"
+msgstr ""
+"قدم المعلومات المبينة في هذا التطبيق موقع <0>Newcomers Guide to British "
+"Columbia</0> حقوق الطبع 2018 ترجع إلى مقاطعة بريتيش كولومبيا. حقوق الطبع "
+"محفوظة."
 
 #: lib/components/help/help_component.js:24
 msgid "Information on BC211"
@@ -392,7 +397,14 @@ msgid ""
 "donors who make this project possible. Arrival Advisor is an open-source "
 "project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how "
 "you can support this project."
-msgstr "TODO 1 <0>TODO 2</0> and <1>TODO 4</1> TODO 3"
+msgstr ""
+"صمم تطبيق Arrival Advisor بالتعاون مع مقدمي خدمات الاستقرار في مترو فانكوفر "
+"ومهاجرين ولاجئين مثلك. نود أن نتوجه بالشكر الجزيل على الدعم المالي الذي "
+"قدمته مقاطعة بريتيش كولومبيا عن طريق وزارة الوظائف والتجارة والتقنية، وكذلك "
+"Google.org Canada. كما نتوجه بالشكر الخاص للمتبرعين من الأفراد الذين جعلوا "
+"من هذا المشروع حقيقة. تطبيق Arrival Advisor هو مشروع مفتوح المصدر. يمكنك "
+"زيارة <0>view it on GitHub</0> وكذلك مراسلة <1>contact us</1> كي تتعرف على "
+"المزيد عن كيفية تقديم المساندة لهذا المشروع."
 
 #: lib/components/disclaimer/disclaimer_component.js:26
 msgid ""
@@ -431,7 +443,7 @@ msgstr "and"
 
 #: lib/components/disclaimer/disclaimer_component.js:22
 msgid "and the BC211 database of service providers, available at:"
-msgstr "TODO 2"
+msgstr "وكذلك قاعدة بيانات BC211 لمزودي الخدمات المتاحة على الموقع:"
 
 msgid "to learn how you can support this project."
-msgstr "to learn how you can support this project."
+msgstr "كي تتعرف على المزيد عن كيفية تقديم المساندة لهذا المشروع."
