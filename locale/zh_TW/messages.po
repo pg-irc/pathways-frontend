@@ -354,8 +354,7 @@ msgstr ""
 "Arrival Advisor 應用程式是 PeaceGeeks "
 "與大溫哥華地區（以下簡稱大溫地區）的定居／安置所提供者們，以及像您一樣的移民或難民共同合作設計的。此專案計劃得益於不列顛哥倫比亞省（BC省）和 "
 "Google.org Canada 與 LEAP | Pecaul Centre 社會影響中心的資助。特別感謝使這個項目成功的個人捐助者。 "
-"Arrival Advisor 是一個開放式專案。You can <0>view it on GitHub</0> and <1>contact "
-"us</1> to learn how you can support this project."
+"Arrival Advisor 是一個開放式專案。 你可以在 <0>Github</0>查看它或<1>聯絡</1>我們來了解如何贊助此專案。"
 
 #: lib/components/disclaimer/disclaimer_component.js:26
 msgid ""

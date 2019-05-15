@@ -350,11 +350,8 @@ msgid ""
 "you can support this project."
 msgstr ""
 "Arrival Advisor应用是与大温地区安置服务提供者，以及像您这样的移民和难民合作而设计的。我们对经工作、贸易及科技厅（Ministry of "
-"Jobs, Trade and "
-"Technology）提供的不列颠哥伦比亚省资助和加拿大Google.org提供的资助表示感谢，我们还要特别感谢那些使这个项目成为可能的个人捐赠者。"
-"Arrival Advisor 是一个开源项目，您可以占击{githubLink}和{contactLink}，了解您可以如何支持该项目。You can "
-"<0>view it on GitHub</0> and <1>contact us</1> to learn how you can support "
-"this project."
+"Jobs, Trade and Technology）提供的不列颠哥伦比亚省资助和加拿大Google.org提供的资助表示感谢，我们还要特别感谢那些使这个项目成为可能的个人捐赠者。"
+"Arrival Advisor 是一个开源项目，您可以占击{githubLink}和{contactLink}，了解您可以如何支持该项目。欲了解如何支持该项目，您可以查阅<0>Github网站</0>并<1>联系我们。</1>."
 
 #: lib/components/disclaimer/disclaimer_component.js:26
 msgid ""

@@ -401,8 +401,8 @@ msgstr ""
 "de Google.org Canada, en partenariat avec LEAP | Pecaut Centre for Social "
 "Impact. Nous remercions aussi tout particulièrement les individus qui ont "
 "fait des dons afin que ce projet prenne vie. Arrival Advisor est un projet "
-"libre. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how "
-"you can support this project."
+"libre. Consultez <0>Github</0> et <1>communiquez avec nous</1> pour savoir "
+"comment soutenir ce projet."
 
 #: lib/components/disclaimer/disclaimer_component.js:26
 msgid ""
