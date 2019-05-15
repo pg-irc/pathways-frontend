@@ -46,7 +46,7 @@ msgstr "Sagutin ang mga tanong"
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
 "Guide, available at:"
-msgstr "TODO 1"
+msgstr "Ang Arrival Advisor ay naglalaman ng impormasyon mula sa Gabay ng Bagong Dating sa Gobyerno ng BC, na makukuha sa:"
 
 #: lib/components/about/about_component.js:19
 msgid ""
@@ -445,7 +445,7 @@ msgstr "and"
 
 #: lib/components/disclaimer/disclaimer_component.js:22
 msgid "and the BC211 database of service providers, available at:"
-msgstr "TODO 2"
+msgstr "at ang BC211 database ng mga tagapaglaan ng serbisyo, na makukuha sa:"
 
 msgid "to learn how you can support this project."
 msgstr "to learn how you can support this project."
