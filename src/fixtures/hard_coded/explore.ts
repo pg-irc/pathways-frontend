@@ -46,6 +46,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'zh_CN': '安家落户',
                     'ar': 'تستقر في',
                     'fr': 'S\'installer',
+                    'zh_TW': '定居下來',
                 },
                 description: {
                     'en': 'Social customs and getting around your community',
@@ -72,6 +73,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'zh_CN': '教育',
                     'ar': 'التعليم',
                     'fr': 'Éducation',
+                    'zh_TW': '教育',
                 },
                 description: {
                     'en': 'Learning English, schools for children, youth and adults',
@@ -98,6 +100,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'zh_CN': '医疗保健',
                     'ar': 'الرعاية الصحية',
                     'fr': 'Soins de santé',
+                    'zh_TW': '醫療護理',
                 },
                 description: {
                     'en': 'Medical insurance, finding a doctor, mental health',
@@ -124,6 +127,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'zh_CN': '货币与理财',
                     'ar': 'المال والبنوك',
                     'fr': 'Argent et banque',
+                    'zh_TW': '貨幣與理財',
                 },
                 description: {
                     'en': 'Opening a bank account, filing taxes',
@@ -150,6 +154,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'zh_CN': '住房',
                     'ar': 'الإسكان',
                     'fr': 'Logement',
+                    'zh_TW': '房屋',
                 },
                 description: {
                     'en': 'Finding a place to rent or buy, getting rental assistance',
@@ -176,6 +181,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'zh_CN': '就业',
                     'ar': 'توظيف',
                     'fr': 'Emploi',
+                    'zh_TW': '就業',
                 },
                 description: {
                     'en': 'Finding a job, working and workers’ rights',
@@ -200,6 +206,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'pa': 'ਕਾਨੂੰਨੀ ਸਿਸਟਮ ਅਤੇ ਇਮੀਗਰੇਸ਼ਨ',
                     'ko': '사법 제도와 이민',
                     'zh_CN': '法律制度和移民',
+                    'zh_TW': '法律制度與移民',
                     'ar': 'النظام القانوني والهجرة',
                     'fr': 'Système juridique et immigration',
                 },
@@ -228,6 +235,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'zh_CN': '汽车驾驶',
                     'ar': 'القيادة',
                     'fr': 'Conduite',
+                    'zh_TW': '汽車駕駛',
                 },
                 description: {
                     'en': 'Getting a driver\'s licence, traffic laws, basic insurance',
@@ -254,6 +262,7 @@ export const buildExploreFixture = (): ExploreStore => (
                     'zh_CN': '帮助个人与家庭',
                     'ar': 'مساعدة للأفراد والعائلات',
                     'fr': 'Aide pour les individus et les familles',
+                    'zh_TW': '個人及家庭援助',
                 },
                 description: {
                     'en': 'For example low-income, disabilities, youth',
