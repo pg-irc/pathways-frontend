@@ -30,3 +30,5 @@ src/fixtures/newcomers_guide
 
 # Build-time configuration file
 .env
+
+.vscode/
