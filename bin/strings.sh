@@ -110,6 +110,20 @@ build_changed() {
 }
 
 
+normalize_line_breaks(){
+    for locale in "${locales[@]}"
+    do
+        echo "Converting PO files to CSV for ${locale}..."
+        po2csv --progress none locale/$locale/messages.po > /tmp/messages-$locale.csv
+        checkForSuccess "convert po files to csv"
+
+        echo "Fixing line breaks in PO file for ${locale}..."
+        csv2po --progress none /tmp/messages-$locale.csv > locale/$locale/messages.po
+        checkForSuccess "convert csv files back to po to normalize line breaks"
+    done
+}
+
+
 clean() {
     rm -f locale/*/messages.csv
     rm -f locale/*/new-messages.*
@@ -123,6 +137,7 @@ help() {
     echo "$0 --build-all          Import all strings from CSV files and build the app"
     echo "$0 --extract-changed    Extract just the changed strings from source code to PO and CSV files"
     echo "$0 --build-changed      Import just the changed strings from CSV files and build the app"
+    echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
     echo "$0 --clean              Remove temporary files"
     echo
 
@@ -144,6 +159,9 @@ elif [ "$1" == "--extract-changed" ]; then
 
 elif [ "$1" == "--build-changed" ]; then
     build_changed
+
+elif [ "$1" == "--normalize" ]; then
+    normalize_line_breaks
 
 elif [ "$1" == "--clean" ]; then
     clean

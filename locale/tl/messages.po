@@ -1,9 +1,9 @@
-#. extracted from locale/tl/messages.csv
+#. extracted from /tmp/messages-tl.csv
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-18 10:24-0700\n"
+"POT-Creation-Date: 2019-05-15 14:55-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,9 +14,9 @@ msgstr ""
 
 #: lib/components/header_menu/header_menu_component.js:45
 msgid "ABOUT THE APP"
-msgstr "ABOUT THE APP"
+msgstr "TUNGKOL SA APP"
 
-#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A19+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
+#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A16+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
 msgid "About Arrival Advisor"
 msgstr "Tungkol sa Arrival Advisor"
 
@@ -26,7 +26,7 @@ msgstr "Address:"
 
 #: lib/components/services/service_list_error_component.js:33
 msgid "An error has occured."
-msgstr "An error has occured."
+msgstr "Nagkaproblema."
 
 #: lib/components/recommended_topics/call_to_action.js:46
 msgid ""
@@ -42,13 +42,18 @@ msgstr ""
 msgid "Answer questions"
 msgstr "Sagutin ang mga tanong"
 
-#: lib/components/disclaimer/disclaimer_component.js:18
+#: lib/components/disclaimer/disclaimer_component.js:15
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at:"
-msgstr "TODO 1"
+"Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of "
+"service providers, available at <1>www.bc211.ca</1>."
+msgstr ""
+"Ang Arrival Advisor ay naglalaman ng impormasyon mula sa Gabay ng Bagong "
+"Dating sa Gobyerno ng BC, na makukuha sa: <0>www.welcomebc.ca</0>, at ang "
+"BC211 database ng mga tagapaglaan ng serbisyo, na makukuha sa: "
+"<1>www.bc211.ca</1>."
 
-#: lib/components/about/about_component.js:22
+#: lib/components/about/about_component.js:19
 msgid ""
 "Arrival Advisor is a free, multilingual, mobile app that helps immigrants "
 "and refugees in British Columbia, Canada find information and services to "
@@ -63,7 +68,7 @@ msgstr ""
 ", at Arabe. Malapit na rin itong magamit sa Pinasimpleng Chinese, "
 "Tradisyonal na Chinese, Koreano, Punjabi, at Tagalog."
 
-#: lib/components/disclaimer/disclaimer_component.js:37
+#: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -113,12 +118,6 @@ msgstr "Tinanggal ang bookmark"
 msgid "Contact Arrival Advisor team"
 msgstr "Kontakin ang Arrival Advisor team"
 
-#: lib/components/about/about_component.js:56
-msgid "Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr ""
-"Copyright 2018 Province of British Columbia. Ang lahat ng karapatan ay "
-"reserbado."
-
 #: lib/components/welcome/welcome_component.js:49
 msgid "Created by"
 msgstr "Nilikha ng"
@@ -127,7 +126,7 @@ msgstr "Nilikha ng"
 msgid "Delete all user data"
 msgstr "Burahin ang lahat ng user data"
 
-#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A15+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
 msgid "Disclaimer"
 msgstr "Pagtatatuwa"
 
@@ -156,8 +155,8 @@ msgid ""
 "Fetching your location timed out. On Android devices you may need to set "
 "your location mode to \"High accuracy\"."
 msgstr ""
-"Fetching your location timed out. On Android devices you may need to set "
-"your location mode to \"High accuracy\"."
+"Natapos na ang oras ng pagkuha ng lokasyon mo. Sa mga Android device "
+"kakailanganin mong itakda ang mode ng lokasyon sa \"Mataas na katumpakan\"."
 
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
@@ -167,7 +166,7 @@ msgstr "Humanap ng ahensiya ng paninirahang malapit sa akin"
 msgid "Find related services near me"
 msgstr "Humanap ng mga kaugnay na serbisyo malapit sa akin"
 
-#: lib/components/about/about_component.js:30
+#: lib/components/about/about_component.js:27
 msgid ""
 "From finding a job to learning English, accessing health care, and more, "
 "Arrival Advisor has everything you need to get started in your new "
@@ -217,11 +216,15 @@ msgstr ""
 "Kung nahihirapan ka sa paninirahan sa Canada, minumungkahi namin na makipag-"
 "ugnayan sa worker ng paninirahan."
 
-#: lib/components/about/about_component.js:54
-msgid "Information in this app is provided by the"
+#: lib/components/about/about_component.js:47
+msgid ""
+"Information in this app is provided by the <0>Newcomers Guide to British "
+"Columbia</0> Copyright 2018 Province of British Columbia. All rights "
+"reserved."
 msgstr ""
-"Ang impormasyon sa app na ito ay inilalaan ng {welcomeBCLink} Copyright 2018 "
-"Province of British Columbia. Ang lahat ng karapatan ay reserbado."
+"Ang impormasyon sa app na ito ay inilalaan ng <0>Newcomers Guide to British "
+"Columbia</0> Copyright 2018 Province of British Columbia. Ang lahat ng "
+"karapatan ay reserbado."
 
 #: lib/components/help/help_component.js:24
 msgid "Information on BC211"
@@ -296,7 +299,7 @@ msgstr ""
 msgid "Open in maps"
 msgstr "Buksan sa mga mapa"
 
-#: lib/components/disclaimer/disclaimer_component.js:49
+#: lib/components/disclaimer/disclaimer_component.js:45
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -315,7 +318,9 @@ msgstr ""
 
 #: lib/components/services/service_list_error_component.js:23
 msgid "Please ensure location services are enabled for Arrival Advisor."
-msgstr "Please ensure location services are enabled for Arrival Advisor."
+msgstr ""
+"Mangyaring tiyakin na ang mga serbisyo ng lokasyon ay ginagagana para "
+"Arrival Advisor."
 
 #: lib/components/help/help_component.js:15
 msgid "Police, fire and medical emergencies"
@@ -355,9 +360,9 @@ msgstr ""
 msgid "Select your language"
 msgstr "Pumili ng wika mo"
 
-#: lib/components/about/about_component.js:63
+#: lib/components/about/about_component.js:56
 msgid "Server version:"
-msgstr "Bersyon ng server: "
+msgstr "Bersyon ng server:"
 
 #: lib/components/help/help_component.js:25
 msgid "Services information and referral"
@@ -379,7 +384,7 @@ msgstr "Magsimula"
 msgid "Start settling in B.C."
 msgstr "Simulan ang paninirahan sa B.C."
 
-#: lib/components/about/about_component.js:41
+#: lib/components/about/about_component.js:38
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -387,7 +392,8 @@ msgid ""
 "Province of British Columbia and Google.org Canada in partnership with LEAP |"
 " Pecaut Centre for Social Impact. Special thanks also goes to individual "
 "donors who make this project possible. Arrival Advisor is an open-source "
-"project. You can"
+"project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how "
+"you can support this project."
 msgstr ""
 "Ang Arrival Advisor app ay nilikha ng PeaceGeeks sa pakikipagtulungan ng mga "
 "organisasyon sa paninirahan sa Metro Vancouver, gayundin sa mga imigrante at "
@@ -396,9 +402,10 @@ msgstr ""
 "Google.org Canada sa pakikipagtulungan ng LEAP | Pecaut Centre for Social "
 "Impact. Espesyal na pasasalamat din sa mga indibidwal na donor na dahilan "
 "upang magawa ang proyektong ito. Ang Arrival Advisor ay isang open-source na "
-"proyekto. Maaari kang"
+"proyekto. Maaari mong tingnan ito sa <0>Github</0> at <1>contact us</1> para "
+"malaman kung paano ka tutulong sa proyektong ito."
 
-#: lib/components/disclaimer/disclaimer_component.js:26
+#: lib/components/disclaimer/disclaimer_component.js:22
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -421,7 +428,7 @@ msgstr ""
 "iyon laban sa iba. Ang paggamit ng mga serbisyong matatagpuan sa app ay "
 "isinasagawa sa pananagutan ng user."
 
-#: lib/components/about/about_component.js:59
+#: lib/components/about/about_component.js:52
 msgid "This is Arrival Advisor version:"
 msgstr "Ito ay bersyon ng Arrival Advisor:"
 
@@ -432,15 +439,3 @@ msgstr "I-UPDATE ANG REKOMENDASYON KO"
 #: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "Web:"
-
-#: lib/components/about/about_component.js:49
-msgid "and"
-msgstr "and"
-
-#: lib/components/disclaimer/disclaimer_component.js:22
-msgid "and the BC211 database of service providers, available at:"
-msgstr "TODO 2"
-
-#: lib/components/about/about_component.js:51
-msgid "to learn how you can support this project."
-msgstr "to learn how you can support this project."

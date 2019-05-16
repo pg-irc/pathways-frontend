@@ -1,9 +1,9 @@
-#. extracted from locale/fr/messages.csv
+#. extracted from /tmp/messages-fr.csv
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-18 10:24-0700\n"
+"POT-Creation-Date: 2019-05-15 14:55-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 msgid "ABOUT THE APP"
 msgstr "À PROPOS DE L’APPLICATION"
 
-#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A19+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
+#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A16+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
 msgid "About Arrival Advisor"
 msgstr "À propos d’Arrival Advisor"
 
@@ -26,7 +26,7 @@ msgstr "Adresse :"
 
 #: lib/components/services/service_list_error_component.js:33
 msgid "An error has occured."
-msgstr "TODO 1"
+msgstr "Une erreur s'est produite."
 
 #: lib/components/recommended_topics/call_to_action.js:46
 msgid ""
@@ -42,13 +42,17 @@ msgstr ""
 msgid "Answer questions"
 msgstr "Répondre aux questions"
 
-#: lib/components/disclaimer/disclaimer_component.js:18
+#: lib/components/disclaimer/disclaimer_component.js:15
 msgid ""
 "Arrival Advisor contains information from the BC Government’s Newcomer’s "
-"Guide, available at:"
-msgstr "TODO 8"
+"Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of "
+"service providers, available at <1>www.bc211.ca</1>."
+msgstr ""
+"Arrival Advisor contient des renseignements tirés du guide à l’intention des "
+"nouveaux arrivants en Colombie-Britannique : <0>www.welcomebc.ca</0>, et de "
+"la base de données de fournisseurs de services BC211 : <1>www.bc211.ca</1>"
 
-#: lib/components/about/about_component.js:22
+#: lib/components/about/about_component.js:19
 msgid ""
 "Arrival Advisor is a free, multilingual, mobile app that helps immigrants "
 "and refugees in British Columbia, Canada find information and services to "
@@ -63,7 +67,7 @@ msgstr ""
 "bientôt disponible en chinois (simplifié et traditionnel), en coréen, en "
 "punjabi et en tagalog."
 
-#: lib/components/disclaimer/disclaimer_component.js:37
+#: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
 "Arrival Advisor respects and maintains the privacy and anonymity of its "
 "users. Users do not need to provide personal information in order to use the "
@@ -113,11 +117,6 @@ msgstr "Retiré des favoris"
 msgid "Contact Arrival Advisor team"
 msgstr "Contacter l’équipe d’Arrival Advisor"
 
-#: lib/components/about/about_component.js:56
-msgid "Copyright 2018 Province of British Columbia. All rights reserved."
-msgstr ""
-"Copyright 2018 Province de la Colombie-Britannique. Tous droits réservés."
-
 #: lib/components/welcome/welcome_component.js:49
 msgid "Created by"
 msgstr "Créé par"
@@ -126,7 +125,7 @@ msgstr "Créé par"
 msgid "Delete all user data"
 msgstr "Supprimer toutes les données de l’utilisateur(trice)"
 
-#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A15+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
 msgid "Disclaimer"
 msgstr "Avertissement"
 
@@ -154,7 +153,9 @@ msgstr "POUR DU SOUTIEN ADDITIONNEL"
 msgid ""
 "Fetching your location timed out. On Android devices you may need to set "
 "your location mode to \"High accuracy\"."
-msgstr "TODO 3"
+msgstr ""
+"La géolocalisation a expiré. Dans le cas des appareils Android, vous devrez "
+"peut-être régler le mode de localisation à « haute précision »."
 
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
@@ -164,7 +165,7 @@ msgstr "Trouver une agence d’établissement à proximité"
 msgid "Find related services near me"
 msgstr "Trouver des services connexes à proximité"
 
-#: lib/components/about/about_component.js:30
+#: lib/components/about/about_component.js:27
 msgid ""
 "From finding a job to learning English, accessing health care, and more, "
 "Arrival Advisor has everything you need to get started in your new "
@@ -215,9 +216,15 @@ msgstr ""
 "Si vous éprouvez de la difficulté à vous établir au Canada, nous vous "
 "suggérons de communiquer avec un travailleur en établissement."
 
-#: lib/components/about/about_component.js:54
-msgid "Information in this app is provided by the"
-msgstr "Les renseignements fournis par cette application sont tirés du"
+#: lib/components/about/about_component.js:47
+msgid ""
+"Information in this app is provided by the <0>Newcomers Guide to British "
+"Columbia</0> Copyright 2018 Province of British Columbia. All rights "
+"reserved."
+msgstr ""
+"Les renseignements fournis par cette application sont tirés du <0>Newcomers "
+"Guide to British Columbia</0> Copyright 2018 Province of British Columbia. "
+"All rights reserved."
 
 #: lib/components/help/help_component.js:24
 msgid "Information on BC211"
@@ -257,7 +264,7 @@ msgstr "Aucun nouveau sujet n’a été recommandé en fonction de vos réponses
 
 #: lib/components/services/service_list_component.js:60
 msgid "No related services found"
-msgstr "Nous n’avons pas trouvé de service connexe."
+msgstr "Nous n’avons pas trouvé de service connexe"
 
 #: lib/components/topics/task_list_component.js:77
 msgid "No topics to recommend"
@@ -292,7 +299,7 @@ msgstr ""
 msgid "Open in maps"
 msgstr "Voir sur une carte"
 
-#: lib/components/disclaimer/disclaimer_component.js:49
+#: lib/components/disclaimer/disclaimer_component.js:45
 msgid ""
 "PeaceGeeks is not liable for any damages incurred as a result of or related "
 "to the use of the app. PeaceGeeks is not an immigration consultancy network, "
@@ -311,7 +318,9 @@ msgstr ""
 
 #: lib/components/services/service_list_error_component.js:23
 msgid "Please ensure location services are enabled for Arrival Advisor."
-msgstr "TODO 4"
+msgstr ""
+"Veuillez vérifier que les services de localisation sont activés pour Arrival "
+"Advisor."
 
 #: lib/components/help/help_component.js:15
 msgid "Police, fire and medical emergencies"
@@ -351,7 +360,7 @@ msgstr ""
 msgid "Select your language"
 msgstr "Choisir la langue"
 
-#: lib/components/about/about_component.js:63
+#: lib/components/about/about_component.js:56
 msgid "Server version:"
 msgstr "Version du serveur :"
 
@@ -375,7 +384,7 @@ msgstr "Débuter"
 msgid "Start settling in B.C."
 msgstr "Amorcer l’établissement en C.-B."
 
-#: lib/components/about/about_component.js:41
+#: lib/components/about/about_component.js:38
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -383,7 +392,8 @@ msgid ""
 "Province of British Columbia and Google.org Canada in partnership with LEAP |"
 " Pecaut Centre for Social Impact. Special thanks also goes to individual "
 "donors who make this project possible. Arrival Advisor is an open-source "
-"project. You can"
+"project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how "
+"you can support this project."
 msgstr ""
 "L’application Arrival Advisor est le fruit du travail de PeaceGeeks, en "
 "partenariat avec des organismes d’aide à l’établissement du Grand Vancouver "
@@ -392,9 +402,10 @@ msgstr ""
 "de Google.org Canada, en partenariat avec LEAP | Pecaut Centre for Social "
 "Impact. Nous remercions aussi tout particulièrement les individus qui ont "
 "fait des dons afin que ce projet prenne vie. Arrival Advisor est un projet "
-"libre."
+"libre. Consultez <0>Github</0> et <1>communiquez avec nous</1> pour savoir "
+"comment soutenir ce projet."
 
-#: lib/components/disclaimer/disclaimer_component.js:26
+#: lib/components/disclaimer/disclaimer_component.js:22
 msgid ""
 "The app provides information about relevant newcomer services, and is "
 "intended for general guidance and reference only. While we aim to provide "
@@ -418,7 +429,7 @@ msgstr ""
 "associés à l’utilisation des services trouvés par l’entremise de l’"
 "application sont assumés par l’utilisateur."
 
-#: lib/components/about/about_component.js:59
+#: lib/components/about/about_component.js:52
 msgid "This is Arrival Advisor version:"
 msgstr "Version d’Arrival Advisor :"
 
@@ -429,15 +440,3 @@ msgstr "METTRE À JOUR MES RECOMMANDATIONS"
 #: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "Site Web :"
-
-#: lib/components/about/about_component.js:49
-msgid "and"
-msgstr "TODO 5"
-
-#: lib/components/disclaimer/disclaimer_component.js:22
-msgid "and the BC211 database of service providers, available at:"
-msgstr "TODO 7"
-
-#: lib/components/about/about_component.js:51
-msgid "to learn how you can support this project."
-msgstr "TODO 6"

@@ -3,18 +3,11 @@ import { Trans } from '@lingui/react';
 import { Content, Text } from 'native-base';
 import { ParagraphComponent } from '../paragraph/paragraph_component';
 import { values, colors, textStyles } from '../../application/styles';
-import { wrapWithSpace } from '../about/about_component';
 import { Link } from '../link/link';
 
 export const DisclaimerComponent: React.StatelessComponent = (): JSX.Element => {
     const welcomeBcUrl = 'https://www.welcomebc.ca';
     const bc211Url = 'https://www.bc211.ca';
-    const welcomeBCLink = wrapWithSpace(
-        <Link href={welcomeBcUrl} text={'www.welcomebc.ca, '} style={textStyles.paragraphURL} />,
-    );
-    const bc211Link = wrapWithSpace(
-        <Link href={bc211Url} text={'www.bc211.ca.'} style={textStyles.paragraphURL} />,
-    );
     return (
         <Content padder style={{ backgroundColor: colors.white }}>
             <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
@@ -22,11 +15,11 @@ export const DisclaimerComponent: React.StatelessComponent = (): JSX.Element => 
             </Text>
             <ParagraphComponent>
                 <Trans>
-                    Arrival Advisor contains information from the BC Government’s Newcomer’s Guide, available at:
+                    Arrival Advisor contains information from the BC Government’s Newcomer’s Guide, available
+                    at <Link href={welcomeBcUrl} style={textStyles.paragraphURL} >www.welcomebc.ca</Link>,
+                    and the BC211 database of service providers, available at <Link href={bc211Url}
+                        style={textStyles.paragraphURL} >www.bc211.ca</Link>.
                 </Trans>
-                {welcomeBCLink}
-                <Trans>and the BC211 database of service providers, available at: </Trans>
-                {bc211Link}
             </ParagraphComponent>
             <ParagraphComponent>
                 <Trans>

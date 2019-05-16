@@ -13,9 +13,23 @@ export const buildExploreFixture = (): ExploreStore => (
                 id: rightAwaySectionId,
                 name: {
                     'en': 'Things to do right away',
+                    'ar': 'أمور يجب عملها على الفور',
+                    'fr': 'Tâches à effectuer tout de suite',
+                    'ko': '지금 바로 해야 할 일들',
+                    'pa': 'ਹੁਣੇ ਕਰਨ ਵਾਲੇ ਕੰਮ',
+                    'tl': 'Mga bagay na gagawin agad',
+                    'zh_CN': '需要立即做的事情',
+                    'zh_TW': '需要立刻做的事情',
                 },
                 description: {
                     'en': 'Important tasks for settling in your community',
+                    'ar': 'مهام لا غنى عنها نحو الاستقرار في مجتمعك',
+                    'fr': 'Tâches importantes en vue de l\'établissement dans votre communauté',
+                    'ko': '커뮤니티 정착에 필요한 중요 과제들',
+                    'pa': 'ਤੁਹਾਡੀ ਕਮਿਊਨਟੀ ਵਿੱਚ ਸੈਟਲ ਹੋਣ ਲਈ ਖਾਸ ਕੰਮ',
+                    'tl': 'Mahahalagang gawain para manirahan sa komunidad mo',
+                    'zh_CN': '在您的社区安顿下来需要做的重要事项',
+                    'zh_TW': '對於在您的社區安頓下來所需的重要任務',
                 },
                 'taxonomyTerms': [{
                     'taxonomyId': exploreTaxonomyId,
