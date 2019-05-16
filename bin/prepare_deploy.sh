@@ -197,6 +197,7 @@ validateServerVersion() {
     fi
 }
 
+# currently not used
 removeContentInUnsuppotedLanguages() {
     for language in zh_TW
     do
@@ -324,8 +325,6 @@ checkOutContentByTag
 
 validateClientVersion
 validateServerVersion
-
-removeContentInUnsuppotedLanguages
 
 getServerDependencies
 createServerEnvironment
