@@ -18,6 +18,7 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
                 onPress={(): Promise<void> =>
                     showLocation({
                         title: props.locationTitle,
+                        googleForceLatLon: true,
                         latitude: props.latitude,
                         longitude: props.longitude,
                         appsWhiteList: ['apple-maps', 'google-maps'],
