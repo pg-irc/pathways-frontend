@@ -24,9 +24,8 @@ export const AboutComponent: React.StatelessComponent<AboutComponentProps> = (pr
             <ParagraphComponent>
                 <Trans>
                     Arrival Advisor is a free, multilingual, mobile app that helps immigrants and refugees in British Columbia,
-                    Canada find information and services to navigate their settlement journey. The app is currently available
-                    in English, French (Canadian), and Arabic. It will soon be available in Chinese Simplified, Chinese
-                    Traditional, Korean, Punjabi, and Tagalog.
+                    Canada find information and services to navigate their settlement journey. Arrival Advisor is offered in English,
+                    Arabic, Chinese Simplified, Chinese Traditional, French (Canadian), Korean, Punjabi, and Tagalog.
                 </Trans>
             </ParagraphComponent>
             <ParagraphComponent>
