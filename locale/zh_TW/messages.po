@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 14:55-0700\n"
+"POT-Creation-Date: 2019-05-23 11:44-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "地址："
 msgid "An error has occured."
 msgstr "發生錯誤。"
 
-#: lib/components/recommended_topics/call_to_action.js:46
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A26+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A46
 msgid ""
 "Answer a few questions about your situation to get personalized "
 "recommendations of topics and services to help you settle in British "
@@ -52,12 +52,13 @@ msgstr ""
 msgid ""
 "Arrival Advisor is a free, multilingual, mobile app that helps immigrants "
 "and refugees in British Columbia, Canada find information and services to "
-"navigate their settlement journey. The app is currently available in "
-"English, French (Canadian), and Arabic. It will soon be available in Chinese "
-"Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
+"navigate their settlement journey. Arrival Advisor is offered in English, "
+"Arabic, Chinese Simplified, Chinese Traditional, French (Canadian), Korean, "
+"Punjabi, and Tagalog."
 msgstr ""
-"Arrival Advisor 是一個免費的多語言手機應用程式，可協助加拿大不列顛哥倫比亞省（BC省）的移民和難民們，在安家定居過程中取得所需的相關資訊和"
-"服務。本應用程式目前提供英語，法語（加拿大）和阿拉伯語版本，並即將提供簡體中文、繁體中文、韓文、旁遮普文及他加祿文等版本。"
+"Arrival Advisor "
+"是一個免費的多語言手機應用程式，可協助加拿大不列顛哥倫比亞省（BC省）的移民和難民們，在安家定居過程中取得所需的相關資訊和服務。Arrival "
+"Advisor 提供英語、阿拉伯語、簡體中文、繁體中文、法語（加拿大）、韓語、旁遮普語和塔加路語版本。"
 
 #: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
@@ -144,7 +145,7 @@ msgstr "就近尋找一家安置機構"
 msgid "Find related services near me"
 msgstr "尋找就近相關服務處"
 
-#: lib/components/about/about_component.js:27
+#: lib/components/about/about_component.js:26
 msgid ""
 "From finding a job to learning English, accessing health care, and more, "
 "Arrival Advisor has everything you need to get started in your new "
@@ -166,7 +167,7 @@ msgstr ""
 msgid "GETTING STARTED"
 msgstr "開始"
 
-#: lib/components/recommended_topics/call_to_action.js:36
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A25+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A36
 msgid "Get information based on your needs"
 msgstr "根據您的需求取得訊息"
 
@@ -184,7 +185,7 @@ msgid ""
 "in touch with a settlement worker."
 msgstr "幫助和支持"
 
-#: lib/components/about/about_component.js:47
+#: lib/components/about/about_component.js:46
 msgid ""
 "Information in this app is provided by the <0>Newcomers Guide to British "
 "Columbia</0> Copyright 2018 Province of British Columbia. All rights "
@@ -314,7 +315,7 @@ msgstr "儲存重要主題以建立個人定居計畫。"
 msgid "Select your language"
 msgstr "選擇您的語言"
 
-#: lib/components/about/about_component.js:56
+#: lib/components/about/about_component.js:55
 msgid "Server version:"
 msgstr "伺服器版本：{0}"
 
@@ -338,7 +339,7 @@ msgstr "開始"
 msgid "Start settling in B.C."
 msgstr "開始在B.C.省定居"
 
-#: lib/components/about/about_component.js:38
+#: lib/components/about/about_component.js:37
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -370,7 +371,7 @@ msgstr ""
 "發現某資訊已過時或無用，懇請在本程式的意見回饋欄留言告知。 本應用程式並不推薦或背書該程式中所列入的服務資訊。 "
 "用戶需自行承擔使用此應用程式所搜尋之服務風險。"
 
-#: lib/components/about/about_component.js:52
+#: lib/components/about/about_component.js:51
 msgid "This is Arrival Advisor version:"
 msgstr "這是 Arrival Advisor 版本："
 

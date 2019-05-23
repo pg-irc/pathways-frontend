@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 14:55-0700\n"
+"POT-Creation-Date: 2019-05-23 11:44-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "Address:"
 msgid "An error has occured."
 msgstr "Nagkaproblema."
 
-#: lib/components/recommended_topics/call_to_action.js:46
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A26+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A46
 msgid ""
 "Answer a few questions about your situation to get personalized "
 "recommendations of topics and services to help you settle in British "
@@ -57,16 +57,16 @@ msgstr ""
 msgid ""
 "Arrival Advisor is a free, multilingual, mobile app that helps immigrants "
 "and refugees in British Columbia, Canada find information and services to "
-"navigate their settlement journey. The app is currently available in "
-"English, French (Canadian), and Arabic. It will soon be available in Chinese "
-"Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
+"navigate their settlement journey. Arrival Advisor is offered in English, "
+"Arabic, Chinese Simplified, Chinese Traditional, French (Canadian), Korean, "
+"Punjabi, and Tagalog."
 msgstr ""
 "Ang Arrival Advisor ay isang libre, maramihang wikang mobile app na "
 "tumutulong sa mga imigrante at takas sa British Columbia, Canada na humanap "
 "ng impormasyon at mga serbisyo upang galugarin ang kanilang byahe sa "
-"paninirahan. Ang app ay kasalukuyang magagamit sa English, Pranses (Canadian)"
-", at Arabe. Malapit na rin itong magamit sa Pinasimpleng Chinese, "
-"Tradisyonal na Chinese, Koreano, Punjabi, at Tagalog."
+"paninirahan. Ang Arrival Advisor ay iniaalok sa English, Arabic, "
+"Pinasimpleng Chinese, Tradisyonal na Chinese, Pranses (Canadian), Korean, "
+"Punjabi, at Tagalog."
 
 #: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
@@ -166,7 +166,7 @@ msgstr "Humanap ng ahensiya ng paninirahang malapit sa akin"
 msgid "Find related services near me"
 msgstr "Humanap ng mga kaugnay na serbisyo malapit sa akin"
 
-#: lib/components/about/about_component.js:27
+#: lib/components/about/about_component.js:26
 msgid ""
 "From finding a job to learning English, accessing health care, and more, "
 "Arrival Advisor has everything you need to get started in your new "
@@ -196,7 +196,7 @@ msgstr ""
 msgid "GETTING STARTED"
 msgstr "PAGSISIMULA"
 
-#: lib/components/recommended_topics/call_to_action.js:36
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A25+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A36
 msgid "Get information based on your needs"
 msgstr "Makakuha ng impormasyon batay sa pangangailangan mo"
 
@@ -216,7 +216,7 @@ msgstr ""
 "Kung nahihirapan ka sa paninirahan sa Canada, minumungkahi namin na makipag-"
 "ugnayan sa worker ng paninirahan."
 
-#: lib/components/about/about_component.js:47
+#: lib/components/about/about_component.js:46
 msgid ""
 "Information in this app is provided by the <0>Newcomers Guide to British "
 "Columbia</0> Copyright 2018 Province of British Columbia. All rights "
@@ -360,7 +360,7 @@ msgstr ""
 msgid "Select your language"
 msgstr "Pumili ng wika mo"
 
-#: lib/components/about/about_component.js:56
+#: lib/components/about/about_component.js:55
 msgid "Server version:"
 msgstr "Bersyon ng server:"
 
@@ -384,7 +384,7 @@ msgstr "Magsimula"
 msgid "Start settling in B.C."
 msgstr "Simulan ang paninirahan sa B.C."
 
-#: lib/components/about/about_component.js:38
+#: lib/components/about/about_component.js:37
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -428,7 +428,7 @@ msgstr ""
 "iyon laban sa iba. Ang paggamit ng mga serbisyong matatagpuan sa app ay "
 "isinasagawa sa pananagutan ng user."
 
-#: lib/components/about/about_component.js:52
+#: lib/components/about/about_component.js:51
 msgid "This is Arrival Advisor version:"
 msgstr "Ito ay bersyon ng Arrival Advisor:"
 

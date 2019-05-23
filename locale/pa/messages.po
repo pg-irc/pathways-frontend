@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 14:55-0700\n"
+"POT-Creation-Date: 2019-05-23 11:44-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "ਪਤਾ:"
 msgid "An error has occured."
 msgstr "ਗਲਤੀ ਹੋਈ ਹੈ।"
 
-#: lib/components/recommended_topics/call_to_action.js:46
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A26+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A46
 msgid ""
 "Answer a few questions about your situation to get personalized "
 "recommendations of topics and services to help you settle in British "
@@ -55,15 +55,15 @@ msgstr ""
 msgid ""
 "Arrival Advisor is a free, multilingual, mobile app that helps immigrants "
 "and refugees in British Columbia, Canada find information and services to "
-"navigate their settlement journey. The app is currently available in "
-"English, French (Canadian), and Arabic. It will soon be available in Chinese "
-"Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
+"navigate their settlement journey. Arrival Advisor is offered in English, "
+"Arabic, Chinese Simplified, Chinese Traditional, French (Canadian), Korean, "
+"Punjabi, and Tagalog."
 msgstr ""
 "Arrival Advisor ਮੁਫ਼ਤ, ਬਹੁ-ਭਾਸਾਈ ਮੋਬਾਈਲ ਐਪ ਹੈ, ਜੋ ਕਿ ਬ੍ਰਿਟਿਸ਼ ਕੋਲੰਬੀਆ, ਕੈਨੇਡਾ"
 " ਦੇ ਆਵਾਸੀਆਂ ਅਤੇ ਰਿਫਿਊਜੀਆਂ ਨੂੰ ਉਹਨਾਂ ਦੀ ਸੈਟਲਮੈਂਟ ਯਾਤਰਾ ਲਈ ਜਾਣਕਾਰੀ ਅਤੇ ਸੇਵਾਵਾਂ "
 "ਲੱਭਣ ਲਈ ਮਦਦ ਕਰਦੀ ਹੈ। ਇਹ ਐਪ ਇਸ ਵੇਲੇ ਅੰਗਰੇਜੀ, ਫਰੈਂਚ (ਕੈਨੇਡਾ) ਅਤੇ ਅਰਬੀ ਵਿੱਚ ਹੈ। "
-"ਇਹ ਛੇਤੀ ਹੀ ਚੀਨੀ ਸਰਲ, ਚੀਨੀ ਰਿਵਾਇਤੀ, ਕੋਰੀਆਈ, ਪੰਜਾਬੀ ਅਤੇ ਟਾਗਾਲੋਗ ਵਿੱਚ ਉਪਲਬਧ "
-"ਹੋਵੇਗੀ।"
+"Arrival Advisor ਅੰਗਰੇਜ਼ੀ, ਅਰਬੀ, ਚੀਨੀ ਸਰਲ, ਚੀਨੀ ਰਿਵਾਇਤੀ, ਫਰੈਂਚ (ਕੈਨੇਡੀਅਨ), ਕੋਰੀ"
+"ਆਈ, ਪੰਜਾਬੀ ਤੇ ਟਾਗਾਲੋਗ ਵਿੱਚ ਪੇਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ।"
 
 #: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
@@ -160,7 +160,7 @@ msgstr "ਮੇਰੇ ਨੇੜੇ ਸੈਟਲਮੈਂਟ ਏਜੰਸੀ ਲ�
 msgid "Find related services near me"
 msgstr "ਮੇਰੇ ਨੇੜੇ ਸੰਬੰਧਿਤ ਸੇਵਾਵਾਂ ਲੱਭੋ"
 
-#: lib/components/about/about_component.js:27
+#: lib/components/about/about_component.js:26
 msgid ""
 "From finding a job to learning English, accessing health care, and more, "
 "Arrival Advisor has everything you need to get started in your new "
@@ -188,7 +188,7 @@ msgstr ""
 msgid "GETTING STARTED"
 msgstr "ਸ਼ੁਰੂ ਕਰੀਏ"
 
-#: lib/components/recommended_topics/call_to_action.js:36
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A25+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A36
 msgid "Get information based on your needs"
 msgstr "ਤੁਹਾਡੀਆਂ ਲੋੜਾਂ ਦੇ ਮੁਤਾਬਕ ਜਾਣਕਾਰੀ ਲਵੋ"
 
@@ -208,7 +208,7 @@ msgstr ""
 "ਜੇ ਤੁਹਾਨੂੰ ਕੈਨੇਡਾ ਵਿੱਚ ਸੈਟਲਮੈਂਟ ਨਾਲ ਔਖਿਆਈ ਆ ਰਹੀ ਹੈ ਤਾਂ ਅਸੀਂ ਤੁਹਾਨੂੰ ਸੈਟਲਮੈਂਟ "
 "ਵਰਕਰ ਨਾਲ ਸੰਪਰਕ ਕਰਨ ਦਾ ਸੁਝਾਅ ਦਿੰਦੇ ਹਾਂ।"
 
-#: lib/components/about/about_component.js:47
+#: lib/components/about/about_component.js:46
 msgid ""
 "Information in this app is provided by the <0>Newcomers Guide to British "
 "Columbia</0> Copyright 2018 Province of British Columbia. All rights "
@@ -345,7 +345,7 @@ msgstr "ਸੈਟਲਮੈਂਟ ਲਈ ਤੁਹਾਡੀ ਨਿੱਜੀ ਵ�
 msgid "Select your language"
 msgstr "ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ"
 
-#: lib/components/about/about_component.js:56
+#: lib/components/about/about_component.js:55
 msgid "Server version:"
 msgstr "ਸਰਵਰ ਵਰਜ਼ਨ: {0}"
 
@@ -369,7 +369,7 @@ msgstr "ਸ਼ੁਰੂ ਕਰੋ"
 msgid "Start settling in B.C."
 msgstr "ਬੀ.ਸੀ. ਵਿੱਚ ਸੈਟਲ ਹੋਣਾ ਸ਼ੁਰੂ ਕਰੋ"
 
-#: lib/components/about/about_component.js:38
+#: lib/components/about/about_component.js:37
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -409,7 +409,7 @@ msgstr ""
 " ਸਰੋਤਾਂ ਦੇ ਸ਼ਾਮਲ ਹੋਣ ਦਾ ਅਰਥ ਉਹਨਾਂ ਦੀ ਹੋਰਨਾਂ ਦੀ ਬਜਾਏ ਤਸਦੀਕ ਜਾਂ ਸਿਫਾਰਸ਼ ਕਰਨਾ ਨਹੀਂ"
 " ਹੈ। ਐਪ ਰਾਹੀਂ ਲੱਭੀਆਂ ਗਈਆਂ ਸੇਵਾਵਾਂ ਦੀ ਵਰਤੋਂ ਕਰਨਾ ਵਰਤੋਂਕਾਰ ਦੇ ਖ਼ਤਰੇ ਦੇ ਅਧੀਨ ਹੈ।"
 
-#: lib/components/about/about_component.js:52
+#: lib/components/about/about_component.js:51
 msgid "This is Arrival Advisor version:"
 msgstr "ਇਹ Arrival Advisor ਦਾ ਵਰਜ਼ਨ: "
 
