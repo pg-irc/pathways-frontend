@@ -43,7 +43,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        this.state = this.getStateWithFirstTaskSectionLoaded();
+        this.state = this.initialState();
         this.setFlatListRef = this.setFlatListRef.bind(this);
         this.loadMoreData = this.loadMoreData.bind(this);
     }
@@ -53,7 +53,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             this.flatListRef.scrollToOffset({ animated: false, offset: 0 });
         }
         if (this.tasksHaveChanged(previousProps)) {
-            this.setState(this.getStateWithFirstTaskSectionLoaded());
+            this.setState(this.initialState());
         }
     }
 
@@ -83,8 +83,8 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         );
     }
 
-    private getStateWithFirstTaskSectionLoaded(): State {
-        const sections = this.getTaskSections();
+    private initialState(): State {
+        const sections = this.taskSections();
         return {
             sections: sections,
             sectionCount: 1,
@@ -92,27 +92,27 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         };
     }
 
-    private loadMoreData(): void {
-        this.setSectionState(this.state.sectionCount + 1);
+    private taskSections(): ReadonlyArray<ReadonlyArray<ListItem>> {
+        return R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
     }
 
-    private setSectionState(sectionCount: number): void {
+    private loadMoreData(): void {
+        this.stateForSectionCount(this.state.sectionCount + 1);
+    }
+
+    private stateForSectionCount(sectionCount: number): void {
         this.setState({
             ...this.state,
             sectionCount: sectionCount,
-            data: this.getSections(sectionCount),
+            data: this.sectionsForSectionCount(sectionCount),
         });
     }
 
-    private getSections(sectionCount: number): ReadonlyArray<ListItem> {
+    private sectionsForSectionCount(sectionCount: number): ReadonlyArray<ListItem> {
         const sections = R.take(sectionCount, this.state.sections);
         type Items = ReadonlyArray<ListItem>;
         const concat = (acc: Items, elem: Items): Items => [...acc, ...elem];
         return R.reduce(concat, [], sections);
-    }
-
-    private getTaskSections(): ReadonlyArray<ReadonlyArray<ListItem>> {
-        return R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
     }
 
     private setFlatListRef(component: object): void {
