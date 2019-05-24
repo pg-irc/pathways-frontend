@@ -75,10 +75,8 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     private tasksHaveChanged(previousProps: Props): boolean {
-        const getIds = R.pluck('id');
-
-        const currentIds = getIds(this.props.tasks);
-        const previousIds = getIds(previousProps.tasks);
+        const currentIds = R.pluck('id', this.props.tasks);
+        const previousIds = R.pluck('id', previousProps.tasks);
 
         return R.not(R.equals(previousIds, currentIds));
     }
@@ -103,15 +101,16 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     private setStateForSectionCount(sectionCount: number): void {
         this.setState({
             ...this.state,
-            sectionCount: sectionCount,
+            sectionCount,
             data: this.tasksForSectionCount(sectionCount),
         });
     }
 
     private tasksForSectionCount(sectionCount: number): ReadonlyArray<ListItem> {
-        const sections = R.take(sectionCount, this.state.sections);
         type Items = ReadonlyArray<ListItem>;
         const concat = (acc: Items, elem: Items): Items => [...acc, ...elem];
+
+        const sections = R.take(sectionCount, this.state.sections);
         return R.reduce(concat, [], sections);
     }
 
