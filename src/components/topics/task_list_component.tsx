@@ -105,6 +105,25 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         };
     }
 
+    private loadMoreData(): void {
+        this.setSectionState(this.state.sectionCount + 1);
+    }
+
+    private setSectionState(sectionCount: number): void {
+        this.setState({
+            ...this.state,
+            sectionCount: sectionCount,
+            data: this.getSections(sectionCount),
+        });
+    }
+
+    private getSections(sectionCount: number): ReadonlyArray<ListItem> {
+        const sections = R.take(sectionCount, this.state.sections);
+        type Items = ReadonlyArray<ListItem>;
+        const concat = (acc: Items, elem: Items): Items => [...acc, ...elem];
+        return R.reduce(concat, [], sections);
+    }
+
     private getTaskSections(): ReadonlyArray<ReadonlyArray<ListItem>> {
         return R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
     }
@@ -126,24 +145,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 goToTaskDetail={goToRouteWithParameter(Routes.TaskDetail, item.id, props.history)}
             />
         );
-    }
-
-    private loadMoreData(): void {
-        this.setSectionState(this.state.sectionCount + 1);
-    }
-
-    private setSectionState(sectionCount: number): void {
-        this.setState({
-            sectionCount: sectionCount,
-            data: this.getSections(sectionCount),
-        });
-    }
-
-    private getSections(sectionCount: number): ReadonlyArray<ListItem> {
-        const sections = R.take(sectionCount, this.state.sections);
-        type Items = ReadonlyArray<ListItem>;
-        const concat = (acc: Items, elem: Items): Items => [...acc, ...elem];
-        return R.reduce(concat, [], sections);
     }
 }
 
