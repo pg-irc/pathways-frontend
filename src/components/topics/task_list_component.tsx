@@ -43,7 +43,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        this.state = this.getFreshState();
+        this.state = this.getStateWithFirstTaskSectionLoaded();
         this.setFlatListRef = this.setFlatListRef.bind(this);
         this.loadMoreData = this.loadMoreData.bind(this);
     }
@@ -53,7 +53,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             this.flatListRef.scrollToOffset({ animated: false, offset: 0 });
         }
         if (this.tasksHaveChanged(previousProps)) {
-            this.setState(this.getFreshState());
+            this.setState(this.getStateWithFirstTaskSectionLoaded());
         }
     }
 
@@ -81,19 +81,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 initialNumToRender={this.numberOfItemsPerSection}
             />
         );
-    }
-
-    private getFreshState(): State {
-        return this.state ? this.getStateWithAllTasksLoaded() : this.getStateWithFirstTaskSectionLoaded();
-    }
-
-    private getStateWithAllTasksLoaded(): State {
-        const sections = this.getTaskSections();
-        return {
-            sections: sections,
-            sectionCount: sections.length,
-            data: this.props.tasks,
-        };
     }
 
     private getStateWithFirstTaskSectionLoaded(): State {
