@@ -31,7 +31,7 @@ type Props = TaskListProps & TaskListActions;
 
 type State = {
     readonly sections: ReadonlyArray<ReadonlyArray<ListItem>>;
-    readonly sectionIndex: number;
+    readonly sectionCount: number;
     readonly data: ReadonlyArray<ListItem>;
 };
 
@@ -91,7 +91,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         const sections = this.getTaskSections();
         return {
             sections: sections,
-            sectionIndex: sections.length - 1,
+            sectionCount: sections.length,
             data: this.props.tasks,
         };
     }
@@ -100,7 +100,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         const sections = this.getTaskSections();
         return {
             sections: sections,
-            sectionIndex: 0,
+            sectionCount: 1,
             data: sections[0],
         };
     }
@@ -129,18 +129,21 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     private loadMoreData(): void {
-        const nextsectionIndex = this.getNextSectionIndex();
-        const nextSection = this.state.sections[nextsectionIndex];
-        if (nextSection) {
-            this.setState({
-                sectionIndex: nextsectionIndex,
-                data: R.concat(this.state.data, nextSection),
-            });
-        }
+        this.setSectionState(this.state.sectionCount + 1);
     }
 
-    private getNextSectionIndex(): number {
-        return this.state.sectionIndex + 1;
+    private setSectionState(sectionCount: number): void {
+        this.setState({
+            sectionCount: sectionCount,
+            data: this.getSections(sectionCount),
+        });
+    }
+
+    private getSections(sectionCount: number): ReadonlyArray<ListItem> {
+        const sections = R.take(sectionCount, this.state.sections);
+        type Items = ReadonlyArray<ListItem>;
+        const concat = (acc: Items, elem: Items): Items => [...acc, ...elem];
+        return R.reduce(concat, [], sections);
     }
 }
 
