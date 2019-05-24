@@ -73,9 +73,6 @@ usage() {
     echo "commits tagged with the client version that is about to be released, and the server repository "
     echo "must be tagged with the server version to use. The script will verify that the version matches "
     echo "the content of VERSION.txt."
-    echo
-    echo "This script will remove Newcomers' Guide content in unsupported languages. When the set of languages"
-    echo "changes, this script needs to be updated to reflect that, see removeContentInUnsuppotedLanguages()"
 }
 
 validateExpoUser() {
@@ -195,17 +192,6 @@ validateServerVersion() {
         echo "Error: server VERSION.txt contains $FILE_VERSION, when $SERVER_VERSION was expected"
         exit
     fi
-}
-
-# currently not used
-removeContentInUnsuppotedLanguages() {
-    for language in zh_TW
-    do
-        echo "Removing Newcomers Guide content in language $language"
-        path="$CONTENT_DIRECTORY/NewcomersGuide/Chapter*/topics/*/$language.*"
-        rm -f $path
-        checkForSuccess "remove files $path"
-    done
 }
 
 getServerDependencies() {
