@@ -1,7 +1,7 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
-import * as R from 'ramda';
+import R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { TaskListItemComponent } from './task_list_item_component';
@@ -52,9 +52,18 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         if (previousProps.headerContentIdentifier !== this.props.headerContentIdentifier) {
             this.flatListRef.scrollToOffset({ animated: false, offset: 0 });
         }
-        if (previousProps.tasks.length !== this.props.tasks.length) {
+        if (this.tasksHaveChanged(previousProps)) {
             this.setState(this.getFreshState());
         }
+    }
+
+    tasksHaveChanged(previousProps: Props): boolean {
+        const getIds = R.pluck('id');
+
+        const currentIds = getIds(this.props.tasks);
+        const previousIds = getIds(previousProps.tasks);
+
+        return R.not(R.equals(previousIds, currentIds));
     }
 
     render(): JSX.Element {
