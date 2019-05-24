@@ -1,7 +1,6 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
-import R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { TaskListItemComponent } from './task_list_item_component';
@@ -12,6 +11,9 @@ import { colors } from '../../application/styles';
 import { isTopicListHeading } from './is_topic_list_heading';
 import { ListItem } from './build_topic_list_items_with_headings';
 import { TopicListHeadingComponent } from './topic_list_heading_component';
+
+// tslint:disable-next-line:no-var-requires
+const R = require('ramda');
 
 export interface TaskListProps {
     readonly history: History;
@@ -107,11 +109,8 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     private tasksForSectionCount(sectionCount: number): ReadonlyArray<ListItem> {
-        type Items = ReadonlyArray<ListItem>;
-        const concat = (acc: Items, elem: Items): Items => [...acc, ...elem];
-
         const sections = R.take(sectionCount, this.state.sections);
-        return R.reduce(concat, [], sections);
+        return R.reduce(R.concat, [], sections);
     }
 
     private setFlatListRef(component: object): void {
