@@ -1,7 +1,6 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
-import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { TaskListItemComponent } from './task_list_item_component';
@@ -12,6 +11,9 @@ import { colors } from '../../application/styles';
 import { isTopicListHeading } from './is_topic_list_heading';
 import { ListItem } from './build_topic_list_items_with_headings';
 import { TopicListHeadingComponent } from './topic_list_heading_component';
+
+// tslint:disable-next-line:no-var-requires
+const R = require('ramda');
 
 export interface TaskListProps {
     readonly history: History;
@@ -31,7 +33,7 @@ type Props = TaskListProps & TaskListActions;
 
 type State = {
     readonly sections: ReadonlyArray<ReadonlyArray<ListItem>>;
-    readonly sectionIndex: number;
+    readonly sectionCount: number;
     readonly data: ReadonlyArray<ListItem>;
 };
 
@@ -43,7 +45,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        this.state = this.getFreshState();
+        this.state = this.initialState();
         this.setFlatListRef = this.setFlatListRef.bind(this);
         this.loadMoreData = this.loadMoreData.bind(this);
     }
@@ -52,8 +54,8 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         if (previousProps.headerContentIdentifier !== this.props.headerContentIdentifier) {
             this.flatListRef.scrollToOffset({ animated: false, offset: 0 });
         }
-        if (previousProps.tasks.length !== this.props.tasks.length) {
-            this.setState(this.getFreshState());
+        if (this.tasksHaveChanged(previousProps)) {
+            this.setState(this.initialState());
         }
     }
 
@@ -74,30 +76,41 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         );
     }
 
-    private getFreshState(): State {
-        return this.state ? this.getStateWithAllTasksLoaded() : this.getStateWithFirstTaskSectionLoaded();
+    private tasksHaveChanged(previousProps: Props): boolean {
+        const currentIds = R.pluck('id', this.props.tasks);
+        const previousIds = R.pluck('id', previousProps.tasks);
+
+        return R.not(R.equals(previousIds, currentIds));
     }
 
-    private getStateWithAllTasksLoaded(): State {
-        const sections = this.getTaskSections();
+    private initialState(): State {
+        const sections = this.taskSections();
         return {
             sections: sections,
-            sectionIndex: sections.length - 1,
-            data: this.props.tasks,
-        };
-    }
-
-    private getStateWithFirstTaskSectionLoaded(): State {
-        const sections = this.getTaskSections();
-        return {
-            sections: sections,
-            sectionIndex: 0,
+            sectionCount: 1,
             data: sections[0],
         };
     }
 
-    private getTaskSections(): ReadonlyArray<ReadonlyArray<ListItem>> {
+    private taskSections(): ReadonlyArray<ReadonlyArray<ListItem>> {
         return R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
+    }
+
+    private loadMoreData(): void {
+        this.setStateForSectionCount(this.state.sectionCount + 1);
+    }
+
+    private setStateForSectionCount(sectionCount: number): void {
+        this.setState({
+            ...this.state,
+            sectionCount,
+            data: this.tasksForSectionCount(sectionCount),
+        });
+    }
+
+    private tasksForSectionCount(sectionCount: number): ReadonlyArray<ListItem> {
+        const sections = R.take(sectionCount, this.state.sections);
+        return R.reduce(R.concat, [], sections);
     }
 
     private setFlatListRef(component: object): void {
@@ -117,21 +130,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 goToTaskDetail={goToRouteWithParameter(Routes.TaskDetail, item.id, props.history)}
             />
         );
-    }
-
-    private loadMoreData(): void {
-        const nextsectionIndex = this.getNextSectionIndex();
-        const nextSection = this.state.sections[nextsectionIndex];
-        if (nextSection) {
-            this.setState({
-                sectionIndex: nextsectionIndex,
-                data: R.concat(this.state.data, nextSection),
-            });
-        }
-    }
-
-    private getNextSectionIndex(): number {
-        return this.state.sectionIndex + 1;
     }
 }
 
