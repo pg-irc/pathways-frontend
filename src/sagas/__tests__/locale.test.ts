@@ -32,12 +32,14 @@ describe('the loadCurrentLocale saga', () => {
 
         it('dispatch a success action with the received locale code', () => {
             const value = saga.next(aLocale.code).value;
-            expect(value).toEqual(put(loadCurrentLocaleActions.success(aLocale.code)));
+            const isSet = true;
+            expect(value).toEqual(put(loadCurrentLocaleActions.success(aLocale.code, isSet)));
         });
 
         it('dispatch a success action with the fallback locale code if no current locale is set', () => {
             const value = saga.next(null).value;
-            expect(value).toEqual(put(loadCurrentLocaleActions.success(aLocale.code)));
+            const isSet = false;
+            expect(value).toEqual(put(loadCurrentLocaleActions.success(aLocale.code, isSet)));
         });
 
         it('dispatch a failure action upon failure to load a locale code', () => {
