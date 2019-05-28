@@ -20,6 +20,7 @@ export interface MainComponentActions {
 
 interface MainProps {
     readonly locale: Locale;
+    readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;
 }
 
@@ -66,7 +67,7 @@ export class MainComponent extends React.Component<Props, State> {
                         location={this.props.location}
                         onHeaderMenuButtonPress={this.openDrawer}
                     />
-                    <MainPageSwitcherComponent />
+                    <MainPageSwitcherComponent {...this.props} />
                     <FooterComponent {...this.props} />
                     <NotificationsConnectedComponent {...this.props} />
                     <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={this.onHardwareBackButtonPress} />
