@@ -66,6 +66,7 @@ export class LocaleStoreBuilder {
     code: string = this.locale.code;
     fallback: string = this.locale.code;
     loading: boolean = false;
+    isSet: boolean = true;
     errorMessage: string = '';
 
     withLocales(locales: ReadonlyArray<LocaleInfo>): LocaleStoreBuilder {
@@ -88,6 +89,11 @@ export class LocaleStoreBuilder {
         return this;
     }
 
+    withIsSet(isSet: boolean): LocaleStoreBuilder {
+        this.isSet = isSet;
+        return this;
+    }
+
     withErrorMessage(message: string): LocaleStoreBuilder {
         this.errorMessage = message;
         return this;
@@ -99,6 +105,7 @@ export class LocaleStoreBuilder {
             code: this.code,
             fallback: this.fallback,
             loading: this.loading,
+            isSet: this.isSet,
             errorMessage: this.errorMessage,
         };
     }

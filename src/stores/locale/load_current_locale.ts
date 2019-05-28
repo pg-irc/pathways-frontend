@@ -14,8 +14,8 @@ export const request = () => {
 };
 
 // tslint:disable-next-line:typedef
-export function success(localeCode: string) {
-    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { localeCode });
+export function success(localeCode: string, isSet: boolean) {
+    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { localeCode, isSet });
 }
 
 // tslint:disable-next-line:typedef
