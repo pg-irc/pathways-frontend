@@ -38,8 +38,9 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     const isOnTopicDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
     const isOnTopicServicesScreen = pathMatchesRoute(path, Routes.Services);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
+    const isOnOnboardingScreen = pathMatchesRoute(path, Routes.Onboarding);
 
-    if (isOnQuestionnaireScreen) {
+    if (isOnQuestionnaireScreen || isOnOnboardingScreen) {
         return <EmptyComponent />;
     }
 
