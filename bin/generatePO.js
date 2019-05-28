@@ -1,10 +1,9 @@
-const questionnaire = require('../lib/fixtures/hard_coded/questionnaire');
+const { buildExploreFixture } = require('../lib/fixtures/hard_coded/explore');
 const R = require('ramda');
 
-const questions = questionnaire.questions;
-const answers = questionnaire.answers;
-const questionKeys = R.keys(questions);
-const answerKeys = R.keys(answers);
+const explore = buildExploreFixture();
+const { sections }  = explore;
+const sectionKeys = R.keys(sections);
 
 const createPoFile = () => {
   const combinedLanguageStrings = combineTwoLanguageCollections('zh_TW');
@@ -19,9 +18,9 @@ const combineTwoLanguageCollections = (language_code) => {
 }
 
 createLanguageCollection = (language_code) => {
-  const questionStrings = questionKeys.map(question => getLanguageStrings(questions,question, language_code));
-  const answersStrings = answerKeys.map(answer => getLanguageStrings(answers, answer, language_code));
-  return R.concat(questionStrings, answersStrings);
+  const nameStrings = sectionKeys.map(section => getLanguageStrings(sections, section, language_code, 'name'));
+  const descriptionStrings = sectionKeys.map(section => getLanguageStrings(sections, section, language_code, 'description'));
+  return R.concat(nameStrings, descriptionStrings);
 }
 
 setupPoFile = (combinedLanguageStrings) => {
@@ -33,8 +32,8 @@ setupPoFile = (combinedLanguageStrings) => {
   }
 }
 
-const getLanguageStrings = (section, key, language_code) => { 
-  const string = section[key].text;
+const getLanguageStrings = (section, key, language_code, nameOrDescription) => { 
+  const string = section[key][nameOrDescription];
   if(language_code !== 'en'){
     return {msgstr: string[language_code]};
   }
