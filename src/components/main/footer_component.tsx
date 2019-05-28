@@ -16,16 +16,9 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     const isOnWelcomeScreen = pathMatchesRoute(path, Routes.Welcome);
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
+    const isOnOnboardingScreen = pathMatchesRoute(path, Routes.Onboarding);
 
-    if (isOnWelcomeScreen) {
-        return <EmptyComponent />;
-    }
-
-    if (isOnQuestionnaireScreen) {
-        return <EmptyComponent />;
-    }
-
-    if (isOnHelpScreen) {
+    if (isOnWelcomeScreen || isOnQuestionnaireScreen || isOnHelpScreen || isOnOnboardingScreen) {
         return <EmptyComponent />;
     }
 
