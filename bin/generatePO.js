@@ -6,72 +6,39 @@ const answers = questionnaire.answers;
 const questionKeys = R.keys(questions);
 const answerKeys = R.keys(answers);
 
-const createPoFiles = () => {
-  setupFRPoFile();
-  setupARPoFile();
+const createPoFile = () => {
+  const combinedLanguageStrings = combineTwoLanguageCollections('zh_TW');
+  setupPoFile(combinedLanguageStrings);
 }
 
-const combineENFRStrings = () => {
-  const en = createENCollection();
-  const fr = createFRCollection();
-  const enFRStrings = en.map((enObj, i) =>({...enObj, ...enObj.msgstr = fr[i]}) );
-  return enFRStrings;
+const combineTwoLanguageCollections = (language_code) => {
+  const en = createLanguageCollection('en');
+  const translation_language = createLanguageCollection(language_code);
+  const combinedStrings = en.map((enObj, i) =>({...enObj, ...enObj.msgstr = translation_language[i]}) );
+  return combinedStrings;
 }
 
-const combineENARStrings = () => {
-  const en = createENCollection();
-  const ar = createARCollection();
-  const enARStrings = en.map((enObj, i) =>({...enObj, ...enObj.msgstr = ar[i]}) );
-  return enARStrings;
+createLanguageCollection = (language_code) => {
+  const questionStrings = questionKeys.map(question => getLanguageStrings(questions,question, language_code));
+  const answersStrings = answerKeys.map(answer => getLanguageStrings(answers, answer, language_code));
+  return R.concat(questionStrings, answersStrings);
 }
 
-const createENCollection = () => {
-  const enQuestionStrings = questionKeys.map(question => getLanguageStrings(questions,question, 'en'));
-  const enAnswersStrings = answerKeys.map(answer => getLanguageStrings(answers, answer, 'en'));
-  
-  return R.concat(enQuestionStrings,enAnswersStrings);
-}
-
-const createFRCollection = () => {
-  const frQuestionStrings = questionKeys.map(question => getLanguageStrings(questions,question, 'fr'));
-  const frAnswersStrings = answerKeys.map(answer => getLanguageStrings(answers, answer, 'fr'));
-  return R.concat(frQuestionStrings, frAnswersStrings);
-}
-
-
-const createARCollection = () => {
-  const arQuestionStrings = questionKeys.map(question => getLanguageStrings(questions,question, 'ar'));
-  const arAnswersStrings = answerKeys.map(answer => getLanguageStrings(answers, answer, 'ar'));
-  return R.concat(arQuestionStrings, arAnswersStrings);
-}
-
-setupFRPoFile = () => {
-  for(let i = 0; i < enFR.length; i++) {
-    const { msgid, msgstr} = enFR[i];
+setupPoFile = (combinedLanguageStrings) => {
+  for(let i = 0; i < combinedLanguageStrings.length; i++) {
+    const { msgid, msgstr} = combinedLanguageStrings[i];
     console.log(`msgid "${msgid}"`);
     console.log(`msgstr "${msgstr}"`);
     console.log('');
   }
 }
 
-setupARPoFile = () => {
-  for(let i = 0; i < enAR.length; i++) {
-    const { msgid, msgstr} = enAR[i];
-    console.log(`msgid "${msgid}"`);
-    console.log(`msgstr "${msgstr}"`);
-    console.log('');
-  }
-}
-
-const getLanguageStrings = (section, key, language) => { 
+const getLanguageStrings = (section, key, language_code) => { 
   const string = section[key].text;
-  if(language !== 'en'){
-    return {msgstr: string[language]};
+  if(language_code !== 'en'){
+    return {msgstr: string[language_code]};
   }
-  return {msgid: string[language]};
+  return {msgid: string[language_code]};
 }
 
-const enFR = combineENFRStrings();
-const enAR = combineENARStrings(); 
-
-createPoFiles();
+createPoFile();
