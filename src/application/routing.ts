@@ -13,6 +13,7 @@ export type RouterProps = RouteComponentProps<MatchParameters>;
 
 export enum Routes {
     Welcome,
+    Onboarding,
     Questionnaire,
     Learn,
     LearnDetail,
@@ -28,8 +29,11 @@ export enum Routes {
 export const routePathDefinition = (route: Routes): string => {
     switch (route) {
         default:
+            throw new Error('Invalid route spec');
         case Routes.Welcome:
-            return '/';
+            return '/welcome';
+        case Routes.Onboarding:
+            return '/onboarding/:page';
         case Routes.Help:
             return '/help';
         case Routes.Questionnaire:

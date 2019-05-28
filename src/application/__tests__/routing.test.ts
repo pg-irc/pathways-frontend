@@ -8,7 +8,7 @@ import { aString } from './helpers/random_test_values';
 describe('the routePathDefinition function', () => {
 
     it('For Routes.Welcome returns path: "/"', () => {
-        expect(routePathDefinition(Routes.Welcome)).toEqual('/');
+        expect(routePathDefinition(Routes.Welcome)).toEqual('/welcome');
     });
 
     it('For Routes.Questionnaire returns path: "/questionnaire"', () => {
