@@ -13,8 +13,15 @@ import { RecommendedTopicsConnectedComponent } from '../recommended_topics/recom
 import { BookmarkedTopicsConnectedComponent } from '../bookmarked_topics/bookmarked_topics_connected_component';
 import { DisclaimerComponent } from '../disclaimer/disclaimer_component';
 import { Routes, routePathDefinition } from '../../application/routing';
+import { Locale } from '../../locale';
 
-export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Element => (
+interface Props {
+    readonly locale: Locale;
+    readonly localeIsSet: boolean;
+    readonly showOnboarding: boolean;
+}
+
+export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <Switch>
         <Route exact path={routePathDefinition(Routes.Welcome)} component={WelcomeConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Onboarding)} component={OnboardingConnectedComponent} />
@@ -28,10 +35,16 @@ export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Eleme
         <Route exact path={routePathDefinition(Routes.RecommendedTopics)} component={RecommendedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.BookmarkedTopics)} component={BookmarkedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Disclaimer)} component={DisclaimerComponent} />
-        <Redirect to={defaultPath()} />
+        <Redirect to={defaultPath(props)} />
     </Switch>
 );
 
-const defaultPath = (): string => {
-    return routePathDefinition(Routes.Welcome);
+const defaultPath = (props: Props): string => {
+    if (!props.localeIsSet) {
+        return routePathDefinition(Routes.Welcome);
+    }
+    if (props.showOnboarding) {
+        return '/onboarding/1';
+    }
+    return routePathDefinition(Routes.RecommendedTopics);
 };
