@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-native';
+import { Switch, Route, Redirect } from 'react-router-native';
+import { OnboardingConnectedComponent } from '../onboarding/onboarding_connected_component';
 import { WelcomeConnectedComponent } from '../welcome/welcome_connected_component';
 import { HelpConnectedComponent } from '../help/help_connected_component';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
@@ -16,6 +17,7 @@ import { Routes, routePathDefinition } from '../../application/routing';
 export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Element => (
     <Switch>
         <Route exact path={routePathDefinition(Routes.Welcome)} component={WelcomeConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.Onboarding)} component={OnboardingConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Help)} component={HelpConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Questionnaire)} component={QuestionnaireConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Learn)} component={ExploreAllConnectedComponent} />
@@ -26,5 +28,10 @@ export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Eleme
         <Route exact path={routePathDefinition(Routes.RecommendedTopics)} component={RecommendedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.BookmarkedTopics)} component={BookmarkedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Disclaimer)} component={DisclaimerComponent} />
+        <Redirect to={defaultPath()} />
     </Switch>
 );
+
+const defaultPath = (): string => {
+    return routePathDefinition(Routes.Welcome);
+};
