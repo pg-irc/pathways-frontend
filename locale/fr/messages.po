@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 14:55-0700\n"
+"POT-Creation-Date: 2019-05-23 11:44-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,7 +28,7 @@ msgstr "Adresse :"
 msgid "An error has occured."
 msgstr "Une erreur s'est produite."
 
-#: lib/components/recommended_topics/call_to_action.js:46
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A26+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A46
 msgid ""
 "Answer a few questions about your situation to get personalized "
 "recommendations of topics and services to help you settle in British "
@@ -56,16 +56,15 @@ msgstr ""
 msgid ""
 "Arrival Advisor is a free, multilingual, mobile app that helps immigrants "
 "and refugees in British Columbia, Canada find information and services to "
-"navigate their settlement journey. The app is currently available in "
-"English, French (Canadian), and Arabic. It will soon be available in Chinese "
-"Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
+"navigate their settlement journey. Arrival Advisor is offered in English, "
+"Arabic, Chinese Simplified, Chinese Traditional, French (Canadian), Korean, "
+"Punjabi, and Tagalog."
 msgstr ""
 "Arrival Advisor est une application mobile multilingue gratuite qui fournit "
 "aux immigrants et aux réfugiés en Colombie-Britannique (Canada) des "
 "informations et des services pour préparer leur établissement. L’application "
-"est offerte en anglais, en français (canadien) et en arabe. Elle sera "
-"bientôt disponible en chinois (simplifié et traditionnel), en coréen, en "
-"punjabi et en tagalog."
+"Arrival Advisor est offerte en anglais, en arabe, en chinois (simplifié et "
+"traditionnel), en français (canadien) en coréen, en punjabi et en tagalog."
 
 #: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
@@ -165,7 +164,7 @@ msgstr "Trouver une agence d’établissement à proximité"
 msgid "Find related services near me"
 msgstr "Trouver des services connexes à proximité"
 
-#: lib/components/about/about_component.js:27
+#: lib/components/about/about_component.js:26
 msgid ""
 "From finding a job to learning English, accessing health care, and more, "
 "Arrival Advisor has everything you need to get started in your new "
@@ -196,7 +195,7 @@ msgstr ""
 msgid "GETTING STARTED"
 msgstr "DÉBUTER"
 
-#: lib/components/recommended_topics/call_to_action.js:36
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A25+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A36
 msgid "Get information based on your needs"
 msgstr "Obtenir des renseignements basés sur vos besoins"
 
@@ -216,7 +215,7 @@ msgstr ""
 "Si vous éprouvez de la difficulté à vous établir au Canada, nous vous "
 "suggérons de communiquer avec un travailleur en établissement."
 
-#: lib/components/about/about_component.js:47
+#: lib/components/about/about_component.js:46
 msgid ""
 "Information in this app is provided by the <0>Newcomers Guide to British "
 "Columbia</0> Copyright 2018 Province of British Columbia. All rights "
@@ -360,7 +359,7 @@ msgstr ""
 msgid "Select your language"
 msgstr "Choisir la langue"
 
-#: lib/components/about/about_component.js:56
+#: lib/components/about/about_component.js:55
 msgid "Server version:"
 msgstr "Version du serveur :"
 
@@ -384,7 +383,7 @@ msgstr "Débuter"
 msgid "Start settling in B.C."
 msgstr "Amorcer l’établissement en C.-B."
 
-#: lib/components/about/about_component.js:38
+#: lib/components/about/about_component.js:37
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -429,7 +428,7 @@ msgstr ""
 "associés à l’utilisation des services trouvés par l’entremise de l’"
 "application sont assumés par l’utilisateur."
 
-#: lib/components/about/about_component.js:52
+#: lib/components/about/about_component.js:51
 msgid "This is Arrival Advisor version:"
 msgstr "Version d’Arrival Advisor :"
 
