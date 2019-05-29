@@ -44,7 +44,7 @@ const defaultPath = (props: Props): string => {
         return routePathDefinition(Routes.Welcome);
     }
     if (props.showOnboarding) {
-        return '/onboarding/1';
+        return '/onboarding/0';
     }
     return routePathDefinition(Routes.RecommendedTopics);
 };
