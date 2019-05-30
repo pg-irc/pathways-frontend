@@ -7,142 +7,52 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
         questions: {
             'questionDurationInCanada': {
                 id: 'questionDurationInCanada',
-                text: {
-                    'en': 'How long have you been living in Canada?',
-                    'tl': 'Gaano ka na katagal naninirahan sa Canada?',
-                    'pa': 'ਤੁਸੀਂ ਕੈਨੇਡਾ ਵਿੱਚ ਕਦੋਂ ਤੋ ਰਹਿ ਰਹੇ ਹੋ?',
-                    'ko': '귀하의 캐나다 거주 기간은 얼마입니까?',
-                    'fr': 'Depuis combien de temps habitez-vous au Canada?',
-                    'ar': 'كم مضى عليك من الوقت مقيما في كندا؟',
-                    'zh_CN': '您在加拿大生活多久了？',
-                    'zh_TW': '您已經在加拿大居住多久？',
-                },
+                text: 'How long have you been living in Canada?',
                 acceptMultipleAnswers: false,
             },
             'questionDocuments': {
                 id: 'questionDocuments',
-                text: {
-                    'en': 'Do you have any of the following important Canadian documents?',
-                    'tl': 'Mayroon ka bang alinman sa sumusunod na mahahalagang dokumentong Pang-Canadian?',
-                    'pa': 'ਕੀ ਤੁਹਾਡੇ ਕੋਲ ਅੱਗੇ ਦਿੱਤਿਆਂ ਖਾਸ ਕੈਨੇਡੀਅਨ ਦਸਤਾਵੇਜਾਂ ਵਿੱਚੋਂ ਕੀ ਹੈ?',
-                    'ko': '다음의 캐나다 공식 문서들 가운데 귀하가 현재 보유하고 있는 것은 무엇입니까?',
-                    'fr': 'Possédez-vous l’un ou l’autre de ces documents canadiens importants?',
-                    'ar': 'هل لديك أي من الوثائق الكندية الهامة التالية؟',
-                    'zh_CN': '您有下列重要的加拿大文件吗？',
-                    'zh_TW': '您有以下重要的加拿大在地文件嗎？',
-                },
+                text: 'Do you have any of the following important Canadian documents?',
                 acceptMultipleAnswers: true,
             },
             'questionAgeGroup': {
                 id: 'questionAgeGroup',
-                text: {
-                    'en': 'Are you arriving with children under 18 years? If yes, how old?',
-                    'tl': 'Dumating ka ba kasama ang mga anak na wala pang 18 taong gulang? Kung oo, ilang taon?',
-                    'pa': 'ਕੀ ਤੁਸੀਂ 18 ਸਾਲ ਤੋਂ ਘੱਟ ਉਮਰ ਦੇ ਬੱਚਿਆਂ ਨਾਲ ਆਏ ਹੋ? ਜੇ ਹਾਂ ਤਾਂ ਕਿੰਨੀ ਉਮਰ ਹੈ?',
-                    'ko': '귀하는 18세 미만의 자녀와 함께 입국하였습니까? 만일 그렇다면, 자녀의 나이는 몇 살입니까?',
-                    'fr': 'Êtes-vous accompagné(e) d’enfants de moins de 18 ans? Si c’est le cas, quel âge ont-ils?',
-                    'ar': 'هل وصلت معك أطفال أقل من 18 سنة؟ لو كانت الإجابة نعم، كم عمرهم؟',
-                    'zh_CN': '您是和未满18岁的子女一起来的吗？如果是，您孩子几岁？',
-                    'zh_TW': '您有18 歲以下同行的孩童嗎？ 如果有，幾歲？',
-                },
+                text: 'Are you arriving with children under 18 years? If yes, how old?',
                 acceptMultipleAnswers: true,
             },
             'questionCurrentHousingSituation': {
                 id: 'questionCurrentHousingSituation',
-                text: {
-                    'en': 'What is your current housing situation?',
-                    'tl': 'Ano ang kasalukuyan mong sitwasyon sa pabahay?',
-                    'pa': 'ਤੁਹਾਡੀ ਰਿਹਾਇਸ਼ ਦੀ ਸਥਿਤੀ ਕੀ ਹੈ?',
-                    'ko': '귀하의 현재 주거 상태는 무엇입니까?',
-                    'fr': 'Quelle est votre situation actuelle en matière de logement?',
-                    'ar': 'ما هو موقفك الحالي من السكن؟',
-                    'zh_CN': '您目前的住房状况如何？',
-                    'zh_TW': '您目前的居住情況？',
-                },
+                text: 'What is your current housing situation?',
                 acceptMultipleAnswers: true,
             },
             'questionEnglishLevel': {
                 id: 'questionEnglishLevel',
-                text: {
-                    'en': 'What is your current level of English?',
-                    'tl': 'Ano ang kasalukuyan mong antas sa English?',
-                    'pa': 'ਤੁਹਾਡੀ ਅੰਗਰੇਜੀ ਦਾ ਪੱਧਰ ਕੀ ਹੈ?',
-                    'ko': '귀하의 현재 영어 구사력은 어느 수준입니까?',
-                    'fr': 'Quel est votre niveau d’anglais actuel?',
-                    'ar': 'ما هو مستوى إجادتك الحالي للغة الإنكليزية؟',
-                    'zh_CN': '您目前的英语水平如何？',
-                    'zh_TW': '您目前的居住情況？',
-                },
+                text: 'What is your current level of English?',
                 acceptMultipleAnswers: false,
             },
             'questionImmigrantType': {
                 id: 'questionImmigrantType',
-                text: {
-                    'en': 'What is your status in Canada?',
-                    'tl': 'Ano ang katayuan mo sa Canada?',
-                    'pa': 'ਕੈਨੇਡਾ ਵਿੱਚ ਤੁਹਾਡੀ ਸਥਿਤੀ ਕੀ ਹੈ?',
-                    'ko': '귀하의 현재 캐나다 체류 자격은 무엇입니까?',
-                    'fr': 'De quel statut bénéficiez-vous au Canada?',
-                    'ar': 'ما هو وضعك في كندا؟',
-                    'zh_CN': '您在加拿大的身份是什么？',
-                    'zh_TW': '您目前在加拿大的簽證身份？',
-                },
+                text: 'What is your status in Canada?',
                 acceptMultipleAnswers: false,
             },
             'questionWorkStatus': {
                 id: 'questionWorkStatus',
-                text: {
-                    'en': 'What is your current work situation?',
-                    'tl': 'Ano ang kasalukuyan mong kalagayan sa trabaho?',
-                    'pa': 'ਤੁਹਾਡੇ ਕੰਮ ਦੀ ਸਥਿਤੀ ਕੀ ਹੈ?',
-                    'ko': '귀하의 현재 직업 상태는 무엇입니까?',
-                    'fr': 'Quelle est votre situation actuelle en matière d’emploi?',
-                    'ar': 'ما هو وضعك الحالي من ناحية العمل؟',
-                    'zh_CN': '您目前的工作状况如何？',
-                    'zh_TW': '您目前的工作情況？',
-                },
+                text: 'What is your current work situation?',
                 acceptMultipleAnswers: true,
             },
             'questionHealth': {
                 id: 'questionHealth',
-                text: {
-                    'en': 'What kinds of health care are you looking for?',
-                    'tl': 'Anong mga uri ng pangangalang pangkalusugan ang hinahanap mo?',
-                    'pa': 'ਤੁਸੀਂ ਕਿਸ ਕਿਸਮ ਦੀ ਹੈਲਥ ਕੇਅਰ ਲੱਭ ਰਹੇ ਹੋ?',
-                    'ko': '귀하가 필요로 하는 의료 서비스는 무엇입니까?',
-                    'fr': 'De quel type de soins de santé avez-vous besoin?',
-                    'ar': 'ما هي أنواع الرعاية الصحية التي تبحث عنها؟',
-                    'zh_CN': '您在找哪一种的医疗保健服务？',
-                    'zh_TW': '您需要哪些醫療護理的服務？',
-                },
+                text: 'What kinds of health care are you looking for?',
                 acceptMultipleAnswers: true,
             },
             'questionLowIncome': {
                 id: 'questionLowIncome',
-                text: {
-                    'en': 'Do you need financial assistance or low-income support?',
-                    'tl': 'Kailangan mo ba ng pinansiyal na tulong o suporta sa mababang kita?',
-                    'pa': 'ਕੀ ਤੁਹਾਨੂੰ ਵਿੱਤੀ ਸਹਾਇਤਾ ਜਾਂ ਘੱਟ-ਆਮਦਨ ਸਹਿਯੋਗ ਦੀ ਲੋੜ ਹੈ?',
-                    'ko': '귀하는 재정적 도움이나 저소득층 지원이 필요합니까?',
-                    'fr': 'Avez-vous besoin d’aide financière ou de soutien pour gens à faible revenu?',
-                    'ar': 'هل تريد مساعدة مالية أو دعم موجه لأصحاب الدخل المتدني؟',
-                    'zh_CN': '您需要经济资助还是低收入支持？',
-                    'zh_TW': '您有經濟協助或低收入戶服務的需求嗎？',
-                },
+                text: 'Do you need financial assistance or low-income support?',
                 acceptMultipleAnswers: false,
             },
             'questionOther': {
                 id: 'questionOther',
-                text: {
-                    'en': 'Anything else you\'re interested in? Select all that apply',
-                    'tl': 'Kailangan mo ba ng pinansiyal na tulong o suporta sa mababang kita?',
-                    'pa': 'ਕਿਸੇ ਹੋਰ ਚੀਜ਼ ਵਿੱਚ ਤੁਹਾਡੀ ਦਿਲਚਸਪੀ ਹੈ? ਜੋ ਵੀ ਲਾਗੂ ਹੋਵੇ, ਸਭ ਚੁਣੋ',
-                    'ko': '그 밖에 관심이 있는 사항이 있습니까? 관심사에 해당하는 모든 항목을 선택해주세요.',
-                    'fr': 'Y a-t-il d’autres sujets qui vous intéressent? Sélectionnez toutes les réponses appropriées.',
-                    'ar': 'هل يوجد شيء آخر يهمك؟ اختر كل ما ينطبق',
-                    'zh_CN': '您还对其他什么主题感兴趣吗？请选择所有适用项。',
-                    'zh_TW': '您對於以下其他項目有興趣嗎？ 可複選',
-                },
+                text: 'Anything else you\'re interested in? Select all that apply',
                 acceptMultipleAnswers: true,
             },
         },
@@ -150,16 +60,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerMoreThan1Year': {
                 id: 'answerMoreThan1Year',
                 questionId: 'questionDurationInCanada',
-                text: {
-                    'en': 'More than 1 year',
-                    'tl': 'Mahigit 1 taon',
-                    'pa': '1 ਸਾਲ ਤੋਂ ਵੱਧ',
-                    'ko': '1년 이상',
-                    'fr': 'Plus d’un an',
-                    'ar': 'أكثر من سنة واحدة',
-                    'zh_CN': '1年以上',
-                    'zh_TW': '一年以上',
-                },
+                text:'More than 1 year',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [],
@@ -167,16 +68,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerLessThan1Year': {
                 id: 'answerLessThan1Year',
                 questionId: 'questionDurationInCanada',
-                text: {
-                    'en': 'Less than 1 year',
-                    'tl': 'Kulang 1 taon',
-                    'pa': '1 ਸਾਲ ਤੋਂ ਘੱਟ',
-                    'ko': '1년 미만',
-                    'fr': 'Moins d’un an',
-                    'ar': 'أقل من سنة واحدة',
-                    'zh_CN': '未满1年',
-                    'zh_TW': '未滿一年',
-                },
+                text: 'Less than 1 year',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [],
@@ -184,16 +76,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerPlanningToMove': {
                 id: 'answerPlanningToMove',
                 questionId: 'questionDurationInCanada',
-                text: {
-                    'en': 'I am planning to move to Canada',
-                    'tl': 'Binabalak kong lumipat sa Canada',
-                    'pa': 'ਮੈਂ ਕੈਨੇਡਾ ਆਉਣ ਬਾਰੇ ਸੋਚ ਰਿਹਾ/ਰਹੀ ਹਾਂ',
-                    'ko': '캐나다로 이주를 계획 중입니다.',
-                    'fr': 'Je prévois d’emménager au Canada',
-                    'ar': 'أعتزم الانتقال إلى كندا',
-                    'zh_CN': '我打算移居加拿大',
-                    'zh_TW': '我計畫移民加拿大',
-                },
+                text: 'I am planning to move to Canada', 
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [],
@@ -201,16 +84,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerSocialInsuranceNumber': {
                 id: 'answerSocialInsuranceNumber',
                 questionId: 'questionDocuments',
-                text: {
-                    'en': 'I have a Social Insurance Number',
-                    'tl': 'May Social Insurance Number ako',
-                    'pa': 'ਮੇਰੇ ਕੋਲ ਸ਼ੋਸ਼ਲ ਇੰਸ਼ੋਰੈਂਸ ਨੰਬਰ ਹੈ',
-                    'ko': '사회보험번호(SIN)가 있습니다.',
-                    'fr': 'J’ai un numéro d\'assurance sociale',
-                    'ar': 'لدي رقم ضمان اجتماعي',
-                    'zh_CN': '我有社会保险号码（Social Insurance Number，英文简称“SIN”）',
-                    'zh_TW': '我有社會保險號碼（SIN）',
-                },
+                text: 'I have a Social Insurance Number',
                 isChosen: false,
                 isInverted: true,
                 'taxonomyTerms': [{
@@ -221,16 +95,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerBankAccount': {
                 id: 'answerBankAccount',
                 questionId: 'questionDocuments',
-                text: {
-                    'en': 'I have a Canadian bank account',
-                    'tl': 'May Canadian bank account ako',
-                    'pa': 'ਮੇਰੇ ਕੋਲ ਕੈਨੇਡੀਅਨ ਬੈਂਕ ਖਾਤਾ ਹੈ',
-                    'ko': '캐나다 은행 계좌를 보유하고 있습니다.',
-                    'fr': 'J’ai un compte bancaire canadien',
-                    'ar': 'لدي حساب مصرفي كندي',
-                    'zh_CN': '我有加拿大的银行账户',
-                    'zh_TW': '我有加拿大銀行戶頭',
-                },
+                text: 'I have a Canadian bank account',
                 isChosen: false,
                 isInverted: true,
                 'taxonomyTerms': [{
@@ -241,16 +106,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerPRCard': {
                 id: 'answerPRCard',
                 questionId: 'questionDocuments',
-                text: {
-                    'en': 'I have a Permanent Resident Card',
-                    'tl': 'May Permanent Resident card ako',
-                    'pa': 'ਮੇਰੇ ਕੋਲ ਪਰਮਾਨੈਂਟ ਰੈਜੀਡੈਂਟ ਕਾਰਡ ਹੈ',
-                    'ko': '영주권 카드를 보유하고 있습니다.',
-                    'fr': 'J’ai une carte de résident permanent',
-                    'ar': 'لدي بطاقة مقيم دائم',
-                    'zh_CN': '我有永久居民卡（俗称“枫叶卡”）',
-                    'zh_TW': '我持有永久居民卡（PR）',
-                },
+                text:'I have a Permanent Resident Card',
                 isChosen: false,
                 isInverted: true,
                 'taxonomyTerms': [{
@@ -261,16 +117,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerMSP': {
                 id: 'answerMSP',
                 questionId: 'questionDocuments',
-                text: {
-                    'en': 'I have registered for MSP (Medical Services Plan)',
-                    'tl': 'Nagparehistro ako sa MSP (Medical Services Plan)',
-                    'pa': 'ਮੈਂ ਐਮਐਸਪੀ (ਮੈਡੀਕਲ ਸਰਵਿਸਜ਼ ਪਲੈਨ) ਲਈ ਰਜਿਸਟਰ ਕੀਤਾ ਹੈ',
-                    'ko': '의료 서비스 플랜(MSP)에 가입되어 있습니다.',
-                    'fr': 'Je me suis inscrit(e) au régime de Services médicaux (MSP)',
-                    'ar': 'لقد سجلت نفسي في خطة الخدمات الطبية (Medical Services Plan)',
-                    'zh_CN': '我注册了医疗服务计划（Medical Services Plan，英文简称“MSP”）',
-                    'zh_TW': '我已註冊加拿大醫療保險計劃 (MSP)',
-                },
+                text: 'I have registered for MSP (Medical Services Plan)',
                 isChosen: false,
                 isInverted: true,
                 'taxonomyTerms': [{
@@ -281,16 +128,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerBCServicesCard': {
                 id: 'answerBCServicesCard',
                 questionId: 'questionDocuments',
-                text: {
-                    'en': 'I have a BC Services Card (health card)',
-                    'tl': 'May BC Services Card (health card) ako',
-                    'pa': 'ਮੇਰੇ ਕੋਲ ਬੀ.ਸੀ. ਸਰਵਿਸਜ਼ ਕਾਰਡ (ਹੈਲਥ ਕਾਰਡ) ਹੈ',
-                    'ko': 'BC 서비스 카드(의료 카드)를 보유하고 있습니다',
-                    'fr': 'J’ai une carte BC Services (carte santé)',
-                    'ar': 'لدي بطاقة خدمات بريتيش كولومبيا (البطاقة الصحية)',
-                    'zh_CN': '我有BC服务卡（俗称“医保卡”）',
-                    'zh_TW': '我有 BC 省服務卡 (Health Card)',
-                },
+                text: 'I have a BC Services Card (health card)',
                 isChosen: false,
                 isInverted: true,
                 'taxonomyTerms': [{
@@ -301,16 +139,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerBCDriversLicence': {
                 id: 'answerBCDriversLicence',
                 questionId: 'questionDocuments',
-                text: {
-                    'en': 'I have a BC Driver\'s Licence',
-                    'tl': 'May Lisensya ako sa Pagmamaneho sa BC',
-                    'pa': 'ਮੇਰੇ ਕੋਲ ਬੀ.ਸੀ. ਡਰਾਇਵਰਜ਼ ਲਾਇਸੈਂਸ ਹੈ',
-                    'ko': 'BC주 운전면허증을 보유하고 있습니다.',
-                    'fr': 'J’ai un permis de conduire de la C.-B.',
-                    'ar': 'لدي رخصة قيادة خاصة ببريتيش كولومبيا',
-                    'zh_CN': '我有BC驾驶执照',
-                    'zh_TW': '我有 BC 省駕駛執照',
-                },
+                text: 'I have a BC Driver\'s Licence',
                 isChosen: false,
                 isInverted: true,
                 'taxonomyTerms': [{
@@ -321,16 +150,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerUnder5': {
                 id: 'answerUnder5',
                 questionId: 'questionAgeGroup',
-                text: {
-                    'en': 'Under 5 years old',
-                    'tl': 'May Lisensya ako sa Pagmamaneho sa BC',
-                    'pa': '5 ਸਾਲ ਤੋਂ ਘੱਟ ਉਮਰ',
-                    'ko': '5세 미만',
-                    'fr': 'Moins de 5 ans',
-                    'ar': 'أقل من 5 سنوات',
-                    'zh_CN': '未满5岁',
-                    'zh_TW': '未滿五歲',
-                },
+                text: 'Under 5 years old',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -344,16 +164,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerAge5to12': {
                 id: 'answerAge5to12',
                 questionId: 'questionAgeGroup',
-                text: {
-                    'en': '5-12 years old',
-                    'tl': '5-12 taong gulang',
-                    'pa': '5-12 ਸਾਲਾਂ ਦੀ ਉਮਰ',
-                    'ko': '5세 이상 12세 이하',
-                    'fr': 'Entre 5 et 12 ans',
-                    'ar': 'من 5 إلى 12 سنة',
-                    'zh_CN': '5-12岁',
-                    'zh_TW': '5 - 12歲',
-                },
+                text: '5-12 years old',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -367,16 +178,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerAge13to18': {
                 id: 'answerAge13to18',
                 questionId: 'questionAgeGroup',
-                text: {
-                    'en': '13-18 years old',
-                    'tl': '13-18 taong gulang',
-                    'pa': '13-18 ਸਾਲਾਂ ਦੀ ਉਮਰ',
-                    'ko': '13세 이상 18세 미만',
-                    'fr': 'Entre 13 et 18 ans',
-                    'ar': 'من 13 إلى 18 سنة',
-                    'zh_CN': '13-18岁',
-                    'zh_TW': '13 - 18歲',
-                },
+                text: '13-18 years old',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -390,16 +192,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerPregnant': {
                 id: 'answerPregnant',
                 questionId: 'questionAgeGroup',
-                text: {
-                    'en': 'Pregnant (the child is not yet born)',
-                    'tl': 'Buntis (hindi pa naisisilang)',
-                    'pa': 'ਗਰਭਵਰਤੀ (ਹਾਲੇ ਪੈਦਾ ਨਹੀਂ ਹੋਇਆ)',
-                    'ko': '임신 중 (출생 이전)',
-                    'fr': 'Enceinte (l’enfant n’est pas encore né)',
-                    'ar': 'حبلى (لم يولد بعد)',
-                    'zh_CN': '怀孕（待产）',
-                    'zh_TW': '懷有身孕',
-                },
+                text: 'Pregnant (the child is not yet born)',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -413,16 +206,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerNoChildren': {
                 id: 'answerNoChildren',
                 questionId: 'questionAgeGroup',
-                text: {
-                    'en': 'No children',
-                    'tl': 'Walang mga anak',
-                    'pa': 'ਕੋਈ ਬੱਚਾ ਨਹੀਂ ਹੈ',
-                    'ko': '아이 없음',
-                    'fr': 'Pas d\'enfant',
-                    'ar': 'لا يوجد أطفال',
-                    'zh_CN': '没有孩子',
-                    'zh_TW': '沒有小孩',
-                },
+                text: 'No children',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [],
@@ -430,16 +214,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerWantToRent': {
                 id: 'answerWantToRent',
                 questionId: 'questionCurrentHousingSituation',
-                text: {
-                    'en': 'I want to rent a place to live',
-                    'tl': 'Nais kong magrenta ng lugar na titirhan',
-                    'pa': 'ਮੈਂ ਰਹਿਣ ਲਈ ਕਿਰਾਏ ਦੀ ਥਾਂ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ',
-                    'ko': '주거용 공간의 임차를 희망합니다.',
-                    'fr': 'Je veux louer un logement',
-                    'ar': 'أرغب في تأجير مسكن',
-                    'zh_CN': '我想租房',
-                    'zh_TW': '我想租房',
-                },
+                text: 'I want to rent a place to live',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -450,16 +225,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerWantToBuy': {
                 id: 'answerWantToBuy',
                 questionId: 'questionCurrentHousingSituation',
-                text: {
-                    'en': 'I want to buy a home',
-                    'tl': 'Nais kong bumili ng bahay',
-                    'pa': 'ਮੈਂ ਘਰ ਖਰੀਦਣਾ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ',
-                    'ko': '주택 구매를 희망합니다.',
-                    'fr': 'Je veux acheter un logement',
-                    'ar': 'أرغب في شراء منزل',
-                    'zh_CN': '我想买房',
-                    'zh_TW': '我想買房',
-                },
+                text: 'I want to buy a home',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -470,16 +236,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerRenting': {
                 id: 'answerRenting',
                 questionId: 'questionCurrentHousingSituation',
-                text: {
-                    'en': 'I am already renting a home',
-                    'tl': 'Nagrerenta na ako ng bahay',
-                    'pa': 'ਮੈਂ ਪਹਿਲਾਂ ਹੀ ਘਰ ਕਿਰਾਏ ਉੱਤੇ ਲੈ ਲਿਆ ਹੈ',
-                    'ko': '이미 주택을 임차하였습니다.',
-                    'fr': 'Je loue déjà un logement',
-                    'ar': 'لقد استأجرت مسكن بالفعل',
-                    'zh_CN': '我已经租了房',
-                    'zh_TW': '我已租房',
-                },
+                text: 'I am already renting a home',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -490,16 +247,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerOwning': {
                 id: 'answerOwning',
                 questionId: 'questionCurrentHousingSituation',
-                text: {
-                    'en': 'I already own a home',
-                    'tl': 'May sarili na akong bahay',
-                    'pa': 'ਮੈਂ ਪਹਿਲਾਂ ਹੀ ਘਰ ਖਰੀਦ ਲਿਆ ਹੈ',
-                    'ko': '이미 주택을 보유하고 있습니다.',
-                    'fr': 'Je possède déjà un logement',
-                    'ar': 'أملك منزل بالفعل',
-                    'zh_CN': '我已经拥有了住房',
-                    'zh_TW': '我已買房',
-                },
+                text: 'I already own a home',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -510,16 +258,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerEnglishLevelNone': {
                 id: 'answerEnglishLevelNone',
                 questionId: 'questionEnglishLevel',
-                text: {
-                    'en': 'None',
-                    'tl': 'Wala',
-                    'pa': 'ਕੋਈ ਨਹੀਂ',
-                    'ko': '전혀 못 함',
-                    'fr': 'Je ne parle pas anglais',
-                    'ar': 'لا شيء',
-                    'zh_CN': '无',
-                    'zh_TW': '無',
-                },
+                text: 'None',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -533,16 +272,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerEnglishLevelBeginner': {
                 id: 'answerEnglishLevelBeginner',
                 questionId: 'questionEnglishLevel',
-                text: {
-                    'en': 'Beginner (Canadian Language Benchmarks 1-4)',
-                    'tl': 'Baguhan (Canadian Language Benchmarks 1-4)',
-                    'pa': 'ਸੁਰੂਆਤੀ (ਕੈਨੇਡੀਅਨ ਲੈਂਗੂਏਜ ਬੈਂਚਮਾਰਕਸ 1-4)',
-                    'ko': '초급자 (캐나다 언어 기준 1~4급)',
-                    'fr': 'Niveau de base (niveaux de compétence linguistique canadiens 1 à 4)',
-                    'ar': 'مبتدئ (بين 1 و4 على المعيار الكندي للغة)',
-                    'zh_CN': '初学者（加拿大语言基准1-4）',
-                    'zh_TW': '初學者（加拿大語言等級標準1-4）',
-                },
+                text: 'Beginner (Canadian Language Benchmarks 1-4)',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -556,16 +286,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerEnglishLevelIntermediate': {
                 id: 'answerEnglishLevelIntermediate',
                 questionId: 'questionEnglishLevel',
-                text: {
-                    'en': 'Intermediate (Canadian Language Benchmarks 5-8)',
-                    'tl': 'Katamtaman (Canadian Language Benchmarks 5-8)',
-                    'pa': 'ਇੰਟਰਮਿਡੀਏਟ (ਕੈਨੇਡੀਅਨ ਲੈਂਗੂਏਜ ਬੈਂਚਮਾਰਕਸ 5-8)',
-                    'ko': '중급자 (캐나다 언어 기준 5~8급)',
-                    'fr': 'Niveau intermédiaire (niveaux de compétence linguistique canadiens 5 à 8)',
-                    'ar': 'متوسط (بين 5 و8 على المعيار الكندي للغة)',
-                    'zh_CN': '中级（加拿大语言基准5-8）',
-                    'zh_TW': '中級（加拿大語言等級標準5-8）',
-                },
+                text: 'Intermediate (Canadian Language Benchmarks 5-8)',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -579,16 +300,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerEnglishLevelFluent': {
                 id: 'answerEnglishLevelFluent',
                 questionId: 'questionEnglishLevel',
-                text: {
-                    'en': 'Fluent (Canadian Language Benchmarks 9-12)',
-                    'tl': 'Matatas (Canadian Language Benchmarks 9-12)',
-                    'pa': 'ਫਲੁਏਂਟ (ਕੈਨੇਡੀਅਨ ਲੈਂਗਗੂਏਜ ਬੈਂਚਮਾਰਕਸ 9-12)',
-                    'ko': '유창함 (캐나다 언어 기준 9~12급)',
-                    'fr': 'Niveau avancé (niveaux de compétence linguistique canadiens 9 à 12)',
-                    'ar': 'فصيح (بين 9 و12 على المعيار الكندي للغة)',
-                    'zh_CN': '流利（加拿大语言基准9-12）',
-                    'zh_TW': '流利（加拿大語言等級標準 9-12）',
-                },
+                text: 'Fluent (Canadian Language Benchmarks 9-12)',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [],
@@ -596,16 +308,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerPermanentResident': {
                 id: 'answerPermanentResident',
                 questionId: 'questionImmigrantType',
-                text: {
-                    'en': 'Permanent resident',
-                    'tl': 'Permanenteng Residente',
-                    'pa': 'ਪੱਕੇ ਨਿਵਾਸੀ',
-                    'ko': '영주권자',
-                    'fr': 'Résident(e) permanent(e)',
-                    'ar': 'مقيم دائم',
-                    'zh_CN': '永久居民',
-                    'zh_TW': '永久居民',
-                },
+                text: 'Permanent resident',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [],
@@ -613,16 +316,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerRefugeeClass': {
                 id: 'answerRefugeeClass',
                 questionId: 'questionImmigrantType',
-                text: {
-                    'en': 'Permanent Resident - Refugee Class or Protected Person',
-                    'tl': 'Permanenteng Residente - Uring Takas o Pinoprotektahang Tao',
-                    'pa': 'ਪੱਕੇ ਨਿਵਾਸੀ - ਰਿਫ਼ਿਊਜੀ ਕਲਾਸ ਜਾਂ ਸੁਰੱਖਿਅਤ ਵਿਅਕਤੀ',
-                    'ko': '영주권자 - 난민 지위 혹은 피보호자',
-                    'fr': 'Résident(e) permanent(e) - catégorie de réfugié ou personne protégée',
-                    'ar': 'مقيم دائم – فئة لاجئ أو متمتع بالحماية',
-                    'zh_CN': '永久居民——难民类或受保护的人',
-                    'zh_TW': '永久居民 - 難民與須受保護人士',
-                },
+                text: 'Permanent Resident - Refugee Class or Protected Person',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -636,16 +330,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerRefugeeClaimant': {
                 id: 'answerRefugeeClaimant',
                 questionId: 'questionImmigrantType',
-                text: {
-                    'en': 'Refugee claimant',
-                    'tl': 'Naghahabol na Takas',
-                    'pa': 'ਰਿਫਿਊਜੀ',
-                    'ko': '난민 신청자',
-                    'fr': 'Demandeur(euse) d’asile',
-                    'ar': 'طالب لجوء',
-                    'zh_CN': '难民申请人',
-                    'zh_TW': '難民申請者',
-                },
+                text: 'Refugee claimant',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -656,16 +341,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerTemporaryForeignWorker': {
                 id: 'answerTemporaryForeignWorker',
                 questionId: 'questionImmigrantType',
-                text: {
-                    'en': 'Temporary Foreign Worker',
-                    'tl': 'Pansamantalang Banyagang Manggagawa',
-                    'pa': 'ਆਰਜ਼ੀ ਵਿਦੇਸ਼ੀ ਵਰਕਰ',
-                    'ko': '임시 외국인 근로자',
-                    'fr': 'Travailleur(euse) étranger(ère) temporaire',
-                    'ar': 'عامل أجنبي مؤقت',
-                    'zh_CN': '外籍临时工',
-                    'zh_TW': '臨時外籍工作者',
-                },
+                text: 'Temporary Foreign Worker',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [],
@@ -673,16 +349,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerStudentVisa': {
                 id: 'answerStudentVisa',
                 questionId: 'questionImmigrantType',
-                text: {
-                    'en': 'Student visa',
-                    'tl': 'Student visa',
-                    'pa': 'ਸਟੂਡੈਂਟ ਵੀਜ਼ਾ',
-                    'ko': '학생 비자',
-                    'fr': 'Visa d’étudiant(e)',
-                    'ar': 'تأشيرة طالب',
-                    'zh_CN': '学生签证',
-                    'zh_TW': '學生簽證',
-                },
+                text: 'Student visa',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [],
@@ -690,16 +357,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerImmigrantTypeNone': {
                 id: 'answerImmigrantTypeNone',
                 questionId: 'questionImmigrantType',
-                text: {
-                    'en': 'Other',
-                    'tl': 'Iba pa',
-                    'pa': 'ਹੋਰ',
-                    'ko': '기타',
-                    'fr': 'Autre',
-                    'ar': 'أخرى',
-                    'zh_CN': '其他',
-                    'zh_TW': '其他',
-                },
+                text: 'Other',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [],
@@ -707,16 +365,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerLookingForWork': {
                 id: 'answerLookingForWork',
                 questionId: 'questionWorkStatus',
-                text: {
-                    'en': 'I am looking for work',
-                    'tl': 'Naghahanap ako ng trabaho',
-                    'pa': 'ਮੈਂ ਕੰਮ ਲੱਭ ਰਿਹਾ/ਰਹੀ ਹਾਂ',
-                    'ko': '구직 중입니다',
-                    'fr': 'Je cherche du travail',
-                    'ar': 'أبحث عن عمل',
-                    'zh_CN': '我在找工作',
-                    'zh_TW': '我在找工作',
-                },
+                text: 'I am looking for work',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -727,16 +376,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerRightsAtWork': {
                 id: 'answerRightsAtWork',
                 questionId: 'questionWorkStatus',
-                text: {
-                    'en': 'I want to learn about my rights at work',
-                    'tl': 'Gusto kong malaman ang mga karapatan ko sa trabaho',
-                    'pa': 'ਮੈਂ ਕੰਮ ਉੱਤੇ ਆਪਣੇ ਅਧਿਕਾਰਾਂ ਬਾਰੇ ਜਾਣਨਾ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ',
-                    'ko': '직장 내 근로자의 권리에 대해 알고 싶습니다',
-                    'fr': 'Je veux en apprendre davantage sur mes droits au travail',
-                    'ar': 'أرغب في التعرف على المزيد عن حقوقي في مكان العمل',
-                    'zh_CN': '我想了解我在工作中的权利',
-                    'zh_TW': '我想了解我工作的權利',
-                },
+                text: 'I want to learn about my rights at work',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -747,16 +387,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerIAmSelfEmployed': {
                 id: 'answerIAmSelfEmployed',
                 questionId: 'questionWorkStatus',
-                text: {
-                    'en': 'I have my own business or want to start my own business',
-                    'tl': 'May sarili akong negosyo o nais kong magsimula ng sariling negosyo',
-                    'pa': 'ਮੇਰਾ ਖੁਦ ਦਾ ਕਾਰੋਬਾਰ ਹੈ ਜਾਂ ਖੁਦ ਦਾ ਕਾਰੋਬਾਰ ਸ਼ੁਰੂ ਕਰਨਾ ਚਾਹੁੰਦਾ/ਚਾਹੁੰਦੀ ਹਾਂ',
-                    'ko': '개인사업을 운영하고 있거나 시작하기를 원합니다',
-                    'fr': 'Je possède ma propre entreprise ou je veux démarrer ma propre entreprise',
-                    'ar': 'أملك نشاطي التجاري الخاص أو أرغب في تأسيس نشاطي التجاري',
-                    'zh_CN': '我有自己的生意，或者想自己创业',
-                    'zh_TW': '我有自己的公司，或者有計劃創業',
-                },
+                text: 'I have my own business or want to start my own business',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -767,16 +398,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerGeneralHealth': {
                 id: 'answerGeneralHealth',
                 questionId: 'questionHealth',
-                text: {
-                    'en': 'General health care and learning about health care costs',
-                    'tl': 'Pangkalahatang pangangalaga sa kalusugan at pag-alam tungkol sa halaga ng pangangalagang pangkalusugan',
-                    'pa': 'ਜਨਰਲ ਹੈਲਥ ਕੇਅਰ ਅਤੇ ਹੈਲਥ ਕੇਅਰ ਖ਼ਰਚਿਆਂ ਬਾਰੇ ਸਿੱਖਣਾ',
-                    'ko': '일반 의료 및 의료비에 관한 정보',
-                    'fr': 'Soins de santé généraux. Renseignements quant aux coûts des soins de santé',
-                    'ar': 'رعاية صحية عامة والتعرف على تكلفة الرعاية الصحية',
-                    'zh_CN': '一般的医疗保健服务与费用',
-                    'zh_TW': '了解關於一般醫療保健的項目與其費用',
-                },
+                text: 'General health care and learning about health care costs',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -793,16 +415,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerHealthEmergency': {
                 id: 'answerHealthEmergency',
                 questionId: 'questionHealth',
-                text: {
-                    'en': 'I need urgent medical attention (for emergencies, call 9-1-1)',
-                    'tl': 'Kailangan ko ng agarang medikal na atensyon (para sa mga emergency, tumawag sa 9-1-1)',
-                    'pa': 'ਮੈਨੂੰ ਜ਼ਰੂਰੀ ਮੈਡੀਕਲ ਧਿਆਨ ਦੀ ਲੋੜ ਹੈ (ਐਮਰਜੈਂਸੀ ਲਈ 9-1-1 ਕਾਲ ਕਰੋ)',
-                    'ko': '긴급 치료가 필요합니다. (비상시 911 신고)',
-                    'fr': 'J’ai besoin de soins médicaux immédiats (pour les urgences, appelez le 9-1-1)',
-                    'ar': 'أريد رعاية صحية عاجلة (في حالات الطوارئ، اتصل بالرقم 911)',
-                    'zh_CN': '我需要紧急医疗服务（看急症，请拨打9-1-1）',
-                    'zh_TW': '我需要緊急的醫療照顧 （緊急事故請撥打9-1-1）',
-                },
+                text: 'I need urgent medical attention (for emergencies, call 9-1-1)',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -813,16 +426,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerHealthTakeMedication': {
                 id: 'answerHealthTakeMedication',
                 questionId: 'questionHealth',
-                text: {
-                    'en': 'Prescription medication',
-                    'tl': 'Resita ng gamot',
-                    'pa': 'ਪ੍ਰਿਸਕ੍ਰਿਪਸ਼ਨ ਡ੍ਰੱਗਜ਼',
-                    'ko': '처방 약품',
-                    'fr': 'Médicament sur ordonnance',
-                    'ar': 'أدوية تصرف بوصفة طبية',
-                    'zh_CN': '处方药',
-                    'zh_TW': '處方藥物',
-                },
+                text: 'Prescription medication',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -833,16 +437,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerHealthMentalHealth': {
                 id: 'answerHealthMentalHealth',
                 questionId: 'questionHealth',
-                text: {
-                    'en': 'Mental health support',
-                    'tl': 'Tulong sa kalusugang pangkaisipan',
-                    'pa': 'ਦਿਮਾਗੀ ਸਿਹਤ ਸਹਿਯੋਗ',
-                    'ko': '정신 건강 의료 지원',
-                    'fr': 'Soin en matière de santé mentale',
-                    'ar': 'مساعدة خاصة بالصحة النفسية',
-                    'zh_CN': '心理健康支持',
-                    'zh_TW': '心理健康輔助',
-                },
+                text: 'Mental health support',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -853,16 +448,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerHealthEyeExam': {
                 id: 'answerHealthEyeExam',
                 questionId: 'questionHealth',
-                text: {
-                    'en': 'Eye doctors',
-                    'tl': 'Mga doktor sa mata',
-                    'pa': 'ਅੱਖਾਂ ਦੇ ਡਾਕਟਰ',
-                    'ko': '안과',
-                    'fr': 'Ophtalmologue',
-                    'ar': 'طبيب عيون',
-                    'zh_CN': '眼科医生',
-                    'zh_TW': '眼科醫生',
-                },
+                text: 'Eye doctors',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -873,16 +459,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerNeedDentist': {
                 id: 'answerNeedDentist',
                 questionId: 'questionHealth',
-                text: {
-                    'en': 'Dentists',
-                    'tl': 'Mga dentista',
-                    'pa': 'ਡੈਂਟਿਸਟ',
-                    'ko': '치과',
-                    'fr': 'Dentiste',
-                    'ar': 'طبيب أسنان',
-                    'zh_CN': '牙科医生',
-                    'zh_TW': '牙醫',
-                },
+                text: 'Dentists',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -893,16 +470,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerDisabilities': {
                 id: 'answerDisabilities',
                 questionId: 'questionHealth',
-                text: {
-                    'en': 'Support for disabilities',
-                    'tl': 'Suporta sa mga kapansanan',
-                    'pa': 'ਅਪੰਗਤਾ ਲਈ ਸਹਿਯੋਗ',
-                    'ko': '장애인 지원',
-                    'fr': 'Soutien pour personnes handicapées',
-                    'ar': 'مساعدة موجهة لأصحاب الاحتياجات الخاصة',
-                    'zh_CN': '支持残疾人',
-                    'zh_TW': '殘障人士支援服務',
-                },
+                text: 'Support for disabilities',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
@@ -913,16 +481,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerHelpFindingServices': {
                 id: 'answerHelpFindingServices',
                 questionId: 'questionWhatHelpDoYouNeed',
-                text: {
-                    'en': 'Help finding information about services',
-                    'ar': 'أبحث عن المساعدة في إيجاد معلومات عن الخدمات',
-                    'fr': 'Aide afin de trouver de l\'information relative aux services',
-                    'ko': '서비스에 관한 정보 검색',
-                    'pa': 'ਸੇਵਾਵਾਂ ਬਾਰੇ ਜਾਣਕਾਰੀ ਲੱਭਣ ਲਈ ਮਦਦ',
-                    'tl': 'Tumulong sa paghahanap ng impormasyon tungkol sa mga serbisyo',
-                    'zh_CN': '帮助查询有关服务的信息',
-                    'zh_TW': '幫助查尋有關服務的訊息',
-                },
+                text: 'Help finding information about services',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -933,16 +492,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerHelpWithMentalHealth': {
                 id: 'answerHelpWithMentalHealth',
                 questionId: 'questionWhatHelpDoYouNeed',
-                text: {
-                    'en': 'Help managing stress',
-                    'ar': 'أبحث عن المساعدة في التعامل مع الإجهاد',
-                    'fr': 'Aide afin de gérer le stress',
-                    'ko': '스트레스 관리',
-                    'pa': 'ਤਣਾਅ ਦੇ ਇੰਤਜ਼ਾਮ ਲਈ ਮਦਦ',
-                    'tl': 'Tumulong na pangasiwaan ang stress',
-                    'zh_CN': '帮助管理情绪压力',
-                    'zh_TW': '幫助管理情緒壓力',
-                },
+                text: 'Help managing stress',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -953,16 +503,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerLowIncome': {
                 id: 'answerLowIncome',
                 questionId: 'questionLowIncome',
-                text: {
-                    'en': 'Yes',
-                    'tl': 'Oo',
-                    'pa': 'ਹਾਂ',
-                    'ko': '네',
-                    'fr': 'Oui',
-                    'ar': 'نعم',
-                    'zh_CN': '是',
-                    'zh_TW': '是',
-                },
+                text: 'Yes',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -976,16 +517,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerNotLowIncome': {
                 id: 'answerNotLowIncome',
                 questionId: 'questionLowIncome',
-                text: {
-                    'en': 'No',
-                    'tl': 'Hindi',
-                    'pa': 'ਨਹੀਂ',
-                    'ko': '아니요',
-                    'fr': 'Non',
-                    'ar': 'لا',
-                    'zh_CN': '不是',
-                    'zh_TW': '否',
-                },
+                text: 'No',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [],
@@ -993,16 +525,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerAlreadyHaveLowIncomeSupport': {
                 id: 'answerAlreadyHaveLowIncomeSupport',
                 questionId: 'questionLowIncome',
-                text: {
-                    'ar': 'أحصل على دعم موجه لأصحاب الدخل المحدود',
-                    'en': 'I have low income support',
-                    'tl': 'May suporta ako sa mababang kita',
-                    'pa': 'ਮੇਰੇ ਕੋਲ ਘੱਟ ਆਮਦਨ ਸਹਿਯੋਗ ਹੈ',
-                    'ko': '저소득층 지원을 받고 있습니다.',
-                    'fr': 'J’ai droit à du soutien pour gens à faible revenu.',
-                    'zh_CN': '我有低收入支持。',
-                    'zh_TW': '我有得到低收入的支助。',
-                },
+                text: 'I have low income support',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1016,16 +539,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerAdultEducationTraining': {
                 id: 'answerAdultEducationTraining',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Adult education and training',
-                    'tl': 'Edukasyon ng adulto at pagsasanay',
-                    'pa': 'ਬਾਲਗ ਸਿੱਖਿਆ ਅਤੇ ਸਿਖਲਾਈ',
-                    'ko': '성인 교육과 연수',
-                    'fr': 'Éducation et formation des adultes',
-                    'ar': 'تعليم الكبار وتدريبهم',
-                    'zh_CN': '成人教育与培训',
-                    'zh_TW': '成人教育與訓練',
-                },
+                text: 'Adult education and training',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1039,16 +553,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerCanadianCitizen': {
                 id: 'answerCanadianCitizen',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Becoming a Canadian citizen',
-                    'tl': 'Pagiging mamamayan ng Canada',
-                    'pa': 'ਕੈਨੇਡੀਅਨ ਸਿਟੀਜ਼ਨ ਬਣਨਾ',
-                    'ko': '캐나다 시민권 취득법',
-                    'fr': 'Devenir citoyen(ne) canadien(ne)',
-                    'ar': 'أن أصبح مواطنا كنديا',
-                    'zh_CN': '成为加拿大公民',
-                    'zh_TW': '成為加拿大公民',
-                },
+                text: 'Becoming a Canadian citizen',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1062,16 +567,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerLegalHelp': {
                 id: 'answerLegalHelp',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Legal help',
-                    'tl': 'Legal na tulong',
-                    'pa': 'ਕਨੂੰਨੀ ਮਦਦ',
-                    'ko': '법률 자문',
-                    'fr': 'Aide juridique',
-                    'ar': 'مساعدة قانونية',
-                    'zh_CN': '法律援助',
-                    'zh_TW': '法律援助',
-                },
+                text: 'Legal help',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1082,16 +578,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerBanking': {
                 id: 'answerBanking',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Banking and financial management',
-                    'tl': 'Pangangasiwa sa Pagbabangko at pananalapi',
-                    'pa': 'ਬੈਂਕਿੰਗ ਅਤੇ ਵਿੱਤੀ ਪ੍ਰਬੰਧ',
-                    'ko': '은행 업무 및 금융 관리',
-                    'fr': 'Gestion bancaire et financière',
-                    'ar': 'أمور مصرفية وإدارة الأموال',
-                    'zh_CN': '理财与财务管理',
-                    'zh_TW': '資金與財務管理',
-                },
+                text: 'Banking and financial management',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1102,16 +589,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerTaxes': {
                 id: 'answerTaxes',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Taxes',
-                    'tl': 'Mga buwis',
-                    'pa': 'ਟੈਕਸਜ਼',
-                    'ko': '세금',
-                    'fr': 'Taxes et impôts',
-                    'ar': 'الضرائب',
-                    'zh_CN': '税务',
-                    'zh_TW': '稅務',
-                },
+                text: 'Taxes',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1122,16 +600,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerLGBTQ': {
                 id: 'answerLGBTQ',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'LGBTQ2 services',
-                    'tl': 'Mga serbisyo ng LGBTQ2',
-                    'pa': 'LGBTQ2 ਸੇਵਾਵਾਂ',
-                    'ko': 'LGBTQ2 서비스',
-                    'fr': 'Services pour les personnes LGBTQ2',
-                    'ar': 'خدمات LGBTQ2',
-                    'zh_CN': '非异性恋者服务（译注：LGBTQ2是女同性恋者、男同性恋者、双性恋者、跨性别者、性向复杂者和双灵人的英文首字母缩写）',
-                    'zh_TW': '多元性別族群服務',
-                },
+                text: 'LGBTQ2 services',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1142,16 +611,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerFrench': {
                 id: 'answerFrench',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Francophone services',
-                    'tl': 'Mga serbisyo ng Francophone',
-                    'pa': 'ਫ੍ਰੈਂਕੋਫੋਨ ਸੇਵਾਵਾਂ',
-                    'ko': '프랑스어 사용자 서비스',
-                    'fr': 'Services pour les francophones',
-                    'ar': 'خدمات للناطقين باللغة الفرنسية',
-                    'zh_CN': '法语服务',
-                    'zh_TW': '法語服務',
-                },
+                text: 'Francophone services',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1162,16 +622,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerSeniors': {
                 id: 'answerSeniors',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Support for seniors (age 65+)',
-                    'tl': 'Tulong para sa mga senyor (edad 65+)',
-                    'pa': 'ਸੀਨੀਅਰਜ਼ ਲਈ ਸਹਾਇਤਾ (65+ ਉਮਰ)',
-                    'ko': '고령자 지원 (65세 이상) ',
-                    'fr': 'Aide pour personnes âgées (plus de 65 ans)',
-                    'ar': 'مساندة موجهة لكبار السن (أكبر من 65 سنة)',
-                    'zh_CN': '支持老年人（65岁以上）',
-                    'zh_TW': '年長者的支援服務 (65 歲以上)',
-                },
+                text: 'Support for seniors (age 65+)',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1182,16 +633,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerDriving': {
                 id: 'answerDriving',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Driving in BC',
-                    'tl': 'Pagmamaneho sa BC',
-                    'pa': 'ਬੀ.ਸੀ. ਵਿੱਚ ਡਰਾਇਵਿੰਗ',
-                    'ko': 'BC주 내 운전',
-                    'fr': 'Conduire en Colombie-Britannique',
-                    'ar': 'القيادة في بريتيش كولومبيا',
-                    'zh_CN': '在B.C.省开车',
-                    'zh_TW': '在BC省開車',
-                },
+                text: 'Driving in BC',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1205,16 +647,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerTransit': {
                 id: 'answerTransit',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Public transportation',
-                    'tl': 'Pampublikong transportasyon',
-                    'pa': 'ਪਬਲਿਕ ਟਰਾਂਸਪੋਰਟ',
-                    'ko': '대중교통',
-                    'fr': 'Transports publics',
-                    'ar': 'المواصلات العامة',
-                    'zh_CN': '公共交通',
-                    'zh_TW': '大眾運輸工具',
-                },
+                text: 'Public transportation',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1225,16 +658,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerAbuseAndViolence': {
                 id: 'answerAbuseAndViolence',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Help with abuse and violence',
-                    'tl': 'Pagtulong sa pang-aabuso at karahasan',
-                    'pa': 'ਦੁਰਵਿਹਾਰ ਅਤੇ ਹਿੰਸਾ ਵਿਰਧ ਮਦਦ',
-                    'ko': '학대와 폭행 피해자 지원',
-                    'fr': 'Aide dans le cas de mauvais traitements et de violence',
-                    'ar': 'مساعدة متعلقة بالعنف والإساءة',
-                    'zh_CN': '帮助解决虐待和暴力问题',
-                    'zh_TW': '家暴與受虐者援助',
-                },
+                text: 'Help with abuse and violence',
                 isChosen: false,
                 isInverted: false,
                 'taxonomyTerms': [{
@@ -1251,16 +675,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
             'answerCommunityServices': {
                 id: 'answerCommunityServices',
                 questionId: 'questionOther',
-                text: {
-                    'en': 'Community services and organizations',
-                    'tl': 'Mga serbisyo ng komunidad at mga organisasyon',
-                    'pa': 'ਕਮਿਊਨਟੀ ਸੇਵਾਵਾਂ ਅਤੇ ਸੰਸਥਾਵਾਂ',
-                    'ko': '커뮤니티 서비스 및 기관',
-                    'fr': 'Services et organisations communautaires',
-                    'ar': 'خدمات المجتمع ومنظمات المجتمع المدني',
-                    'zh_CN': '社区服务和组织',
-                    'zh_TW': '社區服務和組織',
-                },
+                text: 'Community services and organizations',
                 isChosen: false,
                 isInverted: false,
                 taxonomyTerms: [{
