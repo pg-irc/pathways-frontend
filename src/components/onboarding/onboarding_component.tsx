@@ -116,7 +116,8 @@ export class OnboardingComponent extends React.Component<Props> {
 
     onPersonalizationButtonPress(): void {
         this.props.setOnboarding();
-        goToRouteWithoutParameter(Routes.Questionnaire, this.props.history);
+        const goToQuestionnaire = goToRouteWithoutParameter(Routes.Questionnaire, this.props.history);
+        goToQuestionnaire();
     }
 
     renderSkipPersonalizationButton(): JSX.Element {
@@ -137,7 +138,8 @@ export class OnboardingComponent extends React.Component<Props> {
 
     onSkipPersonalizationButtonPress(): void {
         this.props.setOnboarding();
-        goToRouteWithoutParameter(Routes.Welcome, this.props.history);
+        const goToRecommendedTopics = goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history);
+        goToRecommendedTopics();
     }
 
     renderNavigationButtons(): JSX.Element {
