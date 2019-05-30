@@ -144,25 +144,34 @@ export class OnboardingComponent extends React.Component<Props> {
         const pageIndex = this.pageIndex();
         const hasNextPage = pageIndex < pages.length - 1;
         const hasPrevPage = pageIndex > 0;
-        const backButton = <Button style={{ backgroundColor: 'transparent', alignSelf: 'flex-start' }} onPress={this.onButtonPress(this.pageIndex() - 1)}>
-            <Trans><Text style={{ color: colors.teal }}>Back</Text></Trans>
-        </Button>;
-        const nextButton = <Button style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }} onPress={this.onButtonPress(this.pageIndex() + 1)}>
-            <Trans><Text style={{ color: colors.teal }}>Next</Text></Trans>
-        </Button>;
-        return (<View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            margin: 10,
-        }}>
-
+        const backButton = this.backButton();
+        const nextButton = this.nextButton();
+        return (<View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10 }}>
             {hasPrevPage ? backButton : <View />}
             {hasNextPage ? nextButton : <View />}
         </View>
         );
     }
 
-    onButtonPress(nextPage: number): () => void {
+    backButton(): JSX.Element {
+        const prevousIndex = this.pageIndex() - 1;
+        return <Button
+            style={{ backgroundColor: 'transparent', alignSelf: 'flex-start' }}
+            onPress={this.goToPageWithIndex(prevousIndex)}>
+            <Trans><Text style={{ color: colors.teal }}>Back</Text></Trans>
+        </Button>;
+    }
+
+    nextButton(): JSX.Element {
+        const nextIndex = this.pageIndex() + 1;
+        return <Button
+            style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }}
+            onPress={this.goToPageWithIndex(nextIndex)}>
+            <Trans><Text style={{ color: colors.teal }}>Next</Text></Trans>
+        </Button>;
+    }
+
+    goToPageWithIndex(nextPage: number): () => void {
         const nextPageAsString = '' + nextPage;
         return goToRouteWithParameter(Routes.Onboarding, nextPageAsString, this.props.history);
     }
