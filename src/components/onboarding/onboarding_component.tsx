@@ -144,10 +144,10 @@ export class OnboardingComponent extends React.Component<Props> {
         const pageIndex = this.pageIndex();
         const hasNextPage = pageIndex < pages.length - 1;
         const hasPrevPage = pageIndex > 0;
-        const backButton = <Button style={{ backgroundColor: 'transparent', alignSelf: 'flex-start' }} onPress={this.onBackButtonPress()}>
+        const backButton = <Button style={{ backgroundColor: 'transparent', alignSelf: 'flex-start' }} onPress={this.onButtonPress(this.pageIndex() - 1)}>
             <Trans><Text style={{ color: colors.teal }}>Back</Text></Trans>
         </Button>;
-        const nextButton = <Button style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }} onPress={this.onNextButtonPress()}>
+        const nextButton = <Button style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }} onPress={this.onButtonPress(this.pageIndex() + 1)}>
             <Trans><Text style={{ color: colors.teal }}>Next</Text></Trans>
         </Button>;
         return (<View style={{
@@ -162,16 +162,9 @@ export class OnboardingComponent extends React.Component<Props> {
         );
     }
 
-    onNextButtonPress(): () => void {
-        const nextPage = this.pageIndex() + 1;
+    onButtonPress(nextPage: number): () => void {
         const nextPageAsString = '' + nextPage;
         return goToRouteWithParameter(Routes.Onboarding, nextPageAsString, this.props.history);
-    }
-
-    onBackButtonPress(): () => void {
-        const previousPage = this.pageIndex() - 1;
-        const previousPageAsString = '' + previousPage;
-        return goToRouteWithParameter(Routes.Onboarding, previousPageAsString, this.props.history);
     }
 }
 
