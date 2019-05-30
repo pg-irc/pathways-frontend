@@ -1,0 +1,189 @@
+msgid "How long have you been living in Canada?"
+msgstr "Depuis combien de temps habitez-vous au Canada?"
+
+msgid "More than 1 year"
+msgstr "Plus d’un an"
+
+msgid "Less than 1 year"
+msgstr "Moins d’un an"
+
+msgid "I am planning to move to Canada"
+msgstr "Je prévois d’emménager au Canada"
+
+msgid "Do you have any of the following important Canadian documents?"
+msgstr "Possédez-vous l’un ou l’autre de ces documents canadiens importants?"
+
+msgid "I have a Social Insurance Number"
+msgstr "J’ai un numéro d'assurance sociale"
+
+msgid "I have a Canadian bank account"
+msgstr "J’ai un compte bancaire canadien"
+
+msgid "I have a Permanent Resident Card"
+msgstr "J’ai une carte de résident permanent"
+
+msgid "I have registered for MSP (Medical Services Plan)"
+msgstr "Je me suis inscrit(e) au régime de Services médicaux (MSP)"
+
+msgid "I have a BC Services Card (health card)"
+msgstr "J’ai une carte BC Services (carte santé)"
+
+msgid "I have a BC Driver's Licence"
+msgstr "J’ai un permis de conduire de la C.-B."
+
+msgid "Are you arriving with children under 18 years? If yes, how old?"
+msgstr "Êtes-vous accompagné(e) d’enfants de moins de 18 ans? Si c’est le cas, quel âge ont-ils?"
+
+msgid "Under 5 years old"
+msgstr "Moins de 5 ans"
+
+msgid "5-12 years old"
+msgstr "Entre 5 et 12 ans"
+
+msgid "13-18 years old"
+msgstr "Entre 13 et 18 ans"
+
+msgid "Pregnant (the child is not yet born)"
+msgstr "Enceinte (l’enfant n’est pas encore né)"
+
+msgid "No children"
+msgstr "Pas d'enfant"
+
+msgid "What is your current housing situation?"
+msgstr "Quelle est votre situation actuelle en matière de logement?"
+
+msgid "I want to rent a place to live"
+msgstr "Je veux louer un logement"
+
+msgid "I want to buy a home"
+msgstr "Je veux acheter un logement"
+
+msgid "I am already renting a home"
+msgstr "Je loue déjà un logement"
+
+msgid "I already own a home"
+msgstr "Je possède déjà un logement"
+
+msgid "What is your current level of English?"
+msgstr "Quel est votre niveau d’anglais actuel?"
+
+msgid "None"
+msgstr "Je ne parle pas anglais"
+
+msgid "Beginner (Canadian Language Benchmarks 1-4)"
+msgstr "Niveau de base (niveaux de compétence linguistique canadiens 1 à 4)"
+
+msgid "Intermediate (Canadian Language Benchmarks 5-8)"
+msgstr "Niveau intermédiaire (niveaux de compétence linguistique canadiens 5 à 8)"
+
+msgid "Fluent (Canadian Language Benchmarks 9-12)"
+msgstr "Niveau avancé (niveaux de compétence linguistique canadiens 9 à 12)"
+
+msgid "What is your status in Canada?"
+msgstr "De quel statut bénéficiez-vous au Canada?"
+
+msgid "Permanent resident"
+msgstr "Résident(e) permanent(e)"
+
+msgid "Permanent Resident - Refugee Class or Protected Person"
+msgstr "Résident(e) permanent(e) - catégorie de réfugié ou personne protégée"
+
+msgid "Refugee claimant"
+msgstr "Demandeur(euse) d’asile"
+
+msgid "Temporary Foreign Worker"
+msgstr "Travailleur(euse) étranger(ère) temporaire"
+
+msgid "Student visa"
+msgstr "Visa d’étudiant(e)"
+
+msgid "Other"
+msgstr "Autre"
+
+msgid "What is your current work situation?"
+msgstr "Quelle est votre situation actuelle en matière d’emploi?"
+
+msgid "I am looking for work"
+msgstr "Je cherche du travail"
+
+msgid "I want to learn about my rights at work"
+msgstr "Je veux en apprendre davantage sur mes droits au travail"
+
+msgid "I have my own business or want to start my own business"
+msgstr "Je possède ma propre entreprise ou je veux démarrer ma propre entreprise"
+
+msgid "What kinds of health care are you looking for?"
+msgstr "De quel type de soins de santé avez-vous besoin?"
+
+msgid "General health care and learning about health care costs"
+msgstr "Soins de santé généraux. Renseignements quant aux coûts des soins de santé"
+
+msgid "I need urgent medical attention (for emergencies, call 9-1-1)"
+msgstr "J’ai besoin de soins médicaux immédiats (pour les urgences, appelez le 9-1-1)"
+
+msgid "Prescription medication"
+msgstr "Médicament sur ordonnance"
+
+msgid "Mental health support"
+msgstr "Soin en matière de santé mentale"
+
+msgid "Eye doctors"
+msgstr "Ophtalmologue"
+
+msgid "Dentists"
+msgstr "Dentiste"
+
+msgid "Support for disabilities"
+msgstr "Soutien pour personnes handicapées"
+
+msgid "Do you need financial assistance or low-income support?"
+msgstr "Avez-vous besoin d’aide financière ou de soutien pour gens à faible revenu?"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "I have low income support"
+msgstr "J’ai droit à du soutien pour gens à faible revenu."
+
+msgid "Anything else you're interested in? Select all that apply"
+msgstr "Y a-t-il d’autres sujets qui vous intéressent? Sélectionnez toutes les réponses appropriées."
+
+msgid "Adult education and training"
+msgstr "Éducation et formation des adultes"
+
+msgid "Becoming a Canadian citizen"
+msgstr "Devenir citoyen(ne) canadien(ne)"
+
+msgid "Legal help"
+msgstr "Aide juridique"
+
+msgid "Banking and financial management"
+msgstr "Gestion bancaire et financière"
+
+msgid "Taxes"
+msgstr "Taxes et impôts"
+
+msgid "LGBTQ2 services"
+msgstr "Services pour les personnes LGBTQ2"
+
+msgid "Francophone services"
+msgstr "Services pour les francophones"
+
+msgid "Support for seniors (age 65+)"
+msgstr "Aide pour personnes âgées (plus de 65 ans)"
+
+msgid "Driving in BC"
+msgstr "Conduire en Colombie-Britannique"
+
+msgid "Public transportation"
+msgstr "Transports publics"
+
+msgid "Help with abuse and violence"
+msgstr "Aide dans le cas de mauvais traitements et de violence"
+
+msgid "Community services and organizations"
+msgstr "Services et organisations communautaires"
+

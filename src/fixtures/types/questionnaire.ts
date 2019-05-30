@@ -5,7 +5,7 @@ export type Id = string;
 
 export interface Question {
     readonly id: Id;
-    readonly text: LocalizedText;
+    readonly text: string;
     readonly explanation?: LocalizedText;
     readonly acceptMultipleAnswers: boolean;
 }
@@ -17,7 +17,7 @@ export interface QuestionsMap {
 export interface Answer {
     readonly id: Id;
     readonly questionId: Id;
-    readonly text: LocalizedText;
+    readonly text: string;
     readonly isChosen: boolean;
     readonly isInverted: boolean;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;

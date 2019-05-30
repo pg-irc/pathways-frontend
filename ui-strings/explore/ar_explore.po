@@ -1,0 +1,60 @@
+msgid "Things to do right away"
+msgstr "أمور يجب عملها على الفور"
+
+msgid "Settling in"
+msgstr "تستقر في"
+
+msgid "Education"
+msgstr "التعليم"
+
+msgid "Health care"
+msgstr "الرعاية الصحية"
+
+msgid "Money & banking"
+msgstr "المال والبنوك"
+
+msgid "Housing"
+msgstr "الإسكان"
+
+msgid "Employment"
+msgstr "توظيف"
+
+msgid "Legal system & immigration"
+msgstr "النظام القانوني والهجرة"
+
+msgid "Driving"
+msgstr "القيادة"
+
+msgid "Help for individuals & families"
+msgstr "مساعدة للأفراد والعائلات"
+
+msgid "Important tasks for settling in your community"
+msgstr "مهام لا غنى عنها نحو الاستقرار في مجتمعك"
+
+msgid "Social customs and getting around your community"
+msgstr "العادات الاجتماعية والتنقل داخل مجتمعك"
+
+msgid "Learning English, schools for children, youth and adults"
+msgstr "تعلم اللغة الإنجليزية والمدارس للأطفال وللشباب وللكبار"
+
+msgid "Medical insurance, finding a doctor, mental health"
+msgstr "التأمين الطبي والبحث عن طبيب والصحة النفسية"
+
+msgid "Opening a bank account, filing taxes"
+msgstr "فتح حساب مصرفي وتقديم الإقرار الضريبي"
+
+msgid "Finding a place to rent or buy, getting rental assistance"
+msgstr "إيجاد مسكن للإيجار أو التملك والحصول على دعم في سداد الإيجار"
+
+msgid "Finding a job, working and workers’ rights"
+msgstr "البحث عن وظيفة والعمل وحقوق العاملين"
+
+msgid "Immigration and citizenship, legal support, police"
+msgstr "الهجرة والجنسية والدعم القانوني والشرطة"
+
+msgid "Getting a driver's licence, traffic laws, basic insurance"
+msgstr "الحصول على رخصة القيادة وقوانين المرور والتأمين الأساسي"
+
+msgid "For example low-income, disabilities, youth"
+msgstr "على سبيل المثال ذوي الدخل المحدود وذوي الاحتياجات الخاصة والشباب"
+

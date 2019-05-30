@@ -1,0 +1,60 @@
+msgid "Things to do right away"
+msgstr "지금 바로 해야 할 일들"
+
+msgid "Settling in"
+msgstr "새로운 환경에의 적응"
+
+msgid "Education"
+msgstr "교육"
+
+msgid "Health care"
+msgstr "의료 보건"
+
+msgid "Money & banking"
+msgstr "화폐와 금융"
+
+msgid "Housing"
+msgstr "주거"
+
+msgid "Employment"
+msgstr "고용"
+
+msgid "Legal system & immigration"
+msgstr "사법 제도와 이민"
+
+msgid "Driving"
+msgstr "운전"
+
+msgid "Help for individuals & families"
+msgstr "개인과 가족을 위한 지원"
+
+msgid "Important tasks for settling in your community"
+msgstr "커뮤니티 정착에 필요한 중요 과제들"
+
+msgid "Social customs and getting around your community"
+msgstr "사회적 풍습과 지역 사회 둘러보기"
+
+msgid "Learning English, schools for children, youth and adults"
+msgstr "영어 학습, 아동과 청소년 또는 성인을 위한 교육 기관"
+
+msgid "Medical insurance, finding a doctor, mental health"
+msgstr "의료 보험, 병원 검색, 정신 건강"
+
+msgid "Opening a bank account, filing taxes"
+msgstr "은행 계좌 개설, 세금 신고서 제출"
+
+msgid "Finding a place to rent or buy, getting rental assistance"
+msgstr "공간 임차 또는 구매, 임차 지원 프로그램 이용"
+
+msgid "Finding a job, working and workers’ rights"
+msgstr "구직, 근로와 근로자 권리"
+
+msgid "Immigration and citizenship, legal support, police"
+msgstr "이민과 시민권, 법률 자문, 경찰"
+
+msgid "Getting a driver's licence, traffic laws, basic insurance"
+msgstr "운전면허증 취득, 도로교통법, 기본 보험"
+
+msgid "For example low-income, disabilities, youth"
+msgstr "예: 저소득층, 장애인, 청소년"
+
