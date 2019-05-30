@@ -43,8 +43,5 @@ const defaultPath = (props: Props): string => {
     if (!props.localeIsSet) {
         return routePathDefinition(Routes.Welcome);
     }
-    if (props.showOnboarding) {
-        return '/onboarding/0';
-    }
     return routePathDefinition(Routes.RecommendedTopics);
 };

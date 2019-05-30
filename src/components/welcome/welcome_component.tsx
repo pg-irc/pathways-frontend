@@ -5,7 +5,7 @@ import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SetLocale } from '../../stores/locale';
-import { Routes, goToRouteWithoutParameter } from '../../application/routing';
+import { Routes, goToRouteWithoutParameter, goToRouteWithParameter } from '../../application/routing';
 import { colors, applicationStyles, textStyles } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
@@ -13,6 +13,7 @@ import { History } from 'history';
 export interface WelcomeProps {
     readonly currentLocale: Locale;
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
+    readonly showOnboarding: boolean;
     readonly history: History;
 }
 
@@ -72,7 +73,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                 <View>
                     <Button
                         full
-                        onPress={goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)}
+                        onPress={onStartButtonPress(props)}
                         style={[applicationStyles.tealButton, { paddingHorizontal: 20 }]}
                     >
                         <Text style={textStyles.button}>
@@ -98,3 +99,18 @@ export function WelcomeComponent(props: Props): JSX.Element {
         </ImageBackground>
     );
 }
+
+const onStartButtonPress = (props: Props): () => void => {
+    if (props.showOnboarding) {
+        return goToFirstPageOfOnboarding(props.history);
+    }
+    return goToRecommendedTopics(props.history);
+};
+
+const goToFirstPageOfOnboarding = (history: History): () => void => {
+    return goToRouteWithParameter(Routes.Onboarding, '0', history);
+};
+
+const goToRecommendedTopics = (history: History): () => void => {
+    return goToRouteWithoutParameter(Routes.RecommendedTopics, history);
+};

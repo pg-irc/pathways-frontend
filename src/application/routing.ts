@@ -3,10 +3,15 @@ import { RouteComponentProps } from 'react-router-native';
 import { History, Location } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
+export type PageId = string;
 
-interface MatchParameters {
+// The property names of this structure are defined by the corresponding
+// route definitions, e.g. parsing a url '/onboarding/1' which matches
+// '/onboarding/:page' will put '1' in the attribute `page`.
+export interface MatchParameters {
     readonly learnId?: LearnId;
     readonly topicId?: TopicId;
+    readonly page?: PageId;
 }
 
 export type RouterProps = RouteComponentProps<MatchParameters>;
