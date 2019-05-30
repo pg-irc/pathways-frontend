@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { RouterProps } from '../../application/routing';
 import { withI18n } from '@lingui/react';
 import { WelcomeComponent, WelcomeProps, WelcomeActions } from './welcome_component';
 import { Store } from '../../stores';
@@ -7,10 +8,11 @@ import { pullAvailableLocales } from '../../selectors/locale/pull_available_loca
 import { setLocaleActions, SetLocale } from '../../stores/locale';
 import { selectLocale } from '../../selectors/locale/select_locale';
 
-function mapStateToProps(store: Store): WelcomeProps {
+function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
     return {
         currentLocale: selectLocale(store),
         availableLocales: pullAvailableLocales(store),
+        history: routerProps.history,
     };
 }
 
