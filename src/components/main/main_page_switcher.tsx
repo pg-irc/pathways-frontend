@@ -12,7 +12,7 @@ import { AboutComponentWithServerVersion } from '../about/about_component_with_s
 import { RecommendedTopicsConnectedComponent } from '../recommended_topics/recommended_topics_connected_component';
 import { BookmarkedTopicsConnectedComponent } from '../bookmarked_topics/bookmarked_topics_connected_component';
 import { DisclaimerComponent } from '../disclaimer/disclaimer_component';
-import { Routes, routePathDefinition } from '../../application/routing';
+import { Routes, routePathDefinition, routePathWithParameter, routePathWithoutParameter } from '../../application/routing';
 import { Locale } from '../../locale';
 
 interface Props {
@@ -41,7 +41,10 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
 
 const defaultPath = (props: Props): string => {
     if (!props.localeIsSet) {
-        return routePathDefinition(Routes.Welcome);
+        return routePathWithoutParameter(Routes.Welcome);
     }
-    return routePathDefinition(Routes.RecommendedTopics);
+    if (props.showOnboarding) {
+        return routePathWithParameter(Routes.Onboarding, '0');
+    }
+    return routePathWithoutParameter(Routes.RecommendedTopics);
 };
