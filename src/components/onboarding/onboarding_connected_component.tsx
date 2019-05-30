@@ -15,7 +15,7 @@ type OwnProps = {
 const mapStateToProps = (_: Store, ownProps: OwnProps): OnboardingComponentProps => {
     return {
         history: ownProps.history,
-        page: getParametersFromPath(ownProps.location, Routes.Onboarding).topicId,
+        routeParameter: getParametersFromPath(ownProps.location, Routes.Onboarding),
     };
 };
 

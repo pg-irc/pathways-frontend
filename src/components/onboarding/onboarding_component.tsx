@@ -8,7 +8,7 @@ import { Trans } from '@lingui/react';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { SetOnboardingAction } from '../../stores/onboarding/actions';
 import { History } from 'history';
-import { Routes, goToRouteWithoutParameter, goToRouteWithParameter } from '../../application/routing';
+import { Routes, goToRouteWithoutParameter, goToRouteWithParameter, MatchParameters } from '../../application/routing';
 
 export interface OnBoardingPageProps {
     readonly key: string;
@@ -19,7 +19,7 @@ export interface OnBoardingPageProps {
 
 export interface OnboardingComponentProps {
     readonly history: History;
-    readonly page: string;
+    readonly routeParameter: MatchParameters;
 }
 
 export interface OnboardingAction {
@@ -76,11 +76,12 @@ export class OnboardingComponent extends React.Component<Props> {
     }
 
     pageIndex(): number {
-        const index = parseInt(this.props.page, 10);
+        const indexAsString = this.props.routeParameter.page;
+        const index = parseInt(indexAsString, 10);
         if (index >= 0 && index < pages.length) {
             return index;
         }
-        throw new Error(`${index}: Invalid onboarding page index`);
+        throw new Error(`${indexAsString}: Invalid onboarding page index, number expected`);
     }
 
     renderPersonalizationButtons(): JSX.Element {
@@ -143,10 +144,10 @@ export class OnboardingComponent extends React.Component<Props> {
         const pageIndex = this.pageIndex();
         const hasNextPage = pageIndex < pages.length - 1;
         const hasPrevPage = pageIndex > 0;
-        const backButton = <Button style={{ backgroundColor: 'transparent', alignSelf: 'flex-start' }} onPress={() => this.onBackButtonPress()}>
+        const backButton = <Button style={{ backgroundColor: 'transparent', alignSelf: 'flex-start' }} onPress={this.onBackButtonPress()}>
             <Trans><Text style={{ color: colors.teal }}>Back</Text></Trans>
         </Button>;
-        const nextButton = <Button style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }} onPress={() => this.onNextButtonPress()}>
+        const nextButton = <Button style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }} onPress={this.onNextButtonPress()}>
             <Trans><Text style={{ color: colors.teal }}>Next</Text></Trans>
         </Button>;
         return (<View style={{
@@ -161,16 +162,16 @@ export class OnboardingComponent extends React.Component<Props> {
         );
     }
 
-    onNextButtonPress(): void {
+    onNextButtonPress(): () => void {
         const nextPage = this.pageIndex() + 1;
         const nextPageAsString = '' + nextPage;
-        goToRouteWithParameter(Routes.Onboarding, nextPageAsString, this.props.history);
+        return goToRouteWithParameter(Routes.Onboarding, nextPageAsString, this.props.history);
     }
 
-    onBackButtonPress(): void {
+    onBackButtonPress(): () => void {
         const previousPage = this.pageIndex() - 1;
         const previousPageAsString = '' + previousPage;
-        goToRouteWithParameter(Routes.Onboarding, previousPageAsString, this.props.history);
+        return goToRouteWithParameter(Routes.Onboarding, previousPageAsString, this.props.history);
     }
 }
 
