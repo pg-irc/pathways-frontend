@@ -11,6 +11,7 @@ import { RouteChangedAction, routeChanged } from '../../stores/router_actions';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { Locale } from '../../locale';
 import { selectShowOnboarding } from '../../selectors/onboarding/select_show_onboarding';
+import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 
@@ -25,6 +26,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     match: ownProps.match,
     staticContext: ownProps.staticContext,
     locale: selectLocale(store),
+    localeIsSet: selectIsLocaleSet(store),
     showOnboarding: selectShowOnboarding(store),
 });
 

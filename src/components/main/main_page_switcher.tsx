@@ -1,5 +1,6 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-native';
+import { Switch, Route, Redirect } from 'react-router-native';
+import { OnboardingConnectedComponent } from '../onboarding/onboarding_connected_component';
 import { WelcomeConnectedComponent } from '../welcome/welcome_connected_component';
 import { HelpConnectedComponent } from '../help/help_connected_component';
 import { ExploreAllConnectedComponent } from '../explore/explore_all_connected_component';
@@ -11,11 +12,19 @@ import { AboutComponentWithServerVersion } from '../about/about_component_with_s
 import { RecommendedTopicsConnectedComponent } from '../recommended_topics/recommended_topics_connected_component';
 import { BookmarkedTopicsConnectedComponent } from '../bookmarked_topics/bookmarked_topics_connected_component';
 import { DisclaimerComponent } from '../disclaimer/disclaimer_component';
-import { Routes, routePathDefinition } from '../../application/routing';
+import { Routes, routePathDefinition, routePathWithParameter, routePathWithoutParameter } from '../../application/routing';
+import { Locale } from '../../locale';
 
-export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Element => (
+interface Props {
+    readonly locale: Locale;
+    readonly localeIsSet: boolean;
+    readonly showOnboarding: boolean;
+}
+
+export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <Switch>
         <Route exact path={routePathDefinition(Routes.Welcome)} component={WelcomeConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.Onboarding)} component={OnboardingConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Help)} component={HelpConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Questionnaire)} component={QuestionnaireConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Learn)} component={ExploreAllConnectedComponent} />
@@ -26,5 +35,16 @@ export const MainPageSwitcherComponent: React.StatelessComponent = (): JSX.Eleme
         <Route exact path={routePathDefinition(Routes.RecommendedTopics)} component={RecommendedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.BookmarkedTopics)} component={BookmarkedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Disclaimer)} component={DisclaimerComponent} />
+        <Redirect to={defaultPath(props)} />
     </Switch>
 );
+
+const defaultPath = (props: Props): string => {
+    if (!props.localeIsSet) {
+        return routePathWithoutParameter(Routes.Welcome);
+    }
+    if (props.showOnboarding) {
+        return routePathWithParameter(Routes.Onboarding, '0');
+    }
+    return routePathWithoutParameter(Routes.RecommendedTopics);
+};

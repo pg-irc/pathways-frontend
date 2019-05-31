@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let
 import * as locale from '../locale';
 import * as constants from '../../application/constants';
-import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 import { LocaleInfoBuilder, LocaleStoreBuilder } from './helpers/locale_helpers';
 
 const aLocaleCode = aString();
@@ -68,14 +68,20 @@ describe('the loadCurrentLocaleAction for', () => {
 
     describe('success', () => {
 
-        it('should create action with type LOAD_CURRENT_LOCALE_REQUEST', () => {
-            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aLocaleCode);
+        it('should create action with type LOAD_CURRENT_LOCALE_SUCCESS', () => {
+            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aLocaleCode, aBoolean());
             expect(theLoadCurrentLocaleAction.type).toBe(constants.LOAD_CURRENT_LOCALE_SUCCESS);
         });
 
         it('should create action with payload containing the locale', () => {
-            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aLocaleCode);
+            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aLocaleCode, aBoolean());
             expect(theLoadCurrentLocaleAction.payload.localeCode).toBe(aLocaleCode);
+        });
+
+        it('should create action with isSet set to passed in value', () => {
+            const isSet = aBoolean();
+            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aLocaleCode, isSet);
+            expect(theLoadCurrentLocaleAction.payload.isSet).toBe(isSet);
         });
 
     });
@@ -161,7 +167,7 @@ describe('the reducer', () => {
         const theStore = new LocaleStoreBuilder().withLoading(true).build();
         const theAction = {
             type: constants.LOAD_CURRENT_LOCALE_SUCCESS as typeof constants.LOAD_CURRENT_LOCALE_SUCCESS,
-            payload: { localeCode: aLocaleCode },
+            payload: { localeCode: aLocaleCode, isSet: aBoolean() },
         };
         const theNewStore = locale.reducer(theStore, theAction);
         expect(theNewStore.code).toBe(theAction.payload.localeCode);
@@ -182,7 +188,7 @@ describe('the reducer', () => {
     describe('should never change', () => {
         let allLocaleActions: ReadonlyArray<locale.ReducerActions> = [
             { type: constants.LOAD_CURRENT_LOCALE_REQUEST },
-            { type: constants.LOAD_CURRENT_LOCALE_SUCCESS, payload: { localeCode: aString() } },
+            { type: constants.LOAD_CURRENT_LOCALE_SUCCESS, payload: { localeCode: aString(), isSet: aBoolean() } },
             { type: constants.LOAD_CURRENT_LOCALE_FAILURE, payload: { message: aString() } },
             { type: constants.SET_LOCALE_REQUEST, payload: { localeCode: aString() } },
             { type: constants.SET_LOCALE_SUCCESS, payload: { localeCode: aString() } },

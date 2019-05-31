@@ -11,7 +11,6 @@ import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { Locale } from '../../locale';
 import { HardwareBackButtonHandlerComponent } from './hardware_back_button_handler_component';
-import { OnboardingConnectedComponent } from '../onboarding/onboarding_connected_component';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -21,6 +20,7 @@ export interface MainComponentActions {
 
 interface MainProps {
     readonly locale: Locale;
+    readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;
 }
 
@@ -48,13 +48,7 @@ export class MainComponent extends React.Component<Props, State> {
         );
     }
 
-    renderOnboarding(): JSX.Element {
-        return (
-            <OnboardingConnectedComponent history={this.props.history}/>
-        );
-    }
-
-    renderMainApp(): JSX.Element {
+    render(): JSX.Element {
         return (
             <Drawer
                 side='right'
@@ -73,17 +67,13 @@ export class MainComponent extends React.Component<Props, State> {
                         location={this.props.location}
                         onHeaderMenuButtonPress={this.openDrawer}
                     />
-                    <MainPageSwitcherComponent />
+                    <MainPageSwitcherComponent {...this.props} />
                     <FooterComponent {...this.props} />
                     <NotificationsConnectedComponent {...this.props} />
                     <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={this.onHardwareBackButtonPress} />
                 </Container>
             </Drawer>
         );
-    }
-
-    render(): JSX.Element {
-        return this.props.showOnboarding ? this.renderOnboarding() : this.renderMainApp();
     }
 
     closeDrawer(): void {

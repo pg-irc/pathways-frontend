@@ -1,14 +1,18 @@
 // tslint:disable:no-expression-statement
 import {
     Routes, routePathDefinition, routePathWithoutParameter,
-    isOnParentScreen, isOnChildScreen, routePathWithParameter
+    isOnParentScreen, isOnChildScreen, routePathWithParameter,
 } from '../routing';
 import { aString } from './helpers/random_test_values';
 
 describe('the routePathDefinition function', () => {
 
-    it('For Routes.Welcome returns path: "/"', () => {
-        expect(routePathDefinition(Routes.Welcome)).toEqual('/');
+    it('For Routes.Welcome returns path: "/welcome"', () => {
+        expect(routePathDefinition(Routes.Welcome)).toEqual('/welcome');
+    });
+
+    it('For Routes.Onboarding returns path: "/onboarding/:page"', () => {
+        expect(routePathDefinition(Routes.Onboarding)).toEqual('/onboarding/:page');
     });
 
     it('For Routes.Questionnaire returns path: "/questionnaire"', () => {

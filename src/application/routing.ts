@@ -3,16 +3,22 @@ import { RouteComponentProps } from 'react-router-native';
 import { History, Location } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
+export type PageId = string;
 
-interface MatchParameters {
+// The property names of this structure are defined by the corresponding
+// route definitions, e.g. parsing a url '/onboarding/1' which matches
+// '/onboarding/:page' will put '1' in the attribute `page`.
+export interface MatchParameters {
     readonly learnId?: LearnId;
     readonly topicId?: TopicId;
+    readonly page?: PageId;
 }
 
 export type RouterProps = RouteComponentProps<MatchParameters>;
 
 export enum Routes {
     Welcome,
+    Onboarding,
     Questionnaire,
     Learn,
     LearnDetail,
@@ -28,8 +34,11 @@ export enum Routes {
 export const routePathDefinition = (route: Routes): string => {
     switch (route) {
         default:
+            throw new Error('Invalid route spec');
         case Routes.Welcome:
-            return '/';
+            return '/welcome';
+        case Routes.Onboarding:
+            return '/onboarding/:page';
         case Routes.Help:
             return '/help';
         case Routes.Questionnaire:

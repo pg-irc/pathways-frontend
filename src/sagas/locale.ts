@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect} from 'redux-saga/effects';
+import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect } from 'redux-saga/effects';
 
 import * as constants from '../application/constants';
 import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode, reload } from '../locale';
@@ -32,9 +32,18 @@ export type LoadCurrentLocaleActions = LoadCurrentLocale.Request | LoadCurrentLo
 
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadCurrentLocaleActions>> {
     try {
-        const code = yield call(loadCurrentLocaleCode);
-        const locale = code !== null ? LocaleInfoManager.get(code) : LocaleInfoManager.getFallback();
-        yield put(loadCurrentLocaleActions.success(locale.code));
+        const retrievedCode = yield call(loadCurrentLocaleCode);
+
+        if (retrievedCode === null) {
+            const fallbackLocale = LocaleInfoManager.getFallback();
+            yield call(saveCurrentLocaleCode, fallbackLocale.code);
+            const isSet = false;
+            yield put(loadCurrentLocaleActions.success(fallbackLocale.code, isSet));
+        } else {
+            const locale = LocaleInfoManager.get(retrievedCode);
+            const isSet = true;
+            yield put(loadCurrentLocaleActions.success(locale.code, isSet));
+        }
     } catch (e) {
         console.error(`Failed to load current locale (${e.message})`);
         yield put(loadCurrentLocaleActions.failure(e.message));

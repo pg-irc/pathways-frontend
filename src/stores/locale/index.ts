@@ -16,6 +16,7 @@ export interface LocaleStore {
     readonly code: string;
     readonly fallback: string;
     readonly loading: boolean;
+    readonly isSet: boolean;
     readonly errorMessage: string;
 }
 
@@ -24,6 +25,7 @@ export const buildDefaultStore = (): LocaleStore => ({
     code: undefined,
     fallback: undefined,
     loading: false,
+    isSet: false,
     errorMessage: '',
 });
 
@@ -38,19 +40,15 @@ export const reducer = (store: LocaleStore = buildDefaultStore(), action?: Reduc
         case constants.LOAD_CURRENT_LOCALE_REQUEST:
             return { ...store, errorMessage: '', loading: true };
         case constants.LOAD_CURRENT_LOCALE_SUCCESS:
-            return { ...store, errorMessage: '', loading: false, code: action.payload.localeCode };
-        case constants.LOAD_CURRENT_LOCALE_FAILURE: {
-            const payload = action.payload;
-            return { ...store, errorMessage: payload.message, loading: false };
-        }
+            return { ...store, errorMessage: '', loading: false, isSet: action.payload.isSet, code: action.payload.localeCode };
+        case constants.LOAD_CURRENT_LOCALE_FAILURE:
+            return { ...store, errorMessage: action.payload.message, loading: false };
         case constants.SET_LOCALE_REQUEST:
             return { ...store, errorMessage: '', loading: true };
         case constants.SET_LOCALE_SUCCESS:
             return { ...store, errorMessage: '', loading: false, code: action.payload.localeCode };
-        case constants.SET_LOCALE_FAILURE: {
-            const payload = action.payload;
-            return { ...store, errorMessage: payload.message, loading: false };
-        }
+        case constants.SET_LOCALE_FAILURE:
+            return { ...store, errorMessage: action.payload.message, loading: false };
         default:
             return store;
     }

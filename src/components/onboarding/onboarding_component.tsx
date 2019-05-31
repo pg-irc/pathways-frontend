@@ -8,7 +8,7 @@ import { Trans } from '@lingui/react';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { SetOnboardingAction } from '../../stores/onboarding/actions';
 import { History } from 'history';
-import { goToRouteWithoutParameter, Routes } from '../../application/routing';
+import { Routes, goToRouteWithoutParameter, goToRouteWithParameter, MatchParameters } from '../../application/routing';
 
 export interface OnBoardingPageProps {
     readonly key: string;
@@ -19,6 +19,7 @@ export interface OnBoardingPageProps {
 
 export interface OnboardingComponentProps {
     readonly history: History;
+    readonly routeParameter: MatchParameters;
 }
 
 export interface OnboardingAction {
@@ -50,15 +51,10 @@ const pages: ReadonlyArray<OnBoardingPageProps> = [
 const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 1.5;
 
 type Props = OnboardingAction & OnboardingComponentProps;
-interface State {
-    readonly pageIndex: number;
-}
-export class OnboardingComponent extends React.Component<Props, State> {
+
+export class OnboardingComponent extends React.Component<Props> {
     constructor(props: Props) {
         super(props);
-        this.state = {
-            pageIndex: 0,
-        };
     }
 
     render(): JSX.Element {
@@ -67,20 +63,29 @@ export class OnboardingComponent extends React.Component<Props, State> {
                 flex: 1,
                 flexDirection: 'column',
             }}>
-                {this.renderPage(this.state.pageIndex)}
+                {this.renderPage()}
                 {this.renderPersonalizationButtons()}
                 {this.renderNavigationButtons()}
             </View>
         );
     }
 
-    renderPage(pageIndex: number): JSX.Element {
-        const activePage = pages[pageIndex] ;
-        return <OnBoardingPage {...activePage} />;
+    renderPage(): JSX.Element {
+        const pageIndex = this.pageIndex();
+        return <OnBoardingPage {...pages[pageIndex]} />;
+    }
+
+    pageIndex(): number {
+        const indexAsString = this.props.routeParameter.page;
+        const index = parseInt(indexAsString, 10);
+        if (index >= 0 && index < pages.length) {
+            return index;
+        }
+        throw new Error(`${indexAsString}: Invalid onboarding page index, number expected`);
     }
 
     renderPersonalizationButtons(): JSX.Element {
-        const isLastPage = this.state.pageIndex === pages.length - 1;
+        const isLastPage = this.pageIndex() === pages.length - 1;
         const personalizationButtons = <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             {this.renderStartPersonalizationButton()}
             {this.renderSkipPersonalizationButton()}
@@ -100,7 +105,7 @@ export class OnboardingComponent extends React.Component<Props, State> {
             <Button
                 full
                 style={[applicationStyles.tealButton, { paddingHorizontal: 30, paddingVertical: 30, marginBottom: 30 }]}
-                onPress={() => this.onPersonalizationButtonPress()}
+                onPress={this.onPersonalizationButtonPress}
             >
                 <Text style={textStyles.button}>
                     <Trans>Start personalization</Trans>
@@ -111,59 +116,66 @@ export class OnboardingComponent extends React.Component<Props, State> {
 
     onPersonalizationButtonPress(): void {
         this.props.setOnboarding();
-        goToRouteWithoutParameter(Routes.Questionnaire, this.props.history);
+        const goToQuestionnaire = goToRouteWithoutParameter(Routes.Questionnaire, this.props.history);
+        goToQuestionnaire();
     }
 
     renderSkipPersonalizationButton(): JSX.Element {
         return (
             <Button
-            style={{ backgroundColor: 'transparent', paddingHorizontal: 35 }}
-            onPress={() => this.onSkipPersonalizationButtonPress()}
-        >
-            <Text style={{
-                color: colors.sunshine,
-                fontSize: 16, fontFamily: 'AvenirBlack',
-            }}>
-                <Trans>Skip personalization</Trans>
-            </Text>
-        </Button>
+                style={{ backgroundColor: 'transparent', paddingHorizontal: 35 }}
+                onPress={(): void => this.onSkipPersonalizationButtonPress()}
+            >
+                <Text style={{
+                    color: colors.sunshine,
+                    fontSize: 16, fontFamily: 'AvenirBlack',
+                }}>
+                    <Trans>Skip personalization</Trans>
+                </Text>
+            </Button>
         );
     }
 
     onSkipPersonalizationButtonPress(): void {
         this.props.setOnboarding();
-        goToRouteWithoutParameter(Routes.Welcome, this.props.history);
+        const goToRecommendedTopics = goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history);
+        goToRecommendedTopics();
     }
 
     renderNavigationButtons(): JSX.Element {
-        const hasNextPage = this.state.pageIndex < pages.length - 1;
-        const hasPrevPage = this.state.pageIndex > 0;
-        const backButton = <Button style={{backgroundColor: 'transparent', alignSelf: 'flex-start'}} onPress={() => this.onBackButtonPress()}>
-                                 <Trans><Text style={{ color: colors.teal }}>Back</Text></Trans>
-                            </Button>;
-        const nextButton = <Button style={{backgroundColor: 'transparent', alignSelf: 'flex-end'}} onPress={() => this.onNextButtonPress()}>
-                                <Trans><Text style={{ color: colors.teal }}>Next</Text></Trans>
-                            </Button>;
-        return (<View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            margin: 10,
-        }}>
-
-            {hasPrevPage ? backButton : <View/>}
-            {hasNextPage ? nextButton : <View/>}
+        const pageIndex = this.pageIndex();
+        const hasNextPage = pageIndex < pages.length - 1;
+        const hasPrevPage = pageIndex > 0;
+        const backButton = this.backButton();
+        const nextButton = this.nextButton();
+        return (<View style={{ flexDirection: 'row', justifyContent: 'space-between', margin: 10 }}>
+            {hasPrevPage ? backButton : <View />}
+            {hasNextPage ? nextButton : <View />}
         </View>
         );
     }
 
-    onNextButtonPress(): void {
-        const page = this.state.pageIndex;
-        this.setState({pageIndex: page + 1});
+    backButton(): JSX.Element {
+        const prevousIndex = this.pageIndex() - 1;
+        return <Button
+            style={{ backgroundColor: 'transparent', alignSelf: 'flex-start' }}
+            onPress={this.goToPageWithIndex(prevousIndex)}>
+            <Trans><Text style={{ color: colors.teal }}>Back</Text></Trans>
+        </Button>;
     }
 
-    onBackButtonPress(): void {
-        const page = this.state.pageIndex;
-        this.setState({pageIndex: page - 1 });
+    nextButton(): JSX.Element {
+        const nextIndex = this.pageIndex() + 1;
+        return <Button
+            style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }}
+            onPress={this.goToPageWithIndex(nextIndex)}>
+            <Trans><Text style={{ color: colors.teal }}>Next</Text></Trans>
+        </Button>;
+    }
+
+    goToPageWithIndex(nextPage: number): () => void {
+        const nextPageAsString = '' + nextPage;
+        return goToRouteWithParameter(Routes.Onboarding, nextPageAsString, this.props.history);
     }
 }
 
