@@ -105,7 +105,7 @@ export class OnboardingComponent extends React.Component<Props> {
             <Button
                 full
                 style={[applicationStyles.tealButton, { paddingHorizontal: 30, paddingVertical: 30, marginBottom: 30 }]}
-                onPress={this.onPersonalizationButtonPress}
+                onPress={(): void => this.onPersonalizationButtonPress()}
             >
                 <Text style={textStyles.button}>
                     <Trans>Start personalization</Trans>
