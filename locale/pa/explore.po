@@ -1,0 +1,75 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-04 22:34+0000\n"
+"PO-Revision-Date: 2019-06-04 22:34+0000\n"
+"Last-Translator: UserName LastName <tomy@peacegeeks.org>\n"
+"Language-Team: Punjabi <https://35.182.138.61/projects/ui-strings/explore/pa/"
+">\n"
+"Language: pa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.5.1\n"
+
+msgid "Things to do right away"
+msgstr "ਹੁਣੇ ਕਰਨ ਵਾਲੇ ਕੰਮ"
+
+msgid "Settling in"
+msgstr "ਸੈਟਲ ਹੋਣਾ"
+
+msgid "Education"
+msgstr "ਸਿੱਖਿਆ"
+
+msgid "Health care"
+msgstr "ਸਿਹਤ ਦੇਖਭਾਲ"
+
+msgid "Money & banking"
+msgstr "ਧਨ ਤੇ ਬੈਂਕਿੰਗ"
+
+msgid "Housing"
+msgstr "ਘਰ"
+
+msgid "Employment"
+msgstr "ਰੁਜ਼ਗਾਰ"
+
+msgid "Legal system & immigration"
+msgstr "ਕਾਨੂੰਨੀ ਸਿਸਟਮ ਅਤੇ ਇਮੀਗਰੇਸ਼ਨ"
+
+msgid "Driving"
+msgstr "ਡਰਾਇਵ ਕਰਨਾ"
+
+msgid "Help for individuals & families"
+msgstr "ਨਿੱਜੀ ਤੇ ਪਰਿਵਰਾਂ ਲਈ ਮਦਦ"
+
+msgid "Important tasks for settling in your community"
+msgstr "ਤੁਹਾਡੀ ਕਮਿਊਨਟੀ ਵਿੱਚ ਸੈਟਲ ਹੋਣ ਲਈ ਖਾਸ ਕੰਮ"
+
+msgid "Social customs and getting around your community"
+msgstr "ਸਮਾਜਕ ਰੀਤੀ-ਰਿਵਾਜ ਅਤੇ ਤੁਹਾਡੇ ਭਾਈਚਾਰੇ ਦੁਆਲੇ ਮਿਲਣਾ"
+
+msgid "Learning English, schools for children, youth and adults"
+msgstr "ਅੰਗਰੇਜੀ ਸਿੱਖਣਾ, ਬੱਚਿਆਂ, ਨੌਜਵਾਨਾਂ ਅਤੇ ਬਾਲਗਾਂ ਲਈ ਸਕੂਲ"
+
+msgid "Medical insurance, finding a doctor, mental health"
+msgstr "ਮੈਡੀਕਲ ਇੰਸ਼ੋਅਰੈਂਸ, ਡਾਕਟਰ ਲੱਭਣਾ, ਦਿਮਾਗੀ ਸਿਹਤ"
+
+msgid "Opening a bank account, filing taxes"
+msgstr "ਬੈਂਕ ਖਾਤਾ ਖੋਲ੍ਹਣਾ, ਟੈਕਸਾਂ ਦੀ ਅਦਾਇਗੀ"
+
+msgid "Finding a place to rent or buy, getting rental assistance"
+msgstr "ਕਿਰਾਏ ਉੱਤੇ ਥਾਂ ਲੱਭਣਾ ਜਾਂ ਖਰੀਦਣਾ, ਕਿਰਾਏ ਦੇ ਮਕਾਨ ਲਈ ਸਹਾਇਤਾ"
+
+msgid "Finding a job, working and workers’ rights"
+msgstr "ਨੌਕਰੀ ਲੱਭਣੀ, ਕੰਮ ਕਰਨਾ ਅਤੇ ਵਰਕਰਜ਼ ਦੇ ਹੱਕ"
+
+msgid "Immigration and citizenship, legal support, police"
+msgstr "ਇੰਮੀਗਰੇਸ਼ਨ ਅਤੇ ਸਿਟੀਜ਼ਨਸ਼ਿਪ, ਬਾਲ, ਨੌਜਵਾਨ ਤੇ ਬਾਲਗ"
+
+msgid "Getting a driver's licence, traffic laws, basic insurance"
+msgstr "ਡਰਾਇਵਰ ਲਾਇਸੈਂਸ, ਟਰੈਫਿਕ ਕਨੂੰਨ, ਮੁੱਢਲਾ ਇੰਸ਼ੋਰੈਂਸ"
+
+msgid "For example low-income, disabilities, youth"
+msgstr "ਜਿਵੇਂ ਘੱਟ-ਆਮਦਨ, ਅਪੰਗਤਾ, ਨੌਜਵਾਨ"
