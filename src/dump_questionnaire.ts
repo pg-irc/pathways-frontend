@@ -39,13 +39,13 @@ export const dumpQuestionnaireSummary = (): void => {
 };
 
 const logQuestion = (question: Question): void => {
-    const text = question.text['en'];
+    const text = question.text;
 
     console.log(`\n\n${text}`);
 };
 
 const logAnswer = (answer: Answer): void => {
-    const text = answer.text['en'];
+    const text = answer.text;
     const joinedTerms = getJoinedTaxonomyTerms(answer);
 
     console.log(`\t${text}\t${joinedTerms}`);
