@@ -1,0 +1,206 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-04 21:19+0000\n"
+"PO-Revision-Date: 2019-06-04 21:21+0000\n"
+"Last-Translator: UserName LastName <tomy@peacegeeks.org>\n"
+"Language-Team: Arabic <https://35.182.138.61/projects/ui-strings/"
+"questionnaire/en/>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 3.5.1\n"
+
+msgid "How long have you been living in Canada?"
+msgstr ""
+
+msgid "More than 1 year"
+msgstr ""
+
+msgid "Less than 1 year"
+msgstr ""
+
+msgid "I am planning to move to Canada"
+msgstr ""
+
+msgid "Do you have any of the following important Canadian documents?"
+msgstr ""
+
+msgid "I have a Social Insurance Number"
+msgstr ""
+
+msgid "I have a Canadian bank account"
+msgstr ""
+
+msgid "I have a Permanent Resident Card"
+msgstr ""
+
+msgid "I have registered for MSP (Medical Services Plan)"
+msgstr ""
+
+msgid "I have a BC Services Card (health card)"
+msgstr ""
+
+msgid "I have a BC Driver's Licence"
+msgstr ""
+
+msgid "Are you arriving with children under 18 years? If yes, how old?"
+msgstr ""
+
+msgid "Under 5 years old"
+msgstr ""
+
+msgid "5-12 years old"
+msgstr ""
+
+msgid "13-18 years old"
+msgstr ""
+
+msgid "Pregnant (the child is not yet born)"
+msgstr ""
+
+msgid "No children"
+msgstr ""
+
+msgid "What is your current housing situation?"
+msgstr ""
+
+msgid "I want to rent a place to live"
+msgstr ""
+
+msgid "I want to buy a home"
+msgstr ""
+
+msgid "I am already renting a home"
+msgstr ""
+
+msgid "I already own a home"
+msgstr ""
+
+msgid "What is your current level of English?"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "Beginner (Canadian Language Benchmarks 1-4)"
+msgstr ""
+
+msgid "Intermediate (Canadian Language Benchmarks 5-8)"
+msgstr ""
+
+msgid "Fluent (Canadian Language Benchmarks 9-12)"
+msgstr ""
+
+msgid "What is your status in Canada?"
+msgstr ""
+
+msgid "Permanent resident"
+msgstr ""
+
+msgid "Permanent Resident - Refugee Class or Protected Person"
+msgstr ""
+
+msgid "Refugee claimant"
+msgstr ""
+
+msgid "Temporary Foreign Worker"
+msgstr ""
+
+msgid "Student visa"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "What is your current work situation?"
+msgstr ""
+
+msgid "I am looking for work"
+msgstr ""
+
+msgid "I want to learn about my rights at work"
+msgstr ""
+
+msgid "I have my own business or want to start my own business"
+msgstr ""
+
+msgid "What kinds of health care are you looking for?"
+msgstr ""
+
+msgid "General health care and learning about health care costs"
+msgstr ""
+
+msgid "I need urgent medical attention (for emergencies, call 9-1-1)"
+msgstr ""
+
+msgid "Prescription medication"
+msgstr ""
+
+msgid "Mental health support"
+msgstr ""
+
+msgid "Eye doctors"
+msgstr ""
+
+msgid "Dentists"
+msgstr ""
+
+msgid "Support for disabilities"
+msgstr ""
+
+msgid "Do you need financial assistance or low-income support?"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "I have low income support"
+msgstr ""
+
+msgid "Anything else you're interested in? Select all that apply"
+msgstr ""
+
+msgid "Adult education and training"
+msgstr ""
+
+msgid "Becoming a Canadian citizen"
+msgstr ""
+
+msgid "Legal help"
+msgstr ""
+
+msgid "Banking and financial management"
+msgstr ""
+
+msgid "Taxes"
+msgstr ""
+
+msgid "LGBTQ2 services"
+msgstr ""
+
+msgid "Francophone services"
+msgstr ""
+
+msgid "Support for seniors (age 65+)"
+msgstr ""
+
+msgid "Driving in BC"
+msgstr ""
+
+msgid "Public transportation"
+msgstr ""
+
+msgid "Help with abuse and violence"
+msgstr ""
+
+msgid "Community services and organizations"
+msgstr ""
+
