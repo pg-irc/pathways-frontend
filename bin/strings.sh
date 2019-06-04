@@ -131,6 +131,15 @@ clean() {
     rm -f locale/*/*.backup
 }
 
+combine_po_files() {
+    for locale in "${locales[@]}"
+    do
+        echo "Combining PO files for ${locale}..."
+        msgcat locale/$locale/messages.po locale/$locale/questionnaire.po > locale/$locale/messages.po
+        checkForSuccess "combine po files"
+    done
+}
+
 
 help() {
     echo "$0 --extract-all        Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
@@ -139,6 +148,7 @@ help() {
     echo "$0 --build-changed      Import just the changed strings from CSV files and build the app"
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
     echo "$0 --clean              Remove temporary files"
+    echo "$0 --combine-pos        Combine PO Files"  
     echo
 
     for locale in "${locales[@]}"
@@ -166,6 +176,13 @@ elif [ "$1" == "--normalize" ]; then
 elif [ "$1" == "--clean" ]; then
     clean
 
+elif [ "$1" == "--combine-pos" ]; then
+    combine_po_files
+
 else
     help
 fi
+
+
+
+
