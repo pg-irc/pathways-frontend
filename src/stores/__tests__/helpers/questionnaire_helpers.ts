@@ -2,8 +2,6 @@
 
 import * as store from '../../questionnaire';
 import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
-import { LocalizedText } from '../../../locale';
-import { LocalizedTextBuilder } from './locale_helpers';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 import { ValidQuestionnaireStore, LoadingQuestionnaireStore } from '../../questionnaire/stores';
 
@@ -94,13 +92,9 @@ export class QuestionBuilder {
     build(): store.Question {
         return {
             id: this.id,
-            text: this.createLocalizedText(this.text),
+            text: this.text,
             acceptMultipleAnswers: this.acceptMultipleAnswers,
         };
-    }
-
-    private createLocalizedText(text: string): LocalizedText {
-        return new LocalizedTextBuilder().addLocalizedText(this.localeCode, text).build();
     }
 }
 
@@ -152,14 +146,10 @@ export class AnswerBuilder {
         return {
             id: this.id,
             questionId: this.questionId,
-            text: this.createLocalizedText(this.text),
+            text: this.text,
             isChosen: this.isChosen,
             isInverted: this.isInverted,
             taxonomyTerms: this.taxonomyTerms,
         };
-    }
-
-    private createLocalizedText(text: string): LocalizedText {
-        return new LocalizedTextBuilder().addLocalizedText(this.localeCode, text).build();
     }
 }

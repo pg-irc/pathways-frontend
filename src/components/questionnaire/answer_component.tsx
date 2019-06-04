@@ -5,6 +5,7 @@ import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { Id } from '../../stores/questionnaire';
 import { colors, values, textStyles } from '../../application/styles';
 import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
+import { Trans } from '@lingui/react';
 
 export interface AnswerProps {
     readonly answer: SelectorAnswer;
@@ -31,7 +32,7 @@ export const AnswerComponent: React.StatelessComponent<Props> = (props: Props): 
             }}
         >
             <Text style={props.answer.isChosen ? textStyles.headlineH3StyleWhiteCenter : textStyles.headlineH3StyleBlackCenter}>
-                {props.answer.text}
+            <Trans id={props.answer.text} />
             </Text>
         </TouchableOpacity>
     );
