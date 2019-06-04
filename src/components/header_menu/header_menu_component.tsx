@@ -48,7 +48,7 @@ type SelectedLocaleListItemInfo = {
 };
 
 const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element => (
-    <Text style={[textStyles.headlineH5StyleBlackLeft, { marginVertical: 10 } ]}>
+    <Text style={[textStyles.headlineH5StyleBlackLeft, { marginVertical: 10 }]}>
         {props.title}
     </Text>
 );
@@ -94,7 +94,7 @@ const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Elemen
                 type='FontAwesome'
                 style={{ fontSize: values.mediumIconSize, marginRight: 7, color: colors.teal }}
             />
-            <Text style={[ textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{section.label}</Text>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{section.label}</Text>
         </View>
     );
 };
@@ -110,19 +110,24 @@ const AboutListItems = (props: Props): JSX.Element => {
     return (
         <View>
             <AboutItem
-                icon={<AboutIcon name='mobile' fontSize={35} marginRight={10}/>}
+                icon={<AboutIcon name='mobile' fontSize={35} marginRight={10} />}
                 text={<Trans>About Arrival Advisor</Trans>}
                 onPress={buildOnPressForRoute(props, Routes.About)}
             />
             <AboutItem
-                icon={<AboutIcon name='file' fontSize={20} marginRight={7}/>}
+                icon={<AboutIcon name='file' fontSize={20} marginRight={7} />}
                 text={<Trans>Disclaimer</Trans>}
                 onPress={buildOnPressForRoute(props, Routes.Disclaimer)}
             />
             <AboutItem
-                icon={<AboutIcon name='lock' fontSize={30} marginRight={5}/>}
+                icon={<AboutIcon name='lock' fontSize={30} marginRight={5} />}
                 text={<Trans>Privacy policy</Trans>}
                 onPress={buildOnPressForURL('https://peacegeeks.org/privacy')}
+            />
+            <AboutItem
+                icon={<AboutIcon name='file' fontSize={20} marginRight={7} />}
+                text={<Trans>Terms and conditions</Trans>}
+                onPress={buildOnPressForURL('https://arrivaladvisor.ca/terms-conditions/')}
             />
         </View>
     );
