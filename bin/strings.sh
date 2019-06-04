@@ -135,7 +135,7 @@ combine_po_files() {
     for locale in "${locales[@]}"
     do
         echo "Combining PO files for ${locale}..."
-        msgcat locale/$locale/messages.po locale/$locale/questionnaire.po > locale/$locale/messages.po
+       msgcat locale/$locale/ui_strings.po locale/$locale/questionnaire.po > locale/$locale/messages.po
         checkForSuccess "combine po files"
     done
 }
