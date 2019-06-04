@@ -1,0 +1,60 @@
+msgid "Things to do right away"
+msgstr ""
+
+msgid "Settling in"
+msgstr ""
+
+msgid "Education"
+msgstr ""
+
+msgid "Health care"
+msgstr ""
+
+msgid "Money & banking"
+msgstr ""
+
+msgid "Housing"
+msgstr ""
+
+msgid "Employment"
+msgstr ""
+
+msgid "Legal system & immigration"
+msgstr ""
+
+msgid "Driving"
+msgstr ""
+
+msgid "Help for individuals & families"
+msgstr ""
+
+msgid "Important tasks for settling in your community"
+msgstr ""
+
+msgid "Social customs and getting around your community"
+msgstr ""
+
+msgid "Learning English, schools for children, youth and adults"
+msgstr ""
+
+msgid "Medical insurance, finding a doctor, mental health"
+msgstr ""
+
+msgid "Opening a bank account, filing taxes"
+msgstr ""
+
+msgid "Finding a place to rent or buy, getting rental assistance"
+msgstr ""
+
+msgid "Finding a job, working and workers’ rights"
+msgstr ""
+
+msgid "Immigration and citizenship, legal support, police"
+msgstr ""
+
+msgid "Getting a driver's licence, traffic laws, basic insurance"
+msgstr ""
+
+msgid "For example low-income, disabilities, youth"
+msgstr ""
+
