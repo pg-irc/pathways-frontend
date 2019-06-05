@@ -33,7 +33,7 @@ const renderName = (name: string, organizationName: string): JSX.Element => (
 );
 
 const renderDescription = (description: string): JSX.Element => (
-    <ExpandableContentComponent content={<Text style={textStyles.paragraphStyle}>{description}</Text>} />
+    <ExpandableContentComponent forceEnglish={true} content={<Text style={textStyles.paragraphStyle}>{description}</Text>} />
 );
 
 const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));
