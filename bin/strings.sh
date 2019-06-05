@@ -1,6 +1,8 @@
 #!/bin/bash
 
 locales=(ar fr ko pa tl zh_CN zh_TW)
+CLIENT_LOCALE_LOCATION="`pwd`/locale"
+WORKING_DIRECTORY=$2
 
 checkForSuccess () {
     if [ "$?" != "0" ]
@@ -9,6 +11,7 @@ checkForSuccess () {
         exit
     fi
 }
+
 
 extract_all() {
     echo "Building the client ..."
@@ -129,9 +132,61 @@ clean() {
     rm -f locale/*/new-messages.*
     rm -f locale/*/merged-messages.po
     rm -f locale/*/*.backup
+    rm -f locale/*/questionnaire.po
+    rm -f locale/*/explore.po
 }
 
+
+remove_messages_po() {
+    rm -f locale/*/messages.po
+}
+
+
+createWorkingDirectory() {
+    echo "Creating ${WORKING_DIRECTORY}"
+    mkdir "$WORKING_DIRECTORY"
+    checkForSuccess "create working directory for Weblate PO files"
+}
+
+
+cloneWeblateRepository() {
+    echo
+    echo "Cloning Weblate repository"
+    echo  
+
+    (cd "$WORKING_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
+    checkForSuccess "clone Weblate repository"
+}
+
+
+addExplorePOFilesToClientLocaleDir() {
+    echo 
+    echo "adding explore po files to locale"
+
+    for locale in "${locales[@]}"
+    do
+        echo "Moving explore.po file for ${locale}..."
+        (cd "$WORKING_DIRECTORY/ui-strings/explore/locale" && mv $locale/LC_MESSAGES/explore.po $CLIENT_LOCALE_LOCATION/$locale)
+        checkForSuccess "move explore.po files to client locale directories"
+    done
+}
+
+
+addQuestionnairePOFilesToClientLocaleDir() {
+    echo 
+    echo "Adding questionnaire po files to locale"
+
+    for locale in "${locales[@]}"
+    do
+        echo "Moving questionnaire.po file for ${locale}..."
+        (cd "$WORKING_DIRECTORY/ui-strings/questionnaire/locale" && mv $locale/LC_MESSAGES/questionnaire.po $CLIENT_LOCALE_LOCATION/$locale)
+        checkForSuccess "move questionnaire.po files to client locale directories"
+    done
+}
+
+
 combine_po_files() {
+    echo 
     for locale in "${locales[@]}"
     do
         echo "Combining PO files for ${locale}..."
@@ -149,6 +204,7 @@ help() {
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
     echo "$0 --clean              Remove temporary files"
     echo "$0 --combine-pos        Combine PO Files"  
+    echo "$0 --remove-messages    Remove messages PO files" 
     echo
 
     for locale in "${locales[@]}"
@@ -176,7 +232,11 @@ elif [ "$1" == "--normalize" ]; then
 elif [ "$1" == "--clean" ]; then
     clean
 
-elif [ "$1" == "--combine-pos" ]; then
+elif [ "$1" == "--combine-pos" ]; then 
+    createWorkingDirectory
+    cloneWeblateRepository
+    addExplorePOFilesToClientLocaleDir
+    addQuestionnairePOFilesToClientLocaleDir
     combine_po_files
 
 else
@@ -186,3 +246,4 @@ fi
 
 
 
+   
