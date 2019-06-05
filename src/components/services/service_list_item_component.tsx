@@ -7,7 +7,6 @@ import { Text } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
-import { Trans } from '@lingui/react';
 import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_application_popup_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { Link } from '../link/link';
@@ -43,7 +42,7 @@ const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
     mapWithIndex((address: Address, index: number) =>
         <View key={index}>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address:</Trans></Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}>Address:</Text>
             <Text style={textStyles.paragraphStyle}>{address.address}</Text>
             <Text style={textStyles.paragraphStyle}>
                 {address.city} {address.stateProvince} {address.postalCode ? address.postalCode : ''}
@@ -69,7 +68,7 @@ const renderWebsite = (website: string): JSX.Element => {
     }
     return (
         <Text>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans> </Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}>Web: </Text>
             <Link href={website} style={textStyles.paragraphStyle} >{website}</Link>
         </Text>
     );
@@ -81,7 +80,7 @@ const renderEmail = (email: string): JSX.Element => {
     }
     return (
         <Text>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}>Email: </Text>
             <Link href={'mailto:' + email} style={textStyles.paragraphStyle} >{email}</Link>
         </Text>
     );
