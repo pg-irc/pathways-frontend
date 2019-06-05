@@ -1,7 +1,6 @@
 // tslint:disable:no-class no-this no-expression-statement
 import React from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
-import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import { Service } from '../../stores/services';
 import {
@@ -105,7 +104,7 @@ const ServiceListHeaderComponent = (props: Props): JSX.Element => (
             }}
         />
         <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.white }]}>
-            <Trans>FIND A SERVICE NEAR YOU</Trans>
+            FIND A SERVICE NEAR YOU
         </Text>
         <Text style={textStyles.headlineH2StyleWhiteLeft}>
             {props.topic.title}
@@ -114,5 +113,5 @@ const ServiceListHeaderComponent = (props: Props): JSX.Element => (
 );
 
 function ServiceListEmpty(): JSX.Element {
-    return <EmptyListComponent message={<Trans>No related services found</Trans>} />;
+    return <EmptyListComponent message={<Text>No related services found</Text>} />;
 }
