@@ -18,6 +18,7 @@ import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { ServiceListErrorComponent } from './service_list_error_component';
 import { isErrorSelectorTaskServices } from '../../selectors/services/is_error_selector_task_services';
 import * as constants from '../../application/constants';
+import { alwaysLeftTextAlign } from './always_left_text_align';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -103,13 +104,13 @@ const ServiceListHeaderComponent = (props: Props): JSX.Element => (
                 fontSize: values.smallIconSize,
             }}
         />
-        <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.white }]}>
+        <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.white }, alwaysLeftTextAlign()]}>
             FIND A SERVICE NEAR YOU
         </Text>
-        <Text style={textStyles.headlineH2StyleWhiteLeft}>
+        <Text style={[textStyles.headlineH2StyleWhiteLeft, alwaysLeftTextAlign()]}>
             {props.topic.englishTitle}
         </Text>
-    </View>
+    </View >
 );
 
 function ServiceListEmpty(): JSX.Element {
