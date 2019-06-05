@@ -69,6 +69,10 @@ describe('topics selector', () => {
             expect(denormalizedTask.title).toBe(topic.title[locale.code]);
         });
 
+        test('englishTitle property to be the title in English', () => {
+            expect(denormalizedTask.englishTitle).toBe(topic.title.en);
+        });
+
         test('description property', () => {
             expect(denormalizedTask.description).toBe(topic.description[locale.code]);
         });
