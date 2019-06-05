@@ -9,6 +9,7 @@ import { TopicListItem } from '../../topics/topic_list_item';
 export class ViewTaskBuilder {
     id: string = aString();
     title: string = aString();
+    englishTitle: string = aString();
     description: string = aString();
     taxonomyTerms: Array<TaxonomyTermReference>;
     exploreSection: ExploreSection;
@@ -30,6 +31,7 @@ export class ViewTaskBuilder {
         return {
             id: this.id,
             title: this.title,
+            englishTitle: this.englishTitle,
             description: this.description,
             taxonomyTerms: this.taxonomyTerms,
             exploreSection: this.exploreSection,

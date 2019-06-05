@@ -107,7 +107,7 @@ const ServiceListHeaderComponent = (props: Props): JSX.Element => (
             FIND A SERVICE NEAR YOU
         </Text>
         <Text style={textStyles.headlineH2StyleWhiteLeft}>
-            {props.topic.title}
+            {props.topic.englishTitle}
         </Text>
     </View>
 );
