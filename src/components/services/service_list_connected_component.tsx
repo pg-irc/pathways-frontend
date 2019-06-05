@@ -40,4 +40,4 @@ const mergeProps = (props: ServiceListProps, actions: ServiceListActions): Compo
     },
 });
 
-export const ServicesConnectedComponent = connect(mapStateToProps, mapDispatchToProps, mergeProps)(ServiceListComponent);
+export const ServiceListConnectedComponent = connect(mapStateToProps, mapDispatchToProps, mergeProps)(ServiceListComponent);
