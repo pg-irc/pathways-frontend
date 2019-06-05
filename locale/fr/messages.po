@@ -742,5 +742,4 @@ msgid "Getting a driver's licence, traffic laws, basic insurance"
 msgstr "Permis de conduire, code de la route, assurance de base"
 
 msgid "For example low-income, disabilities, youth"
-msgstr ""
-"Exemples : personnes à faibles revenus, personnes handicapées, jeunesssssssss"
+msgstr "Exemples : personnes à faibles revenus, personnes handicapées, jeunes"
