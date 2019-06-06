@@ -132,9 +132,8 @@ clean() {
     rm -f locale/*/new-messages.*
     rm -f locale/*/merged-messages.po
     rm -f locale/*/*.backup
-    rm -f locale/*/questionnaire.po
-    rm -f locale/*/explore.po
-    rm -f locale/*/messages.po
+    rm -f locale/*/*.po
+    rm -f locale/*/*.pot
 }
 
 
@@ -160,22 +159,37 @@ add_po_files_to_client_locale_dir() {
     
     for locale in "${locales[@]}"
     do
-        echo "Moving Weblate .po file for ${locale}..."
+        echo "Moving Weblate PO file for ${locale}..."
         mv $WORKING_DIRECTORY/ui-strings/explore/$locale/explore.po $CLIENT_LOCALE_LOCATION/$locale
-        mv $WORKING_DIRECTORY/ui-strings/questionnaire/$locale/questionnaire.po $CLIENT_LOCALE_LOCATION/$locale       
-        checkForSuccess "move Weblate .po files to client locale directories"
+        mv $WORKING_DIRECTORY/ui-strings/questionnaire/$locale/questionnaire.po $CLIENT_LOCALE_LOCATION/$locale
+        mv $WORKING_DIRECTORY/ui-strings/jsx_strings/$locale/jsx_strings.po $CLIENT_LOCALE_LOCATION/$locale          
+        checkForSuccess "move Weblate PO files to client locale directories"
     done
+
+    echo 
+    echo "Moving .pot files"
+    mv $WORKING_DIRECTORY/ui-strings/explore/explore.pot $CLIENT_LOCALE_LOCATION/en
+    mv $WORKING_DIRECTORY/ui-strings/questionnaire/questionnaire.pot $CLIENT_LOCALE_LOCATION/en
+    mv $WORKING_DIRECTORY/ui-strings/jsx_strings/jsx_strings.pot $CLIENT_LOCALE_LOCATION/en
+    checkForSuccess "move Weblate PO files to client locale"
 }
 
 
 combine_po_files() {
     echo 
+    
     for locale in "${locales[@]}"
     do
         echo "Combining PO files for ${locale}..."
         msgcat locale/$locale/*.po > locale/$locale/messages.po
-        checkForSuccess "combine po files"
+        checkForSuccess "combine PO files"
     done
+
+    echo
+    echo "Combining POT files for en"
+    msgcat locale/en/*.pot > locale/en/messages.po
+    checkForSuccess "combine POT files"
+
 }
 
 
@@ -186,7 +200,7 @@ help() {
     echo "$0 --build-changed      Import just the changed strings from CSV files and build the app"
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
     echo "$0 --clean              Remove temporary files"
-    echo "$0 --combine-pos        Combine PO Files - Mandatory arguments: location of client locale directory and directory to clone Weblate repository"  
+    echo "$0 --combine-pos        Combine PO Files - Mandatory arguments: path to location of client locale directory and path to directory to clone Weblate repository"  
     echo
 
     for locale in "${locales[@]}"
@@ -218,7 +232,7 @@ elif [ "$1" == "--combine-pos" ]; then
     create_working_directory
     clone_weblate_repository
     add_po_files_to_client_locale_dir
-    combine_po_files
+    combine_po_files 
 
 else
     help
