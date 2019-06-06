@@ -1,8 +1,8 @@
 #!/bin/bash
 
 locales=(ar fr ko pa tl zh_CN zh_TW)
-CLIENT_LOCALE_LOCATION="`pwd`/locale"
-WORKING_DIRECTORY=$2
+CLIENT_LOCALE_LOCATION=$2
+WORKING_DIRECTORY=$3
 
 checkForSuccess () {
     if [ "$?" != "0" ]
@@ -134,22 +134,18 @@ clean() {
     rm -f locale/*/*.backup
     rm -f locale/*/questionnaire.po
     rm -f locale/*/explore.po
-}
-
-
-remove_messages_po() {
     rm -f locale/*/messages.po
 }
 
 
-createWorkingDirectory() {
+create_working_directory() {
     echo "Creating ${WORKING_DIRECTORY}"
     mkdir "$WORKING_DIRECTORY"
     checkForSuccess "create working directory for Weblate PO files"
 }
 
 
-cloneWeblateRepository() {
+clone_weblate_repository() {
     echo
     echo "Cloning Weblate repository"
     echo  
@@ -159,28 +155,15 @@ cloneWeblateRepository() {
 }
 
 
-addExplorePOFilesToClientLocaleDir() {
+add_po_files_to_client_locale_dir() {
     echo 
-    echo "adding explore po files to locale"
-
+    
     for locale in "${locales[@]}"
     do
-        echo "Moving explore.po file for ${locale}..."
-        (cd "$WORKING_DIRECTORY/ui-strings/explore/locale" && mv $locale/LC_MESSAGES/explore.po $CLIENT_LOCALE_LOCATION/$locale)
-        checkForSuccess "move explore.po files to client locale directories"
-    done
-}
-
-
-addQuestionnairePOFilesToClientLocaleDir() {
-    echo 
-    echo "Adding questionnaire po files to locale"
-
-    for locale in "${locales[@]}"
-    do
-        echo "Moving questionnaire.po file for ${locale}..."
-        (cd "$WORKING_DIRECTORY/ui-strings/questionnaire/locale" && mv $locale/LC_MESSAGES/questionnaire.po $CLIENT_LOCALE_LOCATION/$locale)
-        checkForSuccess "move questionnaire.po files to client locale directories"
+        echo "Moving Weblate .po file for ${locale}..."
+        mv $WORKING_DIRECTORY/ui-strings/explore/$locale/explore.po $CLIENT_LOCALE_LOCATION/$locale
+        mv $WORKING_DIRECTORY/ui-strings/questionnaire/$locale/questionnaire.po $CLIENT_LOCALE_LOCATION/$locale       
+        checkForSuccess "move Weblate .po files to client locale directories"
     done
 }
 
@@ -190,7 +173,7 @@ combine_po_files() {
     for locale in "${locales[@]}"
     do
         echo "Combining PO files for ${locale}..."
-        msgcat locale/$locale/ui_strings.po locale/$locale/questionnaire.po locale/$locale/explore.po > locale/$locale/messages.po
+        msgcat locale/$locale/*.po > locale/$locale/messages.po
         checkForSuccess "combine po files"
     done
 }
@@ -203,8 +186,7 @@ help() {
     echo "$0 --build-changed      Import just the changed strings from CSV files and build the app"
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
     echo "$0 --clean              Remove temporary files"
-    echo "$0 --combine-pos        Combine PO Files"  
-    echo "$0 --remove-messages    Remove messages PO files" 
+    echo "$0 --combine-pos        Combine PO Files - Mandatory arguments: location of client locale directory and directory to clone Weblate repository"  
     echo
 
     for locale in "${locales[@]}"
@@ -233,10 +215,9 @@ elif [ "$1" == "--clean" ]; then
     clean
 
 elif [ "$1" == "--combine-pos" ]; then 
-    createWorkingDirectory
-    cloneWeblateRepository
-    addExplorePOFilesToClientLocaleDir
-    addQuestionnairePOFilesToClientLocaleDir
+    create_working_directory
+    clone_weblate_repository
+    add_po_files_to_client_locale_dir
     combine_po_files
 
 else
