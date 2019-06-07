@@ -10,7 +10,7 @@ import { arrivalAdvisorGlyphLogo } from '../../application/images';
 
 export interface ExploreDetailContentProps {
     readonly section: ExploreSection;
-    readonly sectionHasTasks: boolean;
+    readonly sectionHasTopics: boolean;
 }
 
 export const ExploreDetailContentComponent: React.StatelessComponent<ExploreDetailContentProps> =
@@ -56,7 +56,7 @@ const TitleComponent = (props: ExploreDetailContentProps): JSX.Element => (
         <Text style={textStyles.headlineH1StyleBlackLeft}>
             {props.section.name}
         </Text>
-        {props.sectionHasTasks ? <CollapsibleIntroduction {...props} /> : <PlainTextIntroduction {...props} />}
+        {props.sectionHasTopics ? <CollapsibleIntroduction {...props} /> : <PlainTextIntroduction {...props} />}
     </View>
 );
 
