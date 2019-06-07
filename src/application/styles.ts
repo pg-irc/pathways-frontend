@@ -181,6 +181,7 @@ export const textStyles = StyleSheet.create({
         lineHeight: 21,
         color: colors.black,
         letterSpacing,
+        ...getNormalFontStylesForOS(),
         ...getAlwaysLeftTextAlign(),
     },
     paragraphStyleBrown: {
