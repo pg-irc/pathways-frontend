@@ -41,7 +41,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View padder>
         <ExploreDetailContentComponent
             section={props.section}
-            sectionHasTasks={props.topics.length > 0}
+            sectionHasTopics={props.topics.length > 0}
         />
         <Text
             style={[
