@@ -11,11 +11,11 @@ import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore/types';
 import { toSelectorTopic } from '../topics/to_selector_topic';
 import { Topic } from '../topics/topic';
-import { isTaskRecommended } from '../topics/is_task_recommended';
+import { isTopicRecommended } from '../topics/is_topic_recommended';
 import { sortTopicList } from '../topics/sort_topic_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';
 import { getRecommendedTasks } from '../topics/get_recommended_tasks';
-import { rejectTasksWithIds } from '../topics/reject_tasks_with_ids';
+import { rejectTopicsWithIds } from '../topics/reject_topics_with_ids';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
 import { getNewlyRecommendedTasks } from '../topics/get_newly_recommended_tasks';
 import { AnswersMap, Answer } from '../../stores/questionnaire';
@@ -322,7 +322,7 @@ describe('topics selector', () => {
             const topic = new TopicBuilder().build();
             const noTaxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [];
 
-            const result = isTaskRecommended([], noTaxonomyTermsFromQuestionnaire, topic);
+            const result = isTopicRecommended([], noTaxonomyTermsFromQuestionnaire, topic);
 
             expect(result).toBe(false);
         });
@@ -333,7 +333,7 @@ describe('topics selector', () => {
             const topic = new TopicBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const noTaxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [];
 
-            const result = isTaskRecommended([], noTaxonomyTermsFromQuestionnaire, topic);
+            const result = isTopicRecommended([], noTaxonomyTermsFromQuestionnaire, topic);
 
             expect(result).toBe(true);
         });
@@ -344,7 +344,7 @@ describe('topics selector', () => {
             const topic = new TopicBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
 
-            const result = isTaskRecommended([taxonomyId], taxonomyTermsFromQuestionnaire, topic);
+            const result = isTopicRecommended([taxonomyId], taxonomyTermsFromQuestionnaire, topic);
 
             expect(result).toBe(true);
         });
@@ -355,7 +355,7 @@ describe('topics selector', () => {
             const topic = new TopicBuilder().withCompleted(true).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
 
-            const result = isTaskRecommended([taxonomyId], taxonomyTermsFromQuestionnaire, topic);
+            const result = isTopicRecommended([taxonomyId], taxonomyTermsFromQuestionnaire, topic);
 
             expect(result).toBe(true);
         });
@@ -434,14 +434,14 @@ describe('topics selector', () => {
         it('excludes rejected topic ids', () => {
             const aTaskIdToReject = aString();
             const aTaskWithRejectedId = new TopicBuilder().withId(aTaskIdToReject).build();
-            expect(rejectTasksWithIds([aTaskWithRejectedId], [aTaskIdToReject])).toHaveLength(0);
+            expect(rejectTopicsWithIds([aTaskWithRejectedId], [aTaskIdToReject])).toHaveLength(0);
         });
 
         it('includes non rejected topic ids', () => {
             const aTaskIdToReject = aString();
             const aTaskWithRejectedId = new TopicBuilder().withId(aTaskIdToReject).build();
             const aTaskToInclude = new TopicBuilder().build();
-            expect(rejectTasksWithIds([aTaskWithRejectedId, aTaskToInclude], [aTaskIdToReject])).toHaveLength(1);
+            expect(rejectTopicsWithIds([aTaskWithRejectedId, aTaskToInclude], [aTaskIdToReject])).toHaveLength(1);
         });
     });
 });

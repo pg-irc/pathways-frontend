@@ -9,7 +9,7 @@ import {
 } from '../../stores/topics';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
-import { pickSavedTaskIds } from '../../selectors/topics/pick_saved_task_ids';
+import { pickSavedTopicIds } from '../../selectors/topics/pick_saved_topic_ids';
 import { Routes, getParametersFromPath } from '../../application/routing';
 
 type OwnProps = {
@@ -20,7 +20,7 @@ type OwnProps = {
 const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.TaskDetail);
     const topic = selectCurrentTopic(store, matchParams.topicId);
-    const savedTasksIdList = pickSavedTaskIds(store);
+    const savedTasksIdList = pickSavedTopicIds(store);
     const taskIsBookmarked = R.contains(topic.id, savedTasksIdList);
     return {
         topic,

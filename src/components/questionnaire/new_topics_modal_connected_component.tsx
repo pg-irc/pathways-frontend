@@ -5,8 +5,8 @@ import { Store } from '../../stores';
 import { NewTopicsModalProps, NewTopicsModalComponent, NewTopicsModalActions } from './new_topics_modal_component';
 import { pickQuestionnaire } from '../../selectors/questionnaire/pick_questionnaire';
 import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
-import { pickTasks } from '../../selectors/topics/pick_tasks';
-import { pickSavedTaskIds } from '../../selectors/topics/pick_saved_task_ids';
+import { pickTopics } from '../../selectors/topics/pick_topics';
+import { pickSavedTopicIds } from '../../selectors/topics/pick_saved_topic_ids';
 import { selectLocale } from '../../selectors/locale/select_locale';
 
 type OwnProps = {
@@ -18,8 +18,8 @@ type OwnProps = {
 const mapStateToProps = (store: Store, ownProps: OwnProps): NewTopicsModalProps => ({
     oldAnswers: pickQuestionnaire(store).oldAnswers,
     newAnswers: pickAnswers(store),
-    topics: pickTasks(store),
-    savedTopicIds: pickSavedTaskIds(store),
+    topics: pickTopics(store),
+    savedTopicIds: pickSavedTopicIds(store),
     locale: selectLocale(store),
     history: ownProps.history,
     isVisible: ownProps.isVisible,
