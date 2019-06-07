@@ -2,7 +2,7 @@ import { Store } from '../../stores';
 import { Id as TaskId } from '../../stores/topics';
 import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_chosen_answers';
 import { selectLocale } from '../locale/select_locale';
-import { toSelectorTask } from './to_selector_task';
+import { toSelectorTopic } from './to_selector_topic';
 import { Topic } from './topic';
 import { selectExploreSectionFromTask } from './select_explore_section_from_task';
 import { isTaskRecommended } from './is_task_recommended';
@@ -20,5 +20,5 @@ export const selectCurrentTask = (appStore: Store, topicId: TaskId): Topic => {
     const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(pickAnswers(appStore));
     const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, topic);
     const relatedTasks = selectRelatedTasks(appStore, topic.relatedTopics);
-    return toSelectorTask(locale, topic, exploreSection, isRecommended, relatedTasks);
+    return toSelectorTopic(locale, topic, exploreSection, isRecommended, relatedTasks);
 };

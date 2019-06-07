@@ -5,7 +5,7 @@ import { ExploreSection } from '../explore/types';
 import { TopicListItem } from './topic_list_item';
 import { Topic } from './topic';
 
-export const toSelectorTask =
+export const toSelectorTopic =
     (locale: Locale, topic: store.Topic, exploreSection: ExploreSection, isRecommended: boolean,
         relatedTopics: ReadonlyArray<TopicListItem>): Topic => (
             {

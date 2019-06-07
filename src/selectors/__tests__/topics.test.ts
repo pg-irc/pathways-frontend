@@ -9,7 +9,7 @@ import { aString, aBoolean } from '../../application/__tests__/helpers/random_te
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore/types';
-import { toSelectorTask } from '../topics/to_selector_task';
+import { toSelectorTopic } from '../topics/to_selector_topic';
 import { Topic } from '../topics/topic';
 import { isTaskRecommended } from '../topics/is_task_recommended';
 import { sortTopicList } from '../topics/sort_topic_list';
@@ -54,7 +54,7 @@ describe('topics selector', () => {
                 build();
             exploreSection = new ExploreSectionBuilder().withName(exploreSectionName).build();
             isRecommended = aBoolean();
-            denormalizedTask = toSelectorTask(locale, topic, exploreSection, isRecommended, []);
+            denormalizedTask = toSelectorTopic(locale, topic, exploreSection, isRecommended, []);
         });
 
         test('id property', () => {
