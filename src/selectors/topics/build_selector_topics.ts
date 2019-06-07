@@ -6,7 +6,7 @@ import { Topic } from './topic';
 import { toSelectorTopicWithoutRelatedEntities } from './to_selector_topic_without_related_entities';
 import { selectExploreSectionFromTopic } from './select_explore_section_from_topic';
 
-export const buildSelectorTask = R.curry((appStore: Store, topic: store.Topic): Topic => {
+export const buildSelectorTopic = R.curry((appStore: Store, topic: store.Topic): Topic => {
     const locale = selectLocale(appStore);
     const exploreSection = selectExploreSectionFromTopic(appStore, topic);
     const isRecommended = true;

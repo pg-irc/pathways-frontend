@@ -11,7 +11,7 @@ import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_
 import { pickAnswers } from '../questionnaire/pick_answers';
 import { selectExploreSectionFromTopic } from './select_explore_section_from_topic';
 
-export const buildSelectorTaskListItem = R.curry((appStore: Store, topicId: store.Id): TopicListItem => {
+export const buildSelectorTopicListItem = R.curry((appStore: Store, topicId: store.Id): TopicListItem => {
     const locale = selectLocale(appStore);
     const topicMap = pickTopics(appStore);
     const topic = topicMap[topicId];
