@@ -1,7 +1,7 @@
 import { Topic } from './topic';
 import * as R from 'ramda';
 
-export const sortTaskList = (taskList: ReadonlyArray<Topic>): ReadonlyArray<Topic> => {
+export const sortTopicList = (taskList: ReadonlyArray<Topic>): ReadonlyArray<Topic> => {
     const compare = (a: Topic, b: Topic): number => (
         a.isRecommended === b.isRecommended ?
             a.id.localeCompare(b.id) :
