@@ -4,12 +4,12 @@ import { PersistedUserData } from '../../stores/user_data';
 import { pickSavedTopicIds } from '../topics/pick_saved_topic_ids';
 import { pickAnswers } from '../questionnaire/pick_answers';
 import { pickTopics } from '../topics/pick_topics';
-import { getIdsOfCompletedTasks } from '../topics/get_ids_of_completed_tasks';
+import { getIdsOfCompletedTopics } from '../topics/get_ids_of_completed_topics';
 import { selectShowOnboarding } from '../onboarding/select_show_onboarding';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedUserData => ({
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
     savedTasks: pickSavedTopicIds(appStore),
-    completedTasks: getIdsOfCompletedTasks(pickTopics(appStore)),
+    completedTasks: getIdsOfCompletedTopics(pickTopics(appStore)),
     showOnboarding: selectShowOnboarding(appStore),
 });

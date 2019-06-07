@@ -14,13 +14,13 @@ import { Topic } from '../topics/topic';
 import { isTopicRecommended } from '../topics/is_topic_recommended';
 import { sortTopicList } from '../topics/sort_topic_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';
-import { getRecommendedTasks } from '../topics/get_recommended_tasks';
+import { getRecommendedTopics } from '../topics/get_recommended_topics';
 import { rejectTopicsWithIds } from '../topics/reject_topics_with_ids';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
-import { getNewlyRecommendedTasks } from '../topics/get_newly_recommended_tasks';
+import { getNewlyRecommendedTopics } from '../topics/get_newly_recommended_topics';
 import { AnswersMap, Answer } from '../../stores/questionnaire';
 import { getAllTaxonomyTermsFromTasks } from '../topics/get_all_taxonomy_terms_from_tasks';
-import { getIdsOfCompletedTasks } from '../topics/get_ids_of_completed_tasks';
+import { getIdsOfCompletedTopics } from '../topics/get_ids_of_completed_topics';
 import * as R from 'ramda';
 
 let locale: Locale = undefined;
@@ -97,7 +97,7 @@ describe('topics selector', () => {
             const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).withTaxonomyTerm(aTaxonomyTerm).build();
             const anIncompleteTask = new TopicBuilder().build();
 
-            const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
+            const result = getRecommendedTopics({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
 
             expect(result).toEqual([]);
         });
@@ -110,7 +110,7 @@ describe('topics selector', () => {
             const aTaskRecommendedToAll = new TopicBuilder().withTaxonomyTerm(recommendedToAllTaxonomyTerm).build();
             const aNonChosenAnswer = new AnswerBuilder().withIsChosen(false).build();
 
-            const result = getRecommendedTasks({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [aTaskRecommendedToAll.id]: aTaskRecommendedToAll });
+            const result = getRecommendedTopics({ [aNonChosenAnswer.id]: aNonChosenAnswer }, { [aTaskRecommendedToAll.id]: aTaskRecommendedToAll });
 
             expect(result).toEqual([aTaskRecommendedToAll]);
         });
@@ -120,7 +120,7 @@ describe('topics selector', () => {
             const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).withIsInverted(false).build();
             const anIncompleteTask = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).build();
 
-            const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
+            const result = getRecommendedTopics({ [aChosenAnswer.id]: aChosenAnswer }, { [anIncompleteTask.id]: anIncompleteTask });
 
             expect(result).toEqual([anIncompleteTask]);
         });
@@ -155,17 +155,17 @@ describe('topics selector', () => {
                 const topicMap = toTaskMap([aRedBlueTask]);
 
                 it('recommends the topic if colour:red is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedBlueTask]);
                 });
 
                 it('recommends the topic if colour:blue is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([blueAnswerChosen]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([blueAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedBlueTask]);
                 });
 
                 it('recommends the topic if colour:red and colour:blue is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, blueAnswerChosen]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswerChosen, blueAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedBlueTask]);
                 });
             });
@@ -177,17 +177,17 @@ describe('topics selector', () => {
                 const topicMap = toTaskMap([aRedSmallTask]);
 
                 it('does not recommend the topic if colour:red is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswer]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswerChosen, smallAnswer]), topicMap);
                     expect(result).toEqual([]);
                 });
 
                 it('does not recommend the topic if size:small is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswer, smallAnswerChosen]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswer, smallAnswerChosen]), topicMap);
                     expect(result).toEqual([]);
                 });
 
                 it('recommends the topic if both colour:red and size:small is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswerChosen]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswerChosen, smallAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedSmallTask]);
                 });
             });
@@ -199,27 +199,27 @@ describe('topics selector', () => {
                 const topicMap = toTaskMap([aRedBlueSmallTask]);
 
                 it('does not recommend when one colour is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswer]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswerChosen, smallAnswer]), topicMap);
                     expect(result).toEqual([]);
                 });
 
                 it('does not recommend when one size is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswer, smallAnswerChosen]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswer, smallAnswerChosen]), topicMap);
                     expect(result).toEqual([]);
                 });
 
                 it('does not recommend when both colours are chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, blueAnswerChosen, smallAnswer]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswerChosen, blueAnswerChosen, smallAnswer]), topicMap);
                     expect(result).toEqual([]);
                 });
 
                 it('does recommend if one colour and the size are chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, smallAnswerChosen]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswerChosen, smallAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedBlueSmallTask]);
                 });
 
                 it('does recommend if both colours and the size are chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen, blueAnswerChosen, smallAnswerChosen]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswerChosen, blueAnswerChosen, smallAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedBlueSmallTask]);
                 });
             });
@@ -235,12 +235,12 @@ describe('topics selector', () => {
                 const topicMap = toTaskMap([aRedTaskWithAdditionalTaxonomyTerm]);
 
                 it('recommends the topic if colour:red is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([redAnswerChosen]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([redAnswerChosen]), topicMap);
                     expect(result).toEqual([aRedTaskWithAdditionalTaxonomyTerm]);
                 });
 
                 it('does not recommend the topic if just colour:blue is chosen', () => {
-                    const result = getRecommendedTasks(toAnswerMap([blueAnswerChosen]), topicMap);
+                    const result = getRecommendedTopics(toAnswerMap([blueAnswerChosen]), topicMap);
                     expect(result).toEqual([]);
                 });
             });
@@ -251,7 +251,7 @@ describe('topics selector', () => {
             const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
             const aCompleteTask = new TopicBuilder().withCompleted(true).withTaxonomyTerm(aTaxonomyTerm).build();
 
-            const result = getRecommendedTasks({ [aChosenAnswer.id]: aChosenAnswer }, { [aCompleteTask.id]: aCompleteTask });
+            const result = getRecommendedTopics({ [aChosenAnswer.id]: aChosenAnswer }, { [aCompleteTask.id]: aCompleteTask });
 
             expect(result).toEqual([]);
         });
@@ -283,7 +283,7 @@ describe('topics selector', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newChosenAnswers, incompleteTasks);
+            const result = getNewlyRecommendedTopics(oldNonChosenAnswers, newChosenAnswers, incompleteTasks);
 
             expect(result).toEqual([incompleteTask]);
         });
@@ -292,7 +292,7 @@ describe('topics selector', () => {
             const oldChosenAnswers = chosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldChosenAnswers, newChosenAnswers, incompleteTasks);
+            const result = getNewlyRecommendedTopics(oldChosenAnswers, newChosenAnswers, incompleteTasks);
 
             expect(result).toEqual([]);
         });
@@ -301,7 +301,7 @@ describe('topics selector', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldNonChosenAnswers, newNonChosenAnswers, incompleteTasks);
+            const result = getNewlyRecommendedTopics(oldNonChosenAnswers, newNonChosenAnswers, incompleteTasks);
 
             expect(result).toEqual([]);
         });
@@ -310,7 +310,7 @@ describe('topics selector', () => {
             const oldChosenAnswers = chosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
-            const result = getNewlyRecommendedTasks(oldChosenAnswers, newNonChosenAnswers, incompleteTasks);
+            const result = getNewlyRecommendedTopics(oldChosenAnswers, newNonChosenAnswers, incompleteTasks);
 
             expect(result).toEqual([]);
         });
@@ -415,7 +415,7 @@ describe('topics selector', () => {
             const theId = aString();
             const aTask = new TopicBuilder().withCompleted(true).withId(theId).build();
 
-            const result = getIdsOfCompletedTasks({ [theId]: aTask });
+            const result = getIdsOfCompletedTopics({ [theId]: aTask });
 
             expect(result).toEqual([theId]);
         });
@@ -423,7 +423,7 @@ describe('topics selector', () => {
             const theId = aString();
             const aTask = new TopicBuilder().withCompleted(false).withId(theId).build();
 
-            const result = getIdsOfCompletedTasks({ [theId]: aTask });
+            const result = getIdsOfCompletedTopics({ [theId]: aTask });
 
             expect(result).toEqual([]);
         });
