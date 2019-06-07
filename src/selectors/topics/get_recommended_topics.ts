@@ -6,7 +6,7 @@ import { isTopicRecommended } from './is_topic_recommended';
 import { isCompleted } from './is_completed';
 import * as R from 'ramda';
 
-export const getRecommendedTasks = (answers: AnswersMap, topics: TopicMap): ReadonlyArray<Topic> => {
+export const getRecommendedTopics = (answers: AnswersMap, topics: TopicMap): ReadonlyArray<Topic> => {
     const chosenTaxonomyTerms = getTaxonomyTermsForRelevantAnswers(answers);
     const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(answers);
     const isRecommended = isTopicRecommended(relevantTaxonomies, chosenTaxonomyTerms);

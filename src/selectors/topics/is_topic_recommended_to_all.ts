@@ -8,6 +8,6 @@ const recommendedToAll: TaxonomyTermReference = {
     taxonomyTermId: Taxonomies.RECOMMEND_TO_ALL_TAXONOMY_TERM_ID,
 };
 
-export const isTaskRecommendedToAll = (topic: Topic): boolean => (
+export const isTopicRecommendedToAll = (topic: Topic): boolean => (
     R.any(R.equals(recommendedToAll), topic.taxonomyTerms)
 );
