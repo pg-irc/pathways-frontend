@@ -35,6 +35,7 @@ done
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
 CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
+WEBLATE_DIRECTORY="$WORKING_DIRECTORY/weblate"
 
 usage() {
     echo
@@ -169,6 +170,13 @@ checkOutServerByTag() {
     checkForSuccess "check out tag for server"
 }
 
+checkOutWeblateByTag() {
+    echo
+    ./bin/strings.sh --combine-pos $CLIENT_DIRECTORY/locale $WEBLATE_DIRECTORY $VERSION
+    checkForSuccess "check out Weblate "$VERSION""
+}
+
+
 validateClientVersion() {
     FILE_VERSION=$(cat "$CLIENT_DIRECTORY/VERSION.txt")
     if [ "$FILE_VERSION" != "$VERSION" ]
@@ -276,6 +284,11 @@ validateContentFixture() {
     fi
 }
 
+buildStringsForLinguiCatalogs() {
+    (cd "$CLIENT_DIRECTORY" && yarn build-strings)
+    checkForSuccess "build messages.js for lingui catalogs"
+}
+
 buildClientLocally() {
     (cd "$CLIENT_DIRECTORY" && yarn clean && yarn build)
     checkForSuccess "build client"
@@ -308,6 +321,7 @@ createWorkingDirectory
 checkOutServerByTag
 checkOutClientByTag
 checkOutContentByTag
+checkOutWeblateByTag
 
 validateClientVersion
 validateServerVersion
@@ -320,6 +334,7 @@ validateContentFixture
 getClientDependencies
 createClientEnvironment
 completeManualConfiguration
+buildStringsForLinguiCatalogs
 buildClientLocally
 testClient
 
