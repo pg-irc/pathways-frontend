@@ -119,11 +119,11 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     }
 
     private readMoreReadLessText(): JSX.Element {
-        const englishText = this.isCollapsed() ? 'Read more' : 'Read less';
-        if (this.props.forceEnglish) {
-            return <Text>{englishText}</Text>;
+        const showReadMore = this.isCollapsed();
+        if (showReadMore) {
+            return this.props.forceEnglish ? <Text>Read more</Text> : <Trans>Read more</Trans>;
         }
-        return <Trans>{englishText}</Trans>;
+        return this.props.forceEnglish ? <Text>Read less</Text> : <Trans>Read less</Trans>;
     }
 
     private getReadMoreButton(): JSX.Element {
