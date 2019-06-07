@@ -40,7 +40,7 @@ describe('topics test helpers', () => {
         describe('building a normalized store', () => {
             let firstTaskBuilder: TopicBuilder;
             let secondTaskBuilder: TopicBuilder;
-            let validStore: stores.ValidTaskStore;
+            let validStore: stores.ValidTopicStore;
 
             beforeEach(() => {
                 firstTaskBuilder = new TopicBuilder();

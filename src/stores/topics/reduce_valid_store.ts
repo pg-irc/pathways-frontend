@@ -1,10 +1,10 @@
-import { TaskStore, ValidTaskStore, LoadingTaskStore } from './stores';
+import { TaskStore, ValidTopicStore, LoadingTopicStore } from './stores';
 import { Id, TopicList, Topic } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import { TaskAction } from './actions';
 import * as R from 'ramda';
 
-export const reduceValidStore = (store: ValidTaskStore, action: TaskAction): TaskStore => {
+export const reduceValidStore = (store: ValidTopicStore, action: TaskAction): TaskStore => {
     switch (action.type) {
         case constants.ADD_TO_SAVED_TOPICS:
             return addToTaskList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
@@ -16,10 +16,10 @@ export const reduceValidStore = (store: ValidTaskStore, action: TaskAction): Tas
             return toggleCompletedValue(store, action.payload.topicId);
 
         case constants.LOAD_USER_DATA_REQUEST:
-            return new LoadingTaskStore(store);
+            return new LoadingTopicStore(store);
 
         case constants.CLEAR_ALL_USER_DATA:
-            return new ValidTaskStore({
+            return new ValidTopicStore({
                 ...store,
                 topicMap: R.map((topic: Topic): Topic => ({ ...topic, completed: false }), store.topicMap),
                 savedTopicsList: [],
@@ -30,23 +30,23 @@ export const reduceValidStore = (store: ValidTaskStore, action: TaskAction): Tas
     }
 };
 
-const addToTaskList = (store: ValidTaskStore, property: keyof (ValidTaskStore), taskList: TopicList, value: Id): ValidTaskStore => {
+const addToTaskList = (store: ValidTopicStore, property: keyof (ValidTopicStore), taskList: TopicList, value: Id): ValidTopicStore => {
     if (taskList.indexOf(value) !== -1) {
         return store;
     }
-    return new ValidTaskStore({ ...store, [property]: [...taskList, value] });
+    return new ValidTopicStore({ ...store, [property]: [...taskList, value] });
 };
 
-const removeFromTaskList = (store: ValidTaskStore, property: keyof (ValidTaskStore), taskList: TopicList, value: Id): ValidTaskStore => {
+const removeFromTaskList = (store: ValidTopicStore, property: keyof (ValidTopicStore), taskList: TopicList, value: Id): ValidTopicStore => {
     if (taskList.indexOf(value) === -1) {
         return store;
     }
-    return new ValidTaskStore({ ...store, [property]: taskList.filter((id: Id) => id !== value) });
+    return new ValidTopicStore({ ...store, [property]: taskList.filter((id: Id) => id !== value) });
 };
 
-const toggleCompletedValue = (store: ValidTaskStore, topicId: Id): ValidTaskStore => {
+const toggleCompletedValue = (store: ValidTopicStore, topicId: Id): ValidTopicStore => {
     const topic = store.topicMap[topicId];
-    return new ValidTaskStore({
+    return new ValidTopicStore({
         ...store,
         topicMap: {
             ...store.topicMap,
