@@ -4,10 +4,10 @@ import { TaskListActions } from '../topics/task_list_component';
 import { Store } from '../../stores';
 import { BookmarkedTopicsComponent, BookmarkedTopicsProps } from './bookmarked_topics_component';
 import { Id, RemoveFromSavedListAction, removeFromSavedList, AddToSavedListAction, addToSavedList } from '../../stores/topics';
-import { selectSavedTasks } from '../../selectors/topics/select_saved_tasks';
+import { selectSavedTopics } from '../../selectors/topics/select_saved_topics';
 
 const mapStateToProps = (store: Store): BookmarkedTopicsProps => ({
-    bookmarkedTopics: selectSavedTasks(store),
+    bookmarkedTopics: selectSavedTopics(store),
 });
 
 type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction;
