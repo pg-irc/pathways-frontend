@@ -7,7 +7,6 @@ import { Text } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
-import { Trans } from '@lingui/react';
 import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_application_popup_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { Link } from '../link/link';
@@ -30,12 +29,15 @@ export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemP
     );
 
 const renderName = (name: string, organizationName: string): JSX.Element => (
-    <Text style={textStyles.headlineH3StyleBlackLeft}>{organizationName} - {name}</Text>
+    <Text style={[textStyles.headlineH3StyleBlackLeft, textStyles.alwaysLeftAlign]}>{organizationName} - {name}</Text>
 );
 
-const renderDescription = (description: string): JSX.Element => (
-    <ExpandableContentComponent content={<Text style={textStyles.paragraphStyle}>{description}</Text>} />
-);
+const renderDescription = (description: string): JSX.Element => {
+    return <ExpandableContentComponent
+        forceEnglish={true}
+        content={<Text style={textStyles.alwaysLeftParagraphStyle} > {description}</ Text>}
+    />;
+};
 
 const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));
 
@@ -43,9 +45,9 @@ const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
     mapWithIndex((address: Address, index: number) =>
         <View key={index}>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address:</Trans></Text>
-            <Text style={textStyles.paragraphStyle}>{address.address}</Text>
-            <Text style={textStyles.paragraphStyle}>
+            <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Address:</Text>
+            <Text style={textStyles.alwaysLeftParagraphStyle}>{address.address}</Text>
+            <Text style={textStyles.alwaysLeftParagraphStyle}>
                 {address.city} {address.stateProvince} {address.postalCode ? address.postalCode : ''}
             </Text>
         </View>, physicalAddresses)
@@ -56,7 +58,7 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>) => (
     (mapWithIndex((phoneNumber: PhoneNumber, index: number): JSX.Element => (
         <View key={index} style={{ paddingVertical: 10 }} >
             <Text>
-                <Text style={textStyles.paragraphBoldBlackLeft}>
+                <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>
                     {capitalizeFirstLetter(phoneNumber.type)}:
             </Text> <TextWithPhoneLinks text={phoneNumber.phoneNumber} />
             </Text>
@@ -69,8 +71,8 @@ const renderWebsite = (website: string): JSX.Element => {
     }
     return (
         <Text>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans> </Text>
-            <Link href={website} style={textStyles.paragraphStyle} >{website}</Link>
+            <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Web: </Text>
+            <Link href={website} style={textStyles.alwaysLeftParagraphStyle} >{website}</Link>
         </Text>
     );
 };
@@ -81,8 +83,8 @@ const renderEmail = (email: string): JSX.Element => {
     }
     return (
         <Text>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>
-            <Link href={'mailto:' + email} style={textStyles.paragraphStyle} >{email}</Link>
+            <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Email: </Text>
+            <Link href={'mailto:' + email} style={textStyles.alwaysLeftParagraphStyle} >{email}</Link>
         </Text>
     );
 };

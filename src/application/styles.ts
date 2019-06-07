@@ -1,4 +1,5 @@
 import { StyleSheet, Platform } from 'react-native';
+import { I18nManager } from 'react-native';
 
 export const colors = {
     pale: '#ffebcb',
@@ -22,7 +23,7 @@ export const colors = {
     purple: '#541388',
     burntSienna: '#ED604B',
     sunshine: '#f2b134',
-  };
+};
 
 export const values = {
     navigationIconSize: 28,
@@ -67,6 +68,11 @@ const getBoldFontStylesForOS = (): object => (
             fontWeight: '900',
             fontStyle,
         }
+);
+
+// return 'right' when in RTL mode to align to the left also in RTL mode
+const getAlwaysLeftTextAlign = (): object => (
+    { textAlign: I18nManager.isRTL ? 'right' : 'left' }
 );
 
 export const textStyles = StyleSheet.create({
@@ -159,6 +165,9 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getNormalFontStylesForOS(),
     },
+    alwaysLeftAlign: {
+        ...getAlwaysLeftTextAlign(),
+    },
     paragraphStyle: {
         fontSize: 16,
         lineHeight: 21,
@@ -166,6 +175,14 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
         letterSpacing,
         ...getNormalFontStylesForOS(),
+    },
+    alwaysLeftParagraphStyle: {
+        fontSize: 16,
+        lineHeight: 21,
+        color: colors.black,
+        letterSpacing,
+        ...getNormalFontStylesForOS(),
+        ...getAlwaysLeftTextAlign(),
     },
     paragraphStyleBrown: {
         fontSize: 16,

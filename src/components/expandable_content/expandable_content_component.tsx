@@ -5,14 +5,17 @@ import { View, Text, Button, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { toggleExpandedState, ExpandableContentStates, shouldShowReadMoreButton,
-         defaultExpandableContentState, isDefaultState } from './expandable_content_states';
+import {
+    toggleExpandedState, ExpandableContentStates, shouldShowReadMoreButton,
+    defaultExpandableContentState, isDefaultState
+} from './expandable_content_states';
 import { values } from '../../application/styles';
 
 export interface ExpandableContentProps {
     readonly content: JSX.Element;
     readonly contentId?: string;
     readonly contentBackgroundColor?: string;
+    readonly forceEnglish?: boolean;
 }
 
 interface ExpandableContentState {
@@ -73,7 +76,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
             paddingHorizontal: 5,
         };
         return (
-            <View style={this.isCollapsed() ? { ...this.getCollapsedStyle(), ...style  } : style}>
+            <View style={this.isCollapsed() ? { ...this.getCollapsedStyle(), ...style } : style}>
                 {this.props.content}
             </View>
         );
@@ -115,9 +118,17 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         });
     }
 
+    private readMoreReadLessText(): JSX.Element {
+        const englishText = this.isCollapsed() ? 'Read more' : 'Read less';
+        if (this.props.forceEnglish) {
+            return <Text>{englishText}</Text>;
+        }
+        return <Trans>{englishText}</Trans>;
+    }
+
     private getReadMoreButton(): JSX.Element {
         const onPress = (): void => this.toggleState();
-        const text = this.isCollapsed() ? <Trans>Read more</Trans> : <Trans>Read less</Trans>;
+        const text = this.readMoreReadLessText();
         const backgroundColor = this.props.contentBackgroundColor ? this.props.contentBackgroundColor : colors.white;
         return (
             <View style={{ backgroundColor }}>
