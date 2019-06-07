@@ -14,7 +14,7 @@ export class ApplicationStoreBuilder {
     fontsInStore: fonts.Store;
     localeInStore: locale.LocaleStore;
     questionnaireInStore: questionnaire.QuestionnaireStore;
-    tasksInStore: tasks.TaskStore;
+    tasksInStore: tasks.TopicStore;
     servicesInStore: services.ServiceStore;
     exploreSectionsInStore: explore.ExploreStore;
     taxonomiesInStore: taxonomies.TaxonomyStore;

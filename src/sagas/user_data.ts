@@ -75,8 +75,8 @@ const deserialize = (serializedUserData: string): PersistedUserData => (
 export const setUserDataDefaultValues = (data: any): PersistedUserData => (
     {
         chosenAnswers: data.chosenAnswers || [],
-        savedTasks: data.savedTasks || [],
-        completedTasks: data.completedTasks || [],
+        savedTopics: data.savedTasks || [],
+        completedTopics: data.completedTasks || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
     }
 );

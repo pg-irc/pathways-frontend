@@ -1,8 +1,8 @@
-import { TaskStore, InValidTopicStore } from './stores';
+import { TopicStore, InValidTopicStore } from './stores';
 import { CLEAR_ERROR_STATE } from '../../application/constants';
-import { TaskAction } from './actions';
+import { TopicAction } from './actions';
 
-export const reduceInvalidStore = (store: InValidTopicStore, action: TaskAction): TaskStore => {
+export const reduceInvalidStore = (store: InValidTopicStore, action: TopicAction): TopicStore => {
     if (action.type === CLEAR_ERROR_STATE) {
         return store.lastValidState;
     }

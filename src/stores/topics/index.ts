@@ -1,22 +1,22 @@
-import { TaskStore, LoadingTopicStore, InValidTopicStore } from './stores';
+import { TopicStore, LoadingTopicStore, InValidTopicStore } from './stores';
 import { buildTasksFixture } from '../../fixtures/buildFixtures';
-import { TaskAction } from './actions';
+import { TopicAction } from './actions';
 import { reduceLoadingStore } from './reduce_loading_store';
 import { reduceInvalidStore } from './reduce_invalid_store';
 import { reduceValidStore } from './reduce_valid_store';
 
-export { TaskStore, ValidTopicStore, LoadingTopicStore, InValidTopicStore, toValidOrThrow } from './stores';
+export { TopicStore, ValidTopicStore, LoadingTopicStore, InValidTopicStore, toValidOrThrow } from './stores';
 export { Id, TopicList, TopicMap, Topic } from '../../fixtures/types/topics';
 export {
     addToSavedList, AddToSavedListAction, removeFromSavedList,
     RemoveFromSavedListAction, toggleCompleted, ToggleCompletedAction,
 } from './actions';
 
-export const buildDefaultStore = (): TaskStore => (
+export const buildDefaultStore = (): TopicStore => (
     buildTasksFixture()
 );
 
-export const reducer = (store: TaskStore = buildDefaultStore(), action?: TaskAction): TaskStore => {
+export const reducer = (store: TopicStore = buildDefaultStore(), action?: TopicAction): TopicStore => {
     if (!action) {
         return store;
     }

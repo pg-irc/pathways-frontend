@@ -109,7 +109,7 @@ describe('topics reducer', () => {
 
                 let firstTaskId = aString();
                 let secondTaskId = aString();
-                let resultStore: stores.TaskStore = undefined;
+                let resultStore: stores.TopicStore = undefined;
 
                 beforeEach(() => {
                     const firstTaskBuilder = new TopicBuilder().withId(firstTaskId);
