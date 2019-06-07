@@ -9,7 +9,7 @@ import { selectShowOnboarding } from '../onboarding/select_show_onboarding';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedUserData => ({
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
-    savedTasks: pickSavedTopicIds(appStore),
-    completedTasks: getIdsOfCompletedTopics(pickTopics(appStore)),
+    savedTopics: pickSavedTopicIds(appStore),
+    completedTopics: getIdsOfCompletedTopics(pickTopics(appStore)),
     showOnboarding: selectShowOnboarding(appStore),
 });

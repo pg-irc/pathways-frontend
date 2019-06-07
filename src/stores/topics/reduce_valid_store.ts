@@ -1,10 +1,10 @@
-import { TaskStore, ValidTopicStore, LoadingTopicStore } from './stores';
+import { TopicStore, ValidTopicStore, LoadingTopicStore } from './stores';
 import { Id, TopicList, Topic } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
-import { TaskAction } from './actions';
+import { TopicAction } from './actions';
 import * as R from 'ramda';
 
-export const reduceValidStore = (store: ValidTopicStore, action: TaskAction): TaskStore => {
+export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): TopicStore => {
     switch (action.type) {
         case constants.ADD_TO_SAVED_TOPICS:
             return addToTaskList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);

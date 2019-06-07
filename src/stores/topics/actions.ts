@@ -11,7 +11,7 @@ export type RemoveFromSavedListAction = Readonly<ReturnType<typeof removeFromSav
 
 export type ToggleCompletedAction = Readonly<ReturnType<typeof toggleCompleted>>;
 
-export type TaskAction = AddToSavedListAction |
+export type TopicAction = AddToSavedListAction |
     RemoveFromSavedListAction |
     ToggleCompletedAction |
     UserDataPersistence.LoadRequestAction |

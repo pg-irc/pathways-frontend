@@ -32,8 +32,8 @@ export class PersistedUserDataBuilder {
     buildObject(): PersistedUserData {
         return {
             chosenAnswers: this.chosenAnswers,
-            savedTasks: this.savedTasks,
-            completedTasks: this.completedTasks,
+            savedTopics: this.savedTasks,
+            completedTopics: this.completedTasks,
             showOnboarding: this.showOnboarding,
         };
     }

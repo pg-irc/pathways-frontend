@@ -21,9 +21,9 @@ export class LoadingTopicStore {
     }
 }
 
-export type TaskStore = ValidTopicStore | InValidTopicStore | LoadingTopicStore;
+export type TopicStore = ValidTopicStore | InValidTopicStore | LoadingTopicStore;
 
-export const toValidOrThrow = (store: TaskStore): ValidTopicStore => {
+export const toValidOrThrow = (store: TopicStore): ValidTopicStore => {
     if (store instanceof ValidTopicStore) {
         return store;
     }

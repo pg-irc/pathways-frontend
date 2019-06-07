@@ -12,7 +12,7 @@ export interface Store {
     readonly fontsInStore: fonts.Store;
     readonly localeInStore: locale.LocaleStore;
     readonly questionnaireInStore: questionnaire.QuestionnaireStore;
-    readonly tasksInStore: tasks.TaskStore;
+    readonly tasksInStore: tasks.TopicStore;
     readonly servicesInStore: services.ServiceStore;
     readonly exploreSectionsInStore: explore.ExploreStore;
     readonly taxonomiesInStore: taxonomies.TaxonomyStore;
