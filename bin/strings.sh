@@ -2,7 +2,8 @@
 
 locales=(ar fr ko pa tl zh_CN zh_TW)
 CLIENT_LOCALE_LOCATION=$2
-WORKING_DIRECTORY=$3
+WEBLATE_DIRECTORY=$3
+VERSION=$4
 
 checkForSuccess () {
     if [ "$?" != "0" ]
@@ -128,31 +129,40 @@ normalize_line_breaks(){
 
 
 clean() {
-    rm -f locale/*/messages.csv
-    rm -f locale/*/new-messages.*
-    rm -f locale/*/merged-messages.po
-    rm -f locale/*/*.backup
-    rm -f locale/*/*.po
-    rm -f locale/*/*.pot
+    rm -f $CLIENT_LOCALE_LOCATION/*/messages.csv
+    rm -f $CLIENT_LOCALE_LOCATION/*/new-messages.*
+    rm -f $CLIENT_LOCALE_LOCATION/*/merged-messages.po
+    rm -f $CLIENT_LOCALE_LOCATION/*/*.backup
+    rm -f $CLIENT_LOCALE_LOCATION/*/*.po
+    rm -f $CLIENT_LOCALE_LOCATION/*/*.pot
 }
 
 
-create_working_directory() {
-    echo "Creating ${WORKING_DIRECTORY}"
-    mkdir "$WORKING_DIRECTORY"
-    checkForSuccess "create working directory for Weblate PO files"
-}
+create_weblate_directory() {
+    echo "Creating Weblate directory"
+    mkdir "$WEBLATE_DIRECTORY"
+    checkForSuccess "create WEBLATE directory for Weblate PO files"
 
-
-clone_weblate_repository() {
-    echo
-    echo "Cloning Weblate repository"
-    echo  
-
-    (cd "$WORKING_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
+    echo "cloning Weblate repository"
+    (cd "$WEBLATE_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
     checkForSuccess "clone Weblate repository"
 }
 
+check_out_weblate_by_tag() {
+    if [ "$VERSION" ]; then
+        echo "Checking out Weblate with tag $VERSION"
+        echo
+        (cd "$WEBLATE_DIRECTORY/ui-strings" && git fetch --tags)
+        checkForSuccess "fetch tags for Weblate"
+
+        (cd "$WEBLATE_DIRECTORY/ui-strings" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
+        checkForSuccess "check out tag for Weblate"
+    else
+        echo "Using newest version of translation strings"
+        echo
+    fi
+}
+   
 
 add_po_files_to_client_locale_dir() {
     echo 
@@ -160,17 +170,17 @@ add_po_files_to_client_locale_dir() {
     for locale in "${locales[@]}"
     do
         echo "Moving Weblate PO file for ${locale}..."
-        mv $WORKING_DIRECTORY/ui-strings/explore/$locale/explore.po $CLIENT_LOCALE_LOCATION/$locale
-        mv $WORKING_DIRECTORY/ui-strings/questionnaire/$locale/questionnaire.po $CLIENT_LOCALE_LOCATION/$locale
-        mv $WORKING_DIRECTORY/ui-strings/jsx_strings/$locale/jsx_strings.po $CLIENT_LOCALE_LOCATION/$locale          
+        mv $WEBLATE_DIRECTORY/ui-strings/explore/$locale/explore.po $CLIENT_LOCALE_LOCATION/$locale
+        mv $WEBLATE_DIRECTORY/ui-strings/questionnaire/$locale/questionnaire.po $CLIENT_LOCALE_LOCATION/$locale
+        mv $WEBLATE_DIRECTORY/ui-strings/jsx_strings/$locale/jsx_strings.po $CLIENT_LOCALE_LOCATION/$locale          
         checkForSuccess "move Weblate PO files to client locale directories"
     done
 
     echo 
     echo "Moving .pot files"
-    mv $WORKING_DIRECTORY/ui-strings/explore/explore.pot $CLIENT_LOCALE_LOCATION/en
-    mv $WORKING_DIRECTORY/ui-strings/questionnaire/questionnaire.pot $CLIENT_LOCALE_LOCATION/en
-    mv $WORKING_DIRECTORY/ui-strings/jsx_strings/jsx_strings.pot $CLIENT_LOCALE_LOCATION/en
+    mv $WEBLATE_DIRECTORY/ui-strings/explore/explore.pot $CLIENT_LOCALE_LOCATION/en
+    mv $WEBLATE_DIRECTORY/ui-strings/questionnaire/questionnaire.pot $CLIENT_LOCALE_LOCATION/en
+    mv $WEBLATE_DIRECTORY/ui-strings/jsx_strings/jsx_strings.pot $CLIENT_LOCALE_LOCATION/en
     checkForSuccess "move Weblate PO files to client locale"
 }
 
@@ -181,13 +191,13 @@ combine_po_files() {
     for locale in "${locales[@]}"
     do
         echo "Combining PO files for ${locale}..."
-        msgcat locale/$locale/*.po > locale/$locale/messages.po
+        msgcat $CLIENT_LOCALE_LOCATION/$locale/*.po > $CLIENT_LOCALE_LOCATION/$locale/messages.po
         checkForSuccess "combine PO files"
     done
 
     echo
     echo "Combining POT files for en"
-    msgcat locale/en/*.pot > locale/en/messages.po
+    msgcat $CLIENT_LOCALE_LOCATION/en/*.pot > $CLIENT_LOCALE_LOCATION/en/messages.po
     checkForSuccess "combine POT files"
 
 }
@@ -229,8 +239,8 @@ elif [ "$1" == "--clean" ]; then
     clean
 
 elif [ "$1" == "--combine-pos" ]; then 
-    create_working_directory
-    clone_weblate_repository
+    create_weblate_directory
+    check_out_weblate_by_tag
     add_po_files_to_client_locale_dir
     combine_po_files 
 
@@ -238,7 +248,3 @@ else
     help
 fi
 
-
-
-
-   
