@@ -11,7 +11,7 @@ import { selectExploreSectionFromTask } from './select_explore_section_from_task
 import { isTaskRecommended } from './is_task_recommended';
 import { pickExploreSectionById } from '../explore/pick_explore_section_by_id';
 import { pickTasks } from './pick_tasks';
-import { sortTaskList } from './sort_task_list';
+import { sortTopicList } from './sort_topic_list';
 import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
 import { pickAnswers } from '../questionnaire/pick_answers';
 
@@ -30,5 +30,5 @@ export const selectTopicForCurrentExploreSection = (appStore: Store, routerProps
         return toSelectorTaskWithoutRelatedEntities(locale, topic, exploreSectionForTask, isRecommended);
     };
 
-    return sortTaskList(R.map(buildTask, matchingTasks));
+    return sortTopicList(R.map(buildTask, matchingTasks));
 };

@@ -12,7 +12,7 @@ import { ExploreSection } from '../explore/types';
 import { toSelectorTask } from '../topics/to_selector_task';
 import { Topic } from '../topics/topic';
 import { isTaskRecommended } from '../topics/is_task_recommended';
-import { sortTaskList } from '../topics/sort_task_list';
+import { sortTopicList } from '../topics/sort_topic_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';
 import { getRecommendedTasks } from '../topics/get_recommended_tasks';
 import { rejectTasksWithIds } from '../topics/reject_tasks_with_ids';
@@ -366,7 +366,7 @@ describe('topics selector', () => {
             const theId = aString();
             const firstByRecommended = new ViewTaskBuilder().withId(theId).withIsRecommended(true).build();
             const lastByRecommended = new ViewTaskBuilder().withId(theId).withIsRecommended(false).build();
-            const sorted = sortTaskList([lastByRecommended, firstByRecommended]);
+            const sorted = sortTopicList([lastByRecommended, firstByRecommended]);
             expect(sorted[0]).toBe(firstByRecommended);
             expect(sorted[1]).toBe(lastByRecommended);
         });
@@ -375,7 +375,7 @@ describe('topics selector', () => {
             const isRecommended = aBoolean();
             const firstById = new ViewTaskBuilder().withId('aaa').withIsRecommended(isRecommended).build();
             const lastById = new ViewTaskBuilder().withId('bbb').withIsRecommended(isRecommended).build();
-            const sorted = sortTaskList([lastById, firstById]);
+            const sorted = sortTopicList([lastById, firstById]);
             expect(sorted[0]).toBe(firstById);
             expect(sorted[1]).toBe(lastById);
         });
@@ -383,7 +383,7 @@ describe('topics selector', () => {
         it('sorts by recommended flag if they have different ids', () => {
             const firstByIdLastByRecommended = new ViewTaskBuilder().withId('aaa').withIsRecommended(false).build();
             const lastByIdFirstByRecommended = new ViewTaskBuilder().withId('bbb').withIsRecommended(true).build();
-            const sorted = sortTaskList([firstByIdLastByRecommended, lastByIdFirstByRecommended]);
+            const sorted = sortTopicList([firstByIdLastByRecommended, lastByIdFirstByRecommended]);
             expect(sorted[0]).toBe(lastByIdFirstByRecommended);
             expect(sorted[1]).toBe(firstByIdLastByRecommended);
         });
