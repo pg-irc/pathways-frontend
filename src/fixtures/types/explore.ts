@@ -1,12 +1,11 @@
-import { LocalizedText } from '../../locale';
 import { TaxonomyTermReference } from './taxonomies';
 
 export type Id = string;
 
 export interface ExploreSection {
     readonly id: Id;
-    readonly name: LocalizedText;
-    readonly description: LocalizedText;
+    readonly name: string;
+    readonly description: string;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
 }
 
