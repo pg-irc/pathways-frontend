@@ -7,7 +7,7 @@ import { selectLocale } from '../locale/select_locale';
 import { findItemsByExploreTaxonomyTerm } from '../taxonomies/find_items_by_explore_taxonomy_term';
 import { Topic } from './topic';
 import { toSelectorTopicWithoutRelatedEntities } from './to_selector_topic_without_related_entities';
-import { selectExploreSectionFromTask } from './select_explore_section_from_task';
+import { selectExploreSectionFromTopic } from './select_explore_section_from_topic';
 import { isTaskRecommended } from './is_task_recommended';
 import { pickExploreSectionById } from '../explore/pick_explore_section_by_id';
 import { pickTasks } from './pick_tasks';
@@ -23,7 +23,7 @@ export const selectTopicForCurrentExploreSection = (appStore: Store, routerProps
     const locale = selectLocale(appStore);
 
     const buildTask = (topic: store.Topic): Topic => {
-        const exploreSectionForTask = selectExploreSectionFromTask(appStore, topic);
+        const exploreSectionForTask = selectExploreSectionFromTopic(appStore, topic);
         const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
         const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(pickAnswers(appStore));
         const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, topic);

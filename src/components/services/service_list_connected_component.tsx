@@ -3,7 +3,7 @@ import { Location } from 'history';
 import { Store } from '../../stores';
 import { sendTopicServicesRequest, SendTopicServicesRequestAction } from '../../stores/services';
 import { connect } from 'react-redux';
-import { selectCurrentTask } from '../../selectors/topics/select_current_task';
+import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/topic';
 import { selectTaskServices } from '../../selectors/services/select_task_services';
 import {
@@ -18,7 +18,7 @@ type OwnProps = {
 
 const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.Services);
-    const topic: Topic = selectCurrentTask(store, matchParams.topicId);
+    const topic: Topic = selectCurrentTopic(store, matchParams.topicId);
     return {
         topic,
         taskServicesOrError: selectTaskServices(topic.id, store),

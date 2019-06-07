@@ -9,7 +9,7 @@ import { isTaskRecommended } from './is_task_recommended';
 import { pickTasks } from './pick_tasks';
 import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
 import { pickAnswers } from '../questionnaire/pick_answers';
-import { selectExploreSectionFromTask } from './select_explore_section_from_task';
+import { selectExploreSectionFromTopic } from './select_explore_section_from_topic';
 
 export const buildSelectorTaskListItem = R.curry((appStore: Store, topicId: store.Id): TopicListItem => {
     const locale = selectLocale(appStore);
@@ -18,6 +18,6 @@ export const buildSelectorTaskListItem = R.curry((appStore: Store, topicId: stor
     const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
     const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(pickAnswers(appStore));
     const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, topic);
-    const exploreSection = selectExploreSectionFromTask(appStore, topic);
+    const exploreSection = selectExploreSectionFromTopic(appStore, topic);
     return toSelectorTopicListItem(locale, topic, isRecommended, exploreSection);
 });
