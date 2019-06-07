@@ -8,7 +8,7 @@ import {
     Id as TopicId, RemoveFromSavedListAction, AddToSavedListAction,
     addToSavedList, removeFromSavedList,
 } from '../../stores/topics';
-import { pickSavedTaskIds } from '../../selectors/topics/pick_saved_task_ids';
+import { pickSavedTopicIds } from '../../selectors/topics/pick_saved_topic_ids';
 
 type OwnProps = {
     readonly history: History,
@@ -18,7 +18,7 @@ type OwnProps = {
 
 const mapStateToProps = (store: Store, ownProps: OwnProps): HeaderProps => ({
     currentLocale: selectLocale(store),
-    savedTasksIdList: pickSavedTaskIds(store),
+    savedTasksIdList: pickSavedTopicIds(store),
     history: ownProps.history,
     location: ownProps.location,
 });

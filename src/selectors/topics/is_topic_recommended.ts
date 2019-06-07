@@ -7,7 +7,7 @@ import * as R from 'ramda';
 type Term = TaxonomyTermReference;
 type TermList = ReadonlyArray<Term>;
 
-export const isTaskRecommended = R.curry((relevantTaxonomyIds: ReadonlyArray<Id>, chosenTermsFromQuestionnaire: TermList, topic: Topic): boolean => {
+export const isTopicRecommended = R.curry((relevantTaxonomyIds: ReadonlyArray<Id>, chosenTermsFromQuestionnaire: TermList, topic: Topic): boolean => {
 
     if (isTaskRecommendedToAll(topic)) {
         return true;
