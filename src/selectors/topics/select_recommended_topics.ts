@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { Store } from '../../stores';
-import { buildSelectorTaskListItem } from './build_selector_task_list_item';
+import { buildSelectorTopicListItem } from './build_selector_topic_list_item';
 import { pickAnswers } from '../questionnaire/pick_answers';
 import { pickTopics } from './pick_topics';
 import { getRecommendedTopics } from './get_recommended_topics';
@@ -10,5 +10,5 @@ export const selectRecommendedTopics = (appStore: Store): ReadonlyArray<TopicLis
     const tasks = pickTopics(appStore);
     const answers = pickAnswers(appStore);
     const recommendedTasks = getRecommendedTopics(answers, tasks);
-    return R.map(buildSelectorTaskListItem(appStore), R.pluck('id', recommendedTasks));
+    return R.map(buildSelectorTopicListItem(appStore), R.pluck('id', recommendedTasks));
 };

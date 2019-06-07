@@ -19,7 +19,7 @@ import { rejectTopicsWithIds } from '../topics/reject_topics_with_ids';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
 import { getNewlyRecommendedTopics } from '../topics/get_newly_recommended_topics';
 import { AnswersMap, Answer } from '../../stores/questionnaire';
-import { getAllTaxonomyTermsFromTasks } from '../topics/get_all_taxonomy_terms_from_tasks';
+import { getAllTaxonomyTermsFromTopics } from '../topics/get_all_taxonomy_terms_from_topics';
 import { getIdsOfCompletedTopics } from '../topics/get_ids_of_completed_topics';
 import * as R from 'ramda';
 
@@ -395,7 +395,7 @@ describe('topics selector', () => {
         it('should return taxonomy term', () => {
             const aTask = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id').build();
 
-            const result = getAllTaxonomyTermsFromTasks({ 'id': aTask });
+            const result = getAllTaxonomyTermsFromTopics({ 'id': aTask });
 
             expect(result).toEqual([aTaxonomyTerm]);
         });
@@ -404,7 +404,7 @@ describe('topics selector', () => {
             const aTask = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id1').build();
             const aSecondTaskWithSameTaxonomyTerm = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).withId('id2').build();
 
-            const result = getAllTaxonomyTermsFromTasks({ 'id1': aTask, 'id2': aSecondTaskWithSameTaxonomyTerm });
+            const result = getAllTaxonomyTermsFromTopics({ 'id1': aTask, 'id2': aSecondTaskWithSameTaxonomyTerm });
 
             expect(result).toEqual([aTaxonomyTerm]);
         });
