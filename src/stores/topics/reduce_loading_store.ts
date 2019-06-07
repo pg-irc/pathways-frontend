@@ -1,18 +1,18 @@
-import { TaskStore, ValidTaskStore, LoadingTaskStore, InvalidTaskStore } from './stores';
+import { TaskStore, ValidTopicStore, LoadingTopicStore, InValidTopicStore } from './stores';
 import * as UserStateActions from '../../application/constants';
 import { TaskAction } from './actions';
 import { TopicMap, Id, Topic } from '../../fixtures/types/topics';
 import * as R from 'ramda';
 
-export const reduceLoadingStore = (store: LoadingTaskStore, action: TaskAction): TaskStore => {
+export const reduceLoadingStore = (store: LoadingTopicStore, action: TaskAction): TaskStore => {
     switch (action.type) {
         case UserStateActions.LOAD_USER_DATA_SUCCESS:
-            return new ValidTaskStore({
+            return new ValidTopicStore({
                 topicMap: R.map(setCompleted(action.payload.completedTasks), store.lastValidState.topicMap),
                 savedTopicsList: filterValidIds(store.lastValidState.topicMap, action.payload.savedTasks),
             });
         case UserStateActions.LOAD_USER_DATA_FAILURE:
-            return new InvalidTaskStore(store.lastValidState, action.payload.message);
+            return new InValidTopicStore(store.lastValidState, action.payload.message);
         default:
             return store;
     }

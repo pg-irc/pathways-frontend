@@ -12,7 +12,7 @@ describe('topics reducer', () => {
 
     describe('with a valid store', () => {
 
-        let validStore: stores.ValidTaskStore;
+        let validStore: stores.ValidTopicStore;
 
         beforeEach(() => {
             const topicBuilder = new TopicBuilder();
@@ -66,12 +66,12 @@ describe('topics reducer', () => {
 
             it('returns a loading store from a load request action', () => {
                 const finalStore = stores.reducer(validStore, UserDataPersistence.loadRequest());
-                expect(finalStore).toBeInstanceOf(stores.LoadingTaskStore);
+                expect(finalStore).toBeInstanceOf(stores.LoadingTopicStore);
             });
 
             it('should return a store with the last known valid state', () => {
                 const finalStore = stores.reducer(validStore, UserDataPersistence.loadRequest());
-                if (finalStore instanceof stores.LoadingTaskStore) {
+                if (finalStore instanceof stores.LoadingTopicStore) {
                     expect(finalStore.lastValidState).toBe(validStore);
                 } else {
                     fail();
@@ -81,23 +81,23 @@ describe('topics reducer', () => {
 
         describe('with a loading store', () => {
 
-            let loadingStore: stores.LoadingTaskStore;
+            let loadingStore: stores.LoadingTopicStore;
 
             beforeEach(() => {
-                loadingStore = new stores.LoadingTaskStore(validStore);
+                loadingStore = new stores.LoadingTopicStore(validStore);
             });
 
             describe('when handling a load error', () => {
 
                 it('should return an invalid store', () => {
                     const finalStore = stores.reducer(loadingStore, UserDataPersistence.loadFailure(''));
-                    expect(finalStore).toBeInstanceOf(stores.InvalidTaskStore);
+                    expect(finalStore).toBeInstanceOf(stores.InValidTopicStore);
                 });
 
                 it('should return s store with the error message', () => {
                     const error = aString();
                     const finalStore = stores.reducer(loadingStore, UserDataPersistence.loadFailure(error));
-                    if (finalStore instanceof stores.InvalidTaskStore) {
+                    if (finalStore instanceof stores.InValidTopicStore) {
                         expect(finalStore.error).toBe(error);
                     } else {
                         fail();
@@ -119,7 +119,7 @@ describe('topics reducer', () => {
                         [firstTaskBuilder, secondTaskBuilder],
                         [firstTaskId],
                     );
-                    const theStore = new stores.LoadingTaskStore(validStoreWhereFirstTaskIsSaved);
+                    const theStore = new stores.LoadingTopicStore(validStoreWhereFirstTaskIsSaved);
 
                     const persistedDataWhereSecondTaskIsSaved = new PersistedUserDataBuilder().
                         addSavedTask(secondTaskId).
@@ -130,7 +130,7 @@ describe('topics reducer', () => {
                 });
 
                 it('should return a valid store', () => {
-                    expect(resultStore).toBeInstanceOf(stores.ValidTaskStore);
+                    expect(resultStore).toBeInstanceOf(stores.ValidTopicStore);
                 });
 
                 it('should return a store with topic saved in loaded data marked as saved', () => {
@@ -146,7 +146,7 @@ describe('topics reducer', () => {
             it('should ignore invalid topic ids in the loaded data', () => {
                 const topicBuilder = new TopicBuilder();
                 const theValidStore = buildNormalizedStore([topicBuilder], []);
-                const theLoadingStore = new stores.LoadingTaskStore(theValidStore);
+                const theLoadingStore = new stores.LoadingTopicStore(theValidStore);
                 const dataWithInvalidId = new PersistedUserDataBuilder().
                     addSavedTask(aString()).
                     buildObject();
@@ -160,7 +160,7 @@ describe('topics reducer', () => {
                     const topicId = aString();
                     const theTask = new TopicBuilder().withId(topicId).withCompleted(false);
                     const storeState = buildNormalizedStore([theTask], []);
-                    const theStore = new stores.LoadingTaskStore(storeState);
+                    const theStore = new stores.LoadingTopicStore(storeState);
                     const actionStateWithCompletedTask = new PersistedUserDataBuilder().
                         addCompletedTask(topicId).
                         buildObject();
@@ -176,7 +176,7 @@ describe('topics reducer', () => {
                     const topicId = aString();
                     const theTask = new TopicBuilder().withId(topicId).withCompleted(true);
                     const storeState = buildNormalizedStore([theTask], []);
-                    const theStore = new stores.LoadingTaskStore(storeState);
+                    const theStore = new stores.LoadingTopicStore(storeState);
                     const actionStateWithNoCompletedTasks = new PersistedUserDataBuilder().buildObject();
                     const theAction = UserDataPersistence.loadSuccess(actionStateWithNoCompletedTasks);
 

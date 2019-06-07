@@ -1,9 +1,9 @@
 // tslint:disable:no-class no-expression-statement no-this
 
 import { ValidTopicStore } from '../../fixtures/types/topics';
-export { ValidTopicStore as ValidTaskStore } from '../../fixtures/types/topics';
+export { ValidTopicStore } from '../../fixtures/types/topics';
 
-export class InvalidTaskStore {
+export class InValidTopicStore {
     readonly lastValidState: ValidTopicStore;
     readonly error: string;
 
@@ -13,7 +13,7 @@ export class InvalidTaskStore {
     }
 }
 
-export class LoadingTaskStore {
+export class LoadingTopicStore {
     readonly lastValidState: ValidTopicStore;
 
     constructor(lastValidState: ValidTopicStore) {
@@ -21,7 +21,7 @@ export class LoadingTaskStore {
     }
 }
 
-export type TaskStore = ValidTopicStore | InvalidTaskStore | LoadingTaskStore;
+export type TaskStore = ValidTopicStore | InValidTopicStore | LoadingTopicStore;
 
 export const toValidOrThrow = (store: TaskStore): ValidTopicStore => {
     if (store instanceof ValidTopicStore) {
