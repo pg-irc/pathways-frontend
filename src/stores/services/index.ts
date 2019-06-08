@@ -13,8 +13,8 @@ import {
     ServicesAction,
 } from './actions';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
-import { isValidTaskServices } from './is_valid_task_services';
-import { isErrorTaskServices } from './is_error_task_services';
+import { isValidServicesForTopic } from './is_valid_services_for_topic';
+import { isErrorServicesForTopic } from './is_error_services_for_topic';
 
 export {
     Id, Service, ServiceStore,
@@ -27,7 +27,7 @@ export {
     SendTopicServicesRequestAction, sendTopicServicesRequest,
     PopulateTopicServicesFromSuccessAction, populateTopicServicesFromSuccess,
     PopulateTopicServicesFromErrorAction, populateTopicServicesFromError,
-    isValidTaskServices, isErrorTaskServices,
+    isValidServicesForTopic as isValidTaskServices, isErrorServicesForTopic as isErrorTaskServices,
     serviceAtLocation,
     serviceAtLocationArray,
 };
