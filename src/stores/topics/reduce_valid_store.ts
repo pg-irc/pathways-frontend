@@ -7,10 +7,10 @@ import * as R from 'ramda';
 export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): TopicStore => {
     switch (action.type) {
         case constants.ADD_TO_SAVED_TOPICS:
-            return addToTaskList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
+            return addToTopicList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
 
         case constants.REMOVE_FROM_SAVED_TOPICS:
-            return removeFromTaskList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
+            return removeFromTopicList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
 
         case constants.TOGGLE_IS_TOPIC_COMPLETED:
             return toggleCompletedValue(store, action.payload.topicId);
@@ -30,18 +30,18 @@ export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): T
     }
 };
 
-const addToTaskList = (store: ValidTopicStore, property: keyof (ValidTopicStore), taskList: TopicList, value: Id): ValidTopicStore => {
-    if (taskList.indexOf(value) !== -1) {
+const addToTopicList = (store: ValidTopicStore, property: keyof (ValidTopicStore), topicList: TopicList, value: Id): ValidTopicStore => {
+    if (topicList.indexOf(value) !== -1) {
         return store;
     }
-    return new ValidTopicStore({ ...store, [property]: [...taskList, value] });
+    return new ValidTopicStore({ ...store, [property]: [...topicList, value] });
 };
 
-const removeFromTaskList = (store: ValidTopicStore, property: keyof (ValidTopicStore), taskList: TopicList, value: Id): ValidTopicStore => {
-    if (taskList.indexOf(value) === -1) {
+const removeFromTopicList = (store: ValidTopicStore, property: keyof (ValidTopicStore), topicList: TopicList, value: Id): ValidTopicStore => {
+    if (topicList.indexOf(value) === -1) {
         return store;
     }
-    return new ValidTopicStore({ ...store, [property]: taskList.filter((id: Id) => id !== value) });
+    return new ValidTopicStore({ ...store, [property]: topicList.filter((id: Id) => id !== value) });
 };
 
 const toggleCompletedValue = (store: ValidTopicStore, topicId: Id): ValidTopicStore => {

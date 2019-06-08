@@ -18,11 +18,11 @@ export const reduceLoadingStore = (store: LoadingTopicStore, action: TopicAction
     }
 };
 
-const filterValidIds = (tasks: TopicMap, ids: ReadonlyArray<Id>): ReadonlyArray<Id> => (
-    R.filter((id: string): boolean => R.has(id, tasks), ids)
+const filterValidIds = (topics: TopicMap, ids: ReadonlyArray<Id>): ReadonlyArray<Id> => (
+    R.filter((id: string): boolean => R.has(id, topics), ids)
 );
 
-const setCompleted = R.curry((completedTaskIds: ReadonlyArray<Id>, topic: Topic): Topic => ({
+const setCompleted = R.curry((completedTopicIds: ReadonlyArray<Id>, topic: Topic): Topic => ({
     ...topic,
-    completed: R.contains(topic.id, completedTaskIds),
+    completed: R.contains(topic.id, completedTopicIds),
 }));

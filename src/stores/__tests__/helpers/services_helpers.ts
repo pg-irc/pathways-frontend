@@ -3,9 +3,9 @@ import { aString, aNumber } from '../../../application/__tests__/helpers/random_
 import { Id } from '../../services';
 import { AsyncGenericErrorType } from '../../../async/error_types';
 import {
-    ValidTaskServices, LoadingTaskServices, Service, ServiceMap,
-    ServiceStore, PhoneNumber, Address, ErrorTaskServices,
-    TaskServicesMap,
+    ValidServicesForTopic, LoadingServicesForTopic, Service, ServiceMap,
+    ServiceStore, PhoneNumber, Address, ErrorServicesForTopic,
+    ServicesForAllTopics,
 } from '../../services/types';
 import * as constants from '../../../application/constants';
 
@@ -14,7 +14,7 @@ export const buildNormalizedServices = (
     taskServicesOrError: ReadonlyArray<TaskServicesBuilder | TaskServicesErrorBuilder>,
 ): ServiceStore => ({
     services: buildServiceMap(services),
-    taskServicesOrError: buildTaskServicesOrErrorMap(taskServicesOrError),
+    servicesByTopic: buildTaskServicesOrErrorMap(taskServicesOrError),
 });
 
 const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {
@@ -26,9 +26,9 @@ const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap =>
 
 const buildTaskServicesOrErrorMap = (
     taskServicesOrError: ReadonlyArray<TaskServicesBuilder | TaskServicesErrorBuilder>,
-): TaskServicesMap => {
-    const buildAndMapToId = (map: TaskServicesMap, builder: TaskServicesBuilder | TaskServicesErrorBuilder):
-        TaskServicesMap => {
+): ServicesForAllTopics => {
+    const buildAndMapToId = (map: ServicesForAllTopics, builder: TaskServicesBuilder | TaskServicesErrorBuilder):
+        ServicesForAllTopics => {
         return { ...map, [builder.topicId]: builder.build() };
     };
     return taskServicesOrError.reduce(buildAndMapToId, {});
@@ -172,7 +172,7 @@ export class TaskServicesBuilder {
         return this;
     }
 
-    build(): ValidTaskServices | LoadingTaskServices {
+    build(): ValidServicesForTopic | LoadingServicesForTopic {
         if (this.loading) {
             return {
                 type: constants.TOPIC_SERVICES_LOADING,
@@ -206,7 +206,7 @@ export class TaskServicesErrorBuilder {
         return this;
     }
 
-    build(): ErrorTaskServices {
+    build(): ErrorServicesForTopic {
         return {
             type: constants.TOPIC_SERVICES_ERROR,
             errorMessage: this.errorMessage,
