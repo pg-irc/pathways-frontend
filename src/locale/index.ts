@@ -1,4 +1,5 @@
 // tslint:disable:no-class no-this no-let readonly-keyword readonly-array no-expression-statement
+
 // Unfortunately we need to load the Intl polyfill for Android. iOS has Intl
 // available natively; we should see it is possibly conditionally load the
 // polyfill only when needed.
@@ -6,45 +7,37 @@ import 'intl';
 import 'intl/locale-data/jsonp/en.js';
 import 'intl/locale-data/jsonp/ar.js';
 import 'intl/locale-data/jsonp/fr.js';
-// Tell OS to enable RTL support.
 import { I18nManager } from 'react-native';
 import { CatalogsMap, Catalog, Locale, LocaleInfo, LocaleInfoWithCatalog, LocalizedText } from './types';
 
-/**
- * Types
- */
 export { CatalogsMap, Catalog, Locale, LocaleInfo, LocalizedText };
 
-/**
- * Side-effects
- */
 export { needsTextDirectionChange, setTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode } from './effects';
 
 export class LocaleInfoManager {
 
-    /**
-     * Singleton nstance of LocaleManager.
-     */
-    private static localeInfoManagerInstance: LocaleInfoManager = undefined;
+    private static singleton: LocaleInfoManager = undefined;
 
-    /**
-     * Creates a singleton instance of LocaleManager with
-     * the provided locales. Throws a runtime error if called twice.
-     * @param locales The list of locales to register with the singleton.
-     */
-    static registerSingle = (locale: LocaleInfoWithCatalog, ...locales: Array<LocaleInfoWithCatalog>): void => {
-        LocaleInfoManager.register([locale, ...locales]);
+    static registerSingle = (locale: LocaleInfoWithCatalog): void => {
+        LocaleInfoManager.register([locale]);
     }
 
     static register(locale: ReadonlyArray<LocaleInfoWithCatalog>): void {
-        if (this.localeInfoManagerInstance !== undefined) {
+        if (this.singleton !== undefined) {
             throw new Error('Cannot register new locales after locale manager has been built');
         }
-        this.localeInfoManagerInstance = new LocaleInfoManager(locale);
+        this.singleton = new LocaleInfoManager(locale);
     }
 
     static reset(): void {
-        this.localeInfoManagerInstance = undefined;
+        this.singleton = undefined;
+    }
+
+    private static get instance(): LocaleInfoManager {
+        if (this.singleton === undefined) {
+            throw new Error('LocaleManager not initialized, registerLocales([Locale,...]) must be called first');
+        }
+        return this.singleton;
     }
 
     static get(localeCode: string): LocaleInfo {
@@ -59,15 +52,8 @@ export class LocaleInfoManager {
         return this.instance.locales;
     }
 
-    static get catalogsMap(): CatalogsMap {
+    static catalogsMap(): CatalogsMap {
         return this.instance.catalogsMap;
-    }
-
-    private static get instance(): LocaleInfoManager {
-        if (this.localeInfoManagerInstance === undefined) {
-            throw new Error('LocaleManager not initialized, registerLocales([Locale,...]) must be called first');
-        }
-        return this.localeInfoManagerInstance;
     }
 
     private fallbackLocaleCode: string;
