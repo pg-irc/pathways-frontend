@@ -38,7 +38,7 @@ export class LocaleInfoManager {
     }
 
     static getFallback(): LocaleInfo {
-        return this.instance().getFallback();
+        return this.instance().locales[0];
     }
 
     static all(): ReadonlyArray<LocaleInfo> {
@@ -56,8 +56,6 @@ export class LocaleInfoManager {
         return this.singleton;
     }
 
-    private fallbackLocaleCode: string;
-
     private locales: ReadonlyArray<LocaleInfo>;
 
     private catalogsMap: CatalogsMap;
@@ -65,13 +63,7 @@ export class LocaleInfoManager {
     private constructor(locales: ReadonlyArray<LocaleInfoWithCatalog>) {
         I18nManager.allowRTL(true);
         this.setLocales(locales);
-        this.fallbackLocaleCode = this.getDefaultFallbackLocaleCode(locales);
         this.catalogsMap = buildCatalogsMap(locales);
-    }
-
-    private getDefaultFallbackLocaleCode(locales: ReadonlyArray<LocaleInfo>): string {
-        const [fallbackLocale]: ReadonlyArray<LocaleInfo> = locales;
-        return fallbackLocale.code;
     }
 
     private setLocales(locales: ReadonlyArray<LocaleInfoWithCatalog>): LocaleInfoManager {
@@ -93,11 +85,6 @@ export class LocaleInfoManager {
     private findLocale(code: string): LocaleInfo {
         return this.locales.find((aLocale: LocaleInfo): boolean => aLocale.code === code);
     }
-
-    private getFallback(): LocaleInfo {
-        return this.getLocaleInfo(this.fallbackLocaleCode);
-    }
-
 }
 
 function buildCatalogsMap(withLocales: ReadonlyArray<LocaleInfoWithCatalog>): CatalogsMap {
