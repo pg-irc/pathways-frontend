@@ -34,12 +34,8 @@ describe('LocaleManager', () => {
             LocaleInfoManager.reset();
         });
 
-        it('should return the LocaleManager', () => {
-            expect(LocaleInfoManager.registerSingle(aLocale)).toBe(LocaleInfoManager);
-        });
-
         it('should throw an error if called twice', () => {
-            expect(LocaleInfoManager.registerSingle(aLocale)).toBe(LocaleInfoManager);
+            LocaleInfoManager.registerSingle(aLocale);
             expect(() => LocaleInfoManager.registerSingle(aLocale)).toThrow();
         });
 
@@ -61,7 +57,7 @@ describe('LocaleManager', () => {
         });
 
         it('.get() should return a locale when given a known locale code', () => {
-            const aLocale = availableLocales[availableLocales.length -  1];
+            const aLocale = availableLocales[availableLocales.length - 1];
             expect(LocaleInfoManager.get(aLocale.code)).toEqual(aLocale);
         });
 

@@ -84,7 +84,8 @@ describe('the applyLocaleChange saga', () => {
         let saga: IterableIterator<CallEffect | PutEffect<SetLocale.Result>>;
 
         beforeEach(() => {
-            LocaleInfoManager.reset().registerSingle({ ...aLocale, catalog: {} });
+            LocaleInfoManager.reset();
+            LocaleInfoManager.registerSingle({ ...aLocale, catalog: {} });
             saga = applyLocaleChange(setLocaleAction);
             saga.next();
         });
