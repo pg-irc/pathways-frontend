@@ -8,7 +8,7 @@ import { selectLocale } from '../locale/select_locale';
 import { pullExploreTaxonomy } from '../taxonomies/pull_explore_taxonomy';
 
 export const selectExploreSectionFromTopic = (appStore: Store, topic: store.Topic): ExploreSection => {
-    const storeExploreSection = taskDetails.findExploreSectionBy(topic, appStore.exploreSectionsInStore.sections);
+    const storeExploreSection = taskDetails.findExploreSectionBy(topic, appStore.exploreSections.sections);
     const exploreTaxonomy = pullExploreTaxonomy(appStore);
     const icon = selectIconFromExploreTaxonomy(storeExploreSection.taxonomyTerms, exploreTaxonomy);
     const locale = selectLocale(appStore);
