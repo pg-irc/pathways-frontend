@@ -32,20 +32,19 @@ export class LocaleInfoManager {
      * the provided locales. Throws a runtime error if called twice.
      * @param locales The list of locales to register with the singleton.
      */
-    static registerSingle = (locale: LocaleInfoWithCatalog, ...locales: Array<LocaleInfoWithCatalog>):
-        typeof LocaleInfoManager => LocaleInfoManager.register([locale, ...locales])
+    static registerSingle = (locale: LocaleInfoWithCatalog, ...locales: Array<LocaleInfoWithCatalog>): void => {
+        LocaleInfoManager.register([locale, ...locales]);
+    }
 
-    static register(locale: ReadonlyArray<LocaleInfoWithCatalog>): typeof LocaleInfoManager {
+    static register(locale: ReadonlyArray<LocaleInfoWithCatalog>): void {
         if (this.localeInfoManagerInstance !== undefined) {
             throw new Error('Cannot register new locales after locale manager has been built');
         }
         this.localeInfoManagerInstance = new LocaleInfoManager(locale);
-        return this;
     }
 
-    static reset(): typeof LocaleInfoManager {
+    static reset(): void {
         this.localeInfoManagerInstance = undefined;
-        return this;
     }
 
     static get(localeCode: string): LocaleInfo {
@@ -64,10 +63,6 @@ export class LocaleInfoManager {
         return this.instance.catalogsMap;
     }
 
-    /**
-     * Returns the LocaleManager singleton instance if it exists, otherwise throws
-     * a runtime error.
-     */
     private static get instance(): LocaleInfoManager {
         if (this.localeInfoManagerInstance === undefined) {
             throw new Error('LocaleManager not initialized, registerLocales([Locale,...]) must be called first');
