@@ -33,8 +33,8 @@ const buildStoreWithLocaleData = (): Store => {
     const defaultStore = buildDefaultStore();
     return {
         ...defaultStore,
-        localeInStore: {
-            ...defaultStore.localeInStore,
+        locale: {
+            ...defaultStore.locale,
             availableLocales: LocaleInfoManager.all,
             fallback: LocaleInfoManager.getFallback().code,
         },

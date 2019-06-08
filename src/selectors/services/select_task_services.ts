@@ -7,9 +7,9 @@ import { toErrorSelectorTaskServices } from './to_error_selector_task_services';
 import * as constants from '../../application/constants';
 
 export const selectTaskServices = (topicId: TaskId, store: Store): SelectorTopicServices => {
-    const topicServices = store.servicesInStore.servicesByTopic[topicId] || buildEmptyServicesForTopic();
+    const topicServices = store.services.servicesByTopic[topicId] || buildEmptyServicesForTopic();
     if (isValidServicesForTopic(topicServices)) {
-        return toValidSelectorTaskServices(topicServices, store.servicesInStore.services);
+        return toValidSelectorTaskServices(topicServices, store.services.services);
     }
     if (isErrorServicesForTopic(topicServices)) {
         return toErrorSelectorTaskServices(topicServices);

@@ -9,7 +9,7 @@ export namespace LoadFonts {
 }
 
 type ReducerActions = LoadFonts.Request | LoadFonts.Result;
-export type Store = Readonly<ReturnType<typeof buildDefaultStore>>;
+export type FontsStore = Readonly<ReturnType<typeof buildDefaultStore>>;
 
 interface Fonts {
     readonly [name: string]: any; // tslint:disable-line:no-any
@@ -35,7 +35,7 @@ export const loadFontsActions = {
     },
 };
 
-export const reducer = (store: Store = buildDefaultStore(), action?: ReducerActions): Store => {
+export const reducer = (store: FontsStore = buildDefaultStore(), action?: ReducerActions): FontsStore => {
     if (!action) {
         return store;
     }
