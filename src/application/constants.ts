@@ -39,17 +39,17 @@ export const PREFERENCES_LOCALE_CODE = 'PREFERENCES:LOCALE_CODE';
 export const USER_DATA_STORAGE_KEY = 'QUESTIONNAIRE_LOCAL_STORAGE_KEY';
 
 export namespace Taxonomies {
-  export const EXPLORE_TAXONOMY_ID = 'explore';
-  export const RECOMMENDATION_TAXONOMY_ID = 'recommendation';
-  export const RECOMMEND_TO_ALL_TAXONOMY_TERM_ID = 'recommendToAll';
+    export const EXPLORE_TAXONOMY_ID = 'explore';
+    export const RECOMMENDATION_TAXONOMY_ID = 'recommendation';
+    export const RECOMMEND_TO_ALL_TAXONOMY_TERM_ID = 'recommendToAll';
 }
 
 export namespace AnalyticsAsync {
-  export const REQUEST = 'ASYNC:ANALYTICS:REQUEST';
-  export const SUCCESS = 'ASYNC:ANALYTICS:SUCCESS';
-  export const FAILURE = 'ASYNC:ANALYTICS:FAILURE';
+    export const REQUEST = 'ASYNC:ANALYTICS:REQUEST';
+    export const SUCCESS = 'ASYNC:ANALYTICS:SUCCESS';
+    export const FAILURE = 'ASYNC:ANALYTICS:FAILURE';
 }
 
-export const TOPIC_SERVICES_VALID = 'TopicServices:Valid';
-export const TOPIC_SERVICES_LOADING = 'TopicServices:Loading';
-export const TOPIC_SERVICES_ERROR = 'TopicServices:Error';
+export const TOPIC_SERVICES_VALID = 'ServicesForTopic:Valid';
+export const TOPIC_SERVICES_LOADING = 'ServicesForTopic:Loading';
+export const TOPIC_SERVICES_ERROR = 'ServicesForTopic:Error';
