@@ -33,27 +33,27 @@ export class LocaleInfoManager {
         this.singleton = undefined;
     }
 
-    private static get instance(): LocaleInfoManager {
+    static get(localeCode: string): LocaleInfo {
+        return this.instance().getLocaleInfo(localeCode);
+    }
+
+    static getFallback(): LocaleInfo {
+        return this.instance().getFallback();
+    }
+
+    static all(): ReadonlyArray<LocaleInfo> {
+        return this.instance().locales;
+    }
+
+    static catalogsMap(): CatalogsMap {
+        return this.instance().catalogsMap;
+    }
+
+    private static instance(): LocaleInfoManager {
         if (this.singleton === undefined) {
             throw new Error('LocaleManager not initialized, registerLocales([Locale,...]) must be called first');
         }
         return this.singleton;
-    }
-
-    static get(localeCode: string): LocaleInfo {
-        return this.instance.getLocaleInfo(localeCode);
-    }
-
-    static getFallback(): LocaleInfo {
-        return this.instance.getFallback();
-    }
-
-    static get all(): ReadonlyArray<LocaleInfo> {
-        return this.instance.locales;
-    }
-
-    static catalogsMap(): CatalogsMap {
-        return this.instance.catalogsMap;
     }
 
     private fallbackLocaleCode: string;
