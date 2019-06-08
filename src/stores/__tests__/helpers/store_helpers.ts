@@ -31,7 +31,7 @@ export class ApplicationStoreBuilder {
             fontsInStore: this.fontsInStore,
             localeInStore: this.localeInStore,
             questionnaireInStore: this.questionnaireInStore,
-            tasksInStore: this.tasksInStore,
+            topicsInStore: this.tasksInStore,
             servicesInStore: this.servicesInStore,
             exploreSectionsInStore: this.exploreSectionsInStore,
             taxonomiesInStore: this.taxonomiesInStore,

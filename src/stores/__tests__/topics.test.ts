@@ -43,17 +43,17 @@ describe('topics reducer', () => {
 
         describe('clear all user data action', () => {
             test('sets topic to not completed', () => {
-                const aTask = new TopicBuilder().withCompleted(true);
-                const theStore = buildNormalizedStore([aTask], []);
+                const aTopic = new TopicBuilder().withCompleted(true);
+                const theStore = buildNormalizedStore([aTopic], []);
 
                 const finalStore = stores.reducer(theStore, clearAllUserData());
 
-                expect(stores.toValidOrThrow(finalStore).topicMap[aTask.id].completed).toBe(false);
+                expect(stores.toValidOrThrow(finalStore).topicMap[aTopic.id].completed).toBe(false);
             });
 
             test('removes topic from my plan', () => {
-                const aTask = new TopicBuilder();
-                const theStore = buildNormalizedStore([aTask], [aTask.id]);
+                const aTopic = new TopicBuilder();
+                const theStore = buildNormalizedStore([aTopic], [aTopic.id]);
 
                 const finalStore = stores.reducer(theStore, clearAllUserData());
 
