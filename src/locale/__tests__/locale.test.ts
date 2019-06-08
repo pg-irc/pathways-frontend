@@ -21,7 +21,7 @@ describe('LocaleManager', () => {
         });
 
         it('.catalogsMap should throw an error', () => {
-            expect(() => LocaleInfoManager.catalogsMap).toThrow();
+            expect(() => LocaleInfoManager.catalogsMap()).toThrow();
         });
 
     });
@@ -77,7 +77,7 @@ describe('LocaleManager', () => {
             const reducer = (acumulator: CatalogsMap, localeCode: string): CatalogsMap => {
                 return { ...acumulator, [localeCode]: aCatalog };
             };
-            expect(LocaleInfoManager.catalogsMap).toEqual(localeCodes.reduce(reducer, {}));
+            expect(LocaleInfoManager.catalogsMap()).toEqual(localeCodes.reduce(reducer, {}));
         });
 
     });
