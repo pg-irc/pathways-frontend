@@ -34,7 +34,7 @@ describe('services reducer', () => {
                 payload: { topicId },
             };
             const store = reducer(theStore, action);
-            const topicServicesOrError = store.taskServicesOrError[topicId];
+            const topicServicesOrError = store.servicesByTopic[topicId];
             expect(topicServicesOrError).toEqual({ type: constants.TOPIC_SERVICES_LOADING });
         });
 
@@ -44,7 +44,7 @@ describe('services reducer', () => {
                 payload: { topicId: loadedTaskServices.topicId },
             };
             const store = reducer(theStore, action);
-            const topicServices = store.taskServicesOrError[loadedTaskServices.topicId];
+            const topicServices = store.servicesByTopic[loadedTaskServices.topicId];
             expect(isServiceLoading(topicServices)).toBe(true);
         });
 
@@ -54,7 +54,7 @@ describe('services reducer', () => {
                 payload: { topicId: loadedTaskServicesError.topicId },
             };
             const store = reducer(theStore, action);
-            const topicServicesError = store.taskServicesOrError[loadedTaskServicesError.topicId];
+            const topicServicesError = store.servicesByTopic[loadedTaskServicesError.topicId];
             expect(isServiceLoading(topicServicesError)).toBe(true);
         });
 
@@ -79,7 +79,7 @@ describe('services reducer', () => {
             },
         };
         const store = reducer(theStore, action);
-        const topicServicesOrErrorEntry = store.taskServicesOrError[topic.id];
+        const topicServicesOrErrorEntry = store.servicesByTopic[topic.id];
 
         it('updates services', () => {
             const serviceMap = store.services;
@@ -102,7 +102,7 @@ describe('services reducer', () => {
                 },
             };
             const resultStore = reducer(theStore, theAction);
-            const servicesForTask = resultStore.taskServicesOrError[topic.id];
+            const servicesForTask = resultStore.servicesByTopic[topic.id];
             if (isValidTaskServices(servicesForTask)) {
                 const serviceIds = servicesForTask.serviceIds;
                 expect(serviceIds).toEqual(['1', '3', '2']);
@@ -144,7 +144,7 @@ describe('services reducer', () => {
             },
         };
         const store = reducer(theStore, action);
-        const topicServicesOrErrorEntry = store.taskServicesOrError[topic.id];
+        const topicServicesOrErrorEntry = store.servicesByTopic[topic.id];
 
         it('sets the error message on the topic services error object', () => {
             if (topicServicesOrErrorEntry.type === constants.TOPIC_SERVICES_ERROR) {
