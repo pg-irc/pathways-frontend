@@ -17,7 +17,7 @@ describe('LocaleManager', () => {
         });
 
         it('.all should throw an error', () => {
-            expect(() => LocaleInfoManager.all).toThrow();
+            expect(() => LocaleInfoManager.all()).toThrow();
         });
 
         it('.catalogsMap should throw an error', () => {
@@ -70,7 +70,7 @@ describe('LocaleManager', () => {
         });
 
         it('.all should be an array of the known locales', () => {
-            expect(LocaleInfoManager.all).toEqual(availableLocales);
+            expect(LocaleInfoManager.all()).toEqual(availableLocales);
         });
 
         it('.catalogsMap should be a map of the known locale catalogs keyed by locale code', () => {
