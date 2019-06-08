@@ -27,7 +27,7 @@ export {
     SendTopicServicesRequestAction, sendTopicServicesRequest,
     PopulateTopicServicesFromSuccessAction, populateTopicServicesFromSuccess,
     PopulateTopicServicesFromErrorAction, populateTopicServicesFromError,
-    isValidServicesForTopic as isValidTaskServices, isErrorServicesForTopic as isErrorTaskServices,
+    isValidServicesForTopic, isErrorServicesForTopic,
     serviceAtLocation,
     serviceAtLocationArray,
 };
@@ -70,7 +70,7 @@ export function buildDefaultStore(): ServiceStore {
     };
 }
 
-export const buildEmptyTasksServices = (): ValidServicesForTopic => ({
+export const buildEmptyServicesForTopic = (): ValidServicesForTopic => ({
     serviceIds: [],
     type: constants.TOPIC_SERVICES_VALID,
 });

@@ -2,7 +2,7 @@
 import * as constants from '../../application/constants';
 import {
     reducer, SendTopicServicesRequestAction, PopulateTopicServicesFromSuccessAction,
-    PopulateTopicServicesFromErrorAction, Service, isValidTaskServices,
+    PopulateTopicServicesFromErrorAction, Service, isValidServicesForTopic,
 } from '../services';
 import { AsyncGenericErrorType } from '../../async/error_types';
 import { TopicBuilder } from './helpers/topics_helpers';
@@ -103,7 +103,7 @@ describe('services reducer', () => {
             };
             const resultStore = reducer(theStore, theAction);
             const servicesForTask = resultStore.servicesByTopic[topic.id];
-            if (isValidTaskServices(servicesForTask)) {
+            if (isValidServicesForTopic(servicesForTask)) {
                 const serviceIds = servicesForTask.serviceIds;
                 expect(serviceIds).toEqual(['1', '3', '2']);
             } else {
@@ -112,7 +112,7 @@ describe('services reducer', () => {
         });
 
         it('sets service ids on topic services object', () => {
-            if (isValidTaskServices(topicServicesOrErrorEntry)) {
+            if (isValidServicesForTopic(topicServicesOrErrorEntry)) {
                 const serviceIds = topicServicesOrErrorEntry.serviceIds;
                 services.forEach((service: Service) => {
                     expect(serviceIds).toContain(service.id);
@@ -123,7 +123,7 @@ describe('services reducer', () => {
         });
 
         it('replaces service ids on existing topic services object', () => {
-            if (isValidTaskServices(topicServicesOrErrorEntry)) {
+            if (isValidServicesForTopic(topicServicesOrErrorEntry)) {
                 const serviceIds = topicServicesOrErrorEntry.serviceIds;
                 expect(serviceIds).not.toContain(aService.id);
             } else {
