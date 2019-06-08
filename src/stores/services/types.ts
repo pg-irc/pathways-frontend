@@ -32,16 +32,16 @@ export interface Service {
 }
 
 export interface ValidServicesForTopic {
-    readonly type: 'TopicServices:Valid';
+    readonly type: 'ServicesForTopic:Valid';
     readonly serviceIds: ReadonlyArray<Id>;
 }
 
 export interface LoadingServicesForTopic {
-    readonly type: 'TopicServices:Loading';
+    readonly type: 'ServicesForTopic:Loading';
 }
 
 export interface ErrorServicesForTopic {
-    readonly type: 'TopicServices:Error';
+    readonly type: 'ServicesForTopic:Error';
     readonly errorMessage: string;
     readonly errorMessageType: ServicesErrorType;
 }
