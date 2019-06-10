@@ -2,7 +2,7 @@
 
 locales=(ar fr ko pa tl zh_CN zh_TW)
 CLIENT_LOCALE_LOCATION=$2
-WEBLATE_DIRECTORY=$3
+UI_STRINGS_DIRECTORY=$3
 VERSION=$4
 
 checkForSuccess () {
@@ -138,25 +138,26 @@ clean() {
 }
 
 
-create_weblate_directory() {
-    echo "Creating Weblate directory"
-    mkdir "$WEBLATE_DIRECTORY"
-    checkForSuccess "create WEBLATE directory for Weblate PO files"
+create_ui_strings_directory() {
+    echo "Creating ui-strings directory"
+    mkdir "$UI_STRINGS_DIRECTORY"
+    check_for_success "create ui-strings directory for ui-strings PO files"
 
-    echo "cloning Weblate repository"
-    (cd "$WEBLATE_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
-    checkForSuccess "clone Weblate repository"
+    echo "cloning ui-strings repository"
+    (cd "$UI_STRINGS_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
+    check_for_success "clone ui-strings repository"
 }
 
-check_out_weblate_by_tag() {
+check_out_ui_strings_by_tag() {
     if [ "$VERSION" ]; then
-        echo "Checking out Weblate with tag $VERSION"
         echo
-        (cd "$WEBLATE_DIRECTORY/ui-strings" && git fetch --tags)
-        checkForSuccess "fetch tags for Weblate"
+        echo "Checking out ui-strings with tag $VERSION"
+        echo
+        (cd "$UI_STRINGS_DIRECTORY/ui-strings" && git fetch --tags)
+        check_for_success "fetch tags for ui-strings"
 
-        (cd "$WEBLATE_DIRECTORY/ui-strings" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
-        checkForSuccess "check out tag for Weblate"
+        (cd "$UI_STRINGS_DIRECTORY/ui-strings" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
+        check_for_success "check out tag for ui-strings"
     else
         echo "Using newest version of translation strings"
         echo
@@ -169,19 +170,19 @@ add_po_files_to_client_locale_dir() {
     
     for locale in "${locales[@]}"
     do
-        echo "Moving Weblate PO file for ${locale}..."
-        mv $WEBLATE_DIRECTORY/ui-strings/explore/$locale/explore.po $CLIENT_LOCALE_LOCATION/$locale
-        mv $WEBLATE_DIRECTORY/ui-strings/questionnaire/$locale/questionnaire.po $CLIENT_LOCALE_LOCATION/$locale
-        mv $WEBLATE_DIRECTORY/ui-strings/jsx_strings/$locale/jsx_strings.po $CLIENT_LOCALE_LOCATION/$locale          
-        checkForSuccess "move Weblate PO files to client locale directories"
+        echo "Moving ui-strings PO file for ${locale}..."
+        mv $UI_STRINGS_DIRECTORY/ui-strings/explore/$locale/explore.po $CLIENT_LOCALE_LOCATION/$locale
+        mv $UI_STRINGS_DIRECTORY/ui-strings/questionnaire/$locale/questionnaire.po $CLIENT_LOCALE_LOCATION/$locale
+        mv $UI_STRINGS_DIRECTORY/ui-strings/jsx_strings/$locale/jsx_strings.po $CLIENT_LOCALE_LOCATION/$locale          
+        check_for_success "move ui-strings PO files to client locale directories"
     done
 
     echo 
     echo "Moving .pot files"
-    mv $WEBLATE_DIRECTORY/ui-strings/explore/explore.pot $CLIENT_LOCALE_LOCATION/en
-    mv $WEBLATE_DIRECTORY/ui-strings/questionnaire/questionnaire.pot $CLIENT_LOCALE_LOCATION/en
-    mv $WEBLATE_DIRECTORY/ui-strings/jsx_strings/jsx_strings.pot $CLIENT_LOCALE_LOCATION/en
-    checkForSuccess "move Weblate PO files to client locale"
+    mv $UI_STRINGS_DIRECTORY/ui-strings/explore/explore.pot $CLIENT_LOCALE_LOCATION/en
+    mv $UI_STRINGS_DIRECTORY/ui-strings/questionnaire/questionnaire.pot $CLIENT_LOCALE_LOCATION/en
+    mv $UI_STRINGS_DIRECTORY/ui-strings/jsx_strings/jsx_strings.pot $CLIENT_LOCALE_LOCATION/en
+    check_for_success "move ui-strings PO files to client locale"
 }
 
 
@@ -210,7 +211,7 @@ help() {
     echo "$0 --build-changed      Import just the changed strings from CSV files and build the app"
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
     echo "$0 --clean              Remove temporary files"
-    echo "$0 --combine-pos        Combine PO Files - Mandatory arguments: path to location of client locale directory and path to directory to clone Weblate repository"  
+    echo "$0 --combine-pos        Combine PO Files - Mandatory arguments: path to location of client locale directory and path to directory to clone ui-strings repository"  
     echo
 
     for locale in "${locales[@]}"
@@ -239,8 +240,8 @@ elif [ "$1" == "--clean" ]; then
     clean
 
 elif [ "$1" == "--combine-pos" ]; then 
-    create_weblate_directory
-    check_out_weblate_by_tag
+    create_ui_strings_directory
+    check_out_ui_strings_by_tag
     add_po_files_to_client_locale_dir
     combine_po_files 
 
