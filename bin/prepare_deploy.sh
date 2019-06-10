@@ -35,7 +35,7 @@ done
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
 CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
-WEBLATE_DIRECTORY="$WORKING_DIRECTORY/weblate"
+UI_STRINGS_DIRECTORY="$WORKING_DIRECTORY/ui-strings"
 
 usage() {
     echo
@@ -170,10 +170,10 @@ checkOutServerByTag() {
     checkForSuccess "check out tag for server"
 }
 
-checkOutWeblateByTag() {
+check_out_ui_strings_by_tag() {
     echo
-    ./bin/strings.sh --combine-pos $CLIENT_DIRECTORY/locale $WEBLATE_DIRECTORY $VERSION
-    checkForSuccess "check out Weblate "$VERSION""
+    ./bin/strings.sh --combine-pos $CLIENT_DIRECTORY/locale $UI_STRINGS_DIRECTORY $VERSION
+    check_for_success "check out ui-strings "$VERSION""
 }
 
 
@@ -318,10 +318,10 @@ validateCommandLine
 validateExpoUser
 createWorkingDirectory
 
-checkOutServerByTag
-checkOutClientByTag
-checkOutContentByTag
-checkOutWeblateByTag
+check_out_server_by_tag
+check_out_client_by_tag
+check_out_content_by_tag
+check_out_ui_strings_by_tag
 
 validateClientVersion
 validateServerVersion
