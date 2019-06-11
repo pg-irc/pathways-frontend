@@ -4,7 +4,7 @@ import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect } from 'redux-
 import * as constants from '../application/constants';
 import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode, reload } from '../locale';
 import { SetLocale, LoadCurrentLocale, setLocaleActions, loadCurrentLocaleActions } from '../stores/locale';
-import { toggleTextDirection, needsTextDirectionChange } from '../locale/effects';
+import { setTextDirection, needsTextDirectionChange } from '../locale/effects';
 
 export function* watchSetLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.SET_LOCALE_REQUEST, applyLocaleChange);
@@ -16,7 +16,7 @@ export function* applyLocaleChange(action: SetLocale.Request): IterableIterator<
         yield call(saveCurrentLocaleCode, localeCode);
         yield put(setLocaleActions.success(localeCode));
         if (yield call(needsTextDirectionChange, localeCode)) {
-            yield call(toggleTextDirection);
+            yield call(setTextDirection, localeCode);
             yield call(reload);
         }
     } catch (e) {

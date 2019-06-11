@@ -18,7 +18,7 @@ export { CatalogsMap, Catalog, Locale, LocaleInfo, LocalizedText };
 /**
  * Side-effects
  */
-export { needsTextDirectionChange, toggleTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode }  from './effects';
+export { needsTextDirectionChange, setTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode } from './effects';
 
 export class LocaleInfoManager {
 
@@ -89,7 +89,7 @@ export class LocaleInfoManager {
     }
 
     private getDefaultFallbackLocaleCode(locales: ReadonlyArray<LocaleInfo>): string {
-        const [ fallbackLocale ]: ReadonlyArray<LocaleInfo> = locales;
+        const [fallbackLocale]: ReadonlyArray<LocaleInfo> = locales;
         return fallbackLocale.code;
     }
 
@@ -97,7 +97,6 @@ export class LocaleInfoManager {
         this.locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog) => ({
             code: localeInfoWithCatalog.code,
             label: localeInfoWithCatalog.label,
-            isRTL: localeInfoWithCatalog.isRTL,
         }));
         return this;
     }
