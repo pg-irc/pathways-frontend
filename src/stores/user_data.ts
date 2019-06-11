@@ -1,12 +1,12 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 import { Id as AnswerId } from './questionnaire';
-import { Id as TaskId } from './topics';
+import { Id as TopicId } from './topics';
 
 export interface PersistedUserData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
-    readonly savedTasks: ReadonlyArray<TaskId>;
-    readonly completedTasks: ReadonlyArray<TaskId>;
+    readonly savedTopics: ReadonlyArray<TopicId>;
+    readonly completedTopics: ReadonlyArray<TopicId>;
     readonly showOnboarding: boolean;
 }
 

@@ -6,7 +6,7 @@ import { buildExploreSectionList } from './build_explore_section_list';
 
 export const selectExploreSectionList = (store: Store): ReadonlyArray<ExploreSection> => {
     const locale = selectLocale(store);
-    const sections = store.exploreSectionsInStore.sections;
+    const sections = store.exploreSections.sections;
     const exploreTaxonomy = pullExploreTaxonomy(store);
     return buildExploreSectionList(locale, sections, exploreTaxonomy);
 };

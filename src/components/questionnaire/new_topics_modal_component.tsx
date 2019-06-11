@@ -7,8 +7,8 @@ import { View, Button, Text } from 'native-base';
 import { Trans } from '@lingui/react';
 import { AnswersMap } from '../../stores/questionnaire';
 import { TopicMap, Id as TaskId, Topic } from '../../stores/topics';
-import { getNewlyRecommendedTasks } from '../../selectors/topics/get_newly_recommended_tasks';
-import { rejectTasksWithIds } from '../../selectors/topics/reject_tasks_with_ids';
+import { getNewlyRecommendedTopics } from '../../selectors/topics/get_newly_recommended_topics';
+import { rejectTopicsWithIds } from '../../selectors/topics/reject_topics_with_ids';
 import { getLocalizedText, Locale } from '../../selectors/locale/get_localized_text';
 import { textStyles, colors, values, applicationStyles } from '../../application/styles';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
@@ -161,8 +161,8 @@ interface PartialTopic {
 }
 
 const getTopicsForModal = (props: Props): ReadonlyArray<PartialTopic> => {
-    const newlyRecommendedTopics = getNewlyRecommendedTasks(props.oldAnswers, props.newAnswers, props.topics);
-    const newlyRecommendedUnsavedTopics = rejectTasksWithIds(newlyRecommendedTopics, props.savedTopicIds);
+    const newlyRecommendedTopics = getNewlyRecommendedTopics(props.oldAnswers, props.newAnswers, props.topics);
+    const newlyRecommendedUnsavedTopics = rejectTopicsWithIds(newlyRecommendedTopics, props.savedTopicIds);
     return R.map((topic: Topic) => buildPartialTopic(topic, props.locale), newlyRecommendedUnsavedTopics);
 };
 

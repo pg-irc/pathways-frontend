@@ -1,8 +1,8 @@
 import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import {
-    Id, Service, ServiceStore, ServiceMap, ValidTaskServices,
-    PhoneNumber, ErrorTaskServices, LoadingTaskServices, TopicServices,
+    Id, Service, ServiceStore, ServiceMap, ValidServicesForTopic,
+    PhoneNumber, ErrorServicesForTopic, LoadingServicesForTopic, ServicesForTopic,
     ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON,
     ValidatedAddressWithTypeJSON, Address,
 } from './types';
@@ -13,21 +13,21 @@ import {
     ServicesAction,
 } from './actions';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
-import { isValidTaskServices } from './is_valid_task_services';
-import { isErrorTaskServices } from './is_error_task_services';
+import { isValidServicesForTopic } from './is_valid_services_for_topic';
+import { isErrorServicesForTopic } from './is_error_services_for_topic';
 
 export {
     Id, Service, ServiceStore,
     PhoneNumber, Address,
-    TopicServices,
-    LoadingTaskServices,
-    ValidTaskServices,
+    ServicesForTopic,
+    LoadingServicesForTopic,
+    ValidServicesForTopic,
     ServiceMap,
-    ErrorTaskServices,
+    ErrorServicesForTopic,
     SendTopicServicesRequestAction, sendTopicServicesRequest,
     PopulateTopicServicesFromSuccessAction, populateTopicServicesFromSuccess,
     PopulateTopicServicesFromErrorAction, populateTopicServicesFromError,
-    isValidTaskServices, isErrorTaskServices,
+    isValidServicesForTopic, isErrorServicesForTopic,
     serviceAtLocation,
     serviceAtLocationArray,
 };
@@ -66,11 +66,11 @@ export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): 
 export function buildDefaultStore(): ServiceStore {
     return {
         services: {},
-        taskServicesOrError: {},
+        servicesByTopic: {},
     };
 }
 
-export const buildEmptyTasksServices = (): ValidTaskServices => ({
+export const buildEmptyServicesForTopic = (): ValidServicesForTopic => ({
     serviceIds: [],
     type: constants.TOPIC_SERVICES_VALID,
 });
@@ -95,8 +95,8 @@ const updateServicesRequest = (store: ServiceStore, action: SendTopicServicesReq
     const topicId = action.payload.topicId;
     return {
         ...store,
-        taskServicesOrError: {
-            ...store.taskServicesOrError,
+        servicesByTopic: {
+            ...store.servicesByTopic,
             [topicId]: {
                 type: constants.TOPIC_SERVICES_LOADING,
             },
@@ -115,8 +115,8 @@ const updateServicesSuccess = (store: ServiceStore, action: PopulateTopicService
             ...store.services,
             ...newServicesAsMap,
         },
-        taskServicesOrError: {
-            ...store.taskServicesOrError,
+        servicesByTopic: {
+            ...store.servicesByTopic,
             [topicId]: {
                 type: constants.TOPIC_SERVICES_VALID,
                 serviceIds: newServiceIds,
@@ -131,8 +131,8 @@ const updateServicesFailure = (store: ServiceStore, action: PopulateTopicService
     const errorMessageType = action.payload.errorMessageType;
     return {
         ...store,
-        taskServicesOrError: {
-            ...store.taskServicesOrError,
+        servicesByTopic: {
+            ...store.servicesByTopic,
             [topicId]: {
                 type: constants.TOPIC_SERVICES_ERROR,
                 errorMessageType,

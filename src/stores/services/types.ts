@@ -31,28 +31,28 @@ export interface Service {
     readonly organizationName: string;
 }
 
-export interface ValidTaskServices {
-    readonly type: 'TopicServices:Valid';
+export interface ValidServicesForTopic {
+    readonly type: 'ServicesForTopic:Valid';
     readonly serviceIds: ReadonlyArray<Id>;
 }
 
-export interface LoadingTaskServices {
-    readonly type: 'TopicServices:Loading';
+export interface LoadingServicesForTopic {
+    readonly type: 'ServicesForTopic:Loading';
 }
 
-export interface ErrorTaskServices {
-    readonly type: 'TopicServices:Error';
+export interface ErrorServicesForTopic {
+    readonly type: 'ServicesForTopic:Error';
     readonly errorMessage: string;
     readonly errorMessageType: ServicesErrorType;
 }
 
-export type TopicServices = ValidTaskServices | LoadingTaskServices | ErrorTaskServices;
+export type ServicesForTopic = ValidServicesForTopic | LoadingServicesForTopic | ErrorServicesForTopic;
 
-export interface TaskServicesMap {
-    readonly [topicId: string]: TopicServices;
+export interface ServicesForAllTopics {
+    readonly [topicId: string]: ServicesForTopic;
 }
 
-export const isServiceLoading = (services: TopicServices): boolean => (
+export const isServiceLoading = (services: ServicesForTopic): boolean => (
     services.type === constants.TOPIC_SERVICES_LOADING
 );
 
@@ -62,7 +62,7 @@ export interface ServiceMap {
 
 export interface ServiceStore {
     readonly services: ServiceMap;
-    readonly taskServicesOrError: TaskServicesMap;
+    readonly servicesByTopic: ServicesForAllTopics;
 }
 
 export interface ValidatedPhoneNumberJSON {

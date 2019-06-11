@@ -6,29 +6,29 @@ import { RouterProps } from '../../application/routing';
 import { selectLocale } from '../locale/select_locale';
 import { findItemsByExploreTaxonomyTerm } from '../taxonomies/find_items_by_explore_taxonomy_term';
 import { Topic } from './topic';
-import { toSelectorTaskWithoutRelatedEntities } from './to_selector_task_without_related_entities';
-import { selectExploreSectionFromTask } from './select_explore_section_from_task';
-import { isTaskRecommended } from './is_task_recommended';
+import { toSelectorTopicWithoutRelatedEntities } from './to_selector_topic_without_related_entities';
+import { selectExploreSectionFromTopic } from './select_explore_section_from_topic';
+import { isTopicRecommended } from './is_topic_recommended';
 import { pickExploreSectionById } from '../explore/pick_explore_section_by_id';
-import { pickTasks } from './pick_tasks';
-import { sortTaskList } from './sort_task_list';
+import { pickTopics } from './pick_topics';
+import { sortTopicList } from './sort_topic_list';
 import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
 import { pickAnswers } from '../questionnaire/pick_answers';
 
-export const selectTaskForCurrentExploreSection = (appStore: Store, routerProps: RouterProps): ReadonlyArray<Topic> => {
+export const selectTopicForCurrentExploreSection = (appStore: Store, routerProps: RouterProps): ReadonlyArray<Topic> => {
     const currentExploreSection = pickExploreSectionById(appStore, routerProps.match.params.learnId);
-    const tasks = pickTasks(appStore);
+    const tasks = pickTopics(appStore);
     const matchingTasks = findItemsByExploreTaxonomyTerm(currentExploreSection.taxonomyTerms, tasks);
 
     const locale = selectLocale(appStore);
 
     const buildTask = (topic: store.Topic): Topic => {
-        const exploreSectionForTask = selectExploreSectionFromTask(appStore, topic);
+        const exploreSectionForTask = selectExploreSectionFromTopic(appStore, topic);
         const termsFromQuestionnaire = selectTaxonomyTermsForChosenAnswers(appStore);
         const relevantTaxonomies = getAllTaxonomyIdsFromAnswers(pickAnswers(appStore));
-        const isRecommended = isTaskRecommended(relevantTaxonomies, termsFromQuestionnaire, topic);
-        return toSelectorTaskWithoutRelatedEntities(locale, topic, exploreSectionForTask, isRecommended);
+        const isRecommended = isTopicRecommended(relevantTaxonomies, termsFromQuestionnaire, topic);
+        return toSelectorTopicWithoutRelatedEntities(locale, topic, exploreSectionForTask, isRecommended);
     };
 
-    return sortTaskList(R.map(buildTask, matchingTasks));
+    return sortTopicList(R.map(buildTask, matchingTasks));
 };

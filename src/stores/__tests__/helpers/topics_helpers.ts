@@ -74,7 +74,7 @@ export class TopicBuilder {
 }
 
 export const buildNormalizedStore = (taskBuilders: ReadonlyArray<TopicBuilder>,
-    savedTasks: ReadonlyArray<store.Id>): store.ValidTaskStore => (
+    savedTasks: ReadonlyArray<store.Id>): store.ValidTopicStore => (
         {
             topicMap: buildTaskMap(taskBuilders),
             savedTopicsList: savedTasks,

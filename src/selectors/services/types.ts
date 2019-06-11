@@ -3,16 +3,16 @@ import { ServicesErrorType } from '../../sagas/services';
 
 export interface ValidSelectorTopicServices {
     readonly services: ReadonlyArray<Service>;
-    readonly type: 'TopicServices:Valid';
+    readonly type: 'ServicesForTopic:Valid';
 }
 
 export interface LoadingSelectorTopicServices {
-    readonly type: 'TopicServices:Loading';
+    readonly type: 'ServicesForTopic:Loading';
 }
 
 export interface ErrorSelectorTopicServices {
     readonly errorMessageType: ServicesErrorType;
-    readonly type: 'TopicServices:Error';
+    readonly type: 'ServicesForTopic:Error';
 }
 
 export type SelectorTopicServices = ValidSelectorTopicServices | LoadingSelectorTopicServices | ErrorSelectorTopicServices;

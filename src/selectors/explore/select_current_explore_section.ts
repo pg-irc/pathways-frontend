@@ -8,7 +8,7 @@ import { buildExploreSection } from './build_explore_section';
 
 export const selectCurrentExploreSection = (store: Store, routerProps: RouterProps): ExploreSection => {
     const locale = selectLocale(store);
-    const sections = store.exploreSectionsInStore.sections;
+    const sections = store.exploreSections.sections;
     const id = routerProps.match.params.learnId;
     const theSection = sections[id];
     const exploreTaxonomy = pullExploreTaxonomy(store);

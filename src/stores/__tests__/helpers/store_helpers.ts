@@ -11,10 +11,10 @@ import * as notifications from '../../notifications';
 import * as onboarding from '../../onboarding';
 
 export class ApplicationStoreBuilder {
-    fontsInStore: fonts.Store;
+    fontsInStore: fonts.FontsStore;
     localeInStore: locale.LocaleStore;
     questionnaireInStore: questionnaire.QuestionnaireStore;
-    tasksInStore: tasks.TaskStore;
+    tasksInStore: tasks.TopicStore;
     servicesInStore: services.ServiceStore;
     exploreSectionsInStore: explore.ExploreStore;
     taxonomiesInStore: taxonomies.TaxonomyStore;
@@ -28,15 +28,15 @@ export class ApplicationStoreBuilder {
 
     build(): Store {
         return {
-            fontsInStore: this.fontsInStore,
-            localeInStore: this.localeInStore,
-            questionnaireInStore: this.questionnaireInStore,
-            tasksInStore: this.tasksInStore,
-            servicesInStore: this.servicesInStore,
-            exploreSectionsInStore: this.exploreSectionsInStore,
-            taxonomiesInStore: this.taxonomiesInStore,
-            notificationsInStore: this.notificationsInStore,
-            onboardingInStore: this.onboardingInStore
+            fonts: this.fontsInStore,
+            locale: this.localeInStore,
+            questionnaire: this.questionnaireInStore,
+            topics: this.tasksInStore,
+            services: this.servicesInStore,
+            exploreSections: this.exploreSectionsInStore,
+            taxonomies: this.taxonomiesInStore,
+            notifications: this.notificationsInStore,
+            onboarding: this.onboardingInStore
         };
     }
 }

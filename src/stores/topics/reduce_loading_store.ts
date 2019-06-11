@@ -1,28 +1,28 @@
-import { TaskStore, ValidTaskStore, LoadingTaskStore, InvalidTaskStore } from './stores';
+import { TopicStore, ValidTopicStore, LoadingTopicStore, InValidTopicStore } from './stores';
 import * as UserStateActions from '../../application/constants';
-import { TaskAction } from './actions';
+import { TopicAction } from './actions';
 import { TopicMap, Id, Topic } from '../../fixtures/types/topics';
 import * as R from 'ramda';
 
-export const reduceLoadingStore = (store: LoadingTaskStore, action: TaskAction): TaskStore => {
+export const reduceLoadingStore = (store: LoadingTopicStore, action: TopicAction): TopicStore => {
     switch (action.type) {
         case UserStateActions.LOAD_USER_DATA_SUCCESS:
-            return new ValidTaskStore({
-                topicMap: R.map(setCompleted(action.payload.completedTasks), store.lastValidState.topicMap),
-                savedTopicsList: filterValidIds(store.lastValidState.topicMap, action.payload.savedTasks),
+            return new ValidTopicStore({
+                topicMap: R.map(setCompleted(action.payload.completedTopics), store.lastValidState.topicMap),
+                savedTopicsList: filterValidIds(store.lastValidState.topicMap, action.payload.savedTopics),
             });
         case UserStateActions.LOAD_USER_DATA_FAILURE:
-            return new InvalidTaskStore(store.lastValidState, action.payload.message);
+            return new InValidTopicStore(store.lastValidState, action.payload.message);
         default:
             return store;
     }
 };
 
-const filterValidIds = (tasks: TopicMap, ids: ReadonlyArray<Id>): ReadonlyArray<Id> => (
-    R.filter((id: string): boolean => R.has(id, tasks), ids)
+const filterValidIds = (topics: TopicMap, ids: ReadonlyArray<Id>): ReadonlyArray<Id> => (
+    R.filter((id: string): boolean => R.has(id, topics), ids)
 );
 
-const setCompleted = R.curry((completedTaskIds: ReadonlyArray<Id>, topic: Topic): Topic => ({
+const setCompleted = R.curry((completedTopicIds: ReadonlyArray<Id>, topic: Topic): Topic => ({
     ...topic,
-    completed: R.contains(topic.id, completedTaskIds),
+    completed: R.contains(topic.id, completedTopicIds),
 }));
