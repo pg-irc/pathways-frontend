@@ -3,13 +3,14 @@ import { I18nManager, AsyncStorage } from 'react-native';
 import { PREFERENCES_LOCALE_CODE } from '../application/constants';
 
 export function needsTextDirectionChange(localeCode: string): boolean {
-    const wasRTL = (localeCode === 'ar');
-    return I18nManager.isRTL !== wasRTL;
+    return I18nManager.isRTL !== isRTL(localeCode);
 }
 
-export function toggleTextDirection(): void {
-    I18nManager.forceRTL(!I18nManager.isRTL);
+export function setTextDirection(localeCode: string): void {
+    I18nManager.forceRTL(isRTL(localeCode));
 }
+
+const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
 
 export function reload(): void {
     Expo.Updates.reloadFromCache();

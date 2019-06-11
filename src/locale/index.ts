@@ -18,7 +18,7 @@ export { CatalogsMap, Catalog, Locale, LocaleInfo, LocalizedText };
 /**
  * Side-effects
  */
-export { needsTextDirectionChange, toggleTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode } from './effects';
+export { needsTextDirectionChange, setTextDirection, reload, saveCurrentLocaleCode, loadCurrentLocaleCode } from './effects';
 
 export class LocaleInfoManager {
 
