@@ -129,9 +129,8 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     private getReadMoreButton(): JSX.Element {
         const onPress = (): void => this.toggleState();
         const text = this.readMoreReadLessText();
-        const backgroundColor = this.props.contentBackgroundColor ? this.props.contentBackgroundColor : colors.white;
-        const flipJustification = I18nManager.isRTL && this.props.forceEnglish;
-        const justifyContent = flipJustification ? 'flex-end' : 'flex-start';
+        const backgroundColor = this.backgroundColour();
+        const justifyContent = this.computeJustifyContent();
         return (
             <View style={{ backgroundColor, flex: 1, flexDirection: 'row', justifyContent }} >
                 <Button
@@ -160,6 +159,19 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                 </Button>
             </View>
         );
+    }
+
+    private computeJustifyContent(): 'flex-start' | 'flex-end' {
+        // If the app locale is Arabic and the screen is in English, justify "Read more"
+        // string to the left by returning 'flex-end', which in RTL mode means left.
+        if (I18nManager.isRTL && this.props.forceEnglish) {
+            return 'flex-end';
+        }
+        return 'flex-start';
+    }
+
+    private backgroundColour(): string {
+        return this.props.contentBackgroundColor || colors.white;
     }
 
     private isCollapsed(): boolean {
