@@ -1,13 +1,12 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import { LocalizedText } from '../../../locale';
-import { aString, aBoolean } from '../../../application/__tests__/helpers/random_test_values';
+import { aString } from '../../../application/__tests__/helpers/random_test_values';
 import { Locale, LocaleInfo } from '../../../locale';
 import { LocaleStore } from '../../locale';
 
 export class LocaleInfoBuilder {
     code: string = aString();
     label: string = aString();
-    isRTL: boolean = aBoolean();
 
     withCode(code: string): LocaleInfoBuilder {
         this.code = code;
@@ -19,16 +18,10 @@ export class LocaleInfoBuilder {
         return this;
     }
 
-    withRTL(isRTL: boolean): LocaleInfoBuilder {
-        this.isRTL = isRTL;
-        return this;
-    }
-
     build(): LocaleInfo {
         return {
             code: this.code,
             label: this.label,
-            isRTL: this.isRTL,
         };
     }
 }

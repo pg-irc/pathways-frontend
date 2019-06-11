@@ -1,11 +1,10 @@
 // tslint:disable:no-expression-statement
 import { I18nManager, AsyncStorage } from 'react-native';
 import { PREFERENCES_LOCALE_CODE } from '../application/constants';
-import { LocaleInfoManager } from '.';
 
 export function needsTextDirectionChange(localeCode: string): boolean {
-    const locale = LocaleInfoManager.get(localeCode);
-    return I18nManager.isRTL !== locale.isRTL;
+    const wasRTL = (localeCode === 'ar');
+    return I18nManager.isRTL !== wasRTL;
 }
 
 export function toggleTextDirection(): void {
