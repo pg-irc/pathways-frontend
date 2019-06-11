@@ -53,7 +53,6 @@ msgstr "TUNGKOL SA APP"
 msgid "About Arrival Advisor"
 msgstr "Tungkol sa Arrival Advisor"
 
-#: lib/components/services/service_list_item_component.js:27
 msgid "Address:"
 msgstr "Address:"
 
@@ -130,7 +129,7 @@ msgstr ""
 "para sa anumang layunin at hindi ginagamit sa anumang paggawa ng desisyon sa "
 "imigrasyon."
 
-#: lib/components/questionnaire/questionnaire_component.js:110
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A112+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A110
 msgid "Back"
 msgstr "Bumalik"
 
@@ -171,11 +170,9 @@ msgstr "Tapos na"
 msgid "EXPLORE TOPICS"
 msgstr "GALUGARIN ANG MGA PAKSA"
 
-#: lib/components/services/service_list_item_component.js:55
 msgid "Email:"
 msgstr "Email:"
 
-#: lib/components/services/service_list_component.js:53
 msgid "FIND A SERVICE NEAR YOU"
 msgstr "HUMANAP NG SERBISYONG MALAPIT SA IYO"
 
@@ -194,6 +191,14 @@ msgstr ""
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
 msgstr "Humanap ng ahensiya ng paninirahang malapit sa akin"
+
+#: lib/components/onboarding/onboarding_component.js:19
+msgid "Find helpful services nearby"
+msgstr ""
+
+#: lib/components/onboarding/onboarding_component.js:20
+msgid "Find organizations that can help you settle into your new community."
+msgstr ""
 
 #: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
@@ -232,6 +237,10 @@ msgstr "PAGSISIMULA"
 #: lib/components/recommended_topics/call_to_action.js:36
 msgid "Get information based on your needs"
 msgstr "Makakuha ng impormasyon batay sa pangangailangan mo"
+
+#: lib/components/onboarding/onboarding_component.js:13
+msgid "Get trusted information"
+msgstr ""
 
 #: lib/components/recommended_topics/call_to_action.js:74
 msgid "Go back to questions"
@@ -275,6 +284,12 @@ msgstr "Impormasyon sa serbisyong pang-emergency (9-1-1)"
 msgid "Information on helplines"
 msgstr "Impormasyon sa mga helpline"
 
+#: lib/components/onboarding/onboarding_component.js:14
+msgid ""
+"Learn about employment, health care, and everything else to start your new "
+"life in British Columbia"
+msgstr ""
+
 #: lib/components/explore/explore_all_component.js:11
 msgid "Learn all about B.C."
 msgstr "Alamin lahat ang tungkol sa B.C."
@@ -287,7 +302,7 @@ msgstr "Maramihang wika na mga serbisyo sa impormasyon sa kalusugan"
 msgid "My bookmarks"
 msgstr "Mga bookmark ko"
 
-#: lib/components/questionnaire/questionnaire_component.js:100
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A118+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A100
 msgid "Next"
 msgstr "Susunod"
 
@@ -295,15 +310,14 @@ msgstr "Susunod"
 msgid "No new topics recommended based on your answers."
 msgstr "Mga bagong paksang nirekomenda batay sa mga sagot mo."
 
-#: lib/components/services/service_list_component.js:60
 msgid "No related services found"
 msgstr "Walang kaugnay na mga serbisyong matatagpuan"
 
-#: lib/components/topics/task_list_component.js:77
+#: lib/components/topics/task_list_component.js:69
 msgid "No topics to recommend"
 msgstr "Walang mga paksang irerekomenda"
 
-#: lib/components/topics/task_list_component.js:76
+#: lib/components/topics/task_list_component.js:68
 msgid "No topics to show"
 msgstr "Walang mga paksang ipapakita"
 
@@ -328,7 +342,6 @@ msgstr ""
 "ipakikita sa ibaba. Sa ngayon, narito ang ilang paksa na nirerekomenda namin "
 "sa lahat:"
 
-#: lib/components/maps_application_popup/maps_application_popup_component.js:18
 msgid "Open in maps"
 msgstr "Buksan sa mga mapa"
 
@@ -367,11 +380,11 @@ msgstr "Patakaran sa Pagkapribado"
 msgid "RELATED TOPICS"
 msgstr "KAUGNAY NA MGA PAKSA"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:82
 msgid "Read less"
 msgstr "Basahin ang kaunti"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:80
 msgid "Read more"
 msgstr "Basahin ang higit"
 
@@ -409,15 +422,27 @@ msgstr "Mas madali na ngayon ang paninirahan sa Canada."
 msgid "Skip"
 msgstr "Laktawan"
 
+#: lib/components/onboarding/onboarding_component.js:89
+msgid "Skip personalization"
+msgstr ""
+
 #: lib/components/welcome/welcome_component.js:42
 msgid "Start"
 msgstr "Magsimula"
+
+#: lib/components/onboarding/onboarding_component.js:74
+msgid "Start personalization"
+msgstr ""
 
 #: lib/components/recommended_topics/recommended_topics_component.js:21
 msgid "Start settling in B.C."
 msgstr "Simulan ang paninirahan sa B.C."
 
-#: lib/components/about/about_component.js:38
+#: lib/components/header_menu/header_menu_component.js:53
+msgid "Terms of Use"
+msgstr ""
+
+#: lib/components/about/about_component.js:37
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -469,7 +494,6 @@ msgstr "Ito ay bersyon ng Arrival Advisor:"
 msgid "UPDATE MY RECOMMENDATIONS"
 msgstr "I-UPDATE ANG REKOMENDASYON KO"
 
-#: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "Web:"
 

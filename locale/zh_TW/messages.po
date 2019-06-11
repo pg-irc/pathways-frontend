@@ -51,7 +51,6 @@ msgstr "關於此應用程式"
 msgid "About Arrival Advisor"
 msgstr "有關 Arrival Advisor"
 
-#: lib/components/services/service_list_item_component.js:27
 msgid "Address:"
 msgstr "地址："
 
@@ -116,7 +115,7 @@ msgstr ""
 "身份。加拿大移民，難民和公民部也不會將此資訊用於其他目的，或用於任何移民相關"
 "決定。"
 
-#: lib/components/questionnaire/questionnaire_component.js:110
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A112+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A110
 msgid "Back"
 msgstr "返回"
 
@@ -156,11 +155,9 @@ msgstr "完成"
 msgid "EXPLORE TOPICS"
 msgstr "探索主題"
 
-#: lib/components/services/service_list_item_component.js:55
 msgid "Email:"
 msgstr "電子郵件"
 
-#: lib/components/services/service_list_component.js:53
 msgid "FIND A SERVICE NEAR YOU"
 msgstr "尋找就近服務"
 
@@ -177,6 +174,14 @@ msgstr "當定位系統收尋超時。Android手機使用者可將定位模式�
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
 msgstr "就近尋找一家安置機構"
+
+#: lib/components/onboarding/onboarding_component.js:19
+msgid "Find helpful services nearby"
+msgstr ""
+
+#: lib/components/onboarding/onboarding_component.js:20
+msgid "Find organizations that can help you settle into your new community."
+msgstr ""
 
 #: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
@@ -209,6 +214,10 @@ msgstr "開始"
 #: lib/components/recommended_topics/call_to_action.js:36
 msgid "Get information based on your needs"
 msgstr "根據您的需求取得訊息"
+
+#: lib/components/onboarding/onboarding_component.js:13
+msgid "Get trusted information"
+msgstr ""
 
 #: lib/components/recommended_topics/call_to_action.js:74
 msgid "Go back to questions"
@@ -249,6 +258,12 @@ msgstr "緊急求助資訊（9-1-1）"
 msgid "Information on helplines"
 msgstr "求助熱線相關資訊"
 
+#: lib/components/onboarding/onboarding_component.js:14
+msgid ""
+"Learn about employment, health care, and everything else to start your new "
+"life in British Columbia"
+msgstr ""
+
 #: lib/components/explore/explore_all_component.js:11
 msgid "Learn all about B.C."
 msgstr "了解所有關於B.C.的資訊"
@@ -261,7 +276,7 @@ msgstr "多種語言健康資訊服務處"
 msgid "My bookmarks"
 msgstr "我的最愛"
 
-#: lib/components/questionnaire/questionnaire_component.js:100
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A118+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A100
 msgid "Next"
 msgstr "下一個"
 
@@ -269,15 +284,14 @@ msgstr "下一個"
 msgid "No new topics recommended based on your answers."
 msgstr "根據您的答案，沒有新主題資訊可推薦。"
 
-#: lib/components/services/service_list_component.js:60
 msgid "No related services found"
 msgstr "沒有找到相關服務處"
 
-#: lib/components/topics/task_list_component.js:77
+#: lib/components/topics/task_list_component.js:69
 msgid "No topics to recommend"
 msgstr "沒有可推薦的主題"
 
-#: lib/components/topics/task_list_component.js:76
+#: lib/components/topics/task_list_component.js:68
 msgid "No topics to show"
 msgstr "沒有可顯示的主題"
 
@@ -301,7 +315,6 @@ msgstr ""
 "回答完部分問題後，針對您需求的建議項目將顯示在下方。以下是我們目前為大家推薦"
 "的一些主題："
 
-#: lib/components/maps_application_popup/maps_application_popup_component.js:18
 msgid "Open in maps"
 msgstr "在地圖中顯示"
 
@@ -335,11 +348,11 @@ msgstr "隱私政策"
 msgid "RELATED TOPICS"
 msgstr "相關主題"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:82
 msgid "Read less"
 msgstr "顯示更少"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:80
 msgid "Read more"
 msgstr "顯示更多"
 
@@ -375,15 +388,27 @@ msgstr "現在，定居加拿大變得更容易"
 msgid "Skip"
 msgstr "跳過"
 
+#: lib/components/onboarding/onboarding_component.js:89
+msgid "Skip personalization"
+msgstr ""
+
 #: lib/components/welcome/welcome_component.js:42
 msgid "Start"
 msgstr "開始"
+
+#: lib/components/onboarding/onboarding_component.js:74
+msgid "Start personalization"
+msgstr ""
 
 #: lib/components/recommended_topics/recommended_topics_component.js:21
 msgid "Start settling in B.C."
 msgstr "開始在B.C.省定居"
 
-#: lib/components/about/about_component.js:38
+#: lib/components/header_menu/header_menu_component.js:53
+msgid "Terms of Use"
+msgstr ""
+
+#: lib/components/about/about_component.js:37
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -426,7 +451,6 @@ msgstr "這是 Arrival Advisor 版本："
 msgid "UPDATE MY RECOMMENDATIONS"
 msgstr "更新我的推薦信息"
 
-#: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "網址："
 

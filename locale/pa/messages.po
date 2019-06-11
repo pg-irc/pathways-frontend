@@ -51,7 +51,6 @@ msgstr "ਐਪ ਬਾਰੇ"
 msgid "About Arrival Advisor"
 msgstr "Arrival Advisor ਬਾਰੇ"
 
-#: lib/components/services/service_list_item_component.js:27
 msgid "Address:"
 msgstr "ਪਤਾ:"
 
@@ -119,7 +118,7 @@ msgstr ""
 "ਰਿਫ਼ਿਊਜ਼ੀ ਅਤੇ ਸਿਟੀਜ਼ਨਸ਼ਿਪ ਕੈਨੇਡਾ ਵਲੋਂ ਕਿਸੇ ਵੀ ਹੋਰ ਮਕਸਦ ਨਹੀਂ ਨਹੀਂ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ ਅਤੇ ਨਾ ਹੀ "
 "ਕਿਸੇ ਵੀ ਇੰਮੀਗਰੇਸ਼ਨ ਫੈਸਲੇ ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ।"
 
-#: lib/components/questionnaire/questionnaire_component.js:110
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A112+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A110
 msgid "Back"
 msgstr "ਅੱਗੇ"
 
@@ -159,11 +158,9 @@ msgstr "ਮੁਕੰਮਲ"
 msgid "EXPLORE TOPICS"
 msgstr "ਵਿਸ਼ਿਆਂ ਦੀ ਪੜਤਾਲ ਕਰੋ"
 
-#: lib/components/services/service_list_item_component.js:55
 msgid "Email:"
 msgstr "ਈਮੇਲ:"
 
-#: lib/components/services/service_list_component.js:53
 msgid "FIND A SERVICE NEAR YOU"
 msgstr "ਆਪਣੇ ਨੇੜੇ ਸੇਵਾ ਲੱਭੋ"
 
@@ -182,6 +179,14 @@ msgstr ""
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
 msgstr "ਮੇਰੇ ਨੇੜੇ ਸੈਟਲਮੈਂਟ ਏਜੰਸੀ ਲੱਭੋ"
+
+#: lib/components/onboarding/onboarding_component.js:19
+msgid "Find helpful services nearby"
+msgstr ""
+
+#: lib/components/onboarding/onboarding_component.js:20
+msgid "Find organizations that can help you settle into your new community."
+msgstr ""
 
 #: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
@@ -216,6 +221,10 @@ msgstr "ਸ਼ੁਰੂ ਕਰੀਏ"
 #: lib/components/recommended_topics/call_to_action.js:36
 msgid "Get information based on your needs"
 msgstr "ਤੁਹਾਡੀਆਂ ਲੋੜਾਂ ਦੇ ਮੁਤਾਬਕ ਜਾਣਕਾਰੀ ਲਵੋ"
+
+#: lib/components/onboarding/onboarding_component.js:13
+msgid "Get trusted information"
+msgstr ""
 
 #: lib/components/recommended_topics/call_to_action.js:74
 msgid "Go back to questions"
@@ -258,6 +267,12 @@ msgstr "ਐਮਰਜੈਂਸੀ ਸੇਵਾਵਾਂ (9-1-1) ਬਾਰੇ ਜ�
 msgid "Information on helplines"
 msgstr "ਮਦਦ-ਲਾਈਨ ਬਾਰੇ ਜਾਣਕਾਰੀ"
 
+#: lib/components/onboarding/onboarding_component.js:14
+msgid ""
+"Learn about employment, health care, and everything else to start your new "
+"life in British Columbia"
+msgstr ""
+
 #: lib/components/explore/explore_all_component.js:11
 msgid "Learn all about B.C."
 msgstr "ਬੀ.ਸੀ. ਬਾਰੇ ਸਭ ਜਾਣੋ"
@@ -270,7 +285,7 @@ msgstr "ਬਹੁ-ਭਾਸ਼ਾਈ ਸਿਹਤ ਜਾਣਕਾਰੀ ਸੇਵ�
 msgid "My bookmarks"
 msgstr "ਮੇਰੇ ਬੁੱਕਮਾਰਕ"
 
-#: lib/components/questionnaire/questionnaire_component.js:100
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A118+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A100
 msgid "Next"
 msgstr "ਅੱਗੇ"
 
@@ -278,15 +293,14 @@ msgstr "ਅੱਗੇ"
 msgid "No new topics recommended based on your answers."
 msgstr "ਤੁਹਾਡੇ ਜਵਾਬਾਂ ਦੇ ਅਧਾਰ ਉੱਤੇ ਕੋਈ ਨਵੇਂ ਸਿਫਾਰਸ਼ ਕੀਤੇ ਵਿਸ਼ੇ ਨਹੀਂ ਹਨ"
 
-#: lib/components/services/service_list_component.js:60
 msgid "No related services found"
 msgstr "ਕੋਈ ਸੰਬੰਧਿਤ ਸੇਵਾ ਨਹੀਂ ਲੱਭੀ"
 
-#: lib/components/topics/task_list_component.js:77
+#: lib/components/topics/task_list_component.js:69
 msgid "No topics to recommend"
 msgstr "ਸਿਫਾਰਸ਼ ਕਰਨ ਲਈ ਕੋਈ ਵਿਸ਼ਾ ਨਹੀਂ ਹੈ"
 
-#: lib/components/topics/task_list_component.js:76
+#: lib/components/topics/task_list_component.js:68
 msgid "No topics to show"
 msgstr "ਵੇਖਾਉਣ ਲਈ ਕੋਈ ਵਿਸ਼ਾ ਨਹੀਂ ਹੈ"
 
@@ -310,7 +324,6 @@ msgstr ""
 "ਜਦੋਂ ਤੁਸੀਂ ਕੁਝ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ ਦੇ ਦਿੱਤੇ ਤਾਂ ਤੁਹਾਡੀਆਂ ਸਿਫਾਰਸ਼ਾਂ ਹੇਠਾਂ ਦਿਖਾਈਆਂ ਜਾਣਗੀਆਂ। ਹੁਣ ਇਹ ਕੁਝ "
 "ਵਿਸ਼ੇ ਹਨ, ਜੋ ਕਿ ਅਸੀਂ ਹਰੇਕ ਲਈ ਸਿਫਾਰਸ਼ ਕਰਦੇ ਹਾਂ:"
 
-#: lib/components/maps_application_popup/maps_application_popup_component.js:18
 msgid "Open in maps"
 msgstr "ਨਕਸ਼ੇ ਵਿੱਚ ਖੋਲ੍ਹੋ"
 
@@ -345,11 +358,11 @@ msgstr "ਪਰਦਦੇਰੀ ਨੀਤੀ"
 msgid "RELATED TOPICS"
 msgstr "ਸੰਬੰਧਿਤ ਵਿਸ਼ੇ"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:82
 msgid "Read less"
 msgstr "ਘੱਟ ਪੜ੍ਹੋ"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:80
 msgid "Read more"
 msgstr "ਵੱਧ ਪੜ੍ਹੋ"
 
@@ -385,15 +398,27 @@ msgstr "ਕੈਨੇਡਾ ਵਿੱਚ ਸੈਟਲ ਹੋਣਾ ਹੁਣ ਹ�
 msgid "Skip"
 msgstr "ਛੱਡੋ"
 
+#: lib/components/onboarding/onboarding_component.js:89
+msgid "Skip personalization"
+msgstr ""
+
 #: lib/components/welcome/welcome_component.js:42
 msgid "Start"
 msgstr "ਸ਼ੁਰੂ ਕਰੋ"
+
+#: lib/components/onboarding/onboarding_component.js:74
+msgid "Start personalization"
+msgstr ""
 
 #: lib/components/recommended_topics/recommended_topics_component.js:21
 msgid "Start settling in B.C."
 msgstr "ਬੀ.ਸੀ. ਵਿੱਚ ਸੈਟਲ ਹੋਣਾ ਸ਼ੁਰੂ ਕਰੋ"
 
-#: lib/components/about/about_component.js:38
+#: lib/components/header_menu/header_menu_component.js:53
+msgid "Terms of Use"
+msgstr ""
+
+#: lib/components/about/about_component.js:37
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -439,7 +464,6 @@ msgstr "ਇਹ Arrival Advisor ਦਾ ਵਰਜ਼ਨ: "
 msgid "UPDATE MY RECOMMENDATIONS"
 msgstr "ਮੇਰੀਆਂ ਸਿਫਾਰਸ਼ਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕਰੋ"
 
-#: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "ਵੈੱਬ:"
 

@@ -51,7 +51,6 @@ msgstr "이 앱에 관하여"
 msgid "About Arrival Advisor"
 msgstr "Arrival Advisor에 대하여"
 
-#: lib/components/services/service_list_item_component.js:27
 msgid "Address:"
 msgstr "주소:"
 
@@ -120,7 +119,7 @@ msgstr ""
 "다. 해당 정보는 캐나다 이민 난민 시민권부(IRCC)에 의해 어떠한 목적으로도 활용"
 "되지 않으며, 어떠한 이민 의사 결정에도 활용되지 않습니다."
 
-#: lib/components/questionnaire/questionnaire_component.js:110
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A112+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A110
 msgid "Back"
 msgstr "이전으로"
 
@@ -160,11 +159,9 @@ msgstr "완료"
 msgid "EXPLORE TOPICS"
 msgstr "주제 탐색하기"
 
-#: lib/components/services/service_list_item_component.js:55
 msgid "Email:"
 msgstr "이메일:"
 
-#: lib/components/services/service_list_component.js:53
 msgid "FIND A SERVICE NEAR YOU"
 msgstr "내 주변 서비스 찾기"
 
@@ -183,6 +180,14 @@ msgstr ""
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
 msgstr "내 주변 이민자 봉사 단체 찾기"
+
+#: lib/components/onboarding/onboarding_component.js:19
+msgid "Find helpful services nearby"
+msgstr ""
+
+#: lib/components/onboarding/onboarding_component.js:20
+msgid "Find organizations that can help you settle into your new community."
+msgstr ""
 
 #: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
@@ -218,6 +223,10 @@ msgstr "시작하기"
 #: lib/components/recommended_topics/call_to_action.js:36
 msgid "Get information based on your needs"
 msgstr "내 필요에 기반한 정보 얻기"
+
+#: lib/components/onboarding/onboarding_component.js:13
+msgid "Get trusted information"
+msgstr ""
 
 #: lib/components/recommended_topics/call_to_action.js:74
 msgid "Go back to questions"
@@ -260,6 +269,12 @@ msgstr "응급상황 서비스 (9-1-1)에 관한 정보"
 msgid "Information on helplines"
 msgstr "전화 상담 서비스에 관한 정보"
 
+#: lib/components/onboarding/onboarding_component.js:14
+msgid ""
+"Learn about employment, health care, and everything else to start your new "
+"life in British Columbia"
+msgstr ""
+
 #: lib/components/explore/explore_all_component.js:11
 msgid "Learn all about B.C."
 msgstr "브리티시컬럼비아주에 대해 알아보기"
@@ -272,7 +287,7 @@ msgstr "다국어 지원 건강 정보 서비스"
 msgid "My bookmarks"
 msgstr "나의 북마크"
 
-#: lib/components/questionnaire/questionnaire_component.js:100
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A118+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A100
 msgid "Next"
 msgstr "다음"
 
@@ -280,15 +295,14 @@ msgstr "다음"
 msgid "No new topics recommended based on your answers."
 msgstr "답변에 기반해 추천된 새로운 주제가 없습니다."
 
-#: lib/components/services/service_list_component.js:60
 msgid "No related services found"
 msgstr "관련 서비스를 찾을 수 없습니다"
 
-#: lib/components/topics/task_list_component.js:77
+#: lib/components/topics/task_list_component.js:69
 msgid "No topics to recommend"
 msgstr "추천할 주제가 없습니다"
 
-#: lib/components/topics/task_list_component.js:76
+#: lib/components/topics/task_list_component.js:68
 msgid "No topics to show"
 msgstr "보여드릴 주제가 없습니다"
 
@@ -312,7 +326,6 @@ msgstr ""
 "질문에 답하면 아래 추천이 나타납니다. 현재, 모두에게 추천된 주제는 다음과 같"
 "습니다:"
 
-#: lib/components/maps_application_popup/maps_application_popup_component.js:18
 msgid "Open in maps"
 msgstr "지도에서 열기"
 
@@ -347,11 +360,11 @@ msgstr "개인정보 정책"
 msgid "RELATED TOPICS"
 msgstr "연관 주제들"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:82
 msgid "Read less"
 msgstr "간단히 보기"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:80
 msgid "Read more"
 msgstr "자세히 보기"
 
@@ -387,15 +400,27 @@ msgstr "이제 캐나다에서의 정착이 더욱 쉬워집니다."
 msgid "Skip"
 msgstr "넘어가기"
 
+#: lib/components/onboarding/onboarding_component.js:89
+msgid "Skip personalization"
+msgstr ""
+
 #: lib/components/welcome/welcome_component.js:42
 msgid "Start"
 msgstr "시작"
+
+#: lib/components/onboarding/onboarding_component.js:74
+msgid "Start personalization"
+msgstr ""
 
 #: lib/components/recommended_topics/recommended_topics_component.js:21
 msgid "Start settling in B.C."
 msgstr "BC주에 정착 시작하기"
 
-#: lib/components/about/about_component.js:38
+#: lib/components/header_menu/header_menu_component.js:53
+msgid "Terms of Use"
+msgstr ""
+
+#: lib/components/about/about_component.js:37
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -443,7 +468,6 @@ msgstr "Arrival Advisor 버전:"
 msgid "UPDATE MY RECOMMENDATIONS"
 msgstr "나의 추천 업데이트하기"
 
-#: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "웹:"
 

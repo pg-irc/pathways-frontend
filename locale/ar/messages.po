@@ -53,7 +53,6 @@ msgstr "نبذة عن التطبيق"
 msgid "About Arrival Advisor"
 msgstr "نبذة عن Arrival Advisor"
 
-#: lib/components/services/service_list_item_component.js:27
 msgid "Address:"
 msgstr "العنوان:"
 
@@ -122,7 +121,7 @@ msgstr ""
 "الهجرة واللاجئين والجنسية الكندية المعلومات لأي غرض آخر كما أنها لا تستخدم "
 "في اتخاذ أي قرار يتعلق بالهجرة."
 
-#: lib/components/questionnaire/questionnaire_component.js:110
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A112+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A110
 msgid "Back"
 msgstr "رجوع"
 
@@ -162,11 +161,9 @@ msgstr "انتهى"
 msgid "EXPLORE TOPICS"
 msgstr "تصفح الموضوعات"
 
-#: lib/components/services/service_list_item_component.js:55
 msgid "Email:"
 msgstr "البريد الإلكتروني:"
 
-#: lib/components/services/service_list_component.js:53
 msgid "FIND A SERVICE NEAR YOU"
 msgstr "ابحث عن خدمة بالقرب منك"
 
@@ -185,6 +182,14 @@ msgstr ""
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
 msgstr "ابحث عن وكالة استقرار قريبة من."
+
+#: lib/components/onboarding/onboarding_component.js:19
+msgid "Find helpful services nearby"
+msgstr ""
+
+#: lib/components/onboarding/onboarding_component.js:20
+msgid "Find organizations that can help you settle into your new community."
+msgstr ""
 
 #: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
@@ -221,6 +226,10 @@ msgstr "بدء الاستخدام"
 #: lib/components/recommended_topics/call_to_action.js:36
 msgid "Get information based on your needs"
 msgstr "أحصل على المعلومات استنادا إلى احتياجاتك"
+
+#: lib/components/onboarding/onboarding_component.js:13
+msgid "Get trusted information"
+msgstr ""
 
 #: lib/components/recommended_topics/call_to_action.js:74
 msgid "Go back to questions"
@@ -264,6 +273,12 @@ msgstr "معلومات تتعلق بخدمات الطوارئ (911)"
 msgid "Information on helplines"
 msgstr "معلومات تتعلق بخطوط المساعدة على الهاتف"
 
+#: lib/components/onboarding/onboarding_component.js:14
+msgid ""
+"Learn about employment, health care, and everything else to start your new "
+"life in British Columbia"
+msgstr ""
+
 #: lib/components/explore/explore_all_component.js:11
 msgid "Learn all about B.C."
 msgstr "تعرف على كل شيء عن بريتيش كولومبيا."
@@ -276,7 +291,7 @@ msgstr "خدمات معلومات صحية مقدمة بعدة لغات"
 msgid "My bookmarks"
 msgstr "علاماتي المرجعية"
 
-#: lib/components/questionnaire/questionnaire_component.js:100
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A118+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A100
 msgid "Next"
 msgstr "التالي"
 
@@ -284,15 +299,14 @@ msgstr "التالي"
 msgid "No new topics recommended based on your answers."
 msgstr "لا توجد مواضيع جديدة نوصي بها استنادا إلى إجاباتك."
 
-#: lib/components/services/service_list_component.js:60
 msgid "No related services found"
 msgstr "لم نجد خدمات متعلقة ببحثك"
 
-#: lib/components/topics/task_list_component.js:77
+#: lib/components/topics/task_list_component.js:69
 msgid "No topics to recommend"
 msgstr "لا توجد موضوعات نوصي بها"
 
-#: lib/components/topics/task_list_component.js:76
+#: lib/components/topics/task_list_component.js:68
 msgid "No topics to show"
 msgstr "لا توجد موضوعات كي نعرضها"
 
@@ -316,7 +330,6 @@ msgstr ""
 "حالما انتهيت من الإجابة عن بضع أسئلة، سوف تظهر توصياتك المخصصة تاليا. إليك "
 "في الوقت الراهن بعض الموضوعات التي نوصي بها للجميع:"
 
-#: lib/components/maps_application_popup/maps_application_popup_component.js:18
 msgid "Open in maps"
 msgstr "فتح في الخرائط"
 
@@ -351,11 +364,11 @@ msgstr "سياسة الخصوصية"
 msgid "RELATED TOPICS"
 msgstr "موضوعات ذات صلة"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:82
 msgid "Read less"
 msgstr "تقليل النص"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:80
 msgid "Read more"
 msgstr "زيادة النص"
 
@@ -391,15 +404,27 @@ msgstr "أصبح الاستقرار في كندا الآن أسهل من ذي ق
 msgid "Skip"
 msgstr "تخطى"
 
+#: lib/components/onboarding/onboarding_component.js:89
+msgid "Skip personalization"
+msgstr ""
+
 #: lib/components/welcome/welcome_component.js:42
 msgid "Start"
 msgstr "ابدأ"
+
+#: lib/components/onboarding/onboarding_component.js:74
+msgid "Start personalization"
+msgstr ""
 
 #: lib/components/recommended_topics/recommended_topics_component.js:21
 msgid "Start settling in B.C."
 msgstr "بدء الاستقرار في بريتيش كولومبيا."
 
-#: lib/components/about/about_component.js:38
+#: lib/components/header_menu/header_menu_component.js:53
+msgid "Terms of Use"
+msgstr ""
+
+#: lib/components/about/about_component.js:37
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
@@ -446,7 +471,6 @@ msgstr "هذا الإصدار من تطبيق Arrival Advisor هو:"
 msgid "UPDATE MY RECOMMENDATIONS"
 msgstr "تحديث توصياتي"
 
-#: lib/components/services/service_list_item_component.js:46
 msgid "Web:"
 msgstr "الموقع الشبكي:"
 

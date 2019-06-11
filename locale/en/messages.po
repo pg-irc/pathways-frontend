@@ -23,8 +23,8 @@ msgid "About Arrival Advisor"
 msgstr "About Arrival Advisor"
 
 #: lib/components/services/service_list_item_component.js:27
-msgid "Address:"
-msgstr "Address:"
+#~ msgid "Address:"
+#~ msgstr "Address:"
 
 #: lib/components/services/service_list_error_component.js:33
 msgid "An error has occured."
@@ -94,6 +94,7 @@ msgstr ""
 "Refugees and Citizenship Canada for any other purpose and is not used for "
 "any immigration decision making."
 
+#: lib/components/onboarding/onboarding_component.js:112
 #: lib/components/questionnaire/questionnaire_component.js:110
 msgid "Back"
 msgstr "Back"
@@ -136,12 +137,12 @@ msgid "EXPLORE TOPICS"
 msgstr "EXPLORE TOPICS"
 
 #: lib/components/services/service_list_item_component.js:55
-msgid "Email:"
-msgstr "Email:"
+#~ msgid "Email:"
+#~ msgstr "Email:"
 
 #: lib/components/services/service_list_component.js:53
-msgid "FIND A SERVICE NEAR YOU"
-msgstr "FIND A SERVICE NEAR YOU"
+#~ msgid "FIND A SERVICE NEAR YOU"
+#~ msgstr "FIND A SERVICE NEAR YOU"
 
 #: lib/components/help/help_component.js:59
 msgid "FOR ADDITIONAL ASSISTANCE"
@@ -158,6 +159,14 @@ msgstr ""
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
 msgstr "Find a settlement agency near me"
+
+#: lib/components/onboarding/onboarding_component.js:19
+msgid "Find helpful services nearby"
+msgstr "Find helpful services nearby"
+
+#: lib/components/onboarding/onboarding_component.js:20
+msgid "Find organizations that can help you settle into your new community."
+msgstr "Find organizations that can help you settle into your new community."
 
 #: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
@@ -194,6 +203,10 @@ msgstr "GETTING STARTED"
 #: lib/components/recommended_topics/call_to_action.js:36
 msgid "Get information based on your needs"
 msgstr "Get information based on your needs"
+
+#: lib/components/onboarding/onboarding_component.js:13
+msgid "Get trusted information"
+msgstr "Get trusted information"
 
 #: lib/components/recommended_topics/call_to_action.js:74
 msgid "Go back to questions"
@@ -237,6 +250,10 @@ msgstr "Information on emergency services (9-1-1)"
 msgid "Information on helplines"
 msgstr "Information on helplines"
 
+#: lib/components/onboarding/onboarding_component.js:14
+msgid "Learn about employment, health care, and everything else to start your new life in British Columbia"
+msgstr "Learn about employment, health care, and everything else to start your new life in British Columbia"
+
 #: lib/components/explore/explore_all_component.js:11
 msgid "Learn all about B.C."
 msgstr "Learn all about B.C."
@@ -249,6 +266,7 @@ msgstr "Mutlilingual health information services"
 msgid "My bookmarks"
 msgstr "My bookmarks"
 
+#: lib/components/onboarding/onboarding_component.js:118
 #: lib/components/questionnaire/questionnaire_component.js:100
 msgid "Next"
 msgstr "Next"
@@ -258,14 +276,14 @@ msgid "No new topics recommended based on your answers."
 msgstr "No new topics recommended based on your answers."
 
 #: lib/components/services/service_list_component.js:60
-msgid "No related services found"
-msgstr "No related services found"
+#~ msgid "No related services found"
+#~ msgstr "No related services found"
 
-#: lib/components/topics/task_list_component.js:77
+#: lib/components/topics/task_list_component.js:69
 msgid "No topics to recommend"
 msgstr "No topics to recommend"
 
-#: lib/components/topics/task_list_component.js:76
+#: lib/components/topics/task_list_component.js:68
 msgid "No topics to show"
 msgstr "No topics to show"
 
@@ -290,8 +308,8 @@ msgstr ""
 "now, here are some topics we recommend for everyone:"
 
 #: lib/components/maps_application_popup/maps_application_popup_component.js:18
-msgid "Open in maps"
-msgstr "Open in maps"
+#~ msgid "Open in maps"
+#~ msgstr "Open in maps"
 
 #: lib/components/disclaimer/disclaimer_component.js:45
 msgid ""
@@ -325,11 +343,11 @@ msgstr "Privacy policy"
 msgid "RELATED TOPICS"
 msgstr "RELATED TOPICS"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:82
 msgid "Read less"
 msgstr "Read less"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:80
 msgid "Read more"
 msgstr "Read more"
 
@@ -366,9 +384,17 @@ msgstr "Settling in Canada is now easier."
 msgid "Skip"
 msgstr "Skip"
 
+#: lib/components/onboarding/onboarding_component.js:89
+msgid "Skip personalization"
+msgstr "Skip personalization"
+
 #: lib/components/welcome/welcome_component.js:42
 msgid "Start"
 msgstr "Start"
+
+#: lib/components/onboarding/onboarding_component.js:74
+msgid "Start personalization"
+msgstr "Start personalization"
 
 #: lib/components/recommended_topics/recommended_topics_component.js:21
 msgid "Start settling in B.C."
@@ -393,6 +419,10 @@ msgstr ""
 "donors who make this project possible. Arrival Advisor is an open-source "
 "project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how "
 "you can support this project."
+
+#: lib/components/header_menu/header_menu_component.js:53
+msgid "Terms of Use"
+msgstr "Terms of Use"
 
 #: lib/components/disclaimer/disclaimer_component.js:22
 msgid ""
