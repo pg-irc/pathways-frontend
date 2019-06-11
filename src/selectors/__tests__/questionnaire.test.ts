@@ -40,7 +40,7 @@ describe('toSelectorQuestion selector', () => {
             secondQuestion = new QuestionBuilder().withLocaleCode(locale.code).withId(secondQuestionId).withAnswers([secondAnswer]);
 
             const normalizedData = new ValidStoreBuilder().withQuestions([firstQuestion, secondQuestion]).build();
-            firstDenormalizedQuestion = toSelectorQuestion(locale, normalizedData.questions[firstQuestion.id],
+            firstDenormalizedQuestion = toSelectorQuestion(normalizedData.questions[firstQuestion.id],
                 normalizedData.questions, normalizedData.answers);
         });
 
@@ -93,7 +93,7 @@ describe('toSelectorQuestion selector', () => {
         const theQuestion = new QuestionBuilder().withLocaleCode(locale.code).withAnswers(answers);
         const normalizedData = new ValidStoreBuilder().withQuestions([theQuestion]).build();
         const firstQuestionKey = R.keys(normalizedData.questions)[0];
-        const denormalizedData = toSelectorQuestion(locale, normalizedData.questions[firstQuestionKey],
+        const denormalizedData = toSelectorQuestion(normalizedData.questions[firstQuestionKey],
             normalizedData.questions, normalizedData.answers);
         expect(denormalizedData.answers).toHaveLength(answerCount);
     });
