@@ -18,8 +18,8 @@ extract_all() {
     checkForSuccess "yarn build"
 
     echo "Generating PO files ..."
-    yarn extract-strings-clean
-    checkForSuccess "yarn extract-strings-clean"
+    yarn extract-strings
+    checkForSuccess "yarn extract-strings"
 
     for locale in "${locales[@]}"
     do
