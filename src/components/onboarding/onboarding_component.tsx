@@ -160,7 +160,7 @@ export class OnboardingComponent extends React.Component<Props> {
         return <Button
             style={{ backgroundColor: 'transparent', alignSelf: 'flex-start' }}
             onPress={this.goToPageWithIndex(prevousIndex)}>
-            <Trans><Text style={{ color: colors.teal }}>Back</Text></Trans>
+            <Text style={{ color: colors.teal }}><Trans>Back</Trans></Text>
         </Button>;
     }
 
@@ -169,7 +169,7 @@ export class OnboardingComponent extends React.Component<Props> {
         return <Button
             style={{ backgroundColor: 'transparent', alignSelf: 'flex-end' }}
             onPress={this.goToPageWithIndex(nextIndex)}>
-            <Trans><Text style={{ color: colors.teal }}>Next</Text></Trans>
+            <Text style={{ color: colors.teal }}><Trans>Next</Trans></Text>
         </Button>;
     }
 
