@@ -4,8 +4,6 @@ import { ExploreStore } from '../fixtures/types/explore';
 export { ExploreStore, ExploreSection, ExploreSectionMap } from '../fixtures/types/explore';
 
 export type Id = string;
-export type Name = string;
-export type Description = string;
 
 export const buildDefaultStore = (): ExploreStore => (
     buildExploreFixture()

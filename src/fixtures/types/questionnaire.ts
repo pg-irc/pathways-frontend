@@ -1,4 +1,3 @@
-import { LocalizedText } from '../../locale';
 import { TaxonomyTermReference } from './taxonomies';
 
 export type Id = string;
@@ -6,7 +5,7 @@ export type Id = string;
 export interface Question {
     readonly id: Id;
     readonly text: string;
-    readonly explanation?: LocalizedText;
+    readonly explanation?: string;
     readonly acceptMultipleAnswers: boolean;
 }
 
