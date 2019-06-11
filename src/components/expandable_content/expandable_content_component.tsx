@@ -1,13 +1,13 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import { Dimensions, LayoutChangeEvent, Animated } from 'react-native';
+import { Dimensions, LayoutChangeEvent, Animated, I18nManager } from 'react-native';
 import { View, Text, Button, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import {
     toggleExpandedState, ExpandableContentStates, shouldShowReadMoreButton,
-    defaultExpandableContentState, isDefaultState
+    defaultExpandableContentState, isDefaultState,
 } from './expandable_content_states';
 import { values } from '../../application/styles';
 
@@ -129,9 +129,10 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     private getReadMoreButton(): JSX.Element {
         const onPress = (): void => this.toggleState();
         const text = this.readMoreReadLessText();
-        const backgroundColor = this.props.contentBackgroundColor ? this.props.contentBackgroundColor : colors.white;
+        const backgroundColor = this.backgroundColour();
+        const justifyContent = this.computeJustifyContent();
         return (
-            <View style={{ backgroundColor }}>
+            <View style={{ backgroundColor, flex: 1, flexDirection: 'row', justifyContent }} >
                 <Button
                     onPress={onPress}
                     transparent
@@ -158,6 +159,19 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                 </Button>
             </View>
         );
+    }
+
+    private computeJustifyContent(): 'flex-start' | 'flex-end' {
+        // If the app locale is Arabic and the screen is in English, justify "Read more"
+        // string to the left by returning 'flex-end', which in RTL mode means left.
+        if (I18nManager.isRTL && this.props.forceEnglish) {
+            return 'flex-end';
+        }
+        return 'flex-start';
+    }
+
+    private backgroundColour(): string {
+        return this.props.contentBackgroundColor || colors.white;
     }
 
     private isCollapsed(): boolean {
