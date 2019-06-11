@@ -126,8 +126,8 @@ const AboutListItems = (props: Props): JSX.Element => {
             />
             <AboutItem
                 icon={<AboutIcon name='file' fontSize={20} marginRight={7} />}
-                text={<Trans>Terms and conditions</Trans>}
-                onPress={buildOnPressForURL('https://arrivaladvisor.ca/terms-conditions/')}
+                text={<Trans>Terms of Use</Trans>}
+                onPress={buildOnPressForURL('https://arrivaladvisor.ca/terms-of-use/')}
             />
         </View>
     );
