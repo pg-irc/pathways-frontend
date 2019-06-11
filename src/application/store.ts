@@ -19,14 +19,14 @@ import zhTwMessages from '../../locale/zh_TW/messages';
 
 // tslint:disable-next-line:no-expression-statement
 LocaleInfoManager.register([
-    { code: 'en', label: 'English', catalog: enMessages, isRTL: false },
-    { code: 'ar', label: 'عربى', catalog: arMessages, isRTL: true },
-    { code: 'fr', label: 'Français', catalog: frMessages, isRTL: false },
-    { code: 'ko', label: '한국어', catalog: koMessages, isRTL: false },
-    { code: 'pa', label: 'ਪੰਜਾਬੀ', catalog: paMessages, isRTL: false },
-    { code: 'tl', label: 'Tagalog', catalog: tlMessages, isRTL: false },
-    { code: 'zh_CN', label: '简体中文', catalog: zhCnMessages, isRTL: false },
-    { code: 'zh_TW', label: '繁體中文', catalog: zhTwMessages, isRTL: false },
+    { code: 'en', label: 'English', catalog: enMessages },
+    { code: 'ar', label: 'عربى', catalog: arMessages },
+    { code: 'fr', label: 'Français', catalog: frMessages },
+    { code: 'ko', label: '한국어', catalog: koMessages },
+    { code: 'pa', label: 'ਪੰਜਾਬੀ', catalog: paMessages },
+    { code: 'tl', label: 'Tagalog', catalog: tlMessages },
+    { code: 'zh_CN', label: '简体中文', catalog: zhCnMessages },
+    { code: 'zh_TW', label: '繁體中文', catalog: zhTwMessages },
 ]);
 
 const buildStoreWithLocaleData = (): Store => {
