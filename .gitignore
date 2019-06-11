@@ -32,5 +32,3 @@ src/fixtures/newcomers_guide
 .env
 
 .vscode/
-
-/locale/*/messages.po
