@@ -1,13 +1,13 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import { Dimensions, LayoutChangeEvent, Animated } from 'react-native';
+import { Dimensions, LayoutChangeEvent, Animated, I18nManager } from 'react-native';
 import { View, Text, Button, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import {
     toggleExpandedState, ExpandableContentStates, shouldShowReadMoreButton,
-    defaultExpandableContentState, isDefaultState
+    defaultExpandableContentState, isDefaultState,
 } from './expandable_content_states';
 import { values } from '../../application/styles';
 
@@ -130,8 +130,10 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         const onPress = (): void => this.toggleState();
         const text = this.readMoreReadLessText();
         const backgroundColor = this.props.contentBackgroundColor ? this.props.contentBackgroundColor : colors.white;
+        const flipJustification = I18nManager.isRTL && this.props.forceEnglish;
+        const justifyContent = flipJustification ? 'flex-end' : 'flex-start';
         return (
-            <View style={{ backgroundColor }}>
+            <View style={{ backgroundColor, flex: 1, flexDirection: 'row', justifyContent }} >
                 <Button
                     onPress={onPress}
                     transparent
