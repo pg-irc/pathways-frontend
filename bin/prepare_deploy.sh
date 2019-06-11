@@ -170,10 +170,10 @@ checkOutServerByTag() {
     checkForSuccess "check out tag for server"
 }
 
-check_out_ui_strings_by_tag() {
+checkOutUiStringsByTag() {
     echo
     ./bin/strings.sh --combine-pos $CLIENT_DIRECTORY/locale $UI_STRINGS_DIRECTORY $VERSION
-    check_for_success "check out ui-strings "$VERSION""
+    checkForSuccess "check out ui-strings "$VERSION""
 }
 
 
@@ -318,10 +318,10 @@ validateCommandLine
 validateExpoUser
 createWorkingDirectory
 
-check_out_server_by_tag
-check_out_client_by_tag
-check_out_content_by_tag
-check_out_ui_strings_by_tag
+checkOutServerByTag
+checkOutClientByTag
+checkOutContentByTag
+checkOutUiStringsByTag
 
 validateClientVersion
 validateServerVersion

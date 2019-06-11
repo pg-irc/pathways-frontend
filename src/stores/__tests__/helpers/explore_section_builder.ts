@@ -1,12 +1,12 @@
 // tslint:disable:no-class readonly-keyword no-this no-expression-statement
-import { Id, ExploreSection, Name, Description } from '../../explore';
+import { Id, ExploreSection } from '../../explore';
 import { TaxonomyTermReference } from '../../taxonomies';
 import { aString } from '../../../application/__tests__/helpers/random_test_values';
 
 export class ExploreSectionBuilder {
     id: Id = aString();
-    name: Name = aString();
-    description: Description = aString();
+    name: string = aString();
+    description: string = aString();
     taxonomyTerms: ReadonlyArray<TaxonomyTermReference> = [];
 
     withId(id: Id): ExploreSectionBuilder {
@@ -14,12 +14,12 @@ export class ExploreSectionBuilder {
         return this;
     }
 
-    withName(name: Name): ExploreSectionBuilder {
+    withName(name: string): ExploreSectionBuilder {
         this.name = name;
         return this;
     }
 
-    withDescription(description: Description): ExploreSectionBuilder {
+    withDescription(description: string): ExploreSectionBuilder {
         this.description = description;
         return this;
     }

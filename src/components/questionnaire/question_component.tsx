@@ -26,7 +26,9 @@ export const QuestionComponent: React.StatelessComponent<Props> = (props: Props)
             <Text style={[textStyles.headlineH2StyleBlackCenter, { marginBottom: 15 }]}>
             <Trans id={question.text} />
             </Text>
-            {question.explanation ? <Text style={textStyles.paragraphSmallStyleLeft}>{question.explanation}</Text> : <EmptyComponent />}
+            {question.explanation ? <Text style={textStyles.paragraphSmallStyleLeft}>
+                <Trans id={question.explanation} />
+            </Text> : <EmptyComponent />}
             <FlatList
                 data={props.question.answers}
                 renderItem={({ item }: ListRenderItemInfo<SelectorAnswer>): JSX.Element => renderAnswer(item, props)}

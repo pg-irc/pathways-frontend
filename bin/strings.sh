@@ -13,6 +13,22 @@ checkForSuccess () {
     fi
 }
 
+validate_command_line () {
+    if [ "$CLIENT_LOCALE_LOCATION" == "" ]
+    then
+        echo "Error: Must provide the path of the locale directory on the client"
+        help
+        exit
+    fi
+
+    if [ "$UI_STRINGS_DIRECTORY" == "" ]
+    then
+        echo "Error: Must specify a directory to place the ui-strings, which must not already exist"
+        help
+        exit
+    fi
+}
+
 
 extract_all() {
     echo "Building the client ..."
@@ -129,35 +145,36 @@ normalize_line_breaks(){
 
 
 clean() {
-    rm -f $CLIENT_LOCALE_LOCATION/*/messages.csv
-    rm -f $CLIENT_LOCALE_LOCATION/*/new-messages.*
-    rm -f $CLIENT_LOCALE_LOCATION/*/merged-messages.po
-    rm -f $CLIENT_LOCALE_LOCATION/*/*.backup
-    rm -f $CLIENT_LOCALE_LOCATION/*/*.po
-    rm -f $CLIENT_LOCALE_LOCATION/*/*.pot
+    rm -f locale/*/messages.csv
+    rm -f locale/*/new-messages.*
+    rm -f locale/*/merged-messages.po
+    rm -f locale/*/*.backup
+    rm -f locale/*/*.po
+    rm -f locale/*/*.pot
 }
 
 
 create_ui_strings_directory() {
     echo "Creating ui-strings directory"
     mkdir "$UI_STRINGS_DIRECTORY"
-    check_for_success "create ui-strings directory for ui-strings PO files"
+    checkForSuccess "create tmp ui-strings directory for ui-strings PO files"
 
     echo "cloning ui-strings repository"
     (cd "$UI_STRINGS_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
-    check_for_success "clone ui-strings repository"
+    checkForSuccess "clone ui-strings repository"
 }
+
 
 check_out_ui_strings_by_tag() {
     if [ "$VERSION" ]; then
         echo
-        echo "Checking out ui-strings with tag $VERSION"
+        echo "Checking out ui-strings with tag ${VERSION}"
         echo
         (cd "$UI_STRINGS_DIRECTORY/ui-strings" && git fetch --tags)
-        check_for_success "fetch tags for ui-strings"
+        checkForSuccess "fetch tags for ui-strings"
 
         (cd "$UI_STRINGS_DIRECTORY/ui-strings" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
-        check_for_success "check out tag for ui-strings"
+        checkForSuccess "check out tag for ui-strings"
     else
         echo "Using newest version of translation strings"
         echo
@@ -165,44 +182,17 @@ check_out_ui_strings_by_tag() {
 }
    
 
-add_po_files_to_client_locale_dir() {
-    echo 
-    
-    for locale in "${locales[@]}"
-    do
-        echo "Moving ui-strings PO file for ${locale}..."
-        mv $UI_STRINGS_DIRECTORY/ui-strings/explore/$locale/explore.po $CLIENT_LOCALE_LOCATION/$locale
-        mv $UI_STRINGS_DIRECTORY/ui-strings/questionnaire/$locale/questionnaire.po $CLIENT_LOCALE_LOCATION/$locale
-        mv $UI_STRINGS_DIRECTORY/ui-strings/jsx_strings/$locale/jsx_strings.po $CLIENT_LOCALE_LOCATION/$locale          
-        check_for_success "move ui-strings PO files to client locale directories"
-    done
-
-    echo 
-    echo "Moving .pot files"
-    mv $UI_STRINGS_DIRECTORY/ui-strings/explore/explore.pot $CLIENT_LOCALE_LOCATION/en
-    mv $UI_STRINGS_DIRECTORY/ui-strings/questionnaire/questionnaire.pot $CLIENT_LOCALE_LOCATION/en
-    mv $UI_STRINGS_DIRECTORY/ui-strings/jsx_strings/jsx_strings.pot $CLIENT_LOCALE_LOCATION/en
-    check_for_success "move ui-strings PO files to client locale"
-}
-
-
 combine_po_files() {
     echo 
-    
     for locale in "${locales[@]}"
     do
-        echo "Combining PO files for ${locale}..."
-        msgcat $CLIENT_LOCALE_LOCATION/$locale/*.po > $CLIENT_LOCALE_LOCATION/$locale/messages.po
-        checkForSuccess "combine PO files"
+        echo "combine files for ${locale}"
+        concat_translation_files $locale
     done
-
-    echo
-    echo "Combining POT files for en"
-    msgcat $CLIENT_LOCALE_LOCATION/en/*.pot > $CLIENT_LOCALE_LOCATION/en/messages.po
-    checkForSuccess "combine POT files"
-
+    
+    echo "combine en files"
+    concat_en_source_files
 }
-
 
 help() {
     echo "$0 --extract-all        Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
@@ -218,6 +208,14 @@ help() {
     do
         echo "Supports locale ${locale}"
     done
+}
+
+concat_translation_files() {
+    locale=$1
+    msgcat $UI_STRINGS_DIRECTORY/ui-strings/*/$locale/*.po > $CLIENT_LOCALE_LOCATION/$locale/messages.po
+}
+concat_en_source_files() {
+    msgcat $UI_STRINGS_DIRECTORY/ui-strings/*/*.pot > $CLIENT_LOCALE_LOCATION/en/messages.po
 }
 
 
@@ -240,9 +238,9 @@ elif [ "$1" == "--clean" ]; then
     clean
 
 elif [ "$1" == "--combine-pos" ]; then 
+    validate_command_line
     create_ui_strings_directory
     check_out_ui_strings_by_tag
-    add_po_files_to_client_locale_dir
     combine_po_files 
 
 else
