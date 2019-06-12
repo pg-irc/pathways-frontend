@@ -36,6 +36,7 @@ SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
 CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
 UI_STRINGS_DIRECTORY="$WORKING_DIRECTORY/ui-strings"
+CLIENT_LOCALE_LOCATION="$CLIENT_DIRECTORY/locale"
 
 usage() {
     echo
@@ -172,8 +173,17 @@ checkOutServerByTag() {
 
 checkOutUiStringsByTag() {
     echo
-    ./bin/strings.sh --combine-pos $CLIENT_DIRECTORY/locale $UI_STRINGS_DIRECTORY $VERSION
-    checkForSuccess "check out ui-strings "$VERSION""
+    echo "Checking out ui-strings tagged with $VERSION"
+    echo
+
+    (cd "$WORKING_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
+    checkForSuccess "clone ui-strings repo"
+
+    (cd "$UI_STRINGS_DIRECTORY" && git fetch --tags)
+    checkForSuccess "fetch tags for ui-strings"
+
+    (cd "$UI_STRINGS_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
+    checkForSuccess "check out tag for ui-strings"
 }
 
 
@@ -334,6 +344,7 @@ validateContentFixture
 getClientDependencies
 createClientEnvironment
 completeManualConfiguration
+./bin/strings.sh --combine-pos-deploy $CLIENT_LOCALE_LOCATION $WORKING_DIRECTORY
 buildStringsForLinguiCatalogs
 buildClientLocally
 testClient
