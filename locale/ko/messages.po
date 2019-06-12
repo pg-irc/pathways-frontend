@@ -1,0 +1,702 @@
+#. #-#-#-#-#  jsx_strings.po (PACKAGE VERSION)  #-#-#-#-#
+#. extracted from /tmp/messages-ko.csv
+#, fuzzy
+msgid ""
+msgstr ""
+"#-#-#-#-#  explore.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-04 22:33+0000\n"
+"PO-Revision-Date: 2019-06-04 22:34+0000\n"
+"Last-Translator: UserName LastName <tomy@peacegeeks.org>\n"
+"Language-Team: Korean <https://35.182.138.61/projects/ui-strings/explore/ko/"
+">\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.5.1\n"
+"#-#-#-#-#  jsx_strings.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-15 14:55-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.2.5\n"
+"#-#-#-#-#  questionnaire.po (PACKAGE VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-06-04 21:24+0000\n"
+"PO-Revision-Date: 2019-06-04 21:24+0000\n"
+"Last-Translator: UserName LastName <tomy@peacegeeks.org>\n"
+"Language-Team: Korean <https://35.182.138.61/projects/ui-strings/"
+"questionnaire/ko/>\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.5.1\n"
+
+msgid "Things to do right away"
+msgstr "지금 바로 해야 할 일들"
+
+msgid "Settling in"
+msgstr "새로운 환경에의 적응"
+
+msgid "Education"
+msgstr "교육"
+
+msgid "Health care"
+msgstr "의료 보건"
+
+msgid "Money & banking"
+msgstr "화폐와 금융"
+
+msgid "Housing"
+msgstr "주거"
+
+msgid "Employment"
+msgstr "고용"
+
+msgid "Legal system & immigration"
+msgstr "사법 제도와 이민"
+
+msgid "Driving"
+msgstr "운전"
+
+msgid "Help for individuals & families"
+msgstr "개인과 가족을 위한 지원"
+
+msgid "Important tasks for settling in your community"
+msgstr "커뮤니티 정착에 필요한 중요 과제들"
+
+msgid "Social customs and getting around your community"
+msgstr "사회적 풍습과 지역 사회 둘러보기"
+
+msgid "Learning English, schools for children, youth and adults"
+msgstr "영어 학습, 아동과 청소년 또는 성인을 위한 교육 기관"
+
+msgid "Medical insurance, finding a doctor, mental health"
+msgstr "의료 보험, 병원 검색, 정신 건강"
+
+msgid "Opening a bank account, filing taxes"
+msgstr "은행 계좌 개설, 세금 신고서 제출"
+
+msgid "Finding a place to rent or buy, getting rental assistance"
+msgstr "공간 임차 또는 구매, 임차 지원 프로그램 이용"
+
+msgid "Finding a job, working and workers’ rights"
+msgstr "구직, 근로와 근로자 권리"
+
+msgid "Immigration and citizenship, legal support, police"
+msgstr "이민과 시민권, 법률 자문, 경찰"
+
+msgid "Getting a driver's licence, traffic laws, basic insurance"
+msgstr "운전면허증 취득, 도로교통법, 기본 보험"
+
+msgid "For example low-income, disabilities, youth"
+msgstr "예: 저소득층, 장애인, 청소년"
+
+#: lib/components/header_menu/header_menu_component.js:45
+msgid "ABOUT THE APP"
+msgstr "이 앱에 관하여"
+
+#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A16+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
+msgid "About Arrival Advisor"
+msgstr "Arrival Advisor에 대하여"
+
+#: lib/components/services/service_list_item_component.js:27
+msgid "Address:"
+msgstr "주소:"
+
+#: lib/components/services/service_list_error_component.js:33
+msgid "An error has occured."
+msgstr "오류가 발생했습니다."
+
+#: lib/components/recommended_topics/call_to_action.js:46
+msgid ""
+"Answer a few questions about your situation to get personalized "
+"recommendations of topics and services to help you settle in British "
+"Columbia."
+msgstr ""
+"몇 가지 질문에 답한 다음, 브리티시컬럼비아주 정착에 유용한 나만의 맞춤 주제"
+"와 서비스 추천받기."
+
+#: lib/components/recommended_topics/call_to_action.js:55
+msgid "Answer questions"
+msgstr "질문에 답하기"
+
+#: lib/components/disclaimer/disclaimer_component.js:15
+msgid ""
+"Arrival Advisor contains information from the BC Government’s Newcomer’s "
+"Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of "
+"service providers, available at <1>www.bc211.ca</1>."
+msgstr ""
+"Arrival Advisor는 브리티시컬럼비아주 새 이민자 안내서(<0>www.welcomebc.ca</0>"
+"에서 확인 가능)와 BC211 서비스 제공자 데이터베이스(<1>www.bc211.ca</1>에서 확"
+"인 가능)에 수록된 정보를 포함하고 있습니다."
+
+#: lib/components/about/about_component.js:19
+msgid ""
+"Arrival Advisor is a free, multilingual, mobile app that helps immigrants "
+"and refugees in British Columbia, Canada find information and services to "
+"navigate their settlement journey. The app is currently available in "
+"English, French (Canadian), and Arabic. It will soon be available in Chinese "
+"Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
+msgstr ""
+"Arrival Advisor는 이민자와 난민이 캐나다 브리티시컬럼비아(BC)주에 정착하는 과"
+"정에서 필요한 정보와 서비스를 쉽게 찾도록 도와주는 다국어 지원 무료 모바일 앱"
+"입니다. 현재 앱에서 지원되는 언어는 영어와 프랑스어(캐나다), 아랍어입니다. 조"
+"만간 중국어 간체자와 번체자, 한국어, 펀자브어와 타갈로그어가 추가로 지원될 예"
+"정입니다."
+
+#: lib/components/disclaimer/disclaimer_component.js:33
+msgid ""
+"Arrival Advisor respects and maintains the privacy and anonymity of its "
+"users. Users do not need to provide personal information in order to use the "
+"app. The questionnaire is designed to assist in personalizing services and "
+"resources required by the user, and answers are only saved to enhance the "
+"usability of the app over time. Users of the Arrival Advisor app do so at "
+"their own discretion. The answers you provide will be used for the operation "
+"of this tool to provide you with guidance on resources and services that can "
+"help you adjust to life in Canada. Users cannot be identified by their "
+"answers to the questionnaire. The information is not used by Immigration, "
+"Refugees and Citizenship Canada for any other purpose and is not used for "
+"any immigration decision making."
+msgstr ""
+"Arrival Advisor는 사용자의 사생활과 익명성을 존중하고 보호합니다. 사용자는 "
+"이 앱을 이용하기 위해 개인 정보를 제공할 필요가 없습니다. 질문들은 사용자가 "
+"필요로 하는 서비스와 정보를 개인별로 맞춤화하는 용도로 고안되었으며, 사용자"
+"의 답변은 시간의 경과에 따라 앱의 편리성을 향상하기 위한 목적으로만 저장됩니"
+"다. 이는 전적으로 Arrival Advisor 사용자의 재량에 따른 것입니다. 사용자가 제"
+"공한 답변은 캐나다 정착에 유용한 정보와 서비스를 안내하는 본 앱을 작동시키는 "
+"데 활용됩니다. 질문들에 대한 답변만으로는 사용자를 신원을 파악할 수 없습니"
+"다. 해당 정보는 캐나다 이민 난민 시민권부(IRCC)에 의해 어떠한 목적으로도 활용"
+"되지 않으며, 어떠한 이민 의사 결정에도 활용되지 않습니다."
+
+#: lib/components/questionnaire/questionnaire_component.js:110
+msgid "Back"
+msgstr "이전으로"
+
+#: lib/components/recommended_topics/call_to_action.js:99
+msgid "Based on your answers, we recommend these topics for you:"
+msgstr "귀하의 답변을 바탕으로 다음의 주제를 추천합니다:"
+
+#: lib/components/notifications/notification_content.js:7
+msgid "Bookmark added"
+msgstr "추가된 북마크"
+
+#: lib/components/notifications/notification_content.js:12
+msgid "Bookmark removed"
+msgstr "삭제된 북마크"
+
+#: lib/components/help/help_component.js:33
+msgid "Contact Arrival Advisor team"
+msgstr "Arrival Advisor 팀에 연락하기"
+
+#: lib/components/welcome/welcome_component.js:49
+msgid "Created by"
+msgstr "제작"
+
+#: lib/components/help/help_component.js:87
+msgid "Delete all user data"
+msgstr "모든 사용자 데이터 삭제하기"
+
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+msgid "Disclaimer"
+msgstr "법적 책임 고지"
+
+#: lib/components/questionnaire/questionnaire_component.js:117
+msgid "Done"
+msgstr "완료"
+
+#: lib/components/explore/explore_detail_component.js:19
+msgid "EXPLORE TOPICS"
+msgstr "주제 탐색하기"
+
+#: lib/components/services/service_list_item_component.js:55
+msgid "Email:"
+msgstr "이메일:"
+
+#: lib/components/services/service_list_component.js:53
+msgid "FIND A SERVICE NEAR YOU"
+msgstr "내 주변 서비스 찾기"
+
+#: lib/components/help/help_component.js:59
+msgid "FOR ADDITIONAL ASSISTANCE"
+msgstr "FOR ADDITIONAL ASSISTANCE"
+
+#: lib/components/services/service_list_error_component.js:28
+msgid ""
+"Fetching your location timed out. On Android devices you may need to set "
+"your location mode to \"High accuracy\"."
+msgstr ""
+"위치 정보 확인 시간이 만료되었습니다. 안드로이드 디바이스의 경우, 위치 모드에"
+"서 \"높은 정확도\"를 선택하세요."
+
+#: lib/components/help/help_component.js:71
+msgid "Find a settlement agency near me"
+msgstr "내 주변 이민자 봉사 단체 찾기"
+
+#: lib/components/topics/task_detail_content_component.js:103
+msgid "Find related services near me"
+msgstr "내 주변 연관 서비스 찾기"
+
+#: lib/components/about/about_component.js:27
+msgid ""
+"From finding a job to learning English, accessing health care, and more, "
+"Arrival Advisor has everything you need to get started in your new "
+"community. Explore topics and services without ever needing to create an "
+"account. Access important information no matter where you are: the newcomer "
+"topics provided by Arrival Advisor are saved to your phone so you can view "
+"them, even without internet. You can fill out some questions to get "
+"personalized recommendations of topics and services to settle in British "
+"Columbia. Arrival Advisor is anonymous and your answers are only used to "
+"operate the app's recommendations. We never save or share your personal data "
+"with funders or any third parties."
+msgstr ""
+"구직에서부터 영어 학습은 물론 보건 의료를 포함한 다양한 서비스의 검색까지, "
+"Arrival Advisor에는 새로운 커뮤니티 정착에 필요한 모든 것이 있습니다. 별도의 "
+"회원 가입 없이 주제와 서비스를 검색해보세요. 장소에 구애받지 않고 중요한 정보"
+"를 얻을 수 있습니다: Arrival Advisor에서 제공하는 신규 이민자 주제들은 사용자"
+"의 핸드폰에 저장되기 때문에 인터넷 연결 없이도 언제 어디서나 확인할 수 있습니"
+"다. 몇 가지 질문에 답한 다음, 브리티시컬럼비아주 정착에 필요한 주제와 서비스"
+"를 개인별 맞춤 추천 기능을 통해 이용해보세요. Arrival Advisor는 익명을 보장하"
+"며, 사용자의 답변은 오직 앱의 추천 기능을 위해서만 활용됩니다. 사용자의 개인 "
+"정보를 별도로 저장하거나, 후원 단체나 제3자와 공유하지 않습니다."
+
+#: lib/components/recommended_topics/call_to_action.js:33
+msgid "GETTING STARTED"
+msgstr "시작하기"
+
+#: lib/components/recommended_topics/call_to_action.js:36
+msgid "Get information based on your needs"
+msgstr "내 필요에 기반한 정보 얻기"
+
+#: lib/components/recommended_topics/call_to_action.js:74
+msgid "Go back to questions"
+msgstr "질문으로 돌아가기"
+
+#: lib/components/help/help_component.js:46
+msgid "Help & Support"
+msgstr "도움과 지원"
+
+#: lib/components/help/help_component.js:49
+msgid ""
+"If you are having difficulty with settlement in Canada, we suggest getting "
+"in touch with a settlement worker."
+msgstr ""
+"캐나다 정착에 어려움을 겪고 있다면, 정착 서비스 담당자에게 연락할 것을 추천합"
+"니다."
+
+#: lib/components/about/about_component.js:47
+msgid ""
+"Information in this app is provided by the <0>Newcomers Guide to British "
+"Columbia</0> Copyright 2018 Province of British Columbia. All rights "
+"reserved."
+msgstr ""
+"이 앱에 포함된 정보들은 <0>Newcomers Guide to British Columbia</0> 에서 제공"
+"받았으며, 2018 브리티시컬럼비아주가 소유한 저작권의 보호를 받습니다."
+
+#: lib/components/help/help_component.js:24
+msgid "Information on BC211"
+msgstr "BC211에 관한 정보"
+
+#: lib/components/help/help_component.js:19
+msgid "Information on HealthLinkBC (8-1-1)"
+msgstr "헬스링크BC (8-1-1)에 관한 정보"
+
+#: lib/components/help/help_component.js:14
+msgid "Information on emergency services (9-1-1)"
+msgstr "응급상황 서비스 (9-1-1)에 관한 정보"
+
+#: lib/components/help/help_component.js:29
+msgid "Information on helplines"
+msgstr "전화 상담 서비스에 관한 정보"
+
+#: lib/components/explore/explore_all_component.js:11
+msgid "Learn all about B.C."
+msgstr "브리티시컬럼비아주에 대해 알아보기"
+
+#: lib/components/help/help_component.js:20
+msgid "Mutlilingual health information services"
+msgstr "다국어 지원 건강 정보 서비스"
+
+#: lib/components/bookmarked_topics/bookmarked_topics_component.js:12
+msgid "My bookmarks"
+msgstr "나의 북마크"
+
+#: lib/components/questionnaire/questionnaire_component.js:100
+msgid "Next"
+msgstr "다음"
+
+#: lib/components/questionnaire/new_topics_modal_component.js:55
+msgid "No new topics recommended based on your answers."
+msgstr "답변에 기반해 추천된 새로운 주제가 없습니다."
+
+#: lib/components/services/service_list_component.js:60
+msgid "No related services found"
+msgstr "관련 서비스를 찾을 수 없습니다"
+
+#: lib/components/topics/task_list_component.js:77
+msgid "No topics to recommend"
+msgstr "추천할 주제가 없습니다"
+
+#: lib/components/topics/task_list_component.js:76
+msgid "No topics to show"
+msgstr "보여드릴 주제가 없습니다"
+
+#: lib/components/questionnaire/new_topics_modal_component.js:43
+msgid "Number of new topics recommended based on your answers:"
+msgstr "답변을 바탕으로 추천된 새로운 주제의 개수:"
+
+#: lib/components/questionnaire/questionnaire_component.js:78
+msgid "OF"
+msgstr "/"
+
+#: lib/components/questionnaire/new_topics_modal_component.js:69
+msgid "OK"
+msgstr "네"
+
+#: lib/components/recommended_topics/call_to_action.js:60
+msgid ""
+"Once you answer some questions, your recommendations will show up below. For "
+"now, here are some topics we recommend for everyone:"
+msgstr ""
+"질문에 답하면 아래 추천이 나타납니다. 현재, 모두에게 추천된 주제는 다음과 같"
+"습니다:"
+
+#: lib/components/maps_application_popup/maps_application_popup_component.js:18
+msgid "Open in maps"
+msgstr "지도에서 열기"
+
+#: lib/components/disclaimer/disclaimer_component.js:45
+msgid ""
+"PeaceGeeks is not liable for any damages incurred as a result of or related "
+"to the use of the app. PeaceGeeks is not an immigration consultancy network, "
+"and therefore cannot provide advice or support directly related to "
+"immigration. Arrival Advisor exists to offer newcomers a directory of "
+"services and resources to assist settlement in Metro Vancouver and does not "
+"exist in an official Immigration Service capacity."
+msgstr ""
+"PeaceGeeks는 본 앱의 사용에 따른 혹은 관련하여 발생한 어떠한 손상에도 법적 책"
+"임을 지지 않습니다. PeaceGeeks는 이민 상담 네트워크가 아니며, 따라서 이민과 "
+"관련된 직접적인 조언이나 지원을 제공하지 않습니다. Arrival Advisor는 신규 이"
+"민자의 광역 밴쿠버 정착에 도움이 될 만한 서비스와 정보 목록을 제공하기 위해 "
+"만들어졌으며, 공식적인 이민 서비스 기능을 수행하지 않습니다."
+
+#: lib/components/services/service_list_error_component.js:23
+msgid "Please ensure location services are enabled for Arrival Advisor."
+msgstr "Arrival Advisor의 위치 서비스 기능이 켜져 있는지 확인해주세요."
+
+#: lib/components/help/help_component.js:15
+msgid "Police, fire and medical emergencies"
+msgstr "경찰, 소방 및 의료 관련 응급상황"
+
+#: lib/components/header_menu/header_menu_component.js:52
+msgid "Privacy policy"
+msgstr "개인정보 정책"
+
+#: lib/components/topics/task_detail_component.js:19
+msgid "RELATED TOPICS"
+msgstr "연관 주제들"
+
+#: lib/components/expandable_content/expandable_content_component.js:79
+msgid "Read less"
+msgstr "간단히 보기"
+
+#: lib/components/expandable_content/expandable_content_component.js:79
+msgid "Read more"
+msgstr "자세히 보기"
+
+#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftopics%2Ftask_detail_content_component.js%3A63
+msgid "Recommended for you"
+msgstr "나만을 위한 추천"
+
+#: lib/components/header_menu/header_menu_component.js:24
+msgid "SELECT YOUR LANGUAGE"
+msgstr "언어를 선택하세요"
+
+#: lib/components/bookmarked_topics/bookmarked_topics_component.js:15
+msgid "Save important topics to build your personal plan for settlement."
+msgstr "나만의 정착 계획 수립을 위한 중요 주제 저장하기"
+
+#: lib/components/welcome/welcome_component.js:31
+msgid "Select your language"
+msgstr "언어 선택하기"
+
+#: lib/components/about/about_component.js:56
+msgid "Server version:"
+msgstr "서버 버전:"
+
+#: lib/components/help/help_component.js:25
+msgid "Services information and referral"
+msgstr "서비스 정보와 의뢰"
+
+#: lib/components/welcome/welcome_component.js:27
+msgid "Settling in Canada is now easier."
+msgstr "이제 캐나다에서의 정착이 더욱 쉬워집니다."
+
+#: lib/components/questionnaire/questionnaire_component.js:100
+msgid "Skip"
+msgstr "넘어가기"
+
+#: lib/components/welcome/welcome_component.js:42
+msgid "Start"
+msgstr "시작"
+
+#: lib/components/recommended_topics/recommended_topics_component.js:21
+msgid "Start settling in B.C."
+msgstr "BC주에 정착 시작하기"
+
+#: lib/components/about/about_component.js:38
+msgid ""
+"The Arrival Advisor app is created by PeaceGeeks in partnership with "
+"settlement organizations in Metro Vancouver, as well as immigrants and "
+"refugees like you. This project is possible thanks to funding by the "
+"Province of British Columbia and Google.org Canada in partnership with LEAP "
+"| Pecaut Centre for Social Impact. Special thanks also goes to individual "
+"donors who make this project possible. Arrival Advisor is an open-source "
+"project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how "
+"you can support this project."
+msgstr ""
+"Arrival Advisor는 PeaceGeeks가 광역 밴쿠버의 정착 서비스 기관 및 이민자, 난민"
+"과 협력하여 제작한 앱입니다. 본 프로젝트는 브리티시컬럼비아주 정부, LEAP | "
+"Pecaut Centre for Social Impact와 제휴한 Google.org Canada의 재정적 지원 덕분"
+"에 완성되었습니다. 무엇보다 본 프로젝트의 실현에 도움을 주신 개인 후원자분들"
+"께 특별한 감사의 인사를 드립니다. Arrival Advisor는 오픈 소스 프로젝트입니"
+"다. 본 정보의 확인은 <0>Github에서도</0> 가능하며, <1>저희에게 연락해주시면"
+"</1> 본 프로젝트를 위한 후원 방법을 알아보실 수 있습니다."
+
+#: lib/components/disclaimer/disclaimer_component.js:22
+msgid ""
+"The app provides information about relevant newcomer services, and is "
+"intended for general guidance and reference only. While we aim to provide "
+"accurate and timely information, we do not have control over the ongoing "
+"accuracy of the information or the quality of the services provided. If you "
+"discover that a piece of information is outdated or not useful, please let "
+"us know in the feedback section of the app. The inclusion of services and "
+"resources in this app does not imply an endorsement or recommendation of "
+"those services over others.  Utilization of services located through the app "
+"is undertaken at the risk of the user."
+msgstr ""
+"본 앱은 신규 이민자 관련 서비스에 대한 정보를 제공하며, 일반적인 안내와 참고 "
+"용도만을 위해 제작되었습니다. 앱의 목적이 정확하고 시기적절한 정보 제공에 있"
+"지만, 당사에서 해당 정보의 최신 정확성이나 서비스의 품질을 통제하지는 않습니"
+"다. 만일 앱에서 제공하는 일부 정보가 시대에 뒤떨어지거나 유용하지 않다고 느껴"
+"지실 경우, 본 앱의 피드백 섹션에 의견을 남겨주십시오. 본 앱에 포함된 서비스"
+"나 정보라고 해서 해당 서비스를 타 서비스보다 더 보증하거나 추천하는 것은 아닙"
+"니다. 본 앱에서 위치 정보를 제공하는 서비스의 이용에 따른 책임은 전적으로 사"
+"용자의 몫입니다."
+
+#: lib/components/about/about_component.js:52
+msgid "This is Arrival Advisor version:"
+msgstr "Arrival Advisor 버전:"
+
+#: lib/components/recommended_topics/call_to_action.js:70
+msgid "UPDATE MY RECOMMENDATIONS"
+msgstr "나의 추천 업데이트하기"
+
+#: lib/components/services/service_list_item_component.js:46
+msgid "Web:"
+msgstr "웹:"
+
+msgid "How long have you been living in Canada?"
+msgstr "귀하의 캐나다 거주 기간은 얼마입니까?"
+
+msgid "More than 1 year"
+msgstr "1년 이상"
+
+msgid "Less than 1 year"
+msgstr "1년 미만"
+
+msgid "I am planning to move to Canada"
+msgstr "캐나다로 이주를 계획 중입니다"
+
+msgid "Do you have any of the following important Canadian documents?"
+msgstr ""
+"다음의 캐나다 공식 문서들 가운데 귀하가 현재 보유하고 있는 것은 무엇입니까?"
+
+msgid "I have a Social Insurance Number"
+msgstr "사회보험번호(SIN)가 있습니다"
+
+msgid "I have a Canadian bank account"
+msgstr "캐나다 은행 계좌를 보유하고 있습니다"
+
+msgid "I have a Permanent Resident Card"
+msgstr "영주권 카드를 보유하고 있습니다"
+
+msgid "I have registered for MSP (Medical Services Plan)"
+msgstr "의료 서비스 플랜(MSP)에 가입되어 있습니다"
+
+msgid "I have a BC Services Card (health card)"
+msgstr "BC 서비스 카드(의료 카드)를 보유하고 있습니다"
+
+msgid "I have a BC Driver's Licence"
+msgstr "BC주 운전면허증을 보유하고 있습니다"
+
+msgid "Are you arriving with children under 18 years? If yes, how old?"
+msgstr ""
+"귀하는 18세 미만의 자녀와 함께 입국하였습니까? 만일 그렇다면, 자녀의 나이는 "
+"몇 살입니까?"
+
+msgid "Under 5 years old"
+msgstr "5세 미만"
+
+msgid "5-12 years old"
+msgstr "5세 이상 12세 이하"
+
+msgid "13-18 years old"
+msgstr "13세 이상 18세 미만"
+
+msgid "Pregnant (the child is not yet born)"
+msgstr "임신 중 (출생 이전)"
+
+msgid "No children"
+msgstr "아이 없음"
+
+msgid "What is your current housing situation?"
+msgstr "귀하의 현재 주거 상태는 무엇입니까?"
+
+msgid "I want to rent a place to live"
+msgstr "주거용 공간의 임차를 희망합니다"
+
+msgid "I want to buy a home"
+msgstr "주택 구매를 희망합니다"
+
+msgid "I am already renting a home"
+msgstr "이미 주택을 임차하였습니다"
+
+msgid "I already own a home"
+msgstr "이미 주택을 보유하고 있습니다"
+
+msgid "What is your current level of English?"
+msgstr "귀하의 현재 영어 구사력은 어느 수준입니까?"
+
+msgid "None"
+msgstr "전혀 못 함"
+
+msgid "Beginner (Canadian Language Benchmarks 1-4)"
+msgstr "초급자 (캐나다 언어 기준 1~4급)"
+
+msgid "Intermediate (Canadian Language Benchmarks 5-8)"
+msgstr "중급자 (캐나다 언어 기준 5~8급)"
+
+msgid "Fluent (Canadian Language Benchmarks 9-12)"
+msgstr "유창함 (캐나다 언어 기준 9~12급)"
+
+msgid "What is your status in Canada?"
+msgstr "귀하의 현재 캐나다 체류 자격은 무엇입니까?"
+
+msgid "Permanent resident"
+msgstr "영주권자"
+
+msgid "Permanent Resident - Refugee Class or Protected Person"
+msgstr "영주권자 - 난민 지위 혹은 피보호자"
+
+msgid "Refugee claimant"
+msgstr "난민 신청자"
+
+msgid "Temporary Foreign Worker"
+msgstr "임시 외국인 근로자"
+
+msgid "Student visa"
+msgstr "학생 비자"
+
+msgid "Other"
+msgstr "기타"
+
+msgid "What is your current work situation?"
+msgstr "귀하의 현재 직업 상태는 무엇입니까?"
+
+msgid "I am looking for work"
+msgstr "구직 중입니다"
+
+msgid "I want to learn about my rights at work"
+msgstr "직장 내 근로자의 권리에 대해 알고 싶습니다"
+
+msgid "I have my own business or want to start my own business"
+msgstr "개인사업을 운영하고 있거나 시작하기를 원합니다"
+
+msgid "What kinds of health care are you looking for?"
+msgstr "귀하가 필요로 하는 의료 서비스는 무엇입니까?"
+
+msgid "General health care and learning about health care costs"
+msgstr "일반 의료 및 의료비에 관한 정보"
+
+msgid "I need urgent medical attention (for emergencies, call 9-1-1)"
+msgstr "긴급 치료가 필요합니다. (비상시 911 신고)"
+
+msgid "Prescription medication"
+msgstr "처방 약품"
+
+msgid "Mental health support"
+msgstr "정신 건강 의료 지원"
+
+msgid "Eye doctors"
+msgstr "안과"
+
+msgid "Dentists"
+msgstr "치과"
+
+msgid "Support for disabilities"
+msgstr "장애인 지원"
+
+msgid "Do you need financial assistance or low-income support?"
+msgstr "귀하는 재정적 도움이나 저소득층 지원이 필요합니까?"
+
+msgid "Yes"
+msgstr "네"
+
+msgid "No"
+msgstr "아니요"
+
+msgid "I have low income support"
+msgstr "저소득층 지원을 받고 있습니다"
+
+msgid "Anything else you're interested in? Select all that apply"
+msgstr ""
+"그 밖에 관심이 있는 사항이 있습니까? 관심사에 해당하는 모든 항목을 선택해주세"
+"요"
+
+msgid "Adult education and training"
+msgstr "성인 교육과 연수"
+
+msgid "Becoming a Canadian citizen"
+msgstr "캐나다 시민권 취득법"
+
+msgid "Legal help"
+msgstr "법률 자문"
+
+msgid "Banking and financial management"
+msgstr "은행 업무 및 금융 관리"
+
+msgid "Taxes"
+msgstr "세금"
+
+msgid "LGBTQ2 services"
+msgstr "LGBTQ2 서비스"
+
+msgid "Francophone services"
+msgstr "프랑스어 사용자 서비스"
+
+msgid "Support for seniors (age 65+)"
+msgstr "고령자 지원 (65세 이상)"
+
+msgid "Driving in BC"
+msgstr "BC주 내 운전"
+
+msgid "Public transportation"
+msgstr "대중교통"
+
+msgid "Help with abuse and violence"
+msgstr "학대와 폭행 피해자 지원"
+
+msgid "Community services and organizations"
+msgstr "커뮤니티 서비스 및 기관"

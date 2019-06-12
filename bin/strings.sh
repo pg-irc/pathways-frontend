@@ -13,7 +13,8 @@ checkForSuccess () {
     fi
 }
 
-validate_command_line () {
+
+validate_arguments_for_combine_pos () {
     if [ "$CLIENT_LOCALE_LOCATION" == "" ]
     then
         echo "Error: Must provide the path of the locale directory on the client"
@@ -156,7 +157,7 @@ clean() {
 
 create_ui_strings_directory() {
     echo "Creating ui-strings directory"
-    mkdir "$UI_STRINGS_DIRECTORY"
+    mkdir -p "$UI_STRINGS_DIRECTORY"
     checkForSuccess "create tmp ui-strings directory for ui-strings PO files"
 
     echo "cloning ui-strings repository"
@@ -194,6 +195,18 @@ combine_po_files() {
     concat_en_source_files
 }
 
+
+concat_translation_files() {
+    locale=$1
+    msgcat $UI_STRINGS_DIRECTORY/ui-strings/*/$locale/*.po > $CLIENT_LOCALE_LOCATION/$locale/messages.po
+}
+
+
+concat_en_source_files() {
+    msgcat $UI_STRINGS_DIRECTORY/ui-strings/*/*.pot > $CLIENT_LOCALE_LOCATION/en/messages.po
+}
+
+
 help() {
     echo "$0 --extract-all        Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
     echo "$0 --build-all          Import all strings from CSV files and build the app"
@@ -208,14 +221,6 @@ help() {
     do
         echo "Supports locale ${locale}"
     done
-}
-
-concat_translation_files() {
-    locale=$1
-    msgcat $UI_STRINGS_DIRECTORY/ui-strings/*/$locale/*.po > $CLIENT_LOCALE_LOCATION/$locale/messages.po
-}
-concat_en_source_files() {
-    msgcat $UI_STRINGS_DIRECTORY/ui-strings/*/*.pot > $CLIENT_LOCALE_LOCATION/en/messages.po
 }
 
 
@@ -238,7 +243,7 @@ elif [ "$1" == "--clean" ]; then
     clean
 
 elif [ "$1" == "--combine-pos" ]; then 
-    validate_command_line
+    validate_arguments_for_combine_pos
     create_ui_strings_directory
     check_out_ui_strings_by_tag
     combine_po_files 
