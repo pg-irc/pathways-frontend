@@ -2,7 +2,7 @@ import React from 'react';
 import { History } from 'history';
 import { Text, View, Icon, Content } from 'native-base';
 import { Trans } from '@lingui/react';
-import { I18nManager, Alert, TouchableOpacity } from 'react-native';
+import { I18nManager, Alert, TouchableOpacity, TextInput } from 'react-native';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/map_with_index';
@@ -10,6 +10,7 @@ import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 import { openURL } from '../link/link';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
+import { LatLong, SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -47,10 +48,13 @@ const fixture: ReadonlyArray<HelpContact> = [
 
 export interface HelpComponentProps {
     readonly history: History;
+    readonly manualUserLocation?: LatLong;
 }
 
 export interface HelpComponentActions {
     readonly clearAllUserState: () => ClearAllUserDataAction;
+    readonly setManualUserLocation: (userLocation: LatLong) => SetManualUserLocationAction;
+    readonly clearManualUserLocation: () => ClearManualUserLocationAction;
 }
 
 type Props = HelpComponentProps & HelpComponentActions;
@@ -77,6 +81,7 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
                 marginBottom: 20,
             }}>
                 <ContactSettlementWorkerButton {...props} />
+                <ManualUserLocation {...props} />
             </View>
         </View>
         <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
@@ -122,6 +127,59 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
         </MultiLineButtonComponent>
     );
 };
+
+interface ManualUserLocationState {
+    readonly latitude?: string;
+    readonly longitude?: string;
+}
+
+// tslint:disable:no-class no-expression-statement no-this
+class ManualUserLocation extends React.Component<Props, ManualUserLocationState> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            latitude: props.manualUserLocation && '' + props.manualUserLocation.latitude,
+            longitude: props.manualUserLocation && '' + props.manualUserLocation.longitude,
+        };
+    }
+
+    onSetManualLocation(): void {
+        const latitude = parseFloat(this.state.latitude);
+        const longitude = parseFloat(this.state.longitude);
+        if (latitude && longitude) {
+            this.props.setManualUserLocation({ latitude, longitude });
+        }
+    }
+
+    onClearManualLocation(): void {
+        this.props.clearManualUserLocation();
+    }
+
+    render(): JSX.Element {
+        return <View>
+            <TextInput
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                onChangeText={(latitude: string): void => this.setState({ ...this.state, latitude })}
+                value={this.state.latitude}
+            />
+            <TextInput
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                onChangeText={(longitude: string): void => this.setState({ ...this.state, longitude })}
+                value={this.state.longitude}
+            />
+            <MultiLineButtonComponent onPress={(): void => this.onSetManualLocation()} >
+                <Text style={textStyles.button}>
+                    <Trans>Set manual location</Trans>
+                </Text>
+            </MultiLineButtonComponent>
+            <MultiLineButtonComponent onPress={(): void => this.onClearManualLocation()} >
+                <Text style={textStyles.button}>
+                    <Trans>Clear manual location</Trans>
+                </Text>
+            </MultiLineButtonComponent>
+        </View>;
+    }
+}
 
 const renderContactComponent = (contact: HelpContact, index: number): JSX.Element => (
     <TouchableOpacity
