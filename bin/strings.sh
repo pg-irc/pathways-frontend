@@ -2,8 +2,8 @@
 
 locales=(ar fr ko pa tl zh_CN zh_TW)
 CLIENT_LOCALE_LOCATION=$2
-UI_STRINGS_DIRECTORY=$3
-VERSION=$4
+WORKING_DIRECTORY=$3
+UI_STRINGS_DIRECTORY="$WORKING_DIRECTORY/ui-strings"
 
 checkForSuccess () {
     if [ "$?" != "0" ]
@@ -22,7 +22,7 @@ validate_arguments_for_combine_pos () {
         exit
     fi
 
-    if [ "$UI_STRINGS_DIRECTORY" == "" ]
+    if [ "$WORKING_DIRECTORY" == "" ]
     then
         echo "Error: Must specify a directory to place the ui-strings, which must not already exist"
         help
@@ -155,33 +155,19 @@ clean() {
 }
 
 
-create_ui_strings_directory() {
+create_working_directory() {
     echo "Creating ui-strings directory"
-    mkdir -p "$UI_STRINGS_DIRECTORY"
-    checkForSuccess "create tmp ui-strings directory for ui-strings PO files"
+    mkdir -p "$WORKING_DIRECTORY"
+    checkForSuccess "create ui-strings directory for ui-strings PO files"
+}
 
+
+clone_ui_strings_repo() {
     echo "cloning ui-strings repository"
-    (cd "$UI_STRINGS_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
+    (cd "$WORKING_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
     checkForSuccess "clone ui-strings repository"
 }
 
-
-check_out_ui_strings_by_tag() {
-    if [ "$VERSION" ]; then
-        echo
-        echo "Checking out ui-strings with tag ${VERSION}"
-        echo
-        (cd "$UI_STRINGS_DIRECTORY/ui-strings" && git fetch --tags)
-        checkForSuccess "fetch tags for ui-strings"
-
-        (cd "$UI_STRINGS_DIRECTORY/ui-strings" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
-        checkForSuccess "check out tag for ui-strings"
-    else
-        echo "Using newest version of translation strings"
-        echo
-    fi
-}
-   
 
 combine_po_files() {
     echo 
@@ -198,12 +184,12 @@ combine_po_files() {
 
 concat_translation_files() {
     locale=$1
-    msgcat $UI_STRINGS_DIRECTORY/ui-strings/*/$locale/*.po > $CLIENT_LOCALE_LOCATION/$locale/messages.po
+    msgcat $UI_STRINGS_DIRECTORY/*/$locale/*.po > $CLIENT_LOCALE_LOCATION/$locale/messages.po
 }
 
 
 concat_en_source_files() {
-    msgcat $UI_STRINGS_DIRECTORY/ui-strings/*/*.pot > $CLIENT_LOCALE_LOCATION/en/messages.po
+    msgcat $UI_STRINGS_DIRECTORY/*/*.pot > $CLIENT_LOCALE_LOCATION/en/messages.po
 }
 
 
@@ -214,7 +200,8 @@ help() {
     echo "$0 --build-changed      Import just the changed strings from CSV files and build the app"
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
     echo "$0 --clean              Remove temporary files"
-    echo "$0 --combine-pos        Combine PO Files - Mandatory arguments: path to location of client locale directory and path to directory to clone ui-strings repository"  
+    echo "$0 --combine-pos-local  Combine PO Files to test locally - Mandatory arguments: path to client locale directory and path to directory to clone ui-strings repository"
+    echo "$0 --combine-pos-deploy Combine PO Files to prepare for deployment - Mandatory arguments: path to client locale directory and path to directory to clone ui-strings repository"    
     echo
 
     for locale in "${locales[@]}"
@@ -242,13 +229,17 @@ elif [ "$1" == "--normalize" ]; then
 elif [ "$1" == "--clean" ]; then
     clean
 
-elif [ "$1" == "--combine-pos" ]; then 
+elif [ "$1" == "--combine-pos-local" ]; then 
     validate_arguments_for_combine_pos
-    create_ui_strings_directory
-    check_out_ui_strings_by_tag
-    combine_po_files 
+    create_working_directory
+    clone_ui_strings_repo
+    combine_po_files
+
+elif [ "$1" == "--combine-pos-deploy" ]; then
+    validate_arguments_for_combine_pos
+    combine_po_files
 
 else
     help
-fi
 
+fi
