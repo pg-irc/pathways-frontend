@@ -4,5 +4,14 @@ export const getLocationTitleFromAddresses = (addresses: ReadonlyArray<Address>)
     if (addresses.length !== 1) {
         return undefined;
     }
-    return addresses[0].address === 'n/a' ? undefined : addresses[0].address;
+    const addressLine = addresses[0].address;
+    if (addressLine === 'n/a') {
+        return undefined;
+    }
+    const addressWithLeadingSuiteNumber = /^(\d+)\-(\d.+)$/;
+    const match = addressWithLeadingSuiteNumber.exec(addressLine);
+    if (match) {
+        return `${match[2]}, Suite ${match[1]}`;
+    }
+    return addressLine;
 };
