@@ -1,5 +1,6 @@
 import { Location, Permissions } from 'expo';
 import { AsyncLocationErrorType } from './error_types';
+import { LatLong } from '../stores/manual_user_location';
 
 export const isAsyncLocationError = (maybeLocation: LocationData | AsyncLocationError):
     maybeLocation is AsyncLocationError => (
@@ -7,8 +8,21 @@ export const isAsyncLocationError = (maybeLocation: LocationData | AsyncLocation
         (<AsyncLocationError>maybeLocation).type === AsyncLocationErrorType.LocationFetchTimeout
     );
 
-export const getLocationIfPermittedAsync = async (): Promise<LocationData | AsyncLocationError> => {
+export const getLocationIfPermittedAsync = async (manualUserLocation?: LatLong): Promise<LocationData | AsyncLocationError> => {
     try {
+        if (manualUserLocation) {
+            return {
+                coords: {
+                    latitude: manualUserLocation.latitude,
+                    longitude: manualUserLocation.longitude,
+                    altitude: 0,
+                    accuracy: 0,
+                    heading: 0,
+                    speed: 0,
+                },
+                timestamp: 0,
+            };
+        }
         const permissions = await Permissions.askAsync(Permissions.LOCATION);
         if (permissions.status !== 'granted') {
             return buildNoLocationPermissionError('Location permission not granted');
