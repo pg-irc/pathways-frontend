@@ -11,6 +11,8 @@ import {
     ServiceListActions, TaskServiceUpdater,
 } from './service_list_component';
 import { Routes, getParametersFromPath } from '../../application/routing';
+import { LatLong } from '../../stores/manual_user_location';
+import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
 
 type OwnProps = {
     readonly location: Location;
@@ -19,15 +21,17 @@ type OwnProps = {
 const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.Services);
     const topic: Topic = selectCurrentTopic(store, matchParams.topicId);
+    const manualUserLocation = selectManualUserLocation(store);
     return {
         topic,
         taskServicesOrError: selectTaskServices(topic.id, store),
+        manualUserLocation,
     };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<SendTopicServicesRequestAction>): ServiceListActions => ({
-    requestUpdateOfServicesForTask: (topic: Topic): SendTopicServicesRequestAction => {
-        return dispatch(sendTopicServicesRequest(topic.id));
+    requestUpdateOfServicesForTask: (topic: Topic, manualUserLocation?: LatLong): SendTopicServicesRequestAction => {
+        return dispatch(sendTopicServicesRequest(topic.id, manualUserLocation));
     },
 });
 
@@ -36,7 +40,7 @@ type ComponentProps = ServiceListProps & ServiceListActions & TaskServiceUpdater
 const mergeProps = (props: ServiceListProps, actions: ServiceListActions): ComponentProps => ({
     ...props, ...actions,
     requestUpdateTaskServices: (): SendTopicServicesRequestAction => {
-        return actions.requestUpdateOfServicesForTask(props.topic);
+        return actions.requestUpdateOfServicesForTask(props.topic, props.manualUserLocation);
     },
 });
 

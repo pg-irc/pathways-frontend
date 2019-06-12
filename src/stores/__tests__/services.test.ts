@@ -31,7 +31,7 @@ describe('services reducer', () => {
             const topicId = aString();
             const action: SendTopicServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { topicId },
+                payload: { topicId, manualUserLocation: undefined },
             };
             const store = reducer(theStore, action);
             const topicServicesOrError = store.servicesByTopic[topicId];
@@ -41,7 +41,7 @@ describe('services reducer', () => {
         it('sets state of the topic service to loading', () => {
             const action: SendTopicServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { topicId: loadedTaskServices.topicId },
+                payload: { topicId: loadedTaskServices.topicId, manualUserLocation: undefined },
             };
             const store = reducer(theStore, action);
             const topicServices = store.servicesByTopic[loadedTaskServices.topicId];
@@ -51,7 +51,7 @@ describe('services reducer', () => {
         it('sets loading to true on pre existing topic services error objects', () => {
             const action: SendTopicServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { topicId: loadedTaskServicesError.topicId },
+                payload: { topicId: loadedTaskServicesError.topicId, manualUserLocation: undefined },
             };
             const store = reducer(theStore, action);
             const topicServicesError = store.servicesByTopic[loadedTaskServicesError.topicId];
@@ -61,7 +61,7 @@ describe('services reducer', () => {
         it('does not update existing services', () => {
             const action: SendTopicServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { topicId: aString() },
+                payload: { topicId: aString(), manualUserLocation: undefined },
             };
             const store = reducer(theStore, action);
             expect(store.services).toEqual(theStore.services);

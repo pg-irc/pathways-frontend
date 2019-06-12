@@ -3,6 +3,7 @@ import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { Service } from './types';
 import { ServicesErrorType } from '../../sagas/services';
+import { LatLong } from '../manual_user_location';
 
 export type SendTopicServicesRequestAction = Readonly<ReturnType<typeof sendTopicServicesRequest>>;
 
@@ -16,8 +17,8 @@ export type ServicesAction =
     PopulateTopicServicesFromErrorAction;
 
 // tslint:disable-next-line:typedef
-export const sendTopicServicesRequest = (topicId: TopicId) => (
-    helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { topicId })
+export const sendTopicServicesRequest = (topicId: TopicId, manualUserLocation?: LatLong) => (
+    helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { topicId, manualUserLocation })
 );
 
 // tslint:disable-next-line:typedef
