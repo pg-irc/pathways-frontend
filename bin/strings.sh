@@ -2,8 +2,7 @@
 
 locales=(ar fr ko pa tl zh_CN zh_TW)
 CLIENT_LOCALE_LOCATION=locale/
-WORKING_DIRECTORY=$2
-UI_STRINGS_DIRECTORY="$WORKING_DIRECTORY/ui-strings"
+UI_STRINGS_DIRECTORY="../ui-strings"
 
 checkForSuccess () {
     if [ "$?" != "0" ]
@@ -12,17 +11,6 @@ checkForSuccess () {
         exit
     fi
 }
-
-
-validate_argument_for_combine_pos () {
-    if [ "$WORKING_DIRECTORY" == "" ]
-    then
-        echo "Error: Must specify a directory to place the ui-strings, which must not already exist"
-        help
-        exit
-    fi
-}
-
 
 extract_all() {
     echo "Building the client ..."
@@ -211,7 +199,6 @@ elif [ "$1" == "--clean" ]; then
     clean
 
 elif [ "$1" == "--combine-pos" ]; then
-    validate_argument_for_combine_pos
     combine_po_files
 
 else

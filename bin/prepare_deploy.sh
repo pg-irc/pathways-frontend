@@ -294,7 +294,7 @@ validateContentFixture() {
 }
 
 buildMessagesPOFiles() {
-    (cd "$CLIENT_DIRECTORY" && ./bin/strings.sh --combine-pos $WORKING_DIRECTORY)
+    (cd "$CLIENT_DIRECTORY" && ./bin/strings.sh --combine-pos)
     checkForSuccess "build messages.po files"
 }
 
