@@ -9,6 +9,7 @@ import { mapWithIndex } from '../../application/map_with_index';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_application_popup_component';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { getLocationTitleFromAddresses } from './get_location_title_from_addresses';
 import { Link } from '../link/link';
 
 interface ServiceListItemProps {
@@ -102,13 +103,6 @@ const renderMapButtonIfLocation = (service: Service): JSX.Element => {
             />
         </View>
     );
-};
-
-const getLocationTitleFromAddresses = (addresses: ReadonlyArray<Address>): string => {
-    if (addresses.length !== 1) {
-        return undefined;
-    }
-    return addresses[0].address === 'n/a' ? undefined : addresses[0].address;
 };
 
 const capitalizeFirstLetter = (s: string): string => (
