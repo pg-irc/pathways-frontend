@@ -9,6 +9,7 @@ import * as explore from '../../explore';
 import * as taxonomies from '../../taxonomies';
 import * as notifications from '../../notifications';
 import * as onboarding from '../../onboarding';
+import * as location from '../../location';
 
 export class ApplicationStoreBuilder {
     fontsInStore: fonts.FontsStore;
@@ -20,6 +21,7 @@ export class ApplicationStoreBuilder {
     taxonomiesInStore: taxonomies.TaxonomyStore;
     notificationsInStore: notifications.NotificationStore;
     onboardingInStore: onboarding.OnboardingStore;
+    location: location.LocationStore;
 
     withLocaleStore(store: locale.LocaleStore): ApplicationStoreBuilder {
         this.localeInStore = store;
@@ -36,7 +38,8 @@ export class ApplicationStoreBuilder {
             exploreSections: this.exploreSectionsInStore,
             taxonomies: this.taxonomiesInStore,
             notifications: this.notificationsInStore,
-            onboarding: this.onboardingInStore
+            onboarding: this.onboardingInStore,
+            location: this.location,
         };
     }
 }
