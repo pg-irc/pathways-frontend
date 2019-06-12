@@ -1,8 +1,8 @@
 #!/bin/bash
 
 locales=(ar fr ko pa tl zh_CN zh_TW)
-CLIENT_LOCALE_LOCATION=$2
-WORKING_DIRECTORY=$3
+CLIENT_LOCALE_LOCATION=locale/
+WORKING_DIRECTORY=$2
 UI_STRINGS_DIRECTORY="$WORKING_DIRECTORY/ui-strings"
 
 checkForSuccess () {
@@ -14,14 +14,7 @@ checkForSuccess () {
 }
 
 
-validate_arguments_for_combine_pos () {
-    if [ "$CLIENT_LOCALE_LOCATION" == "" ]
-    then
-        echo "Error: Must provide the path of the locale directory on the client"
-        help
-        exit
-    fi
-
+validate_argument_for_combine_pos () {
     if [ "$WORKING_DIRECTORY" == "" ]
     then
         echo "Error: Must specify a directory to place the ui-strings, which must not already exist"
@@ -150,22 +143,6 @@ clean() {
     rm -f locale/*/new-messages.*
     rm -f locale/*/merged-messages.po
     rm -f locale/*/*.backup
-    rm -f locale/*/*.po
-    rm -f locale/*/*.pot
-}
-
-
-create_working_directory() {
-    echo "Creating ui-strings directory"
-    mkdir -p "$WORKING_DIRECTORY"
-    checkForSuccess "create ui-strings directory for ui-strings PO files"
-}
-
-
-clone_ui_strings_repo() {
-    echo "cloning ui-strings repository"
-    (cd "$WORKING_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
-    checkForSuccess "clone ui-strings repository"
 }
 
 
@@ -184,12 +161,17 @@ combine_po_files() {
 
 concat_translation_files() {
     locale=$1
-    msgcat $UI_STRINGS_DIRECTORY/*/$locale/*.po > $CLIENT_LOCALE_LOCATION/$locale/messages.po
+    echo "concat ${locale} files"
+    path_to_jsx_strings_files=$UI_STRINGS_DIRECTORY/jsx_strings/$locale/jsx_strings.po
+    path_to_questionnaire_files=$UI_STRINGS_DIRECTORY/questionnaire/$locale/questionnaire.po
+    path_to_explore_files=$UI_STRINGS_DIRECTORY/explore/$locale/explore.po
+    
+    msgcat $path_to_jsx_strings_files $path_to_questionnaire_files $path_to_explore_files > $CLIENT_LOCALE_LOCATION/$locale/messages.po
 }
 
 
 concat_en_source_files() {
-    msgcat $UI_STRINGS_DIRECTORY/*/*.pot > $CLIENT_LOCALE_LOCATION/en/messages.po
+    msgcat $UI_STRINGS_DIRECTORY/*/jsx_strings.pot $UI_STRINGS_DIRECTORY/*/questionnaire.pot $UI_STRINGS_DIRECTORY/*/explore.pot  > $CLIENT_LOCALE_LOCATION/en/messages.po
 }
 
 
@@ -200,8 +182,7 @@ help() {
     echo "$0 --build-changed      Import just the changed strings from CSV files and build the app"
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
     echo "$0 --clean              Remove temporary files"
-    echo "$0 --combine-pos-local  Combine PO Files to test locally - Mandatory arguments: path to client locale directory and path to directory to clone ui-strings repository"
-    echo "$0 --combine-pos-deploy Combine PO Files to prepare for deployment - Mandatory arguments: path to client locale directory and path to directory to clone ui-strings repository"    
+    echo "$0 --combine-pos        Combine PO Files to prepare for deployment - Mandatory argument: path to directory which does not already exist to clone ui-strings repository"    
     echo
 
     for locale in "${locales[@]}"
@@ -229,14 +210,8 @@ elif [ "$1" == "--normalize" ]; then
 elif [ "$1" == "--clean" ]; then
     clean
 
-elif [ "$1" == "--combine-pos-local" ]; then 
-    validate_arguments_for_combine_pos
-    create_working_directory
-    clone_ui_strings_repo
-    combine_po_files
-
-elif [ "$1" == "--combine-pos-deploy" ]; then
-    validate_arguments_for_combine_pos
+elif [ "$1" == "--combine-pos" ]; then
+    validate_argument_for_combine_pos
     combine_po_files
 
 else

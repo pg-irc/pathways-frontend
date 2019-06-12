@@ -36,7 +36,6 @@ SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
 CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
 UI_STRINGS_DIRECTORY="$WORKING_DIRECTORY/ui-strings"
-CLIENT_LOCALE_LOCATION="$CLIENT_DIRECTORY/locale"
 
 usage() {
     echo
@@ -294,7 +293,12 @@ validateContentFixture() {
     fi
 }
 
-buildStringsForLinguiCatalogs() {
+buildMessagesPOFiles() {
+    (cd "$CLIENT_DIRECTORY" && ./bin/strings.sh --combine-pos $WORKING_DIRECTORY)
+    checkForSuccess "build messages.po files"
+}
+
+buildLinguiCatalogs() {
     (cd "$CLIENT_DIRECTORY" && yarn build-strings)
     checkForSuccess "build messages.js for lingui catalogs"
 }
@@ -344,8 +348,8 @@ validateContentFixture
 getClientDependencies
 createClientEnvironment
 completeManualConfiguration
-./bin/strings.sh --combine-pos-deploy $CLIENT_LOCALE_LOCATION $WORKING_DIRECTORY
-buildStringsForLinguiCatalogs
+buildMessagesPOFiles
+buildLinguiCatalogs
 buildClientLocally
 testClient
 
