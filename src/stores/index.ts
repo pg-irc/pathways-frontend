@@ -8,7 +8,7 @@ import * as explore from './explore';
 import * as taxonomies from './taxonomies';
 import * as notifications from './notifications';
 import * as onboarding from './onboarding';
-import * as location from './location';
+import * as location from './manual_user_location';
 
 export interface Store {
     readonly fonts: fonts.FontsStore;
@@ -20,7 +20,7 @@ export interface Store {
     readonly taxonomies: taxonomies.TaxonomyStore;
     readonly notifications: notifications.NotificationStore;
     readonly onboarding: onboarding.OnboardingStore;
-    readonly location: location.LocationStore;
+    readonly manualUserLocation: location.ManualUserLocationStore;
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -33,7 +33,7 @@ export const buildDefaultStore = (): Store => ({
     taxonomies: taxonomies.buildDefaultStore(),
     notifications: notifications.buildDefaultStore(),
     onboarding: onboarding.buildDefaultStore(),
-    location: location.buildDefaultStore(),
+    manualUserLocation: location.buildDefaultStore(),
 });
 
 export const reducer = combineReducers<Store>({
@@ -46,5 +46,5 @@ export const reducer = combineReducers<Store>({
     taxonomies: taxonomies.reducer,
     notifications: notifications.reducer,
     onboarding: onboarding.reducer,
-    location: location.reducer,
+    manualUserLocation: location.reducer,
 });
