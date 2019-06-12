@@ -44,11 +44,19 @@ describe('getLocationTitleFromAddresses', () => {
 
     it('returns the address line when called with one element', () => {
         const address = new AddressBuilder().build();
+
         expect(getLocationTitleFromAddresses([address])).toBe(address.address);
     });
 
     it('returns undefined when called with an address with "n/a" for address line', () => {
         const address = new AddressBuilder().withAddress('n/a').build();
         expect(getLocationTitleFromAddresses([address])).toBeUndefined();
+    });
+
+    it('returns the address with trailing suite number when called with leading suite number', () => {
+        const addressLine = '200-250 West Pender Street';
+        const expectedResult = '250 West Pender Street, Suite 200';
+        const address = new AddressBuilder().withAddress(addressLine).build();
+        expect(getLocationTitleFromAddresses([address])).toBe(expectedResult);
     });
 });
