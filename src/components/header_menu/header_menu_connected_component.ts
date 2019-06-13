@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { HeaderMenuComponent, HeaderMenuProps, HeaderMenuActions } from './header_menu_component';
 import { Store } from '../../stores';
 import { SetLocale, setLocaleActions } from '../../stores/locale';
-import { pullAvailableLocales } from '../../selectors/locale/pull_available_locales';
 import { LocaleInfo } from '../../locale';
+import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 import { selectLocale } from '../../selectors/locale/select_locale';
 
 type OtherProps = {
@@ -14,7 +14,7 @@ type OtherProps = {
 };
 
 const mapStateToProps = (store: Store, otherProps: OtherProps): HeaderMenuProps => {
-    const locales = pullAvailableLocales(store);
+    const locales = selectAvailableLocales(store);
     const locale = selectLocale(store);
     const currentLocale = locales.find((aLocale: LocaleInfo) => locale.code === aLocale.code);
     const availableLocales = locales.filter((aLocale: LocaleInfo) => locale.code !== aLocale.code);
