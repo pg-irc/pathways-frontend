@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Text, View } from 'native-base';
-import { Trans } from '@lingui/react';
 import { TextInput } from 'react-native';
 import { textStyles } from '../../application/styles';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
@@ -16,6 +15,7 @@ interface State {
 }
 
 export class ManualUserLocation extends React.Component<Props, State> {
+
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -23,6 +23,7 @@ export class ManualUserLocation extends React.Component<Props, State> {
             longitude: props.manualUserLocation && '' + props.manualUserLocation.longitude,
         };
     }
+
     onSetManualLocation(): void {
         const latitude = parseFloat(this.state.latitude);
         const longitude = parseFloat(this.state.longitude);
@@ -30,35 +31,35 @@ export class ManualUserLocation extends React.Component<Props, State> {
             this.props.setManualUserLocation({ latitude, longitude });
         }
     }
+
     onClearManualLocation(): void {
         this.props.clearManualUserLocation();
     }
+
     render(): JSX.Element {
+        const onLatitudeChange = (str: string): void => this.setState({ ...this.state, latitude: str });
+        const onLongitudeChange = (str: string): void => this.setState({ ...this.state, longitude: str });
         return <View>
-            <View style={{ flex: 1, flexDirection: 'row' }} >
-                <Text style={{ flex: 0.3 }}><Trans>Latitude:</Trans></Text>
-                <TextInput style={{ flex: 0.7, height: 40, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={(latitude: string): void => this.setState({ ...this.state, latitude })}
-                    value={this.state.latitude}
-                />
-            </View>
-            <View style={{ flex: 1, flexDirection: 'row' }} >
-                <Text style={{ flex: 0.3 }}><Trans>Longitude:</Trans></Text>
-                <TextInput style={{ flex: 0.7, height: 40, borderColor: 'gray', borderWidth: 1 }}
-                    onChangeText={(longitude: string): void => this.setState({ ...this.state, longitude })}
-                    value={this.state.longitude}
-                />
-            </View>
-            <MultiLineButtonComponent onPress={(): void => this.onSetManualLocation()}>
-                <Text style={textStyles.button}>
-                    <Trans>Set manual location</Trans>
-                </Text>
-            </MultiLineButtonComponent>
-            <MultiLineButtonComponent onPress={(): void => this.onClearManualLocation()}>
-                <Text style={textStyles.button}>
-                    <Trans>Clear manual location</Trans>
-                </Text>
-            </MultiLineButtonComponent>
+            {this.textInput('Latitude:', this.state.latitude, onLatitudeChange)}
+            {this.textInput('Longitude:', this.state.longitude, onLongitudeChange)}
+            {this.button('Set manual location', (): void => this.onSetManualLocation())}
+            {this.button('Clear manual location', (): void => this.onClearManualLocation())}
         </View>;
+    }
+
+    textInput(text: string, value: string, onChange: (str: string) => void): JSX.Element {
+        return <View style={{ flex: 1, flexDirection: 'row' }} >
+            <Text style={{ flex: 0.3 }}>{text}</Text>
+            <TextInput style={{ flex: 0.7, height: 40, borderColor: 'gray', borderWidth: 1 }}
+                onChangeText={onChange}
+                value={value}
+            />
+        </View>;
+    }
+
+    button(text: string, onPress: () => void): JSX.Element {
+        return <MultiLineButtonComponent onPress={(): void => onPress()}>
+            <Text style={textStyles.button}>{text}</Text>
+        </MultiLineButtonComponent>;
     }
 }
