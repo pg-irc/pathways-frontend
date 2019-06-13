@@ -6,7 +6,7 @@ describe('build parameters', () => {
     it('with just a topic id', () => {
         const topicId = aString();
         const result = buildParameters(topicId, undefined);
-        expect(result).toEqual({ related_to_task: `${topicId}` });
+        expect(result).toEqual({ related_to_topic: `${topicId}` });
     });
 
     it('with a topic id and location', () => {
@@ -17,7 +17,7 @@ describe('build parameters', () => {
         const result = buildParameters(topicId, location);
         expect(result).toEqual({
             proximity: `${x},${y}`,
-            related_to_task: topicId,
+            related_to_topic: topicId,
             user_location: `${x},${y}`,
         });
     });
