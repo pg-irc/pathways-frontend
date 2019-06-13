@@ -22,6 +22,8 @@ export class ManualUserLocation extends React.Component<Props, State> {
             latitude: props.manualUserLocation && '' + props.manualUserLocation.latitude,
             longitude: props.manualUserLocation && '' + props.manualUserLocation.longitude,
         };
+        this.onSetManualLocation = this.onSetManualLocation.bind(this);
+        this.onClearManualLocation = this.onClearManualLocation.bind(this);
     }
 
     onSetManualLocation(): void {
@@ -33,6 +35,7 @@ export class ManualUserLocation extends React.Component<Props, State> {
     }
 
     onClearManualLocation(): void {
+        this.setState({ latitude: undefined, longitude: undefined });
         this.props.clearManualUserLocation();
     }
 
@@ -47,7 +50,7 @@ export class ManualUserLocation extends React.Component<Props, State> {
         </View>;
     }
 
-    textInput(text: string, value: string, onChange: (str: string) => void): JSX.Element {
+    textInput(text: string, value: string | undefined, onChange: (str: string) => void): JSX.Element {
         return <View style={{ flex: 1, flexDirection: 'row' }} >
             <Text style={{ flex: 0.3 }}>{text}</Text>
             <TextInput style={{ flex: 0.7, height: 40, borderColor: 'gray', borderWidth: 1 }}
