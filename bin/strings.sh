@@ -153,13 +153,40 @@ concat_translation_files() {
     path_to_jsx_strings_files=$UI_STRINGS_DIRECTORY/jsx_strings/$locale/jsx_strings.po
     path_to_questionnaire_files=$UI_STRINGS_DIRECTORY/questionnaire/$locale/questionnaire.po
     path_to_explore_files=$UI_STRINGS_DIRECTORY/explore/$locale/explore.po
-    
+   
     msgcat $path_to_jsx_strings_files $path_to_questionnaire_files $path_to_explore_files > $CLIENT_LOCALE_LOCATION/$locale/messages.po
 }
 
 
 concat_en_source_files() {
     msgcat $UI_STRINGS_DIRECTORY/*/jsx_strings.pot $UI_STRINGS_DIRECTORY/*/questionnaire.pot $UI_STRINGS_DIRECTORY/*/explore.pot  > $CLIENT_LOCALE_LOCATION/en/messages.po
+}
+
+
+validate_messages_po_files() {
+    echo
+    for locale in "${locales[@]}"
+    do
+        echo "checking if ${locale} messages.po requires editing"
+        check_for_fuzzy_attribute $locale
+        check_for_valid_messages_po $locale
+    done
+}
+
+
+check_for_fuzzy_attribute() {
+    locale=$1
+    messages_po_file=$CLIENT_LOCALE_LOCATION/$locale/messages.po
+    grep "fuzzy" $messages_po_file 
+}
+
+
+check_for_valid_messages_po() {
+    if [ "$?" != "0" ]
+    then
+        echo "Warning: $1 messages.po file still requires editing"
+        
+    fi
 }
 
 
@@ -200,6 +227,7 @@ elif [ "$1" == "--clean" ]; then
 
 elif [ "$1" == "--combine-pos" ]; then
     combine_po_files
+    validate_messages_po_files
 
 else
     help
