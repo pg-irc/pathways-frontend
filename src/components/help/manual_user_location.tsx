@@ -35,14 +35,20 @@ export class ManualUserLocation extends React.Component<Props, State> {
     }
     render(): JSX.Element {
         return <View>
-            <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                onChangeText={(latitude: string): void => this.setState({ ...this.state, latitude })}
-                value={this.state.latitude}
-            />
-            <TextInput style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-                onChangeText={(longitude: string): void => this.setState({ ...this.state, longitude })}
-                value={this.state.longitude}
-            />
+            <View style={{ flex: 1, flexDirection: 'row' }} >
+                <Text style={{ flex: 0.3 }}><Trans>Latitude:</Trans></Text>
+                <TextInput style={{ flex: 0.7, height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    onChangeText={(latitude: string): void => this.setState({ ...this.state, latitude })}
+                    value={this.state.latitude}
+                />
+            </View>
+            <View style={{ flex: 1, flexDirection: 'row' }} >
+                <Text style={{ flex: 0.3 }}><Trans>Longitude:</Trans></Text>
+                <TextInput style={{ flex: 0.7, height: 40, borderColor: 'gray', borderWidth: 1 }}
+                    onChangeText={(longitude: string): void => this.setState({ ...this.state, longitude })}
+                    value={this.state.longitude}
+                />
+            </View>
             <MultiLineButtonComponent onPress={(): void => this.onSetManualLocation()}>
                 <Text style={textStyles.button}>
                     <Trans>Set manual location</Trans>
