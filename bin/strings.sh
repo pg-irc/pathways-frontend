@@ -169,7 +169,6 @@ validate_messages_po_files() {
     do
         echo "checking if ${locale} messages.po requires editing"
         check_for_fuzzy_attribute $locale
-        check_for_valid_messages_po $locale
     done
 }
 
@@ -177,15 +176,17 @@ validate_messages_po_files() {
 check_for_fuzzy_attribute() {
     locale=$1
     messages_po_file=$CLIENT_LOCALE_LOCATION/$locale/messages.po
-    grep "fuzzy" $messages_po_file 
+
+    #fuzzy is an attribute that in most cases indicates that a PO file needs revision
+    grep "fuzzy" $messages_po_file
+    warn_if_po_file_needs_editing $locale
 }
 
 
-check_for_valid_messages_po() {
+warn_if_po_file_needs_editing() {
     if [ "$?" != "0" ]
     then
-        echo "Warning: $1 messages.po file still requires editing"
-        
+        echo "Warning: messages.po for $1 still requires editing"
     fi
 }
 
