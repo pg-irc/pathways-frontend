@@ -179,27 +179,24 @@ check_for_fuzzy_attribute() {
 
     #fuzzy is an attribute that in most cases indicates that a PO file needs revision
     grep "fuzzy" $messages_po_file
-    warn_if_po_file_needs_editing $locale
+    prompt_manual_steps_if_po_file_needs_editing $locale
 }
 
 
-warn_if_po_file_needs_editing() {
+prompt_manual_steps_if_po_file_needs_editing() {
     if [ "$?" != "0" ]
     then
-        echo "Warning: messages.po for $1 still requires editing"
+        echo
+        echo "Warning: the $1 messages.po file requires editing"
+        echo 
+        echo "Manual steps:"
+        echo
+        echo "review this file and remove duplicate strings that look like the following:"
+        echo "#-#-#-#-#  jsx_strings.po (PACKAGE VERSION)  #-#-#-#-#\n"
+        echo "J’ai un permis de conduire de la C.-B.\n"
+        echo
+        read -p "Press enter to continue"
     fi
-}
-
-manually_edit_messages_po() {
-    echo
-    echo "Manual steps:"
-    echo
-    echo "review the messages.po files that require editing"
-    echo "and remove duplicate strings within these files that look like the following:"
-    echo "#-#-#-#-#  jsx_strings.po (PACKAGE VERSION)  #-#-#-#-#\n"
-    echo "J’ai un permis de conduire de la C.-B.\n"
-    echo
-    read -p "Press enter to continue"
 }
 
 
@@ -241,7 +238,6 @@ elif [ "$1" == "--clean" ]; then
 elif [ "$1" == "--combine-pos" ]; then
     combine_po_files
     validate_messages_po_files
-    manually_edit_messages_po
     
 else
     help
