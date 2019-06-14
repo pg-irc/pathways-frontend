@@ -7,6 +7,7 @@ import { ExpandableContentComponent } from '../expandable_content/expandable_con
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
 import { SelectableText } from '../selectable_text';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
+import { Trans } from '@lingui/react';
 
 export interface ExploreDetailContentProps {
     readonly section: ExploreSection;
@@ -54,7 +55,7 @@ const TitleComponent = (props: ExploreDetailContentProps): JSX.Element => (
             }}
         />
         <Text style={textStyles.headlineH1StyleBlackLeft}>
-            {props.section.name}
+        <Trans id={props.section.name} />
         </Text>
         {props.sectionHasTopics ? <CollapsibleIntroduction {...props} /> : <PlainTextIntroduction {...props} />}
     </View>
@@ -62,11 +63,15 @@ const TitleComponent = (props: ExploreDetailContentProps): JSX.Element => (
 
 const CollapsibleIntroduction = (props: ExploreDetailContentProps): JSX.Element => (
     <ExpandableContentComponent
-        content={<SelectableText style={textStyles.headlineH4StyleBlackLeft}>{props.section.description}</SelectableText>}
+        content={<SelectableText style={textStyles.headlineH4StyleBlackLeft}>
+        <Trans id={props.section.description} />
+        </SelectableText>}
         contentBackgroundColor={colors.lightGrey}
     />
 );
 
 const PlainTextIntroduction = (props: ExploreDetailContentProps): JSX.Element => (
-    <SelectableText style={textStyles.headlineH4StyleBlackLeft}>{props.section.description}</SelectableText>
+    <SelectableText style={textStyles.headlineH4StyleBlackLeft}>
+        <Trans id={props.section.description} />
+    </SelectableText>
 );

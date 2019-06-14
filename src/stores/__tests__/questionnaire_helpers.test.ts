@@ -30,7 +30,7 @@ describe('questionnaire test helper for', () => {
         });
 
         it('with given question text', () => {
-            expect(question.text[localeCode]).toBe(text);
+            expect(question.text).toBe(text);
         });
 
         it('defaults to three answers', () => {
@@ -71,7 +71,7 @@ describe('questionnaire test helper for', () => {
             });
 
             it('can build an answer with text', () => {
-                expect(answer.text[localeCode]).toBe(text);
+                expect(answer.text).toBe(text);
             });
 
             it('can build an answer with question id', () => {

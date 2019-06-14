@@ -7,6 +7,7 @@ import { ChooseAnswerAction, Id } from '../../stores/questionnaire';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
 import { Question as SelectorQuestion } from '../../selectors/questionnaire/question';
+import { Trans } from '@lingui/react';
 
 export interface QuestionProps {
     readonly question: SelectorQuestion;
@@ -22,8 +23,12 @@ export const QuestionComponent: React.StatelessComponent<Props> = (props: Props)
     const { question }: Props = props;
     return (
         <View style={{ flex: 1, alignItems: 'stretch', marginBottom: 15 }}>
-            <Text style={[textStyles.headlineH2StyleBlackCenter, { marginBottom: 15 }]}>{question.text}</Text>
-            {question.explanation ? <Text style={textStyles.paragraphSmallStyleLeft}>{question.explanation}</Text> : <EmptyComponent />}
+            <Text style={[textStyles.headlineH2StyleBlackCenter, { marginBottom: 15 }]}>
+            <Trans id={question.text} />
+            </Text>
+            {question.explanation ? <Text style={textStyles.paragraphSmallStyleLeft}>
+                <Trans id={question.explanation} />
+            </Text> : <EmptyComponent />}
             <FlatList
                 data={props.question.answers}
                 renderItem={({ item }: ListRenderItemInfo<SelectorAnswer>): JSX.Element => renderAnswer(item, props)}

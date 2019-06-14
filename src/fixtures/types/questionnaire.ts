@@ -1,12 +1,11 @@
-import { LocalizedText } from '../../locale';
 import { TaxonomyTermReference } from './taxonomies';
 
 export type Id = string;
 
 export interface Question {
     readonly id: Id;
-    readonly text: LocalizedText;
-    readonly explanation?: LocalizedText;
+    readonly text: string;
+    readonly explanation?: string;
     readonly acceptMultipleAnswers: boolean;
 }
 
@@ -17,7 +16,7 @@ export interface QuestionsMap {
 export interface Answer {
     readonly id: Id;
     readonly questionId: Id;
-    readonly text: LocalizedText;
+    readonly text: string;
     readonly isChosen: boolean;
     readonly isInverted: boolean;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;

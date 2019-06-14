@@ -35,6 +35,7 @@ done
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
 CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
+UI_STRINGS_DIRECTORY="$WORKING_DIRECTORY/ui-strings"
 
 usage() {
     echo
@@ -169,6 +170,22 @@ checkOutServerByTag() {
     checkForSuccess "check out tag for server"
 }
 
+checkOutUiStringsByTag() {
+    echo
+    echo "Checking out ui-strings tagged with $VERSION"
+    echo
+
+    (cd "$WORKING_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
+    checkForSuccess "clone ui-strings repo"
+
+    (cd "$UI_STRINGS_DIRECTORY" && git fetch --tags)
+    checkForSuccess "fetch tags for ui-strings"
+
+    (cd "$UI_STRINGS_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
+    checkForSuccess "check out tag for ui-strings"
+}
+
+
 validateClientVersion() {
     FILE_VERSION=$(cat "$CLIENT_DIRECTORY/VERSION.txt")
     if [ "$FILE_VERSION" != "$VERSION" ]
@@ -276,6 +293,16 @@ validateContentFixture() {
     fi
 }
 
+buildMessagesPOFiles() {
+    (cd "$CLIENT_DIRECTORY" && ./bin/strings.sh --combine-pos)
+    checkForSuccess "build messages.po files"
+}
+
+buildLinguiCatalogs() {
+    (cd "$CLIENT_DIRECTORY" && yarn build-strings)
+    checkForSuccess "build messages.js for lingui catalogs"
+}
+
 buildClientLocally() {
     (cd "$CLIENT_DIRECTORY" && yarn clean && yarn build)
     checkForSuccess "build client"
@@ -308,6 +335,7 @@ createWorkingDirectory
 checkOutServerByTag
 checkOutClientByTag
 checkOutContentByTag
+checkOutUiStringsByTag
 
 validateClientVersion
 validateServerVersion
@@ -320,6 +348,8 @@ validateContentFixture
 getClientDependencies
 createClientEnvironment
 completeManualConfiguration
+buildMessagesPOFiles
+buildLinguiCatalogs
 buildClientLocally
 testClient
 
