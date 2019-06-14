@@ -190,6 +190,18 @@ warn_if_po_file_needs_editing() {
     fi
 }
 
+manually_edit_messages_po() {
+    echo
+    echo "Manual steps:"
+    echo
+    echo "review the messages.po files that require editing"
+    echo "and remove duplicate strings within these files that look like the following:"
+    echo "#-#-#-#-#  jsx_strings.po (PACKAGE VERSION)  #-#-#-#-#\n"
+    echo "J’ai un permis de conduire de la C.-B.\n"
+    echo
+    read -p "Press enter to continue"
+}
+
 
 help() {
     echo "$0 --extract-all        Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
@@ -229,7 +241,8 @@ elif [ "$1" == "--clean" ]; then
 elif [ "$1" == "--combine-pos" ]; then
     combine_po_files
     validate_messages_po_files
-
+    manually_edit_messages_po
+    
 else
     help
 
