@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import { Dimensions, LayoutChangeEvent, Animated, I18nManager } from 'react-native';
+import { Dimensions, LayoutChangeEvent, Animated, I18nManager, Platform } from 'react-native';
 import { View, Text, Button, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
@@ -72,19 +72,22 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     }
 
     private renderContent(): JSX.Element {
-        const style = {
-            paddingHorizontal: 5,
-        };
         return (
-            <View style={this.isCollapsed() ? { ...this.getCollapsedStyle(), ...style } : style}>
+            <View style={this.isCollapsed() ? { ...this.getCollapsedStyle() } : {} }>
                 {this.props.content}
             </View>
         );
     }
 
     private getCollapsedStyle(): object {
-        return {
+        const style = {
             height: this.state.collapseAtHeight,
+        };
+        if (Platform.OS === 'ios') {
+            return style;
+        }
+        return {
+            ...style,
             overflow: 'hidden',
         };
     }
