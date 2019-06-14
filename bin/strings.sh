@@ -184,7 +184,7 @@ check_for_fuzzy_attribute() {
 
 
 prompt_manual_steps_if_po_file_needs_editing() {
-    if [ "$?" != "0" ]
+    if [ "$?" == "0" ]
     then
         echo
         echo "Warning: the $1 messages.po file requires editing"
