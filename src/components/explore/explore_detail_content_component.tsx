@@ -45,14 +45,13 @@ const ImageComponent = (): JSX.Element => {
 };
 
 const TitleComponent = (props: ExploreDetailContentProps): JSX.Element => (
-    <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
+    <View style={{ paddingHorizontal: values.backgroundTextPadding, alignItems: 'flex-start' }}>
         <Icon
             type={'FontAwesome'}
             name={props.section.icon}
             style={{
                 color: getColorForExploreIcon(props.section.icon),
                 marginVertical: 20,
-                alignSelf: 'flex-start'
             }}
         />
         <Text style={textStyles.headlineH1StyleBlackLeft}>
