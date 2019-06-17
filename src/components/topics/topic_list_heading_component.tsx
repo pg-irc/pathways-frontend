@@ -23,7 +23,7 @@ export const TopicListHeadingComponent: React.StatelessComponent<TopicListHeadin
                 type={'FontAwesome'}
                 style={{
                     color: getColorForExploreIcon(props.icon),
-                    marginBottom: 5,
+                    marginBottom: 5,   
                 }}
             />
             <Text style={textStyles.headlineH3StyleBlackLeft}>
