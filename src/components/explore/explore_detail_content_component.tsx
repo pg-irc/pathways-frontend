@@ -52,6 +52,7 @@ const TitleComponent = (props: ExploreDetailContentProps): JSX.Element => (
             style={{
                 color: getColorForExploreIcon(props.section.icon),
                 marginVertical: 20,
+                alignSelf: 'flex-start'
             }}
         />
         <Text style={textStyles.headlineH1StyleBlackLeft}>
