@@ -3,7 +3,7 @@ import React from 'react';
 import { Linking } from 'react-native';
 import { Text } from 'native-base';
 import { textStyles } from '../../application/styles';
-import { sendLinkPressedEvent } from '../../sagas/analytics/google_analytics';
+import { sendLinkPressedEvent } from '../../sagas/analytics/events';
 
 interface LinkProps {
     readonly children: string;
