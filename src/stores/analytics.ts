@@ -1,7 +1,7 @@
 // tslint:disable:typedef
 
-import { AnalyticsAsync as constants } from '../../application/constants';
-import * as helpers from '../../stores/helpers/make_action';
+import { AnalyticsAsync as constants } from '../application/constants';
+import * as helpers from './helpers/make_action';
 
 export namespace AnalyticsAsync {
 

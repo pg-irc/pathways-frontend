@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, Icon, Button } from 'native-base';
 import { showLocation } from 'react-native-map-link';
 import { textStyles, colors, values, applicationStyles } from '../../application/styles';
-import { sendLinkPressedEvent } from '../../application/google_analytics';
+import { sendLinkPressedEvent } from '../../sagas/analytics/google_analytics';
 
 interface MapsApplicationPopupProps {
     readonly latitude: number;

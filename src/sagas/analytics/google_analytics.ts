@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-any
 import { Analytics as ExpoAnalytics, ScreenHit, Event } from 'expo-analytics';
 import { GOOGLE_ANALYTICS_TRACKING_ID, DEBUG_GOOGLE_ANALYTICS } from 'react-native-dotenv';
-import { RouteChangedAction } from '../stores/router_actions';
+import { RouteChangedAction } from '../../stores/router_actions';
 
 export const sendScreenHit = (action: RouteChangedAction): void => {
     const additionalParameters = createGoogleAnalyticsLanguageParameter(action);

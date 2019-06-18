@@ -10,7 +10,7 @@ import { Topic } from '../../selectors/topics/topic';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
 import { TaskListComponent, NoTasksAddedComponent } from './task_list_component';
-import { sendLinkPressedEvent, buildLinkContext } from '../../application/google_analytics';
+import { sendLinkPressedEvent, buildLinkContext } from '../../sagas/analytics/google_analytics';
 
 export interface TaskDetailProps {
     readonly topic: Topic;

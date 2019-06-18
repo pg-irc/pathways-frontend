@@ -1,9 +1,9 @@
 // tslint:disable:no-expression-statement no-any
 import { call, CallEffect, PutEffect, put } from 'redux-saga/effects';
-import { AnalyticsAsync } from './actions';
+import { AnalyticsAsync } from '../../stores/analytics';
 import { WatchedAction } from './watch_analytics';
 import * as constants from '../../application/constants';
-import { sendScreenHit, sendAnswerChosenEvent, sendBookmarkAddedEvent } from '../../application/google_analytics';
+import { sendScreenHit, sendAnswerChosenEvent, sendBookmarkAddedEvent } from './google_analytics';
 
 type AnalyticsActions = IterableIterator<CallEffect | PutEffect<AnalyticsAsync.SuccessAction | AnalyticsAsync.FailureAction>>;
 
