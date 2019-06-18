@@ -143,10 +143,10 @@ const renderContactComponent = (contact: HelpContact, index: number): JSX.Elemen
         }}
         onPress={(): void => openURL(contact.url)}
     >
-        <View style={{ flexDirection: 'column' }}>
+        <View style={{ flexDirection: 'column', flex: .95 }}>
             <Text style={textStyles.paragraphBoldBlackLeft}>{contact.title}</Text>
             {contact.subTitle ? <Text note>{contact.subTitle}</Text> : <EmptyComponent />}
         </View>
-        <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize }} />
+        <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize, flex: .05 }} />
     </TouchableOpacity>
 );
