@@ -24,10 +24,12 @@ while (( "$#" )); do
     elif [ "$1" == "--staging" ]
     then
         BUILD="staging"
+        echo "Preparing build for $BUILD"
         shift 1
     elif [ "$1" == "--production" ]
     then
         BUILD="production"
+        echo "Preparing build for $BUILD"
         shift 1
     else
         echo "$1: Invalid command argument"
