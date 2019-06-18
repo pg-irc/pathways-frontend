@@ -22,7 +22,7 @@ export type ServicesErrorType = AsyncGenericErrorType | AsyncLocationErrorType;
 export function* updateTaskServices(action: SendTopicServicesRequestAction): UpdateResult {
     const topicId = action.payload.topicId;
     try {
-        const maybeLocation = yield call(getLocationIfPermittedAsync);
+        const maybeLocation = yield call(getLocationIfPermittedAsync, action.payload.manualUserLocation);
         if (isAsyncLocationError(maybeLocation)) {
             return yield put(
                 populateTopicServicesFromError(maybeLocation.message, topicId, maybeLocation.type),

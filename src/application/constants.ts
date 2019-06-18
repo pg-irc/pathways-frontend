@@ -53,3 +53,6 @@ export namespace AnalyticsAsync {
 export const TOPIC_SERVICES_VALID = 'ServicesForTopic:Valid';
 export const TOPIC_SERVICES_LOADING = 'ServicesForTopic:Loading';
 export const TOPIC_SERVICES_ERROR = 'ServicesForTopic:Error';
+
+export const SET_MANUAL_USER_LOCATION = 'SetManualLocation';
+export const CLEAR_MANUAL_USER_LOCATION = 'ClearManualLocation';
