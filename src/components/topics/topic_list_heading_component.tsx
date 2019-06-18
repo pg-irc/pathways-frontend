@@ -17,13 +17,17 @@ export interface TopicListHeadingProps {
 
 export const TopicListHeadingComponent: React.StatelessComponent<TopicListHeadingProps> =
     (props: TopicListHeading): JSX.Element => (
-        <View style={{ marginTop: 30, marginBottom: 10, marginHorizontal: 15 }}>
+        <View style={{
+            marginHorizontal: 15,
+            marginBottom: 10,
+            alignItems: 'flex-start',
+        }}>
             <Icon
                 name={props.icon}
                 type={'FontAwesome'}
                 style={{
                     color: getColorForExploreIcon(props.icon),
-                    marginBottom: 5,
+                    marginTop: 30,
                 }}
             />
             <Text style={textStyles.headlineH3StyleBlackLeft}>
