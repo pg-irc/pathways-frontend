@@ -17,7 +17,7 @@ export interface TopicListHeadingProps {
 
 export const TopicListHeadingComponent: React.StatelessComponent<TopicListHeadingProps> =
     (props: TopicListHeading): JSX.Element => (
-        <View style={{ alignItems: 'flex-start'}}>
+        <View style={{ marginTop: 30, marginBottom: 10, marginHorizontal: 15, alignItems: 'flex-start'}}>
             <Icon
                 name={props.icon}
                 type={'FontAwesome'}
