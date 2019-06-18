@@ -1,9 +1,9 @@
 import { ValidQuestionnaireStore, Answer } from '../../fixtures/types/questionnaire';
 import { QuestionnaireAction } from './actions';
 import { QuestionnaireStore, LoadingQuestionnaireStore } from './stores';
+import { buildDefaultStore } from './build_default_store';
 import * as constants from '../../application/constants';
 import * as R from 'ramda';
-import { buildDefaultStore } from '.';
 
 export const reduceValidStore = (store: ValidQuestionnaireStore, action?: QuestionnaireAction): QuestionnaireStore => {
     if (!action) {

@@ -24,6 +24,7 @@ export interface ServiceListProps {
     readonly topic: Topic;
     readonly taskServicesOrError: SelectorTopicServices;
     readonly manualUserLocation?: LatLong;
+    readonly currentPath: string;
 }
 
 export interface ServiceListActions {
@@ -68,16 +69,16 @@ export class ServiceListComponent extends React.Component<Props> {
                 onRefresh={this.props.requestUpdateTaskServices}
                 data={services}
                 keyExtractor={(service: Service): string => service.id}
-                renderItem={this.renderServiceListItem}
+                renderItem={this.renderServiceListItem(this.props.currentPath)}
                 ListEmptyComponent={ServiceListEmpty}
                 ListHeaderComponent={< ServiceListHeaderComponent {...this.props} />}
             />
         );
     }
 
-    renderServiceListItem({ item }: ServiceItemInfo): JSX.Element {
-        return (
-            <ServiceListItemComponent service={item} />
+    renderServiceListItem(currentPath: string): ({ item }: ServiceItemInfo) => JSX.Element {
+        return ({ item }: ServiceItemInfo): JSX.Element => (
+            <ServiceListItemComponent service={item} currentPath={currentPath} />
         );
     }
 

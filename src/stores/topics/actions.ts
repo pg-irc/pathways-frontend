@@ -22,12 +22,12 @@ export type TopicAction = AddToSavedListAction |
 
 // tslint:disable-next-line:typedef
 export const addToSavedList = (topicId: Id) => {
-    return helpers.makeAction(constants.ADD_TO_SAVED_TOPICS, { topicId });
+    return helpers.makeAction(constants.ADD_BOOKMARK, { topicId });
 };
 
 // tslint:disable-next-line:typedef
 export const removeFromSavedList = (topicId: Id) => (
-    helpers.makeAction(constants.REMOVE_FROM_SAVED_TOPICS, { topicId })
+    helpers.makeAction(constants.REMOVE_BOOKMARK, { topicId })
 );
 
 // tslint:disable-next-line:typedef

@@ -108,14 +108,14 @@ const TitleComponent = (props: Props): JSX.Element => (
 const markDownRules = {
     link: (node: any, children: any) => {
         return (
-            <Text key={node.key} style={markdownStyles.link} onPress={() => openUrl(node.attributes.href)}>
+            <Text key={node.key} style={markdownStyles.link} onPress={(): void => openUrl(node.attributes.href)}>
                 {children}
                 <Text>{' '}</Text>
                 <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: 'blue' }} />
             </Text>
         );
     },
-}
+};
 
 const TaskDescription = (props: Props): JSX.Element => {
     const topic = props.topic;
