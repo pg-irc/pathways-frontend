@@ -17,11 +17,11 @@ describe('LocaleManager', () => {
         });
 
         it('.all should throw an error', () => {
-            expect(() => LocaleInfoManager.all).toThrow();
+            expect(() => LocaleInfoManager.all()).toThrow();
         });
 
         it('.catalogsMap should throw an error', () => {
-            expect(() => LocaleInfoManager.catalogsMap).toThrow();
+            expect(() => LocaleInfoManager.catalogsMap()).toThrow();
         });
 
     });
@@ -34,12 +34,8 @@ describe('LocaleManager', () => {
             LocaleInfoManager.reset();
         });
 
-        it('should return the LocaleManager', () => {
-            expect(LocaleInfoManager.registerSingle(aLocale)).toBe(LocaleInfoManager);
-        });
-
         it('should throw an error if called twice', () => {
-            expect(LocaleInfoManager.registerSingle(aLocale)).toBe(LocaleInfoManager);
+            LocaleInfoManager.registerSingle(aLocale);
             expect(() => LocaleInfoManager.registerSingle(aLocale)).toThrow();
         });
 
@@ -61,7 +57,7 @@ describe('LocaleManager', () => {
         });
 
         it('.get() should return a locale when given a known locale code', () => {
-            const aLocale = availableLocales[availableLocales.length -  1];
+            const aLocale = availableLocales[availableLocales.length - 1];
             expect(LocaleInfoManager.get(aLocale.code)).toEqual(aLocale);
         });
 
@@ -74,14 +70,14 @@ describe('LocaleManager', () => {
         });
 
         it('.all should be an array of the known locales', () => {
-            expect(LocaleInfoManager.all).toEqual(availableLocales);
+            expect(LocaleInfoManager.all()).toEqual(availableLocales);
         });
 
         it('.catalogsMap should be a map of the known locale catalogs keyed by locale code', () => {
             const reducer = (acumulator: CatalogsMap, localeCode: string): CatalogsMap => {
                 return { ...acumulator, [localeCode]: aCatalog };
             };
-            expect(LocaleInfoManager.catalogsMap).toEqual(localeCodes.reduce(reducer, {}));
+            expect(LocaleInfoManager.catalogsMap()).toEqual(localeCodes.reduce(reducer, {}));
         });
 
     });
