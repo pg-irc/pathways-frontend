@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement no-any
+// tslint:disable:no-expression-statement
 import { Analytics as ExpoAnalytics, ScreenHit, Event } from 'expo-analytics';
 import { GOOGLE_ANALYTICS_TRACKING_ID, DEBUG_GOOGLE_ANALYTICS } from 'react-native-dotenv';
 import { RouteChangedAction } from '../../stores/router_actions';
@@ -34,6 +34,7 @@ export const buildLinkContext = (model: string, title: string): string => (
     `${model} - ${title}`
 );
 
+// tslint:disable-next-line:no-any
 const createAnalytics = (additionalParameters?: object): any => {
     const parameters = {
         ...createGoogleAnalyticsAnonymizeIPParameter(),
@@ -47,10 +48,12 @@ const createAnalytics = (additionalParameters?: object): any => {
     );
 };
 
+// tslint:disable-next-line:no-any
 const createScreenHit = (path: string): any => (
     new ScreenHit(path)
 );
 
+// tslint:disable-next-line:no-any
 const createEvent = (category: string, action: string, label?: string, value?: number): any => (
     new Event(category, action, label, value)
 );

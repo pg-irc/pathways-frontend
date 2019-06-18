@@ -12,7 +12,7 @@ import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_ap
 import { EmptyComponent } from '../empty_component/empty_component';
 import { getLocationTitleFromAddresses } from './get_location_title_from_addresses';
 import { AnalyticsLink } from '../link/link';
-import { buildLinkContext } from '../../sagas/analytics/google_analytics';
+import { buildLinkContext } from '../../sagas/analytics/events';
 
 interface ServiceListItemProps {
     readonly service: Service;
