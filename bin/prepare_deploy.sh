@@ -263,11 +263,12 @@ createClientEnvironment() {
     then
         echo "API_URL=$STAGING_URL" >> "$CLIENT_DIRECTORY/.env"
         setStagingValuesInAppJson
-    fi 
-
-    if [ "$BUILD" == "production" ]
+    elif [ "$BUILD" == "production" ]
     then
         echo "API_URL=$PRODUCTION_URL" >> "$CLIENT_DIRECTORY/.env"
+    else
+        echo "Error: You must specify the build type"
+        exit
     fi
 
     checkForSuccess "create client environment"
