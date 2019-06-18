@@ -31,9 +31,9 @@ export const reducer = (store: NotificationStore = buildDefaultStore(), action?:
         return store;
     }
     switch (action.type) {
-        case constants.ADD_TO_SAVED_TOPICS:
+        case constants.ADD_BOOKMARK:
             return addNotificationToStore(store, NotificationType.TaskAddedToPlan);
-        case constants.REMOVE_FROM_SAVED_TOPICS:
+        case constants.REMOVE_BOOKMARK:
             return addNotificationToStore(store, NotificationType.TaskRemovedFromPlan);
         case constants.LOAD_USER_DATA_SUCCESS:
             if (R.isEmpty(action.payload.chosenAnswers)) {
