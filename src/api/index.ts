@@ -39,18 +39,18 @@ export async function searchServices(topicId: Id, location: MaybeLocation): Prom
 
 export const buildParameters = (topicId: Id, location: MaybeLocation): Parameters => {
     if (!location) {
-        return { related_to_task: topicId };
+        return { related_to_topic: topicId };
     }
     const user_location = `${location.coords.longitude},${location.coords.latitude}`;
     return {
         user_location: user_location,
         proximity: user_location,
-        related_to_task: topicId,
+        related_to_topic: topicId,
     };
 };
 
 interface Parameters {
-    related_to_task: Id;
+    related_to_topic: Id;
     proximity?: string;
     user_location?: string;
 }
