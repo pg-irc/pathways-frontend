@@ -1,6 +1,5 @@
 #!/bin/bash
 
-BUILD="production"
 while (( "$#" )); do
     if [ "$1" == "--clientVersion" ]
     then
@@ -25,6 +24,10 @@ while (( "$#" )); do
     elif [ "$1" == "--staging" ]
     then
         BUILD="staging"
+        shift 1
+    elif [ "$1" == "--production" ]
+    then
+        BUILD="production"
         shift 1
     else
         echo "$1: Invalid command argument"
@@ -64,10 +67,9 @@ usage() {
     echo "                Path to a directory to be created by the script. WorkingDirectory should not already"
     echo "                exist, it will be used to clone three git repositories and build the client."
     echo
-    echo "Optional arguments:"
     echo
-    echo "    --staging"
-    echo "                Pass this argument if this is a staging build, affect the URL, icon and app name to be set."
+    echo "    --staging or --production"
+    echo "                Pass one of these flags depending on the build. This affects the URL, icon and app name to be set."
     echo
     echo
     echo "Before running this script, both the client and content repos need to have the appropriate"
@@ -110,6 +112,13 @@ validateCommandLine () {
     if [ "$POSTGRES_USER" == "" ]
     then
         echo "Error: Must specify postgres user, as in pathways-backend/.env"
+        usage
+        exit
+    fi
+
+    if [ "$BUILD" != "staging" ] && [ "$BUILD" != "production" ]
+    then
+        echo "Error: Must specify if the build is for production or staging"
         usage
         exit
     fi
@@ -252,7 +261,10 @@ createClientEnvironment() {
     then
         echo "API_URL=$STAGING_URL" >> "$CLIENT_DIRECTORY/.env"
         setStagingValuesInAppJson
-    else
+    fi 
+
+    if [ "$BUILD" == "production" ]
+    then
         echo "API_URL=$PRODUCTION_URL" >> "$CLIENT_DIRECTORY/.env"
     fi
 
