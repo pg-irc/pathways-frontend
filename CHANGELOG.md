@@ -17,7 +17,7 @@ This is a log of changes to the Arrival Advisor app and related infrastructure t
 
 ### Fixed Bugs
 
-* fixed locations coming on maps incorrectly 
+* fixed locations coming on maps incorrectly by removing suite number 
 * fixed misalignment of arrow icons following long French strings 
 * fixed alignment of icons and text based on locale 
 * fixed Read More / Less coming up as JSX
