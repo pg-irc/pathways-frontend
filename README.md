@@ -83,6 +83,14 @@ All commits are labelled with the issue they are being done under. This ensures 
 * On the client side, the version is stored in VERSION.txt and several other files, with unit tests making sure that all version strings are the same.
 * Client About screen shows the version of the client.
 
+## Changelog
+
+Changes that are made in each release are tracked following [Expo's](https://github.com/expo/expo/blob/master/CHANGELOG.md) procedure. 
+
+
+* changelog is updated with every PR that affects functionality.
+* a new heading is added to the changelog as part of every PR that bumps version strings.
+
 ## Big Thanks
 
 Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs][SauceLabsURL]
