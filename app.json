@@ -2,7 +2,7 @@
   "expo": {
     "sdkVersion": "32.0.0",
     "name": "Arrival Advisor",
-    "version": "1.0.21",
+    "version": "1.0.22",
     "slug": "arrival_advisor",
     "orientation": "portrait",
     "ios": {
