@@ -1,7 +1,6 @@
-#!/usr/bin/node
 // tslint:disable:no-expression-statement no-let
 
-import { setUrl, searchServices } from '..';
+import { setUrl, searchServices } from '.';
 
 let host = '';
 let topicId = '';
