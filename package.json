@@ -58,13 +58,18 @@
             "/node_modules/",
             "/lib/",
             "/helpers/"
-        ]
+        ],
+        "transformIgnorePatterns": [
+			"node_modules/?!(react-native|native-base)"
+		]
     },
     "dependencies": {
         "@expo/vector-icons": "^9.0.0",
-        "expo": "32.0.0",
+        "expo": "33.0.0",
         "expo-analytics": "^1.0.7",
+        "expo-constants": "~5.0.0",
         "expo-location": "^4.0.0",
+        "expo-react-native-adapter": "^3.0.1",
         "extend": "^3.0.2",
         "history": "^4.7.2",
         "intl": "^1.2.5",
@@ -74,8 +79,8 @@
         "native-base": "^2.11.0",
         "query-string": "^6.1.0",
         "ramda": "^0.25.0",
-        "react": "16.5.0",
-        "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+        "react": "16.8.3",
+        "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
         "react-native-dotenv": "^0.2.0",
         "react-native-map-link": "^2.1.4",
         "react-native-markdown-renderer": "^3.2.8",

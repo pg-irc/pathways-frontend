@@ -1,4 +1,5 @@
-import { Location, Permissions } from 'expo';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions'
 import { AsyncLocationErrorType } from './error_types';
 import { LatLong } from '../stores/manual_user_location';
 
