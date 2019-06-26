@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "es2015",
-        "module": "es2015",
+        "module": "commonjs",
         "moduleResolution": "node",
         "jsx": "react-native",
         "outDir": "lib",
@@ -15,6 +15,10 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "skipLibCheck": true,
+        "typeRoots": [
+            "./src/@types",
+            "./node_modules/@types",
+        ],
     },
     "filesGlob": [
         "typings/index.d.ts",
