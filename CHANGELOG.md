@@ -8,7 +8,7 @@ This is a log of changes to the Arrival Advisor app and related infrastructure t
 
 ### Fixed Bugs
 
-## 1.0.21
+## 1.0.22
 
 ### New Features
 
