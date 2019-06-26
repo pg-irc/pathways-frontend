@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { Font } from 'expo';
+import * as Font from 'expo-font'
 import { call, put } from 'redux-saga/effects';
 
 import { loadFontsActions } from '../../stores/fonts';
