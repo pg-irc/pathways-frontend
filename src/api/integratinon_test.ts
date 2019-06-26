@@ -2,14 +2,13 @@
 
 import { setUrl, searchServices } from '.';
 
-let host = '';
-let topicId = '';
-let theFooLocation: LocationData = undefined;
+let host: string = undefined;
+let topicId: string = undefined;
+let latitude: number = undefined;
+let longitude: number = undefined;
 
-const parseLocation = (locationString: string): LocationData => {
-    const substrings = locationString.split(',');
-    const latitude = parseFloat(substrings[0]);
-    const longitude = parseFloat(substrings[1]);
+// tslint:disable-next-line:no-shadowed-variable
+const buildLocationData = (latitude: number, longitude: number): LocationData => {
     return {
         coords: {
             latitude,
@@ -23,36 +22,41 @@ const parseLocation = (locationString: string): LocationData => {
     };
 };
 
-const validateArguments = (theHost: string, theTopicId: string, theLocation: LocationData): void => {
-    if (theHost.length === 0) {
+const validateArguments = (): void => {
+    if (!host || host.length === 0) {
         throw new Error('Invalid host name');
     }
-    if (theTopicId.length === 0) {
+    if (!topicId || topicId.length === 0) {
         throw new Error('Invalid topic id');
     }
-    if (theLocation.coords.latitude < theLocation.coords.longitude) {
-        throw new Error('Invalid lat/long, are they backwards?');
+    if (!latitude || !longitude || latitude < longitude) {
+        throw new Error('Invalid lat/long');
     }
 };
 
-for (let i = 0; i < process.argv.length; i++) {
-    const element = process.argv[i];
-    if (element === '--host') {
-        i++;
-        host = process.argv[i];
-    } else if (element === '--location') {
-        i++;
-        theFooLocation = parseLocation(process.argv[i]);
-    } else if (element === '--topicId') {
-        i++;
-        topicId = process.argv[i];
-    } else {
-        console.log('Help message');
+const parseArguments = (args: ReadonlyArray<string>): void => {
+    for (let i = 0; i < args.length; i++) {
+        const element = args[i];
+        if (element === '--host') {
+            i++;
+            host = args[i];
+        } else if (element === '--topic') {
+            i++;
+            topicId = args[i];
+        } else if (element === '--latitude') {
+            i++;
+            latitude = parseFloat(args[i]);
+        } else if (element === '--longitude') {
+            i++;
+            longitude = parseFloat(args[i]);
+        } else {
+            console.log('Help message');
+        }
     }
-}
+};
 
-validateArguments(host, topicId, theFooLocation);
-
+parseArguments(process.argv);
+validateArguments();
 setUrl(host);
-
-searchServices(topicId, theFooLocation).then((_result: object): void => { });
+const location = buildLocationData(latitude, longitude);
+searchServices(topicId, location).then((_result: object): void => { });
