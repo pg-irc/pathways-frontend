@@ -20,8 +20,8 @@ export const setUrl = (url: string): void => {
 };
 
 const validateUrl = (url: string): string => {
-    if (!url.startsWith('https://')) {
-        throw new Error('URL must start with https://');
+    if (!url.startsWith('http://')) {
+        throw new Error('URL must start with http://');
     }
     if (url.endsWith('/')) {
         throw new Error('URL must not end with /');

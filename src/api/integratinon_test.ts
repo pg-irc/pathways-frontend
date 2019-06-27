@@ -56,7 +56,7 @@ const buildLocationData = (): LocationData => {
 };
 
 const handleSuccess = (result: APIResponse): void => {
-    const data = result ? JSON.stringify(result) : 'Error: Result is not defined';
+    const data = result ? '\nRESPONSE:' + JSON.stringify(result) : 'Error: Result is not defined';
     console.log(data);
 };
 
