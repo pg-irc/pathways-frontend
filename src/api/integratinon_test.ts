@@ -55,19 +55,17 @@ const buildLocationData = (): LocationData => {
     };
 };
 
+const handleSuccess = (result: APIResponse): void => {
+    const data = result ? JSON.stringify(result) : 'Error: Result is not defined';
+    console.log(data);
+};
+
+const handleError = (error: object): void => {
+    const message = error ? 'Error: ' + JSON.stringify(error) : 'Error: Exception caught';
+    console.log(message);
+};
+
 parseArguments(process.argv);
-
 validateArguments();
-
 setUrl(host);
-
-const location = buildLocationData();
-
-searchServices(topicId, location).
-    then((result: APIResponse): void => {
-        const text = result ? result.message : 'Error from then';
-        console.log('OK in bar ' + text);
-    }).catch((error: object): void => {
-        const text = error ? JSON.stringify(error) : 'Error from catch';
-        console.log('Error in bar ' + text);
-    });
+searchServices(topicId, buildLocationData()).then(handleSuccess).catch(handleError);
