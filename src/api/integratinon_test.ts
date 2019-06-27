@@ -3,7 +3,7 @@
 // to run:
 // yarn build && yarn run ts-node src/api/integratinon_test.ts --host <hostname> --topic <topicId> --latitude <lat> --longitude <long>
 
-import { setUrl, searchServices } from '.';
+import { setUrl, searchServices, APIResponse } from '.';
 
 let host: string = undefined;
 let topicId: string = undefined;
@@ -25,8 +25,6 @@ const parseArguments = (args: ReadonlyArray<string>): void => {
         } else if (element === '--longitude') {
             i++;
             longitude = parseFloat(args[i]);
-        } else {
-            console.log('Help message');
         }
     }
 };
@@ -58,7 +56,18 @@ const buildLocationData = (): LocationData => {
 };
 
 parseArguments(process.argv);
+
 validateArguments();
+
 setUrl(host);
+
 const location = buildLocationData();
-searchServices(topicId, location).then((_result: object): void => { });
+
+searchServices(topicId, location).
+    then((result: APIResponse): void => {
+        const text = result ? result.message : 'Error from then';
+        console.log('OK in bar ' + text);
+    }).catch((error: object): void => {
+        const text = error ? JSON.stringify(error) : 'Error from catch';
+        console.log('Error in bar ' + text);
+    });
