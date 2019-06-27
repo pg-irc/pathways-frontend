@@ -55,10 +55,14 @@ const buildLocationData = (): LocationData => {
     };
 };
 
-const handleSuccess = (result: APIResponse): void => {
-    const data = result ? '\nRESPONSE:' + JSON.stringify(result) : 'Error: Result is not defined';
+const handleSuccess = (response: APIResponse): void => {
+    const data = response ? stringifyResponse(response) : 'Error: Result is not defined';
     console.log(data);
 };
+
+const stringifyResponse = (result: APIResponse): string => (
+    'START_OF_RESPONSE' + JSON.stringify(result) + 'END_OF_RESPONSE'
+);
 
 const handleError = (error: object): void => {
     const message = error ? 'Error: ' + JSON.stringify(error) : 'Error: Exception caught';
