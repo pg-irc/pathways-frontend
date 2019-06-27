@@ -55,7 +55,7 @@
             "^.+\\.tsx?$": "ts-jest"
         },
         "testPathIgnorePatterns": [
-            "/node_modules/",
+            "node_modules/?!(react-native|native-base)",
             "/lib/",
             "/helpers/"
         ]
@@ -63,6 +63,7 @@
     "dependencies": {
         "@expo/vector-icons": "^9.0.0",
         "expo": "32.0.0",
+        "cross-fetch": "^3.0.4",
         "expo-analytics": "^1.0.7",
         "expo-location": "^4.0.0",
         "extend": "^3.0.2",

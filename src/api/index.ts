@@ -1,6 +1,7 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { stringify } from 'query-string';
 import { Id } from '../stores/topics';
+import { fetch } from 'cross-fetch';
 
 export interface APIResponse {
     readonly hasError: boolean;
@@ -29,12 +30,19 @@ const validateUrl = (url: string): string => {
 };
 
 export async function searchServices(topicId: Id, location: MaybeLocation): Promise<APIResponse> {
-    const endpoint = 'services_at_location';
-    const parameters = buildParameters(topicId, location);
-    const parameterString = stringify(parameters);
-    const url = buildUrl(endpoint, parameterString);
-    const response = await fetch(url);
-    return createAPIResponse(response);
+    try {
+        const endpoint = 'services_at_location';
+        const parameters = buildParameters(topicId, location);
+        const parameterString = stringify(parameters);
+        const url = buildUrl(endpoint, parameterString);
+        console.log(url);
+        const response = await fetch(url);
+        console.log(response ? 'OK in foobar: ' + JSON.stringify(response) : 'Error in foobar');
+        return createAPIResponse(response);
+    } catch (error) {
+        console.log('Error in foobar: ' + error.message);
+        throw error;
+    }
 }
 
 export const buildParameters = (topicId: Id, location: MaybeLocation): Parameters => {
