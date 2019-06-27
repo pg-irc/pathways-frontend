@@ -65,7 +65,12 @@ const handleError = (error: object): void => {
     console.log(message);
 };
 
-parseArguments(process.argv);
-validateArguments();
-setUrl(host);
-searchServices(topicId, buildLocationData()).then(handleSuccess).catch(handleError);
+const main = (args: ReadonlyArray<string>): void => {
+    parseArguments(args);
+    validateArguments();
+    setUrl(host);
+    const location = buildLocationData();
+    searchServices(topicId, location).then(handleSuccess).catch(handleError);
+};
+
+main(process.argv);
