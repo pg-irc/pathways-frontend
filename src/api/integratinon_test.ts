@@ -36,7 +36,7 @@ const validateArguments = (): void => {
     if (!topicId || topicId.length === 0) {
         throw new Error('Invalid topic id');
     }
-    if (!latitude || !longitude || latitude < longitude) {
+    if (!latitude || !longitude) {
         throw new Error('Invalid lat/long');
     }
 };
@@ -77,4 +77,8 @@ const main = (args: ReadonlyArray<string>): void => {
     searchServices(topicId, location).then(handleSuccess).catch(handleError);
 };
 
-main(process.argv);
+try {
+    main(process.argv);
+} catch (error) {
+    console.log(error);
+}
