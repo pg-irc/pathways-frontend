@@ -3,9 +3,12 @@ import * as R from 'ramda';
 import { Image, Dimensions, Platform } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import Markdown, { openUrl } from 'react-native-markdown-renderer';
+// import Markdown, { openUrl } from 'react-native-markdown-renderer';
+import HTMLView from 'react-native-htmlview'
+import {StyleSheet} from 'react-native';
 import { Topic } from '../../selectors/topics/topic';
-import { textStyles, colors, values, markdownStyles } from '../../application/styles';
+// import { textStyles, colors, values, markdownStyles } from '../../application/styles';
+import { textStyles, colors, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
@@ -22,6 +25,39 @@ export interface TaskDetailContentActions {
 }
 
 type Props = TaskDetailContentProps & TaskDetailContentActions;
+
+const styles = StyleSheet.create({
+    p: {
+        marginTop: 3,
+        marginBottom: 3
+    },
+    // ul: {
+    //     fontWeight: 'bold',
+    //     fontSize: 35,
+    //     marginLeft: 10,
+    //     marginRight: 10,
+    //     ...Platform.select({
+    //         ios: {
+    //             lineHeight: 36,
+    //         },
+    //         android: {
+    //             lineHeight: 40,
+    //         },
+    //     }),
+    // },
+    a: {
+        color: 'blue',
+        textDecorationLine: 'underline',
+    },
+  });
+
+// const htmlContent = `
+// <p style="color:blue;">To work in Canada or have access to government programs and benefits, you need a Social Insurance Number (SIN). When you arrive in Canada, you must apply for your SIN at a Service Canada office. Call or check the website to learn how to apply and what documents you will need. 
+// Toll-free: 1 800 206-7218 (press “3”) 
+// <a href="https://Canada.ca/social-insurance-number">link</a></p>
+// <p>If you do not speak English or French, you can bring an interpreter.</p>
+// <p>Your SIN is confidential (private). It has important information about you. Learn how to protect your SIN. <a href="http://www.esdc.gc.ca/en/sin/protect.page">link</a> </p>
+// `
 
 export const TaskDetailContentComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View padder style={{ backgroundColor: colors.white, marginHorizontal: -10 }}>
@@ -105,21 +141,22 @@ const TitleComponent = (props: Props): JSX.Element => (
     </Text>
 );
 
-const markDownRules = {
-    link: (node: any, children: any) => {
-        return (
-            <Text key={node.key} style={markdownStyles.link} onPress={(): void => openUrl(node.attributes.href)}>
-                {children}
-                <Text>{' '}</Text>
-                <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: 'blue' }} />
-            </Text>
-        );
-    },
-};
+// const markDownRules = {
+//     link: (node: any, children: any) => {
+//         return (
+//             <Text key={node.key} style={markdownStyles.link} onPress={(): void => openUrl(node.attributes.href)}>
+//                 {children}
+//                 <Text>{' '}</Text>
+//                 <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: 'blue' }} />
+//             </Text>
+//         );
+//     },
+// };
 
 const TaskDescription = (props: Props): JSX.Element => {
     const topic = props.topic;
-    const taskDescription = <Markdown rules={markDownRules} style={markdownStyles}>{topic.description}</Markdown>;
+    // const taskDescription = <Markdown rules={markDownRules} style={markdownStyles}>{topic.description}</Markdown>;
+    const taskDescription = <HTMLView addLineBreaks={false} stylesheet={styles} value={topic.description}/>
     return topic.relatedTopics.length > 0 ? <ExpandableContentComponent contentId={topic.id} content={taskDescription} /> : taskDescription;
 };
 

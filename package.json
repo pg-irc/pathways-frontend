@@ -60,11 +60,12 @@
             "/helpers/"
         ],
         "transformIgnorePatterns": [
-			"node_modules/?!(react-native|native-base)"
-		]
+            "node_modules/?!(native-base)/"
+        ]
     },
     "dependencies": {
         "@expo/vector-icons": "^9.0.0",
+        "@types/react-native-htmlview": "^0.12.2",
         "expo": "33.0.0",
         "expo-analytics": "^1.0.7",
         "expo-constants": "~5.0.0",
@@ -82,6 +83,7 @@
         "react": "16.8.3",
         "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
         "react-native-dotenv": "^0.2.0",
+        "react-native-htmlview": "^0.14.0",
         "react-native-map-link": "^2.1.4",
         "react-native-markdown-renderer": "^3.2.8",
         "react-native-modal": "^7.0.2",
