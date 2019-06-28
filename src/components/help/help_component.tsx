@@ -11,7 +11,6 @@ import { openURL } from '../link/link';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 import { LatLong, SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
-import { ManualUserLocation } from './manual_user_location';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -82,7 +81,6 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
                 marginBottom: 20,
             }}>
                 <ContactSettlementWorkerButton {...props} />
-                <ManualUserLocation {...props} />
             </View>
         </View>
         <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
