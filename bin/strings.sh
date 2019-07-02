@@ -17,9 +17,9 @@ extract() {
     yarn build
     checkForSuccess "yarn build"
 
-    echo "Generating PO files ..."
-    yarn extract-strings
-    checkForSuccess "yarn extract-strings"
+    echo "Generating PO files with clean to exclude questionnaire and explore strings ..."
+    yarn extract-strings-clean
+    checkForSuccess "yarn extract-strings-clean"
 
     for locale in "${locales[@]}"
     do
