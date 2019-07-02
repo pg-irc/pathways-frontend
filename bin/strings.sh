@@ -51,6 +51,17 @@ normalize_line_breaks(){
     done
 }
 
+copy_files_to_weblate_repository(){
+    echo "Copy locale/en/jsx_strings.pot ---> ../ui-strings/jsx_strings/jsx_strings.pot"
+    cp locale/en/jsx_strings.pot ../ui-strings/jsx_strings/jsx_strings.pot
+
+    echo
+    for locale in "${locales[@]}"
+    do
+        echo "Copy locale/$locale/jsx_strings.po ---> ../ui-strings/jsx_strings/$locale/jsx_strings.po"
+        cp locale/$locale/jsx_strings.po ../ui-strings/jsx_strings/$locale/jsx_strings.po
+    done
+}
 
 clean() {
     rm -f locale/*/messages.csv
@@ -129,6 +140,7 @@ prompt_manual_steps_if_po_file_needs_editing() {
 help() {
     echo "$0 --extract            Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
+    echo "$0 --copy               Copy files to the Weblate repository, assumed to be located at ../ui-strings"
     echo "$0 --clean              Remove temporary files"
     echo "$0 --combine-pos        Combine PO Files to prepare for deployment - Mandatory argument: path to directory which does not already exist to clone ui-strings repository"
     echo
@@ -143,8 +155,8 @@ help() {
 if [ "$1" == "--extract" ]; then
     extract
 
-elif [ "$1" == "--build-all" ]; then
-    build_all
+elif [ "$1" == "--copy" ]; then
+    copy_files_to_weblate_repository
 
 elif [ "$1" == "--extract-changed" ]; then
     extract_changed
