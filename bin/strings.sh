@@ -30,6 +30,9 @@ extract_all() {
         echo "Fixing line breaks in PO file for ${locale}..."
         csv2po --progress none locale/$locale/messages.csv > locale/$locale/messages.po
         checkForSuccess "convert csv files back to po to normalize line breaks"
+
+        rm -f locale/$locale/messages.csv
+        mv locale/$locale/messages.po locale/$locale/jsx_strings.po
     done
 
     echo "Please send files locale/*/messages.csv or locale/*/messages.po for translation"
