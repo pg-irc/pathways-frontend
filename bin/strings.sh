@@ -12,7 +12,7 @@ checkForSuccess () {
     fi
 }
 
-extract_all() {
+extract() {
     echo "Building the client ..."
     yarn build
     checkForSuccess "yarn build"
@@ -127,7 +127,7 @@ prompt_manual_steps_if_po_file_needs_editing() {
 
 
 help() {
-    echo "$0 --extract-all        Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
+    echo "$0 --extract            Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
     echo "$0 --clean              Remove temporary files"
     echo "$0 --combine-pos        Combine PO Files to prepare for deployment - Mandatory argument: path to directory which does not already exist to clone ui-strings repository"
@@ -140,8 +140,8 @@ help() {
 }
 
 
-if [ "$1" == "--extract-all" ]; then
-    extract_all
+if [ "$1" == "--extract" ]; then
+    extract
 
 elif [ "$1" == "--build-all" ]; then
     build_all
