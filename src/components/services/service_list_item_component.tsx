@@ -90,20 +90,12 @@ const renderWebsite = (website: string, currentPath: string, linkContext: string
     if (R.not(website)) {
         return <EmptyComponent />;
     }
-    return (
-        <Text style={textStyles.alwaysLeftAlign}>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans> </Text>
-            <AnalyticsLink
-                href={website}
-                currentPath={currentPath}
-                linkContext={linkContext}
-                linkType={'Website'}
-                style={textStyles.paragraphStyle}
-            >
-                {website}
-            </AnalyticsLink>>
-        </Text>
-    );
+
+    const label = <Text style={textStyles.paragraphBoldBlackLeft}>Web: </Text>;
+    const link = <AnalyticsLink href={website} currentPath={currentPath} linkContext={linkContext}
+        linkType={'Website'} style={textStyles.paragraphStyle}>{website}</AnalyticsLink>;
+
+    return <Text>{label}{link}</Text>;
 };
 
 const renderEmail = (email: string, currentPath: string, linkContext: string): JSX.Element => {
