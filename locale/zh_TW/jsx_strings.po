@@ -1,0 +1,395 @@
+#. extracted from locale/zh_TW/messages.csv
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-02 11:49-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.2.5\n"
+
+#: lib/components/header_menu/header_menu_component.js:45
+msgid "ABOUT THE APP"
+msgstr "關於此應用程式"
+
+#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A16+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
+msgid "About Arrival Advisor"
+msgstr "有關 Arrival Advisor"
+
+#: lib/components/services/service_list_error_component.js:33
+msgid "An error has occured."
+msgstr "發生錯誤。"
+
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A26+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A46
+msgid ""
+"Answer a few questions about your situation to get personalized "
+"recommendations of topics and services to help you settle in British "
+"Columbia."
+msgstr "回答幾個有關您現況的問題，即可獲得您個人專屬的不列顛哥倫比亞省（BC省）定居的服務推薦清單。"
+
+#: lib/components/recommended_topics/call_to_action.js:55
+msgid "Answer questions"
+msgstr "回答問題"
+
+#: lib/components/disclaimer/disclaimer_component.js:15
+msgid ""
+"Arrival Advisor contains information from the BC Government’s Newcomer’s "
+"Guide, available at <0>www.welcomebc.ca</0>, and the BC211 database of "
+"service providers, available at <1>www.bc211.ca</1>."
+msgstr ""
+"Arrival Advisor 訊息包含由不列顛哥倫比亞省（BC省）政府新移民指南（<0>www.welcomebc.ca</0>），以及服務者所提供的B"
+"C211數據資料庫（<1>www.bc211.ca</1>）"
+
+#: lib/components/about/about_component.js:19
+msgid ""
+"Arrival Advisor is a free, multilingual, mobile app that helps immigrants "
+"and refugees in British Columbia, Canada find information and services to "
+"navigate their settlement journey. Arrival Advisor is offered in English, "
+"Arabic, Chinese Simplified, Chinese Traditional, French (Canadian), Korean, "
+"Punjabi, and Tagalog."
+msgstr ""
+
+#: lib/components/disclaimer/disclaimer_component.js:33
+msgid ""
+"Arrival Advisor respects and maintains the privacy and anonymity of its "
+"users. Users do not need to provide personal information in order to use the "
+"app. The questionnaire is designed to assist in personalizing services and "
+"resources required by the user, and answers are only saved to enhance the "
+"usability of the app over time. Users of the Arrival Advisor app do so at "
+"their own discretion. The answers you provide will be used for the operation "
+"of this tool to provide you with guidance on resources and services that can "
+"help you adjust to life in Canada. Users cannot be identified by their "
+"answers to the questionnaire. The information is not used by Immigration, "
+"Refugees and Citizenship Canada for any other purpose and is not used for "
+"any immigration decision making."
+msgstr ""
+"Arrival Advisor尊重並維護其用戶的隱私和匿名性，用戶無需提供個人資料即可使用本應用程式，調查問卷是為幫助系統客製化，以利針對不同用戶所需的服"
+"務和資源提供更好的服務，儲存之答案僅為增進應用程式的實用性。用戶可自行決定是否回答 Arrival Advisor所設計的問卷。 您提供的答案將用於此工具"
+"的操作，以及更精準地提供有助於您適應加拿大生活的資源和服務指引。程式並不會通過其對問卷所作的回答來識別用戶身份。加拿大移民，難民和公民部也不會將此資訊用於"
+"其他目的，或用於任何移民相關決定。"
+
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A112+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A110
+msgid "Back"
+msgstr "返回"
+
+#: lib/components/recommended_topics/call_to_action.js:99
+msgid "Based on your answers, we recommend these topics for you:"
+msgstr "根據您的回答，我們為您推薦以下主題："
+
+#: lib/components/notifications/notification_content.js:7
+msgid "Bookmark added"
+msgstr "新增最愛"
+
+#: lib/components/notifications/notification_content.js:12
+msgid "Bookmark removed"
+msgstr "移除最愛"
+
+#: lib/components/help/help_component.js:33
+msgid "Contact Arrival Advisor team"
+msgstr "聯繫Arrival Advisor團隊"
+
+#: lib/components/welcome/welcome_component.js:49
+msgid "Created by"
+msgstr "創建者"
+
+#: lib/components/help/help_component.js:87
+msgid "Delete all user data"
+msgstr "刪除所有用戶數據"
+
+#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+msgid "Disclaimer"
+msgstr "免責聲明"
+
+#: lib/components/questionnaire/questionnaire_component.js:117
+msgid "Done"
+msgstr "完成"
+
+#: lib/components/explore/explore_detail_component.js:19
+msgid "EXPLORE TOPICS"
+msgstr "探索主題"
+
+#: lib/components/services/service_list_item_component.js:68
+msgid "Email:"
+msgstr "電子郵件"
+
+#: lib/components/help/help_component.js:59
+msgid "FOR ADDITIONAL ASSISTANCE"
+msgstr "對於額外協助的需求"
+
+#: lib/components/services/service_list_error_component.js:28
+msgid ""
+"Fetching your location timed out. On Android devices you may need to set "
+"your location mode to \"High accuracy\"."
+msgstr "當定位系統收尋超時。Android手機使用者可將定位模式設置為“高準確度”。"
+
+#: lib/components/help/help_component.js:71
+msgid "Find a settlement agency near me"
+msgstr "就近尋找一家安置機構"
+
+#: lib/components/onboarding/onboarding_component.js:19
+msgid "Find helpful services nearby"
+msgstr ""
+
+#: lib/components/onboarding/onboarding_component.js:20
+msgid "Find organizations that can help you settle into your new community."
+msgstr ""
+
+#: lib/components/topics/task_detail_content_component.js:103
+msgid "Find related services near me"
+msgstr "尋找就近相關服務處"
+
+#: lib/components/about/about_component.js:26
+msgid ""
+"From finding a job to learning English, accessing health care, and more, "
+"Arrival Advisor has everything you need to get started in your new "
+"community. Explore topics and services without ever needing to create an "
+"account. Access important information no matter where you are: the newcomer "
+"topics provided by Arrival Advisor are saved to your phone so you can view "
+"them, even without internet. You can fill out some questions to get "
+"personalized recommendations of topics and services to settle in British "
+"Columbia. Arrival Advisor is anonymous and your answers are only used to "
+"operate the app's recommendations. We never save or share your personal data "
+"with funders or any third parties."
+msgstr ""
+"從尋找工作到學習英語、取得醫療保健等，Arrival Advisor 可提供您在開始新生活時所需要的一切資訊。 "
+"無需註冊帳戶即可查詢新移民主題和服務項目。無論您身在何處，即使沒有網路服務，您還是可以讀取重要訊息、查看和儲存這些資訊。 "
+"藉由回答幾個簡單的問題，您將可獲得針對您在不列顛哥倫比亞省（BC省）個人化的服務推薦。並且，Arrival "
+"Advisor的用戶是匿名的，您的答案僅用於應用程式分析優化之使用，我們決不會與贊助者或任何第三方共享保存您的個人數據。"
+
+#: lib/components/recommended_topics/call_to_action.js:33
+msgid "GETTING STARTED"
+msgstr "開始"
+
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A25+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A36
+msgid "Get information based on your needs"
+msgstr "根據您的需求取得訊息"
+
+#: lib/components/onboarding/onboarding_component.js:13
+msgid "Get trusted information"
+msgstr ""
+
+#: lib/components/recommended_topics/call_to_action.js:74
+msgid "Go back to questions"
+msgstr "回到問題"
+
+#: lib/components/help/help_component.js:46
+msgid "Help & Support"
+msgstr "幫助和支持"
+
+#: lib/components/help/help_component.js:49
+msgid ""
+"If you are having difficulty with settlement in Canada, we suggest getting "
+"in touch with a settlement worker."
+msgstr "幫助和支持"
+
+#: lib/components/about/about_component.js:46
+msgid ""
+"Information in this app is provided by the <0>Newcomers Guide to British "
+"Columbia</0> Copyright 2018 Province of British Columbia. All rights "
+"reserved."
+msgstr ""
+"本應用程式資訊由<0>Newcomers Guide to British Columbia</0>所提供；不列顛哥倫比亞省（BC省）2018 版權所有"
+
+#: lib/components/help/help_component.js:24
+msgid "Information on BC211"
+msgstr "BC211 相關資訊"
+
+#: lib/components/help/help_component.js:19
+msgid "Information on HealthLinkBC (8-1-1)"
+msgstr "HealthLink BC 相關資訊（8-1-1）"
+
+#: lib/components/help/help_component.js:14
+msgid "Information on emergency services (9-1-1)"
+msgstr "緊急求助資訊（9-1-1）"
+
+#: lib/components/help/help_component.js:29
+msgid "Information on helplines"
+msgstr "求助熱線相關資訊"
+
+#: lib/components/onboarding/onboarding_component.js:14
+msgid ""
+"Learn about employment, health care, and everything else to start your new "
+"life in British Columbia"
+msgstr ""
+
+#: lib/components/explore/explore_all_component.js:11
+msgid "Learn all about B.C."
+msgstr "了解所有關於B.C.的資訊"
+
+#: lib/components/help/help_component.js:20
+msgid "Mutlilingual health information services"
+msgstr "多種語言健康資訊服務處"
+
+#: lib/components/bookmarked_topics/bookmarked_topics_component.js:12
+msgid "My bookmarks"
+msgstr "我的最愛"
+
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A118+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A100
+msgid "Next"
+msgstr "下一個"
+
+#: lib/components/questionnaire/new_topics_modal_component.js:55
+msgid "No new topics recommended based on your answers."
+msgstr "根據您的答案，沒有新主題資訊可推薦。"
+
+#: lib/components/topics/task_list_component.js:69
+msgid "No topics to recommend"
+msgstr "沒有可推薦的主題"
+
+#: lib/components/topics/task_list_component.js:68
+msgid "No topics to show"
+msgstr "沒有可顯示的主題"
+
+#: lib/components/questionnaire/new_topics_modal_component.js:43
+msgid "Number of new topics recommended based on your answers:"
+msgstr "根據您的答案所推薦的幾項新主題"
+
+#: lib/components/questionnaire/questionnaire_component.js:78
+msgid "OF"
+msgstr "/"
+
+#: lib/components/questionnaire/new_topics_modal_component.js:69
+msgid "OK"
+msgstr "確定"
+
+#: lib/components/recommended_topics/call_to_action.js:60
+msgid ""
+"Once you answer some questions, your recommendations will show up below. For "
+"now, here are some topics we recommend for everyone:"
+msgstr "回答完部分問題後，針對您需求的建議項目將顯示在下方。以下是我們目前為大家推薦的一些主題："
+
+#: lib/components/disclaimer/disclaimer_component.js:45
+msgid ""
+"PeaceGeeks is not liable for any damages incurred as a result of or related "
+"to the use of the app. PeaceGeeks is not an immigration consultancy network, "
+"and therefore cannot provide advice or support directly related to "
+"immigration. Arrival Advisor exists to offer newcomers a directory of "
+"services and resources to assist settlement in Metro Vancouver and does not "
+"exist in an official Immigration Service capacity."
+msgstr ""
+"PeaceGeeks 對於因使用此應用軟體而導致之任何相關的損害概不負責。 PeaceGeeks不是移民諮詢網絡，因此無法提供與移民直接相關的建議或支持。"
+"Arrival Advisor 的存在是為新移民提供所需資源服務目錄，以便利大溫地區的新移民，而不具備官方移民服務之身份。"
+
+#: lib/components/services/service_list_error_component.js:23
+msgid "Please ensure location services are enabled for Arrival Advisor."
+msgstr "請確保為 Arrival Advisor 開啟定位系統功能。"
+
+#: lib/components/help/help_component.js:15
+msgid "Police, fire and medical emergencies"
+msgstr "警察、火災、醫療急診"
+
+#: lib/components/header_menu/header_menu_component.js:52
+msgid "Privacy policy"
+msgstr "隱私政策"
+
+#: lib/components/topics/task_detail_component.js:21
+msgid "RELATED TOPICS"
+msgstr "相關主題"
+
+#: lib/components/expandable_content/expandable_content_component.js:82
+msgid "Read less"
+msgstr "顯示更少"
+
+#: lib/components/expandable_content/expandable_content_component.js:80
+msgid "Read more"
+msgstr "顯示更多"
+
+#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftopics%2Ftask_detail_content_component.js%3A63
+msgid "Recommended for you"
+msgstr "為您推薦"
+
+#: lib/components/header_menu/header_menu_component.js:24
+msgid "SELECT YOUR LANGUAGE"
+msgstr "選擇您的語言"
+
+#: lib/components/bookmarked_topics/bookmarked_topics_component.js:15
+msgid "Save important topics to build your personal plan for settlement."
+msgstr "儲存重要主題以建立個人定居計畫。"
+
+#: lib/components/welcome/welcome_component.js:31
+msgid "Select your language"
+msgstr "選擇您的語言"
+
+#: lib/components/about/about_component.js:55
+msgid "Server version:"
+msgstr "伺服器版本：{0}"
+
+#: lib/components/help/help_component.js:25
+msgid "Services information and referral"
+msgstr "服務資訊和推薦"
+
+#: lib/components/welcome/welcome_component.js:27
+msgid "Settling in Canada is now easier."
+msgstr "現在，定居加拿大變得更容易"
+
+#: lib/components/questionnaire/questionnaire_component.js:100
+msgid "Skip"
+msgstr "跳過"
+
+#: lib/components/onboarding/onboarding_component.js:89
+msgid "Skip personalization"
+msgstr ""
+
+#: lib/components/welcome/welcome_component.js:42
+msgid "Start"
+msgstr "開始"
+
+#: lib/components/onboarding/onboarding_component.js:74
+msgid "Start personalization"
+msgstr ""
+
+#: lib/components/recommended_topics/recommended_topics_component.js:21
+msgid "Start settling in B.C."
+msgstr "開始在B.C.省定居"
+
+#: lib/components/header_menu/header_menu_component.js:53
+msgid "Terms of Use"
+msgstr ""
+
+#: lib/components/about/about_component.js:37
+msgid ""
+"The Arrival Advisor app is created by PeaceGeeks in partnership with "
+"settlement organizations in Metro Vancouver, as well as immigrants and "
+"refugees like you. This project is possible thanks to funding by the "
+"Province of British Columbia and Google.org Canada in partnership with LEAP |"
+" Pecaut Centre for Social Impact. Special thanks also goes to individual "
+"donors who make this project possible. Arrival Advisor is an open-source "
+"project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how "
+"you can support this project."
+msgstr ""
+"Arrival Advisor 應用程式是 PeaceGeeks "
+"與大溫哥華地區（以下簡稱大溫地區）的定居／安置所提供者們，以及像您一樣的移民或難民共同合作設計的。此專案計劃得益於不列顛哥倫比亞省（BC省）和 "
+"Google.org Canada 與 LEAP | Pecaul Centre 社會影響中心的資助。特別感謝使這個項目成功的個人捐助者。Arrival "
+"Advisor 是一個開放式專案。你可以在 <0>Github</0>查看它或<1>聯絡</1>我們來了解如何贊助此專案。"
+
+#: lib/components/disclaimer/disclaimer_component.js:22
+msgid ""
+"The app provides information about relevant newcomer services, and is "
+"intended for general guidance and reference only. While we aim to provide "
+"accurate and timely information, we do not have control over the ongoing "
+"accuracy of the information or the quality of the services provided. If you "
+"discover that a piece of information is outdated or not useful, please let "
+"us know in the feedback section of the app. The inclusion of services and "
+"resources in this app does not imply an endorsement or recommendation of "
+"those services over others.  Utilization of services located through the app "
+"is undertaken at the risk of the user."
+msgstr ""
+"本應用程式所提供之相關新移民服務訊息，僅供一般指導與參考。雖然我們的目標是提供準確與即時的資訊，但我們無法控制資訊隨時變化的準確性或伺服器的品質性。如果您"
+"發現某資訊已過時或無用，懇請在本程式的意見回饋欄留言告知。 本應用程式並不推薦或背書該程式中所列入的服務資訊。 "
+"用戶需自行承擔使用此應用程式所搜尋之服務風險。"
+
+#: lib/components/about/about_component.js:51
+msgid "This is Arrival Advisor version:"
+msgstr "這是 Arrival Advisor 版本："
+
+#: lib/components/recommended_topics/call_to_action.js:70
+msgid "UPDATE MY RECOMMENDATIONS"
+msgstr "更新我的推薦信息"
+
+#: lib/components/services/service_list_item_component.js:57
+msgid "Web:"
+msgstr "網址："

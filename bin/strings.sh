@@ -12,12 +12,15 @@ checkForSuccess () {
     fi
 }
 
-extract_all() {
+extract() {
+
+    check_for_messages_po_files 
+
     echo "Building the client ..."
     yarn build
     checkForSuccess "yarn build"
 
-    echo "Generating PO files ..."
+    echo "Generating PO files with clean to exclude questionnaire and explore strings ..."
     yarn extract-strings-clean
     checkForSuccess "yarn extract-strings-clean"
 
@@ -30,87 +33,26 @@ extract_all() {
         echo "Fixing line breaks in PO file for ${locale}..."
         csv2po --progress none locale/$locale/messages.csv > locale/$locale/messages.po
         checkForSuccess "convert csv files back to po to normalize line breaks"
+
+        rm -f locale/$locale/messages.csv
+        mv locale/$locale/messages.po locale/$locale/jsx_strings.po
     done
 
     echo "Please send files locale/*/messages.csv or locale/*/messages.po for translation"
 }
 
-
-build_all() {
+check_for_messages_po_files() {
+    echo "Checking if messages.po exists for each locale..."
+    
     for locale in "${locales[@]}"
     do
-        echo "Converting CSV to PO files for ${locale} ..."
-        csv2po --progress none locale/$locale/messages.csv locale/$locale/messages.po
-        checkForSuccess "convert csv files to po"
+        if [ ! -f locale/$locale/messages.po ]
+        then 
+            echo "messages.po must be present or else existing translations will be deleted"
+            exit
+        fi 
     done
-
-    echo "Converting PO files to Javascript ..."
-    yarn build-strings
-    checkForSuccess "yarn build-strings"
-
-    echo "Building the app ..."
-    yarn cbt
-    checkForSuccess "yarn cbt"
 }
-
-
-extract_changed() {
-    echo "Building the client ..."
-    yarn build
-    checkForSuccess "yarn build"
-
-    echo "Generating PO files ..."
-    yarn extract-strings
-    checkForSuccess "yarn extract-strings"
-
-    for locale in "${locales[@]}"
-    do
-        # Use msggrep to get the strings needing translation
-        #   -v invert the result
-        #   -T match msgstr entries, i.e. the translated strings
-        #   -e match using regular expression
-        #   "." match strings with at least one character (inverted with -v to mean match empty strings)
-        echo "Filtering strings needing translation for ${locale} ..."
-        msggrep -v -T -e "." locale/$locale/messages.po > locale/$locale/new-messages.po
-        checkForSuccess "filter strings needing translation"
-
-        echo "Converting PO files to CSV for ${locale} ..."
-        po2csv --progress none locale/$locale/new-messages.po > locale/$locale/new-messages.csv
-        checkForSuccess "convert po files to csv"
-
-        echo "Fixing line breaks in PO file for ${locale}..."
-        csv2po --progress none locale/$locale/new-messages.csv > locale/$locale/new-messages.po
-        checkForSuccess "convert csv files back to po to normalize line breaks"
-    done
-
-    echo "Please send files locale/*/new-messages.csv or locale/*/new-messages.po for translation"
-}
-
-
-build_changed() {
-    for locale in "${locales[@]}"
-    do
-        echo "Converting CSV to PO files for ${locale} ..."
-        csv2po --progress none locale/$locale/new-messages.csv locale/$locale/new-messages.po
-        checkForSuccess "convert csv files to po"
-
-        echo "Merging new translations into existing message file for ${locale} ..."
-        msgcat locale/$locale/messages.po locale/$locale/new-messages.po > locale/$locale/merged-messages.po
-        checkForSuccess "merging new translations into po files"
-
-        cp locale/$locale/messages.po locale/$locale/messages.po.backup
-        cp locale/$locale/merged-messages.po locale/$locale/messages.po
-    done
-
-    echo "Converting PO files to Javascript ..."
-    yarn build-strings
-    checkForSuccess "yarn build-strings"
-
-    echo "Building the app ..."
-    yarn cbt
-    checkForSuccess "yarn cbt"
-}
-
 
 normalize_line_breaks(){
     for locale in "${locales[@]}"
@@ -125,6 +67,17 @@ normalize_line_breaks(){
     done
 }
 
+copy_files_to_weblate_repository(){
+    echo "Copy locale/en/jsx_strings.pot ---> ../ui-strings/jsx_strings/jsx_strings.pot"
+    cp locale/en/jsx_strings.pot ../ui-strings/jsx_strings/jsx_strings.pot
+
+    echo
+    for locale in "${locales[@]}"
+    do
+        echo "Copy locale/$locale/jsx_strings.po ---> ../ui-strings/jsx_strings/$locale/jsx_strings.po"
+        cp locale/$locale/jsx_strings.po ../ui-strings/jsx_strings/$locale/jsx_strings.po
+    done
+}
 
 clean() {
     rm -f locale/*/messages.csv
@@ -201,13 +154,11 @@ prompt_manual_steps_if_po_file_needs_editing() {
 
 
 help() {
-    echo "$0 --extract-all        Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
-    echo "$0 --build-all          Import all strings from CSV files and build the app"
-    echo "$0 --extract-changed    Extract just the changed strings from source code to PO and CSV files"
-    echo "$0 --build-changed      Import just the changed strings from CSV files and build the app"
+    echo "$0 --extract            Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
+    echo "$0 --copy               Copy files to the Weblate repository, assumed to be located at ../ui-strings"
     echo "$0 --clean              Remove temporary files"
-    echo "$0 --combine-pos        Combine PO Files to prepare for deployment - Mandatory argument: path to directory which does not already exist to clone ui-strings repository"    
+    echo "$0 --combine-pos        Combine PO Files to prepare for deployment - Mandatory argument: path to directory which does not already exist to clone ui-strings repository"
     echo
 
     for locale in "${locales[@]}"
@@ -217,17 +168,11 @@ help() {
 }
 
 
-if [ "$1" == "--extract-all" ]; then
-    extract_all
+if [ "$1" == "--extract" ]; then
+    extract
 
-elif [ "$1" == "--build-all" ]; then
-    build_all
-
-elif [ "$1" == "--extract-changed" ]; then
-    extract_changed
-
-elif [ "$1" == "--build-changed" ]; then
-    build_changed
+elif [ "$1" == "--copy" ]; then
+    copy_files_to_weblate_repository
 
 elif [ "$1" == "--normalize" ]; then
     normalize_line_breaks

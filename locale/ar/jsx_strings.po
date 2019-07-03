@@ -1,12 +1,9 @@
-#. #-#-#-#-#  jsx_strings.po (PACKAGE VERSION)  #-#-#-#-#
-#. extracted from /tmp/messages-ar.csv
-#, fuzzy
+#. extracted from locale/ar/messages.csv
 msgid ""
 msgstr ""
-"#-#-#-#-#  jsx_strings.po (PACKAGE VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 14:55-0700\n"
+"POT-Creation-Date: 2019-07-02 11:49-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14,36 +11,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"#-#-#-#-#  questionnaire.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-04 21:19+0000\n"
-"PO-Revision-Date: 2019-06-04 21:21+0000\n"
-"Last-Translator: UserName LastName <tomy@peacegeeks.org>\n"
-"Language-Team: Arabic <https://35.182.138.61/projects/ui-strings/"
-"questionnaire/ar/>\n"
-"Language: ar\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 3.5.1\n"
-"#-#-#-#-#  explore.po (PACKAGE VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-04 22:30+0000\n"
-"PO-Revision-Date: 2019-06-04 22:30+0000\n"
-"Last-Translator: UserName LastName <tomy@peacegeeks.org>\n"
-"Language-Team: Arabic <https://35.182.138.61/projects/ui-strings/explore/ar/"
-">\n"
-"Language: ar\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 3.5.1\n"
 
 #: lib/components/header_menu/header_menu_component.js:45
 msgid "ABOUT THE APP"
@@ -53,15 +20,11 @@ msgstr "نبذة عن التطبيق"
 msgid "About Arrival Advisor"
 msgstr "نبذة عن Arrival Advisor"
 
-#: lib/components/services/service_list_item_component.js:27
-msgid "Address:"
-msgstr "العنوان:"
-
 #: lib/components/services/service_list_error_component.js:33
 msgid "An error has occured."
 msgstr "An error has occured."
 
-#: lib/components/recommended_topics/call_to_action.js:46
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A26+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A46
 msgid ""
 "Answer a few questions about your situation to get personalized "
 "recommendations of topics and services to help you settle in British "
@@ -88,15 +51,10 @@ msgstr ""
 msgid ""
 "Arrival Advisor is a free, multilingual, mobile app that helps immigrants "
 "and refugees in British Columbia, Canada find information and services to "
-"navigate their settlement journey. The app is currently available in "
-"English, French (Canadian), and Arabic. It will soon be available in Chinese "
-"Simplified, Chinese Traditional, Korean, Punjabi, and Tagalog."
+"navigate their settlement journey. Arrival Advisor is offered in English, "
+"Arabic, Chinese Simplified, Chinese Traditional, French (Canadian), Korean, "
+"Punjabi, and Tagalog."
 msgstr ""
-"تطبيق Arrival Advisor هو تطبيق مجاني متعدد اللغات للأجهزة المحمولة يساعد "
-"المهاجرين واللاجئين في إقليم بريتيش كولومبيا في كندا على البحث عن المعلومات "
-"والخدمات التي توجههم في سعيهم نحو الاستقرار. التطبيق متوفر حاليا باللغات "
-"الإنكليزية والفرنسية (الكندية) والعربية. سوف يتوفر التطبيق لاحقا بالصينية "
-"المبسطة والصينية والتقليدية والكورية والبنجابية والتاغلوغية."
 
 #: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
@@ -122,7 +80,7 @@ msgstr ""
 "الهجرة واللاجئين والجنسية الكندية المعلومات لأي غرض آخر كما أنها لا تستخدم "
 "في اتخاذ أي قرار يتعلق بالهجرة."
 
-#: lib/components/questionnaire/questionnaire_component.js:110
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A112+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A110
 msgid "Back"
 msgstr "رجوع"
 
@@ -162,13 +120,9 @@ msgstr "انتهى"
 msgid "EXPLORE TOPICS"
 msgstr "تصفح الموضوعات"
 
-#: lib/components/services/service_list_item_component.js:55
+#: lib/components/services/service_list_item_component.js:68
 msgid "Email:"
 msgstr "البريد الإلكتروني:"
-
-#: lib/components/services/service_list_component.js:53
-msgid "FIND A SERVICE NEAR YOU"
-msgstr "ابحث عن خدمة بالقرب منك"
 
 #: lib/components/help/help_component.js:59
 msgid "FOR ADDITIONAL ASSISTANCE"
@@ -179,18 +133,26 @@ msgid ""
 "Fetching your location timed out. On Android devices you may need to set "
 "your location mode to \"High accuracy\"."
 msgstr ""
-"استغرق تحديد موقعك أكثر من اللازم. قد تحتاج إلى ضبط وضع تحديد الموقع إلى "
-"«دقة شديدة» على أجهزة أندرويد."
+"استغرق تحديد موقعك أكثر من اللازم. قد تحتاج إلى ضبط وضع تحديد الموقع إلى «"
+"دقة شديدة» على أجهزة أندرويد."
 
 #: lib/components/help/help_component.js:71
 msgid "Find a settlement agency near me"
 msgstr "ابحث عن وكالة استقرار قريبة من."
 
+#: lib/components/onboarding/onboarding_component.js:19
+msgid "Find helpful services nearby"
+msgstr ""
+
+#: lib/components/onboarding/onboarding_component.js:20
+msgid "Find organizations that can help you settle into your new community."
+msgstr ""
+
 #: lib/components/topics/task_detail_content_component.js:103
 msgid "Find related services near me"
 msgstr "ابحث عن خدمات ذات صلة بالقرب مني"
 
-#: lib/components/about/about_component.js:27
+#: lib/components/about/about_component.js:26
 msgid ""
 "From finding a job to learning English, accessing health care, and more, "
 "Arrival Advisor has everything you need to get started in your new "
@@ -218,9 +180,13 @@ msgstr ""
 msgid "GETTING STARTED"
 msgstr "بدء الاستخدام"
 
-#: lib/components/recommended_topics/call_to_action.js:36
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A25+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A36
 msgid "Get information based on your needs"
 msgstr "أحصل على المعلومات استنادا إلى احتياجاتك"
+
+#: lib/components/onboarding/onboarding_component.js:13
+msgid "Get trusted information"
+msgstr ""
 
 #: lib/components/recommended_topics/call_to_action.js:74
 msgid "Go back to questions"
@@ -238,7 +204,7 @@ msgstr ""
 "لو كنت تواجه مصاعب في الاستقرار داخل كندا، نقترح عليك أن تتواصل مع موظف "
 "استقرار."
 
-#: lib/components/about/about_component.js:47
+#: lib/components/about/about_component.js:46
 msgid ""
 "Information in this app is provided by the <0>Newcomers Guide to British "
 "Columbia</0> Copyright 2018 Province of British Columbia. All rights "
@@ -264,6 +230,12 @@ msgstr "معلومات تتعلق بخدمات الطوارئ (911)"
 msgid "Information on helplines"
 msgstr "معلومات تتعلق بخطوط المساعدة على الهاتف"
 
+#: lib/components/onboarding/onboarding_component.js:14
+msgid ""
+"Learn about employment, health care, and everything else to start your new "
+"life in British Columbia"
+msgstr ""
+
 #: lib/components/explore/explore_all_component.js:11
 msgid "Learn all about B.C."
 msgstr "تعرف على كل شيء عن بريتيش كولومبيا."
@@ -276,7 +248,7 @@ msgstr "خدمات معلومات صحية مقدمة بعدة لغات"
 msgid "My bookmarks"
 msgstr "علاماتي المرجعية"
 
-#: lib/components/questionnaire/questionnaire_component.js:100
+#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A118+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A100
 msgid "Next"
 msgstr "التالي"
 
@@ -284,15 +256,11 @@ msgstr "التالي"
 msgid "No new topics recommended based on your answers."
 msgstr "لا توجد مواضيع جديدة نوصي بها استنادا إلى إجاباتك."
 
-#: lib/components/services/service_list_component.js:60
-msgid "No related services found"
-msgstr "لم نجد خدمات متعلقة ببحثك"
-
-#: lib/components/topics/task_list_component.js:77
+#: lib/components/topics/task_list_component.js:69
 msgid "No topics to recommend"
 msgstr "لا توجد موضوعات نوصي بها"
 
-#: lib/components/topics/task_list_component.js:76
+#: lib/components/topics/task_list_component.js:68
 msgid "No topics to show"
 msgstr "لا توجد موضوعات كي نعرضها"
 
@@ -315,10 +283,6 @@ msgid ""
 msgstr ""
 "حالما انتهيت من الإجابة عن بضع أسئلة، سوف تظهر توصياتك المخصصة تاليا. إليك "
 "في الوقت الراهن بعض الموضوعات التي نوصي بها للجميع:"
-
-#: lib/components/maps_application_popup/maps_application_popup_component.js:18
-msgid "Open in maps"
-msgstr "فتح في الخرائط"
 
 #: lib/components/disclaimer/disclaimer_component.js:45
 msgid ""
@@ -347,15 +311,15 @@ msgstr "الشرطة والمطافئ والطوارئ الصحية"
 msgid "Privacy policy"
 msgstr "سياسة الخصوصية"
 
-#: lib/components/topics/task_detail_component.js:19
+#: lib/components/topics/task_detail_component.js:21
 msgid "RELATED TOPICS"
 msgstr "موضوعات ذات صلة"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:82
 msgid "Read less"
 msgstr "تقليل النص"
 
-#: lib/components/expandable_content/expandable_content_component.js:79
+#: lib/components/expandable_content/expandable_content_component.js:80
 msgid "Read more"
 msgstr "زيادة النص"
 
@@ -375,7 +339,7 @@ msgstr "احفظ الموضوعات المهمة كي تنشئ خطتك للاس
 msgid "Select your language"
 msgstr "اختر لغتك"
 
-#: lib/components/about/about_component.js:56
+#: lib/components/about/about_component.js:55
 msgid "Server version:"
 msgstr "إصدار الخادوم:"
 
@@ -391,21 +355,33 @@ msgstr "أصبح الاستقرار في كندا الآن أسهل من ذي ق
 msgid "Skip"
 msgstr "تخطى"
 
+#: lib/components/onboarding/onboarding_component.js:89
+msgid "Skip personalization"
+msgstr ""
+
 #: lib/components/welcome/welcome_component.js:42
 msgid "Start"
 msgstr "ابدأ"
+
+#: lib/components/onboarding/onboarding_component.js:74
+msgid "Start personalization"
+msgstr ""
 
 #: lib/components/recommended_topics/recommended_topics_component.js:21
 msgid "Start settling in B.C."
 msgstr "بدء الاستقرار في بريتيش كولومبيا."
 
-#: lib/components/about/about_component.js:38
+#: lib/components/header_menu/header_menu_component.js:53
+msgid "Terms of Use"
+msgstr ""
+
+#: lib/components/about/about_component.js:37
 msgid ""
 "The Arrival Advisor app is created by PeaceGeeks in partnership with "
 "settlement organizations in Metro Vancouver, as well as immigrants and "
 "refugees like you. This project is possible thanks to funding by the "
-"Province of British Columbia and Google.org Canada in partnership with LEAP "
-"| Pecaut Centre for Social Impact. Special thanks also goes to individual "
+"Province of British Columbia and Google.org Canada in partnership with LEAP |"
+" Pecaut Centre for Social Impact. Special thanks also goes to individual "
 "donors who make this project possible. Arrival Advisor is an open-source "
 "project. You can <0>view it on GitHub</0> and <1>contact us</1> to learn how "
 "you can support this project."
@@ -438,7 +414,7 @@ msgstr ""
 "توصية لهذه الخدمات دون غيرها. كما أن مسؤولية الاستعانة بالخدمات التي وجدتها "
 "مستخدما هذا التطبيق يقع على المستخدم."
 
-#: lib/components/about/about_component.js:52
+#: lib/components/about/about_component.js:51
 msgid "This is Arrival Advisor version:"
 msgstr "هذا الإصدار من تطبيق Arrival Advisor هو:"
 
@@ -446,255 +422,6 @@ msgstr "هذا الإصدار من تطبيق Arrival Advisor هو:"
 msgid "UPDATE MY RECOMMENDATIONS"
 msgstr "تحديث توصياتي"
 
-#: lib/components/services/service_list_item_component.js:46
+#: lib/components/services/service_list_item_component.js:57
 msgid "Web:"
 msgstr "الموقع الشبكي:"
-
-msgid "How long have you been living in Canada?"
-msgstr "كم مضى عليك من الوقت مقيما في كندا؟"
-
-msgid "More than 1 year"
-msgstr "أكثر من سنة واحدة"
-
-msgid "Less than 1 year"
-msgstr "أقل من سنة واحدة"
-
-msgid "I am planning to move to Canada"
-msgstr "أعتزم الانتقال إلى كندا"
-
-msgid "Do you have any of the following important Canadian documents?"
-msgstr "هل لديك أي من الوثائق الكندية الهامة التالية؟"
-
-msgid "I have a Social Insurance Number"
-msgstr "لدي رقم ضمان اجتماعي"
-
-msgid "I have a Canadian bank account"
-msgstr "لدي حساب مصرفي كندي"
-
-msgid "I have a Permanent Resident Card"
-msgstr "لدي بطاقة مقيم دائم"
-
-msgid "I have registered for MSP (Medical Services Plan)"
-msgstr "لقد سجلت نفسي في خطة الخدمات الطبية (Medical Services Plan)"
-
-msgid "I have a BC Services Card (health card)"
-msgstr "لدي بطاقة خدمات بريتيش كولومبيا (البطاقة الصحية)"
-
-msgid "I have a BC Driver's Licence"
-msgstr "لدي رخصة قيادة خاصة ببريتيش كولومبيا"
-
-msgid "Are you arriving with children under 18 years? If yes, how old?"
-msgstr "هل وصلت معك أطفال أقل من 18 سنة؟ لو كانت الإجابة نعم، كم عمرهم؟"
-
-msgid "Under 5 years old"
-msgstr "أقل من 5 سنوات"
-
-msgid "5-12 years old"
-msgstr "من 5 إلى 12 سنة"
-
-msgid "13-18 years old"
-msgstr "من 13 إلى 18 سنة"
-
-msgid "Pregnant (the child is not yet born)"
-msgstr "حبلى (لم يولد بعد)"
-
-msgid "No children"
-msgstr "لا يوجد أطفال"
-
-msgid "What is your current housing situation?"
-msgstr "ما هو موقفك الحالي من السكن؟"
-
-msgid "I want to rent a place to live"
-msgstr "أرغب في تأجير مسكن"
-
-msgid "I want to buy a home"
-msgstr "أرغب في شراء منزل"
-
-msgid "I am already renting a home"
-msgstr "لقد استأجرت مسكن بالفعل"
-
-msgid "I already own a home"
-msgstr "أملك منزل بالفعل"
-
-msgid "What is your current level of English?"
-msgstr "ما هو مستوى إجادتك الحالي للغة الإنكليزية؟"
-
-msgid "None"
-msgstr "لا شيء"
-
-msgid "Beginner (Canadian Language Benchmarks 1-4)"
-msgstr "مبتدئ (بين 1 و4 على المعيار الكندي للغة)"
-
-msgid "Intermediate (Canadian Language Benchmarks 5-8)"
-msgstr "متوسط (بين 5 و8 على المعيار الكندي للغة)"
-
-msgid "Fluent (Canadian Language Benchmarks 9-12)"
-msgstr "فصيح (بين 9 و12 على المعيار الكندي للغة)"
-
-msgid "What is your status in Canada?"
-msgstr "ما هو وضعك في كندا؟"
-
-msgid "Permanent resident"
-msgstr "مقيم دائم"
-
-msgid "Permanent Resident - Refugee Class or Protected Person"
-msgstr "مقيم دائم – فئة لاجئ أو متمتع بالحماية"
-
-msgid "Refugee claimant"
-msgstr "طالب لجوء"
-
-msgid "Temporary Foreign Worker"
-msgstr "عامل أجنبي مؤقت"
-
-msgid "Student visa"
-msgstr "تأشيرة طالب"
-
-msgid "Other"
-msgstr "أخرى"
-
-msgid "What is your current work situation?"
-msgstr "ما هو وضعك الحالي من ناحية العمل؟"
-
-msgid "I am looking for work"
-msgstr "أبحث عن عمل"
-
-msgid "I want to learn about my rights at work"
-msgstr "أرغب في التعرف على المزيد عن حقوقي في مكان العمل"
-
-msgid "I have my own business or want to start my own business"
-msgstr "أملك نشاطي التجاري الخاص أو أرغب في تأسيس نشاطي التجاري"
-
-msgid "What kinds of health care are you looking for?"
-msgstr "ما هي أنواع الرعاية الصحية التي تبحث عنها؟"
-
-msgid "General health care and learning about health care costs"
-msgstr "رعاية صحية عامة والتعرف على تكلفة الرعاية الصحية"
-
-msgid "I need urgent medical attention (for emergencies, call 9-1-1)"
-msgstr "أريد رعاية صحية عاجلة (في حالات الطوارئ، اتصل بالرقم 911)"
-
-msgid "Prescription medication"
-msgstr "أدوية تصرف بوصفة طبية"
-
-msgid "Mental health support"
-msgstr "مساعدة خاصة بالصحة النفسية"
-
-msgid "Eye doctors"
-msgstr "طبيب عيون"
-
-msgid "Dentists"
-msgstr "طبيب أسنان"
-
-msgid "Support for disabilities"
-msgstr "مساعدة موجهة لأصحاب الاحتياجات الخاصة"
-
-msgid "Do you need financial assistance or low-income support?"
-msgstr "هل تريد مساعدة مالية أو دعم موجه لأصحاب الدخل المتدني؟"
-
-msgid "Yes"
-msgstr "نعم"
-
-msgid "No"
-msgstr "لا"
-
-msgid "I have low income support"
-msgstr "أحصل على دعم موجه لأصحاب الدخل المحدود"
-
-msgid "Anything else you're interested in? Select all that apply"
-msgstr "هل يوجد شيء آخر يهمك؟ اختر كل ما ينطبق"
-
-msgid "Adult education and training"
-msgstr "تعليم الكبار وتدريبهم"
-
-msgid "Becoming a Canadian citizen"
-msgstr "أن أصبح مواطنا كنديا"
-
-msgid "Legal help"
-msgstr "مساعدة قانونية"
-
-msgid "Banking and financial management"
-msgstr "أمور مصرفية وإدارة الأموال"
-
-msgid "Taxes"
-msgstr "الضرائب"
-
-msgid "LGBTQ2 services"
-msgstr "خدمات LGBTQ2"
-
-msgid "Francophone services"
-msgstr "خدمات للناطقين باللغة الفرنسية"
-
-msgid "Support for seniors (age 65+)"
-msgstr "مساندة موجهة لكبار السن (أكبر من 65 سنة)"
-
-msgid "Driving in BC"
-msgstr "القيادة في بريتيش كولومبيا"
-
-msgid "Public transportation"
-msgstr "المواصلات العامة"
-
-msgid "Help with abuse and violence"
-msgstr "مساعدة متعلقة بالعنف والإساءة"
-
-msgid "Community services and organizations"
-msgstr "خدمات المجتمع ومنظمات المجتمع المدني"
-
-msgid "Things to do right away"
-msgstr "أمور يجب عملها على الفور"
-
-msgid "Settling in"
-msgstr "تستقر في"
-
-msgid "Education"
-msgstr "التعليم"
-
-msgid "Health care"
-msgstr "الرعاية الصحية"
-
-msgid "Money & banking"
-msgstr "المال والبنوك"
-
-msgid "Housing"
-msgstr "الإسكان"
-
-msgid "Employment"
-msgstr "توظيف"
-
-msgid "Legal system & immigration"
-msgstr "النظام القانوني والهجرة"
-
-msgid "Driving"
-msgstr "القيادة"
-
-msgid "Help for individuals & families"
-msgstr "مساعدة للأفراد والعائلات"
-
-msgid "Important tasks for settling in your community"
-msgstr "مهام لا غنى عنها نحو الاستقرار في مجتمعك"
-
-msgid "Social customs and getting around your community"
-msgstr "العادات الاجتماعية والتنقل داخل مجتمعك"
-
-msgid "Learning English, schools for children, youth and adults"
-msgstr "تعلم اللغة الإنجليزية والمدارس للأطفال وللشباب وللكبار"
-
-msgid "Medical insurance, finding a doctor, mental health"
-msgstr "التأمين الطبي والبحث عن طبيب والصحة النفسية"
-
-msgid "Opening a bank account, filing taxes"
-msgstr "فتح حساب مصرفي وتقديم الإقرار الضريبي"
-
-msgid "Finding a place to rent or buy, getting rental assistance"
-msgstr "إيجاد مسكن للإيجار أو التملك والحصول على دعم في سداد الإيجار"
-
-msgid "Finding a job, working and workers’ rights"
-msgstr "البحث عن وظيفة والعمل وحقوق العاملين"
-
-msgid "Immigration and citizenship, legal support, police"
-msgstr "الهجرة والجنسية والدعم القانوني والشرطة"
-
-msgid "Getting a driver's licence, traffic laws, basic insurance"
-msgstr "الحصول على رخصة القيادة وقوانين المرور والتأمين الأساسي"
-
-msgid "For example low-income, disabilities, youth"
-msgstr "على سبيل المثال ذوي الدخل المحدود وذوي الاحتياجات الخاصة والشباب"
