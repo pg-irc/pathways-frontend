@@ -91,7 +91,7 @@ const renderWebsite = (website: string, currentPath: string, linkContext: string
         return <EmptyComponent />;
     }
     return (
-        <Text>
+        <Text style={textStyles.alwaysLeftAlign}>
             <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans> </Text>
             <AnalyticsLink
                 href={website}
