@@ -27,10 +27,10 @@ export interface TaskDetailContentActions {
 type Props = TaskDetailContentProps & TaskDetailContentActions;
 
 const styles = StyleSheet.create({
-    p: {
-        marginTop: 3,
-        marginBottom: 3
-    },
+    // p: {
+    //     marginTop: 3,
+    //     marginBottom: 3
+    // },
     // ul: {
     //     fontWeight: 'bold',
     //     fontSize: 35,
@@ -157,6 +157,7 @@ const TaskDescription = (props: Props): JSX.Element => {
     const topic = props.topic;
     // const taskDescription = <Markdown rules={markDownRules} style={markdownStyles}>{topic.description}</Markdown>;
     const taskDescription = <HTMLView addLineBreaks={false} stylesheet={styles} value={topic.description}/>
+    console.log(topic.description)
     return topic.relatedTopics.length > 0 ? <ExpandableContentComponent contentId={topic.id} content={taskDescription} /> : taskDescription;
 };
 
