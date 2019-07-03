@@ -158,12 +158,6 @@ if [ "$1" == "--extract" ]; then
 elif [ "$1" == "--copy" ]; then
     copy_files_to_weblate_repository
 
-elif [ "$1" == "--extract-changed" ]; then
-    extract_changed
-
-elif [ "$1" == "--build-changed" ]; then
-    build_changed
-
 elif [ "$1" == "--normalize" ]; then
     normalize_line_breaks
 
