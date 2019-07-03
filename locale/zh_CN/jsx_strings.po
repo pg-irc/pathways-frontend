@@ -3,20 +3,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-02 11:49-0700\n"
+"POT-Creation-Date: 2019-07-03 13:13-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"X-Generator: Translate Toolkit 2.3.1\n"
 
 #: lib/components/header_menu/header_menu_component.js:45
 msgid "ABOUT THE APP"
 msgstr "关于本应用程序"
 
-#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A16+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
+#: lib/components/about/about_component.js:16+lib/components/header_menu/header_menu_component.js:50
 msgid "About Arrival Advisor"
 msgstr "有关Arrival Advisor"
 
@@ -24,7 +24,7 @@ msgstr "有关Arrival Advisor"
 msgid "An error has occured."
 msgstr "An error has occured."
 
-#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A26+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A46
+#: lib/components/onboarding/onboarding_component.js:26+lib/components/recommended_topics/call_to_action.js:46
 msgid ""
 "Answer a few questions about your situation to get personalized "
 "recommendations of topics and services to help you settle in British "
@@ -52,6 +52,8 @@ msgid ""
 "Arabic, Chinese Simplified, Chinese Traditional, French (Canadian), Korean, "
 "Punjabi, and Tagalog."
 msgstr ""
+"Arrival Advisor是一个免费的多语种手机应用，它可帮助在加拿大不列颠哥伦比亚省（又译作“卑诗省”或简称“B.C.省”）的移民和难民查找他们在安"
+"家落户过程中所需的信息和服务，该应用目前提供英语、法语（加拿大）和阿拉伯语版本，简体中文、繁体中文、韩语、旁遮普语和塔加路语版本即将推出。"
 
 #: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
@@ -72,7 +74,7 @@ msgstr ""
 "资源和服务的指导，帮助您适应在加拿大的生活。用户的身份是无法通过其对问卷所作的回答来识别的。这些信息不被加拿大移民、难民和公民部（"
 "Immigration, Refugees and Citizenship Canada）用作任何他用，并且也不用作任何有关移民的决定。"
 
-#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A112+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A110
+#: lib/components/onboarding/onboarding_component.js:112+lib/components/questionnaire/questionnaire_component.js:110
 msgid "Back"
 msgstr "返回"
 
@@ -100,7 +102,7 @@ msgstr "创建者"
 msgid "Delete all user data"
 msgstr "删除所有用户数据"
 
-#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+#: lib/components/disclaimer/disclaimer_component.js:12+lib/components/header_menu/header_menu_component.js:51
 msgid "Disclaimer"
 msgstr "免责声明"
 
@@ -164,7 +166,7 @@ msgstr ""
 msgid "GETTING STARTED"
 msgstr "开始"
 
-#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A25+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A36
+#: lib/components/onboarding/onboarding_component.js:25+lib/components/recommended_topics/call_to_action.js:36
 msgid "Get information based on your needs"
 msgstr "根据您的需求获取信息"
 
@@ -228,7 +230,7 @@ msgstr "多语种健康信息服务"
 msgid "My bookmarks"
 msgstr "我的网页书签"
 
-#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A118+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A100
+#: lib/components/onboarding/onboarding_component.js:118+lib/components/questionnaire/questionnaire_component.js:100
 msgid "Next"
 msgstr "下一个"
 
@@ -298,7 +300,7 @@ msgstr "收起"
 msgid "Read more"
 msgstr "展开"
 
-#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftopics%2Ftask_detail_content_component.js%3A63
+#: lib/components/recommended_topics/recommended_topics_component.js:38+lib/components/topics/task_detail_content_component.js:63
 msgid "Recommended for you"
 msgstr "为您推荐"
 

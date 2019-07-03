@@ -3,20 +3,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-02 11:49-0700\n"
+"POT-Creation-Date: 2019-07-03 13:13-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.2.5\n"
+"X-Generator: Translate Toolkit 2.3.1\n"
 
 #: lib/components/header_menu/header_menu_component.js:45
 msgid "ABOUT THE APP"
 msgstr "À PROPOS DE L’APPLICATION"
 
-#: lib%2Fcomponents%2Fabout%2Fabout_component.js%3A16+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A50
+#: lib/components/about/about_component.js:16+lib/components/header_menu/header_menu_component.js:50
 msgid "About Arrival Advisor"
 msgstr "À propos d’Arrival Advisor"
 
@@ -24,7 +24,7 @@ msgstr "À propos d’Arrival Advisor"
 msgid "An error has occured."
 msgstr "Une erreur s'est produite."
 
-#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A26+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A46
+#: lib/components/onboarding/onboarding_component.js:26+lib/components/recommended_topics/call_to_action.js:46
 msgid ""
 "Answer a few questions about your situation to get personalized "
 "recommendations of topics and services to help you settle in British "
@@ -56,6 +56,12 @@ msgid ""
 "Arabic, Chinese Simplified, Chinese Traditional, French (Canadian), Korean, "
 "Punjabi, and Tagalog."
 msgstr ""
+"Arrival Advisor est une application mobile multilingue gratuite qui fournit "
+"aux immigrants et aux réfugiés en Colombie-Britannique (Canada) des "
+"informations et des services pour préparer leur établissement. L’application "
+"est offerte en anglais, en français (canadien) et en arabe. Elle sera "
+"bientôt disponible en chinois (simplifié et traditionnel), en coréen, en "
+"punjabi et en tagalog."
 
 #: lib/components/disclaimer/disclaimer_component.js:33
 msgid ""
@@ -85,7 +91,7 @@ msgstr ""
 "Immigration, Réfugiés et Citoyenneté Canada à toute autre fin, et ne sont "
 "pas utilisés lors de prises de décisions relatives à l’immigration."
 
-#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A112+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A110
+#: lib/components/onboarding/onboarding_component.js:112+lib/components/questionnaire/questionnaire_component.js:110
 msgid "Back"
 msgstr "Question précédente"
 
@@ -115,7 +121,7 @@ msgstr "Créé par"
 msgid "Delete all user data"
 msgstr "Supprimer toutes les données de l’utilisateur(trice)"
 
-#: lib%2Fcomponents%2Fdisclaimer%2Fdisclaimer_component.js%3A12+lib%2Fcomponents%2Fheader_menu%2Fheader_menu_component.js%3A51
+#: lib/components/disclaimer/disclaimer_component.js:12+lib/components/header_menu/header_menu_component.js:51
 msgid "Disclaimer"
 msgstr "Avertissement"
 
@@ -190,7 +196,7 @@ msgstr ""
 msgid "GETTING STARTED"
 msgstr "DÉBUTER"
 
-#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A25+lib%2Fcomponents%2Frecommended_topics%2Fcall_to_action.js%3A36
+#: lib/components/onboarding/onboarding_component.js:25+lib/components/recommended_topics/call_to_action.js:36
 msgid "Get information based on your needs"
 msgstr "Obtenir des renseignements basés sur vos besoins"
 
@@ -258,7 +264,7 @@ msgstr "Services de conseils médicaux multilingues"
 msgid "My bookmarks"
 msgstr "Mes favoris"
 
-#: lib%2Fcomponents%2Fonboarding%2Fonboarding_component.js%3A118+lib%2Fcomponents%2Fquestionnaire%2Fquestionnaire_component.js%3A100
+#: lib/components/onboarding/onboarding_component.js:118+lib/components/questionnaire/questionnaire_component.js:100
 msgid "Next"
 msgstr "Prochaine question"
 
@@ -338,7 +344,7 @@ msgstr "En lire moins"
 msgid "Read more"
 msgstr "En lire davantage"
 
-#: lib%2Fcomponents%2Frecommended_topics%2Frecommended_topics_component.js%3A38+lib%2Fcomponents%2Ftopics%2Ftask_detail_content_component.js%3A63
+#: lib/components/recommended_topics/recommended_topics_component.js:38+lib/components/topics/task_detail_content_component.js:63
 msgid "Recommended for you"
 msgstr "Recommandé pour vous"
 
