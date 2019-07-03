@@ -1,6 +1,5 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Trans } from '@lingui/react';
 import { textStyles, colors } from '../../application/styles';
 import { Service, PhoneNumber, Address } from '../../stores/services';
 import { View } from 'native-base';
@@ -102,20 +101,12 @@ const renderEmail = (email: string, currentPath: string, linkContext: string): J
     if (R.not(email)) {
         return <EmptyComponent />;
     }
-    return (
-        <Text>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>
-            <AnalyticsLink
-                href={`mailto: ${email}`}
-                currentPath={currentPath}
-                linkContext={linkContext}
-                linkType={'Email'}
-                style={textStyles.paragraphStyle}
-            >
-                {email}
-            </AnalyticsLink>
-        </Text>
-    );
+
+    const label = <Text style={textStyles.paragraphBoldBlackLeft}>Email: </Text>;
+    const link = <AnalyticsLink href={`mailto: ${email}`} currentPath={currentPath} linkContext={linkContext}
+        linkType={'Email'} style={textStyles.paragraphStyle} >{email}</AnalyticsLink>;
+
+    return <Text>{label}{link}</Text>;
 };
 
 const renderMapButtonIfLocation = (service: Service, currentPath: string, linkContext: string): JSX.Element => {
