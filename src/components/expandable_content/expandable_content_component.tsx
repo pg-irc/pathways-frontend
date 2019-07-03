@@ -131,31 +131,26 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         const text = this.readMoreReadLessText();
         const backgroundColor = this.backgroundColour();
         const justifyContent = this.computeJustifyContent();
+
+        const textStyle: object = [
+            textStyles.paragraphBoldBlackLeft,
+            {
+                color: colors.teal,
+                paddingLeft: 6,
+                paddingRight: 8,
+            }];
+
+        const buttonText = <Text style={textStyle} >{text}</Text>;
+        const buttonIcon = <Icon
+            name={this.isCollapsed() ? 'arrow-down' : 'arrow-up'}
+            style={{ fontSize: values.smallIconSize, color: colors.teal }}
+        />;
+
         return (
             <View style={{ backgroundColor, flex: 1, flexDirection: 'row', justifyContent }} >
-                <Button
-                    onPress={onPress}
-                    transparent
-                    iconRight
-                >
-                    <Text style={[
-                        textStyles.paragraphBoldBlackLeft,
-                        {
-                            color: colors.teal,
-                            paddingLeft: 6,
-                            paddingRight: 8,
-                        },
-                    ]}
-                    >
-                        {text}
-                    </Text>
-                    <Icon
-                        name={this.isCollapsed() ? 'arrow-down' : 'arrow-up'}
-                        style={{
-                            fontSize: values.smallIconSize,
-                            color: colors.teal,
-                        }}
-                    />
+                <Button onPress={onPress} transparent iconRight >
+                    {buttonText}
+                    {buttonIcon}
                 </Button>
             </View>
         );
