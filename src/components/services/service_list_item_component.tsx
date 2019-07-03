@@ -41,7 +41,7 @@ const buildServiceName = (organizationName: string, serviceName: string): string
 );
 
 const renderName = (name: string): JSX.Element => (
-    <Text style={textStyles.headlineH3StyleBlackLeft}>{name}</Text>
+    <Text style={[textStyles.headlineH3StyleBlackLeft, textStyles.alwaysLeftAlign]}>{name}</Text>
 );
 
 const renderDescription = (description: string): JSX.Element => {
