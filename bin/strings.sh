@@ -13,6 +13,9 @@ checkForSuccess () {
 }
 
 extract() {
+
+    check_for_messages_po_files 
+
     echo "Building the client ..."
     yarn build
     checkForSuccess "yarn build"
@@ -36,6 +39,19 @@ extract() {
     done
 
     echo "Please send files locale/*/messages.csv or locale/*/messages.po for translation"
+}
+
+check_for_messages_po_files() {
+    echo "Checking if messages.po exists for each locale..."
+    
+    for locale in "${locales[@]}"
+    do
+        if [ ! -f locale/$locale/messages.po ]
+        then 
+            echo "messages.po must be present or else existing translations will be deleted"
+            exit
+        fi 
+    done
 }
 
 normalize_line_breaks(){
