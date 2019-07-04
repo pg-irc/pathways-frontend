@@ -55,7 +55,7 @@
             "^.+\\.tsx?$": "ts-jest"
         },
         "testPathIgnorePatterns": [
-            "node_modules/?!(react-native|native-base)",
+            "/node_modules/",
             "/lib/",
             "/helpers/"
         ]
