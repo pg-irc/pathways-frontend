@@ -27,16 +27,16 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
 
         const text = <Text style={textStyles.button}>Open in maps</Text>;
 
-        return <View>
-            <Button
-                onPress={onMapsButtonPress(props)}
-                iconLeft
-                style={applicationStyles.tealButton}
-            >
-                {icon}
-                {text}
-            </Button>
-        </View>;
+        const button = <Button
+            onPress={onMapsButtonPress(props)}
+            iconLeft
+            style={applicationStyles.tealButton}
+        >
+            {icon}
+            {text}
+        </Button>;
+
+        return <View>{button}</View>;
     };
 
 const onMapsButtonPress = (props: MapsApplicationPopupProps): () => Promise<void> => (
