@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { textStyles, colors } from '../../application/styles';
 import { Service, PhoneNumber, Address } from '../../stores/services';
 import { View } from 'native-base';
-import { Text } from 'react-native';
+import { Text, I18nManager } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
@@ -113,8 +113,9 @@ const renderMapButtonIfLocation = (service: Service, currentPath: string, linkCo
     if (R.not(service.latitude && service.longitude)) {
         return <EmptyComponent />;
     }
+    const justifyContent = I18nManager.isRTL ? 'flex-end' : 'flex-start';
     return (
-        <View style={{ marginTop: 10 }}>
+        <View style={{ marginTop: 10, flexDirection: 'row', justifyContent }}>
             <MapsApplicationPopupComponent
                 latitude={service.latitude}
                 longitude={service.longitude}
