@@ -14,25 +14,30 @@ interface MapsApplicationPopupProps {
 }
 
 export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplicationPopupProps> =
-    (props: MapsApplicationPopupProps): JSX.Element => (
-        <View>
+    (props: MapsApplicationPopupProps): JSX.Element => {
+
+        const icon = <Icon
+            type={'FontAwesome'}
+            name={'map-marker'}
+            style={{
+                color: colors.white,
+                fontSize: values.smallIconSize,
+            }}
+        />;
+
+        const text = <Text style={textStyles.button}>Open in maps</Text>;
+
+        return <View>
             <Button
                 onPress={onMapsButtonPress(props)}
                 iconLeft
                 style={applicationStyles.tealButton}
             >
-                <Icon
-                    type={'FontAwesome'}
-                    name={'map-marker'}
-                    style={{
-                        color: colors.white,
-                        fontSize: values.smallIconSize,
-                    }}
-                />
-                <Text style={textStyles.button}>Open in maps</Text>
+                {icon}
+                {text}
             </Button>
-        </View>
-    );
+        </View>;
+    };
 
 const onMapsButtonPress = (props: MapsApplicationPopupProps): () => Promise<void> => (
     (): Promise<void> => {
