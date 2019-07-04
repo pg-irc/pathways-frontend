@@ -8,6 +8,17 @@ This is a log of changes to the Arrival Advisor app and related infrastructure t
 
 ### Fixed Bugs
 
+## 1.0.24
+
+### New Features
+
+* upgraded from Expo 32.00 to 33.00
+* improved string localization process  
+
+### Fixed Bugs
+
+* fixed missing translations in all non-English locales in the About page
+
 ## 1.0.22
 
 ### New Features
