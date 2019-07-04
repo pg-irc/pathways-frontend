@@ -23,7 +23,7 @@
         "babel-plugin-macros": "^2.4.2",
         "babel-preset-expo": "^5.0.0",
         "handlebars": "^4.1.2",
-        "jest-expo": "^32.0.0",
+        "jest-expo": "^33.0.0",
         "js-yaml": "^3.13.1",
         "react-dom": "^16.5.0",
         "react-test-renderer": "^16.3.1",
@@ -65,7 +65,7 @@
     },
     "dependencies": {
         "@expo/vector-icons": "^9.0.0",
-        "expo": "33.0.0",
+        "expo": "^33.0.0",
         "expo-analytics": "^1.0.7",
         "expo-constants": "~5.0.0",
         "expo-location": "^4.0.0",
@@ -91,7 +91,7 @@
         "redux-persist": "^5.9.1",
         "redux-saga": "^0.16.0",
         "request": "^2.88.0",
-        "sentry-expo": "^1.10.0",
+        "sentry-expo": "~1.13.0",
         "uuid": "^3.3.2"
     },
     "lingui": {
