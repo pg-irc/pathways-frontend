@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let
 
 // to run:
-// yarn build && yarn run ts-node src/api/integratinon_test.ts --host <hostname> --topic <topicId> --latitude <lat> --longitude <long>
+// yarn build && yarn run ts-node src/api/integration_test.ts --host <hostname> --topic <topicId> --latitude <lat> --longitude <long>
 
 import { setUrl, searchServices, APIResponse } from '.';
 
