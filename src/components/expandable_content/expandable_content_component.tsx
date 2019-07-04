@@ -146,20 +146,31 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
             style={{ fontSize: values.smallIconSize, color: colors.teal }}
         />;
 
+        const button = this.flipLeftRightOrientation() ?
+            <Button onPress={onPress} transparent iconLeft >
+                {buttonIcon}
+                {buttonText}
+            </Button> :
+            <Button onPress={onPress} transparent iconRight >
+                {buttonText}
+                {buttonIcon}
+            </Button>;
+
         return (
             <View style={{ backgroundColor, flex: 1, flexDirection: 'row', justifyContent }} >
-                <Button onPress={onPress} transparent iconRight >
-                    {buttonText}
-                    {buttonIcon}
-                </Button>
+                {button}
             </View>
         );
+    }
+
+    private flipLeftRightOrientation(): boolean {
+        return I18nManager.isRTL && this.props.forceEnglish;
     }
 
     private computeJustifyContent(): 'flex-start' | 'flex-end' {
         // If the app locale is Arabic and the screen is in English, justify "Read more"
         // string to the left by returning 'flex-end', which in RTL mode means left.
-        if (I18nManager.isRTL && this.props.forceEnglish) {
+        if (this.flipLeftRightOrientation()) {
             return 'flex-end';
         }
         return 'flex-start';
