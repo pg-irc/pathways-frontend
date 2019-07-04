@@ -7,7 +7,6 @@
         "@lingui/babel-preset-react": "2.7.3",
         "@lingui/cli": "2.7.3",
         "@lingui/react": "2.7.3",
-        "@types/expo": "^32.0.0",
         "@types/history": "^4.7.0",
         "@types/jest": "^23.3.2",
         "@types/query-string": "^6.1.0",
