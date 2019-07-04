@@ -4,6 +4,7 @@ import { View, Text, Icon, Button } from 'native-base';
 import { showLocation } from 'react-native-map-link';
 import { textStyles, colors, values, applicationStyles } from '../../application/styles';
 import { sendLinkPressedEvent } from '../../sagas/analytics/events';
+import { I18nManager } from 'react-native';
 
 interface MapsApplicationPopupProps {
     readonly latitude: number;
@@ -17,24 +18,21 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
     (props: MapsApplicationPopupProps): JSX.Element => {
 
         const icon = <Icon
-            type={'FontAwesome'}
-            name={'map-marker'}
-            style={{
-                color: colors.white,
-                fontSize: values.smallIconSize,
-            }}
+            type={'FontAwesome'} name={'map-marker'}
+            style={{ color: colors.white, fontSize: values.smallIconSize }}
         />;
 
         const text = <Text style={textStyles.button}>Open in maps</Text>;
 
-        const button = <Button
-            onPress={onMapsButtonPress(props)}
-            iconLeft
-            style={applicationStyles.tealButton}
-        >
-            {icon}
-            {text}
-        </Button>;
+        const flipLeftRightDirection = I18nManager.isRTL;
+
+        const button = flipLeftRightDirection ?
+            <Button onPress={onMapsButtonPress(props)} iconRight style={applicationStyles.tealButton} >
+                {text}{icon}
+            </Button> :
+            <Button onPress={onMapsButtonPress(props)} iconLeft style={applicationStyles.tealButton} >
+                {icon}{text}
+            </Button>;
 
         return <View>{button}</View>;
     };
