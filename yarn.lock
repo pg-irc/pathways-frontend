@@ -944,16 +944,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/expo@^32.0.0":
-  version "32.0.0"
-  resolved "https://registry.yarnpkg.com/@types/expo/-/expo-32.0.0.tgz#88ecb4bc2417febd5b26647e766781e180b09e34"
-  dependencies:
-    "@types/fbemitter" "*"
-    "@types/react" "*"
-    "@types/react-native" "*"
-    react-native-maps "*"
-
-"@types/fbemitter@*", "@types/fbemitter@^2.0.32":
+"@types/fbemitter@^2.0.32":
   version "2.0.32"
   resolved "https://registry.yarnpkg.com/@types/fbemitter/-/fbemitter-2.0.32.tgz#8ed204da0f54e9c8eaec31b1eec91e25132d082c"
 
@@ -1026,13 +1017,6 @@
 "@types/ramda@^0.25.38":
   version "0.25.47"
   resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.25.47.tgz#904f2ee46149af42902fe7dc01867e32798e8b37"
-
-"@types/react-native@*":
-  version "0.57.34"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.57.34.tgz#f15873386c4eab3accb536c49cef594634c0eafb"
-  dependencies:
-    "@types/prop-types" "*"
-    "@types/react" "*"
 
 "@types/react-native@>=0.50.0":
   version "0.55.19"
@@ -6329,10 +6313,6 @@ react-native-map-link@^2.1.4:
   dependencies:
     prop-types "^15.6.1"
     react-native-modal "^6.4.0"
-
-react-native-maps@*:
-  version "0.23.0"
-  resolved "https://registry.yarnpkg.com/react-native-maps/-/react-native-maps-0.23.0.tgz#edbfdcad0e42190627eb1c8067eaba5965c8f81e"
 
 react-native-maps@0.24.2:
   version "0.24.2"
