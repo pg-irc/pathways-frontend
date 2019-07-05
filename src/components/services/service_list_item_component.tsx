@@ -90,7 +90,7 @@ const renderWebsite = (website: string, currentPath: string, linkContext: string
         return <EmptyComponent />;
     }
 
-    const label = <Text style={textStyles.paragraphBoldBlackLeft}>Web: </Text>;
+    const label = <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Web: </Text>;
     const link = <AnalyticsLink href={website} currentPath={currentPath} linkContext={linkContext}
         linkType={'Website'} style={textStyles.paragraphStyle}>{website}</AnalyticsLink>;
 
@@ -102,7 +102,7 @@ const renderEmail = (email: string, currentPath: string, linkContext: string): J
         return <EmptyComponent />;
     }
 
-    const label = <Text style={textStyles.paragraphBoldBlackLeft}>Email: </Text>;
+    const label = <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Email: </Text>;
     const link = <AnalyticsLink href={`mailto: ${email}`} currentPath={currentPath} linkContext={linkContext}
         linkType={'Email'} style={textStyles.paragraphStyle} >{email}</AnalyticsLink>;
 
