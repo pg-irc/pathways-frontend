@@ -1,7 +1,7 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import { Dimensions, LayoutChangeEvent, Animated, I18nManager } from 'react-native';
-import { View, Text, Button, Icon } from 'native-base';
+import { Dimensions, LayoutChangeEvent, Animated, I18nManager, TouchableOpacity, ViewStyle } from 'react-native';
+import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -14,7 +14,6 @@ import { values } from '../../application/styles';
 export interface ExpandableContentProps {
     readonly content: JSX.Element;
     readonly contentId?: string;
-    readonly contentBackgroundColor?: string;
     readonly forceEnglish?: boolean;
 }
 
@@ -72,11 +71,9 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     }
 
     private renderContent(): JSX.Element {
-        const style = {
-            paddingHorizontal: 5,
-        };
+        const style = this.isCollapsed() ? this.getCollapsedStyle() : {};
         return (
-            <View style={this.isCollapsed() ? { ...this.getCollapsedStyle(), ...style } : style}>
+            <View style={style}>
                 {this.props.content}
             </View>
         );
@@ -118,49 +115,56 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         });
     }
 
-    private readMoreReadLessText(): JSX.Element {
+    private readMoreReadLessText(): JSX.Element | string {
         const showReadMore = this.isCollapsed();
         if (showReadMore) {
-            return this.props.forceEnglish ? <Text>Read more</Text> : <Trans>Read more</Trans>;
+            return this.props.forceEnglish ? 'Read more' : <Trans>Read more</Trans>;
         }
-        return this.props.forceEnglish ? <Text>Read less</Text> : <Trans>Read less</Trans>;
+        return this.props.forceEnglish ? 'Read less' : <Trans>Read less</Trans>;
     }
 
     private getReadMoreButton(): JSX.Element {
-        const onPress = (): void => this.toggleState();
-        const text = this.readMoreReadLessText();
-        const backgroundColor = this.backgroundColour();
-        const justifyContent = this.computeJustifyContent();
-
-        const textStyle: object = [
-            textStyles.paragraphBoldBlackLeft,
-            {
-                color: colors.teal,
-                paddingLeft: 6,
-                paddingRight: 8,
-            }];
-
-        const buttonText = <Text style={textStyle} >{text}</Text>;
-        const buttonIcon = <Icon
-            name={this.isCollapsed() ? 'arrow-down' : 'arrow-up'}
-            style={{ fontSize: values.smallIconSize, color: colors.teal }}
-        />;
-
-        const button = this.flipLeftRightOrientation() ?
-            <Button onPress={onPress} transparent iconLeft >
-                {buttonIcon}
-                {buttonText}
-            </Button> :
-            <Button onPress={onPress} transparent iconRight >
-                {buttonText}
-                {buttonIcon}
-            </Button>;
-
-        return (
-            <View style={{ backgroundColor, flex: 1, flexDirection: 'row', justifyContent }} >
-                {button}
-            </View>
+        const buttonOnPress = (): void => this.toggleState();
+        const buttonStyle: ViewStyle = {
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: this.computeJustifyContent(),
+            maxHeight: 20,
+            marginTop: 10,
+        };
+        const buttonText = (
+            <Text style={[
+                    textStyles.paragraphBoldBlackLeft,
+                    {
+                        color: colors.teal,
+                        marginRight: 5,
+                    },
+                ]}
+            >
+                    {this.readMoreReadLessText()}
+            </Text>
         );
+        const buttonIcon = (
+            <Icon
+                name={this.isCollapsed() ? 'arrow-down' : 'arrow-up'}
+                style={{
+                    fontSize: values.smallIconSize,
+                    color: colors.teal,
+                    paddingLeft: this.flipLeftRightOrientation() ? 10 : 0,
+                    paddingRight: this.flipLeftRightOrientation() ? 0 : 10,
+                }}
+            />
+        );
+
+        return this.flipLeftRightOrientation() ?
+            <TouchableOpacity onPress={buttonOnPress} style={buttonStyle}>
+                {buttonIcon}
+                {buttonText}
+            </TouchableOpacity> :
+            <TouchableOpacity onPress={buttonOnPress} style={buttonStyle}>
+                {buttonText}
+                {buttonIcon}
+            </TouchableOpacity>;
     }
 
     private flipLeftRightOrientation(): boolean {
@@ -174,10 +178,6 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
             return 'flex-end';
         }
         return 'flex-start';
-    }
-
-    private backgroundColour(): string {
-        return this.props.contentBackgroundColor || colors.white;
     }
 
     private isCollapsed(): boolean {
