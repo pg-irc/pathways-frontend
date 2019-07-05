@@ -44,10 +44,13 @@ const renderName = (name: string): JSX.Element => (
 );
 
 const renderDescription = (description: string): JSX.Element => {
-    return <ExpandableContentComponent
-        forceEnglish={true}
-        content={<Text style={textStyles.alwaysLeftParagraphStyle} > {description}</ Text>}
-    />;
+    const content = <Text style={textStyles.alwaysLeftParagraphStyle}> {description}</Text>;
+    return (
+        <ExpandableContentComponent
+            forceEnglish={true}
+            content={content}
+        />
+    );
 };
 
 const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));
@@ -55,7 +58,7 @@ const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));
 // tslint:disable-next-line:typedef
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
     mapWithIndex((address: Address, index: number) =>
-        <View key={index}>
+        <View key={index} style={{ marginTop: 10 }}>
             <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Address:</Text>
             <Text style={textStyles.alwaysLeftParagraphStyle}>{address.address}</Text>
             <Text style={textStyles.alwaysLeftParagraphStyle}>
@@ -76,7 +79,7 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>, currentPat
                 linkType={fieldLabel} />
         );
         return (
-            <View key={index} style={{ paddingVertical: 10 }} >
+            <View key={index} style={{ marginTop: 10 }} >
                 <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>
                     {fieldLabel} {textWithPhoneLinks}
                 </Text>
@@ -94,7 +97,7 @@ const renderWebsite = (website: string, currentPath: string, linkContext: string
     const link = <AnalyticsLink href={website} currentPath={currentPath} linkContext={linkContext}
         linkType={'Website'} style={textStyles.paragraphStyle}>{website}</AnalyticsLink>;
 
-    return <Text>{label}{link}</Text>;
+    return <Text style={{ marginTop: 10 }}>{label}{link}</Text>;
 };
 
 const renderEmail = (email: string, currentPath: string, linkContext: string): JSX.Element => {
@@ -106,7 +109,7 @@ const renderEmail = (email: string, currentPath: string, linkContext: string): J
     const link = <AnalyticsLink href={`mailto: ${email}`} currentPath={currentPath} linkContext={linkContext}
         linkType={'Email'} style={textStyles.paragraphStyle} >{email}</AnalyticsLink>;
 
-    return <Text>{label}{link}</Text>;
+    return <Text style={{ marginTop: 10 }}>{label}{link}</Text>;
 };
 
 const renderMapButtonIfLocation = (service: Service, currentPath: string, linkContext: string): JSX.Element => {
