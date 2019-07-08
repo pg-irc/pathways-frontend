@@ -1107,10 +1107,12 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-native@^0.52.20":
-  version "0.52.25"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.52.25.tgz#78c0e6049d4dc0a7af7d4024baac28ae922bedaf"
+"@types/react-native@^0.57.39":
+  version "0.57.65"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.57.65.tgz#9da4773aaa95924bce42a54a5c19cfd8ffd5022b"
+  integrity sha512-7P5ulTb+/cnwbABWaAjzKmSYkRWeK7UCTfUwHhDpnwxdiL2X/KbdN1sPgo0B2E4zxfYE3MEoHv7FhB8Acfvf8A==
   dependencies:
+    "@types/prop-types" "*"
     "@types/react" "*"
 
 "@types/react-redux@^5.0.21":
@@ -1148,9 +1150,10 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/react@^16.0.40":
-  version "16.7.20"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.7.20.tgz#13ae752c012710d0fa800985ca809814b51d3b58"
+"@types/react@^16.8.10":
+  version "16.8.23"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.23.tgz#ec6be3ceed6353a20948169b6cb4c97b65b97ad2"
+  integrity sha512-abkEOIeljniUN9qB5onp++g0EY38h7atnDHxwKUFz1r3VH1+yG1OKi2sNPTyObL40goBmfKFpdii2lEzwLX1cA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
