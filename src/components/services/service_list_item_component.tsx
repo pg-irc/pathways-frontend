@@ -1,10 +1,9 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Trans } from '@lingui/react';
 import { textStyles, colors } from '../../application/styles';
 import { Service, PhoneNumber, Address } from '../../stores/services';
 import { View } from 'native-base';
-import { Text } from 'react-native';
+import { Text, I18nManager } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
@@ -41,7 +40,7 @@ const buildServiceName = (organizationName: string, serviceName: string): string
 );
 
 const renderName = (name: string): JSX.Element => (
-    <Text style={textStyles.headlineH3StyleBlackLeft}>{name}</Text>
+    <Text style={[textStyles.headlineH3StyleBlackLeft, textStyles.alwaysLeftAlign]}>{name}</Text>
 );
 
 const renderDescription = (description: string): JSX.Element => {
@@ -78,7 +77,7 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>, currentPat
         );
         return (
             <View key={index} style={{ paddingVertical: 10 }} >
-                <Text style={textStyles.paragraphBoldBlackLeft}>
+                <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>
                     {fieldLabel} {textWithPhoneLinks}
                 </Text>
             </View>
@@ -90,48 +89,33 @@ const renderWebsite = (website: string, currentPath: string, linkContext: string
     if (R.not(website)) {
         return <EmptyComponent />;
     }
-    return (
-        <Text>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans> </Text>
-            <AnalyticsLink
-                href={website}
-                currentPath={currentPath}
-                linkContext={linkContext}
-                linkType={'Website'}
-                style={textStyles.paragraphStyle}
-            >
-                {website}
-            </AnalyticsLink>>
-        </Text>
-    );
+
+    const label = <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Web: </Text>;
+    const link = <AnalyticsLink href={website} currentPath={currentPath} linkContext={linkContext}
+        linkType={'Website'} style={textStyles.paragraphStyle}>{website}</AnalyticsLink>;
+
+    return <Text>{label}{link}</Text>;
 };
 
 const renderEmail = (email: string, currentPath: string, linkContext: string): JSX.Element => {
     if (R.not(email)) {
         return <EmptyComponent />;
     }
-    return (
-        <Text>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>
-            <AnalyticsLink
-                href={`mailto: ${email}`}
-                currentPath={currentPath}
-                linkContext={linkContext}
-                linkType={'Email'}
-                style={textStyles.paragraphStyle}
-            >
-                {email}
-            </AnalyticsLink>
-        </Text>
-    );
+
+    const label = <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Email: </Text>;
+    const link = <AnalyticsLink href={`mailto: ${email}`} currentPath={currentPath} linkContext={linkContext}
+        linkType={'Email'} style={textStyles.paragraphStyle} >{email}</AnalyticsLink>;
+
+    return <Text>{label}{link}</Text>;
 };
 
 const renderMapButtonIfLocation = (service: Service, currentPath: string, linkContext: string): JSX.Element => {
     if (R.not(service.latitude && service.longitude)) {
         return <EmptyComponent />;
     }
+    const justifyContent = I18nManager.isRTL ? 'flex-end' : 'flex-start';
     return (
-        <View style={{ marginTop: 10 }}>
+        <View style={{ marginTop: 10, flexDirection: 'row', justifyContent }}>
             <MapsApplicationPopupComponent
                 latitude={service.latitude}
                 longitude={service.longitude}
