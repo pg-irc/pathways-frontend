@@ -1,6 +1,7 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { stringify } from 'query-string';
 import { Id } from '../stores/topics';
+import { fetch } from 'cross-fetch';
 
 export interface APIResponse {
     readonly hasError: boolean;
@@ -19,8 +20,8 @@ export const setUrl = (url: string): void => {
 };
 
 const validateUrl = (url: string): string => {
-    if (!url.startsWith('https://')) {
-        throw new Error('URL must start with https://');
+    if (!url.startsWith('http')) {
+        throw new Error('URL must start with http or https');
     }
     if (url.endsWith('/')) {
         throw new Error('URL must not end with /');

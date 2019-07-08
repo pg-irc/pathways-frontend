@@ -15,6 +15,10 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "skipLibCheck": true,
+        "typeRoots": [
+            "./src/@types",
+            "./node_modules/@types",
+        ],
     },
     "filesGlob": [
         "typings/index.d.ts",

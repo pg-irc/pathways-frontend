@@ -63,6 +63,7 @@
     "dependencies": {
         "@expo/vector-icons": "^9.0.0",
         "expo": "32.0.0",
+        "cross-fetch": "^3.0.4",
         "expo-analytics": "^1.0.7",
         "expo-location": "^4.0.0",
         "extend": "^3.0.2",
@@ -87,6 +88,7 @@
         "redux-saga": "^0.16.0",
         "request": "^2.88.0",
         "sentry-expo": "^1.10.0",
+        "ts-node": "^8.3.0",
         "uuid": "^3.3.2"
     },
     "lingui": {
