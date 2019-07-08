@@ -309,6 +309,7 @@ export const markdownStyles = StyleSheet.create({
         fontFamily: 'AvenirBook',
         fontSize: 16,
         lineHeight: 21,
+        paddingHorizontal: values.backgroundTextPadding,
     },
     heading: {
         lineHeight: 26,

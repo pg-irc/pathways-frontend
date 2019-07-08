@@ -119,8 +119,21 @@ const markDownRules = {
 
 const TaskDescription = (props: Props): JSX.Element => {
     const topic = props.topic;
-    const taskDescription = <Markdown rules={markDownRules} style={markdownStyles}>{topic.description}</Markdown>;
-    return topic.relatedTopics.length > 0 ? <ExpandableContentComponent contentId={topic.id} content={taskDescription} /> : taskDescription;
+    const taskDescription = (
+        <Markdown
+            rules={markDownRules}
+            style={markdownStyles}
+        >
+            {topic.description}
+        </Markdown>
+    );
+    return topic.relatedTopics.length > 0 ?
+        <ExpandableContentComponent
+            contentId={topic.id}
+            content={taskDescription}
+        />
+        :
+        taskDescription;
 };
 
 const ServicesButton = (props: Props): JSX.Element => (
