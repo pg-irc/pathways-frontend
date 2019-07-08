@@ -57,10 +57,7 @@
             "/node_modules/",
             "/lib/",
             "/helpers/"
-        ],
-        "transformIgnorePatterns": [
-			"node_modules/?!(react-native|native-base)"
-		]
+        ]
     },
     "dependencies": {
         "@expo/vector-icons": "^9.0.0",
