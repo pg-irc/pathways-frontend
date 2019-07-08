@@ -312,15 +312,20 @@ export const markdownStyles = StyleSheet.create({
         paddingHorizontal: values.backgroundTextPadding,
     },
     heading: {
-        lineHeight: 26,
         marginTop: 10,
         ...getBoldFontStylesForOS(),
     },
     heading1: {
-        fontSize: 22,
+        lineHeight: 23,
+        fontSize: 18,
       },
     heading2: {
-        fontSize: 20,
+        lineHeight: 22,
+        fontSize: 17,
+    },
+    heading3: {
+        lineHeight: 21,
+        fontSize: 16,
     },
     listUnorderedItemIcon: {
         fontWeight: 'bold',
