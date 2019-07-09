@@ -17,20 +17,25 @@ import { colors } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
 import { mapWithIndex } from '../../application/map_with_index';
 
-export interface HeaderProps {
-    readonly currentLocale: Locale;
+type OwnProps = {
     readonly history: History;
     readonly location: Location;
+    readonly closeAboutModal: () => void;
+    readonly closeDisclaimerModal: () => void;
+    readonly openMenu: () => void;
+};
+
+export interface HeaderProps {
+    readonly currentLocale: Locale;
     readonly savedTasksIdList: ReadonlyArray<TaskId>;
 }
 
 export interface HeaderActions {
-    readonly onHeaderMenuButtonPress: () => void;
     readonly addBookmark: (topicId: TaskId) => AddToSavedListAction;
     readonly removeBookmark: (topicId: TaskId) => RemoveFromSavedListAction;
 }
 
-type Props = HeaderProps & HeaderActions;
+type Props = OwnProps & HeaderProps & HeaderActions;
 
 export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const path = props.location.pathname;
@@ -90,7 +95,7 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
             textColor={colors.teal}
         />,
         <MenuButtonComponent
-            onPress={props.onHeaderMenuButtonPress}
+            onPress={props.openMenu}
             locale={props.currentLocale}
             textColor={colors.black}
         />,
@@ -107,7 +112,7 @@ const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
     const leftButton = <BackButtonComponent history={props.history} textColor={props.textColor} />;
     const rightButton =
         <MenuButtonComponent
-            onPress={props.onHeaderMenuButtonPress}
+            onPress={props.openMenu}
             locale={props.currentLocale}
             textColor={props.textColor}
         />;
@@ -120,7 +125,7 @@ const ParentScreenHeader = (props: Props): JSX.Element => {
     const leftButton = <HelpButtonComponent history={props.history} />;
     const rightButton =
         <MenuButtonComponent
-            onPress={props.onHeaderMenuButtonPress}
+            onPress={props.openMenu}
             locale={props.currentLocale}
             textColor={textColor}
         />;
@@ -133,7 +138,7 @@ const ChildScreenHeader = (props: Props): JSX.Element => {
     const leftButton = <BackButtonComponent history={props.history} textColor={textColor} />;
     const rightButton =
         <MenuButtonComponent
-            onPress={props.onHeaderMenuButtonPress}
+            onPress={props.openMenu}
             locale={props.currentLocale}
             textColor={textColor}
         />;

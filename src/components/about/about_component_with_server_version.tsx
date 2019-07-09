@@ -3,8 +3,10 @@ import React from 'react';
 import { AboutComponent } from './about_component';
 import { API_URL } from 'react-native-dotenv';
 
-interface Props {
-}
+type Props = {
+    readonly isVisible: boolean;
+    readonly closeModal: () => void;
+};
 
 interface State {
     readonly serverVersion: string;
@@ -26,6 +28,12 @@ export class AboutComponentWithServerVersion extends React.Component<Props, Stat
     }
 
     render(): JSX.Element {
-        return <AboutComponent serverVersion={this.state.serverVersion} />;
+        return (
+            <AboutComponent
+                serverVersion={this.state.serverVersion}
+                isVisible={this.props.isVisible}
+                closeModal={this.props.closeModal}
+            />
+        );
     }
 }
