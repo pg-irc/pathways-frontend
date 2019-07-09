@@ -10,18 +10,23 @@ import { goToRouteWithoutParameter } from '../../application/routing';
 import { Routes } from '../../application/routing';
 import { openURL } from '../link/link';
 
+type OwnProps = {
+    readonly history: History;
+    readonly closeMenu: () => void;
+    readonly openAboutModal: () => void;
+    readonly openDisclaimerModal: () => void;
+};
+
 export interface HeaderMenuProps {
     readonly currentLocale: LocaleInfo;
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
-    readonly history: History;
 }
 
 export interface HeaderMenuActions {
     readonly setLocale: (locale: string) => void;
-    readonly closeMenu: () => void;
 }
 
-type Props = HeaderMenuProps & HeaderMenuActions;
+type Props = OwnProps & HeaderMenuProps & HeaderMenuActions;
 
 export const HeaderMenuComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
@@ -112,12 +117,12 @@ const AboutListItems = (props: Props): JSX.Element => {
             <AboutItem
                 icon={<AboutIcon name='mobile' fontSize={35} marginRight={10} />}
                 text={<Trans>About Arrival Advisor</Trans>}
-                onPress={buildOnPressForRoute(props, Routes.About)}
+                onPress={props.openAboutModal}
             />
             <AboutItem
                 icon={<AboutIcon name='file' fontSize={20} marginRight={7} />}
                 text={<Trans>Disclaimer</Trans>}
-                onPress={buildOnPressForRoute(props, Routes.Disclaimer)}
+                onPress={props.openDisclaimerModal}
             />
             <AboutItem
                 icon={<AboutIcon name='lock' fontSize={30} marginRight={5} />}

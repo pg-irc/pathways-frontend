@@ -11,6 +11,7 @@ import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { Locale } from '../../locale';
 import { HardwareBackButtonHandlerComponent } from './hardware_back_button_handler_component';
+import { AppModalsComponent } from './app_modals_component';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -28,6 +29,8 @@ type Props = MainComponentProps & MainComponentActions;
 
 interface State {
     readonly isHeaderMenuShowing: boolean;
+    readonly isAboutModalOpen: boolean;
+    readonly isDisclaimerModalOpen: boolean;
 }
 
 export class MainComponent extends React.Component<Props, State> {
@@ -36,10 +39,16 @@ export class MainComponent extends React.Component<Props, State> {
         super(props);
         this.state = {
             isHeaderMenuShowing: false,
+            isAboutModalOpen: false,
+            isDisclaimerModalOpen: false,
         };
         this.openDrawer = this.openDrawer.bind(this);
         this.closeDrawer = this.closeDrawer.bind(this);
         this.onHardwareBackButtonPress = this.onHardwareBackButtonPress.bind(this);
+        this.openAboutModal = this.openAboutModal.bind(this);
+        this.openDisclaimerModal = this.openDisclaimerModal.bind(this);
+        this.closeAboutModal = this.closeAboutModal.bind(this);
+        this.closeDisclaimerModal = this.closeDisclaimerModal.bind(this);
     }
 
     componentDidMount(): void {
@@ -58,6 +67,8 @@ export class MainComponent extends React.Component<Props, State> {
                     <HeaderMenuConnectedComponent
                         history={this.props.history}
                         closeMenu={this.closeDrawer}
+                        openAboutModal={this.openAboutModal}
+                        openDisclaimerModal={this.openDisclaimerModal}
                     />
                 }
             >
@@ -65,12 +76,20 @@ export class MainComponent extends React.Component<Props, State> {
                     <HeaderConnectedComponent
                         history={this.props.history}
                         location={this.props.location}
-                        onHeaderMenuButtonPress={this.openDrawer}
+                        openMenu={this.openDrawer}
+                        closeAboutModal={this.closeAboutModal}
+                        closeDisclaimerModal={this.closeDisclaimerModal}
                     />
                     <MainPageSwitcherComponent {...this.props} />
                     <FooterComponent {...this.props} />
                     <NotificationsConnectedComponent {...this.props} />
                     <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={this.onHardwareBackButtonPress} />
+                    <AppModalsComponent
+                        isAboutVisible={this.state.isAboutModalOpen}
+                        isDisclaimerVisible={this.state.isDisclaimerModalOpen}
+                        closeAboutModal={this.closeAboutModal}
+                        closeDisclaimerModal={this.closeDisclaimerModal}
+                    />
                 </Container>
             </Drawer>
         );
@@ -82,6 +101,22 @@ export class MainComponent extends React.Component<Props, State> {
 
     openDrawer(): void {
         this.setState({ isHeaderMenuShowing: true });
+    }
+
+    closeAboutModal(): void {
+        this.setState({ isAboutModalOpen : false });
+    }
+
+    openAboutModal(): void {
+        this.setState({ isAboutModalOpen: true });
+    }
+
+    closeDisclaimerModal(): void {
+        this.setState({ isDisclaimerModalOpen : false });
+    }
+
+    openDisclaimerModal(): void {
+        this.setState({ isDisclaimerModalOpen: true });
     }
 
     onHardwareBackButtonPress(): boolean {

@@ -8,22 +8,16 @@ import { LocaleInfo } from '../../locale';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 import { selectLocale } from '../../selectors/locale/select_locale';
 
-type OtherProps = {
-    readonly history: History;
-    readonly closeMenu: () => void;
-};
-
-const mapStateToProps = (store: Store, otherProps: OtherProps): HeaderMenuProps => {
+const mapStateToProps = (store: Store): HeaderMenuProps => {
     const locales = selectAvailableLocales(store);
     const locale = selectLocale(store);
     const currentLocale = locales.find((aLocale: LocaleInfo) => locale.code === aLocale.code);
     const availableLocales = locales.filter((aLocale: LocaleInfo) => locale.code !== aLocale.code);
-    return { currentLocale, availableLocales, history: otherProps.history };
+    return { currentLocale, availableLocales };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<SetLocale.Request>, otherProps: OtherProps): HeaderMenuActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<SetLocale.Request>): HeaderMenuActions => ({
     setLocale: (localeCode: string): SetLocale.Request => dispatch(setLocaleActions.request(localeCode)),
-    closeMenu: otherProps.closeMenu,
 });
 
 export const HeaderMenuConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HeaderMenuComponent);
