@@ -1,5 +1,4 @@
 import { Dispatch } from 'redux';
-import { History } from 'history';
 import { connect } from 'react-redux';
 import { HeaderMenuComponent, HeaderMenuProps, HeaderMenuActions } from './header_menu_component';
 import { Store } from '../../stores';
