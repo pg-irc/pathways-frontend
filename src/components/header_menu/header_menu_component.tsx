@@ -6,8 +6,6 @@ import { Trans } from '@lingui/react';
 import { LocaleInfo } from '../../locale/types';
 import { Content, View, Icon, Header } from 'native-base';
 import { colors, values, textStyles } from '../../application/styles';
-import { goToRouteWithoutParameter } from '../../application/routing';
-import { Routes } from '../../application/routing';
 import { openURL } from '../link/link';
 
 type OwnProps = {
@@ -176,13 +174,6 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
             />
         </TouchableOpacity>
     );
-
-const buildOnPressForRoute = (props: Props, route: Routes): () => void => (
-    (): void => {
-        props.closeMenu(); // tslint:disable-line:no-expression-statement
-        goToRouteWithoutParameter(route, props.history)(); // tslint:disable-line:no-expression-statement
-    }
-);
 
 const buildOnPressForURL = (url: string): () => void => (
     (): void => openURL(url)
