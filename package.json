@@ -75,7 +75,7 @@
         "query-string": "^6.1.0",
         "ramda": "^0.25.0",
         "react": "16.5.0",
-        "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+        "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
         "react-native-dotenv": "^0.2.0",
         "react-native-map-link": "^2.1.4",
         "react-native-markdown-renderer": "^3.2.8",
