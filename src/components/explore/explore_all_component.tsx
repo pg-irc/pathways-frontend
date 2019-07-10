@@ -17,7 +17,7 @@ type AllExploreProps = ExploreAllProps & RouterProps;
 export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
     (props: AllExploreProps): JSX.Element => (
         <Content padder style={{ backgroundColor: colors.white }}>
-            <Text maxFontSizeMultiplier={1.5} style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding } ]}>
+            <Text maxFontSizeMultiplier={1.47} style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding } ]}>
                 <Trans>Learn all about B.C.</Trans>
             </Text>
             <View style={styles.buttonsWrapper}>
@@ -50,10 +50,10 @@ const getLearnButtonContent = (section: ExploreSection): JSX.Element => (
                 },
             ]}
         />
-        <Text maxFontSizeMultiplier={1.5} style={textStyles.headlineH2StyleBlackLeft}>
+        <Text maxFontSizeMultiplier={1.47} style={textStyles.headlineH2StyleBlackLeft}>
         <Trans id={section.name} />
         </Text>
-        <Text maxFontSizeMultiplier={1.5} style={[textStyles.paragraphStyle, { color: colors.greyishBrown }]}>
+        <Text maxFontSizeMultiplier={1.47} style={[textStyles.paragraphStyle, { color: colors.greyishBrown }]}>
         <Trans id={section.description} />
         </Text>
     </View>
