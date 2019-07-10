@@ -5,6 +5,7 @@
     "version": "1.0.24",
     "slug": "arrival_advisor",
     "orientation": "portrait",
+    "primaryColor": "#3A818D",
     "ios": {
       "icon": "./assets/images/phone_icon_ios.png",
       "bundleIdentifier": "org.peacegeeks.ArrivalAdvisor",
