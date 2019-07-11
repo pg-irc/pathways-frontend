@@ -43,10 +43,6 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.BookmarkedTopics)).toEqual('/bookmarked-topics');
     });
 
-    it('For Routes.Disclaimer returns path: "/disclaimer"', () => {
-        expect(routePathDefinition(Routes.Disclaimer)).toEqual('/disclaimer');
-    });
-
 });
 
 describe('the routePathWithoutParameter function', () => {
@@ -109,14 +105,6 @@ describe('the isOnChildScreen function', () => {
 
     it('returns true on path: "/learn/A learn section"', () => {
         expect(isOnChildScreen('/learn/A learn section')).toStrictEqual(true);
-    });
-
-    it('returns true on path: "/about"', () => {
-        expect(isOnChildScreen('/about')).toStrictEqual(true);
-    });
-
-    it('returns true on path: "/disclaimer"', () => {
-        expect(isOnChildScreen('/disclaimer')).toStrictEqual(true);
     });
 
     it('returns false on non child screen path', () => {

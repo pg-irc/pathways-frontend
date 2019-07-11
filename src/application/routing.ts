@@ -25,10 +25,8 @@ export enum Routes {
     TaskDetail,
     Services,
     Help,
-    About,
     RecommendedTopics,
     BookmarkedTopics,
-    Disclaimer,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -51,14 +49,10 @@ export const routePathDefinition = (route: Routes): string => {
             return '/task/:topicId';
         case Routes.Services:
             return '/services/:topicId';
-        case Routes.About:
-            return '/about';
         case Routes.RecommendedTopics:
             return '/recommended-topics';
         case Routes.BookmarkedTopics:
             return '/bookmarked-topics';
-        case Routes.Disclaimer:
-            return '/disclaimer';
     }
 };
 
@@ -118,11 +112,8 @@ export const isOnChildScreen = (path: string): boolean => {
     const isOnTaskDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
     const isOnServicesScreen = pathMatchesRoute(path, Routes.Services);
     const isOnLearnDetailScreen = pathMatchesRoute(path, Routes.LearnDetail);
-    const isOnAboutScreen = pathMatchesRoute(path, Routes.About);
-    const isOnDisclaimerScreen = pathMatchesRoute(path, Routes.Disclaimer);
 
-    return isOnTaskDetailScreen || isOnServicesScreen || isOnLearnDetailScreen ||
-        isOnAboutScreen || isOnDisclaimerScreen;
+    return isOnTaskDetailScreen || isOnServicesScreen || isOnLearnDetailScreen;
 };
 
 // By (arguably poor) design the router's match.params is empty when trying to access it outside a "Route" component.

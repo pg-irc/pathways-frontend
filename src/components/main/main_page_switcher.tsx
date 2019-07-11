@@ -8,10 +8,8 @@ import { ExploreDetailConnectedComponent } from '../explore/explore_detail_conne
 import { TaskDetailConnectedComponent } from '../topics/task_detail_connected_component';
 import { ServiceListConnectedComponent } from '../services/service_list_connected_component';
 import { QuestionnaireConnectedComponent } from '../questionnaire/questionnaire_connected_component';
-import { AboutComponentWithServerVersion } from '../about/about_component_with_server_version';
 import { RecommendedTopicsConnectedComponent } from '../recommended_topics/recommended_topics_connected_component';
 import { BookmarkedTopicsConnectedComponent } from '../bookmarked_topics/bookmarked_topics_connected_component';
-import { DisclaimerComponent } from '../disclaimer/disclaimer_component';
 import { Routes, routePathDefinition, routePathWithParameter, routePathWithoutParameter } from '../../application/routing';
 import { Locale } from '../../locale';
 
@@ -31,10 +29,8 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
         <Route exact path={routePathDefinition(Routes.LearnDetail)} component={ExploreDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.TaskDetail)} component={TaskDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Services)} component={ServiceListConnectedComponent} />
-        <Route exact path={routePathDefinition(Routes.About)} component={AboutComponentWithServerVersion} />
         <Route exact path={routePathDefinition(Routes.RecommendedTopics)} component={RecommendedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.BookmarkedTopics)} component={BookmarkedTopicsConnectedComponent} />
-        <Route exact path={routePathDefinition(Routes.Disclaimer)} component={DisclaimerComponent} />
         <Redirect to={defaultPath(props)} />
     </Switch>
 );
