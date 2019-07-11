@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect} from 'redux-saga/effects';
-import { Font } from 'expo';
+import * as Font from 'expo-font';
 
 import * as constants from '../application/constants';
 import { loadFontsActions } from '../stores/fonts';
