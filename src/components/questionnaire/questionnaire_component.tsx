@@ -48,7 +48,11 @@ export class QuestionnaireComponent extends React.Component<Props, State> {
     render(): JSX.Element {
         return (
             <View style={{ flex: 1 }}>
-                <StickyCloseButton onCloseButtonPress={this.openModal} />
+                <CloseButtonComponent
+                    onPress={this.openModal}
+                    color={colors.black}
+                    additionalStyle={{ paddingTop: 20, paddingRight: 10 }}
+                />
                 <Content padder>
                     <HeadingComponent />
                     <ProgressComponent
@@ -87,12 +91,6 @@ export class QuestionnaireComponent extends React.Component<Props, State> {
         goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history)();
     }
 }
-
-const StickyCloseButton = (props: { readonly onCloseButtonPress: () => void }): JSX.Element => (
-    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', paddingTop: 15 }}>
-        <CloseButtonComponent onPress={props.onCloseButtonPress} color={colors.black} />
-    </View>
-);
 
 const HeadingComponent = (): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 6;
