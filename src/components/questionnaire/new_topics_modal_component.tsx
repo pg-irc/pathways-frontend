@@ -86,7 +86,7 @@ const ContentWithTopicsComponent = (props: { readonly topics: ReadonlyArray<Part
             <FlatList
                 data={props.topics}
                 renderItem={renderTopicItem}
-                keyExtractor={(topic: Topic): string => topic.id}
+                keyExtractor={(topic: PartialTopic): string => topic.id}
             />
         </View>
     </View>
