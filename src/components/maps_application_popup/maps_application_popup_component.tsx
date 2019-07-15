@@ -22,7 +22,7 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
             style={{ color: colors.white, fontSize: values.smallIconSize }}
         />;
 
-        const text = <Text style={textStyles.button}>Open in maps</Text>;
+        const text = <Text style={textStyles.button} uppercase={false}>Open in maps</Text>;
 
         const flipLeftRightDirection = I18nManager.isRTL;
 
