@@ -52,7 +52,7 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
                             Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the
                             Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact.
                             Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source
-                            project. You can <Link href={githubUrl} style={textStyles.paragraphURL} >view it on GitHub</Link> and <Link
+                            project. You can view it on <Link href={githubUrl} style={textStyles.paragraphURL} >GitHub</Link> and <Link
                                 href={contactUrl} style={textStyles.paragraphURL} >contact us</Link> to learn how you can support this project.
                         </Trans>
                     </ParagraphComponent>
