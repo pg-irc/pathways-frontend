@@ -150,12 +150,10 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                 style={{
                     fontSize: values.smallIconSize,
                     color: colors.teal,
-                    paddingLeft: this.flipLeftRightOrientation() ? 10 : 0,
-                    paddingRight: this.flipLeftRightOrientation() ? 0 : 10,
+                    paddingHorizontal: 10,
                 }}
             />
         );
-
         return this.flipLeftRightOrientation() ?
             <TouchableOpacity onPress={buttonOnPress} style={buttonStyle}>
                 {buttonIcon}
