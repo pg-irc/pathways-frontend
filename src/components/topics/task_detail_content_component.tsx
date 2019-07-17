@@ -106,12 +106,12 @@ const TitleComponent = (props: Props): JSX.Element => (
 );
 
 const markDownRules = {
-    link: (node: any, children: any) => {
+    link: (node: any, children: any): JSX.Element => {
         return (
             <Text key={node.key} style={markdownStyles.link} onPress={(): void => openUrl(node.attributes.href)}>
                 {children}
                 <Text>{' '}</Text>
-                <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: 'blue' }} />
+                <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: colors.teal }} />
             </Text>
         );
     },
@@ -119,8 +119,21 @@ const markDownRules = {
 
 const TaskDescription = (props: Props): JSX.Element => {
     const topic = props.topic;
-    const taskDescription = <Markdown rules={markDownRules} style={markdownStyles}>{topic.description}</Markdown>;
-    return topic.relatedTopics.length > 0 ? <ExpandableContentComponent contentId={topic.id} content={taskDescription} /> : taskDescription;
+    const taskDescription = (
+        <Markdown
+            rules={markDownRules}
+            style={markdownStyles}
+        >
+            {topic.description}
+        </Markdown>
+    );
+    return topic.relatedTopics.length > 0 ?
+        <ExpandableContentComponent
+            contentId={topic.id}
+            content={taskDescription}
+        />
+        :
+        taskDescription;
 };
 
 const ServicesButton = (props: Props): JSX.Element => (

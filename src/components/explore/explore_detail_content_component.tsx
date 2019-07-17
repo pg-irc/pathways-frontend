@@ -66,7 +66,6 @@ const CollapsibleIntroduction = (props: ExploreDetailContentProps): JSX.Element 
         content={<SelectableText style={textStyles.headlineH4StyleBlackLeft}>
         <Trans id={props.section.description} />
         </SelectableText>}
-        contentBackgroundColor={colors.lightGrey}
     />
 );
 

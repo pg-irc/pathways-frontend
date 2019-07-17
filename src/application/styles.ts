@@ -305,12 +305,34 @@ export const applicationStyles = StyleSheet.create({
 export const markdownStyles = StyleSheet.create({
     text: {
         textAlign: 'left',
+        color: colors.greyishBrown,
+        fontFamily: 'AvenirBook',
+        fontSize: 16,
+        lineHeight: 21,
+        paddingHorizontal: values.backgroundTextPadding,
+    },
+    heading: {
+        marginTop: 10,
+        ...getBoldFontStylesForOS(),
+    },
+    heading1: {
+        lineHeight: 23,
+        fontSize: 18,
+      },
+    heading2: {
+        lineHeight: 22,
+        fontSize: 17,
+    },
+    heading3: {
+        lineHeight: 21,
+        fontSize: 16,
     },
     listUnorderedItemIcon: {
         fontWeight: 'bold',
         fontSize: 35,
         marginLeft: 10,
         marginRight: 10,
+        color: colors.greyishBrown,
         ...Platform.select({
             ios: {
                 lineHeight: 36,
@@ -321,7 +343,7 @@ export const markdownStyles = StyleSheet.create({
         }),
     },
     link: {
-        color: 'blue',
+        color: colors.teal,
         textDecorationLine: 'underline',
     },
 });
