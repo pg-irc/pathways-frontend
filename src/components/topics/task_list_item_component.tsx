@@ -49,7 +49,7 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                         <Text numberOfLines={2} style={textStyles.headlineH4StyleBlackLeft}>
                             {props.topic.title}
                         </Text>
-                        <Text note numberOfLines={1} style={{ textAlign: 'left' }}>
+                        <Text note numberOfLines={1} style={{ textAlign: 'left', fontFamily: 'AvenirBook' }}>
                             {taskDescription}
                         </Text>
                     </View>
