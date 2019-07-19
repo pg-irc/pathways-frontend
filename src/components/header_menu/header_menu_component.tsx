@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager } from 'react-native';
+import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet } from 'react-native';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { LocaleInfo } from '../../locale/types';
@@ -166,12 +166,6 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
                 {props.icon}
                 <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 10 }]}>{props.text}</Text>
             </View>
-            <Icon
-                name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'}
-                style={{
-                    fontSize: values.smallIconSize,
-                }}
-            />
         </TouchableOpacity>
     );
 
