@@ -66,9 +66,7 @@ const TaxonomyComponent = (props: Props): JSX.Element => (
     <Text style={[
         textStyles.headlineH5StyleBlackLeft,
         {
-            color: colors.greyishBrown,
-            marginTop: 20,
-            marginBottom: 5,
+            paddingTop: 18,
             paddingHorizontal: values.backgroundTextPadding,
         },
     ]}
