@@ -14,11 +14,11 @@ export const request = (localeCode: string) => {
 };
 
 // tslint:disable-next-line:typedef
-export function success(localeCode: string) {
-    return helpers.makeAction(constants.SET_LOCALE_SUCCESS, { localeCode });
+export function success(message: string, loading: boolean, localeCode: string) {
+    return helpers.makeAction(constants.SET_LOCALE_SUCCESS, { message, loading, localeCode });
 }
 
 // tslint:disable-next-line:typedef
-export function failure(message: string, localeCode: string) {
-    return helpers.makeAction(constants.SET_LOCALE_FAILURE, { message, localeCode });
+export function failure(message: string, loading: boolean, localeCode: string) {
+    return helpers.makeAction(constants.SET_LOCALE_FAILURE, { message, loading, localeCode });
 }

@@ -8,8 +8,8 @@ import { LocaleInfo } from '../../locale';
 export { SetLocale };
 export { LoadCurrentLocale };
 
-export type ReducerActions = SetLocale.Request | SetLocale.Result |
-    LoadCurrentLocale.Request | LoadCurrentLocale.Result;
+export type ReducerActions = SetLocale.Request | SetLocale.Result | SetLocale.Success | SetLocale.Failure |
+    LoadCurrentLocale.Request | LoadCurrentLocale.Result | LoadCurrentLocale.Success | LoadCurrentLocale.Failure;
 
 export interface LocaleStore {
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
@@ -38,18 +38,73 @@ export const reducer = (store: LocaleStore = buildDefaultStore(), action?: Reduc
     }
     switch (action.type) {
         case constants.LOAD_CURRENT_LOCALE_REQUEST:
-            return { ...store, errorMessage: '', loading: true };
+            return updateCurrentLocaleRequest(store);
         case constants.LOAD_CURRENT_LOCALE_SUCCESS:
-            return { ...store, errorMessage: '', loading: false, isSet: action.payload.isSet, code: action.payload.localeCode };
+            return updateCurrentLocaleSuccess(store, action);
         case constants.LOAD_CURRENT_LOCALE_FAILURE:
-            return { ...store, errorMessage: action.payload.message, loading: false };
+            return updateCurrentLocaleError(store, action);
         case constants.SET_LOCALE_REQUEST:
-            return { ...store, errorMessage: '', loading: true };
+            return setLocaleRequest(store);
         case constants.SET_LOCALE_SUCCESS:
-            return { ...store, errorMessage: '', loading: false, code: action.payload.localeCode };
+            return setLocaleSuccess(store, action); 
         case constants.SET_LOCALE_FAILURE:
-            return { ...store, errorMessage: action.payload.message, loading: false };
+            return setLocaleError(store, action);
         default:
             return store;
     }
 };
+
+const updateCurrentLocaleRequest = (store: LocaleStore): LocaleStore => {
+    return {
+       ...store,
+       errorMessage: '',
+       loading: true
+   }
+};
+
+const updateCurrentLocaleSuccess = (store: LocaleStore, action: LoadCurrentLocale.Success): LocaleStore => {
+    const { message, loading, isSet, localeCode } = action.payload; 
+    return {
+        ...store,
+        errorMessage: message,
+        loading,
+        isSet,
+        code: localeCode
+    }
+};
+
+const updateCurrentLocaleError = (store: LocaleStore, action: LoadCurrentLocale.Failure): LocaleStore => {
+    const { message, loading } = action.payload;
+    return {
+       ...store,
+       errorMessage: message,
+       loading
+   }
+}
+
+const setLocaleRequest = (store: LocaleStore): LocaleStore => {
+    return {
+        ...store,
+        errorMessage: '',
+        loading: true
+    }
+}
+
+const setLocaleSuccess = (store: LocaleStore, action: SetLocale.Success) => {
+    const { message, loading, localeCode } = action.payload;
+    return {
+        ...store,
+        errorMessage: message,
+        loading,
+        code: localeCode
+    }
+}; 
+
+const setLocaleError = (store: LocaleStore, action: SetLocale.Failure) => {
+    const { message, loading } = action.payload;
+    return {
+        ...store,
+        errorMessage: message,
+        loading
+    }
+}

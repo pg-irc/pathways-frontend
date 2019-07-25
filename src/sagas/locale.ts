@@ -13,14 +13,17 @@ export function* watchSetLocale(): IterableIterator<ForkEffect> {
 export function* applyLocaleChange(action: SetLocale.Request): IterableIterator<CallEffect | PutEffect<SetLocale.Result>> {
     const localeCode = action.payload.localeCode;
     try {
+        const message = '';
+        const loading = false; 
         yield call(saveCurrentLocaleCode, localeCode);
-        yield put(setLocaleActions.success(localeCode));
+        yield put(setLocaleActions.success(message, loading, localeCode));
         if (yield call(needsTextDirectionChange, localeCode)) {
             yield call(setTextDirection, localeCode);
             yield call(reload);
         }
     } catch (e) {
-        yield put(setLocaleActions.failure(e.message, localeCode));
+        const loading = false;
+        yield put(setLocaleActions.failure(e.message, loading, localeCode));
     }
 }
 
@@ -38,14 +41,19 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<Lo
             const fallbackLocale = LocaleInfoManager.getFallback();
             yield call(saveCurrentLocaleCode, fallbackLocale.code);
             const isSet = false;
-            yield put(loadCurrentLocaleActions.success(fallbackLocale.code, isSet));
+            const loading = false; 
+            const message = '';
+            yield put(loadCurrentLocaleActions.success(message, loading, fallbackLocale.code, isSet));
         } else {
             const locale = LocaleInfoManager.get(retrievedCode);
             const isSet = true;
-            yield put(loadCurrentLocaleActions.success(locale.code, isSet));
+            const loading = false; 
+            const message = '';
+            yield put(loadCurrentLocaleActions.success(message, loading, locale.code, isSet));
         }
     } catch (e) {
         console.error(`Failed to load current locale (${e.message})`);
-        yield put(loadCurrentLocaleActions.failure(e.message));
+        const loading = false; 
+        yield put(loadCurrentLocaleActions.failure(e.message, loading));
     }
 }
