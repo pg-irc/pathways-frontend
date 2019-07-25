@@ -14,11 +14,11 @@ export const request = () => {
 };
 
 // tslint:disable-next-line:typedef
-export function success(localeCode: string, isSet: boolean) {
-    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { localeCode, isSet });
+export function success(message: string, loading: boolean, localeCode: string, isSet: boolean) {
+    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { message, loading, localeCode, isSet });
 }
 
 // tslint:disable-next-line:typedef
-export function failure(message: string) {
-    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_FAILURE, { message });
+export function failure(message: string, loading: boolean) {
+    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_FAILURE, { message, loading });
 }

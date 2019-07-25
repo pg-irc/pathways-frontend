@@ -36,7 +36,9 @@ describe('load locale saga', () => {
 
         it('dispatches a load current locale success action with isSet flag is true', () => {
             const isSet = true;
-            expect(loadSuccessAction).toEqual(put(loadCurrentLocaleActions.success(aLocale.code, isSet)));
+            const loading = false; 
+            const message = '';
+            expect(loadSuccessAction).toEqual(put(loadCurrentLocaleActions.success(message, loading, aLocale.code, isSet)));
         });
     });
 
@@ -64,7 +66,9 @@ describe('load locale saga', () => {
 
         it('dispatches a load current locale success action with isSet flag is false', () => {
             const isSet = false;
-            expect(loadSuccessActionWithFallbackLocale).toEqual(put(loadCurrentLocaleActions.success(theFallbackLocale.code, isSet)));
+            const loading = false; 
+            const message = '';
+            expect(loadSuccessActionWithFallbackLocale).toEqual(put(loadCurrentLocaleActions.success(message, loading, theFallbackLocale.code, isSet)));
         });
     });
 });
@@ -91,7 +95,9 @@ describe('the applyLocaleChange saga', () => {
         });
 
         it('should dispatch a put effect with a success action upon completion of call effect', () => {
-            expect(saga.next().value).toEqual(put(setLocaleActions.success(aLocale.code)));
+            const loading = false; 
+            const message = '';
+            expect(saga.next().value).toEqual(put(setLocaleActions.success(message, loading,aLocale.code)));
             expect(saga.next().value).toEqual(call(needsTextDirectionChange, aLocale.code));
             expect(saga.next(true).value).toEqual(call(setTextDirection, aLocale.code));
             expect(saga.next().value).toEqual(call(reload));
@@ -100,7 +106,8 @@ describe('the applyLocaleChange saga', () => {
         it('should dispatch a failure action upon failure of call effect', () => {
             const error = anError();
             const value = saga.throw(error).value;
-            expect(value).toEqual(put(setLocaleActions.failure(error.message, aLocale.code)));
+            const loading = false; 
+            expect(value).toEqual(put(setLocaleActions.failure(error.message, loading, aLocale.code)));
         });
 
     });

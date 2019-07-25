@@ -25,12 +25,12 @@ describe('the setLocaleAction for', () => {
     describe('success', () => {
 
         it('should create action with type SET_LOCALE_SUCCESS', () => {
-            const theSetLangAction = locale.setLocaleActions.success(aLocaleCode);
+            const theSetLangAction = locale.setLocaleActions.success(aString(), aBoolean(), aLocaleCode);
             expect(theSetLangAction.type).toBe(constants.SET_LOCALE_SUCCESS);
         });
 
         it('should create action with payload containing the locale code', () => {
-            const theSetLangAction = locale.setLocaleActions.success(aLocaleCode);
+            const theSetLangAction = locale.setLocaleActions.success(aString(), aBoolean(),aLocaleCode);
             expect(theSetLangAction.payload.localeCode).toBe(aLocaleCode);
         });
 
@@ -41,12 +41,12 @@ describe('the setLocaleAction for', () => {
         const errorMessage = '[test] Error occurred during setLocale';
 
         it('should create action with type SET_LOCALE_FAILURE', () => {
-            const theSetLangAction = locale.setLocaleActions.failure(errorMessage, aLocaleCode);
+            const theSetLangAction = locale.setLocaleActions.failure(errorMessage, aBoolean(), aLocaleCode);
             expect(theSetLangAction.type).toBe(constants.SET_LOCALE_FAILURE);
         });
 
         it('should create action with payload containing an error message and the locale code', () => {
-            const theSetLangAction = locale.setLocaleActions.failure(errorMessage, aLocaleCode);
+            const theSetLangAction = locale.setLocaleActions.failure(errorMessage, aBoolean(), aLocaleCode);
             expect(theSetLangAction.payload.message).toBe(errorMessage);
             expect(theSetLangAction.payload.localeCode).toBe(aLocaleCode);
         });
@@ -69,18 +69,18 @@ describe('the loadCurrentLocaleAction for', () => {
     describe('success', () => {
 
         it('should create action with type LOAD_CURRENT_LOCALE_SUCCESS', () => {
-            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aLocaleCode, aBoolean());
+            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aString(), aBoolean(),aLocaleCode, aBoolean());
             expect(theLoadCurrentLocaleAction.type).toBe(constants.LOAD_CURRENT_LOCALE_SUCCESS);
         });
 
         it('should create action with payload containing the locale', () => {
-            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aLocaleCode, aBoolean());
+            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aString(), aBoolean(), aLocaleCode, aBoolean());
             expect(theLoadCurrentLocaleAction.payload.localeCode).toBe(aLocaleCode);
         });
 
         it('should create action with isSet set to passed in value', () => {
             const isSet = aBoolean();
-            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aLocaleCode, isSet);
+            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.success(aString(), aBoolean(), aLocaleCode, isSet);
             expect(theLoadCurrentLocaleAction.payload.isSet).toBe(isSet);
         });
 
@@ -91,12 +91,12 @@ describe('the loadCurrentLocaleAction for', () => {
         const errorMessage = '[test] Error occurred during loadCurrentLocale';
 
         it('should create action with type SET_LOCALE_FAILURE', () => {
-            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.failure(errorMessage);
+            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.failure(errorMessage, aBoolean());
             expect(theLoadCurrentLocaleAction.type).toBe(constants.LOAD_CURRENT_LOCALE_FAILURE);
         });
 
         it('should create action with payload containing an error message', () => {
-            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.failure(errorMessage);
+            const theLoadCurrentLocaleAction = locale.loadCurrentLocaleActions.failure(errorMessage, aBoolean());
             expect(theLoadCurrentLocaleAction.payload.message).toBe(errorMessage);
         });
 
@@ -136,7 +136,7 @@ describe('the reducer', () => {
         const theStore = new LocaleStoreBuilder().withLoading(true).build();
         const theAction = {
             type: constants.SET_LOCALE_SUCCESS as typeof constants.SET_LOCALE_SUCCESS,
-            payload: { localeCode: aLocaleCode },
+            payload: { message: aString(), loading: aBoolean(), localeCode: aLocaleCode },
         };
         const theNewStore = locale.reducer(theStore, theAction);
         expect(theNewStore.code).toBe(theAction.payload.localeCode);
@@ -148,7 +148,7 @@ describe('the reducer', () => {
         const theStore = new LocaleStoreBuilder().withLoading(true).build();
         const theAction = {
             type: constants.SET_LOCALE_FAILURE as typeof constants.SET_LOCALE_FAILURE,
-            payload: { message: errorMessage, localeCode: aLocaleCode },
+            payload: { message: errorMessage, loading: aBoolean(), localeCode: aLocaleCode },
         };
         const theNewStore = locale.reducer(theStore, theAction);
         expect(theNewStore.loading).toBe(false);
@@ -167,7 +167,7 @@ describe('the reducer', () => {
         const theStore = new LocaleStoreBuilder().withLoading(true).build();
         const theAction = {
             type: constants.LOAD_CURRENT_LOCALE_SUCCESS as typeof constants.LOAD_CURRENT_LOCALE_SUCCESS,
-            payload: { localeCode: aLocaleCode, isSet: aBoolean() },
+            payload: { message: aString(), loading: aBoolean(), localeCode: aLocaleCode, isSet: aBoolean() },
         };
         const theNewStore = locale.reducer(theStore, theAction);
         expect(theNewStore.code).toBe(theAction.payload.localeCode);
@@ -179,7 +179,7 @@ describe('the reducer', () => {
         const theStore = new LocaleStoreBuilder().withLoading(true).build();
         const theAction = {
             type: constants.LOAD_CURRENT_LOCALE_FAILURE as typeof constants.LOAD_CURRENT_LOCALE_FAILURE,
-            payload: { message: errorMessage, localeCode: aLocaleCode },
+            payload: { message: errorMessage, loading: aBoolean(), localeCode: aLocaleCode },
         };
         const theNewStore = locale.reducer(theStore, theAction);
         expect(theNewStore.loading).toBe(false);
@@ -188,11 +188,11 @@ describe('the reducer', () => {
     describe('should never change', () => {
         let allLocaleActions: ReadonlyArray<locale.ReducerActions> = [
             { type: constants.LOAD_CURRENT_LOCALE_REQUEST },
-            { type: constants.LOAD_CURRENT_LOCALE_SUCCESS, payload: { localeCode: aString(), isSet: aBoolean() } },
-            { type: constants.LOAD_CURRENT_LOCALE_FAILURE, payload: { message: aString() } },
+            { type: constants.LOAD_CURRENT_LOCALE_SUCCESS, payload: { message: aString(), loading: aBoolean(), localeCode: aString(), isSet: aBoolean() } },
+            { type: constants.LOAD_CURRENT_LOCALE_FAILURE, payload: { message: aString(), loading: aBoolean() } },
             { type: constants.SET_LOCALE_REQUEST, payload: { localeCode: aString() } },
-            { type: constants.SET_LOCALE_SUCCESS, payload: { localeCode: aString() } },
-            { type: constants.SET_LOCALE_FAILURE, payload: { localeCode: aString(), message: aString() } },
+            { type: constants.SET_LOCALE_SUCCESS, payload: { message: aString(), loading: aBoolean(), localeCode: aString() } },
+            { type: constants.SET_LOCALE_FAILURE, payload: { message: aString(), loading: aBoolean(), localeCode: aString()} },
         ];
 
         test('property: availableLocales', () => {
