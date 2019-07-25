@@ -332,8 +332,8 @@ giveExpoCommandsForPublishing() {
     echo "To publish the client for both platforms, ensure that the "
     echo "build cache is cleared, then run these commands: "
     echo
-    echo "(cd $CLIENT_DIRECTORY && yarn run expo bi --release-channel release)"
-    echo "(cd $CLIENT_DIRECTORY && yarn run expo ba --release-channel release)"
+    echo "(cd $CLIENT_DIRECTORY && yarn run expo bi)"
+    echo "(cd $CLIENT_DIRECTORY && yarn run expo ba)"
     echo
 }
 
