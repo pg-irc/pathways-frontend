@@ -19,7 +19,7 @@ describe('persistent user_data tests', () => {
     test('saved topics should persist between being serialized and deserialized', () => {
         const savedTopics = aString();
         const persistent_data = new PersistedUserDataBuilder();
-        persistent_data.addSavedTask(savedTopics);
+        persistent_data.addSavedTopic(savedTopics);
         const userDataObject = persistent_data.buildObject();
         const userDataString = persistent_data.buildJson();
         const serializedUserData = serialize(userDataObject);
@@ -31,7 +31,7 @@ describe('persistent user_data tests', () => {
     test('completed topics should persist between being serialized and deserialized', () => {
         const completedTopics = aString();
         const persistent_data = new PersistedUserDataBuilder();
-        persistent_data.addCompletedTask(completedTopics);
+        persistent_data.addCompletedTopic(completedTopics);
         const userDataObject = persistent_data.buildObject();
         const userDataString = persistent_data.buildJson();
         const serializedUserData = serialize(userDataObject);

@@ -107,24 +107,24 @@ describe('topics reducer', () => {
 
             describe('when loading saved topics', () => {
 
-                let firstTaskId = aString();
-                let secondTaskId = aString();
+                let firstTopicId = aString();
+                let secondTopicId = aString();
                 let resultStore: stores.TopicStore = undefined;
 
                 beforeEach(() => {
-                    const firstTaskBuilder = new TopicBuilder().withId(firstTaskId);
-                    const secondTaskBuilder = new TopicBuilder().withId(secondTaskId);
+                    const firstTopicBuilder = new TopicBuilder().withId(firstTopicId);
+                    const secondTopicBuilder = new TopicBuilder().withId(secondTopicId);
 
-                    const validStoreWhereFirstTaskIsSaved = buildNormalizedStore(
-                        [firstTaskBuilder, secondTaskBuilder],
-                        [firstTaskId],
+                    const validStoreWhereFirstTopicIsSaved = buildNormalizedStore(
+                        [firstTopicBuilder, secondTopicBuilder],
+                        [firstTopicId],
                     );
-                    const theStore = new stores.LoadingTopicStore(validStoreWhereFirstTaskIsSaved);
+                    const theStore = new stores.LoadingTopicStore(validStoreWhereFirstTopicIsSaved);
 
-                    const persistedDataWhereSecondTaskIsSaved = new PersistedUserDataBuilder().
-                        addSavedTask(secondTaskId).
+                    const persistedDataWhereSecondTopicIsSaved = new PersistedUserDataBuilder().
+                        addSavedTopic(secondTopicId).
                         buildObject();
-                    const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereSecondTaskIsSaved);
+                    const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereSecondTopicIsSaved);
 
                     resultStore = stores.reducer(theStore, loadAction);
                 });
@@ -134,11 +134,11 @@ describe('topics reducer', () => {
                 });
 
                 it('should return a store with topic saved in loaded data marked as saved', () => {
-                    expect(stores.toValidOrThrow(resultStore).savedTopicsList).toContain(secondTaskId);
+                    expect(stores.toValidOrThrow(resultStore).savedTopicsList).toContain(secondTopicId);
                 });
 
                 it('should return a store with topic not saved in loaded data not marked as saved', () => {
-                    expect(stores.toValidOrThrow(resultStore).savedTopicsList).not.toContain(firstTaskId);
+                    expect(stores.toValidOrThrow(resultStore).savedTopicsList).not.toContain(firstTopicId);
                 });
 
             });
@@ -148,7 +148,7 @@ describe('topics reducer', () => {
                 const theValidStore = buildNormalizedStore([topicBuilder], []);
                 const theLoadingStore = new stores.LoadingTopicStore(theValidStore);
                 const dataWithInvalidId = new PersistedUserDataBuilder().
-                    addSavedTask(aString()).
+                    addSavedTopic(aString()).
                     buildObject();
                 const theAction = UserDataPersistence.loadSuccess(dataWithInvalidId);
                 const resultStore = stores.reducer(theLoadingStore, theAction);
@@ -158,13 +158,13 @@ describe('topics reducer', () => {
             describe('when loading completed topics', () => {
                 it('should set completed topics to completed', () => {
                     const topicId = aString();
-                    const theTask = new TopicBuilder().withId(topicId).withCompleted(false);
-                    const storeState = buildNormalizedStore([theTask], []);
+                    const theTopic = new TopicBuilder().withId(topicId).withCompleted(false);
+                    const storeState = buildNormalizedStore([theTopic], []);
                     const theStore = new stores.LoadingTopicStore(storeState);
-                    const actionStateWithCompletedTask = new PersistedUserDataBuilder().
-                        addCompletedTask(topicId).
+                    const actionStateWithCompletedTopic = new PersistedUserDataBuilder().
+                        addCompletedTopic(topicId).
                         buildObject();
-                    const theAction = UserDataPersistence.loadSuccess(actionStateWithCompletedTask);
+                    const theAction = UserDataPersistence.loadSuccess(actionStateWithCompletedTopic);
 
                     const resultStore = stores.reducer(theStore, theAction);
                     const topics = stores.toValidOrThrow(resultStore).topicMap;
@@ -174,11 +174,11 @@ describe('topics reducer', () => {
 
                 it('should not set uncompleted topics to completed', () => {
                     const topicId = aString();
-                    const theTask = new TopicBuilder().withId(topicId).withCompleted(true);
-                    const storeState = buildNormalizedStore([theTask], []);
+                    const theTopic = new TopicBuilder().withId(topicId).withCompleted(true);
+                    const storeState = buildNormalizedStore([theTopic], []);
                     const theStore = new stores.LoadingTopicStore(storeState);
-                    const actionStateWithNoCompletedTasks = new PersistedUserDataBuilder().buildObject();
-                    const theAction = UserDataPersistence.loadSuccess(actionStateWithNoCompletedTasks);
+                    const actionStateWithNoCompletedTopics = new PersistedUserDataBuilder().buildObject();
+                    const theAction = UserDataPersistence.loadSuccess(actionStateWithNoCompletedTopics);
 
                     const resultStore = stores.reducer(theStore, theAction);
                     const topics = stores.toValidOrThrow(resultStore).topicMap;
