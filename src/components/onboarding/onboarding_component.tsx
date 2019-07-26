@@ -1,6 +1,9 @@
+// tslint:disable:no-expression-statement
 import React from 'react';
 import { View, Text, Dimensions, Image, ImageSourcePropType } from 'react-native';
-import { textStyles } from '../../application/styles';
+import { Button } from 'native-base';
+import { History } from 'history';
+import { textStyles, applicationStyles, colors } from '../../application/styles';
 import {
     communityOnBoardingImage,
     answerQuestionsOnBoardingImage,
@@ -9,6 +12,9 @@ import {
 } from '../../application/images';
 import { Trans } from '@lingui/react';
 import { SwipeableContentComponent } from '../swipeable_content/swipeable_content_component';
+import { SetOnboardingAction } from '../../stores/onboarding/actions';
+import { CloseButtonComponent } from '../close_button/close_button_component';
+import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 
 const onboardingImageWidth = Dimensions.get('screen').width / 1.25;
 
@@ -16,16 +22,39 @@ const onboardingImageHeight = Dimensions.get('screen').height / 2;
 
 const onboardingSlideHeight = Dimensions.get('screen').height / 1.25;
 
-export const OnboardingComponent = (): JSX.Element => {
+interface OnboardingComponentProps {
+    readonly history: History;
+}
+
+export interface OnboardingActions {
+    readonly setOnboarding: () => SetOnboardingAction;
+}
+
+type Props = OnboardingComponentProps & OnboardingActions;
+
+export const OnboardingComponent = (props: Props): JSX.Element => {
+    const onCloseButtonPress = (): void => {
+        props.setOnboarding();
+        goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)();
+    };
+    const onPersonalizeButtonPress = (): void => {
+        props.setOnboarding();
+        goToRouteWithoutParameter(Routes.Questionnaire, props.history)();
+    };
+    const swipeableContent = buildSwipeableContent(onPersonalizeButtonPress);
     return (
-        <View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>
-            <Text>Close</Text>
-            <SwipeableContentComponent contentItems={getContentItems()}/>
+        <View style={{ flex: 1 }}>
+            <CloseButtonComponent
+                onPress={onCloseButtonPress}
+                color={colors.black}
+                additionalStyle={{ paddingTop: 20, paddingRight: 10 }}
+            />
+            <SwipeableContentComponent contentItems={swipeableContent}/>
         </View>
     );
 };
 
-const getContentItems = (): ReadonlyArray<JSX.Element> => (
+const buildSwipeableContent = (onPersonalizeButtonPress: () => void): ReadonlyArray<JSX.Element> => (
     [
         <OnboardingSlide>
             <OnboardingImage source={communityOnBoardingImage} />
@@ -50,6 +79,11 @@ const getContentItems = (): ReadonlyArray<JSX.Element> => (
             <OnboardingText
                 text={<Trans>Bookmark the topics that you find helpful for future use.</Trans>}
             />
+            <Button full style={applicationStyles.tealButton} onPress={onPersonalizeButtonPress}>
+                <Text style={textStyles.button}>
+                    <Trans>Start</Trans>
+                </Text>
+            </Button>
         </OnboardingSlide>,
     ]
 );
@@ -61,12 +95,13 @@ const OnboardingImage = (props: { readonly source: ImageSourcePropType }): JSX.E
         style={{
             height: onboardingImageHeight,
             width: onboardingImageWidth,
+            marginBottom: 30,
         }}
     />
 );
 
 const OnboardingText = (props: { readonly text: JSX.Element }): JSX.Element => (
-    <Text style={textStyles.onboarding}>
+    <Text style={[textStyles.onboarding, { marginBottom: 30 }]}>
         {props.text}
     </Text>
 );
@@ -75,7 +110,7 @@ const OnboardingSlide = (props: { readonly children: ReadonlyArray<JSX.Element> 
     <View
         style={{
             height: onboardingSlideHeight,
-            justifyContent: 'space-around',
+            justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: 10,
         }}
