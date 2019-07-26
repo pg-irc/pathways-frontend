@@ -35,11 +35,24 @@ const buildState = (): [State, SetState] =>
 
 const buildPanResponder = (currentIndex: number, itemCount: number, setState: SetState): PanResponderInstance => (
     PanResponder.create({
-        onStartShouldSetPanResponderCapture,
         onMoveShouldSetPanResponder,
         onPanResponderEnd: onPanResponderEnd(currentIndex, itemCount, setState),
     })
 );
+
+const onMoveShouldSetPanResponder = (_event: GestureResponderEvent, _gestureState: PanResponderGestureState): boolean => true;
+
+type OnPanResponderMoveCallback = (_event: GestureResponderEvent, _gestureState: PanResponderGestureState) => void;
+
+const onPanResponderEnd = (currentIndex: number, itemCount: number, setState: SetState): OnPanResponderMoveCallback => {
+    return (_event: GestureResponderEvent, gestureState: PanResponderGestureState): void => {
+        if (isRightToLeftSwipe(gestureState.dx)) {
+            updateIndexIfChanged(currentIndex, getNextIndex(currentIndex, itemCount), setState);
+        } else if (isLeftToRightSwipe(gestureState.dx)) {
+            updateIndexIfChanged(currentIndex, getPreviousIndex(currentIndex), setState);
+        }
+    };
+};
 
 const NavigationDots = (props: { readonly currentIndex: number, readonly count: number }): JSX.Element => {
     const renderDot = (_: undefined, loopIndex: number): JSX.Element => {
@@ -59,18 +72,6 @@ const NavigationDot = (props: { readonly currentIndex: number, readonly loopInde
         return <View style={{ ...dotStyle, backgroundColor: colors.topaz }} />;
     }
     return <View style={{ ...dotStyle, backgroundColor: colors.lightGrey }} />;
-};
-
-type OnPanResponderMoveCallback = (_event: GestureResponderEvent, _gestureState: PanResponderGestureState) => void;
-
-const onPanResponderEnd = (currentIndex: number, itemCount: number, setState: SetState): OnPanResponderMoveCallback => {
-    return (_event: GestureResponderEvent, gestureState: PanResponderGestureState): void => {
-        if (isRightToLeftSwipe(gestureState.dx)) {
-            updateIndexIfChanged(currentIndex, getNextIndex(currentIndex, itemCount), setState);
-        } else if (isLeftToRightSwipe(gestureState.dx)) {
-            updateIndexIfChanged(currentIndex, getPreviousIndex(currentIndex), setState);
-        }
-    };
 };
 
 const getNextIndex = (currentIndex: number, itemCount: number): number => (
@@ -94,7 +95,3 @@ const updateIndexIfChanged = (currentIndex: number, newIndex: number, setState: 
         setState({ currentIndex: newIndex });
     }
 };
-
-const onStartShouldSetPanResponderCapture = (_event: GestureResponderEvent, _gestureState: PanResponderGestureState): boolean => true;
-
-const onMoveShouldSetPanResponder = (_event: GestureResponderEvent, _gestureState: PanResponderGestureState): boolean => true;
