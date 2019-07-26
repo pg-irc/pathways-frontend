@@ -4,7 +4,7 @@ import { View, PanResponder, PanResponderInstance, PanResponderGestureState, Ges
 import * as R from 'ramda';
 import { colors } from '../../application/styles';
 
-const swipeSensitivity = 75;
+const requiredSwipeMovementValue = 75;
 
 interface SwipeableContentComponentProps {
     readonly contentItems: ReadonlyArray<JSX.Element>;
@@ -44,7 +44,7 @@ const onMoveShouldSetPanResponder = (_event: GestureResponderEvent, gestureState
     // For 3d touch devices (newer iPhones) we have problems with tappable items not being tappable when nested in the pan responder.
     // See https://github.com/facebook/react-native/issues/3082 for more details.
     // This basically says "your tap must be moving horizontally" in order for us to set the responder.
-    gestureState.dx !== 0 ? true : false
+    gestureState.dx !== 0
 );
 
 type OnPanResponderMoveCallback = (_event: GestureResponderEvent, _gestureState: PanResponderGestureState) => void;
@@ -52,9 +52,9 @@ type OnPanResponderMoveCallback = (_event: GestureResponderEvent, _gestureState:
 const onPanResponderEnd = (currentIndex: number, itemCount: number, setState: SetState): OnPanResponderMoveCallback => {
     return (_event: GestureResponderEvent, gestureState: PanResponderGestureState): void => {
         if (isRightToLeftSwipe(gestureState.dx)) {
-            updateIndexIfChanged(currentIndex, getNextIndex(currentIndex, itemCount), setState);
+            setState({ currentIndex: getNextIndex(currentIndex, itemCount) });
         } else if (isLeftToRightSwipe(gestureState.dx)) {
-            updateIndexIfChanged(currentIndex, getPreviousIndex(currentIndex), setState);
+            setState({ currentIndex: getPreviousIndex(currentIndex) });
         }
     };
 };
@@ -80,23 +80,17 @@ const NavigationDot = (props: { readonly currentIndex: number, readonly loopInde
 };
 
 const getNextIndex = (currentIndex: number, itemCount: number): number => (
-    currentIndex + 1 < itemCount ? currentIndex + 1 : currentIndex
+    R.min(currentIndex + 1, itemCount - 1)
 );
 
 const getPreviousIndex = (currentIndex: number): number => (
-    currentIndex - 1 >= 0 ? currentIndex - 1 : 0
+    R.max(currentIndex - 1, 0)
 );
 
 const isRightToLeftSwipe = (horizontalMovementValue: number): boolean => (
-    horizontalMovementValue < 0 && Math.abs(horizontalMovementValue) > swipeSensitivity
+    horizontalMovementValue < -1.0 * requiredSwipeMovementValue
 );
 
 const isLeftToRightSwipe = (horizontalMovementValue: number): boolean => (
-    horizontalMovementValue > 0 && Math.abs(horizontalMovementValue) > swipeSensitivity
+    horizontalMovementValue > requiredSwipeMovementValue
 );
-
-const updateIndexIfChanged = (currentIndex: number, newIndex: number, setState: SetState): void => {
-    if (currentIndex !== newIndex) {
-        setState({ currentIndex: newIndex });
-    }
-};
