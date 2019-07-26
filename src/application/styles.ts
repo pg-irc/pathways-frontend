@@ -23,6 +23,7 @@ export const colors = {
     purple: '#541388',
     burntSienna: '#ED604B',
     sunshine: '#f2b134',
+    topaz: '#11cac0',
 };
 
 export const values = {
@@ -259,6 +260,12 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
+    onboarding: {
+        fontSize: 18,
+        color: colors.black,
+        textAlign: 'center',
+        ...getNormalFontStylesForOS(),
+    },
 });
 
 export const applicationStyles = StyleSheet.create({
@@ -318,7 +325,7 @@ export const markdownStyles = StyleSheet.create({
     heading1: {
         lineHeight: 23,
         fontSize: 18,
-      },
+    },
     heading2: {
         lineHeight: 22,
         fontSize: 17,
