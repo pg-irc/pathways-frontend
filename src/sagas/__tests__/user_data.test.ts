@@ -1,3 +1,5 @@
+// tslint:disable:no-expression-statement no-trailing-whitespace
+
 import { PersistedUserDataBuilder } from '../../stores/__tests__/helpers/user_data_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { serialize, deserialize } from '../user_data';
@@ -5,38 +7,17 @@ import { serialize, deserialize } from '../user_data';
 describe('persistent user_data tests', () => {
         
     test('chosen answer should persist between being serialized and deserialized', () => {
-        const chosenAnswer = aString();
-        const persistentData = new PersistedUserDataBuilder();
-        persistentData.addChosenAnswer(chosenAnswer);
-        const userDataObject = persistentData.buildObject();
-        const userDataString = persistentData.buildJson();
-        const serializedUserData = serialize(userDataObject);
-        expect(serializedUserData).toEqual(userDataString);
-        const deserializedUserData = deserialize(serializedUserData);
-        expect(deserializedUserData).toEqual(userDataObject);
+        const persistentData = new PersistedUserDataBuilder().addChosenAnswer(aString()).buildObject();
+        expect(persistentData).toEqual(deserialize(serialize(persistentData)));
     });
         
     test('saved topics should persist between being serialized and deserialized', () => {
-        const savedTopics = aString();
-        const persistent_data = new PersistedUserDataBuilder();
-        persistent_data.addSavedTopic(savedTopics);
-        const userDataObject = persistent_data.buildObject();
-        const userDataString = persistent_data.buildJson();
-        const serializedUserData = serialize(userDataObject);
-        expect(serializedUserData).toEqual(userDataString);
-        const deserializedUserData = deserialize(serializedUserData);
-        expect(deserializedUserData).toEqual(userDataObject);
+        const persistentData = new PersistedUserDataBuilder().addSavedTopic(aString()).buildObject();
+        expect(persistentData).toEqual(deserialize(serialize(persistentData)));
     });
 
     test('completed topics should persist between being serialized and deserialized', () => {
-        const completedTopics = aString();
-        const persistent_data = new PersistedUserDataBuilder();
-        persistent_data.addCompletedTopic(completedTopics);
-        const userDataObject = persistent_data.buildObject();
-        const userDataString = persistent_data.buildJson();
-        const serializedUserData = serialize(userDataObject);
-        expect(serializedUserData).toEqual(userDataString);
-        const deserializedUserData = deserialize(serializedUserData);
-        expect(deserializedUserData).toEqual(userDataObject);
+        const persistentData = new PersistedUserDataBuilder().addChosenAnswer(aString()).buildObject();
+        expect(persistentData).toEqual(deserialize(serialize(persistentData)));
     });
 });
