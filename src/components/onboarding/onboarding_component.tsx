@@ -35,19 +35,15 @@ export interface OnboardingActions {
 type Props = OnboardingComponentProps & OnboardingActions;
 
 export const OnboardingComponent = (props: Props): JSX.Element => {
-    const onCloseButtonPress = (): void => {
+    const onButtonPress = (): void => {
         props.setOnboarding();
         goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)();
     };
-    const onPersonalizeButtonPress = (): void => {
-        props.setOnboarding();
-        goToRouteWithoutParameter(Routes.Questionnaire, props.history)();
-    };
-    const swipeableContent = buildSwipeableContent(onPersonalizeButtonPress);
+    const swipeableContent = buildSwipeableContent(onButtonPress);
     return (
         <View style={{ flex: 1 }}>
             <CloseButtonComponent
-                onPress={onCloseButtonPress}
+                onPress={onButtonPress}
                 color={colors.black}
             />
             <SwipeableContentComponent contentItems={swipeableContent}/>
