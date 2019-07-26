@@ -40,7 +40,12 @@ const buildPanResponder = (currentIndex: number, itemCount: number, setState: Se
     })
 );
 
-const onMoveShouldSetPanResponder = (_event: GestureResponderEvent, _gestureState: PanResponderGestureState): boolean => true;
+const onMoveShouldSetPanResponder = (_event: GestureResponderEvent, gestureState: PanResponderGestureState): boolean => (
+    // For 3d touch devices (newer iPhones) we have problems with tappable items not being tappable when nested in the pan responder.
+    // See https://github.com/facebook/react-native/issues/3082 for more details.
+    // This basically says "your tap must be moving horizontally" in order for us to set the responder.
+    gestureState.dx !== 0 ? true : false
+);
 
 type OnPanResponderMoveCallback = (_event: GestureResponderEvent, _gestureState: PanResponderGestureState) => void;
 
