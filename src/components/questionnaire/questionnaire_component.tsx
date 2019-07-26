@@ -51,7 +51,6 @@ export class QuestionnaireComponent extends React.Component<Props, State> {
                 <CloseButtonComponent
                     onPress={this.openModal}
                     color={colors.black}
-                    additionalStyle={{ paddingTop: 20, paddingRight: 10 }}
                 />
                 <Content padder>
                     <HeadingComponent />

@@ -23,7 +23,11 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
     return (
         <Modal isVisible={props.isVisible}>
             <View padder style={{ backgroundColor: colors.white, borderRadius: 5, flex: 1 }}>
-                <CloseButtonComponent onPress={props.closeModal} color={colors.black}/>
+                <CloseButtonComponent
+                    onPress={props.closeModal}
+                    color={colors.black}
+                    additionalStyle={{ paddingTop: 0, paddingRight: 0 }}
+                />
                 <Content>
                     <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
                         <Trans>About Arrival Advisor</Trans>

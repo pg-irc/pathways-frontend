@@ -21,7 +21,9 @@ export const CloseButtonComponent = (props: Props): JSX.Element => (
                 flex: 1,
                 alignItems: 'flex-end',
                 justifyContent: 'center',
-                maxHeight: 50,
+                maxHeight: 55,
+                paddingTop: 30,
+                paddingRight: 15,
                 ...props.additionalStyle,
             }
         }

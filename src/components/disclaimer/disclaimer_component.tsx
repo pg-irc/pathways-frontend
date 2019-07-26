@@ -18,7 +18,11 @@ export const DisclaimerComponent: React.StatelessComponent<Props> = (props: Prop
     return (
         <Modal isVisible={props.isVisible}>
             <View padder style={{ backgroundColor: colors.white, borderRadius: 5, flex: 1 }}>
-                <CloseButtonComponent onPress={props.closeModal} color={colors.black}/>
+                <CloseButtonComponent
+                    onPress={props.closeModal}
+                    color={colors.black}
+                    additionalStyle={{ paddingTop: 0, paddingRight: 0 }}
+                />
                 <Content>
                     <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
                         <Trans>Disclaimer</Trans>
