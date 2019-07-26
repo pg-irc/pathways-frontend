@@ -7,17 +7,23 @@ import { serializePersistedData, deserializePersistedData } from '../user_data';
 describe('persisted user_data tests', () => {
         
     test('chosen answer should persist between being serialized and deserialized', () => {
-        const persistedData = new PersistedUserDataBuilder().addChosenAnswer(aString()).buildObject();
-        expect(persistedData).toEqual(deserializePersistedData(serializePersistedData(persistedData)));
+        const chosenAnswer = aString();
+        const persistedData = new PersistedUserDataBuilder().addChosenAnswer(chosenAnswer).buildObject();
+        const recreatedData = deserializePersistedData(serializePersistedData(persistedData));
+        expect(chosenAnswer).toEqual(recreatedData.chosenAnswers[0]);
     });
         
     test('saved topics should persist between being serialized and deserialized', () => {
-        const persistedData = new PersistedUserDataBuilder().addSavedTopic(aString()).buildObject();
-        expect(persistedData).toEqual(deserializePersistedData(serializePersistedData(persistedData)));
+        const savedTopic = aString();
+        const persistedData = new PersistedUserDataBuilder().addSavedTopic(savedTopic).buildObject();
+        const recreatedData = deserializePersistedData(serializePersistedData(persistedData));
+        expect(savedTopic).toEqual(recreatedData.savedTopics[0]);
     });
 
     test('completed topics should persist between being serialized and deserialized', () => {
-        const persistedData = new PersistedUserDataBuilder().addChosenAnswer(aString()).buildObject();
-        expect(persistedData).toEqual(deserializePersistedData(serializePersistedData(persistedData)));
+        const completedTopic = aString();
+        const persistedData = new PersistedUserDataBuilder().addCompletedTopic(completedTopic).buildObject();
+        const recreatedData = deserializePersistedData(serializePersistedData(persistedData));
+        expect(completedTopic).toEqual(recreatedData.completedTopics[0]);
     });
 });
