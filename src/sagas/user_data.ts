@@ -30,7 +30,7 @@ type SaveActions = IterableIterator<
 export function* saveUserData(): SaveActions {
     try {
         const userData: PersistedUserData = yield select(selectUserDataForLocalPersistence);
-        const serializedUserData = serialize(userData);
+        const serializedUserData = serializePersistedData(userData);
         yield call(saveUserDataAsync, serializedUserData);
         yield put(UserDataPersistence.saveSuccess());
     } catch (error) {
@@ -43,7 +43,7 @@ export async function saveUserDataAsync(ids: string): Promise<void> {
     return await AsyncStorage.setItem(USER_DATA_STORAGE_KEY, ids);
 }
 
-export const serialize = (userData: PersistedUserData): string => (
+export const serializePersistedData = (userData: PersistedUserData): string => (
     JSON.stringify(userData)
 );
 
@@ -56,7 +56,7 @@ type LoadActions = IterableIterator<CallEffect | PutEffect<UserDataPersistence.L
 export function* loadUserData(): LoadActions {
     try {
         const serializedUserData = yield call(loadUserDataAsync);
-        const userData = deserialize(serializedUserData);
+        const userData = deserializePersistedData(serializedUserData);
         yield put(UserDataPersistence.loadSuccess(userData));
     } catch (error) {
         console.error(`Failed to load user data (${error.message})`);
@@ -68,7 +68,7 @@ export async function loadUserDataAsync(): Promise<string> {
     return await AsyncStorage.getItem(USER_DATA_STORAGE_KEY);
 }
 
-export const deserialize = (serializedUserData: string): PersistedUserData => (
+export const deserializePersistedData = (serializedUserData: string): PersistedUserData => (
     serializedUserData ? setUserDataDefaultValues(JSON.parse(serializedUserData)) : setUserDataDefaultValues({})
 );
 
