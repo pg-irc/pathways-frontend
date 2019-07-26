@@ -1,12 +1,12 @@
 // tslint:disable:no-class readonly-keyword readonly-array no-expression-statement no-this
 import { Id as AnswerId } from '../../questionnaire';
-import { Id as TaskId } from '../../topics';
+import { Id as TopicId } from '../../topics';
 import { PersistedUserData } from '../../user_data';
 
 export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];
-    savedTasks: TaskId[] = [];
-    completedTasks: TaskId[] = [];
+    savedTopics: TopicId[] = [];
+    completedTopics: TopicId[] = [];
     showOnboarding: boolean = true;
 
     addChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
@@ -14,13 +14,13 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    addSavedTask(id: TaskId): PersistedUserDataBuilder {
-        this.savedTasks.push(id);
+    addSavedTopic(id: TopicId): PersistedUserDataBuilder {
+        this.savedTopics.push(id);
         return this;
     }
 
-    addCompletedTask(id: TaskId): PersistedUserDataBuilder {
-        this.completedTasks.push(id);
+    addCompletedTopic(id: TopicId): PersistedUserDataBuilder {
+        this.completedTopics.push(id);
         return this;
     }
 
@@ -32,8 +32,8 @@ export class PersistedUserDataBuilder {
     buildObject(): PersistedUserData {
         return {
             chosenAnswers: this.chosenAnswers,
-            savedTopics: this.savedTasks,
-            completedTopics: this.completedTasks,
+            savedTopics: this.savedTopics,
+            completedTopics: this.completedTopics,
             showOnboarding: this.showOnboarding,
         };
     }

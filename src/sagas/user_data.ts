@@ -30,7 +30,7 @@ type SaveActions = IterableIterator<
 export function* saveUserData(): SaveActions {
     try {
         const userData: PersistedUserData = yield select(selectUserDataForLocalPersistence);
-        const serializedUserData = serialize(userData);
+        const serializedUserData = serializeUserData(userData);
         yield call(saveUserDataAsync, serializedUserData);
         yield put(UserDataPersistence.saveSuccess());
     } catch (error) {
@@ -43,7 +43,7 @@ export async function saveUserDataAsync(ids: string): Promise<void> {
     return await AsyncStorage.setItem(USER_DATA_STORAGE_KEY, ids);
 }
 
-const serialize = (userData: PersistedUserData): string => (
+export const serializeUserData = (userData: PersistedUserData): string => (
     JSON.stringify(userData)
 );
 
@@ -56,7 +56,7 @@ type LoadActions = IterableIterator<CallEffect | PutEffect<UserDataPersistence.L
 export function* loadUserData(): LoadActions {
     try {
         const serializedUserData = yield call(loadUserDataAsync);
-        const userData = deserialize(serializedUserData);
+        const userData = deserializeUserData(serializedUserData);
         yield put(UserDataPersistence.loadSuccess(userData));
     } catch (error) {
         console.error(`Failed to load user data (${error.message})`);
@@ -68,15 +68,15 @@ export async function loadUserDataAsync(): Promise<string> {
     return await AsyncStorage.getItem(USER_DATA_STORAGE_KEY);
 }
 
-const deserialize = (serializedUserData: string): PersistedUserData => (
+export const deserializeUserData = (serializedUserData: string): PersistedUserData => (
     serializedUserData ? setUserDataDefaultValues(JSON.parse(serializedUserData)) : setUserDataDefaultValues({})
 );
 
 export const setUserDataDefaultValues = (data: any): PersistedUserData => (
     {
         chosenAnswers: data.chosenAnswers || [],
-        savedTopics: data.savedTasks || [],
-        completedTopics: data.completedTasks || [],
+        savedTopics: data.savedTopics || [],
+        completedTopics: data.completedTopics || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
     }
 );
