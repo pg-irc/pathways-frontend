@@ -1,9 +1,8 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
 import { View, Text, Dimensions, Image, ImageSourcePropType } from 'react-native';
-import { Button } from 'native-base';
 import { History } from 'history';
-import { textStyles, applicationStyles, colors } from '../../application/styles';
+import { textStyles, colors } from '../../application/styles';
 import {
     communityOnBoardingImage,
     answerQuestionsOnBoardingImage,
@@ -15,12 +14,15 @@ import { SwipeableContentComponent } from '../swipeable_content/swipeable_conten
 import { SetOnboardingAction } from '../../stores/onboarding/actions';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
+import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 const onboardingImageWidth = Dimensions.get('screen').width / 1.25;
 
 const onboardingImageHeight = Dimensions.get('screen').height / 2;
 
 const onboardingSlideHeight = Dimensions.get('screen').height / 1.25;
+
+const startButtonWidth = Dimensions.get('screen').width / 2;
 
 interface OnboardingComponentProps {
     readonly history: History;
@@ -47,7 +49,6 @@ export const OnboardingComponent = (props: Props): JSX.Element => {
             <CloseButtonComponent
                 onPress={onCloseButtonPress}
                 color={colors.black}
-                additionalStyle={{ paddingTop: 20, paddingRight: 10 }}
             />
             <SwipeableContentComponent contentItems={swipeableContent}/>
         </View>
@@ -79,11 +80,13 @@ const buildSwipeableContent = (onPersonalizeButtonPress: () => void): ReadonlyAr
             <OnboardingText
                 text={<Trans>Bookmark the topics that you find helpful for future use.</Trans>}
             />
-            <Button full style={applicationStyles.tealButton} onPress={onPersonalizeButtonPress}>
+            <MultiLineButtonComponent
+                onPress={onPersonalizeButtonPress}
+                additionalStyles={{ flex: 0, width: startButtonWidth }}>
                 <Text style={textStyles.button}>
                     <Trans>Start</Trans>
                 </Text>
-            </Button>
+            </MultiLineButtonComponent>
         </OnboardingSlide>,
     ]
 );

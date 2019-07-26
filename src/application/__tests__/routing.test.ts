@@ -11,8 +11,8 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.Welcome)).toEqual('/welcome');
     });
 
-    it('For Routes.Onboarding returns path: "/onboarding/:page"', () => {
-        expect(routePathDefinition(Routes.Onboarding)).toEqual('/onboarding/:page');
+    it('For Routes.Onboarding returns path: "/onboarding"', () => {
+        expect(routePathDefinition(Routes.Onboarding)).toEqual('/onboarding');
     });
 
     it('For Routes.Questionnaire returns path: "/questionnaire"', () => {

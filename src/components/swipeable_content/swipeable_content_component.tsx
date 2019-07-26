@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import React, { useState } from 'react';
-import { View, PanResponder, PanResponderInstance, PanResponderGestureState, GestureResponderEvent, Text } from 'react-native';
+import { View, PanResponder, PanResponderInstance, PanResponderGestureState, GestureResponderEvent } from 'react-native';
 import * as R from 'ramda';
 import { colors } from '../../application/styles';
 

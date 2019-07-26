@@ -10,7 +10,7 @@ import { ServiceListConnectedComponent } from '../services/service_list_connecte
 import { QuestionnaireConnectedComponent } from '../questionnaire/questionnaire_connected_component';
 import { RecommendedTopicsConnectedComponent } from '../recommended_topics/recommended_topics_connected_component';
 import { BookmarkedTopicsConnectedComponent } from '../bookmarked_topics/bookmarked_topics_connected_component';
-import { Routes, routePathDefinition, routePathWithParameter, routePathWithoutParameter } from '../../application/routing';
+import { Routes, routePathDefinition, routePathWithoutParameter } from '../../application/routing';
 import { Locale } from '../../locale';
 
 interface Props {
@@ -40,7 +40,7 @@ const defaultPath = (props: Props): string => {
         return routePathWithoutParameter(Routes.Welcome);
     }
     if (props.showOnboarding) {
-        return routePathWithParameter(Routes.Onboarding, '0');
+        return routePathWithoutParameter(Routes.Onboarding);
     }
     return routePathWithoutParameter(Routes.RecommendedTopics);
 };
