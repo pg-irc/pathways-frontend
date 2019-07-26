@@ -6,12 +6,11 @@ import { Id as TopicId } from '../stores/topics';
 export type PageId = string;
 
 // The property names of this structure are defined by the corresponding
-// route definitions, e.g. parsing a url '/onboarding/1' which matches
-// '/onboarding/:page' will put '1' in the attribute `page`.
+// route definitions, e.g. parsing a url '/learn/1' which matches
+// '/learn/:learnId' will put '1' in the attribute `learnId`.
 export interface MatchParameters {
     readonly learnId?: LearnId;
     readonly topicId?: TopicId;
-    readonly page?: PageId;
 }
 
 export type RouterProps = RouteComponentProps<MatchParameters>;
@@ -36,7 +35,7 @@ export const routePathDefinition = (route: Routes): string => {
         case Routes.Welcome:
             return '/welcome';
         case Routes.Onboarding:
-            return '/onboarding/:page';
+            return '/onboarding';
         case Routes.Help:
             return '/help';
         case Routes.Questionnaire:
