@@ -4,7 +4,7 @@ import { reducer, Store, buildDefaultStore } from '../stores';
 import { runSaga, ApplicationSaga } from '../sagas';
 
 import { loadFontsActions } from '../stores/fonts';
-import { loadCurrentLocaleRequest } from '../stores/locale/actions';
+import { loadCurrentLocaleRequest } from '../stores/locale';
 import { UserDataPersistence } from '../stores/user_data';
 
 import { LocaleInfoManager } from '../locale';
