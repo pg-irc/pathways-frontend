@@ -4,7 +4,7 @@ import { Dimensions, Image, ImageBackground } from 'react-native';
 import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
-import { SetLocale } from '../../stores/locale';
+import { SetLocaleRequestAction } from '../../stores/locale';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { colors, applicationStyles, textStyles } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
@@ -18,7 +18,7 @@ export interface WelcomeProps {
 }
 
 export interface WelcomeActions {
-    readonly setLocale: (localeCode: string) => SetLocale.Request;
+    readonly setLocale: (localeCode: string) => SetLocaleRequestAction;
 }
 
 type Props = WelcomeProps & WelcomeActions;
