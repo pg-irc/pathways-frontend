@@ -66,7 +66,8 @@ const TaxonomyComponent = (props: Props): JSX.Element => (
     <Text style={[
         textStyles.headlineH5StyleBlackLeft,
         {
-            paddingTop: 18,
+            marginTop: 20,
+            marginBottom: 5,
             paddingHorizontal: values.backgroundTextPadding,
         },
     ]}
@@ -86,7 +87,7 @@ const RecommendedComponent = (props: Props): JSX.Element => {
                     marginRight: 5,
                 }}
             />
-            <Text style={[textStyles.paragraphStyle, { color: colors.greyishBrown, fontSize: 14, fontFamily: 'AvenirBook'}]}>
+            <Text style={[textStyles.paragraphStyle, { color: colors.greyishBrown, fontSize: 14, fontFamily: 'AvenirBook' }]}>
                 <Trans>Recommended for you</Trans>
             </Text>
         </View>
