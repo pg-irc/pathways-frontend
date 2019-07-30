@@ -8,9 +8,9 @@ import {
 } from './actions';
 
 export { 
-    LoadCurrentLocaleAction, LoadCurrentLocaleRequestAction, loadCurrentLocaleRequest,loadCurrentLocaleSuccess, 
-    LoadCurrentLocaleErrorAction, loadCurrentLocaleFailure, LoadCurrentLocaleResult, SetLocaleRequestAction, setLocaleRequest, 
-    SetLocaleAction, setLocaleSuccess, setLocaleFailure, SetLocaleResult, LocaleAction
+    LoadCurrentLocaleRequestAction, loadCurrentLocaleRequest,loadCurrentLocaleSuccess, 
+    LoadCurrentLocaleErrorAction, loadCurrentLocaleFailure, LoadCurrentLocaleResult, LoadCurrentLocaleAction, setLocaleRequest, 
+    SetLocaleAction, setLocaleSuccess, setLocaleFailure, SetLocaleResult, SetLocaleRequestAction, LocaleAction
 }; 
 
 export interface LocaleStore {
