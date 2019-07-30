@@ -350,6 +350,7 @@ export const markdownStyles = StyleSheet.create({
         }),
     },
     link: {
+        fontFamily: 'AvenirBook',
         color: colors.teal,
         textDecorationLine: 'underline',
     },

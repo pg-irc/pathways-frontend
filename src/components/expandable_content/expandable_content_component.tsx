@@ -138,6 +138,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                     {
                         color: colors.teal,
                         marginRight: 5,
+                        marginLeft: 5
                     },
                 ]}
             >
