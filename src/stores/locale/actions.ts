@@ -7,13 +7,13 @@ export type LoadLocaleFailureAction = Readonly<ReturnType<typeof loadLocaleFailu
 
 export type LoadLocaleAction = LoadLocaleRequestAction | LoadLocaleSuccessAction | LoadLocaleFailureAction;
 
-export type SetLocaleRequestAction = Readonly<ReturnType<typeof setLocaleRequest>>;
-export type SetLocaleSuccessAction = Readonly<ReturnType<typeof setLocaleSuccess>>;
-export type SetLocaleFailureAction = Readonly<ReturnType<typeof setLocaleFailure>>;
-export type SetLocaleResult = SetLocaleSuccessAction | SetLocaleFailureAction;
+export type SaveLocaleRequestAction = Readonly<ReturnType<typeof saveLocaleRequest>>;
+export type SaveLocaleSuccessAction = Readonly<ReturnType<typeof saveLocaleSuccess>>;
+export type SaveLocaleFailureAction = Readonly<ReturnType<typeof saveLocaleFailure>>;
+export type SaveLocaleResult = SaveLocaleSuccessAction | SaveLocaleFailureAction;
 
-export type SetLocaleAction = SetLocaleRequestAction | SetLocaleSuccessAction | SetLocaleFailureAction;
-export type LocaleAction = LoadLocaleAction | SetLocaleAction;
+export type SaveLocaleAction = SaveLocaleRequestAction | SaveLocaleSuccessAction | SaveLocaleFailureAction;
+export type LocaleAction = LoadLocaleAction | SaveLocaleAction;
 
 // tslint:disable-next-line:typedef
 export const loadLocaleRequest = () => {
@@ -21,8 +21,8 @@ export const loadLocaleRequest = () => {
 };
 
 // tslint:disable-next-line:typedef
-export function loadLocaleSuccess(message: string, loading: boolean, localeCode: string, isSet: boolean) {
-    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { message, loading, localeCode, isSet });
+export function loadLocaleSuccess(message: string, loading: boolean, localeCode: string, isSaved: boolean) {
+    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { message, loading, localeCode, isSaved });
 }
 
 // tslint:disable-next-line:typedef
@@ -31,16 +31,16 @@ export function loadLocaleFailure(message: string, loading: boolean) {
 }
 
 // tslint:disable-next-line:typedef
-export const setLocaleRequest = (localeCode: string) => {
-    return helpers.makeAction(constants.SET_LOCALE_REQUEST, { localeCode });
+export const saveLocaleRequest = (localeCode: string) => {
+    return helpers.makeAction(constants.SAVE_LOCALE_REQUEST, { localeCode });
 };
 
 // tslint:disable-next-line:typedef
-export function setLocaleSuccess(message: string, loading: boolean, localeCode: string) {
-    return helpers.makeAction(constants.SET_LOCALE_SUCCESS, { message, loading, localeCode });
+export function saveLocaleSuccess(message: string, loading: boolean, localeCode: string) {
+    return helpers.makeAction(constants.SAVE_LOCALE_SUCCESS, { message, loading, localeCode });
 }
 
 // tslint:disable-next-line:typedef
-export function setLocaleFailure(message: string, loading: boolean, localeCode: string) {
-    return helpers.makeAction(constants.SET_LOCALE_FAILURE, { message, loading, localeCode });
+export function saveLocaleFailure(message: string, loading: boolean, localeCode: string) {
+    return helpers.makeAction(constants.SAVE_LOCALE_FAILURE, { message, loading, localeCode });
 }
