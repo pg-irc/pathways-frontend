@@ -3,18 +3,17 @@ import * as helpers from '../helpers/make_action';
 
 export type LoadCurrentLocaleRequestAction = Readonly<ReturnType<typeof loadCurrentLocaleRequest>>;
 export type LoadCurrentLocaleSuccessAction = Readonly<ReturnType<typeof loadCurrentLocaleSuccess>>;
-export type LoadCurrentLocaleErrorAction = Readonly<ReturnType<typeof loadCurrentLocaleFailure>>;
-export type LoadCurrentLocaleResult = LoadCurrentLocaleSuccessAction | LoadCurrentLocaleErrorAction;
+export type LoadCurrentLocaleFailureAction = Readonly<ReturnType<typeof loadCurrentLocaleFailure>>;
+export type LoadCurrentLocaleResult = LoadCurrentLocaleSuccessAction | LoadCurrentLocaleFailureAction;
 
-export type LoadCurrentLocaleAction = LoadCurrentLocaleRequestAction | LoadCurrentLocaleSuccessAction | LoadCurrentLocaleErrorAction;
+export type LoadCurrentLocaleAction = LoadCurrentLocaleRequestAction | LoadCurrentLocaleSuccessAction | LoadCurrentLocaleFailureAction;
 
-export type SetLocaleRequestAction = Readonly<ReturnType<typeof setLocaleRequest>>; 
-export type SetLocaleSuccessAction = Readonly<ReturnType<typeof setLocaleSuccess>>; 
-export type SetLocaleErrorAction = Readonly<ReturnType<typeof setLocaleFailure>>; 
-export type SetLocaleResult = SetLocaleSuccessAction | SetLocaleErrorAction
+export type SetLocaleRequestAction = Readonly<ReturnType<typeof setLocaleRequest>>;
+export type SetLocaleSuccessAction = Readonly<ReturnType<typeof setLocaleSuccess>>;
+export type SetLocaleFailureAction = Readonly<ReturnType<typeof setLocaleFailure>>;
+export type SetLocaleResult = SetLocaleSuccessAction | SetLocaleFailureAction;
 
-export type SetLocaleAction = SetLocaleRequestAction | SetLocaleSuccessAction | SetLocaleErrorAction; 
-
+export type SetLocaleAction = SetLocaleRequestAction | SetLocaleSuccessAction | SetLocaleFailureAction;
 export type LocaleAction = LoadCurrentLocaleAction | SetLocaleAction;
 
 // tslint:disable-next-line:typedef
@@ -32,6 +31,7 @@ export function loadCurrentLocaleFailure(message: string, loading: boolean) {
     return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_FAILURE, { message, loading });
 }
 
+// tslint:disable-next-line:typedef
 export const setLocaleRequest = (localeCode: string) => {
     return helpers.makeAction(constants.SET_LOCALE_REQUEST, { localeCode });
 };
