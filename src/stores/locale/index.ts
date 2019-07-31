@@ -1,17 +1,17 @@
 import * as constants from '../../application/constants';
 import { LocaleInfo } from '../../locale';
-import { 
+import {
     LoadCurrentLocaleRequestAction, loadCurrentLocaleRequest,
-    LoadCurrentLocaleSuccessAction, loadCurrentLocaleSuccess, LoadCurrentLocaleErrorAction, loadCurrentLocaleFailure,
-    SetLocaleRequestAction,setLocaleRequest, SetLocaleSuccessAction, setLocaleSuccess, SetLocaleErrorAction, setLocaleFailure,  
-    SetLocaleAction, LoadCurrentLocaleAction, SetLocaleResult, LoadCurrentLocaleResult, LocaleAction
+    loadCurrentLocaleSuccess, LoadCurrentLocaleErrorAction, loadCurrentLocaleFailure,
+    SetLocaleRequestAction,setLocaleRequest, setLocaleSuccess, setLocaleFailure,
+    SetLocaleAction, LoadCurrentLocaleAction, SetLocaleResult, LoadCurrentLocaleResult, LocaleAction,
 } from './actions';
 
-export { 
+export {
     LoadCurrentLocaleRequestAction, loadCurrentLocaleRequest,loadCurrentLocaleSuccess, 
-    LoadCurrentLocaleErrorAction, loadCurrentLocaleFailure, LoadCurrentLocaleResult, LoadCurrentLocaleAction, setLocaleRequest, 
-    SetLocaleAction, setLocaleSuccess, setLocaleFailure, SetLocaleResult, SetLocaleRequestAction, LocaleAction
-}; 
+    LoadCurrentLocaleErrorAction, loadCurrentLocaleFailure, LoadCurrentLocaleResult, LoadCurrentLocaleAction, setLocaleRequest,
+    SetLocaleAction, setLocaleSuccess, setLocaleFailure, SetLocaleResult, SetLocaleRequestAction, LocaleAction,
+};
 
 export interface LocaleStore {
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
@@ -37,73 +37,18 @@ export const reducer = (store: LocaleStore = buildDefaultStore(), action?: Local
     }
     switch (action.type) {
         case constants.LOAD_CURRENT_LOCALE_REQUEST:
-            return updateCurrentLocaleRequest(store);
+            return { ...store, errorMessage: '', loading: true};
         case constants.LOAD_CURRENT_LOCALE_SUCCESS:
-            return updateCurrentLocaleSuccess(store, action);
+            return { ...store, errorMessage: '', loading: false, isSet: action.payload.isSet, code: action.payload.localeCode };
         case constants.LOAD_CURRENT_LOCALE_FAILURE:
-            return updateCurrentLocaleError(store, action);
+            return { ...store, errorMessage: action.payload.message, loading: false };
         case constants.SET_LOCALE_REQUEST:
-            return setNewLocaleRequest(store);
+            return { ...store, errorMessage: '', loading: true };
         case constants.SET_LOCALE_SUCCESS:
-            return setNewLocaleSuccess(store, action); 
+            return { ...store, errorMessage: '', loading: false, code: action.payload.localeCode };
         case constants.SET_LOCALE_FAILURE:
-            return setNewLocaleError(store, action);
+            return { ...store, errorMessage: action.payload.message, loading: false };
         default:
             return store;
     }
 };
-
-const updateCurrentLocaleRequest = (store: LocaleStore): LocaleStore => {
-    return {
-       ...store,
-       errorMessage: '',
-       loading: true
-   }
-};
-
-const updateCurrentLocaleSuccess = (store: LocaleStore, action: LoadCurrentLocaleSuccessAction): LocaleStore => {
-    const { message, loading, isSet, localeCode } = action.payload; 
-    return {
-        ...store,
-        errorMessage: message,
-        loading,
-        isSet,
-        code: localeCode
-    }
-};
-
-const updateCurrentLocaleError = (store: LocaleStore, action: LoadCurrentLocaleErrorAction): LocaleStore => {
-    const { message, loading } = action.payload;
-    return {
-       ...store,
-       errorMessage: message,
-       loading
-   }
-}
-
-const setNewLocaleRequest = (store: LocaleStore): LocaleStore => {
-    return {
-        ...store,
-        errorMessage: '',
-        loading: true
-    }
-}
-
-const setNewLocaleSuccess = (store: LocaleStore, action: SetLocaleSuccessAction) => {
-    const { message, loading, localeCode } = action.payload;
-    return {
-        ...store,
-        errorMessage: message,
-        loading,
-        code: localeCode
-    }
-}; 
-
-const setNewLocaleError = (store: LocaleStore, action: SetLocaleErrorAction) => {
-    const { message, loading } = action.payload;
-    return {
-        ...store,
-        errorMessage: message,
-        loading
-    }
-}
