@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { HeaderMenuComponent, HeaderMenuProps, HeaderMenuActions } from './header_menu_component';
 import { Store } from '../../stores';
-import { SetLocaleRequestAction, setLocaleRequest } from '../../stores/locale';
+import { SetLocaleRequestAction, setLocaleRequest } from '../../stores/locale/actions';
 import { LocaleInfo } from '../../locale';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 import { selectLocale } from '../../selectors/locale/select_locale';
