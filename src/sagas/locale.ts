@@ -31,7 +31,7 @@ export function* watchLoadLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_CURRENT_LOCALE_REQUEST, loadCurrentLocale);
 }
 
-export type LoadLocaleActions = actions.LoadLocaleRequestAction | actions.LoadLocaleResult;
+export type LoadLocaleActions = actions.LoadLocaleAction;
 
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadLocaleActions>> {
     try {
