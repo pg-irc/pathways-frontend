@@ -61,7 +61,7 @@ describe('the loadCurrentLocaleAction for', () => {
     describe('request', () => {
 
         it('should create action with type LOAD_CURRENT_LOCALE_REQUEST', () => {
-            const theLoadCurrentLocaleAction = actions.loadCurrentLocaleRequest();
+            const theLoadCurrentLocaleAction = actions.loadLocaleRequest();
             expect(theLoadCurrentLocaleAction.type).toBe(constants.LOAD_CURRENT_LOCALE_REQUEST);
         });
 
@@ -70,18 +70,18 @@ describe('the loadCurrentLocaleAction for', () => {
     describe('success', () => {
 
         it('should create action with type LOAD_CURRENT_LOCALE_SUCCESS', () => {
-            const theLoadCurrentLocaleAction = actions.loadCurrentLocaleSuccess(aString(), false, aLocaleCode, aBoolean());
+            const theLoadCurrentLocaleAction = actions.loadLocaleSuccess(aString(), false, aLocaleCode, aBoolean());
             expect(theLoadCurrentLocaleAction.type).toBe(constants.LOAD_CURRENT_LOCALE_SUCCESS);
         });
 
         it('should create action with payload containing the locale', () => {
-            const theLoadCurrentLocaleAction = actions.loadCurrentLocaleSuccess(aString(), false, aLocaleCode, aBoolean());
+            const theLoadCurrentLocaleAction = actions.loadLocaleSuccess(aString(), false, aLocaleCode, aBoolean());
             expect(theLoadCurrentLocaleAction.payload.localeCode).toBe(aLocaleCode);
         });
 
         it('should create action with isSet set to passed in value', () => {
             const isSet = aBoolean();
-            const theLoadCurrentLocaleAction = actions.loadCurrentLocaleSuccess(aString(), false, aLocaleCode, isSet);
+            const theLoadCurrentLocaleAction = actions.loadLocaleSuccess(aString(), false, aLocaleCode, isSet);
             expect(theLoadCurrentLocaleAction.payload.isSet).toBe(isSet);
         });
 
@@ -92,12 +92,12 @@ describe('the loadCurrentLocaleAction for', () => {
         const errorMessage = '[test] Error occurred during loadCurrentLocale';
 
         it('should create action with type SET_LOCALE_FAILURE', () => {
-            const theLoadCurrentLocaleAction = actions.loadCurrentLocaleFailure(errorMessage, false);
+            const theLoadCurrentLocaleAction = actions.loadLocaleFailure(errorMessage, false);
             expect(theLoadCurrentLocaleAction.type).toBe(constants.LOAD_CURRENT_LOCALE_FAILURE);
         });
 
         it('should create action with payload containing an error message', () => {
-            const theLoadCurrentLocaleAction = actions.loadCurrentLocaleFailure(errorMessage, false);
+            const theLoadCurrentLocaleAction = actions.loadLocaleFailure(errorMessage, false);
             expect(theLoadCurrentLocaleAction.payload.message).toBe(errorMessage);
         });
 

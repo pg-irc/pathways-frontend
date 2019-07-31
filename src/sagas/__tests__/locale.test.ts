@@ -38,7 +38,7 @@ describe('load locale saga', () => {
             const isSet = true;
             const loading = false; 
             const message = '';
-            expect(loadSuccessAction).toEqual(put(actions.loadCurrentLocaleSuccess(message, loading, aLocale.code, isSet)));
+            expect(loadSuccessAction).toEqual(put(actions.loadLocaleSuccess(message, loading, aLocale.code, isSet)));
         });
     });
 
@@ -69,7 +69,7 @@ describe('load locale saga', () => {
             const loading = false; 
             const message = '';
             expect(loadSuccessActionWithFallbackLocale)
-            .toEqual(put(actions.loadCurrentLocaleSuccess(message, loading, theFallbackLocale.code, isSet)));
+            .toEqual(put(actions.loadLocaleSuccess(message, loading, theFallbackLocale.code, isSet)));
         });
     });
 });
