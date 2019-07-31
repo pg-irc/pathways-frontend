@@ -123,7 +123,7 @@ describe('the reducer', () => {
         expect(theStore.fallback).toBe(undefined);
     });
 
-    it('when called with SAVE_LOCALE_REQUEST should return store with loading flagAVE', () => {
+    it('when called with SAVE_LOCALE_REQUEST should return store with loading flag set', () => {
         const theStore = new LocaleStoreBuilder().build();
         const theAction = {
             type: constants.SAVE_LOCALE_REQUEST as typeof constants.SAVE_LOCALE_REQUEST,
