@@ -31,9 +31,9 @@ export function* watchLoadLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_CURRENT_LOCALE_REQUEST, loadCurrentLocale);
 }
 
-export type LoadCurrentLocaleActions = actions.LoadCurrentLocaleRequestAction | actions.LoadCurrentLocaleResult;
+export type LoadLocaleActions = actions.LoadLocaleRequestAction | actions.LoadLocaleResult;
 
-export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadCurrentLocaleActions>> {
+export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadLocaleActions>> {
     try {
         const retrievedCode = yield call(loadCurrentLocaleCode);
 
@@ -43,17 +43,17 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<Lo
             const isSet = false;
             const loading = false;
             const message = '';
-            yield put(actions.loadCurrentLocaleSuccess(message, loading, fallbackLocale.code, isSet));
+            yield put(actions.loadLocaleSuccess(message, loading, fallbackLocale.code, isSet));
         } else {
             const locale = LocaleInfoManager.get(retrievedCode);
             const isSet = true;
             const loading = false;
             const message = '';
-            yield put(actions.loadCurrentLocaleSuccess(message, loading, locale.code, isSet));
+            yield put(actions.loadLocaleSuccess(message, loading, locale.code, isSet));
         }
     } catch (e) {
         console.error(`Failed to load current locale (${e.message})`);
-        const loading = false; 
-        yield put(actions.loadCurrentLocaleFailure(e.message, loading));
+        const loading = false;
+        yield put(actions.loadLocaleFailure(e.message, loading));
     }
 }
