@@ -19,7 +19,7 @@ describe('load locale saga', () => {
         );
     });
 
-    describe('with locale already set', () => {
+    describe('with locale already saved', () => {
         let loadCurrentLocaleAction: any = undefined;
         let loadSuccessAction: any = undefined;
 
@@ -34,15 +34,13 @@ describe('load locale saga', () => {
             expect(loadCurrentLocaleAction).toEqual(call(loadCurrentLocaleCode));
         });
 
-        it('dispatches a load current locale success action with isSet flag is true', () => {
-            const isSet = true;
-            const loading = false; 
-            const message = '';
-            expect(loadSuccessAction).toEqual(put(actions.loadLocaleSuccess(message, loading, aLocale.code, isSet)));
+        it('dispatches a load current locale success action with isSaved flag is true', () => {
+            const isSaved = true;
+            expect(loadSuccessAction).toEqual(put(actions.loadLocaleSuccess(aLocale.code, isSaved)));
         });
     });
 
-    describe('with locale not set', () => {
+    describe('with locale not saved', () => {
         let saga: any = undefined;
         let loadCurrentLocaleAction: any = undefined;
         let saveCurrentLocaleCodeAction: any = undefined;
@@ -64,12 +62,10 @@ describe('load locale saga', () => {
             expect(saveCurrentLocaleCodeAction).toEqual(call(saveCurrentLocaleCode, theFallbackLocale.code));
         });
 
-        it('dispatches a load current locale success action with isSet flag is false', () => {
-            const isSet = false;
-            const loading = false; 
-            const message = '';
+        it('dispatches a load current locale success action with isSaved flag is false', () => {
+            const isSaved = false;
             expect(loadSuccessActionWithFallbackLocale)
-            .toEqual(put(actions.loadLocaleSuccess(message, loading, theFallbackLocale.code, isSet)));
+            .toEqual(put(actions.loadLocaleSuccess(theFallbackLocale.code, isSaved)));
         });
     });
 });
@@ -96,9 +92,7 @@ describe('the applyLocaleChange saga', () => {
         });
 
         it('should dispatch a put effect with a success action upon completion of call effect', () => {
-            const loading = false; 
-            const message = '';
-            expect(saga.next().value).toEqual(put(actions.saveLocaleSuccess(message, loading,aLocale.code)));
+            expect(saga.next().value).toEqual(put(actions.saveLocaleSuccess(aLocale.code)));
             expect(saga.next().value).toEqual(call(needsTextDirectionChange, aLocale.code));
             expect(saga.next(true).value).toEqual(call(setTextDirection, aLocale.code));
             expect(saga.next().value).toEqual(call(reload));
@@ -107,8 +101,7 @@ describe('the applyLocaleChange saga', () => {
         it('should dispatch a failure action upon failure of call effect', () => {
             const error = anError();
             const value = saga.throw(error).value;
-            const loading = false; 
-            expect(value).toEqual(put(actions.saveLocaleFailure(error.message, loading, aLocale.code)));
+            expect(value).toEqual(put(actions.saveLocaleFailure(error.message, aLocale.code)));
         });
 
     });

@@ -21,13 +21,13 @@ export const loadLocaleRequest = () => {
 };
 
 // tslint:disable-next-line:typedef
-export function loadLocaleSuccess(message: string, loading: boolean, localeCode: string, isSaved: boolean) {
-    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { message, loading, localeCode, isSaved });
+export function loadLocaleSuccess(localeCode: string, isSaved: boolean) {
+    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_SUCCESS, { localeCode, isSaved });
 }
 
 // tslint:disable-next-line:typedef
-export function loadLocaleFailure(message: string, loading: boolean) {
-    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_FAILURE, { message, loading });
+export function loadLocaleFailure(message: string) {
+    return helpers.makeAction(constants.LOAD_CURRENT_LOCALE_FAILURE, { message });
 }
 
 // tslint:disable-next-line:typedef
@@ -36,11 +36,11 @@ export const saveLocaleRequest = (localeCode: string) => {
 };
 
 // tslint:disable-next-line:typedef
-export function saveLocaleSuccess(message: string, loading: boolean, localeCode: string) {
-    return helpers.makeAction(constants.SAVE_LOCALE_SUCCESS, { message, loading, localeCode });
+export function saveLocaleSuccess(localeCode: string) {
+    return helpers.makeAction(constants.SAVE_LOCALE_SUCCESS, { localeCode });
 }
 
 // tslint:disable-next-line:typedef
-export function saveLocaleFailure(message: string, loading: boolean, localeCode: string) {
-    return helpers.makeAction(constants.SAVE_LOCALE_FAILURE, { message, loading, localeCode });
+export function saveLocaleFailure(message: string, localeCode: string) {
+    return helpers.makeAction(constants.SAVE_LOCALE_FAILURE, { message, localeCode });
 }
