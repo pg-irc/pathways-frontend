@@ -4,7 +4,6 @@ import * as helpers from '../helpers/make_action';
 export type LoadLocaleRequestAction = Readonly<ReturnType<typeof loadLocaleRequest>>;
 export type LoadLocaleSuccessAction = Readonly<ReturnType<typeof loadLocaleSuccess>>;
 export type LoadLocaleFailureAction = Readonly<ReturnType<typeof loadLocaleFailure>>;
-export type LoadLocaleResult = LoadLocaleSuccessAction | LoadLocaleFailureAction;
 
 export type LoadLocaleAction = LoadLocaleRequestAction | LoadLocaleSuccessAction | LoadLocaleFailureAction;
 
