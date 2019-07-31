@@ -82,7 +82,7 @@ export class LocaleStoreBuilder {
         return this;
     }
 
-    withIsSet(isSaved: boolean): LocaleStoreBuilder {
+    withIsSaved(isSaved: boolean): LocaleStoreBuilder {
         this.isSaved = isSaved;
         return this;
     }
