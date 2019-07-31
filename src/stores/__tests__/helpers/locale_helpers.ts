@@ -59,7 +59,7 @@ export class LocaleStoreBuilder {
     code: string = this.locale.code;
     fallback: string = this.locale.code;
     loading: boolean = false;
-    isSet: boolean = true;
+    isSaved: boolean = true;
     errorMessage: string = '';
 
     withLocales(locales: ReadonlyArray<LocaleInfo>): LocaleStoreBuilder {
@@ -82,8 +82,8 @@ export class LocaleStoreBuilder {
         return this;
     }
 
-    withIsSet(isSet: boolean): LocaleStoreBuilder {
-        this.isSet = isSet;
+    withIsSet(isSaved: boolean): LocaleStoreBuilder {
+        this.isSaved = isSaved;
         return this;
     }
 
@@ -98,7 +98,7 @@ export class LocaleStoreBuilder {
             code: this.code,
             fallback: this.fallback,
             loading: this.loading,
-            isSet: this.isSet,
+            isSaved: this.isSaved,
             errorMessage: this.errorMessage,
         };
     }
