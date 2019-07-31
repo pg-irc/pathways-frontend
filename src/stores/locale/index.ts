@@ -1,17 +1,6 @@
 import * as constants from '../../application/constants';
 import { LocaleInfo } from '../../locale';
-import {
-    LoadCurrentLocaleRequestAction, loadCurrentLocaleRequest,
-    loadCurrentLocaleSuccess, LoadCurrentLocaleErrorAction, loadCurrentLocaleFailure,
-    SetLocaleRequestAction,setLocaleRequest, setLocaleSuccess, setLocaleFailure,
-    SetLocaleAction, LoadCurrentLocaleAction, SetLocaleResult, LoadCurrentLocaleResult, LocaleAction,
-} from './actions';
-
-export {
-    LoadCurrentLocaleRequestAction, loadCurrentLocaleRequest,loadCurrentLocaleSuccess, 
-    LoadCurrentLocaleErrorAction, loadCurrentLocaleFailure, LoadCurrentLocaleResult, LoadCurrentLocaleAction, setLocaleRequest,
-    SetLocaleAction, setLocaleSuccess, setLocaleFailure, SetLocaleResult, SetLocaleRequestAction, LocaleAction,
-};
+import * as actions from './actions';
 
 export interface LocaleStore {
     readonly availableLocales: ReadonlyArray<LocaleInfo>;
@@ -31,7 +20,7 @@ export const buildDefaultStore = (): LocaleStore => ({
     errorMessage: '',
 });
 
-export const reducer = (store: LocaleStore = buildDefaultStore(), action?: LocaleAction): LocaleStore => {
+export const reducer = (store: LocaleStore = buildDefaultStore(), action?: actions.LocaleAction): LocaleStore => {
     if (!action) {
         return store;
     }

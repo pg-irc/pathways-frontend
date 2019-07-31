@@ -3,7 +3,7 @@ import { call, put, PutEffect, CallEffect } from 'redux-saga/effects';
 
 import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers';
 import { loadCurrentLocaleCode, saveCurrentLocaleCode, reload, needsTextDirectionChange, setTextDirection, LocaleInfoManager } from '../../locale';
-import { loadCurrentLocaleSuccess, setLocaleRequest, setLocaleSuccess, setLocaleFailure, SetLocaleResult,  } from '../../stores/locale';
+import * as actions from '../../stores/locale/actions';
 import { applyLocaleChange, loadCurrentLocale } from '../locale';
 import { anError } from '../../application/__tests__/helpers/random_test_values';
 
@@ -38,7 +38,7 @@ describe('load locale saga', () => {
             const isSet = true;
             const loading = false; 
             const message = '';
-            expect(loadSuccessAction).toEqual(put(loadCurrentLocaleSuccess(message, loading, aLocale.code, isSet)));
+            expect(loadSuccessAction).toEqual(put(actions.loadCurrentLocaleSuccess(message, loading, aLocale.code, isSet)));
         });
     });
 
@@ -68,7 +68,8 @@ describe('load locale saga', () => {
             const isSet = false;
             const loading = false; 
             const message = '';
-            expect(loadSuccessActionWithFallbackLocale).toEqual(put(loadCurrentLocaleSuccess(message, loading, theFallbackLocale.code, isSet)));
+            expect(loadSuccessActionWithFallbackLocale)
+            .toEqual(put(actions.loadCurrentLocaleSuccess(message, loading, theFallbackLocale.code, isSet)));
         });
     });
 });
@@ -76,7 +77,7 @@ describe('load locale saga', () => {
 describe('the applyLocaleChange saga', () => {
 
     const aLocale = new LocaleInfoBuilder().build();
-    const setLocaleAction = setLocaleRequest(aLocale.code);
+    const setLocaleAction = actions.setLocaleRequest(aLocale.code);
 
     it('should dispatch a call effect with saveCurrentLocale', () => {
         const saga = applyLocaleChange(setLocaleAction);
@@ -85,7 +86,7 @@ describe('the applyLocaleChange saga', () => {
 
     describe('after requesting the current locale be saved', () => {
 
-        let saga: IterableIterator<CallEffect | PutEffect<SetLocaleResult>>;
+        let saga: IterableIterator<CallEffect | PutEffect<actions.SetLocaleResult>>;
 
         beforeEach(() => {
             LocaleInfoManager.reset();
@@ -97,7 +98,7 @@ describe('the applyLocaleChange saga', () => {
         it('should dispatch a put effect with a success action upon completion of call effect', () => {
             const loading = false; 
             const message = '';
-            expect(saga.next().value).toEqual(put(setLocaleSuccess(message, loading,aLocale.code)));
+            expect(saga.next().value).toEqual(put(actions.setLocaleSuccess(message, loading,aLocale.code)));
             expect(saga.next().value).toEqual(call(needsTextDirectionChange, aLocale.code));
             expect(saga.next(true).value).toEqual(call(setTextDirection, aLocale.code));
             expect(saga.next().value).toEqual(call(reload));
@@ -107,7 +108,7 @@ describe('the applyLocaleChange saga', () => {
             const error = anError();
             const value = saga.throw(error).value;
             const loading = false; 
-            expect(value).toEqual(put(setLocaleFailure(error.message, loading, aLocale.code)));
+            expect(value).toEqual(put(actions.setLocaleFailure(error.message, loading, aLocale.code)));
         });
 
     });
