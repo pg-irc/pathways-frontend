@@ -4,7 +4,7 @@ import { reducer, Store, buildDefaultStore } from '../stores';
 import { runSaga, ApplicationSaga } from '../sagas';
 
 import { loadFontsActions } from '../stores/fonts';
-import { loadCurrentLocaleActions } from '../stores/locale';
+import { loadLocaleRequest } from '../stores/locale/actions';
 import { UserDataPersistence } from '../stores/user_data';
 
 import { LocaleInfoManager } from '../locale';
@@ -59,6 +59,6 @@ export function startApplication(saga: ApplicationSaga, store: CreatedStore): vo
         Roboto: require('../../assets/fonts/Roboto.ttf'),
         Roboto_medium: require('../../assets/fonts/Roboto_medium.ttf'),
     }));
-    store.dispatch(loadCurrentLocaleActions.request());
+    store.dispatch(loadLocaleRequest());
     store.dispatch(UserDataPersistence.loadRequest());
 }

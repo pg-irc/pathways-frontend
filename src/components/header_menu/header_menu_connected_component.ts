@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { HeaderMenuComponent, HeaderMenuProps, HeaderMenuActions } from './header_menu_component';
 import { Store } from '../../stores';
-import { SetLocale, setLocaleActions } from '../../stores/locale';
+import { SaveLocaleRequestAction, saveLocaleRequest } from '../../stores/locale/actions';
 import { LocaleInfo } from '../../locale';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 import { selectLocale } from '../../selectors/locale/select_locale';
@@ -15,8 +15,8 @@ const mapStateToProps = (store: Store): HeaderMenuProps => {
     return { currentLocale, availableLocales };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<SetLocale.Request>): HeaderMenuActions => ({
-    setLocale: (localeCode: string): SetLocale.Request => dispatch(setLocaleActions.request(localeCode)),
+const mapDispatchToProps = (dispatch: Dispatch<SaveLocaleRequestAction>): HeaderMenuActions => ({
+    setLocale: (localeCode: string): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode)),
 });
 
 export const HeaderMenuConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HeaderMenuComponent);
