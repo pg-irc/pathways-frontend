@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect } from 'redux-saga/effects';
 import * as constants from '../application/constants';
-import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode, reload } from '../locale';
+import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode } from '../locale';
 import * as actions from '../stores/locale/actions';
 import { setTextDirection, needsTextDirectionChange } from '../locale/effects';
 
@@ -16,7 +16,6 @@ export function* applyLocaleChange(action: actions.SaveLocaleRequestAction): Ite
         yield put(actions.saveLocaleSuccess(localeCode));
         if (yield call(needsTextDirectionChange, localeCode)) {
             yield call(setTextDirection, localeCode);
-            yield call(reload);
         }
     } catch (e) {
         yield put(actions.saveLocaleFailure(e.message, localeCode));
