@@ -8,6 +8,7 @@ export function needsTextDirectionChange(localeCode: string): boolean {
 
 export function setTextDirection(localeCode: string): void {
     I18nManager.forceRTL(isRTL(localeCode));
+    reload();
 }
 
 const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
