@@ -25,7 +25,7 @@ type Props = WelcomeProps & WelcomeActions;
 
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
-    const handlechange = (localeCode: string): void => {
+    const handleChange = (localeCode: string): void => {
         if (localeCode !== props.currentLocale.code ) {
             props.setLocale(localeCode);
         }
@@ -67,7 +67,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                             mode='dropdown'
                             iosIcon={<Icon name='ios-arrow-down' />}
                             selectedValue={props.currentLocale.code}
-                            onValueChange={(localeCode: string): void => handlechange(localeCode)}
+                            onValueChange={handleChange}
                             style={{ backgroundColor: colors.white }}
                         >
                             {props.availableLocales.map((locale: LocaleInfo) => (
