@@ -11,7 +11,7 @@ export function setTextDirection(localeCode: string): void {
     reload();
 }
 
-const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
+export const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
 
 export function reload(): void {
     Expo.Updates.reloadFromCache();
