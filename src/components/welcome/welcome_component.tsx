@@ -67,7 +67,7 @@ export function WelcomeComponent(props: Props): JSX.Element {
                             mode='dropdown'
                             iosIcon={<Icon name='ios-arrow-down' />}
                             selectedValue={props.currentLocale.code}
-                            onValueChange={(e: string): void => handlechange(e)}
+                            onValueChange={(localeCode: string): void => handlechange(localeCode)}
                             style={{ backgroundColor: colors.white }}
                         >
                             {props.availableLocales.map((locale: LocaleInfo) => (
