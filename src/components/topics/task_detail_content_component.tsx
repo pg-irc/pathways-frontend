@@ -5,7 +5,7 @@ import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import Markdown, { openUrl } from 'react-native-markdown-renderer';
 import { Topic } from '../../selectors/topics/topic';
-import { textStyles, colors, values, markdownStyles } from '../../application/styles';
+import { textStyles, colors, values, markdownStyles, getNormalFontFamily } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
@@ -87,7 +87,7 @@ const RecommendedComponent = (props: Props): JSX.Element => {
                     marginRight: 5,
                 }}
             />
-            <Text style={[textStyles.paragraphStyle, { color: colors.greyishBrown, fontSize: 14, fontFamily: 'AvenirBook' }]}>
+            <Text style={[textStyles.paragraphStyle, { color: colors.greyishBrown, fontSize: 14, fontFamily: getNormalFontFamily() }]}>
                 <Trans>Recommended for you</Trans>
             </Text>
         </View>

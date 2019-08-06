@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Icon } from 'native-base';
-import { values, colors, textStyles } from '../../application/styles';
+import { values, colors, textStyles, getNormalFontFamily } from '../../application/styles';
 import { TopicListItem } from '../../selectors/topics/topic_list_item';
 import { AddToSavedListAction, RemoveFromSavedListAction, Id } from '../../stores/topics';
 import { I18nManager, TouchableOpacity } from 'react-native';
@@ -49,7 +49,7 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                         <Text numberOfLines={2} style={textStyles.headlineH4StyleBlackLeft}>
                             {props.topic.title}
                         </Text>
-                        <Text note numberOfLines={1} style={{ textAlign: 'left', fontFamily: 'AvenirBook' }}>
+                        <Text note numberOfLines={1} style={{ textAlign: 'left', fontFamily: getNormalFontFamily() }}>
                             {taskDescription}
                         </Text>
                     </View>
