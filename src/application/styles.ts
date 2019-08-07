@@ -41,19 +41,16 @@ const fontStyle = 'normal';
 const letterSpacing = 0;
 const buttonLetterSpacing = 0.2;
 
+export const getNormalFontFamily = (): string => (
+    Platform.OS === 'android' ? 'AvenirBook' : 'Avenir'
+);
+
 const getNormalFontStylesForOS = (): object => (
-    Platform.OS === 'android' ?
-        {
-            fontFamily: 'AvenirBook',
-            fontWeight: 'normal',
-            fontStyle,
-        }
-        :
-        {
-            fontFamily: 'Avenir',
-            fontWeight: 'normal',
-            fontStyle,
-        }
+    {
+        fontFamily: getNormalFontFamily(),
+        fontWeight: 'normal',
+        fontStyle,
+    }
 );
 
 const getBoldFontStylesForOS = (): object => (
@@ -313,7 +310,7 @@ export const markdownStyles = StyleSheet.create({
     text: {
         textAlign: 'left',
         color: colors.greyishBrown,
-        fontFamily: 'AvenirBook',
+        fontFamily: getNormalFontFamily(),
         fontSize: 16,
         lineHeight: 21,
         paddingHorizontal: values.backgroundTextPadding,
@@ -350,7 +347,7 @@ export const markdownStyles = StyleSheet.create({
         }),
     },
     link: {
-        fontFamily: 'AvenirBook',
+        fontFamily: getNormalFontFamily(),
         color: colors.teal,
         textDecorationLine: 'underline',
     },
