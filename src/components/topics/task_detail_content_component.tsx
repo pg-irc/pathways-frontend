@@ -72,7 +72,7 @@ const TaxonomyComponent = (props: Props): JSX.Element => (
         },
     ]}
     >
-        <Trans id={props.topic.exploreSection.name} />
+        <Trans id={props.topic.exploreSection.name.toLocaleUpperCase()} />
     </Text>
 );
 
