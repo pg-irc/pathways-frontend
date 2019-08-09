@@ -58,12 +58,10 @@ type OnPanResponderMoveCallback = (_event: GestureResponderEvent, _gestureState:
 
 const onPanResponderEnd = (currentIndex: number, itemCount: number, setState: SetState): OnPanResponderMoveCallback => {
     return (_event: GestureResponderEvent, gestureState: PanResponderGestureState): void => {
-        if (isLeftSwipe(gestureState.dx)) {
-            const nextIndex = getNextIndexForLeftSwipe(currentIndex, itemCount);
-            setState({ currentIndex: nextIndex });
-        } else if (isRightSwipe(gestureState.dx)) {
-            const nextIndex = getNextIndexForRightSwipe(currentIndex, itemCount);
-            setState({ currentIndex: nextIndex });
+        if (isSwipeToNext(gestureState.dx)) {
+            setState({ currentIndex: getNextIndex(currentIndex, itemCount) });
+        } else if (isSwipeToPrevious(gestureState.dx)) {
+            setState({ currentIndex: getPreviousIndex(currentIndex) });
         }
     };
 };
@@ -88,26 +86,32 @@ const NavigationDot = (props: { readonly currentIndex: number, readonly loopInde
     return <View style={{ ...dotStyle, backgroundColor: colors.lightGrey }} />;
 };
 
-const getNextIndexForLeftSwipe = (currentIndex: number, itemCount: number): number => (
-    I18nManager.isRTL ? getDecrementedIndex(currentIndex) : getIncrementedIndex(currentIndex, itemCount)
-);
-
-const getNextIndexForRightSwipe = (currentIndex: number, itemCount: number): number => (
-    I18nManager.isRTL ? getIncrementedIndex(currentIndex, itemCount) : getDecrementedIndex(currentIndex)
-);
-
-const getIncrementedIndex = (currentIndex: number, itemCount: number): number => (
+const getNextIndex = (currentIndex: number, itemCount: number): number => (
     R.min(currentIndex + 1, itemCount - 1)
 );
 
-const getDecrementedIndex = (currentIndex: number): number => (
+const getPreviousIndex = (currentIndex: number): number => (
     R.max(currentIndex - 1, 0)
+);
+
+const isSwipeToNext = (horizontalMovementValue: number): boolean => {
+    if (I18nManager.isRTL) {
+        return isRightSwipe(horizontalMovementValue);
+    }
+    return isLeftSwipe(horizontalMovementValue);
+};
+
+const isSwipeToPrevious = (horizontalMovementValue: number): boolean => {
+    if (I18nManager.isRTL) {
+        return isLeftSwipe(horizontalMovementValue);
+    }
+    return isRightSwipe(horizontalMovementValue);
+};
+
+const isRightSwipe = (horizontalMovementValue: number): boolean => (
+    horizontalMovementValue > requiredSwipDistanceValue
 );
 
 const isLeftSwipe = (horizontalMovementValue: number): boolean => (
     horizontalMovementValue < -1.0 * requiredSwipDistanceValue
-);
-
-const isRightSwipe = (horizontalMovementValue: number): boolean => (
-    horizontalMovementValue > requiredSwipDistanceValue
 );
