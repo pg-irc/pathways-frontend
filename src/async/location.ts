@@ -1,15 +1,19 @@
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
-import { AsyncLocationErrorType } from './error_types';
+import { AsyncErrors } from './errors';
 import { LatLong } from '../stores/manual_user_location';
 
-export const isAsyncLocationError = (maybeLocation: LocationData | AsyncLocationError):
-    maybeLocation is AsyncLocationError => (
-        (<AsyncLocationError>maybeLocation).type === AsyncLocationErrorType.NoLocationPermission ||
-        (<AsyncLocationError>maybeLocation).type === AsyncLocationErrorType.LocationFetchTimeout
-    );
+export interface NoLocationPermissionError {
+    readonly type: AsyncErrors.NoLocationPermission;
+}
 
-export const getLocationIfPermittedAsync = async (manualUserLocation?: LatLong): Promise<LocationData | AsyncLocationError> => {
+export interface LocationFetchTimeoutError {
+    readonly type: AsyncErrors.LocationFetchTimeout;
+}
+
+type GetDeviceLocationReturnType = Promise<LocationData | NoLocationPermissionError | LocationFetchTimeoutError>;
+
+export const getDeviceLocation = async (manualUserLocation?: LatLong): GetDeviceLocationReturnType => {
     try {
         if (manualUserLocation) {
             return {
@@ -26,25 +30,18 @@ export const getLocationIfPermittedAsync = async (manualUserLocation?: LatLong):
         }
         const permissions = await Permissions.askAsync(Permissions.LOCATION);
         if (permissions.status !== 'granted') {
-            return buildNoLocationPermissionError('Location permission not granted');
+            return buildNoLocationPermissionError();
         }
         return await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low, timeout: 5000 });
     } catch (error) {
-        return buildLocationFetchTimeoutError(error);
+        return buildLocationFetchTimeoutError();
     }
 };
 
-interface AsyncLocationError {
-    readonly type: AsyncLocationErrorType;
-    readonly message: string;
-}
-
-const buildNoLocationPermissionError = (message: string): AsyncLocationError => ({
-    type: AsyncLocationErrorType.NoLocationPermission,
-    message,
+const buildNoLocationPermissionError = (): NoLocationPermissionError => ({
+    type: AsyncErrors.NoLocationPermission,
 });
 
-const buildLocationFetchTimeoutError = (message: string): AsyncLocationError => ({
-    type: AsyncLocationErrorType.LocationFetchTimeout,
-    message,
+const buildLocationFetchTimeoutError = (): LocationFetchTimeoutError => ({
+    type: AsyncErrors.LocationFetchTimeout,
 });

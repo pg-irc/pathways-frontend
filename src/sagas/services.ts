@@ -8,36 +8,46 @@ import {
     serviceFromValidatedJSON,
 } from '../stores/services';
 import { searchServices, APIResponse } from '../api';
-import { isResponseError } from '../api/is_response_error';
-import { servicesAtLocationValidator, isValidationError } from '../json_schemas/validators';
-import { isAsyncLocationError, getLocationIfPermittedAsync } from '../async/location';
-import { AsyncGenericErrorType, AsyncLocationErrorType } from '../async/error_types';
+import { servicesAtLocationValidator } from '../json_schemas/validators';
+import { getDeviceLocation } from '../async/location';
+import {
+    isNoLocationPermissionError,
+    isLocationFetchTimeoutError,
+    isBadServerResponseError,
+    isInvalidServerDataError,
+} from '../async/is_error';
+import { AsyncErrors } from '../async/errors';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
 }
 
-export type ServicesErrorType = AsyncGenericErrorType | AsyncLocationErrorType;
+export type ServicesErrorType = AsyncErrors;
 
 export function* updateTaskServices(action: SendTopicServicesRequestAction): UpdateResult {
     const topicId = action.payload.topicId;
     try {
-        const maybeLocation = yield call(getLocationIfPermittedAsync, action.payload.manualUserLocation);
-        if (isAsyncLocationError(maybeLocation)) {
+        const maybeLocation = yield call(getDeviceLocation, action.payload.manualUserLocation);
+        if (isNoLocationPermissionError(maybeLocation)) {
             return yield put(
-                populateTopicServicesFromError(maybeLocation.message, topicId, maybeLocation.type),
+                populateTopicServicesFromError(topicId, maybeLocation.type),
+            );
+        }
+        if (isLocationFetchTimeoutError(maybeLocation)) {
+            return yield put(
+                populateTopicServicesFromError(topicId, maybeLocation.type),
             );
         }
         const response: APIResponse = yield call(searchServices, topicId, maybeLocation);
-        if (isResponseError(response)) {
+        if (isBadServerResponseError(response)) {
             return yield put(
-                populateTopicServicesFromError(response.message, topicId, AsyncGenericErrorType.BadServerResponse),
+                populateTopicServicesFromError(topicId, AsyncErrors.BadServerResponse),
             );
         }
         const validator = servicesAtLocationValidator(response.results);
-        if (isValidationError(validator)) {
+        if (isInvalidServerDataError(validator)) {
             return yield put(
-                populateTopicServicesFromError(validator.errors, topicId, AsyncGenericErrorType.ValidationFailure),
+                populateTopicServicesFromError(topicId, AsyncErrors.InvalidServerData),
             );
         }
         yield put(
@@ -45,7 +55,7 @@ export function* updateTaskServices(action: SendTopicServicesRequestAction): Upd
         );
     } catch (error) {
         yield put(
-            populateTopicServicesFromError(error.message, topicId, AsyncGenericErrorType.Exception),
+            populateTopicServicesFromError(topicId, AsyncErrors.Exception),
         );
     }
 }

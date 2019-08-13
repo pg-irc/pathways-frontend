@@ -4,7 +4,7 @@ import {
     reducer, SendTopicServicesRequestAction, PopulateTopicServicesFromSuccessAction,
     PopulateTopicServicesFromErrorAction, Service, isValidServicesForTopic,
 } from '../services';
-import { AsyncGenericErrorType } from '../../async/error_types';
+import { AsyncErrors } from '../../async/errors';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
@@ -134,29 +134,19 @@ describe('services reducer', () => {
 
     describe('when populating topic services error object from an error response', () => {
         const topic = new TopicBuilder().withId(loadingTaskServicesError.topicId).build();
-        const anErrorMessage = aString();
         const action: PopulateTopicServicesFromErrorAction = {
             type: constants.LOAD_SERVICES_FAILURE,
             payload: {
-                errorMessage: anErrorMessage,
                 topicId: topic.id,
-                errorMessageType: AsyncGenericErrorType.BadServerResponse,
+                errorMessageType: AsyncErrors.BadServerResponse,
             },
         };
         const store = reducer(theStore, action);
         const topicServicesOrErrorEntry = store.servicesByTopic[topic.id];
 
-        it('sets the error message on the topic services error object', () => {
-            if (topicServicesOrErrorEntry.type === constants.TOPIC_SERVICES_ERROR) {
-                expect(topicServicesOrErrorEntry.errorMessage).toBe(anErrorMessage);
-            } else {
-                fail();
-            }
-        });
-
         it('sets the error message type on the topic services error object', () => {
             if (topicServicesOrErrorEntry.type === constants.TOPIC_SERVICES_ERROR) {
-                expect(topicServicesOrErrorEntry.errorMessageType).toBe(AsyncGenericErrorType.BadServerResponse);
+                expect(topicServicesOrErrorEntry.errorMessageType).toBe(AsyncErrors.BadServerResponse);
             } else {
                 fail();
             }

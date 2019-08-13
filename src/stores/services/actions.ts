@@ -2,8 +2,8 @@ import { Id as TopicId } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { Service } from './types';
-import { ServicesErrorType } from '../../sagas/services';
 import { LatLong } from '../manual_user_location';
+import { AsyncErrors } from '../../async/errors';
 
 export type SendTopicServicesRequestAction = Readonly<ReturnType<typeof sendTopicServicesRequest>>;
 
@@ -28,8 +28,7 @@ export const populateTopicServicesFromSuccess = (topicId: TopicId, services: Rea
 
 // tslint:disable-next-line:typedef
 export const populateTopicServicesFromError = (
-    errorMessage: string,
     topicId: TopicId,
-    errorMessageType: ServicesErrorType) => (
-        helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { errorMessage, topicId, errorMessageType })
+    errorMessageType: AsyncErrors) => (
+        helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { topicId, errorMessageType })
     );
