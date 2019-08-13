@@ -1,10 +1,9 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { Text, View, Icon } from 'native-base';
-import { ServicesErrorType } from '../../sagas/services';
 import { ErrorSelectorTopicServices } from '../../selectors/services/types';
 import { colors, textStyles } from '../../application/styles';
-import { AsyncLocationErrorType } from '../../async/error_types';
+import { AsyncErrors } from '../../async/errors';
 
 export interface ServiceListErrorComponentProps {
     readonly error: ErrorSelectorTopicServices;
@@ -30,15 +29,15 @@ export const ServiceListErrorComponent = (props: ServiceListErrorComponentProps)
     );
 };
 
-const getTextForErrorType = (errorMessageType: ServicesErrorType): JSX.Element => {
-    if (errorMessageType === AsyncLocationErrorType.NoLocationPermission) {
+const getTextForErrorType = (errorMessageType: AsyncErrors): JSX.Element => {
+    if (errorMessageType === AsyncErrors.NoLocationPermission) {
         return (
             <Trans>
                 Please ensure location services are enabled for Arrival Advisor.
             </Trans>
         );
     }
-    if (errorMessageType === AsyncLocationErrorType.LocationFetchTimeout) {
+    if (errorMessageType === AsyncErrors.LocationFetchTimeout) {
         return (
             <Trans>
                 Fetching your location timed out. On Android devices you may need to set

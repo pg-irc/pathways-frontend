@@ -3,7 +3,7 @@
 const Ajv = require('ajv');
 import { serviceAtLocationArray } from '../stores/services';
 
-interface ValidatorResponse {
+export interface ValidatorResponse {
     readonly isValid: boolean;
     readonly errors?: string;
 }
@@ -15,7 +15,3 @@ export const servicesAtLocationValidator = (data: any): ValidatorResponse => {
     };
     return response.isValid ? response : { ...response, errors: ajv.errorsText(ajv.errors) };
 };
-
-export const isValidationError = (validator: ValidatorResponse): boolean => (
-    !validator.isValid
-);

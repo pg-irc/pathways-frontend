@@ -127,7 +127,6 @@ const updateServicesSuccess = (store: ServiceStore, action: PopulateTopicService
 
 const updateServicesFailure = (store: ServiceStore, action: PopulateTopicServicesFromErrorAction): ServiceStore => {
     const topicId = action.payload.topicId;
-    const errorMessage = action.payload.errorMessage;
     const errorMessageType = action.payload.errorMessageType;
     return {
         ...store,
@@ -136,7 +135,6 @@ const updateServicesFailure = (store: ServiceStore, action: PopulateTopicService
             [topicId]: {
                 type: constants.TOPIC_SERVICES_ERROR,
                 errorMessageType,
-                errorMessage,
             },
         },
     };

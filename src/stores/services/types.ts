@@ -1,5 +1,5 @@
 import * as constants from '../../application/constants';
-import { ServicesErrorType } from '../../sagas/services';
+import { AsyncErrors } from '../../async/errors';
 
 export type Id = string;
 
@@ -42,8 +42,7 @@ export interface LoadingServicesForTopic {
 
 export interface ErrorServicesForTopic {
     readonly type: 'ServicesForTopic:Error';
-    readonly errorMessage: string;
-    readonly errorMessageType: ServicesErrorType;
+    readonly errorMessageType: AsyncErrors;
 }
 
 export type ServicesForTopic = ValidServicesForTopic | LoadingServicesForTopic | ErrorServicesForTopic;
