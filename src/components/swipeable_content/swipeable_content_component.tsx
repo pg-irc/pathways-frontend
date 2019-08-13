@@ -1,10 +1,17 @@
 // tslint:disable:no-expression-statement
 import React, { useState } from 'react';
-import { View, PanResponder, PanResponderInstance, PanResponderGestureState, GestureResponderEvent } from 'react-native';
+import {
+    View,
+    PanResponder,
+    PanResponderInstance,
+    PanResponderGestureState,
+    GestureResponderEvent,
+    I18nManager,
+} from 'react-native';
 import * as R from 'ramda';
 import { colors } from '../../application/styles';
 
-const requiredSwipeMovementValue = 75;
+const requiredSwipDistanceValue = 75;
 
 interface SwipeableContentComponentProps {
     readonly contentItems: ReadonlyArray<JSX.Element>;
@@ -51,9 +58,9 @@ type OnPanResponderMoveCallback = (_event: GestureResponderEvent, _gestureState:
 
 const onPanResponderEnd = (currentIndex: number, itemCount: number, setState: SetState): OnPanResponderMoveCallback => {
     return (_event: GestureResponderEvent, gestureState: PanResponderGestureState): void => {
-        if (isRightToLeftSwipe(gestureState.dx)) {
+        if (isSwipeToNext(gestureState.dx)) {
             setState({ currentIndex: getNextIndex(currentIndex, itemCount) });
-        } else if (isLeftToRightSwipe(gestureState.dx)) {
+        } else if (isSwipeToPrevious(gestureState.dx)) {
             setState({ currentIndex: getPreviousIndex(currentIndex) });
         }
     };
@@ -87,10 +94,24 @@ const getPreviousIndex = (currentIndex: number): number => (
     R.max(currentIndex - 1, 0)
 );
 
-const isRightToLeftSwipe = (horizontalMovementValue: number): boolean => (
-    horizontalMovementValue < -1.0 * requiredSwipeMovementValue
+const isSwipeToNext = (horizontalMovementValue: number): boolean => {
+    if (I18nManager.isRTL) {
+        return isRightSwipe(horizontalMovementValue);
+    }
+    return isLeftSwipe(horizontalMovementValue);
+};
+
+const isSwipeToPrevious = (horizontalMovementValue: number): boolean => {
+    if (I18nManager.isRTL) {
+        return isLeftSwipe(horizontalMovementValue);
+    }
+    return isRightSwipe(horizontalMovementValue);
+};
+
+const isRightSwipe = (horizontalMovementValue: number): boolean => (
+    horizontalMovementValue > requiredSwipDistanceValue
 );
 
-const isLeftToRightSwipe = (horizontalMovementValue: number): boolean => (
-    horizontalMovementValue > requiredSwipeMovementValue
+const isLeftSwipe = (horizontalMovementValue: number): boolean => (
+    horizontalMovementValue < -1.0 * requiredSwipDistanceValue
 );
