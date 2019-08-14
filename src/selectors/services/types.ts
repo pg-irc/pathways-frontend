@@ -1,5 +1,5 @@
 import { Service } from '../../stores/services';
-import { AsyncErrors } from '../../async/errors';
+import { Errors } from '../../errors/types';
 
 export interface ValidSelectorTopicServices {
     readonly services: ReadonlyArray<Service>;
@@ -11,7 +11,7 @@ export interface LoadingSelectorTopicServices {
 }
 
 export interface ErrorSelectorTopicServices {
-    readonly errorMessageType: AsyncErrors;
+    readonly errorMessageType: Errors;
     readonly type: 'ServicesForTopic:Error';
 }
 

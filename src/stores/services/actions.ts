@@ -3,7 +3,7 @@ import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { Service } from './types';
 import { LatLong } from '../manual_user_location';
-import { AsyncErrors } from '../../async/errors';
+import { Errors } from '../../errors/types';
 
 export type SendTopicServicesRequestAction = Readonly<ReturnType<typeof sendTopicServicesRequest>>;
 
@@ -29,6 +29,6 @@ export const populateTopicServicesFromSuccess = (topicId: TopicId, services: Rea
 // tslint:disable-next-line:typedef
 export const populateTopicServicesFromError = (
     topicId: TopicId,
-    errorMessageType: AsyncErrors) => (
+    errorMessageType: Errors) => (
         helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { topicId, errorMessageType })
     );

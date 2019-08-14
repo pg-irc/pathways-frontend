@@ -1,14 +1,14 @@
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
-import { AsyncErrors } from './errors';
+import { Errors } from '../errors/types';
 import { LatLong } from '../stores/manual_user_location';
 
 export interface NoLocationPermissionError {
-    readonly type: AsyncErrors.NoLocationPermission;
+    readonly type: Errors.NoLocationPermission;
 }
 
 export interface LocationFetchTimeoutError {
-    readonly type: AsyncErrors.LocationFetchTimeout;
+    readonly type: Errors.LocationFetchTimeout;
 }
 
 type GetDeviceLocationReturnType = Promise<LocationData | NoLocationPermissionError | LocationFetchTimeoutError>;
@@ -16,17 +16,7 @@ type GetDeviceLocationReturnType = Promise<LocationData | NoLocationPermissionEr
 export const getDeviceLocation = async (manualUserLocation?: LatLong): GetDeviceLocationReturnType => {
     try {
         if (manualUserLocation) {
-            return {
-                coords: {
-                    latitude: manualUserLocation.latitude,
-                    longitude: manualUserLocation.longitude,
-                    altitude: 0,
-                    accuracy: 0,
-                    heading: 0,
-                    speed: 0,
-                },
-                timestamp: 0,
-            };
+            return buildManualUserLocation(manualUserLocation);
         }
         const permissions = await Permissions.askAsync(Permissions.LOCATION);
         if (permissions.status !== 'granted') {
@@ -39,9 +29,21 @@ export const getDeviceLocation = async (manualUserLocation?: LatLong): GetDevice
 };
 
 const buildNoLocationPermissionError = (): NoLocationPermissionError => ({
-    type: AsyncErrors.NoLocationPermission,
+    type: Errors.NoLocationPermission,
 });
 
 const buildLocationFetchTimeoutError = (): LocationFetchTimeoutError => ({
-    type: AsyncErrors.LocationFetchTimeout,
+    type: Errors.LocationFetchTimeout,
+});
+
+const buildManualUserLocation = (manualUserLocation: LatLong): LocationData => ({
+    coords: {
+        latitude: manualUserLocation.latitude,
+        longitude: manualUserLocation.longitude,
+        altitude: 0,
+        accuracy: 0,
+        heading: 0,
+        speed: 0,
+    },
+    timestamp: 0,
 });

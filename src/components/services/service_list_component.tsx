@@ -9,13 +9,13 @@ import { ServiceListItemComponent } from './service_list_item_component';
 import { SendTopicServicesRequestAction } from '../../stores/services';
 import { textStyles, colors, values } from '../../application/styles';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
-import { ServiceListErrorComponent } from './service_list_error_component';
 import { isErrorSelectorTopicServices } from '../../selectors/services/is_error_selector_topic_services';
 import * as constants from '../../application/constants';
 import { LatLong } from '../../stores/manual_user_location';
 import { useDeviceIsOffline } from '../../hooks/useDeviceIsOffline';
-import { DeviceOfflineComponent } from '../error_screens/DeviceOfflineComponent';
 import { useRefreshScreen } from '../../hooks/useRefreshScreen';
+import { ErrorScreenPickerComponent } from '../error_screens/ErrorScreenPickerComponent';
+import { Errors } from '../../errors/types';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -38,16 +38,29 @@ interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
     const [isOffline, setIsOffline]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-    const refresh = useRefreshScreen();
-    useDeviceIsOffline((deviceIsOffline: boolean) => setIsOffline(deviceIsOffline));
-    useEffect(() => props.requestTopicServices, []);
+    const deviceIsOfflineCallback = (deviceIsOffline: boolean): void => setIsOffline(deviceIsOffline);
+    const requestTopicServicesEffect = (): void => { props.requestTopicServices(); };
+    const refreshScreen = useRefreshScreen();
+
+    useDeviceIsOffline(deviceIsOfflineCallback);
+    useEffect(requestTopicServicesEffect, []);
 
     if (isOffline) {
-        return <DeviceOfflineComponent refresh={refresh} />;
+        return (
+            <ErrorScreenPickerComponent
+                refreshScreen={refreshScreen}
+                errorType={Errors.Offline}
+            />
+        );
     }
 
     if (isErrorSelectorTopicServices(props.topicServicesOrError)) {
-        return <ServiceListErrorComponent error={props.topicServicesOrError} />;
+        return (
+            <ErrorScreenPickerComponent
+                refreshScreen={refreshScreen}
+                errorType={props.topicServicesOrError.errorMessageType}
+            />
+        );
     }
 
     return (
