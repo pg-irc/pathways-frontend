@@ -190,6 +190,14 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getNormalFontStylesForOS(),
     },
+    paragraphStyleBrownCenter: {
+        fontSize: 16,
+        lineHeight: 21,
+        textAlign: 'center',
+        color: colors.greyishBrown,
+        letterSpacing,
+        ...getNormalFontStylesForOS(),
+    },
     paragraphSmallStyleLeft: {
         fontSize: 12,
         lineHeight: 21,

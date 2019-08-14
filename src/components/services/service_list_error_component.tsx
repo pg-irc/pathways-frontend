@@ -45,5 +45,12 @@ const getTextForErrorType = (errorMessageType: AsyncErrors): JSX.Element => {
             </Trans>
         );
     }
+    if (errorMessageType === AsyncErrors.BadServerResponse) {
+        return (
+            <Trans>
+                Bad Server Response.
+            </Trans>
+        );
+    }
     return <Trans>An error has occured.</Trans>;
 };
