@@ -8,12 +8,11 @@ import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
 import { SendTopicServicesRequestAction } from '../../stores/services';
 import { textStyles, colors, values } from '../../application/styles';
-import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { isErrorSelectorTopicServices } from '../../selectors/services/is_error_selector_topic_services';
 import * as constants from '../../application/constants';
 import { LatLong } from '../../stores/manual_user_location';
 import { useDeviceIsOffline } from '../../hooks/useDeviceIsOffline';
-import { useRefreshScreen } from '../../hooks/useRefreshScreen';
+import { useRefreshScreen, UseRefreshScreen } from '../../hooks/useRefreshScreen';
 import { ErrorScreenPickerComponent } from '../error_screens/ErrorScreenPickerComponent';
 import { Errors } from '../../errors/types';
 
@@ -34,22 +33,22 @@ export interface ServicesUpdater {
 
 type Props = ServiceListProps & ServiceListActions & ServicesUpdater;
 
-interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
+type SetIsOffline = Dispatch<SetStateAction<boolean>>;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
-    const [isOffline, setIsOffline]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+    const [isOffline, setIsOffline]: [boolean, SetIsOffline] = useState(false);
+    const [lastRefresh, refreshScreen]: UseRefreshScreen = useRefreshScreen();
     const deviceIsOfflineCallback = (deviceIsOffline: boolean): void => setIsOffline(deviceIsOffline);
     const requestTopicServicesEffect = (): void => { props.requestTopicServices(); };
-    const refreshScreen = useRefreshScreen();
-
     useDeviceIsOffline(deviceIsOfflineCallback);
-    useEffect(requestTopicServicesEffect, []);
+    useEffect(requestTopicServicesEffect, [lastRefresh]);
 
     if (isOffline) {
         return (
             <ErrorScreenPickerComponent
                 refreshScreen={refreshScreen}
                 errorType={Errors.Offline}
+                errorScreenHeaderComponent={<ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />}
             />
         );
     }
@@ -59,6 +58,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             <ErrorScreenPickerComponent
                 refreshScreen={refreshScreen}
                 errorType={props.topicServicesOrError.errorMessageType}
+                errorScreenHeaderComponent={<ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />}
             />
         );
     }
@@ -69,7 +69,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             refreshing={isLoadingServices(props.topicServicesOrError)}
             onRefresh={props.requestTopicServices}
             renderItem={renderServiceListItem(props.currentPath)}
-            listEmptyComponent={<ServiceListEmptyComponent />}
+            listEmptyComponent={<ErrorScreenPickerComponent errorType={Errors.NoTopicServicesFound} refreshScreen={refreshScreen} />}
             listHeaderComponent={<ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />}
         />
     );
@@ -83,6 +83,8 @@ const getServices = (topicServicesOrError: SelectorTopicServices): ReadonlyArray
     topicServicesOrError.type === constants.TOPIC_SERVICES_VALID ?
         topicServicesOrError.services : []
 );
+
+interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
 
 type ServiceListListComponentProps = {
     readonly services: ReadonlyArray<Service>;
@@ -141,7 +143,3 @@ const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX
         </Text>
     </View >
 );
-
-const ServiceListEmptyComponent = (): JSX.Element => {
-    return <EmptyListComponent message={<Text>No related services found</Text>} />;
-};
