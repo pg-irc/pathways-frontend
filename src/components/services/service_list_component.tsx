@@ -48,7 +48,9 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             <ErrorScreenPickerComponent
                 refreshScreen={refreshScreen}
                 errorType={Errors.Offline}
-                errorScreenHeaderComponent={<ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />}
+                errorScreenHeaderComponent={
+                    <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
+                }
             />
         );
     }
@@ -58,7 +60,9 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             <ErrorScreenPickerComponent
                 refreshScreen={refreshScreen}
                 errorType={props.topicServicesOrError.errorMessageType}
-                errorScreenHeaderComponent={<ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />}
+                errorScreenHeaderComponent={
+                    <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
+                }
             />
         );
     }
@@ -69,8 +73,12 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             refreshing={isLoadingServices(props.topicServicesOrError)}
             onRefresh={props.requestTopicServices}
             renderItem={renderServiceListItem(props.currentPath)}
-            listEmptyComponent={<ErrorScreenPickerComponent errorType={Errors.NoTopicServicesFound} refreshScreen={refreshScreen} />}
-            listHeaderComponent={<ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />}
+            listEmptyComponent={
+                <ErrorScreenPickerComponent errorType={Errors.NoTopicServicesFound} refreshScreen={refreshScreen} />
+            }
+            listHeaderComponent={
+                <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
+            }
         />
     );
 };
