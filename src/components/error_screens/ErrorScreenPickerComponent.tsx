@@ -27,7 +27,12 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
             return (
                 <ErrorScreenComponent
                     title={<Trans>Can't reach the internet</Trans>}
-                    subTitle={<Trans>Services are not available offline. Please connect to the internet and try again.</Trans>}
+                    subTitle={
+                        <Trans>
+                            Services are not available offline.
+                            Please connect to the internet and try again.
+                        </Trans>
+                    }
                     imageSource={noInternet}
                     {...sharedProps}
                 />
@@ -36,7 +41,12 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
             return (
                 <ErrorScreenComponent
                     title={<Trans>Enable location services</Trans>}
-                    subTitle={<Trans>To find services, please turn on Location Services for Arrival Advisor in Settings and try again.</Trans>}
+                    subTitle={
+                        <Trans>
+                            To find services, please turn on Location Services
+                            for Arrival Advisor in Settings and try again.
+                        </Trans>
+                    }
                     imageSource={locationOff}
                     {...sharedProps}
                 />
@@ -45,7 +55,12 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
             return (
                 <ErrorScreenComponent
                     title={<Trans>Check location services</Trans>}
-                    subTitle={<Trans>To find services, try setting your Location Services to “High Accuracy” and try again.</Trans>}
+                    subTitle={
+                        <Trans>
+                            It took too long finding your location.
+                            Setting your device's Location Services to “High Accuracy” can sometimes fix this problem.
+                        </Trans>
+                    }
                     imageSource={locationTimeout}
                     {...sharedProps}
                 />
@@ -55,7 +70,12 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
             return (
                 <ErrorScreenComponent
                     title={<Trans>Server error</Trans>}
-                    subTitle={<Trans>We’re having difficulty connecting to the server. Please try again later.</Trans>}
+                    subTitle={
+                        <Trans>
+                            We’re having difficulty connecting to the server.
+                            Please try again later.
+                        </Trans>
+                    }
                     imageSource={serverError}
                     {...sharedProps}
                 />
