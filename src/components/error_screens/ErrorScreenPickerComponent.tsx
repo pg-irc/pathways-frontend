@@ -1,83 +1,81 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import { View, Text, Image, Dimensions, ImageSourcePropType, TouchableOpacity } from 'react-native';
-import { colors, textStyles } from '../../application/styles';
 import { Errors } from '../../errors/types';
-import { noInternet } from '../../application/images';
-
-const errorImageSize = Dimensions.get('screen').width / 3;
+import {
+    noInternet,
+    locationOff,
+    locationTimeout,
+    serverError,
+    noResults,
+    arrivalAdvisorGlyphLogo,
+} from '../../application/images';
+import { ErrorScreenComponent } from './ErrorScreenComponent';
 
 type ErrorScreenPickerComponentProps = {
     readonly errorType: Errors;
     readonly refreshScreen: () => void;
+    readonly errorScreenHeaderComponent?: JSX.Element;
 };
 
 export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProps): JSX.Element => {
+    const sharedProps = {
+        refreshScreen: props.refreshScreen,
+        errorScreenHeaderComponent: props.errorScreenHeaderComponent,
+    };
     switch (props.errorType) {
-        default:
         case Errors.Offline:
             return (
                 <ErrorScreenComponent
                     title={<Trans>Can't reach the internet</Trans>}
                     subTitle={<Trans>Services are not available offline. Please connect to the internet and try again.</Trans>}
                     imageSource={noInternet}
-                    refreshScreen={props.refreshScreen}
+                    {...sharedProps}
+                />
+            );
+        case Errors.NoLocationPermission:
+            return (
+                <ErrorScreenComponent
+                    title={<Trans>Enable location services</Trans>}
+                    subTitle={<Trans>To find services, please turn on Location Services for Arrival Advisor in Settings and try again.</Trans>}
+                    imageSource={locationOff}
+                    {...sharedProps}
+                />
+            );
+        case Errors.LocationFetchTimeout:
+            return (
+                <ErrorScreenComponent
+                    title={<Trans>Check location services</Trans>}
+                    subTitle={<Trans>To find services, try setting your Location Services to “High Accuracy” and try again.</Trans>}
+                    imageSource={locationTimeout}
+                    {...sharedProps}
+                />
+            );
+        case Errors.InvalidServerData:
+        case Errors.BadServerResponse:
+            return (
+                <ErrorScreenComponent
+                    title={<Trans>Server error</Trans>}
+                    subTitle={<Trans>We’re having difficulty connecting to the server. Please try again later.</Trans>}
+                    imageSource={serverError}
+                    {...sharedProps}
+                />
+            );
+        case Errors.NoTopicServicesFound:
+            return (
+                <ErrorScreenComponent
+                    title={<Trans>No related services found</Trans>}
+                    imageSource={noResults}
+                    {...sharedProps}
+                />
+            );
+        default:
+        case Errors.Exception:
+            return (
+                <ErrorScreenComponent
+                    title={<Trans>An error occured</Trans>}
+                    imageSource={arrivalAdvisorGlyphLogo}
+                    {...sharedProps}
                 />
             );
     }
 };
-
-type ErrorScreenComponentProps = {
-    readonly imageSource: ImageSourcePropType;
-    readonly title: JSX.Element;
-    readonly subTitle: JSX.Element;
-    readonly refreshScreen: () => void;
-};
-
-const ErrorScreenComponent = (props: ErrorScreenComponentProps): JSX.Element => (
-    <View
-        style={{
-            flex: 1,
-            backgroundColor: colors.lightGrey,
-            alignItems: 'center',
-            paddingTop: 50,
-            paddingHorizontal: 10,
-        }}
-    >
-        <ErrorScreenImage imageSource={props.imageSource} />
-        <ErrorScreenTitle title={props.title} />
-        <ErrorScreenSubTitle subTitle={props.subTitle} />
-        <ErrorScreenRefreshButton refreshScreen={props.refreshScreen} />
-    </View>
-);
-
-const ErrorScreenImage = (props: { readonly imageSource: ImageSourcePropType }): JSX.Element => (
-    <Image
-        source={props.imageSource}
-        resizeMode={'contain'}
-        style={{
-            height: errorImageSize,
-            width: errorImageSize,
-        }}
-    />
-);
-
-const ErrorScreenTitle = (props: { readonly title: JSX.Element  }): JSX.Element => (
-    <Text style={[textStyles.headlineH2StyleBlackCenter, { marginTop: 20, marginBottom: 10 }]}>
-        {props.title}
-    </Text>
-);
-
-const ErrorScreenSubTitle = (props: { readonly subTitle: JSX.Element  }): JSX.Element => (
-    <Text style={[textStyles.paragraphStyleBrownCenter, { marginBottom: 10 }]}>
-        {props.subTitle}
-    </Text>
-);
-
-const ErrorScreenRefreshButton = (props: { readonly refreshScreen: () => void }): JSX.Element => (
-    <TouchableOpacity onPress={props.refreshScreen}>
-        <Text>
-            <Trans>Try again</Trans>
-        </Text>
-    </TouchableOpacity>
-);
