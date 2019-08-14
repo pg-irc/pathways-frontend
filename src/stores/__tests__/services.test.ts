@@ -4,7 +4,7 @@ import {
     reducer, SendTopicServicesRequestAction, PopulateTopicServicesFromSuccessAction,
     PopulateTopicServicesFromErrorAction, Service, isValidServicesForTopic,
 } from '../services';
-import { AsyncErrors } from '../../async/errors';
+import { Errors } from '../../errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
@@ -138,7 +138,7 @@ describe('services reducer', () => {
             type: constants.LOAD_SERVICES_FAILURE,
             payload: {
                 topicId: topic.id,
-                errorMessageType: AsyncErrors.BadServerResponse,
+                errorMessageType: Errors.BadServerResponse,
             },
         };
         const store = reducer(theStore, action);
@@ -146,7 +146,7 @@ describe('services reducer', () => {
 
         it('sets the error message type on the topic services error object', () => {
             if (topicServicesOrErrorEntry.type === constants.TOPIC_SERVICES_ERROR) {
-                expect(topicServicesOrErrorEntry.errorMessageType).toBe(AsyncErrors.BadServerResponse);
+                expect(topicServicesOrErrorEntry.errorMessageType).toBe(Errors.BadServerResponse);
             } else {
                 fail();
             }

@@ -1,7 +1,7 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
-import { AsyncErrors } from '../../../async/errors';
+import { Errors } from '../../../errors/types';
 import {
     ValidServicesForTopic, LoadingServicesForTopic, Service, ServiceMap,
     ServiceStore, PhoneNumber, Address, ErrorServicesForTopic,
@@ -188,14 +188,14 @@ export class TaskServicesBuilder {
 export class TaskServicesErrorBuilder {
     topicId: string = aString();
     loading: boolean = false;
-    errorMessageType: AsyncErrors = AsyncErrors.BadServerResponse;
+    errorMessageType: Errors = Errors.BadServerResponse;
 
     withLoading(loading: boolean): TaskServicesErrorBuilder {
         this.loading = loading;
         return this;
     }
 
-    withErrorMessageType(errorMessageType: AsyncErrors): TaskServicesErrorBuilder {
+    withErrorMessageType(errorMessageType: Errors): TaskServicesErrorBuilder {
         this.errorMessageType = errorMessageType;
         return this;
     }

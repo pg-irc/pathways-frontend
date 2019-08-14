@@ -15,14 +15,14 @@ import {
     isLocationFetchTimeoutError,
     isBadServerResponseError,
     isInvalidServerDataError,
-} from '../async/is_error';
-import { AsyncErrors } from '../async/errors';
+} from '../errors/is_error';
+import { Errors } from '../errors/types';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
 }
 
-export type ServicesErrorType = AsyncErrors;
+export type ServicesErrorType = Errors;
 
 export function* updateTaskServices(action: SendTopicServicesRequestAction): UpdateResult {
     const topicId = action.payload.topicId;
@@ -41,13 +41,13 @@ export function* updateTaskServices(action: SendTopicServicesRequestAction): Upd
         const response: APIResponse = yield call(searchServices, topicId, maybeLocation);
         if (isBadServerResponseError(response)) {
             return yield put(
-                populateTopicServicesFromError(topicId, AsyncErrors.BadServerResponse),
+                populateTopicServicesFromError(topicId, Errors.BadServerResponse),
             );
         }
         const validator = servicesAtLocationValidator(response.results);
         if (isInvalidServerDataError(validator)) {
             return yield put(
-                populateTopicServicesFromError(topicId, AsyncErrors.InvalidServerData),
+                populateTopicServicesFromError(topicId, Errors.InvalidServerData),
             );
         }
         yield put(
@@ -55,7 +55,7 @@ export function* updateTaskServices(action: SendTopicServicesRequestAction): Upd
         );
     } catch (error) {
         yield put(
-            populateTopicServicesFromError(topicId, AsyncErrors.Exception),
+            populateTopicServicesFromError(topicId, Errors.Exception),
         );
     }
 }

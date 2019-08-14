@@ -1,5 +1,5 @@
-import { AsyncErrors } from './errors';
-import { NoLocationPermissionError, LocationFetchTimeoutError } from './location';
+import { Errors } from './types';
+import { NoLocationPermissionError, LocationFetchTimeoutError } from '../async/location';
 import { APIResponse } from '../api';
 import { ValidatorResponse } from '../json_schemas/validators';
 
@@ -13,10 +13,10 @@ export const isInvalidServerDataError = (validator: ValidatorResponse): boolean 
 
 export const isNoLocationPermissionError = (maybeLocation: LocationData | NoLocationPermissionError):
     maybeLocation is NoLocationPermissionError => (
-        (<NoLocationPermissionError>maybeLocation).type === AsyncErrors.NoLocationPermission
+        (<NoLocationPermissionError>maybeLocation).type === Errors.NoLocationPermission
     );
 
 export const isLocationFetchTimeoutError = (maybeLocation: LocationData | LocationFetchTimeoutError):
     maybeLocation is LocationFetchTimeoutError => (
-        (<LocationFetchTimeoutError>maybeLocation).type === AsyncErrors.LocationFetchTimeout
+        (<LocationFetchTimeoutError>maybeLocation).type === Errors.LocationFetchTimeout
     );
