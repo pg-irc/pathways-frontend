@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { Service } from '../../stores/services';
@@ -13,6 +13,9 @@ import { ServiceListErrorComponent } from './service_list_error_component';
 import { isErrorSelectorTopicServices } from '../../selectors/services/is_error_selector_topic_services';
 import * as constants from '../../application/constants';
 import { LatLong } from '../../stores/manual_user_location';
+import { useDeviceIsOffline } from '../../hooks/useDeviceIsOffline';
+import { DeviceOfflineComponent } from '../error_screens/DeviceOfflineComponent';
+import { useRefreshScreen } from '../../hooks/useRefreshScreen';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -34,16 +37,23 @@ type Props = ServiceListProps & ServiceListActions & ServicesUpdater;
 interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
-    useEffect(() => {
-        props.requestTopicServices();
-    }, []);
+    const [isOffline, setIsOffline]: [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+    const refresh = useRefreshScreen();
+    useDeviceIsOffline((deviceIsOffline: boolean) => setIsOffline(deviceIsOffline));
+    useEffect(() => props.requestTopicServices, []);
+
+    if (isOffline) {
+        return <DeviceOfflineComponent refresh={refresh} />;
+    }
+
     if (isErrorSelectorTopicServices(props.topicServicesOrError)) {
         return <ServiceListErrorComponent error={props.topicServicesOrError} />;
     }
+
     return (
         <ServiceListListComponent
             services={getServices(props.topicServicesOrError)}
-            refreshing={getRefreshing(props.topicServicesOrError)}
+            refreshing={isLoadingServices(props.topicServicesOrError)}
             onRefresh={props.requestTopicServices}
             renderItem={renderServiceListItem(props.currentPath)}
             listEmptyComponent={<ServiceListEmptyComponent />}
@@ -52,7 +62,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     );
 };
 
-const getRefreshing = (topicServicesOrError: SelectorTopicServices): boolean => (
+const isLoadingServices = (topicServicesOrError: SelectorTopicServices): boolean => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_LOADING
 );
 

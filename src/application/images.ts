@@ -10,3 +10,6 @@ export const communityOnBoardingImage = require('../../assets/images/aa_onboardi
 export const answerQuestionsOnBoardingImage = require('../../assets/images/aa_onboarding_2.png');
 export const settlementJourneyOnBoardingImage = require('../../assets/images/aa_onboarding_3.png');
 export const bookmarkOnBoardingImage = require('../../assets/images/aa_onboarding_4.png');
+export const noInternet = require('../../assets/images/aa_no_internet.png');
+export const locationOff = require('../../assets/images/aa_location_off.png');
+export const serverError = require('../../assets/images/aa_server_error.png');
