@@ -121,24 +121,30 @@ validate_messages_po_files() {
     for locale in "${locales[@]}"
     do
         echo "checking if ${locale} messages.po requires editing"
-        check_for_fuzzy_attribute $locale
+        check_for_duplicate_string_pattern $locale
     done
 }
 
 
-check_for_fuzzy_attribute() {
+check_for_duplicate_string_pattern() {
     locale=$1
     messages_po_file=$CLIENT_LOCALE_LOCATION/$locale/messages.po
 
-    #fuzzy is an attribute that in most cases indicates that a PO file needs revision
-    grep "fuzzy" $messages_po_file
-    prompt_manual_steps_if_po_file_needs_editing $locale
+    # '#-#-#-#' is the pattern generated when duplicated strings exist
+    if [ "$locale" == "ar" ]; then 
+        tail -n +49 $messages_po_file | grep "#-#-#-#"
+        prompt_manual_steps_if_po_file_needs_editing $locale
+
+    else
+        tail -n +46 $messages_po_file | grep "#-#-#-#"
+        prompt_manual_steps_if_po_file_needs_editing $locale
+
+    fi
 }
 
 
 prompt_manual_steps_if_po_file_needs_editing() {
-    if [ "$?" == "0" ]
-    then
+    if [ "$?" == "0" ]; then 
         echo
         echo "Warning: the $1 messages.po file requires editing"
         echo 
@@ -149,6 +155,7 @@ prompt_manual_steps_if_po_file_needs_editing() {
         echo "J’ai un permis de conduire de la C.-B.\n"
         echo
         read -p "Press enter to continue"
+
     fi
 }
 
@@ -183,7 +190,7 @@ elif [ "$1" == "--clean" ]; then
 elif [ "$1" == "--combine-pos" ]; then
     combine_po_files
     validate_messages_po_files
-    
+
 else
     help
 
