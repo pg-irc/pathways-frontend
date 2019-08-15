@@ -10,7 +10,8 @@ import {
     arrivalAdvisorGlyphLogo,
 } from '../../application/images';
 import { ErrorScreenComponent } from './ErrorScreenComponent';
-import { LocationSettingsButtonComponent } from '../location_settings_button/location_settings_button_component';
+import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button/app_settings_button_component';
+import { isOS } from '../../helpers/is_os';
 
 type ErrorScreenPickerComponentProps = {
     readonly errorType: Errors;
@@ -29,12 +30,7 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
                 <ErrorScreenComponent
                     imageSource={noInternet}
                     title={<Trans>Can't reach the internet</Trans>}
-                    subTitle={
-                        <Trans>
-                            Services are not available offline.
-                            Please connect to the internet and try again.
-                        </Trans>
-                    }
+                    subTitle={getSubTitleForError(Errors.Offline)}
                     {...sharedProps}
                 />
             );
@@ -43,13 +39,8 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
                 <ErrorScreenComponent
                     imageSource={locationOff}
                     title={<Trans>Enable location services</Trans>}
-                    subTitle={
-                        <Trans>
-                            To find services, please turn on Location Services
-                            for Arrival Advisor in Settings and try again.
-                        </Trans>
-                    }
-                    additionalContent={<LocationSettingsButtonComponent />}
+                    subTitle={getSubTitleForError(Errors.NoLocationPermission)}
+                    additionalContent={getAdditionalContentForError(Errors.NoLocationPermission)}
                     {...sharedProps}
                 />
             );
@@ -58,13 +49,8 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
                 <ErrorScreenComponent
                     imageSource={locationTimeout}
                     title={<Trans>Check location services</Trans>}
-                    subTitle={
-                        <Trans>
-                            It took too long finding your location.
-                            Setting your device's Location Services to “High Accuracy” can sometimes fix this problem.
-                        </Trans>
-                    }
-                    additionalContent={<LocationSettingsButtonComponent />}
+                    subTitle={getSubTitleForError(Errors.LocationFetchTimeout)}
+                    additionalContent={getAdditionalContentForError(Errors.LocationFetchTimeout)}
                     {...sharedProps}
                 />
             );
@@ -74,12 +60,7 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
                 <ErrorScreenComponent
                     imageSource={serverError}
                     title={<Trans>Server error</Trans>}
-                    subTitle={
-                        <Trans>
-                            We’re having difficulty connecting to the server.
-                            Please try again later.
-                        </Trans>
-                    }
+                    subTitle={getSubTitleForError(Errors.BadServerResponse)}
                     {...sharedProps}
                 />
             );
@@ -100,5 +81,59 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
                     {...sharedProps}
                 />
             );
+    }
+};
+
+const getSubTitleForError = (error: Errors): JSX.Element | undefined => {
+    switch (error) {
+        case Errors.Offline:
+            return (
+                <Trans>
+                    Services are not available offline.
+                    Please connect to the internet and try again.
+                </Trans>
+            );
+        case Errors.NoLocationPermission:
+            return (
+                <Trans>
+                    To find services, please turn on Location Services
+                    for Arrival Advisor in Settings and try again.
+                </Trans>
+            );
+        case Errors.LocationFetchTimeout:
+            return isOS('android') ?
+                <Trans>
+                    It took too long finding your location.
+                    Setting your device's Location Services to “High Accuracy” can sometimes fix this problem.
+                </Trans>
+                :
+                <Trans>It took too long finding your location.</Trans>;
+        case Errors.InvalidServerData:
+        case Errors.BadServerResponse:
+            return (
+                <Trans>
+                    We’re having difficulty connecting to the server.
+                    Please try again later.
+                </Trans>
+            );
+        default:
+            return undefined;
+    }
+};
+
+const getAdditionalContentForError = (error: Errors): JSX.Element | undefined => {
+    switch (error) {
+        case (Errors.NoLocationPermission):
+            return isOS('android') ?
+                <AppSettingsButtonComponent settingsType={SettingsType.AndroidAppSettings} />
+                :
+                <AppSettingsButtonComponent settingsType={SettingsType.IOSAppSettings} />;
+        case (Errors.LocationFetchTimeout):
+            return isOS('android') ?
+                <AppSettingsButtonComponent settingsType={SettingsType.AndroidAppLocation} />
+                :
+                undefined;
+        default:
+            return undefined;
     }
 };
