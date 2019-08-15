@@ -10,22 +10,24 @@ import {
     arrivalAdvisorGlyphLogo,
 } from '../../application/images';
 import { ErrorScreenComponent } from './ErrorScreenComponent';
+import { LocationSettingsButtonComponent } from '../location_settings_button/location_settings_button_component';
 
 type ErrorScreenPickerComponentProps = {
     readonly errorType: Errors;
     readonly refreshScreen: () => void;
-    readonly errorScreenHeaderComponent?: JSX.Element;
+    readonly errorScreenHeader?: JSX.Element;
 };
 
 export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProps): JSX.Element => {
     const sharedProps = {
         refreshScreen: props.refreshScreen,
-        errorScreenHeaderComponent: props.errorScreenHeaderComponent,
+        header: props.errorScreenHeader,
     };
     switch (props.errorType) {
         case Errors.Offline:
             return (
                 <ErrorScreenComponent
+                    imageSource={noInternet}
                     title={<Trans>Can't reach the internet</Trans>}
                     subTitle={
                         <Trans>
@@ -33,13 +35,13 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
                             Please connect to the internet and try again.
                         </Trans>
                     }
-                    imageSource={noInternet}
                     {...sharedProps}
                 />
             );
         case Errors.NoLocationPermission:
             return (
                 <ErrorScreenComponent
+                    imageSource={locationOff}
                     title={<Trans>Enable location services</Trans>}
                     subTitle={
                         <Trans>
@@ -47,13 +49,14 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
                             for Arrival Advisor in Settings and try again.
                         </Trans>
                     }
-                    imageSource={locationOff}
+                    additionalContent={<LocationSettingsButtonComponent />}
                     {...sharedProps}
                 />
             );
         case Errors.LocationFetchTimeout:
             return (
                 <ErrorScreenComponent
+                    imageSource={locationTimeout}
                     title={<Trans>Check location services</Trans>}
                     subTitle={
                         <Trans>
@@ -61,7 +64,7 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
                             Setting your device's Location Services to “High Accuracy” can sometimes fix this problem.
                         </Trans>
                     }
-                    imageSource={locationTimeout}
+                    additionalContent={<LocationSettingsButtonComponent />}
                     {...sharedProps}
                 />
             );
@@ -69,6 +72,7 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
         case Errors.BadServerResponse:
             return (
                 <ErrorScreenComponent
+                    imageSource={serverError}
                     title={<Trans>Server error</Trans>}
                     subTitle={
                         <Trans>
@@ -76,15 +80,14 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
                             Please try again later.
                         </Trans>
                     }
-                    imageSource={serverError}
                     {...sharedProps}
                 />
             );
         case Errors.NoTopicServicesFound:
             return (
                 <ErrorScreenComponent
-                    title={<Trans>No related services found</Trans>}
                     imageSource={noResults}
+                    title={<Trans>No related services found</Trans>}
                     {...sharedProps}
                 />
             );
@@ -92,8 +95,8 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
         case Errors.Exception:
             return (
                 <ErrorScreenComponent
-                    title={<Trans>An error occured</Trans>}
                     imageSource={arrivalAdvisorGlyphLogo}
+                    title={<Trans>An error occured</Trans>}
                     {...sharedProps}
                 />
             );

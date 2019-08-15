@@ -11,13 +11,14 @@ type ErrorScreenComponentProps = {
     readonly refreshScreen: () => void;
     readonly imageSource: ImageSourcePropType;
     readonly title: JSX.Element;
+    readonly header?: JSX.Element;
     readonly subTitle?: JSX.Element;
-    readonly errorScreenHeaderComponent?: JSX.Element;
+    readonly additionalContent?: JSX.Element;
 };
 
 export const ErrorScreenComponent = (props: ErrorScreenComponentProps): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
-        {props.errorScreenHeaderComponent}
+        {props.header}
         <View
             style={{
                 flex: 1,
@@ -29,6 +30,7 @@ export const ErrorScreenComponent = (props: ErrorScreenComponentProps): JSX.Elem
             <ErrorScreenImage imageSource={props.imageSource} />
             <ErrorScreenTitle title={props.title} hasSubTitle={!!props.subTitle} />
             <ErrorScreenSubTitle subTitle={props.subTitle} />
+            <ErrorScreenAdditionalContent additionalContent={props.additionalContent} />
             <ErrorScreenRefreshButton refreshScreen={props.refreshScreen} />
         </View>
     </View>
@@ -63,6 +65,17 @@ const ErrorScreenSubTitle = (props: { readonly subTitle?: JSX.Element  }): JSX.E
         <Text style={[textStyles.paragraphStyleBrownCenter, { marginBottom: 20 }]}>
             {props.subTitle}
         </Text>
+    );
+};
+
+const ErrorScreenAdditionalContent = (props: { readonly additionalContent?: JSX.Element  }): JSX.Element => {
+    if (!props.additionalContent) {
+        return <EmptyComponent />;
+    }
+    return (
+        <View style={{ marginBottom: 20 }}>
+            {props.additionalContent}
+        </View>
     );
 };
 

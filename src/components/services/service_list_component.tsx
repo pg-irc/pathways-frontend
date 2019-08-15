@@ -48,7 +48,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             <ErrorScreenPickerComponent
                 refreshScreen={refreshScreen}
                 errorType={Errors.Offline}
-                errorScreenHeaderComponent={
+                errorScreenHeader={
                     <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
                 }
             />
@@ -60,7 +60,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             <ErrorScreenPickerComponent
                 refreshScreen={refreshScreen}
                 errorType={props.topicServicesOrError.errorMessageType}
-                errorScreenHeaderComponent={
+                errorScreenHeader={
                     <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
                 }
             />
