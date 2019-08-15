@@ -265,7 +265,7 @@ createClientEnvironment() {
         setStagingValuesInAppJson
     elif [ "$BUILD" == "production" ]
     then
-         echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"  >> "$CLIENT_DIRECTORY/.env"
+        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"  >> "$CLIENT_DIRECTORY/.env"
         echo "API_URL=$PRODUCTION_URL" >> "$CLIENT_DIRECTORY/.env"
     else
         echo "Error: You must specify the build type"
