@@ -118,9 +118,9 @@ concat_en_source_files() {
 
 validate_messages_po_files() {
     echo
+    echo "checking if the generated messages.po files require editing"
     for locale in "${locales[@]}"
     do
-        echo "checking if ${locale} messages.po requires editing"
         check_for_duplicate_string_pattern $locale
     done
 }
@@ -146,11 +146,11 @@ check_for_duplicate_string_pattern() {
 prompt_manual_steps_if_po_file_needs_editing() {
     if [ "$?" == "0" ]; then 
         echo
-        echo "Warning: the $1 messages.po file requires editing"
+        echo "Warning: locale/$1/messages.po requires editing"
         echo 
         echo "Manual steps:"
         echo
-        echo "review this file and remove duplicate strings that look like the following:"
+        echo " review this file and remove duplicate strings that look like the following:"
         echo "#-#-#-#-#  jsx_strings.po (PACKAGE VERSION)  #-#-#-#-#\n"
         echo "J’ai un permis de conduire de la C.-B.\n"
         echo
