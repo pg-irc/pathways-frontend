@@ -256,15 +256,16 @@ createClientEnvironment() {
     STAGING_URL="https://fierce-ravine-89308.herokuapp.com"
 
     echo "VERSION=$VERSION"                              >  "$CLIENT_DIRECTORY/.env"
-    echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"  >> "$CLIENT_DIRECTORY/.env"
     echo "DEBUG_GOOGLE_ANALYTICS=false"                  >> "$CLIENT_DIRECTORY/.env"
 
     if [ "$BUILD" == "staging" ]
     then
+        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-5'"  >> "$CLIENT_DIRECTORY/.env"
         echo "API_URL=$STAGING_URL" >> "$CLIENT_DIRECTORY/.env"
         setStagingValuesInAppJson
     elif [ "$BUILD" == "production" ]
     then
+         echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"  >> "$CLIENT_DIRECTORY/.env"
         echo "API_URL=$PRODUCTION_URL" >> "$CLIENT_DIRECTORY/.env"
     else
         echo "Error: You must specify the build type"
