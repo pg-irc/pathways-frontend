@@ -11,8 +11,8 @@ import { textStyles, colors, values } from '../../application/styles';
 import { isErrorSelectorTopicServices } from '../../selectors/services/is_error_selector_topic_services';
 import * as constants from '../../application/constants';
 import { LatLong } from '../../stores/manual_user_location';
-import { useDeviceIsOffline } from '../../hooks/useDeviceIsOffline';
-import { useRefreshScreen, UseRefreshScreen } from '../../hooks/useRefreshScreen';
+import { deviceIsOffline } from '../../async/network';
+import { useRefreshScreen, TimeStamp } from '../../hooks/useRefreshScreen';
 import { ErrorScreenPickerComponent } from '../error_screens/ErrorScreenPickerComponent';
 import { Errors } from '../../errors/types';
 
@@ -37,16 +37,15 @@ type SetIsOffline = Dispatch<SetStateAction<boolean>>;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
     const [isOffline, setIsOffline]: [boolean, SetIsOffline] = useState(false);
-    const [lastRefresh, refreshScreen]: UseRefreshScreen = useRefreshScreen();
-    const deviceIsOfflineCallback = (deviceIsOffline: boolean): void => setIsOffline(deviceIsOffline);
-    const requestTopicServicesEffect = (): void => { props.requestTopicServices(); };
-    useDeviceIsOffline(deviceIsOfflineCallback);
-    useEffect(requestTopicServicesEffect, [lastRefresh]);
+    useEffect(() => { deviceIsOffline().then((offline: boolean) => setIsOffline(offline)); });
+
+    const [lastRefresh, setLastRefreshToNow]: [TimeStamp, () => void] = useRefreshScreen();
+    useEffect((): void => { props.requestTopicServices(); }, [lastRefresh]);
 
     if (isOffline) {
         return (
             <ErrorScreenPickerComponent
-                refreshScreen={refreshScreen}
+                refreshScreen={setLastRefreshToNow}
                 errorType={Errors.Offline}
                 errorScreenHeader={
                     <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
@@ -58,7 +57,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     if (isErrorSelectorTopicServices(props.topicServicesOrError)) {
         return (
             <ErrorScreenPickerComponent
-                refreshScreen={refreshScreen}
+                refreshScreen={setLastRefreshToNow}
                 errorType={props.topicServicesOrError.errorMessageType}
                 errorScreenHeader={
                     <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
@@ -74,7 +73,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             onRefresh={props.requestTopicServices}
             renderItem={renderServiceListItem(props.currentPath)}
             listEmptyComponent={
-                <ErrorScreenPickerComponent errorType={Errors.NoTopicServicesFound} refreshScreen={refreshScreen} />
+                <ErrorScreenPickerComponent errorType={Errors.NoTopicServicesFound} refreshScreen={setLastRefreshToNow} />
             }
             listHeaderComponent={
                 <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />

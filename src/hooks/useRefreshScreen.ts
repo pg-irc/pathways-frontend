@@ -1,9 +1,8 @@
 import { useState, Dispatch, SetStateAction } from 'react';
 
-export type UseRefreshScreen = [number, () => void];
+export type TimeStamp = number;
 
-export const useRefreshScreen = (): UseRefreshScreen => {
-    const [lastRefresh, setLastRefresh]: [number, Dispatch<SetStateAction<number>>] = useState(Date.now());
-    const refreshScreen = (): void => setLastRefresh(Date.now());
-    return [lastRefresh, refreshScreen];
+export const useRefreshScreen = (): [TimeStamp, () => void] => {
+    const [lastRefresh, setLastRefresh]: [TimeStamp, Dispatch<SetStateAction<TimeStamp>>] = useState(Date.now());
+    return [lastRefresh, (): void => setLastRefresh(Date.now())];
 };
