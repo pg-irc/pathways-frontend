@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { Location } from 'history';
 import { Store } from '../../stores';
-import { sendTopicServicesRequest, SendTopicServicesRequestAction } from '../../stores/services';
+import { buildTopicServicesRequestAction, BuildTopicServicesRequestAction} from '../../stores/services';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/topic';
@@ -30,9 +30,9 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => 
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<SendTopicServicesRequestAction>): ServiceListActions => ({
-    requestTopicServicesWithParameters: (topic: Topic, manualUserLocation?: LatLong): SendTopicServicesRequestAction => {
-        return dispatch(sendTopicServicesRequest(topic.id, manualUserLocation));
+const mapDispatchToProps = (dispatch: Dispatch<BuildTopicServicesRequestAction>): ServiceListActions => ({
+    dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong): BuildTopicServicesRequestAction => {
+        return dispatch(buildTopicServicesRequestAction(topic.id, manualUserLocation));
     },
 });
 
@@ -40,8 +40,8 @@ type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;
 
 const mergeProps = (props: ServiceListProps, actions: ServiceListActions): ComponentProps => ({
     ...props, ...actions,
-    requestTopicServices: (): SendTopicServicesRequestAction => {
-        return actions.requestTopicServicesWithParameters(props.topic, props.manualUserLocation);
+    dispatchServicesRequest: (): BuildTopicServicesRequestAction => {
+        return actions.dispatchServicesRequestAction(props.topic, props.manualUserLocation);
     },
 });
 

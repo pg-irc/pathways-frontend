@@ -3,12 +3,12 @@
 const Ajv = require('ajv');
 import { serviceAtLocationArray } from '../stores/services';
 
-export interface ValidatorResponse {
+export interface ValidationResult {
     readonly isValid: boolean;
     readonly errors?: string;
 }
 
-export const servicesAtLocationValidator = (data: any): ValidatorResponse => {
+export const servicesAtLocationValidator = (data: any): ValidationResult => {
     const ajv = new Ajv();
     const response = {
         isValid: ajv.validate(serviceAtLocationArray, data) as boolean,

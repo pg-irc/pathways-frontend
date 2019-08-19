@@ -3,8 +3,8 @@ import * as R from 'ramda';
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import {
-    SendTopicServicesRequestAction, PopulateTopicServicesFromSuccessAction,
-    populateTopicServicesFromSuccess, PopulateTopicServicesFromErrorAction, populateTopicServicesFromError,
+    BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction, BuildTopicServicesErrorAction,
+    buildTopicServicesSuccessAction, buildTopicServicesErrorAction,
     serviceFromValidatedJSON,
 } from '../stores/services';
 import { searchServices, APIResponse } from '../api';
@@ -13,8 +13,8 @@ import { getDeviceLocation } from '../async/location';
 import {
     isNoLocationPermissionError,
     isLocationFetchTimeoutError,
-    isBadServerResponseError,
-    isInvalidServerDataError,
+    isBadResponseError,
+    isInvalidResponseData,
 } from '../errors/is_error';
 import { Errors } from '../errors/types';
 
@@ -22,44 +22,42 @@ export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
 }
 
-export type ServicesErrorType = Errors;
-
-export function* updateTaskServices(action: SendTopicServicesRequestAction): UpdateResult {
+export function* updateTaskServices(action: BuildTopicServicesRequestAction): UpdateResult {
     const topicId = action.payload.topicId;
     try {
         const maybeLocation = yield call(getDeviceLocation, action.payload.manualUserLocation);
         if (isNoLocationPermissionError(maybeLocation)) {
             return yield put(
-                populateTopicServicesFromError(topicId, maybeLocation.type),
+                buildTopicServicesErrorAction(topicId, maybeLocation.type),
             );
         }
         if (isLocationFetchTimeoutError(maybeLocation)) {
             return yield put(
-                populateTopicServicesFromError(topicId, maybeLocation.type),
+                buildTopicServicesErrorAction(topicId, maybeLocation.type),
             );
         }
         const response: APIResponse = yield call(searchServices, topicId, maybeLocation);
-        if (isBadServerResponseError(response)) {
+        if (isBadResponseError(response)) {
             return yield put(
-                populateTopicServicesFromError(topicId, Errors.BadServerResponse),
+                buildTopicServicesErrorAction(topicId, Errors.BadServerResponse),
             );
         }
         const validator = servicesAtLocationValidator(response.results);
-        if (isInvalidServerDataError(validator)) {
+        if (isInvalidResponseData(validator)) {
             return yield put(
-                populateTopicServicesFromError(topicId, Errors.InvalidServerData),
+                buildTopicServicesErrorAction(topicId, Errors.InvalidServerData),
             );
         }
         yield put(
-            populateTopicServicesFromSuccess(topicId, R.map(serviceFromValidatedJSON, response.results)),
+            buildTopicServicesSuccessAction(topicId, R.map(serviceFromValidatedJSON, response.results)),
         );
     } catch (error) {
         yield put(
-            populateTopicServicesFromError(topicId, Errors.Exception),
+            buildTopicServicesErrorAction(topicId, Errors.Exception),
         );
     }
 }
 
-type SuccessOrFailureResult = PopulateTopicServicesFromSuccessAction | PopulateTopicServicesFromErrorAction;
+type SuccessOrFailureResult = BuildTopicServicesSuccessAction | BuildTopicServicesErrorAction;
 
 type UpdateResult = IterableIterator<CallEffect | PutEffect<SuccessOrFailureResult>>;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import { View, Text, Image, Dimensions, ImageSourcePropType, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Dimensions, ImageSourcePropType, TouchableOpacity, ScrollView } from 'react-native';
 import { colors, textStyles } from '../../application/styles';
 import { Icon } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -17,7 +17,7 @@ type ErrorScreenComponentProps = {
 };
 
 export const ErrorScreenComponent = (props: ErrorScreenComponentProps): JSX.Element => (
-    <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
+    <ScrollView style={{ flex: 1, backgroundColor: colors.lightGrey }}>
         {props.header}
         <View
             style={{
@@ -33,7 +33,7 @@ export const ErrorScreenComponent = (props: ErrorScreenComponentProps): JSX.Elem
             <ErrorScreenAdditionalContent additionalContent={props.additionalContent} />
             <ErrorScreenRefreshButton refreshScreen={props.refreshScreen} />
         </View>
-    </View>
+    </ScrollView>
 );
 
 const ErrorScreenImage = (props: { readonly imageSource: ImageSourcePropType }): JSX.Element => (
@@ -80,7 +80,7 @@ const ErrorScreenAdditionalContent = (props: { readonly additionalContent?: JSX.
 };
 
 const ErrorScreenRefreshButton = (props: { readonly refreshScreen: () => void }): JSX.Element => (
-    <TouchableOpacity onPress={props.refreshScreen} style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <TouchableOpacity onPress={props.refreshScreen} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
         <Icon name={'refresh'} type={'FontAwesome'} style={{ color: colors.teal, fontSize: 17, marginRight: 10 }} />
         <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.teal }]}>
             <Trans>Try again</Trans>
