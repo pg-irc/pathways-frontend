@@ -5,5 +5,4 @@ export enum Errors {
     InvalidServerData,
     NoLocationPermission,
     LocationFetchTimeout,
-    NoTopicServicesFound,
 }

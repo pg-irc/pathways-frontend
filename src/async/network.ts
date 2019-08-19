@@ -1,7 +1,7 @@
 import { NetInfo, ConnectionInfo } from 'react-native';
 
-export const deviceIsOffline = async (): Promise<boolean> => {
+export const deviceIsOnline = async (): Promise<boolean> => {
     return NetInfo.getConnectionInfo().then((connectionInfo: ConnectionInfo) => {
-        return connectionInfo.type === 'none';
+        return connectionInfo.type !== 'none';
     });
 };

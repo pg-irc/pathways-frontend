@@ -6,7 +6,6 @@ import {
     locationOff,
     locationTimeout,
     serverError,
-    noResults,
     arrivalAdvisorGlyphLogo,
 } from '../../application/images';
 import { ErrorScreenComponent } from './ErrorScreenComponent';
@@ -61,14 +60,6 @@ export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProp
                     imageSource={serverError}
                     title={<Trans>Server error</Trans>}
                     subTitle={getSubTitleForError(Errors.BadServerResponse)}
-                    {...sharedProps}
-                />
-            );
-        case Errors.NoTopicServicesFound:
-            return (
-                <ErrorScreenComponent
-                    imageSource={noResults}
-                    title={<Trans>No related services found</Trans>}
                     {...sharedProps}
                 />
             );

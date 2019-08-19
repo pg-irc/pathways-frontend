@@ -14,4 +14,3 @@ export const noInternet = require('../../assets/images/aa_no_internet.png');
 export const locationOff = require('../../assets/images/aa_location_off.png');
 export const locationTimeout = require('../../assets/images/aa_location_timeout.png');
 export const serverError = require('../../assets/images/aa_server_error.png');
-export const noResults = require('../../assets/images/no_results.png');
