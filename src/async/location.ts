@@ -23,7 +23,7 @@ export const getDeviceLocation = async (manualUserLocation?: LatLong): GetDevice
             return buildNoLocationPermissionError();
         }
         return await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low, timeout: 5000 });
-    } catch (error) {
+    } catch (locationFetchTimeoutError) {
         return buildLocationFetchTimeoutError();
     }
 };

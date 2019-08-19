@@ -12,16 +12,16 @@ import { ErrorScreenComponent } from './ErrorScreenComponent';
 import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button/app_settings_button_component';
 import { isOS } from '../../helpers/is_os';
 
-type ErrorScreenPickerComponentProps = {
+type ErrorScreenSwitcherComponentProps = {
     readonly errorType: Errors;
     readonly refreshScreen: () => void;
-    readonly errorScreenHeader?: JSX.Element;
+    readonly header?: JSX.Element;
 };
 
-export const ErrorScreenPickerComponent = (props: ErrorScreenPickerComponentProps): JSX.Element => {
+export const ErrorScreenSwitcherComponent = (props: ErrorScreenSwitcherComponentProps): JSX.Element => {
     const sharedProps = {
         refreshScreen: props.refreshScreen,
-        header: props.errorScreenHeader,
+        header: props.header,
     };
     switch (props.errorType) {
         case Errors.Offline:

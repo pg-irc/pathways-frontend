@@ -7,14 +7,14 @@ import { Service } from '../../stores/services';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
-import { SendTopicServicesRequestAction } from '../../stores/services';
+import { BuildTopicServicesRequestAction } from '../../stores/services';
 import { textStyles, colors, values } from '../../application/styles';
-import { isErrorSelectorTopicServices } from '../../selectors/services/is_error_selector_topic_services';
+import { isError } from '../../selectors/services/is_error';
 import * as constants from '../../application/constants';
 import { LatLong } from '../../stores/manual_user_location';
 import { useDeviceIsOnline } from '../../hooks/useDeviceIsOnline';
 import { useRefreshScreen, UseRefreshScreen } from '../../hooks/useRefreshScreen';
-import { ErrorScreenPickerComponent } from '../error_screens/ErrorScreenPickerComponent';
+import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 
@@ -26,11 +26,11 @@ export interface ServiceListProps {
 }
 
 export interface ServiceListActions {
-    readonly requestTopicServicesWithParameters: (topic: Topic, manualUserLocation?: LatLong) => SendTopicServicesRequestAction;
+    readonly dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong) => BuildTopicServicesRequestAction;
 }
 
 export interface ServicesUpdater {
-    readonly requestTopicServices: () => SendTopicServicesRequestAction;
+    readonly dispatchServicesRequest: () => BuildTopicServicesRequestAction;
 }
 
 type Props = ServiceListProps & ServiceListActions & ServicesUpdater;
@@ -45,7 +45,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     const deviceIsOnlineCallback = (deviceIsOnline: boolean): void => setIsOnline(deviceIsOnline);
     const requestTopicServicesEffect = (): void => {
         if (isOnline) {
-            props.requestTopicServices();
+            props.dispatchServicesRequest();
         }
     };
 
@@ -54,22 +54,22 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 
     if (isOffline) {
         return (
-            <ErrorScreenPickerComponent
+            <ErrorScreenSwitcherComponent
                 refreshScreen={refreshScreen}
                 errorType={Errors.Offline}
-                errorScreenHeader={
+                header={
                     <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
                 }
             />
         );
     }
 
-    if (isErrorSelectorTopicServices(props.topicServicesOrError)) {
+    if (isError(props.topicServicesOrError)) {
         return (
-            <ErrorScreenPickerComponent
+            <ErrorScreenSwitcherComponent
                 refreshScreen={refreshScreen}
                 errorType={props.topicServicesOrError.errorMessageType}
-                errorScreenHeader={
+                header={
                     <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
                 }
             />
@@ -77,10 +77,10 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     }
 
     return (
-        <ServiceListListComponent
-            services={getServices(props.topicServicesOrError)}
+        <ServicesComponent
+            services={getServicesIfValid(props.topicServicesOrError)}
             refreshing={isLoadingServices(props.topicServicesOrError)}
-            onRefresh={props.requestTopicServices}
+            onRefresh={props.dispatchServicesRequest}
             renderItem={renderServiceListItem(props.currentPath)}
             listEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
             listHeaderComponent={
@@ -94,7 +94,7 @@ const isLoadingServices = (topicServicesOrError: SelectorTopicServices): boolean
     topicServicesOrError.type === constants.TOPIC_SERVICES_LOADING
 );
 
-const getServices = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<Service> => (
+const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<Service> => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_VALID ?
         topicServicesOrError.services : []
 );
@@ -110,7 +110,7 @@ type ServiceListListComponentProps = {
     readonly listHeaderComponent: JSX.Element;
 };
 
-const ServiceListListComponent = (props: ServiceListListComponentProps): JSX.Element => (
+const ServicesComponent = (props: ServiceListListComponentProps): JSX.Element => (
     <FlatList
         style={{ backgroundColor: colors.lightGrey }}
         refreshing={props.refreshing}
