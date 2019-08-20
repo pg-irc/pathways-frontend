@@ -3,15 +3,11 @@ import * as Location from 'expo-location';
 import { Errors } from '../errors/types';
 import { LatLong } from '../stores/manual_user_location';
 
-export interface NoLocationPermissionError {
-    readonly type: Errors.NoLocationPermission;
-}
+export type NoLocationPermissionErrorAction = Readonly<ReturnType<typeof noLocationPermissionError>>;
 
-export interface LocationFetchTimeoutError {
-    readonly type: Errors.LocationFetchTimeout;
-}
+export type LocationFetchTimeoutErrorAction = Readonly<ReturnType<typeof noLocationFetchTimeoutError>>;
 
-type GetDeviceLocationReturnType = Promise<LocationData | NoLocationPermissionError | LocationFetchTimeoutError>;
+type GetDeviceLocationReturnType = Promise<LocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction>;
 
 export const getDeviceLocation = async (manualUserLocation?: LatLong): GetDeviceLocationReturnType => {
     try {
@@ -20,19 +16,21 @@ export const getDeviceLocation = async (manualUserLocation?: LatLong): GetDevice
         }
         const permissions = await Permissions.askAsync(Permissions.LOCATION);
         if (permissions.status !== 'granted') {
-            return buildNoLocationPermissionError();
+            return noLocationPermissionError();
         }
         return await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low, timeout: 5000 });
     } catch (locationFetchTimeoutError) {
-        return buildLocationFetchTimeoutError();
+        return noLocationFetchTimeoutError();
     }
 };
 
-const buildNoLocationPermissionError = (): NoLocationPermissionError => ({
+// tslint:disable-next-line:typedef
+const noLocationPermissionError = () => ({
     type: Errors.NoLocationPermission,
 });
 
-const buildLocationFetchTimeoutError = (): LocationFetchTimeoutError => ({
+// tslint:disable-next-line:typedef
+const noLocationFetchTimeoutError = () => ({
     type: Errors.LocationFetchTimeout,
 });
 
