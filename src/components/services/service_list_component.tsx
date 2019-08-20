@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import React, { useEffect } from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
@@ -12,8 +12,8 @@ import { textStyles, colors, values } from '../../application/styles';
 import { isError } from '../../selectors/services/is_error';
 import * as constants from '../../application/constants';
 import { LatLong } from '../../stores/manual_user_location';
-import { useDeviceIsOnline } from '../../hooks/useDeviceIsOnline';
 import { useRefreshScreen, UseRefreshScreen } from '../../hooks/useRefreshScreen';
+import { useDeviceOnlineStatus, OnlineStatus } from '../../hooks/useDeviceOnlineStatus';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
@@ -35,27 +35,19 @@ export interface ServicesUpdater {
 
 type Props = ServiceListProps & ServiceListActions & ServicesUpdater;
 
-type SetIsOffline = Dispatch<SetStateAction<boolean>>;
-
 export const ServiceListComponent = (props: Props): JSX.Element => {
-    const [isOnline, setIsOnline]: [boolean, SetIsOffline] = useState(undefined);
-    const [lastRefresh, refreshScreen]: UseRefreshScreen = useRefreshScreen();
-    const isOffline = isOnline === false;
-
-    const deviceIsOnlineCallback = (deviceIsOnline: boolean): void => setIsOnline(deviceIsOnline);
-    const requestTopicServicesEffect = (): void => {
-        if (isOnline) {
+    const onlineStatus = useDeviceOnlineStatus();
+    const [lastRefresh, setLastRefreshToNow]: UseRefreshScreen = useRefreshScreen();
+    useEffect(() => {
+        if (onlineStatus === OnlineStatus.Online) {
             props.dispatchServicesRequest();
         }
-    };
+    }, [onlineStatus, lastRefresh]);
 
-    useDeviceIsOnline(deviceIsOnlineCallback);
-    useEffect(requestTopicServicesEffect, [isOnline, lastRefresh]);
-
-    if (isOffline) {
+    if (onlineStatus === OnlineStatus.Offline) {
         return (
             <ErrorScreenSwitcherComponent
-                refreshScreen={refreshScreen}
+                refreshScreen={setLastRefreshToNow}
                 errorType={Errors.Offline}
                 header={
                     <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
@@ -67,7 +59,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     if (isError(props.topicServicesOrError)) {
         return (
             <ErrorScreenSwitcherComponent
-                refreshScreen={refreshScreen}
+                refreshScreen={setLastRefreshToNow}
                 errorType={props.topicServicesOrError.errorMessageType}
                 header={
                     <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
