@@ -2,8 +2,7 @@ import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import {
     Id, Service, ServiceStore, ServiceMap, ValidServicesForTopic,
-    PhoneNumber, ErrorServicesForTopic, LoadingServicesForTopic, ServicesForTopic,
-    ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON,
+    PhoneNumber, ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON,
     ValidatedAddressWithTypeJSON, Address,
 } from './types';
 import { BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction, BuildTopicServicesErrorAction, ServicesAction } from './actions';
@@ -13,11 +12,6 @@ import { isErrorServicesForTopic } from './is_error_services_for_topic';
 
 export {
     Id, ServiceStore,
-    ServicesForTopic,
-    LoadingServicesForTopic,
-    ValidServicesForTopic,
-    ServiceMap,
-    ErrorServicesForTopic,
     isValidServicesForTopic, isErrorServicesForTopic,
     serviceAtLocation,
     serviceAtLocationArray,
