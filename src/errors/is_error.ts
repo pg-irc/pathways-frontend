@@ -1,7 +1,7 @@
 import { Errors } from './types';
 import { NoLocationPermissionError, LocationFetchTimeoutError } from '../async/location';
 import { APIResponse } from '../api';
-import { ValidationResult } from '../json_schemas/validators';
+import { ValidationResult } from '../stores/services/validation';
 
 export const isBadResponseError = (response: APIResponse): boolean => (
     response.hasError

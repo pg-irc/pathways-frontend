@@ -6,37 +6,6 @@ import * as types from './types';
 import { Id, ServiceStore } from './types';
 export { Id, ServiceStore };
 
-export function serviceFromValidatedJSON(data: types.ValidatedServiceAtLocationJSON): types.Service {
-    const phoneNumbers = R.map((phoneNumber: types.ValidatedPhoneNumberJSON): types.PhoneNumber => ({
-        type: phoneNumber.phone_number_type,
-        phoneNumber: phoneNumber.phone_number,
-    }), data.location.phone_numbers);
-
-    const addresses = R.map((addressWithType: types.ValidatedAddressWithTypeJSON): types.Address => ({
-        id: addressWithType.address.id,
-        type: addressWithType.address_type,
-        address: addressWithType.address.address,
-        city: addressWithType.address.city,
-        stateProvince: addressWithType.address.state_province,
-        postalCode: addressWithType.address.postal_code,
-        country: addressWithType.address.country,
-    }), data.location.addresses);
-
-    return {
-        id: data.service.id,
-        // These values come in the wrong order from the server
-        latitude: data.location.longitude,
-        longitude: data.location.latitude,
-        name: data.service.name,
-        description: data.service.description,
-        phoneNumbers: phoneNumbers,
-        addresses: addresses,
-        website: data.service.organization_url,
-        email: data.service.organization_email,
-        organizationName: data.service.organization_name,
-    };
-}
-
 export function buildDefaultStore(): types.ServiceStore {
     return {
         services: {},

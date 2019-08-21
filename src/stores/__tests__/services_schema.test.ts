@@ -1,28 +1,28 @@
 // tslint:disable:no-expression-statement no-any no-null-keyword
 import { aString, aNumber } from '../../application/__tests__/helpers/random_test_values';
 import * as helpers from '../__tests__/helpers/services_schema_helpers';
-import { servicesAtLocationValidator } from '../../json_schemas/validators';
+import { validateServicesAtLocationArray } from '../services/validation';
 
 describe('schema for services_at_location endpoint', () => {
 
     describe('validating valid data', () => {
 
         test('validation passes on array of ServiceAtLocationJSON items', () => {
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().build(),
             ]);
             expect(validator.isValid).toBe(true);
         });
 
         test('validation passes on array of ServiceAtLocationJSON items with an additional property', () => {
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 { ...new helpers.ServiceAtLocationJSONBuilder().build(), anotherProp: aString() },
             ]);
             expect(validator.isValid).toBe(true);
         });
 
         test('validation passes on empty array', () => {
-            const validator = servicesAtLocationValidator([]);
+            const validator = validateServicesAtLocationArray([]);
             expect(validator.isValid).toBe(true);
         });
     });
@@ -30,7 +30,7 @@ describe('schema for services_at_location endpoint', () => {
     describe('validating service properties', () => {
 
         test('service is required', () => {
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().buildWithoutService(),
             ]);
             expect(validator.isValid).toBe(false);
@@ -39,7 +39,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('service is of type object', () => {
             const service: any = null;
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
@@ -48,7 +48,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('service.id is required', () => {
             const service = new helpers.ServiceJSONBuilder().buildWithoutId();
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
@@ -57,7 +57,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('service.id is of type string', () => {
             const service = new helpers.ServiceJSONBuilder().withId(null).build();
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
@@ -66,7 +66,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('service.name is required', () => {
             const service = new helpers.ServiceJSONBuilder().buildWithoutName();
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
@@ -75,7 +75,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('service.name is of type string', () => {
             const service = new helpers.ServiceJSONBuilder().withName(null).build();
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
@@ -84,7 +84,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('service.description is required', () => {
             const service = new helpers.ServiceJSONBuilder().buildWithoutDescription();
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
@@ -93,7 +93,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('service.description is of type string', () => {
             const service = new helpers.ServiceJSONBuilder().withDescription(null).build();
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
@@ -102,7 +102,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('service.website is optional', () => {
             const service = new helpers.ServiceJSONBuilder().buildWithoutWebsite();
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(true);
@@ -110,7 +110,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('service.email is optional', () => {
             const service = new helpers.ServiceJSONBuilder().buildWithoutEmail();
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(true);
@@ -118,7 +118,7 @@ describe('schema for services_at_location endpoint', () => {
 
         test('service.website, if provided, is of type string', () => {
             const service = new helpers.ServiceJSONBuilder().withWebsite(null).build();
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
@@ -126,7 +126,7 @@ describe('schema for services_at_location endpoint', () => {
         });
         test('service.email, if provided, is of type string', () => {
             const service = new helpers.ServiceJSONBuilder().withEmail(null).build();
-            const validator = servicesAtLocationValidator([
+            const validator = validateServicesAtLocationArray([
                 new helpers.ServiceAtLocationJSONBuilder().withService(service).build(),
             ]);
             expect(validator.isValid).toBe(false);
@@ -140,7 +140,7 @@ describe('schema for services_at_location endpoint', () => {
         describe('location', () => {
 
             test('location is required', () => {
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().buildWithoutLocation(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -149,7 +149,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location is of type object', () => {
                 const location: any = null;
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -161,7 +161,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location.latitude is optional', () => {
                 const location = new helpers.LocationJSONBuilder().buildWithoutLatitude();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(true);
@@ -169,7 +169,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location.latitude, if provided, is of type number', () => {
                 const location = new helpers.LocationJSONBuilder().withLatitude(null).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -182,7 +182,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location.longitude is optional', () => {
                 const location = new helpers.LocationJSONBuilder().buildWithoutLongitude();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(true);
@@ -190,7 +190,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location.longitude, if provided, is of type number', () => {
                 const location = new helpers.LocationJSONBuilder().withLongitude(null).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -203,7 +203,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location.addresses is required', () => {
                 const location = new helpers.LocationJSONBuilder().buildWithoutAddresses();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -212,7 +212,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location.addresses is of type array', () => {
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType(null).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -221,7 +221,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location.addresses can be empty array', () => {
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(true);
@@ -229,7 +229,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location.addresses item is of type object', () => {
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([null]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -239,7 +239,7 @@ describe('schema for services_at_location endpoint', () => {
             test('location.addresses item.address_type is required ', () => {
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().buildWithoutAddressType();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -249,7 +249,7 @@ describe('schema for services_at_location endpoint', () => {
             test('location.addresses item.address_type is of type string', () => {
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddressType(null).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -259,7 +259,7 @@ describe('schema for services_at_location endpoint', () => {
             test('location.addresses item.address is required ', () => {
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().buildWithoutAddress();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -270,7 +270,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().buildWithoutId();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -281,7 +281,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().withId(null).build();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -292,7 +292,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().buildWithoutAddress();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -303,7 +303,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().withAddress(aNumber()).build();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -314,7 +314,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().buildWithoutCity();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -325,7 +325,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().withCity(null).build();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -336,7 +336,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().buildWithoutStateProvince();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -347,7 +347,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().withStateProvince(aNumber()).build();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -358,7 +358,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().buildWithoutPostalCode();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -369,7 +369,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().withPostalCode(aNumber()).build();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -380,7 +380,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().buildWithoutCountry();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -391,7 +391,7 @@ describe('schema for services_at_location endpoint', () => {
                 const address = new helpers.AddressJSONBuilder().withCountry(null).build();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -403,7 +403,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location.phone_numbers is required', () => {
                 const location = new helpers.LocationJSONBuilder().buildWithoutPhoneNumbers();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -412,7 +412,7 @@ describe('schema for services_at_location endpoint', () => {
 
             test('location.phone_numbers is of type array', () => {
                 const location = new helpers.LocationJSONBuilder().withPhoneNumbers(null).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -424,7 +424,7 @@ describe('schema for services_at_location endpoint', () => {
                     .withPhoneNumbers([])
                     .withAddressesWithType([])
                     .build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(true);
@@ -433,7 +433,7 @@ describe('schema for services_at_location endpoint', () => {
             test('location.phone_numbers item is of type object', () => {
                 const phoneNumber: any = null;
                 const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -443,7 +443,7 @@ describe('schema for services_at_location endpoint', () => {
             test('location.phone_numbers item.phone_number_type is required ', () => {
                 const phoneNumber = new helpers.PhoneNumberJSONBuilder().buildWithoutPhoneNumberType();
                 const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -453,7 +453,7 @@ describe('schema for services_at_location endpoint', () => {
             test('location.phone_numbers item.phone_number_type is of type string', () => {
                 const phoneNumber = new helpers.PhoneNumberJSONBuilder().withPhoneNumberType(null).build();
                 const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -463,7 +463,7 @@ describe('schema for services_at_location endpoint', () => {
             test('location.phone_numbers item.phone_number is required ', () => {
                 const phoneNumber = new helpers.PhoneNumberJSONBuilder().buildWithoutPhoneNumber();
                 const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
@@ -473,7 +473,7 @@ describe('schema for services_at_location endpoint', () => {
             test('location.phone_numbers item.phone_number is of type string', () => {
                 const phoneNumber = new helpers.PhoneNumberJSONBuilder().withPhoneNumber(null).build();
                 const location = new helpers.LocationJSONBuilder().withPhoneNumbers([phoneNumber]).build();
-                const validator = servicesAtLocationValidator([
+                const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
