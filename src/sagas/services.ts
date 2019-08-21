@@ -6,9 +6,8 @@ import {
     BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction, BuildTopicServicesErrorAction,
     buildTopicServicesSuccessAction, buildTopicServicesErrorAction,
 } from '../stores/services/actions';
-import { serviceFromValidatedJSON } from '../stores/services';
+import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../stores/services/validation';
 import { searchServices, APIResponse } from '../api';
-import { servicesAtLocationValidator } from '../json_schemas/validators';
 import { getDeviceLocation } from '../async/location';
 import {
     isNoLocationPermissionError,
@@ -42,7 +41,7 @@ export function* updateTaskServices(action: BuildTopicServicesRequestAction): Up
                 buildTopicServicesErrorAction(topicId, Errors.BadServerResponse),
             );
         }
-        const validator = servicesAtLocationValidator(response.results);
+        const validator = validateServicesAtLocationArray(response.results);
         if (isInvalidResponseData(validator)) {
             return yield put(
                 buildTopicServicesErrorAction(topicId, Errors.InvalidServerData),

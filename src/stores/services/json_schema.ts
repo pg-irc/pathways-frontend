@@ -1,4 +1,5 @@
 // tslint:disable:quotemark trailing-comma
+
 const service = {
     "type": "object",
     "properties": {
