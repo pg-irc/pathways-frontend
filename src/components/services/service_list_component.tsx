@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
@@ -12,11 +12,12 @@ import { textStyles, colors, values } from '../../application/styles';
 import { isError } from '../../selectors/services/is_error';
 import * as constants from '../../application/constants';
 import { LatLong } from '../../stores/manual_user_location';
-import { useRefreshScreen, UseRefreshScreen } from '../../hooks/useRefreshScreen';
-import { useDeviceOnlineStatus, OnlineStatus } from '../../hooks/useDeviceOnlineStatus';
+import { useRefreshScreenState, Timestamp } from '../../hooks/use_refresh_screen_state';
+import { OnlineStatus, toStatus } from '../../hooks/online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
+import { deviceIsOnline } from '../../async/network';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -34,15 +35,21 @@ export interface ServicesUpdater {
 }
 
 type Props = ServiceListProps & ServiceListActions & ServicesUpdater;
+type SetOnlineStatus = Dispatch<SetStateAction<OnlineStatus>>;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
-    const onlineStatus = useDeviceOnlineStatus();
-    const [lastRefresh, setLastRefreshToNow]: UseRefreshScreen = useRefreshScreen();
-    useEffect(() => {
+
+    const requestServiceDataIfOnline = (): void => {
         if (onlineStatus === OnlineStatus.Online) {
             props.dispatchServicesRequest();
         }
-    }, [onlineStatus, lastRefresh]);
+    };
+
+    const [onlineStatus, setOnlineStatus]: [OnlineStatus, SetOnlineStatus] = useState(OnlineStatus.Loading);
+    useEffect(() => { deviceIsOnline().then((isOnline: boolean) => setOnlineStatus(toStatus(isOnline))); });
+
+    const [lastRefresh, setLastRefreshToNow]: [Timestamp, () => void] = useRefreshScreenState();
+    useEffect(() => requestServiceDataIfOnline(), [onlineStatus, lastRefresh]);
 
     if (onlineStatus === OnlineStatus.Offline) {
         return (
