@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { Location } from 'history';
 import { Store } from '../../stores';
-import { buildTopicServicesRequestAction, BuildTopicServicesRequestAction} from '../../stores/services';
+import { buildTopicServicesRequestAction, BuildTopicServicesRequestAction } from '../../stores/services/actions';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/topic';

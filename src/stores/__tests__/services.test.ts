@@ -1,9 +1,13 @@
 // tslint:disable:no-let no-expression-statement
 import * as constants from '../../application/constants';
 import {
-    reducer, BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction,
-    BuildTopicServicesErrorAction, Service, isValidServicesForTopic,
+    reducer, isValidServicesForTopic,
 } from '../services';
+import {
+    BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction,
+    BuildTopicServicesErrorAction,
+} from '../services/actions';
+import { Service } from '../services/types';
 import { Errors } from '../../errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
