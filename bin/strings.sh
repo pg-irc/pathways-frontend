@@ -118,7 +118,7 @@ concat_en_source_files() {
 
 validate_messages_po_files() {
     echo
-    echo "checking if the generated messages.po files require editing"
+    echo "checking if the generated messages.po files contain duplicate strings"
     for locale in "${locales[@]}"
     do
         check_for_duplicate_string_pattern $locale
@@ -133,30 +133,31 @@ check_for_duplicate_string_pattern() {
     # '#-#-#-#' is the pattern generated when duplicated strings exist
     if [ "$locale" == "ar" ]; then 
         tail -n +49 $messages_po_file | grep "#-#-#-#"
-        prompt_manual_steps_if_po_file_needs_editing $locale
-
+        if [ "$?" == "0" ]; then 
+        prompt_manual_steps_if_duplicate_strings_exist $locale
+        fi
     else
         tail -n +46 $messages_po_file | grep "#-#-#-#"
-        prompt_manual_steps_if_po_file_needs_editing $locale
-
+        if [ "$?" == "0" ]; then 
+        prompt_manual_steps_if_duplicate_strings_exist $locale
+        fi
     fi
 }
 
 
-prompt_manual_steps_if_po_file_needs_editing() {
-    if [ "$?" == "0" ]; then 
-        echo
-        echo "Warning: locale/$1/messages.po requires editing"
-        echo 
-        echo "Manual steps:"
-        echo
-        echo " review this file and remove duplicate strings that look like the following:"
-        echo "#-#-#-#-#  jsx_strings.po (PACKAGE VERSION)  #-#-#-#-#\n"
-        echo "J’ai un permis de conduire de la C.-B.\n"
-        echo
-        read -p "Press enter to continue"
-
-    fi
+prompt_manual_steps_if_duplicate_strings_exist() {
+    echo
+    echo "Warning: there are duplicate strings in locale/$1/messages.po"
+    echo 
+    echo "Manual steps:"
+    echo
+    echo " review this file and find the duplicate strings."
+    echo "Duplicate strings are flagged using the following pattern:"
+    echo "#-#-#-#-#  *.po (PACKAGE VERSION)  #-#-#-#-#\n"
+    echo
+    echo "After, locate and remove them in the .pot files in the ui-strings repository"
+    echo "so that only one copy of the duplicate strings remains."
+    read -p "Press enter to continue"
 }
 
 
