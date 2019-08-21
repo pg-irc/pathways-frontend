@@ -1,4 +1,4 @@
-import { Address } from '../../stores/services';
+import { Address } from '../../stores/services/types';
 
 export const getLocationTitleFromAddresses = (addresses: ReadonlyArray<Address>): string => {
     if (addresses.length !== 1) {

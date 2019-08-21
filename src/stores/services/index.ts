@@ -6,27 +6,18 @@ import {
     ValidatedPhoneNumberJSON, ValidatedServiceAtLocationJSON,
     ValidatedAddressWithTypeJSON, Address,
 } from './types';
-import {
-    BuildTopicServicesRequestAction, buildTopicServicesRequestAction,
-    BuildTopicServicesSuccessAction, buildTopicServicesSuccessAction,
-    BuildTopicServicesErrorAction, buildTopicServicesErrorAction,
-    ServicesAction,
-} from './actions';
+import { BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction, BuildTopicServicesErrorAction, ServicesAction } from './actions';
 import { serviceAtLocation, serviceAtLocationArray } from './schemas';
 import { isValidServicesForTopic } from './is_valid_services_for_topic';
 import { isErrorServicesForTopic } from './is_error_services_for_topic';
 
 export {
-    Id, Service, ServiceStore,
-    PhoneNumber, Address,
+    Id, ServiceStore,
     ServicesForTopic,
     LoadingServicesForTopic,
     ValidServicesForTopic,
     ServiceMap,
     ErrorServicesForTopic,
-    BuildTopicServicesRequestAction , buildTopicServicesRequestAction,
-    BuildTopicServicesSuccessAction , buildTopicServicesSuccessAction,
-    BuildTopicServicesErrorAction, buildTopicServicesErrorAction,
     isValidServicesForTopic, isErrorServicesForTopic,
     serviceAtLocation,
     serviceAtLocationArray,

@@ -5,8 +5,8 @@ import * as constants from '../application/constants';
 import {
     BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction, BuildTopicServicesErrorAction,
     buildTopicServicesSuccessAction, buildTopicServicesErrorAction,
-    serviceFromValidatedJSON,
-} from '../stores/services';
+} from '../stores/services/actions';
+import { serviceFromValidatedJSON } from '../stores/services';
 import { searchServices, APIResponse } from '../api';
 import { servicesAtLocationValidator } from '../json_schemas/validators';
 import { getDeviceLocation } from '../async/location';
