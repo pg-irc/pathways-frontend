@@ -1,6 +1,8 @@
 import { Store } from '../../stores';
 import { Id as TaskId } from '../../stores/topics';
-import { isValidServicesForTopic, isErrorServicesForTopic, buildEmptyServicesForTopic } from '../../stores/services';
+import { buildEmptyServicesForTopic } from '../../stores/services';
+import { isValidServicesForTopic } from '../../stores/services/is_valid_services_for_topic';
+import { isErrorServicesForTopic } from '../../stores/services/is_error_services_for_topic';
 import { SelectorTopicServices } from './types';
 import { toValidSelectorTopicServices } from './to_valid_selector_topic_services';
 import { toErrorSelectorTopicServices } from './to_error_selector_topic_services';

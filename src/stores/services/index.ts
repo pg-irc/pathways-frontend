@@ -6,16 +6,8 @@ import {
     ValidatedAddressWithTypeJSON, Address,
 } from './types';
 import { BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction, BuildTopicServicesErrorAction, ServicesAction } from './actions';
-import { serviceAtLocation, serviceAtLocationArray } from './schemas';
-import { isValidServicesForTopic } from './is_valid_services_for_topic';
-import { isErrorServicesForTopic } from './is_error_services_for_topic';
 
-export {
-    Id, ServiceStore,
-    isValidServicesForTopic, isErrorServicesForTopic,
-    serviceAtLocation,
-    serviceAtLocationArray,
-};
+export { Id, ServiceStore };
 
 export function serviceFromValidatedJSON(data: ValidatedServiceAtLocationJSON): Service {
     const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): PhoneNumber => ({

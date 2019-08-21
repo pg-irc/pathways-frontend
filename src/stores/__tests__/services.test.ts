@@ -1,8 +1,7 @@
 // tslint:disable:no-let no-expression-statement
 import * as constants from '../../application/constants';
-import {
-    reducer, isValidServicesForTopic,
-} from '../services';
+import { reducer } from '../services';
+import { isValidServicesForTopic } from '../services/is_valid_services_for_topic';
 import {
     BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction,
     BuildTopicServicesErrorAction,
