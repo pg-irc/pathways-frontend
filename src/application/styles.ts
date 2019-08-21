@@ -1,6 +1,6 @@
 import { StyleSheet, Platform } from 'react-native';
 import { I18nManager } from 'react-native';
-import { isOS } from '../helpers/is_os';
+import { isAndroid } from '../helpers/is_os';
 
 export const colors = {
     pale: '#ffebcb',
@@ -43,7 +43,7 @@ const letterSpacing = 0;
 const buttonLetterSpacing = 0.2;
 
 export const getNormalFontFamily = (): string => (
-    isOS('android') ? 'AvenirBook' : 'Avenir'
+    isAndroid() ? 'AvenirBook' : 'Avenir'
 );
 
 const getNormalFontStylesForOS = (): object => (
@@ -55,7 +55,7 @@ const getNormalFontStylesForOS = (): object => (
 );
 
 const getBoldFontStylesForOS = (): object => (
-    isOS('android') ?
+    isAndroid() ?
         {
             fontFamily: 'AvenirBlack',
             fontWeight: 'normal',

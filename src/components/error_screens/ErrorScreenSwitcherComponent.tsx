@@ -10,7 +10,7 @@ import {
 } from '../../application/images';
 import { ErrorScreenComponent } from './ErrorScreenComponent';
 import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button/app_settings_button_component';
-import { isOS } from '../../helpers/is_os';
+import { isAndroid } from '../../helpers/is_os';
 
 type ErrorScreenSwitcherComponentProps = {
     readonly errorType: Errors;
@@ -92,7 +92,7 @@ const getSubTitleForError = (error: Errors): JSX.Element | undefined => {
                 </Trans>
             );
         case Errors.LocationFetchTimeout:
-            return isOS('android') ?
+            return isAndroid() ?
                 <Trans>
                     It took too long finding your location.
                     Setting your device's Location Services to “High Accuracy” can sometimes fix this problem.
@@ -115,12 +115,12 @@ const getSubTitleForError = (error: Errors): JSX.Element | undefined => {
 const getAdditionalContentForError = (error: Errors): JSX.Element | undefined => {
     switch (error) {
         case (Errors.NoLocationPermission):
-            return isOS('android') ?
+            return isAndroid() ?
                 <AppSettingsButtonComponent settingsType={SettingsType.AndroidAppSettings} />
                 :
                 <AppSettingsButtonComponent settingsType={SettingsType.IOSAppSettings} />;
         case (Errors.LocationFetchTimeout):
-            return isOS('android') ?
+            return isAndroid() ?
                 <AppSettingsButtonComponent settingsType={SettingsType.AndroidAppLocation} />
                 :
                 undefined;
