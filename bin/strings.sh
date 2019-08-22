@@ -134,20 +134,20 @@ check_for_duplicate_string_pattern() {
     if [ "$locale" == "ar" ]; then 
         tail -n +49 $messages_po_file | grep "#-#-#-#"
         if [ "$?" == "0" ]; then 
-        prompt_manual_steps_if_duplicate_strings_exist $locale
+            prompt_manual_steps $messages_po_file
         fi
     else
         tail -n +46 $messages_po_file | grep "#-#-#-#"
         if [ "$?" == "0" ]; then 
-        prompt_manual_steps_if_duplicate_strings_exist $locale
+            prompt_manual_steps $messages_po_file
         fi
     fi
 }
 
 
-prompt_manual_steps_if_duplicate_strings_exist() {
+prompt_manual_steps() {
     echo
-    echo "Warning: there are duplicate strings in locale/$1/messages.po"
+    echo "Warning: there are duplicate strings in $1"
     echo 
     echo "Manual steps:"
     echo
