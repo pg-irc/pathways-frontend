@@ -15,9 +15,7 @@ export interface SearchComponentProps {
 
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: SearchComponentProps): JSX.Element => {
     return <View>
-        <InstantSearch {...props}
-            root={this.root}
-        >
+        <InstantSearch {...props} >
             <SearchBoxConnectedComponent />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
