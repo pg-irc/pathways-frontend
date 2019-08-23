@@ -26,11 +26,6 @@ while (( "$#" )); do
         BUILD="staging"
         echo "Preparing build for $BUILD"
         shift 1
-    elif [ "$1" == "--debug" ]
-    then
-        BUILD="debug"
-        echo "Preparing build for $BUILD"
-        shift 1
     elif [ "$1" == "--production" ]
     then
         BUILD="production"
@@ -75,7 +70,7 @@ usage() {
     echo "                exist, it will be used to clone three git repositories and build the client."
     echo
     echo
-    echo "    --staging, --debug or --production"
+    echo "    --staging or --production"
     echo "                Pass one of these flags depending on the build. This affects the URL, icon and app name to be set."
     echo
     echo
@@ -123,9 +118,9 @@ validateCommandLine () {
         exit
     fi
 
-    if [ "$BUILD" != "staging" ] && [ "$BUILD" != "production" ] && [ "$BUILD" != "debug" ]
+    if [ "$BUILD" != "staging" ] && [ "$BUILD" != "production" ]
     then
-        echo "Error: Must specify if the build is for production, staging or debug"
+        echo "Error: Must specify if the build is for production or staging"
         usage
         exit
     fi
@@ -256,21 +251,9 @@ setStagingValuesInAppJson() {
     checkForSuccess "set staging parameters is app.json"
 }
 
-setDebugValuesInAppJson() {
-    ( cd "$CLIENT_DIRECTORY" && \
-        cat app.json | \
-        sed s/phone_icon_android.png/phone_icon_android_debug.png/ | \
-        sed s/phone_icon_ios.png/phone_icon_ios_debug.png/ | \
-        sed s/org.peacegeeks.ArrivalAdvisor/org.peacegeeks.ArrivalAdvisorDebug/ > temp.json && \
-        mv temp.json app.json
-    )
-    checkForSuccess "set debug parameters is app.json"
-}
-
 createClientEnvironment() {
     PRODUCTION_URL="https://pathways-production.herokuapp.com"
     STAGING_URL="https://fierce-ravine-89308.herokuapp.com"
-    DEBUG_URL="https://fierce-ravine-89308.herokuapp.com"
 
     echo "VERSION=$VERSION"                              >  "$CLIENT_DIRECTORY/.env"
     echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"  >> "$CLIENT_DIRECTORY/.env"
@@ -280,10 +263,6 @@ createClientEnvironment() {
     then
         echo "API_URL=$STAGING_URL" >> "$CLIENT_DIRECTORY/.env"
         setStagingValuesInAppJson
-    elif [ "$BUILD" == "debug" ]
-    then
-        echo "API_URL=$DEBUG_URL" >> "$CLIENT_DIRECTORY/.env"
-        setDebugValuesInAppJson
     elif [ "$BUILD" == "production" ]
     then
         echo "API_URL=$PRODUCTION_URL" >> "$CLIENT_DIRECTORY/.env"
