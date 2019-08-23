@@ -17,27 +17,26 @@ const styles = StyleSheet.create({
 });
 
 interface HasId {
-    objectID: string,
+    readonly objectID: string;
 }
 
 interface Props {
-    hits: ReadonlyArray<HasId>;
-    hasMore: boolean;
-    // refine: (foo?: string) => string | undefined;
+    readonly hits: ReadonlyArray<HasId>;
+    readonly hasMore: boolean;
 }
 
-const InfiniteHits = (props: Props) => {
-    return <FlatList
+const InfiniteHits = (props: Props): JSX.Element => (
+    <FlatList
         data={props.hits}
-        keyExtractor={item => item.objectID}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        onEndReached={() => props.hasMore /* && props.refine() */}
+        keyExtractor={(item: HasId): string => item.objectID}
+        ItemSeparatorComponent={(): JSX.Element => <View style={styles.separator} />}
+        onEndReached={(): boolean => props.hasMore}
         renderItem={({ item }) => (
             <View style={styles.item}>
                 <Text>{JSON.stringify(item).slice(0, 100)}</Text>
             </View>
         )}
-    />;
-};
+    />
+);
 
 export const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHits);
