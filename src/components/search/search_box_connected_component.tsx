@@ -22,17 +22,20 @@ const styles = StyleSheet.create({
 });
 
 interface Props {
-    currentRefinement: string;
-    refine: (searchTerm: string) => string | undefined;
+    readonly currentRefinement: string;
 }
 
-const SearchBox = (props: Props): JSX.Element => (
+interface Actions {
+    readonly refine: (searchTerm: string) => string;
+}
+
+const SearchBox = (props: Props & Actions): JSX.Element => (
     <View style={styles.container}>
         <TextInput
             style={styles.input}
-            onChangeText={value => props.refine(value)}
+            onChangeText={(value: string): string => props.refine(value)}
             value={props.currentRefinement}
-            placeholder=""
+            placeholder=''
         />
     </View>
 );
