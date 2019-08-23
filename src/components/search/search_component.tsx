@@ -4,14 +4,14 @@ import { InstantSearch, connectInfiniteHits, connectSearchBox } from 'react-inst
 import { SearchBox } from './search_box';
 import { InfiniteHits } from './infinite_hits';
 
-const SearchBoxConnectedComponent = connectSearchBox(SearchBox);
-const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHits);
-
 export interface SearchComponentProps {
     readonly indexName: string;
     readonly apiKey: string;
     readonly appId: string;
 }
+
+const SearchBoxConnectedComponent = connectSearchBox(SearchBox);
+const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHits);
 
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: SearchComponentProps): JSX.Element => {
     return <View>

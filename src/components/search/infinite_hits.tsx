@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ListRenderItemInfo } from 'react-native';
 
 const styles = StyleSheet.create({
     separator: {
@@ -30,7 +30,7 @@ export const InfiniteHits = (props: Props): JSX.Element => (
         keyExtractor={(item: HasId): string => item.objectID}
         ItemSeparatorComponent={(): JSX.Element => <View style={styles.separator} />}
         onEndReached={(): boolean => props.hasMore}
-        renderItem={({ item }): JSX.Element => (
+        renderItem={({ item }: ListRenderItemInfo<HasId>): JSX.Element => (
             <View style={styles.item}>
                 <Text>{JSON.stringify(item).slice(0, 100)}</Text>
             </View>
