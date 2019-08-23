@@ -1,14 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
-import { InstantSearch } from 'react-instantsearch-native';
-import { SearchBoxConnectedComponent } from './search_box_connected_component';
-import { InfiniteHitsConnectedComponent } from './infinite_hits_connected_component';
+import { InstantSearch, connectInfiniteHits, connectSearchBox } from 'react-instantsearch-native';
+import { SearchBox } from './search_box';
+import { InfiniteHits } from './infinite_hits';
 
-export interface Props {
-}
+const SearchBoxConnectedComponent = connectSearchBox(SearchBox);
+const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHits);
 
-export const SearchComponent: React.StatelessComponent<Props> = (_: Props): JSX.Element => (
-    <View>
+export const SearchComponent: React.StatelessComponent = (): JSX.Element => {
+    return <View>
         <InstantSearch
             indexName='dev_services'
             root={this.root}
@@ -18,5 +18,5 @@ export const SearchComponent: React.StatelessComponent<Props> = (_: Props): JSX.
             <SearchBoxConnectedComponent />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
-    </View>
-);
+    </View>;
+};
