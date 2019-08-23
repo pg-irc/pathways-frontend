@@ -285,6 +285,11 @@ completeManualConfiguration() {
     echo "Log into our account on https://sentry.io to retrieve the auth token"
     echo "from https://sentry.io/settings/account/api/auth-tokens/"
     echo
+    echo " edit $CLIENT_DIRECTORY/.env"
+    echo
+    echo "and set the ALGOLIA_SEARCH_API_KEY available from"
+    echo "https://www.algolia.com/apps/MMYH1Z0D3O/api-keys/all"
+    echo
     echo "Make any other client side configuration changes now."
     echo
     read -p "Press enter to continue"
