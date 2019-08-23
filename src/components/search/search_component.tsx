@@ -7,13 +7,16 @@ import { InfiniteHits } from './infinite_hits';
 const SearchBoxConnectedComponent = connectSearchBox(SearchBox);
 const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHits);
 
-export const SearchComponent: React.StatelessComponent = (): JSX.Element => {
+export interface SearchComponentProps {
+    readonly indexName: string;
+    readonly apiKey: string;
+    readonly appId: string;
+}
+
+export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: SearchComponentProps): JSX.Element => {
     return <View>
-        <InstantSearch
-            indexName='dev_services'
+        <InstantSearch {...props}
             root={this.root}
-            apiKey={'e1061983b287e13e653143c62afac446'} // TODO pass these in as {...props}
-            appId={'MMYH1Z0D3O'}
         >
             <SearchBoxConnectedComponent />
             <InfiniteHitsConnectedComponent />
