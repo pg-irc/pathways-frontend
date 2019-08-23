@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
-import { connectSearchBox } from 'react-instantsearch-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -21,23 +20,21 @@ const styles = StyleSheet.create({
     },
 });
 
-interface Props {
+export interface Props {
     readonly currentRefinement: string;
 }
 
-interface Actions {
-    readonly refine: (searchTerm: string) => string;
+export interface Actions {
+    readonly refine: (searchTerms: string) => string;
 }
 
-const SearchBox = (props: Props & Actions): JSX.Element => (
+export const SearchBox = (props: Props & Actions): JSX.Element => (
     <View style={styles.container}>
         <TextInput
             style={styles.input}
-            onChangeText={(value: string): string => props.refine(value)}
+            onChangeText={(searchTerms: string): string => props.refine(searchTerms)}
             value={props.currentRefinement}
             placeholder=''
         />
     </View>
 );
-
-export const SearchBoxConnectedComponent = connectSearchBox(SearchBox);
