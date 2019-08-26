@@ -10,10 +10,9 @@ export interface SearchComponentProps {
     readonly appId: string;
 }
 
-const SearchBoxConnectedComponent = connectSearchBox(SearchBox);
-const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHits);
-
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: SearchComponentProps): JSX.Element => {
+    const SearchBoxConnectedComponent = connectSearchBox(SearchBox);
+    const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHits);
     return <View>
         <InstantSearch {...props} >
             <SearchBoxConnectedComponent />
