@@ -1,50 +1,47 @@
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
-import { AsyncLocationErrorType } from './error_types';
+import { Errors } from '../errors/types';
 import { LatLong } from '../stores/manual_user_location';
 
-export const isAsyncLocationError = (maybeLocation: LocationData | AsyncLocationError):
-    maybeLocation is AsyncLocationError => (
-        (<AsyncLocationError>maybeLocation).type === AsyncLocationErrorType.NoLocationPermission ||
-        (<AsyncLocationError>maybeLocation).type === AsyncLocationErrorType.LocationFetchTimeout
-    );
+export type NoLocationPermissionErrorAction = Readonly<ReturnType<typeof noLocationPermissionError>>;
 
-export const getLocationIfPermittedAsync = async (manualUserLocation?: LatLong): Promise<LocationData | AsyncLocationError> => {
+export type LocationFetchTimeoutErrorAction = Readonly<ReturnType<typeof noLocationFetchTimeoutError>>;
+
+type GetDeviceLocationReturnType = Promise<LocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction>;
+
+export const getDeviceLocation = async (manualUserLocation?: LatLong): GetDeviceLocationReturnType => {
     try {
         if (manualUserLocation) {
-            return {
-                coords: {
-                    latitude: manualUserLocation.latitude,
-                    longitude: manualUserLocation.longitude,
-                    altitude: 0,
-                    accuracy: 0,
-                    heading: 0,
-                    speed: 0,
-                },
-                timestamp: 0,
-            };
+            return buildManualUserLocation(manualUserLocation);
         }
         const permissions = await Permissions.askAsync(Permissions.LOCATION);
         if (permissions.status !== 'granted') {
-            return buildNoLocationPermissionError('Location permission not granted');
+            return noLocationPermissionError();
         }
         return await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Low, timeout: 5000 });
-    } catch (error) {
-        return buildLocationFetchTimeoutError(error);
+    } catch (locationFetchTimeoutError) {
+        return noLocationFetchTimeoutError();
     }
 };
 
-interface AsyncLocationError {
-    readonly type: AsyncLocationErrorType;
-    readonly message: string;
-}
-
-const buildNoLocationPermissionError = (message: string): AsyncLocationError => ({
-    type: AsyncLocationErrorType.NoLocationPermission,
-    message,
+// tslint:disable-next-line:typedef
+const noLocationPermissionError = () => ({
+    type: Errors.NoLocationPermission,
 });
 
-const buildLocationFetchTimeoutError = (message: string): AsyncLocationError => ({
-    type: AsyncLocationErrorType.LocationFetchTimeout,
-    message,
+// tslint:disable-next-line:typedef
+const noLocationFetchTimeoutError = () => ({
+    type: Errors.LocationFetchTimeout,
+});
+
+const buildManualUserLocation = (manualUserLocation: LatLong): LocationData => ({
+    coords: {
+        latitude: manualUserLocation.latitude,
+        longitude: manualUserLocation.longitude,
+        altitude: 0,
+        accuracy: 0,
+        heading: 0,
+        speed: 0,
+    },
+    timestamp: 0,
 });

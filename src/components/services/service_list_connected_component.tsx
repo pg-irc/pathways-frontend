@@ -1,14 +1,14 @@
 import { Dispatch } from 'redux';
 import { Location } from 'history';
 import { Store } from '../../stores';
-import { sendTopicServicesRequest, SendTopicServicesRequestAction } from '../../stores/services';
+import { buildTopicServicesRequestAction, BuildTopicServicesRequestAction } from '../../stores/services/actions';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/topic';
-import { selectTaskServices } from '../../selectors/services/select_task_services';
+import { selectTopicServices } from '../../selectors/services/select_topic_services';
 import {
     ServiceListComponent, ServiceListProps,
-    ServiceListActions, TaskServiceUpdater,
+    ServiceListActions, ServicesUpdater,
 } from './service_list_component';
 import { Routes, getParametersFromPath } from '../../application/routing';
 import { LatLong } from '../../stores/manual_user_location';
@@ -24,24 +24,24 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => 
     const manualUserLocation = selectManualUserLocation(store);
     return {
         topic,
-        taskServicesOrError: selectTaskServices(topic.id, store),
+        topicServicesOrError: selectTopicServices(topic.id, store),
         manualUserLocation,
         currentPath: ownProps.location.pathname,
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<SendTopicServicesRequestAction>): ServiceListActions => ({
-    requestUpdateOfServicesForTask: (topic: Topic, manualUserLocation?: LatLong): SendTopicServicesRequestAction => {
-        return dispatch(sendTopicServicesRequest(topic.id, manualUserLocation));
+const mapDispatchToProps = (dispatch: Dispatch<BuildTopicServicesRequestAction>): ServiceListActions => ({
+    dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong): BuildTopicServicesRequestAction => {
+        return dispatch(buildTopicServicesRequestAction(topic.id, manualUserLocation));
     },
 });
 
-type ComponentProps = ServiceListProps & ServiceListActions & TaskServiceUpdater;
+type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;
 
 const mergeProps = (props: ServiceListProps, actions: ServiceListActions): ComponentProps => ({
     ...props, ...actions,
-    requestUpdateTaskServices: (): SendTopicServicesRequestAction => {
-        return actions.requestUpdateOfServicesForTask(props.topic, props.manualUserLocation);
+    dispatchServicesRequest: (): BuildTopicServicesRequestAction => {
+        return actions.dispatchServicesRequestAction(props.topic, props.manualUserLocation);
     },
 });
 

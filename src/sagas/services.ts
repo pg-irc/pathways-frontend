@@ -3,53 +3,60 @@ import * as R from 'ramda';
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import {
-    SendTopicServicesRequestAction, PopulateTopicServicesFromSuccessAction,
-    populateTopicServicesFromSuccess, PopulateTopicServicesFromErrorAction, populateTopicServicesFromError,
-    serviceFromValidatedJSON,
-} from '../stores/services';
+    BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction, BuildTopicServicesErrorAction,
+    buildTopicServicesSuccessAction, buildTopicServicesErrorAction,
+} from '../stores/services/actions';
+import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../stores/services/validation';
 import { searchServices, APIResponse } from '../api';
-import { isResponseError } from '../api/is_response_error';
-import { servicesAtLocationValidator, isValidationError } from '../json_schemas/validators';
-import { isAsyncLocationError, getLocationIfPermittedAsync } from '../async/location';
-import { AsyncGenericErrorType, AsyncLocationErrorType } from '../async/error_types';
+import { getDeviceLocation } from '../async/location';
+import {
+    isNoLocationPermissionError,
+    isLocationFetchTimeoutError,
+    isBadResponseError,
+    isInvalidResponseData,
+} from '../errors/is_error';
+import { Errors } from '../errors/types';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
 }
 
-export type ServicesErrorType = AsyncGenericErrorType | AsyncLocationErrorType;
-
-export function* updateTaskServices(action: SendTopicServicesRequestAction): UpdateResult {
+export function* updateTaskServices(action: BuildTopicServicesRequestAction): UpdateResult {
     const topicId = action.payload.topicId;
     try {
-        const maybeLocation = yield call(getLocationIfPermittedAsync, action.payload.manualUserLocation);
-        if (isAsyncLocationError(maybeLocation)) {
+        const maybeLocation = yield call(getDeviceLocation, action.payload.manualUserLocation);
+        if (isNoLocationPermissionError(maybeLocation)) {
             return yield put(
-                populateTopicServicesFromError(maybeLocation.message, topicId, maybeLocation.type),
+                buildTopicServicesErrorAction(topicId, maybeLocation.type),
+            );
+        }
+        if (isLocationFetchTimeoutError(maybeLocation)) {
+            return yield put(
+                buildTopicServicesErrorAction(topicId, maybeLocation.type),
             );
         }
         const response: APIResponse = yield call(searchServices, topicId, maybeLocation);
-        if (isResponseError(response)) {
+        if (isBadResponseError(response)) {
             return yield put(
-                populateTopicServicesFromError(response.message, topicId, AsyncGenericErrorType.BadServerResponse),
+                buildTopicServicesErrorAction(topicId, Errors.BadServerResponse),
             );
         }
-        const validator = servicesAtLocationValidator(response.results);
-        if (isValidationError(validator)) {
+        const validator = validateServicesAtLocationArray(response.results);
+        if (isInvalidResponseData(validator)) {
             return yield put(
-                populateTopicServicesFromError(validator.errors, topicId, AsyncGenericErrorType.ValidationFailure),
+                buildTopicServicesErrorAction(topicId, Errors.InvalidServerData),
             );
         }
         yield put(
-            populateTopicServicesFromSuccess(topicId, R.map(serviceFromValidatedJSON, response.results)),
+            buildTopicServicesSuccessAction(topicId, R.map(serviceFromValidatedJSON, response.results)),
         );
     } catch (error) {
         yield put(
-            populateTopicServicesFromError(error.message, topicId, AsyncGenericErrorType.Exception),
+            buildTopicServicesErrorAction(topicId, Errors.Exception),
         );
     }
 }
 
-type SuccessOrFailureResult = PopulateTopicServicesFromSuccessAction | PopulateTopicServicesFromErrorAction;
+type SuccessOrFailureResult = BuildTopicServicesSuccessAction | BuildTopicServicesErrorAction;
 
 type UpdateResult = IterableIterator<CallEffect | PutEffect<SuccessOrFailureResult>>;

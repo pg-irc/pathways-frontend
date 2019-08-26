@@ -1,6 +1,6 @@
 import { SelectorTopicServices, ErrorSelectorTopicServices } from './types';
 
-export const isErrorSelectorTaskServices = (taskServicesOrError: SelectorTopicServices):
+export const isError = (taskServicesOrError: SelectorTopicServices):
     taskServicesOrError is ErrorSelectorTopicServices => (
         (<ErrorSelectorTopicServices>taskServicesOrError).errorMessageType !== undefined
     );

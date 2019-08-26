@@ -1,5 +1,5 @@
 import * as constants from '../../application/constants';
-import { ServicesErrorType } from '../../sagas/services';
+import { Errors } from '../../errors/types';
 
 export type Id = string;
 
@@ -42,8 +42,7 @@ export interface LoadingServicesForTopic {
 
 export interface ErrorServicesForTopic {
     readonly type: 'ServicesForTopic:Error';
-    readonly errorMessage: string;
-    readonly errorMessageType: ServicesErrorType;
+    readonly errorMessageType: Errors;
 }
 
 export type ServicesForTopic = ValidServicesForTopic | LoadingServicesForTopic | ErrorServicesForTopic;
@@ -63,44 +62,4 @@ export interface ServiceMap {
 export interface ServiceStore {
     readonly services: ServiceMap;
     readonly servicesByTopic: ServicesForAllTopics;
-}
-
-export interface ValidatedPhoneNumberJSON {
-    readonly phone_number_type: string;
-    readonly phone_number: string;
-}
-
-export interface ValidatedAddressJSON {
-    readonly id: number;
-    readonly address: string;
-    readonly city: string;
-    readonly state_province: string;
-    readonly postal_code: string;
-    readonly country: string;
-}
-
-export interface ValidatedAddressWithTypeJSON {
-    readonly address_type: string;
-    readonly address: ValidatedAddressJSON;
-}
-
-export interface ValidatedServiceJSON {
-    readonly id: string;
-    readonly name: string;
-    readonly description: string;
-    readonly organization_url: string;
-    readonly organization_email: string;
-    readonly organization_name: string;
-}
-
-export interface ValidatedLocationJSON {
-    readonly latitude?: number;
-    readonly longitude?: number;
-    readonly phone_numbers: ReadonlyArray<ValidatedPhoneNumberJSON>;
-    readonly addresses: ReadonlyArray<ValidatedAddressWithTypeJSON>;
-}
-
-export interface ValidatedServiceAtLocationJSON {
-    readonly service: ValidatedServiceJSON;
-    readonly location: ValidatedLocationJSON;
 }

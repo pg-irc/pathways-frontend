@@ -1,4 +1,4 @@
-import { ErrorServicesForTopic, ServicesForTopic } from '.';
+import { ErrorServicesForTopic, ServicesForTopic } from './types';
 import * as constants from '../../application/constants';
 
 export const isErrorServicesForTopic = (services: ServicesForTopic):

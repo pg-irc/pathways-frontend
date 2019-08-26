@@ -1,4 +1,4 @@
-import { ValidServicesForTopic, ServicesForTopic } from '.';
+import { ValidServicesForTopic, ServicesForTopic } from './types';
 import * as constants from '../../application/constants';
 
 export const isValidServicesForTopic = (services: ServicesForTopic):
