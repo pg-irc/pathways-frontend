@@ -118,38 +118,46 @@ concat_en_source_files() {
 
 validate_messages_po_files() {
     echo
+    echo "checking if the generated messages.po files contain duplicate strings"
     for locale in "${locales[@]}"
     do
-        echo "checking if ${locale} messages.po requires editing"
-        check_for_fuzzy_attribute $locale
+        check_for_duplicate_string_pattern $locale
     done
 }
 
 
-check_for_fuzzy_attribute() {
+check_for_duplicate_string_pattern() {
     locale=$1
     messages_po_file=$CLIENT_LOCALE_LOCATION/$locale/messages.po
 
-    #fuzzy is an attribute that in most cases indicates that a PO file needs revision
-    grep "fuzzy" $messages_po_file
-    prompt_manual_steps_if_po_file_needs_editing $locale
+    # '#-#-#-#' is the pattern generated when duplicated strings exist
+    if [ "$locale" == "ar" ]; then 
+        tail -n +49 $messages_po_file | grep "#-#-#-#"
+        if [ "$?" == "0" ]; then 
+            prompt_manual_steps $messages_po_file
+        fi
+    else
+        tail -n +46 $messages_po_file | grep "#-#-#-#"
+        if [ "$?" == "0" ]; then 
+            prompt_manual_steps $messages_po_file
+        fi
+    fi
 }
 
 
-prompt_manual_steps_if_po_file_needs_editing() {
-    if [ "$?" == "0" ]
-    then
-        echo
-        echo "Warning: the $1 messages.po file requires editing"
-        echo 
-        echo "Manual steps:"
-        echo
-        echo "review this file and remove duplicate strings that look like the following:"
-        echo "#-#-#-#-#  jsx_strings.po (PACKAGE VERSION)  #-#-#-#-#\n"
-        echo "J’ai un permis de conduire de la C.-B.\n"
-        echo
-        read -p "Press enter to continue"
-    fi
+prompt_manual_steps() {
+    echo
+    echo "Warning: there are duplicate strings in $1"
+    echo 
+    echo "Manual steps:"
+    echo
+    echo " review this file and find the duplicate strings."
+    echo "Duplicate strings are flagged using the following pattern:"
+    echo "#-#-#-#-#  *.po (PACKAGE VERSION)  #-#-#-#-#\n"
+    echo
+    echo "After, locate and remove them in the .pot files in the ui-strings repository"
+    echo "so that only one copy of the duplicate strings remains."
+    read -p "Press enter to continue"
 }
 
 
@@ -183,7 +191,7 @@ elif [ "$1" == "--clean" ]; then
 elif [ "$1" == "--combine-pos" ]; then
     combine_po_files
     validate_messages_po_files
-    
+
 else
     help
 
