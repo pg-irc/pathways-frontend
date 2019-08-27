@@ -43,6 +43,10 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.BookmarkedTopics)).toEqual('/bookmarked-topics');
     });
 
+    it('For Routes.Search returns path: "/search"', () => {
+        expect(routePathDefinition(Routes.Search)).toEqual('/search');
+    });
+
 });
 
 describe('the routePathWithoutParameter function', () => {
