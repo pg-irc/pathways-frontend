@@ -28,7 +28,7 @@ export interface Actions {
     readonly refine: (searchTerms: string) => string;
 }
 
-export const SearchBox = (props: Props & Actions): JSX.Element => (
+export const SearchBoxComponent = (props: Props & Actions): JSX.Element => (
     <View style={styles.container}>
         <TextInput
             style={styles.input}
