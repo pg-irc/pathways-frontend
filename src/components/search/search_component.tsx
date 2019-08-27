@@ -17,6 +17,7 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
 
     const SearchBoxConnectedComponent = connectSearchBox(SearchBoxComponent);
     const AutoCompleteConnectedComponent = connectAutoComplete<Prediction>(AutoCompleteComponent);
+
     return <View>
         <InstantSearch {...props} >
             <SearchBoxConnectedComponent location={location} setLocation={setLocation} />
