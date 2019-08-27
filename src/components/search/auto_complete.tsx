@@ -15,28 +15,29 @@ const styles = StyleSheet.create({
     },
 });
 
-export interface HasId {
+export interface Suggestion {
     readonly objectID: string;
+    readonly name: string;
 }
 
 export interface Props {
-    readonly hits: ReadonlyArray<HasId>;
-    readonly hasMore: boolean;
+    readonly hits: ReadonlyArray<Suggestion>;
+    readonly currentRefinement: string;
 }
 
 export interface Actions {
-    readonly refine: (searchTerms: string) => string;
+    readonly refine: (value?: string) => void;
 }
 
-export const InfiniteHits = (props: Partial<Props & Actions>): JSX.Element => (
+export const AutoCompleteComponent = (props: Props & Actions): JSX.Element => (
     <FlatList
         data={props.hits}
-        keyExtractor={(item: HasId): string => item.objectID}
+        keyExtractor={(item: Suggestion): string => item.objectID}
         ItemSeparatorComponent={(): JSX.Element => <View style={styles.separator} />}
-        onEndReached={(): boolean => props.hasMore}
-        renderItem={({ item }: ListRenderItemInfo<HasId>): JSX.Element => (
+        onEndReached={(): boolean => true}
+        renderItem={({ item }: ListRenderItemInfo<Suggestion>): JSX.Element => (
             <View style={styles.item}>
-                <Text>Result: {JSON.stringify(item).slice(0, 100)}</Text>
+                <Text>Suggestion: {JSON.stringify(item).slice(0, 100)}</Text>
             </View>
         )}
     />

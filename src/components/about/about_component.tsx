@@ -7,6 +7,7 @@ import { values, textStyles, colors } from '../../application/styles';
 import { Link } from '../link/link';
 import { VERSION } from 'react-native-dotenv';
 import { CloseButtonComponent } from '../close_button/close_button_component';
+import { SearchConnectedComponent } from '../search/search_connected_component';
 
 type Props = {
     readonly serverVersion: string;
@@ -74,6 +75,7 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
                         <Trans>Server version:</Trans>
                         {serverVersion}
                     </ParagraphComponent>
+                    <SearchConnectedComponent />
                 </Content>
             </View>
         </Modal>
