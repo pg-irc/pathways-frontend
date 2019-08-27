@@ -15,13 +15,13 @@ const styles = StyleSheet.create({
     },
 });
 
-export interface Suggestion {
+export interface Prediction {
     readonly objectID: string;
     readonly name: string;
 }
 
 export interface Props {
-    readonly hits: ReadonlyArray<Suggestion>;
+    readonly hits: ReadonlyArray<Prediction>;
     readonly currentRefinement: string;
 }
 
@@ -32,10 +32,10 @@ export interface Actions {
 export const AutoCompleteComponent = (props: Props & Actions): JSX.Element => (
     <FlatList
         data={props.hits}
-        keyExtractor={(item: Suggestion): string => item.objectID}
+        keyExtractor={(item: Prediction): string => item.objectID}
         ItemSeparatorComponent={(): JSX.Element => <View style={styles.separator} />}
         onEndReached={(): boolean => true}
-        renderItem={({ item }: ListRenderItemInfo<Suggestion>): JSX.Element => (
+        renderItem={({ item }: ListRenderItemInfo<Prediction>): JSX.Element => (
             <View style={styles.item}>
                 <Text>Suggestion: {JSON.stringify(item).slice(0, 100)}</Text>
             </View>
