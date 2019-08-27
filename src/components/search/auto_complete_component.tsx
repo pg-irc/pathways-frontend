@@ -18,7 +18,9 @@ const styles = StyleSheet.create({
 });
 
 export interface Prediction {
-    readonly objectID: string;
+    readonly service_id: string;
+    readonly service_name: string;
+    readonly service_description: string;
 }
 
 export interface Props {
@@ -51,8 +53,11 @@ export const AutoCompleteComponent = (props: Props & Actions): JSX.Element => {
 
 const renderItem = (prediction: ListRenderItemInfo<Prediction>): JSX.Element => {
     return <View style={styles.item}>
-        <Text>Suggestion: {JSON.stringify(prediction.item).slice(0, 100)}</Text>
+        <Text>SERVICE</Text>
+        <Text>{prediction.item.service_name}</Text>
+        <Text>{prediction.item.service_description.slice(0, 200)}</Text>
+        <Text>{}</Text>
     </View>;
 };
 
-const keyExtractor = (item: Prediction): string => item.objectID;
+const keyExtractor = (item: Prediction): string => item.service_id;
