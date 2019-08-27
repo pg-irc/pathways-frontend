@@ -33,6 +33,8 @@ export interface Actions {
 }
 
 export const AutoCompleteComponent = (props: Props & Actions): JSX.Element => {
+
+    const hits = props.currentRefinement === '' ? [] : props.hits;
     // tslint:disable-next-line:no-empty
     const onRefresh = (): void => { };
     const refreshing = false;
@@ -43,7 +45,7 @@ export const AutoCompleteComponent = (props: Props & Actions): JSX.Element => {
         style={{ backgroundColor: colors.lightGrey }}
         refreshing={refreshing}
         onRefresh={onRefresh}
-        data={props.hits}
+        data={hits}
         keyExtractor={keyExtractor}
         renderItem={renderItem}
         ListEmptyComponent={listEmptyComponent}
