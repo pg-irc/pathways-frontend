@@ -22,10 +22,12 @@ const styles = StyleSheet.create({
 
 export interface Props {
     readonly currentRefinement: string;
+    readonly location: string;
 }
 
 export interface Actions {
     readonly refine: (searchTerms: string) => string;
+    readonly setLocation: (location: string) => void;
 }
 
 export const SearchBoxComponent = (props: Props & Actions): JSX.Element => (
@@ -34,7 +36,13 @@ export const SearchBoxComponent = (props: Props & Actions): JSX.Element => (
             style={styles.input}
             onChangeText={(searchTerms: string): string => props.refine(searchTerms)}
             value={props.currentRefinement}
-            placeholder=''
+            placeholder='Search for services and organizations' // TODO translate
+        />
+        <TextInput
+            style={styles.input}
+            onChangeText={(location: string): void => props.setLocation(location)}
+            value={props.location}
+            placeholder='Near My location' // TODO translate
         />
     </View>
 );
