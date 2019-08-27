@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList, ListRenderItemInfo } from 'react-native';
+import { colors } from '../../application/styles';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 const styles = StyleSheet.create({
     separator: {
@@ -17,7 +19,6 @@ const styles = StyleSheet.create({
 
 export interface Prediction {
     readonly objectID: string;
-    readonly name: string;
 }
 
 export interface Props {
@@ -29,16 +30,29 @@ export interface Actions {
     readonly refine: (value?: string) => void;
 }
 
-export const AutoCompleteComponent = (props: Props & Actions): JSX.Element => (
-    <FlatList
+export const AutoCompleteComponent = (props: Props & Actions): JSX.Element => {
+    // tslint:disable-next-line:no-empty
+    const onRefresh = (): void => { };
+    const refreshing = false;
+    const listEmptyComponent = <EmptyComponent />;
+    const listHeaderComponent = <EmptyComponent />;
+
+    return <FlatList
+        style={{ backgroundColor: colors.lightGrey }}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
         data={props.hits}
-        keyExtractor={(item: Prediction): string => item.objectID}
-        ItemSeparatorComponent={(): JSX.Element => <View style={styles.separator} />}
-        onEndReached={(): boolean => true}
-        renderItem={({ item }: ListRenderItemInfo<Prediction>): JSX.Element => (
-            <View style={styles.item}>
-                <Text>Suggestion: {JSON.stringify(item).slice(0, 100)}</Text>
-            </View>
-        )}
-    />
-);
+        keyExtractor={keyExtractor}
+        renderItem={renderItem}
+        ListEmptyComponent={listEmptyComponent}
+        ListHeaderComponent={listHeaderComponent}
+    />;
+};
+
+const renderItem = (prediction: ListRenderItemInfo<Prediction>): JSX.Element => {
+    return <View style={styles.item}>
+        <Text>Suggestion: {JSON.stringify(prediction.item).slice(0, 100)}</Text>
+    </View>;
+};
+
+const keyExtractor = (item: Prediction): string => item.objectID;
