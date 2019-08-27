@@ -12,30 +12,40 @@ export interface FooterProps {
 }
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
-    const path = props.location.pathname;
-    const isOnWelcomeScreen = pathMatchesRoute(path, Routes.Welcome);
-    const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
-    const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
-    const isOnOnboardingScreen = pathMatchesRoute(path, Routes.Onboarding);
 
-    if (isOnWelcomeScreen || isOnQuestionnaireScreen || isOnHelpScreen || isOnOnboardingScreen) {
+    if (isFooterHidden(props)) {
         return <EmptyComponent />;
     }
-
-    const bookmarkedIsActive = pathMatchesRoute(path, Routes.BookmarkedTopics);
-    const recommendedTopicsActive = pathMatchesRoute(path, Routes.RecommendedTopics);
-    const learnIsActive = pathMatchesRoute(path, Routes.Learn);
 
     return (
         <Footer>
             <FooterTab style={[{ backgroundColor: colors.lightTeal }]}>
-                {navigationButton(props.history, Routes.RecommendedTopics, 'home', recommendedTopicsActive)}
-                {navigationButton(props.history, Routes.Learn, 'book', learnIsActive)}
-                {navigationButton(props.history, Routes.BookmarkedTopics, 'bookmark', bookmarkedIsActive)}
+                {navigationButton(props.history, Routes.RecommendedTopics, 'home', isOnRecommendedTopicsPage(props))}
+                {navigationButton(props.history, Routes.Learn, 'book', isOnLearnPage(props))}
+                {navigationButton(props.history, Routes.BookmarkedTopics, 'bookmark', isOnBookmarksPage(props))}
             </FooterTab>
         </Footer>
     );
 };
+
+const isFooterHidden = (props: FooterProps): boolean => (
+    pathMatchesRoute(props.location.pathname, Routes.Welcome) ||
+    pathMatchesRoute(props.location.pathname, Routes.Questionnaire) ||
+    pathMatchesRoute(props.location.pathname, Routes.Help) ||
+    pathMatchesRoute(props.location.pathname, Routes.Onboarding)
+);
+
+const isOnBookmarksPage = (props: FooterProps): boolean => (
+    pathMatchesRoute(props.location.pathname, Routes.BookmarkedTopics)
+);
+
+const isOnRecommendedTopicsPage = (props: FooterProps): boolean => (
+    pathMatchesRoute(props.location.pathname, Routes.RecommendedTopics)
+);
+
+const isOnLearnPage = (props: FooterProps): boolean => (
+    pathMatchesRoute(props.location.pathname, Routes.Learn)
+);
 
 const navigationButton = (history: History, route: Routes, icon: string, isActive: boolean): JSX.Element => (
     <Button vertical onPress={goToRouteWithoutParameter(route, history)} style={{ flexWrap: 'nowrap' }}>
