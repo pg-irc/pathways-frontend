@@ -28,7 +28,7 @@ export interface Actions {
     readonly refine: (searchTerms: string) => string;
 }
 
-export const InfiniteHits = (props: Partial<Props & Actions>): JSX.Element => (
+export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Element => (
     <FlatList
         data={props.hits}
         keyExtractor={(item: HasId): string => item.objectID}
