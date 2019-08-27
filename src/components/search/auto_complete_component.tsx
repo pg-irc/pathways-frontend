@@ -54,10 +54,13 @@ export const AutoCompleteComponent = (props: Props & Actions): JSX.Element => {
 };
 
 const renderItem = (prediction: ListRenderItemInfo<Prediction>): JSX.Element => {
+    const dummyAddress = '5575 Boundary Road, Vancouver, BC';
+
     return <View style={styles.item}>
         <Text>SERVICE</Text>
         <Text>{prediction.item.service_name}</Text>
-        <Text>{prediction.item.service_description.slice(0, 200)}</Text>
+        <Text>{dummyAddress}</Text>
+        <Text>{prediction.item.service_description.slice(0, 200) + '...'}</Text>
         <Text>{}</Text>
     </View>;
 };
