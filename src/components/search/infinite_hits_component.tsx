@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
+import * as R from 'ramda';
 
 const styles = StyleSheet.create({
     separator: {
@@ -63,9 +64,15 @@ const renderItem = ({ item }: ListRenderItemInfo<ServiceHit>): JSX.Element => {
         <Text>SERVICE</Text>
         <Text>{item.service_name}</Text>
         <Text>{item.street_address + ', ' + item.city + ' ' + item.postal_code}</Text>
-        <Text>{item.service_description.slice(0, 200) + '...'}</Text>
+        <Text>{truncate(200, item.service_description)}</Text>
         <Text>{}</Text>
     </View>;
 };
 
-const keyExtractor = (item: ServiceHit): string => item.service_id;
+const keyExtractor = (item: ServiceHit): string => (
+    item.service_id
+);
+
+const truncate = R.curry((maxLength: number, value: string): string => (
+    value.length > maxLength ? value.slice(0, maxLength - 3) + ' ...' : value
+));

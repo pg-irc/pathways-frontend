@@ -6,7 +6,7 @@ import { SearchBoxComponent } from './search_box_component';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { textStyles, values, colors } from '../../application/styles';
 import { Content } from 'native-base';
-import { EmptyComponent } from '../empty_component/empty_component';
+import { emptyComponent } from '../empty_component/empty_component';
 
 export interface SearchComponentProps {
     readonly indexName: string;
@@ -15,22 +15,20 @@ export interface SearchComponentProps {
 }
 
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: SearchComponentProps): JSX.Element => {
-
-    const renderConfigure = (): JSX.Element => {
-        return <EmptyComponent />;
-    };
-
-    const CustomConfigure = connectConfigure(renderConfigure);
-
+    const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const SearchBoxConnectedComponent = connectSearchBox(SearchBoxComponent);
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
+
+    const configuration = {
+        aroundLatLng: '49.104431,-122.801094',
+    };
 
     return <Content padder style={{ backgroundColor: colors.white }}>
         <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
             <Trans>Find a service</Trans>
         </Text>
         <InstantSearch {...props} >
-            <CustomConfigure aroundLatLng={'49.104431,-122.801094'} />
+            <ConfigureConnectedComponent {...configuration} />
             <SearchBoxConnectedComponent />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
