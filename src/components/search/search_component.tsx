@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { Text } from 'react-native';
+import { Trans } from '@lingui/react';
 import { InstantSearch, connectSearchBox, connectInfiniteHits } from 'react-instantsearch-native';
 import { SearchBoxComponent } from './search_box_component';
 import { InfiniteHitsComponent } from './infinite_hits_component';
+import { textStyles, values, colors } from '../../application/styles';
+import { Content } from 'native-base';
 
 export interface SearchComponentProps {
     readonly indexName: string;
@@ -18,10 +21,13 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     const SearchBoxConnectedComponent = connectSearchBox(SearchBoxComponent);
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
-    return <View>
+    return <Content padder style={{ backgroundColor: colors.white }}>
+        <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
+            <Trans>Find a service</Trans>
+        </Text>
         <InstantSearch {...props} >
             <SearchBoxConnectedComponent location={location} setLocation={setLocation} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
-    </View>;
+    </Content>;
 };
