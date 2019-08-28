@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { InstantSearch, connectSearchBox, connectAutoComplete } from 'react-instantsearch-native';
+import { InstantSearch, connectSearchBox, connectInfiniteHits } from 'react-instantsearch-native';
 import { SearchBoxComponent } from './search_box_component';
-import { AutoCompleteComponent, Prediction } from './auto_complete_component';
+import { InfiniteHitsComponent } from './infinite_hits_component';
 
 export interface SearchComponentProps {
     readonly indexName: string;
@@ -16,12 +16,12 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     const [location, setLocation]: [string, (s: string) => void] = useState(MY_LOCATION);
 
     const SearchBoxConnectedComponent = connectSearchBox(SearchBoxComponent);
-    const AutoCompleteConnectedComponent = connectAutoComplete<Prediction>(AutoCompleteComponent);
+    const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
     return <View>
         <InstantSearch {...props} >
             <SearchBoxConnectedComponent location={location} setLocation={setLocation} />
-            <AutoCompleteConnectedComponent />
+            <InfiniteHitsConnectedComponent />
         </InstantSearch>
     </View>;
 };
