@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Text } from 'react-native';
 import { Trans } from '@lingui/react';
 import { InstantSearch, connectSearchBox, connectInfiniteHits } from 'react-instantsearch-native';
@@ -13,11 +13,7 @@ export interface SearchComponentProps {
     readonly appId: string;
 }
 
-const MY_LOCATION = 'My location';
-
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: SearchComponentProps): JSX.Element => {
-    const [location, setLocation]: [string, (s: string) => void] = useState(MY_LOCATION);
-
     const SearchBoxConnectedComponent = connectSearchBox(SearchBoxComponent);
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
@@ -26,7 +22,7 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
             <Trans>Find a service</Trans>
         </Text>
         <InstantSearch {...props} >
-            <SearchBoxConnectedComponent location={location} setLocation={setLocation} />
+            <SearchBoxConnectedComponent />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
     </Content>;

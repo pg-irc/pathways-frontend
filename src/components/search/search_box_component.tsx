@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -22,27 +22,27 @@ const styles = StyleSheet.create({
 
 export interface Props {
     readonly currentRefinement: string;
-    readonly location: string;
 }
 
 export interface Actions {
     readonly refine: (searchTerms: string) => string;
-    readonly setLocation: (location: string) => void;
 }
 
-export const SearchBoxComponent = (props: Props & Actions): JSX.Element => (
-    <View style={styles.container}>
+export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
+    const [location, setLocation]: [string, (s: string) => void] = useState('');
+
+    return <View style={styles.container}>
         <TextInput
             style={styles.input}
-            onChangeText={(searchTerms: string): string => props.refine(searchTerms)}
+            onChangeText={props.refine}
             value={props.currentRefinement}
             placeholder='Search for services and organizations' // TODO translate
         />
         <TextInput
             style={styles.input}
-            onChangeText={(location: string): void => props.setLocation(location)}
-            value={props.location}
+            onChangeText={setLocation}
+            value={location}
             placeholder='Near My location' // TODO translate
         />
-    </View>
-);
+    </View>;
+};
