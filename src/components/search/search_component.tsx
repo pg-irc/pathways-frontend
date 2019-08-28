@@ -14,24 +14,7 @@ export interface SearchComponentProps {
     readonly appId: string;
 }
 
-// // tslint:disable:no-mixed-interface
-// interface RenderOptions {
-//     readonly refine: () => void;
-//     readonly widgetParams: object;
-// }
-
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: SearchComponentProps): JSX.Element => {
-
-    // const renderConfigure = (renderOptions: RenderOptions, isFirstRender: boolean): JSX.Element => {
-    //     const { refine, widgetParams }: RenderOptions = renderOptions;
-
-    //     if (isFirstRender) {
-    //         // initial render and bind
-    //     }
-
-    //     // rendering logic
-    //     return <EmptyComponent />;
-    // };
 
     const renderConfigure = (): JSX.Element => {
         return <EmptyComponent />;
@@ -47,7 +30,7 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
             <Trans>Find a service</Trans>
         </Text>
         <InstantSearch {...props} >
-            <CustomConfigure aroundLatLng={'49.246292,-123.116226'} />
+            <CustomConfigure aroundLatLng={'49.104431,-122.801094'} />
             <SearchBoxConnectedComponent />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
