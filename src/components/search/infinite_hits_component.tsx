@@ -1,22 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList, ListRenderItemInfo } from 'react-native';
+import { Text, View, FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors } from '../../application/styles';
+import { colors, textStyles } from '../../application/styles';
 import { ServiceHit } from './types';
-
-const styles = StyleSheet.create({
-    separator: {
-        borderBottomWidth: 1,
-        borderColor: '#ddd',
-    },
-    item: {
-        padding: 10,
-        flexDirection: 'column',
-    },
-    titleText: {
-        fontWeight: 'bold',
-    },
-});
 
 export interface Props {
     readonly hits: ReadonlyArray<ServiceHit>;
@@ -37,7 +23,7 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
     const listHeaderComponent = <EmptyComponent />;
 
     return <FlatList
-        style={{ backgroundColor: colors.lightGrey }}
+        style={{ backgroundColor: colors.white }}
         refreshing={refreshing}
         onRefresh={onRefresh}
         data={hits}
@@ -45,34 +31,42 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
         renderItem={renderServiceSearchHit}
         ListEmptyComponent={listEmptyComponent}
         ListHeaderComponent={listHeaderComponent}
-        ItemSeparatorComponent={(): JSX.Element => <View style={styles.separator} />}
+        ItemSeparatorComponent={(): JSX.Element => separator()}
         onEndReached={(): boolean => props.hasMore}
     />;
 };
+
+const separator = (): JSX.Element => (
+    <View style={{ borderBottomWidth: 8, borderColor: colors.lightGrey }} />
+);
 
 const keyExtractor = (item: ServiceHit): string => (
     item.service_id
 );
 
 const renderServiceSearchHit = ({ item }: ListRenderItemInfo<ServiceHit>): JSX.Element => (
-    <View style={styles.item}>
-        <Text>SERVICE</Text>
-        <Text>{name(item)}</Text>
-        <Text>{adress(item)}</Text>
-        <Text>{truncatedDescription(item)}</Text>
-    </View>
+    <View style={{ padding: 10, flexDirection: 'column', justifyContent: 'flex-start' }}>
+        <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}>{itemType(item)}</Text>
+        <Text style={[textStyles.paragraphBoldBlackLeft, { fontSize: 20, lineHeight: 25 }]}>{itemName(item)}</Text>
+        <Text style={[textStyles.paragraphStyle, { color: colors.darkerGrey }]}>{itemAdress(item)}</Text>
+        <Text style={[textStyles.paragraphStyle]}>{truncatedItemDescription(item)}</Text>
+    </View >
 );
 
-const name = (item: ServiceHit): string => (
+const itemType = (_: ServiceHit): string => (
+    'SERVICE'
+);
+
+const itemName = (item: ServiceHit): string => (
     item.service_name
 );
 
-const truncatedDescription = (item: ServiceHit): string => {
-    const maxLength = 200;
-    const description = item.service_description;
-    return description.length > maxLength ? description.slice(0, maxLength - 3) + '...' : description;
-};
-
-const adress = (item: ServiceHit): string => (
+const itemAdress = (item: ServiceHit): string => (
     item.street_address + ', ' + item.city + ' ' + item.postal_code
 );
+
+const truncatedItemDescription = (item: ServiceHit): string => {
+    const maxLength = 200;
+    const desc = item.service_description;
+    return desc.length > maxLength ? desc.slice(0, maxLength - 3) + '...' : desc;
+};
