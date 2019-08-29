@@ -32,14 +32,13 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
         </Text>
         <InstantSearch {...props} >
             <ConfigureConnectedComponent {...configuration} />
-            <SearchBoxConnectedComponent
-                location={location}
-                setLocation={setLocation}
-            />
+            <SearchBoxConnectedComponent location={location} setLocation={setLocation} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
     </Content>;
 };
+
+// TODO use https://geocoder.ca/ to look up addresses or postal codes, free for non-profits
 
 const toLatLong = (s: string): string => {
     if (s.toLowerCase().startsWith('burn')) {
