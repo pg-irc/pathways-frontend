@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
-import * as R from 'ramda';
+import { ServiceHit } from './types';
 
 const styles = StyleSheet.create({
     separator: {
@@ -17,15 +17,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
-
-export interface ServiceHit {
-    readonly service_id: string;
-    readonly service_name: string;
-    readonly service_description: string;
-    readonly street_address: string;
-    readonly city: string;
-    readonly postal_code: string;
-}
 
 export interface Props {
     readonly hits: ReadonlyArray<ServiceHit>;
@@ -51,7 +42,7 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
         onRefresh={onRefresh}
         data={hits}
         keyExtractor={keyExtractor}
-        renderItem={renderItem}
+        renderItem={renderServiceSearchHit}
         ListEmptyComponent={listEmptyComponent}
         ListHeaderComponent={listHeaderComponent}
         ItemSeparatorComponent={(): JSX.Element => <View style={styles.separator} />}
@@ -59,20 +50,29 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
     />;
 };
 
-const renderItem = ({ item }: ListRenderItemInfo<ServiceHit>): JSX.Element => {
-    return <View style={styles.item}>
-        <Text>SERVICE</Text>
-        <Text>{item.service_name}</Text>
-        <Text>{item.street_address + ', ' + item.city + ' ' + item.postal_code}</Text>
-        <Text>{truncate(200, item.service_description)}</Text>
-        <Text>{}</Text>
-    </View>;
-};
-
 const keyExtractor = (item: ServiceHit): string => (
     item.service_id
 );
 
-const truncate = R.curry((maxLength: number, value: string): string => (
-    value.length > maxLength ? value.slice(0, maxLength - 3) + ' ...' : value
-));
+const renderServiceSearchHit = ({ item }: ListRenderItemInfo<ServiceHit>): JSX.Element => (
+    <View style={styles.item}>
+        <Text>SERVICE</Text>
+        <Text>{name(item)}</Text>
+        <Text>{adress(item)}</Text>
+        <Text>{truncatedDescription(item)}</Text>
+    </View>
+);
+
+const name = (item: ServiceHit): string => (
+    item.service_name
+);
+
+const truncatedDescription = (item: ServiceHit): string => {
+    const maxLength = 200;
+    const description = item.service_description;
+    return description.length > maxLength ? description.slice(0, maxLength - 3) + '...' : description;
+};
+
+const adress = (item: ServiceHit): string => (
+    item.street_address + ', ' + item.city + ' ' + item.postal_code
+);
