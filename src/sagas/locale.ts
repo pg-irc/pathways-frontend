@@ -11,21 +11,24 @@ export function* watchSaveLocale(): IterableIterator<ForkEffect> {
 }
 
 export function* watchSaveLocaleSuccess(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.SAVE_LOCALE_SUCCESS, applyRTLChange);
+    yield takeLatest(constants.SAVE_LOCALE_SUCCESS, enforceRTLChange);
 }
 
 export function* watchLoadLocaleSuccess(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.LOAD_CURRENT_LOCALE_SUCCESS, applyRTLChange);
+    yield takeLatest(constants.LOAD_CURRENT_LOCALE_SUCCESS, enforceRTLChange);
 }
 
-export function* applyRTLChange(action: actions.SaveLocaleSuccessAction | actions.LoadLocaleSuccessAction): Iterator<CallEffect> {
+export function* enforceRTLChange(action: actions.SaveLocaleSuccessAction | actions.LoadLocaleSuccessAction): Iterator<CallEffect> {
+    console.log('inside enforceRTLChange');
     const localeCode = action.payload.localeCode;
     if (yield call(needsTextDirectionChange, localeCode)) {
+        console.log('actually flipping locales');
         yield call(setTextDirection, localeCode);
     }
 }
 
 export function* applyLocaleChange(action: actions.SaveLocaleRequestAction): IterableIterator<CallEffect | PutEffect<actions.SaveLocaleResult>> {
+    console.log('inside applyLocaleChange');
     const localeCode = action.payload.localeCode;
     try {
         yield call(saveCurrentLocaleCode, localeCode);
@@ -42,6 +45,7 @@ export function* watchLoadLocale(): IterableIterator<ForkEffect> {
 export type LoadLocaleActions = actions.LoadLocaleAction;
 
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadLocaleActions>> {
+    console.log('inside loadCurrentLocale');
     try {
         const retrievedCode = yield call(loadCurrentLocaleCode);
 
