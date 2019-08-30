@@ -17,7 +17,7 @@ export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState(props.location);
     return <View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {icon('search')}
+            <InputIcon name='search' />
             <TextInput
                 style={applicationStyles.searchInput}
                 onChangeText={props.refine}
@@ -27,7 +27,7 @@ export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
         </View>
         <Separator />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            {icon('map-marker')}
+            <InputIcon name='map-marker' />
             <TextInput
                 style={applicationStyles.searchInput}
                 onChangeText={setLocation}
@@ -40,16 +40,20 @@ export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
     </View>;
 };
 
-const icon = (name: string): JSX.Element => (
+interface IconProps {
+    readonly name: string;
+}
+
+const InputIcon = ({ name }: IconProps): JSX.Element => (
     <Icon name={name}
         type='FontAwesome'
-        style={{ fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3 }}
+        style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3 }}
     />
 );
 
 const Separator = (): JSX.Element => (
     <View style={{
         borderBottomWidth: 1,
-        borderColor: colors.greyishBrown,
+        borderColor: colors.white,
     }} />
 );
