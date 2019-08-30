@@ -11,7 +11,7 @@ import { Trans } from '@lingui/react';
 import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_application_popup_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { getLocationTitleFromAddresses } from './get_location_title_from_addresses';
-import { AnalyticsLink } from '../link/link';
+import { AnalyticsLink, LinkTypes } from '../link/link';
 import { buildLinkContext } from '../../sagas/analytics/events';
 
 interface ServiceListItemProps {
@@ -93,7 +93,7 @@ const renderWebsite = (website: string, currentPath: string, linkContext: string
 
     const label = <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans></Text>;
     const link = <AnalyticsLink href={website} currentPath={currentPath} linkContext={linkContext}
-        linkType={'Website'} style={textStyles.paragraphStyle}>{website}</AnalyticsLink>;
+        linkType={LinkTypes.website} style={textStyles.paragraphStyle}>{website}</AnalyticsLink>;
 
     return <Text style={{ marginTop: 10 }}>{label}{link}</Text>;
 };
@@ -105,7 +105,7 @@ const renderEmail = (email: string, currentPath: string, linkContext: string): J
 
     const label = <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>;
     const link = <AnalyticsLink href={`mailto: ${email}`} currentPath={currentPath} linkContext={linkContext}
-        linkType={'Email'} style={textStyles.paragraphStyle} >{email}</AnalyticsLink>;
+        linkType={LinkTypes.email} style={textStyles.paragraphStyle} >{email}</AnalyticsLink>;
 
     return <Text style={{ marginTop: 10 }}>{label}{link}</Text>;
 };

@@ -1,4 +1,3 @@
-// tslint:disable:no-let readonly-array no-expression-statement
 import React from 'react';
 import { Text } from 'native-base';
 import { AnalyticsLink } from './link';

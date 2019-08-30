@@ -106,7 +106,7 @@ const routeHasParameter = (route: Routes): boolean => (
 export const isOnParentScreen = (path: string): boolean => (
     pathMatchesAnyRoute(
         path,
-        [Routes.Help, Routes.Learn, Routes.Questionnaire, Routes.RecommendedTopics, Routes.BookmarkedTopics, Routes.Search],
+        [Routes.Help, Routes.Learn, Routes.Questionnaire, Routes.RecommendedTopics, Routes.BookmarkedTopics],
     )
 );
 
