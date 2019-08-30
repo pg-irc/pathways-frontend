@@ -48,3 +48,9 @@ export const AnalyticsLink = (props: AnalyticsLinkProps): JSX.Element => {
     };
     return renderLink(onPress, props.style, props.children);
 };
+
+export const LinkTypes = {
+    email: 'Email',
+    website: 'Website',
+    phone: 'Phone',
+};

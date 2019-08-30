@@ -1,10 +1,15 @@
 import React from 'react';
-import { Text, View, FlatList, ListRenderItemInfo } from 'react-native';
+import { View, FlatList, ListRenderItemInfo } from 'react-native';
+import { Text } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
 import { ServiceHit } from './types';
+import { Trans } from '@lingui/react';
+import { LinkTypes, AnalyticsLink } from '../link/link';
+import { buildLinkContext } from '../../sagas/analytics/events';
 
 export interface Props {
+    readonly currentPath: string;
     readonly hits: ReadonlyArray<ServiceHit>;
     readonly hasMore: boolean;
     readonly currentRefinement: string;
@@ -18,25 +23,44 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
     const hits = props.currentRefinement === '' ? [] : props.hits;
     // tslint:disable-next-line:no-empty
     const onRefresh = (): void => { };
-    const refreshing = false;
-    const listEmptyComponent = <EmptyComponent />;
-    const listHeaderComponent = <EmptyComponent />;
 
     return <FlatList
         style={{ backgroundColor: colors.white }}
-        refreshing={refreshing}
+        refreshing={false}
         onRefresh={onRefresh}
         data={hits}
         keyExtractor={keyExtractor}
         renderItem={renderServiceSearchHit}
-        ListEmptyComponent={listEmptyComponent}
-        ListHeaderComponent={listHeaderComponent}
-        ItemSeparatorComponent={(): JSX.Element => separator()}
+        ListEmptyComponent={EmptyComponent}
+        ListHeaderComponent={ListHeaderComponent}
+        ItemSeparatorComponent={Separator}
         onEndReached={(): boolean => props.hasMore}
     />;
 };
 
-const separator = (): JSX.Element => (
+const ListHeaderComponent = (props: Partial<Props & Actions>): JSX.Element => {
+    const phoneNumber: string = '211';
+    const href = `tel: ${phoneNumber}`;
+    const linkContext = buildLinkContext('Service', 'BC-211');
+
+    return <View style={{ backgroundColor: colors.lightTeal }}>
+        <Text style={[textStyles.paragraphStyle,
+        {
+            marginTop: 20,
+            marginBottom: 20,
+            marginLeft: 20,
+            marginRight: 20,
+        }]}>
+            <Trans>Services search is only available in English. For multilingual assistance, <AnalyticsLink
+                href={href} currentPath={props.currentPath}
+                linkContext={linkContext} linkType={LinkTypes.phone}
+            >please call BC211</AnalyticsLink>.</Trans>
+        </Text>
+        <Separator />
+    </View>;
+};
+
+const Separator = (): JSX.Element => (
     <View style={{ borderBottomWidth: 8, borderColor: colors.lightGrey }} />
 );
 
@@ -44,6 +68,7 @@ const keyExtractor = (item: ServiceHit): string => (
     item.service_id
 );
 
+// grey colour from "note" font
 const renderServiceSearchHit = ({ item }: ListRenderItemInfo<ServiceHit>): JSX.Element => (
     <View style={{ padding: 10, flexDirection: 'column', justifyContent: 'flex-start' }}>
         <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}>{itemType(item)}</Text>
