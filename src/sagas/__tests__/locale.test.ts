@@ -5,7 +5,7 @@ import { LocaleInfoBuilder } from '../../stores/__tests__/helpers/locale_helpers
 import { loadCurrentLocaleCode, saveCurrentLocaleCode, needsTextDirectionChange, setTextDirection, LocaleInfoManager } from '../../locale';
 import * as actions from '../../stores/locale/actions';
 import { applyLocaleChange, loadCurrentLocale } from '../locale';
-import { anError } from '../../application/__tests__/helpers/random_test_values';
+import { anError, aBoolean } from '../../application/__tests__/helpers/random_test_values';
 
 describe('load locale saga', () => {
     const theFallbackLocale = new LocaleInfoBuilder().build();
@@ -73,7 +73,7 @@ describe('load locale saga', () => {
 describe('the applyLocaleChange saga', () => {
 
     const aLocale = new LocaleInfoBuilder().build();
-    const saveLocaleAction = actions.saveLocaleRequest(aLocale.code);
+    const saveLocaleAction = actions.saveLocaleRequest(aLocale.code, aBoolean());
 
     it('should dispatch a call effect with saveCurrentLocale', () => {
         const saga = applyLocaleChange(saveLocaleAction);
@@ -92,7 +92,7 @@ describe('the applyLocaleChange saga', () => {
         });
 
         it('should dispatch a put effect with a success action upon completion of call effect', () => {
-            expect(saga.next().value).toEqual(put(actions.saveLocaleSuccess(aLocale.code)));
+            expect(saga.next().value).toEqual(put(actions.saveLocaleSuccess(aLocale.code, aBoolean())));
             expect(saga.next().value).toEqual(call(needsTextDirectionChange, aLocale.code));
             expect(saga.next(true).value).toEqual(call(setTextDirection, aLocale.code));
         });

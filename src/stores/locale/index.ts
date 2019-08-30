@@ -9,6 +9,7 @@ export interface LocaleStore {
     readonly loading: boolean;
     readonly isSaved: boolean;
     readonly errorMessage: string;
+    readonly flipOrientation: boolean;
 }
 
 export const buildDefaultStore = (): LocaleStore => ({
@@ -18,6 +19,7 @@ export const buildDefaultStore = (): LocaleStore => ({
     loading: false,
     isSaved: false,
     errorMessage: '',
+    flipOrientation: false,
 });
 
 export const reducer = (store: LocaleStore = buildDefaultStore(), action?: actions.LocaleAction): LocaleStore => {
@@ -34,7 +36,7 @@ export const reducer = (store: LocaleStore = buildDefaultStore(), action?: actio
         case constants.SAVE_LOCALE_REQUEST:
             return { ...store, errorMessage: '', loading: true };
         case constants.SAVE_LOCALE_SUCCESS:
-            return { ...store, errorMessage: '', loading: false, code: action.payload.localeCode };
+            return { ...store, errorMessage: '', loading: false, code: action.payload.localeCode, flipOrientation: action.payload.flipOrientation };
         case constants.SAVE_LOCALE_FAILURE:
             return { ...store, errorMessage: action.payload.message, loading: false };
         default:

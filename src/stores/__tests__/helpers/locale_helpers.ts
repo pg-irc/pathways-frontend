@@ -61,6 +61,7 @@ export class LocaleStoreBuilder {
     loading: boolean = false;
     isSaved: boolean = true;
     errorMessage: string = '';
+    flipOrientation: boolean = false;
 
     withLocales(locales: ReadonlyArray<LocaleInfo>): LocaleStoreBuilder {
         this.availableLocales = locales;
@@ -100,6 +101,7 @@ export class LocaleStoreBuilder {
             loading: this.loading,
             isSaved: this.isSaved,
             errorMessage: this.errorMessage,
+            flipOrientation: this.flipOrientation,
         };
     }
 }

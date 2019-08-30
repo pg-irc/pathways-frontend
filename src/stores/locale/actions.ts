@@ -31,13 +31,15 @@ export function loadLocaleFailure(message: string) {
 }
 
 // tslint:disable-next-line:typedef
-export const saveLocaleRequest = (localeCode: string) => {
-    return helpers.makeAction(constants.SAVE_LOCALE_REQUEST, { localeCode });
+export const saveLocaleRequest = (localeCode: string, flipOrientation: boolean) => {
+    return helpers.makeAction(constants.SAVE_LOCALE_REQUEST, { localeCode, flipOrientation });
 };
 
+export const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
+
 // tslint:disable-next-line:typedef
-export function saveLocaleSuccess(localeCode: string) {
-    return helpers.makeAction(constants.SAVE_LOCALE_SUCCESS, { localeCode });
+export function saveLocaleSuccess(localeCode: string, flipOrientation: boolean) {
+    return helpers.makeAction(constants.SAVE_LOCALE_SUCCESS, { localeCode, flipOrientation });
 }
 
 // tslint:disable-next-line:typedef

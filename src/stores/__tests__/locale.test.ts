@@ -12,12 +12,12 @@ describe('the setLocaleAction for', () => {
     describe('request', () => {
 
         it('should create action with type SAVE_LOCALE_REQUEST', () => {
-            const theSetLangAction = actions.saveLocaleRequest(aLocaleCode);
+            const theSetLangAction = actions.saveLocaleRequest(aLocaleCode, aBoolean());
             expect(theSetLangAction.type).toBe(constants.SAVE_LOCALE_REQUEST);
         });
 
         it('should create action with payload containing the locale code', () => {
-            const theSetLangAction = actions.saveLocaleRequest(aLocaleCode);
+            const theSetLangAction = actions.saveLocaleRequest(aLocaleCode, aBoolean());
             expect(theSetLangAction.payload.localeCode).toBe(aLocaleCode);
         });
 
@@ -26,12 +26,12 @@ describe('the setLocaleAction for', () => {
     describe('success', () => {
 
         it('should create action with type SAVE_LOCALE_SUCCESS', () => {
-            const theSetLangAction = actions.saveLocaleSuccess(aLocaleCode);
+            const theSetLangAction = actions.saveLocaleSuccess(aLocaleCode, aBoolean());
             expect(theSetLangAction.type).toBe(constants.SAVE_LOCALE_SUCCESS);
         });
 
         it('should create action with payload containing the locale code', () => {
-            const theSetLangAction = actions.saveLocaleSuccess(aLocaleCode);
+            const theSetLangAction = actions.saveLocaleSuccess(aLocaleCode, aBoolean());
             expect(theSetLangAction.payload.localeCode).toBe(aLocaleCode);
         });
 
@@ -127,7 +127,7 @@ describe('the reducer', () => {
         const theStore = new LocaleStoreBuilder().build();
         const theAction = {
             type: constants.SAVE_LOCALE_REQUEST as typeof constants.SAVE_LOCALE_REQUEST,
-            payload: { localeCode: aLocaleCode },
+            payload: { localeCode: aLocaleCode, flipOrientation: aBoolean() },
         };
         const theNewStore = locale.reducer(theStore, theAction);
         expect(theNewStore.loading).toBe(true);
@@ -137,7 +137,7 @@ describe('the reducer', () => {
         const theStore = new LocaleStoreBuilder().withLoading(true).build();
         const theAction = {
             type: constants.SAVE_LOCALE_SUCCESS as typeof constants.SAVE_LOCALE_SUCCESS,
-            payload: { message: aString(), loading: false, localeCode: aLocaleCode },
+            payload: { message: aString(), loading: false, localeCode: aLocaleCode, flipOrientation: aBoolean() },
         };
         const theNewStore = locale.reducer(theStore, theAction);
         expect(theNewStore.code).toBe(theAction.payload.localeCode);
@@ -192,8 +192,8 @@ describe('the reducer', () => {
             { type: constants.LOAD_CURRENT_LOCALE_SUCCESS,
             payload: { localeCode: aString(), isSaved: aBoolean()}},
             { type: constants.LOAD_CURRENT_LOCALE_FAILURE, payload: { message: aString() } },
-            { type: constants.SAVE_LOCALE_REQUEST, payload: { localeCode: aString() } },
-            { type: constants.SAVE_LOCALE_SUCCESS, payload: { localeCode: aString() } },
+            { type: constants.SAVE_LOCALE_REQUEST, payload: { localeCode: aString(), flipOrientation: aBoolean() } },
+            { type: constants.SAVE_LOCALE_SUCCESS, payload: { localeCode: aString(), flipOrientation: aBoolean() } },
             { type: constants.SAVE_LOCALE_FAILURE, payload: { message: aString(), localeCode: aString()} },
         ];
 
