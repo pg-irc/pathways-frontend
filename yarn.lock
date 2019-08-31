@@ -1061,6 +1061,16 @@
     xcode "https://github.com/apache/cordova-node-xcode#e7646f0680d509b590b839e567c217590451505b"
     yargs "^12.0.2"
 
+"@types/algoliasearch-helper@*":
+  version "2.26.1"
+  resolved "https://registry.yarnpkg.com/@types/algoliasearch-helper/-/algoliasearch-helper-2.26.1.tgz#60cf377e7cb4bd9a55f7eba35182792763230a24"
+  dependencies:
+    "@types/algoliasearch" "*"
+
+"@types/algoliasearch@*", "@types/algoliasearch@^3.30.17":
+  version "3.30.18"
+  resolved "https://registry.yarnpkg.com/@types/algoliasearch/-/algoliasearch-3.30.18.tgz#5b68d8fc67e5070fbb3f283d69c7948f84dc7e1c"
+
 "@types/babel__core@^7.1.0":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.2.tgz#608c74f55928033fce18b99b213c16be4b3d114f"
@@ -1164,6 +1174,20 @@
 "@types/ramda@^0.25.38":
   version "0.25.51"
   resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.25.51.tgz#d5421d0e190c56c64c112a761a85782fc971409d"
+
+"@types/react-instantsearch-core@*":
+  version "5.2.9"
+  resolved "https://registry.yarnpkg.com/@types/react-instantsearch-core/-/react-instantsearch-core-5.2.9.tgz#c8050dedefcb86ff01a0ff584c1801f5b165fe4a"
+  dependencies:
+    "@types/algoliasearch-helper" "*"
+    "@types/react" "*"
+
+"@types/react-instantsearch-native@^5.3.2":
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/@types/react-instantsearch-native/-/react-instantsearch-native-5.3.2.tgz#becf824c38dde77df99fd790a05dbf2fe12e73cb"
+  dependencies:
+    "@types/react" "*"
+    "@types/react-instantsearch-core" "*"
 
 "@types/react-native@>=0.50.0", "@types/react-native@^0.60.1":
   version "0.60.8"
@@ -1293,6 +1317,10 @@ agent-base@^4.3.0:
   dependencies:
     es6-promisify "^5.0.0"
 
+agentkeepalive@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/agentkeepalive/-/agentkeepalive-2.2.0.tgz#c5d1bd4b129008f1163f236f86e5faea2026e2ef"
+
 ajv@^6.5.3, ajv@^6.5.5:
   version "6.10.2"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.10.2.tgz#d3cea04d6b017b2894ad69040fec8b623eb4bd52"
@@ -1301,6 +1329,34 @@ ajv@^6.5.3, ajv@^6.5.5:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
+
+algoliasearch-helper@^2.26.0:
+  version "2.28.0"
+  resolved "https://registry.yarnpkg.com/algoliasearch-helper/-/algoliasearch-helper-2.28.0.tgz#1cafa7fcd02c15e9411c4d1778e9a4e89581916d"
+  dependencies:
+    events "^1.1.1"
+    lodash "^4.17.5"
+    qs "^6.5.1"
+
+algoliasearch@^3.27.1, algoliasearch@^3.33.0:
+  version "3.34.0"
+  resolved "https://registry.yarnpkg.com/algoliasearch/-/algoliasearch-3.34.0.tgz#02eb97bd6718e3a2c71121b9c3b655a35a4ba645"
+  dependencies:
+    agentkeepalive "^2.2.0"
+    debug "^2.6.9"
+    envify "^4.0.0"
+    es6-promise "^4.1.0"
+    events "^1.1.0"
+    foreach "^2.0.5"
+    global "^4.3.2"
+    inherits "^2.0.1"
+    isarray "^2.0.1"
+    load-script "^1.0.0"
+    object-keys "^1.0.11"
+    querystring-es3 "^0.2.1"
+    reduce "^1.0.1"
+    semver "^5.1.0"
+    tunnel-agent "^0.6.0"
 
 ansi-colors@^1.0.1:
   version "1.1.0"
@@ -2238,7 +2294,7 @@ date-fns@^1.29.0:
   version "1.30.1"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.30.1.tgz#2e71bf0b119153dbb4cc4e88d9ea5acfb50dc05c"
 
-debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
+debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
@@ -2406,6 +2462,13 @@ entities@~1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
 
+envify@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/envify/-/envify-4.1.0.tgz#f39ad3db9d6801b4e6b478b61028d3f0b6819f7e"
+  dependencies:
+    esprima "^4.0.0"
+    through "~2.3.4"
+
 envinfo@^5.7.0:
   version "5.12.1"
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-5.12.1.tgz#83068c33e0972eb657d6bc69a6df30badefb46ef"
@@ -2442,7 +2505,7 @@ es-to-primitive@^1.2.0:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-es6-promise@^4.0.3:
+es6-promise@^4.0.3, es6-promise@^4.1.0:
   version "4.2.8"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.2.8.tgz#4eb21594c972bc40553d276e510539143db53e0a"
 
@@ -2504,6 +2567,10 @@ event-target-shim@^1.0.5:
 eventemitter3@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
+
+events@^1.1.0, events@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
 exec-sh@^0.2.0:
   version "0.2.2"
@@ -3150,6 +3217,10 @@ for-own@^0.1.4:
   dependencies:
     for-in "^1.0.1"
 
+foreach@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/foreach/-/foreach-2.0.5.tgz#0bee005018aeb260d0a3af3ae658dd0136ec1b99"
+
 forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
@@ -3303,7 +3374,7 @@ glob@^7.1.1, glob@^7.1.2, glob@^7.1.3:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-global@^4.3.0:
+global@^4.3.0, global@^4.3.2:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/global/-/global-4.4.0.tgz#3e7b105179006a323ed71aafca3e9c57a5cc6406"
   dependencies:
@@ -3517,7 +3588,7 @@ inflight@^1.0.4:
     once "^1.3.0"
     wrappy "1"
 
-inherits@2, inherits@2.0.4, inherits@^2.0.3, inherits@~2.0.3:
+inherits@2, inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@~2.0.3:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
 
@@ -3802,6 +3873,10 @@ isarray@0.0.1:
 isarray@1.0.0, isarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
+
+isarray@^2.0.1:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/isarray/-/isarray-2.0.5.tgz#8af1e4c1221244cc62459faf38940d4e644a5723"
 
 isexe@^2.0.0:
   version "2.0.0"
@@ -4459,6 +4534,10 @@ load-json-file@^4.0.0:
     parse-json "^4.0.0"
     pify "^3.0.0"
     strip-bom "^3.0.0"
+
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
 
 locate-path@^2.0.0:
   version "2.0.0"
@@ -5247,7 +5326,7 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
-object-keys@^1.0.11, object-keys@^1.0.12:
+object-keys@^1.0.11, object-keys@^1.0.12, object-keys@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.1.tgz#1c47f272df277f3b1daf061677d9c82e2322c60e"
 
@@ -5736,7 +5815,7 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
 
-qs@^6.5.0:
+qs@^6.5.0, qs@^6.5.1:
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.8.0.tgz#87b763f0d37ca54200334cd57bb2ef8f68a1d081"
 
@@ -5751,6 +5830,10 @@ query-string@*, query-string@^6.1.0, query-string@^6.2.0:
     decode-uri-component "^0.2.0"
     split-on-first "^1.0.0"
     strict-uri-encode "^2.0.0"
+
+querystring-es3@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
 
 querystringify@^2.1.1:
   version "2.1.1"
@@ -5838,6 +5921,23 @@ react-google-maps@^9.4.5:
     recompose "^0.26.0"
     scriptjs "^2.5.8"
     warning "^3.0.0"
+
+react-instantsearch-core@^5.7.0:
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/react-instantsearch-core/-/react-instantsearch-core-5.7.0.tgz#6979ec419d2711033f6c83181de6cae9e1f064c2"
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    algoliasearch-helper "^2.26.0"
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
+
+react-instantsearch-native@^5.7.0:
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/react-instantsearch-native/-/react-instantsearch-native-5.7.0.tgz#758cf25254bacee9dbc31af2bcf1e8e1057cecc2"
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    algoliasearch "^3.27.1"
+    react-instantsearch-core "^5.7.0"
 
 react-is@^16.3.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
   version "16.9.0"
@@ -6180,6 +6280,12 @@ recompose@^0.26.0:
     fbjs "^0.8.1"
     hoist-non-react-statics "^2.3.1"
     symbol-observable "^1.0.4"
+
+reduce@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/reduce/-/reduce-1.0.2.tgz#0cd680ad3ffe0b060e57a5c68bdfce37168d361b"
+  dependencies:
+    object-keys "^1.1.0"
 
 redux-persist@^5.9.1:
   version "5.10.0"
@@ -6909,7 +7015,7 @@ through2@^2.0.0:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
 
-through@^2.3.6:
+through@^2.3.6, through@~2.3.4:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
 
