@@ -279,10 +279,11 @@ export const applicationStyles = StyleSheet.create({
         borderWidth: 2,
     },
     searchInput: {
+        color: colors.white,
+        fontSize: 16,
         flex: 1,
         height: 48,
         padding: 12,
-        fontSize: 16,
     },
     boxShadowBelow: {
         shadowColor: colors.black,
