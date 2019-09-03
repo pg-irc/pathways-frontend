@@ -10,7 +10,6 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 
 export interface SearchComponentProps {
-    readonly indexName: string;
     readonly apiKey: string;
     readonly appId: string;
     readonly currentLocale: Locale;
@@ -31,14 +30,14 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
     const configuration = {
-        aroundLatLng: toLatLong(location),
+        // aroundLatLng: toLatLong(location),
     };
 
     return <Content style={{ backgroundColor: colors.teal }}>
         <ScreenHeader {...props} />
-        <InstantSearch {...props} >
-            <ConfigureConnectedComponent {...configuration} />
+        <InstantSearch indexName='dev_organizations' {...props} >
             <SearchBoxConnectedComponent location={location} setLocation={setLocation} />
+            <ConfigureConnectedComponent {...configuration} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
     </Content>;
@@ -65,7 +64,7 @@ const ScreenHeader = (props: Props): JSX.Element => {
 // GET https://geocoder.ca/?locate=Vancouver&json=1
 // GET https://geocoder.ca/?locate=Prince+George&json=1
 
-const toLatLong = (s: string): string => {
+export const toLatLong = (s: string): string => {
     if (s.toLowerCase().startsWith('burn')) {
         return '49.267132,-122.968941';
     }

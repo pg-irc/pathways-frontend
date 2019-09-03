@@ -5,7 +5,6 @@ import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
 import { selectLocale } from '../../selectors/locale/select_locale';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
-    indexName: 'dev_services',
     apiKey: ALGOLIA_SEARCH_API_KEY,
     appId: 'MMYH1Z0D3O',
     currentLocale: selectLocale(store),
