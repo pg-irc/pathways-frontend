@@ -58,7 +58,12 @@ const ScreenHeader = (props: Props): JSX.Element => {
     </Header>;
 };
 
-// TODO use https://geocoder.ca/ to look up addresses or postal codes, free for non-profits
+// TODO use https://geocoder.ca/ to look up addresses or postal codes, free for non-profits,
+// but it looks like we don't need to talk to then until their throttling becomes a problem for us.
+// GET https://geocoder.ca/?locate=V0G1R0&json=1 brings back a response with lat/long
+// GET https://geocoder.ca/?locate=205+6+Ave+NW%2C+Nakusp%2C+BC+V0G+1R0&json=1 the same
+// GET https://geocoder.ca/?locate=Vancouver&json=1
+// GET https://geocoder.ca/?locate=Prince+George&json=1
 
 const toLatLong = (s: string): string => {
     if (s.toLowerCase().startsWith('burn')) {
