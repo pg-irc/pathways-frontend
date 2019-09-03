@@ -72,9 +72,9 @@ const keyExtractor = (item: ServiceHit): string => (
 const renderServiceSearchHit = ({ item }: ListRenderItemInfo<ServiceHit>): JSX.Element => (
     <View style={{ padding: 10, flexDirection: 'column', justifyContent: 'flex-start' }}>
         <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}>{itemType(item)}</Text>
-        <Text style={[textStyles.paragraphBoldBlackLeft, { fontSize: 20, lineHeight: 25 }]}>{itemName(item)}</Text>
+        <Text style={[textStyles.paragraphBoldBlackLeft, { fontSize: 20, lineHeight: 25 }]}>{serviceName(item)}</Text>
         <Text style={[textStyles.paragraphStyle, { color: colors.darkerGrey }]}>{itemAdress(item)}</Text>
-        <Text style={[textStyles.paragraphStyle]}>{truncatedItemDescription(item)}</Text>
+        <Text style={[textStyles.paragraphStyle]}>{truncatedServiceDescription(item)}</Text>
     </View >
 );
 
@@ -82,16 +82,17 @@ const itemType = (_: ServiceHit): string => (
     'SERVICE'
 );
 
-const itemName = (item: ServiceHit): string => (
-    item.service_name
+const serviceName = (_: ServiceHit): string => (
+    'itemName' // item.service_name
 );
 
-const itemAdress = (item: ServiceHit): string => (
-    item.street_address + ', ' + item.city + ' ' + item.postal_code
+const itemAdress = (service: ServiceHit): string => (
+    JSON.stringify(service).substr(0, 200)
 );
 
-const truncatedItemDescription = (item: ServiceHit): string => {
-    const maxLength = 200;
-    const desc = item.service_description;
-    return desc.length > maxLength ? desc.slice(0, maxLength - 3) + '...' : desc;
+const truncatedServiceDescription = (_: ServiceHit): string => {
+    return 'truncatedItemDescription';
+    // const maxLength = 200;
+    // const desc = item.service_description;
+    // return desc.length > maxLength ? desc.slice(0, maxLength - 3) + '...' : desc;
 };
