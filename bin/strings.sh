@@ -84,6 +84,7 @@ clean() {
     rm -f locale/*/new-messages.*
     rm -f locale/*/merged-messages.po
     rm -f locale/*/*.backup
+    rm -f locale/*/messages.po
 }
 
 
