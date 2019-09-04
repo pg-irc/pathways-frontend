@@ -57,13 +57,11 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<Lo
             yield call(saveCurrentLocaleCode, fallbackLocale.code);
             const isSaved = false;
             const flipOrientation = RTL !== isRTL(fallbackLocale.code);
-            I18nManager.forceRTL(isRTL(fallbackLocale.code));
             yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved, flipOrientation));
         } else {
             const locale = LocaleInfoManager.get(retrievedCode);
             const isSaved = true;
             const flipOrientation = RTL !== isRTL(locale.code);
-            I18nManager.forceRTL(isRTL(locale.code));
             yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
         }
     } catch (e) {
