@@ -27,10 +27,8 @@ const toServiceHit = (data: UnvalidatedData): ServiceSearchHit => {
         street_address: item.street_address,
         city: item.city,
         postal_code: item.postal_code,
-        _geoloc: {
-            lat: item._geoloc.lat,
-            lng: item._geoloc.lng,
-        },
+        latitude: item._geoloc.lat,
+        longitude: item._geoloc.lng,
     });
     return buildServiceSearchItem(data);
 };
