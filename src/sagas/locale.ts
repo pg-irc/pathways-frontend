@@ -11,7 +11,6 @@ export function* watchSaveLocale(): IterableIterator<ForkEffect> {
 }
 
 export function* applyLocaleChange(action: actions.SaveLocaleRequestAction): IterableIterator<CallEffect | PutEffect<actions.SaveLocaleResult>> {
-    console.log('inside applyLocaleChange');
     const localeCode = action.payload.localeCode;
     const flipOrientation = action.payload.flipOrientation;
     try {
@@ -35,7 +34,6 @@ export function* enforceRTLChange(action: actions.SaveLocaleSuccessAction | acti
     const localeCode = action.payload.localeCode;
     const flipOrientation = action.payload.flipOrientation;
     if (flipOrientation) {
-        console.log('actually flipping locales');
         yield call(setTextDirection, localeCode);
     }
 }
@@ -45,7 +43,6 @@ export function* watchLoadLocale(): IterableIterator<ForkEffect> {
 }
 
 export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<actions.LoadLocaleAction>> {
-    console.log('inside loadCurrentLocale');
     try {
         const retrievedCode = yield call(loadCurrentLocaleCode);
         const RTL = I18nManager.isRTL;
