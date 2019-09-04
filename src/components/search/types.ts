@@ -1,13 +1,7 @@
-export interface ServiceHit {
-    readonly service_id: string;
-    readonly service_name: string;
-    readonly service_description: string;
-    readonly street_address: string;
-    readonly city: string;
-    readonly postal_code: string;
-}
+// tslint:disable-next-line:no-any
+export type UnvalidatedData = any;
 
-export interface ServiceSearchItem {
+export interface ServiceSearchHit {
     readonly type: 'ServiceSearchItem';
     readonly service_id: string;
     readonly service_name: string;
@@ -23,7 +17,7 @@ export interface GeoLocation {
     readonly lat: number;
 }
 
-export interface OrganizationSearchItem {
+export interface OrganizationSearchHit {
     // TODO add organization id to the index
     readonly type: 'OrganizationSearchItem';
     readonly organization_id: string;
@@ -33,3 +27,4 @@ export interface OrganizationSearchItem {
     readonly organization_email: string;
 }
 
+export type SearchHit = ServiceSearchHit | OrganizationSearchHit;

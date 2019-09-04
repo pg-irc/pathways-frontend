@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { toValidSearchResponse } from '../validation';
+import { toValidSearchHit } from '../validation';
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 
 describe('Search response validation', () => {
@@ -8,7 +8,7 @@ describe('Search response validation', () => {
 
         it('returns the service data', () => {
             const serviceId = aString();
-            const result = toValidSearchResponse([{
+            const result = toValidSearchHit({
                 service_id: serviceId,
                 service_name: aString(),
                 service_description: aString(),
@@ -19,32 +19,30 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            }]);
-            const resultItem = result[0];
-            if (resultItem.type !== 'ServiceSearchItem') {
+            });
+            if (result.type !== 'ServiceSearchItem') {
                 throw Error('Unexpected type');
             }
-            expect(resultItem.service_id).toEqual(serviceId);
+            expect(result.service_id).toEqual(serviceId);
         });
 
         it('returns the organization data', () => {
             const organizationName = aString();
-            const result = toValidSearchResponse([{
+            const result = toValidSearchHit({
                 organization_name: organizationName,
                 organization_description: aString(),
                 organization_website: aString(),
                 organization_email: aString(),
-            }]);
-            const resultItem = result[0];
-            if (resultItem.type !== 'OrganizationSearchItem') {
+            });
+            if (result.type !== 'OrganizationSearchItem') {
                 throw Error('Unexpected type');
             }
-            expect(resultItem.organization_name).toEqual(organizationName);
+            expect(result.organization_name).toEqual(organizationName);
         });
     });
     describe('with invalid data', () => {
         it('throws on missing field in service data', () => {
-            expect(() => toValidSearchResponse([{
+            expect(() => toValidSearchHit({
                 // service_id is missing
                 service_name: aString(),
                 service_description: aString(),
@@ -55,12 +53,12 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            }])).toThrow();
+            })).toThrow();
         });
 
         it('throws on wrong field type in service data', () => {
             const invalidValue = aNumber();
-            expect(() => toValidSearchResponse([{
+            expect(() => toValidSearchHit({
                 service_id: invalidValue,
                 service_name: aString(),
                 service_description: aString(),
@@ -71,26 +69,26 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            }])).toThrow();
+            })).toThrow();
         });
 
         it('throws on missing field in organization data', () => {
-            expect(() => toValidSearchResponse([{
+            expect(() => toValidSearchHit({
                 // organization_name is missing
                 organization_description: aString(),
                 organization_website: aString(),
                 organization_email: aString(),
-            }])).toThrow();
+            })).toThrow();
         });
 
         it('throws on wrong field type in organization data', () => {
             const invalidData = aNumber();
-            expect(() => toValidSearchResponse([{
+            expect(() => toValidSearchHit({
                 organization_name: invalidData,
                 organization_description: aString(),
                 organization_website: aString(),
                 organization_email: aString(),
-            }])).toThrow();
+            })).toThrow();
         });
     });
 });
