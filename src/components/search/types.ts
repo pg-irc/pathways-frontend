@@ -8,6 +8,7 @@ export interface ServiceHit {
 }
 
 export interface ServiceSearchItem {
+    readonly type: 'ServiceSearchItem';
     readonly service_id: string;
     readonly service_name: string;
     readonly service_description: string;
@@ -24,6 +25,7 @@ export interface GeoLocation {
 
 export interface OrganizationSearchItem {
     // TODO add organization id to the index
+    readonly type: 'OrganizationSearchItem';
     readonly organization_id: string;
     readonly organization_name: string;
     readonly organization_description: string;

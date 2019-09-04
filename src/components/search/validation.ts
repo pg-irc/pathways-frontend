@@ -1,27 +1,22 @@
-// This is the documenated syntax for Ajv. Using an import here causes a runtime error.
 // tslint:disable-next-line:no-var-requires
 const Ajv = require('ajv');
 import * as R from 'ramda';
-import { ServiceSearchItem, OrganizationSearchItem } from './types';
 import * as schema from './schema';
+import { ServiceSearchItem, OrganizationSearchItem } from './types';
 
 // tslint:disable-next-line:no-any
 type UnvalidatedData = any;
 
-export type SearchItemList = ReadonlyArray<ServiceSearchItem> | ReadonlyArray<OrganizationSearchItem>;
+export type SearchResponse = ReadonlyArray<ServiceSearchItem> | ReadonlyArray<OrganizationSearchItem>;
 
-// tslint:disable-next-line:no-class
-export class InvalidSearchResultData {
-}
-
-export const validateSearchResponses = (data: UnvalidatedData): SearchItemList => {
+export const toValidSearchResponse = (data: UnvalidatedData): SearchResponse => {
     if (isServiceData(data)) {
         return toServiceData(data);
     }
     if (isOrganizationData(data)) {
         return toOrganizationData(data);
     }
-    throw new InvalidSearchResultData();
+    throw new Error('Search response failed validation as service or organization data');
 };
 
 const isServiceData = (data: UnvalidatedData): boolean => {
@@ -31,6 +26,7 @@ const isServiceData = (data: UnvalidatedData): boolean => {
 
 const toServiceData = (data: UnvalidatedData): ReadonlyArray<ServiceSearchItem> => {
     const buildServiceSearchItem = (item: UnvalidatedData): ServiceSearchItem => ({
+        type: 'ServiceSearchItem',
         service_id: item.service_id,
         service_name: item.service_name,
         service_description: item.service_description,
@@ -52,6 +48,7 @@ const isOrganizationData = (data: UnvalidatedData): boolean => {
 
 const toOrganizationData = (data: UnvalidatedData): ReadonlyArray<OrganizationSearchItem> => {
     const buildOrganizationSearchItem = (item: UnvalidatedData): OrganizationSearchItem => ({
+        type: 'OrganizationSearchItem',
         organization_id: 'TODO',
         organization_name: item.organization_name,
         organization_description: item.organization_description,
