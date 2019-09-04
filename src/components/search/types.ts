@@ -9,12 +9,8 @@ export interface ServiceSearchHit {
     readonly street_address: string;
     readonly city: string;
     readonly postal_code: string;
-    readonly _geoloc: GeoLocation;
-}
-
-export interface GeoLocation {
-    readonly lng: number;
-    readonly lat: number;
+    readonly latitude: number;
+    readonly longitude: number;
 }
 
 export interface OrganizationSearchHit {
