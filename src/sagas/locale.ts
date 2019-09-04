@@ -50,18 +50,19 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<Lo
     console.log('inside loadCurrentLocale');
     try {
         const retrievedCode = yield call(loadCurrentLocaleCode);
+        const RTL = I18nManager.isRTL;
 
         if (retrievedCode === null) {
             const fallbackLocale = LocaleInfoManager.getFallback();
             yield call(saveCurrentLocaleCode, fallbackLocale.code);
             const isSaved = false;
-            const flipOrientation = I18nManager.isRTL !== isRTL(fallbackLocale.code);
+            const flipOrientation = RTL !== isRTL(fallbackLocale.code);
             I18nManager.forceRTL(isRTL(fallbackLocale.code));
             yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved, flipOrientation));
         } else {
             const locale = LocaleInfoManager.get(retrievedCode);
             const isSaved = true;
-            const flipOrientation = I18nManager.isRTL !== isRTL(locale.code);
+            const flipOrientation = RTL !== isRTL(locale.code);
             I18nManager.forceRTL(isRTL(locale.code));
             yield put(actions.loadLocaleSuccess(locale.code, isSaved, flipOrientation));
         }
