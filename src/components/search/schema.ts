@@ -4,7 +4,7 @@ export const geoLocation = {
         'lng': { 'type': 'number' },
         'lat': { 'type': 'number' },
     },
-    'required': ['service_name', 'service_description'],
+    'required': ['lng', 'lat'],
 };
 
 export const serviceSearchItem = {
