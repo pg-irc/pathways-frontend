@@ -36,7 +36,8 @@ describe('load locale saga', () => {
 
         it('dispatches a load current locale success action with isSaved flag is true', () => {
             const isSaved = true;
-            expect(loadSuccessAction).toEqual(put(actions.loadLocaleSuccess(aLocale.code, isSaved, aBoolean())));
+            const flipOrientation = false;
+            expect(loadSuccessAction).toEqual(put(actions.loadLocaleSuccess(aLocale.code, isSaved, flipOrientation)));
         });
     });
 
@@ -66,7 +67,7 @@ describe('load locale saga', () => {
             const isSaved = false;
             const flipOrientation = false;
             expect(loadSuccessActionWithFallbackLocale)
-            .toEqual(put(actions.loadLocaleSuccess(theFallbackLocale.code, isSaved, flipOrientation)));
+                .toEqual(put(actions.loadLocaleSuccess(theFallbackLocale.code, isSaved, flipOrientation)));
         });
     });
 });
@@ -74,7 +75,8 @@ describe('load locale saga', () => {
 describe('the applyLocaleChange saga', () => {
 
     const aLocale = new LocaleInfoBuilder().build();
-    const saveLocaleAction = actions.saveLocaleRequest(aLocale.code, aBoolean());
+    const flipOrientation = aBoolean();
+    const saveLocaleAction = actions.saveLocaleRequest(aLocale.code, flipOrientation);
 
     it('should dispatch a call effect with saveCurrentLocale', () => {
         const saga = applyLocaleChange(saveLocaleAction);
@@ -93,7 +95,7 @@ describe('the applyLocaleChange saga', () => {
         });
 
         it('should dispatch a put effect with a success action upon completion of call effect', () => {
-            expect(saga.next().value).toEqual(put(actions.saveLocaleSuccess(aLocale.code, true)));
+            expect(saga.next().value).toEqual(put(actions.saveLocaleSuccess(aLocale.code, flipOrientation)));
         });
 
         it('should dispatch a failure action upon failure of call effect', () => {
