@@ -10,6 +10,18 @@ export function* watchSaveLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.SAVE_LOCALE_REQUEST, applyLocaleChange);
 }
 
+export function* applyLocaleChange(action: actions.SaveLocaleRequestAction): IterableIterator<CallEffect | PutEffect<actions.SaveLocaleResult>> {
+    console.log('inside applyLocaleChange');
+    const localeCode = action.payload.localeCode;
+    const flipOrientation = action.payload.flipOrientation;
+    try {
+        yield call(saveCurrentLocaleCode, localeCode);
+        yield put(actions.saveLocaleSuccess(localeCode, flipOrientation));
+    } catch (e) {
+        yield put(actions.saveLocaleFailure(e.message, localeCode));
+    }
+}
+
 export function* watchSaveLocaleSuccess(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.SAVE_LOCALE_SUCCESS, enforceRTLChange);
 }
@@ -28,25 +40,11 @@ export function* enforceRTLChange(action: actions.SaveLocaleSuccessAction | acti
     }
 }
 
-export function* applyLocaleChange(action: actions.SaveLocaleRequestAction): IterableIterator<CallEffect | PutEffect<actions.SaveLocaleResult>> {
-    console.log('inside applyLocaleChange');
-    const localeCode = action.payload.localeCode;
-    const flipOrientation = action.payload.flipOrientation;
-    try {
-        yield call(saveCurrentLocaleCode, localeCode);
-        yield put(actions.saveLocaleSuccess(localeCode, flipOrientation));
-    } catch (e) {
-        yield put(actions.saveLocaleFailure(e.message, localeCode));
-    }
-}
-
 export function* watchLoadLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_CURRENT_LOCALE_REQUEST, loadCurrentLocale);
 }
 
-export type LoadLocaleActions = actions.LoadLocaleAction;
-
-export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadLocaleActions>> {
+export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<actions.LoadLocaleAction>> {
     console.log('inside loadCurrentLocale');
     try {
         const retrievedCode = yield call(loadCurrentLocaleCode);
