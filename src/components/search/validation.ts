@@ -1,31 +1,25 @@
 // tslint:disable-next-line:no-var-requires
 const Ajv = require('ajv');
-import * as R from 'ramda';
 import * as schema from './schema';
-import { ServiceSearchItem, OrganizationSearchItem } from './types';
+import { ServiceSearchHit, OrganizationSearchHit, UnvalidatedData, SearchHit } from './types';
 
-// tslint:disable-next-line:no-any
-type UnvalidatedData = any;
-
-export type SearchResponse = ReadonlyArray<ServiceSearchItem> | ReadonlyArray<OrganizationSearchItem>;
-
-export const toValidSearchResponse = (data: UnvalidatedData): SearchResponse => {
-    if (isServiceData(data)) {
-        return toServiceData(data);
+export const toValidSearchHit = (data: UnvalidatedData): SearchHit => {
+    if (isServiceHit(data)) {
+        return toServiceHit(data);
     }
-    if (isOrganizationData(data)) {
-        return toOrganizationData(data);
+    if (isOrganizationHit(data)) {
+        return toOrganizationHit(data);
     }
     throw new Error('Search response failed validation as service or organization data');
 };
 
-const isServiceData = (data: UnvalidatedData): boolean => {
+const isServiceHit = (data: UnvalidatedData): boolean => {
     const ajv = new Ajv();
-    return ajv.validate(schema.serviceSearchItemArray, data) as boolean;
+    return ajv.validate(schema.serviceSearchItem, data) as boolean;
 };
 
-const toServiceData = (data: UnvalidatedData): ReadonlyArray<ServiceSearchItem> => {
-    const buildServiceSearchItem = (item: UnvalidatedData): ServiceSearchItem => ({
+const toServiceHit = (data: UnvalidatedData): ServiceSearchHit => {
+    const buildServiceSearchItem = (item: UnvalidatedData): ServiceSearchHit => ({
         type: 'ServiceSearchItem',
         service_id: item.service_id,
         service_name: item.service_name,
@@ -38,16 +32,16 @@ const toServiceData = (data: UnvalidatedData): ReadonlyArray<ServiceSearchItem> 
             lng: item._geoloc.lng,
         },
     });
-    return R.map(buildServiceSearchItem, data);
+    return buildServiceSearchItem(data);
 };
 
-const isOrganizationData = (data: UnvalidatedData): boolean => {
+const isOrganizationHit = (data: UnvalidatedData): boolean => {
     const ajv = new Ajv();
-    return ajv.validate(schema.organizationSearchItemArray, data) as boolean;
+    return ajv.validate(schema.organizationSearchItem, data) as boolean;
 };
 
-const toOrganizationData = (data: UnvalidatedData): ReadonlyArray<OrganizationSearchItem> => {
-    const buildOrganizationSearchItem = (item: UnvalidatedData): OrganizationSearchItem => ({
+const toOrganizationHit = (data: UnvalidatedData): OrganizationSearchHit => {
+    const buildOrganizationSearchItem = (item: UnvalidatedData): OrganizationSearchHit => ({
         type: 'OrganizationSearchItem',
         organization_id: 'TODO',
         organization_name: item.organization_name,
@@ -55,5 +49,5 @@ const toOrganizationData = (data: UnvalidatedData): ReadonlyArray<OrganizationSe
         organization_website: item.organization_website,
         organization_email: item.organization_email,
     });
-    return R.map(buildOrganizationSearchItem, data);
+    return buildOrganizationSearchItem(data);
 };

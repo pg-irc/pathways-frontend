@@ -3,14 +3,15 @@ import { View, FlatList, ListRenderItemInfo } from 'react-native';
 import { Text } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
-import { ServiceHit } from './types';
+import { UnvalidatedData, ServiceSearchHit, OrganizationSearchHit } from './types';
 import { Trans } from '@lingui/react';
 import { LinkTypes, AnalyticsLink } from '../link/link';
 import { buildLinkContext } from '../../sagas/analytics/events';
+import { toValidSearchHit as toValidSearchHit } from './validation';
 
 export interface Props {
     readonly currentPath: string;
-    readonly hits: ReadonlyArray<ServiceHit>;
+    readonly hits: ReadonlyArray<UnvalidatedData>;
     readonly hasMore: boolean;
     readonly currentRefinement: string;
 }
@@ -30,7 +31,7 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
         onRefresh={onRefresh}
         data={hits}
         keyExtractor={keyExtractor}
-        renderItem={renderServiceSearchHit}
+        renderItem={renderSearchHit}
         ListEmptyComponent={EmptyComponent}
         ListHeaderComponent={ListHeaderComponent}
         ItemSeparatorComponent={Separator}
@@ -64,35 +65,57 @@ const Separator = (): JSX.Element => (
     <View style={{ borderBottomWidth: 8, borderColor: colors.lightGrey }} />
 );
 
-const keyExtractor = (item: ServiceHit): string => (
-    item.service_id
+const keyExtractor = (hit: UnvalidatedData): string => (
+    hit.service_id ? hit.service_id : hit.organization_name // TODO change organization_name to organization_id
 );
 
-// grey colour from "note" font
-const renderServiceSearchHit = ({ item }: ListRenderItemInfo<ServiceHit>): JSX.Element => (
+const renderSearchHit = ({ item }: ListRenderItemInfo<UnvalidatedData>): JSX.Element => (
+    renderValidSearchHit(toValidSearchHit(item))
+);
+
+const renderValidSearchHit = (validHit: ServiceSearchHit | OrganizationSearchHit): JSX.Element => (
+    validHit.type === 'OrganizationSearchItem' ? renderOrganizationHit(validHit) : renderServiceHit(validHit)
+);
+
+const renderOrganizationHit = (hit: OrganizationSearchHit): JSX.Element => (
     <View style={{ padding: 10, flexDirection: 'column', justifyContent: 'flex-start' }}>
-        <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}>{itemType(item)}</Text>
-        <Text style={[textStyles.paragraphBoldBlackLeft, { fontSize: 20, lineHeight: 25 }]}>{serviceName(item)}</Text>
-        <Text style={[textStyles.paragraphStyle, { color: colors.darkerGrey }]}>{itemAdress(item)}</Text>
-        <Text style={[textStyles.paragraphStyle]}>{truncatedServiceDescription(item)}</Text>
+        <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}><Trans>ORGANIZATION</Trans></Text>
+        <Text style={[textStyles.paragraphBoldBlackLeft, { fontSize: 20, lineHeight: 25 }]}>{organizationName(hit)}</Text>
+        <Text style={[textStyles.paragraphStyle]}>{truncatedOrganizationDescription(hit)}</Text>
     </View >
 );
 
-const itemType = (_: ServiceHit): string => (
-    'SERVICE'
+const organizationName = (hit: OrganizationSearchHit): string => (
+    hit.organization_name
 );
 
-const serviceName = (_: ServiceHit): string => (
-    'itemName' // item.service_name
+const truncatedOrganizationDescription = (hit: OrganizationSearchHit): string => (
+    truncateDescription(hit.organization_description)
 );
 
-const itemAdress = (service: ServiceHit): string => (
-    JSON.stringify(service).substr(0, 200)
-);
-
-const truncatedServiceDescription = (_: ServiceHit): string => {
-    return 'truncatedItemDescription';
-    // const maxLength = 200;
-    // const desc = item.service_description;
-    // return desc.length > maxLength ? desc.slice(0, maxLength - 3) + '...' : desc;
+const truncateDescription = (description: string): string => {
+    const maxLength = 200;
+    return description.length > maxLength ? description.slice(0, maxLength - 3) + '...' : description;
 };
+
+// TODO grey colour from "note" font
+const renderServiceHit = (hit: ServiceSearchHit): JSX.Element => (
+    <View style={{ padding: 10, flexDirection: 'column', justifyContent: 'flex-start' }}>
+        <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}><Trans>SERVICE</Trans></Text>
+        <Text style={[textStyles.paragraphBoldBlackLeft, { fontSize: 20, lineHeight: 25 }]}>{serviceName(hit)}</Text>
+        <Text style={[textStyles.paragraphStyle, { color: colors.darkerGrey }]}>{serviceAdress(hit)}</Text>
+        <Text style={[textStyles.paragraphStyle]}>{truncatedServiceDescription(hit)}</Text>
+    </View >
+);
+
+const serviceName = (hit: ServiceSearchHit): string => (
+    hit.service_name
+);
+
+const serviceAdress = (hit: ServiceSearchHit): string => (
+    hit.street_address + ', ' + hit.city + ' ' + hit.postal_code
+);
+
+const truncatedServiceDescription = (hit: ServiceSearchHit): string => (
+    truncateDescription(hit.service_description)
+);
