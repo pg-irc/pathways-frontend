@@ -4,18 +4,23 @@ import * as schema from './schema';
 import { ServiceSearchHit, OrganizationSearchHit, UnvalidatedData, SearchHit, LatLong } from './types';
 
 export const toValidSearchHit = (hit: UnvalidatedData): SearchHit => {
-    if (isServiceHit(hit)) {
+    const serviceError = getServiceErrorIfAny(hit);
+    if (!serviceError) {
         return toServiceHit(hit);
     }
-    if (isOrganizationHit(hit)) {
+
+    const organizationError = getOrganizationErrorIfAny(hit);
+    if (!organizationError) {
         return toOrganizationHit(hit);
     }
-    throw new Error('Search response failed validation as service or organization data');
+
+    throw new Error(JSON.stringify({ serviceError, organizationError }));
 };
 
-const isServiceHit = (hit: UnvalidatedData): boolean => {
+const getServiceErrorIfAny = (hit: UnvalidatedData): boolean => {
     const ajv = new Ajv();
-    return ajv.validate(schema.serviceSearchItem, hit) as boolean;
+    const isValid = ajv.validate(schema.serviceSearchItem, hit);
+    return isValid ? undefined : ajv.errors;
 };
 
 const toServiceHit = (hit: UnvalidatedData): ServiceSearchHit => ({
@@ -30,9 +35,10 @@ const toServiceHit = (hit: UnvalidatedData): ServiceSearchHit => ({
     longitude: hit._geoloc.lng,
 });
 
-const isOrganizationHit = (hit: UnvalidatedData): boolean => {
+const getOrganizationErrorIfAny = (hit: UnvalidatedData): ReadonlyArray<Object> | undefined => {
     const ajv = new Ajv();
-    return ajv.validate(schema.organizationSearchItem, hit) as boolean;
+    const isValid = ajv.validate(schema.organizationSearchItem, hit);
+    return isValid ? undefined : ajv.errors;
 };
 
 const toOrganizationHit = (hit: UnvalidatedData): OrganizationSearchHit => ({
@@ -45,17 +51,32 @@ const toOrganizationHit = (hit: UnvalidatedData): OrganizationSearchHit => ({
 });
 
 export const toGeoCoderLatLong = (data: UnvalidatedData): LatLong => {
-    if (isGeoCoderLatLong(data)) {
-        return {
-            latitude: parseFloat(data.latt),
-            longitude: parseFloat(data.longt),
-        };
+    const geoCoderError = getGeoCoderLatLongErrorsIfAny(data);
+
+    if (geoCoderError) {
+        throw new Error(JSON.stringify(geoCoderError));
     }
-    throw new Error('Geocoder response failed validation');
+
+    const latitude = parseFloat(data.latt);
+    const longitude = parseFloat(data.longt);
+
+    const isValidNumber = (n: number): boolean => (
+        !isNaN(n) && isFinite(n)
+    );
+
+    if (!isValidNumber(latitude)) {
+        throw new Error('GeoCoder field "latt" is not a number');
+    }
+
+    if (!isValidNumber(longitude)) {
+        throw new Error('GeoCoder field "longt" is not a number');
+    }
+
+    return { latitude, longitude };
 };
 
-const isGeoCoderLatLong = (hit: UnvalidatedData): boolean => {
+const getGeoCoderLatLongErrorsIfAny = (hit: UnvalidatedData): boolean => {
     const ajv = new Ajv();
-    const result = ajv.validate(schema.geoCoderResponse, hit) as boolean;
-    return result;
+    const isValid = ajv.validate(schema.geoCoderResponse, hit);
+    return isValid ? undefined : ajv.errors;
 };

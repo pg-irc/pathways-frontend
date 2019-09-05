@@ -58,8 +58,11 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
 
 const toConfiguration = (latlong?: LatLong): Object => {
     if (latlong) {
+        const aroundLatLng = `${latlong.longitude},${latlong.latitude}`;
+        // tslint:disable-next-line:no-expression-statement
+        console.log('aroundLatLng=' + aroundLatLng);
         return {
-            aroundLatLng: `${latlong.longitude},${latlong.latitude}`,
+            aroundLatLng,
             hitsPerPage: 5,
         };
     }
@@ -76,8 +79,10 @@ const toConfiguration = (latlong?: LatLong): Object => {
 // GET https://geocoder.ca/?locate=Prince+George&json=1
 
 const fetchLatLong = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
-    if (onlineStatus === OnlineStatus.Online) {
+    if (location !== '' && onlineStatus === OnlineStatus.Online) {
         const url = `https://geocoder.ca/?locate=${location}&json=1`;
+        // tslint:disable-next-line:no-expression-statement
+        console.log('fetching from ' + url);
         // tslint:disable-next-line:no-expression-statement
         fetch(url).
             then((response: Response) => response.ok ? response.text() : 'error').
