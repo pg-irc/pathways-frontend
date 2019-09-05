@@ -21,12 +21,8 @@ export function* applyLocaleChange(action: actions.SaveLocaleRequestAction): Ite
     }
 }
 
-export function* watchSaveLocaleSuccess(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.SAVE_LOCALE_SUCCESS, enforceRTLChange);
-}
-
-export function* watchLoadLocaleSuccess(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.LOAD_CURRENT_LOCALE_SUCCESS, enforceRTLChange);
+export function* watchLocaleSuccess(): IterableIterator<ForkEffect> {
+    yield takeLatest([constants.SAVE_LOCALE_SUCCESS, constants.LOAD_CURRENT_LOCALE_SUCCESS], enforceRTLChange);
 }
 
 export function* enforceRTLChange(action: actions.SaveLocaleSuccessAction | actions.LoadLocaleSuccessAction): Iterator<CallEffect> {

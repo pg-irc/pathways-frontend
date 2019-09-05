@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 
-import { watchLoadLocale, watchSaveLocale, watchSaveLocaleSuccess, watchLoadLocaleSuccess } from './locale';
+import { watchLoadLocale, watchSaveLocale, watchLocaleSuccess } from './locale';
 import { watchLoadFonts } from './fonts';
 import { watchUpdateTaskServices } from './services';
 import { watchLoadUserData, watchUserStateChangesToSaveUserData } from './user_data';
@@ -22,9 +22,8 @@ export function buildSaga(): ApplicationSaga {
 export function runSaga(middleware: SagaMiddleware<object>): void {
     middleware.run(watchLoadFonts);
     middleware.run(watchLoadLocale);
-    middleware.run(watchLoadLocaleSuccess);
+    middleware.run(watchLocaleSuccess);
     middleware.run(watchSaveLocale);
-    middleware.run(watchSaveLocaleSuccess);
     middleware.run(watchUserStateChangesToSaveUserData);
     middleware.run(watchLoadUserData);
     middleware.run(watchUpdateTaskServices);
