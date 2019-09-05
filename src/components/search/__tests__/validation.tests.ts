@@ -54,7 +54,7 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            })).toThrow();
+            })).toThrow('service_id');
         });
 
         it('throws on wrong field type in service data', () => {
@@ -104,7 +104,7 @@ describe('GeoCoder response validation', () => {
                     'stnumber': {},
                     'prov': 'BC',
                     'city': 'Nakusp',
-                    'confidence': '0.9'
+                    'confidence': '0.9',
                 },
                 'Dissemination_Area': {
                     'adauid': '59030002',
@@ -135,7 +135,7 @@ describe('GeoCoder response validation', () => {
                 // 'longt': '-117.795094',
                 'postal': 'V0G1R0',
                 'latt': '50.237690',
-            })).toThrow();
+            })).toThrowError('longt');
         });
 
         it('throws on field of wrong type', () => {
