@@ -29,15 +29,21 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     const SearchBoxConnectedComponent = connectSearchBox(SearchBoxComponent);
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
-    const configuration = {
-        // aroundLatLng: toLatLong(location),
-    };
-
+    // organization search cannot take aroundLatLng argument
+    // create a second InstantSearch with
+    //    a non-visible SearchBoxConnectedComponent that calls refine with the value from the first one
+    //    a ConfigureConnectedComponent that does not take the lat/long
+    //    the same InfiniteHitsConnectedComponent
     return <Content style={{ backgroundColor: colors.teal }}>
         <ScreenHeader {...props} />
+        <InstantSearch indexName='dev_services' {...props} >
+            <SearchBoxConnectedComponent location={location} setLocation={setLocation} />
+            <ConfigureConnectedComponent aroundLatLng={toLatLong(location)} hitsPerPage={5} />
+            <InfiniteHitsConnectedComponent />
+        </InstantSearch>
         <InstantSearch indexName='dev_organizations' {...props} >
             <SearchBoxConnectedComponent location={location} setLocation={setLocation} />
-            <ConfigureConnectedComponent {...configuration} />
+            <ConfigureConnectedComponent hitsPerPage={5} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
     </Content>;
