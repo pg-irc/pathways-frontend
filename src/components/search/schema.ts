@@ -36,12 +36,14 @@ export const serviceSearchItemArray = {
 export const organizationSearchItem = {
     'type': 'object',
     'properties': {
+        'organization_id': { 'type': 'string' },
         'organization_name': { 'type': 'string' },
         'organization_description': { 'type': 'string' },
         'organization_website': { 'type': 'string' },
         'organization_email': { 'type': 'string' },
     },
-    'required': ['organization_name',
+    'required': ['organization_id',
+        'organization_name',
         'organization_description',
         'organization_website',
         'organization_email',
