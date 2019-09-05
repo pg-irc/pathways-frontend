@@ -7,6 +7,7 @@ import { LocaleInfo } from '../../locale/types';
 import { Content, View, Icon, Header } from 'native-base';
 import { colors, values, textStyles } from '../../application/styles';
 import { openURL } from '../link/link';
+import { isRTL } from '../../locale/effects';
 
 type OwnProps = {
     readonly history: History;
@@ -76,7 +77,6 @@ const LocaleSection = (props: Props): JSX.Element => {
 };
 
 function createLocaleItemBuilder(onPress: (code: string, flipOrientation: boolean) => void): LocaleItemBuilder {
-    const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
     return (locale: LocaleInfo): LocaleListItem => {
         return { ...locale, onPress: (): void => onPress(locale.code, I18nManager.isRTL !== isRTL(locale.code)) };
     };
