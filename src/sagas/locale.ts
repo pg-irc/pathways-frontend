@@ -40,9 +40,7 @@ export function* watchLoadLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_CURRENT_LOCALE_REQUEST, loadCurrentLocale);
 }
 
-export type LoadLocaleActions = actions.LoadLocaleAction;
-
-export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<LoadLocaleActions>> {
+export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<actions.LoadLocaleAction>> {
     try {
         const retrievedCode = yield call(loadCurrentLocaleCode);
         const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
