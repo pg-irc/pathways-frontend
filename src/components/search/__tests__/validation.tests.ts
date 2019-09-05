@@ -29,6 +29,7 @@ describe('Search response validation', () => {
         it('returns the organization data', () => {
             const organizationName = aString();
             const result = toValidSearchHit({
+                organization_id: aString(),
                 organization_name: organizationName,
                 organization_description: aString(),
                 organization_website: aString(),
@@ -74,6 +75,7 @@ describe('Search response validation', () => {
 
         it('throws on missing field in organization data', () => {
             expect(() => toValidSearchHit({
+                organization_id: aString(),
                 // organization_name is missing
                 organization_description: aString(),
                 organization_website: aString(),
@@ -84,6 +86,7 @@ describe('Search response validation', () => {
         it('throws on wrong field type in organization data', () => {
             const invalidData = aNumber();
             expect(() => toValidSearchHit({
+                organization_id: aString(),
                 organization_name: invalidData,
                 organization_description: aString(),
                 organization_website: aString(),
