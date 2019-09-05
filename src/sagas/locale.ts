@@ -3,8 +3,7 @@ import { takeLatest, call, put, ForkEffect, CallEffect, PutEffect } from 'redux-
 import * as constants from '../application/constants';
 import { LocaleInfoManager, saveCurrentLocaleCode, loadCurrentLocaleCode } from '../locale';
 import * as actions from '../stores/locale/actions';
-import { setTextDirection, needsTextDirectionChange, isRTL } from '../locale/effects';
-import { I18nManager } from 'react-native';
+import { setTextDirection, needsTextDirectionChange } from '../locale/effects';
 
 export function* watchSaveLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.SAVE_LOCALE_REQUEST, applyLocaleChange);
@@ -24,7 +23,11 @@ export function* watchSaveLocaleSuccess(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.SAVE_LOCALE_SUCCESS, enforceRTLChange);
 }
 
-export function* enforceRTLChange(action: actions.SaveLocaleSuccessAction): Iterator<CallEffect> {
+export function* watchLoadLocaleSuccess(): IterableIterator<ForkEffect> {
+    yield takeLatest(constants.SAVE_LOCALE_SUCCESS, enforceRTLChange);
+}
+
+export function* enforceRTLChange(action: actions.SaveLocaleSuccessAction | actions.LoadLocaleSuccessAction): Iterator<CallEffect> {
     const localeCode = action.payload.localeCode;
     if (yield call(needsTextDirectionChange, localeCode)) {
         yield call(setTextDirection, localeCode);
@@ -44,12 +47,10 @@ export function* loadCurrentLocale(): IterableIterator<CallEffect | PutEffect<Lo
             const fallbackLocale = LocaleInfoManager.getFallback();
             yield call(saveCurrentLocaleCode, fallbackLocale.code);
             const isSaved = false;
-            I18nManager.forceRTL(isRTL(fallbackLocale.code));
             yield put(actions.loadLocaleSuccess(fallbackLocale.code, isSaved));
         } else {
             const locale = LocaleInfoManager.get(retrievedCode);
             const isSaved = true;
-            I18nManager.forceRTL(isRTL(locale.code));
             yield put(actions.loadLocaleSuccess(locale.code, isSaved));
         }
     } catch (e) {
