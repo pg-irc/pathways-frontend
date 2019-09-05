@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React from 'react';
-import { Dimensions, Image, ImageBackground } from 'react-native';
+import { Dimensions, Image, ImageBackground, I18nManager } from 'react-native';
 import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
@@ -18,16 +18,19 @@ export interface WelcomeProps {
 }
 
 export interface WelcomeActions {
-    readonly setLocale: (localeCode: string) => SaveLocaleRequestAction;
+    readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
 }
 
 type Props = WelcomeProps & WelcomeActions;
 
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
+    const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
+
     const handleChange = (localeCode: string): void => {
-        if (localeCode !== props.currentLocale.code ) {
-            props.setLocale(localeCode);
+        const flipOrientation = I18nManager.isRTL !== isRTL(localeCode);
+        if (localeCode !== props.currentLocale.code) {
+            props.setLocale(localeCode, flipOrientation);
         }
     };
 

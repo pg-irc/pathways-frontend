@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager } from 'react-native';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { LocaleInfo } from '../../locale/types';
@@ -21,7 +21,7 @@ export interface HeaderMenuProps {
 }
 
 export interface HeaderMenuActions {
-    readonly setLocale: (locale: string) => void;
+    readonly setLocale: (locale: string, flipOrienation: boolean) => void;
 }
 
 type Props = OwnProps & HeaderMenuProps & HeaderMenuActions;
@@ -75,9 +75,10 @@ const LocaleSection = (props: Props): JSX.Element => {
     );
 };
 
-function createLocaleItemBuilder(onPress: (code: string) => void): LocaleItemBuilder {
+function createLocaleItemBuilder(onPress: (code: string, flipOrienation: boolean) => void): LocaleItemBuilder {
+    const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
     return (locale: LocaleInfo): LocaleListItem => {
-        return { ...locale, onPress: (): void => onPress(locale.code) };
+        return { ...locale, onPress: (): void => onPress(locale.code, I18nManager.isRTL !== isRTL(locale.code)) };
     };
 }
 
