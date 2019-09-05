@@ -21,7 +21,7 @@ export interface HeaderMenuProps {
 }
 
 export interface HeaderMenuActions {
-    readonly setLocale: (locale: string, flipOrienation: boolean) => void;
+    readonly setLocale: (locale: string, flipOrientation: boolean) => void;
 }
 
 type Props = OwnProps & HeaderMenuProps & HeaderMenuActions;
@@ -75,7 +75,7 @@ const LocaleSection = (props: Props): JSX.Element => {
     );
 };
 
-function createLocaleItemBuilder(onPress: (code: string, flipOrienation: boolean) => void): LocaleItemBuilder {
+function createLocaleItemBuilder(onPress: (code: string, flipOrientation: boolean) => void): LocaleItemBuilder {
     const isRTL = (localeCode: string): boolean => (localeCode === 'ar');
     return (locale: LocaleInfo): LocaleListItem => {
         return { ...locale, onPress: (): void => onPress(locale.code, I18nManager.isRTL !== isRTL(locale.code)) };
