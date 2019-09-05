@@ -10,7 +10,8 @@ import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 import { openURL } from '../link/link';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
-import { LatLong, SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
+import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
+import { LatLong } from '../search/types';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
