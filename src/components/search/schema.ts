@@ -54,3 +54,12 @@ export const organizationSearchItemArray = {
     'type': 'array',
     'items': organizationSearchItem,
 };
+
+export const geoCoderResponse = {
+    'standard': { 'type': 'object' },
+    'Dissemination_Area': { 'type': 'object' },
+    'longt': { 'type': 'number' },
+    'latt': { 'type': 'number' },
+    'postal': { 'type': 'string' },
+    'required': ['longt', 'latt'],
+};

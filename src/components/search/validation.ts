@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-var-requires
 const Ajv = require('ajv');
 import * as schema from './schema';
-import { ServiceSearchHit, OrganizationSearchHit, UnvalidatedData, SearchHit } from './types';
+import { ServiceSearchHit, OrganizationSearchHit, UnvalidatedData, SearchHit, LatLong } from './types';
 
 export const toValidSearchHit = (hit: UnvalidatedData): SearchHit => {
     if (isServiceHit(hit)) {
@@ -43,3 +43,19 @@ const toOrganizationHit = (hit: UnvalidatedData): OrganizationSearchHit => ({
     organization_website: hit.organization_website,
     organization_email: hit.organization_email,
 });
+
+export const toGeoCoderLatLong = (data: UnvalidatedData): LatLong => {
+    if (isGeoCoderLatLong(data)) {
+        return {
+            latitude: parseFloat(data.latt),
+            longitude: parseFloat(data.longt),
+        };
+    }
+    throw new Error('Geocoder response failed validation');
+};
+
+const isGeoCoderLatLong = (hit: UnvalidatedData): boolean => {
+    const ajv = new Ajv();
+    const result = ajv.validate(schema.geoCoderResponse, hit) as boolean;
+    return result;
+};
