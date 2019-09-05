@@ -1,6 +1,11 @@
 // tslint:disable-next-line:no-any
 export type UnvalidatedData = any;
 
+export interface LatLong {
+    readonly latitude: number;
+    readonly longitude: number;
+}
+
 export interface ServiceSearchHit {
     readonly type: 'ServiceSearchItem';
     readonly service_id: string;

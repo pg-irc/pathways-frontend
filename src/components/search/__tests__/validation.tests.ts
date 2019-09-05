@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { toValidSearchHit } from '../validation';
+import { toValidSearchHit, toGeoCoderLatLong } from '../validation';
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 
 describe('Search response validation', () => {
@@ -91,6 +91,70 @@ describe('Search response validation', () => {
                 organization_description: aString(),
                 organization_website: aString(),
                 organization_email: aString(),
+            })).toThrowError('foo'); // TODO confirm why this throws, false positive?
+        });
+    });
+});
+
+describe('GeoCoder response validation', () => {
+    describe('with valid data', () => {
+        it('returns lat long', () => {
+            const result = toGeoCoderLatLong({
+                'standard': {
+                    'staddress': {},
+                    'stnumber': {},
+                    'prov': 'BC',
+                    'city': 'Nakusp',
+                    'confidence': '0.9'
+                },
+                'Dissemination_Area': {
+                    'adauid': '59030002',
+                    'dauid': '59030131'
+                },
+                'longt': '-117.795094',
+                'postal': 'V0G1R0',
+                'latt': '50.237690',
+            });
+            expect(result.latitude).toEqual(50.237690);
+            expect(result.longitude).toEqual(-117.795094);
+        });
+    });
+    describe('with invalid data', () => {
+        it('throws on missing field', () => {
+            expect(() => toGeoCoderLatLong({
+                'standard': {
+                    'staddress': {},
+                    'stnumber': {},
+                    'prov': 'BC',
+                    'city': 'Nakusp',
+                    'confidence': '0.9',
+                },
+                'Dissemination_Area': {
+                    'adauid': '59030002',
+                    'dauid': '59030131',
+                },
+                // 'longt': '-117.795094',
+                'postal': 'V0G1R0',
+                'latt': '50.237690',
+            })).toThrow();
+        });
+
+        it('throws on field of wrong type', () => {
+            expect(() => toGeoCoderLatLong({
+                'standard': {
+                    'staddress': {},
+                    'stnumber': {},
+                    'prov': 'BC',
+                    'city': 'Nakusp',
+                    'confidence': '0.9',
+                },
+                'Dissemination_Area': {
+                    'adauid': '59030002',
+                    'dauid': '59030131',
+                },
+                'longt': '-117.795094',
+                'postal': 'V0G1R0',
+                'latt': 'not a valid number',
             })).toThrow();
         });
     });

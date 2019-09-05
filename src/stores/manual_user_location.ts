@@ -1,6 +1,7 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 
+// TODO remove and use the one in search/types
 export interface LatLong {
     readonly longitude: number;
     readonly latitude: number;
