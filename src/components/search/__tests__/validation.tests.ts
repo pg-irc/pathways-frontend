@@ -44,7 +44,7 @@ describe('Search response validation', () => {
     describe('with invalid data', () => {
         it('throws on missing field in service data', () => {
             expect(() => toValidSearchHit({
-                // service_id is missing
+                // service_id: serviceId,
                 service_name: aString(),
                 service_description: aString(),
                 street_address: aString(),
@@ -70,17 +70,16 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            })).toThrow();
+            })).toThrowError('service_id');
         });
 
         it('throws on missing field in organization data', () => {
             expect(() => toValidSearchHit({
                 organization_id: aString(),
-                // organization_name is missing
                 organization_description: aString(),
                 organization_website: aString(),
                 organization_email: aString(),
-            })).toThrow();
+            })).toThrowError('organization_name');
         });
 
         it('throws on wrong field type in organization data', () => {
@@ -91,7 +90,7 @@ describe('Search response validation', () => {
                 organization_description: aString(),
                 organization_website: aString(),
                 organization_email: aString(),
-            })).toThrowError('foo'); // TODO confirm why this throws, false positive?
+            })).toThrowError('organization_name');
         });
     });
 });
@@ -109,7 +108,7 @@ describe('GeoCoder response validation', () => {
                 },
                 'Dissemination_Area': {
                     'adauid': '59030002',
-                    'dauid': '59030131'
+                    'dauid': '59030131',
                 },
                 'longt': '-117.795094',
                 'postal': 'V0G1R0',
@@ -153,9 +152,9 @@ describe('GeoCoder response validation', () => {
                     'dauid': '59030131',
                 },
                 'longt': '-117.795094',
-                'postal': 'V0G1R0',
                 'latt': 'not a valid number',
-            })).toThrow();
+                'postal': 'V0G1R0',
+            })).toThrow('latt');
         });
     });
 });
