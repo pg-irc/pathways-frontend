@@ -10,9 +10,10 @@ import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 import { openURL } from '../link/link';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
-import { LatLong, SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import * as R from 'ramda';
+import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
+import { LatLong } from '../search/types';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -121,7 +122,7 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
             { text: _(cancelOption), style: 'cancel' },
             { text: _(deleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
         ];
-            // tslint:disable-next-line:no-expression-statement
+        // tslint:disable-next-line:no-expression-statement
         Alert.alert(_(heading), _(message),
             I18nManager.isRTL ? R.reverse(buttons) : buttons,
         );
@@ -129,11 +130,11 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
     return (
         <I18n>
             {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-            <MultiLineButtonComponent onPress={(): void => alertToClearAllUserData(i18nRenderProp.i18n)} >
-                <Text style={textStyles.button}>
-                    <Trans>Delete all user data</Trans>
-                </Text>
-            </MultiLineButtonComponent>
+                <MultiLineButtonComponent onPress={(): void => alertToClearAllUserData(i18nRenderProp.i18n)} >
+                    <Text style={textStyles.button}>
+                        <Trans>Delete all user data</Trans>
+                    </Text>
+                </MultiLineButtonComponent>
             )}
         </I18n>
     );

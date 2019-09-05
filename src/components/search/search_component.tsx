@@ -28,7 +28,7 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
 
     const onlineStatus = useOnlineStatus();
     const [location, setLocation]: [string, (s: string) => void] = useState('');
-    const [latlong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined); // TODO there are two LatLong types now, fix that
+    const [latlong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
     // tslint:disable-next-line:no-expression-statement
     useEffect(() => fetchLatLong(location, onlineStatus, setLatLong), [onlineStatus, location]);
 

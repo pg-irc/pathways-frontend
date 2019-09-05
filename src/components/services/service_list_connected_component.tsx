@@ -11,8 +11,8 @@ import {
     ServiceListActions, ServicesUpdater,
 } from './service_list_component';
 import { Routes, getParametersFromPath } from '../../application/routing';
-import { LatLong } from '../../stores/manual_user_location';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
+import { LatLong } from '../search/types';
 
 type OwnProps = {
     readonly location: Location;
