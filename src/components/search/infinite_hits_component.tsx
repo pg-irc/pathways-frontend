@@ -17,7 +17,7 @@ export interface Props {
 }
 
 export interface Actions {
-    readonly refine: (searchTerms: string) => string;
+    readonly refine: (searchTerms?: string) => string;
 }
 
 export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Element => {
@@ -35,8 +35,14 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
         ListEmptyComponent={EmptyComponent}
         ListHeaderComponent={ListHeaderComponent}
         ItemSeparatorComponent={Separator}
-        onEndReached={(): boolean => props.hasMore}
-    />;
+        onEndReached={(): void => onEndReached(props)} />;
+};
+
+const onEndReached = (props: Partial<Props & Actions>): void => {
+    if (props.hasMore) {
+        // tslint:disable-next-line:no-expression-statement
+        props.refine();
+    }
 };
 
 const ListHeaderComponent = (props: Partial<Props & Actions>): JSX.Element => {
@@ -65,13 +71,17 @@ const Separator = (): JSX.Element => (
     <View style={{ borderBottomWidth: 8, borderColor: colors.lightGrey }} />
 );
 
-const keyExtractor = (hit: UnvalidatedData): string => (
-    hit.service_id ? hit.service_id : hit.organization_name // TODO change organization_name to organization_id
+const keyExtractor = (item: UnvalidatedData): string => (
+    item.objectID || 'missingId'
 );
 
-const renderSearchHit = ({ item }: ListRenderItemInfo<UnvalidatedData>): JSX.Element => (
-    renderValidSearchHit(toValidSearchHit(item))
-);
+const renderSearchHit = ({ item }: ListRenderItemInfo<UnvalidatedData>): JSX.Element => {
+    try {
+        return renderValidSearchHit(toValidSearchHit(item));
+    } catch (error) {
+        return <Text>Error</Text>;
+    }
+};
 
 const renderValidSearchHit = (validHit: ServiceSearchHit | OrganizationSearchHit): JSX.Element => (
     validHit.type === 'OrganizationSearchItem' ? renderOrganizationHit(validHit) : renderServiceHit(validHit)
