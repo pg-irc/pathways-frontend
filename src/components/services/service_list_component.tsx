@@ -11,13 +11,13 @@ import { BuildTopicServicesRequestAction } from '../../stores/services/actions';
 import { textStyles, colors, values } from '../../application/styles';
 import { isError } from '../../selectors/services/is_error';
 import * as constants from '../../application/constants';
-import { LatLong } from '../../stores/manual_user_location';
 import { useRequestDataIfOnlineReturnRefreshDataCallback }
     from '../../hooks/use_request_data_if_online_return_refresh_data_callback';
 import { OnlineStatus, useOnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
+import { LatLong } from '../search/types';
 
 export interface ServiceListProps {
     readonly topic: Topic;
