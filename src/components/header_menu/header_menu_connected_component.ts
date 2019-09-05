@@ -16,7 +16,7 @@ const mapStateToProps = (store: Store): HeaderMenuProps => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<SaveLocaleRequestAction>): HeaderMenuActions => ({
-    setLocale: (localeCode: string): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode)),
+    setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
 });
 
 export const HeaderMenuConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HeaderMenuComponent);
