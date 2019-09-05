@@ -15,14 +15,21 @@ export function* applyLocaleChange(action: actions.SaveLocaleRequestAction): Ite
     try {
         yield call(saveCurrentLocaleCode, localeCode);
         yield put(actions.saveLocaleSuccess(localeCode));
-        if (yield call(needsTextDirectionChange, localeCode)) {
-            yield call(setTextDirection, localeCode);
-        }
     } catch (e) {
         yield put(actions.saveLocaleFailure(e.message, localeCode));
     }
 }
 
+export function* watchSaveLocaleSuccess(): IterableIterator<ForkEffect> {
+    yield takeLatest(constants.SAVE_LOCALE_SUCCESS, enforceRTLChange);
+}
+
+export function* enforceRTLChange(action: actions.SaveLocaleSuccessAction): Iterator<CallEffect> {
+    const localeCode = action.payload.localeCode;
+    if (yield call(needsTextDirectionChange, localeCode)) {
+        yield call(setTextDirection, localeCode);
+    }
+}
 export function* watchLoadLocale(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_CURRENT_LOCALE_REQUEST, loadCurrentLocale);
 }
