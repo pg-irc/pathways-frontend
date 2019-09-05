@@ -58,11 +58,11 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
 
 const toConfiguration = (latlong?: LatLong): Object => {
     if (latlong) {
-        const aroundLatLng = `${latlong.longitude},${latlong.latitude}`;
+        const latLongString = `${latlong.longitude},${latlong.latitude}`;
         // tslint:disable-next-line:no-expression-statement
-        console.log('aroundLatLng=' + aroundLatLng);
+        console.log(`aroundLatLng = ${latLongString}`);
         return {
-            aroundLatLng,
+            aroundLatLng: latLongString,
             hitsPerPage: 5,
         };
     }
@@ -71,24 +71,21 @@ const toConfiguration = (latlong?: LatLong): Object => {
     };
 };
 
-// TODO use https://geocoder.ca/ to look up addresses or postal codes, free for non-profits,
-// but it looks like we don't need to talk to then until their throttling becomes a problem for us.
-// GET https://geocoder.ca/?locate=V0G1R0&json=1 brings back a response with lat/long
-// GET https://geocoder.ca/?locate=205+6+Ave+NW%2C+Nakusp%2C+BC+V0G+1R0&json=1 the same
-// GET https://geocoder.ca/?locate=Vancouver&json=1
-// GET https://geocoder.ca/?locate=Prince+George&json=1
-
 const fetchLatLong = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
     if (location !== '' && onlineStatus === OnlineStatus.Online) {
         const url = `https://geocoder.ca/?locate=${location}&json=1`;
         // tslint:disable-next-line:no-expression-statement
-        console.log('fetching from ' + url);
-        // tslint:disable-next-line:no-expression-statement
         fetch(url).
             then((response: Response) => response.ok ? response.text() : 'error').
-            then((json: string) => toGeoCoderLatLong(json)).
-            then((latlong: LatLong) => setLatLong(latlong)).
-            catch((_: string) => setLatLong(undefined));
+            then((response: string) => JSON.parse(response)).
+            then((response: object) => toGeoCoderLatLong(response)).
+            then((response: LatLong) => setLatLong(response)).
+            catch((error: string) => {
+                // tslint:disable-next-line:no-expression-statement
+                console.log(`LatLong set to undefined: ${error}`);
+                // tslint:disable-next-line:no-expression-statement
+                setLatLong(undefined);
+            });
     }
 };
 

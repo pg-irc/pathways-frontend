@@ -51,25 +51,29 @@ const toOrganizationHit = (hit: UnvalidatedData): OrganizationSearchHit => ({
 });
 
 export const toGeoCoderLatLong = (data: UnvalidatedData): LatLong => {
-    const geoCoderError = getGeoCoderLatLongErrorsIfAny(data);
+    const validationError = getGeoCoderLatLongErrorsIfAny(data);
 
-    if (geoCoderError) {
-        throw new Error(JSON.stringify(geoCoderError));
+    if (validationError) {
+        throw new Error(JSON.stringify(validationError));
     }
 
     const latitude = parseFloat(data.latt);
     const longitude = parseFloat(data.longt);
 
+    return toValidLatLong(latitude, longitude);
+};
+
+const toValidLatLong = (latitude: number, longitude: number): LatLong => {
     const isValidNumber = (n: number): boolean => (
         !isNaN(n) && isFinite(n)
     );
 
     if (!isValidNumber(latitude)) {
-        throw new Error('GeoCoder field "latt" is not a number');
+        throw new Error(`GeoCoder field "latt" is not a number: ${latitude}`);
     }
 
     if (!isValidNumber(longitude)) {
-        throw new Error('GeoCoder field "longt" is not a number');
+        throw new Error(`GeoCoder field "longt" is not a number: ${longitude}`);
     }
 
     return { latitude, longitude };
