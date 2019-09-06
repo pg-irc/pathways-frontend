@@ -43,11 +43,7 @@ export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
                 style={applicationStyles.searchInput}
                 onChangeText={setLocation}
                 value={location}
-                onEndEditing={(): void => {
-                    console.log(`Refine called, search location updated to ${location} and search to ${props.currentRefinement}`);
-                    props.setLocation(location);
-                    props.refine(props.currentRefinement);
-                }}
+                onEndEditing={(): void => props.setLocation(location)}
                 placeholder='Near My location' // TODO translate
             />
         </View>
