@@ -11,6 +11,7 @@ import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for
 import { useOnlineStatus, OnlineStatus } from '../../hooks/use_online_status';
 import { LatLong } from './types';
 import { toGeoCoderLatLong } from './validation';
+import { fetchLatLongFromAddress } from './fetch_lat_long_from_address';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -31,7 +32,7 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     const onlineStatus = useOnlineStatus();
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latlong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
-    useEffect(() => fetchLatLong(location, onlineStatus, _setLatLong), [onlineStatus, location]);
+    useEffect(() => fetchLatLongFromAddress(location, onlineStatus, _setLatLong), [onlineStatus, location]);
 
     const _setLocation = (s: string): void => {
         console.log(`Setting location to ${s}`);
@@ -72,25 +73,6 @@ const toConfiguration = (latlong?: LatLong): Object => {
         return { aroundLatLng, hitsPerPage };
     }
     return { hitsPerPage };
-};
-
-const fetchLatLong = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
-    if (location !== '' && onlineStatus === OnlineStatus.Online) {
-        const url = `https://geocoder.ca/?locate=${location}&json=1`;
-        // tslint:disable-next-line:no-expression-statement
-        fetch(url).
-            then((response: Response) => response.ok ? response.text() : 'error').
-            then((response: string) => JSON.parse(response)).
-            // TODO change to     then(JSON.parse).
-            then((response: object) => toGeoCoderLatLong(response)).
-            then((response: LatLong) => setLatLong(response)).
-            catch((error: string) => {
-                // tslint:disable-next-line:no-expression-statement
-                console.log(`LatLong set to undefined: ${error}`);
-                // tslint:disable-next-line:no-expression-statement
-                setLatLong(undefined);
-            });
-    }
 };
 
 const ScreenHeader = (props: Props): JSX.Element => {
