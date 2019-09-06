@@ -23,7 +23,7 @@ describe('build parameters', () => {
     });
 });
 
-const makeLocation = (x: number, y: number): LocationData => ({
+const makeLocation = (x: number, y: number): DeviceLocationData => ({
     coords: {
         longitude: x,
         latitude: y,

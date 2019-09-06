@@ -41,7 +41,7 @@ const validateArguments = (): void => {
     }
 };
 
-const buildLocationData = (): LocationData => {
+const buildLocationData = (): DeviceLocationData => {
     return {
         coords: {
             latitude,

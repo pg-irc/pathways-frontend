@@ -7,7 +7,7 @@ export type NoLocationPermissionErrorAction = Readonly<ReturnType<typeof noLocat
 
 export type LocationFetchTimeoutErrorAction = Readonly<ReturnType<typeof noLocationFetchTimeoutError>>;
 
-type GetDeviceLocationReturnType = Promise<LocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction>;
+type GetDeviceLocationReturnType = Promise<DeviceLocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction>;
 
 export const getDeviceLocation = async (manualUserLocation?: LatLong): GetDeviceLocationReturnType => {
     try {
@@ -34,7 +34,7 @@ const noLocationFetchTimeoutError = () => ({
     type: Errors.LocationFetchTimeout,
 });
 
-const buildManualUserLocation = (manualUserLocation: LatLong): LocationData => ({
+const buildManualUserLocation = (manualUserLocation: LatLong): DeviceLocationData => ({
     coords: {
         latitude: manualUserLocation.latitude,
         longitude: manualUserLocation.longitude,
