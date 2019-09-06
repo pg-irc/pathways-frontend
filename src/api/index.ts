@@ -1,5 +1,5 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import { stringify } from 'query-string';
+import BuildUrl from 'build-url';
 import { Id } from '../stores/topics';
 import { fetch } from 'cross-fetch';
 
@@ -30,10 +30,8 @@ const validateUrl = (url: string): string => {
 };
 
 export async function searchServices(topicId: Id, location: MaybeLocation): Promise<APIResponse> {
-    const endpoint = 'services_at_location';
-    const parameters = buildParameters(topicId, location);
-    const parameterString = stringify(parameters);
-    const url = buildUrl(endpoint, parameterString);
+    const endpoint = 'v1/services_at_location';
+    const url = buildUrl(endpoint, location, topicId);
     const response = await fetch(url);
     return createAPIResponse(response);
 }
@@ -50,16 +48,14 @@ export const buildParameters = (topicId: Id, location: MaybeLocation): Parameter
     };
 };
 
-interface Parameters {
-    related_to_topic: Id;
-    proximity?: string;
-    user_location?: string;
-}
+type Parameters = { [name: string]: string };
 
-const buildUrl = (endpoint: string, query: string): string => {
-    const version = 'v1';
-    return `${baseUrl}/${version}/${endpoint}?${query}`;
-};
+const buildUrl = (path: string, location: MaybeLocation, topicId: string): string => (
+    BuildUrl(baseUrl, {
+        path: path,
+        queryParams: buildParameters(topicId, location),
+    })
+);
 
 async function createAPIResponse(response: Response): Promise<APIResponse> {
     const message = `(${response.status}) ${response.statusText}`;
