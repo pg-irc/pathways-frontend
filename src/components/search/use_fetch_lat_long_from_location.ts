@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { OnlineStatus, useOnlineStatus } from '../../hooks/use_online_status';
 import { LatLong } from './types';
 import { toGeoCoderLatLong } from './validation';
+import BuildUrl from 'build-url';
 import * as R from 'ramda';
 
 export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
@@ -10,9 +11,10 @@ export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLo
     useEffect(() => fetchLatLongFromAddress(location, onlineStatus, setLatLong), [onlineStatus, location]);
 };
 
-export const fetchLatLongFromAddress = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
+const fetchLatLongFromAddress = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
     if (location !== '' && onlineStatus === OnlineStatus.Online) {
-        const url = `https://geocoder.ca/?locate=${location}&json=1`;
+
+        const url = buildUrl(location);
         fetch(url).
             then(getTextIfValidOrThrow).
             then(JSON.parse).
@@ -21,6 +23,15 @@ export const fetchLatLongFromAddress = (location: string, onlineStatus: OnlineSt
             catch(handleError(setLatLong));
     }
 };
+
+const buildUrl = (location: string): string => (
+    BuildUrl('https://geocoder.ca', {
+        queryParams: {
+            locate: location,
+            json: '1',
+        },
+    })
+);
 
 const getTextIfValidOrThrow = (response: Response): Promise<string> => {
     if (!response.ok) {
