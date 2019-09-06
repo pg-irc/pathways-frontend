@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput } from 'react-native';
 import { Icon } from 'native-base';
 import { values, applicationStyles, colors } from '../../application/styles';
+import { LatLong } from './types';
 
 export interface Props {
     readonly currentRefinement: string;
     readonly location: string;
+    readonly latLong: LatLong;
 }
 
 export interface Actions {
@@ -17,6 +19,10 @@ export interface Actions {
 
 export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState(props.location);
+    useEffect(() => {
+        console.log(`Hook to update search with ${props.currentRefinement}`);
+        props.refine(props.currentRefinement);
+    }, [props.latLong]);
     return <View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <InputIcon name='search' />
