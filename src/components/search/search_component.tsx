@@ -24,13 +24,24 @@ export interface SearchComponentActions {
 
 type Props = SearchComponentProps & SearchComponentActions;
 
+// tslint:disable:no-expression-statement
+
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: Props): JSX.Element => {
 
     const onlineStatus = useOnlineStatus();
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latlong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
-    // tslint:disable-next-line:no-expression-statement
-    useEffect(() => fetchLatLong(location, onlineStatus, setLatLong), [onlineStatus, location]);
+    useEffect(() => fetchLatLong(location, onlineStatus, _setLatLong), [onlineStatus, location]);
+
+    const _setLocation = (s: string): void => {
+        console.log(`Setting location to ${s}`);
+        setLocation(s);
+    };
+
+    const _setLatLong = (latLong: LatLong): void => {
+        console.log(`Setting latlong to ${JSON.stringify(latLong)}`);
+        setLatLong(latLong);
+    };
 
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const SearchBoxConnectedComponent = connectSearchBox(SearchBoxComponent);
@@ -44,31 +55,23 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     return <Content style={{ backgroundColor: colors.teal }}>
         <ScreenHeader {...props} />
         <InstantSearch indexName='dev_services' {...props} >
-            <SearchBoxConnectedComponent location={location} setLocation={setLocation} />
+            <SearchBoxConnectedComponent location={location} setLocation={_setLocation} />
             <ConfigureConnectedComponent {...toConfiguration(latlong)} />
-            <InfiniteHitsConnectedComponent />
-        </InstantSearch>
-        <InstantSearch indexName='dev_organizations' {...props} >
-            <SearchBoxConnectedComponent location={location} setLocation={setLocation} />
-            <ConfigureConnectedComponent hitsPerPage={5} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
     </Content>;
 };
 
 const toConfiguration = (latlong?: LatLong): Object => {
+    const hitsPerPage = 5;
     if (latlong) {
-        const latLongString = `${latlong.longitude},${latlong.latitude}`;
+        const aroundLatLng = `${latlong.longitude},${latlong.latitude}`;
         // tslint:disable-next-line:no-expression-statement
-        console.log(`aroundLatLng = ${latLongString}`);
-        return {
-            aroundLatLng: latLongString,
-            hitsPerPage: 5,
-        };
+        console.log(`aroundLatLng = ${aroundLatLng}`);
+
+        return { aroundLatLng, hitsPerPage };
     }
-    return {
-        hitsPerPage: 5,
-    };
+    return { hitsPerPage };
 };
 
 const fetchLatLong = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
@@ -78,6 +81,7 @@ const fetchLatLong = (location: string, onlineStatus: OnlineStatus, setLatLong: 
         fetch(url).
             then((response: Response) => response.ok ? response.text() : 'error').
             then((response: string) => JSON.parse(response)).
+            // TODO change to     then(JSON.parse).
             then((response: object) => toGeoCoderLatLong(response)).
             then((response: LatLong) => setLatLong(response)).
             catch((error: string) => {
