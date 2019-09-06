@@ -30,7 +30,7 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
 
     const onlineStatus = useOnlineStatus();
     const [location, setLocation]: [string, (s: string) => void] = useState('');
-    const [latlong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
+    const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
     useEffect(() => fetchLatLongFromAddress(location, onlineStatus, _setLatLong), [onlineStatus, location]);
 
     const _setLocation = (s: string): void => {
@@ -38,9 +38,9 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
         setLocation(s);
     };
 
-    const _setLatLong = (latLong: LatLong): void => {
-        console.log(`Setting latlong to ${JSON.stringify(latLong)}`);
-        setLatLong(latLong);
+    const _setLatLong = (l: LatLong): void => {
+        console.log(`Setting latlong to ${JSON.stringify(l)}`);
+        setLatLong(l);
     };
 
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
@@ -50,8 +50,8 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     return <Content style={{ backgroundColor: colors.teal }}>
         <ScreenHeaderComponent {...props} />
         <InstantSearch indexName='dev_services' {...props} >
-            <SearchBoxConnectedComponent location={location} setLocation={_setLocation} latLong={latlong} />
-            <ConfigureConnectedComponent {...toServiceSearchConfiguration(latlong)} />
+            <SearchBoxConnectedComponent location={location} setLocation={_setLocation} latLong={latLong} />
+            <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
     </Content>;
