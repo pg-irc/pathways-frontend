@@ -10,7 +10,7 @@ export interface APIResponse {
     readonly results?: any; // tslint:disable-line:no-any
 }
 
-export type MaybeLocation = LocationData | undefined;
+export type MaybeLocation = DeviceLocationData | undefined;
 
 // tslint:disable-next-line:no-let
 let baseUrl = '';
