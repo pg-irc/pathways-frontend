@@ -19,7 +19,6 @@ export interface ServiceSearchHit {
 }
 
 export interface OrganizationSearchHit {
-    // TODO add organization id to the index
     readonly type: 'OrganizationSearchItem';
     readonly organization_id: string;
     readonly organization_name: string;
