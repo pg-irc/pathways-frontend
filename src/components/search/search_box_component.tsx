@@ -13,6 +13,8 @@ export interface Actions {
     readonly setLocation: (s: string) => void;
 }
 
+// tslint:disable:no-expression-statement
+
 export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState(props.location);
     return <View>
@@ -20,7 +22,10 @@ export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
             <InputIcon name='search' />
             <TextInput
                 style={applicationStyles.searchInput}
-                onChangeText={props.refine}
+                onChangeText={(s: string): void => {
+                    console.log(`Refine called, search string updated to ${s}`);
+                    props.refine(s);
+                }}
                 value={props.currentRefinement}
                 placeholder='Search for services and organizations' // TODO translate
             />
@@ -32,7 +37,11 @@ export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
                 style={applicationStyles.searchInput}
                 onChangeText={setLocation}
                 value={location}
-                onEndEditing={(): void => props.setLocation(location)}
+                onEndEditing={(): void => {
+                    console.log(`Refine called, search location updated to ${location} and search to ${props.currentRefinement}`);
+                    props.setLocation(location);
+                    props.refine(props.currentRefinement);
+                }}
                 placeholder='Near My location' // TODO translate
             />
         </View>
