@@ -8,9 +8,8 @@ import { emptyComponent } from '../empty_component/empty_component';
 import { Locale } from '../../locale';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
-import { useOnlineStatus, OnlineStatus } from '../../hooks/use_online_status';
+import { useOnlineStatus } from '../../hooks/use_online_status';
 import { LatLong } from './types';
-import { toGeoCoderLatLong } from './validation';
 import { fetchLatLongFromAddress } from './fetch_lat_long_from_address';
 
 export interface SearchComponentProps {
@@ -66,7 +65,7 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
 const toConfiguration = (latlong?: LatLong): Object => {
     const hitsPerPage = 5;
     if (latlong) {
-        const aroundLatLng = `${latlong.longitude},${latlong.latitude}`;
+        const aroundLatLng = `${latlong.latitude},${latlong.longitude}`;
         // tslint:disable-next-line:no-expression-statement
         console.log(`aroundLatLng = ${aroundLatLng}`);
 
