@@ -15,7 +15,7 @@ export interface Actions {
     readonly setLocation: (s: string) => void;
 }
 
-export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
+export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState(props.location);
     // tslint:disable-next-line:no-expression-statement
     useEffect(() => { props.refine(props.currentRefinement); }, [props.latLong]);

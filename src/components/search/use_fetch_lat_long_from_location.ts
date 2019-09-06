@@ -1,12 +1,18 @@
 // tslint:disable:no-expression-statement
-import { OnlineStatus } from '../../hooks/use_online_status';
+import { useEffect } from 'react';
+import { OnlineStatus, useOnlineStatus } from '../../hooks/use_online_status';
 import { LatLong } from './types';
 import { toGeoCoderLatLong } from './validation';
 import * as R from 'ramda';
 
-export const fetchLatLongFromAddress = (address: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
-    if (address !== '' && onlineStatus === OnlineStatus.Online) {
-        const url = `https://geocoder.ca/?locate=${address}&json=1`;
+export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
+    const onlineStatus = useOnlineStatus();
+    useEffect(() => fetchLatLongFromAddress(location, onlineStatus, setLatLong), [onlineStatus, location]);
+};
+
+export const fetchLatLongFromAddress = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
+    if (location !== '' && onlineStatus === OnlineStatus.Online) {
+        const url = `https://geocoder.ca/?locate=${location}&json=1`;
         fetch(url).
             then(getTextIfValidOrThrow).
             then(JSON.parse).
