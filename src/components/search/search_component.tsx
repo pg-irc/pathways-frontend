@@ -50,7 +50,7 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     return <Content style={{ backgroundColor: colors.teal }}>
         <ScreenHeaderComponent {...props} />
         <InstantSearch indexName='dev_services' {...props} >
-            <SearchBoxConnectedComponent location={location} setLocation={_setLocation} />
+            <SearchBoxConnectedComponent location={location} setLocation={_setLocation} latLong={latlong} />
             <ConfigureConnectedComponent {...toServiceSearchConfiguration(latlong)} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
