@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput } from 'react-native';
 import { Icon } from 'native-base';
 import { values, applicationStyles, colors } from '../../application/styles';

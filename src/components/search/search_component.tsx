@@ -3,15 +3,14 @@ import { InstantSearch, connectSearchBox, connectInfiniteHits, connectConfigure 
 import { SearchBoxComponent } from './search_box_component';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
-import { Content, Header, Right, Title } from 'native-base';
+import { Content } from 'native-base';
 import { emptyComponent } from '../empty_component/empty_component';
 import { Locale } from '../../locale';
-import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { useOnlineStatus } from '../../hooks/use_online_status';
 import { LatLong } from './types';
 import { fetchLatLongFromAddress } from './fetch_lat_long_from_address';
 import { toServiceSearchConfiguration } from './configuration';
+import { ScreenHeaderComponent } from './screen_header_component';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -49,25 +48,11 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
     return <Content style={{ backgroundColor: colors.teal }}>
-        <ScreenHeader {...props} />
+        <ScreenHeaderComponent {...props} />
         <InstantSearch indexName='dev_services' {...props} >
             <SearchBoxConnectedComponent location={location} setLocation={_setLocation} />
             <ConfigureConnectedComponent {...toServiceSearchConfiguration(latlong)} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
     </Content>;
-};
-
-const ScreenHeader = (props: Props): JSX.Element => {
-    const marginTop = getStatusBarHeightForPlatform();
-    return <Header style={{ marginTop, backgroundColor: colors.teal, borderBottomColor: 'transparent' }}>
-        <Title>Find a service</Title>
-        <Right style={{ alignItems: 'center' }}>
-            <MenuButtonComponent
-                onPress={props.openMenu}
-                locale={props.currentLocale}
-                textColor={colors.white}
-            />
-        </Right>
-    </Header>;
 };
