@@ -15,23 +15,17 @@ export interface Actions {
     readonly setLocation: (s: string) => void;
 }
 
-// tslint:disable:no-expression-statement
-
 export const SearchBoxComponent = (props: Props & Actions): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState(props.location);
-    useEffect(() => {
-        console.log(`Hook to update search with ${props.currentRefinement}`);
-        props.refine(props.currentRefinement);
-    }, [props.latLong]);
+    // tslint:disable-next-line:no-expression-statement
+    useEffect(() => { props.refine(props.currentRefinement); }, [props.latLong]);
+
     return <View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <InputIcon name='search' />
             <TextInput
                 style={applicationStyles.searchInput}
-                onChangeText={(s: string): void => {
-                    console.log(`Refine called, search string updated to ${s}`);
-                    props.refine(s);
-                }}
+                onChangeText={props.refine}
                 value={props.currentRefinement}
                 placeholder='Search for services and organizations' // TODO translate
             />

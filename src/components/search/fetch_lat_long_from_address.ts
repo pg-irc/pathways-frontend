@@ -8,7 +8,7 @@ export const fetchLatLongFromAddress = (address: string, onlineStatus: OnlineSta
     if (address !== '' && onlineStatus === OnlineStatus.Online) {
         const url = `https://geocoder.ca/?locate=${address}&json=1`;
         fetch(url).
-            then(toValidStringOrThrow).
+            then(getTextIfValidOrThrow).
             then(JSON.parse).
             then(toGeoCoderLatLong).
             then(setLatLong).
@@ -16,7 +16,7 @@ export const fetchLatLongFromAddress = (address: string, onlineStatus: OnlineSta
     }
 };
 
-const toValidStringOrThrow = (response: Response): Promise<string> => {
+const getTextIfValidOrThrow = (response: Response): Promise<string> => {
     if (!response.ok) {
         throw new Error(`Invalid response ${JSON.stringify(response)}`);
     }
