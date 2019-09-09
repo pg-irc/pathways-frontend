@@ -7,7 +7,7 @@ import { UnvalidatedData, ServiceSearchHit, OrganizationSearchHit } from './type
 import { Trans } from '@lingui/react';
 import { LinkTypes, AnalyticsLink } from '../link/link';
 import { buildLinkContext } from '../../sagas/analytics/events';
-import { toValidSearchHit as toValidSearchHit } from './validation';
+import { toValidSearchHit } from './api/validation';
 
 export interface Props {
     readonly currentPath: string;
