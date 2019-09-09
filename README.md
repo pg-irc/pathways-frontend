@@ -43,27 +43,15 @@ To clear out cached values from `.env`, use `--reset-cache`.
 
 ## Internationalization (i18n)
 
-We are using [jsLingui](https://github.com/lingui/js-lingui) and [Weblate](https://weblate.org) for translation and internationalization. The source strings for Arrival Advisor can be found here: [https://github.com/tomy-pg/ui-strings](https://github.com/tomy-pg/ui-strings) and we translate these strings here: [translate.peacegeeks.org](https://translate.peacegeeks.org).
+We are using [jsLingui](https://github.com/lingui/js-lingui) and [Weblate](https://weblate.org) for translation and internationalization. We translate strings through our own Weblate application here: [translate.peacegeeks.org](https://translate.peacegeeks.org). The source strings for Arrival Advisor, as well as information on how we integrate Weblate into our workflow can be found here: [https://github.com/tomy-pg/ui-strings](https://github.com/tomy-pg/ui-strings). 
 
-Use the following commands to add the most recent translations locally. 
+To update the in app translations: 
 
-Ensure that the [ui-strings](https://github.com/tomy-pg/ui-strings) repository is cloned as this the where the translations are retrieved. 
+1. `git clone git@github.com:tomy-pg/ui-strings.git` to retrieve the translated strings. This is the source of truth for all strings translated using Weblate.  
 
-```
-git clone git@github.com:tomy-pg/ui-strings.git
-```
+2. `cd pathways-frontend` and run `./bin/strings --combine-pos`. This command expects the `../ui-strings` directory from step 1 to exist and will not work without it. Once this command is run, a messages.po file will be generated for each locale. Each of these files contain pairs of English source strings and their translated versions. 
 
-This command generates a messages.po file for each locale from the ui-strings repository. 
-
-```
-./bin/strings --combine-pos 
-```
-
-To generate the compiled source catalogs Lingui uses for internationalization. 
-
-```
-yarn build-strings
-```
+3. `yarn build-strings` to generate compiled versions of the messages.po files. The `messages.js` files generated are the source catalogs Lingui uses for internationalization. Source catalogs are used to lookup translations when English strings are wrapped with `<Trans>` tags.
 
 ## Contributing
 
