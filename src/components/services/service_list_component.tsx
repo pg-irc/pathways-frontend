@@ -46,7 +46,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 refreshScreen={refreshServicesData}
                 errorType={Errors.Offline}
                 header={
-                    <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
+                    <ServiceListHeaderComponent title={props.topic.title} />
                 }
             />
         );
@@ -58,7 +58,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 refreshScreen={refreshServicesData}
                 errorType={props.topicServicesOrError.errorMessageType}
                 header={
-                    <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
+                    <ServiceListHeaderComponent title={props.topic.title} />
                 }
             />
         );
@@ -72,7 +72,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             renderItem={renderServiceListItem(props.currentPath)}
             listEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
             listHeaderComponent={
-                <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
+                <ServiceListHeaderComponent title={props.topic.title} />
             }
         />
     );
@@ -118,7 +118,7 @@ const renderServiceListItem = (currentPath: string): ({ item }: ServiceItemInfo)
 };
 
 interface ServiceListHeaderComponentProps {
-    readonly englishTitle: string;
+    readonly title: string;
 }
 
 const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => (
@@ -142,7 +142,7 @@ const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX
             [textStyles.headlineH5StyleBlackLeft, textStyles.alwaysLeftAlign, { color: colors.white }]
         }><Trans>FIND A SERVICE NEAR YOU</Trans></Text>
         <Text style={[textStyles.headlineH2StyleWhiteLeft, textStyles.alwaysLeftAlign]}>
-            {props.englishTitle}
+            {props.title}
         </Text>
     </View >
 );
