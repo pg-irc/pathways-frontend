@@ -120,7 +120,6 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         const buttonStyle: ViewStyle = {
             flex: 1,
             flexDirection: 'row',
-            justifyContent: this.computeJustifyContent(),
             maxHeight: 20,
             marginTop: 10,
         };
@@ -147,7 +146,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                 }}
             />
         );
-        return this.flipLeftRightOrientation() ?
+        return I18nManager.isRTL ?
             <TouchableOpacity onPress={buttonOnPress} style={buttonStyle}>
                 {buttonIcon}
                 {buttonText}
@@ -156,19 +155,6 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                 {buttonText}
                 {buttonIcon}
             </TouchableOpacity>;
-    }
-
-    private flipLeftRightOrientation(): boolean {
-        return I18nManager.isRTL;
-    }
-
-    private computeJustifyContent(): 'flex-start' | 'flex-end' {
-        // If the app locale is Arabic and the screen is in English, justify "Read more"
-        // string to the left by returning 'flex-end', which in RTL mode means left.
-        if (this.flipLeftRightOrientation()) {
-            return 'flex-end';
-        }
-        return 'flex-start';
     }
 
     private isCollapsed(): boolean {
