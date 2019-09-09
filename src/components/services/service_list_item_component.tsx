@@ -47,10 +47,7 @@ const renderName = (name: string): JSX.Element => (
 const renderDescription = (description: string): JSX.Element => {
     const content = <Text style={textStyles.alwaysLeftParagraphStyle}> {description}</Text>;
     return (
-        <ExpandableContentComponent
-            forceEnglish={true}
-            content={content}
-        />
+        <ExpandableContentComponent content={content} />
     );
 };
 

@@ -14,7 +14,6 @@ import { values } from '../../application/styles';
 export interface ExpandableContentProps {
     readonly content: JSX.Element;
     readonly contentId?: string;
-    readonly forceEnglish?: boolean;
 }
 
 interface ExpandableContentState {
@@ -115,16 +114,9 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         });
     }
 
-    private readMoreReadLessText(): JSX.Element | string {
-        const showReadMore = this.isCollapsed();
-        if (showReadMore) {
-            return this.props.forceEnglish ? 'Read more' : <Trans>Read more</Trans>;
-        }
-        return this.props.forceEnglish ? 'Read less' : <Trans>Read less</Trans>;
-    }
-
     private getReadMoreButton(): JSX.Element {
         const buttonOnPress = (): void => this.toggleState();
+        const content = this.isCollapsed() ? <Trans>Read more</Trans> : <Trans>Read less</Trans>;
         const buttonStyle: ViewStyle = {
             flex: 1,
             flexDirection: 'row',
@@ -134,15 +126,15 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         };
         const buttonText = (
             <Text style={[
-                    textStyles.paragraphBoldBlackLeft,
-                    {
-                        color: colors.teal,
-                        marginRight: 5,
-                        marginLeft: 5
-                    },
-                ]}
+                textStyles.paragraphBoldBlackLeft,
+                {
+                    color: colors.teal,
+                    marginRight: 5,
+                    marginLeft: 5
+                },
+            ]}
             >
-                    {this.readMoreReadLessText()}
+                {content}
             </Text>
         );
         const buttonIcon = (
@@ -167,7 +159,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
     }
 
     private flipLeftRightOrientation(): boolean {
-        return I18nManager.isRTL && this.props.forceEnglish;
+        return I18nManager.isRTL;
     }
 
     private computeJustifyContent(): 'flex-start' | 'flex-end' {
