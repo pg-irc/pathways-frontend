@@ -25,9 +25,7 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
 
         const text = <Text style={textStyles.button} uppercase={false}><Trans>Open in maps</Trans></Text>;
 
-        const flipLeftRightDirection = I18nManager.isRTL;
-
-        const button = flipLeftRightDirection ?
+        const button = I18nManager.isRTL ?
             <Button onPress={onMapsButtonPress(props)} iconRight style={applicationStyles.tealButton} >
                 {text}{icon}
             </Button> :
