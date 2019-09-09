@@ -43,23 +43,16 @@ To clear out cached values from `.env`, use `--reset-cache`.
 
 ## Internationalization (i18n)
 
-We are using [jsLingui](https://github.com/lingui/js-lingui) for translation and internationalization (date formats and such) support. Use the following commands to mainpulate strings for translation.
+We are using [jsLingui](https://github.com/lingui/js-lingui) and [Weblate](https://weblate.org) for translation and internationalization. We translate strings through our own Weblate application here: [translate.peacegeeks.org](https://translate.peacegeeks.org). The source strings for Arrival Advisor, as well as information on how we integrate Weblate into our workflow can be found here: [https://github.com/tomy-pg/ui-strings](https://github.com/tomy-pg/ui-strings). 
 
-To add a new locale, this generates an empty messages catalog for the new locale:
+To update the in app translations: 
 
-```
-yarn lingui add-locale [locales...]
-```
+1. `git clone git@github.com:tomy-pg/ui-strings.git` to retrieve the translated strings. This is the source of truth for all strings translated using Weblate.  
 
-Also, update `bin/strings.sh` with the new locale.
+2. `cd pathways-frontend` and run `./bin/strings --combine-pos`. This command expects the `../ui-strings` directory from step 1 to exist and will not work without it. Once this command is run, a messages.po file will be generated for each locale. Each of these files contain pairs of English source strings and their translated versions. 
 
-To export strings for translation and importing the strings after translation, use the script `bin/strings.sh`. Files are exported as both po and comma separated values (CSV, i.e. spreadsheets), and imported from CSV only. The scripts supports both bulk translation of all strings, and incremental translation of strings that have no translation currently.
+3. `yarn build-strings` to generate compiled versions of the messages.po files. The `messages.js` files generated are the source catalogs Lingui uses for internationalization. Source catalogs are used to lookup translations when English strings are wrapped with `<Trans>` tags.
 
-To remove cached strings, this is usually needed when switching between branches:
-
-```
-yarn clean-strings
-```
 ## Contributing
 
 If you want to help out, get in touch at info@arrivaladvisor.ca.
