@@ -5,7 +5,6 @@ import { TopicListItem } from './topic_list_item';
 export interface Topic {
     readonly id: string;
     readonly title: string;
-    readonly englishTitle: string;
     readonly description: string;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly exploreSection: ExploreSection;
