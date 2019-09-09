@@ -33,7 +33,7 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
         keyExtractor={keyExtractor}
         renderItem={renderSearchHit}
         ListEmptyComponent={EmptyComponent}
-        ListHeaderComponent={ListHeaderComponent}
+        ListHeaderComponent={InformationOnlyInEnglishNotice}
         ItemSeparatorComponent={Separator}
         onEndReached={(): void => onEndReached(props)} />;
 };
@@ -45,7 +45,7 @@ const onEndReached = (props: Partial<Props & Actions>): void => {
     }
 };
 
-const ListHeaderComponent = (props: Partial<Props & Actions>): JSX.Element => {
+const InformationOnlyInEnglishNotice = (props: Partial<Props & Actions>): JSX.Element => {
     const phoneNumber: string = '211';
     const href = `tel: ${phoneNumber}`;
     const linkContext = buildLinkContext('Service', 'BC-211');

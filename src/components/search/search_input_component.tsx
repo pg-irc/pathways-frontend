@@ -17,15 +17,24 @@ export interface Actions {
 
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState(props.location);
-    // tslint:disable-next-line:no-expression-statement
-    useEffect(() => { props.refine(props.currentRefinement); }, [props.latLong]);
+    useEffect(() => {
+        // tslint:disable-next-line:no-expression-statement
+        props.refine(props.currentRefinement);
+        // tslint:disable-next-line:no-expression-statement
+        console.log('SearchInput Component useEffect');
+    }, [props.latLong]);
 
     return <View>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <InputIcon name='search' />
             <TextInput
                 style={applicationStyles.searchInput}
-                onChangeText={props.refine}
+                onChangeText={(d: string): void => {
+                    // tslint:disable-next-line:no-expression-statement
+                    props.refine(d);
+                    // tslint:disable-next-line:no-expression-statement
+                    console.log('SearchInput text changed');
+                }}
                 value={props.currentRefinement}
                 placeholder='Search for services and organizations' // TODO translate
             />
@@ -35,7 +44,12 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
             <InputIcon name='map-marker' />
             <TextInput
                 style={applicationStyles.searchInput}
-                onChangeText={setLocation}
+                onChangeText={(d: string): void => {
+                    // tslint:disable-next-line:no-expression-statement
+                    setLocation(d);
+                    // tslint:disable-next-line:no-expression-statement
+                    console.log('SearchInput location text changed');
+                }}
                 value={location}
                 onEndEditing={(): void => props.setLocation(location)}
                 placeholder='Near My location' // TODO translate
