@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { toAlgoliaParameter, toServiceSearchConfiguration } from '../configuration';
+import { toAlgoliaParameter, toServiceSearchConfiguration } from '../api/configuration';
 
 describe('configuration', () => {
     describe('for service search', () => {

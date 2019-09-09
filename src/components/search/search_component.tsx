@@ -7,8 +7,8 @@ import { Content } from 'native-base';
 import { emptyComponent } from '../empty_component/empty_component';
 import { Locale } from '../../locale';
 import { LatLong } from './types';
-import { useFetchLatLongFromLocation } from './use_fetch_lat_long_from_location';
-import { toServiceSearchConfiguration } from './configuration';
+import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
+import { toServiceSearchConfiguration } from './api/configuration';
 import { ScreenHeaderComponent } from './screen_header_component';
 
 export interface SearchComponentProps {

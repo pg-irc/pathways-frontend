@@ -1,7 +1,7 @@
 // tslint:disable-next-line:no-var-requires
 const Ajv = require('ajv');
 import * as schema from './schema';
-import { ServiceSearchHit, OrganizationSearchHit, UnvalidatedData, SearchHit, LatLong } from './types';
+import { ServiceSearchHit, OrganizationSearchHit, UnvalidatedData, SearchHit, LatLong } from '../types';
 
 export const toValidSearchHit = (hit: UnvalidatedData): SearchHit => {
     const serviceError = getServiceErrorIfAny(hit);
