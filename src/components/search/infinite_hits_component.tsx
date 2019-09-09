@@ -108,7 +108,6 @@ const truncateDescription = (description: string): string => {
     return description.length > maxLength ? description.slice(0, maxLength - 3) + '...' : description;
 };
 
-// TODO grey colour from "note" font
 const renderServiceHit = (hit: ServiceSearchHit): JSX.Element => (
     <View style={{ padding: 10, flexDirection: 'column', justifyContent: 'flex-start' }}>
         <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}><Trans>SERVICE</Trans></Text>

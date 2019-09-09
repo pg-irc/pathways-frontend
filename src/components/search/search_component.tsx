@@ -9,7 +9,6 @@ import { Locale } from '../../locale';
 import { LatLong } from './types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
-import { ScreenHeaderComponent } from './screen_header_component';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -23,11 +22,10 @@ export interface SearchComponentActions {
 
 type Props = SearchComponentProps & SearchComponentActions;
 
-// tslint:disable:no-expression-statement
-
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: Props): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
+    // tslint:disable-next-line:no-expression-statement
     useFetchLatLongFromLocation(location, setLatLong);
 
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
@@ -35,7 +33,6 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
     return <Content style={{ backgroundColor: colors.teal }}>
-        <ScreenHeaderComponent {...props} />
         <InstantSearch indexName='dev_services' {...props} >
             <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
             <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
