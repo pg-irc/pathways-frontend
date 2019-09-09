@@ -50,7 +50,7 @@ const ListHeaderComponent = (props: Partial<Props & Actions>): JSX.Element => {
     const href = `tel: ${phoneNumber}`;
     const linkContext = buildLinkContext('Service', 'BC-211');
 
-    return <View style={{ backgroundColor: colors.lightTeal }}>
+    return <View style={{ backgroundColor: colors.white }}>
         <Text style={[textStyles.paragraphStyle,
         {
             marginTop: 20,
@@ -58,9 +58,8 @@ const ListHeaderComponent = (props: Partial<Props & Actions>): JSX.Element => {
             marginLeft: 20,
             marginRight: 20,
         }]}>
-            <Trans>Services search is only available in English. For multilingual assistance, <AnalyticsLink
-                href={href} currentPath={props.currentPath}
-                linkContext={linkContext} linkType={LinkTypes.phone}
+            <Trans>Information about services is currently only available in English. For information in other languages, <AnalyticsLink
+                href={href} currentPath={props.currentPath} linkContext={linkContext} linkType={LinkTypes.phone} style={{ color: colors.teal }}
             >please call BC211</AnalyticsLink>.</Trans>
         </Text>
         <Separator />
