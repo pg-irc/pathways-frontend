@@ -43,23 +43,28 @@ To clear out cached values from `.env`, use `--reset-cache`.
 
 ## Internationalization (i18n)
 
-We are using [jsLingui](https://github.com/lingui/js-lingui) for translation and internationalization (date formats and such) support. Use the following commands to mainpulate strings for translation.
+We are using [jsLingui](https://github.com/lingui/js-lingui) and [Weblate](https://weblate.org) for translation and internationalization. The source strings for Arrival Advisor can be found here: [https://github.com/tomy-pg/ui-strings](https://github.com/tomy-pg/ui-strings) and we translate these strings here: [translate.peacegeeks.org](https://translate.peacegeeks.org).
 
-To add a new locale, this generates an empty messages catalog for the new locale:
+Use the following commands to add the most recent translations locally. 
 
-```
-yarn lingui add-locale [locales...]
-```
-
-Also, update `bin/strings.sh` with the new locale.
-
-To export strings for translation and importing the strings after translation, use the script `bin/strings.sh`. Files are exported as both po and comma separated values (CSV, i.e. spreadsheets), and imported from CSV only. The scripts supports both bulk translation of all strings, and incremental translation of strings that have no translation currently.
-
-To remove cached strings, this is usually needed when switching between branches:
+Ensure that the [ui-strings](https://github.com/tomy-pg/ui-strings) repository is cloned as this the where the translations are retrieved. 
 
 ```
-yarn clean-strings
+git clone git@github.com:tomy-pg/ui-strings.git
 ```
+
+This command generates a messages.po file for each locale from the ui-strings repository. 
+
+```
+./bin/strings --combine-pos 
+```
+
+To generate the compiled source catalogs Lingui uses for internationalization. 
+
+```
+yarn build-strings
+```
+
 ## Contributing
 
 If you want to help out, get in touch at info@arrivaladvisor.ca.
