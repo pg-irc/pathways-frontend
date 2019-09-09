@@ -7,6 +7,7 @@ import { Text, I18nManager } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
+import { Trans } from '@lingui/react';
 import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_application_popup_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { getLocationTitleFromAddresses } from './get_location_title_from_addresses';
@@ -59,7 +60,7 @@ const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
     mapWithIndex((address: Address, index: number) =>
         <View key={index} style={{ marginTop: 10 }}>
-            <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Address:</Text>
+            <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}><Trans>Address:</Trans></Text>
             <Text style={textStyles.alwaysLeftParagraphStyle}>{address.address}</Text>
             <Text style={textStyles.alwaysLeftParagraphStyle}>
                 {address.city} {address.stateProvince} {address.postalCode ? address.postalCode : ''}
@@ -93,7 +94,7 @@ const renderWebsite = (website: string, currentPath: string, linkContext: string
         return <EmptyComponent />;
     }
 
-    const label = <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Web: </Text>;
+    const label = <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}><Trans>Web:</Trans></Text>;
     const link = <AnalyticsLink href={website} currentPath={currentPath} linkContext={linkContext}
         linkType={'Website'} style={textStyles.paragraphStyle}>{website}</AnalyticsLink>;
 
@@ -105,7 +106,7 @@ const renderEmail = (email: string, currentPath: string, linkContext: string): J
         return <EmptyComponent />;
     }
 
-    const label = <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Email: </Text>;
+    const label = <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}><Trans>Email:</Trans> </Text>;
     const link = <AnalyticsLink href={`mailto: ${email}`} currentPath={currentPath} linkContext={linkContext}
         linkType={'Email'} style={textStyles.paragraphStyle} >{email}</AnalyticsLink>;
 

@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Text, Icon, Button } from 'native-base';
 import { showLocation } from 'react-native-map-link';
+import { Trans } from '@lingui/react';
 import { textStyles, colors, values, applicationStyles } from '../../application/styles';
 import { sendLinkPressedEvent } from '../../sagas/analytics/events';
 import { I18nManager } from 'react-native';
@@ -22,7 +23,7 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
             style={{ color: colors.white, fontSize: values.smallIconSize }}
         />;
 
-        const text = <Text style={textStyles.button} uppercase={false}>Open in maps</Text>;
+        const text = <Text style={textStyles.button} uppercase={false}><Trans>Open in maps</Trans></Text>;
 
         const flipLeftRightDirection = I18nManager.isRTL;
 

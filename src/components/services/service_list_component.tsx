@@ -140,7 +140,7 @@ const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX
         />
         <Text style={
             [textStyles.headlineH5StyleBlackLeft, textStyles.alwaysLeftAlign, { color: colors.white }]
-        }>FIND A SERVICE NEAR YOU</Text>
+        }><Trans>FIND A SERVICE NEAR YOU</Trans></Text>
         <Text style={[textStyles.headlineH2StyleWhiteLeft, textStyles.alwaysLeftAlign]}>
             {props.englishTitle}
         </Text>
