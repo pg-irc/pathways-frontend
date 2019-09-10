@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import { Dimensions, LayoutChangeEvent, Animated, I18nManager, TouchableOpacity, ViewStyle } from 'react-native';
+import { Dimensions, LayoutChangeEvent, Animated, TouchableOpacity, ViewStyle } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
@@ -146,15 +146,12 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                 }}
             />
         );
-        return I18nManager.isRTL ?
-            <TouchableOpacity onPress={buttonOnPress} style={buttonStyle}>
-                {buttonIcon}
-                {buttonText}
-            </TouchableOpacity> :
+        return (
             <TouchableOpacity onPress={buttonOnPress} style={buttonStyle}>
                 {buttonText}
                 {buttonIcon}
-            </TouchableOpacity>;
+            </TouchableOpacity>
+        );
     }
 
     private isCollapsed(): boolean {
