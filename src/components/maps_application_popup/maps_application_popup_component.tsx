@@ -5,7 +5,6 @@ import { showLocation } from 'react-native-map-link';
 import { Trans } from '@lingui/react';
 import { textStyles, colors, values, applicationStyles } from '../../application/styles';
 import { sendLinkPressedEvent } from '../../sagas/analytics/events';
-import { I18nManager } from 'react-native';
 
 interface MapsApplicationPopupProps {
     readonly latitude: number;
@@ -25,13 +24,11 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
 
         const text = <Text style={textStyles.button} uppercase={false}><Trans>Open in maps</Trans></Text>;
 
-        const button = I18nManager.isRTL ?
-            <Button onPress={onMapsButtonPress(props)} iconRight style={applicationStyles.tealButton} >
-                {text}{icon}
-            </Button> :
+        const button = (
             <Button onPress={onMapsButtonPress(props)} iconLeft style={applicationStyles.tealButton} >
                 {icon}{text}
-            </Button>;
+            </Button>
+        );
 
         return <View>{button}</View>;
     };
