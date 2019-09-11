@@ -30,7 +30,6 @@ export interface SearchComponentActions {
 
 type Props = SearchComponentProps & SearchComponentActions;
 
-// TODO Remove back button
 // TODO space to left and right of input fields
 // TODO space below lower input field
 // TODO Centre header text
