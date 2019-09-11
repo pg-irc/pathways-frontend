@@ -112,7 +112,7 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
             textColor={colors.black}
         />,
     ];
-    return renderHeader(backgroundColor, leftButton, rightButtons);
+    return renderHeader({ backgroundColor, leftButton, rightButtons });
 };
 
 interface BackAndMenuButtonsHeaderProps extends Props {
@@ -129,7 +129,7 @@ const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
             locale={props.currentLocale}
             textColor={props.textColor}
         />;
-    return renderHeader(props.backgroundColor, leftButton, [rightButton], props.title);
+    return renderHeader({ backgroundColor: props.backgroundColor, leftButton, rightButtons: [rightButton], title: props.title });
 };
 
 const ParentScreenHeader = (props: Props): JSX.Element => {
@@ -142,7 +142,7 @@ const ParentScreenHeader = (props: Props): JSX.Element => {
             locale={props.currentLocale}
             textColor={textColor}
         />;
-    return renderHeader(backgroundColor, leftButton, [rightButton]);
+    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
 };
 
 const ChildScreenHeader = (props: Props): JSX.Element => {
@@ -155,29 +155,52 @@ const ChildScreenHeader = (props: Props): JSX.Element => {
             locale={props.currentLocale}
             textColor={textColor}
         />;
-    return renderHeader(backgroundColor, leftButton, [rightButton]);
+    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
 };
 
-const renderHeader = (backgroundColor: string, leftButton: JSX.Element, rightButtons: ReadonlyArray<JSX.Element>, title?: JSX.Element):
-    JSX.Element => {
-    const renderTitleIfGiven = (): JSX.Element => (
-        title ? <Body><Title>{title}</Title></Body> : <EmptyComponent />
-    );
+interface RenderHeaderProps {
+    readonly backgroundColor: string;
+    readonly leftButton?: JSX.Element;
+    readonly rightButtons: ReadonlyArray<JSX.Element>;
+    readonly title?: JSX.Element;
+}
+
+const renderHeader = (props: RenderHeaderProps): JSX.Element => {
     const marginTop = getStatusBarHeightForPlatform();
-    const renderRightButton = (button: JSX.Element, index: number): JSX.Element => (
+    return (
+        <Header style={{ marginTop, backgroundColor: props.backgroundColor, borderBottomColor: 'transparent' }}>
+            {buildLeftButton(props.leftButton)}
+            {buildTitle(props.title)}
+            {buildRightButtons(props.rightButtons)}
+        </Header>
+    );
+};
+
+const buildLeftButton = (leftButton?: JSX.Element): JSX.Element => {
+    if (!leftButton) {
+        return <EmptyComponent />;
+    }
+    return <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
+        {leftButton}
+    </Left>;
+};
+
+const buildTitle = (title?: JSX.Element): JSX.Element => {
+    if (!title) {
+        return <EmptyComponent />;
+    }
+    return <Body>
+        <Title>{title}</Title>
+    </Body>;
+};
+
+const buildRightButtons = (rightButtons: ReadonlyArray<JSX.Element>): JSX.Element => {
+    const buildView = (button: JSX.Element, index: number): JSX.Element => (
         <View key={index}>
             {button}
         </View>
     );
-    return (
-        <Header style={{ marginTop, backgroundColor: backgroundColor, borderBottomColor: 'transparent' }}>
-            <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
-                {leftButton}
-            </Left>
-            {renderTitleIfGiven()}
-            <Right style={{ alignItems: 'center' }}>
-                {mapWithIndex(renderRightButton, rightButtons)}
-            </Right>
-        </Header>
-    );
+    return <Right style={{ alignItems: 'center' }}>
+        {mapWithIndex(buildView, rightButtons)}
+    </Right>;
 };
