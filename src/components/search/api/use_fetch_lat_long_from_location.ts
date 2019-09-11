@@ -5,7 +5,7 @@ import { LatLong } from '../types';
 import { toGeoCoderLatLong } from './validation';
 import BuildUrl from 'build-url';
 import * as R from 'ramda';
-import { debug } from '../debug';
+import { debug } from '../../../helpers/debug';
 
 export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
     const onlineStatus = useOnlineStatus();
