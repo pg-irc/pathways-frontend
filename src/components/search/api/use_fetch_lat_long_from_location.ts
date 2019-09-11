@@ -13,7 +13,7 @@ export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLo
 
 const fetchLatLongFromAddress = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
     if (location !== '' && onlineStatus === OnlineStatus.Online) {
-
+        console.log(`using fetchLatLongFromAddress with ${location}`)
         const url = buildUrl(location);
         fetch(url).
             then(getTextIfValidOrThrow).

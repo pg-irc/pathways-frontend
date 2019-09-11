@@ -8,6 +8,7 @@ import { Trans } from '@lingui/react';
 import { LinkTypes, AnalyticsLink } from '../link/link';
 import { buildLinkContext } from '../../sagas/analytics/events';
 import { toValidSearchHit } from './api/validation';
+import { useTraceUpdate } from './debug';
 
 export interface Props {
     readonly currentPath: string;
@@ -21,6 +22,8 @@ export interface Actions {
 }
 
 export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Element => {
+    // tslint:disable-next-line:no-expression-statement
+    useTraceUpdate('InfiniteHitsComponent', props);
     const hits = props.currentRefinement === '' ? [] : props.hits;
     // tslint:disable-next-line:no-empty
     const onRefresh = (): void => { };
@@ -38,11 +41,13 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
         onEndReached={(): void => onEndReached(props)} />;
 };
 
-const onEndReached = (props: Partial<Props & Actions>): void => {
-    if (props.hasMore) {
-        // tslint:disable-next-line:no-expression-statement
-        props.refine();
-    }
+const onEndReached = (_: Partial<Props & Actions>): void => {
+    // if (props.hasMore) {
+    //     // tslint:disable-next-line:no-expression-statement
+    //     console.log('onEndReached calling refine()');
+    //     // tslint:disable-next-line:no-expression-statement
+    //     props.refine();
+    // }
 };
 
 const InformationOnlyInEnglishNotice = (props: Partial<Props & Actions>): JSX.Element => {
