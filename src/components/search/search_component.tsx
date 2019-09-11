@@ -9,7 +9,8 @@ import { Locale } from '../../locale';
 import { LatLong } from './types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
-import { useTraceUpdate } from '../../helpers/debug';
+import { useTraceUpdate as useTraceComponentUpdates } from '../../helpers/debug';
+import { ALGOLIA_SERVICES_INDEX, ALGOLIA_ORGANIZATIONS_INDEX } from 'react-native-dotenv';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -25,7 +26,7 @@ type Props = SearchComponentProps & SearchComponentActions;
 
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: Props): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
-    useTraceUpdate('SearchComponent', props);
+    useTraceComponentUpdates('SearchComponent', props);
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
@@ -37,13 +38,21 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
     return <Content style={{ backgroundColor: colors.teal }}>
-        <InstantSearch indexName='dev_services' {...props} >
+        <InstantSearch indexName={servicesIndex()} {...props} >
             <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
             <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
             <InfiniteHitsConnectedComponent />
-            <Index indexName='dev_organizations'>
+            <Index indexName={organizationsIndex()}>
                 <InfiniteHitsConnectedComponent />
             </Index>
         </InstantSearch>
     </Content>;
 };
+
+const servicesIndex = (): string => (
+    ALGOLIA_SERVICES_INDEX || 'dev_services'
+);
+
+const organizationsIndex = (): string => (
+    ALGOLIA_ORGANIZATIONS_INDEX || 'dev_organizations'
+);
