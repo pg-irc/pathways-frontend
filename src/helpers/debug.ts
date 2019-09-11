@@ -17,14 +17,14 @@ export const useTraceUpdate = (name: string, newProps: any): void => {
     const reference = useRef(newProps);
     useEffect(() => {
         const changedProps = Object.entries(newProps).reduce((accumulator: any, [key, newValue]) => {
-            if (reference.oldProps[key] !== newValue) {
-                accumulator[key] = [reference.oldProps[key], newValue];
+            if (reference.props[key] !== newValue) {
+                accumulator[key] = [reference.props[key], newValue];
             }
             return accumulator;
         }, {});
         if (Object.keys(changedProps).length > 0) {
             console.log(`\n${name}: changed props: ${JSON.stringify(changedProps).substring(0, 100)}`);
         }
-        reference.oldProps = newProps;
+        reference.props = newProps;
     });
 };
