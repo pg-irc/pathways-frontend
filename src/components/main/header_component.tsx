@@ -66,7 +66,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
     if (isOnServiceSearchScreen) {
         return (
-            <TwoButtonHeader
+            <RightButtonHeader
                 title={<Text style={{ color: colors.white }}><Trans>FIND A SERVICE</Trans></Text>}
                 {...props}
                 {...{ textColor: colors.white, backgroundColor: colors.teal }}
@@ -129,7 +129,17 @@ const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
             locale={props.currentLocale}
             textColor={props.textColor}
         />;
-    return renderHeader({ backgroundColor: props.backgroundColor, leftButton, rightButtons: [rightButton], title: props.title });
+    return renderHeader({ ...props, leftButton, rightButtons: [rightButton] });
+};
+
+const RightButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
+    const rightButton =
+        <MenuButtonComponent
+            onPress={props.openMenu}
+            locale={props.currentLocale}
+            textColor={props.textColor}
+        />;
+    return renderHeader({ ...props, rightButtons: [rightButton] });
 };
 
 const ParentScreenHeader = (props: Props): JSX.Element => {
