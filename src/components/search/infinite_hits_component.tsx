@@ -9,6 +9,7 @@ import { LinkTypes, AnalyticsLink } from '../link/link';
 import { buildLinkContext } from '../../sagas/analytics/events';
 import { toValidSearchHit } from './api/validation';
 import { useTraceUpdate } from '../../helpers/debug';
+import { SearchListSeparator } from './separators';
 
 export interface Props {
     readonly currentPath: string;
@@ -33,7 +34,7 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
         renderItem={renderSearchHit}
         ListEmptyComponent={EmptyComponent}
         ListHeaderComponent={InformationOnlyInEnglishNotice}
-        ItemSeparatorComponent={Separator} />;
+        ItemSeparatorComponent={SearchListSeparator} />;
 };
 
 const InformationOnlyInEnglishNotice = (props: Partial<Props & Actions>): JSX.Element => {
@@ -53,13 +54,9 @@ const InformationOnlyInEnglishNotice = (props: Partial<Props & Actions>): JSX.El
                 href={href} currentPath={props.currentPath} linkContext={linkContext} linkType={LinkTypes.phone} style={{ color: colors.teal }}
             >please call BC211</AnalyticsLink>.</Trans>
         </Text>
-        <Separator />
+        <SearchListSeparator />
     </View>;
 };
-
-const Separator = (): JSX.Element => (
-    <View style={{ borderBottomWidth: 8, borderColor: colors.lightGrey }} />
-);
 
 const keyExtractor = (item: UnvalidatedData): string => (
     item.objectID || 'missingId'
