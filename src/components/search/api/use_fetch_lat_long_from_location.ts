@@ -5,6 +5,7 @@ import { LatLong } from '../types';
 import { toGeoCoderLatLong } from './validation';
 import BuildUrl from 'build-url';
 import * as R from 'ramda';
+import { debug } from '../debug';
 
 export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
     const onlineStatus = useOnlineStatus();
@@ -13,7 +14,7 @@ export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLo
 
 const fetchLatLongFromAddress = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
     if (location !== '' && onlineStatus === OnlineStatus.Online) {
-        console.log(`using fetchLatLongFromAddress with ${location}`)
+        debug(`using fetchLatLongFromAddress with ${location}`)
         const url = buildUrl(location);
         fetch(url).
             then(getTextIfValidOrThrow).

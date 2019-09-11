@@ -25,29 +25,15 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
     // tslint:disable-next-line:no-expression-statement
     useTraceUpdate('InfiniteHitsComponent', props);
     const hits = props.currentRefinement === '' ? [] : props.hits;
-    // tslint:disable-next-line:no-empty
-    const onRefresh = (): void => { };
-
     return <FlatList
         style={{ backgroundColor: colors.white }}
         refreshing={false}
-        onRefresh={onRefresh}
         data={hits}
         keyExtractor={keyExtractor}
         renderItem={renderSearchHit}
         ListEmptyComponent={EmptyComponent}
         ListHeaderComponent={InformationOnlyInEnglishNotice}
-        ItemSeparatorComponent={Separator}
-        onEndReached={(): void => onEndReached(props)} />;
-};
-
-const onEndReached = (_: Partial<Props & Actions>): void => {
-    // if (props.hasMore) {
-    //     // tslint:disable-next-line:no-expression-statement
-    //     console.log('onEndReached calling refine()');
-    //     // tslint:disable-next-line:no-expression-statement
-    //     props.refine();
-    // }
+        ItemSeparatorComponent={Separator} />;
 };
 
 const InformationOnlyInEnglishNotice = (props: Partial<Props & Actions>): JSX.Element => {
