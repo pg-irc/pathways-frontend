@@ -9,7 +9,7 @@ import { Locale } from '../../locale';
 import { LatLong } from './types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
-import { debug, useTraceUpdate } from '../../helpers/debug';
+import { useTraceUpdate } from '../../helpers/debug';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -23,22 +23,14 @@ export interface SearchComponentActions {
 
 type Props = SearchComponentProps & SearchComponentActions;
 
-// tslint:disable:no-expression-statement
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: Props): JSX.Element => {
+    // tslint:disable-next-line:no-expression-statement
     useTraceUpdate('SearchComponent', props);
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
-    const _setLatLong = (d: LatLong): void => {
-        debug(`SearchComponent setLatLong to '${JSON.stringify(d)}'`);
-        setLatLong(d);
-    };
 
-    const _setLocation = (d: string): void => {
-        debug(`SearchComponent setLocation to '${d}'`);
-        setLocation(d);
-    };
-
-    useFetchLatLongFromLocation(location, _setLatLong);
+    // tslint:disable-next-line:no-expression-statement
+    useFetchLatLongFromLocation(location, setLatLong);
 
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
@@ -46,7 +38,7 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
 
     return <Content style={{ backgroundColor: colors.teal }}>
         <InstantSearch indexName='dev_services' {...props} >
-            <SearchInputConnectedComponent location={location} setLocation={_setLocation} latLong={latLong} />
+            <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
             <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
