@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { InstantSearch, connectSearchBox, connectInfiniteHits, connectConfigure } from 'react-instantsearch-native';
+import { InstantSearch, Index, connectSearchBox, connectInfiniteHits, connectConfigure } from 'react-instantsearch-native';
 import { SearchInputComponent } from './search_input_component';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
@@ -41,6 +41,9 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
             <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
             <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
             <InfiniteHitsConnectedComponent />
+            <Index indexName='dev_organizations'>
+                <InfiniteHitsConnectedComponent />
+            </Index>
         </InstantSearch>
     </Content>;
 };
