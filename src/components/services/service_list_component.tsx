@@ -129,15 +129,17 @@ const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX
         padding: 20,
     }}
     >
-        <Icon
-            type={'FontAwesome'}
-            name={'map-marker'}
-            style={{
-                color: colors.white,
-                padding: 5,
-                fontSize: values.smallIconSize,
-            }}
-        />
+        <View style={{ flexDirection: 'row' }}>
+            <Icon
+                type={'FontAwesome'}
+                name={'map-marker'}
+                style={{
+                    color: colors.white,
+                    padding: 5,
+                    fontSize: values.smallIconSize,
+                }}
+            />
+        </View>
         <Text style={
             [textStyles.headlineH5StyleBlackLeft, { color: colors.white }]
         }><Trans>FIND A SERVICE NEAR YOU</Trans></Text>
