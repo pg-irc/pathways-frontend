@@ -5,8 +5,6 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
 import { UnvalidatedData, ServiceSearchHit, OrganizationSearchHit } from './types';
 import { Trans } from '@lingui/react';
-import { LinkTypes, AnalyticsLink } from '../link/link';
-import { buildLinkContext } from '../../sagas/analytics/events';
 import { toValidSearchHit } from './api/validation';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
@@ -33,29 +31,7 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
         keyExtractor={keyExtractor}
         renderItem={renderSearchHit}
         ListEmptyComponent={EmptyComponent}
-        ListHeaderComponent={InformationOnlyInEnglishNotice}
         ItemSeparatorComponent={SearchListSeparator} />;
-};
-
-const InformationOnlyInEnglishNotice = (props: Partial<Props & Actions>): JSX.Element => {
-    const phoneNumber: string = '211';
-    const href = `tel: ${phoneNumber}`;
-    const linkContext = buildLinkContext('Service', 'BC-211');
-
-    return <View style={{ backgroundColor: colors.white }}>
-        <Text style={[textStyles.paragraphStyle,
-        {
-            marginTop: 20,
-            marginBottom: 20,
-            marginLeft: 20,
-            marginRight: 20,
-        }]}>
-            <Trans>Information about services is currently only available in English. For information in other languages, <AnalyticsLink
-                href={href} currentPath={props.currentPath} linkContext={linkContext} linkType={LinkTypes.phone} style={{ color: colors.teal }}
-            >please call BC211</AnalyticsLink>.</Trans>
-        </Text>
-        <SearchListSeparator />
-    </View>;
 };
 
 const keyExtractor = (item: UnvalidatedData): string => (
