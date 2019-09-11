@@ -9,6 +9,7 @@ import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { colors, applicationStyles, textStyles } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
+import { needsTextDirectionChange } from '../../locale/effects';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
@@ -18,16 +19,18 @@ export interface WelcomeProps {
 }
 
 export interface WelcomeActions {
-    readonly setLocale: (localeCode: string) => SaveLocaleRequestAction;
+    readonly setLocale: (localeCode: string, flipOrientation: boolean) => SaveLocaleRequestAction;
 }
 
 type Props = WelcomeProps & WelcomeActions;
 
 export function WelcomeComponent(props: Props): JSX.Element {
     const arrivalAdvisorLogoSize = Dimensions.get('screen').width / 2.15;
+
     const handleChange = (localeCode: string): void => {
-        if (localeCode !== props.currentLocale.code ) {
-            props.setLocale(localeCode);
+        const flipOrientation = needsTextDirectionChange(localeCode);
+        if (localeCode !== props.currentLocale.code || flipOrientation) {
+            props.setLocale(localeCode, flipOrientation);
         }
     };
 

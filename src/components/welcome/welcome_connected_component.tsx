@@ -20,7 +20,7 @@ function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
 
 function mapDispatchToProps(dispatch: Dispatch<SaveLocaleRequestAction>): WelcomeActions {
     return {
-        setLocale: (localeCode: string): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode)),
+        setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
     };
 }
 
