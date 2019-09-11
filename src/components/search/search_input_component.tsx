@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput } from 'react-native';
-import { Icon } from 'native-base';
+import { TextInput } from 'react-native';
+import { View, Icon } from 'native-base';
 import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from './types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
@@ -26,7 +26,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         props.refine(props.currentRefinement);
     }, [props.latLong]);
 
-    return <View>
+    return <View style={{ paddingHorizontal: 20, paddingBottom: 20 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <InputIcon name='search' />
             <TextInput
@@ -54,7 +54,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
             />
         </View>
         <InputFormSeparator />
-    </View>;
+    </View >;
 };
 
 interface IconProps {
