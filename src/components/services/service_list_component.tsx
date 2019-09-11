@@ -121,18 +121,13 @@ interface ServiceListHeaderComponentProps {
     readonly title: string;
 }
 
-const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => (
-    <View style={{
-        backgroundColor: colors.teal,
-        marginHorizontal: -10,
-        marginTop: -10,
-        padding: 20,
-    }}
-    >
-        <View style={{ flexDirection: 'row' }}>
+const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => {
+    const icon = (
+        <View style={{
+            flexDirection: 'row',
+        }}>
             <Icon
-                type={'FontAwesome'}
-                name={'map-marker'}
+                type={'FontAwesome'} name={'map-marker'}
                 style={{
                     color: colors.white,
                     padding: 5,
@@ -140,11 +135,27 @@ const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX
                 }}
             />
         </View>
-        <Text style={
-            [textStyles.headlineH5StyleBlackLeft, { color: colors.white }]
-        }><Trans>FIND A SERVICE NEAR YOU</Trans></Text>
+    );
+    const heading = (
+        <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.white }]}>
+            <Trans>FIND A SERVICE NEAR YOU</Trans>
+        </Text>
+    );
+    const title = (
         <Text style={textStyles.headlineH2StyleWhiteLeft}>
             {props.title}
-        </Text>
-    </View >
-);
+        </Text>);
+    return (
+        <View style={{
+            backgroundColor: colors.teal,
+            marginHorizontal: -10,
+            marginTop: -10,
+            padding: 20,
+        }}
+        >
+            {icon}
+            {heading}
+            {title}
+        </View >
+    );
+};
