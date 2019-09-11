@@ -3,6 +3,7 @@ import { View, TextInput } from 'react-native';
 import { Icon } from 'native-base';
 import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from './types';
+import { debug, useTraceUpdate } from './debug';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -15,13 +16,13 @@ export interface Actions {
     readonly setLocation: (s: string) => void;
 }
 
+// tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
+    useTraceUpdate('SearchInputComponent', props);
     const [location, setLocation]: [string, (s: string) => void] = useState(props.location);
     useEffect(() => {
-        // tslint:disable-next-line:no-expression-statement
+        debug(`SearchInput Component useEffect with '${props.currentRefinement}'`);
         props.refine(props.currentRefinement);
-        // tslint:disable-next-line:no-expression-statement
-        console.log('SearchInput Component useEffect');
     }, [props.latLong]);
 
     return <View>
@@ -30,10 +31,8 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
             <TextInput
                 style={applicationStyles.searchInput}
                 onChangeText={(d: string): void => {
-                    // tslint:disable-next-line:no-expression-statement
+                    debug(`SearchInputComponent search text changed to '${d}'`);
                     props.refine(d);
-                    // tslint:disable-next-line:no-expression-statement
-                    console.log('SearchInput text changed');
                 }}
                 value={props.currentRefinement}
                 placeholder='Search for services and organizations' // TODO translate
@@ -45,10 +44,8 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
             <TextInput
                 style={applicationStyles.searchInput}
                 onChangeText={(d: string): void => {
-                    // tslint:disable-next-line:no-expression-statement
+                    debug(`SearchInputComponent location text changed to '${d}'`);
                     setLocation(d);
-                    // tslint:disable-next-line:no-expression-statement
-                    console.log('SearchInput location text changed');
                 }}
                 value={location}
                 onEndEditing={(): void => props.setLocation(location)}
