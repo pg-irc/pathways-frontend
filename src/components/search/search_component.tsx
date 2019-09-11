@@ -30,6 +30,12 @@ export interface SearchComponentActions {
 
 type Props = SearchComponentProps & SearchComponentActions;
 
+// TODO Remove back button
+// TODO space to left and right of input fields
+// TODO space below lower input field
+// TODO Centre header text
+// TODO show error condition
+
 export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: Props): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceComponentUpdates('SearchComponent', props);
