@@ -9,7 +9,7 @@ import { Locale } from '../../locale';
 import { LatLong } from './types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
-import { debug, useTraceUpdate } from './debug';
+import { debug, useTraceUpdate } from '../../helpers/debug';
 
 export interface SearchComponentProps {
     readonly apiKey: string;

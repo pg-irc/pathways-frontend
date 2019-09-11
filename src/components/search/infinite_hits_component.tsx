@@ -8,7 +8,7 @@ import { Trans } from '@lingui/react';
 import { LinkTypes, AnalyticsLink } from '../link/link';
 import { buildLinkContext } from '../../sagas/analytics/events';
 import { toValidSearchHit } from './api/validation';
-import { useTraceUpdate } from './debug';
+import { useTraceUpdate } from '../../helpers/debug';
 
 export interface Props {
     readonly currentPath: string;
