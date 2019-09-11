@@ -79,7 +79,7 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>, currentPat
         return (
             <View key={index} style={{ marginTop: 10 }} >
                 <Text style={textStyles.paragraphBoldBlackLeft}>
-                    {fieldLabel} {textWithPhoneLinks}
+                    {fieldLabel}: {textWithPhoneLinks}
                 </Text>
             </View>
         );
