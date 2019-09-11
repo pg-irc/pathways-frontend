@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-expression-statement no-this
 import React from 'react';
-import { Dimensions, LayoutChangeEvent, Animated, I18nManager, TouchableOpacity, ViewStyle } from 'react-native';
+import { Dimensions, LayoutChangeEvent, Animated, TouchableOpacity, ViewStyle } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
@@ -14,7 +14,6 @@ import { values } from '../../application/styles';
 export interface ExpandableContentProps {
     readonly content: JSX.Element;
     readonly contentId?: string;
-    readonly forceEnglish?: boolean;
 }
 
 interface ExpandableContentState {
@@ -115,34 +114,26 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         });
     }
 
-    private readMoreReadLessText(): JSX.Element | string {
-        const showReadMore = this.isCollapsed();
-        if (showReadMore) {
-            return this.props.forceEnglish ? 'Read more' : <Trans>Read more</Trans>;
-        }
-        return this.props.forceEnglish ? 'Read less' : <Trans>Read less</Trans>;
-    }
-
     private getReadMoreButton(): JSX.Element {
         const buttonOnPress = (): void => this.toggleState();
+        const content = this.isCollapsed() ? <Trans>Read more</Trans> : <Trans>Read less</Trans>;
         const buttonStyle: ViewStyle = {
             flex: 1,
             flexDirection: 'row',
-            justifyContent: this.computeJustifyContent(),
             maxHeight: 20,
             marginTop: 10,
         };
         const buttonText = (
             <Text style={[
-                    textStyles.paragraphBoldBlackLeft,
-                    {
-                        color: colors.teal,
-                        marginRight: 5,
-                        marginLeft: 5
-                    },
-                ]}
+                textStyles.paragraphBoldBlackLeft,
+                {
+                    color: colors.teal,
+                    marginRight: 5,
+                    marginLeft: 5
+                },
+            ]}
             >
-                    {this.readMoreReadLessText()}
+                {content}
             </Text>
         );
         const buttonIcon = (
@@ -155,28 +146,12 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                 }}
             />
         );
-        return this.flipLeftRightOrientation() ?
-            <TouchableOpacity onPress={buttonOnPress} style={buttonStyle}>
-                {buttonIcon}
-                {buttonText}
-            </TouchableOpacity> :
+        return (
             <TouchableOpacity onPress={buttonOnPress} style={buttonStyle}>
                 {buttonText}
                 {buttonIcon}
-            </TouchableOpacity>;
-    }
-
-    private flipLeftRightOrientation(): boolean {
-        return I18nManager.isRTL && this.props.forceEnglish;
-    }
-
-    private computeJustifyContent(): 'flex-start' | 'flex-end' {
-        // If the app locale is Arabic and the screen is in English, justify "Read more"
-        // string to the left by returning 'flex-end', which in RTL mode means left.
-        if (this.flipLeftRightOrientation()) {
-            return 'flex-end';
-        }
-        return 'flex-start';
+            </TouchableOpacity>
+        );
     }
 
     private isCollapsed(): boolean {

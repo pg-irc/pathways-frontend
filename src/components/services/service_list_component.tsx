@@ -46,7 +46,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 refreshScreen={refreshServicesData}
                 errorType={Errors.Offline}
                 header={
-                    <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
+                    <ServiceListHeaderComponent title={props.topic.title} />
                 }
             />
         );
@@ -58,7 +58,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 refreshScreen={refreshServicesData}
                 errorType={props.topicServicesOrError.errorMessageType}
                 header={
-                    <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
+                    <ServiceListHeaderComponent title={props.topic.title} />
                 }
             />
         );
@@ -72,7 +72,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             renderItem={renderServiceListItem(props.currentPath)}
             listEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
             listHeaderComponent={
-                <ServiceListHeaderComponent englishTitle={props.topic.englishTitle} />
+                <ServiceListHeaderComponent title={props.topic.title} />
             }
         />
     );
@@ -118,31 +118,44 @@ const renderServiceListItem = (currentPath: string): ({ item }: ServiceItemInfo)
 };
 
 interface ServiceListHeaderComponentProps {
-    readonly englishTitle: string;
+    readonly title: string;
 }
 
-const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => (
-    <View style={{
-        backgroundColor: colors.teal,
-        marginHorizontal: -10,
-        marginTop: -10,
-        padding: 20,
-    }}
-    >
-        <Icon
-            type={'FontAwesome'}
-            name={'map-marker'}
-            style={{
-                color: colors.white,
-                padding: 5,
-                fontSize: values.smallIconSize,
-            }}
-        />
-        <Text style={
-            [textStyles.headlineH5StyleBlackLeft, textStyles.alwaysLeftAlign, { color: colors.white }]
-        }>FIND A SERVICE NEAR YOU</Text>
-        <Text style={[textStyles.headlineH2StyleWhiteLeft, textStyles.alwaysLeftAlign]}>
-            {props.englishTitle}
+const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => {
+    const icon = (
+        <View style={{
+            flexDirection: 'row',
+        }}>
+            <Icon
+                type={'FontAwesome'} name={'map-marker'}
+                style={{
+                    color: colors.white,
+                    padding: 5,
+                    fontSize: values.smallIconSize,
+                }}
+            />
+        </View>
+    );
+    const heading = (
+        <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.white }]}>
+            <Trans>FIND A SERVICE NEAR YOU</Trans>
         </Text>
-    </View >
-);
+    );
+    const title = (
+        <Text style={textStyles.headlineH2StyleWhiteLeft}>
+            {props.title}
+        </Text>);
+    return (
+        <View style={{
+            backgroundColor: colors.teal,
+            marginHorizontal: -10,
+            marginTop: -10,
+            padding: 20,
+        }}
+        >
+            {icon}
+            {heading}
+            {title}
+        </View >
+    );
+};

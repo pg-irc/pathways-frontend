@@ -3,10 +3,11 @@ import * as R from 'ramda';
 import { textStyles, colors } from '../../application/styles';
 import { Service, PhoneNumber, Address } from '../../stores/services/types';
 import { View } from 'native-base';
-import { Text, I18nManager } from 'react-native';
+import { Text } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
+import { Trans } from '@lingui/react';
 import { MapsApplicationPopupComponent } from '../maps_application_popup/maps_application_popup_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { getLocationTitleFromAddresses } from './get_location_title_from_addresses';
@@ -40,16 +41,13 @@ const buildServiceName = (organizationName: string, serviceName: string): string
 );
 
 const renderName = (name: string): JSX.Element => (
-    <Text style={[textStyles.headlineH3StyleBlackLeft, textStyles.alwaysLeftAlign]}>{name}</Text>
+    <Text style={textStyles.headlineH3StyleBlackLeft}>{name}</Text>
 );
 
 const renderDescription = (description: string): JSX.Element => {
-    const content = <Text style={textStyles.alwaysLeftParagraphStyle}> {description}</Text>;
+    const content = <Text style={textStyles.paragraphStyle}> {description}</Text>;
     return (
-        <ExpandableContentComponent
-            forceEnglish={true}
-            content={content}
-        />
+        <ExpandableContentComponent content={content} />
     );
 };
 
@@ -59,9 +57,9 @@ const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
     mapWithIndex((address: Address, index: number) =>
         <View key={index} style={{ marginTop: 10 }}>
-            <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Address:</Text>
-            <Text style={textStyles.alwaysLeftParagraphStyle}>{address.address}</Text>
-            <Text style={textStyles.alwaysLeftParagraphStyle}>
+            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address:</Trans></Text>
+            <Text style={textStyles.paragraphStyle}>{address.address}</Text>
+            <Text style={textStyles.paragraphStyle}>
                 {address.city} {address.stateProvince} {address.postalCode ? address.postalCode : ''}
             </Text>
         </View>, physicalAddresses)
@@ -80,7 +78,7 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>, currentPat
         );
         return (
             <View key={index} style={{ marginTop: 10 }} >
-                <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>
+                <Text style={textStyles.paragraphBoldBlackLeft}>
                     {fieldLabel}: {textWithPhoneLinks}
                 </Text>
             </View>
@@ -93,7 +91,7 @@ const renderWebsite = (website: string, currentPath: string, linkContext: string
         return <EmptyComponent />;
     }
 
-    const label = <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Web: </Text>;
+    const label = <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Web:</Trans></Text>;
     const link = <AnalyticsLink href={website} currentPath={currentPath} linkContext={linkContext}
         linkType={'Website'} style={textStyles.paragraphStyle}>{website}</AnalyticsLink>;
 
@@ -105,7 +103,7 @@ const renderEmail = (email: string, currentPath: string, linkContext: string): J
         return <EmptyComponent />;
     }
 
-    const label = <Text style={[textStyles.paragraphBoldBlackLeft, textStyles.alwaysLeftAlign]}>Email: </Text>;
+    const label = <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>;
     const link = <AnalyticsLink href={`mailto: ${email}`} currentPath={currentPath} linkContext={linkContext}
         linkType={'Email'} style={textStyles.paragraphStyle} >{email}</AnalyticsLink>;
 
@@ -116,9 +114,8 @@ const renderMapButtonIfLocation = (service: Service, currentPath: string, linkCo
     if (R.not(service.latitude && service.longitude)) {
         return <EmptyComponent />;
     }
-    const justifyContent = I18nManager.isRTL ? 'flex-end' : 'flex-start';
     return (
-        <View style={{ marginTop: 10, flexDirection: 'row', justifyContent }}>
+        <View style={{ marginTop: 10, flexDirection: 'row' }}>
             <MapsApplicationPopupComponent
                 latitude={service.latitude}
                 longitude={service.longitude}

@@ -11,7 +11,6 @@ export const toSelectorTopic =
             {
                 id: topic.id,
                 title: getLocalizedText(locale, topic.title),
-                englishTitle: topic.title.en,
                 description: getLocalizedText(locale, topic.description),
                 taxonomyTerms: topic.taxonomyTerms,
                 exploreSection,
