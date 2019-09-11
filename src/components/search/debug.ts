@@ -1,7 +1,7 @@
 // tslint:disable:typedef no-expression-statement no-any
 import { useRef, useEffect } from 'react';
 
-const DEBUG = true;
+const DEBUG = false;
 
 export const debug = (s: string): void => {
     if (DEBUG) {
@@ -9,20 +9,22 @@ export const debug = (s: string): void => {
     }
 };
 
-export const useTraceUpdate = (name: string, props: any): void => {
-    const prev = useRef(props);
+export const useTraceUpdate = (name: string, newProps: any): void => {
+    // flow control is OK in this hook because DEBUG is a constant
+    if (!DEBUG) {
+        return;
+    }
+    const reference = useRef(newProps);
     useEffect(() => {
-        const changedProps = Object.entries(props).reduce((ps: any, [key, v]) => {
-            if (prev.current[key] !== v) {
-                ps[key] = [prev.current[key], v];
+        const changedProps = Object.entries(newProps).reduce((accumulator: any, [key, newValue]) => {
+            if (reference.oldProps[key] !== newValue) {
+                accumulator[key] = [reference.oldProps[key], newValue];
             }
-            return ps;
+            return accumulator;
         }, {});
         if (Object.keys(changedProps).length > 0) {
-            const ddd = JSON.stringify(changedProps);
-            const eee = ddd.substring(0, 100);
-            console.log(`\n${name}: changed props: ${eee}`);
+            console.log(`\n${name}: changed props: ${JSON.stringify(changedProps).substring(0, 100)}`);
         }
-        prev.current = props;
+        reference.oldProps = newProps;
     });
 };
