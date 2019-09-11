@@ -10,7 +10,7 @@ import {
 } from '../../application/images';
 import { ErrorScreenComponent } from './ErrorScreenComponent';
 import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button/app_settings_button_component';
-import { isAndroid } from '../../helpers/is_os';
+import { isAndroid } from '../../helpers/is_android';
 
 type ErrorScreenSwitcherComponentProps = {
     readonly errorType: Errors;
