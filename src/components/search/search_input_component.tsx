@@ -3,7 +3,7 @@ import { View, TextInput } from 'react-native';
 import { Icon } from 'native-base';
 import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from './types';
-import { debug, useTraceUpdate } from './debug';
+import { debug, useTraceUpdate } from '../../helpers/debug';
 
 export interface Props {
     readonly currentRefinement: string;
