@@ -4,6 +4,7 @@ import { Icon } from 'native-base';
 import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from './types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
+import { InputFormSeparator } from './separators';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -38,7 +39,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 placeholder='Search for services and organizations' // TODO translate
             />
         </View>
-        <Separator />
+        <InputFormSeparator />
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <InputIcon name='map-marker' />
             <TextInput
@@ -52,7 +53,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 placeholder='Near My location' // TODO translate
             />
         </View>
-        <Separator />
+        <InputFormSeparator />
     </View>;
 };
 
@@ -65,11 +66,4 @@ const InputIcon = ({ name }: IconProps): JSX.Element => (
         type='FontAwesome'
         style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3 }}
     />
-);
-
-const Separator = (): JSX.Element => (
-    <View style={{
-        borderBottomWidth: 1,
-        borderColor: colors.white,
-    }} />
 );
