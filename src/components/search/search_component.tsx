@@ -6,7 +6,6 @@ import { colors, textStyles } from '../../application/styles';
 import { Content, Text } from 'native-base';
 import { View } from 'react-native';
 import { emptyComponent } from '../empty_component/empty_component';
-import { Locale } from '../../locale';
 import { LatLong } from './types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
@@ -20,7 +19,6 @@ import { SearchListSeparator } from './separators';
 export interface SearchComponentProps {
     readonly apiKey: string;
     readonly appId: string;
-    readonly currentLocale: Locale;
     readonly currentPath: string;
 }
 
