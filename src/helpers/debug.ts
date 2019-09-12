@@ -9,22 +9,26 @@ export const debug = (s: string): void => {
     }
 };
 
-export const useTraceUpdate = (name: string, newProps: any): void => {
-    // flow control is OK in this hook because DEBUG is a constant
-    if (!DEBUG) {
-        return;
-    }
-    const reference = useRef(newProps);
+interface HasOldProps {
+    // tslint:disable-next-line:readonly-keyword
+    current: { readonly [name: string]: any };
+}
+
+export const useTraceUpdate = (name: string, props: any): void => {
+    const prevAsUnknown = useRef({ current: props }) as unknown;
+    const prev = prevAsUnknown as HasOldProps;
     useEffect(() => {
-        const changedProps = Object.entries(newProps).reduce((accumulator: any, [key, newValue]) => {
-            if (reference.props[key] !== newValue) {
-                accumulator[key] = [reference.props[key], newValue];
+        const changedProps = Object.entries(props).reduce((ps: any, [key, v]) => {
+            if (prev.current[key] !== v) {
+                ps[key] = [prev.current[key], v];
             }
-            return accumulator;
+            return ps;
         }, {});
         if (Object.keys(changedProps).length > 0) {
-            console.log(`\n${name}: changed props: ${JSON.stringify(changedProps).substring(0, 100)}`);
+            const ddd = JSON.stringify(changedProps);
+            const eee = ddd.substring(0, 100);
+            console.log(`\n${name}: changed props: ${eee}`);
         }
-        reference.props = newProps;
+        prev.current = props;
     });
 };
