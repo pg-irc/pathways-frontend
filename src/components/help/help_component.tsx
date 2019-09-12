@@ -1,7 +1,7 @@
 import React from 'react';
 import { History } from 'history';
 import { Text, View, Icon, Content } from 'native-base';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
 import { I18nManager, Alert, TouchableOpacity } from 'react-native';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -105,25 +105,33 @@ const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: P
 );
 
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const alertToClearAllUserData = (): void => {
+    // tslint:disable-next-line:no-any
+    const alertToClearAllUserData = (i18n: any): void => {
         const alertHeading = 'Delete user data';
         const alertMessage = 'Do you want to delete all user data from this phone? This includes which ' +
             'answers are chosen in the questionnaire and which topics are bookmarked.';
+        const alertCancelOption = 'Cancel';
+        const alertDeleteOption = 'Delete all user data';
 
         // tslint:disable-next-line:no-expression-statement
-        Alert.alert(alertHeading, alertMessage,
+        Alert.alert(i18n._(alertHeading), i18n._(alertMessage),
             [
-                { text: 'Cancel', style: 'cancel' },
-                { text: 'Delete all user data', onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
+                { text: i18n._(alertCancelOption), style: 'cancel' },
+                { text: i18n._(alertDeleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
             ],
         );
     };
     return (
-        <MultiLineButtonComponent onPress={alertToClearAllUserData} >
-            <Text style={textStyles.button}>
-                <Trans>Delete all user data</Trans>
-            </Text>
-        </MultiLineButtonComponent>
+        // tslint:disable:no-any typedef
+        <I18n>
+            {({ i18n }: any) => (
+            <MultiLineButtonComponent onPress={(): void => alertToClearAllUserData(i18n)} >
+                <Text style={textStyles.button}>
+                    <Trans>Delete all user data</Trans>
+                </Text>
+            </MultiLineButtonComponent>
+            )}
+        </I18n>
     );
 };
 
