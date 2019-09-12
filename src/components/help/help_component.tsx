@@ -107,7 +107,7 @@ const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: P
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     // tslint:disable-next-line:no-any
     const alertToClearAllUserData = (i18n: any): void => {
-        const alertHeading = 'Delete user data';
+        const alertHeading = 'Delete all user data';
         const alertMessage = 'Do you want to delete all user data from this phone? This includes which ' +
             'answers are chosen in the questionnaire and which topics are bookmarked.';
         const alertCancelOption = 'Cancel';
