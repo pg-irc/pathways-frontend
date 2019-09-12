@@ -15,18 +15,18 @@ interface HasOldProps {
     current: { readonly [name: string]: any };
 }
 
-export const useTraceUpdate = (name: string, props: any): void => {
-    const prevAsUnknown = useRef({ current: props }) as unknown;
-    const prev = prevAsUnknown as HasOldProps;
+export const useTraceUpdate = (componentName: string, newProps: any): void => {
+    const oldPropsAsUnknown = useRef({ current: newProps }) as unknown;
+    const oldProps = oldPropsAsUnknown as HasOldProps;
     useEffect(() => {
-        const changedProps = Object.entries(props).reduce(reducer(prev), {});
-        printPropsIfAny(name, changedProps);
-        prev.current = props;
+        const changedProps = Object.entries(newProps).reduce(getChangedProps(oldProps), {});
+        printPropsIfAny(componentName, changedProps);
+        oldProps.current = newProps;
     });
 };
 
-const reducer = R.curry((reference: HasOldProps, accumulator: any, [key, newValue]: [string, any]) => {
-    const oldValue = reference.current[key];
+const getChangedProps = R.curry((oldProps: HasOldProps, accumulator: any, [key, newValue]: [string, any]) => {
+    const oldValue = oldProps.current[key];
     if (oldValue !== newValue) {
         accumulator[key] = [oldValue, newValue];
     }
