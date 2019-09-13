@@ -11,6 +11,7 @@ import { openURL } from '../link/link';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 import { LatLong, SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
+import { I18nRenderProp } from '../../locale/types';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -105,8 +106,7 @@ const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: P
 );
 
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    // tslint:disable-next-line:no-any
-    const alertToClearAllUserData = (i18n: any): void => {
+    const alertToClearAllUserData = (i18n: I18nRenderProp): void => {
         const alertHeading = 'Delete all user data';
         const alertMessage = 'Do you want to delete all user data from this phone? This includes which ' +
             'answers are chosen in the questionnaire and which topics are bookmarked.';
@@ -122,9 +122,8 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
         );
     };
     return (
-        // tslint:disable:no-any typedef
         <I18n>
-            {({ i18n }: any) => (
+            {({i18n}: { readonly i18n: I18nRenderProp }): JSX.Element => (
             <MultiLineButtonComponent onPress={(): void => alertToClearAllUserData(i18n)} >
                 <Text style={textStyles.button}>
                     <Trans>Delete all user data</Trans>
