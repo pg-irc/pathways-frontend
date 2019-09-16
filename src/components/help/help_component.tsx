@@ -112,23 +112,18 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
             'answers are chosen in the questionnaire and which topics are bookmarked.';
         const alertCancelOption = 'Cancel';
         const alertDeleteOption = 'Delete all user data';
-        if (I18nManager.isRTL) {
-            // tslint:disable-next-line:no-expression-statement
-                Alert.alert(i18n._(alertHeading), i18n._(alertMessage),
+        // tslint:disable-next-line:no-expression-statement
+        Alert.alert(i18n._(alertHeading), i18n._(alertMessage),
+            I18nManager.isRTL ?
                 [
                     { text: i18n._(alertDeleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
                     { text: i18n._(alertCancelOption), style: 'cancel' },
-                ],
-            );
-        } else {
-            // tslint:disable-next-line:no-expression-statement
-                Alert.alert(i18n._(alertHeading), i18n._(alertMessage),
+                ] :
                 [
-                    { text: i18n._(alertDeleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
                     { text: i18n._(alertCancelOption), style: 'cancel' },
+                    { text: i18n._(alertDeleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
                 ],
             );
-        }
     };
     return (
         <I18n>
