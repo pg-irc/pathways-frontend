@@ -21,8 +21,6 @@ export interface LocalizedText {
     readonly [localeCode: string]: string;
 }
 
-export class I18nRenderProp {
-    _(str: string): string {
-        return str;
-    }
+export interface I18nRenderProp {
+    _(str: string): string;
 }
