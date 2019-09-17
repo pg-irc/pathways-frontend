@@ -109,18 +109,18 @@ const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: P
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const alertToClearAllUserData = (i18n: I18nRenderProp): void => {
         const _ = i18n._.bind(i18n);
-        const alertHeading = 'Delete all user data';
-        const alertMessage = 'Do you want to delete all user data from this phone? This includes which ' +
+        const heading = 'Delete all user data';
+        const message = 'Do you want to delete all user data from this phone? This includes which ' +
             'answers are chosen in the questionnaire and which topics are bookmarked.';
-        const alertCancelOption = 'Cancel';
-        const alertDeleteOption = 'Delete all user data';
+        const cancelOption = 'Cancel';
+        const deleteOption = 'Delete all user data';
         // tslint:disable-next-line: readonly-array
         const buttons: AlertButton[] = [
-            { text: _(alertCancelOption), style: 'cancel' },
-            { text: _(alertDeleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() }
+            { text: _(cancelOption), style: 'cancel' },
+            { text: _(deleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() }
         ];
             // tslint:disable-next-line:no-expression-statement
-        Alert.alert(_(alertHeading), _(alertMessage),
+        Alert.alert(_(heading), _(message),
             I18nManager.isRTL ? R.reverse(buttons) : buttons,
         );
     };
