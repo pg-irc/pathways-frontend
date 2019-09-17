@@ -11,7 +11,7 @@ import { openURL } from '../link/link';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 import { LatLong, SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
-import { I18nRenderProp } from '../../locale/types';
+import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import * as R from 'ramda';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
@@ -107,7 +107,7 @@ const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: P
 );
 
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const alertToClearAllUserData = (i18n: I18nRenderProp): void => {
+    const alertToClearAllUserData = (i18n: ReactI18n): void => {
         const _ = i18n._.bind(i18n);
         const heading = 'Delete all user data';
         const message = 'Do you want to delete all user data from this phone? This includes which ' +
@@ -117,7 +117,7 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
         // tslint:disable-next-line: readonly-array
         const buttons: AlertButton[] = [
             { text: _(cancelOption), style: 'cancel' },
-            { text: _(deleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() }
+            { text: _(deleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
         ];
             // tslint:disable-next-line:no-expression-statement
         Alert.alert(_(heading), _(message),
@@ -126,8 +126,8 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
     };
     return (
         <I18n>
-            {({i18n}: { readonly i18n: I18nRenderProp }): JSX.Element => (
-            <MultiLineButtonComponent onPress={(): void => alertToClearAllUserData(i18n)} >
+            {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
+            <MultiLineButtonComponent onPress={(): void => alertToClearAllUserData(i18nRenderProp.i18n)} >
                 <Text style={textStyles.button}>
                     <Trans>Delete all user data</Trans>
                 </Text>

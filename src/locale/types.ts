@@ -1,4 +1,3 @@
-// tslint:disable:no-class readonly-keyword
 export type CatalogsMap = { readonly [localeCode: string]: object };
 
 export type Catalog = { readonly [message: string]: object };
@@ -21,6 +20,10 @@ export interface LocalizedText {
     readonly [localeCode: string]: string;
 }
 
-export interface I18nRenderProp {
+export interface ReactI18n {
     _(str: string): string;
+}
+
+export interface ReactI18nRenderProp {
+    readonly i18n: ReactI18n;
 }
