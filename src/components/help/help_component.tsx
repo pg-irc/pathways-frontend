@@ -2,7 +2,7 @@ import React from 'react';
 import { History } from 'history';
 import { Text, View, Icon, Content } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
-import { I18nManager, Alert, TouchableOpacity } from 'react-native';
+import { I18nManager, Alert, TouchableOpacity, AlertButton } from 'react-native';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/map_with_index';
@@ -12,6 +12,7 @@ import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 import { LatLong, SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
 import { I18nRenderProp } from '../../locale/types';
+import * as R from 'ramda';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -112,18 +113,15 @@ const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JS
             'answers are chosen in the questionnaire and which topics are bookmarked.';
         const alertCancelOption = 'Cancel';
         const alertDeleteOption = 'Delete all user data';
-        // tslint:disable-next-line:no-expression-statement
+        // tslint:disable-next-line: readonly-array
+        const buttons: AlertButton[] = [
+            { text: i18n._(alertCancelOption), style: 'cancel' },
+            { text: i18n._(alertDeleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() }
+        ];
+            // tslint:disable-next-line:no-expression-statement
         Alert.alert(i18n._(alertHeading), i18n._(alertMessage),
-            I18nManager.isRTL ?
-                [
-                    { text: i18n._(alertDeleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
-                    { text: i18n._(alertCancelOption), style: 'cancel' },
-                ] :
-                [
-                    { text: i18n._(alertCancelOption), style: 'cancel' },
-                    { text: i18n._(alertDeleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
-                ],
-            );
+            I18nManager.isRTL ? R.reverse(buttons) : buttons,
+        );
     };
     return (
         <I18n>
