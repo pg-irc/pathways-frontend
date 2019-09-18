@@ -109,6 +109,8 @@ const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: P
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const alertToClearAllUserData = (i18n: ReactI18n): void => {
         const _ = i18n._.bind(i18n);
+        // These strings are being extracted by Lingui using the function extractAlertStrings below
+        // They must always match the strings found in the <Trans> tags in extractAlertStrings
         const heading = 'Delete all user data';
         const message = 'Do you want to delete all user data from this phone? This includes which ' +
             'answers are chosen in the questionnaire and which topics are bookmarked.';
@@ -158,3 +160,18 @@ const renderContactComponent = (contact: HelpContact, index: number): JSX.Elemen
         <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize, flex: .05, marginHorizontal: 3 }} />
     </TouchableOpacity>
 );
+
+export const extractAlertStrings = (): JSX.Element => (
+    <div>
+        <Text><Trans>Delete all user data</Trans></Text>
+        <Text>
+            <Trans>
+                Do you want to delete all user data from this phone? This includes which
+                answers are chosen in the questionnaire and which topics are bookmarked.
+            </Trans>
+        </Text>
+        <Text>
+            <Trans>Cancel</Trans>
+        </Text>
+    </div>
+)
