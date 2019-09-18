@@ -19,3 +19,11 @@ export interface Locale {
 export interface LocalizedText {
     readonly [localeCode: string]: string;
 }
+
+export interface ReactI18n {
+    _(str: string): string;
+}
+
+export interface ReactI18nRenderProp {
+    readonly i18n: ReactI18n;
+}

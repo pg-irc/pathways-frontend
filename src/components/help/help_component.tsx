@@ -1,8 +1,8 @@
 import React from 'react';
 import { History } from 'history';
 import { Text, View, Icon, Content } from 'native-base';
-import { Trans } from '@lingui/react';
-import { I18nManager, Alert, TouchableOpacity } from 'react-native';
+import { Trans, I18n } from '@lingui/react';
+import { I18nManager, Alert, TouchableOpacity, AlertButton } from 'react-native';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/map_with_index';
@@ -11,6 +11,8 @@ import { openURL } from '../link/link';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 import { LatLong, SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
+import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
+import * as R from 'ramda';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -105,25 +107,35 @@ const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: P
 );
 
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const alertToClearAllUserData = (): void => {
-        const alertHeading = 'Delete user data';
-        const alertMessage = 'Do you want to delete all user data from this phone? This includes which ' +
+    const alertToClearAllUserData = (i18n: ReactI18n): void => {
+        const _ = i18n._.bind(i18n);
+        // These strings are being extracted by Lingui using the function extractAlertStrings below
+        // They must always match the strings found in the <Trans> tags in extractAlertStrings
+        const heading = 'Delete all user data';
+        const message = 'Do you want to delete all user data from this phone? This includes which ' +
             'answers are chosen in the questionnaire and which topics are bookmarked.';
-
-        // tslint:disable-next-line:no-expression-statement
-        Alert.alert(alertHeading, alertMessage,
-            [
-                { text: 'Cancel', style: 'cancel' },
-                { text: 'Delete all user data', onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
-            ],
+        const cancelOption = 'Cancel';
+        const deleteOption = 'Delete all user data';
+        // tslint:disable-next-line: readonly-array
+        const buttons: AlertButton[] = [
+            { text: _(cancelOption), style: 'cancel' },
+            { text: _(deleteOption), onPress: (): ClearAllUserDataAction => props.clearAllUserState() },
+        ];
+            // tslint:disable-next-line:no-expression-statement
+        Alert.alert(_(heading), _(message),
+            I18nManager.isRTL ? R.reverse(buttons) : buttons,
         );
     };
     return (
-        <MultiLineButtonComponent onPress={alertToClearAllUserData} >
-            <Text style={textStyles.button}>
-                <Trans>Delete all user data</Trans>
-            </Text>
-        </MultiLineButtonComponent>
+        <I18n>
+            {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
+            <MultiLineButtonComponent onPress={(): void => alertToClearAllUserData(i18nRenderProp.i18n)} >
+                <Text style={textStyles.button}>
+                    <Trans>Delete all user data</Trans>
+                </Text>
+            </MultiLineButtonComponent>
+            )}
+        </I18n>
     );
 };
 
@@ -148,3 +160,18 @@ const renderContactComponent = (contact: HelpContact, index: number): JSX.Elemen
         <Icon name={I18nManager.isRTL ? 'arrow-back' : 'arrow-forward'} style={{ fontSize: values.smallIconSize, flex: .05, marginHorizontal: 3 }} />
     </TouchableOpacity>
 );
+
+export const extractAlertStrings = (): JSX.Element => (
+    <div>
+        <Text><Trans>Delete all user data</Trans></Text>
+        <Text>
+            <Trans>
+                Do you want to delete all user data from this phone? This includes which
+                answers are chosen in the questionnaire and which topics are bookmarked.
+            </Trans>
+        </Text>
+        <Text>
+            <Trans>Cancel</Trans>
+        </Text>
+    </div>
+)
