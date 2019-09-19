@@ -53,6 +53,12 @@ To update the in app translations:
 
 3. `yarn build-strings` to generate compiled versions of the messages.po files. The `messages.js` files generated are the source catalogs Lingui uses for internationalization. Source catalogs are used to lookup translations when English strings are wrapped with `<Trans>` tags.
 
+## Entities
+
+These are the entities of the client side data model:
+
+![Entities](ENTITIES.png)
+
 ## Contributing
 
 If you want to help out, get in touch at info@arrivaladvisor.ca.
