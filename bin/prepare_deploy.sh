@@ -97,6 +97,13 @@ validateCommandLine () {
         exit
     fi
 
+    if [ "$SERVER_VERSION" == "" ]
+    then
+        echo "Error: Must specify server version string"
+        usage
+        exit
+    fi 
+
     if [ "$ANDROID_VERSION_CODE" == "" ]
     then
         echo "Error: Must specify android version code"
