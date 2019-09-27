@@ -68,7 +68,7 @@ export const ErrorScreenSwitcherComponent = (props: ErrorScreenSwitcherComponent
             return (
                 <ErrorScreenComponent
                     imageSource={arrivalAdvisorGlyphLogo}
-                    title={<Trans>An error occured</Trans>}
+                    title={<Trans>An error occurred</Trans>}
                     {...sharedProps}
                 />
             );
