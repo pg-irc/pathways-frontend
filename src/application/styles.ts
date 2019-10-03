@@ -1,6 +1,6 @@
 import { StyleSheet, Platform } from 'react-native';
 import { I18nManager } from 'react-native';
-import { isAndroid } from '../helpers/is_os';
+import { isAndroid } from '../helpers/is_android';
 
 export const colors = {
     pale: '#ffebcb',
@@ -294,6 +294,13 @@ export const applicationStyles = StyleSheet.create({
         borderRadius: values.roundedBorderRadius,
         borderColor: colors.teal,
         borderWidth: 2,
+    },
+    searchInput: {
+        color: colors.white,
+        fontSize: 16,
+        flex: 1,
+        height: 48,
+        padding: 12,
     },
     boxShadowBelow: {
         shadowColor: colors.black,

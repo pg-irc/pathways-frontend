@@ -1,8 +1,9 @@
 import React from 'react';
+import { Trans } from '@lingui/react';
 import { View } from 'react-native';
 import * as R from 'ramda';
 import { History, Location } from 'history';
-import { Header, Left, Right } from 'native-base';
+import { Header, Left, Right, Body, Title, Text } from 'native-base';
 import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/topics';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { HelpButtonComponent } from '../header_button/help_button_component';
@@ -42,6 +43,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
     const isOnTopicDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
     const isOnTopicServicesScreen = pathMatchesRoute(path, Routes.Services);
+    const isOnServiceSearchScreen = pathMatchesRoute(path, Routes.Search);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
     const isOnOnboardingScreen = pathMatchesRoute(path, Routes.Onboarding);
 
@@ -56,6 +58,16 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     if (isOnTopicServicesScreen) {
         return (
             <TwoButtonHeader
+                {...props}
+                {...{ textColor: colors.white, backgroundColor: colors.teal }}
+            />
+        );
+    }
+
+    if (isOnServiceSearchScreen) {
+        return (
+            <RightButtonHeader
+                title={<Text style={{ color: colors.white }}><Trans>FIND A SERVICE</Trans></Text>}
                 {...props}
                 {...{ textColor: colors.white, backgroundColor: colors.teal }}
             />
@@ -100,12 +112,13 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
             textColor={colors.black}
         />,
     ];
-    return renderHeader(backgroundColor, leftButton, rightButtons);
+    return renderHeader({ backgroundColor, leftButton, rightButtons });
 };
 
 interface BackAndMenuButtonsHeaderProps extends Props {
     readonly textColor: string;
     readonly backgroundColor: string;
+    readonly title?: JSX.Element;
 }
 
 const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
@@ -116,7 +129,17 @@ const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
             locale={props.currentLocale}
             textColor={props.textColor}
         />;
-    return renderHeader(props.backgroundColor, leftButton, [rightButton]);
+    return renderHeader({ ...props, leftButton, rightButtons: [rightButton] });
+};
+
+const RightButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
+    const rightButton =
+        <MenuButtonComponent
+            onPress={props.openMenu}
+            locale={props.currentLocale}
+            textColor={props.textColor}
+        />;
+    return renderHeader({ ...props, rightButtons: [rightButton] });
 };
 
 const ParentScreenHeader = (props: Props): JSX.Element => {
@@ -129,7 +152,7 @@ const ParentScreenHeader = (props: Props): JSX.Element => {
             locale={props.currentLocale}
             textColor={textColor}
         />;
-    return renderHeader(backgroundColor, leftButton, [rightButton]);
+    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
 };
 
 const ChildScreenHeader = (props: Props): JSX.Element => {
@@ -142,25 +165,52 @@ const ChildScreenHeader = (props: Props): JSX.Element => {
             locale={props.currentLocale}
             textColor={textColor}
         />;
-    return renderHeader(backgroundColor, leftButton, [rightButton]);
+    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
 };
 
-const renderHeader = (backgroundColor: string, leftButton: JSX.Element, rightButtons: ReadonlyArray<JSX.Element>):
-    JSX.Element => {
+interface RenderHeaderProps {
+    readonly backgroundColor: string;
+    readonly leftButton?: JSX.Element;
+    readonly rightButtons: ReadonlyArray<JSX.Element>;
+    readonly title?: JSX.Element;
+}
+
+const renderHeader = (props: RenderHeaderProps): JSX.Element => {
     const marginTop = getStatusBarHeightForPlatform();
-    const renderRightButton = (button: JSX.Element, index: number): JSX.Element => (
+    return (
+        <Header style={{ marginTop, backgroundColor: props.backgroundColor, borderBottomColor: 'transparent' }}>
+            {buildLeftButton(props.leftButton)}
+            {buildTitle(props.title)}
+            {buildRightButtons(props.rightButtons)}
+        </Header>
+    );
+};
+
+const buildLeftButton = (leftButton?: JSX.Element): JSX.Element => {
+    if (!leftButton) {
+        return <EmptyComponent />;
+    }
+    return <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
+        {leftButton}
+    </Left>;
+};
+
+const buildTitle = (title?: JSX.Element): JSX.Element => {
+    if (!title) {
+        return <EmptyComponent />;
+    }
+    return <Body>
+        <Title>{title}</Title>
+    </Body>;
+};
+
+const buildRightButtons = (rightButtons: ReadonlyArray<JSX.Element>): JSX.Element => {
+    const buildView = (button: JSX.Element, index: number): JSX.Element => (
         <View key={index}>
             {button}
         </View>
     );
-    return (
-        <Header style={{ marginTop, backgroundColor: backgroundColor, borderBottomColor: 'transparent' }}>
-            <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
-                {leftButton}
-            </Left>
-            <Right style={{ alignItems: 'center' }}>
-                {mapWithIndex(renderRightButton, rightButtons)}
-            </Right>
-        </Header>
-    );
+    return <Right style={{ alignItems: 'center' }}>
+        {mapWithIndex(buildView, rightButtons)}
+    </Right>;
 };

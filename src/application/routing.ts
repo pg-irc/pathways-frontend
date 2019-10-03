@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router-native';
 import { History, Location } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
+import * as R from 'ramda';
 export type PageId = string;
 
 // The property names of this structure are defined by the corresponding
@@ -26,6 +27,7 @@ export enum Routes {
     Help,
     RecommendedTopics,
     BookmarkedTopics,
+    Search,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -52,6 +54,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/recommended-topics';
         case Routes.BookmarkedTopics:
             return '/bookmarked-topics';
+        case Routes.Search:
+            return '/search';
     }
 };
 
@@ -91,29 +95,24 @@ export const pathMatchesRoute = (path: string, route: Routes): boolean => {
     return !!matchPath(path, { path: routePathDefinition(route), exact: true });
 };
 
+export const pathMatchesAnyRoute = (path: string, routes: ReadonlyArray<Routes>): boolean => (
+    R.any((route: Routes) => pathMatchesRoute(path, route), routes)
+);
+
 const routeHasParameter = (route: Routes): boolean => (
     routePathDefinition(route).indexOf(':') !== -1
 );
 
-export const isOnParentScreen = (path: string): boolean => {
-    const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
-    const isOnLearnScreen = pathMatchesRoute(path, Routes.Learn);
-    const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
-    const isOnRecommendedTopicsScreen = pathMatchesRoute(path, Routes.RecommendedTopics);
-    const isOnBookmarkedTopicsScreen = pathMatchesRoute(path, Routes.BookmarkedTopics);
+export const isOnParentScreen = (path: string): boolean => (
+    pathMatchesAnyRoute(
+        path,
+        [Routes.Help, Routes.Learn, Routes.Questionnaire, Routes.RecommendedTopics, Routes.BookmarkedTopics],
+    )
+);
 
-    return isOnHelpScreen || isOnLearnScreen ||
-        isOnQuestionnaireScreen || isOnRecommendedTopicsScreen ||
-        isOnBookmarkedTopicsScreen;
-};
-
-export const isOnChildScreen = (path: string): boolean => {
-    const isOnTaskDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
-    const isOnServicesScreen = pathMatchesRoute(path, Routes.Services);
-    const isOnLearnDetailScreen = pathMatchesRoute(path, Routes.LearnDetail);
-
-    return isOnTaskDetailScreen || isOnServicesScreen || isOnLearnDetailScreen;
-};
+export const isOnChildScreen = (path: string): boolean => (
+    pathMatchesAnyRoute(path, [Routes.TaskDetail, Routes.Services, Routes.LearnDetail])
+);
 
 // By (arguably poor) design the router's match.params is empty when trying to access it outside a "Route" component.
 // This makes it impossible to access params in components like the Header and Footer.

@@ -1,13 +1,13 @@
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
 import { Errors } from '../errors/types';
-import { LatLong } from '../stores/manual_user_location';
+import { LatLong } from '../components/search/types';
 
 export type NoLocationPermissionErrorAction = Readonly<ReturnType<typeof noLocationPermissionError>>;
 
 export type LocationFetchTimeoutErrorAction = Readonly<ReturnType<typeof noLocationFetchTimeoutError>>;
 
-type GetDeviceLocationReturnType = Promise<LocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction>;
+type GetDeviceLocationReturnType = Promise<DeviceLocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction>;
 
 export const getDeviceLocation = async (manualUserLocation?: LatLong): GetDeviceLocationReturnType => {
     try {
@@ -34,7 +34,7 @@ const noLocationFetchTimeoutError = () => ({
     type: Errors.LocationFetchTimeout,
 });
 
-const buildManualUserLocation = (manualUserLocation: LatLong): LocationData => ({
+const buildManualUserLocation = (manualUserLocation: LatLong): DeviceLocationData => ({
     coords: {
         latitude: manualUserLocation.latitude,
         longitude: manualUserLocation.longitude,

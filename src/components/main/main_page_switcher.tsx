@@ -10,6 +10,7 @@ import { ServiceListConnectedComponent } from '../services/service_list_connecte
 import { QuestionnaireConnectedComponent } from '../questionnaire/questionnaire_connected_component';
 import { RecommendedTopicsConnectedComponent } from '../recommended_topics/recommended_topics_connected_component';
 import { BookmarkedTopicsConnectedComponent } from '../bookmarked_topics/bookmarked_topics_connected_component';
+import { SearchConnectedComponent } from '../search/search_connected_component';
 import { Routes, routePathDefinition, routePathWithoutParameter } from '../../application/routing';
 import { Locale } from '../../locale';
 
@@ -31,6 +32,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
         <Route exact path={routePathDefinition(Routes.Services)} component={ServiceListConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.RecommendedTopics)} component={RecommendedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.BookmarkedTopics)} component={BookmarkedTopicsConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.Search)} component={SearchConnectedComponent} />
         <Redirect to={defaultPath(props)} />
     </Switch>
 );

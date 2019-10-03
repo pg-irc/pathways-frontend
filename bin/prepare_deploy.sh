@@ -262,8 +262,11 @@ createClientEnvironment() {
     PRODUCTION_URL="https://pathways-production.herokuapp.com"
     STAGING_URL="https://fierce-ravine-89308.herokuapp.com"
 
-    echo "VERSION=$VERSION"                              >  "$CLIENT_DIRECTORY/.env"
-    echo "DEBUG_GOOGLE_ANALYTICS=false"                  >> "$CLIENT_DIRECTORY/.env"
+    echo "VERSION=$VERSION"                                >  "$CLIENT_DIRECTORY/.env"
+    echo "DEBUG_GOOGLE_ANALYTICS=false"                    >> "$CLIENT_DIRECTORY/.env"
+    echo "ALGOLIA_SEARCH_API_KEY='enter API key here'"     >> "$CLIENT_DIRECTORY/.env"
+    echo "ALGOLIA_SERVICES_INDEX='dev_services'"           >> "$CLIENT_DIRECTORY/.env"
+    echo "ALGOLIA_ORGANIZATIONS_INDEX='dev_organizations'" >> "$CLIENT_DIRECTORY/.env"
 
     if [ "$BUILD" == "staging" ]
     then

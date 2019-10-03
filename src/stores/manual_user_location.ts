@@ -1,10 +1,6 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
-
-export interface LatLong {
-    readonly longitude: number;
-    readonly latitude: number;
-}
+import { LatLong } from '../components/search/types';
 
 // tslint:disable-next-line:typedef
 export const setManualUserLocation = (userLocation: LatLong) => (
