@@ -14,7 +14,7 @@ import {
     Routes, isOnParentScreen, isOnChildScreen, pathMatchesRoute, getParametersFromPath,
 } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors } from '../../application/styles';
+import { colors, textStyles } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
 import { mapWithIndex } from '../../application/map_with_index';
 
@@ -66,8 +66,8 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
     if (isOnServiceSearchScreen) {
         return (
-            <RightButtonHeader
-                title={<Text style={{ color: colors.white }}><Trans>FIND A SERVICE</Trans></Text>}
+            <SearchHeader
+                title={<Text style={[textStyles.headlineH5StyleBlackCenter, { color: colors.white }]}><Trans>FIND A SERVICE</Trans></Text>}
                 {...props}
                 {...{ textColor: colors.white, backgroundColor: colors.teal }}
             />
@@ -132,14 +132,15 @@ const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
     return renderHeader({ ...props, leftButton, rightButtons: [rightButton] });
 };
 
-const RightButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
+const SearchHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
+    const leftButton = <BackButtonComponent history={props.history} textColor={props.textColor} />;
     const rightButton =
         <MenuButtonComponent
             onPress={props.openMenu}
             locale={props.currentLocale}
             textColor={props.textColor}
         />;
-    return renderHeader({ ...props, rightButtons: [rightButton] });
+    return renderHeader({ ...props, leftButton, rightButtons: [rightButton] });
 };
 
 const ParentScreenHeader = (props: Props): JSX.Element => {
