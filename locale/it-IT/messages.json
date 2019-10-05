@@ -1,0 +1,184 @@
+{
+  "Here are some recommended tasks:": {
+    "translation": "Ecco qualche attività per te:",
+    "origin": [["lib/components/home_page/my_plan_component.js", 29]]
+  },
+  "MY TASKS": {
+    "translation": "LE MIE ATTIVITÀ",
+    "origin": [["lib/components/my_plan/my_plan.js", 30]]
+  },
+  "Plan everything you need to do as a newcomer to Canada. Want to know what next steps you need to take? <0>Answer some questions</0> to get tasks and tips recommended for you.": {
+    "translation": "Pianifica tutto quello che ti serve da nuovo arrivato in Canada. Vuoi sapere quali sono i prossimi passi da fare? <0>Rispondi alle domande</0> per ricevere attività e consigli personalizzati.",
+    "origin": [["lib/components/my_plan/my_plan_intro_component.js", 9]]
+  },
+  "You haven't personalized your Plan yet. Would you like to <0>answer some questions</0> to get your most relevant tasks?": {
+    "translation": "Non hai ancora personalizzato il tuo Piano. Perché non <0>rispondi a qualche domanda</0> per conoscere le attività assegnate?",
+    "origin": [["lib/components/my_plan/my_plan_intro_component.js", 20]]
+  },
+  "NEXT": {
+    "translation": "AVANTI",
+    "origin": [["lib/components/questionnaire/question.js", 38]]
+  },
+  "There is no requirement to answer any of the following questions but in doing so you help us recommend tasks right for you.": {
+    "translation": "Non ci sono vincoli per rispondere alle domande ma facendolo ci aiuti a consigliarti le attività più adatte a te.",
+    "origin": [["lib/components/questionnaire/questionnaire.js", 10]]
+  },
+  "Mark as not Done": {
+    "translation": "Segna come 'Da Fare'",
+    "origin": [["lib/components/tasks/task_detail.js", 50]]
+  },
+  "TASK": {
+    "translation": "ATTIVITÀ",
+    "origin": [["lib/components/tasks/task_detail.js", 77]]
+  },
+  "RECOMMENDED TASK": {
+    "translation": "ATTIVITÀ RACCOMANDATE",
+    "origin": [["lib/components/tasks/task_detail.js", 80]]
+  },
+  "No tasks added yet": {
+    "translation": "Nessuna attività aggiunta",
+    "origin": [["lib/components/tasks/task_list.js", 6]]
+  },
+  "No tasks to recommend": {
+    "translation": "Nessuna attività da consigliare",
+    "origin": [["lib/components/tasks/task_list.js", 7]]
+  },
+  "LEARN MORE": {
+    "translation": "SCOPRI DI PIÙ",
+    "origin": [["lib/components/articles/related_articles.js", 13]]
+  },
+  "Learn about:": {
+    "translation": "Approfondisci:",
+    "origin": [["lib/components/explore/explore_all.js", 11]]
+  },
+  "LEARN ABOUT": {
+    "translation": "APPROFONDISCI",
+    "origin": [
+      ["lib/components/explore/explore_section_detail_component.js", 64],
+      ["lib/components/home_page/learn_section_component.js", 12]
+    ]
+  },
+  "Help & Support": {
+    "translation": "Aiuto e Supporto",
+    "origin": [["lib/components/help/help_component.js", 35]]
+  },
+  "If you are having difficulty with settlement in Canada, get in touch with a settlement worker.": {
+    "translation": "Se stai avendo difficoltà nello stabilirti in Canada, contatta una delle nostre Agenzie di Lavoro.",
+    "origin": [["lib/components/help/help_component.js", 36]]
+  },
+  "FOR ADDITIONAL ASSISTANCE": {
+    "translation": "PER ASSISTENZA AGGIUNTIVA",
+    "origin": [["lib/components/help/help_component.js", 38]]
+  },
+  "CONTACT SETTLEMENT WORKER": {
+    "translation": "CONTATTA AGENZIA",
+    "origin": [["lib/components/help/help_component.js", 44]]
+  },
+  "Arrival Advisor helps you start your new life in Canada, every step of the way.": {
+    "translation": "Il Consulente d'arrivo ti aiuterà a far partire la tua nuova vita in Canada, passo dopo passo.",
+    "origin": [["lib/components/home_page/home_page.js", 30]]
+  },
+  "More": {
+    "translation": "Altro",
+    "origin": [["lib/components/home_page/learn_section_component.js", 31]]
+  },
+  "MY PLAN": {
+    "translation": "IL MIO PIANO",
+    "origin": [["lib/components/home_page/my_plan_component.js", 10]]
+  },
+  "GO TO MY PLAN": {
+    "translation": "VAI AL MIO PIANO",
+    "origin": [
+      ["lib/components/home_page/my_plan_component.js", 18],
+      ["lib/components/questionnaire/question.js", 35]
+    ]
+  },
+  "Select language": {
+    "translation": "Seleziona lingua",
+    "origin": [["lib/components/language_switcher/language_switcher.js", 12]]
+  },
+  "Home": {
+    "translation": "Home",
+    "origin": [["lib/components/main/footer.js", 15]]
+  },
+  "My plan": {
+    "translation": "Il mio Piano",
+    "origin": [["lib/components/main/footer.js", 19]]
+  },
+  "Learn": {
+    "translation": "Scopri",
+    "origin": [["lib/components/main/footer.js", 23]]
+  },
+  "NEED HELP?": {
+    "translation": "HAI BISOGNO DI AIUTO?",
+    "origin": [["lib/components/main/header.js", 48]]
+  },
+  "My Plan": {
+    "translation": "Il Mio Piano",
+    "origin": [["lib/components/my_plan/my_plan.js", 16]]
+  },
+  "RECOMMENDED FOR ME": {
+    "translation": "RACCOMANDATI PER ME",
+    "origin": [["lib/components/my_plan/my_plan.js", 40]]
+  },
+  "Task added to plan": {
+    "translation": "Attività aggiunte al Piano",
+    "origin": [["lib/components/notifications/notification.js", 23]]
+  },
+  "Personalize My Plan": {
+    "translation": "Personalizza il mio Piano",
+    "origin": [["lib/components/questionnaire/questionnaire.js", 8]]
+  },
+  "RELATED TASKS": {
+    "translation": "ATTIVITÀ CORRELATE",
+    "origin": [["lib/components/tasks/related_tasks.js", 15]]
+  },
+  "INFORMATION": {
+    "translation": "INFORMAZIONI",
+    "origin": [["lib/components/tasks/task_detail.js", 24]]
+  },
+  "FIND SERVICES": {
+    "translation": "TROVA SERVIZIO",
+    "origin": [["lib/components/tasks/task_detail.js", 27]]
+  },
+  "Mark Done": {
+    "translation": "Segna come 'Fatto'",
+    "origin": [["lib/components/tasks/task_detail.js", 46]]
+  },
+  "Remove from plan": {
+    "translation": "Rimuovi dal mio Piano",
+    "origin": [["lib/components/tasks/task_detail.js", 54]]
+  },
+  "Add to plan": {
+    "translation": "Aggiungi al mio Piano",
+    "origin": [["lib/components/tasks/task_detail.js", 58]]
+  },
+  "COMPLETED TASK": {
+    "translation": "ATTIVITÀ COMPLETATE",
+    "origin": [["lib/components/tasks/task_detail.js", 78]]
+  },
+  "TASK I PLAN TO DO": {
+    "translation": "ATTIVITÀ PIANIFICATE",
+    "origin": [["lib/components/tasks/task_detail.js", 79]]
+  },
+  "No related services found.": {
+    "translation": "Nessun servizio correlato trovato.",
+    "origin": [["lib/components/tasks/task_detail.js", 134]]
+  },
+  "Arrival Advisor": {
+    "translation": "Consulente d'Arrivo",
+    "origin": [["lib/components/welcome/welcome.js", 27]]
+  },
+  "For immigrants and refugees new to Canada. Arrival Advisor is here to help you start your new life in Canada, every step of the way.": {
+    "translation": "Per immigrati e rifugiati politici in Canada. Il Consulente d'Arrivo è qua per aiutarti a far ripartire la tua nuova vita in canada, passo dopo passo.",
+    "origin": [["lib/components/welcome/welcome.js", 32]]
+  },
+  "Select your language:": {
+    "translation": "Seleziona la tua lingua:",
+    "origin": [["lib/components/welcome/welcome.js", 42]]
+  },
+  "Get started": {
+    "translation": "Per Iniziare",
+    "origin": [["lib/components/welcome/welcome.js", 53]]
+  }
+}
