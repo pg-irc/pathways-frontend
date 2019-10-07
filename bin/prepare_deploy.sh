@@ -186,7 +186,7 @@ checkOutUiStringsByTag() {
     echo "Checking out ui-strings tagged with $VERSION"
     echo
 
-    (cd "$WORKING_DIRECTORY" && git clone git@github.com:tomy-pg/ui-strings.git)
+    (cd "$WORKING_DIRECTORY" && git clone git@github.com:pg-irc/ui-strings.git)
     checkForSuccess "clone ui-strings repo"
 
     (cd "$UI_STRINGS_DIRECTORY" && git fetch --tags)
