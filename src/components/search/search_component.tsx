@@ -36,7 +36,7 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
-    return <Content style={{ backgroundColor: colors.teal }}>
+    return <Content style={{ backgroundColor: colors.pale }}>
         <InstantSearch indexName={servicesIndex()} {...props} >
             <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
             <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />

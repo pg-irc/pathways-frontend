@@ -36,7 +36,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     return <I18n>
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
 
-            <View style={{ paddingHorizontal: 20, paddingBottom: 20 }}>
+            <View style={{ paddingHorizontal: 20, paddingBottom: 20, backgroundColor: colors.teal }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <InputIcon name='search' />
                     <TextInput
