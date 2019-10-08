@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { InstantSearch, Index, connectSearchBox, connectInfiniteHits, connectConfigure } from 'react-instantsearch-native';
+import { InstantSearch, connectSearchBox, connectInfiniteHits, connectConfigure } from 'react-instantsearch-native';
 import { SearchInputComponent } from './search_input_component';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
@@ -9,7 +9,7 @@ import { LatLong } from './types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
 import { useTraceUpdate as useTraceComponentUpdates } from '../../helpers/debug';
-import { ALGOLIA_SERVICES_INDEX, ALGOLIA_ORGANIZATIONS_INDEX } from 'react-native-dotenv';
+import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -41,17 +41,10 @@ export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (
             <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
             <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
             <InfiniteHitsConnectedComponent />
-            <Index indexName={organizationsIndex()}>
-                <InfiniteHitsConnectedComponent />
-            </Index>
         </InstantSearch>
     </Content>;
 };
 
 const servicesIndex = (): string => (
     ALGOLIA_SERVICES_INDEX || 'dev_services'
-);
-
-const organizationsIndex = (): string => (
-    ALGOLIA_ORGANIZATIONS_INDEX || 'dev_organizations'
 );
