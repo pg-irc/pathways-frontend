@@ -3,9 +3,8 @@ import { View, FlatList, ListRenderItemInfo } from 'react-native';
 import { Text } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
-import { UnvalidatedData, ServiceSearchHit, OrganizationSearchHit } from './types';
+import { UnvalidatedData, ServiceSearchHit } from './types';
 import { Trans } from '@lingui/react';
-import { toValidSearchHit } from './api/validation';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 
@@ -40,31 +39,11 @@ const keyExtractor = (item: UnvalidatedData): string => (
 
 const renderSearchHit = ({ item }: ListRenderItemInfo<UnvalidatedData>): JSX.Element => {
     try {
-        return renderValidSearchHit(toValidSearchHit(item));
+        return renderServiceHit(item);
     } catch (error) {
         return <Text>Error</Text>;
     }
 };
-
-const renderValidSearchHit = (validHit: ServiceSearchHit | OrganizationSearchHit): JSX.Element => (
-    validHit.type === 'OrganizationSearchItem' ? renderOrganizationHit(validHit) : renderServiceHit(validHit)
-);
-
-const renderOrganizationHit = (hit: OrganizationSearchHit): JSX.Element => (
-    <View style={{ padding: 10, flexDirection: 'column', justifyContent: 'flex-start' }}>
-        <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}><Trans>ORGANIZATION</Trans></Text>
-        <Text style={[textStyles.paragraphBoldBlackLeft, { fontSize: 20, lineHeight: 25 }]}>{organizationName(hit)}</Text>
-        <Text style={[textStyles.paragraphStyle]}>{truncatedOrganizationDescription(hit)}</Text>
-    </View >
-);
-
-const organizationName = (hit: OrganizationSearchHit): string => (
-    hit.organization_name
-);
-
-const truncatedOrganizationDescription = (hit: OrganizationSearchHit): string => (
-    truncateDescription(hit.organization_description)
-);
 
 const truncateDescription = (description: string): string => {
     const maxLength = 200;
