@@ -78,5 +78,6 @@ export const setUserDataDefaultValues = (data: any): PersistedUserData => (
         savedTopics: data.savedTopics || [],
         completedTopics: data.completedTopics || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
+        savedServices: data.savedServices || [],
     }
 );

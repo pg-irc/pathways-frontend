@@ -12,4 +12,5 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedUse
     savedTopics: pickSavedTopicIds(appStore),
     completedTopics: getIdsOfCompletedTopics(pickTopics(appStore)),
     showOnboarding: selectShowOnboarding(appStore),
+    savedServices: { type: 'ServicesForTopic:Empty'},
 });
