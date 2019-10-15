@@ -1,5 +1,5 @@
-// tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import BuildUrl from 'build-url';
+// tslint:disable:no-class no-this readonly-keyword no-expression-statement no-var-requires
+const BuildUrl = require('build-url');
 import { Id } from '../stores/topics';
 import { fetch } from 'cross-fetch';
 
