@@ -47,10 +47,10 @@ export const buildTopicServicesErrorAction = (
 
 // tslint:disable-next-line:typedef
 export const addToSavedList = (service: Service) => {
-    return helpers.makeAction(constants.ADD_BOOKMARK, { service });
+    return helpers.makeAction(constants.ADD_SERVICE_BOOKMARK, { service });
 };
 
 // tslint:disable-next-line:typedef
 export const removeFromSavedList = (service: Service) => (
-    helpers.makeAction(constants.REMOVE_BOOKMARK, { service })
+    helpers.makeAction(constants.REMOVE_SERVICE_BOOKMARK, { service })
 );
