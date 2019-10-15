@@ -37,14 +37,22 @@ export async function searchServices(topicId: Id, location: MaybeLocation): Prom
 }
 
 export const buildParameters = (topicId: Id, location: MaybeLocation): Parameters => {
+    const numberOfRecordsToGet = '100';
+
+    const parametersWithoutLocation = {
+        related_to_topic: topicId,
+        per_page: numberOfRecordsToGet,
+    };
+
     if (!location) {
-        return { related_to_topic: topicId };
+        return parametersWithoutLocation;
     }
+
     const user_location = `${location.coords.longitude},${location.coords.latitude}`;
     return {
+        ...parametersWithoutLocation,
         user_location: user_location,
         proximity: user_location,
-        related_to_topic: topicId,
     };
 };
 

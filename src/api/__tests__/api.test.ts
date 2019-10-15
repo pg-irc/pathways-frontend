@@ -6,7 +6,10 @@ describe('build parameters', () => {
     it('with just a topic id', () => {
         const topicId = aString();
         const result = buildParameters(topicId, undefined);
-        expect(result).toEqual({ related_to_topic: `${topicId}` });
+        expect(result).toEqual({
+            related_to_topic: `${topicId}`,
+            per_page: '100',
+        });
     });
 
     it('with a topic id and location', () => {
@@ -19,6 +22,7 @@ describe('build parameters', () => {
             proximity: `${x},${y}`,
             related_to_topic: topicId,
             user_location: `${x},${y}`,
+            per_page: '100',
         });
     });
 });
