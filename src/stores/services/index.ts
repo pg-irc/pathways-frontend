@@ -30,6 +30,12 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServicesSuccess(store, action);
         case constants.LOAD_SERVICES_FAILURE:
             return updateServicesFailure(store, action);
+        case constants.LOAD_USER_DATA_SUCCESS:
+            return {...store, savedServices: action.payload.savedServices};
+        case constants.LOAD_USER_DATA_FAILURE:
+            return {...store, savedServices: { type: 'ServicesForTopic:Error'}};
+        case constants.LOAD_USER_DATA_REQUEST:
+            return {...store, savedServices: { type: 'ServicesForTopic:Loading'}};
         default:
             return store;
     }

@@ -11,7 +11,7 @@ export interface LoadingSelectorTopicServices {
 }
 
 export interface ErrorSelectorTopicServices {
-    readonly errorMessageType: Errors;
+    readonly errorMessageType?: Errors;
     readonly type: 'ServicesForTopic:Error';
 }
 
