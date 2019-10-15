@@ -1,4 +1,4 @@
-// tslint:disable:no-class no-this readonly-keyword no-expression-statement no-var-requires
+// tslint:disable: no-expression-statement no-var-requires
 const BuildUrl = require('build-url');
 import { Id } from '../stores/topics';
 import { fetch } from 'cross-fetch';
@@ -48,7 +48,7 @@ export const buildParameters = (topicId: Id, location: MaybeLocation): Parameter
     };
 };
 
-type Parameters = { [name: string]: string };
+type Parameters = { readonly [name: string]: string };
 
 const buildUrl = (path: string, location: MaybeLocation, topicId: string): string => (
     BuildUrl(baseUrl, {
