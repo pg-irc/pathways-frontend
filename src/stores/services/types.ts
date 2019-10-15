@@ -1,5 +1,6 @@
 import * as constants from '../../application/constants';
 import { Errors } from '../../errors/types';
+import { SelectorTopicServices } from '../../selectors/services/types';
 
 export type Id = string;
 
@@ -62,4 +63,5 @@ export interface ServiceMap {
 export interface ServiceStore {
     readonly services: ServiceMap;
     readonly servicesByTopic: ServicesForAllTopics;
+    readonly savedServices: SelectorTopicServices;
 }

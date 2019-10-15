@@ -15,6 +15,7 @@ export const buildNormalizedServices = (
 ): ServiceStore => ({
     services: buildServiceMap(services),
     servicesByTopic: buildTaskServicesOrErrorMap(taskServicesOrError),
+    savedServices: { type: 'ServicesForTopic:Empty'},
 });
 
 const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {

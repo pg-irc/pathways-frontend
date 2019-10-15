@@ -10,6 +10,7 @@ export function buildDefaultStore(): types.ServiceStore {
     return {
         services: {},
         servicesByTopic: {},
+        savedServices: { type: 'ServicesForTopic:Empty'},
     };
 }
 
