@@ -13,14 +13,14 @@ export const isTopicRecommended = R.curry((relevantTaxonomyIds: ReadonlyArray<Id
         return true;
     }
 
-    const relevantTermsFromTask = filterTermsByTaxonomyIds(relevantTaxonomyIds, topic.taxonomyTerms);
-    const groupedTermsFromTask = groupTermsByTaxonomy(relevantTermsFromTask);
+    const relevantTermsFromTopics = filterTermsByTaxonomyIds(relevantTaxonomyIds, topic.taxonomyTerms);
+    const groupedTermsFromTopics = groupTermsByTaxonomy(relevantTermsFromTopics);
 
-    if (R.isEmpty(groupedTermsFromTask)) {
+    if (R.isEmpty(groupedTermsFromTopics)) {
         return false;
     }
 
-    return R.all(atLeastOneTermMatches(chosenTermsFromQuestionnaire), groupedTermsFromTask);
+    return R.all(atLeastOneTermMatches(chosenTermsFromQuestionnaire), groupedTermsFromTopics);
 });
 
 const filterTermsByTaxonomyIds = (relevantTaxonomyIds: ReadonlyArray<Id>, taxonomyTerms: TermList): TermList => (

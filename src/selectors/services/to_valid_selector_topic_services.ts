@@ -2,8 +2,8 @@ import { ValidServicesForTopic, ServiceMap, Id as ServiceId } from '../../stores
 import { ValidSelectorTopicServices } from './types';
 import * as constants from '../../application/constants';
 
-export const toValidSelectorTopicServices = (taskServices: ValidServicesForTopic, services: ServiceMap):
+export const toValidSelectorTopicServices = (topicServices: ValidServicesForTopic, services: ServiceMap):
     ValidSelectorTopicServices => ({
-        services: taskServices.serviceIds.map((serviceId: ServiceId) => services[serviceId]),
+        services: topicServices.serviceIds.map((serviceId: ServiceId) => services[serviceId]),
         type: constants.TOPIC_SERVICES_VALID,
     });

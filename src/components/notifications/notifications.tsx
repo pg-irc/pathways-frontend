@@ -7,7 +7,7 @@ import { View } from 'native-base';
 import { ExpiringNotificationComponent } from './expiring_notification';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { RouterProps } from '../../application/routing';
-import { taskAddedNotification, taskRemovedNotification } from './notification_content';
+import { topicAddedNotification, topicRemovedNotification } from './notification_content';
 
 export interface NotificationsProps {
     readonly notifications: ReadonlyArray<Notification>;
@@ -31,16 +31,16 @@ export const NotificationsComponent: React.StatelessComponent<Props> = (props: P
 
 const getComponentForNotification = (notification: Notification, props: Props): JSX.Element => {
     const removeNotification = (): RemoveNotificationAction => props.removeNotification(notification.id);
-    if (notification.type === NotificationType.TaskAddedToPlan) {
-        return buildExpiringNotification(taskAddedNotification(), removeNotification);
+    if (notification.type === NotificationType.TopicAddedToPlan) {
+        return buildExpiringNotification(topicAddedNotification(), removeNotification);
     }
-    if (notification.type === NotificationType.TaskRemovedFromPlan) {
-        return buildExpiringNotification(taskRemovedNotification(), removeNotification);
+    if (notification.type === NotificationType.TopicRemovedFromPlan) {
+        return buildExpiringNotification(topicRemovedNotification(), removeNotification);
     }
     return <EmptyComponent />;
 };
 
 const buildExpiringNotification = (notificationContent: JSX.Element, removeNotification: () => RemoveNotificationAction): JSX.Element => {
     const notificationProps = { notificationContent, removeNotification };
-    return <ExpiringNotificationComponent {...notificationProps}/>;
+    return <ExpiringNotificationComponent {...notificationProps} />;
 };

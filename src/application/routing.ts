@@ -22,7 +22,7 @@ export enum Routes {
     Questionnaire,
     Learn,
     LearnDetail,
-    TaskDetail,
+    TopicDetail,
     Services,
     Help,
     RecommendedTopics,
@@ -46,7 +46,7 @@ export const routePathDefinition = (route: Routes): string => {
             return '/learn';
         case Routes.LearnDetail:
             return '/learn/:learnId';
-        case Routes.TaskDetail:
+        case Routes.TopicDetail:
             return '/task/:topicId';
         case Routes.Services:
             return '/services/:topicId';
@@ -111,7 +111,7 @@ export const isOnParentScreen = (path: string): boolean => (
 );
 
 export const isOnChildScreen = (path: string): boolean => (
-    pathMatchesAnyRoute(path, [Routes.TaskDetail, Routes.Services, Routes.LearnDetail])
+    pathMatchesAnyRoute(path, [Routes.TopicDetail, Routes.Services, Routes.LearnDetail])
 );
 
 // By (arguably poor) design the router's match.params is empty when trying to access it outside a "Route" component.

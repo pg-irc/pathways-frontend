@@ -4,7 +4,7 @@ import { NotificationType, Notification } from '../../notifications';
 
 export class NotificationBuilder {
     id: string = aString();
-    type: NotificationType = NotificationType.TaskAddedToPlan;
+    type: NotificationType = NotificationType.TopicAddedToPlan;
 
     withId(id: string): NotificationBuilder {
         this.id = id;

@@ -127,7 +127,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 taskIsBookmarked={R.contains(item.id, props.savedTasksIdList)}
                 addToSavedList={props.addToSavedList}
                 removeFromSavedList={props.removeFromSavedList}
-                goToTaskDetail={goToRouteWithParameter(Routes.TaskDetail, item.id, props.history)}
+                goToTaskDetail={goToRouteWithParameter(Routes.TopicDetail, item.id, props.history)}
             />
         );
     }
