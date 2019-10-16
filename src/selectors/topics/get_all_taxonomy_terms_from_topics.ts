@@ -4,6 +4,6 @@ import { getTaxonomyTerms } from './get_taxonomy_terms';
 import { flattenOneLevel } from '../questionnaire/flatten_one_level';
 import * as R from 'ramda';
 
-export const getAllTaxonomyTermsFromTopics = (tasks: TopicMap): ReadonlyArray<TaxonomyTermReference> => (
-    R.uniq(flattenOneLevel(R.map(getTaxonomyTerms, R.values(tasks))))
+export const getAllTaxonomyTermsFromTopics = (topicsMap: TopicMap): ReadonlyArray<TaxonomyTermReference> => (
+    R.uniq(flattenOneLevel(R.map(getTaxonomyTerms, R.values(topicsMap))))
 );

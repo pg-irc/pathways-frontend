@@ -28,7 +28,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
         <Route exact path={routePathDefinition(Routes.Questionnaire)} component={QuestionnaireConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Learn)} component={ExploreAllConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.LearnDetail)} component={ExploreDetailConnectedComponent} />
-        <Route exact path={routePathDefinition(Routes.TaskDetail)} component={TaskDetailConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.TopicDetail)} component={TaskDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Services)} component={ServiceListConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.RecommendedTopics)} component={RecommendedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.BookmarkedTopics)} component={BookmarkedTopicsConnectedComponent} />

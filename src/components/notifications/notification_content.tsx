@@ -3,7 +3,7 @@ import { Trans } from '@lingui/react';
 import { Text } from 'native-base';
 import { textStyles } from '../../application/styles';
 
-export const taskAddedNotification = (): JSX.Element => {
+export const topicAddedNotification = (): JSX.Element => {
     return (
         <Text style={textStyles.paragraphBoldWhiteLeft}>
             <Trans>Bookmark added</Trans>
@@ -11,7 +11,7 @@ export const taskAddedNotification = (): JSX.Element => {
     );
 };
 
-export const taskRemovedNotification = (): JSX.Element => {
+export const topicRemovedNotification = (): JSX.Element => {
     return (
         <Text style={textStyles.paragraphBoldWhiteLeft}>
             <Trans>Bookmark removed</Trans>

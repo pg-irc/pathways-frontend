@@ -6,8 +6,8 @@ import { getAllTaxonomyTermsFromTopics } from '../topics/get_all_taxonomy_terms_
 import { getAllAnswersWithTaxonomyTermsNotIn } from './get_all_answers_with_taxonomy_terms_not_in';
 
 export const selectInvalidAnswers = (appStore: Store): ReadonlyArray<Answer> => {
-    const tasks = pickTopics(appStore);
+    const topics = pickTopics(appStore);
     const answers = pickAnswers(appStore);
-    const validTaxonomyTerms = getAllTaxonomyTermsFromTopics(tasks);
+    const validTaxonomyTerms = getAllTaxonomyTermsFromTopics(topics);
     return getAllAnswersWithTaxonomyTermsNotIn(validTaxonomyTerms, answers);
 };
