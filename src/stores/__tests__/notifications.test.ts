@@ -12,7 +12,7 @@ describe('notifications store', () => {
         let store: model.NotificationStore;
 
         beforeEach(() => {
-            aNotification = new NotificationBuilder().withType(model.NotificationType.TaskAddedToPlan).build();
+            aNotification = new NotificationBuilder().withType(model.NotificationType.TopicAddedToPlan).build();
             store = {
                 notifications: {
                     [aNotification.id]: aNotification,
@@ -24,14 +24,14 @@ describe('notifications store', () => {
             const topic = new TopicBuilder().build();
             const finalStore = model.reducer(store, addToSavedList(topic.id));
             const lastKey = R.keys(finalStore.notifications)[1];
-            expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TaskAddedToPlan);
+            expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TopicAddedToPlan);
         });
 
         it('creates notification of type "TaskRemovedFromPlan" when removing a topic from my plan', () => {
             const topic = new TopicBuilder().build();
             const finalStore = model.reducer(store, removeFromSavedList(topic.id));
             const lastKey = R.keys(finalStore.notifications)[1];
-            expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TaskRemovedFromPlan);
+            expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TopicRemovedFromPlan);
         });
 
         it('allows for the removal of a notification', () => {
@@ -42,14 +42,14 @@ describe('notifications store', () => {
     });
 
     describe('create notification helper', () => {
-        const notification = model.createNotification(model.NotificationType.TaskAddedToPlan);
+        const notification = model.createNotification(model.NotificationType.TopicAddedToPlan);
 
         it('creates a notification with a generated id', () => {
             expect(notification).toHaveProperty('id');
         });
 
         it('creates a notification with expected type', () => {
-            expect(notification.type).toBe(model.NotificationType.TaskAddedToPlan);
+            expect(notification.type).toBe(model.NotificationType.TopicAddedToPlan);
         });
 
     });

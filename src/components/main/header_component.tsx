@@ -41,7 +41,7 @@ type Props = OwnProps & HeaderProps & HeaderActions;
 export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const path = props.location.pathname;
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
-    const isOnTopicDetailScreen = pathMatchesRoute(path, Routes.TaskDetail);
+    const isOnTopicDetailScreen = pathMatchesRoute(path, Routes.TopicDetail);
     const isOnTopicServicesScreen = pathMatchesRoute(path, Routes.Services);
     const isOnServiceSearchScreen = pathMatchesRoute(path, Routes.Search);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
@@ -95,7 +95,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 };
 
 const TopicDetailScreenHeader = (props: Props): JSX.Element => {
-    const params = getParametersFromPath(props.location, Routes.TaskDetail);
+    const params = getParametersFromPath(props.location, Routes.TopicDetail);
     const topicId = params.topicId;
     const backgroundColor = colors.lightGrey;
     const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;

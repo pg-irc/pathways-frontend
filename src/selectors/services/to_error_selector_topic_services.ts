@@ -2,8 +2,8 @@ import { ErrorServicesForTopic } from '../../stores/services/types';
 import { ErrorSelectorTopicServices } from './types';
 import * as constants from '../../application/constants';
 
-export const toErrorSelectorTopicServices = (taskServicesError: ErrorServicesForTopic):
+export const toErrorSelectorTopicServices = (topicServicesError: ErrorServicesForTopic):
     ErrorSelectorTopicServices => ({
-        errorMessageType: taskServicesError.errorMessageType,
+        errorMessageType: topicServicesError.errorMessageType,
         type: constants.TOPIC_SERVICES_ERROR,
     });
