@@ -76,9 +76,8 @@ export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): 
 
     return {
         id: data.service.id,
-        // These values come in the wrong order from the server
-        latitude: data.location.longitude,
-        longitude: data.location.latitude,
+        latitude: data.location.latitude,
+        longitude: data.location.longitude,
         name: data.service.name,
         description: data.service.description,
         phoneNumbers: phoneNumbers,
