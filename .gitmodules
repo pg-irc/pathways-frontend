@@ -1,0 +1,3 @@
+[submodule "assets/content"]
+	path = assets/content
+	url = git@github.com:PeaceGeeksSociety/content.git
