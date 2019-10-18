@@ -150,7 +150,7 @@ checkOutClientByTag() {
     echo
     echo "Checking out client tagged with $VERSION"
     echo
-    (cd "$WORKING_DIRECTORY" && git clone --recursive git@github.com:pg-irc/pathways-frontend.git)
+    (cd "$WORKING_DIRECTORY" && git clone git@github.com:pg-irc/pathways-frontend.git)
     checkForSuccess "clone client repo"
 
     (cd "$CLIENT_DIRECTORY" && git fetch --tags)
@@ -158,6 +158,9 @@ checkOutClientByTag() {
 
     (cd "$CLIENT_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
     checkForSuccess "check out tag for client"
+
+    (cd "$CLIENT_DIRECTORY" && git submodule update)
+    checkForSuccess "check out client submodules"
 }
 
 checkOutServerByTag() {
