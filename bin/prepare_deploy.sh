@@ -146,20 +146,6 @@ createWorkingDirectory() {
     checkForSuccess "create working directory"
 }
 
-checkOutContentByTag() {
-    echo
-    echo "Checking out content tagged with $VERSION"
-    echo
-    (cd "$WORKING_DIRECTORY" && git clone git@github.com:PeaceGeeksSociety/content.git)
-    checkForSuccess "clone content repo"
-
-    (cd "$CONTENT_DIRECTORY" && git fetch --tags)
-    checkForSuccess "fetch tags for content"
-
-    (cd "$CONTENT_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
-    checkForSuccess "check out tag for content"
-}
-
 checkOutClientByTag() {
     echo
     echo "Checking out client tagged with $VERSION"
@@ -187,22 +173,6 @@ checkOutServerByTag() {
     (cd "$SERVER_DIRECTORY" && git checkout "tags/$SERVER_VERSION" -b "appRelease/$SERVER_VERSION")
     checkForSuccess "check out tag for server"
 }
-
-checkOutUiStringsByTag() {
-    echo
-    echo "Checking out ui-strings tagged with $VERSION"
-    echo
-
-    (cd "$WORKING_DIRECTORY" && git clone git@github.com:pg-irc/ui-strings.git)
-    checkForSuccess "clone ui-strings repo"
-
-    (cd "$UI_STRINGS_DIRECTORY" && git fetch --tags)
-    checkForSuccess "fetch tags for ui-strings"
-
-    (cd "$UI_STRINGS_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
-    checkForSuccess "check out tag for ui-strings"
-}
-
 
 validateClientVersion() {
     FILE_VERSION=$(cat "$CLIENT_DIRECTORY/VERSION.txt")
@@ -365,8 +335,6 @@ createWorkingDirectory
 
 checkOutServerByTag
 checkOutClientByTag
-checkOutContentByTag
-checkOutUiStringsByTag
 
 validateClientVersion
 validateServerVersion
