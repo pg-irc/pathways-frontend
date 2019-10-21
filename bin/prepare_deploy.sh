@@ -39,7 +39,6 @@ done
 
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
-CONTENT_DIRECTORY="$CLIENT_DIRECTORY/assets/content"
 UI_STRINGS_DIRECTORY="$CLIENT_DIRECTORY/locale/ui-strings"
 
 usage() {
@@ -294,10 +293,13 @@ buildContentFixture() {
     echo
     echo "Building content fixture"
     echo
+
     (cd "$SERVER_DIRECTORY" &&\
         source .venv/bin/activate &&\
-        ./manage.py import_newcomers_guide $CONTENT_DIRECTORY &&\
-        mv *.ts $CLIENT_DIRECTORY/src/fixtures/newcomers_guide/ )
+        ./manage.py import_newcomers_guide ../pathways-frontend/assets/content/NewcomersGuide/ )
+
+    mv $SERVER_DIRECTORY/*.ts $CLIENT_DIRECTORY/src/fixtures/newcomers_guide/
+
     checkForSuccess "build content fixture"
 }
 
