@@ -6,7 +6,7 @@ import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from './types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
 import { InputFormSeparator } from './separators';
-import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
+import { ReactI18nRenderProp } from '../../locale/types';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -28,15 +28,10 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         props.refine(props.currentRefinement);
     }, [props.latLong]);
 
-    const buildTranslatedPlaceholder = (i18n: ReactI18n, placeholder: string): string => {
-        const _ = i18n._.bind(i18n);
-        return _(placeholder);
-    };
-
     return <I18n>
-        {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-
-            <View style={{ paddingHorizontal: 20, paddingBottom: 20, backgroundColor: colors.teal }}>
+        {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => {
+            const _ = i18nRenderProp.i18n._.bind(i18nRenderProp.i18n);
+            return <View style={{ paddingHorizontal: 20, paddingBottom: 20, backgroundColor: colors.teal }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <InputIcon name='search' />
                     <TextInput
@@ -46,7 +41,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             props.refine(d);
                         }}
                         value={props.currentRefinement}
-                        placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
+                        placeholder={_('Search for services')}
                         placeholderTextColor={colors.white}
                     />
                 </View>
@@ -61,14 +56,13 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                         }}
                         value={location}
                         onEndEditing={(): void => props.setLocation(location)}
-                        placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Near My location')} // TODO translate
+                        placeholder={_('Near My location')}
                         placeholderTextColor={colors.white}
                     />
                 </View>
                 <InputFormSeparator />
-            </View >
-        )}
-
+            </View >;
+        }}
     </I18n>;
 };
 
