@@ -2,7 +2,7 @@
 
 locales=(ar fr ko pa tl zh_CN zh_TW)
 CLIENT_LOCALE_LOCATION=locale/
-UI_STRINGS_DIRECTORY="locale/ui-strings/"
+UI_STRINGS_DIRECTORY="locale/ui-strings"
 
 checkForSuccess () {
     if [ "$?" != "0" ]
