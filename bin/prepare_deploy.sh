@@ -275,9 +275,9 @@ completeManualConfiguration() {
     echo
     echo " edit $CLIENT_DIRECTORY/app.json"
     echo
-    echo "and set the Sentry auth token, it's located in hooks/postPublish/config/authToken."
-    echo "Log into our account on https://sentry.io to retrieve the auth token"
-    echo "from https://sentry.io/settings/account/api/auth-tokens/"
+    echo "and set the Sentry auth token. Log into our account on "
+    echo "https://sentry.io to retrieve the auth token from "
+    echo "https://sentry.io/settings/account/api/auth-tokens/"
     echo
     echo " edit $CLIENT_DIRECTORY/.env"
     echo
