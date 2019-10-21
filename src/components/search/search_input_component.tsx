@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput } from 'react-native';
-import { View, Icon, Text } from 'native-base';
-import { Trans, I18n } from '@lingui/react';
+import { View, Icon } from 'native-base';
+import { I18n } from '@lingui/react';
 import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from './types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
@@ -28,60 +28,58 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         props.refine(props.currentRefinement);
     }, [props.latLong]);
 
-    return <I18n>
-        {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => {
-            const _ = i18nRenderProp.i18n._.bind(i18nRenderProp.i18n);
-            return <View style={{ paddingHorizontal: 20, paddingBottom: 20, backgroundColor: colors.teal }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <InputIcon name='search' />
-                    <TextInput
-                        style={applicationStyles.searchInput}
-                        onChangeText={(d: string): void => {
-                            debug(`SearchInputComponent search text changed to '${d}'`);
-                            props.refine(d);
-                        }}
-                        value={props.currentRefinement}
-                        placeholder={_('Search for services')}
-                        placeholderTextColor={colors.white}
-                    />
-                </View>
-                <InputFormSeparator />
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <InputIcon name='map-marker' />
-                    <TextInput
-                        style={applicationStyles.searchInput}
-                        onChangeText={(d: string): void => {
-                            debug(`SearchInputComponent location text changed to '${d}'`);
-                            setLocation(d);
-                        }}
-                        value={location}
-                        onEndEditing={(): void => props.setLocation(location)}
-                        placeholder={_('Near My location')}
-                        placeholderTextColor={colors.white}
-                    />
-                </View>
-                <InputFormSeparator />
-            </View >;
-        }}
+    return <I18n>{(reactI18nRenderProp: ReactI18nRenderProp): JSX.Element => {
+        const _ = reactI18nRenderProp.i18n._.bind(reactI18nRenderProp.i18n);
+
+        return <View style={{ paddingHorizontal: 20, paddingBottom: 20, backgroundColor: colors.teal }}>
+            <SearchTextInput
+                iconName={'search'}
+                value={props.currentRefinement}
+                localizedPlaceholder={_('Search for services')}
+                onChangeText={(d: string): void => {
+                    debug(`SearchInputComponent search text changed to '${d}'`);
+                    props.refine(d);
+                }} />
+            <InputFormSeparator />
+            <SearchTextInput
+                iconName={'map-marker'}
+                value={location}
+                localizedPlaceholder={_('Near My location')}
+                onChangeText={(d: string): void => {
+                    debug(`SearchInputComponent location text changed to '${d}'`);
+                    setLocation(d);
+                }}
+                onEndEditing={props.setLocation} />
+            <InputFormSeparator />
+        </View >;
+    }}
     </I18n>;
 };
 
-interface IconProps {
-    readonly name: string;
+interface SearchTextInputProps {
+    readonly iconName: string;
+    readonly value: string;
+    readonly localizedPlaceholder: string;
+    // tslint:disable-next-line:no-mixed-interface
+    readonly onChangeText: (s: string) => void;
+    readonly onEndEditing?: (s: string) => void;
 }
 
-const InputIcon = ({ name }: IconProps): JSX.Element => (
-    <Icon name={name}
-        type='FontAwesome'
-        style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3 }}
-    />
-);
-
-export const extractSearchStrings = (): JSX.Element => (
-    <div>
-        <Text><Trans>Search for services</Trans></Text>
-        <Text>
-            <Trans>Near My location</Trans>
-        </Text>
-    </div>
-);
+const SearchTextInput = (props: SearchTextInputProps): JSX.Element => {
+    const onEndEditing = props.onEndEditing ? (): void => props.onEndEditing(props.value) : undefined;
+    return <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Icon
+            name={props.iconName}
+            type='FontAwesome'
+            style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3 }}
+        />
+        <TextInput
+            style={applicationStyles.searchInput}
+            onChangeText={props.onChangeText}
+            value={props.value}
+            onEndEditing={onEndEditing}
+            placeholder={props.localizedPlaceholder}
+            placeholderTextColor={colors.white}
+        />
+    </View>;
+};
