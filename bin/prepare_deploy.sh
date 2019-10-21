@@ -39,6 +39,7 @@ done
 
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
+CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
 UI_STRINGS_DIRECTORY="$CLIENT_DIRECTORY/locale/ui-strings"
 
 usage() {
@@ -143,6 +144,20 @@ checkForSuccess () {
 createWorkingDirectory() {
     mkdir "$WORKING_DIRECTORY"
     checkForSuccess "create working directory"
+}
+
+checkOutContentByTag() {
+    echo
+    echo "Checking out content tagged with $VERSION"
+    echo
+    (cd "$WORKING_DIRECTORY" && git clone git@github.com:PeaceGeeksSociety/content.git)
+    checkForSuccess "clone content repo"
+
+    (cd "$CONTENT_DIRECTORY" && git fetch --tags)
+    checkForSuccess "fetch tags for content"
+
+    (cd "$CONTENT_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
+    checkForSuccess "check out tag for content"
 }
 
 checkOutClientByTag() {
@@ -296,7 +311,7 @@ buildContentFixture() {
 
     (cd "$SERVER_DIRECTORY" &&\
         source .venv/bin/activate &&\
-        ./manage.py import_newcomers_guide ../pathways-frontend/assets/content/NewcomersGuide/ )
+        ./manage.py import_newcomers_guide ../content )
 
     mv $SERVER_DIRECTORY/*.ts $CLIENT_DIRECTORY/src/fixtures/newcomers_guide/
 
@@ -361,6 +376,7 @@ createWorkingDirectory
 
 checkOutServerByTag
 checkOutClientByTag
+checkOutContentByTag
 
 validateClientVersion
 validateServerVersion
