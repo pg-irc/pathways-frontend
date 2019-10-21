@@ -1,6 +1,6 @@
 {
     "name": "pathways-frontend",
-    "version": "pr879",
+    "version": "1.7.1",
     "private": true,
     "devDependencies": {
         "@babel/core": "^7.5.5",
