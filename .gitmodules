@@ -1,0 +1,3 @@
+[submodule "locale/ui-strings"]
+	path = locale/ui-strings
+	url = https://github.com/pg-irc/ui-strings.git

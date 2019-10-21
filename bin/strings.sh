@@ -2,7 +2,7 @@
 
 locales=(ar fr ko pa tl zh_CN zh_TW)
 CLIENT_LOCALE_LOCATION=locale/
-UI_STRINGS_DIRECTORY="../ui-strings"
+UI_STRINGS_DIRECTORY="locale/ui-strings"
 
 checkForSuccess () {
     if [ "$?" != "0" ]
@@ -68,14 +68,14 @@ normalize_line_breaks(){
 }
 
 copy_files_to_weblate_repository(){
-    echo "Copy locale/en/jsx_strings.pot ---> ../ui-strings/jsx_strings/jsx_strings.pot"
-    cp locale/en/jsx_strings.pot ../ui-strings/jsx_strings/jsx_strings.pot
+    echo "Copy locale/en/jsx_strings.pot ---> $UI_STRINGS_DIRECTORY/jsx_strings/jsx_strings.pot"
+    cp locale/en/jsx_strings.pot $UI_STRINGS_DIRECTORY/jsx_strings/jsx_strings.pot
 
     echo
     for locale in "${locales[@]}"
     do
-        echo "Copy locale/$locale/jsx_strings.po ---> ../ui-strings/jsx_strings/$locale/jsx_strings.po"
-        cp locale/$locale/jsx_strings.po ../ui-strings/jsx_strings/$locale/jsx_strings.po
+        echo "Copy locale/$locale/jsx_strings.po ---> $UI_STRINGS_DIRECTORY/jsx_strings/$locale/jsx_strings.po"
+        cp locale/$locale/jsx_strings.po $UI_STRINGS_DIRECTORY/jsx_strings/$locale/jsx_strings.po
     done
 }
 
@@ -165,7 +165,7 @@ prompt_manual_steps() {
 help() {
     echo "$0 --extract            Extract all strings from source code to PO and CSV files, leaving out no longer used strings"
     echo "$0 --normalize          Normalize line breaks in PO files to minimize diffs"
-    echo "$0 --copy               Copy files to the Weblate repository, assumed to be located at ../ui-strings"
+    echo "$0 --copy               Copy files to the Weblate repository, assumed to be located at $UI_STRINGS_DIRECTORY"
     echo "$0 --clean              Remove temporary files"
     echo "$0 --combine-pos        Combine PO Files to prepare for deployment - Mandatory argument: path to directory which does not already exist to clone ui-strings repository"
     echo

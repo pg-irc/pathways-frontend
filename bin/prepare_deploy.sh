@@ -40,7 +40,7 @@ done
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
 CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
-UI_STRINGS_DIRECTORY="$WORKING_DIRECTORY/ui-strings"
+UI_STRINGS_DIRECTORY="$CLIENT_DIRECTORY/locale/ui-strings"
 
 usage() {
     echo
@@ -164,7 +164,7 @@ checkOutClientByTag() {
     echo
     echo "Checking out client tagged with $VERSION"
     echo
-    (cd "$WORKING_DIRECTORY" && git clone git@github.com:pg-irc/pathways-frontend.git)
+    (cd "$WORKING_DIRECTORY" && git clone --recursive git@github.com:pg-irc/pathways-frontend.git)
     checkForSuccess "clone client repo"
 
     (cd "$CLIENT_DIRECTORY" && git fetch --tags)
@@ -172,6 +172,9 @@ checkOutClientByTag() {
 
     (cd "$CLIENT_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
     checkForSuccess "check out tag for client"
+
+    (cd "$CLIENT_DIRECTORY" && git submodule update)
+    checkForSuccess "check out client submodules"
 }
 
 checkOutServerByTag() {
@@ -187,22 +190,6 @@ checkOutServerByTag() {
     (cd "$SERVER_DIRECTORY" && git checkout "tags/$SERVER_VERSION" -b "appRelease/$SERVER_VERSION")
     checkForSuccess "check out tag for server"
 }
-
-checkOutUiStringsByTag() {
-    echo
-    echo "Checking out ui-strings tagged with $VERSION"
-    echo
-
-    (cd "$WORKING_DIRECTORY" && git clone git@github.com:pg-irc/ui-strings.git)
-    checkForSuccess "clone ui-strings repo"
-
-    (cd "$UI_STRINGS_DIRECTORY" && git fetch --tags)
-    checkForSuccess "fetch tags for ui-strings"
-
-    (cd "$UI_STRINGS_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
-    checkForSuccess "check out tag for ui-strings"
-}
-
 
 validateClientVersion() {
     FILE_VERSION=$(cat "$CLIENT_DIRECTORY/VERSION.txt")
@@ -230,6 +217,9 @@ validateServerVersion() {
 }
 
 getServerDependencies() {
+    echo
+    echo "Getting server dependencies"
+    echo
     (cd "$SERVER_DIRECTORY" &&\
         python3 -m venv .venv &&\
         source .venv/bin/activate &&\
@@ -238,11 +228,17 @@ getServerDependencies() {
 }
 
 getClientDependencies() {
+    echo
+    echo "Getting client dependencies"
+    echo
     (cd "$CLIENT_DIRECTORY" && yarn)
     checkForSuccess "install requirements for the client"
 }
 
 createServerEnvironment() {
+    echo
+    echo "Creating server environment"
+    echo
     echo "POSTGRES_USER=$POSTGRES_USER" > "$SERVER_DIRECTORY/.env"
     checkForSuccess "create server environment"
 }
@@ -259,6 +255,9 @@ setStagingValuesInAppJson() {
 }
 
 createClientEnvironment() {
+    echo
+    echo "Creating client environment"
+    echo
     PRODUCTION_URL="https://pathways-production.herokuapp.com"
     STAGING_URL="https://fierce-ravine-89308.herokuapp.com"
 
@@ -291,9 +290,9 @@ completeManualConfiguration() {
     echo
     echo " edit $CLIENT_DIRECTORY/app.json"
     echo
-    echo "and set the Sentry auth token, it's located in hooks/postPublish/config/authToken."
-    echo "Log into our account on https://sentry.io to retrieve the auth token"
-    echo "from https://sentry.io/settings/account/api/auth-tokens/"
+    echo "and set the Sentry auth token. Log into our account on "
+    echo "https://sentry.io to retrieve the auth token from "
+    echo "https://sentry.io/settings/account/api/auth-tokens/"
     echo
     echo " edit $CLIENT_DIRECTORY/.env"
     echo
@@ -306,6 +305,10 @@ completeManualConfiguration() {
 }
 
 buildContentFixture() {
+    echo
+    echo "Building content fixture"
+    echo
+
     (cd "$SERVER_DIRECTORY" &&\
         source .venv/bin/activate &&\
         ./manage.py import_newcomers_guide ../content &&\
@@ -325,11 +328,17 @@ validateContentFixture() {
 }
 
 buildMessagesPOFiles() {
+    echo
+    echo "Building message PO files"
+    echo
     (cd "$CLIENT_DIRECTORY" && ./bin/strings.sh --combine-pos)
     checkForSuccess "build messages.po files"
 }
 
 buildLinguiCatalogs() {
+    echo
+    echo "Compiling message PO files"
+    echo
     (cd "$CLIENT_DIRECTORY" && yarn build-strings)
     checkForSuccess "build messages.js for lingui catalogs"
 }
@@ -366,7 +375,6 @@ createWorkingDirectory
 checkOutServerByTag
 checkOutClientByTag
 checkOutContentByTag
-checkOutUiStringsByTag
 
 validateClientVersion
 validateServerVersion
