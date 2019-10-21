@@ -203,6 +203,9 @@ validateServerVersion() {
 }
 
 getServerDependencies() {
+    echo
+    echo "Getting server dependencies"
+    echo
     (cd "$SERVER_DIRECTORY" &&\
         python3 -m venv .venv &&\
         source .venv/bin/activate &&\
@@ -211,11 +214,17 @@ getServerDependencies() {
 }
 
 getClientDependencies() {
+    echo
+    echo "Getting client dependencies"
+    echo
     (cd "$CLIENT_DIRECTORY" && yarn)
     checkForSuccess "install requirements for the client"
 }
 
 createServerEnvironment() {
+    echo
+    echo "Creating server environment"
+    echo
     echo "POSTGRES_USER=$POSTGRES_USER" > "$SERVER_DIRECTORY/.env"
     checkForSuccess "create server environment"
 }
@@ -232,6 +241,9 @@ setStagingValuesInAppJson() {
 }
 
 createClientEnvironment() {
+    echo
+    echo "Creating client environment"
+    echo
     PRODUCTION_URL="https://pathways-production.herokuapp.com"
     STAGING_URL="https://fierce-ravine-89308.herokuapp.com"
 
@@ -279,6 +291,9 @@ completeManualConfiguration() {
 }
 
 buildContentFixture() {
+    echo
+    echo "Building content fixture"
+    echo
     (cd "$SERVER_DIRECTORY" &&\
         source .venv/bin/activate &&\
         ./manage.py import_newcomers_guide $CONTENT_DIRECTORY &&\
@@ -298,11 +313,17 @@ validateContentFixture() {
 }
 
 buildMessagesPOFiles() {
+    echo
+    echo "Building message PO files"
+    echo
     (cd "$CLIENT_DIRECTORY" && ./bin/strings.sh --combine-pos)
     checkForSuccess "build messages.po files"
 }
 
 buildLinguiCatalogs() {
+    echo
+    echo "Compiling message PO files"
+    echo
     (cd "$CLIENT_DIRECTORY" && yarn build-strings)
     checkForSuccess "build messages.js for lingui catalogs"
 }
