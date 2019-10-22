@@ -18,7 +18,7 @@ export interface Address {
     readonly country: string;
 }
 
-export interface Service {
+export interface HumanServiceData {
     readonly id: Id;
     readonly latitude?: number;
     readonly longitude?: number;
@@ -56,7 +56,7 @@ export const isServiceLoading = (services: ServicesForTopic): boolean => (
 );
 
 export interface ServiceMap {
-    readonly [serviceId: string]: Service;
+    readonly [serviceId: string]: HumanServiceData;
 }
 
 export interface ServiceStore {

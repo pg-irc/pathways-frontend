@@ -3,7 +3,7 @@ import { aString, aNumber } from '../../../helpers/random_test_values';
 import { Id } from '../../services';
 import { Errors } from '../../../validation/errors/types';
 import {
-    ValidServicesForTopic, LoadingServicesForTopic, Service, ServiceMap,
+    ValidServicesForTopic, LoadingServicesForTopic, HumanServiceData, ServiceMap,
     ServiceStore, PhoneNumber, Address, ErrorServicesForTopic,
     ServicesForAllTopics,
 } from '../../../validation/services/types';
@@ -140,7 +140,7 @@ export class ServiceBuilder {
         return this;
     }
 
-    build(): Service {
+    build(): HumanServiceData {
         return {
             id: this.id,
             latitude: this.latitude,
