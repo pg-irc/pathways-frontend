@@ -2,12 +2,12 @@ import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
-import { UnvalidatedData, SearchData, SearchServiceData } from './types';
+import { UnvalidatedData, SearchData, SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { Service } from '../../stores/services/types';
-import { toValidSearchData } from './api/validation';
+import { toValidSearchData } from '../../validation/search';
 
 export interface Props {
     readonly currentPath: string;

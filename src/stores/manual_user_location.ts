@@ -1,6 +1,6 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
-import { LatLong } from '../components/search/types';
+import { LatLong } from '../validation/search/types';
 
 // tslint:disable-next-line:typedef
 export const setManualUserLocation = (userLocation: LatLong) => (
