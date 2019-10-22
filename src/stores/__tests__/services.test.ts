@@ -6,7 +6,7 @@ import {
     BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction,
     BuildTopicServicesErrorAction,
 } from '../services/actions';
-import { Service } from '../../validation/services/types';
+import { HumanServiceData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../helpers/random_test_values';
@@ -73,7 +73,7 @@ describe('services reducer', () => {
 
     describe('when populating topic services objects from a success response', () => {
         const topic = new TopicBuilder().withId(loadingTaskServices.topicId).build();
-        const services: ReadonlyArray<Service> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
+        const services: ReadonlyArray<HumanServiceData> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
         const action: BuildTopicServicesSuccessAction = {
             type: constants.LOAD_SERVICES_SUCCESS,
             payload: {
@@ -86,13 +86,13 @@ describe('services reducer', () => {
 
         it('updates services', () => {
             const serviceMap = store.services;
-            services.forEach((service: Service) => {
+            services.forEach((service: HumanServiceData) => {
                 expect(serviceMap[service.id]).toBe(service);
             });
         });
 
         it('maintains the ordering of the services in the topics service vector', () => {
-            const servicesWithIds: ReadonlyArray<Service> = [
+            const servicesWithIds: ReadonlyArray<HumanServiceData> = [
                 new ServiceBuilder().withId('1').build(),
                 new ServiceBuilder().withId('3').build(),
                 new ServiceBuilder().withId('2').build(),
@@ -117,7 +117,7 @@ describe('services reducer', () => {
         it('sets service ids on topic services object', () => {
             if (isValidServicesForTopic(topicServicesOrErrorEntry)) {
                 const serviceIds = topicServicesOrErrorEntry.serviceIds;
-                services.forEach((service: Service) => {
+                services.forEach((service: HumanServiceData) => {
                     expect(serviceIds).toContain(service.id);
                 });
             } else {

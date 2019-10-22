@@ -1,7 +1,7 @@
 import { Id as TopicId } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { Service } from '../../validation/services/types';
+import { HumanServiceData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { LatLong } from '../../validation/search/types';
 
@@ -22,7 +22,7 @@ export const buildTopicServicesRequestAction = (topicId: TopicId, manualUserLoca
 );
 
 // tslint:disable-next-line:typedef
-export const buildTopicServicesSuccessAction = (topicId: TopicId, services: ReadonlyArray<Service>) => (
+export const buildTopicServicesSuccessAction = (topicId: TopicId, services: ReadonlyArray<HumanServiceData>) => (
     helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { topicId, services })
 );
 

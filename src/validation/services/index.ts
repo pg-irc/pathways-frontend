@@ -58,7 +58,7 @@ interface ValidatedServiceAtLocationJSON {
     readonly location: ValidatedLocationJSON;
 }
 
-export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): types.Service => {
+export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): types.HumanServiceData => {
     const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): types.PhoneNumber => ({
         type: phoneNumber.phone_number_type,
         phoneNumber: phoneNumber.phone_number,
