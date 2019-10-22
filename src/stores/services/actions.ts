@@ -1,7 +1,7 @@
 import { Id as TopicId } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { Service } from './types';
+import { Service } from '../../validation/services/types';
 import { Errors } from '../../errors/types';
 import { LatLong } from '../../validation/search/types';
 

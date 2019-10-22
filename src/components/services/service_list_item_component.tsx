@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { textStyles, colors } from '../../application/styles';
-import { Service, PhoneNumber, Address } from '../../stores/services/types';
+import { Service, PhoneNumber, Address } from '../../validation/services/types';
 import { View } from 'native-base';
 import { Text } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';

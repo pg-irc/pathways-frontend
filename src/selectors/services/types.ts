@@ -1,4 +1,4 @@
-import { Service } from '../../stores/services/types';
+import { Service } from '../../validation/services/types';
 import { Errors } from '../../errors/types';
 
 export interface ValidSelectorTopicServices {
