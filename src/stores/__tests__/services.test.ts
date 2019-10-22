@@ -7,7 +7,7 @@ import {
     BuildTopicServicesErrorAction,
 } from '../services/actions';
 import { Service } from '../../validation/services/types';
-import { Errors } from '../../errors/types';
+import { Errors } from '../../validation/errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';

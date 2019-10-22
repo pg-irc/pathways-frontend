@@ -1,5 +1,5 @@
 import * as constants from '../../application/constants';
-import { Errors } from '../../errors/types';
+import { Errors } from '../errors/types';
 
 export type Id = string;
 
