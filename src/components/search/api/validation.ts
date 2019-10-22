@@ -1,29 +1,30 @@
 // tslint:disable-next-line:no-var-requires
 const Ajv = require('ajv');
 import * as schema from './schema';
-import { ServiceSearchHit, OrganizationSearchHit, UnvalidatedData, SearchHit, LatLong } from '../types';
+import { SearchServiceData, SearchOrganizationData, UnvalidatedData, SearchData, LatLong } from '../types';
 
-export const toValidSearchHit = (hit: UnvalidatedData): SearchHit => {
-    const serviceError = getServiceErrorIfAny(hit);
-    if (!serviceError) {
-        return toServiceHit(hit);
+export const toValidSearchData = (hit: UnvalidatedData): SearchData => {
+    const serviceErrors = getSearchServiceDataErrors(hit);
+    if (!serviceErrors) {
+        return toValidSearchServiceData(hit);
     }
 
-    const organizationError = getOrganizationErrorIfAny(hit);
-    if (!organizationError) {
-        return toOrganizationHit(hit);
+    const organizationErrors = getSearchOrganizationDataErrors(hit);
+    if (!organizationErrors) {
+        return toValidSearchOrganizationData(hit);
     }
 
-    throw new Error(JSON.stringify({ serviceError, organizationError }));
+    throw new Error(JSON.stringify({ serviceErrors, organizationErrors }));
 };
 
-const getServiceErrorIfAny = (hit: UnvalidatedData): boolean => {
+// tslint:disable-next-line:no-any
+const getSearchServiceDataErrors = (hit: UnvalidatedData): ReadonlyArray<Object> | undefined => {
     const ajv = new Ajv();
     const isValid = ajv.validate(schema.serviceSearchItem, hit);
     return isValid ? undefined : ajv.errors;
 };
 
-const toServiceHit = (hit: UnvalidatedData): ServiceSearchHit => ({
+const toValidSearchServiceData = (hit: UnvalidatedData): SearchServiceData => ({
     type: 'ServiceSearchItem',
     service_id: hit.service_id,
     service_name: hit.service_name,
@@ -42,13 +43,13 @@ const toServiceHit = (hit: UnvalidatedData): ServiceSearchHit => ({
     longitude: hit._geoloc.lng,
 });
 
-const getOrganizationErrorIfAny = (hit: UnvalidatedData): ReadonlyArray<Object> | undefined => {
+const getSearchOrganizationDataErrors = (hit: UnvalidatedData): ReadonlyArray<Object> | undefined => {
     const ajv = new Ajv();
     const isValid = ajv.validate(schema.organizationSearchItem, hit);
     return isValid ? undefined : ajv.errors;
 };
 
-const toOrganizationHit = (hit: UnvalidatedData): OrganizationSearchHit => ({
+const toValidSearchOrganizationData = (hit: UnvalidatedData): SearchOrganizationData => ({
     type: 'OrganizationSearchItem',
     organization_id: hit.organization_id,
     organization_name: hit.organization_name,

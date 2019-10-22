@@ -2,12 +2,12 @@ import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
-import { UnvalidatedData, SearchHit, ServiceSearchHit } from './types';
+import { UnvalidatedData, SearchData, SearchServiceData } from './types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { Service } from '../../stores/services/types';
-import { toValidSearchHit } from './api/validation';
+import { toValidSearchData } from './api/validation';
 
 export interface Props {
     readonly currentPath: string;
@@ -44,17 +44,17 @@ const renderSearchHit = ({ item }: ListRenderItemInfo<UnvalidatedData>): JSX.Ele
 };
 
 const toValidService = (data: UnvalidatedData): Service => {
-    return toService(throwOnOrganizationHit(toValidSearchHit(data)));
+    return toService(throwOnOrganizationHit(toValidSearchData(data)));
 };
 
-const throwOnOrganizationHit = (searchHit: SearchHit): ServiceSearchHit => {
+const throwOnOrganizationHit = (searchHit: SearchData): SearchServiceData => {
     if (searchHit.type === 'OrganizationSearchItem') {
         throw new Error('Invalid search hit type, service expected');
     }
     return searchHit;
 };
 
-const toService = (hit: ServiceSearchHit): Service => ({
+const toService = (hit: SearchServiceData): Service => ({
     id: hit.service_id,
     latitude: hit.latitude,
     longitude: hit.longitude,

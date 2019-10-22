@@ -6,7 +6,7 @@ export interface LatLong {
     readonly longitude: number;
 }
 
-export interface ServiceSearchHit {
+export interface SearchServiceData {
     readonly type: 'ServiceSearchItem';
     readonly service_id: string;
     readonly service_name: string;
@@ -23,7 +23,7 @@ export interface ServiceSearchHit {
     readonly longitude: number;
 }
 
-export interface OrganizationSearchHit {
+export interface SearchOrganizationData {
     readonly type: 'OrganizationSearchItem';
     readonly organization_id: string;
     readonly organization_name: string;
@@ -32,4 +32,4 @@ export interface OrganizationSearchHit {
     readonly organization_email: string;
 }
 
-export type SearchHit = ServiceSearchHit | OrganizationSearchHit;
+export type SearchData = SearchServiceData | SearchOrganizationData;
