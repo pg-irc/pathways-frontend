@@ -61,8 +61,8 @@ const toHumanServiceData = (hit: SearchServiceData): HumanServiceData => ({
     name: hit.service_name,
     description: hit.service_description,
     phoneNumbers: [{
-        type: 'toll free',
-        phoneNumber: '1-800-123-4567',
+        type: 'temp',
+        phoneNumber: '1-800-FOR-NOWW',
     }],
     addresses: [{
         id: 1,
@@ -73,7 +73,7 @@ const toHumanServiceData = (hit: SearchServiceData): HumanServiceData => ({
         postalCode: hit.postal_code,
         country: hit.country,
     }],
-    website: hit.type,
-    email: hit.type,
-    organizationName: hit.type,
+    website: hit.organization_website,
+    email: hit.organization_email,
+    organizationName: hit.organization_name,
 });
