@@ -15,7 +15,7 @@ import { useRequestDataIfOnlineReturnRefreshDataCallback }
     from '../../hooks/use_request_data_if_online_return_refresh_data_callback';
 import { OnlineStatus, useOnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
-import { Errors } from '../../errors/types';
+import { Errors } from '../../validation/errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { LatLong } from '../../validation/search/types';
 
