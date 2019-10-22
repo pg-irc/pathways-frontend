@@ -1,5 +1,5 @@
 import { Service } from '../../validation/services/types';
-import { Errors } from '../../errors/types';
+import { Errors } from '../../validation/errors/types';
 
 export interface ValidSelectorTopicServices {
     readonly services: ReadonlyArray<Service>;

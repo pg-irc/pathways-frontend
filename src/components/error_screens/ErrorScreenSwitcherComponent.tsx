@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import { Errors } from '../../errors/types';
+import { Errors } from '../../validation/errors/types';
 import {
     noInternet,
     locationOff,

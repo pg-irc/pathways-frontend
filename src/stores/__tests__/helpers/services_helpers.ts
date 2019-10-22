@@ -1,7 +1,7 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 import { Id } from '../../services';
-import { Errors } from '../../../errors/types';
+import { Errors } from '../../../validation/errors/types';
 import {
     ValidServicesForTopic, LoadingServicesForTopic, Service, ServiceMap,
     ServiceStore, PhoneNumber, Address, ErrorServicesForTopic,

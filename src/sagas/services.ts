@@ -14,8 +14,8 @@ import {
     isLocationFetchTimeoutError,
     isBadResponseError,
     isInvalidResponseData,
-} from '../errors/is_error';
-import { Errors } from '../errors/types';
+} from '../validation/errors/is_error';
+import { Errors } from '../validation/errors/types';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
