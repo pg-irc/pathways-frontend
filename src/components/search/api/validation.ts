@@ -28,9 +28,16 @@ const toServiceHit = (hit: UnvalidatedData): ServiceSearchHit => ({
     service_id: hit.service_id,
     service_name: hit.service_name,
     service_description: hit.service_description,
-    street_address: hit.street_address,
-    city: hit.city,
-    postal_code: hit.postal_code,
+
+    organization_name: hit.organization.name,
+    organization_website: hit.organization.website,
+    organization_email: hit.organization.email,
+    street_address: hit.address.address,
+    city: hit.address.city,
+    province: hit.address.state_province,
+    postal_code: hit.address.postal_code,
+    country: hit.address.country,
+
     latitude: hit._geoloc.lat,
     longitude: hit._geoloc.lng,
 });

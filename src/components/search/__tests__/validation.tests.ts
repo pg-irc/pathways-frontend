@@ -56,7 +56,7 @@ describe('Search response validation', () => {
         it('throws on missing field in service data', () => {
             expect(() => toValidSearchHit({
                 service_name: aString(),
-                //service_id: serviceId,
+                // service_id: serviceId,
                 service_description: aString(),
                 address: {
                     address: aString(),
