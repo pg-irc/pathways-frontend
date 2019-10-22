@@ -6,7 +6,7 @@ import { UnvalidatedData, SearchData, SearchServiceData } from '../../validation
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
-import { Service } from '../../validation/services/types';
+import { HumanServiceData } from '../../validation/services/types';
 import { toValidSearchData } from '../../validation/search';
 
 export interface Props {
@@ -43,8 +43,8 @@ const renderSearchHit = ({ item }: ListRenderItemInfo<UnvalidatedData>): JSX.Ele
     return <ServiceListItemComponent service={toValidService(item)} currentPath={currentPath} />;
 };
 
-const toValidService = (data: UnvalidatedData): Service => {
-    return toService(throwOnOrganizationHit(toValidSearchData(data)));
+const toValidService = (data: UnvalidatedData): HumanServiceData => {
+    return toHumanServiceData(throwOnOrganizationHit(toValidSearchData(data)));
 };
 
 const throwOnOrganizationHit = (searchHit: SearchData): SearchServiceData => {
@@ -54,7 +54,7 @@ const throwOnOrganizationHit = (searchHit: SearchData): SearchServiceData => {
     return searchHit;
 };
 
-const toService = (hit: SearchServiceData): Service => ({
+const toHumanServiceData = (hit: SearchServiceData): HumanServiceData => ({
     id: hit.service_id,
     latitude: hit.latitude,
     longitude: hit.longitude,
