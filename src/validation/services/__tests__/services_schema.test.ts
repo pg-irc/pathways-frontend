@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-any no-null-keyword
-import { aString, aNumber } from '../../application/__tests__/helpers/random_test_values';
-import * as helpers from '../__tests__/helpers/services_schema_helpers';
-import { validateServicesAtLocationArray } from '../../validation/services';
+import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
+import * as helpers from './helpers/services_schema_helpers';
+import { validateServicesAtLocationArray } from '..';
 
 describe('schema for services_at_location endpoint', () => {
 
