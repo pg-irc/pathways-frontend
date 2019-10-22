@@ -9,7 +9,7 @@ import {
 import { Service } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
-import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { aString } from '../../helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
 import { isServiceLoading } from '../../validation/services/types';
 

@@ -2,7 +2,7 @@
 
 import { TopicBuilder, buildNormalizedStore } from './helpers/topics_helpers';
 import { UserDataPersistence } from '../user_data';
-import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { aString } from '../../helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { addToSavedList, removeFromSavedList, toggleCompleted } from '../topics/actions';
 import * as stores from '../topics';

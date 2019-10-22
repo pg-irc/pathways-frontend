@@ -3,7 +3,7 @@ import {
     Routes, routePathDefinition, routePathWithoutParameter,
     isOnParentScreen, isOnChildScreen, routePathWithParameter,
 } from '../routing';
-import { aString } from './helpers/random_test_values';
+import { aString } from '../../helpers/random_test_values';
 
 describe('the routePathDefinition function', () => {
 

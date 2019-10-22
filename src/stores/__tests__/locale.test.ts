@@ -2,7 +2,7 @@
 import * as locale from '../locale';
 import * as actions from '../locale/actions';
 import * as constants from '../../application/constants';
-import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
+import { aString, aBoolean } from '../../helpers/random_test_values';
 import { LocaleInfoBuilder, LocaleStoreBuilder } from './helpers/locale_helpers';
 
 const aLocaleCode = aString();

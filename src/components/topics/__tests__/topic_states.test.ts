@@ -8,7 +8,7 @@ import {
     TaskStateListItemIcon,
 }
     from '../task_states';
-import { aBoolean } from '../../../application/__tests__/helpers/random_test_values';
+import { aBoolean } from '../../../helpers/random_test_values';
 
 describe('topic state', () => {
     describe('computeStateLabel', () => {
