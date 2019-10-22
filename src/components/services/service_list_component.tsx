@@ -3,7 +3,7 @@ import React from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
-import { Service } from '../../stores/services/types';
+import { Service } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';

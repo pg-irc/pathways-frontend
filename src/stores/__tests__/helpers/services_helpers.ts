@@ -6,7 +6,7 @@ import {
     ValidServicesForTopic, LoadingServicesForTopic, Service, ServiceMap,
     ServiceStore, PhoneNumber, Address, ErrorServicesForTopic,
     ServicesForAllTopics,
-} from '../../services/types';
+} from '../../../validation/services/types';
 import * as constants from '../../../application/constants';
 
 export const buildNormalizedServices = (

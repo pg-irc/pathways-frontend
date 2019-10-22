@@ -1,4 +1,4 @@
-import { ErrorServicesForTopic } from '../../stores/services/types';
+import { ErrorServicesForTopic } from '../../validation/services/types';
 import { ErrorSelectorTopicServices } from './types';
 import * as constants from '../../application/constants';
 
