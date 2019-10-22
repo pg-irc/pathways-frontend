@@ -12,7 +12,7 @@ import {
 } from './service_list_component';
 import { Routes, getParametersFromPath } from '../../application/routing';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
-import { LatLong } from '../search/types';
+import { LatLong } from '../../validation/search/types';
 
 type OwnProps = {
     readonly location: Location;

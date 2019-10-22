@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { toValidSearchData, toGeoCoderLatLong } from '../api/validation';
+import { toValidSearchData, toGeoCoderLatLong } from '../../../validation/search';
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 
 describe('Search response validation', () => {
