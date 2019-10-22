@@ -17,7 +17,7 @@ import { OnlineStatus, useOnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
-import { LatLong } from '../search/types';
+import { LatLong } from '../../validation/search/types';
 
 export interface ServiceListProps {
     readonly topic: Topic;
