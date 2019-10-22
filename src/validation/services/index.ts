@@ -18,12 +18,12 @@ export interface ValidationResult {
     readonly errors?: string;
 }
 
-export interface ValidatedPhoneNumberJSON {
+interface ValidatedPhoneNumberJSON {
     readonly phone_number_type: string;
     readonly phone_number: string;
 }
 
-export interface ValidatedAddressJSON {
+interface ValidatedAddressJSON {
     readonly id: number;
     readonly address: string;
     readonly city: string;
@@ -32,12 +32,12 @@ export interface ValidatedAddressJSON {
     readonly country: string;
 }
 
-export interface ValidatedAddressWithTypeJSON {
+interface ValidatedAddressWithTypeJSON {
     readonly address_type: string;
     readonly address: ValidatedAddressJSON;
 }
 
-export interface ValidatedServiceJSON {
+interface ValidatedServiceJSON {
     readonly id: string;
     readonly name: string;
     readonly description: string;
@@ -46,14 +46,14 @@ export interface ValidatedServiceJSON {
     readonly organization_name: string;
 }
 
-export interface ValidatedLocationJSON {
+interface ValidatedLocationJSON {
     readonly latitude?: number;
     readonly longitude?: number;
     readonly phone_numbers: ReadonlyArray<ValidatedPhoneNumberJSON>;
     readonly addresses: ReadonlyArray<ValidatedAddressWithTypeJSON>;
 }
 
-export interface ValidatedServiceAtLocationJSON {
+interface ValidatedServiceAtLocationJSON {
     readonly service: ValidatedServiceJSON;
     readonly location: ValidatedLocationJSON;
 }
