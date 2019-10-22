@@ -6,12 +6,12 @@ import {
     BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction,
     BuildTopicServicesErrorAction,
 } from '../services/actions';
-import { Service } from '../services/types';
+import { Service } from '../../validation/services/types';
 import { Errors } from '../../errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../application/__tests__/helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
-import { isServiceLoading } from '../services/types';
+import { isServiceLoading } from '../../validation/services/types';
 
 describe('services reducer', () => {
     const aService = new ServiceBuilder();

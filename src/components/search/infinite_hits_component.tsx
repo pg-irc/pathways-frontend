@@ -6,7 +6,7 @@ import { UnvalidatedData, SearchData, SearchServiceData } from '../../validation
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
-import { Service } from '../../stores/services/types';
+import { Service } from '../../validation/services/types';
 import { toValidSearchData } from '../../validation/search';
 
 export interface Props {

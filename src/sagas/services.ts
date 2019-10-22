@@ -6,7 +6,7 @@ import {
     BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction, BuildTopicServicesErrorAction,
     buildTopicServicesSuccessAction, buildTopicServicesErrorAction,
 } from '../stores/services/actions';
-import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../stores/services/validation';
+import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../validation/services';
 import { searchServices, APIResponse } from '../api';
 import { getDeviceLocation } from '../async/location';
 import {
