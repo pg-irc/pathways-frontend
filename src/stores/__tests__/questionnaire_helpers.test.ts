@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let
 
 import { ValidStoreBuilder, AnswerBuilder, QuestionBuilder } from './helpers/questionnaire_helpers';
-import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
+import { aString, aBoolean } from '../../helpers/random_test_values';
 import { Answer, Question } from '../questionnaire';
 import { toValidOrThrow } from '../questionnaire/stores';
 

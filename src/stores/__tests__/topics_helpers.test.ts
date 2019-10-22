@@ -2,7 +2,7 @@
 
 import { TopicBuilder, buildNormalizedStore } from './helpers/topics_helpers';
 import * as stores from '../topics';
-import { aString, aBoolean } from '../../application/__tests__/helpers/random_test_values';
+import { aString, aBoolean } from '../../helpers/random_test_values';
 
 describe('topics test helpers', () => {
 

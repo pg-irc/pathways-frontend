@@ -2,7 +2,7 @@
 import { ExploreSection } from '../explore/types';
 import { ExploreSectionMap } from '../../stores/explore';
 import { ExploreTaxonomyId } from '../../stores/taxonomies';
-import { aString } from '../../application/__tests__/helpers/random_test_values';
+import { aString } from '../../helpers/random_test_values';
 import { ExploreSectionBuilder as StoreExploreSectionBuilder } from '../../stores/__tests__/helpers/explore_section_builder';
 import { buildExploreSection } from '../explore/build_explore_section';
 import { buildExploreSectionList } from '../explore/build_explore_section_list';
@@ -19,7 +19,7 @@ const theStore: ExploreSectionMap = {
     [theId]: {
         id: theId,
         name: theNameInEnglish,
-        description:theDescriptionInEnglish,
+        description: theDescriptionInEnglish,
         taxonomyTerms: [{
             taxonomyId,
             taxonomyTermId,
