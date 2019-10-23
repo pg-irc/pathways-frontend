@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
@@ -23,28 +24,30 @@ export interface Actions {
 export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceUpdate('InfiniteHitsComponent', props);
-    const hits = props.currentRefinement === '' ? [] : props.hits;
+    const searchResulsts = getValidSearchResults(props);
     return <FlatList
         style={{ backgroundColor: colors.white }}
         refreshing={false}
-        data={hits}
+        data={searchResulsts}
         keyExtractor={keyExtractor}
         renderItem={renderSearchHit}
         ListEmptyComponent={EmptyComponent}
         ItemSeparatorComponent={SearchListSeparator} />;
 };
 
-const keyExtractor = (item: UnvalidatedData): string => (
-    item.objectID || 'missingId'
-);
-
-const renderSearchHit = ({ item }: ListRenderItemInfo<UnvalidatedData>): JSX.Element => {
-    const currentPath = '';
-    return <ServiceListItemComponent service={toValidService(item)} currentPath={currentPath} />;
+const getValidSearchResults = (props: Partial<Props & Actions>): ReadonlyArray<SearchServiceData> => {
+    const isSearchStringEmpty = props.currentRefinement === '';
+    const hits = isSearchStringEmpty ? [] : props.hits;
+    return R.map(toValidSearchData, hits);
 };
 
-const toValidService = (data: UnvalidatedData): HumanServiceData => {
-    return toHumanServiceData(toValidSearchData(data));
+const keyExtractor = (item: SearchServiceData): string => (
+    item.service_id
+);
+
+const renderSearchHit = ({ item }: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
+    const currentPath = '';
+    return <ServiceListItemComponent service={toHumanServiceData(item)} currentPath={currentPath} />;
 };
 
 const toHumanServiceData = (hit: SearchServiceData): HumanServiceData => ({
