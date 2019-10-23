@@ -1,3 +1,5 @@
+import { LatLong } from '../geocoder/types';
+
 // tslint:disable-next-line:no-any
 export type UnvalidatedData = any;
 
@@ -15,11 +17,6 @@ interface Address {
     readonly state_province: string;
     readonly postal_code: string;
     readonly country: string;
-}
-
-export interface LatLong {
-    readonly lat: number;
-    readonly lng: number;
 }
 
 export interface SearchServiceData {

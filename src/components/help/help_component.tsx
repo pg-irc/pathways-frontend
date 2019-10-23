@@ -13,7 +13,7 @@ import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_co
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import * as R from 'ramda';
 import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
-import { LatLong } from '../../validation/search/types';
+import { LatLong } from '../../validation/geocoder/types';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 

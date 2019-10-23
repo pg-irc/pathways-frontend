@@ -5,7 +5,7 @@ import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
 import { Content } from 'native-base';
 import { emptyComponent } from '../empty_component/empty_component';
-import { LatLong } from '../../validation/search/types';
+import { LatLong } from '../../validation/geocoder/types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
 import { useTraceUpdate as useTraceComponentUpdates } from '../../helpers/debug';

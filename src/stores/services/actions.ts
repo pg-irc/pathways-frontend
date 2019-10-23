@@ -3,7 +3,7 @@ import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { HumanServiceData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
-import { LatLong } from '../../validation/search/types';
+import { LatLong } from '../../validation/geocoder/types';
 
 export type BuildServicesRequestAction = Readonly<ReturnType<typeof buildServicesRequestAction>>;
 
