@@ -1,8 +1,5 @@
 import { LatLong } from '../geocoder/types';
 
-// tslint:disable-next-line:no-any
-export type UnvalidatedData = any;
-
 interface OrganizationUnderService {
     readonly id: string;
     readonly name: string;

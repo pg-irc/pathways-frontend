@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
-import { UnvalidatedData, SearchServiceData } from '../../validation/search/types';
+import { SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
@@ -11,7 +11,8 @@ import { validateServiceSearchResponse } from '../../validation/search';
 
 export interface Props {
     readonly currentPath: string;
-    readonly hits: ReadonlyArray<UnvalidatedData>;
+    // tslint:disable-next-line:no-any
+    readonly hits: ReadonlyArray<any>;
     readonly hasMore: boolean;
     readonly currentRefinement: string;
 }

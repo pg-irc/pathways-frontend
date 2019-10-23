@@ -1,12 +1,10 @@
-// tslint:disable-next-line:no-var-requires
+// tslint:disable:no-var-requires
 const Ajv = require('ajv');
 import * as schema from './schema';
 import { LatLong } from './types';
 
 // tslint:disable-next-line:no-any
-export type UnvalidatedData = any;
-
-export const toGeoCoderLatLong = (data: UnvalidatedData): LatLong => {
+export const toGeoCoderLatLong = (data: any): LatLong => {
     const validationError = getGeoCoderLatLongErrorsIfAny(data);
 
     if (validationError) {
@@ -35,7 +33,8 @@ const toValidLatLong = (latitude: number, longitude: number): LatLong => {
     return { lat: latitude, lng: longitude };
 };
 
-const getGeoCoderLatLongErrorsIfAny = (hit: UnvalidatedData): boolean => {
+// tslint:disable-next-line:no-any
+const getGeoCoderLatLongErrorsIfAny = (hit: any): boolean => {
     const ajv = new Ajv();
     const isValid = ajv.validate(schema.geoCoderResponse, hit);
     return isValid ? undefined : ajv.errors;

@@ -1,17 +1,11 @@
-// tslint:disable-next-line:no-var-requires
+// tslint:disable:no-var-requires no-any
 const Ajv = require('ajv');
-import * as schema from './schema';
-import { SearchServiceData, UnvalidatedData } from './types';
+import { SearchServiceData } from './types';
+import { serviceSearchItemArray } from './schema';
+import { ValidationResult } from '../validation_result';
 
-export const validateServiceSearchResponse = (data: ReadonlyArray<UnvalidatedData>): ValidationResult => {
+export const validateServiceSearchResponse = (data: ReadonlyArray<any>): ValidationResult<SearchServiceData> => {
     const ajv = new Ajv();
-    const isValid = ajv.validate(schema.serviceSearchItemArray, data);
+    const isValid = ajv.validate(serviceSearchItemArray, data) as boolean;
     return isValid ? { isValid, validData: data } : { isValid, errors: ajv.errorsText(ajv.errors) };
 };
-
-// TODO make this a template on SearchServiceData
-export interface ValidationResult {
-    readonly isValid: boolean;
-    readonly validData?: ReadonlyArray<SearchServiceData>;
-    readonly errors?: string;
-}

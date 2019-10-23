@@ -1,19 +1,11 @@
+// tslint:disable:no-var-requires no-any
+const Ajv = require('ajv');
 import { HumanServiceData } from './types';
 import { serviceAtLocationArray } from './schema';
+import { ValidationResult } from '../validation_result';
 
-// This is the documenated syntax for Ajv. Using an import here causes a runtime error.
-// tslint:disable-next-line:no-var-requires
-const Ajv = require('ajv');
-
-// tslint:disable-next-line:no-any
-export const validateServicesAtLocationArray = (data: any): ValidationResult => {
+export const validateServicesAtLocationArray = (data: ReadonlyArray<any>): ValidationResult<HumanServiceData> => {
     const ajv = new Ajv();
     const isValid = ajv.validate(serviceAtLocationArray, data) as boolean;
     return isValid ? { isValid, validData: data } : { isValid, errors: ajv.errorsText(ajv.errors) };
 };
-
-export interface ValidationResult {
-    readonly isValid: boolean;
-    readonly validData?: ReadonlyArray<HumanServiceData>;
-    readonly errors?: string;
-}
