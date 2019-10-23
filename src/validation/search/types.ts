@@ -18,8 +18,8 @@ interface Address {
 }
 
 export interface LatLong {
-    readonly latitude: number;
-    readonly longitude: number;
+    readonly lat: number;
+    readonly lng: number;
 }
 
 export interface SearchServiceData {

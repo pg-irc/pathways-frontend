@@ -43,7 +43,7 @@ const toValidLatLong = (latitude: number, longitude: number): LatLong => {
         throw new Error(`GeoCoder field "longt" is not a number: ${longitude}`);
     }
 
-    return { latitude, longitude };
+    return { lat: latitude, lng: longitude };
 };
 
 const getGeoCoderLatLongErrorsIfAny = (hit: UnvalidatedData): boolean => {

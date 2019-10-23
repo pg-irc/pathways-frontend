@@ -10,5 +10,5 @@ export const toServiceSearchConfiguration = (latlong?: LatLong): Object => {
 };
 
 export const toAlgoliaParameter = (latlong: LatLong): string => (
-    `${latlong.latitude},${latlong.longitude}`
+    `${latlong.lat},${latlong.lng}`
 );

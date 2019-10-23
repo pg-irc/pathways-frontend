@@ -57,8 +57,8 @@ const renderSearchHit = ({ item }: ListRenderItemInfo<SearchServiceData>): JSX.E
 
 const toHumanServiceData = (data: SearchServiceData): HumanServiceData => ({
     id: data.service_id,
-    latitude: data._geoloc.latitude,
-    longitude: data._geoloc.longitude,
+    latitude: data._geoloc.lat,
+    longitude: data._geoloc.lng,
     name: data.service_name,
     description: data.service_description,
     phoneNumbers: [{

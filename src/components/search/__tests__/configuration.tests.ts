@@ -4,7 +4,7 @@ import { toAlgoliaParameter, toServiceSearchConfiguration } from '../api/configu
 describe('configuration', () => {
     describe('for service search', () => {
         it('includes lat/long if given', () => {
-            expect(toServiceSearchConfiguration({ latitude: 1, longitude: 1 })).toEqual({
+            expect(toServiceSearchConfiguration({ lat: 1, lng: 1 })).toEqual({
                 hitsPerPage: 5,
                 aroundLatLng: '1,1',
             });
@@ -17,7 +17,7 @@ describe('configuration', () => {
     });
     describe('conversion from lat/long to string for algolia', () => {
         it('returns latitude first', () => {
-            expect(toAlgoliaParameter({ latitude: 1.1, longitude: 2.2 })).toEqual('1.1,2.2');
+            expect(toAlgoliaParameter({ lat: 1.1, lng: 2.2 })).toEqual('1.1,2.2');
         });
     });
 });

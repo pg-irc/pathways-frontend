@@ -36,8 +36,8 @@ const noLocationFetchTimeoutError = () => ({
 
 const buildManualUserLocation = (manualUserLocation: LatLong): DeviceLocationData => ({
     coords: {
-        latitude: manualUserLocation.latitude,
-        longitude: manualUserLocation.longitude,
+        latitude: manualUserLocation.lat,
+        longitude: manualUserLocation.lng,
         altitude: 0,
         accuracy: 0,
         heading: 0,

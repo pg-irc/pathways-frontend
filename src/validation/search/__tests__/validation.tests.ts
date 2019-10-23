@@ -113,8 +113,8 @@ describe('GeoCoder response validation', () => {
                 'postal': 'V0G1R0',
                 'latt': '50.237690',
             });
-            expect(result.latitude).toEqual(50.237690);
-            expect(result.longitude).toEqual(-117.795094);
+            expect(result.lat).toEqual(50.237690);
+            expect(result.lng).toEqual(-117.795094);
         });
     });
     describe('with invalid data', () => {
