@@ -3,8 +3,8 @@ import * as constants from '../../application/constants';
 import { reducer } from '../services';
 import { isValidServicesForTopic } from '../services/is_valid_services_for_topic';
 import {
-    BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction,
-    BuildTopicServicesErrorAction,
+    BuildServicesRequestAction, BuildServicesSuccessAction,
+    BuildServicesErrorAction,
 } from '../services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
@@ -32,7 +32,7 @@ describe('services reducer', () => {
 
         it('creates loading topic services object', () => {
             const topicId = aString();
-            const action: BuildTopicServicesRequestAction = {
+            const action: BuildServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { topicId, manualUserLocation: undefined },
             };
@@ -42,7 +42,7 @@ describe('services reducer', () => {
         });
 
         it('sets state of the topic service to loading', () => {
-            const action: BuildTopicServicesRequestAction = {
+            const action: BuildServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { topicId: loadedTaskServices.topicId, manualUserLocation: undefined },
             };
@@ -52,7 +52,7 @@ describe('services reducer', () => {
         });
 
         it('sets loading to true on pre existing topic services error objects', () => {
-            const action: BuildTopicServicesRequestAction = {
+            const action: BuildServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { topicId: loadedTaskServicesError.topicId, manualUserLocation: undefined },
             };
@@ -62,7 +62,7 @@ describe('services reducer', () => {
         });
 
         it('does not update existing services', () => {
-            const action: BuildTopicServicesRequestAction = {
+            const action: BuildServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
                 payload: { topicId: aString(), manualUserLocation: undefined },
             };
@@ -74,7 +74,7 @@ describe('services reducer', () => {
     describe('when populating topic services objects from a success response', () => {
         const topic = new TopicBuilder().withId(loadingTaskServices.topicId).build();
         const services: ReadonlyArray<HumanServiceData> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
-        const action: BuildTopicServicesSuccessAction = {
+        const action: BuildServicesSuccessAction = {
             type: constants.LOAD_SERVICES_SUCCESS,
             payload: {
                 topicId: topic.id,
@@ -97,7 +97,7 @@ describe('services reducer', () => {
                 new ServiceBuilder().withId('3').build(),
                 new ServiceBuilder().withId('2').build(),
             ];
-            const theAction: BuildTopicServicesSuccessAction = {
+            const theAction: BuildServicesSuccessAction = {
                 type: constants.LOAD_SERVICES_SUCCESS,
                 payload: {
                     topicId: topic.id,
@@ -137,7 +137,7 @@ describe('services reducer', () => {
 
     describe('when populating topic services error object from an error response', () => {
         const topic = new TopicBuilder().withId(loadingTaskServicesError.topicId).build();
-        const action: BuildTopicServicesErrorAction = {
+        const action: BuildServicesErrorAction = {
             type: constants.LOAD_SERVICES_FAILURE,
             payload: {
                 topicId: topic.id,

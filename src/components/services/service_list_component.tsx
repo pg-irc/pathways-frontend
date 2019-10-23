@@ -7,7 +7,7 @@ import { HumanServiceData } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
-import { BuildTopicServicesRequestAction } from '../../stores/services/actions';
+import { BuildServicesRequestAction } from '../../stores/services/actions';
 import { textStyles, colors, values } from '../../application/styles';
 import { isError } from '../../selectors/services/is_error';
 import * as constants from '../../application/constants';
@@ -27,11 +27,11 @@ export interface ServiceListProps {
 }
 
 export interface ServiceListActions {
-    readonly dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong) => BuildTopicServicesRequestAction;
+    readonly dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
 }
 
 export interface ServicesUpdater {
-    readonly dispatchServicesRequest: () => BuildTopicServicesRequestAction;
+    readonly dispatchServicesRequest: () => BuildServicesRequestAction;
 }
 
 type Props = ServiceListProps & ServiceListActions & ServicesUpdater;
