@@ -8,7 +8,7 @@ describe('Search response validation', () => {
 
         it('returns the service data', () => {
             const serviceId = aString();
-            const result = toValidSearchData({
+            const result = toValidSearchData([{
                 service_name: aString(),
                 service_id: serviceId,
                 service_description: aString(),
@@ -30,16 +30,13 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            });
-            if (result.type !== 'ServiceSearchItem') {
-                throw Error('Unexpected type');
-            }
-            expect(result.service_id).toEqual(serviceId);
+            }]);
+            expect(result.validData[0].service_id).toEqual(serviceId);
         });
     });
     describe('with invalid data', () => {
         it('throws on missing field in service data', () => {
-            expect(() => toValidSearchData({
+            const validationResult = toValidSearchData([{
                 service_name: aString(),
                 // service_id: serviceId,
                 service_description: aString(),
@@ -61,12 +58,14 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            })).toThrow('service_id');
+            }]);
+            expect(validationResult.isValid).toBe(false);
+            expect(validationResult.errors).toContain('service_id');
         });
 
         it('throws on wrong field type in service data', () => {
             const invalidValue = aNumber();
-            expect(() => toValidSearchData({
+            const validationResult = toValidSearchData([{
                 service_name: aString(),
                 service_id: invalidValue,
                 service_description: aString(),
@@ -88,7 +87,9 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            })).toThrowError('service_id');
+            }]);
+            expect(validationResult.isValid).toBe(false);
+            expect(validationResult.errors).toContain('service_id');
         });
     });
 });
