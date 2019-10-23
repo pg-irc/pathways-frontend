@@ -36,21 +36,6 @@ describe('Search response validation', () => {
             }
             expect(result.service_id).toEqual(serviceId);
         });
-
-        it('returns the organization data', () => {
-            const organizationName = aString();
-            const result = toValidSearchData({
-                organization_id: aString(),
-                organization_name: organizationName,
-                organization_description: aString(),
-                organization_website: aString(),
-                organization_email: aString(),
-            });
-            if (result.type !== 'OrganizationSearchItem') {
-                throw Error('Unexpected type');
-            }
-            expect(result.organization_name).toEqual(organizationName);
-        });
     });
     describe('with invalid data', () => {
         it('throws on missing field in service data', () => {
@@ -104,26 +89,6 @@ describe('Search response validation', () => {
                     lng: aNumber(),
                 },
             })).toThrowError('service_id');
-        });
-
-        it('throws on missing field in organization data', () => {
-            expect(() => toValidSearchData({
-                organization_id: aString(),
-                organization_description: aString(),
-                organization_website: aString(),
-                organization_email: aString(),
-            })).toThrowError('organization_name');
-        });
-
-        it('throws on wrong field type in organization data', () => {
-            const invalidData = aNumber();
-            expect(() => toValidSearchData({
-                organization_id: aString(),
-                organization_name: invalidData,
-                organization_description: aString(),
-                organization_website: aString(),
-                organization_email: aString(),
-            })).toThrowError('organization_name');
         });
     });
 });

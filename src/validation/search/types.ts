@@ -22,14 +22,3 @@ export interface SearchServiceData {
     readonly latitude: number;
     readonly longitude: number;
 }
-
-export interface SearchOrganizationData {
-    readonly type: 'OrganizationSearchItem';
-    readonly organization_id: string;
-    readonly organization_name: string;
-    readonly organization_description: string;
-    readonly organization_website: string;
-    readonly organization_email: string;
-}
-
-export type SearchData = SearchServiceData | SearchOrganizationData;

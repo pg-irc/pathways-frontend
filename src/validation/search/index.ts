@@ -1,20 +1,15 @@
-import * as schema from './schema';
-import { SearchServiceData, SearchOrganizationData, UnvalidatedData, SearchData, LatLong } from './types';
 // tslint:disable-next-line:no-var-requires
 const Ajv = require('ajv');
+import * as schema from './schema';
+import { UnvalidatedData, SearchServiceData, LatLong } from './types';
 
-export const toValidSearchData = (hit: UnvalidatedData): SearchData => {
+export const toValidSearchData = (hit: UnvalidatedData): SearchServiceData => {
     const serviceErrors = getSearchServiceDataErrors(hit);
     if (!serviceErrors) {
         return toValidSearchServiceData(hit);
     }
 
-    const organizationErrors = getSearchOrganizationDataErrors(hit);
-    if (!organizationErrors) {
-        return toValidSearchOrganizationData(hit);
-    }
-
-    throw new Error(JSON.stringify({ serviceErrors, organizationErrors }));
+    throw new Error(JSON.stringify({ serviceErrors }));
 };
 
 const getSearchServiceDataErrors = (hit: UnvalidatedData): ReadonlyArray<Object> | undefined => {
@@ -40,21 +35,6 @@ const toValidSearchServiceData = (hit: UnvalidatedData): SearchServiceData => ({
 
     latitude: hit._geoloc.lat,
     longitude: hit._geoloc.lng,
-});
-
-const getSearchOrganizationDataErrors = (hit: UnvalidatedData): ReadonlyArray<Object> | undefined => {
-    const ajv = new Ajv();
-    const isValid = ajv.validate(schema.organizationSearchItem, hit);
-    return isValid ? undefined : ajv.errors;
-};
-
-const toValidSearchOrganizationData = (hit: UnvalidatedData): SearchOrganizationData => ({
-    type: 'OrganizationSearchItem',
-    organization_id: hit.organization_id,
-    organization_name: hit.organization_name,
-    organization_description: hit.organization_description,
-    organization_website: hit.organization_website,
-    organization_email: hit.organization_email,
 });
 
 export const toGeoCoderLatLong = (data: UnvalidatedData): LatLong => {

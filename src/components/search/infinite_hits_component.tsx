@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
-import { UnvalidatedData, SearchData, SearchServiceData } from '../../validation/search/types';
+import { UnvalidatedData, SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
@@ -44,14 +44,7 @@ const renderSearchHit = ({ item }: ListRenderItemInfo<UnvalidatedData>): JSX.Ele
 };
 
 const toValidService = (data: UnvalidatedData): HumanServiceData => {
-    return toHumanServiceData(throwOnOrganizationHit(toValidSearchData(data)));
-};
-
-const throwOnOrganizationHit = (searchHit: SearchData): SearchServiceData => {
-    if (searchHit.type === 'OrganizationSearchItem') {
-        throw new Error('Invalid search hit type, service expected');
-    }
-    return searchHit;
+    return toHumanServiceData(toValidSearchData(data));
 };
 
 const toHumanServiceData = (hit: SearchServiceData): HumanServiceData => ({
