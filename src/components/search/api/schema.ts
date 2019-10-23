@@ -1,7 +1,7 @@
 export const organizationUnderService = {
     'type': 'object',
     'properties': {
-        'id': { 'type': 'number' },
+        'id': { 'type': 'string' },
         'name': { 'type': 'string' },
         'website': { 'type': 'string' },
         'email': { 'type': 'string' },

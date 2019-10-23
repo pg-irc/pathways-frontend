@@ -20,7 +20,7 @@ describe('Search response validation', () => {
                     country: aString(),
                 },
                 organization: {
-                    id: aNumber(),
+                    id: aString(),
                     name: aString(),
                     website: aString(),
                     email: aString(),
