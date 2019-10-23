@@ -1,12 +1,11 @@
 // tslint:disable:no-expression-statement
-import * as R from 'ramda';
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import {
     BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction, BuildTopicServicesErrorAction,
     buildTopicServicesSuccessAction, buildTopicServicesErrorAction,
 } from '../stores/services/actions';
-import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../validation/services';
+import { validateServicesAtLocationArray } from '../validation/services';
 import { searchServices, APIResponse } from '../api';
 import { getDeviceLocation } from '../async/location';
 import {
@@ -40,9 +39,6 @@ export function* updateTaskServices(action: BuildTopicServicesRequestAction): Up
                 buildTopicServicesErrorAction(topicId, Errors.BadServerResponse),
             );
         }
-        // TODO refactor to remove the HumanServiceData data and use ValidatedServiceAtLocationJSON instead
-        // TODO refactor to rename ValidatedServiceAtLocationJSON to HumanServiceData, this means that the
-        //          client DTO will need to match the wire format exactly
         // TODO refactor the search client code to follow the same pattern
         const validationResult = validateServicesAtLocationArray(response.results);
         if (!validationResult.isValid) {
@@ -51,7 +47,7 @@ export function* updateTaskServices(action: BuildTopicServicesRequestAction): Up
             );
         }
         yield put(
-            buildTopicServicesSuccessAction(topicId, R.map(serviceFromValidatedJSON, validationResult.validData)),
+            buildTopicServicesSuccessAction(topicId, validationResult.validData),
         );
     } catch (error) {
         yield put(
