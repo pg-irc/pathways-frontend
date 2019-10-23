@@ -10,11 +10,12 @@ const Ajv = require('ajv');
 export const validateServicesAtLocationArray = (data: any): ValidationResult => {
     const ajv = new Ajv();
     const isValid = ajv.validate(serviceAtLocationArray, data) as boolean;
-    return isValid ? { isValid } : { isValid, errors: ajv.errorsText(ajv.errors) };
+    return isValid ? { isValid, validData: data } : { isValid, errors: ajv.errorsText(ajv.errors) };
 };
 
 export interface ValidationResult {
     readonly isValid: boolean;
+    readonly validData?: ValidatedServiceAtLocationJSON;
     readonly errors?: string;
 }
 

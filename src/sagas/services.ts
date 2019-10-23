@@ -6,14 +6,13 @@ import {
     BuildTopicServicesRequestAction, BuildTopicServicesSuccessAction, BuildTopicServicesErrorAction,
     buildTopicServicesSuccessAction, buildTopicServicesErrorAction,
 } from '../stores/services/actions';
-import { serviceFromValidatedJSON, validateServicesAtLocationArray, ValidatedServiceAtLocationJSON } from '../validation/services';
+import { serviceFromValidatedJSON, validateServicesAtLocationArray } from '../validation/services';
 import { searchServices, APIResponse } from '../api';
 import { getDeviceLocation } from '../async/location';
 import {
     isNoLocationPermissionError,
     isLocationFetchTimeoutError,
     isBadResponseError,
-    isInvalidResponseData,
 } from '../validation/errors/is_error';
 import { Errors } from '../validation/errors/types';
 
@@ -41,20 +40,18 @@ export function* updateTaskServices(action: BuildTopicServicesRequestAction): Up
                 buildTopicServicesErrorAction(topicId, Errors.BadServerResponse),
             );
         }
-        // TODO refactor to give a validator function that takes an any and returns a ValidatedServiceAtLocationJSON
         // TODO refactor to remove the HumanServiceData data and use ValidatedServiceAtLocationJSON instead
         // TODO refactor to rename ValidatedServiceAtLocationJSON to HumanServiceData, this means that the
         //          client DTO will need to match the wire format exactly
         // TODO refactor the search client code to follow the same pattern
-        const validator = validateServicesAtLocationArray(response.results);
-        if (isInvalidResponseData(validator)) {
+        const validationResult = validateServicesAtLocationArray(response.results);
+        if (!validationResult.isValid) {
             return yield put(
                 buildTopicServicesErrorAction(topicId, Errors.InvalidServerData),
             );
         }
-        const validatedResults: ValidatedServiceAtLocationJSON = response.results;
         yield put(
-            buildTopicServicesSuccessAction(topicId, R.map(serviceFromValidatedJSON, validatedResults)),
+            buildTopicServicesSuccessAction(topicId, R.map(serviceFromValidatedJSON, validationResult.validData)),
         );
     } catch (error) {
         yield put(
