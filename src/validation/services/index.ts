@@ -53,7 +53,7 @@ interface ValidatedLocationJSON {
     readonly addresses: ReadonlyArray<ValidatedAddressWithTypeJSON>;
 }
 
-interface ValidatedServiceAtLocationJSON {
+export interface ValidatedServiceAtLocationJSON {
     readonly service: ValidatedServiceJSON;
     readonly location: ValidatedLocationJSON;
 }
