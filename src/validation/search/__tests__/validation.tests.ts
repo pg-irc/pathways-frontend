@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { toValidSearchData, toGeoCoderLatLong } from '..';
+import { validateServiceSearchResponse, toGeoCoderLatLong } from '..';
 import { aString, aNumber } from '../../../helpers/random_test_values';
 
 describe('Search response validation', () => {
@@ -8,7 +8,7 @@ describe('Search response validation', () => {
 
         it('returns the service data', () => {
             const serviceId = aString();
-            const result = toValidSearchData([{
+            const result = validateServiceSearchResponse([{
                 service_name: aString(),
                 service_id: serviceId,
                 service_description: aString(),
@@ -36,7 +36,7 @@ describe('Search response validation', () => {
     });
     describe('with invalid data', () => {
         it('throws on missing field in service data', () => {
-            const validationResult = toValidSearchData([{
+            const validationResult = validateServiceSearchResponse([{
                 service_name: aString(),
                 // service_id: serviceId,
                 service_description: aString(),
@@ -65,7 +65,7 @@ describe('Search response validation', () => {
 
         it('throws on wrong field type in service data', () => {
             const invalidValue = aNumber();
-            const validationResult = toValidSearchData([{
+            const validationResult = validateServiceSearchResponse([{
                 service_name: aString(),
                 service_id: invalidValue,
                 service_description: aString(),

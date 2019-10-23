@@ -30,7 +30,6 @@ export function* updateTaskServices(action: actions.BuildServicesRequestAction):
             return yield put(actions.buildServicesErrorAction(topicId, Errors.BadServerResponse));
         }
 
-        // TODO refactor the search client code to follow the same pattern
         const validatedApiResponse = validateServicesAtLocationArray(apiResponse.results);
         if (!validatedApiResponse.isValid) {
             return yield put(actions.buildServicesErrorAction(topicId, Errors.InvalidServerData));

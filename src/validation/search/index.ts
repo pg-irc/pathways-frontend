@@ -3,8 +3,7 @@ const Ajv = require('ajv');
 import * as schema from './schema';
 import { SearchServiceData, UnvalidatedData, LatLong } from './types';
 
-// TODO rename to validateServiceSearchResponse
-export const toValidSearchData = (data: ReadonlyArray<UnvalidatedData>): ValidationResult => {
+export const validateServiceSearchResponse = (data: ReadonlyArray<UnvalidatedData>): ValidationResult => {
     const ajv = new Ajv();
     const isValid = ajv.validate(schema.serviceSearchItemArray, data);
     return isValid ? { isValid, validData: data } : { isValid, errors: ajv.errorsText(ajv.errors) };

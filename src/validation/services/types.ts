@@ -10,7 +10,7 @@ export interface PhoneNumber {
 
 export interface Address {
     readonly id: number;
-    readonly type: string; // TODO this can only have two values
+    readonly type: string;
     readonly address: string;
     readonly city: string;
     readonly stateProvince: string;

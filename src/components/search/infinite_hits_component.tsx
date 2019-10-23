@@ -7,7 +7,7 @@ import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { HumanServiceData } from '../../validation/services/types';
-import { toValidSearchData } from '../../validation/search';
+import { validateServiceSearchResponse } from '../../validation/search';
 
 export interface Props {
     readonly currentPath: string;
@@ -39,7 +39,7 @@ const getValidSearchResults = (props: Partial<Props & Actions>): ReadonlyArray<S
     if (isSearchStringEmpty) {
         return [];
     }
-    const validationResult = toValidSearchData(props.hits);
+    const validationResult = validateServiceSearchResponse(props.hits);
     if (!validationResult.isValid) {
         throw new Error(validationResult.errors);
     }
