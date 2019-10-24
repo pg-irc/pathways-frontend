@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { View, Icon, Text } from 'native-base';
-import { I18n } from '@lingui/react';
 import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from '../../validation/geocoder/types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
 import { InputFormSeparator } from './separators';
-import { ReactI18nRenderProp } from '../../locale/types';
 import { TouchableOpacity } from 'react-native';
 
 export interface Props {
+    readonly searchTermPlaceHolder: string;
+    readonly locationPlaceHolder: string;
     readonly currentRefinement: string;
     readonly location: string;
     readonly latLong: LatLong;
@@ -29,25 +29,20 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         props.refine(props.currentRefinement);
     }, [props.latLong]);
 
-    return <I18n>{(reactI18nRenderProp: ReactI18nRenderProp): JSX.Element => {
-        const _ = reactI18nRenderProp.i18n._.bind(reactI18nRenderProp.i18n);
-
-        return <View style={{ paddingHorizontal: 20, paddingBottom: 20, backgroundColor: colors.teal }}>
-            <SearchTextInput
-                iconName={'search'}
-                value={props.currentRefinement}
-                localizedPlaceholder={_('Search for services')}
-                onPress={props.openSearchTermInput} />
-            <InputFormSeparator />
-            <SearchTextInput
-                iconName={'map-marker'}
-                value={props.location}
-                localizedPlaceholder={_('Near My location')}
-                onPress={props.openLocationInput} />
-            <InputFormSeparator />
-        </View >;
-    }}
-    </I18n>;
+    return <View style={{ paddingHorizontal: 20, paddingBottom: 20, backgroundColor: colors.teal }}>
+        <SearchTextInput
+            iconName={'search'}
+            value={props.currentRefinement}
+            localizedPlaceholder={props.searchTermPlaceHolder}
+            onPress={props.openSearchTermInput} />
+        <InputFormSeparator />
+        <SearchTextInput
+            iconName={'map-marker'}
+            value={props.location}
+            localizedPlaceholder={props.locationPlaceHolder}
+            onPress={props.openLocationInput} />
+        <InputFormSeparator />
+    </View >;
 };
 
 interface SearchTextInputProps {
