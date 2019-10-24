@@ -6,19 +6,24 @@ export interface LatLong {
     readonly longitude: number;
 }
 
-export interface ServiceSearchHit {
+export interface SearchServiceData {
     readonly type: 'ServiceSearchItem';
     readonly service_id: string;
     readonly service_name: string;
     readonly service_description: string;
+    readonly organization_name: string;
+    readonly organization_website: string;
+    readonly organization_email: string;
     readonly street_address: string;
     readonly city: string;
+    readonly province: string;
     readonly postal_code: string;
+    readonly country: string;
     readonly latitude: number;
     readonly longitude: number;
 }
 
-export interface OrganizationSearchHit {
+export interface SearchOrganizationData {
     readonly type: 'OrganizationSearchItem';
     readonly organization_id: string;
     readonly organization_name: string;
@@ -27,4 +32,4 @@ export interface OrganizationSearchHit {
     readonly organization_email: string;
 }
 
-export type SearchHit = ServiceSearchHit | OrganizationSearchHit;
+export type SearchData = SearchServiceData | SearchOrganizationData;

@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, FlatList, ListRenderItemInfo } from 'react-native';
-import { Text } from 'native-base';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors, textStyles } from '../../application/styles';
-import { UnvalidatedData, ServiceSearchHit, OrganizationSearchHit } from './types';
-import { Trans } from '@lingui/react';
-import { toValidSearchHit } from './api/validation';
+import { colors } from '../../application/styles';
+import { UnvalidatedData, SearchData, SearchServiceData } from './types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
+import { ServiceListItemComponent } from '../services/service_list_item_component';
+import { Service } from '../../stores/services/types';
+import { toValidSearchData } from './api/validation';
 
 export interface Props {
     readonly currentPath: string;
@@ -39,55 +39,41 @@ const keyExtractor = (item: UnvalidatedData): string => (
 );
 
 const renderSearchHit = ({ item }: ListRenderItemInfo<UnvalidatedData>): JSX.Element => {
-    try {
-        return renderValidSearchHit(toValidSearchHit(item));
-    } catch (error) {
-        return <Text>Error</Text>;
+    const currentPath = '';
+    return <ServiceListItemComponent service={toValidService(item)} currentPath={currentPath} />;
+};
+
+const toValidService = (data: UnvalidatedData): Service => {
+    return toService(throwOnOrganizationHit(toValidSearchData(data)));
+};
+
+const throwOnOrganizationHit = (searchHit: SearchData): SearchServiceData => {
+    if (searchHit.type === 'OrganizationSearchItem') {
+        throw new Error('Invalid search hit type, service expected');
     }
+    return searchHit;
 };
 
-const renderValidSearchHit = (validHit: ServiceSearchHit | OrganizationSearchHit): JSX.Element => (
-    validHit.type === 'OrganizationSearchItem' ? renderOrganizationHit(validHit) : renderServiceHit(validHit)
-);
-
-const renderOrganizationHit = (hit: OrganizationSearchHit): JSX.Element => (
-    <View style={{ padding: 10, flexDirection: 'column', justifyContent: 'flex-start' }}>
-        <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}><Trans>ORGANIZATION</Trans></Text>
-        <Text style={[textStyles.paragraphBoldBlackLeft, { fontSize: 20, lineHeight: 25 }]}>{organizationName(hit)}</Text>
-        <Text style={[textStyles.paragraphStyle]}>{truncatedOrganizationDescription(hit)}</Text>
-    </View >
-);
-
-const organizationName = (hit: OrganizationSearchHit): string => (
-    hit.organization_name
-);
-
-const truncatedOrganizationDescription = (hit: OrganizationSearchHit): string => (
-    truncateDescription(hit.organization_description)
-);
-
-const truncateDescription = (description: string): string => {
-    const maxLength = 200;
-    return description.length > maxLength ? description.slice(0, maxLength - 3) + '...' : description;
-};
-
-const renderServiceHit = (hit: ServiceSearchHit): JSX.Element => (
-    <View style={{ padding: 10, flexDirection: 'column', justifyContent: 'flex-start' }}>
-        <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}><Trans>SERVICE</Trans></Text>
-        <Text style={[textStyles.paragraphBoldBlackLeft, { fontSize: 20, lineHeight: 25 }]}>{serviceName(hit)}</Text>
-        <Text style={[textStyles.paragraphStyle, { color: colors.darkerGrey }]}>{serviceAdress(hit)}</Text>
-        <Text style={[textStyles.paragraphStyle]}>{truncatedServiceDescription(hit)}</Text>
-    </View >
-);
-
-const serviceName = (hit: ServiceSearchHit): string => (
-    hit.service_name
-);
-
-const serviceAdress = (hit: ServiceSearchHit): string => (
-    hit.street_address + ', ' + hit.city + ' ' + hit.postal_code
-);
-
-const truncatedServiceDescription = (hit: ServiceSearchHit): string => (
-    truncateDescription(hit.service_description)
-);
+const toService = (hit: SearchServiceData): Service => ({
+    id: hit.service_id,
+    latitude: hit.latitude,
+    longitude: hit.longitude,
+    name: hit.service_name,
+    description: hit.service_description,
+    phoneNumbers: [{
+        type: 'toll free',
+        phoneNumber: '1-800-123-4567',
+    }],
+    addresses: [{
+        id: 1,
+        type: 'physical_address',
+        address: hit.street_address,
+        city: hit.city,
+        stateProvince: hit.province,
+        postalCode: hit.postal_code,
+        country: hit.country,
+    }],
+    website: hit.type,
+    email: hit.type,
+    organizationName: hit.type,
+});

@@ -87,6 +87,7 @@ const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): Readon
         topicServicesOrError.services : []
 );
 
+// TODO this should be a typedef, not inheritance
 interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
 
 type ServiceListListComponentProps = {

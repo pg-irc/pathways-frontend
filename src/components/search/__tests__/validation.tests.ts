@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { toValidSearchHit, toGeoCoderLatLong } from '../api/validation';
+import { toValidSearchData, toGeoCoderLatLong } from '../api/validation';
 import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
 
 describe('Search response validation', () => {
@@ -8,13 +8,24 @@ describe('Search response validation', () => {
 
         it('returns the service data', () => {
             const serviceId = aString();
-            const result = toValidSearchHit({
-                service_id: serviceId,
+            const result = toValidSearchData({
                 service_name: aString(),
+                service_id: serviceId,
                 service_description: aString(),
-                street_address: aString(),
-                city: aString(),
-                postal_code: aString(),
+                address: {
+                    address: aString(),
+                    city: aString(),
+                    state_province: aString(),
+                    postal_code: aString(),
+                    country: aString(),
+                },
+                organization: {
+                    id: aString(),
+                    name: aString(),
+                    website: aString(),
+                    email: aString(),
+                    service_count: aNumber(),
+                },
                 _geoloc: {
                     lat: aNumber(),
                     lng: aNumber(),
@@ -28,7 +39,7 @@ describe('Search response validation', () => {
 
         it('returns the organization data', () => {
             const organizationName = aString();
-            const result = toValidSearchHit({
+            const result = toValidSearchData({
                 organization_id: aString(),
                 organization_name: organizationName,
                 organization_description: aString(),
@@ -43,13 +54,24 @@ describe('Search response validation', () => {
     });
     describe('with invalid data', () => {
         it('throws on missing field in service data', () => {
-            expect(() => toValidSearchHit({
-                // service_id: serviceId,
+            expect(() => toValidSearchData({
                 service_name: aString(),
+                // service_id: serviceId,
                 service_description: aString(),
-                street_address: aString(),
-                city: aString(),
-                postal_code: aString(),
+                address: {
+                    address: aString(),
+                    city: aString(),
+                    state_province: aString(),
+                    postal_code: aString(),
+                    country: aString(),
+                },
+                organization: {
+                    id: aNumber(),
+                    name: aString(),
+                    website: aString(),
+                    email: aString(),
+                    service_count: aNumber(),
+                },
                 _geoloc: {
                     lat: aNumber(),
                     lng: aNumber(),
@@ -59,13 +81,24 @@ describe('Search response validation', () => {
 
         it('throws on wrong field type in service data', () => {
             const invalidValue = aNumber();
-            expect(() => toValidSearchHit({
-                service_id: invalidValue,
+            expect(() => toValidSearchData({
                 service_name: aString(),
+                service_id: invalidValue,
                 service_description: aString(),
-                street_address: aString(),
-                city: aString(),
-                postal_code: aString(),
+                address: {
+                    address: aString(),
+                    city: aString(),
+                    state_province: aString(),
+                    postal_code: aString(),
+                    country: aString(),
+                },
+                organization: {
+                    id: aNumber(),
+                    name: aString(),
+                    website: aString(),
+                    email: aString(),
+                    service_count: aNumber(),
+                },
                 _geoloc: {
                     lat: aNumber(),
                     lng: aNumber(),
@@ -74,7 +107,7 @@ describe('Search response validation', () => {
         });
 
         it('throws on missing field in organization data', () => {
-            expect(() => toValidSearchHit({
+            expect(() => toValidSearchData({
                 organization_id: aString(),
                 organization_description: aString(),
                 organization_website: aString(),
@@ -84,7 +117,7 @@ describe('Search response validation', () => {
 
         it('throws on wrong field type in organization data', () => {
             const invalidData = aNumber();
-            expect(() => toValidSearchHit({
+            expect(() => toValidSearchData({
                 organization_id: aString(),
                 organization_name: invalidData,
                 organization_description: aString(),

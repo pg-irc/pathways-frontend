@@ -1,3 +1,27 @@
+export const organizationUnderService = {
+    'type': 'object',
+    'properties': {
+        'id': { 'type': 'string' },
+        'name': { 'type': 'string' },
+        'website': { 'type': 'string' },
+        'email': { 'type': 'string' },
+        'service_count': { 'type': 'number' },
+    },
+    'required': ['id', 'name', 'website', 'email', 'service_count'],
+};
+
+export const address = {
+    'type': 'object',
+    'properties': {
+        'address': { 'type': 'string' },
+        'city': { 'type': 'string' },
+        'state_province': { 'type': 'string' },
+        'postal_code': { 'type': 'string' },
+        'country': { 'type': 'string' },
+    },
+    'required': ['address', 'city', 'state_province', 'postal_code', 'country'],
+};
+
 export const geoLocation = {
     'type': 'object',
     'properties': {
@@ -13,17 +37,16 @@ export const serviceSearchItem = {
         'service_name': { 'type': 'string' },
         'service_description': { 'type': 'string' },
         'service_id': { 'type': 'string' },
-        'street_address': { 'type': 'string' },
-        'city': { 'type': 'string' },
-        'postal_code': { 'type': 'string' },
+        'organization': organizationUnderService,
+        'address': address,
         '_geoloc': geoLocation,
     },
-    'required': ['service_name',
+    'required': [
+        'service_name',
         'service_description',
         'service_id',
-        'street_address',
-        'city',
-        'postal_code',
+        'organization',
+        'address',
         '_geoloc',
     ],
 };

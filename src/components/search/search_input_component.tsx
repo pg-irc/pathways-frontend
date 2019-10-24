@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TextInput } from 'react-native';
 import { View, Icon } from 'native-base';
+import { I18n } from '@lingui/react';
 import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from './types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
 import { InputFormSeparator } from './separators';
+import { ReactI18nRenderProp } from '../../locale/types';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -26,44 +28,58 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         props.refine(props.currentRefinement);
     }, [props.latLong]);
 
-    return <View style={{ paddingHorizontal: 20, paddingBottom: 20 }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <InputIcon name='search' />
-            <TextInput
-                style={applicationStyles.searchInput}
+    return <I18n>{(reactI18nRenderProp: ReactI18nRenderProp): JSX.Element => {
+        const _ = reactI18nRenderProp.i18n._.bind(reactI18nRenderProp.i18n);
+
+        return <View style={{ paddingHorizontal: 20, paddingBottom: 20, backgroundColor: colors.teal }}>
+            <SearchTextInput
+                iconName={'search'}
+                value={props.currentRefinement}
+                localizedPlaceholder={_('Search for services')}
                 onChangeText={(d: string): void => {
                     debug(`SearchInputComponent search text changed to '${d}'`);
                     props.refine(d);
-                }}
-                value={props.currentRefinement}
-                placeholder='Search for services and organizations' // TODO translate
-            />
-        </View>
-        <InputFormSeparator />
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <InputIcon name='map-marker' />
-            <TextInput
-                style={applicationStyles.searchInput}
+                }} />
+            <InputFormSeparator />
+            <SearchTextInput
+                iconName={'map-marker'}
+                value={location}
+                localizedPlaceholder={_('Near My location')}
                 onChangeText={(d: string): void => {
                     debug(`SearchInputComponent location text changed to '${d}'`);
                     setLocation(d);
                 }}
-                value={location}
-                onEndEditing={(): void => props.setLocation(location)}
-                placeholder='Near My location' // TODO translate
-            />
-        </View>
-        <InputFormSeparator />
-    </View >;
+                onEndEditing={props.setLocation} />
+            <InputFormSeparator />
+        </View >;
+    }}
+    </I18n>;
 };
 
-interface IconProps {
-    readonly name: string;
+interface SearchTextInputProps {
+    readonly iconName: string;
+    readonly value: string;
+    readonly localizedPlaceholder: string;
+    // tslint:disable-next-line:no-mixed-interface
+    readonly onChangeText: (s: string) => void;
+    readonly onEndEditing?: (s: string) => void;
 }
 
-const InputIcon = ({ name }: IconProps): JSX.Element => (
-    <Icon name={name}
-        type='FontAwesome'
-        style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3 }}
-    />
-);
+const SearchTextInput = (props: SearchTextInputProps): JSX.Element => {
+    const onEndEditing = props.onEndEditing ? (): void => props.onEndEditing(props.value) : undefined;
+    return <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Icon
+            name={props.iconName}
+            type='FontAwesome'
+            style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3 }}
+        />
+        <TextInput
+            style={applicationStyles.searchInput}
+            onChangeText={props.onChangeText}
+            value={props.value}
+            onEndEditing={onEndEditing}
+            placeholder={props.localizedPlaceholder}
+            placeholderTextColor={colors.white}
+        />
+    </View>;
+};
