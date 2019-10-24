@@ -51,6 +51,10 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
                 onEndEditing={(newLocation: string): void => {
                     setModalState('None');
                     setLocation(newLocation);
+                }}
+                onUseMyLocation={(): void => {
+                    setModalState('None');
+                    setLocation('');
                 }} />
             <TouchableOpacity
                 onPress={(): void => {
@@ -75,6 +79,7 @@ interface SearchTermInputModalProps {
     readonly visible: boolean;
     // tslint:disable-next-line:no-mixed-interface
     readonly onEndEditing: (s: string) => void;
+    readonly onUseMyLocation?: () => void;
 }
 
 const SearchTermInputModal: React.StatelessComponent<SearchTermInputModalProps> = (props: SearchTermInputModalProps): JSX.Element => {
@@ -108,6 +113,11 @@ const LocationInputModal: React.StatelessComponent<SearchTermInputModalProps> = 
     const onEndEditing = (): void => {
         props.onEndEditing(searchTerm);
     };
+    const onUseMyLocation = (): void => {
+        if (props.onUseMyLocation) {
+            props.onUseMyLocation();
+        }
+    };
     return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}    >
         <View style={{ flexDirection: 'column', marginTop: 22 }}>
             <View style={{ flexDirection: 'row' }}>
@@ -125,7 +135,7 @@ const LocationInputModal: React.StatelessComponent<SearchTermInputModalProps> = 
                     <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onEndEditing}>
+            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onUseMyLocation}>
                 <Icon name={'arrow-back'} style={{}} />
                 <Text><Trans>My location</Trans></Text>
             </TouchableOpacity>
