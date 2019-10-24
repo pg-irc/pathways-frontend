@@ -12,8 +12,9 @@ import { useTraceUpdate as useTraceComponentUpdates } from '../../helpers/debug'
 import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { View, Text } from 'native-base';
 import { TouchableOpacity, Modal, TextInput } from 'react-native';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
 import { SearchInputComponent } from './search_input_component';
+import { ReactI18nRenderProp } from '../../locale/types';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -27,13 +28,14 @@ export interface SearchComponentActions {
 
 type Props = SearchComponentProps & SearchComponentActions;
 
+const MODAL_NONE = '____MODAL_NONE____';
+const MODAL_SEARCH_TERM = '____MODAL_SEARCH_TERM____';
+const MODAL_LOCATION = '____MODAL_LOCATION____';
+export const USE_MY_LOCATION = '____USE_MY_LOCATION____';
+
 export const SearchComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceComponentUpdates('SearchComponent', props);
-
-    const MODAL_NONE = 'None';
-    const MODAL_SEARCH_TERM = 'Search';
-    const MODAL_LOCATION = 'Location';
 
     const [modalState, setModalState]: [string, (s: string) => void] = useState(MODAL_NONE);
     const [location, setLocation]: [string, (s: string) => void] = useState('');
@@ -47,40 +49,52 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
-    return <Content style={{ backgroundColor: colors.pale }}>
-        <InstantSearch indexName={servicesIndex()} {...props} >
-            <SearchTermInputModal
-                visible={modalState === MODAL_SEARCH_TERM}
-                onEndEditing={(_: string): void => {
-                    setModalState(MODAL_NONE);
-                }} />
+    return <I18n>{(reactI18nRenderProp: ReactI18nRenderProp): JSX.Element => {
 
-            <LocationInputModal
-                visible={modalState === MODAL_LOCATION}
-                onEndEditing={(newLocation: string): void => {
-                    setModalState(MODAL_NONE);
-                    setLocation(newLocation);
-                }}
-                onUseMyLocation={(): void => {
-                    setModalState(MODAL_NONE);
-                    setLocation('');
-                }} />
+        const _ = reactI18nRenderProp.i18n._.bind(reactI18nRenderProp.i18n);
+        const searchTermPlaceHolder = _('Search for services');
+        const locationPlaceHolder = _('City, address or postal code');
 
-            <SearchInputConnectedComponent
-                location={location}
-                setLocation={setLocation}
-                latLong={latLong}
-                openSearchTermInput={(): void => { setModalState(MODAL_SEARCH_TERM); }}
-                openLocationInput={(): void => { setModalState(MODAL_LOCATION); }}
-            />
-            <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
-            <InfiniteHitsConnectedComponent />
-        </InstantSearch>
-    </Content>;
+        return <Content style={{ backgroundColor: colors.pale }}>
+            <InstantSearch indexName={servicesIndex()} {...props} >
+                <SearchTermInputModal
+                    placeholder={searchTermPlaceHolder}
+                    visible={modalState === MODAL_SEARCH_TERM}
+                    onEndEditing={(_: string): void => {
+                        setModalState(MODAL_NONE);
+                    }} />
+
+                <LocationInputModal
+                    placeholder={locationPlaceHolder}
+                    visible={modalState === MODAL_LOCATION}
+                    onEndEditing={(s: string): void => {
+                        setLocation(s);
+                        setModalState(MODAL_NONE);
+                    }}
+                    onUseMyLocation={(): void => {
+                        setLocation(USE_MY_LOCATION);
+                        setModalState(MODAL_NONE);
+                    }} />
+
+                <SearchInputConnectedComponent
+                    location={location}
+                    setLocation={setLocation}
+                    latLong={latLong}
+                    searchTermPlaceHolder={searchTermPlaceHolder}
+                    locationPlaceHolder={locationPlaceHolder}
+                    openSearchTermInput={(): void => { setModalState(MODAL_SEARCH_TERM); }}
+                    openLocationInput={(): void => { setModalState(MODAL_LOCATION); }}
+                />
+                <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
+                <InfiniteHitsConnectedComponent />
+            </InstantSearch>
+        </Content>;
+    }}</I18n>;
 };
 
 interface SearchTermInputModalProps {
     readonly visible: boolean;
+    readonly placeholder: string;
     // tslint:disable-next-line:no-mixed-interface
     readonly onEndEditing: (s: string) => void;
     readonly onUseMyLocation?: () => void;
@@ -98,7 +112,7 @@ const SearchTermInputModal: React.StatelessComponent<SearchTermInputModalProps> 
             <Icon name={'arrow-back'} style={{}} />
         </TouchableOpacity>);
 
-    const ClearButton = (): JSX.Element => (
+    const ClearInputButton = (): JSX.Element => (
         <TouchableOpacity onPress={(): void => { setSearchTerm(''); }}>
             <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
         </TouchableOpacity>);
@@ -111,10 +125,10 @@ const SearchTermInputModal: React.StatelessComponent<SearchTermInputModalProps> 
                     value={searchTerm}
                     onChangeText={setSearchTerm}
                     onEndEditing={onEndEditing}
-                    placeholder={'Search term'}
+                    placeholder={props.placeholder}
                     style={{ flex: 1 }}
                 />
-                <ClearButton />
+                <ClearInputButton />
             </View>
         </View>
     </Modal>;
@@ -128,12 +142,12 @@ const LocationInputModal: React.StatelessComponent<SearchTermInputModalProps> = 
             <Icon name={'arrow-back'} style={{}} />
         </TouchableOpacity >);
 
-    const ClearButton = (): JSX.Element => (
+    const ClearInputButton = (): JSX.Element => (
         <TouchableOpacity onPress={(): void => { setLocation(''); }}>
             <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
         </TouchableOpacity>);
 
-    const MyLocationButton = (): JSX.Element => (
+    const UseMyLocationButton = (): JSX.Element => (
         <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onUseMyLocation}>
             <Icon name={'arrow-back'} style={{}} />
             <Text><Trans>My location</Trans></Text>
@@ -157,12 +171,12 @@ const LocationInputModal: React.StatelessComponent<SearchTermInputModalProps> = 
                     value={location}
                     onChangeText={setLocation}
                     onEndEditing={onEndEditing}
-                    placeholder={'Location'}
+                    placeholder={props.placeholder}
                     style={{ flex: 1 }}
                 />
-                <ClearButton />
+                <ClearInputButton />
             </View>
-            <MyLocationButton />
+            <UseMyLocationButton />
         </View>
     </Modal>;
 };
