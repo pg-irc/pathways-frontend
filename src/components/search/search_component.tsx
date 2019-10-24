@@ -84,15 +84,25 @@ interface SearchTermInputModalProps {
 
 const SearchTermInputModal: React.StatelessComponent<SearchTermInputModalProps> = (props: SearchTermInputModalProps): JSX.Element => {
     const [searchTerm, setSearchTerm]: [string, (s: string) => void] = useState('');
+
     const onEndEditing = (): void => {
         props.onEndEditing(searchTerm);
     };
+
+    const BackButton = (): JSX.Element => (
+        <TouchableOpacity onPress={onEndEditing}>
+            <Icon name={'arrow-back'} style={{}} />
+        </TouchableOpacity>);
+
+    const ClearButton = (): JSX.Element => (
+        <TouchableOpacity onPress={(): void => { setSearchTerm(''); }}>
+            <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
+        </TouchableOpacity>);
+
     return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}    >
         <View style={{ marginTop: 22 }}>
             <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity onPress={onEndEditing}>
-                    <Icon name={'arrow-back'} style={{}} />
-                </TouchableOpacity>
+                <BackButton />
                 <TextInput
                     value={searchTerm}
                     onChangeText={setSearchTerm}
@@ -100,45 +110,55 @@ const SearchTermInputModal: React.StatelessComponent<SearchTermInputModalProps> 
                     placeholder={'Search term'}
                     style={{ flex: 1 }}
                 />
-                <TouchableOpacity onPress={(): void => { setSearchTerm(''); }}>
-                    <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
-                </TouchableOpacity>
+                <ClearButton />
             </View>
         </View>
     </Modal>;
 };
 
 const LocationInputModal: React.StatelessComponent<SearchTermInputModalProps> = (props: SearchTermInputModalProps): JSX.Element => {
-    const [searchTerm, setSearchTerm]: [string, (s: string) => void] = useState('');
+    const [location, setLocation]: [string, (s: string) => void] = useState('');
+
+    const BackButton = (): JSX.Element => (
+        <TouchableOpacity onPress={onEndEditing} >
+            <Icon name={'arrow-back'} style={{}} />
+        </TouchableOpacity >);
+
+    const ClearButton = (): JSX.Element => (
+        <TouchableOpacity onPress={(): void => { setLocation(''); }}>
+            <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
+        </TouchableOpacity>);
+
+    const MyLocationButton = (): JSX.Element => (
+        <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onUseMyLocation}>
+            <Icon name={'arrow-back'} style={{}} />
+            <Text><Trans>My location</Trans></Text>
+        </TouchableOpacity>);
+
     const onEndEditing = (): void => {
-        props.onEndEditing(searchTerm);
+        props.onEndEditing(location);
     };
+
     const onUseMyLocation = (): void => {
         if (props.onUseMyLocation) {
             props.onUseMyLocation();
         }
     };
+
     return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}    >
         <View style={{ flexDirection: 'column', marginTop: 22 }}>
             <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity onPress={onEndEditing}>
-                    <Icon name={'arrow-back'} style={{}} />
-                </TouchableOpacity>
+                <BackButton />
                 <TextInput
-                    value={searchTerm}
-                    onChangeText={setSearchTerm}
+                    value={location}
+                    onChangeText={setLocation}
                     onEndEditing={onEndEditing}
                     placeholder={'Location'}
                     style={{ flex: 1 }}
                 />
-                <TouchableOpacity onPress={(): void => { setSearchTerm(''); }}>
-                    <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
-                </TouchableOpacity>
+                <ClearButton />
             </View>
-            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onUseMyLocation}>
-                <Icon name={'arrow-back'} style={{}} />
-                <Text><Trans>My location</Trans></Text>
-            </TouchableOpacity>
+            <MyLocationButton />
         </View>
     </Modal>;
 };
