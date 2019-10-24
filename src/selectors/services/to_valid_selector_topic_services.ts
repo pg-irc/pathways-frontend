@@ -1,4 +1,4 @@
-import { ValidServicesForTopic, ServiceMap, Id as ServiceId } from '../../stores/services/types';
+import { ValidServicesForTopic, ServiceMap, Id as ServiceId } from '../../validation/services/types';
 import { ValidSelectorTopicServices } from './types';
 import * as constants from '../../application/constants';
 

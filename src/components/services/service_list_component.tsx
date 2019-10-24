@@ -3,7 +3,7 @@ import React from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
-import { Service } from '../../stores/services/types';
+import { HumanServiceData } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
@@ -15,9 +15,9 @@ import { useRequestDataIfOnlineReturnRefreshDataCallback }
     from '../../hooks/use_request_data_if_online_return_refresh_data_callback';
 import { OnlineStatus, useOnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
-import { Errors } from '../../errors/types';
+import { Errors } from '../../validation/errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
-import { LatLong } from '../search/types';
+import { LatLong } from '../../validation/search/types';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -82,16 +82,16 @@ const isLoadingServices = (topicServicesOrError: SelectorTopicServices): boolean
     topicServicesOrError.type === constants.TOPIC_SERVICES_LOADING
 );
 
-const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<Service> => (
+const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<HumanServiceData> => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_VALID ?
         topicServicesOrError.services : []
 );
 
 // TODO this should be a typedef, not inheritance
-interface ServiceItemInfo extends ListRenderItemInfo<Service> { }
+interface ServiceItemInfo extends ListRenderItemInfo<HumanServiceData> { }
 
 type ServiceListListComponentProps = {
-    readonly services: ReadonlyArray<Service>;
+    readonly services: ReadonlyArray<HumanServiceData>;
     readonly refreshing: boolean;
     readonly onRefresh: () => void;
     readonly renderItem: ({ item }: ServiceItemInfo) => JSX.Element;
@@ -105,7 +105,7 @@ const ServicesComponent = (props: ServiceListListComponentProps): JSX.Element =>
         refreshing={props.refreshing}
         onRefresh={props.onRefresh}
         data={props.services}
-        keyExtractor={(service: Service): string => service.id}
+        keyExtractor={(service: HumanServiceData): string => service.id}
         renderItem={props.renderItem}
         ListEmptyComponent={props.listEmptyComponent}
         ListHeaderComponent={props.listHeaderComponent}

@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let no-class readonly-keyword no-this
 
-import { aNumber, aString } from '../../application/__tests__/helpers/random_test_values';
-import { Address } from '../../stores/services/types';
+import { aNumber, aString } from '../../helpers/random_test_values';
+import { Address } from '../../validation/services/types';
 import { getLocationTitleFromAddresses } from '../services/get_location_title_from_addresses';
 
 class AddressBuilder {

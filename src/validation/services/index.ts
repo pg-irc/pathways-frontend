@@ -1,10 +1,10 @@
+import * as R from 'ramda';
+import * as types from './types';
+import { serviceAtLocationArray } from './schema';
+
 // This is the documenated syntax for Ajv. Using an import here causes a runtime error.
 // tslint:disable-next-line:no-var-requires
 const Ajv = require('ajv');
-
-import * as R from 'ramda';
-import * as types from './types';
-import { serviceAtLocationArray } from './json_schema';
 
 // tslint:disable-next-line:no-any
 export const validateServicesAtLocationArray = (data: any): ValidationResult => {
@@ -18,12 +18,12 @@ export interface ValidationResult {
     readonly errors?: string;
 }
 
-export interface ValidatedPhoneNumberJSON {
+interface ValidatedPhoneNumberJSON {
     readonly phone_number_type: string;
     readonly phone_number: string;
 }
 
-export interface ValidatedAddressJSON {
+interface ValidatedAddressJSON {
     readonly id: number;
     readonly address: string;
     readonly city: string;
@@ -32,12 +32,12 @@ export interface ValidatedAddressJSON {
     readonly country: string;
 }
 
-export interface ValidatedAddressWithTypeJSON {
+interface ValidatedAddressWithTypeJSON {
     readonly address_type: string;
     readonly address: ValidatedAddressJSON;
 }
 
-export interface ValidatedServiceJSON {
+interface ValidatedServiceJSON {
     readonly id: string;
     readonly name: string;
     readonly description: string;
@@ -46,7 +46,7 @@ export interface ValidatedServiceJSON {
     readonly organization_name: string;
 }
 
-export interface ValidatedLocationJSON {
+interface ValidatedLocationJSON {
     readonly latitude?: number;
     readonly longitude?: number;
     readonly phone_numbers: ReadonlyArray<ValidatedPhoneNumberJSON>;
@@ -58,7 +58,7 @@ export interface ValidatedServiceAtLocationJSON {
     readonly location: ValidatedLocationJSON;
 }
 
-export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): types.Service => {
+export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): types.HumanServiceData => {
     const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): types.PhoneNumber => ({
         type: phoneNumber.phone_number_type,
         phoneNumber: phoneNumber.phone_number,

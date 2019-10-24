@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { textStyles, colors } from '../../application/styles';
-import { Service, PhoneNumber, Address } from '../../stores/services/types';
+import { HumanServiceData, PhoneNumber, Address } from '../../validation/services/types';
 import { View } from 'native-base';
 import { Text } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
@@ -15,7 +15,7 @@ import { AnalyticsLink, LinkTypes } from '../link/link';
 import { buildLinkContext } from '../../sagas/analytics/events';
 
 interface ServiceListItemProps {
-    readonly service: Service;
+    readonly service: HumanServiceData;
     readonly currentPath: string;
 }
 
@@ -110,7 +110,7 @@ const renderEmail = (email: string, currentPath: string, linkContext: string): J
     return <Text style={{ marginTop: 10 }}>{label}{link}</Text>;
 };
 
-const renderMapButtonIfLocation = (service: Service, currentPath: string, linkContext: string): JSX.Element => {
+const renderMapButtonIfLocation = (service: HumanServiceData, currentPath: string, linkContext: string): JSX.Element => {
     if (R.not(service.latitude && service.longitude)) {
         return <EmptyComponent />;
     }

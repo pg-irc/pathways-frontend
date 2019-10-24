@@ -1,9 +1,9 @@
 import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import * as actions from './actions';
-import * as types from './types';
+import * as types from '../../validation/services/types';
 
-import { Id, ServiceStore } from './types';
+import { Id, ServiceStore } from '../../validation/services/types';
 export { Id, ServiceStore };
 
 export function buildDefaultStore(): types.ServiceStore {
@@ -51,7 +51,7 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildT
     const newServices = action.payload.services;
     const topicId = action.payload.topicId;
     const newServicesAsMap = createServiceMap(newServices);
-    const newServiceIds = R.map((service: types.Service): string => service.id, newServices);
+    const newServiceIds = R.map((service: types.HumanServiceData): string => service.id, newServices);
     return {
         ...store,
         services: {
@@ -83,8 +83,8 @@ const updateServicesFailure = (store: types.ServiceStore, action: actions.BuildT
     };
 };
 
-const createServiceMap = (services: ReadonlyArray<types.Service>): types.ServiceMap => {
-    const theReducer = (serviceMap: types.ServiceMap, service: types.Service): types.ServiceMap => {
+const createServiceMap = (services: ReadonlyArray<types.HumanServiceData>): types.ServiceMap => {
+    const theReducer = (serviceMap: types.ServiceMap, service: types.HumanServiceData): types.ServiceMap => {
         return { ...serviceMap, [service.id]: service };
     };
     return services.reduce(theReducer, {});

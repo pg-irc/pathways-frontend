@@ -1,7 +1,7 @@
+import * as schema from './schema';
+import { SearchServiceData, SearchOrganizationData, UnvalidatedData, SearchData, LatLong } from './types';
 // tslint:disable-next-line:no-var-requires
 const Ajv = require('ajv');
-import * as schema from './schema';
-import { SearchServiceData, SearchOrganizationData, UnvalidatedData, SearchData, LatLong } from '../types';
 
 export const toValidSearchData = (hit: UnvalidatedData): SearchData => {
     const serviceErrors = getSearchServiceDataErrors(hit);
@@ -17,7 +17,6 @@ export const toValidSearchData = (hit: UnvalidatedData): SearchData => {
     throw new Error(JSON.stringify({ serviceErrors, organizationErrors }));
 };
 
-// tslint:disable-next-line:no-any
 const getSearchServiceDataErrors = (hit: UnvalidatedData): ReadonlyArray<Object> | undefined => {
     const ajv = new Ajv();
     const isValid = ajv.validate(schema.serviceSearchItem, hit);

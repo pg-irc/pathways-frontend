@@ -1,9 +1,9 @@
 import { Id as TopicId } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { Service } from './types';
-import { Errors } from '../../errors/types';
-import { LatLong } from '../../components/search/types';
+import { HumanServiceData } from '../../validation/services/types';
+import { Errors } from '../../validation/errors/types';
+import { LatLong } from '../../validation/search/types';
 
 export type BuildTopicServicesRequestAction = Readonly<ReturnType<typeof buildTopicServicesRequestAction>>;
 
@@ -22,7 +22,7 @@ export const buildTopicServicesRequestAction = (topicId: TopicId, manualUserLoca
 );
 
 // tslint:disable-next-line:typedef
-export const buildTopicServicesSuccessAction = (topicId: TopicId, services: ReadonlyArray<Service>) => (
+export const buildTopicServicesSuccessAction = (topicId: TopicId, services: ReadonlyArray<HumanServiceData>) => (
     helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { topicId, services })
 );
 

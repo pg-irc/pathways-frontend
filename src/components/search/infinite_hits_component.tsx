@@ -2,12 +2,12 @@ import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
-import { UnvalidatedData, SearchData, SearchServiceData } from './types';
+import { UnvalidatedData, SearchData, SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
-import { Service } from '../../stores/services/types';
-import { toValidSearchData } from './api/validation';
+import { HumanServiceData } from '../../validation/services/types';
+import { toValidSearchData } from '../../validation/search';
 
 export interface Props {
     readonly currentPath: string;
@@ -43,8 +43,8 @@ const renderSearchHit = ({ item }: ListRenderItemInfo<UnvalidatedData>): JSX.Ele
     return <ServiceListItemComponent service={toValidService(item)} currentPath={currentPath} />;
 };
 
-const toValidService = (data: UnvalidatedData): Service => {
-    return toService(throwOnOrganizationHit(toValidSearchData(data)));
+const toValidService = (data: UnvalidatedData): HumanServiceData => {
+    return toHumanServiceData(throwOnOrganizationHit(toValidSearchData(data)));
 };
 
 const throwOnOrganizationHit = (searchHit: SearchData): SearchServiceData => {
@@ -54,15 +54,15 @@ const throwOnOrganizationHit = (searchHit: SearchData): SearchServiceData => {
     return searchHit;
 };
 
-const toService = (hit: SearchServiceData): Service => ({
+const toHumanServiceData = (hit: SearchServiceData): HumanServiceData => ({
     id: hit.service_id,
     latitude: hit.latitude,
     longitude: hit.longitude,
     name: hit.service_name,
     description: hit.service_description,
     phoneNumbers: [{
-        type: 'toll free',
-        phoneNumber: '1-800-123-4567',
+        type: 'temp',
+        phoneNumber: '1-800-FOR-NOWW',
     }],
     addresses: [{
         id: 1,
@@ -73,7 +73,7 @@ const toService = (hit: SearchServiceData): Service => ({
         postalCode: hit.postal_code,
         country: hit.country,
     }],
-    website: hit.type,
-    email: hit.type,
-    organizationName: hit.type,
+    website: hit.organization_website,
+    email: hit.organization_email,
+    organizationName: hit.organization_name,
 });

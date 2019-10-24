@@ -1,12 +1,12 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import { aString, aNumber } from '../../../application/__tests__/helpers/random_test_values';
+import { aString, aNumber } from '../../../helpers/random_test_values';
 import { Id } from '../../services';
-import { Errors } from '../../../errors/types';
+import { Errors } from '../../../validation/errors/types';
 import {
-    ValidServicesForTopic, LoadingServicesForTopic, Service, ServiceMap,
+    ValidServicesForTopic, LoadingServicesForTopic, HumanServiceData, ServiceMap,
     ServiceStore, PhoneNumber, Address, ErrorServicesForTopic,
     ServicesForAllTopics,
-} from '../../services/types';
+} from '../../../validation/services/types';
 import * as constants from '../../../application/constants';
 
 export const buildNormalizedServices = (
@@ -140,7 +140,7 @@ export class ServiceBuilder {
         return this;
     }
 
-    build(): Service {
+    build(): HumanServiceData {
         return {
             id: this.id,
             latitude: this.latitude,

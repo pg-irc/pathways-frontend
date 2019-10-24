@@ -3,7 +3,7 @@ import { TextInput } from 'react-native';
 import { View, Icon } from 'native-base';
 import { I18n } from '@lingui/react';
 import { values, applicationStyles, colors } from '../../application/styles';
-import { LatLong } from './types';
+import { LatLong } from '../../validation/search/types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
 import { InputFormSeparator } from './separators';
 import { ReactI18nRenderProp } from '../../locale/types';
