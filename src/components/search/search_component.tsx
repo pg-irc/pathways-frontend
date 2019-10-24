@@ -30,7 +30,12 @@ type Props = SearchComponentProps & SearchComponentActions;
 export const SearchComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceComponentUpdates('SearchComponent', props);
-    const [modalState, setModalState]: [string, (s: string) => void] = useState('None');
+
+    const MODAL_NONE = 'None';
+    const MODAL_SEARCH_TERM = 'Search';
+    const MODAL_LOCATION = 'Location';
+
+    const [modalState, setModalState]: [string, (s: string) => void] = useState(MODAL_NONE);
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
@@ -45,18 +50,19 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
     return <Content style={{ backgroundColor: colors.pale }}>
         <InstantSearch indexName={servicesIndex()} {...props} >
             <SearchTermInputModal
-                visible={modalState === 'Search'}
+                visible={modalState === MODAL_SEARCH_TERM}
                 onEndEditing={(_: string): void => {
-                    setModalState('None');
+                    setModalState(MODAL_NONE);
                 }} />
+
             <LocationInputModal
-                visible={modalState === 'Location'}
+                visible={modalState === MODAL_LOCATION}
                 onEndEditing={(newLocation: string): void => {
-                    setModalState('None');
+                    setModalState(MODAL_NONE);
                     setLocation(newLocation);
                 }}
                 onUseMyLocation={(): void => {
-                    setModalState('None');
+                    setModalState(MODAL_NONE);
                     setLocation('');
                 }} />
 
@@ -64,23 +70,9 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
                 location={location}
                 setLocation={setLocation}
                 latLong={latLong}
-                openSearchTermInput={(): void => { setModalState('Search'); }}
-                openLocationInput={(): void => { setModalState('Location'); }}
+                openSearchTermInput={(): void => { setModalState(MODAL_SEARCH_TERM); }}
+                openLocationInput={(): void => { setModalState(MODAL_LOCATION); }}
             />
-
-            <TouchableOpacity
-                onPress={(): void => {
-                    setModalState('Search');
-                }}>
-                <Text>Click for search term</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={(): void => {
-                    setModalState('Location');
-                    setLocation('foo');
-                }}>
-                <Text>Click for location</Text>
-            </TouchableOpacity>
             <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
