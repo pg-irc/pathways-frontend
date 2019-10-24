@@ -40,23 +40,7 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
 
     return <Content style={{ backgroundColor: colors.pale }}>
         <InstantSearch indexName={servicesIndex()} {...props} >
-            <Modal
-                visible={modalState !== 'None'}
-                transparent={false}
-                presentationStyle={'fullScreen'}
-            >
-                <View style={{ marginTop: 22 }}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={(): void => { setModalState('None'); }}>
-                            <Icon name={'arrow-left'} type='FontAwesome' style={{ fontSize: values.mediumIconSize }} />
-                        </TouchableOpacity>
-                        <TextInput style={{ flex: 1 }} />
-                        <TouchableOpacity onPress={(): void => { setModalState('None'); }}>
-                            <Icon name={'map-marker'} type='FontAwesome' style={{ fontSize: values.mediumIconSize }} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+            <SearchTermInputModal visible={modalState === 'Search'} setModalState={setModalState} />
             <TouchableOpacity
                 onPress={(): void => {
                     setModalState('Search');
@@ -74,6 +58,28 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
     </Content>;
+};
+
+interface SearchTermInputModalProps {
+    readonly visible: boolean;
+    // tslint:disable-next-line:no-mixed-interface
+    readonly setModalState: (s: string) => void;
+}
+
+const SearchTermInputModal: React.StatelessComponent<SearchTermInputModalProps> = (props: SearchTermInputModalProps): JSX.Element => {
+    return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}    >
+        <View style={{ marginTop: 22 }}>
+            <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity onPress={(): void => { props.setModalState('None'); }}>
+                    <Icon name={'arrow-left'} type='FontAwesome' style={{ fontSize: values.mediumIconSize }} />
+                </TouchableOpacity>
+                <TextInput style={{ flex: 1 }} />
+                <TouchableOpacity onPress={(): void => { props.setModalState('None'); }}>
+                    <Icon name={'map-marker'} type='FontAwesome' style={{ fontSize: values.mediumIconSize }} />
+                </TouchableOpacity>
+            </View>
+        </View>
+    </Modal>;
 };
 
 const servicesIndex = (): string => (
