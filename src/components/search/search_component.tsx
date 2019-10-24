@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import React, { useState } from 'react';
-import { InstantSearch, connectInfiniteHits, connectConfigure } from 'react-instantsearch-native';
+import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
 import { Content, Icon } from 'native-base';
@@ -13,6 +13,7 @@ import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { View, Text } from 'native-base';
 import { TouchableOpacity, Modal, TextInput } from 'react-native';
 import { Trans } from '@lingui/react';
+import { SearchInputComponent } from './search_input_component';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -36,6 +37,8 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
     // tslint:disable-next-line:no-expression-statement
     useFetchLatLongFromLocation(location, setLatLong);
 
+    // TODO connect to SearchTermInputModal instead
+    const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
@@ -56,6 +59,15 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
                     setModalState('None');
                     setLocation('');
                 }} />
+
+            <SearchInputConnectedComponent
+                location={location}
+                setLocation={setLocation}
+                latLong={latLong}
+                openSearchTermInput={(): void => { setModalState('Search'); }}
+                openLocationInput={(): void => { setModalState('Location'); }}
+            />
+
             <TouchableOpacity
                 onPress={(): void => {
                     setModalState('Search');
