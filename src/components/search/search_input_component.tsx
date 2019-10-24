@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { TextInput } from 'react-native';
-import { View, Icon } from 'native-base';
+import React, { useEffect } from 'react';
+import { View, Icon, Text } from 'native-base';
 import { I18n } from '@lingui/react';
 import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from '../../validation/geocoder/types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
 import { InputFormSeparator } from './separators';
 import { ReactI18nRenderProp } from '../../locale/types';
+import { TouchableOpacity } from 'react-native';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -17,12 +17,13 @@ export interface Props {
 export interface Actions {
     readonly refine: (searchTerms: string) => string;
     readonly setLocation: (s: string) => void;
+    readonly openSearchTermInput: () => void;
+    readonly openLocationInput: () => void;
 }
 
 // tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
-    const [location, setLocation]: [string, (s: string) => void] = useState(props.location);
     useEffect(() => {
         debug(`SearchInput Component useEffect with '${props.currentRefinement}'`);
         props.refine(props.currentRefinement);
@@ -36,20 +37,13 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 iconName={'search'}
                 value={props.currentRefinement}
                 localizedPlaceholder={_('Search for services')}
-                onChangeText={(d: string): void => {
-                    debug(`SearchInputComponent search text changed to '${d}'`);
-                    props.refine(d);
-                }} />
+                onPress={props.openSearchTermInput} />
             <InputFormSeparator />
             <SearchTextInput
                 iconName={'map-marker'}
-                value={location}
+                value={props.location}
                 localizedPlaceholder={_('Near My location')}
-                onChangeText={(d: string): void => {
-                    debug(`SearchInputComponent location text changed to '${d}'`);
-                    setLocation(d);
-                }}
-                onEndEditing={props.setLocation} />
+                onPress={props.openLocationInput} />
             <InputFormSeparator />
         </View >;
     }}
@@ -61,25 +55,18 @@ interface SearchTextInputProps {
     readonly value: string;
     readonly localizedPlaceholder: string;
     // tslint:disable-next-line:no-mixed-interface
-    readonly onChangeText: (s: string) => void;
-    readonly onEndEditing?: (s: string) => void;
+    readonly onPress: () => void;
 }
 
 const SearchTextInput = (props: SearchTextInputProps): JSX.Element => {
-    const onEndEditing = props.onEndEditing ? (): void => props.onEndEditing(props.value) : undefined;
-    return <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    return <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={props.onPress}>
         <Icon
             name={props.iconName}
             type='FontAwesome'
             style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3 }}
         />
-        <TextInput
-            style={applicationStyles.searchInput}
-            onChangeText={props.onChangeText}
-            value={props.value}
-            onEndEditing={onEndEditing}
-            placeholder={props.localizedPlaceholder}
-            placeholderTextColor={colors.white}
-        />
-    </View>;
+        <Text style={applicationStyles.searchInput} >
+            {props.value || props.localizedPlaceholder}
+        </Text>
+    </TouchableOpacity>;
 };
