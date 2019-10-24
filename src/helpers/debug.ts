@@ -2,7 +2,7 @@
 import { useRef, useEffect } from 'react';
 import * as R from 'ramda';
 
-const DEBUG = false;
+const DEBUG = true;
 
 export const debug = (s: string): void => {
     if (DEBUG) {

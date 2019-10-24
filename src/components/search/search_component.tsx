@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import { InstantSearch, connectInfiniteHits, connectConfigure } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
-import { colors, values } from '../../application/styles';
+import { colors } from '../../application/styles';
 import { Content, Icon } from 'native-base';
 import { emptyComponent } from '../empty_component/empty_component';
 import { LatLong } from '../../validation/geocoder/types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
-import { useTraceUpdate as useTraceComponentUpdates } from '../../helpers/debug';
+import { useTraceUpdate as useTraceComponentUpdates, debug } from '../../helpers/debug';
 import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { View, Text } from 'native-base';
 import { TouchableOpacity, Modal, TextInput } from 'react-native';
@@ -40,7 +40,13 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
 
     return <Content style={{ backgroundColor: colors.pale }}>
         <InstantSearch indexName={servicesIndex()} {...props} >
-            <SearchTermInputModal visible={modalState === 'Search'} setModalState={setModalState} />
+            <SearchTermInputModal
+                visible={modalState === 'Search'}
+                onEndEditing={(searchTerm: string): void => {
+                    setModalState('None');
+                    // TODO set search term state...
+                    debug(searchTerm);
+                }} />
             <TouchableOpacity
                 onPress={(): void => {
                     setModalState('Search');
@@ -63,19 +69,29 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
 interface SearchTermInputModalProps {
     readonly visible: boolean;
     // tslint:disable-next-line:no-mixed-interface
-    readonly setModalState: (s: string) => void;
+    readonly onEndEditing: (s: string) => void;
 }
 
 const SearchTermInputModal: React.StatelessComponent<SearchTermInputModalProps> = (props: SearchTermInputModalProps): JSX.Element => {
+    const [searchTerm, setSearchTerm]: [string, (s: string) => void] = useState('');
+    const onEndEditing = (): void => {
+        props.onEndEditing(searchTerm);
+    };
     return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}    >
         <View style={{ marginTop: 22 }}>
             <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity onPress={(): void => { props.setModalState('None'); }}>
-                    <Icon name={'arrow-left'} type='FontAwesome' style={{ fontSize: values.mediumIconSize }} />
+                <TouchableOpacity onPress={onEndEditing}>
+                    <Icon name={'arrow-back'} style={{}} />
                 </TouchableOpacity>
-                <TextInput style={{ flex: 1 }} />
-                <TouchableOpacity onPress={(): void => { props.setModalState('None'); }}>
-                    <Icon name={'map-marker'} type='FontAwesome' style={{ fontSize: values.mediumIconSize }} />
+                <TextInput
+                    value={searchTerm}
+                    onChangeText={setSearchTerm}
+                    onEndEditing={onEndEditing}
+                    placeholder={'Placeholder'}
+                    style={{ flex: 1 }}
+                />
+                <TouchableOpacity onPress={(): void => { setSearchTerm(''); }}>
+                    <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
                 </TouchableOpacity>
             </View>
         </View>
