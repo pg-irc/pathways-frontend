@@ -1,6 +1,6 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
-import { LatLong } from '../validation/geocoder/types';
+import { LatLong } from '../validation/latlong/types';
 
 // tslint:disable-next-line:typedef
 export const setManualUserLocation = (userLocation: LatLong) => (
