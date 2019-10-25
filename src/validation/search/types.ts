@@ -1,4 +1,4 @@
-import { LatLong } from '../geocoder/types';
+import { LatLong } from '../latlong/types';
 
 interface OrganizationUnderService {
     readonly id: string;

@@ -5,7 +5,7 @@ import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
 import { Content, Icon } from 'native-base';
 import { emptyComponent } from '../empty_component/empty_component';
-import { LatLong } from '../../validation/geocoder/types';
+import { LatLong } from '../../validation/latlong/types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
 import { useTraceUpdate as useTraceComponentUpdates } from '../../helpers/debug';
@@ -50,6 +50,7 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
         const _ = reactI18nRenderProp.i18n._.bind(reactI18nRenderProp.i18n);
         const searchTermPlaceHolder = _('Search for services');
         const locationPlaceHolder = _('City, address or postal code');
+        const nearMyLocationPlaceHolder = _('Near My location');
 
         return <Content style={{ backgroundColor: colors.pale }}>
             <InstantSearch indexName={servicesIndex()} {...props} >
@@ -78,6 +79,7 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
                     latLong={latLong}
                     searchTermPlaceHolder={searchTermPlaceHolder}
                     locationPlaceHolder={locationPlaceHolder}
+                    nearMyLocationPlaceHolder={nearMyLocationPlaceHolder}
                     openSearchTermInput={(): void => { setModalState(MODAL_SEARCH_TERM); }}
                     openLocationInput={(): void => { setModalState(MODAL_LOCATION); }}
                 />

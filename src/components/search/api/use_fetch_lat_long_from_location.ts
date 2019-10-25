@@ -1,8 +1,8 @@
 // tslint:disable:no-expression-statement
 import { useEffect } from 'react';
 import { OnlineStatus, useOnlineStatus } from '../../../hooks/use_online_status';
-import { LatLong } from '../../../validation/geocoder/types';
-import { toGeoCoderLatLong } from '../../../validation/geocoder';
+import { LatLong } from '../../../validation/latlong/types';
+import { toGeoCoderLatLong } from '../../../validation/latlong';
 import BuildUrl from 'build-url';
 import * as R from 'ramda';
 import { debug } from '../../../helpers/debug';

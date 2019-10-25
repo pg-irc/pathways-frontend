@@ -6,8 +6,8 @@ import { SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
-import { HumanServiceData } from '../../validation/services/types';
 import { validateServiceSearchResponse } from '../../validation/search';
+import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 
 export interface Props {
     readonly currentPath: string;
@@ -55,27 +55,3 @@ const renderSearchHit = ({ item }: ListRenderItemInfo<SearchServiceData>): JSX.E
     const currentPath = '';
     return <ServiceListItemComponent service={toHumanServiceData(item)} currentPath={currentPath} />;
 };
-
-const toHumanServiceData = (data: SearchServiceData): HumanServiceData => ({
-    id: data.service_id,
-    latitude: data._geoloc.lat,
-    longitude: data._geoloc.lng,
-    name: data.service_name,
-    description: data.service_description,
-    phoneNumbers: [{
-        type: 'temp',
-        phoneNumber: '1-800-FOR-NOWW',
-    }],
-    addresses: [{
-        id: 1,
-        type: 'physical_address',
-        address: data.address.address,
-        city: data.address.city,
-        stateProvince: data.address.state_province,
-        postalCode: data.address.postal_code,
-        country: data.address.country,
-    }],
-    website: data.organization.website,
-    email: data.organization.email,
-    organizationName: data.organization.name,
-});
