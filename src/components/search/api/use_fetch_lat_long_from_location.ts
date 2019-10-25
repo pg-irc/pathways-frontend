@@ -9,20 +9,24 @@ import { debug } from '../../../helpers/debug';
 
 export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
     const onlineStatus = useOnlineStatus();
-    useEffect(() => fetchLatLongFromAddress(location, onlineStatus, setLatLong), [onlineStatus, location]);
+    useEffect(() => fetchLatLongFromLocation(location, onlineStatus, setLatLong), [onlineStatus, location]);
 };
 
-const fetchLatLongFromAddress = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
+const fetchLatLongFromLocation = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
     if (location !== '' && onlineStatus === OnlineStatus.Online) {
         debug(`using fetchLatLongFromAddress with ${location}`);
-        const url = buildUrl(location);
-        fetch(url).
-            then(getTextIfValidOrThrow).
-            then(JSON.parse).
-            then(toGeoCoderLatLong).
-            then(setLatLong).
-            catch(handleError(setLatLong));
+        fetchLatLongFromAddress(location, setLatLong);
     }
+};
+
+const fetchLatLongFromAddress = (location: string, setLatLong: (latLong: LatLong) => void): void => {
+    const url = buildUrl(location);
+    fetch(url).
+        then(getTextIfValidOrThrow).
+        then(JSON.parse).
+        then(toGeoCoderLatLong).
+        then(setLatLong).
+        catch(handleError(setLatLong));
 };
 
 const buildUrl = (location: string): string => (
