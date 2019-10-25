@@ -6,6 +6,9 @@ import { toGeoCoderLatLong } from '../../../validation/geocoder';
 import BuildUrl from 'build-url';
 import * as R from 'ramda';
 import { debug } from '../../../helpers/debug';
+import { getDeviceLocation, NoLocationPermissionErrorAction, LocationFetchTimeoutErrorAction } from '../../../async/location';
+import * as errors from '../../../validation/errors/is_error';
+import { USE_MY_LOCATION } from '../constants';
 
 export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
     const onlineStatus = useOnlineStatus();
@@ -13,10 +16,25 @@ export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLo
 };
 
 const fetchLatLongFromLocation = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
-    if (location !== '' && onlineStatus === OnlineStatus.Online) {
+    if (location === USE_MY_LOCATION) {
+        debug('Getting location from device');
+        fetchLatLongFromDevice(setLatLong);
+    } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
         debug(`using fetchLatLongFromAddress with ${location}`);
         fetchLatLongFromAddress(location, setLatLong);
     }
+};
+
+const fetchLatLongFromDevice = (setLatLong: (latLong: LatLong) => void): void => {
+    getDeviceLocation().then((location: DeviceLocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction): void => {
+        if (errors.isNoLocationPermissionError(location)) {
+            setLatLong({ lat: 0, lng: 0 });
+        } else if (errors.isLocationFetchTimeoutError(location)) {
+            setLatLong({ lat: 0, lng: 0 });
+        } else {
+            setLatLong({ lat: location.coords.latitude, lng: location.coords.longitude });
+        }
+    });
 };
 
 const fetchLatLongFromAddress = (location: string, setLatLong: (latLong: LatLong) => void): void => {
