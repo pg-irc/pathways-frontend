@@ -15,6 +15,7 @@ import { TouchableOpacity, Modal, TextInput } from 'react-native';
 import { Trans, I18n } from '@lingui/react';
 import { SearchInputComponent } from './search_input_component';
 import { ReactI18nRenderProp } from '../../locale/types';
+import { MODAL_NONE, MODAL_SEARCH_TERM, MODAL_LOCATION, USE_MY_LOCATION } from './constants';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -27,11 +28,6 @@ export interface SearchComponentActions {
 }
 
 type Props = SearchComponentProps & SearchComponentActions;
-
-const MODAL_NONE = '____MODAL_NONE____';
-const MODAL_SEARCH_TERM = '____MODAL_SEARCH_TERM____';
-const MODAL_LOCATION = '____MODAL_LOCATION____';
-export const USE_MY_LOCATION = '____USE_MY_LOCATION____';
 
 export const SearchComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
