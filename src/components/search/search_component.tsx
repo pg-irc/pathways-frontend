@@ -91,7 +91,6 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
 interface SearchTermInputModalProps {
     readonly visible: boolean;
     readonly placeholder: string;
-    // tslint:disable-next-line:no-mixed-interface
     readonly onEndEditing: (s: string) => void;
     readonly onUseMyLocation?: () => void;
 }

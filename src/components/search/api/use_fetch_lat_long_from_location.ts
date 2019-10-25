@@ -38,7 +38,7 @@ const fetchLatLongFromDevice = (setLatLong: (latLong: LatLong) => void): void =>
 };
 
 const fetchLatLongFromAddress = (location: string, setLatLong: (latLong: LatLong) => void): void => {
-    const url = buildUrl(location);
+    const url = buildGeoCoderUrl(location);
     fetch(url).
         then(getTextIfValidOrThrow).
         then(JSON.parse).
@@ -47,7 +47,7 @@ const fetchLatLongFromAddress = (location: string, setLatLong: (latLong: LatLong
         catch(handleError(setLatLong));
 };
 
-const buildUrl = (location: string): string => (
+const buildGeoCoderUrl = (location: string): string => (
     BuildUrl('https://geocoder.ca', {
         queryParams: {
             locate: location,
