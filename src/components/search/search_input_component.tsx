@@ -49,7 +49,6 @@ interface SearchTextInputProps {
     readonly iconName: string;
     readonly value: string;
     readonly localizedPlaceholder: string;
-    // tslint:disable-next-line:no-mixed-interface
     readonly onPress: () => void;
 }
 
