@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Icon } from 'native-base';
 import { View } from 'native-base';
 import { TouchableOpacity, Modal, TextInput } from 'react-native';
+import { colors } from '../../application/styles';
 
 interface Props {
     readonly visible: boolean;
@@ -36,17 +37,15 @@ export const SearchTermInputModal: React.StatelessComponent<Props> = (props: Pro
     );
 
     return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}>
-        <View style={{ marginTop: 22 }}>
-            <View style={{ flexDirection: 'row' }}>
-                <BackButton />
-                <TextInput
-                    value={searchTerm}
-                    onChangeText={setSearchTerm}
-                    onEndEditing={onEndEditing}
-                    placeholder={props.placeholder}
-                    style={{ flex: 1 }} />
-                <ClearInputButton />
-            </View>
+        <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: colors.darkerGrey }}>
+            <BackButton />
+            <TextInput
+                value={searchTerm}
+                onChangeText={setSearchTerm}
+                onEndEditing={onEndEditing}
+                placeholder={props.placeholder}
+                style={{ flex: 1 }} />
+            <ClearInputButton />
         </View>
     </Modal>;
 };

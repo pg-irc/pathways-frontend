@@ -3,6 +3,7 @@ import { Icon } from 'native-base';
 import { View, Text } from 'native-base';
 import { TouchableOpacity, Modal, TextInput } from 'react-native';
 import { Trans } from '@lingui/react';
+import { colors } from '../../application/styles';
 
 interface Props {
     readonly visible: boolean;
@@ -29,14 +30,14 @@ export const LocationInputModal: React.StatelessComponent<Props> = (props: Props
     const clearLocation = (): void => setLocation('');
 
     const UseMyLocationButton = (): JSX.Element => (
-        <TouchableOpacity style={{ flexDirection: 'row' }} onPress={props.onUseMyLocation}>
+        <TouchableOpacity style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: colors.darkerGrey }} onPress={props.onUseMyLocation}>
             <Icon name={'arrow-back'} style={{}} />
             <Text><Trans>My location</Trans></Text>
         </TouchableOpacity>);
 
     return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}    >
-        <View style={{ flexDirection: 'column', marginTop: 22 }}>
-            <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'column' }}>
+            <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: colors.darkerGrey }}>
                 <BackButton />
                 <TextInput
                     value={location}
