@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
@@ -34,16 +34,16 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
     useTraceComponentUpdates('SearchComponent', props);
 
     const [modalState, setModalState]: [string, (s: string) => void] = useState(MODAL_NONE);
+    const [searchTerm, setSearchTerm]: [string, (s: string) => void] = useState('');
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
     // tslint:disable-next-line:no-expression-statement
     useFetchLatLongFromLocation(location, setLatLong);
 
-    // disconnect SearchInputConnectedComponent
-    // remove refinement properties from SearchInputComponent
+    // make SearchInputComponent read-only
+    // refactor localized strings
     const ConnectedSearchTermInputModal = connectSearchBox(SearchTermInputModal);
-    const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
@@ -59,8 +59,9 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
                 <ConnectedSearchTermInputModal
                     placeholder={searchTermPlaceHolder}
                     visible={modalState === MODAL_SEARCH_TERM}
-                    onEndEditing={(_: string): void => {
+                    onEndEditing={(newSearchTerm: string): void => {
                         setModalState(MODAL_NONE);
+                        setSearchTerm(newSearchTerm);
                     }} />
 
                 <LocationInputModal
@@ -75,7 +76,8 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
                         setModalState(MODAL_NONE);
                     }} />
 
-                <SearchInputConnectedComponent
+                <SearchInputComponent
+                    searchTerm={searchTerm}
                     location={location}
                     setLocation={setLocation}
                     latLong={latLong}
@@ -98,11 +100,14 @@ interface SearchTermInputModalProps {
     readonly currentRefinement: string;
     readonly refine: (searchTerms: string) => string;
     readonly onEndEditing: (s: string) => void;
-    readonly onUseMyLocation?: () => void;
 }
 
 const SearchTermInputModal: React.StatelessComponent<SearchTermInputModalProps> = (props: SearchTermInputModalProps): JSX.Element => {
-    const [searchTerm, setSearchTerm]: [string, (s: string) => void] = useState('');
+    const [searchTerm, setSearchTerm]: [string, (s: string) => void] = useState(props.currentRefinement);
+
+    useEffect(() => {
+        props.refine(searchTerm);
+    });
 
     const onEndEditing = (): void => {
         props.onEndEditing(searchTerm);

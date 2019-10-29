@@ -1,23 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Icon, Text } from 'native-base';
 import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from '../../validation/latlong/types';
-import { debug, useTraceUpdate } from '../../helpers/debug';
+import { useTraceUpdate } from '../../helpers/debug';
 import { InputFormSeparator } from './separators';
 import { TouchableOpacity } from 'react-native';
 import { USE_MY_LOCATION } from './constants';
 
 export interface Props {
+    readonly searchTerm: string;
     readonly searchTermPlaceHolder: string;
     readonly locationPlaceHolder: string;
     readonly nearMyLocationPlaceHolder: string;
-    readonly currentRefinement: string;
     readonly location: string;
     readonly latLong: LatLong;
 }
 
 export interface Actions {
-    readonly refine: (searchTerms: string) => string;
     readonly setLocation: (s: string) => void;
     readonly openSearchTermInput: () => void;
     readonly openLocationInput: () => void;
@@ -26,17 +25,13 @@ export interface Actions {
 // tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
-    useEffect(() => {
-        debug(`SearchInput Component useEffect with '${props.currentRefinement}'`);
-        props.refine(props.currentRefinement);
-    }, [props.latLong]);
 
     const location = props.location === USE_MY_LOCATION ? props.nearMyLocationPlaceHolder : props.location;
 
     return <View style={{ paddingHorizontal: 20, paddingBottom: 20, backgroundColor: colors.teal }}>
         <SearchTextInput
             iconName={'search'}
-            value={props.currentRefinement}
+            value={props.searchTerm}
             localizedPlaceholder={props.searchTermPlaceHolder}
             onPress={props.openSearchTermInput} />
         <InputFormSeparator />
