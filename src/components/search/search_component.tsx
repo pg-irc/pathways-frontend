@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
@@ -16,6 +16,7 @@ import { Trans, I18n } from '@lingui/react';
 import { SearchTermAndLocationComponent } from './search_term_and_location_component';
 import { ReactI18nRenderProp } from '../../locale/types';
 import { MODAL_NONE, MODAL_SEARCH_TERM, MODAL_LOCATION, USE_MY_LOCATION } from './constants';
+import { SearchTermInputModal } from './search_term_input_modal';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -91,52 +92,6 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
             </InstantSearch>
         </Content>;
     }}</I18n>;
-};
-
-interface SearchTermInputModalProps {
-    readonly visible: boolean;
-    readonly placeholder: string;
-    readonly currentRefinement: string;
-    readonly refine: (searchTerms: string) => string;
-    readonly onEndEditing: (s: string) => void;
-}
-
-const SearchTermInputModal: React.StatelessComponent<SearchTermInputModalProps> = (props: SearchTermInputModalProps): JSX.Element => {
-    const [searchTerm, setSearchTerm]: [string, (s: string) => void] = useState(props.currentRefinement);
-
-    useEffect(() => {
-        props.refine(searchTerm);
-    });
-
-    const onEndEditing = (): void => {
-        props.onEndEditing(searchTerm);
-    };
-
-    const BackButton = (): JSX.Element => (
-        <TouchableOpacity onPress={onEndEditing}>
-            <Icon name={'arrow-back'} style={{}} />
-        </TouchableOpacity>);
-
-    const ClearInputButton = (): JSX.Element => (
-        <TouchableOpacity onPress={(): void => { setSearchTerm(''); }}>
-            <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
-        </TouchableOpacity>);
-
-    return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}    >
-        <View style={{ marginTop: 22 }}>
-            <View style={{ flexDirection: 'row' }}>
-                <BackButton />
-                <TextInput
-                    value={searchTerm}
-                    onChangeText={setSearchTerm}
-                    onEndEditing={onEndEditing}
-                    placeholder={props.placeholder}
-                    style={{ flex: 1 }}
-                />
-                <ClearInputButton />
-            </View>
-        </View>
-    </Modal>;
 };
 
 interface LocationInputModalProps {
