@@ -40,7 +40,11 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
     // tslint:disable-next-line:no-expression-statement
     useFetchLatLongFromLocation(location, setLatLong);
 
-    // TODO connect to SearchTermInputModal instead
+    // Make separate Props types for each modal
+    // Add refinement properties to SearchTermInputModal
+    // create SearchTermConnectedInputModal to connect
+    // disconnect SearchInputConnectedComponent
+    // remove refinement properties from SearchInputComponent
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
@@ -131,7 +135,14 @@ const SearchTermInputModal: React.StatelessComponent<SearchTermInputModalProps> 
     </Modal>;
 };
 
-const LocationInputModal: React.StatelessComponent<SearchTermInputModalProps> = (props: SearchTermInputModalProps): JSX.Element => {
+interface LocationInputModalProps {
+    readonly visible: boolean;
+    readonly placeholder: string;
+    readonly onEndEditing: (s: string) => void;
+    readonly onUseMyLocation: () => void;
+}
+
+const LocationInputModal: React.StatelessComponent<LocationInputModalProps> = (props: LocationInputModalProps): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState('');
 
     const BackButton = (): JSX.Element => (
@@ -145,19 +156,13 @@ const LocationInputModal: React.StatelessComponent<SearchTermInputModalProps> = 
         </TouchableOpacity>);
 
     const UseMyLocationButton = (): JSX.Element => (
-        <TouchableOpacity style={{ flexDirection: 'row' }} onPress={onUseMyLocation}>
+        <TouchableOpacity style={{ flexDirection: 'row' }} onPress={props.onUseMyLocation}>
             <Icon name={'arrow-back'} style={{}} />
             <Text><Trans>My location</Trans></Text>
         </TouchableOpacity>);
 
     const onEndEditing = (): void => {
         props.onEndEditing(location);
-    };
-
-    const onUseMyLocation = (): void => {
-        if (props.onUseMyLocation) {
-            props.onUseMyLocation();
-        }
     };
 
     return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}    >
