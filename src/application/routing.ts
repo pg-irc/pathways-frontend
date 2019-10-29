@@ -28,6 +28,7 @@ export enum Routes {
     RecommendedTopics,
     BookmarkedTopics,
     Search,
+    OrganizationDetail,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -56,6 +57,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/bookmarked-topics';
         case Routes.Search:
             return '/search';
+        case Routes.OrganizationDetail:
+            return '/organization/:organizationId';
     }
 };
 

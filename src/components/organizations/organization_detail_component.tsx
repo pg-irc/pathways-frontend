@@ -27,7 +27,6 @@ export const OrganizationDetailComponent = (): JSX.Element => (
     <Tabs>
         <Tab heading='Tab1'>
             <View>
-
             </View>
         </Tab>
         <Tab heading='Tab2'>
