@@ -3,20 +3,19 @@ import React, { useState } from 'react';
 import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
-import { Content, Icon } from 'native-base';
+import { Content } from 'native-base';
 import { emptyComponent } from '../empty_component/empty_component';
 import { LatLong } from '../../validation/latlong/types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
 import { useTraceUpdate as useTraceComponentUpdates } from '../../helpers/debug';
 import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
-import { View, Text } from 'native-base';
-import { TouchableOpacity, Modal, TextInput } from 'react-native';
-import { Trans, I18n } from '@lingui/react';
+import { I18n } from '@lingui/react';
 import { SearchTermAndLocationComponent } from './search_term_and_location_component';
 import { ReactI18nRenderProp } from '../../locale/types';
 import { MODAL_NONE, MODAL_SEARCH_TERM, MODAL_LOCATION, USE_MY_LOCATION } from './constants';
 import { SearchTermInputModal } from './search_term_input_modal';
+import { LocationInputModal } from './location_input_modal';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -92,54 +91,6 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
             </InstantSearch>
         </Content>;
     }}</I18n>;
-};
-
-interface LocationInputModalProps {
-    readonly visible: boolean;
-    readonly placeholder: string;
-    readonly onEndEditing: (s: string) => void;
-    readonly onUseMyLocation: () => void;
-}
-
-const LocationInputModal: React.StatelessComponent<LocationInputModalProps> = (props: LocationInputModalProps): JSX.Element => {
-    const [location, setLocation]: [string, (s: string) => void] = useState('');
-
-    const BackButton = (): JSX.Element => (
-        <TouchableOpacity onPress={onEndEditing} >
-            <Icon name={'arrow-back'} style={{}} />
-        </TouchableOpacity >);
-
-    const ClearInputButton = (): JSX.Element => (
-        <TouchableOpacity onPress={(): void => { setLocation(''); }}>
-            <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
-        </TouchableOpacity>);
-
-    const UseMyLocationButton = (): JSX.Element => (
-        <TouchableOpacity style={{ flexDirection: 'row' }} onPress={props.onUseMyLocation}>
-            <Icon name={'arrow-back'} style={{}} />
-            <Text><Trans>My location</Trans></Text>
-        </TouchableOpacity>);
-
-    const onEndEditing = (): void => {
-        props.onEndEditing(location);
-    };
-
-    return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}    >
-        <View style={{ flexDirection: 'column', marginTop: 22 }}>
-            <View style={{ flexDirection: 'row' }}>
-                <BackButton />
-                <TextInput
-                    value={location}
-                    onChangeText={setLocation}
-                    onEndEditing={onEndEditing}
-                    placeholder={props.placeholder}
-                    style={{ flex: 1 }}
-                />
-                <ClearInputButton />
-            </View>
-            <UseMyLocationButton />
-        </View>
-    </Modal>;
 };
 
 const servicesIndex = (): string => (
