@@ -53,8 +53,15 @@ const SearchStringComponent = (props: SearchStringComponentProps): JSX.Element =
             type='FontAwesome'
             style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3 }}
         />
-        <Text style={applicationStyles.searchInput} >
+        <Text style={textStyleForSearchString(!props.value)}>
             {props.value || props.localizedPlaceholder}
         </Text>
     </TouchableOpacity>
+);
+
+// tslint:disable-next-line:no-any
+const textStyleForSearchString = (isPlaceholder: boolean): any => (
+    isPlaceholder ?
+        [applicationStyles.searchInput] :
+        [applicationStyles.searchInput, { fontWeight: 'bold' }]
 );
