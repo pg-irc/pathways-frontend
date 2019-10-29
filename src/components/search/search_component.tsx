@@ -16,6 +16,7 @@ import { ReactI18nRenderProp } from '../../locale/types';
 import { MODAL_NONE, MODAL_SEARCH_TERM, MODAL_LOCATION, USE_MY_LOCATION } from './constants';
 import { SearchTermInputModal } from './search_term_input_modal';
 import { LocationInputModal } from './location_input_modal';
+import { localizedPlaceHolders } from './localized_place_holders';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -41,31 +42,26 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
     // tslint:disable-next-line:no-expression-statement
     useFetchLatLongFromLocation(location, setLatLong);
 
-    // refactor localized strings
     const ConnectedSearchTermInputModal = connectSearchBox(SearchTermInputModal);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
     return <I18n>{(reactI18nRenderProp: ReactI18nRenderProp): JSX.Element => {
-
-        const _ = reactI18nRenderProp.i18n._.bind(reactI18nRenderProp.i18n);
-        const searchTermPlaceHolder = _('Search for services');
-        const locationPlaceHolder = _('City, address or postal code');
-        const nearMyLocationPlaceHolder = _('Near My location');
+        const placeholderStrings = localizedPlaceHolders(reactI18nRenderProp);
 
         return <Content style={{ backgroundColor: colors.pale }}>
             <InstantSearch indexName={servicesIndex()} {...props} >
                 <ConnectedSearchTermInputModal
-                    placeholder={searchTermPlaceHolder}
                     visible={modalState === MODAL_SEARCH_TERM}
+                    placeholder={placeholderStrings.searchTermPlaceHolder}
                     onEndEditing={(newSearchTerm: string): void => {
                         setModalState(MODAL_NONE);
                         setSearchTerm(newSearchTerm);
                     }} />
 
                 <LocationInputModal
-                    placeholder={locationPlaceHolder}
                     visible={modalState === MODAL_LOCATION}
+                    placeholder={placeholderStrings.locationPlaceHolder}
                     onEndEditing={(s: string): void => {
                         setLocation(s);
                         setModalState(MODAL_NONE);
@@ -80,9 +76,9 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
                     location={location}
                     setLocation={setLocation}
                     latLong={latLong}
-                    searchTermPlaceHolder={searchTermPlaceHolder}
-                    locationPlaceHolder={locationPlaceHolder}
-                    nearMyLocationPlaceHolder={nearMyLocationPlaceHolder}
+                    searchTermPlaceHolder={placeholderStrings.searchTermPlaceHolder}
+                    locationPlaceHolder={placeholderStrings.locationPlaceHolder}
+                    nearMyLocationPlaceHolder={placeholderStrings.nearMyLocationPlaceHolder}
                     openSearchTermInput={(): void => { setModalState(MODAL_SEARCH_TERM); }}
                     openLocationInput={(): void => { setModalState(MODAL_LOCATION); }}
                 />

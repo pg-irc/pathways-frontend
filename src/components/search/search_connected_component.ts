@@ -14,6 +14,7 @@ const mapStateToProps = (_: Store, ownProps: OwnProps): SearchComponentProps => 
 });
 
 const mapDispatchToProps = (_: Dispatch<void>): SearchComponentActions => ({
+    // TODO clean up this
     // tslint:disable-next-line:no-empty
     openMenu: (): void => { },
 });
