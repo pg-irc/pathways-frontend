@@ -40,11 +40,9 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
     // tslint:disable-next-line:no-expression-statement
     useFetchLatLongFromLocation(location, setLatLong);
 
-    // Make separate Props types for each modal
-    // Add refinement properties to SearchTermInputModal
-    // create SearchTermConnectedInputModal to connect
     // disconnect SearchInputConnectedComponent
     // remove refinement properties from SearchInputComponent
+    const ConnectedSearchTermInputModal = connectSearchBox(SearchTermInputModal);
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
@@ -58,7 +56,7 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
 
         return <Content style={{ backgroundColor: colors.pale }}>
             <InstantSearch indexName={servicesIndex()} {...props} >
-                <SearchTermInputModal
+                <ConnectedSearchTermInputModal
                     placeholder={searchTermPlaceHolder}
                     visible={modalState === MODAL_SEARCH_TERM}
                     onEndEditing={(_: string): void => {
@@ -97,6 +95,8 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
 interface SearchTermInputModalProps {
     readonly visible: boolean;
     readonly placeholder: string;
+    readonly currentRefinement: string;
+    readonly refine: (searchTerms: string) => string;
     readonly onEndEditing: (s: string) => void;
     readonly onUseMyLocation?: () => void;
 }
