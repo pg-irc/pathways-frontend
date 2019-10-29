@@ -13,7 +13,7 @@ import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { View, Text } from 'native-base';
 import { TouchableOpacity, Modal, TextInput } from 'react-native';
 import { Trans, I18n } from '@lingui/react';
-import { SearchInputComponent } from './search_input_component';
+import { SearchTermAndLocationComponent } from './search_term_and_location_component';
 import { ReactI18nRenderProp } from '../../locale/types';
 import { MODAL_NONE, MODAL_SEARCH_TERM, MODAL_LOCATION, USE_MY_LOCATION } from './constants';
 
@@ -41,7 +41,6 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
     // tslint:disable-next-line:no-expression-statement
     useFetchLatLongFromLocation(location, setLatLong);
 
-    // make SearchInputComponent read-only
     // refactor localized strings
     const ConnectedSearchTermInputModal = connectSearchBox(SearchTermInputModal);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
@@ -76,7 +75,7 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
                         setModalState(MODAL_NONE);
                     }} />
 
-                <SearchInputComponent
+                <SearchTermAndLocationComponent
                     searchTerm={searchTerm}
                     location={location}
                     setLocation={setLocation}
