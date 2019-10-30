@@ -78,7 +78,6 @@ export const SearchComponent: React.StatelessComponent<Props> = (props: Props): 
                     latLong={latLong}
                     searchTermPlaceHolder={placeholderStrings.searchTermPlaceHolder}
                     locationPlaceHolder={placeholderStrings.locationPlaceHolder}
-                    nearMyLocationPlaceHolder={placeholderStrings.nearMyLocationPlaceHolder}
                     openSearchTermInput={(): void => { setModalState(MODAL_SEARCH_TERM); }}
                     openLocationInput={(): void => { setModalState(MODAL_LOCATION); }}
                 />
