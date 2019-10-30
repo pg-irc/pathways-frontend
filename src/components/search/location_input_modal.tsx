@@ -66,7 +66,11 @@ export const LocationInputModal: React.StatelessComponent<Props> = (props: Props
                     onChangeText={setLocation}
                     onEndEditing={onEndEditing}
                     placeholder={props.placeholder}
-                    style={{ flex: 1, paddingTop: 15, paddingBottom: 15 }}
+                    style={{
+                        flex: 1,
+                        paddingTop: 15,
+                        paddingBottom: 15,
+                    }}
                 />
                 <ClearInputButton visible={location !== ''} />
             </View>
