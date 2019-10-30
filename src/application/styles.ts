@@ -316,6 +316,10 @@ export const applicationStyles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 1,
     },
+    thinGreyBorderBelow: {
+        borderBottomWidth: 1,
+        borderColor: colors.darkerGrey,
+    },
     body: {
         backgroundColor: colors.lightGrey,
     },
