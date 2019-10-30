@@ -89,7 +89,7 @@
         "redux-persist": "^5.9.1",
         "redux-saga": "^0.16.0",
         "request": "^2.88.0",
-        "sentry-expo": "~1.13.0",
+        "sentry-expo": "~2.0.1",
         "ts-node": "^8.3.0",
         "uuid": "^3.3.2"
     },
