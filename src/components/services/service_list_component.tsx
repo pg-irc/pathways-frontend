@@ -3,6 +3,7 @@ import React from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
+import * as Sentry from 'sentry-expo';
 import { HumanServiceData } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
@@ -18,6 +19,9 @@ import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitch
 import { Errors } from '../../validation/errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { LatLong } from '../../validation/search/types';
+import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
+
+const SENTRY_ERROR_CONTEXT = 'ServicesListing';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -41,10 +45,12 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     const refreshServicesData = useRequestDataIfOnlineReturnRefreshDataCallback(props.dispatchServicesRequest);
 
     if (onlineStatus === OnlineStatus.Offline) {
+        const errorType = Errors.Offline;
+        Sentry.captureMessage(getSentryMessageForError(errorType, SENTRY_ERROR_CONTEXT));
         return (
             <ErrorScreenSwitcherComponent
                 refreshScreen={refreshServicesData}
-                errorType={Errors.Offline}
+                errorType={errorType}
                 header={
                     <ServiceListHeaderComponent title={props.topic.title} />
                 }
@@ -53,10 +59,12 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     }
 
     if (isError(props.topicServicesOrError)) {
+        const errorType = props.topicServicesOrError.errorMessageType;
+        Sentry.captureMessage(getSentryMessageForError(errorType, SENTRY_ERROR_CONTEXT));
         return (
             <ErrorScreenSwitcherComponent
                 refreshScreen={refreshServicesData}
-                errorType={props.topicServicesOrError.errorMessageType}
+                errorType={errorType}
                 header={
                     <ServiceListHeaderComponent title={props.topic.title} />
                 }

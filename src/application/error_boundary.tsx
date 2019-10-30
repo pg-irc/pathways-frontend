@@ -1,7 +1,7 @@
 // tslint:disable:no-class no-this no-expression-statement
 import React from 'react';
 import { View, Text } from 'react-native';
-import Sentry from 'sentry-expo';
+import * as Sentry from 'sentry-expo';
 
 interface Props {
 }
@@ -25,9 +25,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
             error: error,
             errorInfo: errorInfo,
         });
-        Sentry.captureException(error, {
-            extra: errorInfo,
-        });
+        Sentry.captureException(error);
     }
 
     render(): React.ReactNode {
