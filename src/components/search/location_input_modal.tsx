@@ -16,39 +16,53 @@ export const LocationInputModal: React.StatelessComponent<Props> = (props: Props
     const [location, setLocation]: [string, (s: string) => void] = useState('');
 
     const BackButton = (): JSX.Element => (
-        <TouchableOpacity onPress={onEndEditing} >
+        <TouchableOpacity onPress={onEndEditing} style={{ padding: 15 }} >
             <Icon name={'arrow-back'} style={{}} />
         </TouchableOpacity >);
 
     const onEndEditing = (): void => props.onEndEditing(location);
 
     const ClearInputButton = (): JSX.Element => (
-        <TouchableOpacity onPress={clearLocation}>
+        <TouchableOpacity onPress={clearLocation} style={{ padding: 15 }}>
             <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
         </TouchableOpacity>);
 
     const clearLocation = (): void => setLocation('');
 
     const UseMyLocationButton = (): JSX.Element => (
-        <TouchableOpacity style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: colors.darkerGrey }} onPress={props.onUseMyLocation}>
-            <Icon name={'arrow-back'} style={{}} />
-            <Text><Trans>My location</Trans></Text>
-        </TouchableOpacity>);
+        <TouchableOpacity
+            style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderBottomWidth: 1,
+                borderColor: colors.darkerGrey,
+            }}
+            onPress={props.onUseMyLocation}
+        >
+            <Icon name={'compass'} type='FontAwesome' style={{ padding: 15 }} />
+            <Text style={{ paddingTop: 15, paddingBottom: 15 }} ><Trans>My location</Trans></Text>
+        </TouchableOpacity>
+    );
 
-    return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}    >
+    return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'} >
         <View style={{ flexDirection: 'column' }}>
-            <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderColor: colors.darkerGrey }}>
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                borderBottomWidth: 1,
+                borderColor: colors.darkerGrey,
+            }}>
                 <BackButton />
                 <TextInput
                     value={location}
                     onChangeText={setLocation}
                     onEndEditing={onEndEditing}
                     placeholder={props.placeholder}
-                    style={{ flex: 1 }}
+                    style={{ flex: 1, paddingTop: 15, paddingBottom: 15 }}
                 />
                 <ClearInputButton />
             </View>
             <UseMyLocationButton />
         </View>
-    </Modal>;
+    </Modal >;
 };
