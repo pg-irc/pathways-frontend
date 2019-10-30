@@ -4,7 +4,8 @@ import { View, Text } from 'native-base';
 import { TouchableOpacity, Modal, TextInput } from 'react-native';
 import { Trans } from '@lingui/react';
 import { colors } from '../../application/styles';
-import { EmptyComponent } from '../empty_component/empty_component';
+import { BackButton } from './back_button';
+import { ClearInputButton } from './clear_input_button';
 
 interface Props {
     readonly visible: boolean;
@@ -15,27 +16,8 @@ interface Props {
 
 export const LocationInputModal: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState('');
-
-    const BackButton = (): JSX.Element => (
-        <TouchableOpacity onPress={onEndEditing} style={{ padding: 15 }} >
-            <Icon name={'arrow-back'} style={{}} />
-        </TouchableOpacity >);
-
     const onEndEditing = (): void => props.onEndEditing(location);
-
-    interface ClearInputButtonProps {
-        readonly visible: boolean;
-    }
-
-    const ClearInputButton = ({ visible }: ClearInputButtonProps): JSX.Element => (
-        visible ?
-            <TouchableOpacity onPress={clearLocation} style={{ padding: 15 }}>
-                <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
-            </TouchableOpacity> :
-            <EmptyComponent />
-    );
-
-    const clearLocation = (): void => setLocation('');
+    const clearContent = (): void => setLocation('');
 
     const UseMyLocationButton = (): JSX.Element => (
         <TouchableOpacity
@@ -60,7 +42,7 @@ export const LocationInputModal: React.StatelessComponent<Props> = (props: Props
                 borderBottomWidth: 1,
                 borderColor: colors.darkerGrey,
             }}>
-                <BackButton />
+                <BackButton onPress={onEndEditing} />
                 <TextInput
                     value={location}
                     onChangeText={setLocation}
@@ -72,7 +54,7 @@ export const LocationInputModal: React.StatelessComponent<Props> = (props: Props
                         paddingBottom: 15,
                     }}
                 />
-                <ClearInputButton visible={location !== ''} />
+                <ClearInputButton visible={location !== ''} onPress={clearContent} />
             </View>
             <UseMyLocationButton />
         </View>
