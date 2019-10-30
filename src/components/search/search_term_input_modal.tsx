@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View } from 'native-base';
 import { Modal, TextInput } from 'react-native';
-import { colors } from '../../application/styles';
+import { applicationStyles } from '../../application/styles';
 import { BackButton } from './back_button';
 import { ClearInputButton } from './clear_input_button';
 
@@ -31,8 +31,7 @@ export const SearchTermInputModal: React.StatelessComponent<Props> = (props: Pro
         <View style={{
             flexDirection: 'row',
             alignItems: 'center',
-            borderBottomWidth: 1,
-            borderColor: colors.darkerGrey,
+            ...applicationStyles.thinGreyBorderBelow,
         }}>
             <BackButton onPress={onEndEditing} />
             <TextInput
