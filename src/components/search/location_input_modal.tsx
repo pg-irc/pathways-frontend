@@ -4,6 +4,7 @@ import { View, Text } from 'native-base';
 import { TouchableOpacity, Modal, TextInput } from 'react-native';
 import { Trans } from '@lingui/react';
 import { colors } from '../../application/styles';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface Props {
     readonly visible: boolean;
@@ -22,10 +23,17 @@ export const LocationInputModal: React.StatelessComponent<Props> = (props: Props
 
     const onEndEditing = (): void => props.onEndEditing(location);
 
-    const ClearInputButton = (): JSX.Element => (
-        <TouchableOpacity onPress={clearLocation} style={{ padding: 15 }}>
-            <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
-        </TouchableOpacity>);
+    interface ClearInputButtonProps {
+        readonly visible: boolean;
+    }
+
+    const ClearInputButton = ({ visible }: ClearInputButtonProps): JSX.Element => (
+        visible ?
+            <TouchableOpacity onPress={clearLocation} style={{ padding: 15 }}>
+                <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: 25 }} />
+            </TouchableOpacity> :
+            <EmptyComponent />
+    );
 
     const clearLocation = (): void => setLocation('');
 
@@ -60,7 +68,7 @@ export const LocationInputModal: React.StatelessComponent<Props> = (props: Props
                     placeholder={props.placeholder}
                     style={{ flex: 1, paddingTop: 15, paddingBottom: 15 }}
                 />
-                <ClearInputButton />
+                <ClearInputButton visible={location !== ''} />
             </View>
             <UseMyLocationButton />
         </View>
