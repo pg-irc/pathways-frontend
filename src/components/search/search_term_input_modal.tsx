@@ -35,6 +35,7 @@ export const SearchTermInputModal: React.StatelessComponent<Props> = (props: Pro
         }}>
             <BackButton onPress={onEndEditing} />
             <TextInput
+                autoFocus
                 value={searchTerm}
                 onChangeText={setSearchTerm}
                 onEndEditing={onEndEditing}

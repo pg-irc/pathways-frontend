@@ -40,6 +40,7 @@ export const LocationInputModal = (props: Props): JSX.Element => {
             <View style={{ flexDirection: 'row', alignItems: 'center', ...applicationStyles.thinGreyBorderBelow }}>
                 <BackButton onPress={onEndEditing} />
                 <TextInput
+                    autoFocus
                     value={location}
                     onChangeText={setLocation}
                     onEndEditing={onEndEditing}
