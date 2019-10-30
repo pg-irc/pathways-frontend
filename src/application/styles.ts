@@ -302,6 +302,14 @@ export const applicationStyles = StyleSheet.create({
         height: 48,
         padding: 12,
     },
+    searchInputBold: {
+        color: colors.white,
+        fontSize: 16,
+        fontWeight: 'bold',
+        flex: 1,
+        height: 48,
+        padding: 12,
+    },
     boxShadowBelow: {
         shadowColor: colors.black,
         shadowOffset: { width: 0, height: 3 },
