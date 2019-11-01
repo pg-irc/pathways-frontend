@@ -34,7 +34,7 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
     }
 }
 
-const updateServicesRequest = (store: types.ServiceStore, action: actions.BuildTopicServicesRequestAction): types.ServiceStore => {
+const updateServicesRequest = (store: types.ServiceStore, action: actions.BuildServicesRequestAction): types.ServiceStore => {
     const topicId = action.payload.topicId;
     return {
         ...store,
@@ -47,7 +47,7 @@ const updateServicesRequest = (store: types.ServiceStore, action: actions.BuildT
     };
 };
 
-const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildTopicServicesSuccessAction): types.ServiceStore => {
+const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildServicesSuccessAction): types.ServiceStore => {
     const newServices = action.payload.services;
     const topicId = action.payload.topicId;
     const newServicesAsMap = createServiceMap(newServices);
@@ -68,7 +68,7 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildT
     };
 };
 
-const updateServicesFailure = (store: types.ServiceStore, action: actions.BuildTopicServicesErrorAction): types.ServiceStore => {
+const updateServicesFailure = (store: types.ServiceStore, action: actions.BuildServicesErrorAction): types.ServiceStore => {
     const topicId = action.payload.topicId;
     const errorMessageType = action.payload.errorMessageType;
     return {

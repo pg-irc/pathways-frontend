@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { Location } from 'history';
 import { Store } from '../../stores';
-import { buildTopicServicesRequestAction, BuildTopicServicesRequestAction } from '../../stores/services/actions';
+import { buildServicesRequestAction, BuildServicesRequestAction } from '../../stores/services/actions';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/topic';
@@ -12,7 +12,7 @@ import {
 } from './service_list_component';
 import { Routes, getParametersFromPath } from '../../application/routing';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
-import { LatLong } from '../../validation/search/types';
+import { LatLong } from '../../validation/geocoder/types';
 
 type OwnProps = {
     readonly location: Location;
@@ -30,9 +30,9 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => 
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<BuildTopicServicesRequestAction>): ServiceListActions => ({
-    dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong): BuildTopicServicesRequestAction => {
-        return dispatch(buildTopicServicesRequestAction(topic.id, manualUserLocation));
+const mapDispatchToProps = (dispatch: Dispatch<BuildServicesRequestAction>): ServiceListActions => ({
+    dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong): BuildServicesRequestAction => {
+        return dispatch(buildServicesRequestAction(topic.id, manualUserLocation));
     },
 });
 
@@ -40,7 +40,7 @@ type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;
 
 const mergeProps = (props: ServiceListProps, actions: ServiceListActions): ComponentProps => ({
     ...props, ...actions,
-    dispatchServicesRequest: (): BuildTopicServicesRequestAction => {
+    dispatchServicesRequest: (): BuildServicesRequestAction => {
         return actions.dispatchServicesRequestAction(props.topic, props.manualUserLocation);
     },
 });

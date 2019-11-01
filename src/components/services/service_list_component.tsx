@@ -7,7 +7,7 @@ import { HumanServiceData } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
-import { BuildTopicServicesRequestAction } from '../../stores/services/actions';
+import { BuildServicesRequestAction } from '../../stores/services/actions';
 import { textStyles, colors, values } from '../../application/styles';
 import { isError } from '../../selectors/services/is_error';
 import * as constants from '../../application/constants';
@@ -17,7 +17,7 @@ import { OnlineStatus, useOnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
-import { LatLong } from '../../validation/search/types';
+import { LatLong } from '../../validation/geocoder/types';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -27,11 +27,11 @@ export interface ServiceListProps {
 }
 
 export interface ServiceListActions {
-    readonly dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong) => BuildTopicServicesRequestAction;
+    readonly dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
 }
 
 export interface ServicesUpdater {
-    readonly dispatchServicesRequest: () => BuildTopicServicesRequestAction;
+    readonly dispatchServicesRequest: () => BuildServicesRequestAction;
 }
 
 type Props = ServiceListProps & ServiceListActions & ServicesUpdater;
@@ -87,8 +87,7 @@ const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): Readon
         topicServicesOrError.services : []
 );
 
-// TODO this should be a typedef, not inheritance
-interface ServiceItemInfo extends ListRenderItemInfo<HumanServiceData> { }
+type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
 
 type ServiceListListComponentProps = {
     readonly services: ReadonlyArray<HumanServiceData>;

@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { toValidSearchData, toGeoCoderLatLong } from '..';
+import { validateServiceSearchResponse } from '..';
 import { aString, aNumber } from '../../../helpers/random_test_values';
 
 describe('Search response validation', () => {
@@ -8,7 +8,7 @@ describe('Search response validation', () => {
 
         it('returns the service data', () => {
             const serviceId = aString();
-            const result = toValidSearchData({
+            const result = validateServiceSearchResponse([{
                 service_name: aString(),
                 service_id: serviceId,
                 service_description: aString(),
@@ -30,31 +30,13 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            });
-            if (result.type !== 'ServiceSearchItem') {
-                throw Error('Unexpected type');
-            }
-            expect(result.service_id).toEqual(serviceId);
-        });
-
-        it('returns the organization data', () => {
-            const organizationName = aString();
-            const result = toValidSearchData({
-                organization_id: aString(),
-                organization_name: organizationName,
-                organization_description: aString(),
-                organization_website: aString(),
-                organization_email: aString(),
-            });
-            if (result.type !== 'OrganizationSearchItem') {
-                throw Error('Unexpected type');
-            }
-            expect(result.organization_name).toEqual(organizationName);
+            }]);
+            expect(result.validData[0].service_id).toEqual(serviceId);
         });
     });
     describe('with invalid data', () => {
         it('throws on missing field in service data', () => {
-            expect(() => toValidSearchData({
+            const validationResult = validateServiceSearchResponse([{
                 service_name: aString(),
                 // service_id: serviceId,
                 service_description: aString(),
@@ -76,12 +58,14 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            })).toThrow('service_id');
+            }]);
+            expect(validationResult.isValid).toBe(false);
+            expect(validationResult.errors).toContain('service_id');
         });
 
         it('throws on wrong field type in service data', () => {
             const invalidValue = aNumber();
-            expect(() => toValidSearchData({
+            const validationResult = validateServiceSearchResponse([{
                 service_name: aString(),
                 service_id: invalidValue,
                 service_description: aString(),
@@ -103,91 +87,9 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            })).toThrowError('service_id');
-        });
-
-        it('throws on missing field in organization data', () => {
-            expect(() => toValidSearchData({
-                organization_id: aString(),
-                organization_description: aString(),
-                organization_website: aString(),
-                organization_email: aString(),
-            })).toThrowError('organization_name');
-        });
-
-        it('throws on wrong field type in organization data', () => {
-            const invalidData = aNumber();
-            expect(() => toValidSearchData({
-                organization_id: aString(),
-                organization_name: invalidData,
-                organization_description: aString(),
-                organization_website: aString(),
-                organization_email: aString(),
-            })).toThrowError('organization_name');
-        });
-    });
-});
-
-describe('GeoCoder response validation', () => {
-    describe('with valid data', () => {
-        it('returns lat long', () => {
-            const result = toGeoCoderLatLong({
-                'standard': {
-                    'staddress': {},
-                    'stnumber': {},
-                    'prov': 'BC',
-                    'city': 'Nakusp',
-                    'confidence': '0.9',
-                },
-                'Dissemination_Area': {
-                    'adauid': '59030002',
-                    'dauid': '59030131',
-                },
-                'longt': '-117.795094',
-                'postal': 'V0G1R0',
-                'latt': '50.237690',
-            });
-            expect(result.latitude).toEqual(50.237690);
-            expect(result.longitude).toEqual(-117.795094);
-        });
-    });
-    describe('with invalid data', () => {
-        it('throws on missing field', () => {
-            expect(() => toGeoCoderLatLong({
-                'standard': {
-                    'staddress': {},
-                    'stnumber': {},
-                    'prov': 'BC',
-                    'city': 'Nakusp',
-                    'confidence': '0.9',
-                },
-                'Dissemination_Area': {
-                    'adauid': '59030002',
-                    'dauid': '59030131',
-                },
-                // 'longt': '-117.795094',
-                'postal': 'V0G1R0',
-                'latt': '50.237690',
-            })).toThrowError('longt');
-        });
-
-        it('throws on field of wrong type', () => {
-            expect(() => toGeoCoderLatLong({
-                'standard': {
-                    'staddress': {},
-                    'stnumber': {},
-                    'prov': 'BC',
-                    'city': 'Nakusp',
-                    'confidence': '0.9',
-                },
-                'Dissemination_Area': {
-                    'adauid': '59030002',
-                    'dauid': '59030131',
-                },
-                'longt': '-117.795094',
-                'latt': 'not a valid number',
-                'postal': 'V0G1R0',
-            })).toThrow('latt');
+            }]);
+            expect(validationResult.isValid).toBe(false);
+            expect(validationResult.errors).toContain('service_id');
         });
     });
 });

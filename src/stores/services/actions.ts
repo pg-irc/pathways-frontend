@@ -3,32 +3,30 @@ import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { HumanServiceData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
-import { LatLong } from '../../validation/search/types';
+import { LatLong } from '../../validation/geocoder/types';
 
-export type BuildTopicServicesRequestAction = Readonly<ReturnType<typeof buildTopicServicesRequestAction>>;
+export type BuildServicesRequestAction = Readonly<ReturnType<typeof buildServicesRequestAction>>;
 
-export type BuildTopicServicesSuccessAction = Readonly<ReturnType<typeof buildTopicServicesSuccessAction>>;
+export type BuildServicesSuccessAction = Readonly<ReturnType<typeof buildServicesSuccessAction>>;
 
-export type BuildTopicServicesErrorAction = Readonly<ReturnType<typeof buildTopicServicesErrorAction>>;
+export type BuildServicesErrorAction = Readonly<ReturnType<typeof buildServicesErrorAction>>;
 
 export type ServicesAction =
-    BuildTopicServicesRequestAction |
-    BuildTopicServicesSuccessAction |
-    BuildTopicServicesErrorAction;
+    BuildServicesRequestAction |
+    BuildServicesSuccessAction |
+    BuildServicesErrorAction;
 
 // tslint:disable-next-line:typedef
-export const buildTopicServicesRequestAction = (topicId: TopicId, manualUserLocation?: LatLong) => (
+export const buildServicesRequestAction = (topicId: TopicId, manualUserLocation?: LatLong) => (
     helpers.makeAction(constants.LOAD_SERVICES_REQUEST, { topicId, manualUserLocation })
 );
 
 // tslint:disable-next-line:typedef
-export const buildTopicServicesSuccessAction = (topicId: TopicId, services: ReadonlyArray<HumanServiceData>) => (
+export const buildServicesSuccessAction = (topicId: TopicId, services: ReadonlyArray<HumanServiceData>) => (
     helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { topicId, services })
 );
 
 // tslint:disable-next-line:typedef
-export const buildTopicServicesErrorAction = (
-    topicId: TopicId,
-    errorMessageType: Errors) => (
-        helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { topicId, errorMessageType })
-    );
+export const buildServicesErrorAction = (topicId: TopicId, errorMessageType: Errors) => (
+    helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { topicId, errorMessageType })
+);

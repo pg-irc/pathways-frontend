@@ -1,15 +1,17 @@
+// tslint:disable:no-expression-statement
 import React, { useState } from 'react';
-import { InstantSearch, connectSearchBox, connectInfiniteHits, connectConfigure } from 'react-instantsearch-native';
-import { SearchInputComponent } from './search_input_component';
+import { InstantSearch, connectInfiniteHits, connectConfigure } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
 import { Content } from 'native-base';
 import { emptyComponent } from '../empty_component/empty_component';
-import { LatLong } from '../../validation/search/types';
+import { LatLong } from '../../validation/geocoder/types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
 import { useTraceUpdate as useTraceComponentUpdates } from '../../helpers/debug';
 import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
+import { View, Text } from 'native-base';
+import { TouchableOpacity, Modal } from 'react-native';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -23,22 +25,43 @@ export interface SearchComponentActions {
 
 type Props = SearchComponentProps & SearchComponentActions;
 
-export const SearchComponent: React.StatelessComponent<SearchComponentProps> = (props: Props): JSX.Element => {
+export const SearchComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceComponentUpdates('SearchComponent', props);
+    const [modalState, setModalState]: [string, (s: string) => void] = useState('None');
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
     // tslint:disable-next-line:no-expression-statement
     useFetchLatLongFromLocation(location, setLatLong);
 
-    const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
     return <Content style={{ backgroundColor: colors.pale }}>
         <InstantSearch indexName={servicesIndex()} {...props} >
-            <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
+            <Modal
+                visible={modalState !== 'None'}
+                transparent={false}
+                presentationStyle={'fullScreen'}
+            >
+                <View style={{ marginTop: 22 }}>
+                    <View>
+                        <Text>Hello World!</Text>
+                        <TouchableOpacity
+                            onPress={(): void => { setModalState('None'); }}>
+                            <Text>Show Modal</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+            <TouchableOpacity
+                onPress={(): void => {
+                    setModalState('Search');
+                    setLocation('foo');
+                }}>
+                <Text>Hide Modal</Text>
+            </TouchableOpacity>
             <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
             <InfiniteHitsConnectedComponent />
         </InstantSearch>
