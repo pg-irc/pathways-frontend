@@ -24,13 +24,7 @@ export interface SearchComponentProps {
     readonly currentPath: string;
 }
 
-export interface SearchComponentActions {
-    readonly openMenu: () => void;
-}
-
-type Props = SearchComponentProps & SearchComponentActions;
-
-export const SearchComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+export const SearchComponent = (props: SearchComponentProps): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceComponentUpdates('SearchComponent', props);
 

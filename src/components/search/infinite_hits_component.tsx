@@ -14,13 +14,10 @@ export interface Props {
     // tslint:disable-next-line:no-any
     readonly hits: ReadonlyArray<any>;
     readonly hasMore: boolean;
-}
-
-export interface Actions {
     readonly refine: (searchTerms?: string) => string;
 }
 
-export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Element => {
+export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceUpdate('InfiniteHitsComponent', props);
     const searchResults = getValidSearchResults(props);
@@ -34,7 +31,7 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
         ItemSeparatorComponent={SearchListSeparator} />;
 };
 
-const getValidSearchResults = (props: Partial<Props & Actions>): ReadonlyArray<SearchServiceData> => {
+const getValidSearchResults = (props: Partial<Props>): ReadonlyArray<SearchServiceData> => {
     const validationResult = validateServiceSearchResponse(props.hits);
     if (!validationResult.isValid) {
         throw new Error(validationResult.errors);

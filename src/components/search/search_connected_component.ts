@@ -1,6 +1,6 @@
-import { connect, Dispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { Store } from '../../stores';
-import { SearchComponentProps, SearchComponent, SearchComponentActions } from './search_component';
+import { SearchComponentProps, SearchComponent } from './search_component';
 import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
 
 type OwnProps = {
@@ -13,10 +13,4 @@ const mapStateToProps = (_: Store, ownProps: OwnProps): SearchComponentProps => 
     currentPath: ownProps.location.pathname,
 });
 
-const mapDispatchToProps = (_: Dispatch<void>): SearchComponentActions => ({
-    // TODO clean up this
-    // tslint:disable-next-line:no-empty
-    openMenu: (): void => { },
-});
-
-export const SearchConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(SearchComponent);
+export const SearchConnectedComponent = connect(mapStateToProps)(SearchComponent);
