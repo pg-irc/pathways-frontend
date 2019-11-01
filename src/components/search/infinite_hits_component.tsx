@@ -14,7 +14,6 @@ export interface Props {
     // tslint:disable-next-line:no-any
     readonly hits: ReadonlyArray<any>;
     readonly hasMore: boolean;
-    readonly currentRefinement: string;
 }
 
 export interface Actions {
@@ -36,10 +35,6 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
 };
 
 const getValidSearchResults = (props: Partial<Props & Actions>): ReadonlyArray<SearchServiceData> => {
-    const isSearchStringEmpty = props.currentRefinement === '';
-    if (isSearchStringEmpty) {
-        return [];
-    }
     const validationResult = validateServiceSearchResponse(props.hits);
     if (!validationResult.isValid) {
         throw new Error(validationResult.errors);
