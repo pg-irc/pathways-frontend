@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Icon, Text } from 'native-base';
 import { values, applicationStyles, colors } from '../../application/styles';
-import { LatLong } from '../../validation/latlong/types';
 import { InputFormSeparator } from './separators';
 import { Trans } from '@lingui/react';
 import { TouchableOpacity } from 'react-native';
@@ -10,10 +9,8 @@ import { USE_MY_LOCATION } from './constants';
 interface Props {
     readonly searchTerm: string;
     readonly searchTermPlaceHolder: string;
-    readonly locationPlaceHolder: string;
     readonly location: string;
-    readonly latLong: LatLong;
-    readonly setLocation: (location: string) => void;
+    readonly locationPlaceHolder: string;
     readonly openSearchTermInput: () => void;
     readonly openLocationInput: () => void;
 }
