@@ -1,4 +1,3 @@
-// tslint:disable:no-expression-statement
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { Errors } from '../../validation/errors/types';
