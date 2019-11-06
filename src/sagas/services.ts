@@ -2,7 +2,8 @@
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import * as actions from '../stores/services/actions';
-import { validateServicesAtLocationArray } from '../validation/services';
+import * as R from 'ramda';
+import { validateServicesAtLocationArray, serviceFromValidatedJSON } from '../validation/services';
 import { searchServices, APIResponse } from '../api';
 import { getDeviceLocation } from '../async/location';
 import * as errors from '../validation/errors/is_error';
@@ -35,7 +36,7 @@ export function* updateTaskServices(action: actions.BuildServicesRequestAction):
             return yield put(actions.buildServicesErrorAction(topicId, Errors.InvalidServerData));
         }
 
-        yield put(actions.buildServicesSuccessAction(topicId, validatedApiResponse.validData));
+        yield put(actions.buildServicesSuccessAction(topicId, R.map(serviceFromValidatedJSON, validatedApiResponse.validData)));
 
     } catch (error) {
         yield put(actions.buildServicesErrorAction(topicId, Errors.Exception));
