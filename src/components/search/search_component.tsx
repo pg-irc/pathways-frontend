@@ -74,7 +74,7 @@ export const SearchComponent = (props: SearchComponentProps): JSX.Element => {
                     openLocationInput={(): void => { setModalState(MODAL_LOCATION); }}
                 />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
-                <InfiniteHitsConnectedComponent />
+                <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>
         </Content>;
     }}</I18n>;

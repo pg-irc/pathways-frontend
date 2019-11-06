@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
@@ -26,7 +27,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
         refreshing={false}
         data={searchResults}
         keyExtractor={keyExtractor}
-        renderItem={renderSearchHit}
+        renderItem={renderSearchHit(props.currentPath)}
         ListEmptyComponent={EmptyComponent}
         ItemSeparatorComponent={SearchListSeparator} />;
 };
@@ -43,7 +44,7 @@ const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
 );
 
-const renderSearchHit = ({ item }: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
-    const currentPath = '';
+const renderSearchHit = R.curry((currentPath: string, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
+    const item: SearchServiceData = itemInfo.item;
     return <ServiceListItemComponent service={toHumanServiceData(item)} currentPath={currentPath} />;
-};
+});
