@@ -34,7 +34,8 @@ const getChangedProps = R.curry((oldProps: HasOldProps, accumulator: any, [key, 
 });
 
 const printPropsIfAny = (componentName: string, changedProps: object): void => {
-    if (Object.keys(changedProps).length > 0) {
+    const propsHaveChanged = Object.keys(changedProps).length > 0;
+    if (DEBUG && propsHaveChanged) {
         console.log(`\n${componentName}: changed props: ${JSON.stringify(changedProps).substring(0, 100)}`);
     }
 };

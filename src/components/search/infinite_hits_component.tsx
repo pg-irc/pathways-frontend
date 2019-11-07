@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
@@ -6,22 +7,18 @@ import { SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
-import { HumanServiceData } from '../../validation/services/types';
 import { validateServiceSearchResponse } from '../../validation/search';
+import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 
 export interface Props {
     readonly currentPath: string;
     // tslint:disable-next-line:no-any
     readonly hits: ReadonlyArray<any>;
     readonly hasMore: boolean;
-    readonly currentRefinement: string;
-}
-
-export interface Actions {
     readonly refine: (searchTerms?: string) => string;
 }
 
-export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Element => {
+export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceUpdate('InfiniteHitsComponent', props);
     const searchResults = getValidSearchResults(props);
@@ -30,16 +27,12 @@ export const InfiniteHitsComponent = (props: Partial<Props & Actions>): JSX.Elem
         refreshing={false}
         data={searchResults}
         keyExtractor={keyExtractor}
-        renderItem={renderSearchHit}
+        renderItem={renderSearchHit(props.currentPath)}
         ListEmptyComponent={EmptyComponent}
         ItemSeparatorComponent={SearchListSeparator} />;
 };
 
-const getValidSearchResults = (props: Partial<Props & Actions>): ReadonlyArray<SearchServiceData> => {
-    const isSearchStringEmpty = props.currentRefinement === '';
-    if (isSearchStringEmpty) {
-        return [];
-    }
+const getValidSearchResults = (props: Partial<Props>): ReadonlyArray<SearchServiceData> => {
     const validationResult = validateServiceSearchResponse(props.hits);
     if (!validationResult.isValid) {
         throw new Error(validationResult.errors);
@@ -51,31 +44,7 @@ const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
 );
 
-const renderSearchHit = ({ item }: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
-    const currentPath = '';
+const renderSearchHit = R.curry((currentPath: string, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
+    const item: SearchServiceData = itemInfo.item;
     return <ServiceListItemComponent service={toHumanServiceData(item)} currentPath={currentPath} />;
-};
-
-const toHumanServiceData = (data: SearchServiceData): HumanServiceData => ({
-    id: data.service_id,
-    latitude: data._geoloc.lat,
-    longitude: data._geoloc.lng,
-    name: data.service_name,
-    description: data.service_description,
-    phoneNumbers: [{
-        type: 'temp',
-        phoneNumber: '1-800-FOR-NOWW',
-    }],
-    addresses: [{
-        id: 1,
-        type: 'physical_address',
-        address: data.address.address,
-        city: data.address.city,
-        stateProvince: data.address.state_province,
-        postalCode: data.address.postal_code,
-        country: data.address.country,
-    }],
-    website: data.organization.website,
-    email: data.organization.email,
-    organizationName: data.organization.name,
 });

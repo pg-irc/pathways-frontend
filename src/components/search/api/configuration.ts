@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { LatLong } from '../../../validation/geocoder/types';
+import { LatLong } from '../../../validation/latlong/types';
 
 export const toServiceSearchConfiguration = (latlong?: LatLong): Object => {
     const latLongArgument = latlong ? { aroundLatLng: toAlgoliaParameter(latlong) } : {};
