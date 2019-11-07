@@ -8,7 +8,7 @@ import { emptyComponent } from '../empty_component/empty_component';
 import { LatLong } from '../../validation/latlong/types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
-import { useTraceUpdate as useTraceComponentUpdates } from '../../helpers/debug';
+import { useTraceUpdate } from '../../helpers/debug';
 import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { I18n } from '@lingui/react';
 import { SearchTermAndLocationComponent } from './search_term_and_location_component';
@@ -26,7 +26,7 @@ export interface SearchComponentProps {
 
 export const SearchComponent = (props: SearchComponentProps): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
-    useTraceComponentUpdates('SearchComponent', props);
+    useTraceUpdate('SearchComponent', props);
 
     const [modalState, setModalState]: [string, (s: string) => void] = useState(MODAL_NONE);
     const [searchTerm, setSearchTerm]: [string, (s: string) => void] = useState('');

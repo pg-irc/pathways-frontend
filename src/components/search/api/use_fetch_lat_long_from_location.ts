@@ -5,7 +5,6 @@ import { LatLong } from '../../../validation/latlong/types';
 import { toGeoCoderLatLong } from '../../../validation/latlong';
 import BuildUrl from 'build-url';
 import * as R from 'ramda';
-import { debug } from '../../../helpers/debug';
 import { getDeviceLocation, NoLocationPermissionErrorAction, LocationFetchTimeoutErrorAction } from '../../../async/location';
 import * as errors from '../../../validation/errors/is_error';
 import { USE_MY_LOCATION } from '../constants';
@@ -17,10 +16,8 @@ export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLo
 
 const fetchLatLongFromLocation = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
     if (location === USE_MY_LOCATION) {
-        debug('Getting location from device');
         fetchLatLongFromDevice(setLatLong);
     } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
-        debug(`using fetchLatLongFromAddress with ${location}`);
         fetchLatLongFromAddress(location, setLatLong);
     }
 };
@@ -63,7 +60,6 @@ const getTextIfValidOrThrow = (response: Response): Promise<string> => {
     return response.text();
 };
 
-const handleError = R.curry((setLatLong: (latLong: LatLong) => void, error: string): void => {
-    console.log(`LatLong set to undefined: ${error}`);
+const handleError = R.curry((setLatLong: (latLong: LatLong) => void, _: string): void => {
     setLatLong(undefined);
 });
