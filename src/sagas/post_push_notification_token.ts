@@ -3,6 +3,7 @@ import { CallEffect, PutEffect, takeLatest, ForkEffect, put, call } from 'redux-
 import * as constants from '../application/constants';
 import * as helpers from '../stores/helpers/make_action';
 import * as Permissions from 'expo-permissions';
+import { Notifications } from 'expo';
 
 export type PushNotificationPostRequestAction = Readonly<ReturnType<typeof request>>;
 export type PushNotificationPostSuccessAction = Readonly<ReturnType<typeof success>>;
@@ -35,6 +36,12 @@ function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction)
     if (permission.status !== 'granted') {
         console.log('permission not granted, done');
         return yield put(failure('Permission not granted for push notifications'));
+    }
+    console.log('getting token...');
+    const token: string = yield call(Notifications.getExpoPushTokenAsync);
+    if (token === '') {
+        console.log('failed to get token');
+        return yield put(failure('Error retrieving push notification token'));
     }
 }
 
