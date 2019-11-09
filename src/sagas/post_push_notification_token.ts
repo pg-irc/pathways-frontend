@@ -4,6 +4,7 @@ import * as constants from '../application/constants';
 import * as helpers from '../stores/helpers/make_action';
 import * as Permissions from 'expo-permissions';
 import { Notifications } from 'expo';
+import { postPushNotificationToken } from '../api';
 
 export type PushNotificationPostRequestAction = Readonly<ReturnType<typeof request>>;
 export type PushNotificationPostSuccessAction = Readonly<ReturnType<typeof success>>;
@@ -43,6 +44,14 @@ function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction)
         console.log('failed to get token');
         return yield put(failure('Error retrieving push notification token'));
     }
+    console.log(`Got token ${token}, posting to server...`);
+    const result = yield call(postPushNotificationToken, token);
+    if (!result || result.hasError) {
+        console.log(`failed to post token: ${result.message}`);
+        return yield put(failure('Error posting push notification token'));
+    }
+    console.log('succeeded in posting token');
+    yield put(success());
 }
 
 type SuccessOrFailure = PushNotificationPostSuccessAction | PushNotificationPostFailureAction;

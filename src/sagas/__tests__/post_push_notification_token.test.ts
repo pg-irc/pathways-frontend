@@ -1,4 +1,5 @@
-import { createPushNotificationTokenUrl } from '../../api';
+import { createPushNotificationTokenUrl, parseExpoTokenString } from '../../api';
+import { aString } from '../../helpers/random_test_values';
 
 // tslint:disable:no-expression-statement
 // tslint:disable-next-line:no-var-requires
@@ -51,6 +52,14 @@ describe('BuildUrl third party library function', () => {
 describe('token endpoint', () => {
     test('url contains token', () => {
         const url = 'http://example.com';
-        expect(createPushNotificationTokenUrl(url)).toEqual('http://example.com/notifications/v1/tokens/');
+        expect(createPushNotificationTokenUrl(url)).toEqual('http://example.com/v1/push_notifications/tokens/');
+    });
+});
+
+describe('parse token from expo', () => {
+    it('extracts the token from the string', () => {
+        const token = aString();
+        const tokenFromExpo = `ExponentPushToken[${token}]`;
+        expect(parseExpoTokenString(tokenFromExpo)).toEqual(token);
     });
 });
