@@ -6,6 +6,7 @@ import { watchLoadFonts } from './fonts';
 import { watchUpdateTaskServices } from './services';
 import { watchLoadUserData, watchUserStateChangesToSaveUserData } from './user_data';
 import { watchAnalytics } from './analytics/watch_analytics';
+import { watchRequestPostPushNotificationToken } from './post_push_notification_token';
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -28,4 +29,5 @@ export function runSaga(middleware: SagaMiddleware<object>): void {
     middleware.run(watchLoadUserData);
     middleware.run(watchUpdateTaskServices);
     middleware.run(watchAnalytics);
+    middleware.run(watchRequestPostPushNotificationToken);
 }

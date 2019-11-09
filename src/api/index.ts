@@ -58,9 +58,9 @@ export const buildParameters = (topicId: Id, location: MaybeLocation): Parameter
 
 type Parameters = { readonly [name: string]: string };
 
-const buildUrl = (path: string, location: MaybeLocation, topicId: string): string => (
+const buildUrl = (endpoint: string, location: MaybeLocation, topicId: string): string => (
     BuildUrl(baseUrl, {
-        path: path,
+        path: endpoint,
         queryParams: buildParameters(topicId, location),
     })
 );
@@ -73,3 +73,14 @@ async function createAPIResponse(response: Response): Promise<APIResponse> {
     const results = await response.json();
     return { hasError: false, message, response, results };
 }
+
+export async function postPushNotificationToken(token: string): Promise<APIResponse> {
+    const url = createPushNotificationTokenUrl(baseUrl);
+    const body = { id: token };
+    const response = await fetch(url, { method: 'post', body: JSON.stringify(body) });
+    return createAPIResponse(response);
+}
+
+export const createPushNotificationTokenUrl = (url: string): string => (
+    BuildUrl(url, { path: 'notifications/v1/tokens/' })
+);
