@@ -1,7 +1,8 @@
 // tslint:disable:no-expression-statement
-import { CallEffect, PutEffect, takeLatest, ForkEffect } from 'redux-saga/effects';
+import { CallEffect, PutEffect, takeLatest, ForkEffect, put, call } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import * as helpers from '../stores/helpers/make_action';
+import * as Permissions from 'expo-permissions';
 
 export type PushNotificationPostRequestAction = Readonly<ReturnType<typeof request>>;
 export type PushNotificationPostSuccessAction = Readonly<ReturnType<typeof success>>;
@@ -29,6 +30,12 @@ export function* watchRequestPostPushNotificationToken(): IterableIterator<ForkE
 
 function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction): Result {
     console.log('entered saga, asking permission...');
+    const permission: Permissions.PermissionResponse = yield call(Permissions.getAsync, Permissions.NOTIFICATIONS);
+    console.log('asked permission');
+    if (permission.status !== 'granted') {
+        console.log('permission not granted, done');
+        return yield put(failure('Permission not granted for push notifications'));
+    }
 }
 
 type SuccessOrFailure = PushNotificationPostSuccessAction | PushNotificationPostFailureAction;
