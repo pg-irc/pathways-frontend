@@ -1,10 +1,12 @@
 // tslint:disable:no-expression-statement
-import { CallEffect, PutEffect, takeLatest, ForkEffect, put, call } from 'redux-saga/effects';
+import { CallEffect, PutEffect, takeLatest, SelectEffect, ForkEffect, put, call, select } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import * as helpers from '../stores/helpers/make_action';
 import * as Permissions from 'expo-permissions';
 import { Notifications } from 'expo';
 import { postPushNotificationToken } from '../api';
+import { selectLocale } from '../selectors/locale/select_locale';
+import { Locale } from '../locale';
 
 export type PushNotificationPostRequestAction = Readonly<ReturnType<typeof request>>;
 export type PushNotificationPostSuccessAction = Readonly<ReturnType<typeof success>>;
@@ -26,7 +28,6 @@ const failure = (error: string) => (
 );
 
 export function* watchRequestPostPushNotificationToken(): IterableIterator<ForkEffect> {
-    console.log('watcher');
     yield takeLatest(constants.POST_PUSH_NOTIFICATION_TOKEN_REQUEST, requestPostPushNotificationToken);
 }
 
@@ -39,7 +40,8 @@ function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction)
     if (token === '') {
         return yield put(failure('Error retrieving push notification token'));
     }
-    const result = yield call(postPushNotificationToken, token);
+    const locale: Locale = yield select(selectLocale);
+    const result = yield call(postPushNotificationToken, token, locale);
     if (!result || result.hasError) {
         return yield put(failure('Error posting push notification token'));
     }
@@ -48,4 +50,4 @@ function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction)
 
 type SuccessOrFailure = PushNotificationPostSuccessAction | PushNotificationPostFailureAction;
 
-export type Result = IterableIterator<CallEffect | PutEffect<SuccessOrFailure>>;
+export type Result = IterableIterator<SelectEffect | CallEffect | PutEffect<SuccessOrFailure>>;

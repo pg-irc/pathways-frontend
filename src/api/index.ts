@@ -2,6 +2,7 @@
 const BuildUrl = require('build-url');
 import { Id } from '../stores/topics';
 import { fetch } from 'cross-fetch';
+import { Locale } from '../locale';
 
 export interface APIResponse {
     readonly hasError: boolean;
@@ -74,7 +75,7 @@ async function createAPIResponse(response: Response): Promise<APIResponse> {
     return { hasError: false, message, response, results };
 }
 
-export async function postPushNotificationToken(token: string): Promise<APIResponse> {
+export async function postPushNotificationToken(token: string, locale: Locale): Promise<APIResponse> {
     const url = createPushNotificationTokenUrl(baseUrl);
     const response = await fetch(url,
         {
@@ -82,7 +83,7 @@ export async function postPushNotificationToken(token: string): Promise<APIRespo
             headers: [
                 ['Content-Type', 'application/json'],
             ],
-            body: JSON.stringify({ id: token }),
+            body: JSON.stringify({ id: token, locale: locale.code }),
         },
     );
     return createAPIResponse(response);
