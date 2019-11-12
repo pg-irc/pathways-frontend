@@ -31,26 +31,18 @@ export function* watchRequestPostPushNotificationToken(): IterableIterator<ForkE
 }
 
 function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction): Result {
-    console.log('entered saga, asking permission...');
     const permission: Permissions.PermissionResponse = yield call(Permissions.getAsync, Permissions.NOTIFICATIONS);
-    console.log('asked permission');
     if (permission.status !== 'granted') {
-        console.log('permission not granted, done');
         return yield put(failure('Permission not granted for push notifications'));
     }
-    console.log('getting token...');
     const token: string = yield call(Notifications.getExpoPushTokenAsync);
     if (token === '') {
-        console.log('failed to get token');
         return yield put(failure('Error retrieving push notification token'));
     }
-    console.log(`Got token ${token}, posting to server...`);
     const result = yield call(postPushNotificationToken, token);
     if (!result || result.hasError) {
-        console.log(`failed to post token: ${result.message}`);
         return yield put(failure('Error posting push notification token'));
     }
-    console.log('succeeded in posting token');
     yield put(success());
 }
 

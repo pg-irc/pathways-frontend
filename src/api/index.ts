@@ -74,10 +74,8 @@ async function createAPIResponse(response: Response): Promise<APIResponse> {
     return { hasError: false, message, response, results };
 }
 
-export async function postPushNotificationToken(expoTokenString: string): Promise<APIResponse> {
+export async function postPushNotificationToken(token: string): Promise<APIResponse> {
     const url = createPushNotificationTokenUrl(baseUrl);
-    console.log(`posting to ${url}`);
-    const token = parseExpoTokenString(expoTokenString);
     const response = await fetch(url,
         {
             method: 'post',
@@ -89,13 +87,6 @@ export async function postPushNotificationToken(expoTokenString: string): Promis
     );
     return createAPIResponse(response);
 }
-
-export const parseExpoTokenString = (token: string): string => {
-    const start = token.indexOf('[');
-    const end = token.indexOf(']');
-    return token.substr(start + 1, end - start - 1);
-};
-
 
 export const createPushNotificationTokenUrl = (url: string): string => (
     BuildUrl(url, { path: 'v1/push_notifications/tokens/' })
