@@ -4,7 +4,7 @@ import * as constants from '../application/constants';
 import * as helpers from '../stores/helpers/make_action';
 import * as Permissions from 'expo-permissions';
 import { Notifications } from 'expo';
-import { postPushNotificationToken } from '../api';
+import { putPushNotificationToken } from '../api';
 import { selectLocale } from '../selectors/locale/select_locale';
 import { Locale } from '../locale';
 
@@ -41,8 +41,9 @@ function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction)
         return yield put(failure('Error retrieving push notification token'));
     }
     const locale: Locale = yield select(selectLocale);
-    const result = yield call(postPushNotificationToken, token, locale);
+    const result = yield call(putPushNotificationToken, token, locale);
     if (!result || result.hasError) {
+        // TODO log error to sentry
         return yield put(failure('Error posting push notification token'));
     }
     yield put(success());

@@ -51,6 +51,7 @@ describe('BuildUrl third party library function', () => {
 describe('token endpoint', () => {
     test('url contains token', () => {
         const url = 'http://example.com';
-        expect(createPushNotificationTokenUrl(url)).toEqual('http://example.com/v1/push_notifications/tokens/');
+        const token = 'xyz';
+        expect(createPushNotificationTokenUrl(url, token)).toEqual('http://example.com/v1/push_notifications/tokens/xyz/');
     });
 });
