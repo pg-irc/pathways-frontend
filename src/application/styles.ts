@@ -259,7 +259,7 @@ export const textStyles = StyleSheet.create({
         letterSpacing: buttonLetterSpacing,
         ...getBoldFontStylesForOS(),
     },
-    taskTitle: {
+    contentTitle: {
         fontSize: 22,
         textAlign: 'left',
         color: colors.black,
