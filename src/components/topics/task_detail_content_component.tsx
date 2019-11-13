@@ -3,9 +3,9 @@ import * as R from 'ramda';
 import { Image, Dimensions, Platform } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import Markdown, { openUrl } from 'react-native-markdown-renderer';
 import { Topic } from '../../selectors/topics/topic';
-import { textStyles, colors, values, markdownStyles, getNormalFontFamily } from '../../application/styles';
+import { textStyles, colors, values, getNormalFontFamily } from '../../application/styles';
+import { MarkdownComponent } from '../markdown/markdown_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
@@ -104,27 +104,12 @@ const TitleComponent = (props: Props): JSX.Element => (
     </Text>
 );
 
-const markDownRules = {
-    link: (node: any, children: any): JSX.Element => {
-        return (
-            <Text key={node.key} style={markdownStyles.link} onPress={(): void => openUrl(node.attributes.href)}>
-                {children}
-                <Text>{' '}</Text>
-                <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: colors.teal }} />
-            </Text>
-        );
-    },
-};
-
 const TaskDescription = (props: Props): JSX.Element => {
     const topic = props.topic;
     const taskDescription = (
-        <Markdown
-            rules={markDownRules}
-            style={markdownStyles}
-        >
+        <MarkdownComponent>
             {topic.description}
-        </Markdown>
+        </MarkdownComponent>
     );
     return topic.relatedTopics.length > 0 ?
         <ExpandableContentComponent
