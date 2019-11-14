@@ -7,7 +7,7 @@ interface Props {
     readonly imageSource: ImageProps;
 }
 
-export const ContentBannerImageComponent = (props: Props): JSX.Element => {
+export const BannerImageComponent = (props: Props): JSX.Element => {
     const logoHeight = Dimensions.get('screen').height / 8;
     return (
         <View style={{

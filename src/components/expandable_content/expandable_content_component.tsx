@@ -118,7 +118,6 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
         const buttonOnPress = (): void => this.toggleState();
         const content = this.isCollapsed() ? <Trans>Read more</Trans> : <Trans>Read less</Trans>;
         const buttonStyle: ViewStyle = {
-            flex: 1,
             flexDirection: 'row',
             maxHeight: 20,
             marginTop: 10,

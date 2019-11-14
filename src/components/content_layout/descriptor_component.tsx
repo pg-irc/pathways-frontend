@@ -6,7 +6,7 @@ interface Props {
     readonly descriptor: JSX.Element;
 }
 
-export const ContentDescriptorComponent = (props: Props): JSX.Element => (
+export const DescriptorComponent = (props: Props): JSX.Element => (
     <Text style={[
         textStyles.headlineH5StyleBlackLeft,
         {

@@ -6,7 +6,7 @@ interface Props {
     readonly title: string;
 }
 
-export const ContentTitleComponent = (props: Props): JSX.Element => (
+export const TitleComponent = (props: Props): JSX.Element => (
     <Text style={[textStyles.contentTitle, { paddingHorizontal: values.backgroundTextPadding }]}>
         {props.title}
     </Text>

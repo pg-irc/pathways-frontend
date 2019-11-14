@@ -46,6 +46,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     const isOnServiceSearchScreen = pathMatchesRoute(path, Routes.Search);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
     const isOnOnboardingScreen = pathMatchesRoute(path, Routes.Onboarding);
+    const isOnOrganizationDetailScreen = pathMatchesRoute(path, Routes.OrganizationDetail);
 
     if (isOnQuestionnaireScreen || isOnOnboardingScreen) {
         return <EmptyComponent />;
@@ -79,6 +80,15 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
             <TwoButtonHeader
                 {...props}
                 {...{ textColor: colors.teal, backgroundColor: colors.white }}
+            />
+        );
+    }
+
+    if (isOnOrganizationDetailScreen) {
+        return (
+            <TwoButtonHeader
+                {...props}
+                {...{ textColor: colors.white, backgroundColor: colors.teal }}
             />
         );
     }

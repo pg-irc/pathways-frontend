@@ -10,11 +10,11 @@ import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { images as topicImages } from '../../application/topicImages';
 import { RecommendedIconComponent } from '../recommended_topics/recommended_icon_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
-import { ContentTitleComponent } from '../layout/content_title_component';
-import { ContentDescriptorComponent } from '../layout/content_descriptor_component';
-import { ContentDividerComponent } from '../layout/content_divider_component';
-import { ContentBannerImageComponent } from '../layout/content_banner_image_component';
-import { ContentBodyComponent } from '../layout/content_body_component';
+import { TitleComponent } from '../content_layout/title_component';
+import { DescriptorComponent } from '../content_layout/descriptor_component';
+import { DividerComponent } from '../content_layout/divider_component';
+import { BannerImageComponent } from '../content_layout/banner_image_component';
+import { BodyComponent } from '../content_layout/body_component';
 
 export interface TaskDetailContentProps {
     readonly topic: Topic;
@@ -28,13 +28,13 @@ type Props = TaskDetailContentProps & TaskDetailContentActions;
 
 export const TaskDetailContentComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View padder style={{ backgroundColor: colors.white, marginHorizontal: -10 }}>
-        <ContentBannerImageComponent imageSource={topicImages[props.topic.id] || arrivalAdvisorGlyphLogo} />
-        <ContentDescriptorComponent descriptor={<Trans id={props.topic.exploreSection.name.toUpperCase()}/>} />
-        <ContentTitleComponent title={props.topic.title} />
+        <BannerImageComponent imageSource={topicImages[props.topic.id] || arrivalAdvisorGlyphLogo} />
+        <DescriptorComponent descriptor={<Trans id={props.topic.exploreSection.name.toUpperCase()}/>} />
+        <TitleComponent title={props.topic.title} />
         <RecommendedComponent {...props} />
-        <ContentDividerComponent />
-        <ContentBodyComponent body={props.topic.description} shouldBeExpandable={!!props.topic.relatedTopics.length} />
-        <ContentDividerComponent />
+        <DividerComponent />
+        <BodyComponent body={props.topic.description} shouldBeExpandable={!!props.topic.relatedTopics.length} />
+        <DividerComponent />
         <ServicesButton {...props} />
     </View>
 );
