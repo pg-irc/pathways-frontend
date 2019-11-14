@@ -42,41 +42,49 @@ export const SearchComponent = (props: SearchComponentProps): JSX.Element => {
 
     return <I18n>{(reactI18nRenderProp: ReactI18nRenderProp): JSX.Element => {
         const placeholderStrings = localizedPlaceHolders(reactI18nRenderProp);
-
-        return <Content style={{ backgroundColor: colors.pale }}>
-            <InstantSearch indexName={servicesIndex()} {...props} >
-                <ConnectedSearchTermInputModal
-                    visible={modalState === MODAL_SEARCH_TERM}
-                    placeholder={placeholderStrings.searchTermPlaceHolder}
-                    onEndEditing={(newSearchTerm: string): void => {
-                        setModalState(MODAL_NONE);
-                        setSearchTerm(newSearchTerm);
-                    }} />
-
-                <LocationInputModal
-                    visible={modalState === MODAL_LOCATION}
-                    placeholder={placeholderStrings.locationPlaceHolder}
-                    onEndEditing={(s: string): void => {
-                        setLocation(s);
-                        setModalState(MODAL_NONE);
-                    }}
-                    onUseMyLocation={(): void => {
-                        setLocation(USE_MY_LOCATION);
-                        setModalState(MODAL_NONE);
-                    }} />
-
-                <SearchTermAndLocationComponent
-                    searchTerm={searchTerm}
-                    searchTermPlaceHolder={placeholderStrings.searchTermPlaceHolder}
-                    location={location}
-                    locationPlaceHolder={placeholderStrings.locationPlaceHolder}
-                    openSearchTermInput={(): void => { setModalState(MODAL_SEARCH_TERM); }}
-                    openLocationInput={(): void => { setModalState(MODAL_LOCATION); }}
-                />
-                <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
-                <InfiniteHitsConnectedComponent {...props} />
-            </InstantSearch>
-        </Content>;
+        switch (modalState) {
+            case MODAL_SEARCH_TERM:
+                return <Content style={{ backgroundColor: colors.pale }}>
+                    <InstantSearch indexName={servicesIndex()} {...props} >
+                        <ConnectedSearchTermInputModal
+                            placeholder={placeholderStrings.searchTermPlaceHolder}
+                            onEndEditing={(newSearchTerm: string): void => {
+                                setModalState(MODAL_NONE);
+                                setSearchTerm(newSearchTerm);
+                            }} />
+                    </InstantSearch>
+                </Content>;
+            case MODAL_LOCATION:
+                return <Content style={{ backgroundColor: colors.pale }}>
+                    <InstantSearch indexName={servicesIndex()} {...props} >
+                        <LocationInputModal
+                            placeholder={placeholderStrings.locationPlaceHolder}
+                            onEndEditing={(s: string): void => {
+                                setLocation(s);
+                                setModalState(MODAL_NONE);
+                            }}
+                            onUseMyLocation={(): void => {
+                                setLocation(USE_MY_LOCATION);
+                                setModalState(MODAL_NONE);
+                            }} />
+                    </InstantSearch>
+                </Content>;
+            default:
+                return <Content style={{ backgroundColor: colors.pale }}>
+                    <InstantSearch indexName={servicesIndex()} {...props} >
+                        <SearchTermAndLocationComponent
+                            searchTerm={searchTerm}
+                            searchTermPlaceHolder={placeholderStrings.searchTermPlaceHolder}
+                            location={location}
+                            locationPlaceHolder={placeholderStrings.locationPlaceHolder}
+                            openSearchTermInput={(): void => { setModalState(MODAL_SEARCH_TERM); }}
+                            openLocationInput={(): void => { setModalState(MODAL_LOCATION); }}
+                        />
+                        <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
+                        <InfiniteHitsConnectedComponent {...props} />
+                    </InstantSearch>
+                </Content>;
+        }
     }}</I18n>;
 };
 

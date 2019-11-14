@@ -8,7 +8,6 @@ import { BackButton } from './back_button';
 import { ClearInputButton } from './clear_input_button';
 
 interface Props {
-    readonly visible: boolean;
     readonly placeholder: string;
     readonly onEndEditing: (s: string) => void;
     readonly onUseMyLocation: () => void;
@@ -35,7 +34,7 @@ export const LocationInputModal = (props: Props): JSX.Element => {
     const onEndEditing = (): void => props.onEndEditing(location);
     const clearContent = (): void => setLocation('');
 
-    return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'} >
+    return <Modal visible={true} transparent={false} presentationStyle={'fullScreen'} >
         <View style={{ flexDirection: 'column' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', ...applicationStyles.thinGreyBorderBelow }}>
                 <BackButton onPress={onEndEditing} />

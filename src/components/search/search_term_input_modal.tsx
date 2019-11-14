@@ -7,7 +7,6 @@ import { BackButton } from './back_button';
 import { ClearInputButton } from './clear_input_button';
 
 interface Props {
-    readonly visible: boolean;
     readonly placeholder: string;
     readonly currentRefinement: string;
     readonly refine: (searchTerms: string) => string;
@@ -27,7 +26,7 @@ export const SearchTermInputModal: React.StatelessComponent<Props> = (props: Pro
         setSearchTerm('');
     };
 
-    return <Modal visible={props.visible} transparent={false} presentationStyle={'fullScreen'}>
+    return <Modal visible={true} transparent={false} presentationStyle={'fullScreen'}>
         <View style={{
             flexDirection: 'row',
             alignItems: 'center',
