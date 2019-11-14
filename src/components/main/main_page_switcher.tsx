@@ -13,7 +13,7 @@ import { BookmarkedTopicsConnectedComponent } from '../bookmarked_topics/bookmar
 import { SearchConnectedComponent } from '../search/search_connected_component';
 import { OrganizationDetailComponent } from '../organizations/organization_detail_component';
 import { ServiceDetailComponent } from '../services/service_detail_component';
-import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter } from '../../application/routing';
+import { Routes, routePathDefinition, routePathWithoutParameter } from '../../application/routing';
 import { Locale } from '../../locale';
 
 interface Props {

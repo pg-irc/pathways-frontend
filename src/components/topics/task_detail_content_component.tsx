@@ -6,7 +6,6 @@ import { Trans } from '@lingui/react';
 import { Topic } from '../../selectors/topics/topic';
 import { textStyles, colors, values, getNormalFontFamily } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { images as topicImages } from '../../application/topicImages';
 import { RecommendedIconComponent } from '../recommended_topics/recommended_icon_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
@@ -28,7 +27,7 @@ type Props = TaskDetailContentProps & TaskDetailContentActions;
 
 export const TaskDetailContentComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View padder style={{ backgroundColor: colors.white, marginHorizontal: -10 }}>
-        <BannerImageComponent imageSource={topicImages[props.topic.id] || arrivalAdvisorGlyphLogo} />
+        <BannerImageComponent imageSource={topicImages[props.topic.id]} />
         <DescriptorComponent descriptor={<Trans id={props.topic.exploreSection.name.toUpperCase()}/>} />
         <TitleComponent title={props.topic.title} />
         <RecommendedComponent {...props} />
