@@ -42,6 +42,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     const path = props.location.pathname;
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
     const isOnTopicDetailScreen = pathMatchesRoute(path, Routes.TopicDetail);
+    const isOnServiceDetailScreen = pathMatchesRoute(path, Routes.ServiceDetail);
     const isOnTopicServicesScreen = pathMatchesRoute(path, Routes.Services);
     const isOnServiceSearchScreen = pathMatchesRoute(path, Routes.Search);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
@@ -54,6 +55,10 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
     if (isOnTopicDetailScreen) {
         return <TopicDetailScreenHeader {...props} />;
+    }
+
+    if (isOnServiceDetailScreen) {
+        return <ServiceDetailScreenHeader {...props} />;
     }
 
     if (isOnTopicServicesScreen) {
@@ -114,6 +119,25 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
             isBookmarked={R.contains(topicId, props.savedTasksIdList)}
             addBookmark={(): AddToSavedListAction => props.addBookmark(topicId)}
             removeBookmark={(): RemoveFromSavedListAction => props.removeBookmark(topicId)}
+            textColor={colors.teal}
+        />,
+        <MenuButtonComponent
+            onPress={props.openMenu}
+            locale={props.currentLocale}
+            textColor={colors.black}
+        />,
+    ];
+    return renderHeader({ backgroundColor, leftButton, rightButtons });
+};
+
+const ServiceDetailScreenHeader = (props: Props): JSX.Element => {
+    const backgroundColor = colors.lightGrey;
+    const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
+    const rightButtons: ReadonlyArray<JSX.Element> = [
+        <BookmarkButtonComponent
+            isBookmarked={false}
+            addBookmark={(): undefined => undefined}
+            removeBookmark={(): undefined => undefined}
             textColor={colors.teal}
         />,
         <MenuButtonComponent

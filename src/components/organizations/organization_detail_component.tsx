@@ -11,6 +11,7 @@ import { DividerComponent } from '../content_layout/divider_component';
 import { IconRowComponent } from '../icon_row/icon_row_component';
 
 const testOrganization = {
+    id: 'mosiac',
     title: 'Mosaic',
     description: 'Assists immigrants, refugees, and newcomers in the course of their settlement and integration into Canadian society. Provides employment services… family services, interpretation and translation, language instruction, legal information, settlement services, and victim and family violence services from multiple sites in Metro Vancouver. Also provides employment services under contract to BC Employment and Assistance (BCEA); see WorkBC listings for details. Office hours are 9 am to 5 pm Monday to Friday. Nonprofit society, registered charity.',
     address: 'Head Office\n5575 Boundary Road Vancouver, BC\nV5R 2P9',
