@@ -3,6 +3,7 @@ import React from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
+import * as Sentry from 'sentry-expo';
 import { HumanServiceData } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
@@ -18,6 +19,7 @@ import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitch
 import { Errors } from '../../validation/errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { LatLong } from '../../validation/latlong/types';
+import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -39,43 +41,45 @@ type Props = ServiceListProps & ServiceListActions & ServicesUpdater;
 export const ServiceListComponent = (props: Props): JSX.Element => {
     const onlineStatus = useOnlineStatus();
     const refreshServicesData = useRequestDataIfOnlineReturnRefreshDataCallback(props.dispatchServicesRequest);
+    const hasNoErrors = onlineStatus !== OnlineStatus.Offline && !isError(props.topicServicesOrError);
 
-    if (onlineStatus === OnlineStatus.Offline) {
+    if (hasNoErrors) {
         return (
-            <ErrorScreenSwitcherComponent
-                refreshScreen={refreshServicesData}
-                errorType={Errors.Offline}
-                header={
+            <ServicesComponent
+                services={getServicesIfValid(props.topicServicesOrError)}
+                refreshing={isLoadingServices(props.topicServicesOrError)}
+                onRefresh={props.dispatchServicesRequest}
+                renderItem={renderServiceListItem(props.currentPath)}
+                listEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
+                listHeaderComponent={
                     <ServiceListHeaderComponent title={props.topic.title} />
                 }
             />
         );
     }
 
-    if (isError(props.topicServicesOrError)) {
-        return (
-            <ErrorScreenSwitcherComponent
-                refreshScreen={refreshServicesData}
-                errorType={props.topicServicesOrError.errorMessageType}
-                header={
-                    <ServiceListHeaderComponent title={props.topic.title} />
-                }
-            />
-        );
-    }
-
+    const errorType = determineErrorType(onlineStatus, props.topicServicesOrError);
+    const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
+    Sentry.captureMessage(sentryMessage);
     return (
-        <ServicesComponent
-            services={getServicesIfValid(props.topicServicesOrError)}
-            refreshing={isLoadingServices(props.topicServicesOrError)}
-            onRefresh={props.dispatchServicesRequest}
-            renderItem={renderServiceListItem(props.currentPath)}
-            listEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
-            listHeaderComponent={
+        <ErrorScreenSwitcherComponent
+            refreshScreen={refreshServicesData}
+            errorType={errorType}
+            header={
                 <ServiceListHeaderComponent title={props.topic.title} />
             }
         />
     );
+};
+
+const determineErrorType = (onlineStatus: OnlineStatus, topicServicesOrError: SelectorTopicServices): Errors => {
+    if (onlineStatus === OnlineStatus.Offline) {
+        return Errors.Offline;
+    }
+    if (isError(topicServicesOrError)) {
+        return topicServicesOrError.errorMessageType;
+    }
+    return Errors.Exception;
 };
 
 const isLoadingServices = (topicServicesOrError: SelectorTopicServices): boolean => (

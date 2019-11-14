@@ -56,3 +56,5 @@ export const TOPIC_SERVICES_ERROR = 'ServicesForTopic:Error';
 
 export const SET_MANUAL_USER_LOCATION = 'SetManualLocation';
 export const CLEAR_MANUAL_USER_LOCATION = 'ClearManualLocation';
+
+export const SENTRY_SERVICES_LISTING_ERROR_CONTEXT = 'ServicesListing';
