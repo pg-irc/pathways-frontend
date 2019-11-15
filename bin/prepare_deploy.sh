@@ -236,7 +236,8 @@ getServerDependencies() {
     (cd "$SERVER_DIRECTORY" &&\
         python3 -m venv .venv &&\
         source .venv/bin/activate &&\
-        pip install -r requirements/local.txt)
+        pip install -r requirements/local.txt &&\
+        python -m spacy download en)
     checkForSuccess "install requirements for the server"
 }
 
