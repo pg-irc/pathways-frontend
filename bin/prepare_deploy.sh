@@ -311,7 +311,7 @@ buildContentFixture() {
 
     (cd "$SERVER_DIRECTORY" &&\
         source .venv/bin/activate &&\
-        ./manage.py import_newcomers_guide ../content &&\
+        ./manage.py generate_client_fixtures ../content &&\
         mv *.ts ../pathways-frontend/src/fixtures/newcomers_guide/ )
     checkForSuccess "build content fixture"
 }
