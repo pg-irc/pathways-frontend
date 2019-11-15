@@ -21,6 +21,10 @@ while (( "$#" )); do
     then
         WORKING_DIRECTORY=$2
         shift 2
+    elif [ "$1" == "--bc211path" ]
+    then
+        BC211PATH=$2
+        shift 2
     elif [ "$1" == "--staging" ]
     then
         BUILD="staging"
@@ -65,10 +69,12 @@ usage() {
     echo "                in order to retrieve related tasks from the database. The related tasks must"
     echo "                already have been computed, see the server side prepare deploy script."
     echo
+    echo "    --bc211path"
+    echo "                Path to the XML file containing the BC211 data dump."
+    echo
     echo "    --workingDirectory"
     echo "                Path to a directory to be created by the script. WorkingDirectory should not already"
     echo "                exist, it will be used to clone three git repositories and build the client."
-    echo
     echo
     echo "    --staging or --production"
     echo "                Pass one of these flags depending on the build. This affects the URL, icon and app name to be set."
@@ -121,6 +127,13 @@ validateCommandLine () {
     if [ "$POSTGRES_USER" == "" ]
     then
         echo "Error: Must specify postgres user, as in pathways-backend/.env"
+        usage
+        exit
+    fi
+
+    if [ "$BC211PATH" == "" ]
+    then
+        echo "Error: Must specify path to BC211 data dump file"
         usage
         exit
     fi
@@ -304,6 +317,23 @@ completeManualConfiguration() {
     read -p "Press enter to continue"
 }
 
+buildServer() {
+    echo
+    echo "Building server"
+    echo
+
+    ln -s $BC211PATH $SERVER_DIRECTORY/bc211.xml
+    (cd "$SERVER_DIRECTORY" &&\
+        source .venv/bin/activate &&\
+        ./utility/prepare_deploy.sh \
+            --bc211Path                 ./bc211.xml                  \
+            --newComersGuidePath        ../content/NewcomersGuide/   \
+            --recommendationsToAddPath  ../content/taxonomy/         \
+            --outputDir                 ../                          \
+    )
+    checkForSuccess "build server"
+}
+
 buildContentFixture() {
     echo
     echo "Building content fixture"
@@ -381,6 +411,7 @@ validateServerVersion
 
 getServerDependencies
 createServerEnvironment
+buildServer
 buildContentFixture
 validateContentFixture
 
