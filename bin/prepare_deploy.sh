@@ -322,7 +322,7 @@ buildServer() {
     echo "Building server"
     echo
 
-    ln -s $BC211PATH $SERVER_DIRECTORY/bc211.xml
+    cp $BC211PATH $SERVER_DIRECTORY/bc211.xml
     (cd "$SERVER_DIRECTORY" &&\
         source .venv/bin/activate &&\
         ./utility/prepare_deploy.sh \
