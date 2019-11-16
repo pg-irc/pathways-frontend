@@ -277,19 +277,27 @@ createClientEnvironment() {
 
     echo "VERSION=$VERSION"                                >  "$CLIENT_DIRECTORY/.env"
     echo "DEBUG_GOOGLE_ANALYTICS=false"                    >> "$CLIENT_DIRECTORY/.env"
-    echo "ALGOLIA_SEARCH_API_KEY='enter API key here'"     >> "$CLIENT_DIRECTORY/.env"
     echo "ALGOLIA_SERVICES_INDEX='dev_services'"           >> "$CLIENT_DIRECTORY/.env"
     echo "ALGOLIA_ORGANIZATIONS_INDEX='dev_organizations'" >> "$CLIENT_DIRECTORY/.env"
+    echo "SENTRY_DEBUG=false"                              >> "$CLIENT_DIRECTORY/.env"
+    echo "SENTRY_ENABLE_IN_DEV=false"                      >> "$CLIENT_DIRECTORY/.env"
+    echo                                                   >> "$CLIENT_DIRECTORY/.env"
+    echo "SENTRY_AUTH_TOKEN='token...'"                    >> "$CLIENT_DIRECTORY/.env"
+    echo "SENTRY_DSN=https://...sentry.io/..."             >> "$CLIENT_DIRECTORY/.env"
+    echo "ALGOLIA_SEARCH_API_KEY='key...'"                 >> "$CLIENT_DIRECTORY/.env"
+
 
     if [ "$BUILD" == "staging" ]
     then
-        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-5'"  >> "$CLIENT_DIRECTORY/.env"
-        echo "API_URL=$STAGING_URL" >> "$CLIENT_DIRECTORY/.env"
+        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-5'" >> "$CLIENT_DIRECTORY/.env"
+        echo "API_URL=$STAGING_URL"                         >> "$CLIENT_DIRECTORY/.env"
+
         setStagingValuesInAppJson
+
     elif [ "$BUILD" == "production" ]
     then
-        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"  >> "$CLIENT_DIRECTORY/.env"
-        echo "API_URL=$PRODUCTION_URL" >> "$CLIENT_DIRECTORY/.env"
+        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'" >> "$CLIENT_DIRECTORY/.env"
+        echo "API_URL=$PRODUCTION_URL"                      >> "$CLIENT_DIRECTORY/.env"
     else
         echo "Error: You must specify the build type"
         exit
@@ -302,15 +310,14 @@ completeManualConfiguration() {
     echo
     echo "Manual steps:"
     echo
-    echo " edit $CLIENT_DIRECTORY/app.json"
-    echo
-    echo "and set the Sentry auth token. Log into our account on "
-    echo "https://sentry.io to retrieve the auth token from "
-    echo "https://sentry.io/settings/account/api/auth-tokens/"
-    echo
     echo " edit $CLIENT_DIRECTORY/.env"
     echo
-    echo "and set the ALGOLIA_SEARCH_API_KEY available from"
+    echo "and set the Sentry auth token and dsn. Log into our account on "
+    echo "https://sentry.io to retrieve the auth token from "
+    echo "https://sentry.io/settings/account/api/auth-tokens/ and dsn from"
+    echo "https://sentry.io/settings/peacegeeks/projects/pathways/keys/"
+    echo
+    echo "Also set the ALGOLIA_SEARCH_API_KEY available from"
     echo "https://www.algolia.com/apps/MMYH1Z0D3O/api-keys/all"
     echo
     echo "Make any other client side configuration changes now."
