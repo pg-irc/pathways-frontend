@@ -11,10 +11,17 @@ export type BuildServicesSuccessAction = Readonly<ReturnType<typeof buildService
 
 export type BuildServicesErrorAction = Readonly<ReturnType<typeof buildServicesErrorAction>>;
 
+export type AddServiceToSavedListAction = Readonly<ReturnType<typeof addServiceToSavedListAction>>;
+
+export type RemoveServiceFromSavedListAction = Readonly<ReturnType<typeof removeFromSavedListAction>>;
+
 export type ServicesAction =
     BuildServicesRequestAction |
     BuildServicesSuccessAction |
-    BuildServicesErrorAction;
+    BuildServicesErrorAction |
+    AddServiceToSavedListAction |
+    RemoveServiceFromSavedListAction
+    ;
 
 // tslint:disable-next-line:typedef
 export const buildServicesRequestAction = (topicId: TopicId, manualUserLocation?: LatLong) => (
@@ -29,4 +36,14 @@ export const buildServicesSuccessAction = (topicId: TopicId, services: ReadonlyA
 // tslint:disable-next-line:typedef
 export const buildServicesErrorAction = (topicId: TopicId, errorMessageType: Errors) => (
     helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { topicId, errorMessageType })
+);
+
+// tslint:disable-next-line: typedef
+export const addServiceToSavedListAction = (service: HumanServiceData) => (
+    helpers.makeAction(constants.ADD_BOOKMARK, { service })
+);
+
+// tslint:disable-next-line: typedef
+export const removeFromSavedListAction = (service: HumanServiceData) => (
+    helpers.makeAction(constants.REMOVE_BOOKMARK, { service })
 );
