@@ -25,8 +25,8 @@ export const address = {
 export const geoLocation = {
     'type': 'object',
     'properties': {
-        'lng': { 'type': 'number' },
-        'lat': { 'type': 'number' },
+        'lng': { 'type': ['number', 'string'] },
+        'lat': { 'type': ['number', 'string'] },
     },
     'required': ['lng', 'lat'],
 };
