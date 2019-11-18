@@ -13,7 +13,7 @@ export type BuildServicesErrorAction = Readonly<ReturnType<typeof buildServicesE
 
 export type AddServiceToSavedListAction = Readonly<ReturnType<typeof addServiceToSavedListAction>>;
 
-export type RemoveServiceFromSavedListAction = Readonly<ReturnType<typeof removeFromSavedListAction>>;
+export type RemoveServiceFromSavedListAction = Readonly<ReturnType<typeof removeServiceFromSavedListAction>>;
 
 export type ServicesAction =
     BuildServicesRequestAction |
@@ -40,10 +40,10 @@ export const buildServicesErrorAction = (topicId: TopicId, errorMessageType: Err
 
 // tslint:disable-next-line: typedef
 export const addServiceToSavedListAction = (service: HumanServiceData) => (
-    helpers.makeAction(constants.ADD_BOOKMARK, { service })
+    helpers.makeAction(constants.ADD_SERVICE_BOOKMARK, { service })
 );
 
 // tslint:disable-next-line: typedef
-export const removeFromSavedListAction = (service: HumanServiceData) => (
-    helpers.makeAction(constants.REMOVE_BOOKMARK, { service })
+export const removeServiceFromSavedListAction = (service: HumanServiceData) => (
+    helpers.makeAction(constants.REMOVE_SERVICE_BOOKMARK, { service })
 );

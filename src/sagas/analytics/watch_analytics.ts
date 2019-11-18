@@ -15,7 +15,7 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
         [
             constants.ROUTE_CHANGED,
             constants.CHOOSE_ANSWER,
-            constants.ADD_BOOKMARK,
+            constants.ADD_TOPIC_BOOKMARK,
         ],
         sendAnalyticsData);
 }
@@ -39,7 +39,7 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
     if (action.type === constants.CHOOSE_ANSWER) {
         events.sendAnswerChosenEvent(action.payload.answerId);
     }
-    if (action.type === constants.ADD_BOOKMARK) {
+    if (action.type === constants.ADD_TOPIC_BOOKMARK) {
         events.sendBookmarkAddedEvent(action.payload.topicId);
     }
 }
