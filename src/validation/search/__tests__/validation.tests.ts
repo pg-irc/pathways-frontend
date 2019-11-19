@@ -146,5 +146,33 @@ describe('Search response validation', () => {
             expect(validationResult.isValid).toBe(false);
             expect(validationResult.errors).toContain('service_id');
         });
+        it('throws on lat long types does not match', () => {
+            const invalidValue = aNumber();
+            const validationResult = validateServiceSearchResponse([{
+                service_name: aString(),
+                service_id: invalidValue,
+                service_description: aString(),
+                address: {
+                    address: aString(),
+                    city: aString(),
+                    state_province: aString(),
+                    postal_code: aString(),
+                    country: aString(),
+                },
+                organization: {
+                    id: aNumber(),
+                    name: aString(),
+                    website: aString(),
+                    email: aString(),
+                    service_count: aNumber(),
+                },
+                _geoloc: {
+                    lat: aString(),
+                    lng: aNumber(),
+                },
+            }]);
+            expect(validationResult.isValid).toBe(false);
+            expect(validationResult.errors).toContain('service_id');
+        });
     });
 });

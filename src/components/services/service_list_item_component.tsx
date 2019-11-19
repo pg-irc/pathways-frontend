@@ -111,7 +111,7 @@ const renderEmail = (email: string, currentPath: string, linkContext: string): J
 };
 
 const renderMapButtonIfLocation = (service: HumanServiceData, currentPath: string, linkContext: string): JSX.Element => {
-    if (R.not(service.latlong.lat && service.latlong.lng)) {
+    if (R.not(service.latlong)) {
         return <EmptyComponent />;
     }
     return (
