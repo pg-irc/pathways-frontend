@@ -1,5 +1,9 @@
 #!/bin/bash
 
+fail() {
+    exit -1
+}
+
 while (( "$#" )); do
     if [ "$1" == "--clientVersion" ]
     then
@@ -37,7 +41,7 @@ while (( "$#" )); do
         shift 1
     else
         echo "$1: Invalid command argument"
-        exit
+        fail
     fi
 done
 
@@ -91,7 +95,7 @@ validateExpoUser() {
         echo "Expo account is OK"
     else
         echo "Error: Must be logged into expo as peacegeeks"
-        exit
+        fail
     fi
 }
 
@@ -100,49 +104,49 @@ validateCommandLine () {
     then
         echo "Error: Must specify version string"
         usage
-        exit
+        fail
     fi
 
     if [ "$SERVER_VERSION" == "" ]
     then
         echo "Error: Must specify server version string"
         usage
-        exit
+        fail
     fi 
 
     if [ "$ANDROID_VERSION_CODE" == "" ]
     then
         echo "Error: Must specify android version code"
         usage
-        exit
+        fail
     fi
 
     if [ "$WORKING_DIRECTORY" == "" ]
     then
         echo "Error: Must specify working directory, which must not already exist"
         usage
-        exit
+        fail
     fi
 
     if [ "$POSTGRES_USER" == "" ]
     then
         echo "Error: Must specify postgres user, as in pathways-backend/.env"
         usage
-        exit
+        fail
     fi
 
     if [ "$BC211PATH" == "" ]
     then
         echo "Error: Must specify path to BC211 data dump file"
         usage
-        exit
+        fail
     fi
 
     if [ "$BUILD" != "staging" ] && [ "$BUILD" != "production" ]
     then
         echo "Error: Must specify if the build is for production or staging"
         usage
-        exit
+        fail
     fi
 }
 
@@ -150,7 +154,7 @@ checkForSuccess () {
     if [ "$?" != "0" ]
     then
         echo "Error: failed to $1"
-        exit
+        fail
     fi
 }
 
@@ -209,14 +213,14 @@ validateClientVersion() {
     if [ "$FILE_VERSION" != "$VERSION" ]
     then
         echo "Error: client VERSION.txt contains $FILE_VERSION, when $VERSION was expected"
-        exit
+        fail
     fi
 
     FILE_CODE=$(grep versionCode "$CLIENT_DIRECTORY/app.json")
     if [ "$FILE_CODE" != "      \"versionCode\": $ANDROID_VERSION_CODE," ]
     then
         echo "Error: client app.json contains $FILE_CODE when $ANDROID_VERSION_CODE was expected"
-        exit
+        fail
     fi
 }
 
@@ -225,7 +229,7 @@ validateServerVersion() {
     if [ "$FILE_VERSION" != "$SERVER_VERSION" ]
     then
         echo "Error: server VERSION.txt contains $FILE_VERSION, when $SERVER_VERSION was expected"
-        exit
+        fail
     fi
 }
 
@@ -300,7 +304,7 @@ createClientEnvironment() {
         echo "API_URL=$PRODUCTION_URL"                      >> "$CLIENT_DIRECTORY/.env"
     else
         echo "Error: You must specify the build type"
-        exit
+        fail
     fi
 
     checkForSuccess "create client environment"
@@ -361,7 +365,7 @@ validateContentFixture() {
     then
         echo "Error: tasks.ts does not contain related tasks"
         echo "Run the server side prepare_deploy script to populate the db with related task scores"
-        exit
+        fail
     fi
 }
 
