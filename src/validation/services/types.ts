@@ -1,5 +1,6 @@
 import * as constants from '../../application/constants';
 import { Errors } from '../errors/types';
+import { LatLong } from '../latlong/types';
 
 export type Id = string;
 
@@ -20,8 +21,7 @@ export interface Address {
 
 export interface HumanServiceData {
     readonly id: Id;
-    readonly latitude?: number;
-    readonly longitude?: number;
+    readonly latlong?: LatLong;
     readonly name: string;
     readonly description: string;
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;

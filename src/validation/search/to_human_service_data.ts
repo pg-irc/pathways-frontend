@@ -1,10 +1,10 @@
 import { SearchServiceData } from './types';
 import { HumanServiceData } from '../services/types';
+import { LatLong } from '../latlong/types';
 
 export const toHumanServiceData = (data: SearchServiceData): HumanServiceData => ({
     id: data.service_id,
-    latitude: validateLatLong(data._geoloc.lat),
-    longitude: validateLatLong(data._geoloc.lng),
+    latlong: validateLatLong(data._geoloc.lat, data._geoloc.lng),
     name: data.service_name,
     description: data.service_description,
     phoneNumbers: [{
@@ -25,13 +25,6 @@ export const toHumanServiceData = (data: SearchServiceData): HumanServiceData =>
     organizationName: data.organization.name,
 });
 
-const validateLatLong = (LatOrLong: string | number): number => {
-    const defaultLatOrLong = 0;
-    if (LatOrLong === '') {
-        return defaultLatOrLong;
-    }
-    if ((typeof LatOrLong === 'number')) {
-        return LatOrLong;
-    }
-    throw new Error('Non empty strings are invalid lat/long');
+const validateLatLong = (latitude: number, longitude: number): LatLong => {
+    return { lat: latitude, lng: longitude };
 };

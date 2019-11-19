@@ -143,8 +143,7 @@ export class ServiceBuilder {
     build(): HumanServiceData {
         return {
             id: this.id,
-            latitude: this.latitude,
-            longitude: this.longitude,
+            latlong: { lat: this.latitude, lng: this.longitude },
             name: this.name,
             description: this.description,
             phoneNumbers: this.phoneNumbers,
