@@ -1,5 +1,9 @@
 #!/bin/bash
 
+fail() {
+    exit -1
+}
+
 while (( "$#" )); do
     if [ "$1" == "--clientVersion" ]
     then
@@ -21,6 +25,10 @@ while (( "$#" )); do
     then
         WORKING_DIRECTORY=$2
         shift 2
+    elif [ "$1" == "--bc211path" ]
+    then
+        BC211PATH=$2
+        shift 2
     elif [ "$1" == "--staging" ]
     then
         BUILD="staging"
@@ -33,7 +41,7 @@ while (( "$#" )); do
         shift 1
     else
         echo "$1: Invalid command argument"
-        exit
+        fail
     fi
 done
 
@@ -65,10 +73,12 @@ usage() {
     echo "                in order to retrieve related tasks from the database. The related tasks must"
     echo "                already have been computed, see the server side prepare deploy script."
     echo
+    echo "    --bc211path"
+    echo "                Path to the XML file containing the BC211 data dump."
+    echo
     echo "    --workingDirectory"
     echo "                Path to a directory to be created by the script. WorkingDirectory should not already"
     echo "                exist, it will be used to clone three git repositories and build the client."
-    echo
     echo
     echo "    --staging or --production"
     echo "                Pass one of these flags depending on the build. This affects the URL, icon and app name to be set."
@@ -85,7 +95,7 @@ validateExpoUser() {
         echo "Expo account is OK"
     else
         echo "Error: Must be logged into expo as peacegeeks"
-        exit
+        fail
     fi
 }
 
@@ -94,42 +104,49 @@ validateCommandLine () {
     then
         echo "Error: Must specify version string"
         usage
-        exit
+        fail
     fi
 
     if [ "$SERVER_VERSION" == "" ]
     then
         echo "Error: Must specify server version string"
         usage
-        exit
+        fail
     fi 
 
     if [ "$ANDROID_VERSION_CODE" == "" ]
     then
         echo "Error: Must specify android version code"
         usage
-        exit
+        fail
     fi
 
     if [ "$WORKING_DIRECTORY" == "" ]
     then
         echo "Error: Must specify working directory, which must not already exist"
         usage
-        exit
+        fail
     fi
 
     if [ "$POSTGRES_USER" == "" ]
     then
         echo "Error: Must specify postgres user, as in pathways-backend/.env"
         usage
-        exit
+        fail
+    fi
+
+    if [ "$BC211PATH" == "" ]
+    then
+        echo "Error: Must specify path to BC211 data dump file"
+        usage
+        fail
     fi
 
     if [ "$BUILD" != "staging" ] && [ "$BUILD" != "production" ]
     then
         echo "Error: Must specify if the build is for production or staging"
         usage
-        exit
+        fail
     fi
 }
 
@@ -137,7 +154,7 @@ checkForSuccess () {
     if [ "$?" != "0" ]
     then
         echo "Error: failed to $1"
-        exit
+        fail
     fi
 }
 
@@ -196,14 +213,14 @@ validateClientVersion() {
     if [ "$FILE_VERSION" != "$VERSION" ]
     then
         echo "Error: client VERSION.txt contains $FILE_VERSION, when $VERSION was expected"
-        exit
+        fail
     fi
 
     FILE_CODE=$(grep versionCode "$CLIENT_DIRECTORY/app.json")
     if [ "$FILE_CODE" != "      \"versionCode\": $ANDROID_VERSION_CODE," ]
     then
         echo "Error: client app.json contains $FILE_CODE when $ANDROID_VERSION_CODE was expected"
-        exit
+        fail
     fi
 }
 
@@ -212,7 +229,7 @@ validateServerVersion() {
     if [ "$FILE_VERSION" != "$SERVER_VERSION" ]
     then
         echo "Error: server VERSION.txt contains $FILE_VERSION, when $SERVER_VERSION was expected"
-        exit
+        fail
     fi
 }
 
@@ -223,7 +240,8 @@ getServerDependencies() {
     (cd "$SERVER_DIRECTORY" &&\
         python3 -m venv .venv &&\
         source .venv/bin/activate &&\
-        pip install -r requirements/local.txt)
+        pip install -r requirements/local.txt &&\
+        python -m spacy download en)
     checkForSuccess "install requirements for the server"
 }
 
@@ -263,22 +281,30 @@ createClientEnvironment() {
 
     echo "VERSION=$VERSION"                                >  "$CLIENT_DIRECTORY/.env"
     echo "DEBUG_GOOGLE_ANALYTICS=false"                    >> "$CLIENT_DIRECTORY/.env"
-    echo "ALGOLIA_SEARCH_API_KEY='enter API key here'"     >> "$CLIENT_DIRECTORY/.env"
     echo "ALGOLIA_SERVICES_INDEX='dev_services'"           >> "$CLIENT_DIRECTORY/.env"
     echo "ALGOLIA_ORGANIZATIONS_INDEX='dev_organizations'" >> "$CLIENT_DIRECTORY/.env"
+    echo "SENTRY_DEBUG=false"                              >> "$CLIENT_DIRECTORY/.env"
+    echo "SENTRY_ENABLE_IN_DEV=false"                      >> "$CLIENT_DIRECTORY/.env"
+    echo                                                   >> "$CLIENT_DIRECTORY/.env"
+    echo "SENTRY_AUTH_TOKEN='token...'"                    >> "$CLIENT_DIRECTORY/.env"
+    echo "SENTRY_DSN=https://...sentry.io/..."             >> "$CLIENT_DIRECTORY/.env"
+    echo "ALGOLIA_SEARCH_API_KEY='key...'"                 >> "$CLIENT_DIRECTORY/.env"
+
 
     if [ "$BUILD" == "staging" ]
     then
-        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-5'"  >> "$CLIENT_DIRECTORY/.env"
-        echo "API_URL=$STAGING_URL" >> "$CLIENT_DIRECTORY/.env"
+        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-5'" >> "$CLIENT_DIRECTORY/.env"
+        echo "API_URL=$STAGING_URL"                         >> "$CLIENT_DIRECTORY/.env"
+
         setStagingValuesInAppJson
+
     elif [ "$BUILD" == "production" ]
     then
-        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'"  >> "$CLIENT_DIRECTORY/.env"
-        echo "API_URL=$PRODUCTION_URL" >> "$CLIENT_DIRECTORY/.env"
+        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'" >> "$CLIENT_DIRECTORY/.env"
+        echo "API_URL=$PRODUCTION_URL"                      >> "$CLIENT_DIRECTORY/.env"
     else
         echo "Error: You must specify the build type"
-        exit
+        fail
     fi
 
     checkForSuccess "create client environment"
@@ -288,20 +314,36 @@ completeManualConfiguration() {
     echo
     echo "Manual steps:"
     echo
-    echo " edit $CLIENT_DIRECTORY/app.json"
-    echo
-    echo "and set the Sentry auth token. Log into our account on "
-    echo "https://sentry.io to retrieve the auth token from "
-    echo "https://sentry.io/settings/account/api/auth-tokens/"
-    echo
     echo " edit $CLIENT_DIRECTORY/.env"
     echo
-    echo "and set the ALGOLIA_SEARCH_API_KEY available from"
+    echo "and set the Sentry auth token and dsn. Log into our account on "
+    echo "https://sentry.io to retrieve the auth token from "
+    echo "https://sentry.io/settings/account/api/auth-tokens/ and dsn from"
+    echo "https://sentry.io/settings/peacegeeks/projects/pathways/keys/"
+    echo
+    echo "Also set the ALGOLIA_SEARCH_API_KEY available from"
     echo "https://www.algolia.com/apps/MMYH1Z0D3O/api-keys/all"
     echo
     echo "Make any other client side configuration changes now."
     echo
     read -p "Press enter to continue"
+}
+
+buildServer() {
+    echo
+    echo "Building server"
+    echo
+
+    cp $BC211PATH $SERVER_DIRECTORY/bc211.xml
+    (cd "$SERVER_DIRECTORY" &&\
+        source .venv/bin/activate &&\
+        ./utility/prepare_deploy.sh \
+            --bc211Path                 ./bc211.xml                  \
+            --newComersGuidePath        ../content/NewcomersGuide/   \
+            --recommendationsToAddPath  ../content/taxonomy/         \
+            --outputDir                 ../                          \
+    )
+    checkForSuccess "build server"
 }
 
 buildContentFixture() {
@@ -311,7 +353,7 @@ buildContentFixture() {
 
     (cd "$SERVER_DIRECTORY" &&\
         source .venv/bin/activate &&\
-        ./manage.py import_newcomers_guide ../content &&\
+        ./manage.py generate_client_fixtures ../content &&\
         mv *.ts ../pathways-frontend/src/fixtures/newcomers_guide/ )
     checkForSuccess "build content fixture"
 }
@@ -323,7 +365,7 @@ validateContentFixture() {
     then
         echo "Error: tasks.ts does not contain related tasks"
         echo "Run the server side prepare_deploy script to populate the db with related task scores"
-        exit
+        fail
     fi
 }
 
@@ -381,6 +423,7 @@ validateServerVersion
 
 getServerDependencies
 createServerEnvironment
+buildServer
 buildContentFixture
 validateContentFixture
 
