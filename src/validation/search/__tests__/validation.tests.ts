@@ -33,6 +33,33 @@ describe('Search response validation', () => {
             }]);
             expect(result.validData[0].service_id).toEqual(serviceId);
         });
+        it('empty string lat long are valid', () => {
+            const serviceId = aString();
+            const result = validateServiceSearchResponse([{
+                service_name: aString(),
+                service_id: serviceId,
+                service_description: aString(),
+                address: {
+                    address: aString(),
+                    city: aString(),
+                    state_province: aString(),
+                    postal_code: aString(),
+                    country: aString(),
+                },
+                organization: {
+                    id: aString(),
+                    name: aString(),
+                    website: aString(),
+                    email: aString(),
+                    service_count: aNumber(),
+                },
+                _geoloc: {
+                    lat: '',
+                    lng: '',
+                },
+            }]);
+            expect(result.validData[0].service_id).toEqual(serviceId);
+        });
     });
     describe('with invalid data', () => {
         it('throws on missing field in service data', () => {
@@ -86,6 +113,34 @@ describe('Search response validation', () => {
                 _geoloc: {
                     lat: aNumber(),
                     lng: aNumber(),
+                },
+            }]);
+            expect(validationResult.isValid).toBe(false);
+            expect(validationResult.errors).toContain('service_id');
+        });
+        it('throws on random string for latlong', () => {
+            const invalidValue = aNumber();
+            const validationResult = validateServiceSearchResponse([{
+                service_name: aString(),
+                service_id: invalidValue,
+                service_description: aString(),
+                address: {
+                    address: aString(),
+                    city: aString(),
+                    state_province: aString(),
+                    postal_code: aString(),
+                    country: aString(),
+                },
+                organization: {
+                    id: aNumber(),
+                    name: aString(),
+                    website: aString(),
+                    email: aString(),
+                    service_count: aNumber(),
+                },
+                _geoloc: {
+                    lat: aString(),
+                    lng: aString(),
                 },
             }]);
             expect(validationResult.isValid).toBe(false);
