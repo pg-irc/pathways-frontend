@@ -1,7 +1,7 @@
 import { Id as TopicId } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, Id } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { LatLong } from '../../validation/latlong/types';
 
@@ -39,11 +39,11 @@ export const buildServicesErrorAction = (topicId: TopicId, errorMessageType: Err
 );
 
 // tslint:disable-next-line: typedef
-export const addServiceToSavedListAction = (service: HumanServiceData) => (
-    helpers.makeAction(constants.ADD_SERVICE_BOOKMARK, { service })
+export const addServiceToSavedListAction = (serviceId: Id) => (
+    helpers.makeAction(constants.ADD_SERVICE_BOOKMARK, { serviceId })
 );
 
 // tslint:disable-next-line: typedef
-export const removeServiceFromSavedListAction = (service: HumanServiceData) => (
-    helpers.makeAction(constants.REMOVE_SERVICE_BOOKMARK, { service })
+export const removeServiceFromSavedListAction = (serviceId: Id) => (
+    helpers.makeAction(constants.REMOVE_SERVICE_BOOKMARK, { serviceId })
 );

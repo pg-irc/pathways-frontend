@@ -59,7 +59,10 @@ export interface ServiceMap {
     readonly [serviceId: string]: HumanServiceData;
 }
 
+export type ServiceList = ReadonlyArray<Id>;
+
 export interface ServiceStore {
     readonly services: ServiceMap;
     readonly servicesByTopic: ServicesForAllTopics;
+    readonly savedServices: ServiceList;
 }

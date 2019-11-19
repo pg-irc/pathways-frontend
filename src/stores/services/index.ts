@@ -10,6 +10,7 @@ export function buildDefaultStore(): types.ServiceStore {
     return {
         services: {},
         servicesByTopic: {},
+        savedServices: [],
     };
 }
 
@@ -29,6 +30,10 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServicesSuccess(store, action);
         case constants.LOAD_SERVICES_FAILURE:
             return updateServicesFailure(store, action);
+        case constants.ADD_SERVICE_BOOKMARK:
+            return addToSavedServicesList(store, action);
+        case constants.REMOVE_SERVICE_BOOKMARK:
+            return removeFromSavedServicesList(store, action);
         default:
             return store;
     }
@@ -88,4 +93,21 @@ const createServiceMap = (services: ReadonlyArray<types.HumanServiceData>): type
         return { ...serviceMap, [service.id]: service };
     };
     return services.reduce(theReducer, {});
+};
+
+const addToSavedServicesList = (store: types.ServiceStore, action: actions.AddServiceToSavedListAction): types.ServiceStore => {
+    const serviceId = action.payload.serviceId;
+    return {
+        ...store,
+        savedServices: [...store.savedServices, serviceId],
+    };
+} ;
+
+const removeFromSavedServicesList = (store: types.ServiceStore, action: actions.RemoveServiceFromSavedListAction): types.ServiceStore => {
+    const serviceIdToRemove = action.payload.serviceId;
+    const updatedSavedServicesList = store.savedServices.filter((id: Id) => id !== serviceIdToRemove);
+    return {
+        ...store,
+        savedServices: updatedSavedServicesList,
+    };
 };
