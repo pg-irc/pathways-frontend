@@ -9,14 +9,24 @@ import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { validateServiceSearchResponse } from '../../validation/search';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
+import { ServiceList, Id } from '../../validation/services/types';
+import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
 
-export interface Props {
+export interface InfiniteHitsProps {
     readonly currentPath: string;
     // tslint:disable-next-line:no-any
     readonly hits: ReadonlyArray<any>;
     readonly hasMore: boolean;
     readonly refine: (searchTerms?: string) => string;
+    readonly savedServices: ServiceList;
 }
+
+export interface InfiniteHitsActions {
+    readonly addServiceToSavedListAction: (serviceId: Id) => AddServiceToSavedListAction;
+    readonly removeServiceFromSavedListAction: (serviceId: Id) => RemoveServiceFromSavedListAction;
+}
+
+type Props = InfiniteHitsProps&InfiniteHitsActions;
 
 export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
@@ -27,7 +37,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
         refreshing={false}
         data={searchResults}
         keyExtractor={keyExtractor}
-        renderItem={renderSearchHit(props.currentPath)}
+        renderItem={renderSearchHit(props)}
         ListEmptyComponent={EmptyComponent}
         ItemSeparatorComponent={SearchListSeparator} />;
 };
@@ -44,7 +54,13 @@ const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
 );
 
-const renderSearchHit = R.curry((currentPath: string, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
+const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
     const item: SearchServiceData = itemInfo.item;
-    return <ServiceListItemComponent service={toHumanServiceData(item)} currentPath={currentPath} />;
+    return <ServiceListItemComponent
+            service={toHumanServiceData(item)}
+            currentPath={props.currentPath}
+            isBookmarked={R.contains(item.service_id, props.savedServices)}
+            addServiceToSavedList={props.addServiceToSavedListAction}
+            removeServiceFromSavedList={props.removeServiceFromSavedListAction}
+            />;
 });

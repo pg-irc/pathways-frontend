@@ -2,15 +2,18 @@ import React from 'react';
 import { Icon, Button } from 'native-base';
 import { AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/topics';
 import { values } from '../../application/styles';
+import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
 
 export interface BookmarkButtonProps {
     readonly isBookmarked: boolean;
     readonly textColor: string;
 }
+export type AddBookmarkAction = AddToSavedListAction | AddServiceToSavedListAction;
+export type RemoveBookmarkAction = RemoveFromSavedListAction | RemoveServiceFromSavedListAction;
 
 export interface BookmarkButtonActions {
-    readonly addBookmark: () => AddToSavedListAction;
-    readonly removeBookmark: () => RemoveFromSavedListAction;
+    readonly addBookmark: () => AddBookmarkAction;
+    readonly removeBookmark: () => RemoveBookmarkAction;
 }
 
 type Props = BookmarkButtonProps & BookmarkButtonActions;
@@ -31,6 +34,6 @@ const BookmarkIcon = (props: Props): JSX.Element => (
         }} />
 );
 
-const getButtonOnPress = (props: Props): () => AddToSavedListAction | RemoveFromSavedListAction => (
+const getButtonOnPress = (props: Props): () => AddBookmarkAction | RemoveBookmarkAction => (
     props.isBookmarked ? props.removeBookmark : props.addBookmark
 );

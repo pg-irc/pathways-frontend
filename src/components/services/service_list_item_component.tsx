@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { textStyles, colors } from '../../application/styles';
-import { HumanServiceData, PhoneNumber, Address } from '../../validation/services/types';
+import { HumanServiceData, PhoneNumber, Address, Id } from '../../validation/services/types';
 import { View } from 'native-base';
 import { Text } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
@@ -13,18 +13,32 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { getLocationTitleFromAddresses } from './get_location_title_from_addresses';
 import { AnalyticsLink, LinkTypes } from '../link/link';
 import { buildLinkContext } from '../../sagas/analytics/events';
+import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
+import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
 
-interface ServiceListItemProps {
+export interface ServiceListItemProps {
     readonly service: HumanServiceData;
     readonly currentPath: string;
+    readonly isBookmarked: boolean;
 }
 
-export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
-    (props: ServiceListItemProps): JSX.Element => {
+export interface ServiceListItemActions {
+    readonly addServiceToSavedList: (serviceId: Id) => AddServiceToSavedListAction;
+    readonly removeServiceFromSavedList: (serviceId: Id) => RemoveServiceFromSavedListAction;
+}
+
+type Props = ServiceListItemProps & ServiceListItemActions;
+
+export const ServiceListItemComponent: React.StatelessComponent<Props> =
+    (props: Props): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
         const linkContext = buildLinkContext('Service', serviceName);
         return (
             <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
+                <BookmarkButtonComponent isBookmarked={props.isBookmarked} textColor={colors.teal}
+                addBookmark={(): AddServiceToSavedListAction => props.addServiceToSavedList(props.service.id)}
+                removeBookmark={(): RemoveServiceFromSavedListAction => props.removeServiceFromSavedList(props.service.id)}
+                />
                 {renderName(serviceName)}
                 {renderDescription(props.service.description)}
                 {renderAddresses(filterPhysicalAddresses(props.service.addresses))}

@@ -1,16 +1,31 @@
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { Store } from '../../stores';
 import { SearchComponentProps, SearchComponent } from './search_component';
 import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
+import { ServicesAction, AddServiceToSavedListAction, addServiceToSavedListAction,
+        removeServiceFromSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
+import { InfiniteHitsActions } from './infinite_hits_component';
+import { Id } from '../../stores/services';
 
 type OwnProps = {
     readonly location: Location;
 };
 
-const mapStateToProps = (_: Store, ownProps: OwnProps): SearchComponentProps => ({
+const mapStateToProps = (store: Store, ownProps: OwnProps): SearchComponentProps => ({
     apiKey: ALGOLIA_SEARCH_API_KEY,
     appId: 'MMYH1Z0D3O',
     currentPath: ownProps.location.pathname,
+    savedServices: store.services.savedServices,
 });
 
-export const SearchConnectedComponent = connect(mapStateToProps)(SearchComponent);
+const mapDispatchToProps = (dispatch: Dispatch<ServicesAction>): InfiniteHitsActions => ({
+    addServiceToSavedListAction: (serviceId: Id): AddServiceToSavedListAction => {
+        return dispatch(addServiceToSavedListAction(serviceId));
+    },
+    removeServiceFromSavedListAction: (serviceId: Id): RemoveServiceFromSavedListAction => {
+        return dispatch(removeServiceFromSavedListAction(serviceId));
+    },
+});
+
+export const SearchConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(SearchComponent);
