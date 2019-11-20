@@ -37,7 +37,7 @@ describe('Search response validation', () => {
         });
     });
     describe('with invalid data', () => {
-        it('throws on missing field in service data', () => {
+        it('returns invalid on missing field in service data', () => {
             const validationResult = validateServiceSearchResponse([{
                 service_name: aString(),
                 // service_id: serviceId,
@@ -65,7 +65,7 @@ describe('Search response validation', () => {
             expect(validationResult.errors).toContain('service_id');
         });
 
-        it('throws on wrong field type in service data', () => {
+        it('returns invalid on wrong field type in service data', () => {
             const invalidValue = aNumber();
             const validationResult = validateServiceSearchResponse([{
                 service_name: aString(),
