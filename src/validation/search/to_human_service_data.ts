@@ -26,14 +26,11 @@ export const toHumanServiceData = (data: SearchServiceData): HumanServiceData =>
 });
 
 const validateLatLong = (latitude: number | string, longitude: number | string): LatLong | undefined => {
-    if (typeof latitude !== typeof longitude) {
-        throw new Error('Latitude and Longitude types do not match');
-    }
     if (typeof latitude === 'number' && typeof longitude === 'number') {
         return { lat: latitude, lng: longitude };
     }
     if (latitude === '' && longitude === '') {
         return undefined;
     }
-    throw new Error('Non empty strings do not make sense for Latitude and Longitude');
+    throw new Error('Invalid types for lat/long in search result');
 };

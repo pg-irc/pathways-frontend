@@ -90,7 +90,7 @@ describe('Adapting search result to service data', () => {
                     lat: aString(),
                     lng: aNumber(),
                 },
-            })).toThrowError('Latitude and Longitude types do not match');
+            })).toThrowError('Invalid types for lat/long in search result');
         });
 
         it('throws error on non empty strings in both latitude and longitude', () => {
@@ -117,7 +117,7 @@ describe('Adapting search result to service data', () => {
                     lat: 'not an empty string',
                     lng: 'not an empty string',
                 },
-            })).toThrowError('Non empty strings do not make sense for Latitude and Longitude');
+            })).toThrowError('Invalid types for lat/long in search result');
         });
     });
 });
