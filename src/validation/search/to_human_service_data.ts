@@ -25,7 +25,7 @@ export const toHumanServiceData = (data: SearchServiceData): HumanServiceData =>
     organizationName: data.organization.name,
 });
 
-const validateLatLong = (latitude: number | string, longitude: number | string): LatLong => {
+const validateLatLong = (latitude: number | string, longitude: number | string): LatLong | undefined => {
     if (typeof latitude !== typeof longitude) {
         throw new Error('Latitude and Longitude types do not match');
     }
@@ -33,7 +33,7 @@ const validateLatLong = (latitude: number | string, longitude: number | string):
         return { lat: latitude, lng: longitude };
     }
     if (latitude === '' && longitude === '') {
-        return { lat: 0, lng: 0 };
+        return undefined;
     }
     throw new Error('Non empty strings do not make sense for Latitude and Longitude');
 };

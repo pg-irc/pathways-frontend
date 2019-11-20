@@ -41,7 +41,7 @@ interface ValidatedServiceJSON {
 }
 
 interface ValidatedLocationJSON {
-    readonly latlong: LatLong;
+    readonly latlong?: LatLong;
     readonly phone_numbers: ReadonlyArray<ValidatedPhoneNumberJSON>;
     readonly addresses: ReadonlyArray<ValidatedAddressWithTypeJSON>;
 }
