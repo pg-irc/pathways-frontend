@@ -11,6 +11,7 @@ import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { CardButtonComponent } from '../card_button/card_button_component';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
+import { ContentVerificationComponent } from '../content_verification/content_verification_component';
 
 const testService = {
     organizationId: 'mosaic',
@@ -68,6 +69,7 @@ const ServiceContactDetails = (): JSX.Element => (
             textLabel={<Trans>Address</Trans>}
             text={testService.address}
             onPress={(): undefined => undefined}
+            displayTextInline={false}
         />
         <DividerComponent />
         <CardButtonComponent
@@ -75,6 +77,7 @@ const ServiceContactDetails = (): JSX.Element => (
             textLabel={<Trans>Phone</Trans>}
             text={testService.phone}
             onPress={(): undefined => undefined}
+            displayTextInline={true}
         />
         <DividerComponent />
         <CardButtonComponent
@@ -82,6 +85,7 @@ const ServiceContactDetails = (): JSX.Element => (
             textLabel={<Trans>Fax</Trans>}
             text={testService.fax}
             onPress={(): undefined => undefined}
+            displayTextInline={true}
         />
         <DividerComponent />
         <CardButtonComponent
@@ -89,13 +93,11 @@ const ServiceContactDetails = (): JSX.Element => (
             textLabel={<Trans>Website</Trans>}
             text={testService.website}
             onPress={(): undefined => undefined}
+            displayTextInline={true}
         />
         <DividerComponent />
-        <CardButtonComponent
-            icon={'question'}
-            textLabel={<Trans>Last verified</Trans>}
-            text={testService.lastVerified}
-            onPress={(): undefined => undefined}
+        <ContentVerificationComponent
+            verificationDate={testService.lastVerified}
         />
         <DividerComponent />
     </View>

@@ -9,6 +9,7 @@ import { BodyComponent } from '../content_layout/body_component';
 import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { CardButtonComponent } from '../card_button/card_button_component';
+import { ContentVerificationComponent } from '../content_verification/content_verification_component';
 
 const testOrganization = {
     id: 'mosiac',
@@ -74,6 +75,7 @@ const AboutContactDetails = (): JSX.Element => (
             textLabel={<Trans>Address</Trans>}
             text={testOrganization.address}
             onPress={(): undefined => undefined}
+            displayTextInline={false}
         />
         <DividerComponent />
         <CardButtonComponent
@@ -81,6 +83,7 @@ const AboutContactDetails = (): JSX.Element => (
             textLabel={<Trans>Phone</Trans>}
             text={testOrganization.phone}
             onPress={(): undefined => undefined}
+            displayTextInline={true}
         />
         <DividerComponent />
         <CardButtonComponent
@@ -88,6 +91,7 @@ const AboutContactDetails = (): JSX.Element => (
             textLabel={<Trans>Fax</Trans>}
             text={testOrganization.fax}
             onPress={(): undefined => undefined}
+            displayTextInline={true}
         />
         <DividerComponent />
         <CardButtonComponent
@@ -95,6 +99,7 @@ const AboutContactDetails = (): JSX.Element => (
             textLabel={<Trans>Website</Trans>}
             text={testOrganization.website}
             onPress={(): undefined => undefined}
+            displayTextInline={true}
         />
         <DividerComponent />
         <CardButtonComponent
@@ -102,13 +107,11 @@ const AboutContactDetails = (): JSX.Element => (
             textLabel={<Trans>Email</Trans>}
             text={testOrganization.email}
             onPress={(): undefined => undefined}
+            displayTextInline={true}
         />
         <DividerComponent />
-        <CardButtonComponent
-            icon={'question'}
-            textLabel={<Trans>Last verified</Trans>}
-            text={testOrganization.lastVerified}
-            onPress={(): undefined => undefined}
+        <ContentVerificationComponent
+            verificationDate={testOrganization.lastVerified}
         />
         <DividerComponent />
     </View>
