@@ -8,7 +8,8 @@ describe('Search response validation', () => {
 
         it('returns the service data', () => {
             const serviceId = aString();
-            const result = validateServiceSearchResponse([{
+            // tslint:disable-next-line:no-any
+            const serviceData: ReadonlyArray<any> = [{
                 service_name: aString(),
                 service_id: serviceId,
                 service_description: aString(),
@@ -30,8 +31,9 @@ describe('Search response validation', () => {
                     lat: aNumber(),
                     lng: aNumber(),
                 },
-            }]);
-            expect(result.validData[0].service_id).toEqual(serviceId);
+            }];
+            const result = validateServiceSearchResponse(serviceData);
+            expect(result.validData).toEqual(serviceData);
         });
     });
     describe('with invalid data', () => {
