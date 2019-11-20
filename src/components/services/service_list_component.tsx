@@ -40,7 +40,7 @@ type Props = ServiceListProps & ServiceListActions & ServicesUpdater;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
     const onlineStatus = useOnlineStatus();
-    const refreshServicesData = useRequestDataIfOnlineReturnRefreshDataCallback(props.dispatchServicesRequest);
+    const refreshServicesData = useRequestDataIfOnlineReturnRefreshDataCallback(onlineStatus, props.dispatchServicesRequest);
     const hasNoErrors = onlineStatus !== OnlineStatus.Offline && !isError(props.topicServicesOrError);
 
     if (hasNoErrors) {
