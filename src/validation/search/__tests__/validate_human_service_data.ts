@@ -2,17 +2,17 @@
 import { toHumanServiceData } from '../to_human_service_data';
 import { aString, aNumber } from '../../../helpers/random_test_values';
 
-describe('Search response validation', () => {
+describe('Adapting search result to service data', () => {
 
     describe('with valid data', () => {
+
         it('returns human service when both latitude and longitude are numbers', () => {
             const latitude = aNumber();
             const longitude = aNumber();
-            const serviceId = aString();
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
-                service_id: serviceId,
+                service_id: aString(),
                 service_description: aString(),
                 address: {
                     address: aString(),
@@ -33,16 +33,15 @@ describe('Search response validation', () => {
                     lng: longitude,
                 },
             });
-            expect(result.id).toEqual(serviceId);
             expect(result.latlong.lat).toEqual(latitude);
             expect(result.latlong.lng).toEqual(longitude);
         });
+
         it('human service returns with undefined latlong if latitude and longitude were both empty string', () => {
-            const serviceId = aString();
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
                 service_name: aString(),
-                service_id: serviceId,
+                service_id: aString(),
                 service_description: aString(),
                 address: {
                     address: aString(),
@@ -115,8 +114,8 @@ describe('Search response validation', () => {
                     service_count: aNumber(),
                 },
                 _geoloc: {
-                    lat: aString(),
-                    lng: aString(),
+                    lat: 'not an empty string',
+                    lng: 'not an empty string',
                 },
             })).toThrowError('Non empty strings do not make sense for Latitude and Longitude');
         });
