@@ -2,12 +2,14 @@
 import { Id as AnswerId } from '../../questionnaire';
 import { Id as TopicId } from '../../topics';
 import { PersistedUserData } from '../../user_data';
+import { HumanServiceData } from '../../../validation/services/types';
 
 export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];
     savedTopics: TopicId[] = [];
     completedTopics: TopicId[] = [];
     showOnboarding: boolean = true;
+    savedServices: HumanServiceData[] = [];
 
     addChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
         this.chosenAnswers.push(id);
@@ -29,12 +31,18 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
+    addSavedService(service: HumanServiceData): PersistedUserDataBuilder {
+        this.savedServices.push(service);
+        return this;
+    }
+
     buildObject(): PersistedUserData {
         return {
             chosenAnswers: this.chosenAnswers,
             savedTopics: this.savedTopics,
             completedTopics: this.completedTopics,
             showOnboarding: this.showOnboarding,
+            savedServices: this.savedServices,
         };
     }
 

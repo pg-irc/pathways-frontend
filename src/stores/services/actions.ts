@@ -4,6 +4,7 @@ import * as helpers from '../helpers/make_action';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { LatLong } from '../../validation/latlong/types';
+import { UserDataPersistence } from '../user_data';
 
 export type BuildServicesRequestAction = Readonly<ReturnType<typeof buildServicesRequestAction>>;
 
@@ -20,7 +21,10 @@ export type ServicesAction =
     BuildServicesSuccessAction |
     BuildServicesErrorAction |
     AddServiceToSavedListAction |
-    RemoveServiceFromSavedListAction
+    RemoveServiceFromSavedListAction |
+    UserDataPersistence.LoadRequestAction |
+    UserDataPersistence.LoadSuccessAction |
+    UserDataPersistence.LoadFailureAction
     ;
 
 // tslint:disable-next-line:typedef
