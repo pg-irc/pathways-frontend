@@ -32,7 +32,7 @@ export const CardButtonComponent = (props: Props): JSX.Element => {
 
 const IconComponent = (props: { readonly icon?: string }): JSX.Element => (
     props.icon ?
-        <Icon name={props.icon} type={'FontAwesome'} style={{ color: colors.teal, fontSize: values.smallIconSize }}/>
+        <Icon name={props.icon} type={'FontAwesome'} style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}/>
         :
         <EmptyComponent />
 );

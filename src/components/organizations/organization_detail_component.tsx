@@ -10,6 +10,7 @@ import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { CardButtonComponent } from '../card_button/card_button_component';
 import { ContentVerificationComponent } from '../content_verification/content_verification_component';
+import { openURL } from '../link/link';
 
 const testOrganization = {
     id: 'mosiac',
@@ -82,7 +83,7 @@ const AboutContactDetails = (): JSX.Element => (
             icon={'phone'}
             textLabel={<Trans>Phone</Trans>}
             text={testOrganization.phone}
-            onPress={(): undefined => undefined}
+            onPress={(): void => openURL('tel: ' + testOrganization.phone)}
             displayTextInline={true}
         />
         <DividerComponent />
@@ -90,7 +91,7 @@ const AboutContactDetails = (): JSX.Element => (
             icon={'fax'}
             textLabel={<Trans>Fax</Trans>}
             text={testOrganization.fax}
-            onPress={(): undefined => undefined}
+            onPress={(): void => openURL('tel: ' + testOrganization.fax)}
             displayTextInline={true}
         />
         <DividerComponent />
@@ -98,7 +99,7 @@ const AboutContactDetails = (): JSX.Element => (
             icon={'external-link'}
             textLabel={<Trans>Website</Trans>}
             text={testOrganization.website}
-            onPress={(): undefined => undefined}
+            onPress={(): void => openURL(testOrganization.website)}
             displayTextInline={true}
         />
         <DividerComponent />

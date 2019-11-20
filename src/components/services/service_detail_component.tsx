@@ -12,6 +12,7 @@ import { DividerComponent } from '../content_layout/divider_component';
 import { CardButtonComponent } from '../card_button/card_button_component';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { ContentVerificationComponent } from '../content_verification/content_verification_component';
+import { openURL } from '../link/link';
 
 const testService = {
     organizationId: 'mosaic',
@@ -45,7 +46,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
 const ServiceOrganization = (props: { readonly history: History }): JSX.Element => {
     const OrganizationLinkComponent = (): JSX.Element => (
         <TouchableOpacity onPress={goToRouteWithParameter(Routes.OrganizationDetail, testService.organizationId, props.history)}>
-            <Text style={textStyles.paragraphURL}>{testService.organizationId.toUpperCase()}</Text>
+            <Text style={textStyles.URL}>{testService.organizationId.toUpperCase()}</Text>
         </TouchableOpacity>
     );
     return (
@@ -76,7 +77,7 @@ const ServiceContactDetails = (): JSX.Element => (
             icon={'phone'}
             textLabel={<Trans>Phone</Trans>}
             text={testService.phone}
-            onPress={(): undefined => undefined}
+            onPress={(): void => openURL('tel: ' + testService.phone)}
             displayTextInline={true}
         />
         <DividerComponent />
@@ -84,7 +85,7 @@ const ServiceContactDetails = (): JSX.Element => (
             icon={'fax'}
             textLabel={<Trans>Fax</Trans>}
             text={testService.fax}
-            onPress={(): undefined => undefined}
+            onPress={(): void => openURL('tel: ' + testService.fax)}
             displayTextInline={true}
         />
         <DividerComponent />
@@ -92,7 +93,7 @@ const ServiceContactDetails = (): JSX.Element => (
             icon={'external-link'}
             textLabel={<Trans>Website</Trans>}
             text={testService.website}
-            onPress={(): undefined => undefined}
+            onPress={(): void => openURL(testService.website)}
             displayTextInline={true}
         />
         <DividerComponent />
