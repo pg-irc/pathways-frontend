@@ -9,7 +9,7 @@ import { TitleComponent } from '../content_layout/title_component';
 import { BodyComponent } from '../content_layout/body_component';
 import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
-import { IconRowComponent } from '../icon_row/icon_row_component';
+import { CardButtonComponent } from '../card_button/card_button_component';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 
 const testService = {
@@ -63,34 +63,39 @@ const ServiceOrganization = (props: { readonly history: History }): JSX.Element 
 
 const ServiceContactDetails = (): JSX.Element => (
     <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
-        <IconRowComponent
+        <CardButtonComponent
             icon={'location-arrow'}
             textLabel={<Trans>Address</Trans>}
             text={testService.address}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
-        <IconRowComponent
+        <CardButtonComponent
             icon={'phone'}
             textLabel={<Trans>Phone</Trans>}
             text={testService.phone}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
-        <IconRowComponent
+        <CardButtonComponent
             icon={'fax'}
             textLabel={<Trans>Fax</Trans>}
             text={testService.fax}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
-        <IconRowComponent
+        <CardButtonComponent
             icon={'external-link'}
             textLabel={<Trans>Website</Trans>}
             text={testService.website}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
-        <IconRowComponent
+        <CardButtonComponent
             icon={'question'}
             textLabel={<Trans>Last verified</Trans>}
             text={testService.lastVerified}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
     </View>

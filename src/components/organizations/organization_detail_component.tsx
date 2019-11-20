@@ -8,7 +8,7 @@ import { TitleComponent } from '../content_layout/title_component';
 import { BodyComponent } from '../content_layout/body_component';
 import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
-import { IconRowComponent } from '../icon_row/icon_row_component';
+import { CardButtonComponent } from '../card_button/card_button_component';
 
 const testOrganization = {
     id: 'mosiac',
@@ -69,40 +69,46 @@ const AboutTab = (): JSX.Element => (
 
 const AboutContactDetails = (): JSX.Element => (
     <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
-        <IconRowComponent
+        <CardButtonComponent
             icon={'location-arrow'}
             textLabel={<Trans>Address</Trans>}
             text={testOrganization.address}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
-        <IconRowComponent
+        <CardButtonComponent
             icon={'phone'}
             textLabel={<Trans>Phone</Trans>}
             text={testOrganization.phone}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
-        <IconRowComponent
+        <CardButtonComponent
             icon={'fax'}
             textLabel={<Trans>Fax</Trans>}
             text={testOrganization.fax}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
-        <IconRowComponent
+        <CardButtonComponent
             icon={'external-link'}
             textLabel={<Trans>Website</Trans>}
             text={testOrganization.website}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
-        <IconRowComponent
+        <CardButtonComponent
             icon={'envelope'}
             textLabel={<Trans>Email</Trans>}
             text={testOrganization.email}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
-        <IconRowComponent
+        <CardButtonComponent
             icon={'question'}
             textLabel={<Trans>Last verified</Trans>}
             text={testOrganization.lastVerified}
+            onPress={(): undefined => undefined}
         />
         <DividerComponent />
     </View>
