@@ -6,6 +6,7 @@ import { runSaga, ApplicationSaga } from '../sagas';
 import { loadFontsActions } from '../stores/fonts';
 import { loadLocaleRequest } from '../stores/locale/actions';
 import { UserDataPersistence } from '../stores/user_data';
+import { request as requestPushNotificationPost } from '../sagas/post_push_notification_token';
 
 import { LocaleInfoManager } from '../locale';
 import arMessages from '../../locale/ar/messages';
@@ -61,4 +62,5 @@ export function startApplication(saga: ApplicationSaga, store: CreatedStore): vo
     }));
     store.dispatch(loadLocaleRequest());
     store.dispatch(UserDataPersistence.loadRequest());
+    store.dispatch(requestPushNotificationPost());
 }

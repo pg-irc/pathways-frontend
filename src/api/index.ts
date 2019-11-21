@@ -2,6 +2,7 @@
 const BuildUrl = require('build-url');
 import { Id } from '../stores/topics';
 import { fetch } from 'cross-fetch';
+import { Locale } from '../locale';
 
 export interface APIResponse {
     readonly hasError: boolean;
@@ -58,9 +59,9 @@ export const buildParameters = (topicId: Id, location: MaybeLocation): Parameter
 
 type Parameters = { readonly [name: string]: string };
 
-const buildUrl = (path: string, location: MaybeLocation, topicId: string): string => (
+const buildUrl = (endpoint: string, location: MaybeLocation, topicId: string): string => (
     BuildUrl(baseUrl, {
-        path: path,
+        path: endpoint,
         queryParams: buildParameters(topicId, location),
     })
 );
@@ -73,3 +74,21 @@ async function createAPIResponse(response: Response): Promise<APIResponse> {
     const results = await response.json();
     return { hasError: false, message, response, results };
 }
+
+export async function putPushNotificationToken(token: string, locale: Locale): Promise<APIResponse> {
+    const url = createPushNotificationTokenUrl(baseUrl, token);
+    const response = await fetch(url,
+        {
+            method: 'PUT',
+            headers: [
+                ['Content-Type', 'application/json'],
+            ],
+            body: JSON.stringify({ 'locale': locale.code }),
+        },
+    );
+    return createAPIResponse(response);
+}
+
+export const createPushNotificationTokenUrl = (url: string, token: string): string => (
+    BuildUrl(url, { path: `v1/push_notifications/tokens/${token}/` })
+);
