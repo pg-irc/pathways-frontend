@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import * as types from './types';
 import { serviceAtLocationArray } from './schema';
 import { ValidationResult } from '../validation_result';
+import { LatLong } from '../latlong/types';
 
 export const validateServicesAtLocationArray = (data: ReadonlyArray<any>): ValidationResult<ValidatedServiceAtLocationJSON> => {
     const ajv = new Ajv();
@@ -40,8 +41,7 @@ interface ValidatedServiceJSON {
 }
 
 interface ValidatedLocationJSON {
-    readonly latitude?: number;
-    readonly longitude?: number;
+    readonly latlong?: LatLong;
     readonly phone_numbers: ReadonlyArray<ValidatedPhoneNumberJSON>;
     readonly addresses: ReadonlyArray<ValidatedAddressWithTypeJSON>;
 }
@@ -69,8 +69,7 @@ export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): 
 
     return {
         id: data.service.id,
-        latitude: data.location.latitude,
-        longitude: data.location.longitude,
+        latlong: data.location.latlong,
         name: data.service.name,
         description: data.service.description,
         phoneNumbers: phoneNumbers,

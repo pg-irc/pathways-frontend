@@ -1,5 +1,3 @@
-import { LatLong } from '../latlong/types';
-
 interface OrganizationUnderService {
     readonly id: string;
     readonly name: string;
@@ -16,6 +14,11 @@ interface Address {
     readonly country: string;
 }
 
+export interface AlgoliaLatLong {
+    readonly lat: number | string;
+    readonly lng: number | string;
+}
+
 export interface SearchServiceData {
     readonly type: 'SearchServiceData';
     readonly service_name: string;
@@ -23,5 +26,5 @@ export interface SearchServiceData {
     readonly service_id: string;
     readonly organization: OrganizationUnderService;
     readonly address: Address;
-    readonly _geoloc: LatLong;
+    readonly _geoloc: AlgoliaLatLong;
 }

@@ -111,14 +111,14 @@ const renderEmail = (email: string, currentPath: string, linkContext: string): J
 };
 
 const renderMapButtonIfLocation = (service: HumanServiceData, currentPath: string, linkContext: string): JSX.Element => {
-    if (R.not(service.latitude && service.longitude)) {
+    if (R.not(service.latlong)) {
         return <EmptyComponent />;
     }
     return (
         <View style={{ marginTop: 10, flexDirection: 'row' }}>
             <MapsApplicationPopupComponent
-                latitude={service.latitude}
-                longitude={service.longitude}
+                latitude={service.latlong.lat}
+                longitude={service.latlong.lng}
                 locationTitle={getLocationTitleFromAddresses(filterPhysicalAddresses(service.addresses))}
                 currentPath={currentPath}
                 linkContext={linkContext}
