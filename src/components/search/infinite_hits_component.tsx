@@ -9,7 +9,7 @@ import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { validateServiceSearchResponse } from '../../validation/search';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
-import { ServiceList, Id } from '../../validation/services/types';
+import { ServiceList, HumanServiceData } from '../../validation/services/types';
 import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
 
 export interface InfiniteHitsProps {
@@ -22,8 +22,8 @@ export interface InfiniteHitsProps {
 }
 
 export interface InfiniteHitsActions {
-    readonly addServiceToSavedListAction: (serviceId: Id) => AddServiceToSavedListAction;
-    readonly removeServiceFromSavedListAction: (serviceId: Id) => RemoveServiceFromSavedListAction;
+    readonly addServiceToSavedListAction: (service: HumanServiceData) => AddServiceToSavedListAction;
+    readonly removeServiceFromSavedListAction: (service: HumanServiceData) => RemoveServiceFromSavedListAction;
 }
 
 type Props = InfiniteHitsProps&InfiniteHitsActions;

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { textStyles, colors } from '../../application/styles';
-import { HumanServiceData, PhoneNumber, Address, Id } from '../../validation/services/types';
+import { HumanServiceData, PhoneNumber, Address } from '../../validation/services/types';
 import { View } from 'native-base';
 import { Text } from 'react-native';
 import { TextWithPhoneLinks } from '../link/text_with_phone_links';
@@ -23,8 +23,8 @@ export interface ServiceListItemProps {
 }
 
 export interface ServiceListItemActions {
-    readonly addServiceToSavedList: (serviceId: Id) => AddServiceToSavedListAction;
-    readonly removeServiceFromSavedList: (serviceId: Id) => RemoveServiceFromSavedListAction;
+    readonly addServiceToSavedList: (service: HumanServiceData) => AddServiceToSavedListAction;
+    readonly removeServiceFromSavedList: (service: HumanServiceData) => RemoveServiceFromSavedListAction;
 }
 
 type Props = ServiceListItemProps & ServiceListItemActions;
@@ -36,8 +36,8 @@ export const ServiceListItemComponent: React.StatelessComponent<Props> =
         return (
             <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
                 <BookmarkButtonComponent isBookmarked={props.isBookmarked} textColor={colors.teal}
-                addBookmark={(): AddServiceToSavedListAction => props.addServiceToSavedList(props.service.id)}
-                removeBookmark={(): RemoveServiceFromSavedListAction => props.removeServiceFromSavedList(props.service.id)}
+                addBookmark={(): AddServiceToSavedListAction => props.addServiceToSavedList(props.service)}
+                removeBookmark={(): RemoveServiceFromSavedListAction => props.removeServiceFromSavedList(props.service)}
                 />
                 {renderName(serviceName)}
                 {renderDescription(props.service.description)}

@@ -96,15 +96,20 @@ const createServiceMap = (services: ReadonlyArray<types.HumanServiceData>): type
 };
 
 const addToSavedServicesList = (store: types.ServiceStore, action: actions.AddServiceToSavedListAction): types.ServiceStore => {
-    const serviceId = action.payload.serviceId;
+    const service = action.payload.service;
+    const serviceId = service.id;
     return {
         ...store,
+        services: {
+            ...store.services,
+            service,
+        },
         savedServices: [...store.savedServices, serviceId],
     };
 } ;
 
 const removeFromSavedServicesList = (store: types.ServiceStore, action: actions.RemoveServiceFromSavedListAction): types.ServiceStore => {
-    const serviceIdToRemove = action.payload.serviceId;
+    const serviceIdToRemove = action.payload.service.id;
     const updatedSavedServicesList = store.savedServices.filter((id: Id) => id !== serviceIdToRemove);
     return {
         ...store,

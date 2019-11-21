@@ -4,7 +4,7 @@ import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import * as Sentry from 'sentry-expo';
-import { HumanServiceData, ServiceList, Id } from '../../validation/services/types';
+import { HumanServiceData, ServiceList } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
@@ -32,8 +32,8 @@ export interface ServiceListProps {
 
 export interface ServiceListActions {
     readonly dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
-    readonly addServiceToSavedListAction: (serviceId: Id) => AddServiceToSavedListAction;
-    readonly removeServiceFromSavedListAction: (serviceId: Id) => RemoveServiceFromSavedListAction;
+    readonly addServiceToSavedListAction: (service: HumanServiceData) => AddServiceToSavedListAction;
+    readonly removeServiceFromSavedListAction: (service: HumanServiceData) => RemoveServiceFromSavedListAction;
 }
 
 export interface ServicesUpdater {

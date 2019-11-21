@@ -14,7 +14,7 @@ import {
 import { Routes, getParametersFromPath } from '../../application/routing';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
 import { LatLong } from '../../validation/latlong/types';
-import { Id } from '../../stores/services';
+import { HumanServiceData } from '../../validation/services/types';
 
 type OwnProps = {
     readonly location: Location;
@@ -37,11 +37,11 @@ const mapDispatchToProps = (dispatch: Dispatch<ServicesAction>): ServiceListActi
     dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong): BuildServicesRequestAction => {
         return dispatch(buildServicesRequestAction(topic.id, manualUserLocation));
     },
-    addServiceToSavedListAction: (serviceId: Id): AddServiceToSavedListAction => {
-        return dispatch(addServiceToSavedListAction(serviceId));
+    addServiceToSavedListAction: (service: HumanServiceData): AddServiceToSavedListAction => {
+        return dispatch(addServiceToSavedListAction(service));
     },
-    removeServiceFromSavedListAction: (serviceId: Id): RemoveServiceFromSavedListAction => {
-        return dispatch(removeServiceFromSavedListAction(serviceId));
+    removeServiceFromSavedListAction: (service: HumanServiceData): RemoveServiceFromSavedListAction => {
+        return dispatch(removeServiceFromSavedListAction(service));
     },
 });
 
