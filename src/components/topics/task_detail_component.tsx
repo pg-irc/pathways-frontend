@@ -10,7 +10,7 @@ import { Topic } from '../../selectors/topics/topic';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
 import { TaskListComponent, NoTasksAddedComponent } from './task_list_component';
-import { sendLinkPressedEvent, buildLinkContext } from '../../sagas/analytics/events';
+import { sendLinkPressedEvent, buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 
 export interface TaskDetailProps {
     readonly topic: Topic;
@@ -63,10 +63,10 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
 
 const onServicesTextPress = (props: Props): () => void => {
     return (): void => {
-        const linkContext = buildLinkContext('Topic', props.topic.title);
+        const analyticsLinkContext = buildAnalyticsLinkContext('Topic', props.topic.title);
         const linkType = 'Button';
         const linkValue = 'Find related services near me';
-        sendLinkPressedEvent(props.currentPath, linkContext, linkType, linkValue);
+        sendLinkPressedEvent(props.currentPath, analyticsLinkContext, linkType, linkValue);
         goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
     };
 };

@@ -1,5 +1,6 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
+import { History } from 'history';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
@@ -20,12 +21,12 @@ import { Errors } from '../../validation/errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { LatLong } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
+import { RouterProps } from '../../application/routing';
 
 export interface ServiceListProps {
     readonly topic: Topic;
     readonly topicServicesOrError: SelectorTopicServices;
     readonly manualUserLocation?: LatLong;
-    readonly currentPath: string;
 }
 
 export interface ServiceListActions {
@@ -36,7 +37,7 @@ export interface ServicesUpdater {
     readonly dispatchServicesRequest: () => BuildServicesRequestAction;
 }
 
-type Props = ServiceListProps & ServiceListActions & ServicesUpdater;
+type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterProps;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
     const onlineStatus = useOnlineStatus();
@@ -49,7 +50,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 services={getServicesIfValid(props.topicServicesOrError)}
                 refreshing={isLoadingServices(props.topicServicesOrError)}
                 onRefresh={props.dispatchServicesRequest}
-                renderItem={renderServiceListItem(props.currentPath)}
+                renderItem={renderServiceListItem(props.location.pathname, props.history)}
                 listEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
                 listHeaderComponent={
                     <ServiceListHeaderComponent title={props.topic.title} />
@@ -115,9 +116,9 @@ const ServicesComponent = (props: ServiceListListComponentProps): JSX.Element =>
     />
 );
 
-const renderServiceListItem = (currentPath: string): ({ item }: ServiceItemInfo) => JSX.Element => {
+const renderServiceListItem = (currentPath: string, history: History): ({ item }: ServiceItemInfo) => JSX.Element => {
     return ({ item }: ServiceItemInfo): JSX.Element => (
-        <ServiceListItemComponent service={item} currentPath={currentPath} />
+        <ServiceListItemComponent service={item} currentPath={currentPath} history={history}/>
     );
 };
 

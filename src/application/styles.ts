@@ -225,6 +225,14 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
+    headlineH3StyleURL: {
+        fontSize: 16,
+        textAlign: 'left',
+        textDecorationLine: 'underline',
+        color: colors.teal,
+        letterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
     paragraphStyleWhiteCenter: {
         fontSize: 16,
         lineHeight: 21,

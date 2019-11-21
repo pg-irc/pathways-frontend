@@ -1,5 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
+import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
@@ -16,6 +17,7 @@ export interface Props {
     readonly hits: ReadonlyArray<any>;
     readonly hasMore: boolean;
     readonly refine: (searchTerms?: string) => string;
+    readonly history: History;
 }
 
 export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
@@ -27,7 +29,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
         refreshing={false}
         data={searchResults}
         keyExtractor={keyExtractor}
-        renderItem={renderSearchHit(props.currentPath)}
+        renderItem={renderSearchHit(props.currentPath, props.history)}
         ListEmptyComponent={EmptyComponent}
         ItemSeparatorComponent={SearchListSeparator} />;
 };
@@ -44,7 +46,7 @@ const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
 );
 
-const renderSearchHit = R.curry((currentPath: string, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
+const renderSearchHit = R.curry((currentPath: string, history: History, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
     const item: SearchServiceData = itemInfo.item;
-    return <ServiceListItemComponent service={toHumanServiceData(item)} currentPath={currentPath} />;
+    return <ServiceListItemComponent service={toHumanServiceData(item)} currentPath={currentPath} history={history}/>;
 });

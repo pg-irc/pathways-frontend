@@ -17,14 +17,16 @@ import { MODAL_NONE, MODAL_SEARCH_TERM, MODAL_LOCATION, USE_MY_LOCATION } from '
 import { SearchTermInputModal } from './search_term_input_modal';
 import { LocationInputModal } from './location_input_modal';
 import { localizedPlaceHolders } from './localized_place_holders';
+import { RouterProps } from '../../application/routing';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
     readonly appId: string;
-    readonly currentPath: string;
 }
 
-export const SearchComponent = (props: SearchComponentProps): JSX.Element => {
+type Props = SearchComponentProps & RouterProps;
+
+export const SearchComponent = (props: Props): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceUpdate('SearchComponent', props);
 
