@@ -32,8 +32,14 @@ export function* watchRequestPostPushNotificationToken(): IterableIterator<ForkE
 }
 
 function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction): Result {
-    const permission: Permissions.PermissionResponse = yield call(Permissions.getAsync, Permissions.NOTIFICATIONS);
-    if (permission.status !== 'granted') {
+    const existingStatus = yield call(Permissions.getAsync, Permissions.NOTIFICATIONS);
+    // tslint:disable-next-line: no-let
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+        const newStatus = yield call(Permissions.askAsync, Permissions.NOTIFICATIONS);
+        finalStatus = newStatus;
+    }
+    if (finalStatus.status !== 'granted') {
         return yield put(failure('Permission not granted for push notifications'));
     }
     const token: string = yield call(Notifications.getExpoPushTokenAsync);
