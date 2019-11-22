@@ -19,7 +19,7 @@ import { Routes, goToRouteWithParameter } from '../../application/routing';
 interface ServiceListItemProps {
     readonly service: HumanServiceData;
     readonly currentPath: string;
-    readonly history: History;
+    readonly history?: History;
 }
 
 type Props = ServiceListItemProps;
@@ -45,11 +45,14 @@ const buildServiceName = (organizationName: string, serviceName: string): string
     `${organizationName} - ${serviceName}`
 );
 
-const renderName = (name: string, serviceId: string, history: History): JSX.Element => (
-    <TouchableOpacity onPress={goToRouteWithParameter(Routes.ServiceDetail, serviceId, history)}>
-        <Text style={[textStyles.headlineH3StyleURL, textStyles.alwaysLeftAlign]}>{name}</Text>
-    </TouchableOpacity>
-);
+const renderName = (name: string, serviceId: string, history?: History): JSX.Element => {
+    const onPress = history ? goToRouteWithParameter(Routes.ServiceDetail, serviceId, history) : (): void => undefined;
+    return (
+        <TouchableOpacity onPress={onPress}>
+            <Text style={[textStyles.headlineH3StyleURL, textStyles.alwaysLeftAlign]}>{name}</Text>
+        </TouchableOpacity>
+    );
+};
 
 const renderDescription = (description: string): JSX.Element => {
     const content = <Text style={textStyles.alwaysLeftParagraphStyle}> {description}</Text>;
