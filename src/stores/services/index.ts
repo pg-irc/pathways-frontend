@@ -2,7 +2,6 @@ import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import * as actions from './actions';
 import * as types from '../../validation/services/types';
-
 import { Id, ServiceStore } from '../../validation/services/types';
 export { Id, ServiceStore };
 

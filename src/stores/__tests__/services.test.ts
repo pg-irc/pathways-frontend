@@ -5,6 +5,7 @@ import { isValidServicesForTopic } from '../services/is_valid_services_for_topic
 import {
     BuildServicesRequestAction, BuildServicesSuccessAction,
     BuildServicesErrorAction,
+    AddServiceToSavedListAction,
 } from '../services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
@@ -157,6 +158,21 @@ describe('services reducer', () => {
 
         it('does not update existing services', () => {
             expect(store.services).toEqual(theStore.services);
+        });
+    });
+
+    describe('when a service is bookmarked', () => {
+        const service = new ServiceBuilder();
+        const action: AddServiceToSavedListAction = {
+            type: constants.ADD_SERVICE_BOOKMARK,
+            payload: { service },
+        };
+        const store = reducer(theStore, action);
+        it('can add a service id savedServices list', () => {
+            expect(store.savedServices).toHaveLength(1);
+        });
+        it('can add a service to services map', () => {
+            expect(store.services.service).toEqual(service);
         });
     });
 });
