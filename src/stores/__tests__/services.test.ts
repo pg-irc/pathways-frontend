@@ -13,6 +13,7 @@ import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
 import { isServiceLoading } from '../../validation/services/types';
+import { ClearAllUserDataAction } from '../questionnaire/actions';
 
 describe('services reducer', () => {
     const aService = new ServiceBuilder();
@@ -173,6 +174,16 @@ describe('services reducer', () => {
         });
         it('can add a service to services map', () => {
             expect(store.services.service).toEqual(service);
+        });
+    });
+
+    describe('when clear all user data action is dispatched', () => {
+        const action: ClearAllUserDataAction = {
+            type: constants.CLEAR_ALL_USER_DATA,
+        };
+        const store = reducer(theStore, action);
+        it('removes services from services map', () => {
+            expect(store.services).toEqual({});
         });
     });
 });

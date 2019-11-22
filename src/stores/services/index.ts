@@ -33,6 +33,8 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return addToSavedServicesList(store, action);
         case constants.REMOVE_SERVICE_BOOKMARK:
             return removeFromSavedServicesList(store, action);
+        case constants.CLEAR_ALL_USER_DATA:
+            return clearServicesData(store);
         default:
             return store;
     }
@@ -115,3 +117,11 @@ const removeFromSavedServicesList = (store: types.ServiceStore, action: actions.
         savedServices: updatedSavedServicesList,
     };
 };
+
+const clearServicesData = (store: types.ServiceStore): types.ServiceStore => (
+    {
+        ...store,
+        services: {},
+        savedServices: [],
+    }
+);
