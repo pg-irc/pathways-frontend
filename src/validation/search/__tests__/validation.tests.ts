@@ -6,7 +6,7 @@ describe('Search response validation', () => {
 
     describe('with valid data', () => {
 
-        it('returns the service data', () => {
+        it('accepts data without phone number', () => {
             const serviceId = aString();
             // tslint:disable-next-line:no-any
             const serviceData: ReadonlyArray<any> = [{
@@ -20,6 +20,43 @@ describe('Search response validation', () => {
                     postal_code: aString(),
                     country: aString(),
                 },
+                organization: {
+                    id: aString(),
+                    name: aString(),
+                    website: aString(),
+                    email: aString(),
+                    service_count: aNumber(),
+                },
+                _geoloc: {
+                    lat: aNumber(),
+                    lng: aNumber(),
+                },
+            }];
+            const result = validateServiceSearchResponse(serviceData);
+            expect(result.validData).toEqual(serviceData);
+        });
+
+        it('accepts data with phone number', () => {
+            const serviceId = aString();
+            // tslint:disable-next-line:no-any
+            const serviceData: ReadonlyArray<any> = [{
+                service_name: aString(),
+                service_id: serviceId,
+                service_description: aString(),
+                address: {
+                    address: aString(),
+                    city: aString(),
+                    state_province: aString(),
+                    postal_code: aString(),
+                    country: aString(),
+                },
+                phone_number: [{
+                    phone_number: aString(),
+                    type: aString(),
+                }, {
+                    phone_number: aString(),
+                    type: aString(),
+                }],
                 organization: {
                     id: aString(),
                     name: aString(),
