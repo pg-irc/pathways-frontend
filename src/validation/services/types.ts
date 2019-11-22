@@ -6,7 +6,7 @@ export type Id = string;
 
 export interface PhoneNumber {
     readonly type: string;
-    readonly phoneNumber: string;
+    readonly phone_number: string;
 }
 
 export interface Address {

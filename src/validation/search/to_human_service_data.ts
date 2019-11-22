@@ -9,7 +9,7 @@ export const toHumanServiceData = (data: SearchServiceData): HumanServiceData =>
     description: data.service_description,
     phoneNumbers: [{
         type: 'temp',
-        phoneNumber: '1-800-FOR-NOWW',
+        phone_number: '1-800-FOR-NOWW',
     }],
     addresses: [{
         id: 1,

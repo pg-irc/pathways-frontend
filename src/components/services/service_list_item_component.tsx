@@ -71,7 +71,7 @@ const renderPhoneNumbers = (phoneNumbers: ReadonlyArray<PhoneNumber>, currentPat
         const fieldLabel = capitalizeFirstLetter(phoneNumber.type);
         const textWithPhoneLinks = (
             <TextWithPhoneLinks
-                text={phoneNumber.phoneNumber}
+                text={phoneNumber.phone_number}
                 currentPath={currentPath}
                 linkContext={linkContext}
                 linkType={fieldLabel} />

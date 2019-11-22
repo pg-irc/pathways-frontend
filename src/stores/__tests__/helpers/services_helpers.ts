@@ -51,7 +51,7 @@ export class PhoneNumberBuilder {
     build(): PhoneNumber {
         return {
             type: this.type,
-            phoneNumber: this.phoneNumber,
+            phone_number: this.phoneNumber,
         };
     }
 }
