@@ -37,6 +37,72 @@ describe('Adapting search result to service data', () => {
             expect(result.latlong.lng).toEqual(longitude);
         });
 
+        it('returns data with phone numbers if present', () => {
+            const firstPhoneNumber = aString();
+            const secondType = aString();
+            const result = toHumanServiceData({
+                type: 'SearchServiceData',
+                service_name: aString(),
+                service_id: aString(),
+                service_description: aString(),
+                address: {
+                    address: aString(),
+                    city: aString(),
+                    state_province: aString(),
+                    postal_code: aString(),
+                    country: aString(),
+                },
+                phone_numbers: [{
+                    type: aString(),
+                    phone_number: firstPhoneNumber,
+                }, {
+                    type: secondType,
+                    phone_number: aString(),
+                }],
+                organization: {
+                    id: aString(),
+                    name: aString(),
+                    website: aString(),
+                    email: aString(),
+                    service_count: aNumber(),
+                },
+                _geoloc: {
+                    lat: aNumber(),
+                    lng: aNumber(),
+                },
+            });
+            expect(result.phoneNumbers[0].phone_number).toEqual(firstPhoneNumber);
+            expect(result.phoneNumbers[1].type).toEqual(secondType);
+        });
+
+        it('returns empty array for phone numbers if none are given', () => {
+            const result = toHumanServiceData({
+                type: 'SearchServiceData',
+                service_name: aString(),
+                service_id: aString(),
+                service_description: aString(),
+                address: {
+                    address: aString(),
+                    city: aString(),
+                    state_province: aString(),
+                    postal_code: aString(),
+                    country: aString(),
+                },
+                organization: {
+                    id: aString(),
+                    name: aString(),
+                    website: aString(),
+                    email: aString(),
+                    service_count: aNumber(),
+                },
+                _geoloc: {
+                    lat: aNumber(),
+                    lng: aNumber(),
+                },
+            });
+            expect(result.phoneNumbers).toEqual([]);
+        });
+
         it('human service returns with undefined latlong if latitude and longitude were both empty string', () => {
             const result = toHumanServiceData({
                 type: 'SearchServiceData',
