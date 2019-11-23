@@ -40,18 +40,19 @@ describe('Search response validation', () => {
         });
 
         it('accepts data with phone number', () => {
-            const serviceId = aString();
+            const firstType = aString();
+            const secondNumber = aString();
             // tslint:disable-next-line:no-any
             const serviceData: ReadonlyArray<any> = [{
                 service_name: aString(),
-                service_id: serviceId,
+                service_id: aString(),
                 service_description: aString(),
                 address: anAddress(),
-                phone_number: [{
+                phone_numbers: [{
                     phone_number: aString(),
-                    type: aString(),
+                    type: firstType,
                 }, {
-                    phone_number: aString(),
+                    phone_number: secondNumber,
                     type: aString(),
                 }],
                 organization: anOrganization(),
@@ -61,7 +62,8 @@ describe('Search response validation', () => {
                 },
             }];
             const result = validateServiceSearchResponse(serviceData);
-            expect(result.validData).toEqual(serviceData);
+            expect(result.validData[0].phone_numbers[0].type).toEqual(firstType);
+            expect(result.validData[0].phone_numbers[1].phone_number).toEqual(secondNumber);
         });
     });
     describe('with invalid data', () => {
