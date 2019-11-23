@@ -2,7 +2,7 @@
 import { Id as AnswerId } from '../../questionnaire';
 import { Id as TopicId } from '../../topics';
 import { PersistedUserData } from '../../user_data';
-import { HumanServiceData, ServiceMap } from '../../../validation/services/types';
+import { ServiceMap } from '../../../validation/services/types';
 
 export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];
@@ -31,10 +31,10 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    addSavedService(service: HumanServiceData): PersistedUserDataBuilder {
+    addSavedService(service: ServiceMap): PersistedUserDataBuilder {
         this.savedServices = {
             ...this.savedServices,
-            service,
+            ...service,
         };
         return this;
     }

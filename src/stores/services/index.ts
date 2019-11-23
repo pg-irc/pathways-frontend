@@ -3,6 +3,7 @@ import * as constants from '../../application/constants';
 import * as actions from './actions';
 import * as types from '../../validation/services/types';
 import { Id, ServiceStore } from '../../validation/services/types';
+import { UserDataPersistence } from '../user_data';
 export { Id, ServiceStore };
 
 export function buildDefaultStore(): types.ServiceStore {
@@ -35,6 +36,16 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return removeFromSavedServicesList(store, action);
         case constants.CLEAR_ALL_USER_DATA:
             return clearServicesData(store);
+        case constants.LOAD_USER_DATA_FAILURE:
+        return {
+            ...store,
+        };
+        case constants.LOAD_USER_DATA_REQUEST:
+            return {
+                ...store,
+            };
+        case constants.LOAD_USER_DATA_SUCCESS:
+            return loadServicesFromUserData(store, action);
         default:
             return store;
     }
@@ -125,3 +136,19 @@ const clearServicesData = (store: types.ServiceStore): types.ServiceStore => (
         savedServices: [],
     }
 );
+
+const loadServicesFromUserData = (store: types.ServiceStore, action: UserDataPersistence.LoadSuccessAction): types. ServiceStore => {
+    const persistedServices: types.ServiceMap = action.payload.savedServices;
+    const persistedServicesIds: types.ServiceList = Object.keys(persistedServices);
+    return {
+        ...store,
+        services: {
+            ...store.services,
+            ...persistedServices,
+        },
+        savedServices: [
+            ...store.savedServices,
+            ...persistedServicesIds,
+        ],
+    };
+};

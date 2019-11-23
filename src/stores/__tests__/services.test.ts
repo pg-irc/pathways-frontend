@@ -7,13 +7,15 @@ import {
     BuildServicesErrorAction,
     AddServiceToSavedListAction,
 } from '../services/actions';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, ServiceStore } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../helpers/random_test_values';
-import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
+import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder, buildServiceMap } from './helpers/services_helpers';
 import { isServiceLoading } from '../../validation/services/types';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
+import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
+import { UserDataPersistence } from '../user_data';
 
 describe('services reducer', () => {
     const aService = new ServiceBuilder();
@@ -24,6 +26,7 @@ describe('services reducer', () => {
     const theStore = buildNormalizedServices(
         [aService],
         [loadedTaskServices, loadingTaskServices, loadedTaskServicesError, loadingTaskServicesError],
+        [],
     );
 
     it('returns a unmodified store when the action is missing', () => {
@@ -184,6 +187,29 @@ describe('services reducer', () => {
         const store = reducer(theStore, action);
         it('removes services from services map', () => {
             expect(store.services).toEqual({});
+        });
+    });
+
+    describe('when loading saved services', () => {
+        let store: ServiceStore = undefined;
+        const savedServiceId = aString();
+        const savedService = new ServiceBuilder().withId(savedServiceId);
+        const savedServiceMap = buildServiceMap([savedService]);
+        beforeEach(() => {
+            const persistedDataWhereServiceIsSaved = new PersistedUserDataBuilder().
+            addSavedService(savedServiceMap).
+            buildObject();
+            const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereServiceIsSaved);
+            store = reducer(theStore, loadAction);
+        });
+        it('should return the id of the saved service', () => {
+            expect(store.savedServices).toContain(savedServiceId);
+        });
+        it('should return the saved service object', () => {
+            expect(store.services[savedServiceId]).toEqual(savedServiceMap[savedServiceId]);
+        });
+        it('should not include service ids that are not saved', () => {
+            expect(store.savedServices).toHaveLength(1);
         });
     });
 });
