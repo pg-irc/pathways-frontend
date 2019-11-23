@@ -12,6 +12,14 @@ describe('Search response validation', () => {
         country: aString(),
     });
 
+    const anOrganization = (): any => ({
+        id: aString(),
+        name: aString(),
+        website: aString(),
+        email: aString(),
+        service_count: aNumber(),
+    });
+
     describe('with valid data', () => {
 
         it('accepts data without phone number', () => {
@@ -21,13 +29,7 @@ describe('Search response validation', () => {
                 service_id: serviceId,
                 service_description: aString(),
                 address: anAddress(),
-                organization: {
-                    id: aString(),
-                    name: aString(),
-                    website: aString(),
-                    email: aString(),
-                    service_count: aNumber(),
-                },
+                organization: anOrganization(),
                 _geoloc: {
                     lat: aNumber(),
                     lng: aNumber(),
@@ -52,13 +54,7 @@ describe('Search response validation', () => {
                     phone_number: aString(),
                     type: aString(),
                 }],
-                organization: {
-                    id: aString(),
-                    name: aString(),
-                    website: aString(),
-                    email: aString(),
-                    service_count: aNumber(),
-                },
+                organization: anOrganization(),
                 _geoloc: {
                     lat: aNumber(),
                     lng: aNumber(),
@@ -75,13 +71,7 @@ describe('Search response validation', () => {
                 // service_id: serviceId,
                 service_description: aString(),
                 address: anAddress(),
-                organization: {
-                    id: aNumber(),
-                    name: aString(),
-                    website: aString(),
-                    email: aString(),
-                    service_count: aNumber(),
-                },
+                organization: anOrganization(),
                 _geoloc: {
                     lat: aNumber(),
                     lng: aNumber(),
@@ -98,13 +88,7 @@ describe('Search response validation', () => {
                 service_id: invalidValue,
                 service_description: aString(),
                 address: anAddress(),
-                organization: {
-                    id: aNumber(),
-                    name: aString(),
-                    website: aString(),
-                    email: aString(),
-                    service_count: aNumber(),
-                },
+                organization: anOrganization(),
                 _geoloc: {
                     lat: aNumber(),
                     lng: aNumber(),
