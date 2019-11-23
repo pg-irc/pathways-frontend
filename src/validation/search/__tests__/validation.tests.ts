@@ -1,25 +1,26 @@
-// tslint:disable:no-expression-statement
+// tslint:disable:no-any no-expression-statement
 import { validateServiceSearchResponse } from '..';
 import { aString, aNumber } from '../../../helpers/random_test_values';
 
 describe('Search response validation', () => {
 
+    const anAddress = (): any => ({
+        address: aString(),
+        city: aString(),
+        state_province: aString(),
+        postal_code: aString(),
+        country: aString(),
+    });
+
     describe('with valid data', () => {
 
         it('accepts data without phone number', () => {
             const serviceId = aString();
-            // tslint:disable-next-line:no-any
             const serviceData: ReadonlyArray<any> = [{
                 service_name: aString(),
                 service_id: serviceId,
                 service_description: aString(),
-                address: {
-                    address: aString(),
-                    city: aString(),
-                    state_province: aString(),
-                    postal_code: aString(),
-                    country: aString(),
-                },
+                address: anAddress(),
                 organization: {
                     id: aString(),
                     name: aString(),
@@ -43,13 +44,7 @@ describe('Search response validation', () => {
                 service_name: aString(),
                 service_id: serviceId,
                 service_description: aString(),
-                address: {
-                    address: aString(),
-                    city: aString(),
-                    state_province: aString(),
-                    postal_code: aString(),
-                    country: aString(),
-                },
+                address: anAddress(),
                 phone_number: [{
                     phone_number: aString(),
                     type: aString(),
@@ -79,13 +74,7 @@ describe('Search response validation', () => {
                 service_name: aString(),
                 // service_id: serviceId,
                 service_description: aString(),
-                address: {
-                    address: aString(),
-                    city: aString(),
-                    state_province: aString(),
-                    postal_code: aString(),
-                    country: aString(),
-                },
+                address: anAddress(),
                 organization: {
                     id: aNumber(),
                     name: aString(),
@@ -108,13 +97,7 @@ describe('Search response validation', () => {
                 service_name: aString(),
                 service_id: invalidValue,
                 service_description: aString(),
-                address: {
-                    address: aString(),
-                    city: aString(),
-                    state_province: aString(),
-                    postal_code: aString(),
-                    country: aString(),
-                },
+                address: anAddress(),
                 organization: {
                     id: aNumber(),
                     name: aString(),
