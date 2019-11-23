@@ -20,6 +20,11 @@ describe('Search response validation', () => {
         service_count: aNumber(),
     });
 
+    const aGeoLocation = (): any => ({
+        lat: aNumber(),
+        lng: aNumber(),
+    });
+
     describe('with valid data', () => {
 
         it('accepts data without phone number', () => {
@@ -30,19 +35,15 @@ describe('Search response validation', () => {
                 service_description: aString(),
                 address: anAddress(),
                 organization: anOrganization(),
-                _geoloc: {
-                    lat: aNumber(),
-                    lng: aNumber(),
-                },
+                _geoloc: aGeoLocation(),
             }];
             const result = validateServiceSearchResponse(serviceData);
             expect(result.validData).toEqual(serviceData);
         });
 
         it('accepts data with phone number', () => {
-            const firstType = aString();
-            const secondNumber = aString();
-            // tslint:disable-next-line:no-any
+            const firstPhoneNumberType = aString();
+            const secondPhoneNumber = aString();
             const serviceData: ReadonlyArray<any> = [{
                 service_name: aString(),
                 service_id: aString(),
@@ -50,20 +51,17 @@ describe('Search response validation', () => {
                 address: anAddress(),
                 phone_numbers: [{
                     phone_number: aString(),
-                    type: firstType,
+                    type: firstPhoneNumberType,
                 }, {
-                    phone_number: secondNumber,
+                    phone_number: secondPhoneNumber,
                     type: aString(),
                 }],
                 organization: anOrganization(),
-                _geoloc: {
-                    lat: aNumber(),
-                    lng: aNumber(),
-                },
+                _geoloc: aGeoLocation(),
             }];
             const result = validateServiceSearchResponse(serviceData);
-            expect(result.validData[0].phone_numbers[0].type).toEqual(firstType);
-            expect(result.validData[0].phone_numbers[1].phone_number).toEqual(secondNumber);
+            expect(result.validData[0].phone_numbers[0].type).toEqual(firstPhoneNumberType);
+            expect(result.validData[0].phone_numbers[1].phone_number).toEqual(secondPhoneNumber);
         });
     });
     describe('with invalid data', () => {
@@ -74,10 +72,7 @@ describe('Search response validation', () => {
                 service_description: aString(),
                 address: anAddress(),
                 organization: anOrganization(),
-                _geoloc: {
-                    lat: aNumber(),
-                    lng: aNumber(),
-                },
+                _geoloc: aGeoLocation(),
             }]);
             expect(validationResult.isValid).toBe(false);
             expect(validationResult.errors).toContain('service_id');
@@ -91,10 +86,7 @@ describe('Search response validation', () => {
                 service_description: aString(),
                 address: anAddress(),
                 organization: anOrganization(),
-                _geoloc: {
-                    lat: aNumber(),
-                    lng: aNumber(),
-                },
+                _geoloc: aGeoLocation(),
             }]);
             expect(validationResult.isValid).toBe(false);
             expect(validationResult.errors).toContain('service_id');
