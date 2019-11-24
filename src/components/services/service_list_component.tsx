@@ -95,18 +95,18 @@ const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): Readon
         topicServicesOrError.services : []
 );
 
-type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
+export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
 
 type ServiceListListComponentProps = {
     readonly services: ReadonlyArray<HumanServiceData>;
-    readonly refreshing: boolean;
-    readonly onRefresh: () => void;
+    readonly refreshing?: boolean;
+    readonly onRefresh?: () => void;
     readonly renderItem: ({ item }: ServiceItemInfo) => JSX.Element;
     readonly listEmptyComponent: JSX.Element;
     readonly listHeaderComponent: JSX.Element;
 };
 
-const ServicesComponent = (props: ServiceListListComponentProps): JSX.Element => (
+export const ServicesComponent = (props: ServiceListListComponentProps): JSX.Element => (
     <FlatList
         style={{ backgroundColor: colors.lightGrey }}
         refreshing={props.refreshing}
@@ -135,7 +135,7 @@ interface ServiceListHeaderComponentProps {
     readonly title: string;
 }
 
-const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => {
+export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => {
     const icon = (
         <View style={{
             flexDirection: 'row',
