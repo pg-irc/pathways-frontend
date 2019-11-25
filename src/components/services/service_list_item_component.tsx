@@ -15,6 +15,7 @@ import { getLocationTitleFromAddresses } from './get_location_title_from_address
 import { AnalyticsLink, LinkTypes } from '../link/link';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
+import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
 
 interface ServiceListItemProps {
     readonly service: HumanServiceData;
@@ -60,8 +61,6 @@ const renderDescription = (description: string): JSX.Element => {
         <ExpandableContentComponent content={content} />
     );
 };
-
-const filterPhysicalAddresses = R.filter(R.propEq('type', 'physical_address'));
 
 // tslint:disable-next-line:typedef
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
@@ -130,8 +129,8 @@ const renderMapButtonIfLocation = (service: HumanServiceData, currentPath: strin
                 latitude={service.latlong.lat}
                 longitude={service.latlong.lng}
                 locationTitle={getLocationTitleFromAddresses(filterPhysicalAddresses(service.addresses))}
-                currentPath={currentPath}
-                linkContext={linkContext}
+                currentPathForAnalytics={currentPath}
+                linkContextForAnalytics={linkContext}
             />
         </View>
     );

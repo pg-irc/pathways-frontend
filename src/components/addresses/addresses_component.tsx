@@ -10,6 +10,9 @@ import { colors, values, textStyles } from '../../application/styles';
 
 interface Props {
     readonly addresses: ReadonlyArray<Address>;
+    readonly linkContextForAnalytics: string;
+    readonly currentPathForAnalytics: string;
+    readonly onPressForAddress: (address: Address) => () => Promise<void>;
 }
 
 export const AddressesComponent = (props: Props): JSX.Element => (
@@ -25,7 +28,8 @@ export const AddressesComponent = (props: Props): JSX.Element => (
                             style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
                         />
                     }
-                    onPress={(): void => undefined} />
+                    onPress={props.onPressForAddress(address)}
+                 />
                 <DividerComponent />
             </View>
         , props.addresses)}

@@ -1,16 +1,15 @@
 // tslint:disable no-class no-this no-expression-statement
 import React from 'react';
 import { View, Text, Icon, Button } from 'native-base';
-import { showLocation } from 'react-native-map-link';
 import { Trans } from '@lingui/react';
 import { textStyles, colors, values, applicationStyles } from '../../application/styles';
-import { sendLinkPressedEvent } from '../../sagas/analytics/events';
+import { openInMapsApplication } from './open_in_maps_application';
 
 interface MapsApplicationPopupProps {
     readonly latitude: number;
     readonly longitude: number;
-    readonly currentPath: string;
-    readonly linkContext: string;
+    readonly currentPathForAnalytics: string;
+    readonly linkContextForAnalytics: string;
     readonly locationTitle?: string;
 }
 
@@ -24,27 +23,19 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
 
         const text = <Text style={textStyles.button} uppercase={false}><Trans>Open in maps</Trans></Text>;
 
+        const onPress = openInMapsApplication(
+            props.locationTitle,
+            props.latitude,
+            props.longitude,
+            props.currentPathForAnalytics,
+            props.linkContextForAnalytics,
+        );
+
         const button = (
-            <Button onPress={onMapsButtonPress(props)} iconLeft style={applicationStyles.tealButton} >
+            <Button onPress={onPress} iconLeft style={applicationStyles.tealButton} >
                 {icon}{text}
             </Button>
         );
 
         return <View>{button}</View>;
     };
-
-const onMapsButtonPress = (props: MapsApplicationPopupProps): () => Promise<void> => (
-    (): Promise<void> => {
-        const linkType = 'Button';
-        const linkValue = 'Open in maps';
-        sendLinkPressedEvent(props.currentPath, props.linkContext, linkType, linkValue);
-        return (
-            showLocation({
-                title: props.locationTitle,
-                latitude: props.latitude,
-                longitude: props.longitude,
-                appsWhiteList: ['apple-maps', 'google-maps'],
-            }).catch((): void => alert('Supported applications include Apple or Google maps.'))
-        );
-    }
-);

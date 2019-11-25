@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -11,13 +12,15 @@ import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { RouterProps } from '../../application/routing';
 import { ContentVerificationComponent } from '../content_verification/content_verification_component';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, Address } from '../../validation/services/types';
 import { AddressesComponent } from '../addresses/addresses_component';
 import { PhoneNumbersComponent } from '../phone_numbers/phone_numbers_component';
 import { WebsiteComponent } from '../website/website_component';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { buildServiceName } from '../services//build_service_name';
+import { openInMapsApplication } from '../maps_application_popup/open_in_maps_application';
+import { getLocationTitleFromAddresses } from '../services/get_location_title_from_addresses';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -58,9 +61,23 @@ const ServiceOrganization = (props: { readonly history: History, readonly name: 
 const ServiceContactDetails = (props: { readonly service: HumanServiceData, readonly currentPathForAnaltyics: string }): JSX.Element => {
     const serviceName = buildServiceName(props.service.organizationName, props.service.name);
     const linkContextForAnalytics = buildAnalyticsLinkContext('Service', serviceName);
+    const locationTitle = getLocationTitleFromAddresses(filterPhysicalAddresses(props.service.addresses));
+    const onPressForAddress = serviceHasLatLng(props.service) ?
+        (_: Address): () => Promise<void> => openInMapsApplication(
+            locationTitle,
+            props.service.latitude,
+            props.service.longitude,
+            props.currentPathForAnaltyics,
+            linkContextForAnalytics,
+        ) : undefined;
     return (
         <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
-            <AddressesComponent addresses={filterPhysicalAddresses(props.service.addresses)} />
+            <AddressesComponent
+                addresses={filterPhysicalAddresses(props.service.addresses)}
+                linkContextForAnalytics={linkContextForAnalytics}
+                currentPathForAnalytics={props.currentPathForAnaltyics}
+                onPressForAddress={onPressForAddress}
+            />
             <PhoneNumbersComponent
                 phoneNumbers={props.service.phoneNumbers}
                 linkContextForAnalytics={linkContextForAnalytics}
@@ -71,8 +88,12 @@ const ServiceContactDetails = (props: { readonly service: HumanServiceData, read
                 linkContextForAnalytics={linkContextForAnalytics}
                 currentPathForAnalytics={props.currentPathForAnaltyics}
             />
-            <ContentVerificationComponent verificationDate={'TODO'} />
+            <ContentVerificationComponent verificationDate={'N/A'} />
             <DividerComponent />
         </View>
     );
  };
+
+const serviceHasLatLng = (service: HumanServiceData): boolean => (
+    R.not(service.latitude && service.longitude)
+);
