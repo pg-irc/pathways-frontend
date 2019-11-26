@@ -1,3 +1,5 @@
+import { PhoneNumber } from '../services/types';
+
 interface OrganizationUnderService {
     readonly id: string;
     readonly name: string;
@@ -26,5 +28,6 @@ export interface SearchServiceData {
     readonly service_id: string;
     readonly organization: OrganizationUnderService;
     readonly address: Address;
+    readonly phone_numbers?: ReadonlyArray<PhoneNumber>;
     readonly _geoloc: AlgoliaLatLong;
 }

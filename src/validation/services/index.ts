@@ -54,7 +54,7 @@ export interface ValidatedServiceAtLocationJSON {
 export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): types.HumanServiceData => {
     const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): types.PhoneNumber => ({
         type: phoneNumber.phone_number_type,
-        phoneNumber: phoneNumber.phone_number,
+        phone_number: phoneNumber.phone_number,
     }), data.location.phone_numbers);
 
     const addresses = R.map((addressWithType: ValidatedAddressWithTypeJSON): types.Address => ({

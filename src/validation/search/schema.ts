@@ -22,6 +22,20 @@ export const address = {
     'required': ['address', 'city', 'state_province', 'postal_code', 'country'],
 };
 
+export const phoneNumber = {
+    'type': 'object',
+    'properties': {
+        'phone_number': { 'type': 'string' },
+        'type': { 'type': 'string' },
+    },
+    'required': ['phone_number', 'type'],
+};
+
+export const phoneNumbers = {
+    'type': 'array',
+    'items': phoneNumber,
+};
+
 export const geoLocation = {
     'type': 'object',
     'properties': {
@@ -39,6 +53,7 @@ export const serviceSearchItem = {
         'service_id': { 'type': 'string' },
         'organization': organizationUnderService,
         'address': address,
+        'phone_numbers': phoneNumbers,
         '_geoloc': geoLocation,
     },
     'required': [
