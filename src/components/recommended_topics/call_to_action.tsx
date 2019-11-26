@@ -24,9 +24,6 @@ export const CallToActionFullComponent = (props: Props): JSX.Element => {
                 <FullComponentContent />
                 <FullComponentButton {...props} />
             </View>
-            <View style={{ alignItems: 'center'}}>
-                <Icon type={'FontAwesome'} name={'angle-down'} style={{ color: colors.lightGrey }} />
-            </View>
         </View>
     );
 };
