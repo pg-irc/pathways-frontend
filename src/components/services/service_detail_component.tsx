@@ -1,5 +1,4 @@
 import React from 'react';
-import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { View, Text, TouchableOpacity } from 'react-native';
@@ -94,6 +93,6 @@ const ServiceContactDetails = (props: { readonly service: HumanServiceData, read
     );
  };
 
-const serviceHasLatLng = (service: HumanServiceData): boolean => (
-    R.not(service.latitude && service.longitude)
+const serviceHasLatLng = (service: HumanServiceData): number => (
+    service.latitude && service.longitude
 );

@@ -1,4 +1,4 @@
-// tslint:disable no-class no-this no-expression-statement
+// tslint:disable no-expression-statement
 import { sendLinkPressedEvent } from '../../sagas/analytics/events';
 import { showLocation } from 'react-native-map-link';
 
