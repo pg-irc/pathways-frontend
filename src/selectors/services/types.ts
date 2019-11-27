@@ -1,8 +1,8 @@
-import { HumanServiceData } from '../../validation/services/types';
+import { ServiceListData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 
 export interface ValidSelectorTopicServices {
-    readonly services: ReadonlyArray<HumanServiceData>;
+    readonly services: ServiceListData;
     readonly type: 'ServicesForTopic:Valid';
 }
 

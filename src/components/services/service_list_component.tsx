@@ -4,7 +4,7 @@ import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import * as Sentry from 'sentry-expo';
-import { HumanServiceData, ServiceList } from '../../validation/services/types';
+import { HumanServiceData, ServiceList, ServiceListData } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
@@ -90,7 +90,7 @@ const isLoadingServices = (topicServicesOrError: SelectorTopicServices): boolean
     topicServicesOrError.type === constants.TOPIC_SERVICES_LOADING
 );
 
-const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<HumanServiceData> => (
+const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): ServiceListData => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_VALID ?
         topicServicesOrError.services : []
 );
@@ -98,7 +98,7 @@ const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): Readon
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
 
 type ServiceListListComponentProps = {
-    readonly services: ReadonlyArray<HumanServiceData>;
+    readonly services: ServiceListData;
     readonly refreshing?: boolean;
     readonly onRefresh?: () => void;
     readonly renderItem: ({ item }: ServiceItemInfo) => JSX.Element;

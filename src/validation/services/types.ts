@@ -66,3 +66,5 @@ export interface ServiceStore {
     readonly servicesByTopic: ServicesForAllTopics;
     readonly savedServices: ServiceList;
 }
+
+export type ServiceListData = ReadonlyArray<HumanServiceData>;

@@ -1,7 +1,7 @@
 import { Id as TopicId } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, ServiceListData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { LatLong } from '../../validation/latlong/types';
 import { UserDataPersistence } from '../user_data';
@@ -35,7 +35,7 @@ export const buildServicesRequestAction = (topicId: TopicId, manualUserLocation?
 );
 
 // tslint:disable-next-line:typedef
-export const buildServicesSuccessAction = (topicId: TopicId, services: ReadonlyArray<HumanServiceData>) => (
+export const buildServicesSuccessAction = (topicId: TopicId, services: ServiceListData) => (
     helpers.makeAction(constants.LOAD_SERVICES_SUCCESS, { topicId, services })
 );
 

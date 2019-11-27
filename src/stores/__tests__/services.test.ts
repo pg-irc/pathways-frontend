@@ -7,7 +7,7 @@ import {
     BuildServicesErrorAction,
     AddServiceToSavedListAction,
 } from '../services/actions';
-import { HumanServiceData, ServiceStore } from '../../validation/services/types';
+import { HumanServiceData, ServiceStore, ServiceListData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../helpers/random_test_values';
@@ -78,7 +78,7 @@ describe('services reducer', () => {
 
     describe('when populating topic services objects from a success response', () => {
         const topic = new TopicBuilder().withId(loadingTaskServices.topicId).build();
-        const services: ReadonlyArray<HumanServiceData> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
+        const services: ServiceListData = [new ServiceBuilder().build(), new ServiceBuilder().build()];
         const action: BuildServicesSuccessAction = {
             type: constants.LOAD_SERVICES_SUCCESS,
             payload: {
@@ -97,7 +97,7 @@ describe('services reducer', () => {
         });
 
         it('maintains the ordering of the services in the topics service vector', () => {
-            const servicesWithIds: ReadonlyArray<HumanServiceData> = [
+            const servicesWithIds: ServiceListData = [
                 new ServiceBuilder().withId('1').build(),
                 new ServiceBuilder().withId('3').build(),
                 new ServiceBuilder().withId('2').build(),

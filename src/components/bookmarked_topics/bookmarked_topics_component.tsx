@@ -6,7 +6,7 @@ import { TopicListItem } from '../../selectors/topics/topic_list_item';
 import { NoTasksAddedComponent, TaskListComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { textStyles, colors, values } from '../../application/styles';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, ServiceListData } from '../../validation/services/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { ServiceListHeaderComponent, ServiceItemInfo } from '../services/service_list_component';
 import { FlatList } from 'react-native';
@@ -15,7 +15,7 @@ import { ListActions } from './bookmarked_topics_connected_component';
 import { getSavedServicesIds } from './get_saved_services_ids';
 
 export interface BookmarkedTopicsProps {
-    readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
+    readonly bookmarkedServices: ServiceListData;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly currentPath: string;
 }
