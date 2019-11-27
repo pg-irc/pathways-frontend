@@ -24,6 +24,10 @@
         "ACCESS_FINE_LOCATION"
       ]
     },
+    "notification": {
+      "icon": "./assets/images/aa_notification_icon.png",
+      "color": "#00838f"
+    },
     "assetBundlePatterns": [
       "assets/images/*",
       "assets/fonts/*",
