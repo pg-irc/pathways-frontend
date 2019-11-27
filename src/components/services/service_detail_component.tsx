@@ -64,8 +64,8 @@ const ServiceContactDetails = (props: { readonly service: HumanServiceData, read
     const onPressForAddress = serviceHasLatLng(props.service) ?
         (_: Address): () => Promise<void> => openInMapsApplication(
             locationTitle,
-            props.service.latitude,
-            props.service.longitude,
+            props.service.latlong.lat,
+            props.service.latlong.lng,
             props.currentPathForAnaltyics,
             linkContextForAnalytics,
         ) : undefined;
@@ -94,5 +94,5 @@ const ServiceContactDetails = (props: { readonly service: HumanServiceData, read
  };
 
 const serviceHasLatLng = (service: HumanServiceData): number => (
-    service.latitude && service.longitude
+    service.latlong && service.latlong.lat && service.latlong.lng
 );

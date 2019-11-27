@@ -57,13 +57,13 @@ const SinglePhoneNumberComponent = (props: SinglePhoneNumberProps): JSX.Element 
     return (
         <View>
             <Text style={textStyles.paragraphBoldBlackLeft}>{fieldLabel}: </Text>
-            <Text style={textStyles.paragraphStyle}>{props.phoneNumber.phoneNumber}</Text>
+            <Text style={textStyles.paragraphStyle}>{props.phoneNumber.phone_number}</Text>
         </View>
     );
 };
 
 const getOnPressForPhoneNumber = (phoneNumber: PhoneNumber, currentPathForAnalytics: string, linkContextForAnalytics: string): () => void => {
-    const linkValue = 'tel: ' + phoneNumber.phoneNumber;
+    const linkValue = 'tel: ' + phoneNumber.phone_number;
     const onPress = (): void => {
         sendLinkPressedEvent(currentPathForAnalytics, linkContextForAnalytics, LinkTypes.phone, linkValue);
         openURL(linkValue);
