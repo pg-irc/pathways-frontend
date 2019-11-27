@@ -18,7 +18,7 @@ import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '.
 
 export interface ServiceListItemProps {
     readonly service: HumanServiceData;
-    readonly currentPath?: string;
+    readonly currentPath: string;
     readonly isBookmarked: boolean;
 }
 

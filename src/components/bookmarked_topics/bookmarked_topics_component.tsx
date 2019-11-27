@@ -3,25 +3,28 @@ import * as R from 'ramda';
 import { Trans } from '@lingui/react';
 import { Text, View } from 'native-base';
 import { TopicListItem } from '../../selectors/topics/topic_list_item';
-import { TaskListActions, NoTasksAddedComponent, TaskListComponent } from '../topics/task_list_component';
+import { NoTasksAddedComponent, TaskListComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { textStyles, colors, values } from '../../application/styles';
 import { HumanServiceData } from '../../validation/services/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { ServiceListHeaderComponent, ServiceItemInfo } from '../services/service_list_component';
-
 import { FlatList } from 'react-native';
+import { ServiceListItemComponent } from '../services/service_list_item_component';
+import { ListActions } from './bookmarked_topics_connected_component';
+import { getSavedServicesIds } from './get_saved_services_ids';
 
 export interface BookmarkedTopicsProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
+    readonly currentPath: string;
 }
 
-type Props = BookmarkedTopicsProps & TaskListActions & RouterProps;
+type Props = BookmarkedTopicsProps & ListActions & RouterProps ;
 
 export const BookmarkedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     return (
-        <View>
+        <React.Fragment>
             <TaskListComponent
                 {...props}
                 tasks={props.bookmarkedTopics}
@@ -33,11 +36,11 @@ export const BookmarkedTopicsComponent: React.StatelessComponent<Props> = (props
                 style={{ backgroundColor: colors.lightGrey }}
                 data={props.bookmarkedServices}
                 keyExtractor={(service: HumanServiceData): string => service.id}
-                renderItem={renderFoo(props)}
+                renderItem={renderServiceItems(props)}
                 ListEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>}/>}
                 ListHeaderComponent={<ServiceListHeaderComponent title={'Services'} />}
     />
-        </View>
+        </React.Fragment>
     );
 };
 
@@ -52,33 +55,14 @@ const TaskListHeaderComponent = (): JSX.Element => (
     </View>
 );
 
-export const renderFoo = (_props: Props): ({ item }: ServiceItemInfo) => JSX.Element => {
+export const renderServiceItems = (props: Props): ({ item }: ServiceItemInfo) => JSX.Element => {
     return ({ item }: ServiceItemInfo): JSX.Element => (
-       <Foo service={item}/>
+        <ServiceListItemComponent
+        service={item}
+        currentPath={props.currentPath}
+        isBookmarked={R.contains(item.id, getSavedServicesIds(props.bookmarkedServices))}
+        addServiceToSavedList={props.addServiceToSavedList}
+        removeServiceFromSavedList={props.removeServiceFromSavedList}
+        />
     );
 };
-
-// const getIds = (bookmarkedServices: ReadonlyArray<HumanServiceData>): ServiceList => (
-//     bookmarkedServices.map((service: HumanServiceData) => service.id)
-// );
-
-export interface FooProps {
-    readonly service: HumanServiceData;
-}
-
-export const Foo: React.StatelessComponent<FooProps> =
-    (props: FooProps): JSX.Element => {
-        const serviceName = buildServiceName(props.service.organizationName, props.service.name);
-        return (
-            <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
-                {renderName(serviceName)}
-            </View>
-        );
-    };
-
-    const buildServiceName = (organizationName: string, serviceName: string): string => (
-        `${organizationName} - ${serviceName}`
-    );
-    const renderName = (name: string): JSX.Element => (
-        <Text style={[textStyles.headlineH3StyleBlackLeft, textStyles.alwaysLeftAlign]}>{name}</Text>
-    );

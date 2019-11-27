@@ -9,17 +9,25 @@ import { selectSavedServices } from '../../selectors/services/select_saved_servi
 import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction, addServiceToSavedListAction, removeServiceFromSavedListAction } from '../../stores/services/actions';
 import { ServiceListItemActions } from '../services/service_list_item_component';
 import { HumanServiceData } from '../../validation/services/types';
+import { RouterProps } from '../../application/routing';
 
-const mapStateToProps = (store: Store): BookmarkedTopicsProps => ({
+type Props = BookmarkedTopicsProps & RouterProps;
+
+const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     bookmarkedServices: selectSavedServices(store),
     bookmarkedTopics: selectSavedTopics(store),
+    currentPath: ownProps.location.pathname,
+    history: ownProps.history,
+    location: ownProps.location,
+    match: ownProps.match,
 });
 
 export type ServiceDispatchActions = AddServiceToSavedListAction | RemoveServiceFromSavedListAction;
+export type ListActions = TaskListActions & ServiceListItemActions;
 export type TopicDispatchActions = AddToSavedListAction | RemoveFromSavedListAction;
 type DispatchActions = ServiceDispatchActions | TopicDispatchActions;
 
-const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskListActions | ServiceListItemActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): ListActions => ({
     addServiceToSavedList: (service: HumanServiceData): AddServiceToSavedListAction => dispatch(addServiceToSavedListAction(service)),
     removeServiceFromSavedList: (service: HumanServiceData): RemoveServiceFromSavedListAction => dispatch(removeServiceFromSavedListAction(service)),
     addToSavedList: (topicId: Id): AddToSavedListAction => dispatch(addToSavedList(topicId)),
