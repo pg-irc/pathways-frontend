@@ -17,15 +17,13 @@ import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
 
-interface ServiceListItemProps {
+interface Props {
     readonly service: HumanServiceData;
     readonly currentPath: string;
     readonly history?: History;
 }
 
-type Props = ServiceListItemProps;
-
-export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
+export const ServiceListItemComponent: React.StatelessComponent<Props> =
     (props: Props): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
         const linkContext = buildAnalyticsLinkContext('Service', serviceName);

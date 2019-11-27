@@ -5,7 +5,7 @@ import { Tab, Tabs, TabHeading, Content } from 'native-base';
 import { textStyles, colors, values } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
-import { BodyComponent } from '../content_layout/body_component';
+import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
 
@@ -23,9 +23,12 @@ const testOrganization = {
 export const OrganizationDetailComponent = (): JSX.Element => {
     // NativeBase's (Buggy) Tabs component notes:
     //
-    // - Breaking out the Tab and TabHeading components from the Tabs component does not seem to work (they don't render)
-    // - The activeTextStyle prop only works with a text heading, we need to use a component for translation purposes,
-    //   see: https://stackoverflow.com/questions/43113859/customise-tabs-of-native-base, this means we cannot sensibly style active tab text
+    // - Breaking out the Tab and TabHeading components from the Tabs component does not work as
+    //   they do not render in isolation, this makes our component a little harder to split up
+    // - The activeTextStyle prop only works with a text heading, we need to use a component for
+    //   translation purposes,
+    //   see: https://stackoverflow.com/questions/43113859/customise-tabs-of-native-base,
+    //   this means we cannot sensibly style active tab text
     return (
         <Tabs tabBarUnderlineStyle={{ backgroundColor: colors.teal }}>
             <Tab
@@ -59,7 +62,7 @@ const AboutTab = (): JSX.Element => (
         <BannerImageComponent imageSource={undefined} />
         <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>}/>
         <TitleComponent title={testOrganization.title.toUpperCase()}/>
-        <BodyComponent body={testOrganization.description} shouldBeExpandable={true} />
+        <MarkdownBodyComponent body={testOrganization.description} shouldBeExpandable={true} />
         <DividerComponent />
         <AboutContactDetails />
     </Content>

@@ -13,7 +13,7 @@ import { TitleComponent } from '../content_layout/title_component';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { BannerImageComponent } from '../content_layout/banner_image_component';
-import { BodyComponent } from '../content_layout/body_component';
+import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 
 export interface TaskDetailContentProps {
     readonly topic: Topic;
@@ -32,7 +32,7 @@ export const TaskDetailContentComponent: React.StatelessComponent<Props> = (prop
         <TitleComponent title={props.topic.title} />
         <RecommendedComponent {...props} />
         <DividerComponent />
-        <BodyComponent body={props.topic.description} shouldBeExpandable={!!props.topic.relatedTopics.length} />
+        <MarkdownBodyComponent body={props.topic.description} shouldBeExpandable={!!props.topic.relatedTopics.length} />
         <DividerComponent />
         <ServicesButton {...props} />
     </View>

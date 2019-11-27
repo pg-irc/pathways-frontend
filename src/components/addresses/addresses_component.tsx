@@ -41,7 +41,7 @@ export const SingleAddressComponent = (props: {readonly address: Address}): JSX.
         <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address</Trans>: </Text>
         <Text style={textStyles.paragraphStyle}>{props.address.address}</Text>
         <Text style={textStyles.paragraphStyle}>
-            {props.address.city} {props.address.stateProvince} {props.address.postalCode ? props.address.postalCode : ''}
+            {props.address.city} {props.address.stateProvince} {props.address.postalCode}
         </Text>
     </View>
 );

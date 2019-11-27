@@ -6,7 +6,7 @@ import { Content } from 'native-base';
 import { values, textStyles } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
-import { BodyComponent } from '../content_layout/body_component';
+import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { RouterProps } from '../../application/routing';
@@ -35,7 +35,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
             <TitleComponent title={props.service.name} />
             <ServiceOrganization history={props.history} name={props.service.organizationName} />
-            <BodyComponent body={props.service.description} shouldBeExpandable={true} />
+            <MarkdownBodyComponent body={props.service.description} shouldBeExpandable={true} />
             <DividerComponent />
             <ServiceContactDetails service={props.service} currentPathForAnaltyics={props.location.pathname}/>
         </Content>

@@ -7,7 +7,7 @@ interface Props {
     readonly shouldBeExpandable: boolean;
 }
 
-export const BodyComponent = (props: Props): JSX.Element => {
+export const MarkdownBodyComponent = (props: Props): JSX.Element => {
     const body = (
         <MarkdownComponent>
             {props.body}
