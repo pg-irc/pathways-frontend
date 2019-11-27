@@ -9,7 +9,7 @@ import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
 import { BuildServicesRequestAction } from '../../stores/services/actions';
-import { textStyles, colors, values, getNormalFontFamily } from '../../application/styles';
+import { textStyles, colors, values } from '../../application/styles';
 import { isError } from '../../selectors/services/is_error';
 import * as constants from '../../application/constants';
 import { useRequestDataIfOnlineReturnRefreshDataCallback }
@@ -42,10 +42,6 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     const onlineStatus = useOnlineStatus();
     const refreshServicesData = useRequestDataIfOnlineReturnRefreshDataCallback(props.dispatchServicesRequest);
     const hasNoErrors = onlineStatus !== OnlineStatus.Offline && !isError(props.topicServicesOrError);
-    const emptyMessage = (
-        <Text note numberOfLines={1} style={{ textAlign: 'left', fontFamily: getNormalFontFamily() }}>
-            <Trans>No services to show</Trans>
-        </Text>);
 
     if (hasNoErrors) {
         return (
@@ -54,7 +50,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 refreshing={isLoadingServices(props.topicServicesOrError)}
                 onRefresh={props.dispatchServicesRequest}
                 renderItem={renderServiceListItem(props.currentPath)}
-                listEmptyComponent={<EmptyListComponent message={emptyMessage} />}
+                listEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
                 listHeaderComponent={
                     <ServiceListHeaderComponent title={props.topic.title} />
                 }
