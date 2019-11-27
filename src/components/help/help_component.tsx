@@ -27,7 +27,7 @@ const fixture: ReadonlyArray<HelpContact> = [
     {
         title: <Trans>Information on emergency services (9-1-1)</Trans>,
         subTitle: (
-            <Text note numberOfLines={1} style={{ textAlign: 'left', fontFamily: getNormalFontFamily() }}>
+            <Text note style={{ fontFamily: getNormalFontFamily() }}>
                 <Trans>Police, fire and medical emergencies</Trans>
             </Text>),
         url: 'https://www.ecomm911.ca/',
@@ -35,7 +35,7 @@ const fixture: ReadonlyArray<HelpContact> = [
     {
         title: <Trans>Information on HealthLinkBC (8-1-1)</Trans>,
         subTitle: (
-            <Text note numberOfLines={1} style={{ textAlign: 'left', fontFamily: getNormalFontFamily() }}>
+            <Text note style={{ fontFamily: getNormalFontFamily() }}>
                 <Trans>Mutlilingual health information services</Trans>
             </Text>),
         url: 'https://www.healthlinkbc.ca/services-and-resources/about-8-1-1',
@@ -43,7 +43,7 @@ const fixture: ReadonlyArray<HelpContact> = [
     {
         title: <Trans>Information on BC211</Trans>,
         subTitle: (
-            <Text note numberOfLines={1} style={{ textAlign: 'left', fontFamily: getNormalFontFamily() }}>
+            <Text note style={{ fontFamily: getNormalFontFamily() }}>
                 <Trans>Services information and referral</Trans>
             </Text>),
         url: 'http://www.bc211.ca/',
