@@ -29,6 +29,7 @@ export interface HumanServiceData {
     readonly website: string;
     readonly email: string;
     readonly organizationName: string;
+    readonly bookmarked: boolean;
 }
 
 export interface ValidServicesForTopic {

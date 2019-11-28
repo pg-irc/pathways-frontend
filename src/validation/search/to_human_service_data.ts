@@ -23,4 +23,5 @@ export const toHumanServiceData = (data: SearchServiceData): HumanServiceData =>
     website: data.organization.website,
     email: data.organization.email,
     organizationName: data.organization.name,
+    bookmarked: false,
 });

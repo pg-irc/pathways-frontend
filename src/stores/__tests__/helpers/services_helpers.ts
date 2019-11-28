@@ -97,6 +97,7 @@ export class ServiceBuilder {
     website: string = aString();
     email: string = aString();
     organizationName: string = aString();
+    bookmarked: boolean = false;
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -148,6 +149,11 @@ export class ServiceBuilder {
         return this;
     }
 
+    withBookmarked(bookmarked: boolean): ServiceBuilder {
+        this.bookmarked = bookmarked;
+        return this;
+    }
+
     build(): HumanServiceData {
         return {
             id: this.id,
@@ -160,6 +166,7 @@ export class ServiceBuilder {
             website: this.website,
             email: this.email,
             organizationName: this.organizationName,
+            bookmarked: this.bookmarked,
         };
     }
 }

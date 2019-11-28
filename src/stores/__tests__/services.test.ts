@@ -138,6 +138,11 @@ describe('services reducer', () => {
                 fail();
             }
         });
+        it('provides services that are not bookmarked by default', () => {
+            services.forEach((service: HumanServiceData) => {
+                expect(service.bookmarked).toEqual(false);
+            });
+        });
     });
 
     describe('when populating topic services error object from an error response', () => {
@@ -164,7 +169,7 @@ describe('services reducer', () => {
             expect(store.services).toEqual(theStore.services);
         });
     });
-
+// TO-DO refactor below
     describe('when a service is bookmarked', () => {
         const service = new ServiceBuilder();
         const action: AddServiceToSavedListAction = {
