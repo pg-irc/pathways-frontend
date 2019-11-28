@@ -21,7 +21,6 @@ import { localizedPlaceHolders } from './localized_place_holders';
 export interface SearchComponentProps {
     readonly apiKey: string;
     readonly appId: string;
-    readonly currentPath: string;
 }
 
 export const SearchComponent = (props: SearchComponentProps): JSX.Element => {

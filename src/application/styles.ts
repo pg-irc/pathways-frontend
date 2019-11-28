@@ -216,6 +216,23 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
+    URL: {
+        fontSize: 15,
+        lineHeight: 21,
+        textDecorationLine: 'underline',
+        textAlign: 'left',
+        color: colors.teal,
+        letterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
+    headlineH3StyleURL: {
+        fontSize: 16,
+        textAlign: 'left',
+        textDecorationLine: 'underline',
+        color: colors.teal,
+        letterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
     paragraphStyleWhiteCenter: {
         fontSize: 16,
         lineHeight: 21,
@@ -259,7 +276,7 @@ export const textStyles = StyleSheet.create({
         letterSpacing: buttonLetterSpacing,
         ...getBoldFontStylesForOS(),
     },
-    taskTitle: {
+    contentTitle: {
         fontSize: 22,
         textAlign: 'left',
         color: colors.black,

@@ -4,7 +4,6 @@ import { History, Location } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
 import * as R from 'ramda';
-export type PageId = string;
 
 // The property names of this structure are defined by the corresponding
 // route definitions, e.g. parsing a url '/learn/1' which matches
@@ -12,6 +11,8 @@ export type PageId = string;
 export interface MatchParameters {
     readonly learnId?: LearnId;
     readonly topicId?: TopicId;
+    readonly organizationId?: string;
+    readonly serviceId?: string;
 }
 
 export type RouterProps = RouteComponentProps<MatchParameters>;
@@ -28,6 +29,8 @@ export enum Routes {
     RecommendedTopics,
     BookmarkedTopics,
     Search,
+    OrganizationDetail,
+    ServiceDetail,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -56,6 +59,10 @@ export const routePathDefinition = (route: Routes): string => {
             return '/bookmarked-topics';
         case Routes.Search:
             return '/search';
+        case Routes.OrganizationDetail:
+            return '/organization/:organizationId';
+        case Routes.ServiceDetail:
+            return '/service/:serviceId';
     }
 };
 

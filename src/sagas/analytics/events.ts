@@ -30,7 +30,7 @@ export const sendLinkPressedEvent = (currentPath: string, linkContext: string, l
     analytics.hit(event);
 };
 
-export const buildLinkContext = (model: string, title: string): string => (
+export const buildAnalyticsLinkContext = (model: string, title: string): string => (
     `${model} - ${title}`
 );
 

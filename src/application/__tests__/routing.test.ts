@@ -47,6 +47,14 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.Search)).toEqual('/search');
     });
 
+    it('For Routes.OrganizationDetail returns path: "/organization/:organizationId"', () => {
+        expect(routePathDefinition(Routes.OrganizationDetail)).toEqual('/organization/:organizationId');
+    });
+
+    it('For Routes.ServiceDetail returns path: "/service/:serviceId"', () => {
+        expect(routePathDefinition(Routes.ServiceDetail)).toEqual('/service/:serviceId');
+    });
+
 });
 
 describe('the routePathWithoutParameter function', () => {

@@ -1,17 +1,19 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Image, Dimensions, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import Markdown, { openUrl } from 'react-native-markdown-renderer';
 import { Topic } from '../../selectors/topics/topic';
-import { textStyles, colors, values, markdownStyles, getNormalFontFamily } from '../../application/styles';
+import { textStyles, colors, values, getNormalFontFamily } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
-import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { images as topicImages } from '../../application/topicImages';
 import { RecommendedIconComponent } from '../recommended_topics/recommended_icon_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
+import { TitleComponent } from '../content_layout/title_component';
+import { DescriptorComponent } from '../content_layout/descriptor_component';
+import { DividerComponent } from '../content_layout/divider_component';
+import { BannerImageComponent } from '../content_layout/banner_image_component';
+import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 
 export interface TaskDetailContentProps {
     readonly topic: Topic;
@@ -25,55 +27,15 @@ type Props = TaskDetailContentProps & TaskDetailContentActions;
 
 export const TaskDetailContentComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View padder style={{ backgroundColor: colors.white, marginHorizontal: -10 }}>
-        <ImageComponent {...props} />
-        <TaxonomyComponent {...props} />
-        <TitleComponent {...props} />
+        <BannerImageComponent imageSource={topicImages[props.topic.id]} />
+        <DescriptorComponent descriptor={<Trans id={props.topic.exploreSection.name.toUpperCase()}/>} />
+        <TitleComponent title={props.topic.title} />
         <RecommendedComponent {...props} />
-        <Divider />
-        <TaskDescription {...props} />
-        <Divider />
+        <DividerComponent />
+        <MarkdownBodyComponent body={props.topic.description} shouldBeExpandable={!!props.topic.relatedTopics.length} />
+        <DividerComponent />
         <ServicesButton {...props} />
     </View>
-);
-
-const ImageComponent = (props: Props): JSX.Element => {
-    const logoHeight = Dimensions.get('screen').height / 8;
-    const imageSource = topicImages[props.topic.id] ?
-        topicImages[props.topic.id]
-        :
-        arrivalAdvisorGlyphLogo;
-    return (
-        <View style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingVertical: 10,
-            backgroundColor: colors.lightGrey,
-            borderBottomWidth: 1,
-            borderBottomColor: colors.darkerGrey,
-            marginHorizontal: -10,
-            marginTop: -10,
-        }}>
-            <Image
-                source={imageSource}
-                resizeMode={'contain'}
-                style={{ height: logoHeight }}
-            />
-        </View>
-    );
-};
-
-const TaxonomyComponent = (props: Props): JSX.Element => (
-    <Text style={[
-        textStyles.headlineH5StyleBlackLeft,
-        {
-            marginTop: 20,
-            marginBottom: 5,
-            paddingHorizontal: values.backgroundTextPadding,
-        },
-    ]}
-    >
-        <Trans id={props.topic.exploreSection.name.toUpperCase()} />
-    </Text>
 );
 
 const RecommendedComponent = (props: Props): JSX.Element => {
@@ -92,47 +54,6 @@ const RecommendedComponent = (props: Props): JSX.Element => {
             </Text>
         </View>
     );
-};
-
-const Divider = (): JSX.Element => (
-    <View style={{ height: 2, flex: 1, marginVertical: 20, backgroundColor: colors.lightGrey }}></View>
-);
-
-const TitleComponent = (props: Props): JSX.Element => (
-    <Text style={[textStyles.taskTitle, { paddingHorizontal: values.backgroundTextPadding }]}>
-        {props.topic.title}
-    </Text>
-);
-
-const markDownRules = {
-    link: (node: any, children: any): JSX.Element => {
-        return (
-            <Text key={node.key} style={markdownStyles.link} onPress={(): void => openUrl(node.attributes.href)}>
-                {children}
-                <Text>{' '}</Text>
-                <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: colors.teal }} />
-            </Text>
-        );
-    },
-};
-
-const TaskDescription = (props: Props): JSX.Element => {
-    const topic = props.topic;
-    const taskDescription = (
-        <Markdown
-            rules={markDownRules}
-            style={markdownStyles}
-        >
-            {topic.description}
-        </Markdown>
-    );
-    return topic.relatedTopics.length > 0 ?
-        <ExpandableContentComponent
-            contentId={topic.id}
-            content={taskDescription}
-        />
-        :
-        taskDescription;
 };
 
 const ServicesButton = (props: Props): JSX.Element => (
