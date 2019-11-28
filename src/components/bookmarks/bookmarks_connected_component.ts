@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { TaskListActions } from '../topics/task_list_component';
 import { Store } from '../../stores';
-import { BookmarksComponent, BookmarksProps } from './bookmarked_component';
+import { BookmarksComponent, BookmarksProps } from './bookmarks_component';
 import { Id, RemoveFromSavedListAction, removeFromSavedList, AddToSavedListAction, addToSavedList } from '../../stores/topics';
 import { selectSavedTopics } from '../../selectors/topics/select_saved_topics';
 import { selectSavedServices } from '../../selectors/services/select_saved_services';
@@ -34,4 +34,4 @@ const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): ListActions =>
     removeFromSavedList: (topicId: Id): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
 });
 
-export const BookmarkedTopicsConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(BookmarksComponent);
+export const BookmarksConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(BookmarksComponent);
