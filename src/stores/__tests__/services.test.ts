@@ -6,6 +6,7 @@ import {
     BuildServicesRequestAction, BuildServicesSuccessAction,
     BuildServicesErrorAction,
     AddServiceToSavedListAction,
+    RemoveServiceFromSavedListAction,
 } from '../services/actions';
 import { HumanServiceData, ServiceStore, ServiceListData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
@@ -170,7 +171,7 @@ describe('services reducer', () => {
         });
     });
 // TO-DO refactor below
-    describe('when a service is bookmarked', () => {
+    describe('when bookmarking a service', () => {
         const service = new ServiceBuilder();
         const action: AddServiceToSavedListAction = {
             type: constants.ADD_SERVICE_BOOKMARK,
@@ -181,7 +182,29 @@ describe('services reducer', () => {
             expect(store.savedServices).toHaveLength(1);
         });
         it('can add a service to services map', () => {
-            expect(store.services.service).toEqual(service);
+            expect(Object.keys(store.services)).toHaveLength(2);
+        });
+        it('can add a service to services map marked as bookmarked', () => {
+            expect(store.services[service.id].bookmarked).toEqual(true);
+        });
+    });
+
+    describe('when removing a bookmarked service', () => {
+        const bookmarkedService = new ServiceBuilder().withBookmarked(true);
+        const store = buildNormalizedServices(
+            [bookmarkedService],
+            [loadedTaskServices, loadingTaskServices, loadedTaskServicesError, loadingTaskServicesError],
+            [],
+        );
+        const action: RemoveServiceFromSavedListAction = {
+            type: constants.REMOVE_SERVICE_BOOKMARK,
+            payload: { service: bookmarkedService },
+        };
+
+        const storeState = reducer(store, action);
+
+        it('can mark a service as no longer being bookmarked', () => {
+            expect(storeState.services[bookmarkedService.id].bookmarked).toEqual(false);
         });
     });
 
