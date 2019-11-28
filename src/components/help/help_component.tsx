@@ -3,7 +3,7 @@ import { History } from 'history';
 import { Text, View, Icon, Content } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { I18nManager, Alert, TouchableOpacity, AlertButton } from 'react-native';
-import { applicationStyles, colors, textStyles, values } from '../../application/styles';
+import { applicationStyles, colors, textStyles, values, getNormalFontFamily } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/map_with_index';
 import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
@@ -26,17 +26,26 @@ interface HelpContact {
 const fixture: ReadonlyArray<HelpContact> = [
     {
         title: <Trans>Information on emergency services (9-1-1)</Trans>,
-        subTitle: <Trans>Police, fire and medical emergencies</Trans>,
+        subTitle: (
+            <Text note style={{ fontFamily: getNormalFontFamily() }}>
+                <Trans>Police, fire and medical emergencies</Trans>
+            </Text>),
         url: 'https://www.ecomm911.ca/',
     },
     {
         title: <Trans>Information on HealthLinkBC (8-1-1)</Trans>,
-        subTitle: <Trans>Mutlilingual health information services</Trans>,
+        subTitle: (
+            <Text note style={{ fontFamily: getNormalFontFamily() }}>
+                <Trans>Mutlilingual health information services</Trans>
+            </Text>),
         url: 'https://www.healthlinkbc.ca/services-and-resources/about-8-1-1',
     },
     {
         title: <Trans>Information on BC211</Trans>,
-        subTitle: <Trans>Services information and referral</Trans>,
+        subTitle: (
+            <Text note style={{ fontFamily: getNormalFontFamily() }}>
+                <Trans>Services information and referral</Trans>
+            </Text>),
         url: 'http://www.bc211.ca/',
     },
     {
