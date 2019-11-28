@@ -22,7 +22,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
             <FooterTab style={[{ backgroundColor: colors.lightTeal }]}>
                 {navigationButton(props.history, Routes.RecommendedTopics, 'home', isOnRecommendedTopicsPage(props))}
                 {navigationButton(props.history, Routes.Learn, 'book', isOnLearnPage(props))}
-                {navigationButton(props.history, Routes.BookmarkedTopics, 'bookmark', isOnBookmarksPage(props))}
+                {navigationButton(props.history, Routes.Bookmarked, 'bookmark', isOnBookmarksPage(props))}
                 {navigationButton(props.history, Routes.Search, 'search', isOnSearchPage(props))}
             </FooterTab>
         </Footer>
@@ -37,7 +37,7 @@ const isFooterHidden = (props: FooterProps): boolean => (
 );
 
 const isOnBookmarksPage = (props: FooterProps): boolean => (
-    pathMatchesRoute(props.location.pathname, Routes.BookmarkedTopics)
+    pathMatchesRoute(props.location.pathname, Routes.Bookmarked)
 );
 
 const isOnRecommendedTopicsPage = (props: FooterProps): boolean => (
