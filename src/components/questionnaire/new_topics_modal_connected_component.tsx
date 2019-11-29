@@ -7,7 +7,6 @@ import { pickQuestionnaire } from '../../selectors/questionnaire/pick_questionna
 import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
 import { pickTopics } from '../../selectors/topics/pick_topics';
 import { pickSavedTopicIds } from '../../selectors/topics/pick_saved_topic_ids';
-import { selectLocale } from '../../selectors/locale/select_locale';
 
 type OwnProps = {
     readonly history: History;
@@ -20,8 +19,6 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): NewTopicsModalProps 
     newAnswers: pickAnswers(store),
     topics: pickTopics(store),
     savedTopicIds: pickSavedTopicIds(store),
-    locale: selectLocale(store),
-    history: ownProps.history,
     isVisible: ownProps.isVisible,
 });
 
