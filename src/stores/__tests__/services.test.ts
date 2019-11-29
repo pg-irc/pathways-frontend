@@ -27,7 +27,6 @@ describe('services reducer', () => {
     const theStore = buildNormalizedServices(
         [aService],
         [loadedTaskServices, loadingTaskServices, loadedTaskServicesError, loadingTaskServicesError],
-        [],
     );
 
     it('returns a unmodified store when the action is missing', () => {
@@ -178,9 +177,6 @@ describe('services reducer', () => {
             payload: { service },
         };
         const store = reducer(theStore, action);
-        it('can add a service id savedServices list', () => {
-            expect(store.savedServices).toHaveLength(1);
-        });
         it('can add a service to services map', () => {
             expect(Object.keys(store.services)).toHaveLength(2);
         });
@@ -194,7 +190,6 @@ describe('services reducer', () => {
         const store = buildNormalizedServices(
             [bookmarkedService],
             [loadedTaskServices, loadingTaskServices, loadedTaskServicesError, loadingTaskServicesError],
-            [],
         );
         const action: RemoveServiceFromSavedListAction = {
             type: constants.REMOVE_SERVICE_BOOKMARK,
@@ -230,14 +225,8 @@ describe('services reducer', () => {
             const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereServiceIsSaved);
             store = reducer(theStore, loadAction);
         });
-        it('should return the id of the saved service', () => {
-            expect(store.savedServices).toContain(savedServiceId);
-        });
         it('should return the saved service object', () => {
             expect(store.services[savedServiceId]).toEqual(savedServiceMap[savedServiceId]);
-        });
-        it('should not include service ids that are not saved', () => {
-            expect(store.savedServices).toHaveLength(1);
         });
     });
 });

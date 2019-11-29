@@ -10,7 +10,6 @@ export function buildDefaultStore(): types.ServiceStore {
     return {
         services: {},
         servicesByTopic: {},
-        savedServices: [],
     };
 }
 
@@ -119,14 +118,12 @@ const addToSavedServicesList = (store: types.ServiceStore, action: actions.AddSe
                 bookmarked: true,
             },
         },
-        savedServices: [...store.savedServices, serviceId],
     };
 } ;
 
 const removeFromSavedServicesList = (store: types.ServiceStore, action: actions.RemoveServiceFromSavedListAction): types.ServiceStore => {
     const serviceToRemove = action.payload.service;
     const serviceId = serviceToRemove.id;
-    const updatedSavedServicesList = store.savedServices.filter((id: Id) => id !== serviceId);
     return {
         ...store,
         services: {
@@ -136,7 +133,6 @@ const removeFromSavedServicesList = (store: types.ServiceStore, action: actions.
                 bookmarked: false,
             },
         },
-        savedServices: updatedSavedServicesList,
     };
 };
 
@@ -144,22 +140,16 @@ const clearServicesData = (store: types.ServiceStore): types.ServiceStore => (
     {
         ...store,
         services: {},
-        savedServices: [],
     }
 );
 
 const loadServicesFromUserData = (store: types.ServiceStore, action: UserDataPersistence.LoadSuccessAction): types. ServiceStore => {
     const persistedServices: types.ServiceMap = action.payload.savedServices;
-    const persistedServicesIds: types.ServiceList = Object.keys(persistedServices);
     return {
         ...store,
         services: {
             ...store.services,
             ...persistedServices,
         },
-        savedServices: [
-            ...store.savedServices,
-            ...persistedServicesIds,
-        ],
     };
 };

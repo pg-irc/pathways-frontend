@@ -6,18 +6,15 @@ import {
     ValidServicesForTopic, LoadingServicesForTopic, HumanServiceData, ServiceMap,
     ServiceStore, PhoneNumber, Address, ErrorServicesForTopic,
     ServicesForAllTopics,
-    ServiceList,
 } from '../../../validation/services/types';
 import * as constants from '../../../application/constants';
 
 export const buildNormalizedServices = (
     services: ReadonlyArray<ServiceBuilder>,
     taskServicesOrError: ReadonlyArray<TaskServicesBuilder | TaskServicesErrorBuilder>,
-    savedServices: ReadonlyArray<ServiceBuilder>,
 ): ServiceStore => ({
     services: buildServiceMap(services),
     servicesByTopic: buildTaskServicesOrErrorMap(taskServicesOrError),
-    savedServices: buildSavedServicesList(savedServices),
 });
 
 export const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {
@@ -35,11 +32,6 @@ const buildTaskServicesOrErrorMap = (
         return { ...map, [builder.topicId]: builder.build() };
     };
     return taskServicesOrError.reduce(buildAndMapToId, {});
-};
-
-const buildSavedServicesList = (services: ReadonlyArray<ServiceBuilder>): ServiceList => {
-    const serviceMapToId = buildServiceMap(services);
-    return Object.keys(serviceMapToId);
 };
 
 export class PhoneNumberBuilder {

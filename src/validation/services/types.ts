@@ -65,7 +65,6 @@ export type ServiceList = ReadonlyArray<Id>;
 export interface ServiceStore {
     readonly services: ServiceMap;
     readonly servicesByTopic: ServicesForAllTopics;
-    readonly savedServices: ServiceList;
 }
 
 export type ServiceListData = ReadonlyArray<HumanServiceData>;
