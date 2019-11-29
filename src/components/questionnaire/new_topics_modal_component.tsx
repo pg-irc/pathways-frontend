@@ -1,10 +1,8 @@
 import React from 'react';
-import { Dimensions, Image } from 'react-native';
 import Modal from 'react-native-modal';
-import { View, Button, Text } from 'native-base';
+import { View, Button, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { textStyles, colors, values, applicationStyles } from '../../application/styles';
-import { arrivalAdvisorGlyphLogo } from '../../application/images';
 
 export interface NewTopicsModalProps {
     readonly isVisible: boolean;
@@ -15,8 +13,6 @@ export interface NewTopicsModalActions {
 }
 
 type Props = NewTopicsModalProps & NewTopicsModalActions;
-
-const logoSize = Dimensions.get('screen').width / 7;
 
 export const NewTopicsModalComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <Modal isVisible={props.isVisible}>
@@ -35,15 +31,15 @@ export const NewTopicsModalComponent: React.StatelessComponent<Props> = (props: 
 
 const ContentComponent = (): JSX.Element => (
     <View style={{ backgroundColor: colors.white }}>
-        <Image
-            source={arrivalAdvisorGlyphLogo}
-            resizeMode={'contain'}
+        <Icon
             style={{
-                width: logoSize,
-                height: logoSize,
+                fontSize: values.heroIconSize,
+                color: colors.lightTeal,
                 marginVertical: 15,
                 alignSelf: 'center',
             }}
+            name={'check-decagram'}
+            type={'MaterialCommunityIcons'}
         />
         <View style={{ padding: 10 }}>
             <Text style={textStyles.headlineH2StyleBlackCenter}>
@@ -58,7 +54,7 @@ const ButtonComponent = (props: Props): JSX.Element => (
         style={{
             flexDirection: 'row',
             justifyContent: 'center',
-            marginTop: 10,
+            marginVertical: 15,
         }}
     >
         <Button

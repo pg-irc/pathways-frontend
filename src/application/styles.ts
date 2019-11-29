@@ -29,6 +29,7 @@ export const colors = {
 
 export const values = {
     navigationIconSize: 28,
+    heroIconSize: 60,
     largeIconSize: 30,
     mediumIconSize: 25,
     smallIconSize: 20,
