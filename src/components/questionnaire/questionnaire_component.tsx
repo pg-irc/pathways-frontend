@@ -9,16 +9,23 @@ import { QuestionComponent } from './question_component';
 import { applicationStyles, textStyles, colors, values } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
-import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
+import { Id, ChooseAnswerAction, SetActiveQuestionAction, AnswersMap } from '../../stores/questionnaire';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { NewTopicsModalConnectedComponent } from './new_topics_modal_connected_component';
 import { UpdateOldAnswersFromStoreAnswersAction } from '../../stores/questionnaire/actions';
+import { Topic, TopicMap, Id as TaskId } from '../../stores/topics';
+import { getNewlyRecommendedTopics } from '../../selectors/topics/get_newly_recommended_topics';
+import { rejectTopicsWithIds } from '../../selectors/topics/reject_topics_with_ids';
 
 export interface QuestionnaireProps {
     readonly activeQuestion: SelectorQuestion;
+    readonly oldAnswers: AnswersMap;
+    readonly newAnswers: AnswersMap;
+    readonly topics: TopicMap;
+    readonly savedTopicIds: ReadonlyArray<TaskId>;
 }
 
 export interface QuestionnaireActions {
@@ -33,8 +40,19 @@ export const QuestionnaireComponent = (props: Props): JSX.Element => {
     // tslint:disable-next-line:typedef
     const [showModal, setShowModal] = useState(false);
 
-    const closeQuestionnaireWithModal = (): void => {
-        setShowModal(true);
+    const closeQuestionnaireWithOptionalModal = (): void => {
+        const topics = getTopicsForModal();
+        if (topics.length > 0) {
+            setShowModal(true);
+        } else {
+            closeQuestionnaire();
+        }
+    };
+
+    const getTopicsForModal = (): ReadonlyArray<Topic> => {
+        const newlyRecommendedTopics = getNewlyRecommendedTopics(props.oldAnswers, props.newAnswers, props.topics);
+        const newlyRecommendedUnsavedTopics = rejectTopicsWithIds(newlyRecommendedTopics, props.savedTopicIds);
+        return newlyRecommendedUnsavedTopics;
     };
 
     const closeQuestionnaire = (): void => {
@@ -46,7 +64,7 @@ export const QuestionnaireComponent = (props: Props): JSX.Element => {
     return (
         <View style={{ flex: 1 }}>
             <CloseButtonComponent
-                onPress={closeQuestionnaireWithModal}
+                onPress={closeQuestionnaireWithOptionalModal}
                 color={colors.black}
             />
             <Content padder>
@@ -61,7 +79,7 @@ export const QuestionnaireComponent = (props: Props): JSX.Element => {
                 <ButtonsComponent
                     activeQuestion={props.activeQuestion}
                     setActiveQuestion={props.setActiveQuestion}
-                    onDoneButtonPress={closeQuestionnaireWithModal}
+                    onDoneButtonPress={closeQuestionnaireWithOptionalModal}
                 />
                 <NewTopicsModalConnectedComponent
                     history={props.history}
