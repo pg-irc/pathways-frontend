@@ -1,5 +1,5 @@
 // tslint:disable:no-class no-this no-expression-statement
-import React from 'react';
+import React, { useState } from 'react';
 import { I18nManager, Image, Dimensions } from 'react-native';
 import { Button, Content, View, Text, Icon } from 'native-base';
 import * as R from 'ramda';
@@ -29,62 +29,49 @@ export interface QuestionnaireActions {
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
-interface State {
-    readonly newTopicsModalIsVisible: boolean;
-}
+export const QuestionnaireComponent = (props: Props): JSX.Element => {
+    // tslint:disable-next-line:typedef
+    const [showModal, setShowModal] = useState(false);
 
-export class QuestionnaireComponent extends React.Component<Props, State> {
+    const closeQuestionnaireWithModal = (): void => {
+        setShowModal(true);
+    };
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            newTopicsModalIsVisible: false,
-        };
-        this.closeQuestionnaireWithModal = this.closeQuestionnaireWithModal.bind(this);
-        this.closeQuestionnaire = this.closeQuestionnaire.bind(this);
-    }
+    const closeQuestionnaire = (): void => {
+        props.updateOldAnswersFromStoreAnswers();
+        setShowModal(false);
+        goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)();
+    };
 
-    render(): JSX.Element {
-        return (
-            <View style={{ flex: 1 }}>
-                <CloseButtonComponent
-                    onPress={this.closeQuestionnaireWithModal}
-                    color={colors.black}
+    return (
+        <View style={{ flex: 1 }}>
+            <CloseButtonComponent
+                onPress={closeQuestionnaireWithModal}
+                color={colors.black}
+            />
+            <Content padder>
+                <HeadingComponent />
+                <ProgressComponent
+                    activeQuestion={props.activeQuestion}
                 />
-                <Content padder>
-                    <HeadingComponent />
-                    <ProgressComponent
-                        activeQuestion={this.props.activeQuestion}
-                    />
-                    <QuestionComponent
-                        question={this.props.activeQuestion}
-                        chooseAnswer={this.props.chooseAnswer}
-                    />
-                    <ButtonsComponent
-                        activeQuestion={this.props.activeQuestion}
-                        setActiveQuestion={this.props.setActiveQuestion}
-                        onDoneButtonPress={this.closeQuestionnaireWithModal}
-                    />
-                    <NewTopicsModalConnectedComponent
-                        history={this.props.history}
-                        isVisible={this.state.newTopicsModalIsVisible}
-                        onModalButtonPress={this.closeQuestionnaire}
-                    />
-                </Content>
-            </View>
-        );
-    }
-
-    private closeQuestionnaireWithModal(): void {
-        this.setState({ newTopicsModalIsVisible: true });
-    }
-
-    private closeQuestionnaire(): void {
-        this.props.updateOldAnswersFromStoreAnswers();
-        this.setState({ newTopicsModalIsVisible: false });
-        goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history)();
-    }
-}
+                <QuestionComponent
+                    question={props.activeQuestion}
+                    chooseAnswer={props.chooseAnswer}
+                />
+                <ButtonsComponent
+                    activeQuestion={props.activeQuestion}
+                    setActiveQuestion={props.setActiveQuestion}
+                    onDoneButtonPress={closeQuestionnaireWithModal}
+                />
+                <NewTopicsModalConnectedComponent
+                    history={props.history}
+                    isVisible={showModal}
+                    onModalButtonPress={closeQuestionnaire}
+                />
+            </Content>
+        </View>
+    );
+};
 
 const HeadingComponent = (): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 6;
