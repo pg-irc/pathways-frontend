@@ -40,16 +40,15 @@ export class QuestionnaireComponent extends React.Component<Props, State> {
         this.state = {
             newTopicsModalIsVisible: false,
         };
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.getOnModalButtonPress = this.getOnModalButtonPress.bind(this);
+        this.closeQuestionnaireWithModal = this.closeQuestionnaireWithModal.bind(this);
+        this.closeQuestionnaire = this.closeQuestionnaire.bind(this);
     }
 
     render(): JSX.Element {
         return (
             <View style={{ flex: 1 }}>
                 <CloseButtonComponent
-                    onPress={this.openModal}
+                    onPress={this.closeQuestionnaireWithModal}
                     color={colors.black}
                 />
                 <Content padder>
@@ -64,29 +63,25 @@ export class QuestionnaireComponent extends React.Component<Props, State> {
                     <ButtonsComponent
                         activeQuestion={this.props.activeQuestion}
                         setActiveQuestion={this.props.setActiveQuestion}
-                        onDoneButtonPress={this.openModal}
+                        onDoneButtonPress={this.closeQuestionnaireWithModal}
                     />
                     <NewTopicsModalConnectedComponent
                         history={this.props.history}
                         isVisible={this.state.newTopicsModalIsVisible}
-                        onModalButtonPress={this.getOnModalButtonPress}
+                        onModalButtonPress={this.closeQuestionnaire}
                     />
                 </Content>
             </View>
         );
     }
 
-    private openModal(): void {
+    private closeQuestionnaireWithModal(): void {
         this.setState({ newTopicsModalIsVisible: true });
     }
 
-    private closeModal(): void {
-        this.setState({ newTopicsModalIsVisible: false });
-    }
-
-    private getOnModalButtonPress(): void {
+    private closeQuestionnaire(): void {
         this.props.updateOldAnswersFromStoreAnswers();
-        this.closeModal();
+        this.setState({ newTopicsModalIsVisible: false });
         goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history)();
     }
 }
@@ -179,7 +174,7 @@ const renderPreviousButton = (props: ButtonsProps): JSX.Element => {
     const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
     const text = <Trans>Back</Trans>;
     return (
-        <Button style={[ applicationStyles.whiteTealButton, { marginBottom: 5 } ]} onPress={onPress} iconLeft>
+        <Button style={[applicationStyles.whiteTealButton, { marginBottom: 5 }]} onPress={onPress} iconLeft>
             <Icon name={icon} style={{ color: colors.teal }} />
             <Text style={textStyles.whiteTealButton}>{text}</Text>
         </Button>
