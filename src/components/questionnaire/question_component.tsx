@@ -20,11 +20,11 @@ export interface QuestionActions {
 type Props = QuestionProps & QuestionActions;
 
 export const QuestionComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const { question }: Props = props;
+    const question = props.question;
     return (
         <View style={{ flex: 1, alignItems: 'stretch', marginBottom: 15 }}>
             <Text style={[textStyles.headlineH2StyleBlackCenter, { marginBottom: 15 }]}>
-            <Trans id={question.text} />
+                <Trans id={question.text} />
             </Text>
             {question.explanation ? <Text style={textStyles.paragraphSmallStyleLeft}>
                 <Trans id={question.explanation} />

@@ -33,27 +33,25 @@ export const NewTopicsModalComponent: React.StatelessComponent<Props> = (props: 
     </Modal>
 );
 
-const ContentComponent = (): JSX.Element => {
-    return (
-        <View style={{ backgroundColor: colors.white }}>
-            <Image
-                source={arrivalAdvisorGlyphLogo}
-                resizeMode={'contain'}
-                style={{
-                    width: logoSize,
-                    height: logoSize,
-                    marginVertical: 15,
-                    alignSelf: 'center',
-                }}
-            />
-            <View style={{ padding: 10 }}>
-                <Text style={textStyles.headlineH2StyleBlackCenter}>
-                    <Trans>Some new topics recommended based on your answers.</Trans>
-                </Text>
-            </View>
+const ContentComponent = (): JSX.Element => (
+    <View style={{ backgroundColor: colors.white }}>
+        <Image
+            source={arrivalAdvisorGlyphLogo}
+            resizeMode={'contain'}
+            style={{
+                width: logoSize,
+                height: logoSize,
+                marginVertical: 15,
+                alignSelf: 'center',
+            }}
+        />
+        <View style={{ padding: 10 }}>
+            <Text style={textStyles.headlineH2StyleBlackCenter}>
+                <Trans>New topics have been recommended based on your answers!</Trans>
+            </Text>
         </View>
-    );
-};
+    </View>
+);
 
 const ButtonComponent = (props: Props): JSX.Element => (
     <View
@@ -72,7 +70,7 @@ const ButtonComponent = (props: Props): JSX.Element => (
             onPress={props.onModalButtonPress}
         >
             <Text style={textStyles.button}>
-                <Trans>OK</Trans>
+                <Trans>See recommendations</Trans>
             </Text>
         </Button>
     </View>

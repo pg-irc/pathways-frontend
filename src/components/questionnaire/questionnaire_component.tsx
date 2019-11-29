@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { I18nManager, Image, Dimensions } from 'react-native';
 import { Button, Content, View, Text, Icon } from 'native-base';
-import * as R from 'ramda';
 import { Question as SelectorQuestion } from '../../selectors/questionnaire/question';
 import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
 import { QuestionComponent } from './question_component';
@@ -19,6 +18,7 @@ import { UpdateOldAnswersFromStoreAnswersAction } from '../../stores/questionnai
 import { Topic, TopicMap, Id as TaskId } from '../../stores/topics';
 import { getNewlyRecommendedTopics } from '../../selectors/topics/get_newly_recommended_topics';
 import { rejectTopicsWithIds } from '../../selectors/topics/reject_topics_with_ids';
+import * as R from 'ramda';
 
 export interface QuestionnaireProps {
     readonly activeQuestion: SelectorQuestion;
@@ -36,23 +36,24 @@ export interface QuestionnaireActions {
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
+const computeNewlyRecommendedTopics = (props: Props): ReadonlyArray<Topic> => {
+    const newlyRecommendedTopics = getNewlyRecommendedTopics(props.oldAnswers, props.newAnswers, props.topics);
+    const newlyRecommendedUnsavedTopics = rejectTopicsWithIds(newlyRecommendedTopics, props.savedTopicIds);
+    return newlyRecommendedUnsavedTopics;
+};
+
 export const QuestionnaireComponent = (props: Props): JSX.Element => {
+    // linter doesn't understand state hooks with booleans for some reason
     // tslint:disable-next-line:typedef
     const [showModal, setShowModal] = useState(false);
 
     const closeQuestionnaireWithOptionalModal = (): void => {
-        const topics = getTopicsForModal();
-        if (topics.length > 0) {
-            setShowModal(true);
-        } else {
+        const newlyRecommendedTopics = computeNewlyRecommendedTopics(props);
+        if (R.isEmpty(newlyRecommendedTopics)) {
             closeQuestionnaire();
+        } else {
+            setShowModal(true);
         }
-    };
-
-    const getTopicsForModal = (): ReadonlyArray<Topic> => {
-        const newlyRecommendedTopics = getNewlyRecommendedTopics(props.oldAnswers, props.newAnswers, props.topics);
-        const newlyRecommendedUnsavedTopics = rejectTopicsWithIds(newlyRecommendedTopics, props.savedTopicIds);
-        return newlyRecommendedUnsavedTopics;
     };
 
     const closeQuestionnaire = (): void => {
@@ -82,7 +83,6 @@ export const QuestionnaireComponent = (props: Props): JSX.Element => {
                     onDoneButtonPress={closeQuestionnaireWithOptionalModal}
                 />
                 <NewTopicsModalConnectedComponent
-                    history={props.history}
                     isVisible={showModal}
                     onModalButtonPress={closeQuestionnaire}
                 />

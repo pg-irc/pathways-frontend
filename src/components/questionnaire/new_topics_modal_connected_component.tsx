@@ -1,11 +1,9 @@
 import { Dispatch } from 'redux';
-import { History } from 'history';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { NewTopicsModalProps, NewTopicsModalComponent, NewTopicsModalActions } from './new_topics_modal_component';
 
 type OwnProps = {
-    readonly history: History;
     readonly isVisible: boolean;
     readonly onModalButtonPress: () => void;
 };
