@@ -15,6 +15,7 @@ import { Routes, getParametersFromPath } from '../../application/routing';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
 import { LatLong } from '../../validation/latlong/types';
 import { HumanServiceData } from '../../validation/services/types';
+import { getSavedServicesIdsList } from '../../selectors/services/get_saved_services_ids_list';
 
 type OwnProps = {
     readonly location: Location;
@@ -29,7 +30,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => 
         topicServicesOrError: selectTopicServices(topic.id, store),
         manualUserLocation,
         currentPath: ownProps.location.pathname,
-        savedServices: store.services.savedServices,
+        savedServices: getSavedServicesIdsList(store),
     };
 };
 

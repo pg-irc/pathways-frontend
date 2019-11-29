@@ -7,6 +7,7 @@ import { ServicesAction, AddServiceToSavedListAction, addServiceToSavedListActio
         removeServiceFromSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
 import { InfiniteHitsActions } from './infinite_hits_component';
 import { HumanServiceData } from '../../validation/services/types';
+import { getSavedServicesIdsList } from '../../selectors/services/get_saved_services_ids_list';
 
 type OwnProps = {
     readonly location: Location;
@@ -16,7 +17,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): SearchComponentProps
     apiKey: ALGOLIA_SEARCH_API_KEY,
     appId: 'MMYH1Z0D3O',
     currentPath: ownProps.location.pathname,
-    savedServices: store.services.savedServices,
+    savedServices: getSavedServicesIdsList(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<ServicesAction>): InfiniteHitsActions => ({
