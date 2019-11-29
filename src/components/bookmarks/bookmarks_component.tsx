@@ -1,13 +1,14 @@
 import React from 'react';
 import { TopicListItem } from '../../selectors/topics/topic_list_item';
 import { RouterProps } from '../../application/routing';
-import { ServiceListData } from '../../validation/services/types';
+import { ServiceListData, ServiceList } from '../../validation/services/types';
 import { ListActions } from './bookmarks_connected_component';
 import { TopicBookmarksComponent } from './topic_bookmarks_component';
 import { ServiceBookmarksComponent } from './service_bookmarks_component';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ServiceListData;
+    readonly savedServicesIds: ServiceList;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly currentPath: string;
 }

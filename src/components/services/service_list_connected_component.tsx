@@ -30,7 +30,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): ServiceListProps => 
         topicServicesOrError: selectTopicServices(topic.id, store),
         manualUserLocation,
         currentPath: ownProps.location.pathname,
-        savedServices: getSavedServicesIdsList(store),
+        savedServicesIds: getSavedServicesIdsList(store),
     };
 };
 

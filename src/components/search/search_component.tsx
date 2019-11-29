@@ -23,7 +23,7 @@ export interface SearchComponentProps {
     readonly apiKey: string;
     readonly appId: string;
     readonly currentPath: string;
-    readonly savedServices: ServiceList;
+    readonly savedServicesIds: ServiceList;
 }
 
 export const SearchComponent = (props: SearchComponentProps): JSX.Element => {

@@ -17,7 +17,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): SearchComponentProps
     apiKey: ALGOLIA_SEARCH_API_KEY,
     appId: 'MMYH1Z0D3O',
     currentPath: ownProps.location.pathname,
-    savedServices: getSavedServicesIdsList(store),
+    savedServicesIds: getSavedServicesIdsList(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<ServicesAction>): InfiniteHitsActions => ({

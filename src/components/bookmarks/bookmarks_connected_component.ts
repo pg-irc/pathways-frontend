@@ -10,11 +10,13 @@ import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction, addServi
 import { ServiceListItemActions } from '../services/service_list_item_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { RouterProps } from '../../application/routing';
+import { getSavedServicesIdsList } from '../../selectors/services/get_saved_services_ids_list';
 
 type Props = BookmarksProps & RouterProps;
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     bookmarkedServices: selectSavedServices(store),
+    savedServicesIds: getSavedServicesIdsList(store),
     bookmarkedTopics: selectSavedTopics(store),
     currentPath: ownProps.location.pathname,
     history: ownProps.history,

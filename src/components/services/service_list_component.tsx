@@ -27,7 +27,7 @@ export interface ServiceListProps {
     readonly topicServicesOrError: SelectorTopicServices;
     readonly manualUserLocation?: LatLong;
     readonly currentPath: string;
-    readonly savedServices: ServiceList;
+    readonly savedServicesIds: ServiceList;
 }
 
 export interface ServiceListActions {
@@ -124,7 +124,7 @@ const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX
         <ServiceListItemComponent
         service={item}
         currentPath={props.currentPath}
-        isBookmarked={R.contains(item.id, props.savedServices)}
+        isBookmarked={R.contains(item.id, props.savedServicesIds)}
         addServiceToSavedList={props.addServiceToSavedListAction}
         removeServiceFromSavedList={props.removeServiceFromSavedListAction}
         />

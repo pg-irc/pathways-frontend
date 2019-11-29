@@ -1,17 +1,17 @@
 import React from 'react';
 import * as R from 'ramda';
 import { FlatList } from 'react-native';
-import { ServiceListData, HumanServiceData } from '../../validation/services/types';
+import { ServiceListData, HumanServiceData, ServiceList } from '../../validation/services/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { ServiceListHeaderComponent, ServiceItemInfo } from '../services/service_list_component';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
 import { ServiceListItemActions, ServiceListItemComponent } from '../services/service_list_item_component';
-import { getSavedServicesIds } from './get_saved_services_ids';
 import { colors } from '../../application/styles';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ServiceListData;
+    readonly savedServicesIds: ServiceList;
     readonly currentPath: string;
 }
 
@@ -33,7 +33,7 @@ export const renderServiceItems = (props: Props): ({ item }: ServiceItemInfo) =>
         <ServiceListItemComponent
         service={item}
         currentPath={props.currentPath}
-        isBookmarked={R.contains(item.id, getSavedServicesIds(props.bookmarkedServices))}
+        isBookmarked={R.contains(item.id, props.savedServicesIds)}
         addServiceToSavedList={props.addServiceToSavedList}
         removeServiceFromSavedList={props.removeServiceFromSavedList}
         />
