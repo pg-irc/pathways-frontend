@@ -260,7 +260,7 @@ describe('questionnaire reducer', () => {
 
     describe('update old answers from store answers action', () => {
         it('sets old answers equal to store answers', () => {
-            newStore = store.reducer(theStore, updateOldAnswersFromStoreAnswers());
+            newStore = store.reducer(theStore, updateOldAnswersFromStoreAnswers([]));
             expect(toValidOrThrow(newStore).oldAnswers).toEqual(toValidOrThrow(theStore).answers);
         });
     });

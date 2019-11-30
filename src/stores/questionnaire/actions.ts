@@ -1,6 +1,7 @@
 import { Id } from '../../fixtures/types/questionnaire';
 import { UserDataPersistence } from '../user_data';
 import { ClearErrorAction } from '../clear_error';
+import { Topic } from '../topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 
@@ -25,8 +26,8 @@ export const clearAllUserData = () => (
 );
 
 // tslint:disable-next-line:typedef
-export const updateOldAnswersFromStoreAnswers = () => (
-    helpers.makeAction(constants.UPDATE_OLD_ANSWERS_FROM_STORE_ANSWERS)
+export const updateOldAnswersFromStoreAnswers = (newlyRecommendedTopics: ReadonlyArray<Topic>) => (
+    helpers.makeAction(constants.UPDATE_OLD_ANSWERS_FROM_STORE_ANSWERS, { newlyRecommendedTopics })
 );
 
 export type QuestionnaireAction =
