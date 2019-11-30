@@ -31,7 +31,7 @@ export interface QuestionnaireProps {
 export interface QuestionnaireActions {
     readonly chooseAnswer: (answerId: Id) => ChooseAnswerAction;
     readonly setActiveQuestion: (activeQuestion: Id) => SetActiveQuestionAction;
-    readonly updateOldAnswersFromStoreAnswers: () => UpdateOldAnswersFromStoreAnswersAction;
+    readonly updateOldAnswersFromStoreAnswers: (newlyRecommendedTopics: ReadonlyArray<Topic>) => UpdateOldAnswersFromStoreAnswersAction;
 }
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
@@ -57,7 +57,8 @@ export const QuestionnaireComponent = (props: Props): JSX.Element => {
     };
 
     const closeQuestionnaire = (): void => {
-        props.updateOldAnswersFromStoreAnswers();
+        const newlyRecommendedTopics = computeNewlyRecommendedTopics(props);
+        props.updateOldAnswersFromStoreAnswers(newlyRecommendedTopics);
         setShowModal(false);
         goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)();
     };
