@@ -8,7 +8,7 @@ import * as helpers from '../helpers/make_action';
 export type ChooseAnswerAction = Readonly<ReturnType<typeof chooseAnswer>>;
 export type SetActiveQuestionAction = Readonly<ReturnType<typeof setActiveQuestion>>;
 export type ClearAllUserDataAction = Readonly<ReturnType<typeof clearAllUserData>>;
-export type UpdateOldAnswersFromStoreAnswersAction = Readonly<ReturnType<typeof updateOldAnswersFromStoreAnswers>>;
+export type CloseQuestionnaireAction = Readonly<ReturnType<typeof closeQuestionnaire>>;
 
 // tslint:disable-next-line:typedef
 export const chooseAnswer = (answerId: Id) => (
@@ -26,8 +26,8 @@ export const clearAllUserData = () => (
 );
 
 // tslint:disable-next-line:typedef
-export const updateOldAnswersFromStoreAnswers = (newlyRecommendedTopics: ReadonlyArray<Topic>) => (
-    helpers.makeAction(constants.UPDATE_OLD_ANSWERS_FROM_STORE_ANSWERS, { newlyRecommendedTopics })
+export const closeQuestionnaire = (newlyRecommendedTopics: ReadonlyArray<Topic>) => (
+    helpers.makeAction(constants.CLOSE_QUESTIONNAIRE, { newlyRecommendedTopics })
 );
 
 export type QuestionnaireAction =
@@ -40,4 +40,4 @@ export type QuestionnaireAction =
     UserDataPersistence.LoadFailureAction |
     ClearErrorAction |
     ClearAllUserDataAction |
-    UpdateOldAnswersFromStoreAnswersAction;
+    CloseQuestionnaireAction;
