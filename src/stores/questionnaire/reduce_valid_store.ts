@@ -12,11 +12,8 @@ export const reduceValidStore = (store: ValidQuestionnaireStore, action?: Questi
 
     switch (action.type) {
 
-        case constants.UPDATE_OLD_ANSWERS_FROM_STORE_ANSWERS:
-            return new ValidQuestionnaireStore({
-                ...store,
-                oldAnswers: store.answers,
-            });
+        case constants.CLOSE_QUESTIONNAIRE:
+            return setOldAnswersToCurrentAnswers(store);
 
         case constants.SET_ACTIVE_QUESTION:
             return new ValidQuestionnaireStore({
@@ -37,6 +34,13 @@ export const reduceValidStore = (store: ValidQuestionnaireStore, action?: Questi
             return store;
     }
 };
+
+const setOldAnswersToCurrentAnswers = (store: ValidQuestionnaireStore): ValidQuestionnaireStore => (
+    new ValidQuestionnaireStore({
+        ...store,
+        oldAnswers: store.answers,
+    })
+);
 
 const toggleIsChosenFlagForAnswer = (store: ValidQuestionnaireStore, answerId: string): ValidQuestionnaireStore => (
     canChooseMultiple(store, answerId) ?

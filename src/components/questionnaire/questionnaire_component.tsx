@@ -14,7 +14,7 @@ import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { NewTopicsModalConnectedComponent } from './new_topics_modal_connected_component';
-import { UpdateOldAnswersFromStoreAnswersAction } from '../../stores/questionnaire/actions';
+import { CloseQuestionnaireAction } from '../../stores/questionnaire/actions';
 import { Topic, TopicMap, Id as TaskId } from '../../stores/topics';
 import { getNewlyRecommendedTopics } from '../../selectors/topics/get_newly_recommended_topics';
 import { rejectTopicsWithIds } from '../../selectors/topics/reject_topics_with_ids';
@@ -31,15 +31,15 @@ export interface QuestionnaireProps {
 export interface QuestionnaireActions {
     readonly chooseAnswer: (answerId: Id) => ChooseAnswerAction;
     readonly setActiveQuestion: (activeQuestion: Id) => SetActiveQuestionAction;
-    readonly updateOldAnswersFromStoreAnswers: (newlyRecommendedTopics: ReadonlyArray<Topic>) => UpdateOldAnswersFromStoreAnswersAction;
+    readonly closeQuestionnaire: (newTopics: ReadonlyArray<Topic>) => CloseQuestionnaireAction;
 }
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
 const computeNewlyRecommendedTopics = (props: Props): ReadonlyArray<Topic> => {
-    const newlyRecommendedTopics = getNewlyRecommendedTopics(props.oldAnswers, props.newAnswers, props.topics);
-    const newlyRecommendedUnsavedTopics = rejectTopicsWithIds(newlyRecommendedTopics, props.savedTopicIds);
-    return newlyRecommendedUnsavedTopics;
+    const newTopics = getNewlyRecommendedTopics(props.oldAnswers, props.newAnswers, props.topics);
+    const newTopicsNotAlreadySaved = rejectTopicsWithIds(newTopics, props.savedTopicIds);
+    return newTopicsNotAlreadySaved;
 };
 
 export const QuestionnaireComponent = (props: Props): JSX.Element => {
@@ -48,8 +48,8 @@ export const QuestionnaireComponent = (props: Props): JSX.Element => {
     const [showModal, setShowModal] = useState(false);
 
     const closeQuestionnaireWithOptionalModal = (): void => {
-        const newlyRecommendedTopics = computeNewlyRecommendedTopics(props);
-        if (R.isEmpty(newlyRecommendedTopics)) {
+        const newTopics = computeNewlyRecommendedTopics(props);
+        if (R.isEmpty(newTopics)) {
             closeQuestionnaire();
         } else {
             setShowModal(true);
@@ -57,8 +57,8 @@ export const QuestionnaireComponent = (props: Props): JSX.Element => {
     };
 
     const closeQuestionnaire = (): void => {
-        const newlyRecommendedTopics = computeNewlyRecommendedTopics(props);
-        props.updateOldAnswersFromStoreAnswers(newlyRecommendedTopics);
+        const newTopics = computeNewlyRecommendedTopics(props);
+        props.closeQuestionnaire(newTopics);
         setShowModal(false);
         goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)();
     };
