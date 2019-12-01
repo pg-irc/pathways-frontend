@@ -6,19 +6,21 @@ import { aString } from '../../helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { addToSavedList, removeFromSavedList, toggleCompleted } from '../topics/actions';
 import * as stores from '../topics';
-import { clearAllUserData } from '../questionnaire/actions';
+import { clearAllUserData, closeQuestionnaire } from '../questionnaire/actions';
+import { Id } from '../topics';
 
 describe('topics reducer', () => {
 
     describe('with a valid store', () => {
 
         let validStore: stores.ValidTopicStore;
+        const topicId = aString();
 
         beforeEach(() => {
-            const topicBuilder = new TopicBuilder();
+            const topicBuilder = new TopicBuilder().withId(topicId);
             validStore = buildNormalizedStore(
                 [topicBuilder],
-                [topicBuilder.build().id],
+                [topicId],
             );
         });
 
@@ -35,10 +37,18 @@ describe('topics reducer', () => {
         });
 
         test('can toggle a topic completed', () => {
-            const topicId = Object.keys(validStore.topicMap)[0];
             const oldCompleted = validStore.topicMap[topicId].completed;
             const finalStore = stores.reducer(validStore, toggleCompleted(topicId));
             expect(stores.toValidOrThrow(finalStore).topicMap[topicId].completed).toEqual(!oldCompleted);
+        });
+
+        describe('when closing the questionnaire', () => {
+            it('marks newly recommended topic as newlyRecommended', () => {
+                const newlyRecommendedTopics: ReadonlyArray<Id> = [topicId];
+                const action = closeQuestionnaire(newlyRecommendedTopics);
+                const finalStore = stores.reducer(validStore, action);
+                expect(stores.toValidOrThrow(finalStore).topicMap[topicId].newlyRecommended).toBe(true);
+            });
         });
 
         describe('clear all user data action', () => {

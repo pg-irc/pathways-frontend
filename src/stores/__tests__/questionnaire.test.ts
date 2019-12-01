@@ -258,8 +258,8 @@ describe('questionnaire reducer', () => {
         });
     });
 
-    describe('update old answers from store answers action', () => {
-        it('sets old answers equal to store answers', () => {
+    describe('when closing the questionnaire', () => {
+        it('sets old answers equal to current answers', () => {
             newStore = store.reducer(theStore, closeQuestionnaire([]));
             expect(toValidOrThrow(newStore).oldAnswers).toEqual(toValidOrThrow(theStore).answers);
         });

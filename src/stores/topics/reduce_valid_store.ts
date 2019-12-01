@@ -15,6 +15,12 @@ export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): T
         case constants.TOGGLE_IS_TOPIC_COMPLETED:
             return toggleCompletedValue(store, action.payload.topicId);
 
+        case constants.CLOSE_QUESTIONNAIRE:
+            return new ValidTopicStore({
+                ...store,
+                topicMap: R.map((topic: Topic): Topic => ({ ...topic, newlyRecommended: true }), store.topicMap),
+            });
+
         case constants.LOAD_USER_DATA_REQUEST:
             return new LoadingTopicStore(store);
 
