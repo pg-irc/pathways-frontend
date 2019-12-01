@@ -15,31 +15,32 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { NewTopicsModalConnectedComponent } from './new_topics_modal_connected_component';
 import { CloseQuestionnaireAction } from '../../stores/questionnaire/actions';
-import { Topic, TopicMap, Id as TaskId } from '../../stores/topics';
+import { Id as TopicId, TopicMap } from '../../stores/topics';
 import { getNewlyRecommendedTopics } from '../../selectors/topics/get_newly_recommended_topics';
 import { rejectTopicsWithIds } from '../../selectors/topics/reject_topics_with_ids';
 import * as R from 'ramda';
+import { getId } from '../../selectors/topics/get_id';
 
 export interface QuestionnaireProps {
     readonly activeQuestion: SelectorQuestion;
     readonly oldAnswers: AnswersMap;
     readonly newAnswers: AnswersMap;
     readonly topics: TopicMap;
-    readonly savedTopicIds: ReadonlyArray<TaskId>;
+    readonly savedTopicIds: ReadonlyArray<TopicId>;
 }
 
 export interface QuestionnaireActions {
     readonly chooseAnswer: (answerId: Id) => ChooseAnswerAction;
     readonly setActiveQuestion: (activeQuestion: Id) => SetActiveQuestionAction;
-    readonly closeQuestionnaire: (newTopics: ReadonlyArray<Topic>) => CloseQuestionnaireAction;
+    readonly closeQuestionnaire: (newTopics: ReadonlyArray<TopicId>) => CloseQuestionnaireAction;
 }
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
-const computeNewlyRecommendedTopics = (props: Props): ReadonlyArray<Topic> => {
+const computeNewlyRecommendedTopics = (props: Props): ReadonlyArray<TopicId> => {
     const newTopics = getNewlyRecommendedTopics(props.oldAnswers, props.newAnswers, props.topics);
     const newTopicsNotAlreadySaved = rejectTopicsWithIds(newTopics, props.savedTopicIds);
-    return newTopicsNotAlreadySaved;
+    return R.map(getId, newTopicsNotAlreadySaved);
 };
 
 export const QuestionnaireComponent = (props: Props): JSX.Element => {

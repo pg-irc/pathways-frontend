@@ -11,6 +11,7 @@ export interface Topic {
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly relatedTopics: ReadonlyArray<Id>;
     readonly completed: boolean;
+    readonly newlyRecommended: boolean;
 }
 
 export interface TopicMap {

@@ -1,7 +1,7 @@
 import { Id } from '../../fixtures/types/questionnaire';
+import { Id as TopicId } from '../../stores/topics';
 import { UserDataPersistence } from '../user_data';
 import { ClearErrorAction } from '../clear_error';
-import { Topic } from '../topics';
 import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 
@@ -26,7 +26,7 @@ export const clearAllUserData = () => (
 );
 
 // tslint:disable-next-line:typedef
-export const closeQuestionnaire = (newlyRecommendedTopics: ReadonlyArray<Topic>) => (
+export const closeQuestionnaire = (newlyRecommendedTopics: ReadonlyArray<TopicId>) => (
     helpers.makeAction(constants.CLOSE_QUESTIONNAIRE, { newlyRecommendedTopics })
 );
 
