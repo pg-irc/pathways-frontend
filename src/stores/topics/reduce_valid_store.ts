@@ -18,7 +18,12 @@ export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): T
         case constants.CLOSE_QUESTIONNAIRE:
             return new ValidTopicStore({
                 ...store,
-                topicMap: R.map((topic: Topic): Topic => ({ ...topic, newlyRecommended: true }), store.topicMap),
+                topicMap: R.map((topic: Topic): Topic => (
+                    {
+                        ...topic,
+                        newlyRecommended: R.contains(topic.id, action.payload.newlyRecommendedTopics),
+                    }
+                ), store.topicMap),
             });
 
         case constants.LOAD_USER_DATA_REQUEST:
