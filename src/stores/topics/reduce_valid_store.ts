@@ -6,10 +6,10 @@ import * as R from 'ramda';
 
 export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): TopicStore => {
     switch (action.type) {
-        case constants.ADD_BOOKMARK:
+        case constants.ADD_TOPIC_BOOKMARK:
             return addToTopicList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
 
-        case constants.REMOVE_BOOKMARK:
+        case constants.REMOVE_TOPIC_BOOKMARK:
             return removeFromTopicList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
 
         case constants.CLOSE_QUESTIONNAIRE:

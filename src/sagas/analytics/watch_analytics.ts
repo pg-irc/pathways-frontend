@@ -15,9 +15,9 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
         [
             constants.ROUTE_CHANGED,
             constants.CHOOSE_ANSWER,
-            constants.ADD_BOOKMARK,
             constants.EXPAND_DETAIL,
             constants.COLLAPSE_DETAIL,
+            constants.ADD_TOPIC_BOOKMARK,
         ],
         sendAnalyticsData);
 }
@@ -42,7 +42,7 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
         case constants.CHOOSE_ANSWER:
             events.sendAnswerChosenEvent(action.payload.answerId);
             break;
-        case constants.ADD_BOOKMARK:
+        case constants.ADD_TOPIC_BOOKMARK:
             events.sendBookmarkAddedEvent(action.payload.topicId);
             break;
         case constants.EXPAND_DETAIL:
