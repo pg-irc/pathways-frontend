@@ -9,12 +9,15 @@ import {
     AddServiceToSavedListAction,
     RemoveServiceFromSavedListAction,
 } from '../services/actions';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, ServiceStore } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../helpers/random_test_values';
-import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
+import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder, buildServiceMap } from './helpers/services_helpers';
 import { isServiceLoading } from '../../validation/services/types';
+import { ClearAllUserDataAction } from '../questionnaire/actions';
+import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
+import { UserDataPersistence } from '../user_data';
 
 describe('services reducer', () => {
     const aService = new ServiceBuilder();
@@ -202,11 +205,11 @@ describe('services reducer', () => {
             payload: { service },
         };
         const store = reducer(theStore, action);
-        it('can add a service to services map', () => {
+        it('can add a service to service map', () => {
             expect(Object.keys(store.services)).toHaveLength(2);
         });
         it('can add a service to services map marked as bookmarked', () => {
-            expect(store.services[service.id].bookmarked).toEqual(true);
+            expect(store.services[service.id].bookmarked).toBe(true);
         });
     });
 
@@ -224,7 +227,34 @@ describe('services reducer', () => {
         const storeState = reducer(store, action);
 
         it('can mark a service as no longer being bookmarked', () => {
-            expect(storeState.services[bookmarkedService.id].bookmarked).toEqual(false);
+            expect(storeState.services[bookmarkedService.id].bookmarked).toBe(false);
+        });
+    });
+
+    describe('when clear all user data action is dispatched', () => {
+        const action: ClearAllUserDataAction = {
+            type: constants.CLEAR_ALL_USER_DATA,
+        };
+        const store = reducer(theStore, action);
+        it('removes services from service map', () => {
+            expect(store.services).toEqual({});
+        });
+    });
+
+    describe('when loading saved services', () => {
+        let store: ServiceStore = undefined;
+        const savedServiceId = aString();
+        const savedService = new ServiceBuilder().withId(savedServiceId).withBookmarked(true);
+        const savedServiceMap = buildServiceMap([savedService]);
+        beforeEach(() => {
+            const persistedDataWhereServiceIsSaved = new PersistedUserDataBuilder().
+            addSavedService(savedServiceMap).
+            buildObject();
+            const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereServiceIsSaved);
+            store = reducer(theStore, loadAction);
+        });
+        it('should return the saved service map', () => {
+            expect(store.services[savedServiceId]).toBe(savedServiceMap[savedServiceId]);
         });
     });
 });

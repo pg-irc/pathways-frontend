@@ -2,11 +2,13 @@
 import { Id as AnswerId } from '../../questionnaire';
 import { Id as TopicId } from '../../topics';
 import { PersistedUserData } from '../../user_data';
+import { ServiceMap } from '../../../validation/services/types';
 
 export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];
     savedTopics: TopicId[] = [];
     showOnboarding: boolean = true;
+    savedServices: ServiceMap = {};
 
     addChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
         this.chosenAnswers.push(id);
@@ -23,11 +25,20 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
+    addSavedService(service: ServiceMap): PersistedUserDataBuilder {
+        this.savedServices = {
+            ...this.savedServices,
+            ...service,
+        };
+        return this;
+    }
+
     buildObject(): PersistedUserData {
         return {
             chosenAnswers: this.chosenAnswers,
             savedTopics: this.savedTopics,
             showOnboarding: this.showOnboarding,
+            savedServices: this.savedServices,
         };
     }
 

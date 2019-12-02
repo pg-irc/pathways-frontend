@@ -17,6 +17,8 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.TOGGLE_IS_TOPIC_COMPLETED,
             constants.CLEAR_ALL_USER_DATA,
             constants.SET_ONBOARDING,
+            constants.ADD_SERVICE_BOOKMARK,
+            constants.REMOVE_SERVICE_BOOKMARK,
         ],
         saveUserData);
 }
@@ -77,5 +79,6 @@ export const setUserDataDefaultValues = (data: any): PersistedUserData => (
         chosenAnswers: data.chosenAnswers || [],
         savedTopics: data.savedTopics || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
+        savedServices: data.savedServices || {},
     }
 );

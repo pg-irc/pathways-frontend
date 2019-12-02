@@ -3,6 +3,7 @@ import * as constants from '../../application/constants';
 import * as actions from './actions';
 import * as types from '../../validation/services/types';
 import { Id, ServiceStore } from '../../validation/services/types';
+import { UserDataPersistence } from '../user_data';
 export { Id, ServiceStore };
 
 export function buildDefaultStore(): types.ServiceStore {
@@ -34,6 +35,10 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return addToSavedServicesList(store, action);
         case constants.REMOVE_SERVICE_BOOKMARK:
             return removeFromSavedServicesList(store, action);
+        case constants.CLEAR_ALL_USER_DATA:
+            return clearServicesData(store);
+        case constants.LOAD_USER_DATA_SUCCESS:
+            return loadServicesFromUserData(store, action);
         default:
             return store;
     }
@@ -128,6 +133,24 @@ const removeFromSavedServicesList = (store: types.ServiceStore, action: actions.
                 ...serviceToRemove,
                 bookmarked: false,
             },
+        },
+    };
+};
+
+const clearServicesData = (store: types.ServiceStore): types.ServiceStore => (
+    {
+        ...store,
+        services: {},
+    }
+);
+
+const loadServicesFromUserData = (store: types.ServiceStore, action: UserDataPersistence.LoadSuccessAction): types. ServiceStore => {
+    const persistedServices: types.ServiceMap = action.payload.savedServices;
+    return {
+        ...store,
+        services: {
+            ...store.services,
+            ...persistedServices,
         },
     };
 };

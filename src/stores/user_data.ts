@@ -2,11 +2,13 @@ import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 import { Id as AnswerId } from './questionnaire';
 import { Id as TopicId } from './topics';
+import { ServiceMap } from '../validation/services/types';
 
 export interface PersistedUserData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
     readonly savedTopics: ReadonlyArray<TopicId>;
     readonly showOnboarding: boolean;
+    readonly savedServices: ServiceMap;
 }
 
 export namespace UserDataPersistence {

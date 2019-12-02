@@ -17,7 +17,7 @@ export const buildNormalizedServices = (
     servicesByTopic: buildTaskServicesOrErrorMap(taskServicesOrError),
 });
 
-const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {
+export const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {
     const buildAndMapToId = (map: ServiceMap, builder: ServiceBuilder): ServiceMap => {
         return { ...map, [builder.id]: builder.build() };
     };
