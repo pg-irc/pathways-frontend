@@ -1,5 +1,7 @@
+// tslint:disable:no-expression-statement
 import React from 'react';
 import * as R from 'ramda';
+import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors } from '../../application/styles';
@@ -9,6 +11,9 @@ import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { validateServiceSearchResponse } from '../../validation/search';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
+import { HumanServiceData } from '../../validation/services/types';
+import { BuildSaveServiceFromSearchAction } from '../../stores/services/actions';
+import { goToRouteWithParameter, Routes } from '../../application/routing';
 
 export interface Props {
     readonly currentPath: string;
@@ -16,6 +21,8 @@ export interface Props {
     readonly hits: ReadonlyArray<any>;
     readonly hasMore: boolean;
     readonly refine: (searchTerms?: string) => string;
+    readonly history: History;
+    readonly saveServiceFromSearch: (service: HumanServiceData) => BuildSaveServiceFromSearchAction;
 }
 
 export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
@@ -27,7 +34,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
         refreshing={false}
         data={searchResults}
         keyExtractor={keyExtractor}
-        renderItem={renderSearchHit(props.currentPath)}
+        renderItem={renderSearchHit(props.currentPath, props.history, props.saveServiceFromSearch)}
         ListEmptyComponent={EmptyComponent}
         ItemSeparatorComponent={SearchListSeparator} />;
 };
@@ -44,7 +51,22 @@ const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
 );
 
-const renderSearchHit = R.curry((currentPath: string, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
-    const item: SearchServiceData = itemInfo.item;
-    return <ServiceListItemComponent service={toHumanServiceData(item)} currentPath={currentPath} />;
+const renderSearchHit = R.curry((
+        currentPath: string,
+        history: History,
+        saveServiceFromSearch: (service: HumanServiceData) => BuildSaveServiceFromSearchAction,
+        itemInfo: ListRenderItemInfo<SearchServiceData>,
+    ): JSX.Element => {
+    const service: HumanServiceData = toHumanServiceData(itemInfo.item);
+    const onPress = (): void => {
+        saveServiceFromSearch(service);
+        goToRouteWithParameter(Routes.ServiceDetail, service.id, history)();
+    };
+    return (
+        <ServiceListItemComponent
+            service={service}
+            currentPath={currentPath}
+            onPress={onPress}
+        />
+    );
 });

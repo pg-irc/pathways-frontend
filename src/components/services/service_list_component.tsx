@@ -21,7 +21,7 @@ import { Errors } from '../../validation/errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { LatLong } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
-import { RouterProps } from '../../application/routing';
+import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -118,7 +118,11 @@ const ServicesComponent = (props: ServiceListListComponentProps): JSX.Element =>
 
 const renderServiceListItem = (currentPath: string, history: History): ({ item }: ServiceItemInfo) => JSX.Element => {
     return ({ item }: ServiceItemInfo): JSX.Element => (
-        <ServiceListItemComponent service={item} currentPath={currentPath} history={history}/>
+        <ServiceListItemComponent
+            service={item}
+            currentPath={currentPath}
+            onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, history)}
+        />
     );
 };
 

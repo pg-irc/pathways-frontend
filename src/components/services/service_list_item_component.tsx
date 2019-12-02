@@ -1,6 +1,5 @@
 import React from 'react';
 import * as R from 'ramda';
-import { History } from 'history';
 import { textStyles, colors } from '../../application/styles';
 import { HumanServiceData, PhoneNumber, Address } from '../../validation/services/types';
 import { View } from 'native-base';
@@ -14,13 +13,12 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { getLocationTitleFromAddresses } from './get_location_title_from_addresses';
 import { AnalyticsLink, LinkTypes } from '../link/link';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
-import { Routes, goToRouteWithParameter } from '../../application/routing';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
 
 interface Props {
     readonly service: HumanServiceData;
     readonly currentPath: string;
-    readonly history?: History;
+    readonly onPress: () => void;
 }
 
 export const ServiceListItemComponent: React.StatelessComponent<Props> =
@@ -29,7 +27,7 @@ export const ServiceListItemComponent: React.StatelessComponent<Props> =
         const linkContext = buildAnalyticsLinkContext('Service', serviceName);
         return (
             <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
-                {renderName(serviceName, props.service.id, props.history)}
+                {renderName(serviceName, props.onPress)}
                 {renderDescription(props.service.description)}
                 {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
                 {renderPhoneNumbers(props.service.phoneNumbers, props.currentPath, linkContext)}
@@ -44,14 +42,11 @@ const buildServiceName = (organizationName: string, serviceName: string): string
     `${organizationName} - ${serviceName}`
 );
 
-const renderName = (name: string, serviceId: string, history?: History): JSX.Element => {
-    const onPress = history ? goToRouteWithParameter(Routes.ServiceDetail, serviceId, history) : (): void => undefined;
-    return (
-        <TouchableOpacity onPress={onPress}>
-            <Text style={[textStyles.headlineH3StyleURL, textStyles.alwaysLeftAlign]}>{name}</Text>
-        </TouchableOpacity>
-    );
-};
+const renderName = (name: string, onPress: () => void): JSX.Element => (
+    <TouchableOpacity onPress={onPress}>
+        <Text style={[textStyles.headlineH3StyleURL, textStyles.alwaysLeftAlign]}>{name}</Text>
+    </TouchableOpacity>
+);
 
 const renderDescription = (description: string): JSX.Element => {
     const content = <Text style={textStyles.alwaysLeftParagraphStyle}> {description}</Text>;

@@ -29,6 +29,8 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServicesSuccess(store, action);
         case constants.LOAD_SERVICES_FAILURE:
             return updateServicesFailure(store, action);
+        case constants.SAVE_SERVICE_FROM_SEARCH:
+            return saveServiceFromSearch(store, action);
         default:
             return store;
     }
@@ -89,3 +91,11 @@ const createServiceMap = (services: ReadonlyArray<types.HumanServiceData>): type
     };
     return services.reduce(theReducer, {});
 };
+
+const saveServiceFromSearch = (store: types.ServiceStore, action: actions.BuildSaveServiceFromSearchAction): types.ServiceStore => ({
+    ...store,
+    services: {
+        ...store.services,
+        [action.payload.service.id]: action.payload.service,
+    },
+});
