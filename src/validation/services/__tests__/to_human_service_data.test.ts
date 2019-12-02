@@ -58,6 +58,7 @@ describe('Adapting server service object to client service object', () => {
             website: serverServiceObject.service.organization_url,
             email: serverServiceObject.service.organization_email,
             organizationName: serverServiceObject.service.organization_name,
+            bookmarked: false,
         };
 
         expect(clientServiceObject).toEqual(expectedClientServiceObject);

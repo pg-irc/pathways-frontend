@@ -82,5 +82,6 @@ export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): 
         website: data.service.organization_url,
         email: data.service.organization_email,
         organizationName: data.service.organization_name,
+        bookmarked: false,
     };
 };

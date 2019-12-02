@@ -20,6 +20,7 @@ export const toHumanServiceData = (data: SearchServiceData): HumanServiceData =>
     website: data.organization.website,
     email: data.organization.email,
     organizationName: data.organization.name,
+    bookmarked: false,
 });
 
 const validateLatLong = (latitude: number | string, longitude: number | string): LatLong | undefined => {
