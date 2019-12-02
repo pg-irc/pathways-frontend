@@ -39,6 +39,8 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return clearServicesData(store);
         case constants.LOAD_USER_DATA_SUCCESS:
             return loadServicesFromUserData(store, action);
+        case constants.LOAD_USER_DATA_FAILURE:
+            return store;
         default:
             return store;
     }

@@ -7,6 +7,7 @@ import { UserDataPersistence } from '../stores/user_data';
 import { PersistedUserData } from '../stores/user_data';
 import * as constants from '../application/constants';
 import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
+import { validateServiceMap } from '../validation/services/persisted_services';
 
 export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEffect> {
     yield takeLatest(
@@ -59,6 +60,10 @@ export function* loadUserData(): LoadActions {
     try {
         const serializedUserData = yield call(loadUserDataAsync);
         const userData = deserializeUserData(serializedUserData);
+        const validatedSavedServices = validateServiceMap(userData.savedServices);
+        if (!validatedSavedServices.isValid) {
+            yield put(UserDataPersistence.loadFailure('Failed to load saved services'));
+        }
         yield put(UserDataPersistence.loadSuccess(userData));
     } catch (error) {
         console.error(`Failed to load user data (${error.message})`);
