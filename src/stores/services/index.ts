@@ -2,7 +2,6 @@ import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import * as actions from './actions';
 import * as types from '../../validation/services/types';
-
 import { Id, ServiceStore } from '../../validation/services/types';
 export { Id, ServiceStore };
 
@@ -31,6 +30,10 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServicesFailure(store, action);
         case constants.SAVE_SERVICE:
             return saveService(store, action);
+        case constants.ADD_SERVICE_BOOKMARK:
+            return addToSavedServicesList(store, action);
+        case constants.REMOVE_SERVICE_BOOKMARK:
+            return removeFromSavedServicesList(store, action);
         default:
             return store;
     }
@@ -99,3 +102,32 @@ const saveService = (store: types.ServiceStore, action: actions.SaveServiceActio
         [action.payload.service.id]: action.payload.service,
     },
 });
+const addToSavedServicesList = (store: types.ServiceStore, action: actions.AddServiceToSavedListAction): types.ServiceStore => {
+    const service = action.payload.service;
+    const serviceId = service.id;
+    return {
+        ...store,
+        services: {
+            ...store.services,
+            [serviceId]: {
+                ...service,
+                bookmarked: true,
+            },
+        },
+    };
+};
+
+const removeFromSavedServicesList = (store: types.ServiceStore, action: actions.RemoveServiceFromSavedListAction): types.ServiceStore => {
+    const serviceToRemove = action.payload.service;
+    const serviceId = serviceToRemove.id;
+    return {
+        ...store,
+        services: {
+            ...store.services,
+            [serviceId]: {
+                ...serviceToRemove,
+                bookmarked: false,
+            },
+        },
+    };
+};
