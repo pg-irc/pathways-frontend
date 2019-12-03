@@ -12,7 +12,7 @@ import {
 import { RouterProps } from '../../application/routing';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
 import { LatLong } from '../../validation/latlong/types';
-import { getSavedServicesIds } from '../../selectors/services/get_saved_service_ids';
+import { getSavedServicesIds } from '../../selectors/services/get_saved_services_ids';
 import { HumanServiceData } from '../../validation/services/types';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {

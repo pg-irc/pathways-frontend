@@ -5,7 +5,7 @@ import { SearchComponentProps, SearchComponent, SearchComponentActions } from '.
 import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
 import { saveService, SaveServiceAction } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
-import { getSavedServicesIds } from '../../selectors/services/get_saved_service_ids';
+import { getSavedServicesIds } from '../../selectors/services/get_saved_services_ids';
 import { ServicesAction, AddServiceToSavedListAction, addServiceToSavedListAction,
         removeServiceFromSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
 import { InfiniteHitsActions } from './infinite_hits_component';
