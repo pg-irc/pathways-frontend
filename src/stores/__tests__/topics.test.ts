@@ -4,7 +4,7 @@ import { TopicBuilder, buildNormalizedStore } from './helpers/topics_helpers';
 import { UserDataPersistence } from '../user_data';
 import { aString } from '../../helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
-import { addToSavedList, removeFromSavedList } from '../topics/actions';
+import { addTopicToSavedList, removeTopicFromSavedList } from '../topics/actions';
 import * as stores from '../topics';
 import { clearAllUserData, closeQuestionnaire } from '../questionnaire/actions';
 import { Id } from '../topics';
@@ -26,13 +26,13 @@ describe('topics reducer', () => {
 
         test('can add topic to saved topics list', () => {
             const topic = new TopicBuilder().build();
-            const finalStore = stores.reducer(validStore, addToSavedList(topic.id));
+            const finalStore = stores.reducer(validStore, addTopicToSavedList(topic.id));
 
             expect(stores.toValidOrThrow(finalStore).savedTopicsList).toHaveLength(2);
         });
 
         test('can remove topic from saved topics list', () => {
-            const finalStore = stores.reducer(validStore, removeFromSavedList(validStore.savedTopicsList[0]));
+            const finalStore = stores.reducer(validStore, removeTopicFromSavedList(validStore.savedTopicsList[0]));
             expect(stores.toValidOrThrow(finalStore).savedTopicsList).toHaveLength(0);
         });
 

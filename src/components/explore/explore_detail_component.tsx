@@ -3,7 +3,7 @@ import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
 import { RouterProps } from '../../application/routing';
-import { Id as TaskId, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/topics';
+import { Id as TaskId, AddTopicToSavedListAction, RemoveTopicFromSavedListAction } from '../../stores/topics';
 import { ExploreDetailContentComponent } from './explore_detail_content_component';
 import { TopicListItem } from '../../selectors/topics/topic_list_item';
 import { textStyles, values } from '../../application/styles';
@@ -16,8 +16,8 @@ export interface ExploreDetailProps {
 }
 
 export interface ExploreDetailActions {
-    readonly addToSavedList: (topicId: TaskId) => AddToSavedListAction;
-    readonly removeFromSavedList: (topicId: TaskId) => RemoveFromSavedListAction;
+    readonly addTopicToSavedList: (topicId: TaskId) => AddTopicToSavedListAction;
+    readonly removeTopicFromSavedList: (topicId: TaskId) => RemoveTopicFromSavedListAction;
 }
 
 type Props = ExploreDetailProps & ExploreDetailActions & RouterProps;
@@ -28,8 +28,8 @@ export const ExploreDetailComponent: React.StatelessComponent<Props> =
             <TaskListComponent
                 tasks={props.topics}
                 savedTasksIdList={props.savedTopicsIdList}
-                addToSavedList={props.addToSavedList}
-                removeFromSavedList={props.removeFromSavedList}
+                addTopicToSavedList={props.addTopicToSavedList}
+                removeTopicFromSavedList={props.removeTopicFromSavedList}
                 history={props.history}
                 emptyTaskListContent={<NoTasksAddedComponent />}
                 headerContent={<TaskListHeaderComponent {...props} />}

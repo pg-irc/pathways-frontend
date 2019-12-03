@@ -5,7 +5,7 @@ import { ExploreDetailComponent, ExploreDetailProps, ExploreDetailActions } from
 import { selectCurrentExploreSection } from '../../selectors/explore/select_current_explore_section';
 import { selectTopicForCurrentExploreSection } from '../../selectors/topics/select_topic_for_current_explore_section';
 import { RouterProps } from '../../application/routing';
-import { addToSavedList, AddToSavedListAction, Id, RemoveFromSavedListAction, removeFromSavedList } from '../../stores/topics';
+import { addTopicToSavedList, AddTopicToSavedListAction, Id, RemoveTopicFromSavedListAction, removeTopicFromSavedList } from '../../stores/topics';
 import { pickSavedTopicIds } from '../../selectors/topics/pick_saved_topic_ids';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProps => ({
@@ -14,11 +14,11 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProp
     savedTopicsIdList: pickSavedTopicIds(store),
 });
 
-type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction;
+type DispatchActions = AddTopicToSavedListAction | RemoveTopicFromSavedListAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): ExploreDetailActions => ({
-    addToSavedList: (topicId: Id): AddToSavedListAction => dispatch(addToSavedList(topicId)),
-    removeFromSavedList: (topicId: Id): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
+    addTopicToSavedList: (topicId: Id): AddTopicToSavedListAction => dispatch(addTopicToSavedList(topicId)),
+    removeTopicFromSavedList: (topicId: Id): RemoveTopicFromSavedListAction => dispatch(removeTopicFromSavedList(topicId)),
 });
 
 export const ExploreDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ExploreDetailComponent);

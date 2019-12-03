@@ -4,8 +4,8 @@ import * as R from 'ramda';
 import { Store } from '../../stores';
 import { TaskDetailProps, TaskDetailActions, TaskDetailComponent } from './task_detail_component';
 import {
-    Id as TaskId, AddToSavedListAction, addToSavedList,
-    RemoveFromSavedListAction, removeFromSavedList,
+    Id as TaskId, AddTopicToSavedListAction, addTopicToSavedList,
+    RemoveTopicFromSavedListAction, removeTopicFromSavedList,
     ExpandDetailAction, expandDetail,
     CollapseDetailAction, collapseDeail,
 } from '../../stores/topics';
@@ -33,11 +33,11 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
     };
 };
 
-type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction | ExpandDetailAction | CollapseDetailAction;
+type DispatchActions = AddTopicToSavedListAction | RemoveTopicFromSavedListAction | ExpandDetailAction | CollapseDetailAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActions => ({
-    addToSavedList: (topicId: TaskId): AddToSavedListAction => dispatch(addToSavedList(topicId)),
-    removeFromSavedList: (topicId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
+    addTopicToSavedList: (topicId: TaskId): AddTopicToSavedListAction => dispatch(addTopicToSavedList(topicId)),
+    removeTopicFromSavedList: (topicId: TaskId): RemoveTopicFromSavedListAction => dispatch(removeTopicFromSavedList(topicId)),
     onExpand: (contentId: string): ExpandDetailAction => dispatch(expandDetail(contentId)),
     onCollapse: (contentId: string): CollapseDetailAction => dispatch(collapseDeail(contentId)),
 });

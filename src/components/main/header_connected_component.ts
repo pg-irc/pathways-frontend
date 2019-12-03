@@ -4,8 +4,8 @@ import { Store } from '../../stores';
 import { HeaderProps, HeaderActions, HeaderComponent } from './header_component';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import {
-    Id as TopicId, RemoveFromSavedListAction, AddToSavedListAction,
-    addToSavedList, removeFromSavedList,
+    Id as TopicId, RemoveTopicFromSavedListAction, AddTopicToSavedListAction,
+    addTopicToSavedList, removeTopicFromSavedList,
 } from '../../stores/topics';
 import { pickSavedTopicIds } from '../../selectors/topics/pick_saved_topic_ids';
 
@@ -14,11 +14,11 @@ const mapStateToProps = (store: Store): HeaderProps => ({
     savedTasksIdList: pickSavedTopicIds(store),
 });
 
-type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction;
+type DispatchActions = AddTopicToSavedListAction | RemoveTopicFromSavedListAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): HeaderActions => ({
-    addBookmark: (topicId: TopicId): AddToSavedListAction => dispatch(addToSavedList(topicId)),
-    removeBookmark: (topicId: TopicId): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
+    addBookmark: (topicId: TopicId): AddTopicToSavedListAction => dispatch(addTopicToSavedList(topicId)),
+    removeBookmark: (topicId: TopicId): RemoveTopicFromSavedListAction => dispatch(removeTopicFromSavedList(topicId)),
 });
 
 export const HeaderConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);

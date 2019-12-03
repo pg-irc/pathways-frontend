@@ -4,11 +4,11 @@ import * as constants from '../../application/constants';
 import { AnalyticsAsync } from '../../stores/analytics';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { RouteChangedAction } from '../../stores/router_actions';
-import { AddToSavedListAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
+import { AddTopicToSavedListAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 import { ForkEffect, takeLatest, call, CallEffect, PutEffect, put } from 'redux-saga/effects';
 import * as events from './events';
 
-export type WatchedAction = RouteChangedAction | ChooseAnswerAction | AddToSavedListAction | ExpandDetailAction | CollapseDetailAction;
+export type WatchedAction = RouteChangedAction | ChooseAnswerAction | AddTopicToSavedListAction | ExpandDetailAction | CollapseDetailAction;
 
 export function* watchAnalytics(): IterableIterator<ForkEffect> {
     yield takeLatest(

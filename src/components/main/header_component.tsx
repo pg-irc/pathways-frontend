@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import * as R from 'ramda';
 import { History, Location } from 'history';
 import { Header, Left, Right, Body, Title, Text } from 'native-base';
-import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/topics';
+import { Id as TaskId, RemoveTopicFromSavedListAction, AddTopicToSavedListAction } from '../../stores/topics';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { HelpButtonComponent } from '../header_button/help_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
@@ -32,8 +32,8 @@ export interface HeaderProps {
 }
 
 export interface HeaderActions {
-    readonly addBookmark: (topicId: TaskId) => AddToSavedListAction;
-    readonly removeBookmark: (topicId: TaskId) => RemoveFromSavedListAction;
+    readonly addBookmark: (topicId: TaskId) => AddTopicToSavedListAction;
+    readonly removeBookmark: (topicId: TaskId) => RemoveTopicFromSavedListAction;
 }
 
 type Props = OwnProps & HeaderProps & HeaderActions;
@@ -117,8 +117,8 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={R.contains(topicId, props.savedTasksIdList)}
-            addBookmark={(): AddToSavedListAction => props.addBookmark(topicId)}
-            removeBookmark={(): RemoveFromSavedListAction => props.removeBookmark(topicId)}
+            addBookmark={(): AddTopicToSavedListAction => props.addBookmark(topicId)}
+            removeBookmark={(): RemoveTopicFromSavedListAction => props.removeBookmark(topicId)}
             textColor={colors.teal}
         />,
         <MenuButtonComponent
