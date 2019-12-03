@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { Store } from '../../stores';
-import { buildServicesRequestAction, BuildServicesRequestAction } from '../../stores/services/actions';
+import { buildServicesRequestAction, BuildServicesRequestAction, ServicesAction, AddServiceToSavedListAction, RemoveServiceFromSavedListAction, addServiceToSavedListAction, removeServiceFromSavedListAction } from '../../stores/services/actions';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/topic';
@@ -12,6 +12,8 @@ import {
 import { RouterProps } from '../../application/routing';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
 import { LatLong } from '../../validation/latlong/types';
+import { getSavedServicesIds } from '../../selectors/services/get_saved_service_ids';
+import { HumanServiceData } from '../../validation/services/types';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
     const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);
@@ -20,12 +22,20 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
         topic,
         topicServicesOrError: selectTopicServices(topic.id, store),
         manualUserLocation,
+        savedServicesIds: getSavedServicesIds(store),
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<BuildServicesRequestAction>): ServiceListActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<ServicesAction>): ServiceListActions => ({
     dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong): BuildServicesRequestAction => {
         return dispatch(buildServicesRequestAction(topic.id, manualUserLocation));
+    },
+    // could be naming error here
+    addServiceToSavedList: (service: HumanServiceData): AddServiceToSavedListAction => {
+        return dispatch(addServiceToSavedListAction(service));
+    },
+    removeServiceFromSavedList: (service: HumanServiceData): RemoveServiceFromSavedListAction => {
+        return dispatch(removeServiceFromSavedListAction(service));
     },
 });
 

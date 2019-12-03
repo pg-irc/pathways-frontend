@@ -14,12 +14,24 @@ import { getLocationTitleFromAddresses } from './get_location_title_from_address
 import { AnalyticsLink, LinkTypes } from '../link/link';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
+import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
+import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
+import { History } from 'history';
 
-interface Props {
+export interface ServiceListItemProps {
     readonly service: HumanServiceData;
     readonly currentPath: string;
     readonly onPress: () => void;
+    readonly history?: History;
+    readonly isBookmarked: boolean;
 }
+
+export interface ServiceListItemActions {
+    readonly addServiceToSavedList: (service: HumanServiceData) => AddServiceToSavedListAction;
+    readonly removeServiceFromSavedList: (service: HumanServiceData) => RemoveServiceFromSavedListAction;
+}
+
+type Props = ServiceListItemProps & ServiceListItemActions;
 
 export const ServiceListItemComponent: React.StatelessComponent<Props> =
     (props: Props): JSX.Element => {
@@ -27,6 +39,10 @@ export const ServiceListItemComponent: React.StatelessComponent<Props> =
         const linkContext = buildAnalyticsLinkContext('Service', serviceName);
         return (
             <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
+                <BookmarkButtonComponent isBookmarked={props.isBookmarked} textColor={colors.teal}
+                    addBookmark={(): AddServiceToSavedListAction => props.addServiceToSavedList(props.service)}
+                    removeBookmark={(): RemoveServiceFromSavedListAction => props.removeServiceFromSavedList(props.service)}
+                    />
                 {renderName(serviceName, props.onPress)}
                 {renderDescription(props.service.description)}
                 {renderAddresses(filterPhysicalAddresses(props.service.addresses))}

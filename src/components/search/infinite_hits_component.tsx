@@ -14,8 +14,10 @@ import { toHumanServiceData } from '../../validation/search/to_human_service_dat
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction } from '../../stores/services/actions';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
+import { Id } from '../../stores/services';
+import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
 
-export interface Props {
+export interface InfiniteHitsProps {
     readonly currentPath: string;
     // tslint:disable-next-line:no-any
     readonly hits: ReadonlyArray<any>;
@@ -23,7 +25,15 @@ export interface Props {
     readonly refine: (searchTerms?: string) => string;
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly savedServicesIds: ReadonlyArray<Id>;
 }
+
+export interface InfiniteHitsActions {
+    readonly addServiceToSavedList: (service: HumanServiceData) => AddServiceToSavedListAction;
+    readonly removeServiceFromSavedList: (service: HumanServiceData) => RemoveServiceFromSavedListAction;
+}
+
+type Props = InfiniteHitsProps & InfiniteHitsActions;
 
 export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
@@ -34,7 +44,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
         refreshing={false}
         data={searchResults}
         keyExtractor={keyExtractor}
-        renderItem={renderSearchHit(props.currentPath, props.history, props.saveService)}
+        renderItem={renderSearchHit(props)}
         ListEmptyComponent={EmptyComponent}
         ItemSeparatorComponent={SearchListSeparator} />;
 };
@@ -51,24 +61,19 @@ const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
 );
 
-type SearchServiceDataItem = ListRenderItemInfo<SearchServiceData>;
-
-const renderSearchHit = R.curry((
-        currentPath: string,
-        history: History,
-        saveServiceFromSearch: (service: HumanServiceData) => SaveServiceAction,
-        itemInfo: SearchServiceDataItem,
-    ): JSX.Element => {
-    const service: HumanServiceData = toHumanServiceData(itemInfo.item);
+const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
+    const item: SearchServiceData = itemInfo.item;
+    const service: HumanServiceData = toHumanServiceData(item);
     const onPress = (): void => {
-        saveServiceFromSearch(service);
-        goToRouteWithParameter(Routes.ServiceDetail, service.id, history)();
-    };
-    return (
-        <ServiceListItemComponent
-            service={service}
-            currentPath={currentPath}
-            onPress={onPress}
-        />
-    );
+                props.saveService(service);
+                goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
+            };
+    return <ServiceListItemComponent
+        service={service}
+        currentPath={props.currentPath}
+        onPress={onPress}
+        isBookmarked={R.contains(item.service_id, props.savedServicesIds)}
+        addServiceToSavedList={props.addServiceToSavedList}
+        removeServiceFromSavedList={props.removeServiceFromSavedList}
+        />;
 });

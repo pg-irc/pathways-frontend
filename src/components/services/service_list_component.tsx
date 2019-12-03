@@ -1,15 +1,14 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
-import { History } from 'history';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import * as Sentry from 'sentry-expo';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
-import { BuildServicesRequestAction } from '../../stores/services/actions';
+import { BuildServicesRequestAction, AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
 import { textStyles, colors, values } from '../../application/styles';
 import { isError } from '../../selectors/services/is_error';
 import * as constants from '../../application/constants';
@@ -22,15 +21,19 @@ import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { LatLong } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
+import * as R from 'ramda';
 
 export interface ServiceListProps {
     readonly topic: Topic;
     readonly topicServicesOrError: SelectorTopicServices;
     readonly manualUserLocation?: LatLong;
+    readonly savedServicesIds: ReadonlyArray<Id>;
 }
 
 export interface ServiceListActions {
     readonly dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
+    readonly addServiceToSavedList: (service: HumanServiceData) => AddServiceToSavedListAction;
+    readonly removeServiceFromSavedList: (service: HumanServiceData) => RemoveServiceFromSavedListAction;
 }
 
 export interface ServicesUpdater {
@@ -50,7 +53,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 services={getServicesIfValid(props.topicServicesOrError)}
                 refreshing={isLoadingServices(props.topicServicesOrError)}
                 onRefresh={props.dispatchServicesRequest}
-                renderItem={renderServiceListItem(props.location.pathname, props.history)}
+                renderItem={renderServiceListItem(props)}
                 listEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
                 listHeaderComponent={
                     <ServiceListHeaderComponent title={props.topic.title} />
@@ -116,12 +119,16 @@ const ServicesComponent = (props: ServiceListListComponentProps): JSX.Element =>
     />
 );
 
-const renderServiceListItem = (currentPath: string, history: History): ({ item }: ServiceItemInfo) => JSX.Element => {
+const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX.Element => {
     return ({ item }: ServiceItemInfo): JSX.Element => (
         <ServiceListItemComponent
             service={item}
-            currentPath={currentPath}
-            onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, history)}
+            onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
+            currentPath={props.location.pathname}
+            history={props.history}
+            isBookmarked={R.contains(item.id, props.savedServicesIds)}
+            addServiceToSavedList={props.addServiceToSavedList}
+            removeServiceFromSavedList={props.removeServiceFromSavedList}
         />
     );
 };
