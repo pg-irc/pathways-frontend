@@ -4,7 +4,7 @@ import { TopicBuilder, buildNormalizedStore } from './helpers/topics_helpers';
 import { UserDataPersistence } from '../user_data';
 import { aString } from '../../helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
-import { addToSavedList, removeFromSavedList, toggleCompleted } from '../topics/actions';
+import { addToSavedList, removeFromSavedList } from '../topics/actions';
 import * as stores from '../topics';
 import { clearAllUserData, closeQuestionnaire } from '../questionnaire/actions';
 import { Id } from '../topics';
@@ -34,12 +34,6 @@ describe('topics reducer', () => {
         test('can remove topic from saved topics list', () => {
             const finalStore = stores.reducer(validStore, removeFromSavedList(validStore.savedTopicsList[0]));
             expect(stores.toValidOrThrow(finalStore).savedTopicsList).toHaveLength(0);
-        });
-
-        test('can toggle a topic completed', () => {
-            const oldCompleted = validStore.topicMap[topicId].completed;
-            const finalStore = stores.reducer(validStore, toggleCompleted(topicId));
-            expect(stores.toValidOrThrow(finalStore).topicMap[topicId].completed).toEqual(!oldCompleted);
         });
 
         describe('when closing the questionnaire', () => {
