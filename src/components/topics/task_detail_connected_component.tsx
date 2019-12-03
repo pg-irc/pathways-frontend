@@ -4,8 +4,7 @@ import * as R from 'ramda';
 import { Store } from '../../stores';
 import { TaskDetailProps, TaskDetailActions, TaskDetailComponent } from './task_detail_component';
 import {
-    Id as TaskId, AddToSavedListAction, addToSavedList, ToggleCompletedAction,
-    toggleCompleted, RemoveFromSavedListAction, removeFromSavedList,
+    Id as TaskId, AddToSavedListAction, addToSavedList, RemoveFromSavedListAction, removeFromSavedList,
 } from '../../stores/topics';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
@@ -31,10 +30,9 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
     };
 };
 
-type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction | ToggleCompletedAction;
+type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActions => ({
-    toggleCompleted: (topicId: TaskId): ToggleCompletedAction => dispatch(toggleCompleted(topicId)),
     addToSavedList: (topicId: TaskId): AddToSavedListAction => dispatch(addToSavedList(topicId)),
     removeFromSavedList: (topicId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
 });

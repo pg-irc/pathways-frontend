@@ -14,7 +14,6 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.CHOOSE_ANSWER,
             constants.ADD_BOOKMARK,
             constants.REMOVE_BOOKMARK,
-            constants.TOGGLE_IS_TOPIC_COMPLETED,
             constants.CLEAR_ALL_USER_DATA,
             constants.SET_ONBOARDING,
         ],

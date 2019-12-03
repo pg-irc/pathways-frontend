@@ -9,11 +9,8 @@ export type AddToSavedListAction = Readonly<ReturnType<typeof addToSavedList>>;
 
 export type RemoveFromSavedListAction = Readonly<ReturnType<typeof removeFromSavedList>>;
 
-export type ToggleCompletedAction = Readonly<ReturnType<typeof toggleCompleted>>;
-
 export type TopicAction = AddToSavedListAction |
     RemoveFromSavedListAction |
-    ToggleCompletedAction |
     UserDataPersistence.LoadRequestAction |
     UserDataPersistence.LoadSuccessAction |
     UserDataPersistence.LoadFailureAction |
@@ -29,9 +26,4 @@ export const addToSavedList = (topicId: Id) => {
 // tslint:disable-next-line:typedef
 export const removeFromSavedList = (topicId: Id) => (
     helpers.makeAction(constants.REMOVE_BOOKMARK, { topicId })
-);
-
-// tslint:disable-next-line:typedef
-export const toggleCompleted = (topicId: Id) => (
-    helpers.makeAction(constants.TOGGLE_IS_TOPIC_COMPLETED, { topicId })
 );
