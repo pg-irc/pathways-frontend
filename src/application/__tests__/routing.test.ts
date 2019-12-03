@@ -39,8 +39,8 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.RecommendedTopics)).toEqual('/recommended-topics');
     });
 
-    it('For Routes.BookmarkedTopics returns path: "/bookmarked-topics"', () => {
-        expect(routePathDefinition(Routes.BookmarkedTopics)).toEqual('/bookmarked-topics');
+    it('For Routes.BookmarkedTopics returns path: "/bookmarks"', () => {
+        expect(routePathDefinition(Routes.Bookmarks)).toEqual('/bookmarks');
     });
 
     it('For Routes.Search returns path: "/search"', () => {
@@ -96,8 +96,8 @@ describe('the isOnParentScreen function', () => {
         expect(isOnParentScreen('/recommended-topics')).toStrictEqual(true);
     });
 
-    it('returns true on path: "/bookmarked-topics"', () => {
-        expect(isOnParentScreen('/bookmarked-topics')).toStrictEqual(true);
+    it('returns true on path: "/bookmarks"', () => {
+        expect(isOnParentScreen('/bookmarks')).toStrictEqual(true);
     });
 
     it('returns false on non parent screen path', () => {

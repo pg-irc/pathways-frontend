@@ -7,13 +7,13 @@ import { TaskListActions, NoTasksAddedComponent, TaskListComponent } from '../to
 import { RouterProps } from '../../application/routing';
 import { textStyles, colors, values } from '../../application/styles';
 
-export interface BookmarkedTopicsProps {
+export interface TopicBookmarksProps {
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
 }
 
-type Props = BookmarkedTopicsProps & TaskListActions & RouterProps;
+type Props = TopicBookmarksProps & TaskListActions & RouterProps;
 
-export const BookmarkedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     return (
         <TaskListComponent
             {...props}

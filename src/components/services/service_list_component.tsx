@@ -95,7 +95,7 @@ const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): Readon
         topicServicesOrError.services : []
 );
 
-type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
+export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
 
 type ServiceListListComponentProps = {
     readonly services: ReadonlyArray<HumanServiceData>;
@@ -136,8 +136,7 @@ const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX
 interface ServiceListHeaderComponentProps {
     readonly title: string;
 }
-
-const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => {
+export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => {
     const icon = (
         <View style={{
             flexDirection: 'row',
