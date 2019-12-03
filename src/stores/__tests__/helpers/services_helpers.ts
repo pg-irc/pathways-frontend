@@ -8,6 +8,7 @@ import {
     ServicesForAllTopics,
 } from '../../../validation/services/types';
 import * as constants from '../../../application/constants';
+import { LatLong } from '../../../validation/latlong/types';
 
 export const buildNormalizedServices = (
     services: ReadonlyArray<ServiceBuilder>,
@@ -74,6 +75,27 @@ export class AddressBuilder {
             stateProvince: this.stateProvince,
             postalCode: this.postalCode,
             country: this.country,
+        };
+    }
+}
+
+export class LatLongBuilder {
+    latitude: number = aNumber();
+    longitude: number = aNumber();
+
+    withLatitude(latitude: number): LatLongBuilder {
+        this.latitude = latitude;
+        return this;
+    }
+
+    withLongitude(longitude: number): LatLongBuilder {
+        this.longitude = longitude;
+        return this;
+    }
+    build(): LatLong {
+        return {
+            lat: this.latitude,
+            lng: this.longitude,
         };
     }
 }

@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-any no-null-keyword
 import { validateServiceMap } from '..';
-import { ServiceBuilder } from '../../../../stores/__tests__/helpers/services_helpers';
+import { ServiceBuilder, AddressBuilder, PhoneNumberBuilder, LatLongBuilder } from '../../../../stores/__tests__/helpers/services_helpers';
 import { aString, aNumber, aBoolean } from '../../../../helpers/random_test_values';
 
 describe('schema for saved service map', () => {
@@ -28,25 +28,11 @@ describe('schema for saved service map', () => {
         const anId = aString();
         const aLatitude = aNumber();
         const aLongitude = aNumber();
-        const aLatLong = {
-            lat: aLatitude,
-            lng: aLongitude,
-        };
+        const aLatLong = new LatLongBuilder().withLatitude(aLatitude).withLongitude(aLongitude).build();
         const aName = aString();
         const aDescription = aString();
-        const aPhoneNumber = {
-            type: aString(),
-            phone_number: aString(),
-        };
-        const anAddress = {
-            type: aString(),
-            id: aNumber(),
-            address: aString(),
-            city: aString(),
-            stateProvince: aString(),
-            postalCode: aString(),
-            country: aString(),
-        };
+        const aPhoneNumber = new PhoneNumberBuilder().build();
+        const anAddress = new AddressBuilder().build();
         const aWebsite = aString();
         const anEmail = aString();
         const anOrganizationName = aString();
