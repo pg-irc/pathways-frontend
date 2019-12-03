@@ -241,17 +241,6 @@ describe('topics selector', () => {
                 });
             });
         });
-
-        it('should not recommend a completed topic', () => {
-            const aTaxonomyTerm = aTaxonomyTermReference();
-            const aChosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).build();
-            const aCompleteTask = new TopicBuilder().withCompleted(true).withTaxonomyTerm(aTaxonomyTerm).build();
-
-            const result = getRecommendedTopics({ [aChosenAnswer.id]: aChosenAnswer }, { [aCompleteTask.id]: aCompleteTask });
-
-            expect(result).toEqual([]);
-        });
-
     });
 
     describe('getting newly recommended topics', () => {
