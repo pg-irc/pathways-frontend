@@ -24,7 +24,7 @@ export const buildTasksFixture = (): ValidTopicStore => {
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'Education',
                 }],
-                'newlyRecommended': false,
+                'isNewlyRecommended': false,
                 'relatedTopics': ['t2'],
             },
             't2': {
@@ -44,7 +44,7 @@ export const buildTasksFixture = (): ValidTopicStore => {
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'Education',
                 }],
-                'newlyRecommended': false,
+                'isNewlyRecommended': false,
                 'relatedTopics': ['t1'],
             },
             't3': {
@@ -64,7 +64,7 @@ export const buildTasksFixture = (): ValidTopicStore => {
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'Education',
                 }],
-                'newlyRecommended': false,
+                'isNewlyRecommended': false,
                 'relatedTopics': ['t2'],
             },
             't4': {
@@ -84,7 +84,7 @@ export const buildTasksFixture = (): ValidTopicStore => {
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'Money',
                 }],
-                'newlyRecommended': false,
+                'isNewlyRecommended': false,
                 'relatedTopics': [],
             },
             't5': {
@@ -104,7 +104,7 @@ export const buildTasksFixture = (): ValidTopicStore => {
                     'taxonomyId': exploreTaxonomyId,
                     'taxonomyTermId': 'Money',
                 }],
-                'newlyRecommended': false,
+                'isNewlyRecommended': false,
                 'relatedTopics': [],
             },
         },

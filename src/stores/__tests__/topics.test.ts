@@ -37,18 +37,18 @@ describe('topics reducer', () => {
         });
 
         describe('when closing the questionnaire', () => {
-            it('marks newly recommended topic as newlyRecommended', () => {
+            it('marks newly recommended topic as isNewlyRecommended', () => {
                 const newlyRecommendedTopics: ReadonlyArray<Id> = [topicId];
                 const action = closeQuestionnaire(newlyRecommendedTopics);
                 const finalStore = stores.reducer(validStore, action);
-                expect(stores.toValidOrThrow(finalStore).topicMap[topicId].newlyRecommended).toBe(true);
+                expect(stores.toValidOrThrow(finalStore).topicMap[topicId].isNewlyRecommended).toBe(true);
             });
 
-            it('does not mark other tasks as newlyRecommended', () => {
+            it('does not mark other tasks as isNewlyRecommended', () => {
                 const newlyRecommendedTopics: ReadonlyArray<Id> = [];
                 const action = closeQuestionnaire(newlyRecommendedTopics);
                 const finalStore = stores.reducer(validStore, action);
-                expect(stores.toValidOrThrow(finalStore).topicMap[topicId].newlyRecommended).toBe(false);
+                expect(stores.toValidOrThrow(finalStore).topicMap[topicId].isNewlyRecommended).toBe(false);
             });
         });
 
@@ -59,7 +59,7 @@ describe('topics reducer', () => {
 
                 const finalStore = stores.reducer(theStore, clearAllUserData());
 
-                expect(stores.toValidOrThrow(finalStore).topicMap[aTopic.id].newlyRecommended).toBe(false);
+                expect(stores.toValidOrThrow(finalStore).topicMap[aTopic.id].isNewlyRecommended).toBe(false);
             });
 
             test('removes topic from my plan', () => {
