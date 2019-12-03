@@ -53,13 +53,13 @@ describe('topics reducer', () => {
         });
 
         describe('clear all user data action', () => {
-            test('sets topic to not completed', () => {
-                const aTopic = new TopicBuilder().withCompleted(true);
+            test('sets topic to not newly recommended', () => {
+                const aTopic = new TopicBuilder().withNewlyRecommended(true);
                 const theStore = buildNormalizedStore([aTopic], []);
 
                 const finalStore = stores.reducer(theStore, clearAllUserData());
 
-                expect(stores.toValidOrThrow(finalStore).topicMap[aTopic.id].completed).toBe(false);
+                expect(stores.toValidOrThrow(finalStore).topicMap[aTopic.id].newlyRecommended).toBe(false);
             });
 
             test('removes topic from my plan', () => {
@@ -164,38 +164,6 @@ describe('topics reducer', () => {
                 const theAction = UserDataPersistence.loadSuccess(dataWithInvalidId);
                 const resultStore = stores.reducer(theLoadingStore, theAction);
                 expect(stores.toValidOrThrow(resultStore).savedTopicsList).toHaveLength(0);
-            });
-
-            describe('when loading completed topics', () => {
-                it('should set completed topics to completed', () => {
-                    const theTopicId = aString();
-                    const theTopic = new TopicBuilder().withId(theTopicId).withCompleted(false);
-                    const storeState = buildNormalizedStore([theTopic], []);
-                    const theStore = new stores.LoadingTopicStore(storeState);
-                    const actionStateWithCompletedTopic = new PersistedUserDataBuilder().
-                        addCompletedTopic(theTopicId).
-                        buildObject();
-                    const theAction = UserDataPersistence.loadSuccess(actionStateWithCompletedTopic);
-
-                    const resultStore = stores.reducer(theStore, theAction);
-                    const topics = stores.toValidOrThrow(resultStore).topicMap;
-
-                    expect(topics[theTopicId].completed).toBe(true);
-                });
-
-                it('should not set uncompleted topics to completed', () => {
-                    const theTopicId = aString();
-                    const theTopic = new TopicBuilder().withId(theTopicId).withCompleted(true);
-                    const storeState = buildNormalizedStore([theTopic], []);
-                    const theStore = new stores.LoadingTopicStore(storeState);
-                    const actionStateWithNoCompletedTopics = new PersistedUserDataBuilder().buildObject();
-                    const theAction = UserDataPersistence.loadSuccess(actionStateWithNoCompletedTopics);
-
-                    const resultStore = stores.reducer(theStore, theAction);
-                    const topics = stores.toValidOrThrow(resultStore).topicMap;
-
-                    expect(topics[theTopicId].completed).toBe(false);
-                });
             });
         });
     });

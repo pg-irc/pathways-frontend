@@ -29,7 +29,7 @@ export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): T
         case constants.CLEAR_ALL_USER_DATA:
             return new ValidTopicStore({
                 ...store,
-                topicMap: R.map((topic: Topic): Topic => ({ ...topic, completed: false }), store.topicMap),
+                topicMap: R.map((topic: Topic): Topic => ({ ...topic, newlyRecommended: false }), store.topicMap),
                 savedTopicsList: [],
             });
 

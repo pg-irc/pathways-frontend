@@ -14,7 +14,6 @@ export class TopicBuilder {
     description: string = aString();
     taxonomyTerms: TaxonomyTermReference[] = [];
     relatedTasks: ReadonlyArray<TaskId> = [aString(), aString()];
-    completed: boolean = false;
     newlyRecommended: boolean = false;
 
     withLocaleCode(localeCode: string): TopicBuilder {
@@ -42,11 +41,6 @@ export class TopicBuilder {
         return this;
     }
 
-    withCompleted(completed: boolean): TopicBuilder {
-        this.completed = completed;
-        return this;
-    }
-
     withNewlyRecommended(newlyRecommended: boolean): TopicBuilder {
         this.newlyRecommended = newlyRecommended;
         return this;
@@ -70,7 +64,7 @@ export class TopicBuilder {
             description: this.createLocalizedText(this.description),
             taxonomyTerms: this.taxonomyTerms,
             relatedTopics: this.relatedTasks,
-            completed: this.completed,
+            completed: false,
             newlyRecommended: this.newlyRecommended,
         };
     }
