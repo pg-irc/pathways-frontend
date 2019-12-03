@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 import { Store } from '../../stores';
-import { buildServicesRequestAction, BuildServicesRequestAction, ServicesAction, AddServiceToSavedListAction, RemoveServiceFromSavedListAction, addServiceToSavedListAction, removeServiceFromSavedListAction } from '../../stores/services/actions';
+import { buildServicesRequestAction, BuildServicesRequestAction, ServicesAction, AddServiceToSavedListAction,
+        RemoveServiceFromSavedListAction, addServiceToSavedListAction, removeServiceFromSavedListAction } from '../../stores/services/actions';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/topic';

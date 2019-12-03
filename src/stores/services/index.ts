@@ -110,30 +110,34 @@ const saveService = (store: types.ServiceStore, action: actions.SaveServiceActio
     },
 });
 const addToSavedServicesList = (store: types.ServiceStore, action: actions.AddServiceToSavedListAction): types.ServiceStore => {
-    const service = action.payload.service;
-    const serviceId = service.id;
+    const savedService = {
+        ...action.payload.service,
+        bookmarked: true,
+    };
+    const savedServiceId = savedService.id;
     return {
         ...store,
         services: {
             ...store.services,
-            [serviceId]: {
-                ...service,
-                bookmarked: true,
+            [savedServiceId]: {
+                ...savedService,
             },
         },
     };
 };
 
 const removeFromSavedServicesList = (store: types.ServiceStore, action: actions.RemoveServiceFromSavedListAction): types.ServiceStore => {
-    const serviceToRemove = action.payload.service;
-    const serviceId = serviceToRemove.id;
+    const serviceToRemove = {
+        ...action.payload.service,
+        bookmarked: false,
+    };
+    const serviceToRemoveId = serviceToRemove.id;
     return {
         ...store,
         services: {
             ...store.services,
-            [serviceId]: {
+            [serviceToRemoveId]: {
                 ...serviceToRemove,
-                bookmarked: false,
             },
         },
     };
