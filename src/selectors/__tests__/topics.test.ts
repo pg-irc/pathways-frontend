@@ -20,7 +20,6 @@ import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_help
 import { getNewlyRecommendedTopics } from '../topics/get_newly_recommended_topics';
 import { AnswersMap, Answer } from '../../stores/questionnaire';
 import { getAllTaxonomyTermsFromTopics } from '../topics/get_all_taxonomy_terms_from_topics';
-import { getIdsOfCompletedTopics } from '../topics/get_ids_of_completed_topics';
 import * as R from 'ramda';
 
 let locale: Locale = undefined;
@@ -248,8 +247,8 @@ describe('topics selector', () => {
         let aTaxonomyTerm: TaxonomyTermReference = undefined;
         let chosenAnswers: AnswersMap = undefined;
         let nonChosenAnswers: AnswersMap = undefined;
-        let incompleteTask: stores.Topic = undefined;
-        let incompleteTasks: stores.TopicMap = undefined;
+        let aTask: stores.Topic = undefined;
+        let aTaskMap: stores.TopicMap = undefined;
 
         beforeEach(() => {
             aTaxonomyTerm = aTaxonomyTermReference();
@@ -260,24 +259,25 @@ describe('topics selector', () => {
             const chosenAnswer = new AnswerBuilder().withTaxonomyTerm(aTaxonomyTerm).withIsChosen(true).withIsInverted(false).build();
             chosenAnswers = { [chosenAnswer.id]: chosenAnswer };
 
-            incompleteTask = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).withCompleted(false).build();
-            incompleteTasks = { [incompleteTask.id]: incompleteTask };
+            aTask = new TopicBuilder().withTaxonomyTerm(aTaxonomyTerm).build();
+            aTaskMap = { [aTask.id]: aTask };
+
         });
 
         it('should include a topic that was not previously recommended but is now recommended', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
-            const result = getNewlyRecommendedTopics(oldNonChosenAnswers, newChosenAnswers, incompleteTasks);
+            const result = getNewlyRecommendedTopics(oldNonChosenAnswers, newChosenAnswers, aTaskMap);
 
-            expect(result).toEqual([incompleteTask]);
+            expect(result).toEqual([aTask]);
         });
 
         it('should not include a topics that was previously recommended and is still recommended', () => {
             const oldChosenAnswers = chosenAnswers;
             const newChosenAnswers = chosenAnswers;
 
-            const result = getNewlyRecommendedTopics(oldChosenAnswers, newChosenAnswers, incompleteTasks);
+            const result = getNewlyRecommendedTopics(oldChosenAnswers, newChosenAnswers, aTaskMap);
 
             expect(result).toEqual([]);
         });
@@ -286,7 +286,7 @@ describe('topics selector', () => {
             const oldNonChosenAnswers = nonChosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
-            const result = getNewlyRecommendedTopics(oldNonChosenAnswers, newNonChosenAnswers, incompleteTasks);
+            const result = getNewlyRecommendedTopics(oldNonChosenAnswers, newNonChosenAnswers, aTaskMap);
 
             expect(result).toEqual([]);
         });
@@ -295,7 +295,7 @@ describe('topics selector', () => {
             const oldChosenAnswers = chosenAnswers;
             const newNonChosenAnswers = nonChosenAnswers;
 
-            const result = getNewlyRecommendedTopics(oldChosenAnswers, newNonChosenAnswers, incompleteTasks);
+            const result = getNewlyRecommendedTopics(oldChosenAnswers, newNonChosenAnswers, aTaskMap);
 
             expect(result).toEqual([]);
         });
@@ -327,17 +327,6 @@ describe('topics selector', () => {
             const taxonomyId = aString();
             const taxonomyTermId = aString();
             const topic = new TopicBuilder().withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
-            const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
-
-            const result = isTopicRecommended([taxonomyId], taxonomyTermsFromQuestionnaire, topic);
-
-            expect(result).toBe(true);
-        });
-
-        it('returns true for a completed topic', () => {
-            const taxonomyId = aString();
-            const taxonomyTermId = aString();
-            const topic = new TopicBuilder().withCompleted(true).withTaxonomyTerm({ taxonomyId, taxonomyTermId }).build();
             const taxonomyTermsFromQuestionnaire: ReadonlyArray<TaxonomyTermReference> = [{ taxonomyId, taxonomyTermId }];
 
             const result = isTopicRecommended([taxonomyId], taxonomyTermsFromQuestionnaire, topic);
@@ -392,25 +381,6 @@ describe('topics selector', () => {
             const result = getAllTaxonomyTermsFromTopics({ 'id1': aTask, 'id2': aSecondTaskWithSameTaxonomyTerm });
 
             expect(result).toEqual([aTaxonomyTerm]);
-        });
-    });
-
-    describe('get ids of completed topics', () => {
-        it('includes the id of a completed topic', () => {
-            const theId = aString();
-            const aTask = new TopicBuilder().withCompleted(true).withId(theId).build();
-
-            const result = getIdsOfCompletedTopics({ [theId]: aTask });
-
-            expect(result).toEqual([theId]);
-        });
-        it('does not include the id of a non-completed topic', () => {
-            const theId = aString();
-            const aTask = new TopicBuilder().withCompleted(false).withId(theId).build();
-
-            const result = getIdsOfCompletedTopics({ [theId]: aTask });
-
-            expect(result).toEqual([]);
         });
     });
 
