@@ -10,5 +10,4 @@ export interface Topic {
     readonly exploreSection: ExploreSection;
     readonly isRecommended: boolean;
     readonly relatedTopics: ReadonlyArray<TopicListItem>;
-    readonly completed: boolean;
 }

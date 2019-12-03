@@ -14,7 +14,6 @@ export class ViewTaskBuilder {
     exploreSection: ExploreSection;
     isRecommended: boolean = aBoolean();
     relatedTasks: Array<TopicListItem> = [];
-    completed: boolean = aBoolean();
 
     withId(id: string): ViewTaskBuilder {
         this.id = id;
@@ -35,7 +34,6 @@ export class ViewTaskBuilder {
             exploreSection: this.exploreSection,
             isRecommended: this.isRecommended,
             relatedTopics: this.relatedTasks,
-            completed: this.completed,
         };
     }
 }
