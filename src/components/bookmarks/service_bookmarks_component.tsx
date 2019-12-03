@@ -5,7 +5,7 @@ import { HumanServiceData, Id } from '../../validation/services/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { ServiceListHeaderComponent, ServiceItemInfo } from '../services/service_list_component';
 import { Trans } from '@lingui/react';
-import { RouterProps } from '../../application/routing';
+import { RouterProps, goToRouteWithParameter, Routes } from '../../application/routing';
 import { ServiceListItemActions, ServiceListItemComponent } from '../services/service_list_item_component';
 import { colors } from '../../application/styles';
 
@@ -31,6 +31,7 @@ export const renderServiceItems = (props: Props): ({ item }: ServiceItemInfo) =>
     return ({ item }: ServiceItemInfo): JSX.Element => (
         <ServiceListItemComponent
         service={item}
+        onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
         currentPath={props.location.pathname}
         isBookmarked={R.contains(item.id, props.savedServicesIds)}
         addServiceToSavedList={props.addServiceToSavedList}
