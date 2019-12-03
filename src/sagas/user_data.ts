@@ -75,7 +75,6 @@ export const setUserDataDefaultValues = (data: any): PersistedUserData => (
     {
         chosenAnswers: data.chosenAnswers || [],
         savedTopics: data.savedTopics || [],
-        completedTopics: data.completedTopics || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
     }
 );

@@ -60,10 +60,6 @@ describe('topics selector', () => {
             expect(denormalizedTask.id).toBe(topic.id);
         });
 
-        test('completed property', () => {
-            expect(denormalizedTask.completed).toBe(topic.completed);
-        });
-
         test('title property', () => {
             expect(denormalizedTask.title).toBe(topic.title[locale.code]);
         });

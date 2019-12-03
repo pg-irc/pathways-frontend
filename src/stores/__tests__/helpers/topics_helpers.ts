@@ -64,7 +64,6 @@ export class TopicBuilder {
             description: this.createLocalizedText(this.description),
             taxonomyTerms: this.taxonomyTerms,
             relatedTopics: this.relatedTasks,
-            completed: false,
             newlyRecommended: this.newlyRecommended,
         };
     }

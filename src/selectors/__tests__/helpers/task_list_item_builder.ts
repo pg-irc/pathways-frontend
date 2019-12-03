@@ -9,7 +9,6 @@ export class TaskListItemBuilder {
     title: string = aString();
     description: string = aString();
     isRecommended: boolean = aBoolean();
-    completed: boolean = aBoolean();
     exploreSection: ExploreSection;
 
     constructor(exploreSection: ExploreSection) {
@@ -27,7 +26,6 @@ export class TaskListItemBuilder {
             title: this.title,
             description: this.description,
             isRecommended: this.isRecommended,
-            completed: this.completed,
             exploreSection: this.exploreSection,
         };
     }
