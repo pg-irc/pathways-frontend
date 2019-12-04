@@ -37,7 +37,7 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
         events.sendScreenHit(action);
     }
     if (action.type === constants.CHOOSE_ANSWER) {
-        events.sendAnswerChosenEvent(action.payload.answerId);
+        events.sendAnswerChosenEvent();
     }
     if (action.type === constants.ADD_BOOKMARK) {
         events.sendBookmarkAddedEvent(action.payload.topicId);
