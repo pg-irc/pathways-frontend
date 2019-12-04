@@ -687,7 +687,7 @@ export const buildQuestionnaireFixture = (): ValidQuestionnaireStore => {
     return new ValidQuestionnaireStore({
         questions,
         answers,
-        oldAnswers: {},
+        oldAnswers: answers,
         activeQuestion: 'questionDurationInCanada',
     });
 };
