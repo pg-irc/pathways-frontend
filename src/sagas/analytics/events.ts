@@ -30,6 +30,12 @@ export const sendLinkPressedEvent = (currentPath: string, linkContext: string, l
     analytics.hit(event);
 };
 
+export const sendServicesCountEvent = (count: number): void => {
+    const analytics = createAnalytics();
+    const event = createEvent('MemoryReport', `ServicesCount: ${count}`);
+    analytics.hit(event);
+};
+
 export const buildAnalyticsLinkContext = (model: string, title: string): string => (
     `${model} - ${title}`
 );
