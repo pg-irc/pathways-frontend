@@ -10,9 +10,9 @@ export const sendScreenHit = (action: RouteChangedAction): void => {
     analytics.hit(screenHit);
 };
 
-export const sendAnswerChosenEvent = (answerId: string): void => {
+export const sendAnswerChosenEvent = (): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Questionnaire', 'AnswerChosen', answerId);
+    const event = createEvent('Questionnaire', 'AnswerChosen');
     analytics.hit(event);
 };
 
