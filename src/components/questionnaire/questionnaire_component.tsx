@@ -1,24 +1,31 @@
 // tslint:disable:no-class no-this no-expression-statement
-import React from 'react';
+import React, { useState } from 'react';
 import { I18nManager, Image, Dimensions } from 'react-native';
 import { Button, Content, View, Text, Icon } from 'native-base';
-import * as R from 'ramda';
 import { Question as SelectorQuestion } from '../../selectors/questionnaire/question';
 import { Answer as SelectorAnswer } from '../../selectors/questionnaire/answer';
 import { QuestionComponent } from './question_component';
 import { applicationStyles, textStyles, colors, values } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { RouterProps } from '../../application/routing';
-import { Id, ChooseAnswerAction, SetActiveQuestionAction } from '../../stores/questionnaire';
+import { Id, ChooseAnswerAction, SetActiveQuestionAction, AnswersMap } from '../../stores/questionnaire';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { NewTopicsModalConnectedComponent } from './new_topics_modal_connected_component';
 import { UpdateOldAnswersFromStoreAnswersAction } from '../../stores/questionnaire/actions';
+import { Topic, TopicMap, Id as TaskId } from '../../stores/topics';
+import { getNewlyRecommendedTopics } from '../../selectors/topics/get_newly_recommended_topics';
+import { rejectTopicsWithIds } from '../../selectors/topics/reject_topics_with_ids';
+import * as R from 'ramda';
 
 export interface QuestionnaireProps {
     readonly activeQuestion: SelectorQuestion;
+    readonly oldAnswers: AnswersMap;
+    readonly newAnswers: AnswersMap;
+    readonly topics: TopicMap;
+    readonly savedTopicIds: ReadonlyArray<TaskId>;
 }
 
 export interface QuestionnaireActions {
@@ -29,67 +36,60 @@ export interface QuestionnaireActions {
 
 type Props = QuestionnaireProps & QuestionnaireActions & RouterProps;
 
-interface State {
-    readonly newTopicsModalIsVisible: boolean;
-}
+const computeNewlyRecommendedTopics = (props: Props): ReadonlyArray<Topic> => {
+    const newlyRecommendedTopics = getNewlyRecommendedTopics(props.oldAnswers, props.newAnswers, props.topics);
+    const newlyRecommendedUnsavedTopics = rejectTopicsWithIds(newlyRecommendedTopics, props.savedTopicIds);
+    return newlyRecommendedUnsavedTopics;
+};
 
-export class QuestionnaireComponent extends React.Component<Props, State> {
+export const QuestionnaireComponent = (props: Props): JSX.Element => {
+    // linter doesn't understand state hooks with booleans for some reason
+    // tslint:disable-next-line:typedef
+    const [showModal, setShowModal] = useState(false);
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            newTopicsModalIsVisible: false,
-        };
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.getOnModalButtonPress = this.getOnModalButtonPress.bind(this);
-    }
+    const closeQuestionnaireWithOptionalModal = (): void => {
+        const newlyRecommendedTopics = computeNewlyRecommendedTopics(props);
+        if (R.isEmpty(newlyRecommendedTopics)) {
+            closeQuestionnaire();
+        } else {
+            setShowModal(true);
+        }
+    };
 
-    render(): JSX.Element {
-        return (
-            <View style={{ flex: 1 }}>
-                <CloseButtonComponent
-                    onPress={this.openModal}
-                    color={colors.black}
+    const closeQuestionnaire = (): void => {
+        props.updateOldAnswersFromStoreAnswers();
+        setShowModal(false);
+        goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)();
+    };
+
+    return (
+        <View style={{ flex: 1 }}>
+            <CloseButtonComponent
+                onPress={closeQuestionnaireWithOptionalModal}
+                color={colors.black}
+            />
+            <Content padder>
+                <HeadingComponent />
+                <ProgressComponent
+                    activeQuestion={props.activeQuestion}
                 />
-                <Content padder>
-                    <HeadingComponent />
-                    <ProgressComponent
-                        activeQuestion={this.props.activeQuestion}
-                    />
-                    <QuestionComponent
-                        question={this.props.activeQuestion}
-                        chooseAnswer={this.props.chooseAnswer}
-                    />
-                    <ButtonsComponent
-                        activeQuestion={this.props.activeQuestion}
-                        setActiveQuestion={this.props.setActiveQuestion}
-                        onDoneButtonPress={this.openModal}
-                    />
-                    <NewTopicsModalConnectedComponent
-                        history={this.props.history}
-                        isVisible={this.state.newTopicsModalIsVisible}
-                        onModalButtonPress={this.getOnModalButtonPress}
-                    />
-                </Content>
-            </View>
-        );
-    }
-
-    private openModal(): void {
-        this.setState({ newTopicsModalIsVisible: true });
-    }
-
-    private closeModal(): void {
-        this.setState({ newTopicsModalIsVisible: false });
-    }
-
-    private getOnModalButtonPress(): void {
-        this.props.updateOldAnswersFromStoreAnswers();
-        this.closeModal();
-        goToRouteWithoutParameter(Routes.RecommendedTopics, this.props.history)();
-    }
-}
+                <QuestionComponent
+                    question={props.activeQuestion}
+                    chooseAnswer={props.chooseAnswer}
+                />
+                <ButtonsComponent
+                    activeQuestion={props.activeQuestion}
+                    setActiveQuestion={props.setActiveQuestion}
+                    onDoneButtonPress={closeQuestionnaireWithOptionalModal}
+                />
+                <NewTopicsModalConnectedComponent
+                    isVisible={showModal}
+                    onModalButtonPress={closeQuestionnaire}
+                />
+            </Content>
+        </View>
+    );
+};
 
 const HeadingComponent = (): JSX.Element => {
     const logoSize = Dimensions.get('screen').width / 6;
@@ -179,7 +179,7 @@ const renderPreviousButton = (props: ButtonsProps): JSX.Element => {
     const icon = I18nManager.isRTL ? 'arrow-forward' : 'arrow-back';
     const text = <Trans>Back</Trans>;
     return (
-        <Button style={[ applicationStyles.whiteTealButton, { marginBottom: 5 } ]} onPress={onPress} iconLeft>
+        <Button style={[applicationStyles.whiteTealButton, { marginBottom: 5 }]} onPress={onPress} iconLeft>
             <Icon name={icon} style={{ color: colors.teal }} />
             <Text style={textStyles.whiteTealButton}>{text}</Text>
         </Button>
