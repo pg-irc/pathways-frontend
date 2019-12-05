@@ -6,15 +6,15 @@ import { buildDefaultStore } from '../../stores';
 import { aNumber } from '../../helpers/random_test_values';
 
 describe('Google Analytics memory report middleware helpers', () => {
-    const aServiceBuilder = new ServiceBuilder();
-    const store = {
-        ...buildDefaultStore(),
-        services: buildNormalizedServices([aServiceBuilder], []),
-    };
 
     describe('countNewServicesToBeCreatedByAction()', () => {
 
         it('returns expected count with SAVE_SERVICE_FROM_SEARCH action and new service', () => {
+            const aServiceBuilder = new ServiceBuilder();
+            const store = {
+                ...buildDefaultStore(),
+                services: buildNormalizedServices([aServiceBuilder], []),
+            };
             const action = {
                 type: SAVE_SERVICE_FROM_SEARCH,
                 payload: {
@@ -25,6 +25,11 @@ describe('Google Analytics memory report middleware helpers', () => {
         });
 
         it('returns expected count with SAVE_SERVICE_FROM_SEARCH action and an existing service', () => {
+            const aServiceBuilder = new ServiceBuilder();
+            const store = {
+                ...buildDefaultStore(),
+                services: buildNormalizedServices([aServiceBuilder], []),
+            };
             const action = {
                 type: SAVE_SERVICE_FROM_SEARCH,
                 payload: {
@@ -35,6 +40,11 @@ describe('Google Analytics memory report middleware helpers', () => {
         });
 
         it('returns expected count with LOAD_SERVICES_SUCCESS action and new service', () => {
+            const aServiceBuilder = new ServiceBuilder();
+            const store = {
+                ...buildDefaultStore(),
+                services: buildNormalizedServices([aServiceBuilder], []),
+            };
             const action = {
                 type: LOAD_SERVICES_SUCCESS,
                 payload: {
@@ -45,6 +55,11 @@ describe('Google Analytics memory report middleware helpers', () => {
         });
 
         it('returns expected count with LOAD_SERVICES_SUCCESS action and an existing service', () => {
+            const aServiceBuilder = new ServiceBuilder();
+            const store = {
+                ...buildDefaultStore(),
+                services: buildNormalizedServices([aServiceBuilder], []),
+            };
             const action = {
                 type: LOAD_SERVICES_SUCCESS,
                 payload: {
@@ -55,6 +70,11 @@ describe('Google Analytics memory report middleware helpers', () => {
         });
 
         it('returns 0 when action is of invalid type', () => {
+            const aServiceBuilder = new ServiceBuilder();
+            const store = {
+                ...buildDefaultStore(),
+                services: buildNormalizedServices([aServiceBuilder], []),
+            };
             const action = {
                 type: LOAD_SERVICES_REQUEST,
             };
@@ -65,6 +85,11 @@ describe('Google Analytics memory report middleware helpers', () => {
     describe('countTotalServicesAfterActionFinishes()', () => {
 
         it ('returns the sum of new services count and existing store services count', () => {
+            const aServiceBuilder = new ServiceBuilder();
+            const store = {
+                ...buildDefaultStore(),
+                services: buildNormalizedServices([aServiceBuilder], []),
+            };
             const newServicesCount = 1;
             expect(countTotalServicesAfterActionFinishes(newServicesCount, store)).toEqual(2);
         });
