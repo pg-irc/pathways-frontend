@@ -51,11 +51,13 @@ const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
 );
 
+type SearchServiceDataItem = ListRenderItemInfo<SearchServiceData>;
+
 const renderSearchHit = R.curry((
         currentPath: string,
         history: History,
         saveServiceFromSearch: (service: HumanServiceData) => SaveServiceAction,
-        itemInfo: ListRenderItemInfo<SearchServiceData>,
+        itemInfo: SearchServiceDataItem,
     ): JSX.Element => {
     const service: HumanServiceData = toHumanServiceData(itemInfo.item);
     const onPress = (): void => {

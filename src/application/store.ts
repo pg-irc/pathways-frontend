@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 
 import { reducer, Store, buildDefaultStore } from '../stores';
-import { GoogleAnalytics } from '../middleware/google_analytics';
+import { analytics } from '../middleware/analytics';
 import { runSaga, ApplicationSaga } from '../sagas';
 
 import { loadFontsActions } from '../stores/fonts';
@@ -46,7 +46,7 @@ const buildStoreWithLocaleData = (): Store => {
 type CreatedStore = Readonly<ReturnType<typeof createStore>>;
 
 export const buildStore = (saga: ApplicationSaga): CreatedStore => {
-    const middleware = applyMiddleware(saga.middleware, GoogleAnalytics.MemoryReportMiddleware);
+    const middleware = applyMiddleware(saga.middleware, analytics.middleware);
     const store = buildStoreWithLocaleData();
     const enhancers = compose(middleware);
     return createStore(reducer, store, enhancers);
