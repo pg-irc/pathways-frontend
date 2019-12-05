@@ -20,13 +20,13 @@ import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { UserDataPersistence } from '../user_data';
 
 describe('services reducer', () => {
-    const aService = new ServiceBuilder();
-    const loadedTaskServices = new TaskServicesBuilder().withServiceIds([aService.id]);
+    const aServiceBuilder = new ServiceBuilder();
+    const loadedTaskServices = new TaskServicesBuilder().withServiceIds([aServiceBuilder.id]);
     const loadingTaskServices = new TaskServicesBuilder().withLoading(true);
     const loadedTaskServicesError = new TaskServicesErrorBuilder();
     const loadingTaskServicesError = new TaskServicesErrorBuilder().withLoading(true);
     const theStore = buildNormalizedServices(
-        [aService],
+        [aServiceBuilder],
         [loadedTaskServices, loadingTaskServices, loadedTaskServicesError, loadingTaskServicesError],
     );
 
@@ -134,7 +134,7 @@ describe('services reducer', () => {
         it('replaces service ids on existing topic services object', () => {
             if (isValidServicesForTopic(topicServicesOrErrorEntry)) {
                 const serviceIds = topicServicesOrErrorEntry.serviceIds;
-                expect(serviceIds).not.toContain(aService.id);
+                expect(serviceIds).not.toContain(aServiceBuilder.id);
             } else {
                 fail();
             }
