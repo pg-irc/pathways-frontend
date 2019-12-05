@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { SearchComponentProps, SearchComponent, SearchComponentActions } from './search_component';
 import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
-import { buildSaveServiceFromSearchAction, BuildSaveServiceFromSearchAction } from '../../stores/services/actions';
+import { saveService, SaveServiceAction } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 
 const mapStateToProps = (_: Store): SearchComponentProps => ({
@@ -11,9 +11,9 @@ const mapStateToProps = (_: Store): SearchComponentProps => ({
     appId: 'MMYH1Z0D3O',
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<BuildSaveServiceFromSearchAction>): SearchComponentActions => ({
-    saveServiceFromSearch: (service: HumanServiceData): BuildSaveServiceFromSearchAction =>
-        dispatch(buildSaveServiceFromSearchAction(service)),
+const mapDispatchToProps = (dispatch: Dispatch<SaveServiceAction>): SearchComponentActions => ({
+    saveService: (service: HumanServiceData): SaveServiceAction =>
+        dispatch(saveService(service)),
 });
 
 export const SearchConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(SearchComponent);

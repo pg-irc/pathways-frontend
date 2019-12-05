@@ -11,13 +11,13 @@ export type BuildServicesSuccessAction = Readonly<ReturnType<typeof buildService
 
 export type BuildServicesErrorAction = Readonly<ReturnType<typeof buildServicesErrorAction>>;
 
-export type BuildSaveServiceFromSearchAction = Readonly<ReturnType<typeof buildSaveServiceFromSearchAction>>;
+export type SaveServiceAction = Readonly<ReturnType<typeof saveService>>;
 
 export type ServicesAction =
     BuildServicesRequestAction |
     BuildServicesSuccessAction |
     BuildServicesErrorAction |
-    BuildSaveServiceFromSearchAction;
+    SaveServiceAction;
 
 // tslint:disable-next-line:typedef
 export const buildServicesRequestAction = (topicId: TopicId, manualUserLocation?: LatLong) => (
@@ -35,6 +35,6 @@ export const buildServicesErrorAction = (topicId: TopicId, errorMessageType: Err
 );
 
 // tslint:disable-next-line:typedef
-export const buildSaveServiceFromSearchAction = (service: HumanServiceData) => (
-    helpers.makeAction(constants.SAVE_SERVICE_FROM_SEARCH, { service })
+export const saveService = (service: HumanServiceData) => (
+    helpers.makeAction(constants.SAVE_SERVICE, { service })
 );

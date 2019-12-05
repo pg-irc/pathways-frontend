@@ -5,7 +5,7 @@ import { isValidServicesForTopic } from '../services/is_valid_services_for_topic
 import {
     BuildServicesRequestAction, BuildServicesSuccessAction,
     BuildServicesErrorAction,
-    BuildSaveServiceFromSearchAction,
+    SaveServiceAction,
 } from '../services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
@@ -165,8 +165,8 @@ describe('services reducer', () => {
 
         it('updates the store with the new service', () => {
             const aSearchService = new ServiceBuilder().build();
-            const action: BuildSaveServiceFromSearchAction = {
-                type: constants.SAVE_SERVICE_FROM_SEARCH,
+            const action: SaveServiceAction = {
+                type: constants.SAVE_SERVICE,
                 payload: {
                     service: aSearchService,
                 },
@@ -178,8 +178,8 @@ describe('services reducer', () => {
         it('overwrites an existing service with the same id', () => {
             const aNewName = 'ANewName';
             const aSearchService = new ServiceBuilder().withId(aService.id).withName(aNewName).build();
-            const action: BuildSaveServiceFromSearchAction = {
-                type: constants.SAVE_SERVICE_FROM_SEARCH,
+            const action: SaveServiceAction = {
+                type: constants.SAVE_SERVICE,
                 payload: {
                     service: aSearchService,
                 },

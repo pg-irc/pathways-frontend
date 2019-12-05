@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { SAVE_SERVICE_FROM_SEARCH, LOAD_SERVICES_SUCCESS, LOAD_SERVICES_REQUEST } from '../../application/constants';
+import { SAVE_SERVICE, LOAD_SERVICES_SUCCESS, LOAD_SERVICES_REQUEST } from '../../application/constants';
 import { countNewServicesToBeCreatedByAction, countTotalServicesAfterActionFinishes, shouldSendServicesCountReport  } from '../google_analytics';
 import { ServiceBuilder, buildNormalizedServices } from '../../stores/__tests__/helpers/services_helpers';
 import { buildDefaultStore } from '../../stores';
@@ -9,14 +9,14 @@ describe('Google Analytics memory report middleware helpers', () => {
 
     describe('countNewServicesToBeCreatedByAction()', () => {
 
-        it('returns expected count with SAVE_SERVICE_FROM_SEARCH action and new service', () => {
+        it('returns expected count with SAVE_SERVICE action and new service', () => {
             const aServiceBuilder = new ServiceBuilder();
             const store = {
                 ...buildDefaultStore(),
                 services: buildNormalizedServices([aServiceBuilder], []),
             };
             const action = {
-                type: SAVE_SERVICE_FROM_SEARCH,
+                type: SAVE_SERVICE,
                 payload: {
                     service: new ServiceBuilder().build(),
                 },
@@ -24,14 +24,14 @@ describe('Google Analytics memory report middleware helpers', () => {
             expect(countNewServicesToBeCreatedByAction(action, store)).toEqual(1);
         });
 
-        it('returns expected count with SAVE_SERVICE_FROM_SEARCH action and an existing service', () => {
+        it('returns expected count with SAVE_SERVICE action and an existing service', () => {
             const aServiceBuilder = new ServiceBuilder();
             const store = {
                 ...buildDefaultStore(),
                 services: buildNormalizedServices([aServiceBuilder], []),
             };
             const action = {
-                type: SAVE_SERVICE_FROM_SEARCH,
+                type: SAVE_SERVICE,
                 payload: {
                     service: aServiceBuilder.build(),
                 },

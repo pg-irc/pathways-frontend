@@ -18,7 +18,7 @@ import { SearchTermInputModal } from './search_term_input_modal';
 import { LocationInputModal } from './location_input_modal';
 import { localizedPlaceHolders } from './localized_place_holders';
 import { HumanServiceData } from '../../validation/services/types';
-import { BuildSaveServiceFromSearchAction } from '../../stores/services/actions';
+import { SaveServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
 
 export interface SearchComponentProps {
@@ -27,7 +27,7 @@ export interface SearchComponentProps {
 }
 
 export interface SearchComponentActions {
-    readonly saveServiceFromSearch: (service: HumanServiceData) => BuildSaveServiceFromSearchAction;
+    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
 }
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;

@@ -12,7 +12,7 @@ import { ServiceListItemComponent } from '../services/service_list_item_componen
 import { validateServiceSearchResponse } from '../../validation/search';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 import { HumanServiceData } from '../../validation/services/types';
-import { BuildSaveServiceFromSearchAction } from '../../stores/services/actions';
+import { SaveServiceAction } from '../../stores/services/actions';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 
 export interface Props {
@@ -22,7 +22,7 @@ export interface Props {
     readonly hasMore: boolean;
     readonly refine: (searchTerms?: string) => string;
     readonly history: History;
-    readonly saveServiceFromSearch: (service: HumanServiceData) => BuildSaveServiceFromSearchAction;
+    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
 }
 
 export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
@@ -34,7 +34,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
         refreshing={false}
         data={searchResults}
         keyExtractor={keyExtractor}
-        renderItem={renderSearchHit(props.currentPath, props.history, props.saveServiceFromSearch)}
+        renderItem={renderSearchHit(props.currentPath, props.history, props.saveService)}
         ListEmptyComponent={EmptyComponent}
         ItemSeparatorComponent={SearchListSeparator} />;
 };
@@ -54,7 +54,7 @@ const keyExtractor = (item: SearchServiceData): string => (
 const renderSearchHit = R.curry((
         currentPath: string,
         history: History,
-        saveServiceFromSearch: (service: HumanServiceData) => BuildSaveServiceFromSearchAction,
+        saveServiceFromSearch: (service: HumanServiceData) => SaveServiceAction,
         itemInfo: ListRenderItemInfo<SearchServiceData>,
     ): JSX.Element => {
     const service: HumanServiceData = toHumanServiceData(itemInfo.item);

@@ -3,7 +3,7 @@ import { Dispatch, MiddlewareAPI, AnyAction } from 'redux';
 import { Store } from '../stores';
 import * as R from 'ramda';
 import { sendServicesCountEvent } from '../sagas/analytics/events';
-import { SAVE_SERVICE_FROM_SEARCH, LOAD_SERVICES_SUCCESS, MEMORY_REPORT_SEND_EVERY_SERVICES_COUNT } from '../application/constants';
+import { SAVE_SERVICE, LOAD_SERVICES_SUCCESS, MEMORY_REPORT_SEND_EVERY_SERVICES_COUNT } from '../application/constants';
 
 export const GoogleAnalytics = {
     MemoryReportMiddleware: R.curry((
@@ -26,7 +26,7 @@ export const countNewServicesToBeCreatedByAction = (action: AnyAction, store: St
     const type = action.type;
     const storeServices = R.values(store.services.services);
 
-    if (type === SAVE_SERVICE_FROM_SEARCH) {
+    if (type === SAVE_SERVICE) {
         return R.difference([action.payload.service], storeServices).length;
     }
 
