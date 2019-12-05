@@ -199,62 +199,66 @@ describe('services reducer', () => {
     });
 
     describe('when bookmarking a service', () => {
-        const service = new ServiceBuilder();
+        const store = buildNormalizedServices([], []);
+        const service = new ServiceBuilder().build();
         const action: AddServiceToSavedListAction = {
             type: constants.ADD_SERVICE_BOOKMARK,
             payload: { service },
         };
-        const store = reducer(theStore, action);
+        const storeState = reducer(store, action);
         it('can add a service to service map', () => {
-            expect(Object.keys(store.services)).toHaveLength(2);
+            expect(Object.keys(storeState.services)).toHaveLength(1);
         });
         it('can add a service to services map marked as bookmarked', () => {
-            expect(store.services[service.id].bookmarked).toBe(true);
+            expect(storeState.services[service.id].bookmarked).toBe(true);
         });
     });
 
     describe('when removing a bookmarked service', () => {
-        const bookmarkedService = new ServiceBuilder().withBookmarked(true);
-        const store = buildNormalizedServices(
-            [bookmarkedService],
-            [loadedTaskServices, loadingTaskServices, loadedTaskServicesError, loadingTaskServicesError],
-        );
+        const bookmarkedServiceBuilder = new ServiceBuilder().withBookmarked(true);
+        const store = buildNormalizedServices([bookmarkedServiceBuilder], []);
+        const bookmarkedService = bookmarkedServiceBuilder.build();
         const action: RemoveServiceFromSavedListAction = {
             type: constants.REMOVE_SERVICE_BOOKMARK,
             payload: { service: bookmarkedService },
         };
-
         const storeState = reducer(store, action);
-
         it('can mark a service as no longer being bookmarked', () => {
             expect(storeState.services[bookmarkedService.id].bookmarked).toBe(false);
         });
     });
 
     describe('when clear all user data action is dispatched', () => {
+        const serviceBuilder = new ServiceBuilder();
+        const store = buildNormalizedServices([serviceBuilder], []);
         const action: ClearAllUserDataAction = {
             type: constants.CLEAR_ALL_USER_DATA,
         };
-        const store = reducer(theStore, action);
+        const storeState = reducer(store, action);
         it('removes services from service map', () => {
-            expect(store.services).toEqual({});
+            expect(storeState.services).toEqual({});
         });
     });
 
     describe('when loading saved services', () => {
-        let store: ServiceStore = undefined;
+        let storeState: ServiceStore = undefined;
+        const store = buildNormalizedServices([], []);
         const savedServiceId = aString();
-        const savedService = new ServiceBuilder().withId(savedServiceId).withBookmarked(true);
-        const savedServiceMap = buildServiceMap([savedService]);
+        const savedServiceBuilder = new ServiceBuilder().withId(savedServiceId).withBookmarked(true);
+        const savedServiceMap = buildServiceMap([savedServiceBuilder]);
         beforeEach(() => {
             const persistedDataWhereServiceIsSaved = new PersistedUserDataBuilder().
-            addSavedService(savedServiceMap).
+            addSavedServices(savedServiceMap).
             buildObject();
             const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereServiceIsSaved);
-            store = reducer(theStore, loadAction);
+            storeState = reducer(store, loadAction);
         });
         it('should return the saved service map', () => {
-            expect(store.services[savedServiceId]).toBe(savedServiceMap[savedServiceId]);
+            expect(storeState.services).toEqual(savedServiceMap);
+        });
+        it('it should return the saved service', () => {
+            const savedService = savedServiceBuilder.build();
+            expect(storeState.services[savedServiceId]).toEqual(savedService);
         });
     });
 });

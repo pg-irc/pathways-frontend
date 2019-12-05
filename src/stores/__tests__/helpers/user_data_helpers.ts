@@ -25,7 +25,7 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    addSavedService(service: ServiceMap): PersistedUserDataBuilder {
+    addSavedServices(service: ServiceMap): PersistedUserDataBuilder {
         this.savedServices = {
             ...this.savedServices,
             ...service,
