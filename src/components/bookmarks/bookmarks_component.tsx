@@ -4,11 +4,10 @@ import { RouterProps } from '../../application/routing';
 import { ListActions } from './bookmarks_connected_component';
 import { TopicBookmarksComponent } from './topic_bookmarks_component';
 import { ServiceBookmarksComponent } from './service_bookmarks_component';
-import { HumanServiceData, Id } from '../../validation/services/types';
+import { HumanServiceData } from '../../validation/services/types';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
-    readonly savedServicesIds: ReadonlyArray<Id>;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
 }
 

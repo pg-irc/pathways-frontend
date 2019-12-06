@@ -1,7 +1,6 @@
 import React from 'react';
-import * as R from 'ramda';
 import { FlatList } from 'react-native';
-import { HumanServiceData, Id } from '../../validation/services/types';
+import { HumanServiceData } from '../../validation/services/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { ServiceListHeaderComponent, ServiceItemInfo } from '../services/service_list_component';
 import { Trans } from '@lingui/react';
@@ -11,7 +10,6 @@ import { colors } from '../../application/styles';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
-    readonly savedServicesIds: ReadonlyArray<Id>;
 }
 
 type Props = ServiceBookmarksProps & RouterProps & ServiceListItemActions;
@@ -33,7 +31,7 @@ export const renderServiceItems = (props: Props): ({ item }: ServiceItemInfo) =>
         service={item}
         onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
         currentPath={props.location.pathname}
-        isBookmarked={R.contains(item.id, props.savedServicesIds)}
+        isBookmarked={item.bookmarked}
         addServiceToSavedList={props.addServiceToSavedList}
         removeServiceFromSavedList={props.removeServiceFromSavedList}
         />
