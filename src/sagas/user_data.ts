@@ -7,7 +7,7 @@ import { UserDataPersistence } from '../stores/user_data';
 import { PersistedUserData } from '../stores/user_data';
 import * as constants from '../application/constants';
 import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
-import { validateServiceMap } from '../validation/services/persisted_services';
+import { validateServiceMap } from '../validation/services/saved_services';
 
 export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEffect> {
     yield takeLatest(
