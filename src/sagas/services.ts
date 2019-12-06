@@ -1,13 +1,14 @@
 // tslint:disable:no-expression-statement
-import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put } from 'redux-saga/effects';
+import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put, select, SelectEffect } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import * as actions from '../stores/services/actions';
-import * as R from 'ramda';
-import { validateServicesAtLocationArray, serviceFromValidatedJSON } from '../validation/services';
+import { validateServicesAtLocationArray, toServicesFromValidatedJSONAndStore } from '../validation/services';
 import { searchServices, APIResponse } from '../api';
 import { getDeviceLocation, DeviceLocation } from '../async/location';
 import * as errors from '../validation/errors/is_error';
 import { Errors } from '../validation/errors/types';
+import { HumanServiceData } from '../validation/services/types';
+import { selectSavedServicesIds } from '../selectors/services/select_saved_services_ids';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
@@ -36,8 +37,9 @@ export function* updateTaskServices(action: actions.BuildServicesRequestAction):
             return yield put(actions.buildServicesErrorAction(topicId, Errors.InvalidServerData));
         }
 
-        yield put(actions.buildServicesSuccessAction(topicId, R.map(serviceFromValidatedJSON, validatedApiResponse.validData)));
-
+        const savedServicesIds = yield select(selectSavedServicesIds);
+        const services = yield toServicesFromValidatedJSONAndStore(validatedApiResponse.validData, savedServicesIds);
+        yield put(actions.buildServicesSuccessAction(topicId, services));
     } catch (error) {
         yield put(actions.buildServicesErrorAction(topicId, Errors.Exception));
     }
@@ -45,4 +47,4 @@ export function* updateTaskServices(action: actions.BuildServicesRequestAction):
 
 type SuccessOrFailureResult = actions.BuildServicesSuccessAction | actions.BuildServicesErrorAction;
 
-type UpdateResult = IterableIterator<CallEffect | PutEffect<SuccessOrFailureResult>>;
+type UpdateResult = IterableIterator<ReadonlyArray<HumanServiceData> | SelectEffect | CallEffect | PutEffect<SuccessOrFailureResult>>;

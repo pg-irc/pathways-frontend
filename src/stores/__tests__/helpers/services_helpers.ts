@@ -6,6 +6,7 @@ import {
     ValidServicesForTopic, LoadingServicesForTopic, HumanServiceData, ServiceMap,
     ServiceStore, PhoneNumber, Address, ErrorServicesForTopic,
     ServicesForAllTopics,
+    ServicesForTopic,
 } from '../../../validation/services/types';
 import * as constants from '../../../application/constants';
 import { LatLong } from '../../../validation/latlong/types';
@@ -18,9 +19,24 @@ export const buildNormalizedServices = (
     servicesByTopic: buildTaskServicesOrErrorMap(taskServicesOrError),
 });
 
+export const buildNormalizedServicesFromBuilders = (
+    services: ReadonlyArray<HumanServiceData>,
+    taskServices: ReadonlyArray<ServicesForTopic>,
+): ServiceStore => ({
+    services: buildServiceMapFromBuilder(services),
+    servicesByTopic: buildTaskServicesMapFromBuilder(taskServices),
+});
+
 export const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {
     const buildAndMapToId = (map: ServiceMap, builder: ServiceBuilder): ServiceMap => {
         return { ...map, [builder.id]: builder.build() };
+    };
+    return services.reduce(buildAndMapToId, {});
+};
+
+export const buildServiceMapFromBuilder = (services: ReadonlyArray<HumanServiceData>): ServiceMap => {
+    const buildAndMapToId = (map: ServiceMap, service: HumanServiceData): ServiceMap => {
+        return { ...map, [service.id]: service };
     };
     return services.reduce(buildAndMapToId, {});
 };
@@ -31,6 +47,14 @@ const buildTaskServicesOrErrorMap = (
     const buildAndMapToId = (map: ServicesForAllTopics, builder: TaskServicesBuilder | TaskServicesErrorBuilder):
         ServicesForAllTopics => {
         return { ...map, [builder.topicId]: builder.build() };
+    };
+    return taskServicesOrError.reduce(buildAndMapToId, {});
+};
+
+const buildTaskServicesMapFromBuilder = (taskServicesOrError: ReadonlyArray<ServicesForTopic>): ServicesForAllTopics => {
+    const buildAndMapToId = (map: ServicesForAllTopics, taskServices: ServicesForTopic): ServicesForAllTopics => {
+        const topicId = aString();
+        return { ...map, [topicId]: taskServices };
     };
     return taskServicesOrError.reduce(buildAndMapToId, {});
 };
