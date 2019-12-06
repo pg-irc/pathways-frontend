@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 
 import { reducer, Store, buildDefaultStore } from '../stores';
-import { analytics } from '../middleware/analytics';
+import * as analytics from '../middleware/analytics';
 import { runSaga, ApplicationSaga } from '../sagas';
 
 import { loadFontsActions } from '../stores/fonts';
