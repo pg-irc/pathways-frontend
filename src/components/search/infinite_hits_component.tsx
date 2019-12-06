@@ -63,7 +63,7 @@ const keyExtractor = (item: SearchServiceData): string => (
 
 const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
     const item: SearchServiceData = itemInfo.item;
-    const service: HumanServiceData = toHumanServiceData(item);
+    const service: HumanServiceData = toHumanServiceData(item, props.savedServicesIds);
     const onPress = (): void => {
                 props.saveService(service);
                 goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
