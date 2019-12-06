@@ -9,11 +9,11 @@ import { selectSavedServices } from '../../selectors/services/selected_saved_ser
 import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction, addServiceToSavedListAction, removeServiceFromSavedListAction } from '../../stores/services/actions';
 import { ServiceListItemActions } from '../services/service_list_item_component';
 import { HumanServiceData } from '../../validation/services/types';
-import { getSavedServicesIds } from '../../selectors/services/get_saved_services_ids';
+import { selectSavedServicesIds } from '../../selectors/services/select_saved_services_ids';
 
 const mapStateToProps = (store: Store): BookmarksProps => ({
     bookmarkedServices: selectSavedServices(store),
-    savedServicesIds: getSavedServicesIds(store),
+    savedServicesIds: selectSavedServicesIds(store),
     bookmarkedTopics: selectSavedTopics(store),
 });
 

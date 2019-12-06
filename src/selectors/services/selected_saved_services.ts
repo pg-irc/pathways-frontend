@@ -1,10 +1,8 @@
 import { Store } from '../../stores';
-import { Id, HumanServiceData } from '../../validation/services/types';
-import { getSavedServiceMap } from './get_saved_service_map';
-import { getSavedServicesIds } from './get_saved_services_ids';
+import { HumanServiceData } from '../../validation/services/types';
+import { selectSavedServiceMap } from './select_saved_service_map';
+import * as R from 'ramda';
 
-export const selectSavedServices = (appStore: Store): ReadonlyArray<HumanServiceData> => {
-    const serviceMap = getSavedServiceMap(appStore);
-    const serviceIds = getSavedServicesIds(appStore);
-    return serviceIds.map((id: Id) => serviceMap[id]);
-};
+export const selectSavedServices = (appStore: Store): ReadonlyArray<HumanServiceData> => (
+    R.values(selectSavedServiceMap(appStore))
+);
