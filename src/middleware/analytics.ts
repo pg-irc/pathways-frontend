@@ -11,40 +11,31 @@ import { SaveServiceAction, BuildServicesSuccessAction } from '../stores/service
 export const middleware = R.curry((store: MiddlewareAPI<Dispatch, Store>, next: Dispatch, action: any) => {
     const state = store.getState();
 
-    if  (action.type === SAVE_SERVICE || action.type === LOAD_SERVICES_SUCCESS) {
+    if (action.type === SAVE_SERVICE || action.type === LOAD_SERVICES_SUCCESS) {
         sendServicesCountReport(state, action);
     }
 
     return next(action);
 });
 
-export const serviceWasAdded = (oldStore: ServiceStore, newStore: ServiceStore): boolean => (
-    R.difference(
-        Object.keys(newStore.services),
-        Object.keys(oldStore.services),
-    ).length > 0
-);
-
-export const isDivisable = (dividend: number, divisor: number): boolean => {
-    const numbersAreValid = dividend > 0 && divisor > 0;
-    const numbersAreDivisable = dividend % divisor === 0;
-    return numbersAreValid && numbersAreDivisable;
-};
-
 type UpdateServicesActions = SaveServiceAction | BuildServicesSuccessAction;
 
-const sendServicesCountReport = (state: Store, action: UpdateServicesActions): void => {
-    const currentServiceState = state.services;
-    const nextServicesState = servicesReducer(state.services, action);
-    const nextServicesCount = Object.keys(nextServicesState.services).length;
+const sendServicesCountReport = (store: Store, action: UpdateServicesActions): void => {
+    const oldStore = store.services;
+    const newStore = servicesReducer(store.services, action);
+    const servicesAdded = computeNumberOfServicesAdded(oldStore, newStore);
+    const newServiceCount = R.length(R.keys(newStore.services));
 
-    if (!serviceWasAdded(currentServiceState, nextServicesState)) {
-        return;
+    if (servicesAdded > 0 && newServiceCount % MEMORY_REPORT_SEND_EVERY_SERVICES_COUNT === 0) {
+        sendServicesCountEvent(newServiceCount);
     }
-
-    if (!isDivisable(nextServicesCount, MEMORY_REPORT_SEND_EVERY_SERVICES_COUNT)) {
-        return;
-    }
-
-    sendServicesCountEvent(nextServicesCount);
 };
+
+export const computeNumberOfServicesAdded = (oldStore: ServiceStore, newStore: ServiceStore): number => (
+    R.length(
+        R.difference(
+            R.keys(newStore.services),
+            R.keys(oldStore.services),
+        ),
+    )
+);

@@ -176,16 +176,20 @@ describe('services reducer', () => {
         });
 
         it('overwrites an existing service with the same id', () => {
-            const aNewName = 'ANewName';
-            const aSearchService = new ServiceBuilder().withId(aService.id).withName(aNewName).build();
+            const serviceId = aString();
+            const oldService = new ServiceBuilder().withId(serviceId);
+            const oldStore = buildNormalizedServices([oldService], []);
+
+            const newService = new ServiceBuilder().withId(serviceId).build();
             const action: SaveServiceAction = {
                 type: constants.SAVE_SERVICE,
                 payload: {
-                    service: aSearchService,
+                    service: newService,
                 },
             };
-            const store = reducer(theStore, action);
-            expect(store.services[aSearchService.id].name).toEqual(aNewName);
+
+            const newStore = reducer(oldStore, action);
+            expect(newStore.services[serviceId].name).toEqual(newService.name);
         });
     });
 });
