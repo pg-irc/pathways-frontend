@@ -13,6 +13,8 @@ export function buildDefaultStore(): types.ServiceStore {
     };
 }
 
+export type ServiceBookmarkActions = actions.AddServiceToSavedListAction | actions.RemoveServiceFromSavedListAction;
+
 export const buildEmptyServicesForTopic = (): types.ValidServicesForTopic => ({
     serviceIds: [],
     type: constants.TOPIC_SERVICES_VALID,
@@ -32,9 +34,9 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
         case constants.SAVE_SERVICE:
             return saveService(store, action);
         case constants.ADD_SERVICE_BOOKMARK:
-            return addToSavedServicesList(store, action);
+            return updateServiceBookmarkInServicesMap(store, action, true);
         case constants.REMOVE_SERVICE_BOOKMARK:
-            return removeFromSavedServicesList(store, action);
+            return updateServiceBookmarkInServicesMap(store, action, false);
         case constants.CLEAR_ALL_USER_DATA:
             return clearServicesData(store);
         case constants.LOAD_USER_DATA_SUCCESS:
@@ -109,35 +111,17 @@ const saveService = (store: types.ServiceStore, action: actions.SaveServiceActio
         [action.payload.service.id]: action.payload.service,
     },
 });
-const addToSavedServicesList = (store: types.ServiceStore, action: actions.AddServiceToSavedListAction): types.ServiceStore => {
-    const savedService = {
-        ...action.payload.service,
-        bookmarked: true,
-    };
-    const savedServiceId = savedService.id;
-    return {
-        ...store,
-        services: {
-            ...store.services,
-            [savedServiceId]: {
-                ...savedService,
-            },
-        },
-    };
-};
 
-const removeFromSavedServicesList = (store: types.ServiceStore, action: actions.RemoveServiceFromSavedListAction): types.ServiceStore => {
-    const serviceToRemove = {
-        ...action.payload.service,
-        bookmarked: false,
-    };
-    const serviceToRemoveId = serviceToRemove.id;
+const updateServiceBookmarkInServicesMap = (store: types.ServiceStore, action: ServiceBookmarkActions,
+    bookmarkedState: boolean): types.ServiceStore => {
+    const serviceId = action.payload.service.id;
     return {
         ...store,
         services: {
             ...store.services,
-            [serviceToRemoveId]: {
-                ...serviceToRemove,
+            [serviceId]: {
+                ...action.payload.service,
+                bookmarked: bookmarkedState,
             },
         },
     };
@@ -151,12 +135,11 @@ const clearServicesData = (store: types.ServiceStore): types.ServiceStore => (
 );
 
 const loadServicesFromUserData = (store: types.ServiceStore, action: UserDataPersistence.LoadSuccessAction): types. ServiceStore => {
-    const persistedServices: types.ServiceMap = action.payload.savedServices;
     return {
         ...store,
         services: {
             ...store.services,
-            ...persistedServices,
+            ...action.payload.savedServices,
         },
     };
 };
