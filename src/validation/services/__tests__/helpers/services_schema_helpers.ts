@@ -40,6 +40,7 @@ interface LocationJSON {
 }
 
 interface ServiceAtLocationJSON {
+    readonly id?: number;
     readonly service?: ServiceJSON;
     readonly location?: LocationJSON;
 }
@@ -400,8 +401,14 @@ export class LocationJSONBuilder {
 }
 
 export class ServiceAtLocationJSONBuilder {
+    id: number | null = aNumber();
     service: ServiceJSON | null = new ServiceJSONBuilder().build();
     location: LocationJSON | null = new LocationJSONBuilder().build();
+
+    withId(id: number): ServiceAtLocationJSONBuilder {
+        this.id = id;
+        return this;
+    }
 
     withService(service: ServiceJSON | null): ServiceAtLocationJSONBuilder {
         this.service = service;
@@ -415,19 +422,29 @@ export class ServiceAtLocationJSONBuilder {
 
     build(): ServiceAtLocationJSON {
         return {
+            id: this.id,
             service: this.service,
             location: this.location,
         };
     }
 
+    buildWithoutId(): ServiceAtLocationJSON {
+        return {
+            location: this.location,
+            service: this.service,
+        };
+    }
+
     buildWithoutService(): ServiceAtLocationJSON {
         return {
+            id: this.id,
             location: this.location,
         };
     }
 
     buildWithoutLocation(): ServiceAtLocationJSON {
         return {
+            id: this.id,
             service: this.service,
         };
     }

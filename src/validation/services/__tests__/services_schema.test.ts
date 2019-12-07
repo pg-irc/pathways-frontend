@@ -27,6 +27,16 @@ describe('schema for services_at_location endpoint', () => {
         });
     });
 
+    describe('validate service at location id', () => {
+        test('service at location is of type number', () => {
+            const validator = validateServicesAtLocationArray([
+                new helpers.ServiceAtLocationJSONBuilder().withId(null).build(),
+            ]);
+            expect(validator.isValid).toBe(false);
+            expect(validator.errors).toBe('data[0].id should be number');
+        });
+    });
+
     describe('validating service properties', () => {
 
         test('service is required', () => {
