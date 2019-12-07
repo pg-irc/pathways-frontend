@@ -21,6 +21,7 @@ export interface Address {
 
 export interface HumanServiceData {
     readonly id: Id;
+    readonly services_at_location_id?: number;
     readonly latlong?: LatLong;
     readonly name: string;
     readonly description: string;

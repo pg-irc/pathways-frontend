@@ -6,6 +6,7 @@ describe('Adapting server service object to client service object', () => {
 
     it('it builds expected object', () => {
         const serverServiceObject = {
+            id: aNumber(),
             service: {
                 id: aString(),
                 name: aString(),
@@ -34,6 +35,7 @@ describe('Adapting server service object to client service object', () => {
         const clientServiceObject = serviceFromValidatedJSON(serverServiceObject);
         const expectedClientServiceObject = {
             id: serverServiceObject.service.id,
+            services_at_location_id: serverServiceObject.id,
             latlong: {
                 lat: serverServiceObject.location.latitude,
                 lng: serverServiceObject.location.longitude,
