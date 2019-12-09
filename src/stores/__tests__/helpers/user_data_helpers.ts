@@ -25,10 +25,10 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    addSavedServices(service: ServiceMap): PersistedUserDataBuilder {
+    addSavedServices(services: ServiceMap): PersistedUserDataBuilder {
         this.savedServices = {
             ...this.savedServices,
-            ...service,
+            ...services,
         };
         return this;
     }
