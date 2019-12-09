@@ -401,21 +401,21 @@ export class LocationJSONBuilder {
 }
 
 export class ServiceAtLocationJSONBuilder {
-    id: number | null = aNumber();
-    service: ServiceJSON | null = new ServiceJSONBuilder().build();
-    location: LocationJSON | null = new LocationJSONBuilder().build();
+    id: number = aNumber();
+    service: ServiceJSON = new ServiceJSONBuilder().build();
+    location: LocationJSON = new LocationJSONBuilder().build();
 
     withId(id: number): ServiceAtLocationJSONBuilder {
         this.id = id;
         return this;
     }
 
-    withService(service: ServiceJSON | null): ServiceAtLocationJSONBuilder {
+    withService(service: ServiceJSON): ServiceAtLocationJSONBuilder {
         this.service = service;
         return this;
     }
 
-    withLocation(location: LocationJSON | null): ServiceAtLocationJSONBuilder {
+    withLocation(location: LocationJSON): ServiceAtLocationJSONBuilder {
         this.location = location;
         return this;
     }
