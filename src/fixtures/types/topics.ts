@@ -10,7 +10,7 @@ export interface Topic {
     readonly description: LocalizedText;
     readonly taxonomyTerms: ReadonlyArray<TaxonomyTermReference>;
     readonly relatedTopics: ReadonlyArray<Id>;
-    readonly completed: boolean;
+    readonly isNewlyRecommended: boolean;
 }
 
 export interface TopicMap {

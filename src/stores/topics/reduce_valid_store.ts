@@ -12,8 +12,16 @@ export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): T
         case constants.REMOVE_BOOKMARK:
             return removeFromTopicList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
 
-        case constants.TOGGLE_IS_TOPIC_COMPLETED:
-            return toggleCompletedValue(store, action.payload.topicId);
+        case constants.CLOSE_QUESTIONNAIRE:
+            return new ValidTopicStore({
+                ...store,
+                topicMap: R.map((topic: Topic): Topic => (
+                    {
+                        ...topic,
+                        isNewlyRecommended: R.contains(topic.id, action.payload.newlyRecommendedTopics),
+                    }
+                ), store.topicMap),
+            });
 
         case constants.LOAD_USER_DATA_REQUEST:
             return new LoadingTopicStore(store);
@@ -21,7 +29,7 @@ export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): T
         case constants.CLEAR_ALL_USER_DATA:
             return new ValidTopicStore({
                 ...store,
-                topicMap: R.map((topic: Topic): Topic => ({ ...topic, completed: false }), store.topicMap),
+                topicMap: R.map((topic: Topic): Topic => ({ ...topic, isNewlyRecommended: false }), store.topicMap),
                 savedTopicsList: [],
             });
 
@@ -42,18 +50,4 @@ const removeFromTopicList = (store: ValidTopicStore, property: keyof (ValidTopic
         return store;
     }
     return new ValidTopicStore({ ...store, [property]: topicList.filter((id: Id) => id !== value) });
-};
-
-const toggleCompletedValue = (store: ValidTopicStore, topicId: Id): ValidTopicStore => {
-    const topic = store.topicMap[topicId];
-    return new ValidTopicStore({
-        ...store,
-        topicMap: {
-            ...store.topicMap,
-            [topicId]: {
-                ...topic,
-                completed: !topic.completed,
-            },
-        },
-    });
 };

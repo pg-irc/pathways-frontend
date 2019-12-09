@@ -6,7 +6,6 @@ import { Id as TopicId } from './topics';
 export interface PersistedUserData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
     readonly savedTopics: ReadonlyArray<TopicId>;
-    readonly completedTopics: ReadonlyArray<TopicId>;
     readonly showOnboarding: boolean;
 }
 

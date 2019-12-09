@@ -14,7 +14,6 @@ export const toSelectorTopicListItem = (
             title: getLocalizedText(locale, topic.title),
             description: getLocalizedText(locale, topic.description),
             isRecommended: isRecommended,
-            completed: topic.completed,
             exploreSection: exploreSection,
         }
     );

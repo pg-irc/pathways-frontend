@@ -7,7 +7,7 @@ import { aString } from '../../helpers/random_test_values';
 import { toValidOrThrow, LoadingQuestionnaireStore, InvalidQuestionnaireStore } from '../questionnaire/stores';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { UserDataPersistence } from '../user_data';
-import { clearAllUserData, updateOldAnswersFromStoreAnswers } from '../questionnaire/actions';
+import { clearAllUserData, closeQuestionnaire } from '../questionnaire/actions';
 
 describe('choose answer action creator', () => {
     it('should create action with type CHOOSE_ANSWER', () => {
@@ -258,9 +258,9 @@ describe('questionnaire reducer', () => {
         });
     });
 
-    describe('update old answers from store answers action', () => {
-        it('sets old answers equal to store answers', () => {
-            newStore = store.reducer(theStore, updateOldAnswersFromStoreAnswers());
+    describe('when closing the questionnaire', () => {
+        it('sets old answers equal to current answers', () => {
+            newStore = store.reducer(theStore, closeQuestionnaire([]));
             expect(toValidOrThrow(newStore).oldAnswers).toEqual(toValidOrThrow(theStore).answers);
         });
     });

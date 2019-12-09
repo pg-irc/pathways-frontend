@@ -16,6 +16,5 @@ export const toSelectorTopic =
                 exploreSection,
                 isRecommended,
                 relatedTopics,
-                completed: topic.completed,
             }
         );

@@ -6,7 +6,6 @@ import { PersistedUserData } from '../../user_data';
 export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];
     savedTopics: TopicId[] = [];
-    completedTopics: TopicId[] = [];
     showOnboarding: boolean = true;
 
     addChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
@@ -19,11 +18,6 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    addCompletedTopic(id: TopicId): PersistedUserDataBuilder {
-        this.completedTopics.push(id);
-        return this;
-    }
-
     addShowOnboarding(showOnboarding: boolean): PersistedUserDataBuilder {
         this.showOnboarding = showOnboarding;
         return this;
@@ -33,7 +27,6 @@ export class PersistedUserDataBuilder {
         return {
             chosenAnswers: this.chosenAnswers,
             savedTopics: this.savedTopics,
-            completedTopics: this.completedTopics,
             showOnboarding: this.showOnboarding,
         };
     }
