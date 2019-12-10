@@ -1,9 +1,9 @@
 // tslint:disable:no-var-requires no-any
-const Ajv = require('ajv');
 import * as R from 'ramda';
 import * as types from './types';
 import { serviceAtLocationArray } from './schema';
 import { ValidationResult } from '../validation_result';
+const Ajv = require('ajv');
 
 export const validateServicesAtLocationArray = (data: ReadonlyArray<any>): ValidationResult<ValidatedServiceAtLocationJSON> => {
     const ajv = new Ajv();
@@ -47,6 +47,7 @@ interface ValidatedLocationJSON {
 }
 
 export interface ValidatedServiceAtLocationJSON {
+    readonly id?: number;
     readonly service: ValidatedServiceJSON;
     readonly location: ValidatedLocationJSON;
 }
@@ -69,6 +70,7 @@ export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): 
 
     return {
         id: data.service.id,
+        services_at_location_id: data.id,
         latlong: {
             lat: data.location.latitude,
             lng: data.location.longitude,

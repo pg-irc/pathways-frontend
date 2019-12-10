@@ -1,7 +1,7 @@
 // tslint:disable:no-var-requires
-const Ajv = require('ajv');
 import * as schema from './schema';
 import { LatLong } from './types';
+const Ajv = require('ajv');
 
 // tslint:disable-next-line:no-any
 export const toGeoCoderLatLong = (data: any): LatLong => {

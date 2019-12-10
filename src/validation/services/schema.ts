@@ -102,6 +102,9 @@ const location = {
 export const serviceAtLocation = {
     "type": "object",
     "properties": {
+        "id": {
+            "type": "number",
+        },
         "service": service,
         "location": location
     },
