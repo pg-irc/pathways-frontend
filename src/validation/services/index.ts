@@ -1,9 +1,9 @@
 // tslint:disable:no-var-requires no-any
-const Ajv = require('ajv');
 import * as R from 'ramda';
 import * as types from './types';
 import { serviceAtLocationArray } from './schema';
 import { ValidationResult } from '../validation_result';
+const Ajv = require('ajv');
 
 export const validateServicesAtLocationArray = (data: ReadonlyArray<any>): ValidationResult<ValidatedServiceAtLocationJSON> => {
     const ajv = new Ajv();

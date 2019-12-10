@@ -1,8 +1,8 @@
 // tslint:disable:no-var-requires no-any
-const Ajv = require('ajv');
 import { SearchServiceData } from './types';
 import { serviceSearchItemArray } from './schema';
 import { ValidationResult } from '../validation_result';
+const Ajv = require('ajv');
 
 export const validateServiceSearchResponse = (data: ReadonlyArray<any>): ValidationResult<SearchServiceData> => {
     const ajv = new Ajv();
