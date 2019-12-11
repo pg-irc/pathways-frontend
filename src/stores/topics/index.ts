@@ -8,7 +8,10 @@ import { reduceValidStore } from './reduce_valid_store';
 export { TopicStore, ValidTopicStore, LoadingTopicStore, InValidTopicStore, toValidOrThrow } from './stores';
 export { Id, TopicList, TopicMap, Topic } from '../../fixtures/types/topics';
 export {
-    addToSavedList, AddToSavedListAction, removeFromSavedList, RemoveFromSavedListAction,
+    addToSavedList, AddToSavedListAction,
+    removeFromSavedList, RemoveFromSavedListAction,
+    expandTopicDetail, ExpandTopicDetailAction,
+    reduceTopicDetail, ReduceTopicDetailAction,
 } from './actions';
 
 export const buildDefaultStore = (): TopicStore => (
