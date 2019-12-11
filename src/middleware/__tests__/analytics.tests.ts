@@ -6,6 +6,13 @@ describe('Analytics memory report middleware helpers', () => {
 
     describe('shouldSendServicesReport()', () => {
 
+        it('returns false when the new service count does not pass the threshold', () => {
+            const oldServicesCount = 8;
+            const newServicesCount = 9;
+            const sendEveryCount = 10;
+            expect(shouldSendServicesReport(oldServicesCount, newServicesCount, sendEveryCount)).toBe(false);
+        });
+
         it('returns true when the new services count passes the threshold', () => {
             const oldServicesCount = 8;
             const newServicesCount = 12;
