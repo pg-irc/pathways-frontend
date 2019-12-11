@@ -61,14 +61,19 @@ const ServiceContactDetails = (props: { readonly service: HumanServiceData, read
     const serviceName = buildServiceName(props.service.organizationName, props.service.name);
     const linkContextForAnalytics = buildAnalyticsLinkContext('Service', serviceName);
     const locationTitle = getLocationTitleFromAddresses(filterPhysicalAddresses(props.service.addresses));
-    const onPressForAddress = serviceHasLatLng(props.service) ?
-        (_: Address): () => Promise<void> => openInMapsApplication(
-            locationTitle,
-            props.service.latlong.lat,
-            props.service.latlong.lng,
-            props.currentPathForAnaltyics,
-            linkContextForAnalytics,
-        ) : undefined;
+    const onPressForAddress = (_: Address): () => Promise<void> => {
+        if (serviceHasLatLng(props.service)) {
+            return openInMapsApplication(
+                locationTitle,
+                props.service.latlong.lat,
+                props.service.latlong.lng,
+                props.currentPathForAnaltyics,
+                linkContextForAnalytics,
+            );
+        }
+        return undefined;
+    };
+
     return (
         <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
             <AddressesComponent

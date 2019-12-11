@@ -5,6 +5,7 @@ import { isValidServicesForTopic } from '../services/is_valid_services_for_topic
 import {
     BuildServicesRequestAction, BuildServicesSuccessAction,
     BuildServicesErrorAction,
+    SaveServiceAction,
 } from '../services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
@@ -157,6 +158,38 @@ describe('services reducer', () => {
 
         it('does not update existing services', () => {
             expect(store.services).toEqual(theStore.services);
+        });
+    });
+
+    describe('when sending a save search service action', () => {
+
+        it('updates the store with the new service', () => {
+            const aSearchService = new ServiceBuilder().build();
+            const action: SaveServiceAction = {
+                type: constants.SAVE_SERVICE,
+                payload: {
+                    service: aSearchService,
+                },
+            };
+            const store = reducer(theStore, action);
+            expect(store.services[aSearchService.id]).toEqual(aSearchService);
+        });
+
+        it('overwrites an existing service with the same id', () => {
+            const serviceId = aString();
+            const oldService = new ServiceBuilder().withId(serviceId);
+            const oldStore = buildNormalizedServices([oldService], []);
+
+            const newService = new ServiceBuilder().withId(serviceId).build();
+            const action: SaveServiceAction = {
+                type: constants.SAVE_SERVICE,
+                payload: {
+                    service: newService,
+                },
+            };
+
+            const newStore = reducer(oldStore, action);
+            expect(newStore.services[serviceId].name).toEqual(newService.name);
         });
     });
 });

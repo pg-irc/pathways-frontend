@@ -17,14 +17,22 @@ import { MODAL_NONE, MODAL_SEARCH_TERM, MODAL_LOCATION, USE_MY_LOCATION } from '
 import { SearchTermInputModal } from './search_term_input_modal';
 import { LocationInputModal } from './location_input_modal';
 import { localizedPlaceHolders } from './localized_place_holders';
+import { HumanServiceData } from '../../validation/services/types';
+import { SaveServiceAction } from '../../stores/services/actions';
+import { RouterProps } from '../../application/routing';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
     readonly appId: string;
 }
 
-export const SearchComponent = (props: SearchComponentProps): JSX.Element => {
-    // tslint:disable-next-line:no-expression-statement
+export interface SearchComponentActions {
+    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+}
+
+type Props = SearchComponentProps & SearchComponentActions & RouterProps;
+
+export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
 
     const [modalState, setModalState]: [string, (s: string) => void] = useState(MODAL_NONE);
@@ -32,7 +40,6 @@ export const SearchComponent = (props: SearchComponentProps): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
-    // tslint:disable-next-line:no-expression-statement
     useFetchLatLongFromLocation(location, setLatLong);
 
     const ConnectedSearchTermInputModal = connectSearchBox(SearchTermInputModal);

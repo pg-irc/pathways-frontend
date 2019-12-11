@@ -1,4 +1,5 @@
 import React from 'react';
+import * as R from 'ramda';
 import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
 import { Icon } from 'native-base';
@@ -17,22 +18,7 @@ interface Props {
 
 export const AddressesComponent = (props: Props): JSX.Element => (
     <View>
-        {mapWithIndex((address: Address, index: number) =>
-            <View key={index}>
-                <CardButtonComponent
-                    leftContent={<SingleAddressComponent address={address} />}
-                    rightContent={
-                        <Icon
-                            name={'location-arrow'}
-                            type={'FontAwesome'}
-                            style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-                        />
-                    }
-                    onPress={props.onPressForAddress(address)}
-                 />
-                <DividerComponent />
-            </View>
-        , props.addresses)}
+        {mapWithIndex(buildAddress(props), props.addresses)}
     </View>
 );
 
@@ -45,3 +31,25 @@ export const SingleAddressComponent = (props: {readonly address: Address}): JSX.
         </Text>
     </View>
 );
+
+const buildAddress = R.curry((props: Props, address: Address, index: number): JSX.Element => {
+    const leftContent = <SingleAddressComponent address={address} />;
+    const rightContent = (
+        <Icon
+            name={'location-arrow'}
+            type={'FontAwesome'}
+            style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
+        />
+    );
+
+    return (
+        <View key={index}>
+            <CardButtonComponent
+                leftContent={leftContent}
+                rightContent={rightContent}
+                onPress={props.onPressForAddress(address)}
+            />
+            <DividerComponent />
+        </View>
+    );
+});
