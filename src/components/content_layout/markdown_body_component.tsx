@@ -5,6 +5,7 @@ import { ExpandableContentComponent } from '../expandable_content/expandable_con
 interface Props {
     readonly body: string;
     readonly shouldBeExpandable: boolean;
+    readonly topicId?: string;
 }
 
 export const MarkdownBodyComponent = (props: Props): JSX.Element => {
@@ -13,10 +14,12 @@ export const MarkdownBodyComponent = (props: Props): JSX.Element => {
             {props.body}
         </MarkdownComponent>
     );
+    const contentId = 'Topic id: ' + props.topicId;
     if (props.shouldBeExpandable) {
         return (
             <ExpandableContentComponent
                 content={body}
+                contentId={contentId}
             />
         );
     }
