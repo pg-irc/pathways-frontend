@@ -82,6 +82,20 @@ All commits are labelled with the issue they are being done under. This ensures 
 * On the client side, the version is stored in VERSION.txt and several other files, with unit tests making sure that all version strings are the same.
 * Client About screen shows the version of the client.
 
+## Updating project dependencies
+
+This is a managed Expo application so we should let Expo update its dependencies before we apply non Expo updates. You may run into problems with Expo if for example you upgrade one of its dependencies passed what it requires. This is the approach we've been using:
+
+1. Update the Expo CLI: `$ npm install -g expo-cli`
+
+2. Install the newest Expo SDK: `$ expo update {EXPO_SDK_VERSION}`
+
+3. Test and fix any breakage due to Expo updates
+
+4. Apply non Expo updates using `yarn`
+
+5. Test and fix any breakage due to non Expo updates
+
 ## Changelog
 
 Changes that are made in each release are tracked following [Expo's](https://github.com/expo/expo/blob/master/CHANGELOG.md) procedure. 
