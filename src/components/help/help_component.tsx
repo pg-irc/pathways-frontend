@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { History } from 'history';
 import { Text, View, Icon, Content } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
@@ -14,7 +14,6 @@ import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import * as R from 'ramda';
 import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
 import { LatLong } from '../../validation/latlong/types';
-import { Notifications } from 'expo';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -72,25 +71,8 @@ export interface HelpComponentActions {
 
 type Props = HelpComponentProps & HelpComponentActions;
 
-// tslint:disable:typedef no-any no-expression-statement
-
-export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
-    const [state, setState] = useState({});
-    useEffect(() => {
-        Notifications.addListener((notification: any) => {
-            setState(notification);
-            // tslint:disable-next-line:no-string-literal
-            const route = notification && notification['data'] && notification['data']['navigateToRoute'];
-            if (route === 'store') {
-                openURL('market://details?id=org.peacegeeks.ArrivalAdvisor');
-            } else if (route) {
-                props.history.push(route);
-            } else {
-                setState(JSON.stringify(notification));
-            }
-        });
-    });
-    return <Content padder style={applicationStyles.body}>
+export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    <Content padder style={applicationStyles.body}>
         <View
             style={{
                 backgroundColor: colors.white,
@@ -112,7 +94,6 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
             }}>
                 <ContactSettlementWorkerButton {...props} />
             </View>
-            <Text>Data: {JSON.stringify(state)}</Text>
         </View>
         <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
             <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
@@ -124,8 +105,8 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
         }}>
             <ClearAppMemoryButton {...props} />
         </View>
-    </Content>;
-};
+    </Content>
+);
 
 const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <MultiLineButtonComponent onPress={goToRouteWithParameter(Routes.Services, settlementWorkerTaskID, props.history)}>
@@ -203,4 +184,4 @@ export const extractAlertStrings = (): JSX.Element => (
             <Trans>Cancel</Trans>
         </Text>
     </div>
-);
+)
