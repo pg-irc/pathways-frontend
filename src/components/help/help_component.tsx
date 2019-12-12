@@ -81,8 +81,12 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
             setState(notification);
             // tslint:disable-next-line:no-string-literal
             const route = notification && notification['data'] && notification['data']['navigateToRoute'];
-            if (route) {
+            if (route === 'store') {
+                openURL('market://details?id=org.peacegeeks.ArrivalAdvisor');
+            } else if (route) {
                 props.history.push(route);
+            } else {
+                setState(JSON.stringify(notification));
             }
         });
     });
