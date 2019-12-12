@@ -1,5 +1,4 @@
 // tslint:disable:quotemark trailing-comma
-import { phoneNumberArray, addressWithTypeArray } from "../services/schema";
 
 const chosenAnswersArray = {
     "type": "array",
@@ -25,7 +24,68 @@ const latLong = {
             "type": "number"
         }
     },
-    "required": ["lat", "long"]
+    "required": ["lat", "lng"]
+};
+
+const phoneNumber = {
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "phone_number": {
+            "type": "string"
+        }
+    },
+    "required": ["type", "phone_number"]
+};
+
+const phoneNumberArray = {
+    "type": "array",
+    "items": phoneNumber
+};
+
+const address = {
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "address": {
+            "type": ["string", "null"]
+        },
+        "city": {
+            "type": "string"
+        },
+        "state_province": {
+            "type": ["string", "null"]
+        },
+        "postal_code": {
+            "type": ["string", "null"]
+        },
+        "country": {
+            "type": "string"
+        }
+    },
+    "required": ["id", "address", "city", "state_province", "postal_code", "country"]
+};
+
+const addressWithType = {
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string"
+        },
+        "address": {
+            address
+        }
+    },
+    "required": ["type", "address"]
+};
+
+const addressWithTypeArray = {
+    "type": "array",
+    "items": addressWithType
 };
 
 const serviceIdRegularExpression = "^[A-Za-z0-9]+$";
@@ -44,24 +104,24 @@ const serviceMap = {
                         "type": "string"
                     },
                     "description": {
-                        "type": "string"
+                        "type": ["string", "null"]
                     },
-                    "phoneNumbers": phoneNumberArray,
                     "addresses": addressWithTypeArray,
+                    "phoneNumbers": phoneNumberArray,
                     "website": {
-                        "type": "string"
+                        "type": ["string", "null"]
                     },
                     "email": {
-                        "type": "string"
+                        "type": ["string", "null"]
                     },
-                    "organization_name": {
-                        "type": "string"
+                    "organizationName": {
+                        "type": ["string", "null"]
                     },
                     "bookmarked": {
                         "type": "boolean"
                     }
                 },
-                "required": ["id", "latlong", "name", "description", "phoneNumbers", "addresses", "website", "email", "organization_name", "bookmarked"]
+                "required": ["id", "name", "description", "phoneNumbers", "addresses", "website", "email", "organizationName", "bookmarked"]
         }
     }
 };
