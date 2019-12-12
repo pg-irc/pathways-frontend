@@ -4,11 +4,11 @@ import { PersistedUserData } from '../../stores/user_data';
 import { pickSavedTopicIds } from '../topics/pick_saved_topic_ids';
 import { pickAnswers } from '../questionnaire/pick_answers';
 import { selectShowOnboarding } from '../onboarding/select_show_onboarding';
-import { selectSavedServiceMap } from '../services/select_saved_service_map';
+import { selectBookmarkedServiceMap } from '../services/select_bookmarked_service_map';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedUserData => ({
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
     savedTopics: pickSavedTopicIds(appStore),
     showOnboarding: selectShowOnboarding(appStore),
-    savedServices: selectSavedServiceMap(appStore),
+    bookmarkedServices: selectBookmarkedServiceMap(appStore),
 });

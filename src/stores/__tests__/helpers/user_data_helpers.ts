@@ -8,7 +8,7 @@ export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];
     savedTopics: TopicId[] = [];
     showOnboarding: boolean = true;
-    savedServices: ServiceMap = {};
+    bookmarkedServices: ServiceMap = {};
 
     addChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
         this.chosenAnswers.push(id);
@@ -25,9 +25,9 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    addSavedServices(services: ServiceMap): PersistedUserDataBuilder {
-        this.savedServices = {
-            ...this.savedServices,
+    addBookmarkedServices(services: ServiceMap): PersistedUserDataBuilder {
+        this.bookmarkedServices = {
+            ...this.bookmarkedServices,
             ...services,
         };
         return this;
@@ -38,7 +38,7 @@ export class PersistedUserDataBuilder {
             chosenAnswers: this.chosenAnswers,
             savedTopics: this.savedTopics,
             showOnboarding: this.showOnboarding,
-            savedServices: this.savedServices,
+            bookmarkedServices: this.bookmarkedServices,
         };
     }
 

@@ -135,6 +135,6 @@ export const userData = {
         "showOnboarding": {
             "type": "boolean"
         },
-        "savedServices": serviceMap
+        "bookmarkedServices": serviceMap
     }
 };

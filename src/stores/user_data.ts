@@ -8,7 +8,7 @@ export interface PersistedUserData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
     readonly savedTopics: ReadonlyArray<TopicId>;
     readonly showOnboarding: boolean;
-    readonly savedServices: ServiceMap;
+    readonly bookmarkedServices: ServiceMap;
 }
 
 export namespace UserDataPersistence {

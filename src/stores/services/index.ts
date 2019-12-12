@@ -13,7 +13,7 @@ export function buildDefaultStore(): types.ServiceStore {
     };
 }
 
-export type ServiceBookmarkActions = actions.AddServiceToSavedListAction | actions.RemoveServiceFromSavedListAction;
+export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.UnbookmarkServiceAction;
 
 export const buildEmptyServicesForTopic = (): types.ValidServicesForTopic => ({
     serviceIds: [],
@@ -33,9 +33,9 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServicesFailure(store, action);
         case constants.SAVE_SERVICE:
             return saveService(store, action);
-        case constants.ADD_SERVICE_BOOKMARK:
+        case constants.BOOKMARK_SERVICE:
             return updateServiceBookmarkInServicesMap(store, action, true);
-        case constants.REMOVE_SERVICE_BOOKMARK:
+        case constants.UNBOOKMARK_SERVICE:
             return updateServiceBookmarkInServicesMap(store, action, false);
         case constants.CLEAR_ALL_USER_DATA:
             return clearServicesData(store);
@@ -137,7 +137,7 @@ const loadServicesFromUserData = (store: types.ServiceStore, action: UserDataPer
         ...store,
         services: {
             ...store.services,
-            ...action.payload.savedServices,
+            ...action.payload.bookmarkedServices,
         },
     };
 };

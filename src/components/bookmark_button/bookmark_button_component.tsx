@@ -2,15 +2,15 @@ import React from 'react';
 import { Icon, Button } from 'native-base';
 import { AddTopicToSavedListAction, RemoveTopicFromSavedListAction } from '../../stores/topics';
 import { values } from '../../application/styles';
-import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 
 export interface BookmarkButtonProps {
     readonly isBookmarked: boolean;
     readonly textColor: string;
 }
 
-export type AddBookmarkAction = AddTopicToSavedListAction | AddServiceToSavedListAction;
-export type RemoveBookmarkAction = RemoveTopicFromSavedListAction | RemoveServiceFromSavedListAction;
+export type AddBookmarkAction = AddTopicToSavedListAction | BookmarkServiceAction;
+export type RemoveBookmarkAction = RemoveTopicFromSavedListAction | UnbookmarkServiceAction;
 
 export interface BookmarkButtonActions {
     readonly addBookmark: () => AddBookmarkAction;

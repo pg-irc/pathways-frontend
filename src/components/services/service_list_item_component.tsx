@@ -14,7 +14,7 @@ import { getLocationTitleFromAddresses } from './get_location_title_from_address
 import { AnalyticsLink, LinkTypes } from '../link/link';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
-import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
 import { History } from 'history';
 
@@ -27,8 +27,8 @@ export interface ServiceListItemProps {
 }
 
 export interface ServiceListItemActions {
-    readonly addServiceToSavedList: (service: HumanServiceData) => AddServiceToSavedListAction;
-    readonly removeServiceFromSavedList: (service: HumanServiceData) => RemoveServiceFromSavedListAction;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
 }
 
 type Props = ServiceListItemProps & ServiceListItemActions;
@@ -37,8 +37,8 @@ export const ServiceListItemComponent: React.StatelessComponent<Props> =
     (props: Props): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
         const linkContext = buildAnalyticsLinkContext('Service', serviceName);
-        const addBookmark = (): AddServiceToSavedListAction => props.addServiceToSavedList(props.service);
-        const removeBookmark = (): RemoveServiceFromSavedListAction => props.removeServiceFromSavedList(props.service);
+        const addBookmark = (): BookmarkServiceAction => props.bookmarkService(props.service);
+        const removeBookmark = (): UnbookmarkServiceAction => props.unbookmarkService(props.service);
         return (
             <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
                 <BookmarkButtonComponent isBookmarked={props.isBookmarked}

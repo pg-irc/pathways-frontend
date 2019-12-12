@@ -18,8 +18,8 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.TOGGLE_IS_TOPIC_COMPLETED,
             constants.CLEAR_ALL_USER_DATA,
             constants.SET_ONBOARDING,
-            constants.ADD_SERVICE_BOOKMARK,
-            constants.REMOVE_SERVICE_BOOKMARK,
+            constants.BOOKMARK_SERVICE,
+            constants.UNBOOKMARK_SERVICE,
         ],
         saveUserData);
 }
@@ -62,6 +62,7 @@ export function* loadUserData(): LoadActions {
         const userData = deserializeUserData(serializedUserData);
         const validatedUserData = validateUserData(userData);
         if (!validatedUserData.isValid) {
+            console.log(validatedUserData)
             yield put(UserDataPersistence.loadFailure('Failed to load user data'));
         }
         yield put(UserDataPersistence.loadSuccess(userData));
@@ -84,6 +85,6 @@ export const setUserDataDefaultValues = (data: any): PersistedUserData => (
         chosenAnswers: data.chosenAnswers || [],
         savedTopics: data.savedTopics || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
-        savedServices: data.savedServices || {},
+        bookmarkedServices: data.bookmarkedServices || {},
     }
 );

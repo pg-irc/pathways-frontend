@@ -21,12 +21,12 @@ describe('persisted user_data tests', () => {
         expect(recreatedData.savedTopics[0]).toEqual(savedTopic);
     });
 
-    test('saved services should persist between being serialized and deserialized', () => {
-        const savedServiceId = aString();
-        const savedService = new ServiceBuilder().withId(savedServiceId).withBookmarked(true);
-        const savedServiceMap = buildServiceMap([savedService]);
-        const userData = new PersistedUserDataBuilder().addSavedServices(savedServiceMap).buildObject();
+    test('bookmarked services should persist between being serialized and deserialized', () => {
+        const bookmarkedServiceId = aString();
+        const bookmarkedService = new ServiceBuilder().withId(bookmarkedServiceId).withBookmarked(true);
+        const bookmarkedServiceMap = buildServiceMap([bookmarkedService]);
+        const userData = new PersistedUserDataBuilder().addBookmarkedServices(bookmarkedServiceMap).buildObject();
         const recreatedData = deserializeUserData(serializeUserData(userData));
-        expect(recreatedData.savedServices[savedServiceId]).toEqual(savedServiceMap[savedServiceId]);
+        expect(recreatedData.bookmarkedServices[bookmarkedServiceId]).toEqual(bookmarkedServiceMap[bookmarkedServiceId]);
     });
 });

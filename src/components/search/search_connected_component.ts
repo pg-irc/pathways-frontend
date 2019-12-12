@@ -5,24 +5,22 @@ import { SearchComponentProps, SearchComponent, SearchComponentActions } from '.
 import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
 import { saveService, SaveServiceAction } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
-import { selectSavedServicesIds } from '../../selectors/services/select_saved_services_ids';
-import { ServicesAction, AddServiceToSavedListAction, addServiceToSavedListAction,
-        removeServiceFromSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
+import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
+import { ServicesAction, BookmarkServiceAction, bookmarkService,
+        unbookmarkService, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { InfiniteHitsActions } from './infinite_hits_component';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     apiKey: ALGOLIA_SEARCH_API_KEY,
     appId: 'MMYH1Z0D3O',
-    savedServicesIds: selectSavedServicesIds(store),
+    bookmarkedServicesIds: selectBookmarkedServicesIds(store),
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<ServicesAction>): SearchComponentActions | InfiniteHitsActions => ({
     saveService: (service: HumanServiceData): SaveServiceAction =>
         dispatch(saveService(service)),
-    addServiceToSavedList: (service: HumanServiceData): AddServiceToSavedListAction =>
-        dispatch(addServiceToSavedListAction(service)),
-    removeServiceFromSavedList: (service: HumanServiceData): RemoveServiceFromSavedListAction =>
-        dispatch(removeServiceFromSavedListAction(service)),
+    bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
+    unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
 });
 
 export const SearchConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(SearchComponent);

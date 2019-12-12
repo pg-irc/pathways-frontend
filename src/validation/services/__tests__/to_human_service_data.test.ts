@@ -67,7 +67,7 @@ describe('Adapting server service object to client service object', () => {
 
     describe('building the array of HumanServicesData from Valid JSON and saved services', () => {
         const serviceId = aString();
-        const savedServicesIds: ReadonlyArray<Id> = [serviceId];
+        const bookmarkedServicesIds: ReadonlyArray<Id> = [serviceId];
         it('it builds expected object with bookmarked set to true', () => {
             const serverServiceObject = {
                 service: {
@@ -95,7 +95,7 @@ describe('Adapting server service object to client service object', () => {
                     }],
                 },
             };
-            const clientServiceObject = toServicesFromValidatedJSONAndStore([serverServiceObject], savedServicesIds);
+            const clientServiceObject = toServicesFromValidatedJSONAndStore([serverServiceObject], bookmarkedServicesIds);
             const expectedClientServiceObject = {
                 id: serverServiceObject.service.id,
                 latlong: {

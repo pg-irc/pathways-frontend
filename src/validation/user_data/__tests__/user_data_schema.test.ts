@@ -122,7 +122,7 @@ describe('user data schema', () => {
             test('passes with valid data', () => {
                 const aServiceBuilder = new ServiceBuilder();
                 const serviceMap = buildServiceMap([aServiceBuilder]);
-                const validUserData = new PersistedUserDataBuilder().addSavedServices(serviceMap).buildObject();
+                const validUserData = new PersistedUserDataBuilder().addBookmarkedServices(serviceMap).buildObject();
                 const validator = validateUserData(validUserData);
                 expect(validator.isValid).toBe(true);
             });
@@ -141,7 +141,7 @@ describe('user data schema', () => {
                     // bookmarked: aBoolean(),
                 };
                 const invalidServiceMap: any = { serviceId: invalidService };
-                const invalidUserData = new PersistedUserDataBuilder().addSavedServices(invalidServiceMap).buildObject();
+                const invalidUserData = new PersistedUserDataBuilder().addBookmarkedServices(invalidServiceMap).buildObject();
                 const validator = validateUserData(invalidUserData);
                 expect(validator.isValid).toBe(false);
             });

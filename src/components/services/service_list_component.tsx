@@ -8,7 +8,7 @@ import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
-import { BuildServicesRequestAction, AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
+import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { textStyles, colors, values } from '../../application/styles';
 import { isError } from '../../selectors/services/is_error';
 import * as constants from '../../application/constants';
@@ -27,13 +27,13 @@ export interface ServiceListProps {
     readonly topic: Topic;
     readonly topicServicesOrError: SelectorTopicServices;
     readonly manualUserLocation?: LatLong;
-    readonly savedServicesIds: ReadonlyArray<Id>;
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
 }
 
 export interface ServiceListActions {
-    readonly dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
-    readonly addServiceToSavedList: (service: HumanServiceData) => AddServiceToSavedListAction;
-    readonly removeServiceFromSavedList: (service: HumanServiceData) => RemoveServiceFromSavedListAction;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
 }
 
 export interface ServicesUpdater {
@@ -126,9 +126,9 @@ const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX
             onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
             currentPath={props.location.pathname}
             history={props.history}
-            isBookmarked={R.contains(item.id, props.savedServicesIds)}
-            addServiceToSavedList={props.addServiceToSavedList}
-            removeServiceFromSavedList={props.removeServiceFromSavedList}
+            isBookmarked={R.contains(item.id, props.bookmarkedServicesIds)}
+            bookmarkService={props.bookmarkService}
+            unbookmarkService={props.unbookmarkService}
         />
     );
 };

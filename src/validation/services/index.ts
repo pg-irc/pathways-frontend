@@ -53,13 +53,13 @@ export interface ValidatedServiceAtLocationJSON {
     readonly location: ValidatedLocationJSON;
 }
 
-export const toServicesFromValidatedJSONAndStore = (data: ReadonlyArray<ValidatedServiceAtLocationJSON>, savedServicesIds: ReadonlyArray<Id>,
+export const toServicesFromValidatedJSONAndStore = (data: ReadonlyArray<ValidatedServiceAtLocationJSON>, bookmarkedServicesIds: ReadonlyArray<Id>,
 ): ReadonlyArray<types.HumanServiceData> => {
    const servicesFromValidatedJSON = R.map(serviceFromValidatedJSON, data);
    return R.map((service: types.HumanServiceData): types.HumanServiceData => (
        {
            ...service,
-           bookmarked: R.contains(service.id, savedServicesIds),
+           bookmarked: R.contains(service.id, bookmarkedServicesIds),
        }
    ), servicesFromValidatedJSON);
 };

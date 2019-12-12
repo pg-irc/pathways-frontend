@@ -32,8 +32,8 @@ export const renderServiceItems = (props: Props): ({ item }: ServiceItemInfo) =>
         onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
         currentPath={props.location.pathname}
         isBookmarked={item.bookmarked}
-        addServiceToSavedList={props.addServiceToSavedList}
-        removeServiceFromSavedList={props.removeServiceFromSavedList}
+        bookmarkService={props.bookmarkService}
+        unbookmarkService={props.unbookmarkService}
         />
     );
 };

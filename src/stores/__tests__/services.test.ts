@@ -6,8 +6,8 @@ import {
     BuildServicesRequestAction, BuildServicesSuccessAction,
     BuildServicesErrorAction,
     SaveServiceAction,
-    AddServiceToSavedListAction,
-    RemoveServiceFromSavedListAction,
+    BookmarkServiceAction,
+    UnbookmarkServiceAction,
 } from '../services/actions';
 import { HumanServiceData, ServiceStore } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
@@ -201,8 +201,8 @@ describe('services reducer', () => {
     describe('when bookmarking a service', () => {
         const store = buildNormalizedServices([], []);
         const service = new ServiceBuilder().build();
-        const action: AddServiceToSavedListAction = {
-            type: constants.ADD_SERVICE_BOOKMARK,
+        const action: BookmarkServiceAction = {
+            type: constants.BOOKMARK_SERVICE,
             payload: { service },
         };
         const storeState = reducer(store, action);
@@ -218,8 +218,8 @@ describe('services reducer', () => {
         const bookmarkedServiceBuilder = new ServiceBuilder().withBookmarked(true);
         const store = buildNormalizedServices([bookmarkedServiceBuilder], []);
         const bookmarkedService = bookmarkedServiceBuilder.build();
-        const action: RemoveServiceFromSavedListAction = {
-            type: constants.REMOVE_SERVICE_BOOKMARK,
+        const action: UnbookmarkServiceAction = {
+            type: constants.UNBOOKMARK_SERVICE,
             payload: { service: bookmarkedService },
         };
         const storeState = reducer(store, action);
@@ -240,25 +240,25 @@ describe('services reducer', () => {
         });
     });
 
-    describe('when loading saved services', () => {
+    describe('when loading bookmarked services', () => {
         let storeState: ServiceStore = undefined;
         const store = buildNormalizedServices([], []);
-        const savedServiceId = aString();
-        const savedServiceBuilder = new ServiceBuilder().withId(savedServiceId).withBookmarked(true);
-        const savedServiceMap = buildServiceMap([savedServiceBuilder]);
+        const bookmarkedServiceId = aString();
+        const bookmarkedServiceBuilder = new ServiceBuilder().withId(bookmarkedServiceId).withBookmarked(true);
+        const bookmarkedServiceMap = buildServiceMap([bookmarkedServiceBuilder]);
         beforeEach(() => {
-            const persistedDataWhereServiceIsSaved = new PersistedUserDataBuilder().
-            addSavedServices(savedServiceMap).
+            const userDataWithBookmarkedService = new PersistedUserDataBuilder().
+            addBookmarkedServices(bookmarkedServiceMap).
             buildObject();
-            const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereServiceIsSaved);
+            const loadAction = UserDataPersistence.loadSuccess(userDataWithBookmarkedService);
             storeState = reducer(store, loadAction);
         });
-        it('should return the saved service map', () => {
-            expect(storeState.services).toEqual(savedServiceMap);
+        it('should return the bookmarked service map', () => {
+            expect(storeState.services).toEqual(bookmarkedServiceMap);
         });
-        it('it should return the saved service', () => {
-            const savedService = savedServiceBuilder.build();
-            expect(storeState.services[savedServiceId]).toEqual(savedService);
+        it('it should return the bookmarked service', () => {
+            const bookmarkedService = bookmarkedServiceBuilder.build();
+            expect(storeState.services[bookmarkedServiceId]).toEqual(bookmarkedService);
         });
     });
 });

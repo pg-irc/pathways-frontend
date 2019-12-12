@@ -15,7 +15,7 @@ import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction } from '../../stores/services/actions';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { Id } from '../../stores/services';
-import { AddServiceToSavedListAction, RemoveServiceFromSavedListAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -25,12 +25,12 @@ export interface InfiniteHitsProps {
     readonly refine: (searchTerms?: string) => string;
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
-    readonly savedServicesIds: ReadonlyArray<Id>;
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
 }
 
 export interface InfiniteHitsActions {
-    readonly addServiceToSavedList: (service: HumanServiceData) => AddServiceToSavedListAction;
-    readonly removeServiceFromSavedList: (service: HumanServiceData) => RemoveServiceFromSavedListAction;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
 }
 
 type Props = InfiniteHitsProps & InfiniteHitsActions;
@@ -63,7 +63,7 @@ const keyExtractor = (item: SearchServiceData): string => (
 
 const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
     const item: SearchServiceData = itemInfo.item;
-    const service: HumanServiceData = toHumanServiceData(item, props.savedServicesIds);
+    const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
                 props.saveService(service);
                 goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
@@ -72,8 +72,8 @@ const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItem
         service={service}
         currentPath={props.currentPath}
         onPress={onPress}
-        isBookmarked={R.contains(item.service_id, props.savedServicesIds)}
-        addServiceToSavedList={props.addServiceToSavedList}
-        removeServiceFromSavedList={props.removeServiceFromSavedList}
+        isBookmarked={R.contains(item.service_id, props.bookmarkedServicesIds)}
+        bookmarkService={props.bookmarkService}
+        unbookmarkService={props.unbookmarkService}
         />;
 });

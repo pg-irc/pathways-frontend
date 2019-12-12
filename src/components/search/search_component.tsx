@@ -25,7 +25,7 @@ import { Id } from '../../stores/services';
 export interface SearchComponentProps {
     readonly apiKey: string;
     readonly appId: string;
-    readonly savedServicesIds: ReadonlyArray<Id>;
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
 }
 
 export interface SearchComponentActions {
