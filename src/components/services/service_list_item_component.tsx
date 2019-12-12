@@ -37,12 +37,15 @@ export const ServiceListItemComponent: React.StatelessComponent<Props> =
     (props: Props): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
         const linkContext = buildAnalyticsLinkContext('Service', serviceName);
+        const addBookmark = (): AddServiceToSavedListAction => props.addServiceToSavedList(props.service);
+        const removeBookmark = (): RemoveServiceFromSavedListAction => props.removeServiceFromSavedList(props.service);
         return (
             <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
-                <BookmarkButtonComponent isBookmarked={props.isBookmarked} textColor={colors.teal}
-                    addBookmark={(): AddServiceToSavedListAction => props.addServiceToSavedList(props.service)}
-                    removeBookmark={(): RemoveServiceFromSavedListAction => props.removeServiceFromSavedList(props.service)}
-                    />
+                <BookmarkButtonComponent isBookmarked={props.isBookmarked}
+                textColor={colors.teal}
+                addBookmark={addBookmark}
+                removeBookmark={removeBookmark}
+                />
                 {renderName(serviceName, props.onPress)}
                 {renderDescription(props.service.description)}
                 {renderAddresses(filterPhysicalAddresses(props.service.addresses))}

@@ -103,26 +103,9 @@ export class AddressBuilder {
     }
 }
 
-export class LatLongBuilder {
-    latitude: number = aNumber();
-    longitude: number = aNumber();
-
-    withLatitude(latitude: number): LatLongBuilder {
-        this.latitude = latitude;
-        return this;
-    }
-
-    withLongitude(longitude: number): LatLongBuilder {
-        this.longitude = longitude;
-        return this;
-    }
-    build(): LatLong {
-        return {
-            lat: this.latitude,
-            lng: this.longitude,
-        };
-    }
-}
+export const toLatLong = (lat: number, lng: number): LatLong => (
+    { lat, lng}
+);
 
 export class ServiceBuilder {
     id: Id = aString();
