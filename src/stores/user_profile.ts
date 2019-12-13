@@ -57,6 +57,7 @@ export const reducer = (store: OnboardingStore = buildDefaultStore(), action?: O
             return ({
                 ...store,
                 showOnboarding: true,
+                disableAnalytics: false,
             });
         default:
             return store;

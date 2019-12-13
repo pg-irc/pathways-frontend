@@ -67,6 +67,14 @@ describe('user profile reducer', () => {
 
             expect(newStore.disableAnalytics).toBe(!disableAnalyticsFlag);
         });
+        test('is cleared by clean all user data action', () => {
+            const oldStore: OnboardingStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: true,
+            };
+            const newStore = reducer(oldStore, clearAllUserData());
 
+            expect(newStore.disableAnalytics).toBe(false);
+        });
     });
 });
