@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let
 
 import { TopicBuilder, buildNormalizedStore } from './helpers/topics_helpers';
-import { UserDataPersistence } from '../user_data';
+import { DataPersistence } from '../persisted_data';
 import { aString } from '../../helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { bookmarkTopic, unbookmarkTopic } from '../topics/actions';
@@ -76,12 +76,12 @@ describe('topics reducer', () => {
         describe('when handling a load request', () => {
 
             it('returns a loading store from a load request action', () => {
-                const finalStore = stores.reducer(validStore, UserDataPersistence.loadRequest());
+                const finalStore = stores.reducer(validStore, DataPersistence.loadRequest());
                 expect(finalStore).toBeInstanceOf(stores.LoadingTopicStore);
             });
 
             it('should return a store with the last known valid state', () => {
-                const finalStore = stores.reducer(validStore, UserDataPersistence.loadRequest());
+                const finalStore = stores.reducer(validStore, DataPersistence.loadRequest());
                 if (finalStore instanceof stores.LoadingTopicStore) {
                     expect(finalStore.lastValidState).toBe(validStore);
                 } else {
@@ -101,13 +101,13 @@ describe('topics reducer', () => {
             describe('when handling a load error', () => {
 
                 it('should return an invalid store', () => {
-                    const finalStore = stores.reducer(loadingStore, UserDataPersistence.loadFailure(''));
+                    const finalStore = stores.reducer(loadingStore, DataPersistence.loadFailure(''));
                     expect(finalStore).toBeInstanceOf(stores.InValidTopicStore);
                 });
 
                 it('should return s store with the error message', () => {
                     const error = aString();
-                    const finalStore = stores.reducer(loadingStore, UserDataPersistence.loadFailure(error));
+                    const finalStore = stores.reducer(loadingStore, DataPersistence.loadFailure(error));
                     if (finalStore instanceof stores.InValidTopicStore) {
                         expect(finalStore.error).toBe(error);
                     } else {
@@ -135,7 +135,7 @@ describe('topics reducer', () => {
                     const persistedDataWhereSecondTopicIsbookmarked = new PersistedUserDataBuilder().
                         addBookmarkedTopic(secondTopicId).
                         buildObject();
-                    const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereSecondTopicIsbookmarked);
+                    const loadAction = DataPersistence.loadSuccess(persistedDataWhereSecondTopicIsbookmarked);
 
                     resultStore = stores.reducer(theStore, loadAction);
                 });
@@ -161,7 +161,7 @@ describe('topics reducer', () => {
                 const dataWithInvalidId = new PersistedUserDataBuilder().
                     addBookmarkedTopic(aString()).
                     buildObject();
-                const theAction = UserDataPersistence.loadSuccess(dataWithInvalidId);
+                const theAction = DataPersistence.loadSuccess(dataWithInvalidId);
                 const resultStore = stores.reducer(theLoadingStore, theAction);
                 expect(stores.toValidOrThrow(resultStore).bookmarkedTopics).toHaveLength(0);
             });

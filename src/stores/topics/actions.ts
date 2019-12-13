@@ -1,7 +1,7 @@
 import { Id } from '../../fixtures/types/topics';
 import * as constants from '../../application/constants';
 import { ClearErrorAction } from '../clear_error';
-import { UserDataPersistence } from '../user_data';
+import { DataPersistence } from '../persisted_data';
 import * as helpers from '../helpers/make_action';
 import { ClearAllUserDataAction, CloseQuestionnaireAction } from '../questionnaire/actions';
 
@@ -15,9 +15,9 @@ export type CollapseDetailAction = Readonly<ReturnType<typeof collapseDeail>>;
 
 export type TopicAction = BookmarkTopicAction |
     UnbookmarkTopicAction |
-    UserDataPersistence.LoadRequestAction |
-    UserDataPersistence.LoadSuccessAction |
-    UserDataPersistence.LoadFailureAction |
+    DataPersistence.LoadRequestAction |
+    DataPersistence.LoadSuccessAction |
+    DataPersistence.LoadFailureAction |
     ClearErrorAction |
     ClearAllUserDataAction |
     CloseQuestionnaireAction |

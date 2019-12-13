@@ -2,7 +2,7 @@ import * as R from 'ramda';
 import * as uuid from 'uuid';
 import * as constants from '../application/constants';
 import { BookmarkTopicAction, UnbookmarkTopicAction } from './topics';
-import { UserDataPersistence } from './user_data';
+import { DataPersistence } from './persisted_data';
 import * as helpers from './helpers/make_action';
 import { Id, NotificationType, Notification, NotificationStore } from '../fixtures/types/notifications';
 
@@ -12,7 +12,7 @@ export type RemoveNotificationAction = Readonly<ReturnType<typeof removeNotifica
 type NotificationAction =
     BookmarkTopicAction |
     UnbookmarkTopicAction |
-    UserDataPersistence.LoadSuccessAction |
+    DataPersistence.LoadSuccessAction |
     RemoveNotificationAction;
 
 // tslint:disable-next-line:typedef

@@ -3,7 +3,7 @@ import * as constants from '../../application/constants';
 import * as actions from './actions';
 import * as types from '../../validation/services/types';
 import { Id, ServiceStore } from '../../validation/services/types';
-import { UserDataPersistence } from '../user_data';
+import { DataPersistence } from '../persisted_data';
 export { Id, ServiceStore };
 
 export function buildDefaultStore(): types.ServiceStore {
@@ -132,7 +132,7 @@ const clearServicesData = (store: types.ServiceStore): types.ServiceStore => (
     }
 );
 
-const loadServicesFromUserData = (store: types.ServiceStore, action: UserDataPersistence.LoadSuccessAction): types. ServiceStore => {
+const loadServicesFromUserData = (store: types.ServiceStore, action: DataPersistence.LoadSuccessAction): types.ServiceStore => {
     return {
         ...store,
         services: {

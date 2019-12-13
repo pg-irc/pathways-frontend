@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { SetOnboardingAction, setOnboarding } from '../../stores/user_flags';
+import { SetOnboardingAction, setOnboarding } from '../../stores/user_profile';
 import { OnboardingActions } from './onboarding_component';
 import { OnboardingComponent } from './onboarding_component';
 

@@ -7,7 +7,7 @@ import * as services from './services';
 import * as explore from './explore';
 import * as taxonomies from './taxonomies';
 import * as notifications from './notifications';
-import * as onboarding from './user_flags';
+import * as onboarding from './user_profile';
 import * as location from './manual_user_location';
 
 export interface Store {

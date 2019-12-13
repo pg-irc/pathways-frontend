@@ -5,7 +5,7 @@ import { aString, aBoolean } from '../../../helpers/random_test_values';
 import { ServiceBuilder, buildServiceMap } from '../../../stores/__tests__/helpers/services_helpers';
 import { buildDefaultStore, Store } from '../../../stores';
 import { selectUserDataForLocalPersistence } from '../../../selectors/user_data/select_user_data_for_local_persistence';
-import { UserDataPersistence } from '../../../stores/user_data';
+import { DataPersistence } from '../../../stores/persisted_data';
 import * as constants from '../../../application/constants';
 import { reducer } from '../../../stores';
 
@@ -27,9 +27,9 @@ describe('user data schema', () => {
         test('passes when it is consistent with the user data saved on disk', () => {
             const appStore: Store = buildDefaultStore();
             const userDataInDeviceStorage = new PersistedUserDataBuilder().buildObject();
-            const action: UserDataPersistence.LoadSuccessAction = {
+            const action: DataPersistence.LoadSuccessAction = {
                 type: constants.LOAD_USER_DATA_SUCCESS,
-                payload:  userDataInDeviceStorage,
+                payload: userDataInDeviceStorage,
             };
             const appStoreState = reducer(appStore, action);
             const userDataFromStore = selectUserDataForLocalPersistence(appStoreState);
@@ -51,20 +51,20 @@ describe('user data schema', () => {
 
         describe('the chosenAnswers property', () => {
 
-                test('passes with valid data', () => {
-                    const answerId = aString();
-                    const validUserData = new PersistedUserDataBuilder().addChosenAnswer(answerId).buildObject();
-                    const validator = validateUserData(validUserData);
-                    expect(validator.isValid).toBe(true);
-                });
-
-                test('fails with invalid data,', () => {
-                    const answerId: any = null;
-                    const invalidUserData = new PersistedUserDataBuilder().addChosenAnswer(answerId).buildObject();
-                    const validator = validateUserData(invalidUserData);
-                    expect(validator.isValid).toBe(false);
-                });
+            test('passes with valid data', () => {
+                const answerId = aString();
+                const validUserData = new PersistedUserDataBuilder().addChosenAnswer(answerId).buildObject();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(true);
             });
+
+            test('fails with invalid data,', () => {
+                const answerId: any = null;
+                const invalidUserData = new PersistedUserDataBuilder().addChosenAnswer(answerId).buildObject();
+                const validator = validateUserData(invalidUserData);
+                expect(validator.isValid).toBe(false);
+            });
+        });
 
         describe('the saved topics property', () => {
 

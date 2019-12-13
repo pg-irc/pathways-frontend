@@ -1,8 +1,8 @@
 // tslint:disable:no-class readonly-keyword readonly-array no-expression-statement no-this
 import { Id as AnswerId } from '../../questionnaire';
 import { Id as TopicId } from '../../topics';
-import { PersistedUserData } from '../../user_data';
 import { ServiceMap } from '../../../validation/services/types';
+import { PersistedData } from '../../persisted_data';
 
 export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];
@@ -33,7 +33,7 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    buildObject(): PersistedUserData {
+    buildObject(): PersistedData {
         return {
             chosenAnswers: this.chosenAnswers,
             bookmarkedTopics: this.bookmarkedTopics,

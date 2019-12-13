@@ -1,6 +1,6 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
-import { UserDataPersistence } from './user_data';
+import { DataPersistence } from './persisted_data';
 import { ClearAllUserDataAction } from './questionnaire/actions';
 
 export type SetOnboardingAction = Readonly<ReturnType<typeof setOnboarding>>;
@@ -13,7 +13,7 @@ export const setOnboarding = () => (
 export type OnboardingAction =
     SetOnboardingAction |
     ClearAllUserDataAction |
-    UserDataPersistence.LoadSuccessAction;
+    DataPersistence.LoadSuccessAction;
 
 export interface OnboardingStore {
     readonly showOnboarding: boolean;
