@@ -4,7 +4,7 @@ import * as constants from '../application/constants';
 import * as helpers from '../stores/helpers/make_action';
 import * as Permissions from 'expo-permissions';
 import { Notifications } from 'expo';
-import { putPushNotificationToken } from '../api';
+import { putPushNotificationToken, APIResponse } from '../api';
 import { selectLocale } from '../selectors/locale/select_locale';
 import { Locale } from '../locale';
 
@@ -32,10 +32,10 @@ export function* watchRequestPostPushNotificationToken(): IterableIterator<ForkE
 }
 
 function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction): Result {
-    const existingStatus = yield call(Permissions.getAsync, Permissions.NOTIFICATIONS);
+    const existingStatus: Permissions.PermissionResponse = yield call(Permissions.getAsync, Permissions.NOTIFICATIONS);
     // tslint:disable-next-line: no-let
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
+    let finalStatus: Permissions.PermissionResponse = existingStatus;
+    if (existingStatus.status !== 'granted') {
         const newStatus = yield call(Permissions.askAsync, Permissions.NOTIFICATIONS);
         finalStatus = newStatus;
     }
@@ -47,7 +47,7 @@ function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction)
         return yield put(failure('Error retrieving push notification token'));
     }
     const locale: Locale = yield select(selectLocale);
-    const result = yield call(putPushNotificationToken, token, locale);
+    const result: APIResponse = yield call(putPushNotificationToken, token, locale);
     if (!result || result.hasError) {
         // TODO log error to sentry
         return yield put(failure('Error posting push notification token'));
