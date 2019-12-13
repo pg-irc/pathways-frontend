@@ -27,16 +27,16 @@ describe('the load user data saga', () => {
 
         it('should dispatch a success action on success', () => {
             const questionId = aString();
-            const dataBuilder = new PersistedUserDataBuilder().addChosenAnswer(questionId);
+            const dataBuilder = new PersistedUserDataBuilder().withChosenAnswer(questionId);
 
             const result = saga.next(dataBuilder.buildJson()).value;
 
-            expect(result).toEqual(put(DataPersistence.loadSuccess(dataBuilder.buildObject())));
+            expect(result).toEqual(put(DataPersistence.loadSuccess(dataBuilder.build())));
         });
 
         it('should return zero ids when there is no data in persistent storage', () => {
             const questionId: string = undefined;
-            const expectedPersistedData = new PersistedUserDataBuilder().buildObject();
+            const expectedPersistedData = new PersistedUserDataBuilder().build();
 
             const result = saga.next(questionId).value;
 
@@ -47,12 +47,12 @@ describe('the load user data saga', () => {
             const firstQuestionId = aString();
             const secondQuestionId = aString();
             const dataBuilder = new PersistedUserDataBuilder().
-                addChosenAnswer(firstQuestionId).
-                addChosenAnswer(secondQuestionId);
+                withChosenAnswer(firstQuestionId).
+                withChosenAnswer(secondQuestionId);
 
             const result = saga.next(dataBuilder.buildJson()).value;
 
-            expect(result).toEqual(put(DataPersistence.loadSuccess(dataBuilder.buildObject())));
+            expect(result).toEqual(put(DataPersistence.loadSuccess(dataBuilder.build())));
         });
 
         it('should dispatch a put effect with a failure action on error', () => {
@@ -87,7 +87,7 @@ describe('the save user data saga', () => {
         });
 
         it('should dispatch call effect to save user state', () => {
-            const persistedData = new PersistedUserDataBuilder().buildObject();
+            const persistedData = new PersistedUserDataBuilder().build();
             const expectedResult = new PersistedUserDataBuilder().buildJson();
 
             const result = saga.next(persistedData).value;
@@ -99,10 +99,10 @@ describe('the save user data saga', () => {
             const firstId = aString();
             const secondId = aString();
             const dataBuilder = new PersistedUserDataBuilder().
-                addChosenAnswer(firstId).
-                addChosenAnswer(secondId);
+                withChosenAnswer(firstId).
+                withChosenAnswer(secondId);
 
-            const result = saga.next(dataBuilder.buildObject()).value;
+            const result = saga.next(dataBuilder.build()).value;
 
             expect(result).toEqual(call(saveUserDataAsync, dataBuilder.buildJson()));
         });
@@ -118,7 +118,7 @@ describe('the save user data saga', () => {
         describe('after successfully saving user data', () => {
 
             beforeEach(() => {
-                const persistedData = new PersistedUserDataBuilder().buildObject();
+                const persistedData = new PersistedUserDataBuilder().build();
                 saga.next(persistedData);
             });
 

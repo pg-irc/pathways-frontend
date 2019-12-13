@@ -248,8 +248,8 @@ describe('services reducer', () => {
         const bookmarkedServiceMap = buildServiceMap([bookmarkedServiceBuilder]);
         beforeEach(() => {
             const userDataWithBookmarkedService = new PersistedUserDataBuilder().
-                addBookmarkedServices(bookmarkedServiceMap).
-                buildObject();
+                withBookmarkedServices(bookmarkedServiceMap).
+                build();
             const loadAction = DataPersistence.loadSuccess(userDataWithBookmarkedService);
             storeState = reducer(store, loadAction);
         });

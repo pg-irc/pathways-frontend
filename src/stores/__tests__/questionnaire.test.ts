@@ -173,7 +173,7 @@ describe('questionnaire reducer', () => {
             nonChosenAnswer = new AnswerBuilder().withIsChosen(false);
             question = new QuestionBuilder().withAnswers([nonChosenAnswer]);
             loadingStore = buildLoadingStore([question]);
-            const persistedData = new PersistedUserDataBuilder().addChosenAnswer(nonChosenAnswer.id).buildObject();
+            const persistedData = new PersistedUserDataBuilder().withChosenAnswer(nonChosenAnswer.id).build();
             const action = DataPersistence.loadSuccess(persistedData);
 
             newStore = store.reducer(loadingStore, action);
@@ -185,7 +185,7 @@ describe('questionnaire reducer', () => {
             chosenAnswer = new AnswerBuilder().withIsChosen(true);
             question = new QuestionBuilder().withAnswers([chosenAnswer]);
             loadingStore = buildLoadingStore([question]);
-            const persistedData = new PersistedUserDataBuilder().buildObject();
+            const persistedData = new PersistedUserDataBuilder().build();
             const action = DataPersistence.loadSuccess(persistedData);
 
             newStore = store.reducer(loadingStore, action);

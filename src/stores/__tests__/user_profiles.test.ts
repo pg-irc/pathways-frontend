@@ -23,8 +23,8 @@ describe('user profile reducer', () => {
                 disableAnalytics: aBoolean(),
             };
             const dataFlippingFlag = new PersistedUserDataBuilder().
-                addShowOnboarding(!onboardingFlag).
-                buildObject();
+                withShowOnboarding(!onboardingFlag).
+                build();
             const actionFlippingFlag = DataPersistence.loadSuccess(dataFlippingFlag);
 
             const newStore = reducer(oldStore, actionFlippingFlag);
@@ -60,7 +60,7 @@ describe('user profile reducer', () => {
             };
             const dataFlippingFlag = new PersistedUserDataBuilder().
                 withDisableAnalytics(!disableAnalyticsFlag).
-                buildObject();
+                build();
             const actionFlippingFlag = DataPersistence.loadSuccess(dataFlippingFlag);
 
             const newStore = reducer(oldStore, actionFlippingFlag);

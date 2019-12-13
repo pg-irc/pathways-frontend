@@ -133,8 +133,8 @@ describe('topics reducer', () => {
                     const theStore = new stores.LoadingTopicStore(validStoreWhereFirstTopicIsbookmarked);
 
                     const persistedDataWhereSecondTopicIsbookmarked = new PersistedUserDataBuilder().
-                        addBookmarkedTopic(secondTopicId).
-                        buildObject();
+                        withBookmarkedTopic(secondTopicId).
+                        build();
                     const loadAction = DataPersistence.loadSuccess(persistedDataWhereSecondTopicIsbookmarked);
 
                     resultStore = stores.reducer(theStore, loadAction);
@@ -159,8 +159,8 @@ describe('topics reducer', () => {
                 const theValidStore = buildNormalizedStore([topicBuilder], []);
                 const theLoadingStore = new stores.LoadingTopicStore(theValidStore);
                 const dataWithInvalidId = new PersistedUserDataBuilder().
-                    addBookmarkedTopic(aString()).
-                    buildObject();
+                    withBookmarkedTopic(aString()).
+                    build();
                 const theAction = DataPersistence.loadSuccess(dataWithInvalidId);
                 const resultStore = stores.reducer(theLoadingStore, theAction);
                 expect(stores.toValidOrThrow(resultStore).bookmarkedTopics).toHaveLength(0);

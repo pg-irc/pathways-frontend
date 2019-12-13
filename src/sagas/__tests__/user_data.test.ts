@@ -9,14 +9,14 @@ describe('persisted user_data tests', () => {
 
     test('chosen answer should persist between being serialized and deserialized', () => {
         const chosenAnswer = aString();
-        const userData = new PersistedUserDataBuilder().addChosenAnswer(chosenAnswer).buildObject();
+        const userData = new PersistedUserDataBuilder().withChosenAnswer(chosenAnswer).build();
         const recreatedData = deserializeUserData(serializeUserData(userData));
         expect(recreatedData.chosenAnswers[0]).toEqual(chosenAnswer);
     });
-        
+
     test('bookmarked topics should persist between being serialized and deserialized', () => {
         const bookmarkedTopic = aString();
-        const userData = new PersistedUserDataBuilder().addBookmarkedTopic(bookmarkedTopic).buildObject();
+        const userData = new PersistedUserDataBuilder().withBookmarkedTopic(bookmarkedTopic).build();
         const recreatedData = deserializeUserData(serializeUserData(userData));
         expect(recreatedData.bookmarkedTopics[0]).toEqual(bookmarkedTopic);
     });
@@ -25,7 +25,7 @@ describe('persisted user_data tests', () => {
         const bookmarkedServiceId = aString();
         const bookmarkedService = new ServiceBuilder().withId(bookmarkedServiceId).withBookmarked(true);
         const bookmarkedServiceMap = buildServiceMap([bookmarkedService]);
-        const userData = new PersistedUserDataBuilder().addBookmarkedServices(bookmarkedServiceMap).buildObject();
+        const userData = new PersistedUserDataBuilder().withBookmarkedServices(bookmarkedServiceMap).build();
         const recreatedData = deserializeUserData(serializeUserData(userData));
         expect(recreatedData.bookmarkedServices[bookmarkedServiceId]).toEqual(bookmarkedServiceMap[bookmarkedServiceId]);
     });

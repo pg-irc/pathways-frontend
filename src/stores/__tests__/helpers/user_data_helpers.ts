@@ -11,22 +11,22 @@ export class PersistedUserDataBuilder {
     bookmarkedServices: ServiceMap = {};
     disableAnalytics: boolean = false;
 
-    addChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
+    withChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
         this.chosenAnswers.push(id);
         return this;
     }
 
-    addBookmarkedTopic(id: TopicId): PersistedUserDataBuilder {
+    withBookmarkedTopic(id: TopicId): PersistedUserDataBuilder {
         this.bookmarkedTopics.push(id);
         return this;
     }
 
-    addShowOnboarding(showOnboarding: boolean): PersistedUserDataBuilder {
+    withShowOnboarding(showOnboarding: boolean): PersistedUserDataBuilder {
         this.showOnboarding = showOnboarding;
         return this;
     }
 
-    addBookmarkedServices(services: ServiceMap): PersistedUserDataBuilder {
+    withBookmarkedServices(services: ServiceMap): PersistedUserDataBuilder {
         this.bookmarkedServices = {
             ...this.bookmarkedServices,
             ...services,
@@ -39,7 +39,7 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    buildObject(): PersistedData {
+    build(): PersistedData {
         return {
             chosenAnswers: this.chosenAnswers,
             bookmarkedTopics: this.bookmarkedTopics,
@@ -50,6 +50,6 @@ export class PersistedUserDataBuilder {
     }
 
     buildJson(): string {
-        return JSON.stringify(this.buildObject());
+        return JSON.stringify(this.build());
     }
 }
