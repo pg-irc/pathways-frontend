@@ -22,8 +22,20 @@ export const notificationListener = R.curry((history: History, notification: any
 const validateUrl = (data: any): string | undefined => {
     const ajv = new Ajv();
     const isValid = ajv.validate(notificationSchema, data) as boolean;
+
+    if (!isValid) {
+        return undefined;
+    }
+
     // tslint:disable-next-line:no-string-literal
-    return isValid ? data['data']['navigateToRoute'] : undefined;
+    const url = data['data']['navigateToRoute'];
+    const validTopicUrlRegEx = /^\/task\/[a-z0-9\-]+$/;
+
+    if (url === 'store' || validTopicUrlRegEx.test(url)) {
+        return url;
+    }
+
+    return undefined;
 };
 
 const notificationSchema = {
