@@ -1,6 +1,5 @@
 // tslint:disable:no-var-requires no-expression-statement
 const Ajv = require('ajv');
-import { openURL } from '../link/link';
 import { History } from 'history';
 import * as R from 'ramda';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
@@ -12,8 +11,10 @@ export const notificationListener = R.curry((history: History, notification: any
         return;
     }
     if (route === 'store') {
-        const playStoreUrl = 'market://details?id=org.peacegeeks.ArrivalAdvisor';
-        openURL(playStoreUrl);
+        // This opens up the store regardless, even if our app is in the background. This would
+        // be a very poor UX. Disabling this until we decide on what our UX should be around this.
+        // const playStoreUrl = 'market://details?id=org.peacegeeks.ArrivalAdvisor';
+        // openURL(playStoreUrl);
     } else if (route === 'welcome') {
         goToRouteWithoutParameter(Routes.Welcome, history)();
     } else if (route.startsWith('/task')) {
