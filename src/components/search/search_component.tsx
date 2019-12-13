@@ -20,6 +20,7 @@ import { localizedPlaceHolders } from './localized_place_holders';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
+import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 
 export interface SearchComponentProps {
@@ -30,6 +31,7 @@ export interface SearchComponentProps {
 
 export interface SearchComponentActions {
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly disableAnalytics: () => DisableAnalyticsAction;
 }
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;
