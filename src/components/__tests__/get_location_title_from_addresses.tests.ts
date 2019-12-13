@@ -42,9 +42,9 @@ describe('getLocationTitleFromAddresses', () => {
         expect(getLocationTitleFromAddresses([address1, address2])).toBeUndefined();
     });
 
-    it('returns the address line when called with one element', () => {
-        const address = new AddressBuilder().build();
-
+    it('returns the address line when called with one element without a leading suite number', () => {
+        const addressLine = '250 West Pender Street';
+        const address = new AddressBuilder().withAddress(addressLine).build();
         expect(getLocationTitleFromAddresses([address])).toBe(address.address);
     });
 
