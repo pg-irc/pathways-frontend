@@ -1,7 +1,7 @@
-import * as constants from '../../application/constants';
-import * as helpers from '../helpers/make_action';
-import { UserDataPersistence } from '../user_data';
-import { ClearAllUserDataAction } from '../questionnaire/actions';
+import * as constants from '../application/constants';
+import * as helpers from './helpers/make_action';
+import { UserDataPersistence } from './user_data';
+import { ClearAllUserDataAction } from './questionnaire/actions';
 
 export type SetOnboardingAction = Readonly<ReturnType<typeof setOnboarding>>;
 

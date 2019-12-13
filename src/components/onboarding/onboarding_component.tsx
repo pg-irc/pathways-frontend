@@ -11,7 +11,7 @@ import {
 } from '../../application/images';
 import { Trans } from '@lingui/react';
 import { SwipeableContentComponent } from '../swipeable_content/swipeable_content_component';
-import { SetOnboardingAction } from '../../stores/onboarding';
+import { SetOnboardingAction } from '../../stores/user_flags';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
