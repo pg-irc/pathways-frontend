@@ -44,7 +44,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
-    useFetchLatLongFromLocation(location, setLatLong);
+    useFetchLatLongFromLocation(location, setLatLong, props.disableAnalytics);
 
     const ConnectedSearchTermInputModal = connectSearchBox(SearchTermInputModal);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());

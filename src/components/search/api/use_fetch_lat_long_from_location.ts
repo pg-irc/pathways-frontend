@@ -8,17 +8,38 @@ import * as R from 'ramda';
 import { getDeviceLocation, NoLocationPermissionErrorAction, LocationFetchTimeoutErrorAction } from '../../../async/location';
 import * as errors from '../../../validation/errors/is_error';
 import { USE_MY_LOCATION } from '../constants';
+import { DisableAnalyticsAction } from '../../../stores/user_profile';
 
-export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
+export const useFetchLatLongFromLocation = (
+    location: string,
+    setLatLong: (latLong: LatLong) => void,
+    disableAnalytics: () => DisableAnalyticsAction,
+): void => {
     const onlineStatus = useOnlineStatus();
-    useEffect(() => fetchLatLongFromLocation(location, onlineStatus, setLatLong), [onlineStatus, location]);
+    useEffect(
+        () => fetchLatLongFromLocation(location, onlineStatus, setLatLong, disableAnalytics),
+        [onlineStatus, location],
+    );
 };
 
-const fetchLatLongFromLocation = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
+const fetchLatLongFromLocation = (
+    location: string,
+    onlineStatus: OnlineStatus,
+    setLatLong: (latLong: LatLong) => void,
+    disableAnalytics: () => DisableAnalyticsAction,
+): void => {
     if (location === USE_MY_LOCATION) {
         fetchLatLongFromDevice(setLatLong);
     } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
         fetchLatLongFromAddress(location, setLatLong);
+    }
+    disableAnalyticsOnEasterEgg(location, disableAnalytics);
+};
+
+const disableAnalyticsOnEasterEgg = (location: string, disableAnalytics: () => DisableAnalyticsAction): void => {
+    if (location === 'easter egg') {
+        disableAnalytics();
+        alert('Hi');
     }
 };
 
