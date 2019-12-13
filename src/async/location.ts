@@ -7,9 +7,11 @@ export type NoLocationPermissionErrorAction = Readonly<ReturnType<typeof noLocat
 
 export type LocationFetchTimeoutErrorAction = Readonly<ReturnType<typeof noLocationFetchTimeoutError>>;
 
-type GetDeviceLocationReturnType = Promise<DeviceLocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction>;
+export type DeviceLocation = DeviceLocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction;
 
-export const getDeviceLocation = async (manualUserLocation?: LatLong): GetDeviceLocationReturnType => {
+type DeviceLocationAsync = Promise<DeviceLocation>;
+
+export const getDeviceLocation = async (manualUserLocation?: LatLong): DeviceLocationAsync => {
     try {
         if (manualUserLocation) {
             return buildManualUserLocation(manualUserLocation);

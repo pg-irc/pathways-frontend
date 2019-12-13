@@ -5,7 +5,7 @@ import * as actions from '../stores/services/actions';
 import * as R from 'ramda';
 import { validateServicesAtLocationArray, serviceFromValidatedJSON } from '../validation/services';
 import { searchServices, APIResponse } from '../api';
-import { getDeviceLocation } from '../async/location';
+import { getDeviceLocation, DeviceLocation } from '../async/location';
 import * as errors from '../validation/errors/is_error';
 import { Errors } from '../validation/errors/types';
 
@@ -16,7 +16,7 @@ export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
 export function* updateTaskServices(action: actions.BuildServicesRequestAction): UpdateResult {
     const topicId = action.payload.topicId;
     try {
-        const deviceLocationResponse = yield call(getDeviceLocation, action.payload.manualUserLocation);
+        const deviceLocationResponse: DeviceLocation = yield call(getDeviceLocation, action.payload.manualUserLocation);
 
         if (errors.isNoLocationPermissionError(deviceLocationResponse)) {
             return yield put(actions.buildServicesErrorAction(topicId, deviceLocationResponse.type));
