@@ -82,9 +82,9 @@ All commits are labelled with the issue they are being done under. This ensures 
 * On the client side, the version is stored in VERSION.txt and several other files, with unit tests making sure that all version strings are the same.
 * Client About screen shows the version of the client.
 
-## Updating project dependencies
+## Expo SDK updates
 
-This is a managed Expo application so we should let Expo update its dependencies before we apply non Expo updates. You may run into problems with Expo if for example you upgrade one of its dependencies passed what it requires. This is the approach we've been using:
+This is a managed Expo application so we should let Expo update its dependencies before we apply non Expo updates. Always reference: https://docs.expo.io/versions/latest/workflow/upgrading-expo-sdk-walkthrough/ prior to performing an update. This is the approach we've been using:
 
 1. Update the Expo CLI: `$ npm install -g expo-cli`
 
@@ -92,9 +92,13 @@ This is a managed Expo application so we should let Expo update its dependencies
 
 3. Test and fix any breakage due to Expo updates
 
-4. Apply non Expo updates using `yarn`
+## Non Expo package updates
 
-5. Test and fix any breakage due to non Expo updates
+It's suggested you first apply [Expo SDK updates](#expo-sdk-updates) then non Expo updates. Once you feel you're not going to compromise any of Expo's dependencies run:
+
+1. `yarn outdated` and review available upgrades
+
+2. `yarn upgrade {package-name}`to upgrade specific packages
 
 ## Changelog
 
