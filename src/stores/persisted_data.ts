@@ -9,6 +9,7 @@ export interface PersistedData {
     readonly bookmarkedTopics: ReadonlyArray<TopicId>;
     readonly showOnboarding: boolean;
     readonly bookmarkedServices: ServiceMap;
+    readonly disableAnalytics: boolean;
 }
 
 export namespace DataPersistence {

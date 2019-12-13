@@ -86,5 +86,6 @@ export const setUserDataDefaultValues = (data: any): PersistedData => (
         bookmarkedTopics: data.bookmarkedTopics || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
         bookmarkedServices: data.bookmarkedServices || {},
+        disableAnalytics: typeof data.disableAnalytics === 'undefined' ? false : data.disableAnalytics,
     }
 );

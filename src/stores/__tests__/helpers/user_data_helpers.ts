@@ -9,6 +9,7 @@ export class PersistedUserDataBuilder {
     bookmarkedTopics: TopicId[] = [];
     showOnboarding: boolean = true;
     bookmarkedServices: ServiceMap = {};
+    disableAnalytics: boolean = false;
 
     addChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
         this.chosenAnswers.push(id);
@@ -33,12 +34,18 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
+    withDisableAnalytics(disableAnalytics: boolean): PersistedUserDataBuilder {
+        this.disableAnalytics = disableAnalytics;
+        return this;
+    }
+
     buildObject(): PersistedData {
         return {
             chosenAnswers: this.chosenAnswers,
             bookmarkedTopics: this.bookmarkedTopics,
             showOnboarding: this.showOnboarding,
             bookmarkedServices: this.bookmarkedServices,
+            disableAnalytics: this.disableAnalytics,
         };
     }
 

@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { OnboardingStore, reducer, setOnboarding } from '../user_profile';
+import { OnboardingStore, reducer, setOnboarding, disableAnalytics } from '../user_profile';
 import { aBoolean } from '../../helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
 import { DataPersistence } from '../persisted_data';
@@ -41,5 +41,32 @@ describe('user profile reducer', () => {
 
             expect(newStore.showOnboarding).toBe(true);
         });
+    });
+    describe('disable analytics flag', () => {
+        it('is set by the disable analytics action', () => {
+            const oldStore: OnboardingStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: false,
+            };
+            const newStore = reducer(oldStore, disableAnalytics());
+            expect(newStore.disableAnalytics).toBe(true);
+
+        });
+        test('is loaded from persisted data', () => {
+            const disableAnalyticsFlag = aBoolean();
+            const oldStore: OnboardingStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: disableAnalyticsFlag,
+            };
+            const dataFlippingFlag = new PersistedUserDataBuilder().
+                withDisableAnalytics(!disableAnalyticsFlag).
+                buildObject();
+            const actionFlippingFlag = DataPersistence.loadSuccess(dataFlippingFlag);
+
+            const newStore = reducer(oldStore, actionFlippingFlag);
+
+            expect(newStore.disableAnalytics).toBe(!disableAnalyticsFlag);
+        });
+
     });
 });
