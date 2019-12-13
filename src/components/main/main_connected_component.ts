@@ -10,7 +10,7 @@ import { Location } from 'history';
 import { RouteChangedAction, routeChanged } from '../../stores/router_actions';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import { Locale } from '../../locale';
-import { selectShowOnboarding } from '../../selectors/onboarding/select_show_onboarding';
+import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;

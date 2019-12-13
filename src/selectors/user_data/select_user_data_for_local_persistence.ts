@@ -3,8 +3,9 @@ import { getIdsOfChosenAnswers } from '../questionnaire/get_ids_of_chosen_answer
 import { pickBookmarkedTopicIds } from '../topics/pick_bookmarked_topic_ids';
 import { PersistedData } from '../../stores/persisted_data';
 import { pickAnswers } from '../questionnaire/pick_answers';
+import { selectShowOnboarding } from '../user_profile/select_show_onboarding';
+import { selectDisableAnalytics } from '../user_profile/select_disable_analytics';
 import { selectBookmarkedServiceMap } from '../services/select_bookmarked_service_map';
-import { selectShowOnboarding, selectDisableAnalytics } from '../onboarding/select_show_onboarding';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedData => ({
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),

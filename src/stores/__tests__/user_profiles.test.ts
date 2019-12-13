@@ -6,7 +6,7 @@ import { DataPersistence } from '../persisted_data';
 import { clearAllUserData } from '../questionnaire/actions';
 
 describe('user profile reducer', () => {
-    describe('onboarding flag', () => {
+    describe('the onboarding flag', () => {
         test('is cleared by the set onboarding action', () => {
             const oldStore: OnboardingStore = {
                 showOnboarding: true,
@@ -42,7 +42,7 @@ describe('user profile reducer', () => {
             expect(newStore.showOnboarding).toBe(true);
         });
     });
-    describe('disable analytics flag', () => {
+    describe('the disable analytics flag', () => {
         it('is set by the disable analytics action', () => {
             const oldStore: OnboardingStore = {
                 showOnboarding: aBoolean(),
