@@ -130,7 +130,7 @@ export const userData = {
     "type": "object",
     "properties": {
         "chosenAnswers": chosenAnswersArray,
-        "savedTopics": topicsIdsArray,
+        "bookmarkedTopics": topicsIdsArray,
         "completedTopics": topicsIdsArray,
         "showOnboarding": {
             "type": "boolean"

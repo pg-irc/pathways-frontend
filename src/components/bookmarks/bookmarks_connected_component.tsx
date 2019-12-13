@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { TaskListActions } from '../topics/task_list_component';
 import { Store } from '../../stores';
 import { BookmarksComponent, BookmarksProps } from './bookmarks_component';
-import { Id, RemoveTopicFromSavedListAction, removeTopicFromSavedList, AddTopicToSavedListAction, addTopicToSavedList } from '../../stores/topics';
-import { selectSavedTopics } from '../../selectors/topics/select_saved_topics';
+import { Id, UnbookmarkTopicAction, unbookmarkTopic, BookmarkTopicAction, bookmarkTopic } from '../../stores/topics';
+import { selectBookmarkedTopics } from '../../selectors/topics/select_bookmarked_topics';
 import { selectBookmarkedServices } from '../../selectors/services/select_bookmarked_services';
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
 import { ServiceListItemActions } from '../services/service_list_item_component';
@@ -12,19 +12,19 @@ import { HumanServiceData } from '../../validation/services/types';
 
 const mapStateToProps = (store: Store): BookmarksProps => ({
     bookmarkedServices: selectBookmarkedServices(store),
-    bookmarkedTopics: selectSavedTopics(store),
+    bookmarkedTopics: selectBookmarkedTopics(store),
 });
 
 export type ServiceDispatchActions = BookmarkServiceAction | UnbookmarkServiceAction;
 export type ListActions = TaskListActions & ServiceListItemActions;
-export type TopicDispatchActions = AddTopicToSavedListAction | RemoveTopicFromSavedListAction;
+export type TopicDispatchActions = BookmarkTopicAction | UnbookmarkTopicAction;
 type DispatchActions = ServiceDispatchActions | TopicDispatchActions;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): ListActions => ({
     bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
     unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
-    addTopicToSavedList: (topicId: Id): AddTopicToSavedListAction => dispatch(addTopicToSavedList(topicId)),
-    removeTopicFromSavedList: (topicId: Id): RemoveTopicFromSavedListAction => dispatch(removeTopicFromSavedList(topicId)),
+    bookmarkTopic: (topicId: Id): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
+    unbookmarkTopic: (topicId: Id): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
 });
 
 export const BookmarksConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(BookmarksComponent);

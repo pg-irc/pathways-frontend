@@ -13,8 +13,8 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
     yield takeLatest(
         [
             constants.CHOOSE_ANSWER,
-            constants.ADD_TOPIC_BOOKMARK,
-            constants.REMOVE_TOPIC_BOOKMARK,
+            constants.BOOKMARK_TOPIC,
+            constants.UNBOOKMARK_TOPIC,
             constants.TOGGLE_IS_TOPIC_COMPLETED,
             constants.CLEAR_ALL_USER_DATA,
             constants.SET_ONBOARDING,
@@ -83,7 +83,7 @@ export const deserializeUserData = (serializedUserData: string): PersistedUserDa
 export const setUserDataDefaultValues = (data: any): PersistedUserData => (
     {
         chosenAnswers: data.chosenAnswers || [],
-        savedTopics: data.savedTopics || [],
+        bookmarkedTopics: data.bookmarkedTopics || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
         bookmarkedServices: data.bookmarkedServices || {},
     }

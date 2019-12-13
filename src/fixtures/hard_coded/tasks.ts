@@ -108,6 +108,6 @@ export const buildTasksFixture = (): ValidTopicStore => {
                 'relatedTopics': [],
             },
         },
-        savedTopicsList: [],
+        bookmarkedTopics: [],
     });
 };

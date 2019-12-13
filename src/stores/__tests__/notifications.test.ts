@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-let
 import * as model from '../notifications';
 import * as R from 'ramda';
-import { addTopicToSavedList, removeTopicFromSavedList } from '../topics';
+import { bookmarkTopic, unbookmarkTopic } from '../topics';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { NotificationBuilder } from './helpers/notification_helpers';
 
@@ -22,14 +22,14 @@ describe('notifications store', () => {
 
         it('creates notification of type "TaskAddedToPlan" when adding a topic to my plan', () => {
             const topic = new TopicBuilder().build();
-            const finalStore = model.reducer(store, addTopicToSavedList(topic.id));
+            const finalStore = model.reducer(store, bookmarkTopic(topic.id));
             const lastKey = R.keys(finalStore.notifications)[1];
             expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TopicAddedToPlan);
         });
 
         it('creates notification of type "TaskRemovedFromPlan" when removing a topic from my plan', () => {
             const topic = new TopicBuilder().build();
-            const finalStore = model.reducer(store, removeTopicFromSavedList(topic.id));
+            const finalStore = model.reducer(store, unbookmarkTopic(topic.id));
             const lastKey = R.keys(finalStore.notifications)[1];
             expect(finalStore.notifications[lastKey].type).toBe(model.NotificationType.TopicRemovedFromPlan);
         });

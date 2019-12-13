@@ -4,11 +4,11 @@ import * as constants from '../../application/constants';
 import { AnalyticsAsync } from '../../stores/analytics';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { RouteChangedAction } from '../../stores/router_actions';
-import { AddTopicToSavedListAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
+import { BookmarkTopicAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 import { ForkEffect, takeLatest, call, CallEffect, PutEffect, put } from 'redux-saga/effects';
 import * as events from './events';
 
-export type WatchedAction = RouteChangedAction | ChooseAnswerAction | AddTopicToSavedListAction | ExpandDetailAction | CollapseDetailAction;
+export type WatchedAction = RouteChangedAction | ChooseAnswerAction | BookmarkTopicAction | ExpandDetailAction | CollapseDetailAction;
 
 export function* watchAnalytics(): IterableIterator<ForkEffect> {
     yield takeLatest(
@@ -17,7 +17,7 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
             constants.CHOOSE_ANSWER,
             constants.EXPAND_DETAIL,
             constants.COLLAPSE_DETAIL,
-            constants.ADD_TOPIC_BOOKMARK,
+            constants.BOOKMARK_TOPIC,
         ],
         sendAnalyticsData);
 }
@@ -42,7 +42,7 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
         case constants.CHOOSE_ANSWER:
             events.sendAnswerChosenEvent(action.payload.answerId);
             break;
-        case constants.ADD_TOPIC_BOOKMARK:
+        case constants.BOOKMARK_TOPIC:
             events.sendBookmarkAddedEvent(action.payload.topicId);
             break;
         case constants.EXPAND_DETAIL:

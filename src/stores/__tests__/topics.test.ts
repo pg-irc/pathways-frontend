@@ -4,7 +4,7 @@ import { TopicBuilder, buildNormalizedStore } from './helpers/topics_helpers';
 import { UserDataPersistence } from '../user_data';
 import { aString } from '../../helpers/random_test_values';
 import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
-import { addTopicToSavedList, removeTopicFromSavedList } from '../topics/actions';
+import { bookmarkTopic, unbookmarkTopic } from '../topics/actions';
 import * as stores from '../topics';
 import { clearAllUserData, closeQuestionnaire } from '../questionnaire/actions';
 import { Id } from '../topics';
@@ -24,16 +24,16 @@ describe('topics reducer', () => {
             );
         });
 
-        test('can add topic to saved topics list', () => {
+        test('can add topic to bookmarked topics list', () => {
             const topic = new TopicBuilder().build();
-            const finalStore = stores.reducer(validStore, addTopicToSavedList(topic.id));
+            const finalStore = stores.reducer(validStore, bookmarkTopic(topic.id));
 
-            expect(stores.toValidOrThrow(finalStore).savedTopicsList).toHaveLength(2);
+            expect(stores.toValidOrThrow(finalStore).bookmarkedTopics).toHaveLength(2);
         });
 
-        test('can remove topic from saved topics list', () => {
-            const finalStore = stores.reducer(validStore, removeTopicFromSavedList(validStore.savedTopicsList[0]));
-            expect(stores.toValidOrThrow(finalStore).savedTopicsList).toHaveLength(0);
+        test('can remove topic from bookmarked topics list', () => {
+            const finalStore = stores.reducer(validStore, unbookmarkTopic(validStore.bookmarkedTopics[0]));
+            expect(stores.toValidOrThrow(finalStore).bookmarkedTopics).toHaveLength(0);
         });
 
         describe('when closing the questionnaire', () => {
@@ -68,7 +68,7 @@ describe('topics reducer', () => {
 
                 const finalStore = stores.reducer(theStore, clearAllUserData());
 
-                expect(stores.toValidOrThrow(finalStore).savedTopicsList).toEqual([]);
+                expect(stores.toValidOrThrow(finalStore).bookmarkedTopics).toEqual([]);
             });
 
         });
@@ -116,7 +116,7 @@ describe('topics reducer', () => {
                 });
             });
 
-            describe('when loading saved topics', () => {
+            describe('when loading bookmarked topics', () => {
 
                 let firstTopicId = aString();
                 let secondTopicId = aString();
@@ -126,16 +126,16 @@ describe('topics reducer', () => {
                     const firstTopicBuilder = new TopicBuilder().withId(firstTopicId);
                     const secondTopicBuilder = new TopicBuilder().withId(secondTopicId);
 
-                    const validStoreWhereFirstTopicIsSaved = buildNormalizedStore(
+                    const validStoreWhereFirstTopicIsbookmarked = buildNormalizedStore(
                         [firstTopicBuilder, secondTopicBuilder],
                         [firstTopicId],
                     );
-                    const theStore = new stores.LoadingTopicStore(validStoreWhereFirstTopicIsSaved);
+                    const theStore = new stores.LoadingTopicStore(validStoreWhereFirstTopicIsbookmarked);
 
-                    const persistedDataWhereSecondTopicIsSaved = new PersistedUserDataBuilder().
-                        addSavedTopic(secondTopicId).
+                    const persistedDataWhereSecondTopicIsbookmarked = new PersistedUserDataBuilder().
+                        addBookmarkedTopic(secondTopicId).
                         buildObject();
-                    const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereSecondTopicIsSaved);
+                    const loadAction = UserDataPersistence.loadSuccess(persistedDataWhereSecondTopicIsbookmarked);
 
                     resultStore = stores.reducer(theStore, loadAction);
                 });
@@ -144,12 +144,12 @@ describe('topics reducer', () => {
                     expect(resultStore).toBeInstanceOf(stores.ValidTopicStore);
                 });
 
-                it('should return a store with topic saved in loaded data marked as saved', () => {
-                    expect(stores.toValidOrThrow(resultStore).savedTopicsList).toContain(secondTopicId);
+                it('should return a store with topic bookmarked in loaded data marked as bookmarked', () => {
+                    expect(stores.toValidOrThrow(resultStore).bookmarkedTopics).toContain(secondTopicId);
                 });
 
-                it('should return a store with topic not saved in loaded data not marked as saved', () => {
-                    expect(stores.toValidOrThrow(resultStore).savedTopicsList).not.toContain(firstTopicId);
+                it('should return a store with topic not bookmarked in loaded data not marked as bookmarked', () => {
+                    expect(stores.toValidOrThrow(resultStore).bookmarkedTopics).not.toContain(firstTopicId);
                 });
 
             });
@@ -159,11 +159,11 @@ describe('topics reducer', () => {
                 const theValidStore = buildNormalizedStore([topicBuilder], []);
                 const theLoadingStore = new stores.LoadingTopicStore(theValidStore);
                 const dataWithInvalidId = new PersistedUserDataBuilder().
-                    addSavedTopic(aString()).
+                    addBookmarkedTopic(aString()).
                     buildObject();
                 const theAction = UserDataPersistence.loadSuccess(dataWithInvalidId);
                 const resultStore = stores.reducer(theLoadingStore, theAction);
-                expect(stores.toValidOrThrow(resultStore).savedTopicsList).toHaveLength(0);
+                expect(stores.toValidOrThrow(resultStore).bookmarkedTopics).toHaveLength(0);
             });
         });
     });

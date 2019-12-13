@@ -6,7 +6,7 @@ import { ServiceMap } from '../validation/services/types';
 
 export interface PersistedUserData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
-    readonly savedTopics: ReadonlyArray<TopicId>;
+    readonly bookmarkedTopics: ReadonlyArray<TopicId>;
     readonly showOnboarding: boolean;
     readonly bookmarkedServices: ServiceMap;
 }

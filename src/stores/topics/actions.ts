@@ -5,17 +5,16 @@ import { UserDataPersistence } from '../user_data';
 import * as helpers from '../helpers/make_action';
 import { ClearAllUserDataAction, CloseQuestionnaireAction } from '../questionnaire/actions';
 
-export type AddTopicToSavedListAction = Readonly<ReturnType<typeof addTopicToSavedList>>;
+export type BookmarkTopicAction = Readonly<ReturnType<typeof bookmarkTopic>>;
 
-export type RemoveTopicFromSavedListAction = Readonly<ReturnType<typeof removeTopicFromSavedList>>;
+export type UnbookmarkTopicAction = Readonly<ReturnType<typeof unbookmarkTopic>>;
 
 export type ExpandDetailAction = Readonly<ReturnType<typeof expandDetail>>;
 
 export type CollapseDetailAction = Readonly<ReturnType<typeof collapseDeail>>;
 
-export type TopicAction =
-    AddTopicToSavedListAction |
-    RemoveTopicFromSavedListAction |
+export type TopicAction = BookmarkTopicAction |
+    UnbookmarkTopicAction |
     UserDataPersistence.LoadRequestAction |
     UserDataPersistence.LoadSuccessAction |
     UserDataPersistence.LoadFailureAction |
@@ -26,13 +25,13 @@ export type TopicAction =
     CollapseDetailAction;
 
 // tslint:disable-next-line:typedef
-export const addTopicToSavedList = (topicId: Id) => {
-    return helpers.makeAction(constants.ADD_TOPIC_BOOKMARK, { topicId });
+export const bookmarkTopic = (topicId: Id) => {
+    return helpers.makeAction(constants.BOOKMARK_TOPIC, { topicId });
 };
 
 // tslint:disable-next-line:typedef
-export const removeTopicFromSavedList = (topicId: Id) => (
-    helpers.makeAction(constants.REMOVE_TOPIC_BOOKMARK, { topicId })
+export const unbookmarkTopic = (topicId: Id) => (
+    helpers.makeAction(constants.UNBOOKMARK_TOPIC, { topicId })
 );
 
 // tslint:disable-next-line:typedef

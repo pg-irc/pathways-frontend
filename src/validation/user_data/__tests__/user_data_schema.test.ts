@@ -70,31 +70,14 @@ describe('user data schema', () => {
 
             test('passes with valid data', () => {
                 const topicId = aString();
-                const validUserData = new PersistedUserDataBuilder().addSavedTopic(topicId).buildObject();
+                const validUserData = new PersistedUserDataBuilder().addBookmarkedTopic(topicId).buildObject();
                 const validator = validateUserData(validUserData);
                 expect(validator.isValid).toBe(true);
             });
 
             test('fails with invalid data', () => {
                 const topicId: any = null;
-                const invalidUserData = new PersistedUserDataBuilder().addSavedTopic(topicId).buildObject();
-                const validator = validateUserData(invalidUserData);
-                expect(validator.isValid).toBe(false);
-            });
-        });
-
-        describe('the completed topics property', () => {
-
-            test('passes with valid data', () => {
-                const topicId = aString();
-                const validUserData = new PersistedUserDataBuilder().addCompletedTopic(topicId).buildObject();
-                const validator = validateUserData(validUserData);
-                expect(validator.isValid).toBe(true);
-            });
-
-            test('fails with invalid data', () => {
-                const topicId: any = null;
-                const invalidUserData = new PersistedUserDataBuilder().addCompletedTopic(topicId).buildObject();
+                const invalidUserData = new PersistedUserDataBuilder().addBookmarkedTopic(topicId).buildObject();
                 const validator = validateUserData(invalidUserData);
                 expect(validator.isValid).toBe(false);
             });

@@ -9,7 +9,7 @@ export const reduceLoadingStore = (store: LoadingTopicStore, action: TopicAction
         case UserStateActions.LOAD_USER_DATA_SUCCESS:
             return new ValidTopicStore({
                 topicMap: store.lastValidState.topicMap,
-                savedTopicsList: filterValidIds(store.lastValidState.topicMap, action.payload.savedTopics),
+                bookmarkedTopics: filterValidIds(store.lastValidState.topicMap, action.payload.bookmarkedTopics),
             });
         case UserStateActions.LOAD_USER_DATA_FAILURE:
             return new InValidTopicStore(store.lastValidState, action.payload.message);

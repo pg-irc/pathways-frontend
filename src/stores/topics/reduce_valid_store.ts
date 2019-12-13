@@ -6,11 +6,11 @@ import * as R from 'ramda';
 
 export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): TopicStore => {
     switch (action.type) {
-        case constants.ADD_TOPIC_BOOKMARK:
-            return addToTopicList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
+        case constants.BOOKMARK_TOPIC:
+            return addToTopicList(store, 'bookmarkedTopics', store.bookmarkedTopics, action.payload.topicId);
 
-        case constants.REMOVE_TOPIC_BOOKMARK:
-            return removeFromTopicList(store, 'savedTopicsList', store.savedTopicsList, action.payload.topicId);
+        case constants.UNBOOKMARK_TOPIC:
+            return removeFromTopicList(store, 'bookmarkedTopics', store.bookmarkedTopics, action.payload.topicId);
 
         case constants.CLOSE_QUESTIONNAIRE:
             return new ValidTopicStore({
@@ -30,7 +30,7 @@ export const reduceValidStore = (store: ValidTopicStore, action: TopicAction): T
             return new ValidTopicStore({
                 ...store,
                 topicMap: R.map((topic: Topic): Topic => ({ ...topic, isNewlyRecommended: false }), store.topicMap),
-                savedTopicsList: [],
+                bookmarkedTopics: [],
             });
 
         default:

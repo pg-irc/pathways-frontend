@@ -16,7 +16,7 @@ import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_ite
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
-    readonly savedTopicsIdList: ReadonlyArray<TaskId>;
+    readonly bookmarkedTopics: ReadonlyArray<TaskId>;
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
 }
 
@@ -26,7 +26,7 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
     <TaskListComponent
         {...props}
         tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
-        savedTasksIdList={props.savedTopicsIdList}
+        savedTasksIdList={props.bookmarkedTopics}
         emptyTaskListContent={<NoTasksRecommendedComponent />}
         headerContent={<TaskListHeaderComponent {...props} />}
     />

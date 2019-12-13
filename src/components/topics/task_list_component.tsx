@@ -5,7 +5,7 @@ import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { TaskListItemComponent } from './task_list_item_component';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
-import { Id, AddTopicToSavedListAction, RemoveTopicFromSavedListAction } from '../../stores/topics';
+import { Id, BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { colors } from '../../application/styles';
 import { isTopicListHeading } from './is_topic_list_heading';
@@ -25,8 +25,8 @@ export interface TaskListProps {
 }
 
 export interface TaskListActions {
-    readonly addTopicToSavedList: (topicId: Id) => AddTopicToSavedListAction;
-    readonly removeTopicFromSavedList: (topicId: Id) => RemoveTopicFromSavedListAction;
+    readonly bookmarkTopic: (topicId: Id) => BookmarkTopicAction;
+    readonly unbookmarkTopic: (topicId: Id) => UnbookmarkTopicAction;
 }
 
 type Props = TaskListProps & TaskListActions;
@@ -125,8 +125,8 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             <TaskListItemComponent
                 topic={item}
                 taskIsBookmarked={R.contains(item.id, props.savedTasksIdList)}
-                addTopicToSavedList={props.addTopicToSavedList}
-                removeTopicFromSavedList={props.removeTopicFromSavedList}
+                bookmarkTopic={props.bookmarkTopic}
+                unbookmarkTopic={props.unbookmarkTopic}
                 goToTaskDetail={goToRouteWithParameter(Routes.TopicDetail, item.id, props.history)}
             />
         );

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Icon } from 'native-base';
 import { values, colors, textStyles, getNormalFontFamily } from '../../application/styles';
 import { TopicListItem } from '../../selectors/topics/topic_list_item';
-import { AddTopicToSavedListAction, RemoveTopicFromSavedListAction, Id } from '../../stores/topics';
+import { BookmarkTopicAction, UnbookmarkTopicAction, Id } from '../../stores/topics';
 import { I18nManager, TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
@@ -15,8 +15,8 @@ export interface TaskListItemProps {
 }
 
 export interface TaskListItemActions {
-    readonly addTopicToSavedList: (topicId: Id) => AddTopicToSavedListAction;
-    readonly removeTopicFromSavedList: (topicId: Id) => RemoveTopicFromSavedListAction;
+    readonly bookmarkTopic: (topicId: Id) => BookmarkTopicAction;
+    readonly unbookmarkTopic: (topicId: Id) => UnbookmarkTopicAction;
     readonly goToTaskDetail: () => void;
 }
 
@@ -41,8 +41,8 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                 <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                     <BookmarkButtonComponent
                         isBookmarked={props.taskIsBookmarked}
-                        addBookmark={(): AddTopicToSavedListAction => props.addTopicToSavedList(props.topic.id)}
-                        removeBookmark={(): RemoveTopicFromSavedListAction => props.removeTopicFromSavedList(props.topic.id)}
+                        addBookmark={(): BookmarkTopicAction => props.bookmarkTopic(props.topic.id)}
+                        removeBookmark={(): UnbookmarkTopicAction => props.unbookmarkTopic(props.topic.id)}
                         textColor={colors.teal}
                     />
                     <View>

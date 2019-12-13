@@ -6,7 +6,7 @@ import { ServiceMap } from '../../../validation/services/types';
 
 export class PersistedUserDataBuilder {
     chosenAnswers: AnswerId[] = [];
-    savedTopics: TopicId[] = [];
+    bookmarkedTopics: TopicId[] = [];
     showOnboarding: boolean = true;
     bookmarkedServices: ServiceMap = {};
 
@@ -15,8 +15,8 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    addSavedTopic(id: TopicId): PersistedUserDataBuilder {
-        this.savedTopics.push(id);
+    addBookmarkedTopic(id: TopicId): PersistedUserDataBuilder {
+        this.bookmarkedTopics.push(id);
         return this;
     }
 
@@ -36,7 +36,7 @@ export class PersistedUserDataBuilder {
     buildObject(): PersistedUserData {
         return {
             chosenAnswers: this.chosenAnswers,
-            savedTopics: this.savedTopics,
+            bookmarkedTopics: this.bookmarkedTopics,
             showOnboarding: this.showOnboarding,
             bookmarkedServices: this.bookmarkedServices,
         };

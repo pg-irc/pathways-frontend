@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Button } from 'native-base';
-import { AddTopicToSavedListAction, RemoveTopicFromSavedListAction } from '../../stores/topics';
+import { BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
 import { values } from '../../application/styles';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 
@@ -9,8 +9,8 @@ export interface BookmarkButtonProps {
     readonly textColor: string;
 }
 
-export type AddBookmarkAction = AddTopicToSavedListAction | BookmarkServiceAction;
-export type RemoveBookmarkAction = RemoveTopicFromSavedListAction | UnbookmarkServiceAction;
+export type AddBookmarkAction = BookmarkTopicAction | BookmarkServiceAction;
+export type RemoveBookmarkAction = UnbookmarkTopicAction | UnbookmarkServiceAction;
 
 export interface BookmarkButtonActions {
     readonly addBookmark: () => AddBookmarkAction;

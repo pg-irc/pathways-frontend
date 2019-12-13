@@ -9,14 +9,14 @@ import { CloseQuestionnaireAction, closeQuestionnaire } from '../../stores/quest
 import { pickQuestionnaire } from '../../selectors/questionnaire/pick_questionnaire';
 import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
 import { pickTopics } from '../../selectors/topics/pick_topics';
-import { pickSavedTopicIds } from '../../selectors/topics/pick_saved_topic_ids';
 import { Id as TopicId } from '../../stores/topics';
+import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 
 const mapStateToProps = (store: Store): QuestionnaireProps => ({
     oldAnswers: pickQuestionnaire(store).oldAnswers,
     newAnswers: pickAnswers(store),
     topics: pickTopics(store),
-    savedTopicIds: pickSavedTopicIds(store),
+    savedTopicIds:  pickBookmarkedTopicIds(store),
     activeQuestion: selectActiveQuestion(store),
 });
 

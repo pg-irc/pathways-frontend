@@ -21,7 +21,7 @@ export type TopicList = ReadonlyArray<Id>;
 
 export interface IStore {
     readonly topicMap: TopicMap;
-    readonly savedTopicsList: TopicList;
+    readonly bookmarkedTopics: TopicList;
 }
 
 // tslint:disable:no-class no-this no-expression-statement
@@ -29,8 +29,8 @@ export interface IStore {
 export class ValidTopicStore {
     constructor(parameters: IStore) {
         this.topicMap = parameters.topicMap;
-        this.savedTopicsList = parameters.savedTopicsList;
+        this.bookmarkedTopics = parameters.bookmarkedTopics;
     }
     readonly topicMap: TopicMap;
-    readonly savedTopicsList: TopicList;
+    readonly bookmarkedTopics: TopicList;
 }
