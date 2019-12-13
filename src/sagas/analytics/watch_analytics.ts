@@ -4,8 +4,9 @@ import * as constants from '../../application/constants';
 import { AnalyticsAsync } from '../../stores/analytics';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { RouteChangedAction } from '../../stores/router_actions';
+import { selectDisableAnalytics } from '../../selectors/user_profile/select_disable_analytics';
+import { ForkEffect, takeLatest, call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
 import { BookmarkTopicAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
-import { ForkEffect, takeLatest, call, CallEffect, PutEffect, put } from 'redux-saga/effects';
 import * as events from './events';
 
 export type WatchedAction = RouteChangedAction | ChooseAnswerAction | BookmarkTopicAction | ExpandDetailAction | CollapseDetailAction;
@@ -22,10 +23,16 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
         sendAnalyticsData);
 }
 
-type AnalyticsActions = IterableIterator<CallEffect | PutEffect<AnalyticsAsync.SuccessAction | AnalyticsAsync.FailureAction>>;
+type SuccessOrFail = AnalyticsAsync.SuccessAction | AnalyticsAsync.FailureAction;
+
+type AnalyticsActions = IterableIterator<CallEffect | SelectEffect | PutEffect<SuccessOrFail>>;
 
 function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
     try {
+        const analyticsIsDisabled = yield select(selectDisableAnalytics);
+        if (analyticsIsDisabled) {
+            return;
+        }
         yield call(sendAnalyticsDataAsync, action);
         yield put(AnalyticsAsync.success());
     } catch (error) {
