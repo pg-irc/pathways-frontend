@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement no-let
-import { call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from '../user_data';
 import { UserDataPersistence } from '../../stores/user_data';
 import { aString, anError } from '../../helpers/random_test_values';
@@ -17,10 +17,8 @@ describe('the load user data saga', () => {
     });
 
     describe('after requesting the user data', () => {
-        let saga: IterableIterator<
-            CallEffect |
-            PutEffect<UserDataPersistence.LoadSuccessAction | UserDataPersistence.LoadFailureAction>
-            >;
+        // tslint:disable-next-line:no-any
+        let saga: any;
 
         beforeEach(() => {
             saga = loadUserData();
@@ -80,11 +78,8 @@ describe('the save user data saga', () => {
     });
 
     describe('after selecting user data from store', () => {
-        let saga: IterableIterator<
-            SelectEffect |
-            CallEffect |
-            PutEffect<UserDataPersistence.SaveSuccessAction | UserDataPersistence.SaveFailureAction>
-            >;
+        // tslint:disable-next-line:no-any
+        let saga: any;
 
         beforeEach(() => {
             saga = saveUserData();

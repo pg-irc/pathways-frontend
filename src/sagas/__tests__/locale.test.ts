@@ -24,7 +24,7 @@ describe('load locale saga', () => {
         let loadSuccessAction: any = undefined;
 
         beforeEach(() => {
-            const saga = loadCurrentLocale();
+            const saga: any = loadCurrentLocale();
             loadCurrentLocaleAction = saga.next().value;
             const valueFromStorage: string = aLocale.code;
             loadSuccessAction = saga.next(valueFromStorage).value;
