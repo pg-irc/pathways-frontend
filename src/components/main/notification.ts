@@ -7,7 +7,7 @@ import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 
 // tslint:disable-next-line:no-any
 export const notificationListener = R.curry((history: History, notification: any): void => {
-    const route = validate(notification);
+    const route = getValidRouteFromNotificationPayload(notification);
     if (!route) {
         return;
     }
@@ -22,9 +22,9 @@ export const notificationListener = R.curry((history: History, notification: any
 });
 
 // tslint:disable-next-line:no-any
-const validate = (data: any): string | undefined => {
+const getValidRouteFromNotificationPayload = (data: any): string | undefined => {
     const ajv = new Ajv();
-    const isValid = ajv.validate(notificationSchema, data) as boolean;
+    const isValid = ajv.validate(notificationPayloadSchema, data) as boolean;
 
     if (!isValid) {
         return undefined;
@@ -41,7 +41,7 @@ const validate = (data: any): string | undefined => {
     return undefined;
 };
 
-const notificationSchema = {
+const notificationPayloadSchema = {
     'type': 'object',
     'properties': {
         'data': {
