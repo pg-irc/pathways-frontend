@@ -13,8 +13,8 @@ export type AddBookmarkAction = BookmarkTopicAction | BookmarkServiceAction;
 export type RemoveBookmarkAction = UnbookmarkTopicAction | UnbookmarkServiceAction;
 
 export interface BookmarkButtonActions {
-    readonly addBookmark: () => AddBookmarkAction;
-    readonly removeBookmark: () => RemoveBookmarkAction;
+    readonly bookmark: () => AddBookmarkAction;
+    readonly unbookmark: () => RemoveBookmarkAction;
 }
 
 type Props = BookmarkButtonProps & BookmarkButtonActions;
@@ -36,5 +36,5 @@ const BookmarkIcon = (props: Props): JSX.Element => (
 );
 
 const getButtonOnPress = (props: Props): () => AddBookmarkAction | RemoveBookmarkAction => (
-    props.isBookmarked ? props.removeBookmark : props.addBookmark
+    props.isBookmarked ? props.unbookmark : props.bookmark
 );

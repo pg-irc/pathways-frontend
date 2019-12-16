@@ -43,8 +43,8 @@ export const ServiceListItemComponent: React.StatelessComponent<Props> =
             <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
                 <BookmarkButtonComponent isBookmarked={props.isBookmarked}
                 textColor={colors.teal}
-                addBookmark={addBookmark}
-                removeBookmark={removeBookmark}
+                bookmark={addBookmark}
+                unbookmark={removeBookmark}
                 />
                 {renderName(serviceName, props.onPress)}
                 {renderDescription(props.service.description)}

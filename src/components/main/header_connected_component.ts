@@ -17,8 +17,8 @@ const mapStateToProps = (store: Store): HeaderProps => ({
 type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): HeaderActions => ({
-    addBookmark: (topicId: TopicId): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
-    removeBookmark: (topicId: TopicId): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
+    bookmarkTopic: (topicId: TopicId): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
+    unbookmarkTopic: (topicId: TopicId): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
 });
 
 export const HeaderConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);

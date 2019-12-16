@@ -32,8 +32,8 @@ export interface HeaderProps {
 }
 
 export interface HeaderActions {
-    readonly addBookmark: (topicId: TaskId) => BookmarkTopicAction;
-    readonly removeBookmark: (topicId: TaskId) => UnbookmarkTopicAction;
+    readonly bookmarkTopic: (topicId: TaskId) => BookmarkTopicAction;
+    readonly unbookmarkTopic: (topicId: TaskId) => UnbookmarkTopicAction;
 }
 
 type Props = OwnProps & HeaderProps & HeaderActions;
@@ -117,8 +117,8 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={R.contains(topicId, props.savedTasksIdList)}
-            addBookmark={(): BookmarkTopicAction => props.addBookmark(topicId)}
-            removeBookmark={(): UnbookmarkTopicAction => props.removeBookmark(topicId)}
+            bookmark={(): BookmarkTopicAction => props.bookmarkTopic(topicId)}
+            unbookmark={(): UnbookmarkTopicAction => props.unbookmarkTopic(topicId)}
             textColor={colors.teal}
         />,
         <MenuButtonComponent
@@ -136,8 +136,8 @@ const ServiceDetailScreenHeader = (props: Props): JSX.Element => {
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={false}
-            addBookmark={(): undefined => undefined}
-            removeBookmark={(): undefined => undefined}
+            bookmark={(): undefined => undefined}
+            unbookmark={(): undefined => undefined}
             textColor={colors.teal}
         />,
         <MenuButtonComponent

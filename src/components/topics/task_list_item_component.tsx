@@ -41,8 +41,8 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                 <View style={{ flex: 3, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                     <BookmarkButtonComponent
                         isBookmarked={props.taskIsBookmarked}
-                        addBookmark={(): BookmarkTopicAction => props.bookmarkTopic(props.topic.id)}
-                        removeBookmark={(): UnbookmarkTopicAction => props.unbookmarkTopic(props.topic.id)}
+                        bookmark={(): BookmarkTopicAction => props.bookmarkTopic(props.topic.id)}
+                        unbookmark={(): UnbookmarkTopicAction => props.unbookmarkTopic(props.topic.id)}
                         textColor={colors.teal}
                     />
                     <View>
