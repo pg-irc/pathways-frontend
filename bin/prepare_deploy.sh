@@ -339,6 +339,7 @@ buildServer() {
         source .venv/bin/activate &&\
         ./utility/prepare_deploy.sh \
             --bc211Path                 ./bc211.xml                  \
+            --city_latlongs             ../content/city_latlong.csv  \
             --newComersGuidePath        ../content/NewcomersGuide/   \
             --recommendationsToAddPath  ../content/taxonomy/         \
             --outputDir                 ../                          \
