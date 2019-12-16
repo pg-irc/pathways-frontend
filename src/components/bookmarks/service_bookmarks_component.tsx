@@ -28,6 +28,7 @@ export const ServiceBookmarksComponent: React.StatelessComponent<Props> = (props
 export const renderServiceItems = (props: Props): ({ item }: ServiceItemInfo) => JSX.Element => {
     return ({ item }: ServiceItemInfo): JSX.Element => (
         <ServiceListItemComponent
+        history={props.history}
         service={item}
         onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
         currentPath={props.location.pathname}
