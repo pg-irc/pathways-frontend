@@ -6,7 +6,7 @@ import { colors } from '../../application/styles';
 import { Content } from 'native-base';
 import { emptyComponent } from '../empty_component/empty_component';
 import { LatLong } from '../../validation/latlong/types';
-import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
+import { useFetchLatLongFromLocation, useDisableAnalyticsOnEasterEgg } from './api/use_fetch_lat_long_from_location';
 import { toServiceSearchConfiguration } from './api/configuration';
 import { useTraceUpdate } from '../../helpers/debug';
 import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
@@ -44,7 +44,8 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
-    useFetchLatLongFromLocation(location, setLatLong, props.disableAnalytics);
+    useFetchLatLongFromLocation(location, setLatLong);
+    useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
 
     const ConnectedSearchTermInputModal = connectSearchBox(SearchTermInputModal);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
