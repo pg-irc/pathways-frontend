@@ -9,14 +9,14 @@ export type AddToSavedListAction = Readonly<ReturnType<typeof addToSavedList>>;
 
 export type RemoveFromSavedListAction = Readonly<ReturnType<typeof removeFromSavedList>>;
 
-export type ExpandTopicDetailAction = Readonly<ReturnType<typeof expandTopicDetail>>;
+export type ExpandDetailAction = Readonly<ReturnType<typeof expandDetail>>;
 
-export type ReduceTopicDetailAction = Readonly<ReturnType<typeof reduceTopicDetail>>;
+export type ReduceDetailAction = Readonly<ReturnType<typeof reduceDetail>>;
 
 export type TopicAction = AddToSavedListAction |
     RemoveFromSavedListAction |
-    ExpandTopicDetailAction |
-    ReduceTopicDetailAction |
+    ExpandDetailAction |
+    ReduceDetailAction |
     UserDataPersistence.LoadRequestAction |
     UserDataPersistence.LoadSuccessAction |
     UserDataPersistence.LoadFailureAction |
@@ -35,11 +35,11 @@ export const removeFromSavedList = (topicId: Id) => (
 );
 
 // tslint:disable-next-line:typedef
-export const expandTopicDetail = (topicId: Id) => (
-    helpers.makeAction(constants.EXPAND_DETAIL, { topicId })
+export const expandDetail = (contentId: string) => (
+    helpers.makeAction(constants.EXPAND_DETAIL, { contentId })
 );
 
 // tslint:disable-next-line:typedef
-export const reduceTopicDetail = (topicId: Id) => (
-    helpers.makeAction(constants.REDUCE_DETAIL, { topicId })
+export const reduceDetail = (contentId: string) => (
+    helpers.makeAction(constants.REDUCE_DETAIL, { contentId })
 );

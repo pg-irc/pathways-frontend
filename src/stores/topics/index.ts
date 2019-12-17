@@ -10,8 +10,8 @@ export { Id, TopicList, TopicMap, Topic } from '../../fixtures/types/topics';
 export {
     addToSavedList, AddToSavedListAction,
     removeFromSavedList, RemoveFromSavedListAction,
-    expandTopicDetail, ExpandTopicDetailAction,
-    reduceTopicDetail, ReduceTopicDetailAction,
+    expandDetail, ExpandDetailAction,
+    reduceDetail, ReduceDetailAction,
 } from './actions';
 
 export const buildDefaultStore = (): TopicStore => (

@@ -10,11 +10,12 @@ import {
     defaultExpandableContentState, isDefaultState,
 } from './expandable_content_states';
 import { values } from '../../application/styles';
-import { expandTopicDetail, reduceTopicDetail } from '../../stores/topics/actions';
+import { ExpandDetailAction } from '../../stores/topics';
 
 export interface ExpandableContentProps {
     readonly content: JSX.Element;
     readonly contentId?: string;
+    readonly expandDetail?: () => ExpandDetailAction;
 }
 
 interface ExpandableContentState {
@@ -113,12 +114,8 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
             ...this.state,
             expandableState: toggleExpandedState(this.state.expandableState),
         });
-        if (this.state.expandableState === 1) {
-            expandTopicDetail(this.props.contentId);
-        }
-        if (this.state.expandableState === 2) {
-            reduceTopicDetail(this.props.contentId);
-        }
+        console.log(this.props.contentId);
+        this.props.expandDetail();
     }
 
     private getReadMoreButton(): JSX.Element {

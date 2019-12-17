@@ -3,7 +3,7 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { History } from 'history';
 import { Text, View } from 'native-base';
-import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/topics';
+import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction, ExpandDetailAction } from '../../stores/topics';
 import { textStyles, values } from '../../application/styles';
 import { goToRouteWithParameter } from '../../application/routing';
 import { Topic } from '../../selectors/topics/topic';
@@ -23,6 +23,7 @@ export interface TaskDetailProps {
 export interface TaskDetailActions {
     readonly addToSavedList: (topicId: TaskId) => AddToSavedListAction;
     readonly removeFromSavedList: (topicId: TaskId) => RemoveFromSavedListAction;
+    readonly expandDetail?: (contentId: string) => ExpandDetailAction;
 }
 
 type Props = TaskDetailProps & TaskDetailActions;
@@ -45,6 +46,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
         <TaskDetailContentComponent
             topic={props.topic}
             onServicesTextPress={onServicesTextPress(props)}
+            expandDetail={(): ExpandDetailAction => props.expandDetail(props.topic.id)}
         />
         <Text
             style={[

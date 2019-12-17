@@ -22,15 +22,15 @@ export const sendBookmarkAddedEvent = (topicId: string): void => {
     analytics.hit(event);
 };
 
-export const sendExpandDetail = (detailID: string): void => {
+export const sendExpandDetail = (contentId: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Detail', 'DetailExpanded', detailID);
+    const event = createEvent('Detail', 'DetailExpanded', contentId);
     analytics.hit(event);
 };
 
-export const sendReduceDetail = (detailID: string): void => {
+export const sendReduceDetail = (contentId: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Detail', 'DetailReduced', detailID);
+    const event = createEvent('Detail', 'DetailReduced', contentId);
     analytics.hit(event);
 };
 

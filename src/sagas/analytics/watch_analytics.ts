@@ -4,11 +4,11 @@ import * as constants from '../../application/constants';
 import { AnalyticsAsync } from '../../stores/analytics';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { RouteChangedAction } from '../../stores/router_actions';
-import { AddToSavedListAction, ExpandTopicDetailAction, ReduceTopicDetailAction } from '../../stores/topics';
+import { AddToSavedListAction, ExpandDetailAction, ReduceDetailAction } from '../../stores/topics';
 import { ForkEffect, takeLatest, call, CallEffect, PutEffect, put } from 'redux-saga/effects';
 import * as events from './events';
 
-export type WatchedAction = RouteChangedAction | ChooseAnswerAction | AddToSavedListAction | ExpandTopicDetailAction | ReduceTopicDetailAction;
+export type WatchedAction = RouteChangedAction | ChooseAnswerAction | AddToSavedListAction | ExpandDetailAction | ReduceDetailAction;
 
 export function* watchAnalytics(): IterableIterator<ForkEffect> {
     yield takeLatest(
@@ -45,9 +45,9 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
         events.sendBookmarkAddedEvent(action.payload.topicId);
     }
     if (action.type === constants.EXPAND_DETAIL) {
-        events.sendExpandDetail(action.payload.topicId);
+        events.sendExpandDetail(action.payload.contentId);
     }
     if (action.type === constants.REDUCE_DETAIL) {
-        events.sendReduceDetail(action.payload.topicId);
+        events.sendReduceDetail(action.payload.contentId);
     }
 }
