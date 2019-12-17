@@ -115,10 +115,10 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
             ...this.state,
             expandableState: toggleExpandedState(this.state.expandableState),
         });
-        if (this.state.expandableState === 1) {
+        if (this.state.expandableState === 1 && this.props.expandDetail) {
             this.props.expandDetail();
         }
-        else {
+        if (this.state.expandableState === 2 && this.props.reduceDetail) {
             this.props.reduceDetail();
         }
     }
