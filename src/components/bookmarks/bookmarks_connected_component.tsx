@@ -15,9 +15,9 @@ const mapStateToProps = (store: Store): BookmarksProps => ({
     bookmarkedTopics: selectBookmarkedTopics(store),
 });
 
-export type ServiceDispatchActions = BookmarkServiceAction | UnbookmarkServiceAction;
 export type ListActions = TaskListActions & ServiceListItemActions;
-export type TopicDispatchActions = BookmarkTopicAction | UnbookmarkTopicAction;
+type ServiceDispatchActions = BookmarkServiceAction | UnbookmarkServiceAction;
+type TopicDispatchActions = BookmarkTopicAction | UnbookmarkTopicAction;
 type DispatchActions = ServiceDispatchActions | TopicDispatchActions;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): ListActions => ({
