@@ -12,6 +12,9 @@ import { RouteChangedAction } from '../../stores/router_actions';
 import { Locale } from '../../locale';
 import { HardwareBackButtonHandlerComponent } from './hardware_back_button_handler_component';
 import { AppModalsComponent } from './app_modals_component';
+import { Notifications } from 'expo';
+import { History } from 'history';
+import { notificationListener } from './notification';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -20,6 +23,7 @@ export interface MainComponentActions {
 }
 
 interface MainProps {
+    readonly history: History;
     readonly locale: Locale;
     readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;
@@ -55,6 +59,7 @@ export class MainComponent extends React.Component<Props, State> {
         this.props.history.listen((location: Location, _: Action) =>
             this.props.sendAnalyticsData(location, this.props.locale),
         );
+        Notifications.addListener(notificationListener(this.props.history));
     }
 
     render(): JSX.Element {
@@ -104,7 +109,7 @@ export class MainComponent extends React.Component<Props, State> {
     }
 
     closeAboutModal(): void {
-        this.setState({ isAboutModalOpen : false });
+        this.setState({ isAboutModalOpen: false });
     }
 
     openAboutModal(): void {
@@ -112,7 +117,7 @@ export class MainComponent extends React.Component<Props, State> {
     }
 
     closeDisclaimerModal(): void {
-        this.setState({ isDisclaimerModalOpen : false });
+        this.setState({ isDisclaimerModalOpen: false });
     }
 
     openDisclaimerModal(): void {
