@@ -41,18 +41,6 @@ yarn start [-c]
 
 To clear out cached values from `.env`, use `--reset-cache`.
 
-## Internationalization (i18n)
-
-We are using [jsLingui](https://github.com/lingui/js-lingui) and [Weblate](https://weblate.org) for translation and internationalization. We translate strings through our own Weblate application here: [translate.peacegeeks.org](https://translate.peacegeeks.org). The source strings for Arrival Advisor, as well as information on how we integrate Weblate into our workflow can be found here: [https://github.com/tomy-pg/ui-strings](https://github.com/tomy-pg/ui-strings). 
-
-To update the in app translations: 
-
-1. `git clone git@github.com:tomy-pg/ui-strings.git` to retrieve the translated strings. This is the source of truth for all strings translated using Weblate.  
-
-2. `cd pathways-frontend` and run `./bin/strings --combine-pos`. This command expects the `../ui-strings` directory from step 1 to exist and will not work without it. Once this command is run, a messages.po file will be generated for each locale. Each of these files contain pairs of English source strings and their translated versions. 
-
-3. `yarn build-strings` to generate compiled versions of the messages.po files. The `messages.js` files generated are the source catalogs Lingui uses for internationalization. Source catalogs are used to lookup translations when English strings are wrapped with `<Trans>` tags.
-
 ## Entities
 
 These are the entities of the client side data model:
