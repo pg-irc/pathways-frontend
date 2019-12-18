@@ -115,13 +115,13 @@ describe('user data schema', () => {
                 const invalidService: any = {
                     id: serviceId,
                     // name: aString(),
-                    // description: aString(),
-                    // phoneNumbers: [],
-                    // addresses: [],
-                    // website: aString(),
-                    // email: aString(),
-                    // organizationName: aString(),
-                    // bookmarked: aBoolean(),
+                    description: aString(),
+                    phoneNumbers: [],
+                    addresses: [],
+                    website: aString(),
+                    email: aString(),
+                    organizationName: aString(),
+                    bookmarked: aBoolean(),
                 };
                 const invalidServiceMap: any = { serviceId: invalidService };
                 const invalidUserData = new PersistedUserDataBuilder().addBookmarkedServices(invalidServiceMap).buildObject();

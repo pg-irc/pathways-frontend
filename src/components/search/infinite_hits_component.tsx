@@ -70,6 +70,7 @@ const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItem
             };
     return <ServiceListItemComponent
         service={service}
+        history={props.history}
         currentPath={props.currentPath}
         onPress={onPress}
         isBookmarked={R.contains(item.service_id, props.bookmarkedServicesIds)}

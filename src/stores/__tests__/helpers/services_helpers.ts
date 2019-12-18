@@ -9,7 +9,6 @@ import {
     ServicesForTopic,
 } from '../../../validation/services/types';
 import * as constants from '../../../application/constants';
-import { LatLong } from '../../../validation/latlong/types';
 
 export const buildNormalizedServices = (
     services: ReadonlyArray<ServiceBuilder>,
@@ -102,10 +101,6 @@ export class AddressBuilder {
         };
     }
 }
-
-export const toLatLong = (lat: number, lng: number): LatLong => (
-    { lat, lng}
-);
 
 export class ServiceBuilder {
     id: Id = aString();

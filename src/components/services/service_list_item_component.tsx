@@ -22,7 +22,7 @@ export interface ServiceListItemProps {
     readonly service: HumanServiceData;
     readonly currentPath: string;
     readonly onPress: () => void;
-    readonly history?: History;
+    readonly history: History;
     readonly isBookmarked: boolean;
 }
 
