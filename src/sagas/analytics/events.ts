@@ -30,7 +30,7 @@ export const sendExpandDetail = (contentId: string): void => {
 
 export const sendReduceDetail = (contentId: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Detail', 'DetailReduced', contentId);
+    const event = createEvent('Detail', 'DetailCollapsed', contentId);
     analytics.hit(event);
 };
 

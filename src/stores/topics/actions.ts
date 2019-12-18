@@ -11,12 +11,12 @@ export type RemoveFromSavedListAction = Readonly<ReturnType<typeof removeFromSav
 
 export type ExpandDetailAction = Readonly<ReturnType<typeof expandDetail>>;
 
-export type ReduceDetailAction = Readonly<ReturnType<typeof reduceDetail>>;
+export type CollapseDetailAction = Readonly<ReturnType<typeof collapseDeail>>;
 
 export type TopicAction = AddToSavedListAction |
     RemoveFromSavedListAction |
     ExpandDetailAction |
-    ReduceDetailAction |
+    CollapseDetailAction |
     UserDataPersistence.LoadRequestAction |
     UserDataPersistence.LoadSuccessAction |
     UserDataPersistence.LoadFailureAction |
@@ -40,6 +40,6 @@ export const expandDetail = (contentId: string) => (
 );
 
 // tslint:disable-next-line:typedef
-export const reduceDetail = (contentId: string) => (
-    helpers.makeAction(constants.REDUCE_DETAIL, { contentId })
+export const collapseDeail = (contentId: string) => (
+    helpers.makeAction(constants.COLLAPSE_DETAIL, { contentId })
 );

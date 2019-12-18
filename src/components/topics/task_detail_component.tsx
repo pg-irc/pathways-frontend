@@ -3,7 +3,7 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { History } from 'history';
 import { Text, View } from 'native-base';
-import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction, ExpandDetailAction, ReduceDetailAction } from '../../stores/topics';
+import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 import { textStyles, values } from '../../application/styles';
 import { goToRouteWithParameter } from '../../application/routing';
 import { Topic } from '../../selectors/topics/topic';
@@ -24,7 +24,7 @@ export interface TaskDetailActions {
     readonly addToSavedList: (topicId: TaskId) => AddToSavedListAction;
     readonly removeFromSavedList: (topicId: TaskId) => RemoveFromSavedListAction;
     readonly expandDetail?: (contentId: string) => ExpandDetailAction;
-    readonly reduceDetail?: (contentId: string) => ReduceDetailAction;
+    readonly collapseDeail?: (contentId: string) => CollapseDetailAction;
 }
 
 type Props = TaskDetailProps & TaskDetailActions;
@@ -48,7 +48,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             topic={props.topic}
             onServicesTextPress={onServicesTextPress(props)}
             expandDetail={(): ExpandDetailAction => props.expandDetail(props.topic.id)}
-            reduceDetail={(): ReduceDetailAction => props.reduceDetail(props.topic.id)}
+            collapseDeail={(): CollapseDetailAction => props.collapseDeail(props.topic.id)}
         />
         <Text
             style={[

@@ -11,7 +11,7 @@ export {
     addToSavedList, AddToSavedListAction,
     removeFromSavedList, RemoveFromSavedListAction,
     expandDetail, ExpandDetailAction,
-    reduceDetail, ReduceDetailAction,
+    collapseDeail, CollapseDetailAction,
 } from './actions';
 
 export const buildDefaultStore = (): TopicStore => (

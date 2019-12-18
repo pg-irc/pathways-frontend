@@ -14,7 +14,7 @@ import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
-import { ExpandDetailAction, ReduceDetailAction } from '../../stores/topics';
+import { ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 
 export interface TaskDetailContentProps {
     readonly topic: Topic;
@@ -23,7 +23,7 @@ export interface TaskDetailContentProps {
 export interface TaskDetailContentActions {
     readonly onServicesTextPress: () => void;
     readonly expandDetail: () => ExpandDetailAction;
-    readonly reduceDetail: () => ReduceDetailAction;
+    readonly collapseDeail: () => CollapseDetailAction;
 }
 
 type Props = TaskDetailContentProps & TaskDetailContentActions;
@@ -40,7 +40,7 @@ export const TaskDetailContentComponent: React.StatelessComponent<Props> = (prop
             shouldBeExpandable={!!props.topic.relatedTopics.length}
             topicId={props.topic.id}
             expandDetail={props.expandDetail}
-            reduceDetail={props.reduceDetail}
+            collapseDeail={props.collapseDeail}
         />
         <DividerComponent />
         <ServicesButton {...props} />
