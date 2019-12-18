@@ -34,8 +34,10 @@ Make a copy of the file `locale/en/messages.po` titled `jsx_strings.pot`.
 
 ### 2. Move to ui-strings repository: 
 
-The ui-strings repository is integrated into our Weblate instance which uses the `translate` branch. 
+The ui-strings repository is integrated into Weblate. Weblate uses the `translate` branch . 
+
 With the `jsx_strings.pot` file, create a branch from the `translate` branch and add the file to the directory `jsx_strings`. 
+Push the changes and merge them into `translate`.
 
 ### 3. Start Weblate:
 
@@ -43,7 +45,7 @@ If you have access, start the Weblate EC2 instance on AWS or ask someone who doe
 
 ### 4. Pull changes into Weblate:
 
-Upon logging in, navigate to the UI-strings project on Weblate. Within this page navigate to `Manage > Repository Maintenance` and click on `Pull`. 
+Upon logging in, navigate to the ui-strings project on Weblate. Within this page navigate to `Manage > Repository Maintenance` and click on `Pull`. 
 This will pull strings from the `jsx_strings.pot` file that needs to be translated. 
 
 ### 5. Translate:
@@ -52,13 +54,13 @@ In the UI-strings project, you should be able to navigate through each locale an
 
 ### 6. Push changes to ui-strings repository:
 
-Once translation have been made, navigate back to `Manage > Repository Maintenance` and click on `Commit` and `Push`.
+Once translations have been made, navigate back to `Manage > Repository Maintenance` and click on `Commit` and `Push`.
 
 These actions will push the changes to the `translate` branch on the ui-strings repository. 
 
 ### 7. Merge into master branch:
 
-During the import of the translated strings to our app, we use the ui-string's repositories `master` branch. 
+During the import of the translated strings to our app, we use the ui-string's repository's `master` branch. 
 Using the `master` branch allows us to do another round of review before we pull in changes into the app. 
 
 On the ui-strings repository, change the branch from `translate` to `master`. Open up a new PR from `translate` and merge the changes. The `translate` branch does not automatically create a PR for you on `master`
@@ -71,8 +73,8 @@ Localized strings are imported into our app as part of the release process. By r
 
 To update the in app translations without the release process: 
 
-1. `git clone git@github.com:pg-irc/ui-strings.git` to retrieve the translated strings. This is the source of truth for all strings translated using Weblate.  
+1. `git clone git@github.com:pg-irc/ui-strings.git` to retrieve the translated strings.
 
-2. `cd pathways-frontend` and run `./bin/strings --combine-pos`. This command expects the `../ui-strings` directory from step 1 to exist and will not work without it. Once this command is run, a messages.po file will be generated for each locale. Each of these files contain pairs of English source strings and their translated versions. 
+2. `cd pathways-frontend` and run `./bin/strings --combine-pos`. Once this command is run, a messages.po file will be generated for each locale. Each of these files contain pairs of English source strings and their translated versions. 
 
 3. `yarn build-strings` to generate compiled versions of the messages.po files.
