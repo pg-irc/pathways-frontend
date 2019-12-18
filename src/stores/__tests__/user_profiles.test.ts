@@ -48,8 +48,16 @@ describe('user profile reducer', () => {
                 showOnboarding: aBoolean(),
                 disableAnalytics: false,
             };
-            const newStore = reducer(oldStore, disableAnalytics());
+            const newStore = reducer(oldStore, disableAnalytics(true));
             expect(newStore.disableAnalytics).toBe(true);
+        });
+        it('is set by the disable analytics action', () => {
+            const oldStore: OnboardingStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: true,
+            };
+            const newStore = reducer(oldStore, disableAnalytics(false));
+            expect(newStore.disableAnalytics).toBe(false);
 
         });
         test('is loaded from persisted data', () => {

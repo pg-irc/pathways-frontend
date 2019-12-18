@@ -68,11 +68,14 @@ const handleError = R.curry((setLatLong: (latLong: LatLong) => void, _: string):
     setLatLong(undefined);
 });
 
-export const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: () => DisableAnalyticsAction): void => {
+export const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction): void => {
     const effect = (): void => {
         if (location === 'easter egg') {
-            disableAnalytics();
+            disableAnalytics(true);
             alert('Hi');
+        } else if (location === 'Easter Egg') {
+            disableAnalytics(false);
+            alert('Ho');
         }
     };
     useEffect(effect, [location]);

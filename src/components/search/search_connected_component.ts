@@ -20,8 +20,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     saveService: (service: HumanServiceData): SaveServiceAction => (
         dispatch(saveService(service))
     ),
-    disableAnalytics: (): DisableAnalyticsAction => (
-        dispatch(disableAnalytics())
+    disableAnalytics: (disable: boolean): DisableAnalyticsAction => (
+        dispatch(disableAnalytics(disable))
     ),
 });
 

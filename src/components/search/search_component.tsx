@@ -31,7 +31,7 @@ export interface SearchComponentProps {
 
 export interface SearchComponentActions {
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
-    readonly disableAnalytics: () => DisableAnalyticsAction;
+    readonly disableAnalytics: (disable: boolean) => DisableAnalyticsAction;
 }
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;

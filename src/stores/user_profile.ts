@@ -12,8 +12,8 @@ export const setOnboarding = () => (
 );
 
 // tslint:disable-next-line:typedef
-export const disableAnalytics = () => (
-    helpers.makeAction(constants.DISABLE_ANALYTICS)
+export const disableAnalytics = (disable: boolean) => (
+    helpers.makeAction(constants.DISABLE_ANALYTICS, { disable })
 );
 
 export type OnboardingAction =
@@ -45,7 +45,7 @@ export const reducer = (store: OnboardingStore = buildDefaultStore(), action?: O
         case constants.DISABLE_ANALYTICS:
             return ({
                 ...store,
-                disableAnalytics: true,
+                disableAnalytics: action.payload.disable,
             });
         case constants.LOAD_USER_DATA_SUCCESS:
             return ({
