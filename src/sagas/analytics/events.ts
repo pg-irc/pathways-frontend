@@ -28,7 +28,7 @@ export const sendExpandDetail = (contentId: string): void => {
     analytics.hit(event);
 };
 
-export const sendReduceDetail = (contentId: string): void => {
+export const sendCollapseDetail = (contentId: string): void => {
     const analytics = createAnalytics();
     const event = createEvent('Detail', 'DetailCollapsed', contentId);
     analytics.hit(event);

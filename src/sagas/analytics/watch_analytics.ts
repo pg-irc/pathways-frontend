@@ -35,19 +35,23 @@ function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
 }
 
 async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
-    if (action.type === constants.ROUTE_CHANGED) {
-        events.sendScreenHit(action);
-    }
-    if (action.type === constants.CHOOSE_ANSWER) {
-        events.sendAnswerChosenEvent(action.payload.answerId);
-    }
-    if (action.type === constants.ADD_BOOKMARK) {
-        events.sendBookmarkAddedEvent(action.payload.topicId);
-    }
-    if (action.type === constants.EXPAND_DETAIL) {
-        events.sendExpandDetail(action.payload.contentId);
-    }
-    if (action.type === constants.COLLAPSE_DETAIL) {
-        events.sendReduceDetail(action.payload.contentId);
+    switch (action.type) {
+        case constants.ROUTE_CHANGED:
+            events.sendScreenHit(action);
+            break;
+        case constants.CHOOSE_ANSWER:
+            events.sendAnswerChosenEvent(action.payload.answerId);
+            break;
+        case constants.ADD_BOOKMARK:
+            events.sendBookmarkAddedEvent(action.payload.topicId);
+            break;
+        case constants.EXPAND_DETAIL:
+            events.sendExpandDetail(action.payload.contentId);
+            break;
+        case constants.COLLAPSE_DETAIL:
+            events.sendCollapseDetail(action.payload.contentId);
+            break;
+        default:
+            break;
     }
 }

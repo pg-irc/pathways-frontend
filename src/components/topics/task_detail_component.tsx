@@ -23,8 +23,8 @@ export interface TaskDetailProps {
 export interface TaskDetailActions {
     readonly addToSavedList: (topicId: TaskId) => AddToSavedListAction;
     readonly removeFromSavedList: (topicId: TaskId) => RemoveFromSavedListAction;
-    readonly expandDetail?: (contentId: string) => ExpandDetailAction;
-    readonly collapseDeail?: (contentId: string) => CollapseDetailAction;
+    readonly onExpand?: (contentId: string) => ExpandDetailAction;
+    readonly onCollapse?: (contentId: string) => CollapseDetailAction;
 }
 
 type Props = TaskDetailProps & TaskDetailActions;
@@ -47,8 +47,8 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
         <TaskDetailContentComponent
             topic={props.topic}
             onServicesTextPress={onServicesTextPress(props)}
-            expandDetail={(): ExpandDetailAction => props.expandDetail(props.topic.id)}
-            collapseDeail={(): CollapseDetailAction => props.collapseDeail(props.topic.id)}
+            onExpand={(): ExpandDetailAction => props.onExpand(props.topic.id)}
+            onCollapse={(): CollapseDetailAction => props.onCollapse(props.topic.id)}
         />
         <Text
             style={[

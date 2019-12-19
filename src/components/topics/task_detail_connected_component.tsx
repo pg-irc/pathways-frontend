@@ -4,7 +4,10 @@ import * as R from 'ramda';
 import { Store } from '../../stores';
 import { TaskDetailProps, TaskDetailActions, TaskDetailComponent } from './task_detail_component';
 import {
-    Id as TaskId, AddToSavedListAction, addToSavedList, RemoveFromSavedListAction, removeFromSavedList, expandDetail, ExpandDetailAction, CollapseDetailAction, collapseDeail,
+    Id as TaskId, AddToSavedListAction, addToSavedList,
+    RemoveFromSavedListAction, removeFromSavedList,
+    ExpandDetailAction, expandDetail,
+    CollapseDetailAction, collapseDeail,
 } from '../../stores/topics';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
@@ -35,8 +38,8 @@ type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction | Expand
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActions => ({
     addToSavedList: (topicId: TaskId): AddToSavedListAction => dispatch(addToSavedList(topicId)),
     removeFromSavedList: (topicId: TaskId): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
-    expandDetail: (contentId: string): ExpandDetailAction => dispatch(expandDetail(contentId)),
-    collapseDeail: (contentId: string): CollapseDetailAction => dispatch(collapseDeail(contentId)),
+    onExpand: (contentId: string): ExpandDetailAction => dispatch(expandDetail(contentId)),
+    onCollapse: (contentId: string): CollapseDetailAction => dispatch(collapseDeail(contentId)),
 });
 
 export const TaskDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TaskDetailComponent);

@@ -10,13 +10,12 @@ import {
     defaultExpandableContentState, isDefaultState,
 } from './expandable_content_states';
 import { values } from '../../application/styles';
-import { ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 
 export interface ExpandableContentProps {
     readonly content: JSX.Element;
     readonly contentId?: string;
-    readonly expandDetail?: () => ExpandDetailAction;
-    readonly collapseDeail?: () => CollapseDetailAction;
+    readonly onExpand?: () => void;
+    readonly onCollapse?: () => void;
 }
 
 interface ExpandableContentState {
@@ -115,11 +114,11 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
             ...this.state,
             expandableState: toggleExpandedState(this.state.expandableState),
         });
-        if (this.state.expandableState === ExpandableContentStates.isCollapsed && this.props.expandDetail) {
-            this.props.expandDetail();
+        if (this.state.expandableState === ExpandableContentStates.isCollapsed && this.props.onExpand) {
+            this.props.onExpand();
         }
-        if (this.state.expandableState === ExpandableContentStates.isExpanded && this.props.collapseDeail) {
-            this.props.collapseDeail();
+        if (this.state.expandableState === ExpandableContentStates.isExpanded && this.props.onCollapse) {
+            this.props.onCollapse();
         }
     }
 
