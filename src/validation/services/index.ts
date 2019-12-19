@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import * as types from './types';
 import { serviceAtLocationArray } from './schema';
 import { ValidationResult } from '../validation_result';
+import { Id } from '../../stores/services';
 const Ajv = require('ajv');
 
 export const validateServicesAtLocationArray = (data: ReadonlyArray<any>): ValidationResult<ValidatedServiceAtLocationJSON> => {
@@ -52,6 +53,17 @@ export interface ValidatedServiceAtLocationJSON {
     readonly location: ValidatedLocationJSON;
 }
 
+export const toServicesFromValidatedJSONAndStore = (data: ReadonlyArray<ValidatedServiceAtLocationJSON>, bookmarkedServicesIds: ReadonlyArray<Id>,
+): ReadonlyArray<types.HumanServiceData> => {
+   const servicesFromValidatedJSON = R.map(serviceFromValidatedJSON, data);
+   return R.map((service: types.HumanServiceData): types.HumanServiceData => (
+       {
+           ...service,
+           bookmarked: R.contains(service.id, bookmarkedServicesIds),
+       }
+   ), servicesFromValidatedJSON);
+};
+
 export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): types.HumanServiceData => {
     const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): types.PhoneNumber => ({
         type: phoneNumber.phone_number_type,
@@ -82,5 +94,6 @@ export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): 
         website: data.service.organization_url,
         email: data.service.organization_email,
         organizationName: data.service.organization_name,
+        bookmarked: false,
     };
 };

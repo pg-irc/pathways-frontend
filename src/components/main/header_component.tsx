@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import * as R from 'ramda';
 import { History, Location } from 'history';
 import { Header, Left, Right, Body, Title, Text } from 'native-base';
-import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction } from '../../stores/topics';
+import { Id as TaskId, UnbookmarkTopicAction, BookmarkTopicAction } from '../../stores/topics';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { HelpButtonComponent } from '../header_button/help_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
@@ -17,8 +17,12 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
 import { mapWithIndex } from '../../application/map_with_index';
+import { Id as ServiceId} from '../../stores/services';
+import { HumanServiceData } from '../../validation/services/types';
+import { UnbookmarkServiceAction, BookmarkServiceAction } from '../../stores/services/actions';
+import { ServiceDetailScreenHeaderConnectedComponent } from './service_detail_screen_header_connected_component';
 
-type OwnProps = {
+export type HeaderOwnProps = {
     readonly history: History;
     readonly location: Location;
     readonly closeAboutModal: () => void;
@@ -29,14 +33,17 @@ type OwnProps = {
 export interface HeaderProps {
     readonly currentLocale: Locale;
     readonly savedTasksIdList: ReadonlyArray<TaskId>;
+    readonly bookmarkedServicesIds: ReadonlyArray<ServiceId>;
 }
 
 export interface HeaderActions {
-    readonly addBookmark: (topicId: TaskId) => AddToSavedListAction;
-    readonly removeBookmark: (topicId: TaskId) => RemoveFromSavedListAction;
+    readonly bookmarkTopic: (topicId: TaskId) => BookmarkTopicAction;
+    readonly unbookmarkTopic: (topicId: TaskId) => UnbookmarkTopicAction;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
 }
 
-type Props = OwnProps & HeaderProps & HeaderActions;
+type Props = HeaderOwnProps & HeaderProps & HeaderActions;
 
 export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const path = props.location.pathname;
@@ -58,7 +65,7 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     }
 
     if (isOnServiceDetailScreen) {
-        return <ServiceDetailScreenHeader {...props} />;
+        return <ServiceDetailScreenHeaderConnectedComponent {...props} />;
     }
 
     if (isOnTopicServicesScreen) {
@@ -117,27 +124,8 @@ const TopicDetailScreenHeader = (props: Props): JSX.Element => {
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={R.contains(topicId, props.savedTasksIdList)}
-            addBookmark={(): AddToSavedListAction => props.addBookmark(topicId)}
-            removeBookmark={(): RemoveFromSavedListAction => props.removeBookmark(topicId)}
-            textColor={colors.teal}
-        />,
-        <MenuButtonComponent
-            onPress={props.openMenu}
-            locale={props.currentLocale}
-            textColor={colors.black}
-        />,
-    ];
-    return renderHeader({ backgroundColor, leftButton, rightButtons });
-};
-
-const ServiceDetailScreenHeader = (props: Props): JSX.Element => {
-    const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
-    const rightButtons: ReadonlyArray<JSX.Element> = [
-        <BookmarkButtonComponent
-            isBookmarked={false}
-            addBookmark={(): undefined => undefined}
-            removeBookmark={(): undefined => undefined}
+            bookmark={(): BookmarkTopicAction => props.bookmarkTopic(topicId)}
+            unbookmark={(): UnbookmarkTopicAction => props.unbookmarkTopic(topicId)}
             textColor={colors.teal}
         />,
         <MenuButtonComponent
@@ -210,7 +198,7 @@ interface RenderHeaderProps {
     readonly title?: JSX.Element;
 }
 
-const renderHeader = (props: RenderHeaderProps): JSX.Element => {
+export const renderHeader = (props: RenderHeaderProps): JSX.Element => {
     const marginTop = getStatusBarHeightForPlatform();
     return (
         <Header style={{ marginTop, backgroundColor: props.backgroundColor, borderBottomColor: 'transparent' }}>

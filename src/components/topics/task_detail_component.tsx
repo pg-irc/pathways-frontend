@@ -3,7 +3,7 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { History } from 'history';
 import { Text, View } from 'native-base';
-import { Id as TaskId, RemoveFromSavedListAction, AddToSavedListAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
+import { Id as TaskId, UnbookmarkTopicAction, BookmarkTopicAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 import { textStyles, values } from '../../application/styles';
 import { goToRouteWithParameter } from '../../application/routing';
 import { Topic } from '../../selectors/topics/topic';
@@ -21,8 +21,8 @@ export interface TaskDetailProps {
 }
 
 export interface TaskDetailActions {
-    readonly addToSavedList: (topicId: TaskId) => AddToSavedListAction;
-    readonly removeFromSavedList: (topicId: TaskId) => RemoveFromSavedListAction;
+    readonly bookmarkTopic: (topicId: TaskId) => BookmarkTopicAction;
+    readonly unbookmarkTopic: (topicId: TaskId) => UnbookmarkTopicAction;
     readonly onExpand?: (contentId: string) => ExpandDetailAction;
     readonly onCollapse?: (contentId: string) => CollapseDetailAction;
 }
@@ -33,8 +33,8 @@ export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Prop
     <TaskListComponent
         tasks={props.topic.relatedTopics}
         savedTasksIdList={props.savedTasksIdList}
-        addToSavedList={props.addToSavedList}
-        removeFromSavedList={props.removeFromSavedList}
+        bookmarkTopic={props.bookmarkTopic}
+        unbookmarkTopic={props.unbookmarkTopic}
         history={props.history}
         emptyTaskListContent={<NoTasksAddedComponent />}
         headerContent={<TaskListHeaderComponent {...props} />}

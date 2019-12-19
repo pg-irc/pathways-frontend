@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 import { Store } from '../../stores';
-import { buildServicesRequestAction, BuildServicesRequestAction } from '../../stores/services/actions';
+import { buildServicesRequest, BuildServicesRequestAction, ServicesAction, BookmarkServiceAction,
+        UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/topic';
@@ -12,6 +13,8 @@ import {
 import { RouterProps } from '../../application/routing';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
 import { LatLong } from '../../validation/latlong/types';
+import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
+import { HumanServiceData } from '../../validation/services/types';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
     const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);
@@ -20,13 +23,15 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
         topic,
         topicServicesOrError: selectTopicServices(topic.id, store),
         manualUserLocation,
+        bookmarkedServicesIds: selectBookmarkedServicesIds(store),
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<BuildServicesRequestAction>): ServiceListActions => ({
-    dispatchServicesRequestAction: (topic: Topic, manualUserLocation?: LatLong): BuildServicesRequestAction => {
-        return dispatch(buildServicesRequestAction(topic.id, manualUserLocation));
-    },
+const mapDispatchToProps = (dispatch: Dispatch<ServicesAction>): ServiceListActions => ({
+    dispatchServicesRequest: (topic: Topic, manualUserLocation?: LatLong): BuildServicesRequestAction =>
+        dispatch(buildServicesRequest(topic.id, manualUserLocation)),
+    bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
+    unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
 });
 
 type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;
@@ -34,7 +39,7 @@ type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;
 const mergeProps = (stateProps: ServiceListProps, dispatchProps: ServiceListActions, ownProps: RouterProps): ComponentProps => ({
     ...stateProps, ...dispatchProps, ...ownProps,
     dispatchServicesRequest: (): BuildServicesRequestAction => {
-        return dispatchProps.dispatchServicesRequestAction(stateProps.topic, stateProps.manualUserLocation);
+        return dispatchProps.dispatchServicesRequest(stateProps.topic, stateProps.manualUserLocation);
     },
 });
 

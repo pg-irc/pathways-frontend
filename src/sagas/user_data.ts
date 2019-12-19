@@ -7,15 +7,19 @@ import { UserDataPersistence } from '../stores/user_data';
 import { PersistedUserData } from '../stores/user_data';
 import * as constants from '../application/constants';
 import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
+import { validateUserData } from '../validation/user_data';
 
 export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEffect> {
     yield takeLatest(
         [
             constants.CHOOSE_ANSWER,
-            constants.ADD_BOOKMARK,
-            constants.REMOVE_BOOKMARK,
+            constants.BOOKMARK_TOPIC,
+            constants.UNBOOKMARK_TOPIC,
+            constants.TOGGLE_IS_TOPIC_COMPLETED,
             constants.CLEAR_ALL_USER_DATA,
             constants.SET_ONBOARDING,
+            constants.BOOKMARK_SERVICE,
+            constants.UNBOOKMARK_SERVICE,
         ],
         saveUserData);
 }
@@ -56,6 +60,11 @@ export function* loadUserData(): LoadActions {
     try {
         const serializedUserData = yield call(loadUserDataAsync);
         const userData = deserializeUserData(serializedUserData);
+        const validatedUserData = validateUserData(userData);
+        if (!validatedUserData.isValid) {
+            console.log(validatedUserData)
+            yield put(UserDataPersistence.loadFailure('Failed to load user data'));
+        }
         yield put(UserDataPersistence.loadSuccess(userData));
     } catch (error) {
         console.error(`Failed to load user data (${error.message})`);
@@ -74,7 +83,8 @@ export const deserializeUserData = (serializedUserData: string): PersistedUserDa
 export const setUserDataDefaultValues = (data: any): PersistedUserData => (
     {
         chosenAnswers: data.chosenAnswers || [],
-        savedTopics: data.savedTopics || [],
+        bookmarkedTopics: data.bookmarkedTopics || [],
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
+        bookmarkedServices: data.bookmarkedServices || {},
     }
 );

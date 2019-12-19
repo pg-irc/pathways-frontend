@@ -2,8 +2,8 @@ import * as R from 'ramda';
 import * as constants from '../../application/constants';
 import * as actions from './actions';
 import * as types from '../../validation/services/types';
-
 import { Id, ServiceStore } from '../../validation/services/types';
+import { UserDataPersistence } from '../user_data';
 export { Id, ServiceStore };
 
 export function buildDefaultStore(): types.ServiceStore {
@@ -12,6 +12,8 @@ export function buildDefaultStore(): types.ServiceStore {
         servicesByTopic: {},
     };
 }
+
+export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.UnbookmarkServiceAction;
 
 export const buildEmptyServicesForTopic = (): types.ValidServicesForTopic => ({
     serviceIds: [],
@@ -31,6 +33,14 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServicesFailure(store, action);
         case constants.SAVE_SERVICE:
             return saveService(store, action);
+        case constants.BOOKMARK_SERVICE:
+            return updateServiceBookmarkInServicesMap(store, action, true);
+        case constants.UNBOOKMARK_SERVICE:
+            return updateServiceBookmarkInServicesMap(store, action, false);
+        case constants.CLEAR_ALL_USER_DATA:
+            return clearServicesData(store);
+        case constants.LOAD_USER_DATA_SUCCESS:
+            return loadServicesFromUserData(store, action);
         default:
             return store;
     }
@@ -99,3 +109,35 @@ const saveService = (store: types.ServiceStore, action: actions.SaveServiceActio
         [action.payload.service.id]: action.payload.service,
     },
 });
+
+const updateServiceBookmarkInServicesMap = (store: types.ServiceStore, action: ServiceBookmarkActions,
+    bookmarkedState: boolean): types.ServiceStore => {
+    const serviceId = action.payload.service.id;
+    return {
+        ...store,
+        services: {
+            ...store.services,
+            [serviceId]: {
+                ...action.payload.service,
+                bookmarked: bookmarkedState,
+            },
+        },
+    };
+};
+
+const clearServicesData = (store: types.ServiceStore): types.ServiceStore => (
+    {
+        ...store,
+        services: {},
+    }
+);
+
+const loadServicesFromUserData = (store: types.ServiceStore, action: UserDataPersistence.LoadSuccessAction): types. ServiceStore => {
+    return {
+        ...store,
+        services: {
+            ...store.services,
+            ...action.payload.bookmarkedServices,
+        },
+    };
+};

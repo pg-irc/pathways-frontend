@@ -38,7 +38,7 @@ const phoneNumber = {
     "required": ["phone_number_type", "phone_number"]
 };
 
-const phoneNumberArray = {
+export const phoneNumberArray = {
     "type": "array",
     "items": phoneNumber
 };
@@ -79,7 +79,7 @@ const addressWithType = {
     "required": ["address_type", "address"]
 };
 
-const addressWithTypeArray = {
+export const addressWithTypeArray = {
     "type": "array",
     "items": addressWithType
 };

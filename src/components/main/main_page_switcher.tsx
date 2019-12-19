@@ -9,7 +9,7 @@ import { TaskDetailConnectedComponent } from '../topics/task_detail_connected_co
 import { ServiceListConnectedComponent } from '../services/service_list_connected_component';
 import { QuestionnaireConnectedComponent } from '../questionnaire/questionnaire_connected_component';
 import { RecommendedTopicsConnectedComponent } from '../recommended_topics/recommended_topics_connected_component';
-import { BookmarkedTopicsConnectedComponent } from '../bookmarked_topics/bookmarked_topics_connected_component';
+import { BookmarksConnectedComponent } from '../bookmarks/bookmarks_connected_component';
 import { SearchConnectedComponent } from '../search/search_connected_component';
 import { OrganizationDetailComponent } from '../organizations/organization_detail_component';
 import { ServiceDetailConnectedComponent } from '../services/service_detail_connected_component';
@@ -33,7 +33,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
         <Route exact path={routePathDefinition(Routes.TopicDetail)} component={TaskDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Services)} component={ServiceListConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.RecommendedTopics)} component={RecommendedTopicsConnectedComponent} />
-        <Route exact path={routePathDefinition(Routes.BookmarkedTopics)} component={BookmarkedTopicsConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.Bookmarks)} component={BookmarksConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Search)} component={SearchConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.OrganizationDetail)} component={OrganizationDetailComponent} />
         <Route exact path={routePathDefinition(Routes.ServiceDetail)} component={ServiceDetailConnectedComponent} />

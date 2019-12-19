@@ -4,21 +4,27 @@ import { Store } from '../../stores';
 import { HeaderProps, HeaderActions, HeaderComponent } from './header_component';
 import { selectLocale } from '../../selectors/locale/select_locale';
 import {
-    Id as TopicId, RemoveFromSavedListAction, AddToSavedListAction,
-    addToSavedList, removeFromSavedList,
+    Id as TopicId, UnbookmarkTopicAction, BookmarkTopicAction,
+    bookmarkTopic, unbookmarkTopic,
 } from '../../stores/topics';
-import { pickSavedTopicIds } from '../../selectors/topics/pick_saved_topic_ids';
+import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
+import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
+import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
+import { HumanServiceData } from '../../validation/services/types';
 
 const mapStateToProps = (store: Store): HeaderProps => ({
     currentLocale: selectLocale(store),
-    savedTasksIdList: pickSavedTopicIds(store),
+    savedTasksIdList: pickBookmarkedTopicIds(store),
+    bookmarkedServicesIds: selectBookmarkedServicesIds(store),
 });
 
-type DispatchActions = AddToSavedListAction | RemoveFromSavedListAction;
+type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction | BookmarkServiceAction | UnbookmarkServiceAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): HeaderActions => ({
-    addBookmark: (topicId: TopicId): AddToSavedListAction => dispatch(addToSavedList(topicId)),
-    removeBookmark: (topicId: TopicId): RemoveFromSavedListAction => dispatch(removeFromSavedList(topicId)),
+    bookmarkTopic: (topicId: TopicId): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
+    unbookmarkTopic: (topicId: TopicId): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
+    bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
+    unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
 });
 
 export const HeaderConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HeaderComponent);

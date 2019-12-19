@@ -3,7 +3,7 @@ import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { ExploreSection } from '../../selectors/explore/types';
 import { RouterProps } from '../../application/routing';
-import { Id as TaskId, AddToSavedListAction, RemoveFromSavedListAction } from '../../stores/topics';
+import { Id as TaskId, BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
 import { ExploreDetailContentComponent } from './explore_detail_content_component';
 import { TopicListItem } from '../../selectors/topics/topic_list_item';
 import { textStyles, values } from '../../application/styles';
@@ -12,12 +12,12 @@ import { TaskListComponent, NoTasksAddedComponent } from '../topics/task_list_co
 export interface ExploreDetailProps {
     readonly section: ExploreSection;
     readonly topics: ReadonlyArray<TopicListItem>;
-    readonly savedTopicsIdList: ReadonlyArray<TaskId>;
+    readonly bookmarkedTopics: ReadonlyArray<TaskId>;
 }
 
 export interface ExploreDetailActions {
-    readonly addToSavedList: (topicId: TaskId) => AddToSavedListAction;
-    readonly removeFromSavedList: (topicId: TaskId) => RemoveFromSavedListAction;
+    readonly bookmarkTopic: (topicId: TaskId) => BookmarkTopicAction;
+    readonly unbookmarkTopic: (topicId: TaskId) => UnbookmarkTopicAction;
 }
 
 type Props = ExploreDetailProps & ExploreDetailActions & RouterProps;
@@ -27,9 +27,9 @@ export const ExploreDetailComponent: React.StatelessComponent<Props> =
         return (
             <TaskListComponent
                 tasks={props.topics}
-                savedTasksIdList={props.savedTopicsIdList}
-                addToSavedList={props.addToSavedList}
-                removeFromSavedList={props.removeFromSavedList}
+                savedTasksIdList={props.bookmarkedTopics}
+                bookmarkTopic={props.bookmarkTopic}
+                unbookmarkTopic={props.unbookmarkTopic}
                 history={props.history}
                 emptyTaskListContent={<NoTasksAddedComponent />}
                 headerContent={<TaskListHeaderComponent {...props} />}

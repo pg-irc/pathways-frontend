@@ -20,10 +20,12 @@ import { localizedPlaceHolders } from './localized_place_holders';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
+import { Id } from '../../stores/services';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
     readonly appId: string;
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
 }
 
 export interface SearchComponentActions {

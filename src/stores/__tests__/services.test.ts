@@ -6,22 +6,27 @@ import {
     BuildServicesRequestAction, BuildServicesSuccessAction,
     BuildServicesErrorAction,
     SaveServiceAction,
+    BookmarkServiceAction,
+    UnbookmarkServiceAction,
 } from '../services/actions';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, ServiceStore } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../helpers/random_test_values';
-import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder } from './helpers/services_helpers';
+import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder, buildServiceMap } from './helpers/services_helpers';
 import { isServiceLoading } from '../../validation/services/types';
+import { ClearAllUserDataAction } from '../questionnaire/actions';
+import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
+import { UserDataPersistence } from '../user_data';
 
 describe('services reducer', () => {
-    const aService = new ServiceBuilder();
-    const loadedTaskServices = new TaskServicesBuilder().withServiceIds([aService.id]);
+    const aServiceBuilder = new ServiceBuilder();
+    const loadedTaskServices = new TaskServicesBuilder().withServiceIds([aServiceBuilder.id]);
     const loadingTaskServices = new TaskServicesBuilder().withLoading(true);
     const loadedTaskServicesError = new TaskServicesErrorBuilder();
     const loadingTaskServicesError = new TaskServicesErrorBuilder().withLoading(true);
     const theStore = buildNormalizedServices(
-        [aService],
+        [aServiceBuilder],
         [loadedTaskServices, loadingTaskServices, loadedTaskServicesError, loadingTaskServicesError],
     );
 
@@ -129,7 +134,7 @@ describe('services reducer', () => {
         it('replaces service ids on existing topic services object', () => {
             if (isValidServicesForTopic(topicServicesOrErrorEntry)) {
                 const serviceIds = topicServicesOrErrorEntry.serviceIds;
-                expect(serviceIds).not.toContain(aService.id);
+                expect(serviceIds).not.toContain(aServiceBuilder.id);
             } else {
                 fail();
             }
@@ -190,6 +195,70 @@ describe('services reducer', () => {
 
             const newStore = reducer(oldStore, action);
             expect(newStore.services[serviceId].name).toEqual(newService.name);
+        });
+    });
+
+    describe('when bookmarking a service', () => {
+        const store = buildNormalizedServices([], []);
+        const service = new ServiceBuilder().build();
+        const action: BookmarkServiceAction = {
+            type: constants.BOOKMARK_SERVICE,
+            payload: { service },
+        };
+        const storeState = reducer(store, action);
+        it('can add a service to service map', () => {
+            expect(Object.keys(storeState.services)).toHaveLength(1);
+        });
+        it('can add a service to services map marked as bookmarked', () => {
+            expect(storeState.services[service.id].bookmarked).toBe(true);
+        });
+    });
+
+    describe('when removing a bookmarked service', () => {
+        const bookmarkedServiceBuilder = new ServiceBuilder().withBookmarked(true);
+        const store = buildNormalizedServices([bookmarkedServiceBuilder], []);
+        const bookmarkedService = bookmarkedServiceBuilder.build();
+        const action: UnbookmarkServiceAction = {
+            type: constants.UNBOOKMARK_SERVICE,
+            payload: { service: bookmarkedService },
+        };
+        const storeState = reducer(store, action);
+        it('can mark a service as no longer being bookmarked', () => {
+            expect(storeState.services[bookmarkedService.id].bookmarked).toBe(false);
+        });
+    });
+
+    describe('when clear all user data action is dispatched', () => {
+        const serviceBuilder = new ServiceBuilder();
+        const store = buildNormalizedServices([serviceBuilder], []);
+        const action: ClearAllUserDataAction = {
+            type: constants.CLEAR_ALL_USER_DATA,
+        };
+        const storeState = reducer(store, action);
+        it('removes services from service map', () => {
+            expect(storeState.services).toEqual({});
+        });
+    });
+
+    describe('when loading bookmarked services', () => {
+        let storeState: ServiceStore = undefined;
+        const store = buildNormalizedServices([], []);
+        const bookmarkedServiceId = aString();
+        const bookmarkedServiceBuilder = new ServiceBuilder().withId(bookmarkedServiceId).withBookmarked(true);
+        const bookmarkedServiceMap = buildServiceMap([bookmarkedServiceBuilder]);
+        beforeEach(() => {
+            const userDataWithBookmarkedService = new PersistedUserDataBuilder().
+            addBookmarkedServices(bookmarkedServiceMap).
+            buildObject();
+            const loadAction = UserDataPersistence.loadSuccess(userDataWithBookmarkedService);
+            storeState = reducer(store, loadAction);
+        });
+        it('should return the bookmarked service map', () => {
+            expect(storeState.services).toEqual(bookmarkedServiceMap);
+        });
+        it('it should return the bookmarked service', () => {
+            const bookmarkedService = bookmarkedServiceBuilder.build();
+            expect(storeState.services[bookmarkedServiceId]).toEqual(bookmarkedService);
         });
     });
 });

@@ -6,6 +6,7 @@ import {
     ValidServicesForTopic, LoadingServicesForTopic, HumanServiceData, ServiceMap,
     ServiceStore, PhoneNumber, Address, ErrorServicesForTopic,
     ServicesForAllTopics,
+    ServicesForTopic,
 } from '../../../validation/services/types';
 import * as constants from '../../../application/constants';
 
@@ -17,9 +18,24 @@ export const buildNormalizedServices = (
     servicesByTopic: buildTaskServicesOrErrorMap(taskServicesOrError),
 });
 
-const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {
+export const buildNormalizedServicesFromBuilders = (
+    services: ReadonlyArray<HumanServiceData>,
+    taskServices: ReadonlyArray<ServicesForTopic>,
+): ServiceStore => ({
+    services: buildServiceMapFromBuilder(services),
+    servicesByTopic: buildTaskServicesMapFromBuilder(taskServices),
+});
+
+export const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {
     const buildAndMapToId = (map: ServiceMap, builder: ServiceBuilder): ServiceMap => {
         return { ...map, [builder.id]: builder.build() };
+    };
+    return services.reduce(buildAndMapToId, {});
+};
+
+export const buildServiceMapFromBuilder = (services: ReadonlyArray<HumanServiceData>): ServiceMap => {
+    const buildAndMapToId = (map: ServiceMap, service: HumanServiceData): ServiceMap => {
+        return { ...map, [service.id]: service };
     };
     return services.reduce(buildAndMapToId, {});
 };
@@ -30,6 +46,14 @@ const buildTaskServicesOrErrorMap = (
     const buildAndMapToId = (map: ServicesForAllTopics, builder: TaskServicesBuilder | TaskServicesErrorBuilder):
         ServicesForAllTopics => {
         return { ...map, [builder.topicId]: builder.build() };
+    };
+    return taskServicesOrError.reduce(buildAndMapToId, {});
+};
+
+const buildTaskServicesMapFromBuilder = (taskServicesOrError: ReadonlyArray<ServicesForTopic>): ServicesForAllTopics => {
+    const buildAndMapToId = (map: ServicesForAllTopics, taskServices: ServicesForTopic): ServicesForAllTopics => {
+        const topicId = aString();
+        return { ...map, [topicId]: taskServices };
     };
     return taskServicesOrError.reduce(buildAndMapToId, {});
 };
@@ -89,6 +113,7 @@ export class ServiceBuilder {
     website: string = aString();
     email: string = aString();
     organizationName: string = aString();
+    bookmarked: boolean = false;
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -140,6 +165,11 @@ export class ServiceBuilder {
         return this;
     }
 
+    withBookmarked(bookmarked: boolean): ServiceBuilder {
+        this.bookmarked = bookmarked;
+        return this;
+    }
+
     build(): HumanServiceData {
         return {
             id: this.id,
@@ -151,6 +181,7 @@ export class ServiceBuilder {
             website: this.website,
             email: this.email,
             organizationName: this.organizationName,
+            bookmarked: this.bookmarked,
         };
     }
 }

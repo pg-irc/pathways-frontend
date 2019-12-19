@@ -49,8 +49,8 @@ describe('topics test helpers', () => {
                 expect(validStore).toHaveProperty('topicMap');
             });
 
-            test('saved topics list property', () => {
-                expect(validStore).toHaveProperty('savedTopicsList');
+            test('bookmarked topics list property', () => {
+                expect(validStore).toHaveProperty('bookmarkedTopics');
             });
 
             test('topics map keys are expected topic ids', () => {

@@ -27,7 +27,7 @@ export enum Routes {
     Services,
     Help,
     RecommendedTopics,
-    BookmarkedTopics,
+    Bookmarks,
     Search,
     OrganizationDetail,
     ServiceDetail,
@@ -55,8 +55,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/services/:topicId';
         case Routes.RecommendedTopics:
             return '/recommended-topics';
-        case Routes.BookmarkedTopics:
-            return '/bookmarked-topics';
+        case Routes.Bookmarks:
+            return '/bookmarks';
         case Routes.Search:
             return '/search';
         case Routes.OrganizationDetail:
@@ -113,7 +113,7 @@ const routeHasParameter = (route: Routes): boolean => (
 export const isOnParentScreen = (path: string): boolean => (
     pathMatchesAnyRoute(
         path,
-        [Routes.Help, Routes.Learn, Routes.Questionnaire, Routes.RecommendedTopics, Routes.BookmarkedTopics],
+        [Routes.Help, Routes.Learn, Routes.Questionnaire, Routes.RecommendedTopics, Routes.Bookmarks],
     )
 );
 
