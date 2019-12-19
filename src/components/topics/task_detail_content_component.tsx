@@ -21,6 +21,8 @@ export interface TaskDetailContentProps {
 
 export interface TaskDetailContentActions {
     readonly onServicesTextPress: () => void;
+    readonly onExpand: () => void;
+    readonly onCollapse: () => void;
 }
 
 type Props = TaskDetailContentProps & TaskDetailContentActions;
@@ -28,11 +30,17 @@ type Props = TaskDetailContentProps & TaskDetailContentActions;
 export const TaskDetailContentComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View padder style={{ backgroundColor: colors.white, marginHorizontal: -10 }}>
         <BannerImageComponent imageSource={topicImages[props.topic.id]} />
-        <DescriptorComponent descriptor={<Trans id={props.topic.exploreSection.name.toUpperCase()}/>} />
+        <DescriptorComponent descriptor={<Trans id={props.topic.exploreSection.name.toUpperCase()} />} />
         <TitleComponent title={props.topic.title} />
         <RecommendedComponent {...props} />
         <DividerComponent />
-        <MarkdownBodyComponent body={props.topic.description} shouldBeExpandable={!!props.topic.relatedTopics.length} />
+        <MarkdownBodyComponent
+            body={props.topic.description}
+            shouldBeExpandable={!!props.topic.relatedTopics.length}
+            topicId={props.topic.id}
+            onExpand={props.onExpand}
+            onCollapse={props.onCollapse}
+        />
         <DividerComponent />
         <ServicesButton {...props} />
     </View>

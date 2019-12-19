@@ -22,6 +22,18 @@ export const sendBookmarkAddedEvent = (topicId: string): void => {
     analytics.hit(event);
 };
 
+export const sendExpandDetail = (contentId: string): void => {
+    const analytics = createAnalytics();
+    const event = createEvent('Detail', 'DetailExpanded', contentId);
+    analytics.hit(event);
+};
+
+export const sendCollapseDetail = (contentId: string): void => {
+    const analytics = createAnalytics();
+    const event = createEvent('Detail', 'DetailCollapsed', contentId);
+    analytics.hit(event);
+};
+
 export const sendLinkPressedEvent = (currentPath: string, linkContext: string, linkType: string, linkValue: string)
     : void => {
     const additionalParameters = createGoogleAnalyticsScreenNameParameter(currentPath);

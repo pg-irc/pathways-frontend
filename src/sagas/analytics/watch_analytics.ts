@@ -4,11 +4,11 @@ import * as constants from '../../application/constants';
 import { AnalyticsAsync } from '../../stores/analytics';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { RouteChangedAction } from '../../stores/router_actions';
-import { AddToSavedListAction } from '../../stores/topics';
+import { AddToSavedListAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 import { ForkEffect, takeLatest, call, CallEffect, PutEffect, put } from 'redux-saga/effects';
 import * as events from './events';
 
-export type WatchedAction = RouteChangedAction | ChooseAnswerAction | AddToSavedListAction;
+export type WatchedAction = RouteChangedAction | ChooseAnswerAction | AddToSavedListAction | ExpandDetailAction | CollapseDetailAction;
 
 export function* watchAnalytics(): IterableIterator<ForkEffect> {
     yield takeLatest(
@@ -16,6 +16,8 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
             constants.ROUTE_CHANGED,
             constants.CHOOSE_ANSWER,
             constants.ADD_BOOKMARK,
+            constants.EXPAND_DETAIL,
+            constants.COLLAPSE_DETAIL,
         ],
         sendAnalyticsData);
 }
@@ -33,13 +35,23 @@ function* sendAnalyticsData(action: WatchedAction): AnalyticsActions {
 }
 
 async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
-    if (action.type === constants.ROUTE_CHANGED) {
-        events.sendScreenHit(action);
-    }
-    if (action.type === constants.CHOOSE_ANSWER) {
-        events.sendAnswerChosenEvent(action.payload.answerId);
-    }
-    if (action.type === constants.ADD_BOOKMARK) {
-        events.sendBookmarkAddedEvent(action.payload.topicId);
+    switch (action.type) {
+        case constants.ROUTE_CHANGED:
+            events.sendScreenHit(action);
+            break;
+        case constants.CHOOSE_ANSWER:
+            events.sendAnswerChosenEvent(action.payload.answerId);
+            break;
+        case constants.ADD_BOOKMARK:
+            events.sendBookmarkAddedEvent(action.payload.topicId);
+            break;
+        case constants.EXPAND_DETAIL:
+            events.sendExpandDetail(action.payload.contentId);
+            break;
+        case constants.COLLAPSE_DETAIL:
+            events.sendCollapseDetail(action.payload.contentId);
+            break;
+        default:
+            break;
     }
 }
