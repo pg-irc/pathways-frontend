@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import { OnboardingStore, reducer, setOnboarding, disableAnalytics } from '../user_profile';
 import { aBoolean } from '../../helpers/random_test_values';
-import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
+import { PersistedDataBuilder } from './helpers/user_data_helpers';
 import { DataPersistence } from '../persisted_data';
 import { clearAllUserData } from '../questionnaire/actions';
 
@@ -22,7 +22,7 @@ describe('user profile reducer', () => {
                 showOnboarding: onboardingFlag,
                 disableAnalytics: aBoolean(),
             };
-            const dataFlippingFlag = new PersistedUserDataBuilder().
+            const dataFlippingFlag = new PersistedDataBuilder().
                 withShowOnboarding(!onboardingFlag).
                 build();
             const actionFlippingFlag = DataPersistence.loadSuccess(dataFlippingFlag);
@@ -66,7 +66,7 @@ describe('user profile reducer', () => {
                 showOnboarding: aBoolean(),
                 disableAnalytics: disableAnalyticsFlag,
             };
-            const dataFlippingFlag = new PersistedUserDataBuilder().
+            const dataFlippingFlag = new PersistedDataBuilder().
                 withDisableAnalytics(!disableAnalyticsFlag).
                 build();
             const actionFlippingFlag = DataPersistence.loadSuccess(dataFlippingFlag);

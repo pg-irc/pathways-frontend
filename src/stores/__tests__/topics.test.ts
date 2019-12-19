@@ -3,7 +3,7 @@
 import { TopicBuilder, buildNormalizedStore } from './helpers/topics_helpers';
 import { DataPersistence } from '../persisted_data';
 import { aString } from '../../helpers/random_test_values';
-import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
+import { PersistedDataBuilder } from './helpers/user_data_helpers';
 import { bookmarkTopic, unbookmarkTopic } from '../topics/actions';
 import * as stores from '../topics';
 import { clearAllUserData, closeQuestionnaire } from '../questionnaire/actions';
@@ -132,7 +132,7 @@ describe('topics reducer', () => {
                     );
                     const theStore = new stores.LoadingTopicStore(validStoreWhereFirstTopicIsbookmarked);
 
-                    const persistedDataWhereSecondTopicIsbookmarked = new PersistedUserDataBuilder().
+                    const persistedDataWhereSecondTopicIsbookmarked = new PersistedDataBuilder().
                         withBookmarkedTopic(secondTopicId).
                         build();
                     const loadAction = DataPersistence.loadSuccess(persistedDataWhereSecondTopicIsbookmarked);
@@ -158,7 +158,7 @@ describe('topics reducer', () => {
                 const topicBuilder = new TopicBuilder();
                 const theValidStore = buildNormalizedStore([topicBuilder], []);
                 const theLoadingStore = new stores.LoadingTopicStore(theValidStore);
-                const dataWithInvalidId = new PersistedUserDataBuilder().
+                const dataWithInvalidId = new PersistedDataBuilder().
                     withBookmarkedTopic(aString()).
                     build();
                 const theAction = DataPersistence.loadSuccess(dataWithInvalidId);

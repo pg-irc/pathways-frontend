@@ -16,7 +16,7 @@ import { aString } from '../../helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder, buildServiceMap } from './helpers/services_helpers';
 import { isServiceLoading } from '../../validation/services/types';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
-import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
+import { PersistedDataBuilder } from './helpers/user_data_helpers';
 import { DataPersistence } from '../persisted_data';
 
 describe('services reducer', () => {
@@ -247,7 +247,7 @@ describe('services reducer', () => {
         const bookmarkedServiceBuilder = new ServiceBuilder().withId(bookmarkedServiceId).withBookmarked(true);
         const bookmarkedServiceMap = buildServiceMap([bookmarkedServiceBuilder]);
         beforeEach(() => {
-            const userDataWithBookmarkedService = new PersistedUserDataBuilder().
+            const userDataWithBookmarkedService = new PersistedDataBuilder().
                 withBookmarkedServices(bookmarkedServiceMap).
                 build();
             const loadAction = DataPersistence.loadSuccess(userDataWithBookmarkedService);

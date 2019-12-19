@@ -4,7 +4,7 @@ import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from
 import { DataPersistence } from '../../stores/persisted_data';
 import { aString, anError } from '../../helpers/random_test_values';
 import { selectUserDataForLocalPersistence } from '../../selectors/user_data/select_user_data_for_local_persistence';
-import { PersistedUserDataBuilder } from '../../stores/__tests__/helpers/user_data_helpers';
+import { PersistedDataBuilder } from '../../stores/__tests__/helpers/user_data_helpers';
 
 describe('the load user data saga', () => {
 
@@ -27,7 +27,7 @@ describe('the load user data saga', () => {
 
         it('should dispatch a success action on success', () => {
             const questionId = aString();
-            const dataBuilder = new PersistedUserDataBuilder().withChosenAnswer(questionId);
+            const dataBuilder = new PersistedDataBuilder().withChosenAnswer(questionId);
 
             const result = saga.next(dataBuilder.buildJson()).value;
 
@@ -36,7 +36,7 @@ describe('the load user data saga', () => {
 
         it('should return zero ids when there is no data in persistent storage', () => {
             const questionId: string = undefined;
-            const expectedPersistedData = new PersistedUserDataBuilder().build();
+            const expectedPersistedData = new PersistedDataBuilder().build();
 
             const result = saga.next(questionId).value;
 
@@ -46,7 +46,7 @@ describe('the load user data saga', () => {
         it('should split the data on comma', () => {
             const firstQuestionId = aString();
             const secondQuestionId = aString();
-            const dataBuilder = new PersistedUserDataBuilder().
+            const dataBuilder = new PersistedDataBuilder().
                 withChosenAnswer(firstQuestionId).
                 withChosenAnswer(secondQuestionId);
 
@@ -87,8 +87,8 @@ describe('the save user data saga', () => {
         });
 
         it('should dispatch call effect to save user state', () => {
-            const persistedData = new PersistedUserDataBuilder().build();
-            const expectedResult = new PersistedUserDataBuilder().buildJson();
+            const persistedData = new PersistedDataBuilder().build();
+            const expectedResult = new PersistedDataBuilder().buildJson();
 
             const result = saga.next(persistedData).value;
 
@@ -98,7 +98,7 @@ describe('the save user data saga', () => {
         it('should save question ids as comma-separated string', () => {
             const firstId = aString();
             const secondId = aString();
-            const dataBuilder = new PersistedUserDataBuilder().
+            const dataBuilder = new PersistedDataBuilder().
                 withChosenAnswer(firstId).
                 withChosenAnswer(secondId);
 
@@ -118,7 +118,7 @@ describe('the save user data saga', () => {
         describe('after successfully saving user data', () => {
 
             beforeEach(() => {
-                const persistedData = new PersistedUserDataBuilder().build();
+                const persistedData = new PersistedDataBuilder().build();
                 saga.next(persistedData);
             });
 

@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement no-any no-null-keyword
-import { PersistedUserDataBuilder } from '../../../stores/__tests__/helpers/user_data_helpers';
+import { PersistedDataBuilder } from '../../../stores/__tests__/helpers/user_data_helpers';
 import { validateUserData } from '..';
 import { aString, aBoolean } from '../../../helpers/random_test_values';
 import { ServiceBuilder, buildServiceMap } from '../../../stores/__tests__/helpers/services_helpers';
@@ -14,7 +14,7 @@ describe('user data schema', () => {
     describe('with valid data', () => {
 
         test('passes on valid user data object', () => {
-            const validUserData = new PersistedUserDataBuilder().build();
+            const validUserData = new PersistedDataBuilder().build();
             const validator = validateUserData(validUserData);
             expect(validator.isValid).toBe(true);
         });
@@ -26,7 +26,7 @@ describe('user data schema', () => {
 
         test('passes when it is consistent with the user data saved on disk', () => {
             const appStore: Store = buildDefaultStore();
-            const userDataInDeviceStorage = new PersistedUserDataBuilder().build();
+            const userDataInDeviceStorage = new PersistedDataBuilder().build();
             const action: DataPersistence.LoadSuccessAction = {
                 type: constants.LOAD_USER_DATA_SUCCESS,
                 payload: userDataInDeviceStorage,
@@ -53,14 +53,14 @@ describe('user data schema', () => {
 
             test('passes with valid data', () => {
                 const answerId = aString();
-                const validUserData = new PersistedUserDataBuilder().withChosenAnswer(answerId).build();
+                const validUserData = new PersistedDataBuilder().withChosenAnswer(answerId).build();
                 const validator = validateUserData(validUserData);
                 expect(validator.isValid).toBe(true);
             });
 
             test('fails with invalid data,', () => {
                 const answerId: any = null;
-                const invalidUserData = new PersistedUserDataBuilder().withChosenAnswer(answerId).build();
+                const invalidUserData = new PersistedDataBuilder().withChosenAnswer(answerId).build();
                 const validator = validateUserData(invalidUserData);
                 expect(validator.isValid).toBe(false);
             });
@@ -70,14 +70,14 @@ describe('user data schema', () => {
 
             test('passes with valid data', () => {
                 const topicId = aString();
-                const validUserData = new PersistedUserDataBuilder().withBookmarkedTopic(topicId).build();
+                const validUserData = new PersistedDataBuilder().withBookmarkedTopic(topicId).build();
                 const validator = validateUserData(validUserData);
                 expect(validator.isValid).toBe(true);
             });
 
             test('fails with invalid data', () => {
                 const topicId: any = null;
-                const invalidUserData = new PersistedUserDataBuilder().withBookmarkedTopic(topicId).build();
+                const invalidUserData = new PersistedDataBuilder().withBookmarkedTopic(topicId).build();
                 const validator = validateUserData(invalidUserData);
                 expect(validator.isValid).toBe(false);
             });
@@ -87,14 +87,14 @@ describe('user data schema', () => {
 
             test('passes with valid data', () => {
                 const showOnboarding = aBoolean();
-                const validUserData = new PersistedUserDataBuilder().withShowOnboarding(showOnboarding).build();
+                const validUserData = new PersistedDataBuilder().withShowOnboarding(showOnboarding).build();
                 const validator = validateUserData(validUserData);
                 expect(validator.isValid).toBe(true);
             });
 
             test('fails with invalid data', () => {
                 const showOnboarding: any = null;
-                const invalidUserData = new PersistedUserDataBuilder().withShowOnboarding(showOnboarding).build();
+                const invalidUserData = new PersistedDataBuilder().withShowOnboarding(showOnboarding).build();
                 const validator = validateUserData(invalidUserData);
                 expect(validator.isValid).toBe(false);
             });
@@ -105,7 +105,7 @@ describe('user data schema', () => {
             test('passes with valid data', () => {
                 const aServiceBuilder = new ServiceBuilder();
                 const serviceMap = buildServiceMap([aServiceBuilder]);
-                const validUserData = new PersistedUserDataBuilder().withBookmarkedServices(serviceMap).build();
+                const validUserData = new PersistedDataBuilder().withBookmarkedServices(serviceMap).build();
                 const validator = validateUserData(validUserData);
                 expect(validator.isValid).toBe(true);
             });
@@ -124,7 +124,7 @@ describe('user data schema', () => {
                     bookmarked: aBoolean(),
                 };
                 const invalidServiceMap: any = { serviceId: invalidService };
-                const invalidUserData = new PersistedUserDataBuilder().withBookmarkedServices(invalidServiceMap).build();
+                const invalidUserData = new PersistedDataBuilder().withBookmarkedServices(invalidServiceMap).build();
                 const validator = validateUserData(invalidUserData);
                 expect(validator.isValid).toBe(false);
             });

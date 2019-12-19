@@ -5,7 +5,7 @@ import { ValidStoreBuilder, QuestionBuilder, AnswerBuilder, buildLoadingStore } 
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../helpers/random_test_values';
 import { toValidOrThrow, LoadingQuestionnaireStore, InvalidQuestionnaireStore } from '../questionnaire/stores';
-import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
+import { PersistedDataBuilder } from './helpers/user_data_helpers';
 import { DataPersistence } from '../persisted_data';
 import { clearAllUserData, closeQuestionnaire } from '../questionnaire/actions';
 
@@ -173,7 +173,7 @@ describe('questionnaire reducer', () => {
             nonChosenAnswer = new AnswerBuilder().withIsChosen(false);
             question = new QuestionBuilder().withAnswers([nonChosenAnswer]);
             loadingStore = buildLoadingStore([question]);
-            const persistedData = new PersistedUserDataBuilder().withChosenAnswer(nonChosenAnswer.id).build();
+            const persistedData = new PersistedDataBuilder().withChosenAnswer(nonChosenAnswer.id).build();
             const action = DataPersistence.loadSuccess(persistedData);
 
             newStore = store.reducer(loadingStore, action);
@@ -185,7 +185,7 @@ describe('questionnaire reducer', () => {
             chosenAnswer = new AnswerBuilder().withIsChosen(true);
             question = new QuestionBuilder().withAnswers([chosenAnswer]);
             loadingStore = buildLoadingStore([question]);
-            const persistedData = new PersistedUserDataBuilder().build();
+            const persistedData = new PersistedDataBuilder().build();
             const action = DataPersistence.loadSuccess(persistedData);
 
             newStore = store.reducer(loadingStore, action);

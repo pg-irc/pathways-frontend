@@ -4,29 +4,29 @@ import { Id as TopicId } from '../../topics';
 import { ServiceMap } from '../../../validation/services/types';
 import { PersistedData } from '../../persisted_data';
 
-export class PersistedUserDataBuilder {
+export class PersistedDataBuilder {
     chosenAnswers: AnswerId[] = [];
     bookmarkedTopics: TopicId[] = [];
     showOnboarding: boolean = true;
     bookmarkedServices: ServiceMap = {};
     disableAnalytics: boolean = false;
 
-    withChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
+    withChosenAnswer(id: AnswerId): PersistedDataBuilder {
         this.chosenAnswers.push(id);
         return this;
     }
 
-    withBookmarkedTopic(id: TopicId): PersistedUserDataBuilder {
+    withBookmarkedTopic(id: TopicId): PersistedDataBuilder {
         this.bookmarkedTopics.push(id);
         return this;
     }
 
-    withShowOnboarding(showOnboarding: boolean): PersistedUserDataBuilder {
+    withShowOnboarding(showOnboarding: boolean): PersistedDataBuilder {
         this.showOnboarding = showOnboarding;
         return this;
     }
 
-    withBookmarkedServices(services: ServiceMap): PersistedUserDataBuilder {
+    withBookmarkedServices(services: ServiceMap): PersistedDataBuilder {
         this.bookmarkedServices = {
             ...this.bookmarkedServices,
             ...services,
@@ -34,7 +34,7 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    withDisableAnalytics(disableAnalytics: boolean): PersistedUserDataBuilder {
+    withDisableAnalytics(disableAnalytics: boolean): PersistedDataBuilder {
         this.disableAnalytics = disableAnalytics;
         return this;
     }
