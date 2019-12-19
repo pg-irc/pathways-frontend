@@ -4,7 +4,7 @@ import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from
 import { DataPersistence } from '../../stores/persisted_data';
 import { aString, anError } from '../../helpers/random_test_values';
 import { selectUserDataForLocalPersistence } from '../../selectors/user_data/select_user_data_for_local_persistence';
-import { PersistedDataBuilder } from '../../stores/__tests__/helpers/user_data_helpers';
+import { PersistedDataBuilder } from '../../stores/__tests__/helpers/persisted_data_builder';
 
 describe('the load user data saga', () => {
 

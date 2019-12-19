@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement no-any no-null-keyword
-import { PersistedDataBuilder } from '../../../stores/__tests__/helpers/user_data_helpers';
+import { PersistedDataBuilder } from '../../../stores/__tests__/helpers/persisted_data_builder';
 import { validateUserData } from '..';
 import { aString, aBoolean } from '../../../helpers/random_test_values';
 import { ServiceBuilder, buildServiceMap } from '../../../stores/__tests__/helpers/services_helpers';

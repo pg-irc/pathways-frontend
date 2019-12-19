@@ -16,7 +16,7 @@ import { aString } from '../../helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder, buildServiceMap } from './helpers/services_helpers';
 import { isServiceLoading } from '../../validation/services/types';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
-import { PersistedDataBuilder } from './helpers/user_data_helpers';
+import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
 
 describe('services reducer', () => {

@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-trailing-whitespace
 
-import { PersistedDataBuilder } from '../../stores/__tests__/helpers/user_data_helpers';
+import { PersistedDataBuilder } from '../../stores/__tests__/helpers/persisted_data_builder';
 import { aString } from '../../helpers/random_test_values';
 import { serializeUserData, deserializeUserData } from '../user_data';
 import { ServiceBuilder, buildServiceMap } from '../../stores/__tests__/helpers/services_helpers';

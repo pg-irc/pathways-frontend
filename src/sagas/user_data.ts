@@ -3,8 +3,7 @@
 import { call, CallEffect, PutEffect, put, ForkEffect, takeLatest, select, SelectEffect } from 'redux-saga/effects';
 import { AsyncStorage } from 'react-native';
 import { USER_DATA_STORAGE_KEY } from '../application/constants';
-import { DataPersistence } from '../stores/persisted_data';
-import { PersistedData } from '../stores/persisted_data';
+import { DataPersistence, PersistedData } from '../stores/persisted_data';
 import * as constants from '../application/constants';
 import { selectUserDataForLocalPersistence } from '../selectors/user_data/select_user_data_for_local_persistence';
 import { validateUserData } from '../validation/user_data';

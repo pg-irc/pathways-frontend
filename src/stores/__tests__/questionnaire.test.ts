@@ -5,7 +5,7 @@ import { ValidStoreBuilder, QuestionBuilder, AnswerBuilder, buildLoadingStore } 
 import { CHOOSE_ANSWER } from '../../application/constants';
 import { aString } from '../../helpers/random_test_values';
 import { toValidOrThrow, LoadingQuestionnaireStore, InvalidQuestionnaireStore } from '../questionnaire/stores';
-import { PersistedDataBuilder } from './helpers/user_data_helpers';
+import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
 import { clearAllUserData, closeQuestionnaire } from '../questionnaire/actions';
 
