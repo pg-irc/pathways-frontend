@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { TextInput } from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from '../../validation/latlong/types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
-import { InputFormSeparator } from './separators';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 
 export interface Props {
@@ -36,36 +35,38 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     return <I18n>
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
 
-            <View style={{ paddingHorizontal: 20, paddingBottom: 20, backgroundColor: colors.teal }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <InputIcon name='search' />
-                    <TextInput
-                        style={applicationStyles.searchInput}
-                        onChangeText={(d: string): void => {
-                            debug(`SearchInputComponent search text changed to '${d}'`);
-                            props.refine(d);
-                        }}
-                        value={props.currentRefinement}
-                        placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
-                        placeholderTextColor={colors.white}
-                    />
-                </View>
-                <InputFormSeparator />
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <InputIcon name='map-marker' />
-                    <TextInput
-                        style={applicationStyles.searchInput}
-                        onChangeText={(d: string): void => {
-                            debug(`SearchInputComponent location text changed to '${d}'`);
-                            setLocation(d);
-                        }}
-                        value={location}
-                        onEndEditing={(): void => props.setLocation(location)}
-                        placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Near My location')} // TODO translate
-                        placeholderTextColor={colors.white}
-                    />
-                </View>
-                <InputFormSeparator />
+            <View style={{ padding: 10, backgroundColor: colors.teal }}>
+                <TouchableOpacity style={{ backgroundColor: colors.lightTeal, borderRadius: 10, margin: 5 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <InputIcon name='search' />
+                        <TextInput
+                            style={applicationStyles.searchInput}
+                            onChangeText={(d: string): void => {
+                                debug(`SearchInputComponent search text changed to '${d}'`);
+                                props.refine(d);
+                            }}
+                            value={props.currentRefinement}
+                            placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
+                            placeholderTextColor={colors.white}
+                        />
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={{ backgroundColor: colors.lightTeal, borderRadius: 10, margin: 5 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <InputIcon name='map-marker' />
+                        <TextInput
+                            style={applicationStyles.searchInput}
+                            onChangeText={(d: string): void => {
+                                debug(`SearchInputComponent location text changed to '${d}'`);
+                                setLocation(d);
+                            }}
+                            value={location}
+                            onEndEditing={(): void => props.setLocation(location)}
+                            placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Near My location')} // TODO translate
+                            placeholderTextColor={colors.white}
+                        />
+                    </View>
+                </TouchableOpacity>
             </View >
         )}
 
@@ -79,7 +80,7 @@ interface IconProps {
 const InputIcon = ({ name }: IconProps): JSX.Element => (
     <Icon name={name}
         type='FontAwesome'
-        style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3 }}
+        style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, marginHorizontal: 3, paddingHorizontal: 10 }}
     />
 );
 
@@ -91,4 +92,3 @@ export const extractSearchStrings = (): JSX.Element => (
         </Text>
     </div>
 );
-
