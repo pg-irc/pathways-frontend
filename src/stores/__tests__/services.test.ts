@@ -139,6 +139,38 @@ describe('services reducer', () => {
                 fail();
             }
         });
+
+        it('sets service by topic expiration', () => {
+            if (isValidServicesForTopic(topicServicesOrErrorEntry)) {
+                expect(topicServicesOrErrorEntry.expiresAt).toBeDefined();
+            } else {
+                fail();
+            }
+        });
+
+        it('sets services by topic expiration to 24 hours from now', () => {
+            const expiresAt = Date.now();
+            const taskServicesBuilder = new TaskServicesBuilder().withExpiresAt(expiresAt);
+            const topicId = taskServicesBuilder.topicId;
+            const serviceBuilder = new ServiceBuilder().withId(topicId);
+            const storeBeforeAction = buildNormalizedServices([serviceBuilder], [taskServicesBuilder]);
+            const theAction: BuildServicesSuccessAction = {
+                type: constants.LOAD_SERVICES_SUCCESS,
+                payload: {
+                    topicId,
+                    services: [serviceBuilder.build()],
+                },
+            };
+            const storeAfterAction = reducer(storeBeforeAction, theAction);
+            const servicesByTopic = storeAfterAction.servicesByTopic[topicId];
+
+            if (isValidServicesForTopic(servicesByTopic)) {
+                const twentyFourHoursAfterExpiry = expiresAt + (24 * 60 * 60 * 1000);
+                expect(servicesByTopic.expiresAt).toBeGreaterThanOrEqual(twentyFourHoursAfterExpiry);
+            } else {
+                fail();
+            }
+        });
     });
 
     describe('when populating topic services error object from an error response', () => {

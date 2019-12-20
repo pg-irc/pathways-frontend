@@ -191,6 +191,7 @@ export class TaskServicesBuilder {
     loading: boolean = false;
     message: string = aString();
     serviceIds: ReadonlyArray<Id> = [];
+    expiresAt: number = Date.now();
 
     withLoading(loading: boolean): TaskServicesBuilder {
         this.loading = loading;
@@ -199,6 +200,11 @@ export class TaskServicesBuilder {
 
     withServiceIds(serviceIds: ReadonlyArray<Id>): TaskServicesBuilder {
         this.serviceIds = serviceIds;
+        return this;
+    }
+
+    withExpiresAt(expiresAt: number): TaskServicesBuilder {
+        this.expiresAt = expiresAt;
         return this;
     }
 
@@ -211,6 +217,7 @@ export class TaskServicesBuilder {
         return {
             type: constants.TOPIC_SERVICES_VALID,
             serviceIds: this.serviceIds,
+            expiresAt: this.expiresAt,
         };
     }
 }
