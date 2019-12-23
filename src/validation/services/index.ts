@@ -53,47 +53,42 @@ export interface ValidatedServiceAtLocationJSON {
     readonly location: ValidatedLocationJSON;
 }
 
-export const toServicesFromValidatedJSONAndStore = (data: ReadonlyArray<ValidatedServiceAtLocationJSON>, bookmarkedServicesIds: ReadonlyArray<Id>,
-): ReadonlyArray<types.HumanServiceData> => {
-   const servicesFromValidatedJSON = R.map(serviceFromValidatedJSON, data);
-   return R.map((service: types.HumanServiceData): types.HumanServiceData => (
-       {
-           ...service,
-           bookmarked: R.contains(service.id, bookmarkedServicesIds),
-       }
-   ), servicesFromValidatedJSON);
-};
+export const toServicesFromValidatedData = (bookmarkedServiceIds: ReadonlyArray<Id>, data: ReadonlyArray<ValidatedServiceAtLocationJSON>):
+    ReadonlyArray<types.HumanServiceData> => (
+        R.map(serviceFromData(bookmarkedServiceIds), data)
+    );
 
-export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): types.HumanServiceData => {
-    const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): types.PhoneNumber => ({
-        type: phoneNumber.phone_number_type,
-        phone_number: phoneNumber.phone_number,
-    }), data.location.phone_numbers);
+const serviceFromData = R.curry((bookmarkedServiceIds: ReadonlyArray<Id>, data: ValidatedServiceAtLocationJSON):
+    types.HumanServiceData => {
+        const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): types.PhoneNumber => ({
+            type: phoneNumber.phone_number_type,
+            phone_number: phoneNumber.phone_number,
+        }), data.location.phone_numbers);
 
-    const addresses = R.map((addressWithType: ValidatedAddressWithTypeJSON): types.Address => ({
-        id: addressWithType.address.id,
-        type: addressWithType.address_type,
-        address: addressWithType.address.address,
-        city: addressWithType.address.city,
-        stateProvince: addressWithType.address.state_province,
-        postalCode: addressWithType.address.postal_code,
-        country: addressWithType.address.country,
-    }), data.location.addresses);
+        const addresses = R.map((addressWithType: ValidatedAddressWithTypeJSON): types.Address => ({
+            id: addressWithType.address.id,
+            type: addressWithType.address_type,
+            address: addressWithType.address.address,
+            city: addressWithType.address.city,
+            stateProvince: addressWithType.address.state_province,
+            postalCode: addressWithType.address.postal_code,
+            country: addressWithType.address.country,
+        }), data.location.addresses);
 
-    return {
-        id: data.service.id,
-        services_at_location_id: data.id,
-        latlong: {
-            lat: data.location.latitude,
-            lng: data.location.longitude,
-        },
-        name: data.service.name,
-        description: data.service.description,
-        phoneNumbers: phoneNumbers,
-        addresses: addresses,
-        website: data.service.organization_url,
-        email: data.service.organization_email,
-        organizationName: data.service.organization_name,
-        bookmarked: false,
-    };
-};
+        return {
+            id: data.service.id,
+            services_at_location_id: data.id,
+            latlong: {
+                lat: data.location.latitude,
+                lng: data.location.longitude,
+            },
+            name: data.service.name,
+            description: data.service.description,
+            phoneNumbers: phoneNumbers,
+            addresses: addresses,
+            website: data.service.organization_url,
+            email: data.service.organization_email,
+            organizationName: data.service.organization_name,
+            bookmarked: R.contains(data.service.id, bookmarkedServiceIds),
+        };
+});

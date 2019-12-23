@@ -2,7 +2,7 @@
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put, select, SelectEffect } from 'redux-saga/effects';
 import * as constants from '../application/constants';
 import * as actions from '../stores/services/actions';
-import { validateServicesAtLocationArray, toServicesFromValidatedJSONAndStore } from '../validation/services';
+import { validateServicesAtLocationArray, toServicesFromValidatedData } from '../validation/services';
 import { searchServices, APIResponse } from '../api';
 import { getDeviceLocation, DeviceLocation } from '../async/location';
 import * as errors from '../validation/errors/is_error';
@@ -19,13 +19,11 @@ export function* updateTaskServices(action: actions.BuildServicesRequestAction):
     const topicId = action.payload.topicId;
     try {
         const isOnline = yield call(deviceIsOnline);
-
         if (!isOnline) {
             return yield put(actions.buildServicesError(topicId, Errors.Offline));
         }
 
         const deviceLocationResponse: DeviceLocation = yield call(getDeviceLocation, action.payload.manualUserLocation);
-
         if (errors.isNoLocationPermissionError(deviceLocationResponse)) {
             return yield put(actions.buildServicesError(topicId, deviceLocationResponse.type));
         }
@@ -44,8 +42,8 @@ export function* updateTaskServices(action: actions.BuildServicesRequestAction):
             return yield put(actions.buildServicesError(topicId, Errors.InvalidServerData));
         }
 
-        const bookmarkedServicesIds = yield select(selectBookmarkedServicesIds);
-        const services = yield toServicesFromValidatedJSONAndStore(validatedApiResponse.validData, bookmarkedServicesIds);
+        const bookmarkedServiceIds = yield select(selectBookmarkedServicesIds);
+        const services = toServicesFromValidatedData(bookmarkedServiceIds, validatedApiResponse.validData);
         yield put(actions.buildServicesSuccess(topicId, services));
     } catch (error) {
         yield put(actions.buildServicesError(topicId, Errors.Exception));
