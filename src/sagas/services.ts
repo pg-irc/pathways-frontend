@@ -9,6 +9,7 @@ import * as errors from '../validation/errors/is_error';
 import { Errors } from '../validation/errors/types';
 import { HumanServiceData } from '../validation/services/types';
 import { selectBookmarkedServicesIds } from '../selectors/services/select_bookmarked_services_ids';
+import { deviceIsOnline } from '../async/network';
 
 export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
@@ -17,6 +18,12 @@ export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
 export function* updateTaskServices(action: actions.BuildServicesRequestAction): UpdateResult {
     const topicId = action.payload.topicId;
     try {
+        const isOnline = yield call(deviceIsOnline);
+
+        if (!isOnline) {
+            return yield put(actions.buildServicesError(topicId, Errors.Offline));
+        }
+
         const deviceLocationResponse: DeviceLocation = yield call(getDeviceLocation, action.payload.manualUserLocation);
 
         if (errors.isNoLocationPermissionError(deviceLocationResponse)) {

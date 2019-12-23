@@ -18,7 +18,7 @@ export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.Unb
 export const buildEmptyServicesForTopic = (): types.ValidServicesForTopic => ({
     serviceIds: [],
     type: constants.TOPIC_SERVICES_VALID,
-    expiresAt: Date.now(),
+    expiresAt: 0,
 });
 
 export function reducer(store: types.ServiceStore = buildDefaultStore(), action?: actions.ServicesAction): types.ServiceStore {
