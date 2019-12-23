@@ -6,6 +6,7 @@ import { values, applicationStyles, colors } from '../../application/styles';
 import { LatLong } from '../../validation/latlong/types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -29,7 +30,7 @@ const UseMyLocationButton = (): JSX.Element => {
         fontSize: 12,
         marginVertical: 10,
         marginRight: 10,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     }}><Trans>Use My Location</Trans></Text>;
 
     const button = (
@@ -40,6 +41,13 @@ const UseMyLocationButton = (): JSX.Element => {
     return <View style={{ marginTop: 5, marginLeft: 5 }}>{button}</View>;
 };
 
+const renderUseMyLocationButton = (showUseMyLocationButton: boolean): JSX.Element => {
+    if (!showUseMyLocationButton) {
+        return <EmptyComponent />;
+    }
+    return <UseMyLocationButton />;
+};
+
 // tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
@@ -48,7 +56,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         debug(`SearchInput Component useEffect with '${props.currentRefinement}'`);
         props.refine(props.currentRefinement);
     }, [props.latLong]);
-
+    const [locationInput, setLocationInput]: [boolean, (b: boolean) => void] = useState();
     const buildTranslatedPlaceholder = (i18n: ReactI18n, placeholder: string): string => {
         const _ = i18n._.bind(i18n);
         return _(placeholder);
@@ -79,13 +87,15 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             debug(`SearchInputComponent location text changed to '${d}'`);
                             setLocation(d);
                         }}
+                        onFocus={(): void => setLocationInput(true)}
+                        onBlur={(): void => setLocationInput(false)}
                         value={location}
                         onEndEditing={(): void => props.setLocation(location)}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Near My location')} // TODO translate
                         placeholderTextColor={colors.white}
                     />
                 </TouchableOpacity>
-                <UseMyLocationButton />
+                {renderUseMyLocationButton(locationInput)}
             </View >
         )}
 
