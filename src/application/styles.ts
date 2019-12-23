@@ -307,6 +307,12 @@ export const applicationStyles = StyleSheet.create({
         backgroundColor: colors.teal,
         borderRadius: values.roundedBorderRadius,
     },
+    whiteButton: {
+        backgroundColor: colors.white,
+        borderRadius: values.roundedBorderRadius,
+        alignSelf: 'flex-start',
+        flexDirection: 'row',
+    },
     whiteTealButton: {
         backgroundColor: colors.white,
         borderRadius: values.roundedBorderRadius,
