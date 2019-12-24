@@ -7,6 +7,7 @@ import { LatLong } from '../../validation/latlong/types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { ClearInputButton } from './clear_input_button';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -61,6 +62,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         const _ = i18n._.bind(i18n);
         return _(placeholder);
     };
+    const clearLocation = (): void => setLocation('');
 
     return <I18n>
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
@@ -94,6 +96,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Near My location')} // TODO translate
                         placeholderTextColor={colors.white}
                     />
+                    <ClearInputButton visible={location !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
                 {renderUseMyLocationButton(locationInput)}
             </View >
