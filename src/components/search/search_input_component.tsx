@@ -62,6 +62,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         const _ = i18n._.bind(i18n);
         return _(placeholder);
     };
+    const clearSearch = (): string => props.refine('');
     const clearLocation = (): void => setLocation('');
 
     return <I18n>
@@ -80,6 +81,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
                         placeholderTextColor={colors.white}
                     />
+                    <ClearInputButton visible={props.currentRefinement !== ''} onPress={clearSearch} />
                 </TouchableOpacity>
                 <TouchableOpacity style={{ backgroundColor: colors.lightTeal, borderRadius: values.lessRoundedBorderRadius, margin: 5, flexDirection: 'row', alignItems: 'center' }}>
                     <InputIcon name='map-marker' />
