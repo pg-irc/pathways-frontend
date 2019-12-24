@@ -9,6 +9,7 @@ import { Trans, I18n } from '@lingui/react';
 import { colors, textStyles, values } from '../../application/styles';
 import { ServiceBookmarksComponent } from './service_bookmarks_component';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
+import { StyleSheet } from 'react-native';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -51,27 +52,34 @@ const TabSwitcher = (props: Props & TabSwitcherProps): JSX.Element => {
     const serviceTabHeading = _('Services');
     return (
         <View style={{backgroundColor: colors.white}}>
-            <Tabs tabContainerStyle={{elevation: 0, width: '50%', marginHorizontal: 8}} tabBarUnderlineStyle={{width: 0}}>
-                <Tab heading={topicTabHeading}
-                textStyle={[textStyles.headlineH4StyleBlackLeft, {fontWeight: 'bold'}]}
-                tabStyle={{backgroundColor: colors.white, borderBottomColor: colors.white, borderBottomWidth: 4}}
-                activeTabStyle={{backgroundColor: colors.white, borderBottomColor: colors.teal, borderBottomWidth: 4}}
-                activeTextStyle={[textStyles.headlineH4StyleBlackLeft, {fontWeight: 'bold'}]}
-                >
+            <Tabs tabContainerStyle={{elevation: 0, width: '50%', marginHorizontal: 8}} tabBarUnderlineStyle={{width: 0}} scrollWithoutAnimation>
+                <Tab heading={topicTabHeading} {...tabStyle}>
                     <TopicBookmarksComponent {...props} />
                 </Tab>
-                <Tab heading={serviceTabHeading}
-                textStyle={[textStyles.headlineH4StyleBlackLeft, {fontWeight: 'bold'}]}
-                tabStyle={{backgroundColor: colors.white, borderBottomColor: colors.white, borderBottomWidth: 4}}
-                activeTabStyle={{backgroundColor: colors.white, borderBottomColor: colors.teal, borderBottomWidth: 4}}
-                activeTextStyle={[textStyles.headlineH4StyleBlackLeft, {fontWeight: 'bold'}]}
-                >
+                <Tab heading={serviceTabHeading} {...tabStyle}>
                     <ServiceBookmarksComponent {...props} />
                 </Tab>
             </Tabs>
     </View>
     );
 };
+
+const tabStyle = StyleSheet.create({
+    textStyle: {
+        ...textStyles.headlineH4StyleBlackLeft,
+        fontWeight: 'bold',
+    },
+    tabStyle: {
+        backgroundColor: colors.white, borderBottomColor: colors.white, borderBottomWidth: 4,
+    },
+    activeTabStyle: {
+        backgroundColor: colors.white, borderBottomColor: colors.teal, borderBottomWidth: 4,
+    },
+    activeTextStyle: {
+        ...textStyles.headlineH4StyleBlackLeft,
+        fontWeight: 'bold',
+    },
+  });
 
 // This is here to be able to extract heading strings with yarn extract-strings-clean.
 // These strings must match the strings within the TabSwitcher component.
