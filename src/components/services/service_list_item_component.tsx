@@ -1,10 +1,9 @@
 import React from 'react';
 import { textStyles, colors } from '../../application/styles';
 import { HumanServiceData, Address } from '../../validation/services/types';
-import { View } from 'native-base';
-import { Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'native-base';
+import { TouchableOpacity } from 'react-native';
 import { mapWithIndex } from '../../application/map_with_index';
-import { ExpandableContentComponent } from '../expandable_content/expandable_content_component';
 import { Trans } from '@lingui/react';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
@@ -32,15 +31,20 @@ export const ServiceListItemComponent: React.StatelessComponent<Props> =
         const addBookmark = (): BookmarkServiceAction => props.bookmarkService(props.service);
         const removeBookmark = (): UnbookmarkServiceAction => props.unbookmarkService(props.service);
         return (
-            <View style={{ backgroundColor: colors.white, padding: 10, marginTop: 10 }}>
-                <BookmarkButtonComponent isBookmarked={props.isBookmarked}
-                textColor={colors.teal}
-                bookmark={addBookmark}
-                unbookmark={removeBookmark}
-                />
-                {renderName(serviceName, props.onPress)}
-                {renderDescription(props.service.description)}
-                {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
+            <View style={{ backgroundColor: colors.white, marginTop: 10, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
+                {/* native-base Button/Icon component has default padding */}
+                <View style={{flex: 2, paddingLeft: 10}}>
+                    {renderName(serviceName, props.onPress)}
+                    {renderDescription(props.service.description)}
+                    {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
+                </View>
+                <View>
+                    <BookmarkButtonComponent isBookmarked={props.isBookmarked}
+                    textColor={colors.teal}
+                    bookmark={addBookmark}
+                    unbookmark={removeBookmark}
+                    />
+                </View>
             </View>
         );
     };
@@ -55,12 +59,11 @@ const renderName = (name: string, onPress: () => void): JSX.Element => (
     </TouchableOpacity>
 );
 
-const renderDescription = (description: string): JSX.Element => {
-    const content = <Text style={textStyles.alwaysLeftParagraphStyle}> {description}</Text>;
-    return (
-        <ExpandableContentComponent content={content} />
-    );
-};
+const renderDescription = (description: string): JSX.Element => (
+    <Text note numberOfLines={3} style={textStyles.alwaysLeftParagraphStyle }>
+    {description}
+</Text>
+);
 
 // tslint:disable-next-line:typedef
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
