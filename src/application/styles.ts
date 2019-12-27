@@ -312,6 +312,8 @@ export const applicationStyles = StyleSheet.create({
         borderRadius: values.roundedBorderRadius,
         alignSelf: 'flex-start',
         flexDirection: 'row',
+        marginTop: 5,
+        marginLeft: 5,
     },
     whiteTealButton: {
         backgroundColor: colors.white,
@@ -332,6 +334,13 @@ export const applicationStyles = StyleSheet.create({
         flex: 1,
         height: 48,
         padding: 12,
+    },
+    searchContainer: {
+        backgroundColor: colors.lightTeal,
+        borderRadius: values.lessRoundedBorderRadius,
+        margin: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     boxShadowBelow: {
         shadowColor: colors.black,

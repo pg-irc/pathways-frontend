@@ -37,25 +37,24 @@ const renderUseMyLocationButton = (showUseMyLocationButton: boolean, setLocation
         fontWeight: 'bold',
     }}><Trans>Use My Location</Trans></Text>;
 
-    const button = (
+    return (
         <TouchableOpacity
             style={applicationStyles.whiteButton}
             onPress={(): void => setLocation('Using my Location')}>
             {icon}{text}
         </TouchableOpacity>
     );
-    return <View style={{ marginTop: 5, marginLeft: 5 }}>{button}</View>;
 };
 
 // tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
     const [location, setLocation]: [string, (s: string) => void] = useState(props.location);
+    const [locationInput, setLocationInput]: [boolean, (b: boolean) => void] = useState();
     useEffect(() => {
         debug(`SearchInput Component useEffect with '${props.currentRefinement}'`);
         props.refine(props.currentRefinement);
     }, [props.latLong]);
-    const [locationInput, setLocationInput]: [boolean, (b: boolean) => void] = useState();
     const buildTranslatedPlaceholder = (i18n: ReactI18n, placeholder: string): string => {
         const _ = i18n._.bind(i18n);
         return _(placeholder);
@@ -67,7 +66,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
 
             <View style={{ padding: 10, backgroundColor: colors.teal }}>
-                <TouchableOpacity style={{ backgroundColor: colors.lightTeal, borderRadius: values.lessRoundedBorderRadius, margin: 5, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='search' />
                     <TextInput
                         style={applicationStyles.searchInput}
@@ -81,13 +80,13 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     />
                     <ClearInputButton visible={props.currentRefinement !== ''} onPress={clearSearch} />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ backgroundColor: colors.lightTeal, borderRadius: values.lessRoundedBorderRadius, margin: 5, flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='map-marker' />
                     <TextInput
                         style={applicationStyles.searchInput}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent location text changed to '${d}'`);
-                            setLocation(d);
+                            props.setLocation(d);
                         }}
                         onFocus={(): void => setLocationInput(true)}
                         onBlur={(): void => setLocationInput(false)}
