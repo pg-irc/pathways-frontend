@@ -36,7 +36,7 @@ const fixture: ReadonlyArray<HelpContact> = [
         title: <Trans>Information on HealthLinkBC (8-1-1)</Trans>,
         subTitle: (
             <Text note style={{ fontFamily: getNormalFontFamily() }}>
-                <Trans>Mutlilingual health information services</Trans>
+                <Trans>Multilingual health information services</Trans>
             </Text>),
         url: 'https://www.healthlinkbc.ca/services-and-resources/about-8-1-1',
     },
