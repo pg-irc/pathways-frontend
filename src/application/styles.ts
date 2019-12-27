@@ -290,7 +290,7 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         ...getNormalFontStylesForOS(),
     },
-    listItemTextLeft: {
+    listItemDetail: {
         fontSize: 13,
         lineHeight: 21,
         textAlign: 'left',

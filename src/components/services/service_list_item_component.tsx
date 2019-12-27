@@ -61,12 +61,11 @@ const renderName = (name: string, onPress: () => void): JSX.Element => (
 
 const renderOrganizationName = (name: string): JSX.Element => (
     <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
-        <Text style={textStyles.listItemTextLeft}>
-             {/* syntax below provides white-space character */}
+        <Text style={textStyles.listItemDetail}>
             <Trans>Provided by</Trans>{' '}
         </Text>
         <TouchableOpacity>
-        <Text style={[textStyles.listItemTextLeft, { color: 'teal', fontWeight: 'bold'} ]}>
+        <Text style={[textStyles.listItemDetail, { color: 'teal', fontWeight: 'bold'} ]}>
             {name}
         </Text>
     </TouchableOpacity>
@@ -74,7 +73,7 @@ const renderOrganizationName = (name: string): JSX.Element => (
 );
 
 const renderDescription = (description: string): JSX.Element => (
-    <Text note numberOfLines={3} style={textStyles.listItemTextLeft }>
+    <Text note numberOfLines={3} style={textStyles.listItemDetail }>
     {description}
     </Text>
 );
@@ -83,8 +82,10 @@ const renderDescription = (description: string): JSX.Element => (
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
     mapWithIndex((address: Address, index: number) =>
         <View key={index} style={{ flex: 1, flexDirection: 'row'}}>
-            <Text style={textStyles.listItemTextLeft}>{address.address}</Text>
-            <Text style={textStyles.listItemTextLeft}>
+            <Text style={textStyles.listItemDetail}>
+                {address.address}
+            </Text>
+            <Text style={textStyles.listItemDetail}>
                 , {address.city} {address.stateProvince} {address.postalCode ? address.postalCode : ''}
             </Text>
         </View>, physicalAddresses)
