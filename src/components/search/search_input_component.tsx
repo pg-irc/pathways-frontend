@@ -88,10 +88,10 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             debug(`SearchInputComponent location text changed to '${d}'`);
                             props.setLocation(d);
                         }}
+                        onEndEditing={(): void => props.setLocation(location)}
                         onFocus={(): void => setLocationInput(true)}
                         onBlur={(): void => setLocationInput(false)}
                         value={location}
-                        onEndEditing={(): void => props.setLocation(location)}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Near My location')} // TODO translate
                         placeholderTextColor={colors.white}
                     />
