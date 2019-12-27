@@ -20,7 +20,10 @@ export interface Actions {
     readonly setLocation: (s: string) => void;
 }
 
-const UseMyLocationButton = (): JSX.Element => {
+const renderUseMyLocationButton = (showUseMyLocationButton: boolean, setLocation: Function): JSX.Element => {
+    if (!showUseMyLocationButton) {
+        return <EmptyComponent />;
+    }
     const icon = <Icon
         type={'MaterialIcons'} name={'my-location'}
         style={{ color: colors.greyishBrown, fontSize: 16, margin: 10 }}
@@ -35,18 +38,13 @@ const UseMyLocationButton = (): JSX.Element => {
     }}><Trans>Use My Location</Trans></Text>;
 
     const button = (
-        <TouchableOpacity style={applicationStyles.whiteButton}>
+        <TouchableOpacity
+            style={applicationStyles.whiteButton}
+            onPress={(): void => setLocation('Using my Location')}>
             {icon}{text}
         </TouchableOpacity>
     );
     return <View style={{ marginTop: 5, marginLeft: 5 }}>{button}</View>;
-};
-
-const renderUseMyLocationButton = (showUseMyLocationButton: boolean): JSX.Element => {
-    if (!showUseMyLocationButton) {
-        return <EmptyComponent />;
-    }
-    return <UseMyLocationButton />;
 };
 
 // tslint:disable:no-expression-statement
@@ -100,7 +98,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     />
                     <ClearInputButton visible={location !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
-                {renderUseMyLocationButton(locationInput)}
+                {renderUseMyLocationButton(locationInput, setLocation)}
             </View >
         )}
 
