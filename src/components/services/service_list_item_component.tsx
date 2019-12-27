@@ -34,8 +34,9 @@ export const ServiceListItemComponent: React.StatelessComponent<Props> =
             <View style={{ backgroundColor: colors.white, marginTop: 10, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
                 <View style={{flex: 2, paddingLeft: 15}}>
                     {renderName(serviceName, props.onPress)}
-                    {renderDescription(props.service.description)}
+                    {renderOrganizationName(props.service.organizationName)}
                     {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
+                    {renderDescription(props.service.description)}
                 </View>
                 <View>
                     <BookmarkButtonComponent isBookmarked={props.isBookmarked}
@@ -54,24 +55,37 @@ const buildServiceName = (organizationName: string, serviceName: string): string
 
 const renderName = (name: string, onPress: () => void): JSX.Element => (
     <TouchableOpacity onPress={onPress}>
-        <Text style={[textStyles.headlineH3StyleURL, textStyles.alwaysLeftAlign]}>{name}</Text>
+        <Text style={[textStyles.headlineH3StyleBlackLeft]}>{name}</Text>
     </TouchableOpacity>
 );
 
+const renderOrganizationName = (name: string): JSX.Element => (
+    <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
+        <Text style={textStyles.listItemTextLeft}>
+             {/* syntax below provides white-space character */}
+            <Trans>Provided by</Trans>{' '}
+        </Text>
+        <TouchableOpacity>
+        <Text style={[textStyles.listItemTextLeft, { color: 'teal', fontWeight: 'bold'} ]}>
+            {name}
+        </Text>
+    </TouchableOpacity>
+    </View>
+);
+
 const renderDescription = (description: string): JSX.Element => (
-    <Text note numberOfLines={3} style={textStyles.alwaysLeftParagraphStyle }>
+    <Text note numberOfLines={3} style={textStyles.listItemTextLeft }>
     {description}
-</Text>
+    </Text>
 );
 
 // tslint:disable-next-line:typedef
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
     mapWithIndex((address: Address, index: number) =>
-        <View key={index} style={{ marginTop: 10 }}>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address:</Trans></Text>
-            <Text style={textStyles.paragraphStyle}>{address.address}</Text>
-            <Text style={textStyles.paragraphStyle}>
-                {address.city} {address.stateProvince} {address.postalCode ? address.postalCode : ''}
+        <View key={index} style={{ flex: 1, flexDirection: 'row'}}>
+            <Text style={textStyles.listItemTextLeft}>{address.address}</Text>
+            <Text style={textStyles.listItemTextLeft}>
+                , {address.city} {address.stateProvince} {address.postalCode ? address.postalCode : ''}
             </Text>
         </View>, physicalAddresses)
 );

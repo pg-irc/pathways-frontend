@@ -290,6 +290,14 @@ export const textStyles = StyleSheet.create({
         textAlign: 'center',
         ...getNormalFontStylesForOS(),
     },
+    listItemTextLeft: {
+        fontSize: 13,
+        lineHeight: 21,
+        textAlign: 'left',
+        color: colors.greyishBrown,
+        letterSpacing,
+        ...getNormalFontStylesForOS(),
+    },
 });
 
 export const applicationStyles = StyleSheet.create({
