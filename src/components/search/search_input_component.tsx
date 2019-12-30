@@ -60,7 +60,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         return _(placeholder);
     };
     const clearSearch = (): string => props.refine('');
-    const clearLocation = (): void => setLocationInputField('');
+    const clearLocation = (): void => props.setLocation('');
 
     return <I18n>
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
@@ -97,7 +97,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     />
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
-                {renderMyLocationButton(showMyLocationButton, setLocationInputField)}
+                {renderMyLocationButton(showMyLocationButton, props.setLocation)}
             </View >
         )}
 
