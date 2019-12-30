@@ -20,8 +20,8 @@ export interface Actions {
     readonly setLocation: (s: string) => void;
 }
 
-const renderMyLocationButton = (showMyLocationButton: boolean, setLocation: Function): JSX.Element => {
-    if (!showMyLocationButton) {
+const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Function): JSX.Element => {
+    if (hideMyLocationButton) {
         return <EmptyComponent />;
     }
     const icon = <Icon
@@ -50,7 +50,9 @@ const renderMyLocationButton = (showMyLocationButton: boolean, setLocation: Func
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
     const [locationInputField, setLocationInputField]: [string, (s: string) => void] = useState(props.location);
-    const [showMyLocationButton, setShowMyLocationButton]: [boolean, (b: boolean) => void] = useState();
+    // linter doesn't understand state hooks with booleans for some reason
+    // tslint:disable-next-line:typedef
+    const [hideMyLocationButton, setHideMyLocationButton] = useState(true);
     useEffect(() => {
         debug(`SearchInput Component useEffect with '${props.currentRefinement}'`);
         props.refine(props.currentRefinement);
@@ -89,15 +91,15 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             setLocationInputField(d);
                         }}
                         onEndEditing={(): void => props.setLocation(locationInputField)}
-                        onFocus={(): void => setShowMyLocationButton(true)}
-                        onBlur={(): void => setShowMyLocationButton(false)}
+                        onFocus={(): void => setHideMyLocationButton(false)}
+                        onBlur={(): void => setHideMyLocationButton(true)}
                         value={locationInputField}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Near My location')} // TODO translate
                         placeholderTextColor={colors.white}
                     />
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
-                {renderMyLocationButton(showMyLocationButton, props.setLocation)}
+                {renderMyLocationButton(hideMyLocationButton, props.setLocation)}
             </View >
         )}
 
