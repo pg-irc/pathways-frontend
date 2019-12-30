@@ -40,7 +40,7 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Func
     return (
         <TouchableOpacity
             style={applicationStyles.whiteButton}
-            onPress={(): void => setLocation('Using my Location')}>
+            onPress={(): void => setLocation('Near My Location')}>
             {icon}{text}
         </TouchableOpacity>
     );
@@ -94,7 +94,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                         onFocus={(): void => setHideMyLocationButton(false)}
                         onBlur={(): void => setHideMyLocationButton(true)}
                         value={locationInputField}
-                        placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Near My location')} // TODO translate
+                        placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Enter city, address, or postal code')} // TODO translate
                         placeholderTextColor={colors.white}
                     />
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
@@ -121,7 +121,7 @@ export const extractSearchStrings = (): JSX.Element => (
     <div>
         <Text><Trans>Search for services</Trans></Text>
         <Text>
-            <Trans>Near My location</Trans>
+            <Trans>Enter city, address, or postal code</Trans>
         </Text>
     </div>
 );

@@ -14,7 +14,7 @@ export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLo
 };
 
 const fetchLatLongFromLocation = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
-    if (location === 'Using my Location') {
+    if (location === 'Near My Location') {
         fetchLatLongFromDevice(setLatLong);
     } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
         fetchLatLongFromAddress(location, setLatLong);
