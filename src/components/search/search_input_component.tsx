@@ -20,8 +20,8 @@ export interface Actions {
     readonly setLocation: (s: string) => void;
 }
 
-const renderUseMyLocationButton = (showUseMyLocationButton: boolean, setLocation: Function): JSX.Element => {
-    if (!showUseMyLocationButton) {
+const renderMyLocationButton = (showMyLocationButton: boolean, setLocation: Function): JSX.Element => {
+    if (!showMyLocationButton) {
         return <EmptyComponent />;
     }
     const icon = <Icon
@@ -35,7 +35,7 @@ const renderUseMyLocationButton = (showUseMyLocationButton: boolean, setLocation
         marginVertical: 10,
         marginRight: 10,
         fontWeight: 'bold',
-    }}><Trans>Use My Location</Trans></Text>;
+    }}><Trans>My Location</Trans></Text>;
 
     return (
         <TouchableOpacity
@@ -49,8 +49,8 @@ const renderUseMyLocationButton = (showUseMyLocationButton: boolean, setLocation
 // tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
-    const [location, setLocation]: [string, (s: string) => void] = useState(props.location);
-    const [locationInput, setLocationInput]: [boolean, (b: boolean) => void] = useState();
+    const [locationInputField, setLocationInputField]: [string, (s: string) => void] = useState(props.location);
+    const [showMyLocationButton, setShowMyLocationButton]: [boolean, (b: boolean) => void] = useState();
     useEffect(() => {
         debug(`SearchInput Component useEffect with '${props.currentRefinement}'`);
         props.refine(props.currentRefinement);
@@ -60,7 +60,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         return _(placeholder);
     };
     const clearSearch = (): string => props.refine('');
-    const clearLocation = (): void => setLocation('');
+    const clearLocation = (): void => setLocationInputField('');
 
     return <I18n>
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
@@ -86,18 +86,18 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                         style={applicationStyles.searchInput}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent location text changed to '${d}'`);
-                            props.setLocation(d);
+                            setLocationInputField(d);
                         }}
-                        onEndEditing={(): void => props.setLocation(location)}
-                        onFocus={(): void => setLocationInput(true)}
-                        onBlur={(): void => setLocationInput(false)}
-                        value={location}
+                        onEndEditing={(): void => props.setLocation(locationInputField)}
+                        onFocus={(): void => setShowMyLocationButton(true)}
+                        onBlur={(): void => setShowMyLocationButton(false)}
+                        value={locationInputField}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Near My location')} // TODO translate
                         placeholderTextColor={colors.white}
                     />
-                    <ClearInputButton visible={location !== ''} onPress={clearLocation} />
+                    <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
-                {renderUseMyLocationButton(locationInput, setLocation)}
+                {renderMyLocationButton(showMyLocationButton, setLocationInputField)}
             </View >
         )}
 
