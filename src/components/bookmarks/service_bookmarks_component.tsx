@@ -17,7 +17,7 @@ type Props = ServiceBookmarksProps & RouterProps & ServiceListItemActions;
 
 export const ServiceBookmarksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <FlatList
-        style={{ backgroundColor: colors.lightGrey }}
+        style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
         data={props.bookmarkedServices}
         keyExtractor={(service: HumanServiceData): string => service.id}
         renderItem={renderServiceItems(props)}

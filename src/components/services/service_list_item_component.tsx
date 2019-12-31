@@ -31,7 +31,7 @@ export const ServiceListItemComponent: React.StatelessComponent<Props> =
         const addBookmark = (): BookmarkServiceAction => props.bookmarkService(props.service);
         const removeBookmark = (): UnbookmarkServiceAction => props.unbookmarkService(props.service);
         return (
-            <View style={{ backgroundColor: colors.white, marginTop: 10, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
+            <View style={{ backgroundColor: colors.white, marginTop: 8, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
                 <View style={{flex: 2, paddingLeft: 15}}>
                     {renderName(serviceName, props.onPress)}
                     {renderOrganizationName(props.service.organizationName)}

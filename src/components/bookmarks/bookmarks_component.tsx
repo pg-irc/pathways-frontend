@@ -6,7 +6,7 @@ import { TopicBookmarksComponent } from './topic_bookmarks_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { View, Text, Container } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
-import { colors, textStyles, values, getNormalFontFamily } from '../../application/styles';
+import { colors, textStyles, values } from '../../application/styles';
 import { ServiceBookmarksComponent } from './service_bookmarks_component';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import { TabView, SceneMap, TabBar, SceneRendererProps, NavigationState, Route } from 'react-native-tab-view';
@@ -97,7 +97,7 @@ const renderTabBar = (tabBarProps: SceneRendererProps  & {
     style={{ backgroundColor: colors.white, width: '55%', elevation: 0, marginHorizontal: 8 }}
     indicatorStyle={{ backgroundColor: colors.teal, height: 4 }}
     getLabelText={({ route }: { readonly route: Route}): string => route.title}
-    labelStyle={{color: colors.black, fontWeight: 'bold', fontFamily: getNormalFontFamily()}}
+    labelStyle={textStyles.headlineH3StyleBlackCenter}
     />
 );
 

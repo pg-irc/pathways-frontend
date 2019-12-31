@@ -33,7 +33,8 @@ export const TaskListItemComponent: React.StatelessComponent<Props> = (props: Pr
                 paddingVertical: 10,
                 paddingRight: 10,
                 paddingLeft: 0,
-                marginVertical: 3,
+                marginTop: 3,
+                marginBottom: 8,
                 marginHorizontal: 10,
             }}
         >
