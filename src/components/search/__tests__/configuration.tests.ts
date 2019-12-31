@@ -5,13 +5,13 @@ describe('configuration', () => {
     describe('for service search', () => {
         it('includes lat/long if given', () => {
             expect(toServiceSearchConfiguration({ lat: 1, lng: 1 })).toEqual({
-                hitsPerPage: 100,
+                hitsPerPage: 20,
                 aroundLatLng: '1,1',
             });
         });
         it('does not includes lat/long if missing', () => {
             expect(toServiceSearchConfiguration()).toEqual({
-                hitsPerPage: 100,
+                hitsPerPage: 20,
             });
         });
     });

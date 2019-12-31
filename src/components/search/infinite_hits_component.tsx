@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors } from '../../application/styles';
+import { colors, applicationStyles, textStyles } from '../../application/styles';
 import { SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
@@ -16,6 +16,8 @@ import { SaveServiceAction } from '../../stores/services/actions';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
+import { View, Text, Button } from 'native-base';
+import { Trans } from '@lingui/react';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -23,6 +25,7 @@ export interface InfiniteHitsProps {
     readonly hits: ReadonlyArray<any>;
     readonly hasMore: boolean;
     readonly refine: (searchTerms?: string) => string;
+    readonly refineNext: () => void;
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -39,14 +42,28 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceUpdate('InfiniteHitsComponent', props);
     const searchResults = getValidSearchResults(props);
-    return <FlatList
-        style={{ backgroundColor: colors.white }}
-        refreshing={false}
-        data={searchResults}
-        keyExtractor={keyExtractor}
-        renderItem={renderSearchHit(props)}
-        ListEmptyComponent={EmptyComponent}
-        ItemSeparatorComponent={SearchListSeparator} />;
+    const loadMoreButton = renderLoadMoreButton(props.hasMore, props.refineNext);
+    const serviceList = (
+        <FlatList
+            style={{ backgroundColor: colors.white }}
+            refreshing={false}
+            data={searchResults}
+            keyExtractor={keyExtractor}
+            renderItem={renderSearchHit(props)}
+            ListEmptyComponent={EmptyComponent}
+            ItemSeparatorComponent={SearchListSeparator} />
+    );
+    return <View style={{ flexDirection: 'column' }}>{serviceList}{loadMoreButton}</View>;
+};
+
+const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Element => {
+    if (hasMore) {
+        return (
+            <Button onPress={refineNext} style={applicationStyles.tealButton} >
+                <Text style={textStyles.button} uppercase={false}><Trans>Show More</Trans></Text>
+            </Button>);
+    }
+    return <EmptyComponent />;
 };
 
 const getValidSearchResults = (props: Partial<Props>): ReadonlyArray<SearchServiceData> => {
@@ -65,9 +82,9 @@ const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItem
     const item: SearchServiceData = itemInfo.item;
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
-                props.saveService(service);
-                goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
-            };
+        props.saveService(service);
+        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
+    };
     return <ServiceListItemComponent
         service={service}
         history={props.history}
@@ -76,5 +93,5 @@ const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItem
         isBookmarked={R.contains(item.service_id, props.bookmarkedServicesIds)}
         bookmarkService={props.bookmarkService}
         unbookmarkService={props.unbookmarkService}
-        />;
+    />;
 });
