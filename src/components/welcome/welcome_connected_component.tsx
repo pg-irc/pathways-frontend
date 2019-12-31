@@ -6,7 +6,7 @@ import { WelcomeComponent, WelcomeProps, WelcomeActions } from './welcome_compon
 import { Store } from '../../stores';
 import { SaveLocaleRequestAction, saveLocaleRequest } from '../../stores/locale/actions';
 import { selectLocale } from '../../selectors/locale/select_locale';
-import { selectShowOnboarding } from '../../selectors/onboarding/select_show_onboarding';
+import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 
 function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
@@ -20,7 +20,9 @@ function mapStateToProps(store: Store, routerProps: RouterProps): WelcomeProps {
 
 function mapDispatchToProps(dispatch: Dispatch<SaveLocaleRequestAction>): WelcomeActions {
     return {
-        setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
+        setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => (
+            dispatch(saveLocaleRequest(localeCode, flipOrientation))
+        ),
     };
 }
 

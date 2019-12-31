@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
@@ -20,7 +20,9 @@ import { localizedPlaceHolders } from './localized_place_holders';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
+import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
+import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -30,6 +32,7 @@ export interface SearchComponentProps {
 
 export interface SearchComponentActions {
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly disableAnalytics: (disable: boolean) => DisableAnalyticsAction;
 }
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;
@@ -43,6 +46,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
     useFetchLatLongFromLocation(location, setLatLong);
+    useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
 
     const ConnectedSearchTermInputModal = connectSearchBox(SearchTermInputModal);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
@@ -88,6 +92,18 @@ export const SearchComponent = (props: Props): JSX.Element => {
     }}</I18n>;
 };
 
+const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction): void => {
+    const effect = (): void => {
+        if (location === DISABLE_ANALYTICS_STRING) {
+            disableAnalytics(true);
+            alert('Analytics disabled');
+        } else if (location === ENABLE_ANALYTICS_STRING) {
+            disableAnalytics(false);
+            alert('Analytics enabled');
+        }
+    };
+    useEffect(effect, [location]);
+};
 const servicesIndex = (): string => (
     ALGOLIA_SERVICES_INDEX || 'dev_services'
 );

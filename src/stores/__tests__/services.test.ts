@@ -16,8 +16,8 @@ import { aString } from '../../helpers/random_test_values';
 import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder, buildServiceMap } from './helpers/services_helpers';
 import { isServiceLoading } from '../../validation/services/types';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
-import { PersistedUserDataBuilder } from './helpers/user_data_helpers';
-import { UserDataPersistence } from '../user_data';
+import { PersistedDataBuilder } from './helpers/persisted_data_builder';
+import { DataPersistence } from '../persisted_data';
 
 describe('services reducer', () => {
     const aServiceBuilder = new ServiceBuilder();
@@ -247,10 +247,10 @@ describe('services reducer', () => {
         const bookmarkedServiceBuilder = new ServiceBuilder().withId(bookmarkedServiceId).withBookmarked(true);
         const bookmarkedServiceMap = buildServiceMap([bookmarkedServiceBuilder]);
         beforeEach(() => {
-            const userDataWithBookmarkedService = new PersistedUserDataBuilder().
-            addBookmarkedServices(bookmarkedServiceMap).
-            buildObject();
-            const loadAction = UserDataPersistence.loadSuccess(userDataWithBookmarkedService);
+            const userDataWithBookmarkedService = new PersistedDataBuilder().
+                withBookmarkedServices(bookmarkedServiceMap).
+                build();
+            const loadAction = DataPersistence.loadSuccess(userDataWithBookmarkedService);
             storeState = reducer(store, loadAction);
         });
         it('should return the bookmarked service map', () => {

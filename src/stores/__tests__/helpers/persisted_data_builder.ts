@@ -1,31 +1,32 @@
 // tslint:disable:no-class readonly-keyword readonly-array no-expression-statement no-this
 import { Id as AnswerId } from '../../questionnaire';
 import { Id as TopicId } from '../../topics';
-import { PersistedUserData } from '../../user_data';
 import { ServiceMap } from '../../../validation/services/types';
+import { PersistedData } from '../../persisted_data';
 
-export class PersistedUserDataBuilder {
+export class PersistedDataBuilder {
     chosenAnswers: AnswerId[] = [];
     bookmarkedTopics: TopicId[] = [];
     showOnboarding: boolean = true;
     bookmarkedServices: ServiceMap = {};
+    disableAnalytics: boolean = false;
 
-    addChosenAnswer(id: AnswerId): PersistedUserDataBuilder {
+    withChosenAnswer(id: AnswerId): PersistedDataBuilder {
         this.chosenAnswers.push(id);
         return this;
     }
 
-    addBookmarkedTopic(id: TopicId): PersistedUserDataBuilder {
+    withBookmarkedTopic(id: TopicId): PersistedDataBuilder {
         this.bookmarkedTopics.push(id);
         return this;
     }
 
-    addShowOnboarding(showOnboarding: boolean): PersistedUserDataBuilder {
+    withShowOnboarding(showOnboarding: boolean): PersistedDataBuilder {
         this.showOnboarding = showOnboarding;
         return this;
     }
 
-    addBookmarkedServices(services: ServiceMap): PersistedUserDataBuilder {
+    withBookmarkedServices(services: ServiceMap): PersistedDataBuilder {
         this.bookmarkedServices = {
             ...this.bookmarkedServices,
             ...services,
@@ -33,16 +34,22 @@ export class PersistedUserDataBuilder {
         return this;
     }
 
-    buildObject(): PersistedUserData {
+    withDisableAnalytics(disableAnalytics: boolean): PersistedDataBuilder {
+        this.disableAnalytics = disableAnalytics;
+        return this;
+    }
+
+    build(): PersistedData {
         return {
             chosenAnswers: this.chosenAnswers,
             bookmarkedTopics: this.bookmarkedTopics,
             showOnboarding: this.showOnboarding,
             bookmarkedServices: this.bookmarkedServices,
+            disableAnalytics: this.disableAnalytics,
         };
     }
 
     buildJson(): string {
-        return JSON.stringify(this.buildObject());
+        return JSON.stringify(this.build());
     }
 }

@@ -11,7 +11,10 @@ import { USE_MY_LOCATION } from '../constants';
 
 export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
     const onlineStatus = useOnlineStatus();
-    useEffect(() => fetchLatLongFromLocation(location, onlineStatus, setLatLong), [onlineStatus, location]);
+    useEffect(
+        () => fetchLatLongFromLocation(location, onlineStatus, setLatLong),
+        [onlineStatus, location],
+    );
 };
 
 const fetchLatLongFromLocation = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {

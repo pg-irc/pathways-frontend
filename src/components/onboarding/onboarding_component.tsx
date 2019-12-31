@@ -11,7 +11,7 @@ import {
 } from '../../application/images';
 import { Trans } from '@lingui/react';
 import { SwipeableContentComponent } from '../swipeable_content/swipeable_content_component';
-import { SetOnboardingAction } from '../../stores/onboarding/actions';
+import { SetOnboardingAction } from '../../stores/user_profile';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
@@ -46,7 +46,7 @@ export const OnboardingComponent = (props: Props): JSX.Element => {
                 onPress={onButtonPress}
                 color={colors.black}
             />
-            <SwipeableContentComponent contentItems={swipeableContent}/>
+            <SwipeableContentComponent contentItems={swipeableContent} />
         </View>
     );
 };
@@ -60,19 +60,19 @@ const buildSwipeableContent = (onPersonalizeButtonPress: () => void): ReadonlyAr
             />
         </OnboardingSlide>,
         <OnboardingSlide>
-            <OnboardingImage source={answerQuestionsOnBoardingImage}/>
+            <OnboardingImage source={answerQuestionsOnBoardingImage} />
             <OnboardingText
                 text={<Trans>Answer a few optional questions to get tailored recommendations for your needs.</Trans>}
             />
         </OnboardingSlide>,
         <OnboardingSlide>
-            <OnboardingImage source={settlementJourneyOnBoardingImage}/>
+            <OnboardingImage source={settlementJourneyOnBoardingImage} />
             <OnboardingText
                 text={<Trans>Find service providers near you that can help you through your settlement journey.</Trans>}
             />
         </OnboardingSlide>,
         <OnboardingSlide>
-            <OnboardingImage source={bookmarkOnBoardingImage}/>
+            <OnboardingImage source={bookmarkOnBoardingImage} />
             <OnboardingText
                 text={<Trans>Bookmark the topics that you find helpful for future use.</Trans>}
             />

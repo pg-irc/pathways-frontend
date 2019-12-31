@@ -4,7 +4,7 @@ import * as helpers from '../helpers/make_action';
 import { HumanServiceData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 import { LatLong } from '../../validation/latlong/types';
-import { UserDataPersistence } from '../user_data';
+import { DataPersistence } from '../persisted_data';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 
 export type BuildServicesRequestAction = Readonly<ReturnType<typeof buildServicesRequest>>;
@@ -25,9 +25,9 @@ export type ServicesAction =
     SaveServiceAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
-    UserDataPersistence.LoadRequestAction |
-    UserDataPersistence.LoadSuccessAction |
-    UserDataPersistence.LoadFailureAction |
+    DataPersistence.LoadRequestAction |
+    DataPersistence.LoadSuccessAction |
+    DataPersistence.LoadFailureAction |
     ClearAllUserDataAction;
 
 // tslint:disable-next-line:typedef

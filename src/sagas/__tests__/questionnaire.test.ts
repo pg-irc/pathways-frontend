@@ -1,10 +1,10 @@
 // tslint:disable:no-expression-statement no-let
 import { call, put, select } from 'redux-saga/effects';
 import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from '../user_data';
-import { UserDataPersistence } from '../../stores/user_data';
+import { DataPersistence } from '../../stores/persisted_data';
 import { aString, anError } from '../../helpers/random_test_values';
 import { selectUserDataForLocalPersistence } from '../../selectors/user_data/select_user_data_for_local_persistence';
-import { PersistedUserDataBuilder } from '../../stores/__tests__/helpers/user_data_helpers';
+import { PersistedDataBuilder } from '../../stores/__tests__/helpers/persisted_data_builder';
 
 describe('the load user data saga', () => {
 
@@ -27,32 +27,32 @@ describe('the load user data saga', () => {
 
         it('should dispatch a success action on success', () => {
             const questionId = aString();
-            const dataBuilder = new PersistedUserDataBuilder().addChosenAnswer(questionId);
+            const dataBuilder = new PersistedDataBuilder().withChosenAnswer(questionId);
 
             const result = saga.next(dataBuilder.buildJson()).value;
 
-            expect(result).toEqual(put(UserDataPersistence.loadSuccess(dataBuilder.buildObject())));
+            expect(result).toEqual(put(DataPersistence.loadSuccess(dataBuilder.build())));
         });
 
         it('should return zero ids when there is no data in persistent storage', () => {
             const questionId: string = undefined;
-            const expectedPersistedData = new PersistedUserDataBuilder().buildObject();
+            const expectedPersistedData = new PersistedDataBuilder().build();
 
             const result = saga.next(questionId).value;
 
-            expect(result).toEqual(put(UserDataPersistence.loadSuccess(expectedPersistedData)));
+            expect(result).toEqual(put(DataPersistence.loadSuccess(expectedPersistedData)));
         });
 
         it('should split the data on comma', () => {
             const firstQuestionId = aString();
             const secondQuestionId = aString();
-            const dataBuilder = new PersistedUserDataBuilder().
-                addChosenAnswer(firstQuestionId).
-                addChosenAnswer(secondQuestionId);
+            const dataBuilder = new PersistedDataBuilder().
+                withChosenAnswer(firstQuestionId).
+                withChosenAnswer(secondQuestionId);
 
             const result = saga.next(dataBuilder.buildJson()).value;
 
-            expect(result).toEqual(put(UserDataPersistence.loadSuccess(dataBuilder.buildObject())));
+            expect(result).toEqual(put(DataPersistence.loadSuccess(dataBuilder.build())));
         });
 
         it('should dispatch a put effect with a failure action on error', () => {
@@ -60,7 +60,7 @@ describe('the load user data saga', () => {
 
             const result = saga.throw(error).value;
 
-            expect(result).toEqual(put(UserDataPersistence.loadFailure(error.message)));
+            expect(result).toEqual(put(DataPersistence.loadFailure(error.message)));
         });
 
         // TODO add test for handling no persistent data
@@ -87,8 +87,8 @@ describe('the save user data saga', () => {
         });
 
         it('should dispatch call effect to save user state', () => {
-            const persistedData = new PersistedUserDataBuilder().buildObject();
-            const expectedResult = new PersistedUserDataBuilder().buildJson();
+            const persistedData = new PersistedDataBuilder().build();
+            const expectedResult = new PersistedDataBuilder().buildJson();
 
             const result = saga.next(persistedData).value;
 
@@ -98,11 +98,11 @@ describe('the save user data saga', () => {
         it('should save question ids as comma-separated string', () => {
             const firstId = aString();
             const secondId = aString();
-            const dataBuilder = new PersistedUserDataBuilder().
-                addChosenAnswer(firstId).
-                addChosenAnswer(secondId);
+            const dataBuilder = new PersistedDataBuilder().
+                withChosenAnswer(firstId).
+                withChosenAnswer(secondId);
 
-            const result = saga.next(dataBuilder.buildObject()).value;
+            const result = saga.next(dataBuilder.build()).value;
 
             expect(result).toEqual(call(saveUserDataAsync, dataBuilder.buildJson()));
         });
@@ -112,20 +112,20 @@ describe('the save user data saga', () => {
 
             const result = saga.throw(error).value;
 
-            expect(result).toEqual(put(UserDataPersistence.saveFailure(error.message)));
+            expect(result).toEqual(put(DataPersistence.saveFailure(error.message)));
         });
 
         describe('after successfully saving user data', () => {
 
             beforeEach(() => {
-                const persistedData = new PersistedUserDataBuilder().buildObject();
+                const persistedData = new PersistedDataBuilder().build();
                 saga.next(persistedData);
             });
 
             it('should dispatch a put effect with a success action', () => {
                 const result = saga.next().value;
 
-                expect(result).toEqual(put(UserDataPersistence.saveSuccess()));
+                expect(result).toEqual(put(DataPersistence.saveSuccess()));
             });
         });
     });

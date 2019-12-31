@@ -4,14 +4,15 @@ import { Id as AnswerId } from './questionnaire';
 import { Id as TopicId } from './topics';
 import { ServiceMap } from '../validation/services/types';
 
-export interface PersistedUserData {
+export interface PersistedData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
     readonly bookmarkedTopics: ReadonlyArray<TopicId>;
     readonly showOnboarding: boolean;
     readonly bookmarkedServices: ServiceMap;
+    readonly disableAnalytics: boolean;
 }
 
-export namespace UserDataPersistence {
+export namespace DataPersistence {
 
     export type SaveSuccessAction = Readonly<ReturnType<typeof saveSuccess>>;
     export type SaveFailureAction = Readonly<ReturnType<typeof saveFailure>>;
@@ -36,7 +37,7 @@ export namespace UserDataPersistence {
     );
 
     // tslint:disable-next-line:typedef
-    export const loadSuccess = (userData: PersistedUserData) => (
+    export const loadSuccess = (userData: PersistedData) => (
         helpers.makeAction(constants.LOAD_USER_DATA_SUCCESS, userData)
     );
 
