@@ -1,9 +1,9 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { useState } from 'react';
 import { TopicBookmarksComponent } from './topic_bookmarks_component';
 import { ServiceBookmarksComponent } from './service_bookmarks_component';
 import { TabView, SceneMap, TabBar, SceneRendererProps, NavigationState, Route } from 'react-native-tab-view';
 import { Dimensions } from 'react-native';
-import { ReactI18n } from '../../locale/types';
+import { ReactI18nRenderProp } from '../../locale/types';
 import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
 import { BookmarksProps } from './bookmarks_component';
@@ -11,46 +11,41 @@ import { View, Text } from 'native-base';
 import { ListActions } from './bookmarks_connected_component';
 import { RouterProps } from '../../application/routing';
 
-export interface BookmarksTabSwitcherProps {
-    readonly i18n: ReactI18n;
-}
-
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
 
-type Props = BookmarksTabSwitcherProps & BookmarksProps & ListActions & RouterProps;
+type Props = ReactI18nRenderProp & BookmarksProps & ListActions & RouterProps;
 
-export const BookmarksTabSwitcher = (props: Props): JSX.Element => {
+export const TabSwitcher = (props: Props): JSX.Element => {
     const _ = props.i18n._.bind(props.i18n);
-    const tabRoutes: TabRoutes = [
+    const routes: TabRoutes = [
         { key: 'topics', title: _('Topics') },
         { key: 'services', title: _('Services') },
     ];
 
-    const [index, setIndex]: [number, (n: number) => void] = React.useState(0);
-    const [routes]: [TabRoutes, Dispatch<SetStateAction<TabRoutes>>] = React.useState(tabRoutes);
+    const [index, setIndex]: [number, (n: number) => void] = useState(0);
 
-    const TopicsRoute = (): JSX.Element => (
+    const TopicsComponent = (): JSX.Element => (
         <View style={{backgroundColor: colors.white}}>
             <TopicBookmarksComponent {...props} />
         </View>
     );
 
-    const ServicesRoute = (): JSX.Element => (
+    const ServicesComponent = (): JSX.Element => (
         <View style={{backgroundColor: colors.white}}>
             <ServiceBookmarksComponent {...props} />
         </View>
     );
 
-    const renderScene = SceneMap({
-        topics: TopicsRoute,
-        services: ServicesRoute,
+    const render = SceneMap({
+        topics: TopicsComponent,
+        services: ServicesComponent,
     });
 
     return (
         <TabView
         navigationState={{ index, routes }}
-        renderScene={renderScene}
+        renderScene={render}
         renderTabBar={renderTabBar}
         onIndexChange={setIndex}
         style={{backgroundColor: colors.white}}
@@ -63,7 +58,6 @@ export const BookmarksTabSwitcher = (props: Props): JSX.Element => {
 export interface NavigationStateRoute {
     readonly navigationState: NavigationState<Route>;
 }
-
 type TabBarProps = SceneRendererProps & NavigationStateRoute;
 
 const renderTabBar = (tabBarProps: TabBarProps): JSX.Element => (
