@@ -8,8 +8,6 @@ import * as R from 'ramda';
 import { getDeviceLocation, NoLocationPermissionErrorAction, LocationFetchTimeoutErrorAction } from '../../../async/location';
 import * as errors from '../../../validation/errors/is_error';
 import { USE_MY_LOCATION } from '../constants';
-import { DisableAnalyticsAction } from '../../../stores/user_profile';
-import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 
 export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
     const onlineStatus = useOnlineStatus();
@@ -68,16 +66,3 @@ const getTextIfValidOrThrow = (response: Response): Promise<string> => {
 const handleError = R.curry((setLatLong: (latLong: LatLong) => void, _: string): void => {
     setLatLong(undefined);
 });
-
-export const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction): void => {
-    const effect = (): void => {
-        if (location === DISABLE_ANALYTICS_STRING) {
-            disableAnalytics(true);
-            alert('Analytics disabled');
-        } else if (location === ENABLE_ANALYTICS_STRING) {
-            disableAnalytics(false);
-            alert('Analytics enabled');
-        }
-    };
-    useEffect(effect, [location]);
-};
