@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors, applicationStyles, textStyles } from '../../application/styles';
+import { colors, values, textStyles } from '../../application/styles';
 import { SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
@@ -53,14 +53,22 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             ListEmptyComponent={EmptyComponent}
             ItemSeparatorComponent={SearchListSeparator} />
     );
-    return <View style={{ flexDirection: 'column' }}>{serviceList}{loadMoreButton}</View>;
+    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey }}>{serviceList}{loadMoreButton}</View>;
 };
 
 const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Element => {
     if (hasMore) {
         return (
-            <Button onPress={refineNext} style={applicationStyles.tealButton} >
-                <Text style={textStyles.button} uppercase={false}><Trans>Show More</Trans></Text>
+            <Button onPress={refineNext} style={{
+                backgroundColor: colors.teal,
+                borderRadius: values.roundedBorderRadius,
+                alignSelf: 'flex-start',
+                paddingVertical: 15,
+                paddingHorizontal: 80,
+                marginVertical: 15,
+                marginHorizontal: 24,
+            }} >
+                <Text style={textStyles.button} uppercase={false}><Trans>Show more services</Trans></Text>
             </Button>);
     }
     return <EmptyComponent />;
