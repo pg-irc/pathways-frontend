@@ -289,7 +289,8 @@ createClientEnvironment() {
     echo "SENTRY_AUTH_TOKEN='token...'"                    >> "$CLIENT_DIRECTORY/.env"
     echo "SENTRY_DSN=https://...sentry.io/..."             >> "$CLIENT_DIRECTORY/.env"
     echo "ALGOLIA_SEARCH_API_KEY='key...'"                 >> "$CLIENT_DIRECTORY/.env"
-
+    echo "DISABLE_ANALYTICS_STRING='foobar'"               >> "$CLIENT_DIRECTORY/.env"
+    echo "ENABLE_ANALYTICS_STRING='barfoo'"                >> "$CLIENT_DIRECTORY/.env"
 
     if [ "$BUILD" == "staging" ]
     then
