@@ -13,7 +13,7 @@ import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { I18n } from '@lingui/react';
 import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
-import { SaveServiceAction } from '../../stores/services/actions';
+import { SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
@@ -28,6 +28,8 @@ export interface SearchComponentProps {
 export interface SearchComponentActions {
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly disableAnalytics: (disable: boolean) => DisableAnalyticsAction;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
 }
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;
