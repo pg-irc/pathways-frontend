@@ -11,12 +11,7 @@ import { toServiceSearchConfiguration } from './api/configuration';
 import { useTraceUpdate } from '../../helpers/debug';
 import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { I18n } from '@lingui/react';
-import { SearchTermAndLocationComponent } from './search_term_and_location_component';
-import { ReactI18nRenderProp } from '../../locale/types';
-import { MODAL_NONE, MODAL_SEARCH_TERM, MODAL_LOCATION, USE_MY_LOCATION } from './constants';
-import { SearchTermInputModal } from './search_term_input_modal';
-import { LocationInputModal } from './location_input_modal';
-import { localizedPlaceHolders } from './localized_place_holders';
+import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
@@ -40,51 +35,22 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
 
-    const [modalState, setModalState]: [string, (s: string) => void] = useState(MODAL_NONE);
-    const [searchTerm, setSearchTerm]: [string, (s: string) => void] = useState('');
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
     useFetchLatLongFromLocation(location, setLatLong);
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
 
-    const ConnectedSearchTermInputModal = connectSearchBox(SearchTermInputModal);
+    const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
 
-    return <I18n>{(reactI18nRenderProp: ReactI18nRenderProp): JSX.Element => {
-        const placeholderStrings = localizedPlaceHolders(reactI18nRenderProp);
+    return <I18n>{(): JSX.Element => {
 
         return <Content style={{ backgroundColor: colors.pale }}>
             <InstantSearch indexName={servicesIndex()} {...props} >
-                <ConnectedSearchTermInputModal
-                    visible={modalState === MODAL_SEARCH_TERM}
-                    placeholder={placeholderStrings.searchTermPlaceHolder}
-                    onEndEditing={(newSearchTerm: string): void => {
-                        setModalState(MODAL_NONE);
-                        setSearchTerm(newSearchTerm);
-                    }} />
 
-                <LocationInputModal
-                    visible={modalState === MODAL_LOCATION}
-                    placeholder={placeholderStrings.locationPlaceHolder}
-                    onEndEditing={(s: string): void => {
-                        setLocation(s);
-                        setModalState(MODAL_NONE);
-                    }}
-                    onUseMyLocation={(): void => {
-                        setLocation(USE_MY_LOCATION);
-                        setModalState(MODAL_NONE);
-                    }} />
-
-                <SearchTermAndLocationComponent
-                    searchTerm={searchTerm}
-                    searchTermPlaceHolder={placeholderStrings.searchTermPlaceHolder}
-                    location={location}
-                    locationPlaceHolder={placeholderStrings.locationPlaceHolder}
-                    openSearchTermInput={(): void => { setModalState(MODAL_SEARCH_TERM); }}
-                    openLocationInput={(): void => { setModalState(MODAL_LOCATION); }}
-                />
+                <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
                 <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>

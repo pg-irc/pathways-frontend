@@ -4,7 +4,7 @@ import { LatLong } from '../../../validation/latlong/types';
 export const toServiceSearchConfiguration = (latlong?: LatLong): Object => {
     const latLongArgument = latlong ? { aroundLatLng: toAlgoliaParameter(latlong) } : {};
     return {
-        hitsPerPage: 100,
+        hitsPerPage: 20,
         ...latLongArgument,
     };
 };

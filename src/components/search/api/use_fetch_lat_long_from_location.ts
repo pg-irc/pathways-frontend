@@ -7,7 +7,6 @@ import BuildUrl from 'build-url';
 import * as R from 'ramda';
 import { getDeviceLocation, NoLocationPermissionErrorAction, LocationFetchTimeoutErrorAction } from '../../../async/location';
 import * as errors from '../../../validation/errors/is_error';
-import { USE_MY_LOCATION } from '../constants';
 
 export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
     const onlineStatus = useOnlineStatus();
@@ -18,7 +17,7 @@ export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLo
 };
 
 const fetchLatLongFromLocation = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
-    if (location === USE_MY_LOCATION) {
+    if (location === 'Near My Location') {
         fetchLatLongFromDevice(setLatLong);
     } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
         fetchLatLongFromAddress(location, setLatLong);
