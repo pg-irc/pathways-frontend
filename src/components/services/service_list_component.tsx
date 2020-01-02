@@ -60,7 +60,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             style={{ backgroundColor: colors.lightGrey }}
             refreshing={isLoadingServices(props.topicServicesOrError)}
             onRefresh={(): void => refreshServices(props)}
-            data={getServices(props.topicServicesOrError)}
+            data={getServicesIfValid(props.topicServicesOrError)}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceListItem(props)}
             ListEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
@@ -76,7 +76,8 @@ const refreshServices = (props: Props): void => {
 };
 
 const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boolean => (
-    !(topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.isStaleData === false)
+    topicServicesOrError.type === constants.TOPIC_SERVICES_ERROR ||
+    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.isExpired
 );
 
 const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void, readonly title: string }): JSX.Element => {
@@ -100,7 +101,7 @@ const determineErrorType = (topicServicesOrError: SelectorTopicServices): Errors
     return Errors.Exception;
 };
 
-const getServices = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<HumanServiceData> => (
+const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<HumanServiceData> => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.services
 );
 

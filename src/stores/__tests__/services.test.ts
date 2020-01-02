@@ -166,7 +166,9 @@ describe('services reducer', () => {
 
             if (isValidServicesForTopic(servicesByTopic)) {
                 const twentyFourHoursAfterExpiry = expiresAt + (24 * 60 * 60 * 1000);
+                const upperLimit = twentyFourHoursAfterExpiry + 5000;
                 expect(servicesByTopic.expiresAt).toBeGreaterThanOrEqual(twentyFourHoursAfterExpiry);
+                expect(servicesByTopic.expiresAt).toBeLessThan(upperLimit);
             } else {
                 fail();
             }

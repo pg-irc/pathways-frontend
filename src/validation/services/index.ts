@@ -1,6 +1,6 @@
 // tslint:disable:no-var-requires no-any
 import * as R from 'ramda';
-import * as types from './types';
+import { HumanServiceData, Address, PhoneNumber } from './types';
 import { serviceAtLocationArray } from './schema';
 import { ValidationResult } from '../validation_result';
 import { Id } from '../../stores/services';
@@ -54,27 +54,12 @@ export interface ValidatedServiceAtLocationJSON {
 }
 
 export const toServicesFromValidatedData = (bookmarkedServiceIds: ReadonlyArray<Id>, data: ReadonlyArray<ValidatedServiceAtLocationJSON>):
-    ReadonlyArray<types.HumanServiceData> => (
-        R.map(serviceFromData(bookmarkedServiceIds), data)
+    ReadonlyArray<HumanServiceData> => (
+        R.map(buildHumanService(bookmarkedServiceIds), data)
     );
 
-const serviceFromData = R.curry((bookmarkedServiceIds: ReadonlyArray<Id>, data: ValidatedServiceAtLocationJSON):
-    types.HumanServiceData => {
-        const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): types.PhoneNumber => ({
-            type: phoneNumber.phone_number_type,
-            phone_number: phoneNumber.phone_number,
-        }), data.location.phone_numbers);
-
-        const addresses = R.map((addressWithType: ValidatedAddressWithTypeJSON): types.Address => ({
-            id: addressWithType.address.id,
-            type: addressWithType.address_type,
-            address: addressWithType.address.address,
-            city: addressWithType.address.city,
-            stateProvince: addressWithType.address.state_province,
-            postalCode: addressWithType.address.postal_code,
-            country: addressWithType.address.country,
-        }), data.location.addresses);
-
+const buildHumanService = R.curry((bookmarkedServiceIds: ReadonlyArray<Id>, data: ValidatedServiceAtLocationJSON):
+    HumanServiceData => {
         return {
             id: data.service.id,
             services_at_location_id: data.id,
@@ -84,11 +69,30 @@ const serviceFromData = R.curry((bookmarkedServiceIds: ReadonlyArray<Id>, data: 
             },
             name: data.service.name,
             description: data.service.description,
-            phoneNumbers: phoneNumbers,
-            addresses: addresses,
+            phoneNumbers: buildHumanServicePhoneNumbers(data.location.phone_numbers),
+            addresses: buildHumanServiceAddresses(data.location.addresses),
             website: data.service.organization_url,
             email: data.service.organization_email,
             organizationName: data.service.organization_name,
             bookmarked: R.contains(data.service.id, bookmarkedServiceIds),
         };
 });
+
+const buildHumanServicePhoneNumbers = (phoneNumbers: ReadonlyArray<ValidatedPhoneNumberJSON>): ReadonlyArray<PhoneNumber> => (
+    R.map((phoneNumber: ValidatedPhoneNumberJSON): PhoneNumber => ({
+        type: phoneNumber.phone_number_type,
+        phone_number: phoneNumber.phone_number,
+    }), phoneNumbers)
+);
+
+const buildHumanServiceAddresses = (addresses: ReadonlyArray<ValidatedAddressWithTypeJSON>): ReadonlyArray<Address> => (
+    R.map((addressWithType: ValidatedAddressWithTypeJSON): Address => ({
+        id: addressWithType.address.id,
+        type: addressWithType.address_type,
+        address: addressWithType.address.address,
+        city: addressWithType.address.city,
+        stateProvince: addressWithType.address.state_province,
+        postalCode: addressWithType.address.postal_code,
+        country: addressWithType.address.country,
+    }), addresses)
+);
