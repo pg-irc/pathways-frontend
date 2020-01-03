@@ -20,6 +20,11 @@ export class TaskListItemBuilder {
         return this;
     }
 
+    withIsRecommended(isRecommended: boolean): TaskListItemBuilder {
+        this.isRecommended = isRecommended;
+        return this;
+    }
+
     build(): TopicListItem {
         return {
             id: this.id,
