@@ -1,5 +1,5 @@
-import { Dispatch } from 'react-redux';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { selectServiceById } from '../../selectors/services/select_service_by_id';
 import { getParametersFromPath, Routes } from '../../application/routing';
 import { Store } from '../../stores';
