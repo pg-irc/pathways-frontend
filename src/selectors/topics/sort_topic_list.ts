@@ -1,10 +1,5 @@
 import * as R from 'ramda';
-import { Topic } from './topic';
-import { TopicListItem } from './topic_list_item';
-
-export type ExploreTopic = Topic | TopicListItem;
-
-export type ExploreTopicList = ReadonlyArray<Topic> | ReadonlyArray<TopicListItem>;
+import { ExploreTopicList, ExploreTopic } from './types';
 
 export const sortTopicList = (taskList: ExploreTopicList): ExploreTopicList => {
     const compare = (a: ExploreTopic, b: ExploreTopic): number => (
