@@ -9,6 +9,14 @@ import { buildSaga } from '../sagas';
 
 import { API_URL } from 'react-native-dotenv';
 import { setUrl } from '../api';
+import {YellowBox} from 'react-native';
+
+// tslint:disable-next-line: no-expression-statement
+YellowBox.ignoreWarnings([
+    'Warning: componentWillReceiveProps has been renamed, and is not recommended for use. See https://fb.me/react-async-component-lifecycle-hooks for details.',
+    'Warning: componentWillMount has been renamed, and is not recommended for use. See https://fb.me/react-async-component-lifecycle-hooks for details.',
+    'Warning: componentWillUpdate has been renamed, and is not recommended for use. See https://fb.me/react-async-component-lifecycle-hooks for details.',
+]);
 
 // tslint:disable-next-line:no-expression-statement
 setUrl(API_URL);
