@@ -69,11 +69,14 @@ describe('Group topics by section', () => {
     });
 
     describe('topics sorting', () => {
-        const section = new ExploreSectionBuilder().build();
-        const notRecommendedTopic = new TaskListItemBuilder(section).withIsRecommended(false).build();
-        const recommendedTopic = new TaskListItemBuilder(section).withIsRecommended(true).build();
-        const sorted = sortTopicList([notRecommendedTopic, recommendedTopic]);
-        expect(sorted[0]).toBe(recommendedTopic);
-        expect(sorted[1]).toBe(notRecommendedTopic);
+
+        it('puts topics with isRecommended set to true first', () => {
+            const section = new ExploreSectionBuilder().build();
+            const notRecommendedTopic = new TaskListItemBuilder(section).withIsRecommended(false).build();
+            const recommendedTopic = new TaskListItemBuilder(section).withIsRecommended(true).build();
+            const sorted = sortTopicList([notRecommendedTopic, recommendedTopic]);
+            expect(sorted[0]).toBe(recommendedTopic);
+            expect(sorted[1]).toBe(notRecommendedTopic);
+        });
     });
 });
