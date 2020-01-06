@@ -1427,86 +1427,93 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@lingui/babel-plugin-extract-messages@2.7.3":
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-extract-messages/-/babel-plugin-extract-messages-2.7.3.tgz#90785433dc344a4ea3a661ba1f3cf441505a92ce"
+"@lingui/babel-plugin-extract-messages@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-extract-messages/-/babel-plugin-extract-messages-2.9.0.tgz#204a34c26935b031916d6b5a64e9703714428cbd"
+  integrity sha512-b99Art2fPcL+qy9cV12cgMmTMstq+WcM1XVmQAldl2cXamR4/RvY2gwwtHNELkQr9S4WTe1L+6wPTUBZttbhnw==
   dependencies:
-    "@lingui/conf" "2.7.3"
+    "@lingui/conf" "2.9.0"
     babel-generator "^6.26.1"
 
-"@lingui/babel-plugin-transform-js@2.7.3":
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-transform-js/-/babel-plugin-transform-js-2.7.3.tgz#7e435cf93e69cf4ecd7acd6d3ad20fb5cc1e4f98"
+"@lingui/babel-plugin-transform-js@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-transform-js/-/babel-plugin-transform-js-2.9.0.tgz#79b43ac3cc6f03b48011f33b0c717e1a4ae1cc16"
+  integrity sha512-8mkwiWvNqpu4w6QMgCjxCvDBgkKuio0naB99mtxZD/55d/fZfbEsD6onVbPZGocIyqc4gi9eFAPs/rzGYmujUg==
 
-"@lingui/babel-plugin-transform-react@2.7.3":
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-transform-react/-/babel-plugin-transform-react-2.7.3.tgz#f80921ef2a7d7557214f17dab30128ae3f3471ef"
+"@lingui/babel-plugin-transform-react@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@lingui/babel-plugin-transform-react/-/babel-plugin-transform-react-2.9.0.tgz#f44b01ff8030de3cc1bf945c8e09ca20253aa89f"
+  integrity sha512-m/Dd1p2ckWN6iKXKDfHE9Y03TUD/17wJP1E4963JsZqVFx0Wq5Z9D3m3rCUqfl4OGN38ivHnvoKZ6Y9SLeVjbg==
 
-"@lingui/babel-preset-react@2.7.3":
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/@lingui/babel-preset-react/-/babel-preset-react-2.7.3.tgz#74e1d074372b51556d3e8109ab6ce70e5f9fea90"
+"@lingui/babel-preset-react@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@lingui/babel-preset-react/-/babel-preset-react-2.9.0.tgz#cc4a49e90dae85494248b68a9d90f49fee4e0fb6"
+  integrity sha512-DyF6nxI5ysb/PyX5BiGCzjo/ukOv0SBkCh+kSd4SjCF9KeCaxtmO94j2i+XQam03qpMGnFpU+Niv2iDraHPw6w==
   dependencies:
-    "@lingui/babel-plugin-transform-js" "2.7.3"
-    "@lingui/babel-plugin-transform-react" "2.7.3"
+    "@lingui/babel-plugin-transform-js" "2.9.0"
+    "@lingui/babel-plugin-transform-react" "2.9.0"
 
-"@lingui/cli@2.7.3":
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/@lingui/cli/-/cli-2.7.3.tgz#6a2b6c26c1a558e0a55653f87c018f51f4e8bcaa"
+"@lingui/cli@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@lingui/cli/-/cli-2.9.0.tgz#5fab071a2ac17cf79ef14035f216aa02ebe15b5b"
+  integrity sha512-1NZaw0QE9TYdDIU4d2xtDmuNn734wfjVxjofRMjfVw0XOhsuUCr+PTOJwfFhuw6inVl1wDSNLo88ctrd/27WWQ==
   dependencies:
-    "@lingui/babel-plugin-extract-messages" "2.7.3"
-    "@lingui/babel-plugin-transform-js" "2.7.3"
-    "@lingui/babel-plugin-transform-react" "2.7.3"
-    "@lingui/conf" "2.7.3"
+    "@lingui/babel-plugin-extract-messages" "2.9.0"
+    "@lingui/babel-plugin-transform-js" "2.9.0"
+    "@lingui/babel-plugin-transform-react" "2.9.0"
+    "@lingui/conf" "2.9.0"
     babel-generator "^6.26.1"
     babel-plugin-syntax-jsx "^6.18.0"
     babel-runtime "^6.26.0"
     babel-types "^6.26.0"
     babylon "^6.18.0"
-    bcp-47 "^1.0.4"
+    bcp-47 "^1.0.5"
     chalk "^2.3.0"
     cli-table "^0.3.1"
-    commander "^2.17.1"
+    commander "^2.20.0"
     date-fns "^1.29.0"
     fuzzaldrin "^2.1.0"
-    glob "^7.1.2"
-    inquirer "^6.2.0"
+    glob "^7.1.4"
+    inquirer "^6.3.1"
     make-plural "^4.1.1"
     messageformat-parser "^2.0.0"
     mkdirp "^0.5.1"
     opencollective "^1.0.3"
-    ora "^3.0.0"
+    ora "^3.4.0"
     pofile "^1.0.11"
     pseudolocale "^1.1.0"
-    ramda "^0.25.0"
-    typescript "^2.9.2"
+    ramda "^0.26.1"
 
-"@lingui/conf@2.7.3":
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/@lingui/conf/-/conf-2.7.3.tgz#d05ad22e51ae26e88c9def3e913faabe0711a5d6"
+"@lingui/conf@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@lingui/conf/-/conf-2.9.0.tgz#b8b0b1c86b238f7ae1a885def484c549be99e80d"
+  integrity sha512-MUQAWWmwUi0JlGE4O/eQ+m92m8maAtPlkO1dei1XU3MavsEh754lUVxCIH4+iwA/KTBqadnivgBj7skok2ntWQ==
   dependencies:
     chalk "^2.3.0"
-    cosmiconfig "^5.0.6"
-    jest-regex-util "^23.3.0"
-    jest-validate "^23.5.0"
-    pkg-conf "^2.1.0"
+    cosmiconfig "^5.2.1"
+    jest-regex-util "^24.3.0"
+    jest-validate "^24.8.0"
+    pkg-conf "^3.1.0"
 
-"@lingui/core@2.7.3":
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/@lingui/core/-/core-2.7.3.tgz#9b2a12a56dd6129faf692fc6f47c49763b470a3f"
+"@lingui/core@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@lingui/core/-/core-2.9.0.tgz#5c1fc0434e73f3f9db2e34d891105684a57bd60f"
+  integrity sha512-RQ1Vlcdf45nOWEPDozlqNoRirBuVWxnk5vE6lTOizyV/ebZRp7IvHzgbtlnQG/rpqxbD3QAx/1+iEBXbZ9/UXw==
   dependencies:
     babel-runtime "^6.26.0"
     make-plural "^4.1.1"
     messageformat-parser "^2.0.0"
 
-"@lingui/react@2.7.3":
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/@lingui/react/-/react-2.7.3.tgz#3b377189b04e406b225d3c1d8a196d004d7229fe"
+"@lingui/react@^2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@lingui/react/-/react-2.9.0.tgz#0ddba1f2baa74d0e690c5f4d0bc73f7c40ad4a2b"
+  integrity sha512-E71zXq5BOpv6IojLOpEFql+L33/b4Ay5H2lClQUoyk7ZOTT3zAAZ3zIuR6dmBLTMlveCdFnu46lDKMHxaWy6kw==
   dependencies:
-    "@lingui/core" "2.7.3"
+    "@lingui/core" "2.9.0"
     babel-runtime "^6.26.0"
     hash-sum "^1.0.2"
-    hoist-non-react-statics "3.0.1"
-    prop-types "^15.6.2"
+    hoist-non-react-statics "3.3.0"
+    prop-types "^15.7.2"
 
 "@react-native-community/cli-debugger-ui@^3.0.0":
   version "3.0.0"
@@ -2726,9 +2733,10 @@ basic-auth@~2.0.0:
   dependencies:
     safe-buffer "5.1.2"
 
-bcp-47@^1.0.4:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/bcp-47/-/bcp-47-1.0.5.tgz#9cb5e53c3d03e09f7d20f5f0affda1cde296a64f"
+bcp-47@^1.0.5:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/bcp-47/-/bcp-47-1.0.6.tgz#de83a3e81634483910cc614c536f0b851eac4adc"
+  integrity sha512-hSyiezb8rTqrF1W/2f3CseWLc3JdSUu62N/fjscOjhOsOdJ4L032l3bqaYy5/idbC4p+XApYPq7CdEGaax5+zQ==
   dependencies:
     is-alphabetical "^1.0.0"
     is-alphanumerical "^1.0.0"
@@ -3171,9 +3179,14 @@ commander@*:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-3.0.0.tgz#0641ea00838c7a964627f04cddc336a2deddd60a"
 
-commander@^2.12.1, commander@^2.17.1, commander@^2.19.0, commander@~2.20.0:
+commander@^2.12.1, commander@^2.19.0, commander@~2.20.0:
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
+
+commander@^2.20.0:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
 commander@~2.13.0:
   version "2.13.0"
@@ -3294,7 +3307,7 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-cosmiconfig@^5.0.5, cosmiconfig@^5.0.6, cosmiconfig@^5.1.0:
+cosmiconfig@^5.0.5, cosmiconfig@^5.1.0, cosmiconfig@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-5.2.1.tgz#040f726809c591e77a17c0a3626ca45b4f168b1a"
   dependencies:
@@ -4361,6 +4374,18 @@ glob@^7.1.3:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
+glob@^7.1.4:
+  version "7.1.6"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.6.tgz#141f33b81a7c2492e125594307480c46679278a6"
+  integrity sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==
+  dependencies:
+    fs.realpath "^1.0.0"
+    inflight "^1.0.4"
+    inherits "2"
+    minimatch "^3.0.4"
+    once "^1.3.0"
+    path-is-absolute "^1.0.0"
+
 global-dirs@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/global-dirs/-/global-dirs-0.1.1.tgz#b319c0dd4607f353f3be9cca4c72fc148c49f445"
@@ -4526,11 +4551,12 @@ history@^4.9.0:
     tiny-warning "^1.0.0"
     value-equal "^1.0.1"
 
-hoist-non-react-statics@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.0.1.tgz#fba3e7df0210eb9447757ca1a7cb607162f0a364"
+hoist-non-react-statics@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.0.tgz#b09178f0122184fb95acf525daaecb4d8f45958b"
+  integrity sha512-0XsbTXxgiaCDYDIWFcwkmerZPSwywfUqYmwT4jzewKTQSWoE6FCMoUVOeBJWK3E/CrWbxRG3m5GzY4lnIwGRBA==
   dependencies:
-    react-is "^16.3.2"
+    react-is "^16.7.0"
 
 hoist-non-react-statics@^1.0.5:
   version "1.2.0"
@@ -4705,7 +4731,7 @@ inquirer@^3.0.6:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-inquirer@^6.2.0, inquirer@^6.2.2:
+inquirer@^6.2.0, inquirer@^6.2.2, inquirer@^6.3.1:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-6.5.2.tgz#ad50942375d036d327ff528c08bd5fab089928ca"
   integrity sha512-cntlB5ghuB0iuO65Ovoi8ogLHiWGs/5yNrtUcKjFhSSiVeAIVpD7koaSU9RM8mpXw5YDi9RdYXGQMaOURB7ycQ==
@@ -5146,10 +5172,6 @@ jest-expo@^36.0.0:
     lodash "^4.5.0"
     react-test-renderer "~16.9.0"
 
-jest-get-type@^22.1.0:
-  version "22.4.3"
-  resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-22.4.3.tgz#e3a8504d8479342dd4420236b322869f18900ce4"
-
 jest-get-type@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-get-type/-/jest-get-type-24.9.0.tgz#1684a0c8a50f2e4901b6644ae861f579eed2ef0e"
@@ -5235,10 +5257,6 @@ jest-pnp-resolver@^1.2.1:
 jest-react-native@^18.0.0:
   version "18.0.0"
   resolved "https://registry.yarnpkg.com/jest-react-native/-/jest-react-native-18.0.0.tgz#77dd909f069324599f227c58c61c2e62168726ba"
-
-jest-regex-util@^23.3.0:
-  version "23.3.0"
-  resolved "https://registry.yarnpkg.com/jest-regex-util/-/jest-regex-util-23.3.0.tgz#5f86729547c2785c4002ceaa8f849fe8ca471bc5"
 
 jest-regex-util@^24.3.0, jest-regex-util@^24.9.0:
   version "24.9.0"
@@ -5353,16 +5371,7 @@ jest-util@^24.9.0:
     slash "^2.0.0"
     source-map "^0.6.0"
 
-jest-validate@^23.5.0:
-  version "23.6.0"
-  resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-23.6.0.tgz#36761f99d1ed33fcd425b4e4c5595d62b6597474"
-  dependencies:
-    chalk "^2.0.1"
-    jest-get-type "^22.1.0"
-    leven "^2.1.0"
-    pretty-format "^23.6.0"
-
-jest-validate@^24.7.0, jest-validate@^24.9.0:
+jest-validate@^24.7.0, jest-validate@^24.8.0, jest-validate@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-validate/-/jest-validate-24.9.0.tgz#0775c55360d173cd854e40180756d4ff52def8ab"
   dependencies:
@@ -5634,10 +5643,6 @@ left-pad@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/left-pad/-/left-pad-1.3.0.tgz#5b8a3a7765dfe001261dde915589e782f8c94d1e"
 
-leven@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/leven/-/leven-2.1.0.tgz#c2e7a9f772094dee9d34202ae8acce4687875580"
-
 leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
@@ -5684,6 +5689,17 @@ load-json-file@^4.0.0:
     parse-json "^4.0.0"
     pify "^3.0.0"
     strip-bom "^3.0.0"
+
+load-json-file@^5.2.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-5.3.0.tgz#4d3c1e01fa1c03ea78a60ac7af932c9ce53403f3"
+  integrity sha512-cJGP40Jc/VXUsp8/OrnyKyTZ1y6v/dphm3bioS+RrKXjK2BB6wHUd6JptZEFDGgGahMT+InnZO5i1Ei9mpC8Bw==
+  dependencies:
+    graceful-fs "^4.1.15"
+    parse-json "^4.0.0"
+    pify "^4.0.1"
+    strip-bom "^3.0.0"
+    type-fest "^0.3.0"
 
 load-script@^1.0.0:
   version "1.0.0"
@@ -6648,7 +6664,7 @@ options@>=0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/options/-/options-0.0.6.tgz#ec22d312806bb53e731773e7cdaefcf1c643128f"
 
-ora@^3.0.0, ora@^3.4.0:
+ora@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/ora/-/ora-3.4.0.tgz#bf0752491059a3ef3ed4c85097531de9fdbcd318"
   dependencies:
@@ -6972,12 +6988,13 @@ pirates@^4.0.0, pirates@^4.0.1:
   dependencies:
     node-modules-regexp "^1.0.0"
 
-pkg-conf@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/pkg-conf/-/pkg-conf-2.1.0.tgz#2126514ca6f2abfebd168596df18ba57867f0058"
+pkg-conf@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/pkg-conf/-/pkg-conf-3.1.0.tgz#d9f9c75ea1bae0e77938cde045b276dac7cc69ae"
+  integrity sha512-m0OTbR/5VPNPqO1ph6Fqbj7Hv6QU7gR/tQW40ZqrL1rjgCU85W6C1bJn0BItuJqnR98PWzw7Z8hHeChD1WrgdQ==
   dependencies:
-    find-up "^2.0.0"
-    load-json-file "^4.0.0"
+    find-up "^3.0.0"
+    load-json-file "^5.2.0"
 
 pkg-dir@^3.0.0:
   version "3.0.0"
@@ -7187,10 +7204,6 @@ raf@^3.1.0:
   dependencies:
     performance-now "^2.1.0"
 
-ramda@^0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
-
 ramda@^0.26.1:
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
@@ -7254,14 +7267,14 @@ react-instantsearch-native@^5.7.0:
     algoliasearch "^3.27.1"
     react-instantsearch-core "^5.7.0"
 
-react-is@^16.3.2, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
-  version "16.9.0"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
-
 react-is@^16.6.0:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
+
+react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.9.0:
+  version "16.9.0"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
 
 react-native-animatable@^1.2.4, react-native-animatable@^1.3.1:
   version "1.3.2"
@@ -8896,6 +8909,11 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
+type-fest@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.3.1.tgz#63d00d204e059474fe5e1b7c011112bbd1dc29e1"
+  integrity sha512-cUGJnCdr4STbePCgqNFbpVNCepa+kAVohJs1sLhxzdH+gnEoOd8VhbYa7pD3zZYGiURWM2xzEII3fQcRizDkYQ==
+
 type-fest@^0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.7.1.tgz#8dda65feaf03ed78f0a3f9678f1869147f7c5c48"
@@ -8935,10 +8953,6 @@ typescript-tuple@^2.2.1:
   integrity sha512-Zcr0lbt8z5ZdEzERHAMAniTiIKerFCMgd7yjq1fPnDJ43et/k9twIFQMUYff9k5oXcsQ0WpvFcgzK2ZKASoW6Q==
   dependencies:
     typescript-compare "^0.0.2"
-
-typescript@^2.9.2:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
 
 typescript@^3.7.2:
   version "3.7.4"
