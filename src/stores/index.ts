@@ -9,6 +9,7 @@ import * as taxonomies from './taxonomies';
 import * as notifications from './notifications';
 import * as userProfile from './user_profile';
 import * as location from './manual_user_location';
+import * as search from './search';
 
 export interface Store {
     readonly fonts: fonts.FontsStore;
@@ -21,6 +22,7 @@ export interface Store {
     readonly notifications: notifications.NotificationStore;
     readonly userProfile: userProfile.OnboardingStore;
     readonly manualUserLocation: location.ManualUserLocationStore;
+    readonly search: search.SearchStore;
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -34,6 +36,7 @@ export const buildDefaultStore = (): Store => ({
     notifications: notifications.buildDefaultStore(),
     userProfile: userProfile.buildDefaultStore(),
     manualUserLocation: location.buildDefaultStore(),
+    search: search.buildDefaultStore(),
 });
 
 export const reducer = combineReducers<Store>({
@@ -47,4 +50,5 @@ export const reducer = combineReducers<Store>({
     notifications: notifications.reducer,
     userProfile: userProfile.reducer,
     manualUserLocation: location.reducer,
+    search: search.reducer,
 });

@@ -10,6 +10,8 @@ export interface PersistedData {
     readonly showOnboarding: boolean;
     readonly bookmarkedServices: ServiceMap;
     readonly disableAnalytics: boolean;
+    readonly searchTerm: string;
+    readonly searchLocation: string;
 }
 
 export namespace DataPersistence {

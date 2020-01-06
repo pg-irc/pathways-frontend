@@ -10,6 +10,8 @@ export class PersistedDataBuilder {
     showOnboarding: boolean = true;
     bookmarkedServices: ServiceMap = {};
     disableAnalytics: boolean = false;
+    searchTerm: string = '';
+    searchLocation: string = '';
 
     withChosenAnswer(id: AnswerId): PersistedDataBuilder {
         this.chosenAnswers.push(id);
@@ -39,6 +41,16 @@ export class PersistedDataBuilder {
         return this;
     }
 
+    withSearchTerm(searchTerm: string): PersistedDataBuilder {
+        this.searchTerm = searchTerm;
+        return this;
+    }
+
+    withSearchLocatuib(searchLocation: string): PersistedDataBuilder {
+        this.searchLocation = searchLocation;
+        return this;
+    }
+
     build(): PersistedData {
         return {
             chosenAnswers: this.chosenAnswers,
@@ -46,6 +58,8 @@ export class PersistedDataBuilder {
             showOnboarding: this.showOnboarding,
             bookmarkedServices: this.bookmarkedServices,
             disableAnalytics: this.disableAnalytics,
+            searchTerm: this.searchTerm,
+            searchLocation: this.searchLocation,
         };
     }
 
