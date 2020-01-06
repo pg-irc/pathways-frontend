@@ -1,9 +1,8 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import { View } from 'react-native';
 import * as R from 'ramda';
 import { History, Location } from 'history';
-import { Header, Left, Right, Body, Title, Text } from 'native-base';
+import { Text } from 'native-base';
 import { Id as TaskId, UnbookmarkTopicAction, BookmarkTopicAction } from '../../stores/topics';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { HelpButtonComponent } from '../header_button/help_button_component';
@@ -15,12 +14,11 @@ import {
 } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
-import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
-import { mapWithIndex } from '../../application/map_with_index';
 import { Id as ServiceId} from '../../stores/services';
 import { HumanServiceData } from '../../validation/services/types';
 import { UnbookmarkServiceAction, BookmarkServiceAction } from '../../stores/services/actions';
 import { ServiceDetailScreenHeaderConnectedComponent } from './service_detail_screen_header_connected_component';
+import { renderHeader } from './render_header';
 
 export type HeaderOwnProps = {
     readonly history: History;
@@ -191,49 +189,3 @@ const ChildScreenHeader = (props: Props): JSX.Element => {
     return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
 };
 
-interface RenderHeaderProps {
-    readonly backgroundColor: string;
-    readonly leftButton?: JSX.Element;
-    readonly rightButtons: ReadonlyArray<JSX.Element>;
-    readonly title?: JSX.Element;
-}
-
-export const renderHeader = (props: RenderHeaderProps): JSX.Element => {
-    const marginTop = getStatusBarHeightForPlatform();
-    return (
-        <Header style={{ marginTop, backgroundColor: props.backgroundColor, borderBottomColor: 'transparent' }}>
-            {buildLeftButton(props.leftButton)}
-            {buildTitle(props.title)}
-            {buildRightButtons(props.rightButtons)}
-        </Header>
-    );
-};
-
-const buildLeftButton = (leftButton?: JSX.Element): JSX.Element => {
-    if (!leftButton) {
-        return <EmptyComponent />;
-    }
-    return <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
-        {leftButton}
-    </Left>;
-};
-
-const buildTitle = (title?: JSX.Element): JSX.Element => {
-    if (!title) {
-        return <EmptyComponent />;
-    }
-    return <Body>
-        <Title>{title}</Title>
-    </Body>;
-};
-
-const buildRightButtons = (rightButtons: ReadonlyArray<JSX.Element>): JSX.Element => {
-    const buildView = (button: JSX.Element, index: number): JSX.Element => (
-        <View key={index}>
-            {button}
-        </View>
-    );
-    return <Right style={{ alignItems: 'center' }}>
-        {mapWithIndex(buildView, rightButtons)}
-    </Right>;
-};

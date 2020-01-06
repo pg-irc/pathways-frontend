@@ -4,12 +4,13 @@ import { Locale } from '../../locale';
 import { Id } from '../../stores/services';
 import { HumanServiceData } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
-import { HeaderOwnProps, renderHeader } from './header_component';
+import { HeaderOwnProps } from './header_component';
 import { getParametersFromPath, Routes } from '../../application/routing';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { colors } from '../../application/styles';
 import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
+import { renderHeader } from './render_header';
 
 export interface ServiceDetailScreenHeaderProps {
     readonly currentLocale: Locale;
