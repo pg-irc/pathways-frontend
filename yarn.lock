@@ -1986,9 +1986,12 @@
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.5.3.tgz#1c3b71b091eaeaf5924538006b7f70603ce63d38"
 
-"@types/ramda@^0.25.38":
-  version "0.25.51"
-  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.25.51.tgz#d5421d0e190c56c64c112a761a85782fc971409d"
+"@types/ramda@^0.26.39":
+  version "0.26.39"
+  resolved "https://registry.yarnpkg.com/@types/ramda/-/ramda-0.26.39.tgz#bb392cdb4d431cf6884b3ef11bef635c5d20274f"
+  integrity sha512-3bu32X02VpjJhsYPUWkdOQGoBXjb/UveZgGg4IYMm+SPAXio96BOYrRhVELfM4AoP00sxoi/f2tqrXdwtR4jjg==
+  dependencies:
+    ts-toolbelt "^4.12.0"
 
 "@types/react-instantsearch-core@*":
   version "5.2.9"
@@ -7188,6 +7191,11 @@ ramda@^0.25.0:
   version "0.25.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
 
+ramda@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
+
 range-parser@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
@@ -8813,6 +8821,11 @@ ts-node@^8.5.4:
     make-error "^1.1.1"
     source-map-support "^0.5.6"
     yn "^3.0.0"
+
+ts-toolbelt@^4.12.0:
+  version "4.14.6"
+  resolved "https://registry.yarnpkg.com/ts-toolbelt/-/ts-toolbelt-4.14.6.tgz#9a232f62276caeee4fa9e81e0c4bffa047de0765"
+  integrity sha512-SONcnRd93+LuYGfn/CZg5A5qhCODohZslAVZKHHu5bnwUxoXLqd2k2VIdwRUXYfKnY+UCeNbI2pTPz+Dno6Mpg==
 
 tslib@1.9.3:
   version "1.9.3"
