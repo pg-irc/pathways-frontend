@@ -85,7 +85,7 @@
         "react-native-gesture-handler": "~1.5.0",
         "react-native-map-link": "^2.1.4",
         "react-native-markdown-renderer": "^3.2.8",
-        "react-native-modal": "^7.0.2",
+        "react-native-modal": "^11.5.3",
         "react-native-reanimated": "~1.4.0",
         "react-native-tab-view": "^2.11.0",
         "react-redux": "^7.1.3",
