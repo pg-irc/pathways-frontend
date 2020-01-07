@@ -19,8 +19,8 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.SET_ONBOARDING,
             constants.BOOKMARK_SERVICE,
             constants.UNBOOKMARK_SERVICE,
-            constants.SET_SEARCH_TERM,
-            constants.SET_SEARCH_LOCATION,
+            constants.SAVE_SEARCH_TERM,
+            constants.SAVE_SEARCH_LOCATION,
         ],
         saveUserData);
 }

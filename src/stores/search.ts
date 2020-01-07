@@ -1,22 +1,22 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 
-export type SetSearchTermAction = Readonly<ReturnType<typeof setSearchTerm>>;
-export type SetSearchLocationAction = Readonly<ReturnType<typeof setSearchLocation>>;
+export type SaveSearchTermAction = Readonly<ReturnType<typeof saveSearchTerm>>;
+export type SaveSearchLocationAction = Readonly<ReturnType<typeof saveSearchLocation>>;
 
 // tslint:disable-next-line:typedef
-export const setSearchTerm = (searchTerm: string) => (
-    helpers.makeAction(constants.SET_SEARCH_TERM, { searchTerm })
+export const saveSearchTerm = (searchTerm: string) => (
+    helpers.makeAction(constants.SAVE_SEARCH_TERM, { searchTerm })
 );
 
 // tslint:disable-next-line:typedef
-export const setSearchLocation = (searchLocation: string) => (
-    helpers.makeAction(constants.SET_SEARCH_LOCATION, { searchLocation })
+export const saveSearchLocation = (searchLocation: string) => (
+    helpers.makeAction(constants.SAVE_SEARCH_LOCATION, { searchLocation })
 );
 
 export type SearchAction =
-    SetSearchTermAction |
-    SetSearchLocationAction;
+    SaveSearchTermAction |
+    SaveSearchLocationAction;
 
 export interface SearchStore {
     readonly searchTerm: string;
@@ -33,12 +33,12 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
         return store;
     }
     switch (action.type) {
-        case constants.SET_SEARCH_TERM:
+        case constants.SAVE_SEARCH_TERM:
             return ({
                 ...store,
                 searchTerm: action.payload.searchTerm,
             });
-        case constants.SET_SEARCH_LOCATION:
+        case constants.SAVE_SEARCH_LOCATION:
             return ({
                 ...store,
                 searchTerm: action.payload.searchLocation,
