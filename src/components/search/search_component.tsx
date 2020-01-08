@@ -19,11 +19,14 @@ import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import algoliasearch from 'algoliasearch/lite';
+import { SaveSearchTermAction, SaveSearchLocationAction } from '../../stores/search';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
     readonly appId: string;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly searchTerm: string;
+    readonly searchLocation: string;
 }
 
 export interface SearchComponentActions {
@@ -31,6 +34,8 @@ export interface SearchComponentActions {
     readonly disableAnalytics: (disable: boolean) => DisableAnalyticsAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly saveSearchTerm: (searchTerm: string) => SaveSearchTermAction;
+    readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
 }
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;
@@ -56,7 +61,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
         return <Content style={{ backgroundColor: colors.pale }}>
             <InstantSearch indexName={servicesIndex()} searchClient={searchClient} {...props} >
 
-                <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
+                <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} saveSearchTerm={props.saveSearchTerm} searchTerm={props.searchTerm} />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
                 <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>
