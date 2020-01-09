@@ -43,8 +43,12 @@ type LocaleListItem = LocaleInfo & {
 
 type LocaleItemBuilder = (locale: LocaleInfo) => LocaleListItem;
 
-type LocaleListItemInfo = {
+// TO DO complete rest of these types
+export interface SectionListItemInfo {
     readonly item: LocaleListItem;
+    readonly index: number;
+    readonly section: any;
+    readonly separators: any;
 };
 
 type SelectedLocaleListItemInfo = {
@@ -82,10 +86,10 @@ function createLocaleItemBuilder(onPress: (code: string, flipOrientation: boolea
     };
 }
 
-const LocaleItem = ({ item }: LocaleListItemInfo): JSX.Element => {
+const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
     return (
-        <TouchableOpacity key={item.code} style={styles.localeListItem} onPress={item.onPress}>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 31 }]}>{item.label}</Text>
+        <TouchableOpacity key={sectionListLocaleItem.item.code} style={styles.localeListItem} onPress={sectionListLocaleItem.item.onPress}>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 31 }]}>{sectionListLocaleItem.item.label}</Text>
         </TouchableOpacity>
     );
 };

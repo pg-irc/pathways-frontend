@@ -43,7 +43,7 @@ const buildStoreWithLocaleData = (): Store => {
     };
 };
 
-type CreatedStore = Readonly<ReturnType<typeof createStore>>;
+type CreatedStore = ReturnType<typeof createStore>;
 
 export const buildStore = (saga: ApplicationSaga): CreatedStore => {
     const middleware = applyMiddleware(saga.middleware, analytics.middleware);

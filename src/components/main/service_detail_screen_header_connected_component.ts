@@ -1,5 +1,5 @@
-import { Dispatch } from 'react-redux';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { selectServiceById } from '../../selectors/services/select_service_by_id';
 import { getParametersFromPath, Routes } from '../../application/routing';
 import { Store } from '../../stores';
@@ -8,9 +8,17 @@ import { selectLocale } from '../../selectors/locale/select_locale';
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
-import { HeaderOwnProps } from './header_component';
+import { History, Location } from 'history';
 
-const mapStateToProps = (store: Store, ownProps: HeaderOwnProps): ServiceDetailScreenHeaderProps => {
+interface OwnProps {
+    readonly history: History;
+    readonly location: Location;
+    readonly closeAboutModal: () => void;
+    readonly closeDisclaimerModal: () => void;
+    readonly openMenu: () => void;
+}
+
+const mapStateToProps = (store: Store, ownProps: OwnProps ): ServiceDetailScreenHeaderProps => {
     // getParamatersFromPath returns null when used in HeadersConnectedComponent
     const serviceParameters = getParametersFromPath(ownProps.location, Routes.ServiceDetail);
     return {

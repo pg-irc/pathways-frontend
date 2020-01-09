@@ -18,6 +18,7 @@ import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
+import algoliasearch from 'algoliasearch/lite';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
@@ -46,11 +47,14 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
-
+    const searchClient = algoliasearch(
+        props.appId,
+        props.apiKey,
+    );
     return <I18n>{(): JSX.Element => {
 
         return <Content style={{ backgroundColor: colors.pale }}>
-            <InstantSearch indexName={servicesIndex()} {...props} >
+            <InstantSearch indexName={servicesIndex()} searchClient={searchClient} {...props} >
 
                 <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
