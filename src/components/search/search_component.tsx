@@ -43,7 +43,7 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
 
-    const [location, setLocation]: [string, (s: string) => void] = useState('');
+    const [location, setLocation]: [string, (s: string) => void] = useState(props.searchLocation);
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
     useFetchLatLongFromLocation(location, setLatLong);
@@ -60,8 +60,14 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
         return <Content style={{ backgroundColor: colors.pale }}>
             <InstantSearch indexName={servicesIndex()} searchClient={searchClient} {...props} >
-
-                <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} saveSearchTerm={props.saveSearchTerm} searchTerm={props.searchTerm} />
+                <SearchInputConnectedComponent
+                    location={location}
+                    setLocation={setLocation}
+                    latLong={latLong}
+                    searchTerm={props.searchTerm}
+                    saveSearchTerm={props.saveSearchTerm}
+                    searchLocation={props.searchLocation}
+                    saveSearchLocation={props.saveSearchLocation} />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
                 <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>

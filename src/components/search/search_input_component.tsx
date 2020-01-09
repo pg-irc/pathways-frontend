@@ -14,15 +14,17 @@ export interface Props {
     readonly location: string;
     readonly latLong: LatLong;
     readonly searchTerm: string;
+    readonly searchLocation: string;
 }
 
 export interface Actions {
     readonly refine: (searchTerms: string) => string;
     readonly setLocation: (s: string) => void;
     readonly saveSearchTerm: (s: string) => void;
+    readonly saveSearchLocation: (s: string) => void;
 }
 
-const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Function): JSX.Element => {
+const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Function, saveLocation: Function): JSX.Element => {
     if (hideMyLocationButton) {
         return <EmptyComponent />;
     }
@@ -40,7 +42,12 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Func
     return (
         <TouchableOpacity
             style={applicationStyles.whiteButton}
-            onPress={(): void => setLocation('Near My Location')}>
+            onPress={(): void => {
+                // tslint:disable-next-line: no-expression-statement
+                setLocation('Near My Location');
+                // tslint:disable-next-line: no-expression-statement
+                saveLocation('Near My Location');
+            }}>
             {icon}{text}
         </TouchableOpacity>
     );
@@ -56,7 +63,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     // tslint:disable-next-line:typedef
     const [hideMyLocationButton, setHideMyLocationButton] = useState(true);
     useEffect(() => {
-        debug(`SearchInput Component useEffect with '${props.currentRefinement}'`);
+        debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
         props.refine(props.searchTerm);
     }, [props.latLong]);
     const buildTranslatedPlaceholder = (i18n: ReactI18n, placeholder: string): string => {
@@ -82,9 +89,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             debug(`SearchInputComponent search text changed to '${d}'`);
                             props.refine(d);
                         }}
-                        onEndEditing={(): void => {
-                            props.saveSearchTerm(props.currentRefinement);
-                        }}
+                        onEndEditing={(): void => { props.saveSearchTerm(props.currentRefinement); }}
                         value={props.currentRefinement}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
                         placeholderTextColor={colors.greyishBrown}
@@ -109,7 +114,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     />
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
-                {renderMyLocationButton(hideMyLocationButton, props.setLocation)}
+                {renderMyLocationButton(hideMyLocationButton, props.setLocation, props.saveSearchLocation)}
             </View >
         )}
 

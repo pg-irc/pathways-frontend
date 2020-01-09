@@ -14,9 +14,7 @@ export const saveSearchLocation = (searchLocation: string) => (
     helpers.makeAction(constants.SAVE_SEARCH_LOCATION, { searchLocation })
 );
 
-export type SearchAction =
-    SaveSearchTermAction |
-    SaveSearchLocationAction;
+export type SearchAction = SaveSearchTermAction | SaveSearchLocationAction;
 
 export interface SearchStore {
     readonly searchTerm: string;
@@ -41,7 +39,7 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
         case constants.SAVE_SEARCH_LOCATION:
             return ({
                 ...store,
-                searchTerm: action.payload.searchLocation,
+                searchLocation: action.payload.searchLocation,
             });
         default:
             return store;
