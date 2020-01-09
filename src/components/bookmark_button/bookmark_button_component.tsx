@@ -1,5 +1,9 @@
+// tslint:disable:no-expression-statement
 import React from 'react';
-import { Icon, Button } from 'native-base';
+import * as R from 'ramda';
+import { Icon, Button, Toast } from 'native-base';
+import { I18n } from '@lingui/react';
+import { t } from '@lingui/macro';
 import { BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
 import { values } from '../../application/styles';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
@@ -19,11 +23,19 @@ export interface BookmarkButtonActions {
 
 type Props = BookmarkButtonProps & BookmarkButtonActions;
 
-export const BookmarkButtonComponent = (props: Props): JSX.Element => (
-    <Button onPress={getButtonOnPress(props)} transparent icon>
-        <BookmarkIcon {...props} />
-    </Button>
-);
+export const BookmarkButtonComponent = (props: Props): JSX.Element => {
+    const onButtonPress = props.isBookmarked ? onBookmarkedItemPressed(props.unbookmark) : onUnbookmarkedItemPressed(props.bookmark);
+    return (
+        <I18n>
+            {
+                ({ i18n }: any): JSX.Element =>
+                    <Button onPress={onButtonPress(i18n)} transparent icon>
+                        <BookmarkIcon {...props} />
+                    </Button>
+            }
+        </I18n>
+    );
+};
 
 const BookmarkIcon = (props: Props): JSX.Element => (
     <Icon
@@ -35,6 +47,20 @@ const BookmarkIcon = (props: Props): JSX.Element => (
         }} />
 );
 
-const getButtonOnPress = (props: Props): () => AddBookmarkAction | RemoveBookmarkAction => (
-    props.isBookmarked ? props.unbookmark : props.bookmark
-);
+type OnPress = () => void;
+
+const onBookmarkedItemPressed = R.curry((unbookmark: () => RemoveBookmarkAction, i18n: I18n):
+    OnPress => (): void => {
+        unbookmark();
+        Toast.show({
+            text: i18n._(t`Bookmark removed`),
+        });
+});
+
+const onUnbookmarkedItemPressed = R.curry((bookmark: () => AddBookmarkAction, i18n: I18n):
+    OnPress => (): void => {
+        bookmark();
+        Toast.show({
+            text: i18n._(t`Bookmark added`),
+        });
+});

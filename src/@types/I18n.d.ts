@@ -1,6 +1,7 @@
 // tslint:disable-next-line:no-class
 declare class I18n {
     t(message: TemplateStringsArray): string;
+    _(message: TemplateStringsArray): string;
 }
 
 declare interface I18nProps {
