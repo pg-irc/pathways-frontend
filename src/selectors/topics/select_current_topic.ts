@@ -3,7 +3,7 @@ import { Id as TaskId } from '../../stores/topics';
 import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxonomy_terms_for_chosen_answers';
 import { selectLocale } from '../locale/select_locale';
 import { toSelectorTopic } from './to_selector_topic';
-import { Topic } from './topic';
+import { Topic } from './types';
 import { selectExploreSectionFromTopic } from './select_explore_section_from_topic';
 import { isTopicRecommended } from './is_topic_recommended';
 import { selectRelatedTopics } from './select_related_topics';

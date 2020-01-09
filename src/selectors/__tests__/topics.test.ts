@@ -10,7 +10,7 @@ import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore/types';
 import { toSelectorTopic } from '../topics/to_selector_topic';
-import { Topic } from '../topics/topic';
+import { Topic } from '../topics/types';
 import { isTopicRecommended } from '../topics/is_topic_recommended';
 import { sortTopicList } from '../topics/sort_topic_list';
 import { ViewTaskBuilder } from './helpers/task_helpers';

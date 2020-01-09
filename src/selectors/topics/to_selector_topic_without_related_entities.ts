@@ -2,7 +2,7 @@ import * as store from '../../stores/topics';
 import { Locale } from '../../locale/types';
 import { ExploreSection } from '../explore/types';
 import { toSelectorTopic } from './to_selector_topic';
-import { Topic } from './topic';
+import { Topic } from './types';
 import { TopicListItem } from './topic_list_item';
 
 export const toSelectorTopicWithoutRelatedEntities =

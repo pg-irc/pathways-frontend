@@ -4,7 +4,7 @@ import { buildServicesRequest, BuildServicesRequestAction, ServicesAction, Bookm
         UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
-import { Topic } from '../../selectors/topics/topic';
+import { Topic } from '../../selectors/topics/types';
 import { selectTopicServices } from '../../selectors/services/select_topic_services';
 import {
     ServiceListComponent, ServiceListProps,
