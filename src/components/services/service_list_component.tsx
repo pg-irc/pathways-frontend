@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React from 'react';
+import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
@@ -10,11 +10,8 @@ import { Topic } from '../../selectors/topics/topic';
 import { ServiceListItemComponent } from './service_list_item_component';
 import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { textStyles, colors, values } from '../../application/styles';
-import { isError } from '../../selectors/services/is_error';
+import { isErrorSelectorTopicServices } from '../../selectors/services/is_error_selector_topic_services';
 import * as constants from '../../application/constants';
-import { useRequestDataIfOnlineReturnRefreshDataCallback }
-    from '../../hooks/use_request_data_if_online_return_refresh_data_callback';
-import { OnlineStatus, useOnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
 import { EmptyListComponent } from '../empty_component/empty_list_component';
@@ -42,82 +39,77 @@ export interface ServicesUpdater {
 
 type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterProps;
 
-export const ServiceListComponent = (props: Props): JSX.Element => {
-    const onlineStatus = useOnlineStatus();
-    const refreshServicesData = useRequestDataIfOnlineReturnRefreshDataCallback(onlineStatus, props.dispatchServicesRequest);
-    const hasNoErrors = onlineStatus !== OnlineStatus.Offline && !isError(props.topicServicesOrError);
+type Timestamp = number;
+type TimestampSetter = Dispatch<SetStateAction<Timestamp>>;
 
-    if (hasNoErrors) {
+export const ServiceListComponent = (props: Props): JSX.Element => {
+    const [lastScreenRefresh, setLastScreenRefresh]: [Timestamp, TimestampSetter] = useState(Date.now());
+    useEffect(() => refreshServices(props), [lastScreenRefresh]);
+
+    if (isErrorSelectorTopicServices(props.topicServicesOrError)) {
         return (
-            <ServicesComponent
-                services={getServicesIfValid(props.topicServicesOrError)}
-                refreshing={isLoadingServices(props.topicServicesOrError)}
-                onRefresh={props.dispatchServicesRequest}
-                renderItem={renderServiceListItem(props)}
-                listEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
-                listHeaderComponent={
-                    <ServiceListHeaderComponent title={props.topic.title} />
-                }
+            <ErrorComponent
+                errorType={determineErrorType(props.topicServicesOrError)}
+                refreshScreen={(): void => setLastScreenRefresh(Date.now())}
+                title={props.topic.title}
             />
         );
     }
+    return (
+        <FlatList
+            style={{ backgroundColor: colors.lightGrey }}
+            refreshing={isLoadingServices(props.topicServicesOrError)}
+            onRefresh={(): void => refreshServices(props)}
+            data={getServicesIfValid(props.topicServicesOrError)}
+            keyExtractor={(service: HumanServiceData): string => service.id}
+            renderItem={renderServiceListItem(props)}
+            ListEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
+            ListHeaderComponent={<ServiceListHeaderComponent title={props.topic.title} />}
+        />
+    );
+};
 
-    const errorType = determineErrorType(onlineStatus, props.topicServicesOrError);
-    const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
+const refreshServices = (props: Props): void => {
+    if (servicesFetchRequired(props.topicServicesOrError)) {
+        props.dispatchServicesRequest();
+    }
+};
+
+const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boolean => (
+    topicServicesOrError.type === constants.TOPIC_SERVICES_ERROR ||
+    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.isExpired
+);
+
+const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void, readonly title: string }): JSX.Element => {
+    const sentryMessage = getSentryMessageForError(props.errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
     Sentry.captureMessage(sentryMessage);
     return (
         <ErrorScreenSwitcherComponent
-            refreshScreen={refreshServicesData}
-            errorType={errorType}
+            refreshScreen={props.refreshScreen}
+            errorType={props.errorType}
             header={
-                <ServiceListHeaderComponent title={props.topic.title} />
+                <ServiceListHeaderComponent title={props.title} />
             }
         />
     );
 };
 
-const determineErrorType = (onlineStatus: OnlineStatus, topicServicesOrError: SelectorTopicServices): Errors => {
-    if (onlineStatus === OnlineStatus.Offline) {
-        return Errors.Offline;
-    }
-    if (isError(topicServicesOrError)) {
+const determineErrorType = (topicServicesOrError: SelectorTopicServices): Errors => {
+    if (isErrorSelectorTopicServices(topicServicesOrError)) {
         return topicServicesOrError.errorMessageType;
     }
     return Errors.Exception;
 };
 
+const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<HumanServiceData> => (
+    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.services
+);
+
 const isLoadingServices = (topicServicesOrError: SelectorTopicServices): boolean => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_LOADING
 );
 
-const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<HumanServiceData> => (
-    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID ?
-        topicServicesOrError.services : []
-);
-
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
-
-type ServiceListListComponentProps = {
-    readonly services: ReadonlyArray<HumanServiceData>;
-    readonly refreshing: boolean;
-    readonly onRefresh: () => void;
-    readonly renderItem: ({ item }: ServiceItemInfo) => JSX.Element;
-    readonly listEmptyComponent: JSX.Element;
-    readonly listHeaderComponent: JSX.Element;
-};
-
-const ServicesComponent = (props: ServiceListListComponentProps): JSX.Element => (
-    <FlatList
-        style={{ backgroundColor: colors.lightGrey }}
-        refreshing={props.refreshing}
-        onRefresh={props.onRefresh}
-        data={props.services}
-        keyExtractor={(service: HumanServiceData): string => service.id}
-        renderItem={props.renderItem}
-        ListEmptyComponent={props.listEmptyComponent}
-        ListHeaderComponent={props.listHeaderComponent}
-    />
-);
 
 const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX.Element => {
     return ({ item }: ServiceItemInfo): JSX.Element => (
@@ -136,6 +128,7 @@ const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX
 interface ServiceListHeaderComponentProps {
     readonly title: string;
 }
+
 export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => {
     const icon = (
         <View style={{

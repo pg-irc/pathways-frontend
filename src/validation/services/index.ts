@@ -1,6 +1,6 @@
 // tslint:disable:no-var-requires no-any
 import * as R from 'ramda';
-import * as types from './types';
+import { HumanServiceData, Address, PhoneNumber } from './types';
 import { serviceAtLocationArray } from './schema';
 import { ValidationResult } from '../validation_result';
 import { Id } from '../../stores/services';
@@ -53,24 +53,40 @@ export interface ValidatedServiceAtLocationJSON {
     readonly location: ValidatedLocationJSON;
 }
 
-export const toServicesFromValidatedJSONAndStore = (data: ReadonlyArray<ValidatedServiceAtLocationJSON>, bookmarkedServicesIds: ReadonlyArray<Id>,
-): ReadonlyArray<types.HumanServiceData> => {
-   const servicesFromValidatedJSON = R.map(serviceFromValidatedJSON, data);
-   return R.map((service: types.HumanServiceData): types.HumanServiceData => (
-       {
-           ...service,
-           bookmarked: R.contains(service.id, bookmarkedServicesIds),
-       }
-   ), servicesFromValidatedJSON);
-};
+export const toServicesFromValidatedData = (bookmarkedServiceIds: ReadonlyArray<Id>, data: ReadonlyArray<ValidatedServiceAtLocationJSON>):
+    ReadonlyArray<HumanServiceData> => (
+        R.map(buildHumanService(bookmarkedServiceIds), data)
+    );
 
-export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): types.HumanServiceData => {
-    const phoneNumbers = R.map((phoneNumber: ValidatedPhoneNumberJSON): types.PhoneNumber => ({
+const buildHumanService = R.curry((bookmarkedServiceIds: ReadonlyArray<Id>, data: ValidatedServiceAtLocationJSON):
+    HumanServiceData => {
+        return {
+            id: data.service.id,
+            services_at_location_id: data.id,
+            latlong: {
+                lat: data.location.latitude,
+                lng: data.location.longitude,
+            },
+            name: data.service.name,
+            description: data.service.description,
+            phoneNumbers: buildHumanServicePhoneNumbers(data.location.phone_numbers),
+            addresses: buildHumanServiceAddresses(data.location.addresses),
+            website: data.service.organization_url,
+            email: data.service.organization_email,
+            organizationName: data.service.organization_name,
+            bookmarked: R.contains(data.service.id, bookmarkedServiceIds),
+        };
+});
+
+const buildHumanServicePhoneNumbers = (phoneNumbers: ReadonlyArray<ValidatedPhoneNumberJSON>): ReadonlyArray<PhoneNumber> => (
+    R.map((phoneNumber: ValidatedPhoneNumberJSON): PhoneNumber => ({
         type: phoneNumber.phone_number_type,
         phone_number: phoneNumber.phone_number,
-    }), data.location.phone_numbers);
+    }), phoneNumbers)
+);
 
-    const addresses = R.map((addressWithType: ValidatedAddressWithTypeJSON): types.Address => ({
+const buildHumanServiceAddresses = (addresses: ReadonlyArray<ValidatedAddressWithTypeJSON>): ReadonlyArray<Address> => (
+    R.map((addressWithType: ValidatedAddressWithTypeJSON): Address => ({
         id: addressWithType.address.id,
         type: addressWithType.address_type,
         address: addressWithType.address.address,
@@ -78,22 +94,5 @@ export const serviceFromValidatedJSON = (data: ValidatedServiceAtLocationJSON): 
         stateProvince: addressWithType.address.state_province,
         postalCode: addressWithType.address.postal_code,
         country: addressWithType.address.country,
-    }), data.location.addresses);
-
-    return {
-        id: data.service.id,
-        services_at_location_id: data.id,
-        latlong: {
-            lat: data.location.latitude,
-            lng: data.location.longitude,
-        },
-        name: data.service.name,
-        description: data.service.description,
-        phoneNumbers: phoneNumbers,
-        addresses: addresses,
-        website: data.service.organization_url,
-        email: data.service.organization_email,
-        organizationName: data.service.organization_name,
-        bookmarked: false,
-    };
-};
+    }), addresses)
+);

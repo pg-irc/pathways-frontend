@@ -18,6 +18,7 @@ export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.Unb
 export const buildEmptyServicesForTopic = (): types.ValidServicesForTopic => ({
     serviceIds: [],
     type: constants.TOPIC_SERVICES_VALID,
+    expiresAt: 0,
 });
 
 export function reducer(store: types.ServiceStore = buildDefaultStore(), action?: actions.ServicesAction): types.ServiceStore {
@@ -64,6 +65,8 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildS
     const topicId = action.payload.topicId;
     const newServicesAsMap = createServiceMap(newServices);
     const newServiceIds = R.map((service: types.HumanServiceData): string => service.id, newServices);
+    const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000;
+    const expiresAt = Date.now() + twentyFourHoursInMilliseconds;
     return {
         ...store,
         services: {
@@ -75,6 +78,7 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildS
             [topicId]: {
                 type: constants.TOPIC_SERVICES_VALID,
                 serviceIds: newServiceIds,
+                expiresAt,
             },
         },
     };

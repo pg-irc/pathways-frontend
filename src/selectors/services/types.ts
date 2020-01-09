@@ -4,6 +4,7 @@ import { Errors } from '../../validation/errors/types';
 export interface ValidSelectorTopicServices {
     readonly services: ReadonlyArray<HumanServiceData>;
     readonly type: 'ServicesForTopic:Valid';
+    readonly isExpired: boolean;
 }
 
 export interface LoadingSelectorTopicServices {
