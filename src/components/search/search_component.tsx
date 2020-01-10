@@ -58,7 +58,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     );
     return <I18n>{(): JSX.Element => {
 
-        return <Content style={{ backgroundColor: colors.pale }}>
+        return <Content style={{ backgroundColor: colors.pale }} keyboardShouldPersistTaps={'always'} keyboardDismissMode='on-drag'>
             <InstantSearch indexName={servicesIndex()} searchClient={searchClient} {...props} >
                 <SearchInputConnectedComponent
                     location={location}

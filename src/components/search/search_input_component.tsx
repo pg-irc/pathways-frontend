@@ -140,5 +140,6 @@ export const extractSearchStrings = (): JSX.Element => (
         <Text>
             <Trans>Enter city, address, or postal code</Trans>
         </Text>
+        <Text><Trans>My Location</Trans></Text>
     </div>
 );
