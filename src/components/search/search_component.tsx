@@ -46,6 +46,10 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [location, setLocation]: [string, (s: string) => void] = useState(props.searchLocation);
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
 
+    useEffect(() => {
+        props.saveSearchLocation(location);
+    }, [location]);
+
     useFetchLatLongFromLocation(location, setLatLong);
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
 
@@ -61,13 +65,11 @@ export const SearchComponent = (props: Props): JSX.Element => {
         return <Content style={{ backgroundColor: colors.pale }} keyboardShouldPersistTaps={'always'} keyboardDismissMode='on-drag'>
             <InstantSearch indexName={servicesIndex()} searchClient={searchClient} {...props} >
                 <SearchInputConnectedComponent
-                    location={location}
-                    setLocation={setLocation}
                     latLong={latLong}
                     searchTerm={props.searchTerm}
                     saveSearchTerm={props.saveSearchTerm}
-                    searchLocation={props.searchLocation}
-                    saveSearchLocation={props.saveSearchLocation} />
+                    location={location}
+                    setLocation={setLocation} />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
                 <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>

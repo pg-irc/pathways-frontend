@@ -11,20 +11,18 @@ import { ClearInputButton } from './clear_input_button';
 
 export interface Props {
     readonly currentRefinement: string;
-    readonly location: string;
     readonly latLong: LatLong;
     readonly searchTerm: string;
-    readonly searchLocation: string;
+    readonly location: string;
 }
 
 export interface Actions {
     readonly refine: (searchTerms: string) => string;
-    readonly setLocation: (s: string) => void;
     readonly saveSearchTerm: (s: string) => void;
-    readonly saveSearchLocation: (s: string) => void;
+    readonly setLocation: (s: string) => void;
 }
 
-const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Function, saveLocation: Function): JSX.Element => {
+const renderMyLocationButton = (hideMyLocationButton: boolean, saveLocation: Function): JSX.Element => {
     if (hideMyLocationButton) {
         return <EmptyComponent />;
     }
@@ -42,12 +40,7 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Func
     return (
         <TouchableOpacity
             style={applicationStyles.whiteButton}
-            onPress={(): void => {
-                // tslint:disable-next-line: no-expression-statement
-                setLocation('Near My Location');
-                // tslint:disable-next-line: no-expression-statement
-                saveLocation('Near My Location');
-            }}>
+            onPress={(): void => saveLocation('Near My Location')}>
             {icon}{text}
         </TouchableOpacity>
     );
@@ -114,7 +107,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     />
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
-                {renderMyLocationButton(hideMyLocationButton, props.setLocation, props.saveSearchLocation)}
+                {renderMyLocationButton(hideMyLocationButton, props.setLocation)}
             </View >
         )}
 
