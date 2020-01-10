@@ -5,7 +5,7 @@ import { Icon, Button, Toast } from 'native-base';
 import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
-import { values } from '../../application/styles';
+import { values, textStyles, applicationStyles } from '../../application/styles';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 
 export interface BookmarkButtonProps {
@@ -28,10 +28,11 @@ export const BookmarkButtonComponent = (props: Props): JSX.Element => {
     return (
         <I18n>
             {
-                ({ i18n }: any): JSX.Element =>
+                (({ i18n }: any): JSX.Element =>
                     <Button onPress={onButtonPress(i18n)} transparent icon>
                         <BookmarkIcon {...props} />
                     </Button>
+                )
             }
         </I18n>
     );
@@ -54,6 +55,8 @@ const onBookmarkedItemPressed = R.curry((unbookmark: () => RemoveBookmarkAction,
         unbookmark();
         Toast.show({
             text: i18n._(t`Bookmark removed`),
+            style: applicationStyles.toast,
+            textStyle: textStyles.toast,
         });
 });
 
@@ -62,5 +65,7 @@ const onUnbookmarkedItemPressed = R.curry((bookmark: () => AddBookmarkAction, i1
         bookmark();
         Toast.show({
             text: i18n._(t`Bookmark added`),
+            style: applicationStyles.toast,
+            textStyle: textStyles.toast,
         });
 });
