@@ -1,6 +1,5 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
-import * as R from 'ramda';
 import { Icon, Button, Toast } from 'native-base';
 import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
@@ -23,20 +22,17 @@ export interface BookmarkButtonActions {
 
 type Props = BookmarkButtonProps & BookmarkButtonActions;
 
-export const BookmarkButtonComponent = (props: Props): JSX.Element => {
-    const onButtonPress = props.isBookmarked ? onBookmarkedItemPressed(props.unbookmark) : onUnbookmarkedItemPressed(props.bookmark);
-    return (
-        <I18n>
-            {
-                (({ i18n }: any): JSX.Element =>
-                    <Button onPress={onButtonPress(i18n)} transparent icon>
-                        <BookmarkIcon {...props} />
-                    </Button>
-                )
-            }
-        </I18n>
-    );
-};
+export const BookmarkButtonComponent = (props: Props): JSX.Element => (
+    <I18n>
+        {
+            (({ i18n }: any): JSX.Element =>
+                <Button onPress={getBookmarkButtonOnPress(props, i18n)} transparent icon>
+                    <BookmarkIcon {...props} />
+                </Button>
+            )
+        }
+    </I18n>
+);
 
 const BookmarkIcon = (props: Props): JSX.Element => (
     <Icon
@@ -48,24 +44,27 @@ const BookmarkIcon = (props: Props): JSX.Element => (
         }} />
 );
 
-type OnPress = () => void;
+type ButtonOnPress = () => void;
 
-const onBookmarkedItemPressed = R.curry((unbookmark: () => RemoveBookmarkAction, i18n: I18n):
-    OnPress => (): void => {
-        unbookmark();
+const getBookmarkButtonOnPress = (props: Props, i18n: I18n): ButtonOnPress => {
+    const toastProps = {
+        style: applicationStyles.toast,
+        textStyle: textStyles.toast,
+    };
+    if (props.isBookmarked) {
+        return (): void => {
+            props.unbookmark();
+            Toast.show({
+                ...toastProps,
+                text: i18n._(t`Bookmark removed`),
+            });
+        };
+    }
+    return (): void => {
+        props.bookmark();
         Toast.show({
-            text: i18n._(t`Bookmark removed`),
-            style: applicationStyles.toast,
-            textStyle: textStyles.toast,
-        });
-});
-
-const onUnbookmarkedItemPressed = R.curry((bookmark: () => AddBookmarkAction, i18n: I18n):
-    OnPress => (): void => {
-        bookmark();
-        Toast.show({
+            ...toastProps,
             text: i18n._(t`Bookmark added`),
-            style: applicationStyles.toast,
-            textStyle: textStyles.toast,
         });
-});
+    };
+};
