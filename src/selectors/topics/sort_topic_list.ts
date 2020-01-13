@@ -1,8 +1,8 @@
 import * as R from 'ramda';
-import { ExploreTopicList, ExploreTopic } from './types';
+import { Topic } from './types';
 
-export const sortTopicList = (taskList: ExploreTopicList): ExploreTopicList => {
-    const compare = (a: ExploreTopic, b: ExploreTopic): number => (
+export const sortTopicList = (taskList: ReadonlyArray<Topic>): ReadonlyArray<Topic> => {
+    const compare = (a: Topic, b: Topic): number => (
         a.isRecommended === b.isRecommended ?
             a.id.localeCompare(b.id) :
             a.isRecommended ? -1 : 1

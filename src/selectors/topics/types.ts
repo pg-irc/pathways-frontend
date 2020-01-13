@@ -18,7 +18,3 @@ export interface TopicListItem {
     readonly isRecommended: boolean;
     readonly exploreSection: ExploreSection;
 }
-
-export type ExploreTopic = Topic | TopicListItem;
-
-export type ExploreTopicList = ReadonlyArray<Topic> | ReadonlyArray<TopicListItem>;

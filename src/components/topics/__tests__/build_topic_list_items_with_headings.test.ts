@@ -3,7 +3,7 @@ import { ExploreSectionBuilder } from '../../../selectors/__tests__/helpers/expl
 import { TaskListItemBuilder } from '../../../selectors/__tests__/helpers/task_list_item_builder';
 import { buildTopicsListItemsWithHeadings } from '../build_topic_list_items_with_headings';
 import { TopicListHeading } from '../topic_list_heading_component';
-import { sortTopicList } from '../../../selectors/topics/sort_topic_list';
+import { sortTopicListItems } from '../../../selectors/topics/sort_topic_list_items';
 
 describe('Group topics by section', () => {
     describe('topics with the same section', () => {
@@ -74,7 +74,7 @@ describe('Group topics by section', () => {
             const section = new ExploreSectionBuilder().build();
             const notRecommendedTopic = new TaskListItemBuilder(section).withIsRecommended(false).build();
             const recommendedTopic = new TaskListItemBuilder(section).withIsRecommended(true).build();
-            const sorted = sortTopicList([notRecommendedTopic, recommendedTopic]);
+            const sorted = sortTopicListItems([notRecommendedTopic, recommendedTopic]);
             expect(sorted[0]).toBe(recommendedTopic);
             expect(sorted[1]).toBe(notRecommendedTopic);
         });

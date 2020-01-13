@@ -14,9 +14,8 @@ import { pickTopics } from './pick_topics';
 import { sortTopicList } from './sort_topic_list';
 import { getAllTaxonomyIdsFromAnswers } from '../questionnaire/get_all_taxonomy_ids_from_questionnaire';
 import { pickAnswers } from '../questionnaire/pick_answers';
-import { ExploreTopicList} from './types';
 
-export const selectTopicForCurrentExploreSection = (appStore: Store, routerProps: RouterProps): ExploreTopicList=> {
+export const selectTopicForCurrentExploreSection = (appStore: Store, routerProps: RouterProps): ReadonlyArray<Topic> => {
     const currentExploreSection = pickExploreSectionById(appStore, routerProps.match.params.learnId);
     const tasks = pickTopics(appStore);
     const matchingTasks = findItemsByExploreTaxonomyTerm(currentExploreSection.taxonomyTerms, tasks);
