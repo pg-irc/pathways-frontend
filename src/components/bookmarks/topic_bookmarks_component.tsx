@@ -1,6 +1,6 @@
 import React from 'react';
 import * as R from 'ramda';
-import { TopicListItem } from '../../selectors/topics/topic_list_item';
+import { TopicListItem } from '../../selectors/topics/types';
 import { TaskListActions, NoTasksAddedComponent, TaskListComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { View } from 'native-base';

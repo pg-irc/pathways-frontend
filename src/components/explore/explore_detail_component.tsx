@@ -5,7 +5,7 @@ import { ExploreSection } from '../../selectors/explore/types';
 import { RouterProps } from '../../application/routing';
 import { Id as TaskId, BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
 import { ExploreDetailContentComponent } from './explore_detail_content_component';
-import { TopicListItem } from '../../selectors/topics/topic_list_item';
+import { TopicListItem } from '../../selectors/topics/types';
 import { textStyles, values } from '../../application/styles';
 import { TaskListComponent, NoTasksAddedComponent } from '../topics/task_list_component';
 

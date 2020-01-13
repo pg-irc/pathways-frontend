@@ -1,5 +1,5 @@
 import React from 'react';
-import { TopicListItem } from '../../selectors/topics/topic_list_item';
+import { TopicListItem } from '../../selectors/topics/types';
 import { RouterProps } from '../../application/routing';
 import { ListActions } from './bookmarks_connected_component';
 import { TabSwitcher } from './tab_switcher';

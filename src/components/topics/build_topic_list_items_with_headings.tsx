@@ -1,5 +1,5 @@
 import * as R from 'ramda';
-import { TopicListItem } from '../../selectors/topics/topic_list_item';
+import { TopicListItem } from '../../selectors/topics/types';
 import { TopicListHeading } from './topic_list_heading_component';
 import { ExploreSection } from '../../selectors/explore/types';
 import { rightAwaySectionId } from '../../fixtures/hard_coded/explore';

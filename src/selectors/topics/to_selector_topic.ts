@@ -2,7 +2,7 @@ import * as store from '../../stores/topics';
 import { getLocalizedText } from '../locale/get_localized_text';
 import { Locale } from '../../locale/types';
 import { ExploreSection } from '../explore/types';
-import { TopicListItem } from './topic_list_item';
+import { TopicListItem } from './types';
 import { Topic } from './types';
 
 export const toSelectorTopic =

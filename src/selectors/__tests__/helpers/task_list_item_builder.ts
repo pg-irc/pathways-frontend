@@ -2,7 +2,7 @@
 
 import { ExploreSection } from '../../explore/types';
 import { aString, aBoolean } from '../../../helpers/random_test_values';
-import { TopicListItem } from '../../topics/topic_list_item';
+import { TopicListItem } from '../../topics/types';
 
 export class TaskListItemBuilder {
     id: string = aString();

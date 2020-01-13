@@ -4,7 +4,7 @@ import { aString, aBoolean } from '../../../helpers/random_test_values';
 import { TaxonomyTermReference } from '../../../stores/taxonomies';
 import { ExploreSection } from '../../explore/types';
 import { Topic } from '../../topics/types';
-import { TopicListItem } from '../../topics/topic_list_item';
+import { TopicListItem } from '../../topics/types';
 
 export class ViewTaskBuilder {
     id: string = aString();

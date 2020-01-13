@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Icon } from 'native-base';
 import { values, colors, textStyles, getNormalFontFamily } from '../../application/styles';
-import { TopicListItem } from '../../selectors/topics/topic_list_item';
+import { TopicListItem } from '../../selectors/topics/types';
 import { BookmarkTopicAction, UnbookmarkTopicAction, Id } from '../../stores/topics';
 import { I18nManager, TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
