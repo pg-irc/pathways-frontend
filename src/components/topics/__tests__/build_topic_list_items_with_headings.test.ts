@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { ExploreSectionBuilder } from '../../../selectors/__tests__/helpers/explore_section_helpers';
-import { TaskListItemBuilder } from '../../../selectors/__tests__/helpers/task_list_item_builder';
+import { TaskListItemBuilder } from '../../../selectors/__tests__/helpers/topic_list_item_builder';
 import { buildTopicsListItemsWithHeadings } from '../build_topic_list_items_with_headings';
 import { TopicListHeading } from '../topic_list_heading_component';
 import { sortTopicListItems } from '../../../selectors/topics/sort_topic_list_items';

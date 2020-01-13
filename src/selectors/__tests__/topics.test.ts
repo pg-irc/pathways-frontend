@@ -13,7 +13,7 @@ import { toSelectorTopic } from '../topics/to_selector_topic';
 import { Topic } from '../topics/types';
 import { isTopicRecommended } from '../topics/is_topic_recommended';
 import { sortTopicList } from '../topics/sort_topic_list';
-import { ViewTaskBuilder } from './helpers/task_helpers';
+import { ViewTopicBuilder } from './helpers/topic_helpers';
 import { getRecommendedTopics } from '../topics/get_recommended_topics';
 import { rejectTopicsWithIds } from '../topics/reject_topics_with_ids';
 import { AnswerBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
@@ -334,8 +334,8 @@ describe('topics selector', () => {
     describe('sorting', () => {
         it('sorts recommended topics before non-recommended topics', () => {
             const theId = aString();
-            const firstByRecommended = new ViewTaskBuilder().withId(theId).withIsRecommended(true).build();
-            const lastByRecommended = new ViewTaskBuilder().withId(theId).withIsRecommended(false).build();
+            const firstByRecommended = new ViewTopicBuilder().withId(theId).withIsRecommended(true).build();
+            const lastByRecommended = new ViewTopicBuilder().withId(theId).withIsRecommended(false).build();
             const sorted = sortTopicList([lastByRecommended, firstByRecommended]);
             expect(sorted[0]).toBe(firstByRecommended);
             expect(sorted[1]).toBe(lastByRecommended);
@@ -343,16 +343,16 @@ describe('topics selector', () => {
 
         it('sorts by id if both have the same recommended state', () => {
             const isRecommended = aBoolean();
-            const firstById = new ViewTaskBuilder().withId('aaa').withIsRecommended(isRecommended).build();
-            const lastById = new ViewTaskBuilder().withId('bbb').withIsRecommended(isRecommended).build();
+            const firstById = new ViewTopicBuilder().withId('aaa').withIsRecommended(isRecommended).build();
+            const lastById = new ViewTopicBuilder().withId('bbb').withIsRecommended(isRecommended).build();
             const sorted = sortTopicList([lastById, firstById]);
             expect(sorted[0]).toBe(firstById);
             expect(sorted[1]).toBe(lastById);
         });
 
         it('sorts by recommended flag if they have different ids', () => {
-            const firstByIdLastByRecommended = new ViewTaskBuilder().withId('aaa').withIsRecommended(false).build();
-            const lastByIdFirstByRecommended = new ViewTaskBuilder().withId('bbb').withIsRecommended(true).build();
+            const firstByIdLastByRecommended = new ViewTopicBuilder().withId('aaa').withIsRecommended(false).build();
+            const lastByIdFirstByRecommended = new ViewTopicBuilder().withId('bbb').withIsRecommended(true).build();
             const sorted = sortTopicList([firstByIdLastByRecommended, lastByIdFirstByRecommended]);
             expect(sorted[0]).toBe(lastByIdFirstByRecommended);
             expect(sorted[1]).toBe(firstByIdLastByRecommended);
