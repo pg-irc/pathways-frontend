@@ -2,7 +2,7 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
-import { View, Text, Icon } from 'native-base';
+import { View, Text, Icon, Content } from 'native-base';
 import * as Sentry from 'sentry-expo';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
@@ -53,6 +53,15 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 refreshScreen={(): void => setLastScreenRefresh(Date.now())}
                 title={props.topic.title}
             />
+        );
+    }
+
+    if (isLoadingServices(props.topicServicesOrError)) {
+        return (
+            <Content>
+            <ServiceListHeaderComponent title={props.topic.title}/>
+            <EmptyListComponent message={<Trans>Loading</Trans>} />
+            </Content>
         );
     }
     return (
