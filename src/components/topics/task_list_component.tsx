@@ -6,11 +6,11 @@ import { Trans } from '@lingui/react';
 import { TaskListItemComponent } from './task_list_item_component';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
 import { Id, BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
-import { EmptyListComponent } from '../empty_component/empty_list_component';
-import { colors } from '../../application/styles';
+import { colors, values, getNormalFontFamily } from '../../application/styles';
 import { isTopicListHeading } from './is_topic_list_heading';
 import { ListItem } from './build_topic_list_items_with_headings';
 import { TopicListHeadingComponent } from './topic_list_heading_component';
+import { View, Text } from 'native-base';
 
 // tslint:disable-next-line:no-var-requires
 const R = require('ramda');
@@ -134,9 +134,30 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 }
 
 export const NoTasksAddedComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No topics to show</Trans>} />
+    <EmptyTaskListComponent message={<Trans>No topics to show</Trans>} />
 );
 
 export const NoTasksRecommendedComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No topics to recommend</Trans>} />
+    <EmptyTaskListComponent message={<Trans>No topics to recommend</Trans>} />
+);
+
+export interface EmptyTaskListComponentProps {
+    readonly message: JSX.Element;
+}
+
+const EmptyTaskListComponent = (props: EmptyTaskListComponentProps): JSX.Element => (
+    <View
+        style={{
+            flex: 1,
+            paddingHorizontal: 10,
+            backgroundColor: colors.white,
+            borderRadius: values.lessRoundedBorderRadius,
+            margin: 5,
+            alignItems: 'center',
+        }}
+    >
+        <Text style={{ color: colors.darkerGrey, fontFamily: getNormalFontFamily() }}>
+            {props.message}
+        </Text>
+    </View>
 );
