@@ -2,7 +2,7 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
-import { View, Text, Icon, Content } from 'native-base';
+import { View, Text, Icon } from 'native-base';
 import * as Sentry from 'sentry-expo';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
@@ -19,6 +19,7 @@ import { LatLong } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import * as R from 'ramda';
+import { LoadingScreenComponent } from '../loading_screen/loading_screen_component';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -58,12 +59,10 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 
     if (isLoadingServices(props.topicServicesOrError)) {
         return (
-            <Content>
-            <ServiceListHeaderComponent title={props.topic.title}/>
-            <EmptyListComponent message={<Trans>Loading</Trans>} />
-            </Content>
+           <LoadingScreenComponent title={props.topic.title} />
         );
     }
+
     return (
         <FlatList
             style={{ backgroundColor: colors.lightGrey }}

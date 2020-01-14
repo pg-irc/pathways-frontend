@@ -11,6 +11,7 @@ export const colors = {
     // Rename to surface
     lightGrey: '#eee5d9',
     darkerGrey: '#d0d0c5',
+    fadedGrey: '#e5e5e5',
     greyishBrown: '#595959',
     black: '#313131',
     sunYellow: '#f2b134',
