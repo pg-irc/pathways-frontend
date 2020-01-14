@@ -20,6 +20,7 @@ import { getSentryMessageForError } from '../../validation/errors/sentry_message
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import * as R from 'ramda';
 import { LoadingScreenComponent } from '../loading_screen/loading_screen_component';
+import { emptyList } from '../../application/images';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -71,7 +72,13 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             data={getServicesIfValid(props.topicServicesOrError)}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceListItem(props)}
-            ListEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>} />}
+            ListEmptyComponent={
+                <EmptyListComponent
+                    title={<Trans>No services to show</Trans>}
+                    imageSource={emptyList}
+                    refreshScreen={(): void => setLastScreenRefresh(Date.now())}
+                />
+            }
             ListHeaderComponent={<ServiceListHeaderComponent title={props.topic.title} />}
         />
     );

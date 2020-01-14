@@ -8,6 +8,7 @@ import { RouterProps, goToRouteWithParameter, Routes } from '../../application/r
 import { ServiceListItemActions, ServiceListItemComponent } from '../services/service_list_item_component';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
+import { emptyList } from '../../application/images';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -21,7 +22,7 @@ export const ServiceBookmarksComponent: React.StatelessComponent<Props> = (props
         data={props.bookmarkedServices}
         keyExtractor={(service: HumanServiceData): string => service.id}
         renderItem={renderServiceItems(props)}
-        ListEmptyComponent={<EmptyListComponent message={<Trans>No services to show</Trans>}/>}
+        ListEmptyComponent={<EmptyListComponent title={<Trans>No services to show</Trans>} imageSource={emptyList} refreshScreen={() => console.log('TO DO')}/>}
         ListHeaderComponent={<View />}
     />
 );
