@@ -1,5 +1,6 @@
 // tslint:disable:no-expression-statement
-import React from 'react';
+import React, { useState } from 'react';
+import Modal from 'react-native-modal';
 import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
@@ -18,6 +19,7 @@ import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { View, Text, Button } from 'native-base';
 import { Trans } from '@lingui/react';
+import { CloseButtonComponent } from '../close_button/close_button_component';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -43,6 +45,8 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
     useTraceUpdate('InfiniteHitsComponent', props);
     const searchResults = getValidSearchResults(props);
     const loadMoreButton = renderLoadMoreButton(props.hasMore, props.refineNext);
+    const [modalState, setModalState] = useState(true);
+    const modal = renderServiceDetailModal(modalState, setModalState);
     const serviceList = (
         <FlatList
             style={{ backgroundColor: colors.white }}
@@ -53,7 +57,25 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             ListEmptyComponent={EmptyComponent}
             ItemSeparatorComponent={SearchListSeparator} />
     );
-    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey }}>{serviceList}{loadMoreButton}</View>;
+    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey }}>{modal}{serviceList}{loadMoreButton}</View>;
+};
+
+const renderServiceDetailModal = (modalState: boolean, setModalState: (state: boolean) => void): JSX.Element => {
+
+    const hideModal = (): void => {
+        setModalState(false);
+    };
+    return (
+        <Modal isVisible={modalState}>
+            <View padder style={{ backgroundColor: colors.white, borderRadius: 5, flex: 1 }}>
+                <CloseButtonComponent
+                    onPress={hideModal}
+                    color={colors.black}
+                />
+                <Text>Hi I am the modal</Text>
+            </View>
+        </Modal>
+    );
 };
 
 const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Element => {
