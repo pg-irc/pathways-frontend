@@ -22,7 +22,7 @@ export const ServiceBookmarksComponent: React.StatelessComponent<Props> = (props
         data={props.bookmarkedServices}
         keyExtractor={(service: HumanServiceData): string => service.id}
         renderItem={renderServiceItems(props)}
-        ListEmptyComponent={<EmptyListComponent title={<Trans>No services to show</Trans>} imageSource={emptyList} refreshScreen={() => console.log('TO DO')}/>}
+        ListEmptyComponent={<EmptyListComponent title={<Trans>No services to show</Trans>} imageSource={emptyList} />}
         ListHeaderComponent={<View />}
     />
 );

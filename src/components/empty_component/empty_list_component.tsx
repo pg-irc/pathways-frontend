@@ -8,7 +8,7 @@ import { Trans } from '@lingui/react';
 const emptyListImageSize = Dimensions.get('screen').width / 3.5;
 
 export interface EmptyListProps {
-    readonly refreshScreen: () => void;
+    readonly refreshScreen?: () => void;
     readonly imageSource: ImageSourcePropType;
     readonly title: JSX.Element;
     readonly header?: JSX.Element;
