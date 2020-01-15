@@ -1,16 +1,15 @@
 import React from 'react';
-import { ServiceListHeaderComponent } from '../services/service_list_component';
 import { Content, View } from 'native-base';
 import { colors } from '../../application/styles';
 
 export interface LoadingScreenComponentProps {
-    readonly title: string;
+    readonly header?: JSX.Element;
 }
 
 export const LoadingScreenComponent = (props: LoadingScreenComponentProps): JSX.Element => {
     return (
-        <Content>
-            <ServiceListHeaderComponent title={props.title}/>
+        <Content style={{ backgroundColor: colors.lightGrey }}>
+            {props.header}
             <View style={{ backgroundColor: colors.white, marginTop: 8, paddingVertical: 15 }}>
                 <View style={{ flex: 2, paddingLeft: 15 }}>
                     <View style={{ height: 16, width: 312, backgroundColor: colors.fadedGrey }}/>

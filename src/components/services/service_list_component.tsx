@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { ListRenderItemInfo, FlatList } from 'react-native';
+import { ListRenderItemInfo, FlatList, ImageSourcePropType } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import * as Sentry from 'sentry-expo';
@@ -60,7 +60,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 
     if (isLoadingServices(props.topicServicesOrError)) {
         return (
-           <LoadingScreenComponent title={props.topic.title} />
+           <LoadingScreenComponent header={<ServiceListHeaderComponent title={props.topic.title}/>}/>
         );
     }
 
