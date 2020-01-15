@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useState } from 'react';
+import React from 'react';
 import Modal from 'react-native-modal';
 import * as R from 'ramda';
 import { History } from 'history';
@@ -14,7 +14,7 @@ import { validateServiceSearchResponse } from '../../validation/search';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction } from '../../stores/services/actions';
-import { goToRouteWithParameter, Routes } from '../../application/routing';
+// import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { View, Text, Button } from 'native-base';
@@ -31,11 +31,13 @@ export interface InfiniteHitsProps {
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly modalState: boolean;
 }
 
 export interface InfiniteHitsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly setModalState: (modalState: boolean) => void;
 }
 
 type Props = InfiniteHitsProps & InfiniteHitsActions;
@@ -45,8 +47,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
     useTraceUpdate('InfiniteHitsComponent', props);
     const searchResults = getValidSearchResults(props);
     const loadMoreButton = renderLoadMoreButton(props.hasMore, props.refineNext);
-    const [modalState, setModalState] = useState(true);
-    const modal = renderServiceDetailModal(modalState, setModalState);
+    const modal = renderServiceDetailModal(props.modalState, props.setModalState);
     const serviceList = (
         <FlatList
             style={{ backgroundColor: colors.white }}
@@ -66,7 +67,7 @@ const renderServiceDetailModal = (modalState: boolean, setModalState: (state: bo
         setModalState(false);
     };
     return (
-        <Modal isVisible={modalState}>
+        <Modal isVisible={modalState} >
             <View padder style={{ backgroundColor: colors.white, borderRadius: 5, flex: 1 }}>
                 <CloseButtonComponent
                     onPress={hideModal}
@@ -113,7 +114,8 @@ const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItem
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
         props.saveService(service);
-        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
+        props.setModalState(true);
+        // goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };
     return <ServiceListItemComponent
         service={service}

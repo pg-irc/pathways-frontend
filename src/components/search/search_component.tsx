@@ -40,6 +40,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
     const [location, setLocation]: [string, (s: string) => void] = useState('');
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
+    const [modalState, setModalState]: readonly [boolean, (modalState: any) => void] = useState(false);
 
     useFetchLatLongFromLocation(location, setLatLong);
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
@@ -58,7 +59,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
                 <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
-                <InfiniteHitsConnectedComponent {...props} />
+                <InfiniteHitsConnectedComponent {...{ ...props, modalState, setModalState }} />
             </InstantSearch>
         </Content>;
     }}</I18n>;
