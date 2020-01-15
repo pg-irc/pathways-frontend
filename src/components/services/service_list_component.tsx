@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { ListRenderItemInfo, FlatList, ImageSourcePropType } from 'react-native';
+import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import * as Sentry from 'sentry-expo';
@@ -43,11 +43,12 @@ type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterPro
 
 type Timestamp = number;
 type TimestampSetter = Dispatch<SetStateAction<Timestamp>>;
+type RefreshServicesAttemptedSetter = Dispatch<SetStateAction<boolean>>;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
     const [lastScreenRefresh, setLastScreenRefresh]: [Timestamp, TimestampSetter] = useState(Date.now());
-    useEffect(() => refreshServices(props), [lastScreenRefresh]);
-
+    const [refreshServicesAttempted, setRefreshServicesAttempted]: [boolean, RefreshServicesAttemptedSetter] = useState(false);
+    useEffect(() => refreshServices(props, setRefreshServicesAttempted), [lastScreenRefresh]);
     if (isErrorSelectorTopicServices(props.topicServicesOrError)) {
         return (
             <ErrorComponent
@@ -56,6 +57,19 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 title={props.topic.title}
             />
         );
+    }
+
+    if (refreshServicesAttempted) {
+        if (isEmptyValidServices(props.topicServicesOrError)) {
+            return (
+                <EmptyListComponent
+                        title={<Trans>No services to show</Trans>}
+                        imageSource={emptyList}
+                        refreshScreen={(): void => setLastScreenRefresh(Date.now())}
+                        header={<ServiceListHeaderComponent title={props.topic.title} />}
+                    />
+            );
+        }
     }
 
     if (isLoadingServices(props.topicServicesOrError)) {
@@ -68,31 +82,29 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
         <FlatList
             style={{ backgroundColor: colors.lightGrey }}
             refreshing={isLoadingServices(props.topicServicesOrError)}
-            onRefresh={(): void => refreshServices(props)}
+            onRefresh={(): void => refreshServices(props, setRefreshServicesAttempted)}
             data={getServicesIfValid(props.topicServicesOrError)}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceListItem(props)}
-            ListEmptyComponent={
-                <EmptyListComponent
-                    title={<Trans>No services to show</Trans>}
-                    imageSource={emptyList}
-                    refreshScreen={(): void => setLastScreenRefresh(Date.now())}
-                />
-            }
             ListHeaderComponent={<ServiceListHeaderComponent title={props.topic.title} />}
         />
     );
 };
 
-const refreshServices = (props: Props): void => {
+const refreshServices = (props: Props, setRefreshServicesAttempted: Dispatch<SetStateAction<boolean>> ): void => {
     if (servicesFetchRequired(props.topicServicesOrError)) {
         props.dispatchServicesRequest();
     }
+    setRefreshServicesAttempted(true);
 };
 
 const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boolean => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_ERROR ||
     topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.isExpired
+);
+
+const isEmptyValidServices = (topicServicesOrError: SelectorTopicServices): boolean => (
+    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.services.length <= 0
 );
 
 const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void, readonly title: string }): JSX.Element => {
