@@ -59,25 +59,6 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
         );
     }
 
-    if (refreshServicesAttempted) {
-        if (isEmptyValidServices(props.topicServicesOrError)) {
-            return (
-                <EmptyListComponent
-                        title={<Trans>No services to show</Trans>}
-                        imageSource={emptyList}
-                        refreshScreen={(): void => setLastScreenRefresh(Date.now())}
-                        header={<ServiceListHeaderComponent title={props.topic.title} />}
-                    />
-            );
-        }
-    }
-
-    if (isLoadingServices(props.topicServicesOrError)) {
-        return (
-           <LoadingScreenComponent header={<ServiceListHeaderComponent title={props.topic.title}/>}/>
-        );
-    }
-
     return (
         <FlatList
             style={{ backgroundColor: colors.lightGrey }}
@@ -86,9 +67,25 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             data={getServicesIfValid(props.topicServicesOrError)}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceListItem(props)}
+            ListEmptyComponent={renderEmptyOrLoadingComponent(props, refreshServicesAttempted, setLastScreenRefresh)}
             ListHeaderComponent={<ServiceListHeaderComponent title={props.topic.title} />}
         />
     );
+};
+
+const renderEmptyOrLoadingComponent = (props: Props, refreshServicesAttempted: boolean, setLastScreenRefresh: TimestampSetter): JSX.Element => {
+    if (refreshServicesAttempted) {
+        if (isEmptyValidServices(props.topicServicesOrError)) {
+            return (
+                <EmptyListComponent
+                        title={<Trans>No services to show</Trans>}
+                        imageSource={emptyList}
+                        refreshScreen={(): void => setLastScreenRefresh(Date.now())}
+                    />
+            );
+        }
+    }
+    return <LoadingScreenComponent />;
 };
 
 const refreshServices = (props: Props, setRefreshServicesAttempted: Dispatch<SetStateAction<boolean>> ): void => {
