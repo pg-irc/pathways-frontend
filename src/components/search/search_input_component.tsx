@@ -26,14 +26,12 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Func
     }
     const icon = <Icon
         type={'MaterialIcons'} name={'my-location'}
-        style={{ color: colors.greyishBrown, fontSize: 16, margin: 10 }}
+        style={{ color: colors.greyishBrown, fontSize: 16, marginRight: 8 }}
     />;
 
     const text = <Text style={{
         color: colors.greyishBrown,
         fontSize: 12,
-        marginVertical: 10,
-        marginRight: 10,
         fontWeight: 'bold',
     }}><Trans>My Location</Trans></Text>;
 

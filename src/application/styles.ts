@@ -322,6 +322,8 @@ export const applicationStyles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 5,
         marginLeft: 5,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
     },
     whiteTealButton: {
         backgroundColor: colors.white,
