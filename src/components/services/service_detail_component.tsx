@@ -37,12 +37,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             <ServiceOrganization history={props.history} name={props.service.organizationName} />
             <MarkdownBodyComponent body={props.service.description} shouldBeExpandable={true} />
             <DividerComponent />
-            <ServiceContactDetails service={props.service} currentPathForAnaltyics={props.location.pathname}/>
+            <ServiceContactDetails service={props.service} currentPathForAnaltyics={props.location.pathname} />
         </Content>
     );
 };
 
-const ServiceOrganization = (props: { readonly history: History, readonly name: string }): JSX.Element => (
+export const ServiceOrganization = (props: { readonly history: History, readonly name: string }): JSX.Element => (
     <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
         <DividerComponent />
         <View>
@@ -57,7 +57,7 @@ const ServiceOrganization = (props: { readonly history: History, readonly name: 
     </View>
 );
 
-const ServiceContactDetails = (props: { readonly service: HumanServiceData, readonly currentPathForAnaltyics: string }): JSX.Element => {
+export const ServiceContactDetails = (props: { readonly service: HumanServiceData, readonly currentPathForAnaltyics: string }): JSX.Element => {
     const serviceName = buildServiceName(props.service.organizationName, props.service.name);
     const linkContextForAnalytics = buildAnalyticsLinkContext('Service', serviceName);
     const locationTitle = getLocationTitleFromAddresses(filterPhysicalAddresses(props.service.addresses));
@@ -96,7 +96,7 @@ const ServiceContactDetails = (props: { readonly service: HumanServiceData, read
             <DividerComponent />
         </View>
     );
- };
+};
 
 const serviceHasLatLng = (service: HumanServiceData): number => (
     service.latlong && service.latlong.lat && service.latlong.lng
