@@ -79,6 +79,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                         value={props.currentRefinement}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
                         placeholderTextColor={colors.white}
+                        selectionColor={colors.white}
                     />
                     <ClearInputButton visible={props.currentRefinement !== ''} onPress={clearSearch} />
                 </TouchableOpacity>
@@ -96,6 +97,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                         value={locationInputField}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Enter city, address, or postal code')} // TODO translate
                         placeholderTextColor={colors.white}
+                        selectionColor={colors.white}
                     />
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
