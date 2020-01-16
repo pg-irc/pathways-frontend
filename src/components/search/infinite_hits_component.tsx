@@ -34,8 +34,6 @@ export interface InfiniteHitsProps {
 export interface InfiniteHitsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly setModalState: (modalState: boolean) => void;
-    readonly setServiceDetail: (service: HumanServiceData) => void;
 }
 
 type Props = InfiniteHitsProps & InfiniteHitsActions;
@@ -93,9 +91,7 @@ const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItem
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
         props.saveService(service);
-        props.setServiceDetail(service);
-        props.setModalState(true);
-        console.log(service);
+       
         // goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };
     return <ServiceListItemComponent
@@ -106,5 +102,6 @@ const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItem
         isBookmarked={R.contains(item.service_id, props.bookmarkedServicesIds)}
         bookmarkService={props.bookmarkService}
         unbookmarkService={props.unbookmarkService}
+        withModal={true}
     />;
 });
