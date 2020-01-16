@@ -2,7 +2,7 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { Id as TaskId } from '../../stores/topics';
 import { View, Text } from 'native-base';
-import { TopicListItem } from '../../selectors/topics/topic_list_item';
+import { TopicListItem } from '../../selectors/topics/types';
 import { TaskListActions } from '../topics/task_list_component';
 import { TaskListComponent, NoTasksRecommendedComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';

@@ -1,8 +1,9 @@
 // tslint:disable:no-expression-statement
 import { ExploreSectionBuilder } from '../../../selectors/__tests__/helpers/explore_section_helpers';
-import { TaskListItemBuilder } from '../../../selectors/__tests__/helpers/task_list_item_builder';
+import { TaskListItemBuilder } from '../../../selectors/__tests__/helpers/topic_list_item_builder';
 import { buildTopicsListItemsWithHeadings } from '../build_topic_list_items_with_headings';
 import { TopicListHeading } from '../topic_list_heading_component';
+import { sortTopicListItems } from '../../../selectors/topics/sort_topic_list_items';
 
 describe('Group topics by section', () => {
     describe('topics with the same section', () => {
@@ -64,6 +65,18 @@ describe('Group topics by section', () => {
             expect(secondTopicListHeading.heading).toBe(firstSection.name);
 
             expect(result[3]).toBe(firstTask);
+        });
+    });
+
+    describe('topics sorting', () => {
+
+        it('puts topics with isRecommended set to true first', () => {
+            const section = new ExploreSectionBuilder().build();
+            const notRecommendedTopic = new TaskListItemBuilder(section).withIsRecommended(false).build();
+            const recommendedTopic = new TaskListItemBuilder(section).withIsRecommended(true).build();
+            const sorted = sortTopicListItems([notRecommendedTopic, recommendedTopic]);
+            expect(sorted[0]).toBe(recommendedTopic);
+            expect(sorted[1]).toBe(notRecommendedTopic);
         });
     });
 });

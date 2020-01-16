@@ -5,7 +5,7 @@ import { selectTaxonomyTermsForChosenAnswers } from '../taxonomies/select_taxono
 import { RouterProps } from '../../application/routing';
 import { selectLocale } from '../locale/select_locale';
 import { findItemsByExploreTaxonomyTerm } from '../taxonomies/find_items_by_explore_taxonomy_term';
-import { Topic } from './topic';
+import { Topic } from './types';
 import { toSelectorTopicWithoutRelatedEntities } from './to_selector_topic_without_related_entities';
 import { selectExploreSectionFromTopic } from './select_explore_section_from_topic';
 import { isTopicRecommended } from './is_topic_recommended';

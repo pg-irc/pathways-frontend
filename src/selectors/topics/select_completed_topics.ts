@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import { Store } from '../../stores';
-import { TopicListItem } from './topic_list_item';
+import { TopicListItem } from './types';
 import { buildSelectorTopicListItem } from './build_selector_topic_list_item';
 import { pickTopics } from './pick_topics';
 

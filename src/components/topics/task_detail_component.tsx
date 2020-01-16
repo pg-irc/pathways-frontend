@@ -6,7 +6,7 @@ import { Text, View } from 'native-base';
 import { Id as TaskId, UnbookmarkTopicAction, BookmarkTopicAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 import { textStyles, values } from '../../application/styles';
 import { goToRouteWithParameter } from '../../application/routing';
-import { Topic } from '../../selectors/topics/topic';
+import { Topic } from '../../selectors/topics/types';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
 import { TaskListComponent, NoTasksAddedComponent } from './task_list_component';

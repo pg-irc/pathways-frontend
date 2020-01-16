@@ -3,10 +3,10 @@
 import { aString, aBoolean } from '../../../helpers/random_test_values';
 import { TaxonomyTermReference } from '../../../stores/taxonomies';
 import { ExploreSection } from '../../explore/types';
-import { Topic } from '../../topics/topic';
-import { TopicListItem } from '../../topics/topic_list_item';
+import { Topic } from '../../topics/types';
+import { TopicListItem } from '../../topics/types';
 
-export class ViewTaskBuilder {
+export class ViewTopicBuilder {
     id: string = aString();
     title: string = aString();
     description: string = aString();
@@ -15,12 +15,12 @@ export class ViewTaskBuilder {
     isRecommended: boolean = aBoolean();
     relatedTasks: Array<TopicListItem> = [];
 
-    withId(id: string): ViewTaskBuilder {
+    withId(id: string): ViewTopicBuilder {
         this.id = id;
         return this;
     }
 
-    withIsRecommended(isRecommended: boolean): ViewTaskBuilder {
+    withIsRecommended(isRecommended: boolean): ViewTopicBuilder {
         this.isRecommended = isRecommended;
         return this;
     }

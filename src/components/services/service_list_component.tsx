@@ -6,7 +6,7 @@ import { View, Text, Icon } from 'native-base';
 import * as Sentry from 'sentry-expo';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
-import { Topic } from '../../selectors/topics/topic';
+import { Topic } from '../../selectors/topics/types';
 import { ServiceListItemComponent } from './service_list_item_component';
 import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { textStyles, colors, values } from '../../application/styles';

@@ -2,7 +2,7 @@
 
 import { ExploreSection } from '../../explore/types';
 import { aString, aBoolean } from '../../../helpers/random_test_values';
-import { TopicListItem } from '../../topics/topic_list_item';
+import { TopicListItem } from '../../topics/types';
 
 export class TaskListItemBuilder {
     id: string = aString();
@@ -17,6 +17,11 @@ export class TaskListItemBuilder {
 
     withexploreSection(exploreSection: ExploreSection): TaskListItemBuilder {
         this.exploreSection = exploreSection;
+        return this;
+    }
+
+    withIsRecommended(isRecommended: boolean): TaskListItemBuilder {
+        this.isRecommended = isRecommended;
         return this;
     }
 

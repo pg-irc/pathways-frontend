@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { Platform } from 'react-native';
 import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
-import { Topic } from '../../selectors/topics/topic';
+import { Topic } from '../../selectors/topics/types';
 import { textStyles, colors, values, getNormalFontFamily } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { images as topicImages } from '../../application/topicImages';
