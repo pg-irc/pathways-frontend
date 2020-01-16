@@ -25,7 +25,7 @@ type Props = BookmarkButtonProps & BookmarkButtonActions;
 export const BookmarkButtonComponent = (props: Props): JSX.Element => (
     <I18n>
         {
-            (({ i18n }: any): JSX.Element =>
+            (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
                 <Button onPress={getBookmarkButtonOnPress(props, i18n)} transparent icon>
                     <BookmarkIcon {...props} />
                 </Button>
