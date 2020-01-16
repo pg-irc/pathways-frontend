@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement readonly-array
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { ListRenderItemInfo, FlatList } from 'react-native';
+import { ListRenderItemInfo, FlatList, RefreshControl } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Icon } from 'native-base';
 import * as Sentry from 'sentry-expo';
@@ -64,6 +64,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             style={{ backgroundColor: colors.lightGrey }}
             refreshing={isLoadingServices(props.topicServicesOrError)}
             onRefresh={(): void => refreshServices(props, setRefreshServicesAttempted)}
+            refreshControl={renderRefreshControl(isLoadingServices(props.topicServicesOrError))}
             data={getServicesIfValid(props.topicServicesOrError)}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceListItem(props)}
@@ -198,3 +199,7 @@ export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProp
         </View >
     );
 };
+
+const renderRefreshControl = (refreshing: boolean): JSX.Element => (
+    <RefreshControl refreshing={refreshing} style={{backgroundColor: colors.teal}} tintColor={colors.white} />
+);
