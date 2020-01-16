@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement readonly-array
+// tslint:disable:no-expression-statement
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { ListRenderItemInfo, FlatList, RefreshControl } from 'react-native';
 import { Trans } from '@lingui/react';
@@ -46,8 +46,8 @@ type TimestampSetter = Dispatch<SetStateAction<Timestamp>>;
 type RefreshServicesAttemptedSetter = Dispatch<SetStateAction<boolean>>;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
-    const [lastScreenRefresh, setLastScreenRefresh]: [Timestamp, TimestampSetter] = useState(Date.now());
-    const [refreshServicesAttempted, setRefreshServicesAttempted]: [boolean, RefreshServicesAttemptedSetter] = useState(false);
+    const [lastScreenRefresh, setLastScreenRefresh]: readonly [Timestamp, TimestampSetter] = useState(Date.now());
+    const [refreshServicesAttempted, setRefreshServicesAttempted]: readonly [boolean, RefreshServicesAttemptedSetter] = useState(false);
     useEffect(() => refreshServices(props, setRefreshServicesAttempted), [lastScreenRefresh]);
     if (isErrorSelectorTopicServices(props.topicServicesOrError)) {
         return (
