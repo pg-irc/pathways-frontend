@@ -74,18 +74,14 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 };
 
 const renderEmptyOrLoadingComponent = (props: Props, refreshServicesAttempted: boolean, setLastScreenRefresh: TimestampSetter): JSX.Element => {
-    if (refreshServicesAttempted) {
-        if (isEmptyValidServices(props.topicServicesOrError)) {
-            return (
-                <EmptyListComponent
-                        title={<Trans>No services to show</Trans>}
-                        imageSource={emptyList}
-                        refreshScreen={(): void => setLastScreenRefresh(Date.now())}
-                    />
-            );
-        }
+    if (!showEmptyComponent(props, refreshServicesAttempted)) {
+        return <LoadingScreenComponent />;
     }
-    return <LoadingScreenComponent />;
+    return <EmptyListComponent
+                title={<Trans>No services to show</Trans>}
+                imageSource={emptyList}
+                refreshScreen={(): void => setLastScreenRefresh(Date.now())}
+            />;
 };
 
 const refreshServices = (props: Props, setRefreshServicesAttempted: Dispatch<SetStateAction<boolean>> ): void => {
@@ -99,6 +95,15 @@ const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boo
     topicServicesOrError.type === constants.TOPIC_SERVICES_ERROR ||
     topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.isExpired
 );
+
+const showEmptyComponent = (props: Props, refreshServicesAttempted: boolean): boolean => {
+    if (refreshServicesAttempted) {
+        if (isEmptyValidServices(props.topicServicesOrError)) {
+            return true;
+        }
+    }
+    return false;
+};
 
 const isEmptyValidServices = (topicServicesOrError: SelectorTopicServices): boolean => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.services.length <= 0
