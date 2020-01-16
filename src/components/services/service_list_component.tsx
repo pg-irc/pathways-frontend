@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement
+// tslint:disable:no-expression-statement readonly-array
 import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
@@ -74,14 +74,16 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 };
 
 const renderEmptyOrLoadingComponent = (props: Props, refreshServicesAttempted: boolean, setLastScreenRefresh: TimestampSetter): JSX.Element => {
-    if (!showEmptyComponent(props, refreshServicesAttempted)) {
-        return <LoadingScreenComponent />;
-    }
-    return <EmptyListComponent
+    if (showEmptyComponent(props, refreshServicesAttempted)) {
+        return (
+            <EmptyListComponent
                 title={<Trans>No services to show</Trans>}
                 imageSource={emptyList}
                 refreshScreen={(): void => setLastScreenRefresh(Date.now())}
-            />;
+            />
+            );
+    }
+    return <LoadingScreenComponent />;
 };
 
 const refreshServices = (props: Props, setRefreshServicesAttempted: Dispatch<SetStateAction<boolean>> ): void => {

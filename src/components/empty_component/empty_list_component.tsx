@@ -13,10 +13,9 @@ export interface EmptyListProps {
     readonly title: JSX.Element;
     readonly header?: JSX.Element;
     readonly subTitle?: JSX.Element;
-    readonly additionalContent?: JSX.Element;
 }
 
-export const EmptyListComponent: React.StatelessComponent<EmptyListProps> = (props: EmptyListProps): JSX.Element => (
+export const EmptyListComponent = (props: EmptyListProps): JSX.Element => (
     <ScrollView style={{ flex: 1, backgroundColor: colors.lightGrey }}>
     {props.header}
         <View
@@ -30,7 +29,6 @@ export const EmptyListComponent: React.StatelessComponent<EmptyListProps> = (pro
             <EmptyListImage imageSource={props.imageSource} />
             <EmptyListTitle title={props.title} hasSubTitle={!!props.subTitle} />
             <EmptyListSubtitle subTitle={props.subTitle} />
-            <EmptyListAdditionalContent additionalContent={props.additionalContent} />
             <EmptyListRefreshButton refreshScreen={props.refreshScreen} />
         </View>
     </ScrollView>
@@ -65,17 +63,6 @@ const EmptyListSubtitle = (props: { readonly subTitle?: JSX.Element  }): JSX.Ele
         <Text style={[textStyles.paragraphStyleBrownCenter, { marginBottom: 20 }]}>
             {props.subTitle}
         </Text>
-    );
-};
-
-const EmptyListAdditionalContent = (props: { readonly additionalContent?: JSX.Element  }): JSX.Element => {
-    if (!props.additionalContent) {
-        return <EmptyComponent />;
-    }
-    return (
-        <View style={{ marginBottom: 20 }}>
-            {props.additionalContent}
-        </View>
     );
 };
 
