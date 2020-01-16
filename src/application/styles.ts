@@ -332,6 +332,7 @@ export const applicationStyles = StyleSheet.create({
     searchInput: {
         color: colors.white,
         fontSize: 16,
+        fontFamily: getNormalFontFamily(),
         flex: 1,
         height: 48,
     },
