@@ -20,6 +20,7 @@ import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { buildServiceName } from '../services//build_service_name';
 import { openInMapsApplication } from '../maps_application_popup/open_in_maps_application';
 import { getLocationTitleFromAddresses } from '../services/get_location_title_from_addresses';
+import { EmailComponent } from '../email/email_component';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -89,6 +90,11 @@ const ServiceContactDetails = (props: { readonly service: HumanServiceData, read
             />
             <WebsiteComponent
                 website={props.service.website}
+                linkContextForAnalytics={linkContextForAnalytics}
+                currentPathForAnalytics={props.currentPathForAnaltyics}
+            />
+            <EmailComponent
+                email={props.service.email}
                 linkContextForAnalytics={linkContextForAnalytics}
                 currentPathForAnalytics={props.currentPathForAnaltyics}
             />
