@@ -51,7 +51,8 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, saveLocation: Fun
 // tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
-    const [locationInputField, setLocationInputField]: [string, (s: string) => void] = useState(props.location);
+    const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.location);
+    const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
     // linter doesn't understand state hooks with booleans for some reason
     // tslint:disable-next-line:typedef
     const [hideMyLocationButton, setHideMyLocationButton] = useState(true);
@@ -80,15 +81,14 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                         style={[applicationStyles.searchInput, { opacity: getOpacity(props.currentRefinement) }]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent search text changed to '${d}'`);
-                            props.refine(d);
+                            setSearchInputField(d);
                         }}
-                        onEndEditing={(): void => { props.saveSearchTerm(props.currentRefinement); }}
-                        value={props.currentRefinement}
+                        value={searchInputField}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
                         placeholderTextColor={colors.greyishBrown}
                         selectionColor={colors.black}
                     />
-                    <ClearInputButton visible={props.currentRefinement !== ''} onPress={clearSearch} />
+                    <ClearInputButton visible={searchInputField !== ''} onPress={clearSearch} />
                 </TouchableOpacity>
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='location-on' />
@@ -108,6 +108,14 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
                 {renderMyLocationButton(hideMyLocationButton, props.setLocation)}
+                <TouchableOpacity
+                    onPress={(): void => {
+                        props.saveSearchTerm(searchInputField);
+                        props.refine(searchInputField);
+                        props.setLocation(locationInputField);
+                    }}>
+                    <Text>Search</Text>
+                </TouchableOpacity>
             </View >
         )}
 
