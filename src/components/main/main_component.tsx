@@ -1,9 +1,8 @@
 // tslint:disable:no-class no-this no-expression-statement
 import React from 'react';
-import { Container, Drawer } from 'native-base';
+import { Container, Drawer, Root } from 'native-base';
 import { HeaderConnectedComponent } from './header_connected_component';
 import { MainPageSwitcherComponent } from './main_page_switcher';
-import { NotificationsConnectedComponent } from '../notifications/notifications_connected_component';
 import { FooterComponent, FooterProps } from './footer_component';
 import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connected_component';
 import { RouterProps, goBack } from '../../application/routing';
@@ -64,39 +63,40 @@ export class MainComponent extends React.Component<Props, State> {
 
     render(): JSX.Element {
         return (
-            <Drawer
-                side='right'
-                onClose={this.closeDrawer}
-                open={this.state.isHeaderMenuShowing}
-                content={
-                    <HeaderMenuConnectedComponent
-                        history={this.props.history}
-                        closeMenu={this.closeDrawer}
-                        openAboutModal={this.openAboutModal}
-                        openDisclaimerModal={this.openDisclaimerModal}
-                    />
-                }
-            >
-                <Container>
-                    <HeaderConnectedComponent
-                        history={this.props.history}
-                        location={this.props.location}
-                        openMenu={this.openDrawer}
-                        closeAboutModal={this.closeAboutModal}
-                        closeDisclaimerModal={this.closeDisclaimerModal}
-                    />
-                    <MainPageSwitcherComponent {...this.props} />
-                    <FooterComponent {...this.props} />
-                    <NotificationsConnectedComponent {...this.props} />
-                    <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={this.onHardwareBackButtonPress} />
-                    <AppModalsComponent
-                        isAboutVisible={this.state.isAboutModalOpen}
-                        isDisclaimerVisible={this.state.isDisclaimerModalOpen}
-                        closeAboutModal={this.closeAboutModal}
-                        closeDisclaimerModal={this.closeDisclaimerModal}
-                    />
-                </Container>
-            </Drawer>
+            <Root>
+                <Drawer
+                    side='right'
+                    onClose={this.closeDrawer}
+                    open={this.state.isHeaderMenuShowing}
+                    content={
+                        <HeaderMenuConnectedComponent
+                            history={this.props.history}
+                            closeMenu={this.closeDrawer}
+                            openAboutModal={this.openAboutModal}
+                            openDisclaimerModal={this.openDisclaimerModal}
+                        />
+                    }
+                >
+                    <Container>
+                        <HeaderConnectedComponent
+                            history={this.props.history}
+                            location={this.props.location}
+                            openMenu={this.openDrawer}
+                            closeAboutModal={this.closeAboutModal}
+                            closeDisclaimerModal={this.closeDisclaimerModal}
+                        />
+                        <MainPageSwitcherComponent {...this.props} />
+                        <FooterComponent {...this.props} />
+                        <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={this.onHardwareBackButtonPress} />
+                        <AppModalsComponent
+                            isAboutVisible={this.state.isAboutModalOpen}
+                            isDisclaimerVisible={this.state.isDisclaimerModalOpen}
+                            closeAboutModal={this.closeAboutModal}
+                            closeDisclaimerModal={this.closeDisclaimerModal}
+                        />
+                    </Container>
+                </Drawer>
+            </Root>
         );
     }
 

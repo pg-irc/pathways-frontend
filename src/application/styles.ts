@@ -298,6 +298,13 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getNormalFontStylesForOS(),
     },
+    toast: {
+        fontSize: 15,
+        textAlign: 'left',
+        color: colors.white,
+        letterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
 });
 
 export const applicationStyles = StyleSheet.create({
@@ -370,6 +377,18 @@ export const applicationStyles = StyleSheet.create({
     },
     body: {
         backgroundColor: colors.lightGrey,
+    },
+    toast: {
+        marginBottom: 65,
+        borderRadius: 10,
+        ...Platform.select({
+            ios: {
+                marginHorizontal: -10,
+            },
+            android: {
+                marginHorizontal: 10,
+            },
+        }),
     },
 });
 

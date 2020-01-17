@@ -6,6 +6,7 @@
         "@babel/core": "^7.7.7",
         "@lingui/babel-preset-react": "^2.9.0",
         "@lingui/cli": "^2.9.0",
+        "@lingui/macro": "^2.9.0",
         "@lingui/react": "^2.9.0",
         "@types/history": "^4.7.0",
         "@types/jest": "^24.0.25",
