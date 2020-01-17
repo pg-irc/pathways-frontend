@@ -14,13 +14,13 @@ import { isErrorSelectorTopicServices } from '../../selectors/services/is_error_
 import * as constants from '../../application/constants';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
-import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { LatLong } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import * as R from 'ramda';
 import { LoadingScreenComponent } from '../loading_screen/loading_screen_component';
-import { emptyList } from '../../application/images';
+import { emptyTopicServicesList } from '../../application/images';
+import { EmptyTopicServicesListComponent } from '../empty_component/empty_topic_services_list_component';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -77,9 +77,9 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 const renderEmptyOrLoadingComponent = (props: Props, refreshServicesAttempted: boolean, setLastScreenRefresh: TimestampSetter): JSX.Element => {
     if (showEmptyComponent(props, refreshServicesAttempted)) {
         return (
-            <EmptyListComponent
+            <EmptyTopicServicesListComponent
                 title={<Trans>No services to show</Trans>}
-                imageSource={emptyList}
+                imageSource={emptyTopicServicesList}
                 refreshScreen={(): void => setLastScreenRefresh(Date.now())}
             />
             );
