@@ -9,8 +9,9 @@ import { goToRouteWithParameter } from '../../application/routing';
 import { Topic } from '../../selectors/topics/types';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
-import { TaskListComponent, NoTasksAddedComponent } from './task_list_component';
+import { TaskListComponent } from './task_list_component';
 import { sendLinkPressedEvent, buildAnalyticsLinkContext } from '../../sagas/analytics/events';
+import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 
 export interface TaskDetailProps {
     readonly topic: Topic;
@@ -36,7 +37,7 @@ export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Prop
         bookmarkTopic={props.bookmarkTopic}
         unbookmarkTopic={props.unbookmarkTopic}
         history={props.history}
-        emptyTaskListContent={<NoTasksAddedComponent />}
+        emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
         headerContent={<TaskListHeaderComponent {...props} />}
         headerContentIdentifier={props.topic.id}
     />

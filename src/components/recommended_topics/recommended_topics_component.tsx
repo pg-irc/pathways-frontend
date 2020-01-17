@@ -4,7 +4,7 @@ import { Id as TaskId } from '../../stores/topics';
 import { View, Text } from 'native-base';
 import { TopicListItem } from '../../selectors/topics/types';
 import { TaskListActions } from '../topics/task_list_component';
-import { TaskListComponent, NoTasksRecommendedComponent } from '../topics/task_list_component';
+import { TaskListComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { textStyles, colors, values } from '../../application/styles';
 import {
@@ -13,6 +13,7 @@ import {
 } from './call_to_action';
 import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
+import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -27,7 +28,7 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
         {...props}
         tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
         savedTasksIdList={props.bookmarkedTopics}
-        emptyTaskListContent={<NoTasksRecommendedComponent />}
+        emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to recommend</Trans>}/>}
         headerContent={<TaskListHeaderComponent {...props} />}
     />
 );
