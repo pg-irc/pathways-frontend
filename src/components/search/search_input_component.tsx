@@ -113,7 +113,7 @@ interface IconProps {
 const InputIcon = ({ name }: IconProps): JSX.Element => (
     <Icon name={name}
         type='FontAwesome'
-        style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, paddingLeft: 10 }}
+        style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, paddingLeft: 16 }}
     />
 );
 
