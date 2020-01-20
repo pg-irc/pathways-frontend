@@ -332,7 +332,6 @@ export const applicationStyles = StyleSheet.create({
         borderWidth: 2,
     },
     searchInput: {
-        color: colors.white,
         fontSize: 16,
         fontFamily: getNormalFontFamily(),
         flex: 1,
@@ -347,7 +346,7 @@ export const applicationStyles = StyleSheet.create({
         padding: 12,
     },
     searchContainer: {
-        backgroundColor: colors.lightTeal,
+        backgroundColor: colors.white,
         borderRadius: values.lessRoundedBorderRadius,
         margin: 5,
         flexDirection: 'row',
