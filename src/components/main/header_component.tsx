@@ -14,7 +14,7 @@ import {
 } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
-import { Id as ServiceId} from '../../stores/services';
+import { Id as ServiceId } from '../../stores/services';
 import { HumanServiceData } from '../../validation/services/types';
 import { UnbookmarkServiceAction, BookmarkServiceAction } from '../../stores/services/actions';
 import { ServiceDetailScreenHeaderConnectedComponent } from './service_detail_screen_header_connected_component';
@@ -153,14 +153,13 @@ const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
 };
 
 const SearchHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
-    const leftButton = <BackButtonComponent history={props.history} textColor={props.textColor} />;
     const rightButton =
         <MenuButtonComponent
             onPress={props.openMenu}
             locale={props.currentLocale}
             textColor={props.textColor}
         />;
-    return renderHeader({ ...props, leftButton, rightButtons: [rightButton] });
+    return renderHeader({ ...props, rightButtons: [rightButton] });
 };
 
 const ParentScreenHeader = (props: Props): JSX.Element => {
