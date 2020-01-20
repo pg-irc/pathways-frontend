@@ -48,7 +48,11 @@ export interface ErrorServicesForTopic {
     readonly errorMessageType: Errors;
 }
 
-export type ServicesForTopic = ValidServicesForTopic | LoadingServicesForTopic | ErrorServicesForTopic;
+export interface InitialEmptyServicesForTopic {
+    readonly type: 'ServicesForTopic:InitialEmpty';
+}
+
+export type ServicesForTopic = ValidServicesForTopic | LoadingServicesForTopic | ErrorServicesForTopic | InitialEmptyServicesForTopic;
 
 export interface ServicesForAllTopics {
     readonly [topicId: string]: ServicesForTopic;

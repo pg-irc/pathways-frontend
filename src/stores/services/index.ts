@@ -15,10 +15,8 @@ export function buildDefaultStore(): types.ServiceStore {
 
 export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.UnbookmarkServiceAction;
 
-export const buildEmptyServicesForTopic = (): types.ValidServicesForTopic => ({
-    serviceIds: [],
-    type: constants.TOPIC_SERVICES_VALID,
-    expiresAt: 0,
+export const buildInitialEmptyServicesForTopic = (): types.InitialEmptyServicesForTopic => ({
+    type: constants.TOPIC_SERVICES_INITIAL_EMPTY,
 });
 
 export function reducer(store: types.ServiceStore = buildDefaultStore(), action?: actions.ServicesAction): types.ServiceStore {

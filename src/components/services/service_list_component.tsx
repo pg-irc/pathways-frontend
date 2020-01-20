@@ -76,7 +76,8 @@ const refreshServices = (props: Props): void => {
 
 const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boolean => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_ERROR ||
-    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.isExpired
+    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.isExpired ||
+    topicServicesOrError.type === constants.TOPIC_SERVICES_INITIAL_EMPTY
 );
 
 const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void, readonly title: string }): JSX.Element => {

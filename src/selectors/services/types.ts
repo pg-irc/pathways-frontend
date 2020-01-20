@@ -16,4 +16,12 @@ export interface ErrorSelectorTopicServices {
     readonly type: 'ServicesForTopic:Error';
 }
 
-export type SelectorTopicServices = ValidSelectorTopicServices | LoadingSelectorTopicServices | ErrorSelectorTopicServices;
+export interface InitialEmptySelectorTopicServices {
+    readonly type: 'ServicesForTopic:InitialEmpty';
+}
+
+export type SelectorTopicServices =
+    ValidSelectorTopicServices |
+    LoadingSelectorTopicServices |
+    ErrorSelectorTopicServices |
+    InitialEmptySelectorTopicServices;
