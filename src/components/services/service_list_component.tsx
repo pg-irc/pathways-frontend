@@ -58,7 +58,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
         );
     }
 
-    if (isLoadingServices(props.topicServicesOrError)) {
+    if (isLoadingServices(props.topicServicesOrError) || isInitialEmptyTopicServices(props.topicServicesOrError)) {
         return <LoadingScreenComponent header={<ServiceListHeaderComponent title={props.topic.title} />} />;
     }
 
@@ -128,6 +128,10 @@ const isLoadingServices = (topicServicesOrError: SelectorTopicServices): boolean
 
 const isValidEmptyTopicServices = (topicServicesOrError: SelectorTopicServices): boolean => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.services.length <= 0
+);
+
+const isInitialEmptyTopicServices = (topicServicesOrError: SelectorTopicServices): boolean => (
+    topicServicesOrError.type === constants.TOPIC_SERVICES_INITIAL_EMPTY
 );
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
