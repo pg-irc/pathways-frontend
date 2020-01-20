@@ -7,13 +7,13 @@ import { Trans } from '@lingui/react';
 
 const emptyListImageSize = Dimensions.get('screen').width / 3.5;
 
-export interface EmptyListProps {
+export interface EmptyServiceListProps {
     readonly refreshScreen: () => void;
     readonly imageSource: ImageSourcePropType;
     readonly title: JSX.Element;
 }
 
-export const EmptyTopicServicesListComponent = (props: EmptyListProps): JSX.Element => (
+export const EmptyServiceListComponent = (props: EmptyServiceListProps): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
         <View
             style={{

@@ -2,23 +2,23 @@ import React from 'react';
 import { Content, View } from 'native-base';
 import { colors } from '../../application/styles';
 
-export interface LoadingScreenComponentProps {
+export interface LoadingServiceListComponentProps {
     readonly header?: JSX.Element;
 }
 
-export const LoadingScreenComponent = (props: LoadingScreenComponentProps): JSX.Element => {
+export const LoadingServiceListComponent = (props: LoadingServiceListComponentProps): JSX.Element => {
     return (
         <Content style={{ backgroundColor: colors.lightGrey }}>
             {props.header}
-            <LoadingScreenBlockComponent />
-            <LoadingScreenBlockComponent />
-            <LoadingScreenBlockComponent />
-            <LoadingScreenBlockComponent />
+            <LoadingServiceListItemComponent />
+            <LoadingServiceListItemComponent />
+            <LoadingServiceListItemComponent />
+            <LoadingServiceListItemComponent />
         </Content>
     );
 };
 
-const LoadingScreenBlockComponent = (): JSX.Element => (
+const LoadingServiceListItemComponent = (): JSX.Element => (
     <View style={{ backgroundColor: colors.white, marginTop: 8, paddingVertical: 15 }}>
         <View style={{ flex: 2, paddingLeft: 15 }}>
             <LoadingTitle />

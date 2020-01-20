@@ -18,8 +18,8 @@ import { LatLong } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import * as R from 'ramda';
-import { LoadingScreenComponent } from '../loading_screen/loading_screen_component';
-import { EmptyTopicServicesListComponent } from '../empty_component/empty_topic_services_list_component';
+import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
+import { EmptyServiceListComponent } from '../empty_component/empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
 
 export interface ServiceListProps {
@@ -59,12 +59,12 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     }
 
     if (isLoadingServices(props.topicServicesOrError) || isInitialEmptyTopicServices(props.topicServicesOrError)) {
-        return <LoadingScreenComponent header={<ServiceListHeaderComponent title={props.topic.title} />} />;
+        return <LoadingServiceListComponent header={<ServiceListHeaderComponent title={props.topic.title} />} />;
     }
 
     if (isValidEmptyTopicServices(props.topicServicesOrError)) {
         return (
-            <EmptyTopicServicesListComponent
+            <EmptyServiceListComponent
                 title={<Trans>No services to show</Trans>}
                 imageSource={emptyTopicServicesList}
                 refreshScreen={(): void => setLastScreenRefresh(Date.now())} />
