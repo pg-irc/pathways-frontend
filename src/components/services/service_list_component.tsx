@@ -18,9 +18,6 @@ import { LatLong } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import * as R from 'ramda';
-import { LoadingScreenComponent } from '../loading_screen/loading_screen_component';
-import { emptyTopicServicesList } from '../../application/images';
-import { EmptyTopicServicesListComponent } from '../empty_component/empty_topic_services_list_component';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -43,12 +40,10 @@ type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterPro
 
 type Timestamp = number;
 type TimestampSetter = Dispatch<SetStateAction<Timestamp>>;
-type RefreshServicesAttemptedSetter = Dispatch<SetStateAction<boolean>>;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
     const [lastScreenRefresh, setLastScreenRefresh]: readonly [Timestamp, TimestampSetter] = useState(Date.now());
-    const [refreshServicesAttempted, setRefreshServicesAttempted]: readonly [boolean, RefreshServicesAttemptedSetter] = useState(false);
-    useEffect(() => refreshServices(props, setRefreshServicesAttempted), [lastScreenRefresh]);
+    useEffect(() => refreshServices(props), [lastScreenRefresh]);
     if (isErrorSelectorTopicServices(props.topicServicesOrError)) {
         return (
             <ErrorComponent
@@ -63,53 +58,25 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
         <FlatList
             style={{ backgroundColor: colors.lightGrey }}
             refreshing={isLoadingServices(props.topicServicesOrError)}
-            onRefresh={(): void => refreshServices(props, setRefreshServicesAttempted)}
+            onRefresh={(): void => refreshServices(props)}
             refreshControl={renderRefreshControl(isLoadingServices(props.topicServicesOrError))}
             data={getServicesIfValid(props.topicServicesOrError)}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceListItem(props)}
-            ListEmptyComponent={renderEmptyOrLoadingComponent(props, refreshServicesAttempted, setLastScreenRefresh)}
             ListHeaderComponent={<ServiceListHeaderComponent title={props.topic.title} />}
         />
     );
 };
 
-const renderEmptyOrLoadingComponent = (props: Props, refreshServicesAttempted: boolean, setLastScreenRefresh: TimestampSetter): JSX.Element => {
-    if (showEmptyComponent(props, refreshServicesAttempted)) {
-        return (
-            <EmptyTopicServicesListComponent
-                title={<Trans>No services to show</Trans>}
-                imageSource={emptyTopicServicesList}
-                refreshScreen={(): void => setLastScreenRefresh(Date.now())}
-            />
-            );
-    }
-    return <LoadingScreenComponent />;
-};
-
-const refreshServices = (props: Props, setRefreshServicesAttempted: Dispatch<SetStateAction<boolean>> ): void => {
+const refreshServices = (props: Props): void => {
     if (servicesFetchRequired(props.topicServicesOrError)) {
         props.dispatchServicesRequest();
     }
-    setRefreshServicesAttempted(true);
 };
 
 const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boolean => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_ERROR ||
     topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.isExpired
-);
-
-const showEmptyComponent = (props: Props, refreshServicesAttempted: boolean): boolean => {
-    if (refreshServicesAttempted) {
-        if (isEmptyValidServices(props.topicServicesOrError)) {
-            return true;
-        }
-    }
-    return false;
-};
-
-const isEmptyValidServices = (topicServicesOrError: SelectorTopicServices): boolean => (
-    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.services.length <= 0
 );
 
 const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void, readonly title: string }): JSX.Element => {
