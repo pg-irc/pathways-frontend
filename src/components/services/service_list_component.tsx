@@ -18,6 +18,9 @@ import { LatLong } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import * as R from 'ramda';
+import { LoadingScreenComponent } from '../loading_screen/loading_screen_component';
+import { EmptyTopicServicesListComponent } from '../empty_component/empty_topic_services_list_component';
+import { emptyTopicServicesList } from '../../application/images';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -44,6 +47,7 @@ type TimestampSetter = Dispatch<SetStateAction<Timestamp>>;
 export const ServiceListComponent = (props: Props): JSX.Element => {
     const [lastScreenRefresh, setLastScreenRefresh]: readonly [Timestamp, TimestampSetter] = useState(Date.now());
     useEffect(() => refreshServices(props), [lastScreenRefresh]);
+
     if (isErrorSelectorTopicServices(props.topicServicesOrError)) {
         return (
             <ErrorComponent
@@ -53,6 +57,19 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             />
         );
     }
+
+    if (isLoadingServices(props.topicServicesOrError)) {
+        return <LoadingScreenComponent header={<ServiceListHeaderComponent title={props.topic.title} />} />;
+    }
+
+    if (isValidEmptyTopicServices(props.topicServicesOrError)) {
+        return (
+            <EmptyTopicServicesListComponent
+                title={<Trans>No services to show</Trans>}
+                imageSource={emptyTopicServicesList}
+                refreshScreen={(): void => setLastScreenRefresh(Date.now())} />
+            );
+        }
 
     return (
         <FlatList
@@ -107,6 +124,10 @@ const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): Readon
 
 const isLoadingServices = (topicServicesOrError: SelectorTopicServices): boolean => (
     topicServicesOrError.type === constants.TOPIC_SERVICES_LOADING
+);
+
+const isValidEmptyTopicServices = (topicServicesOrError: SelectorTopicServices): boolean => (
+    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.services.length <= 0
 );
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
