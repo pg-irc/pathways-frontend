@@ -88,7 +88,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     <ClearInputButton visible={props.currentRefinement !== ''} onPress={clearSearch} />
                 </TouchableOpacity>
                 <TouchableOpacity style={applicationStyles.searchContainer}>
-                    <InputIcon name='map-marker' />
+                    <InputIcon name='location-on' />
                     <TextInput
                         style={[applicationStyles.searchInput, getOpacity(locationInputField)]}
                         onChangeText={(d: string): void => {
@@ -119,8 +119,8 @@ interface IconProps {
 const InputIcon = ({ name }: IconProps): JSX.Element => (
     <View style={{ width: 48 }}>
         <Icon name={name}
-            type='FontAwesome'
-            style={{ color: colors.teal, fontSize: values.smallIconSize, paddingLeft: 16 }}
+            type='MaterialIcons'
+            style={{ color: colors.teal, fontSize: values.mediumIconSize, paddingLeft: 12 }}
         />
     </View>
 );
