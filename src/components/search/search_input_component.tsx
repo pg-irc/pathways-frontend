@@ -44,11 +44,18 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Func
     );
 };
 
-const getFontWeight = (input: string): object => (
-    {
-        fontWeight: (input === '') ? 'normal' : 'bold',
+const getInputStyle = (input: string): object => {
+    if (input === '') {
+        return {
+            fontWeight: 'normal',
+            opacity: .6,
+        };
     }
-);
+    return {
+        fontWeight: 'bold',
+        opacity: 1,
+    };
+};
 
 // tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
@@ -75,7 +82,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='search' />
                     <TextInput
-                        style={[applicationStyles.searchInput, getFontWeight(props.currentRefinement)]}
+                        style={[applicationStyles.searchInput, getInputStyle(props.currentRefinement)]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent search text changed to '${d}'`);
                             props.refine(d);
@@ -90,7 +97,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='map-marker' />
                     <TextInput
-                        style={[applicationStyles.searchInput, getFontWeight(locationInputField)]}
+                        style={[applicationStyles.searchInput, getInputStyle(locationInputField)]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent location text changed to '${d}'`);
                             setLocationInputField(d);
