@@ -117,7 +117,6 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                         }}
                         onPress={(): void => {
                             props.saveSearchTerm(searchInputField);
-                            props.refine(searchInputField);
                             props.setLocation(locationInputField);
                         }}>
                         <Icon
