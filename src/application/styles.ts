@@ -355,7 +355,7 @@ export const applicationStyles = StyleSheet.create({
     searchContainer: {
         backgroundColor: colors.white,
         borderRadius: values.lessRoundedBorderRadius,
-        margin: 5,
+        margin: 6,
         flexDirection: 'row',
         alignItems: 'center',
     },

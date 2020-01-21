@@ -107,15 +107,33 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     />
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
-                {renderMyLocationButton(hideMyLocationButton, props.setLocation)}
-                <TouchableOpacity
-                    onPress={(): void => {
-                        props.saveSearchTerm(searchInputField);
-                        props.refine(searchInputField);
-                        props.setLocation(locationInputField);
-                    }}>
-                    <Text>Search</Text>
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 6 }}>
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: colors.lightTeal,
+                            borderRadius: values.roundedBorderRadius,
+                            alignSelf: 'flex-start',
+                            flexDirection: 'row',
+                        }}
+                        onPress={(): void => {
+                            props.saveSearchTerm(searchInputField);
+                            props.refine(searchInputField);
+                            props.setLocation(locationInputField);
+                        }}>
+                        <Icon
+                            type={'MaterialIcons'} name={'search'}
+                            style={{ color: colors.white, fontSize: 20, margin: 10 }}
+                        />
+                        <Text style={{
+                            color: colors.white,
+                            fontSize: 16,
+                            marginVertical: 10,
+                            marginRight: 16,
+                            fontWeight: 'bold',
+                        }}>Search</Text>
+                    </TouchableOpacity>
+                    {renderMyLocationButton(hideMyLocationButton, props.setLocation)}
+                </View>
             </View >
         )}
 
