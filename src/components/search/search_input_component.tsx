@@ -44,11 +44,7 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Func
     );
 };
 
-const getOpacity = (input: string): object => (
-    {
-        opacity: (input === '') ? .6 : 1,
-    }
-);
+
 
 // tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
@@ -66,7 +62,11 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         return _(placeholder);
     };
     const clearSearch = (): string => props.refine('');
-    const clearLocation = (): void => props.setLocation('');
+    const clearLocation = (): void => {
+        setLocationInputField('');
+        props.setLocation('');
+    };
+    const getOpacity = (input: string): number => input === '' ? .6 : 1;
 
     return <I18n>
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
@@ -75,7 +75,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='search' />
                     <TextInput
-                        style={[applicationStyles.searchInput, getOpacity(props.currentRefinement)]}
+                        style={[applicationStyles.searchInput, { opacity: getOpacity(props.currentRefinement) }]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent search text changed to '${d}'`);
                             props.refine(d);
@@ -90,12 +90,11 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='location-on' />
                     <TextInput
-                        style={[applicationStyles.searchInput, getOpacity(locationInputField)]}
+                        style={[applicationStyles.searchInput, { opacity: getOpacity(locationInputField) }]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent location text changed to '${d}'`);
                             setLocationInputField(d);
                         }}
-                        onEndEditing={(): void => props.setLocation(locationInputField)}
                         onFocus={(): void => setHideMyLocationButton(false)}
                         onBlur={(): void => setHideMyLocationButton(true)}
                         value={locationInputField}
