@@ -1,9 +1,7 @@
 import React from 'react';
 import { Text, View } from 'native-base';
-import { colors, textStyles } from '../../application/styles';
-import { ImageSourcePropType, Dimensions, Image } from 'react-native';
-
-const emptyListImageSize = Dimensions.get('screen').width / 3.5;
+import { colors, textStyles, imageStyles } from '../../application/styles';
+import { ImageSourcePropType, Image } from 'react-native';
 
 export interface EmptyListProps {
     readonly imageSource: ImageSourcePropType;
@@ -30,11 +28,7 @@ const EmptyBookmarksImage = (props: { readonly imageSource: ImageSourcePropType 
     <Image
         source={props.imageSource}
         resizeMode={'contain'}
-        style={{
-            height: emptyListImageSize,
-            width: emptyListImageSize,
-            marginBottom: 20,
-        }}
+        style={imageStyles.emptyOrErrorComponentImage}
     />
 );
 

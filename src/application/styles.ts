@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, Dimensions } from 'react-native';
 import { I18nManager } from 'react-native';
 import { isAndroid } from '../helpers/is_android';
 
@@ -438,5 +438,15 @@ export const markdownStyles = StyleSheet.create({
         fontFamily: getNormalFontFamily(),
         color: colors.teal,
         textDecorationLine: 'underline',
+    },
+});
+
+const emptyOrErrorImageSize = Dimensions.get('screen').width / 3.5;
+
+export const imageStyles = StyleSheet.create({
+    emptyOrErrorComponentImage: {
+        height: emptyOrErrorImageSize,
+        width: emptyOrErrorImageSize,
+        marginBottom: 20,
     },
 });

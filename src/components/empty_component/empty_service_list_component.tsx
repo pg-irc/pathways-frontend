@@ -1,11 +1,9 @@
 import React from 'react';
 import { Text, View, Icon } from 'native-base';
-import { colors, textStyles } from '../../application/styles';
-import { ImageSourcePropType, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { colors, textStyles, imageStyles } from '../../application/styles';
+import { ImageSourcePropType, Image, TouchableOpacity } from 'react-native';
 import { EmptyComponent } from './empty_component';
 import { Trans } from '@lingui/react';
-
-const emptyListImageSize = Dimensions.get('screen').width / 3.5;
 
 export interface EmptyServiceListProps {
     readonly refreshScreen: () => void;
@@ -34,11 +32,7 @@ const EmptyListImage = (props: { readonly imageSource: ImageSourcePropType }): J
     <Image
         source={props.imageSource}
         resizeMode={'contain'}
-        style={{
-            height: emptyListImageSize,
-            width: emptyListImageSize,
-            marginBottom: 20,
-        }}
+        style={imageStyles.emptyOrErrorComponentImage}
     />
 );
 
