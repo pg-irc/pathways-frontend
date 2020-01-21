@@ -131,7 +131,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             fontWeight: 'bold',
                         }}>Search</Text>
                     </TouchableOpacity>
-                    {renderMyLocationButton(hideMyLocationButton, props.setLocation)}
+                    {renderMyLocationButton(hideMyLocationButton, setLocationInputField)}
                 </View>
             </View >
         )}
