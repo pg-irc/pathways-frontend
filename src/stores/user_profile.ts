@@ -16,23 +16,23 @@ export const disableAnalytics = (disable: boolean) => (
     helpers.makeAction(constants.DISABLE_ANALYTICS, { disable })
 );
 
-export type OnboardingAction =
+export type UserProfileAction =
     SetOnboardingAction |
     ClearAllUserDataAction |
     DisableAnalyticsAction |
     DataPersistence.LoadSuccessAction;
 
-export interface OnboardingStore {
+export interface UserProfileStore {
     readonly showOnboarding: boolean;
     readonly disableAnalytics: boolean;
 }
 
-export const buildDefaultStore = (): OnboardingStore => ({
+export const buildDefaultStore = (): UserProfileStore => ({
     showOnboarding: false,
     disableAnalytics: false,
 });
 
-export const reducer = (store: OnboardingStore = buildDefaultStore(), action?: OnboardingAction): OnboardingStore => {
+export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: UserProfileAction): UserProfileStore => {
     if (!action) {
         return store;
     }

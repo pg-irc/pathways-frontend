@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { OnboardingStore, reducer, setOnboarding, disableAnalytics } from '../user_profile';
+import { UserProfileStore, reducer, setOnboarding, disableAnalytics } from '../user_profile';
 import { aBoolean } from '../../helpers/random_test_values';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
@@ -8,7 +8,7 @@ import { clearAllUserData } from '../questionnaire/actions';
 describe('user profile reducer', () => {
     describe('the onboarding flag', () => {
         test('is cleared by the set onboarding action', () => {
-            const oldStore: OnboardingStore = {
+            const oldStore: UserProfileStore = {
                 showOnboarding: true,
                 disableAnalytics: aBoolean(),
             };
@@ -18,7 +18,7 @@ describe('user profile reducer', () => {
 
         test('is loaded from persisted data', () => {
             const onboardingFlag = aBoolean();
-            const oldStore: OnboardingStore = {
+            const oldStore: UserProfileStore = {
                 showOnboarding: onboardingFlag,
                 disableAnalytics: aBoolean(),
             };
@@ -33,7 +33,7 @@ describe('user profile reducer', () => {
         });
 
         test('is set by clean all user data action', () => {
-            const oldStore: OnboardingStore = {
+            const oldStore: UserProfileStore = {
                 showOnboarding: false,
                 disableAnalytics: aBoolean(),
             };
@@ -44,7 +44,7 @@ describe('user profile reducer', () => {
     });
     describe('the disable analytics flag', () => {
         it('is set by the disable analytics action', () => {
-            const oldStore: OnboardingStore = {
+            const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: false,
             };
@@ -52,7 +52,7 @@ describe('user profile reducer', () => {
             expect(newStore.disableAnalytics).toBe(true);
         });
         it('is set by the disable analytics action', () => {
-            const oldStore: OnboardingStore = {
+            const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: true,
             };
@@ -62,7 +62,7 @@ describe('user profile reducer', () => {
         });
         test('is loaded from persisted data', () => {
             const disableAnalyticsFlag = aBoolean();
-            const oldStore: OnboardingStore = {
+            const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: disableAnalyticsFlag,
             };
@@ -76,7 +76,7 @@ describe('user profile reducer', () => {
             expect(newStore.disableAnalytics).toBe(!disableAnalyticsFlag);
         });
         test('is cleared by clean all user data action', () => {
-            const oldStore: OnboardingStore = {
+            const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: true,
             };
