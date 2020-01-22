@@ -1,6 +1,6 @@
 import { Store } from '../../stores';
 import { Id as TopicId } from '../../stores/topics';
-import { buildInitialEmptyServicesForTopic } from '../../stores/services';
+import { buildInitialEmptyServicesForTopic } from '../../stores/services/build_initial_empty_services_for_topic';
 import { isValidServicesForTopic } from '../../stores/services/is_valid_services_for_topic';
 import { isErrorServicesForTopic } from '../../stores/services/is_error_services_for_topic';
 import { SelectorTopicServices } from './types';

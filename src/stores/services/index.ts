@@ -6,18 +6,14 @@ import { Id, ServiceStore } from '../../validation/services/types';
 import { DataPersistence } from '../persisted_data';
 export { Id, ServiceStore };
 
+export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.UnbookmarkServiceAction;
+
 export function buildDefaultStore(): types.ServiceStore {
     return {
         services: {},
         servicesByTopic: {},
     };
 }
-
-export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.UnbookmarkServiceAction;
-
-export const buildInitialEmptyServicesForTopic = (): types.InitialEmptyServicesForTopic => ({
-    type: constants.INITIAL_EMPTY_SERVICES_FOR_TOPIC,
-});
 
 export function reducer(store: types.ServiceStore = buildDefaultStore(), action?: actions.ServicesAction): types.ServiceStore {
     if (!action) {
