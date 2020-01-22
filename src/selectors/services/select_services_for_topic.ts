@@ -7,10 +7,13 @@ import { SelectorTopicServices } from './types';
 import { toSelectorValidServicesForTopic } from './to_selector_valid_services_for_topic';
 import { toSelectorErrorServicesForTopic } from './to_selector_error_services_for_topic';
 import { isLoadingServicesForTopic } from '../../stores/services/is_loading_services_for_topic';
-import { toSelectorLoadingServicesForTopic } from './to_loading_selector_topic_services';
+import { buildLoadingServicesForTopic } from '../../stores/services/build_loading_services_for_topic';
 
 export const selectServicesForTopic = (topicId: TopicId, store: Store): SelectorTopicServices => {
-    const topicServices = store.services.servicesByTopic[topicId] || buildInitialEmptyServicesForTopic();
+    const topicServices = store.services.servicesByTopic[topicId];
+    if (!topicServices) {
+        return buildInitialEmptyServicesForTopic();
+    }
     if (isValidServicesForTopic(topicServices)) {
         return toSelectorValidServicesForTopic(topicServices, store.services.services);
     }
@@ -18,7 +21,7 @@ export const selectServicesForTopic = (topicId: TopicId, store: Store): Selector
         return toSelectorErrorServicesForTopic(topicServices);
     }
     if (isLoadingServicesForTopic(topicServices)) {
-        return toSelectorLoadingServicesForTopic();
+        return buildLoadingServicesForTopic();
     }
     return buildInitialEmptyServicesForTopic();
 };
