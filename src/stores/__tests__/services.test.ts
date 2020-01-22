@@ -44,7 +44,7 @@ describe('services reducer', () => {
             };
             const store = reducer(theStore, action);
             const topicServicesOrError = store.servicesByTopic[topicId];
-            expect(topicServicesOrError).toEqual({ type: constants.TOPIC_SERVICES_LOADING });
+            expect(topicServicesOrError).toEqual({ type: constants.LOADING_SERVICES_FOR_TOPIC });
         });
 
         it('sets state of the topic service to loading', () => {
@@ -188,7 +188,7 @@ describe('services reducer', () => {
         const topicServicesOrErrorEntry = store.servicesByTopic[topic.id];
 
         it('sets the error message type on the topic services error object', () => {
-            if (topicServicesOrErrorEntry.type === constants.TOPIC_SERVICES_ERROR) {
+            if (topicServicesOrErrorEntry.type === constants.ERROR_SERVICES_FOR_TOPIC) {
                 expect(topicServicesOrErrorEntry.errorMessageType).toBe(Errors.BadServerResponse);
             } else {
                 fail();

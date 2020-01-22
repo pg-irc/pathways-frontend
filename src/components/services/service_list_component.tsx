@@ -92,9 +92,9 @@ const refreshServices = (props: Props): void => {
 };
 
 const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boolean => (
-    topicServicesOrError.type === constants.TOPIC_SERVICES_ERROR ||
-    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.isExpired ||
-    topicServicesOrError.type === constants.TOPIC_SERVICES_INITIAL_EMPTY
+    topicServicesOrError.type === constants.ERROR_SERVICES_FOR_TOPIC ||
+    topicServicesOrError.type === constants.VALID_SERVICES_FOR_TOPIC && topicServicesOrError.isExpired ||
+    topicServicesOrError.type === constants.INITIAL_EMPTY_SERVICES_FOR_TOPIC
 );
 
 const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void, readonly title: string }): JSX.Element => {
@@ -119,19 +119,19 @@ const determineErrorType = (topicServicesOrError: SelectorTopicServices): Errors
 };
 
 const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<HumanServiceData> => (
-    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.services
+    topicServicesOrError.type === constants.VALID_SERVICES_FOR_TOPIC && topicServicesOrError.services
 );
 
 const isLoadingServices = (topicServicesOrError: SelectorTopicServices): boolean => (
-    topicServicesOrError.type === constants.TOPIC_SERVICES_LOADING
+    topicServicesOrError.type === constants.LOADING_SERVICES_FOR_TOPIC
 );
 
 const isValidEmptyTopicServices = (topicServicesOrError: SelectorTopicServices): boolean => (
-    topicServicesOrError.type === constants.TOPIC_SERVICES_VALID && topicServicesOrError.services.length <= 0
+    topicServicesOrError.type === constants.VALID_SERVICES_FOR_TOPIC && topicServicesOrError.services.length <= 0
 );
 
 const isInitialEmptyTopicServices = (topicServicesOrError: SelectorTopicServices): boolean => (
-    topicServicesOrError.type === constants.TOPIC_SERVICES_INITIAL_EMPTY
+    topicServicesOrError.type === constants.INITIAL_EMPTY_SERVICES_FOR_TOPIC
 );
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;

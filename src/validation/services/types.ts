@@ -34,22 +34,22 @@ export interface HumanServiceData {
 }
 
 export interface ValidServicesForTopic {
-    readonly type: 'ServicesForTopic:Valid';
+    readonly type: 'SERVICES_FOR_TOPIC:VALID';
     readonly serviceIds: ReadonlyArray<Id>;
     readonly expiresAt: number;
 }
 
 export interface LoadingServicesForTopic {
-    readonly type: 'ServicesForTopic:Loading';
+    readonly type: 'SERVICES_FOR_TOPIC:LOADING';
 }
 
 export interface ErrorServicesForTopic {
-    readonly type: 'ServicesForTopic:Error';
+    readonly type: 'SERVICES_FOR_TOPIC:ERROR';
     readonly errorMessageType: Errors;
 }
 
 export interface InitialEmptyServicesForTopic {
-    readonly type: 'ServicesForTopic:InitialEmpty';
+    readonly type: 'SERVICES_FOR_TOPIC:INITIAL_EMPTY';
 }
 
 export type ServicesForTopic = ValidServicesForTopic | LoadingServicesForTopic | ErrorServicesForTopic | InitialEmptyServicesForTopic;
@@ -59,7 +59,7 @@ export interface ServicesForAllTopics {
 }
 
 export const isServiceLoading = (services: ServicesForTopic): boolean => (
-    services.type === constants.TOPIC_SERVICES_LOADING
+    services.type === constants.LOADING_SERVICES_FOR_TOPIC
 );
 
 export interface ServiceMap {

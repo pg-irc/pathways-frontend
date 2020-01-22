@@ -16,7 +16,7 @@ export function buildDefaultStore(): types.ServiceStore {
 export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.UnbookmarkServiceAction;
 
 export const buildInitialEmptyServicesForTopic = (): types.InitialEmptyServicesForTopic => ({
-    type: constants.TOPIC_SERVICES_INITIAL_EMPTY,
+    type: constants.INITIAL_EMPTY_SERVICES_FOR_TOPIC,
 });
 
 export function reducer(store: types.ServiceStore = buildDefaultStore(), action?: actions.ServicesAction): types.ServiceStore {
@@ -52,7 +52,7 @@ const updateServicesRequest = (store: types.ServiceStore, action: actions.BuildS
         servicesByTopic: {
             ...store.servicesByTopic,
             [topicId]: {
-                type: constants.TOPIC_SERVICES_LOADING,
+                type: constants.LOADING_SERVICES_FOR_TOPIC,
             },
         },
     };
@@ -74,7 +74,7 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildS
         servicesByTopic: {
             ...store.servicesByTopic,
             [topicId]: {
-                type: constants.TOPIC_SERVICES_VALID,
+                type: constants.VALID_SERVICES_FOR_TOPIC,
                 serviceIds: newServiceIds,
                 expiresAt,
             },
@@ -90,7 +90,7 @@ const updateServicesFailure = (store: types.ServiceStore, action: actions.BuildS
         servicesByTopic: {
             ...store.servicesByTopic,
             [topicId]: {
-                type: constants.TOPIC_SERVICES_ERROR,
+                type: constants.ERROR_SERVICES_FOR_TOPIC,
                 errorMessageType,
             },
         },

@@ -211,11 +211,11 @@ export class TaskServicesBuilder {
     build(): ValidServicesForTopic | LoadingServicesForTopic {
         if (this.loading) {
             return {
-                type: constants.TOPIC_SERVICES_LOADING,
+                type: constants.LOADING_SERVICES_FOR_TOPIC,
             };
         }
         return {
-            type: constants.TOPIC_SERVICES_VALID,
+            type: constants.VALID_SERVICES_FOR_TOPIC,
             serviceIds: this.serviceIds,
             expiresAt: this.expiresAt,
         };
@@ -239,7 +239,7 @@ export class TaskServicesErrorBuilder {
 
     build(): ErrorServicesForTopic {
         return {
-            type: constants.TOPIC_SERVICES_ERROR,
+            type: constants.ERROR_SERVICES_FOR_TOPIC,
             errorMessageType: this.errorMessageType,
         };
     }

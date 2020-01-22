@@ -54,10 +54,10 @@ export namespace AnalyticsAsync {
     export const FAILURE = 'ASYNC:ANALYTICS:FAILURE';
 }
 
-export const TOPIC_SERVICES_VALID = 'ServicesForTopic:Valid';
-export const TOPIC_SERVICES_LOADING = 'ServicesForTopic:Loading';
-export const TOPIC_SERVICES_ERROR = 'ServicesForTopic:Error';
-export const TOPIC_SERVICES_INITIAL_EMPTY = 'ServicesForTopic:InitialEmpty';
+export const VALID_SERVICES_FOR_TOPIC = 'SERVICES_FOR_TOPIC:VALID';
+export const LOADING_SERVICES_FOR_TOPIC = 'SERVICES_FOR_TOPIC:LOADING';
+export const ERROR_SERVICES_FOR_TOPIC = 'SERVICES_FOR_TOPIC:ERROR';
+export const INITIAL_EMPTY_SERVICES_FOR_TOPIC = 'SERVICES_FOR_TOPIC:INITIAL_EMPTY';
 
 export const SET_MANUAL_USER_LOCATION = 'SetManualLocation';
 export const CLEAR_MANUAL_USER_LOCATION = 'ClearManualLocation';

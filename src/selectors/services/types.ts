@@ -3,21 +3,21 @@ import { Errors } from '../../validation/errors/types';
 
 export interface SelectorValidServicesForTopic {
     readonly services: ReadonlyArray<HumanServiceData>;
-    readonly type: 'ServicesForTopic:Valid';
+    readonly type: 'SERVICES_FOR_TOPIC:VALID';
     readonly isExpired: boolean;
 }
 
 export interface SelectorLoadingServicesForTopic {
-    readonly type: 'ServicesForTopic:Loading';
+    readonly type: 'SERVICES_FOR_TOPIC:LOADING';
 }
 
 export interface SelectorErrorServicesForTopic {
     readonly errorMessageType: Errors;
-    readonly type: 'ServicesForTopic:Error';
+    readonly type: 'SERVICES_FOR_TOPIC:ERROR';
 }
 
 export interface SelectorInitialEmptyServicesForTopic {
-    readonly type: 'ServicesForTopic:InitialEmpty';
+    readonly type: 'SERVICES_FOR_TOPIC:INITIAL_EMPTY';
 }
 
 export type SelectorTopicServices =

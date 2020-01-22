@@ -3,5 +3,5 @@ import * as constants from '../../application/constants';
 
 export const isLoadingServicesForTopic = (services: ServicesForTopic):
     services is LoadingServicesForTopic => (
-        services.type === constants.TOPIC_SERVICES_LOADING
+        services.type === constants.LOADING_SERVICES_FOR_TOPIC
     );
