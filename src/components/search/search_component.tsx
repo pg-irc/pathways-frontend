@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
-import { Content } from 'native-base';
+import { View } from 'native-base';
 import { emptyComponent } from '../empty_component/empty_component';
 import { LatLong } from '../../validation/latlong/types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
@@ -62,7 +62,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     );
     return <I18n>{(): JSX.Element => {
 
-        return <Content style={{ backgroundColor: colors.pale }} keyboardShouldPersistTaps={'always'} keyboardDismissMode='on-drag'>
+        return <View style={{ backgroundColor: colors.pale }}>
             <InstantSearch indexName={servicesIndex()} searchClient={searchClient} {...props} >
                 <SearchInputConnectedComponent
                     latLong={latLong}
@@ -73,7 +73,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
                 <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>
-        </Content>;
+        </View>;
     }}</I18n>;
 };
 

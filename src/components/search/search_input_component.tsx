@@ -46,7 +46,34 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, saveLocation: Fun
     );
 };
 
+const renderSearchButton = (searchTerm: string, location: string, saveSearchTerm: Function, saveLocation: Function): JSX.Element => {
 
+    return (
+        <TouchableOpacity
+            style={{
+                backgroundColor: colors.lightTeal,
+                borderRadius: values.roundedBorderRadius,
+                alignSelf: 'flex-start',
+                flexDirection: 'row',
+            }}
+            onPress={(): void => {
+                saveSearchTerm(searchTerm);
+                saveLocation(location);
+            }}>
+            <Icon
+                type={'MaterialIcons'} name={'search'}
+                style={{ color: colors.white, fontSize: 20, margin: 10 }}
+            />
+            <Text style={{
+                color: colors.white,
+                fontSize: 16,
+                marginVertical: 10,
+                marginRight: 16,
+                fontWeight: 'bold',
+            }}>Search</Text>
+        </TouchableOpacity>
+    );
+};
 
 // tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
@@ -108,29 +135,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 6 }}>
-                    <TouchableOpacity
-                        style={{
-                            backgroundColor: colors.lightTeal,
-                            borderRadius: values.roundedBorderRadius,
-                            alignSelf: 'flex-start',
-                            flexDirection: 'row',
-                        }}
-                        onPress={(): void => {
-                            props.saveSearchTerm(searchInputField);
-                            props.setLocation(locationInputField);
-                        }}>
-                        <Icon
-                            type={'MaterialIcons'} name={'search'}
-                            style={{ color: colors.white, fontSize: 20, margin: 10 }}
-                        />
-                        <Text style={{
-                            color: colors.white,
-                            fontSize: 16,
-                            marginVertical: 10,
-                            marginRight: 16,
-                            fontWeight: 'bold',
-                        }}>Search</Text>
-                    </TouchableOpacity>
+                    {renderSearchButton(searchInputField, locationInputField, props.saveSearchTerm, props.setLocation)}
                     {renderMyLocationButton(hideMyLocationButton, setLocationInputField)}
                 </View>
             </View >
