@@ -26,14 +26,12 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Func
     }
     const icon = <Icon
         type={'MaterialIcons'} name={'my-location'}
-        style={{ color: colors.greyishBrown, fontSize: 16, margin: 10 }}
+        style={{ color: colors.greyishBrown, fontSize: 16, marginRight: 8 }}
     />;
 
     const text = <Text style={{
         color: colors.greyishBrown,
         fontSize: 12,
-        marginVertical: 10,
-        marginRight: 10,
         fontWeight: 'bold',
     }}><Trans>My Location</Trans></Text>;
 
@@ -45,6 +43,8 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, setLocation: Func
         </TouchableOpacity>
     );
 };
+
+
 
 // tslint:disable:no-expression-statement
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
@@ -62,7 +62,11 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         return _(placeholder);
     };
     const clearSearch = (): string => props.refine('');
-    const clearLocation = (): void => props.setLocation('');
+    const clearLocation = (): void => {
+        setLocationInputField('');
+        props.setLocation('');
+    };
+    const getOpacity = (input: string): number => input === '' ? .6 : 1;
 
     return <I18n>
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
@@ -71,31 +75,32 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='search' />
                     <TextInput
-                        style={applicationStyles.searchInput}
+                        style={[applicationStyles.searchInput, { opacity: getOpacity(props.currentRefinement) }]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent search text changed to '${d}'`);
                             props.refine(d);
                         }}
                         value={props.currentRefinement}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
-                        placeholderTextColor={colors.white}
+                        placeholderTextColor={colors.greyishBrown}
+                        selectionColor={colors.black}
                     />
                     <ClearInputButton visible={props.currentRefinement !== ''} onPress={clearSearch} />
                 </TouchableOpacity>
                 <TouchableOpacity style={applicationStyles.searchContainer}>
-                    <InputIcon name='map-marker' />
+                    <InputIcon name='location-on' />
                     <TextInput
-                        style={applicationStyles.searchInput}
+                        style={[applicationStyles.searchInput, { opacity: getOpacity(locationInputField) }]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent location text changed to '${d}'`);
                             setLocationInputField(d);
                         }}
-                        onEndEditing={(): void => props.setLocation(locationInputField)}
                         onFocus={(): void => setHideMyLocationButton(false)}
                         onBlur={(): void => setHideMyLocationButton(true)}
                         value={locationInputField}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Enter city, address, or postal code')} // TODO translate
-                        placeholderTextColor={colors.white}
+                        placeholderTextColor={colors.greyishBrown}
+                        selectionColor={colors.black}
                     />
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
@@ -111,10 +116,12 @@ interface IconProps {
 }
 
 const InputIcon = ({ name }: IconProps): JSX.Element => (
-    <Icon name={name}
-        type='FontAwesome'
-        style={{ color: colors.white, fontSize: values.smallIconSize, flex: .1, paddingLeft: 10 }}
-    />
+    <View style={{ width: 48 }}>
+        <Icon name={name}
+            type='MaterialIcons'
+            style={{ color: colors.teal, fontSize: values.mediumIconSize, paddingLeft: 12 }}
+        />
+    </View>
 );
 
 export const extractSearchStrings = (): JSX.Element => (

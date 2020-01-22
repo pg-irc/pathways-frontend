@@ -62,10 +62,8 @@ const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Ele
             <Button onPress={refineNext} style={{
                 backgroundColor: colors.teal,
                 borderRadius: values.roundedBorderRadius,
-                alignSelf: 'flex-start',
-                paddingVertical: 15,
-                paddingHorizontal: 80,
-                marginVertical: 15,
+                justifyContent: 'center',
+                marginVertical: 16,
                 marginHorizontal: 24,
             }} >
                 <Text style={textStyles.button} uppercase={false}><Trans>Show more services</Trans></Text>
