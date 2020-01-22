@@ -2,11 +2,9 @@
 import React from 'react';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { History } from 'history';
-import { Trans } from '@lingui/react';
 import { TaskListItemComponent } from './task_list_item_component';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
 import { Id, BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
-import { EmptyListComponent } from '../empty_component/empty_list_component';
 import { colors } from '../../application/styles';
 import { isTopicListHeading } from './is_topic_list_heading';
 import { ListItem } from './build_topic_list_items_with_headings';
@@ -131,12 +129,4 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             />
         );
     }
-}
-
-export const NoTasksAddedComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No topics to show</Trans>} />
-);
-
-export const NoTasksRecommendedComponent = (): JSX.Element => (
-    <EmptyListComponent message={<Trans>No topics to recommend</Trans>} />
-);
+};

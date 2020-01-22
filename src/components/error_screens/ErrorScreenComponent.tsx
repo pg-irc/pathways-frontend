@@ -1,11 +1,9 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import { View, Text, Image, Dimensions, ImageSourcePropType, TouchableOpacity, ScrollView } from 'react-native';
-import { colors, textStyles } from '../../application/styles';
+import { View, Text, Image, ImageSourcePropType, TouchableOpacity, ScrollView } from 'react-native';
+import { colors, textStyles, imageStyles } from '../../application/styles';
 import { Icon } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
-
-const errorImageSize = Dimensions.get('screen').width / 3.5;
 
 type ErrorScreenComponentProps = {
     readonly refreshScreen: () => void;
@@ -40,11 +38,7 @@ const ErrorScreenImage = (props: { readonly imageSource: ImageSourcePropType }):
     <Image
         source={props.imageSource}
         resizeMode={'contain'}
-        style={{
-            height: errorImageSize,
-            width: errorImageSize,
-            marginBottom: 20,
-        }}
+        style={imageStyles.emptyOrErrorComponentImage}
     />
 );
 

@@ -6,20 +6,14 @@ import { Id, ServiceStore } from '../../validation/services/types';
 import { DataPersistence } from '../persisted_data';
 export { Id, ServiceStore };
 
+export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.UnbookmarkServiceAction;
+
 export function buildDefaultStore(): types.ServiceStore {
     return {
         services: {},
         servicesByTopic: {},
     };
 }
-
-export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.UnbookmarkServiceAction;
-
-export const buildEmptyServicesForTopic = (): types.ValidServicesForTopic => ({
-    serviceIds: [],
-    type: constants.TOPIC_SERVICES_VALID,
-    expiresAt: 0,
-});
 
 export function reducer(store: types.ServiceStore = buildDefaultStore(), action?: actions.ServicesAction): types.ServiceStore {
     if (!action) {
@@ -54,7 +48,7 @@ const updateServicesRequest = (store: types.ServiceStore, action: actions.BuildS
         servicesByTopic: {
             ...store.servicesByTopic,
             [topicId]: {
-                type: constants.TOPIC_SERVICES_LOADING,
+                type: constants.LOADING_SERVICES_FOR_TOPIC,
             },
         },
     };
@@ -76,7 +70,7 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildS
         servicesByTopic: {
             ...store.servicesByTopic,
             [topicId]: {
-                type: constants.TOPIC_SERVICES_VALID,
+                type: constants.VALID_SERVICES_FOR_TOPIC,
                 serviceIds: newServiceIds,
                 expiresAt,
             },
@@ -92,7 +86,7 @@ const updateServicesFailure = (store: types.ServiceStore, action: actions.BuildS
         servicesByTopic: {
             ...store.servicesByTopic,
             [topicId]: {
-                type: constants.TOPIC_SERVICES_ERROR,
+                type: constants.ERROR_SERVICES_FOR_TOPIC,
                 errorMessageType,
             },
         },

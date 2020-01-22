@@ -1,19 +1,27 @@
 import { HumanServiceData } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
 
-export interface ValidSelectorTopicServices {
+export interface SelectorValidServicesForTopic {
     readonly services: ReadonlyArray<HumanServiceData>;
-    readonly type: 'ServicesForTopic:Valid';
+    readonly type: 'SERVICES_FOR_TOPIC:VALID';
     readonly isExpired: boolean;
 }
 
-export interface LoadingSelectorTopicServices {
-    readonly type: 'ServicesForTopic:Loading';
+export interface SelectorLoadingServicesForTopic {
+    readonly type: 'SERVICES_FOR_TOPIC:LOADING';
 }
 
-export interface ErrorSelectorTopicServices {
+export interface SelectorErrorServicesForTopic {
     readonly errorMessageType: Errors;
-    readonly type: 'ServicesForTopic:Error';
+    readonly type: 'SERVICES_FOR_TOPIC:ERROR';
 }
 
-export type SelectorTopicServices = ValidSelectorTopicServices | LoadingSelectorTopicServices | ErrorSelectorTopicServices;
+export interface SelectorInitialEmptyServicesForTopic {
+    readonly type: 'SERVICES_FOR_TOPIC:INITIAL_EMPTY';
+}
+
+export type SelectorTopicServices =
+    SelectorValidServicesForTopic |
+    SelectorLoadingServicesForTopic |
+    SelectorErrorServicesForTopic |
+    SelectorInitialEmptyServicesForTopic;

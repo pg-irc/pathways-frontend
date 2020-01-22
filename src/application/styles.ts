@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, Dimensions } from 'react-native';
 import { I18nManager } from 'react-native';
 import { isAndroid } from '../helpers/is_android';
 
@@ -11,6 +11,7 @@ export const colors = {
     // Rename to surface
     lightGrey: '#eee5d9',
     darkerGrey: '#d0d0c5',
+    fadedGrey: '#e5e5e5',
     greyishBrown: '#595959',
     black: '#313131',
     sunYellow: '#f2b134',
@@ -428,5 +429,15 @@ export const markdownStyles = StyleSheet.create({
         fontFamily: getNormalFontFamily(),
         color: colors.teal,
         textDecorationLine: 'underline',
+    },
+});
+
+const emptyOrErrorImageSize = Dimensions.get('screen').width / 3.5;
+
+export const imageStyles = StyleSheet.create({
+    emptyOrErrorComponentImage: {
+        height: emptyOrErrorImageSize,
+        width: emptyOrErrorImageSize,
+        marginBottom: 20,
     },
 });

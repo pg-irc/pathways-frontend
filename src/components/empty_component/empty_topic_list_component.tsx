@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, View } from 'native-base';
+import { View, Text } from 'react-native';
 import { colors, values, getNormalFontFamily } from '../../application/styles';
 
-export interface EmptyListProps {
+export interface EmptyTopicListComponentProps {
     readonly message: JSX.Element;
 }
 
-export const EmptyListComponent: React.StatelessComponent<EmptyListProps> = (props: EmptyListProps): JSX.Element => (
+export const EmptyTopicListComponent = (props: EmptyTopicListComponentProps): JSX.Element => (
     <View
         style={{
             flex: 1,

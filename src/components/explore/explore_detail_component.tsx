@@ -7,7 +7,8 @@ import { Id as TaskId, BookmarkTopicAction, UnbookmarkTopicAction } from '../../
 import { ExploreDetailContentComponent } from './explore_detail_content_component';
 import { TopicListItem } from '../../selectors/topics/types';
 import { textStyles, values } from '../../application/styles';
-import { TaskListComponent, NoTasksAddedComponent } from '../topics/task_list_component';
+import { TaskListComponent } from '../topics/task_list_component';
+import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 
 export interface ExploreDetailProps {
     readonly section: ExploreSection;
@@ -31,7 +32,7 @@ export const ExploreDetailComponent: React.StatelessComponent<Props> =
                 bookmarkTopic={props.bookmarkTopic}
                 unbookmarkTopic={props.unbookmarkTopic}
                 history={props.history}
-                emptyTaskListContent={<NoTasksAddedComponent />}
+                emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
                 headerContent={<TaskListHeaderComponent {...props} />}
             />
         );

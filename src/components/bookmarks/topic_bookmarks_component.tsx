@@ -1,10 +1,13 @@
 import React from 'react';
 import * as R from 'ramda';
 import { TopicListItem } from '../../selectors/topics/types';
-import { TaskListActions, NoTasksAddedComponent, TaskListComponent } from '../topics/task_list_component';
+import { TaskListActions, TaskListComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { View } from 'native-base';
 import { colors } from '../../application/styles';
+import { emptyTopicServicesList } from '../../application/images';
+import { Trans } from '@lingui/react';
+import { EmptyBookmarksComponent } from './empty_bookmarks_component';
 
 export interface TopicBookmarksProps {
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
@@ -19,7 +22,12 @@ export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: 
                 {...props}
                 tasks={props.bookmarkedTopics}
                 savedTasksIdList={R.map((topic: TopicListItem) => topic.id, props.bookmarkedTopics)}
-                emptyTaskListContent={<NoTasksAddedComponent />}
+                emptyTaskListContent={
+                    <EmptyBookmarksComponent
+                        title={<Trans>No topics to show</Trans>}
+                        imageSource={emptyTopicServicesList}
+                    />
+                }
                 headerContent={<View />}
             />
         </View>
