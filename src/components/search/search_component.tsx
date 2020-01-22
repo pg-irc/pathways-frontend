@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
-import { Content } from 'native-base';
+import { View } from 'native-base';
 import { emptyComponent } from '../empty_component/empty_component';
 import { LatLong } from '../../validation/latlong/types';
 import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
@@ -19,11 +19,14 @@ import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import algoliasearch from 'algoliasearch/lite';
+import { SaveSearchTermAction, SaveSearchLocationAction } from '../../stores/search';
 
 export interface SearchComponentProps {
     readonly apiKey: string;
     readonly appId: string;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly searchTerm: string;
+    readonly searchLocation: string;
 }
 
 export interface SearchComponentActions {
@@ -31,6 +34,8 @@ export interface SearchComponentActions {
     readonly disableAnalytics: (disable: boolean) => DisableAnalyticsAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly saveSearchTerm: (searchTerm: string) => SaveSearchTermAction;
+    readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
 }
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;
@@ -38,8 +43,15 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
 
-    const [location, setLocation]: [string, (s: string) => void] = useState('');
+    const [location, setLocation]: [string, (s: string) => void] = useState(props.searchLocation);
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
+
+    useEffect(() => {
+        props.saveSearchLocation(location);
+        if (location === '') {
+            setLatLong(undefined);
+        }
+    }, [location]);
 
     useFetchLatLongFromLocation(location, setLatLong);
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
@@ -53,14 +65,18 @@ export const SearchComponent = (props: Props): JSX.Element => {
     );
     return <I18n>{(): JSX.Element => {
 
-        return <Content style={{ backgroundColor: colors.pale }}>
+        return <View style={{ backgroundColor: colors.pale }}>
             <InstantSearch indexName={servicesIndex()} searchClient={searchClient} {...props} >
-
-                <SearchInputConnectedComponent location={location} setLocation={setLocation} latLong={latLong} />
+                <SearchInputConnectedComponent
+                    latLong={latLong}
+                    searchTerm={props.searchTerm}
+                    saveSearchTerm={props.saveSearchTerm}
+                    location={location}
+                    setLocation={setLocation} />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
                 <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>
-        </Content>;
+        </View>;
     }}</I18n>;
 };
 

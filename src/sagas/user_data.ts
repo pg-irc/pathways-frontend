@@ -19,6 +19,8 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.SET_ONBOARDING,
             constants.BOOKMARK_SERVICE,
             constants.UNBOOKMARK_SERVICE,
+            constants.SAVE_SEARCH_TERM,
+            constants.SAVE_SEARCH_LOCATION,
         ],
         saveUserData);
 }
@@ -86,5 +88,7 @@ export const setUserDataDefaultValues = (data: any): PersistedData => (
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
         bookmarkedServices: data.bookmarkedServices || {},
         disableAnalytics: typeof data.disableAnalytics === 'undefined' ? false : data.disableAnalytics,
+        searchTerm: data.searchTerm || '',
+        searchLocation: data.searchLocation || '',
     }
 );

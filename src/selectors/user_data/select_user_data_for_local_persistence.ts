@@ -6,6 +6,8 @@ import { pickAnswers } from '../questionnaire/pick_answers';
 import { selectShowOnboarding } from '../user_profile/select_show_onboarding';
 import { selectDisableAnalytics } from '../user_profile/select_disable_analytics';
 import { selectBookmarkedServiceMap } from '../services/select_bookmarked_service_map';
+import { selectSearchTerm } from '../search/select_search_term';
+import { selectSearchLocation } from '../search/select_search_location';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedData => ({
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
@@ -13,4 +15,6 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedDat
     showOnboarding: selectShowOnboarding(appStore),
     bookmarkedServices: selectBookmarkedServiceMap(appStore),
     disableAnalytics: selectDisableAnalytics(appStore),
+    searchTerm: selectSearchTerm(appStore),
+    searchLocation: selectSearchLocation(appStore),
 });
