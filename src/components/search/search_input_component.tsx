@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
-import { values, applicationStyles, colors } from '../../application/styles';
+import { values, applicationStyles, colors, getNormalFontFamily } from '../../application/styles';
 import { LatLong } from '../../validation/latlong/types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
@@ -26,6 +26,7 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, saveLocation: Fun
     if (hideMyLocationButton) {
         return <EmptyComponent />;
     }
+
     const icon = <Icon
         type={'MaterialIcons'} name={'my-location'}
         style={{ color: colors.greyishBrown, fontSize: 16, marginRight: 8 }}
@@ -35,11 +36,12 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, saveLocation: Fun
         color: colors.greyishBrown,
         fontSize: 12,
         fontWeight: 'bold',
+        fontFamily: getNormalFontFamily(),
     }}><Trans>My Location</Trans></Text>;
 
     return (
         <TouchableOpacity
-            style={applicationStyles.whiteButton}
+            style={[applicationStyles.searchButton, { backgroundColor: colors.white }]}
             onPress={(): void => saveLocation('Near My Location')}>
             {icon}{text}
         </TouchableOpacity>
@@ -48,29 +50,26 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, saveLocation: Fun
 
 const renderSearchButton = (searchTerm: string, location: string, saveSearchTerm: Function, saveLocation: Function): JSX.Element => {
 
+    const icon = <Icon
+        type={'MaterialIcons'} name={'search'}
+        style={{ color: colors.white, fontSize: values.smallIconSize, marginRight: 8 }}
+    />;
+
+    const text = <Text style={{
+        color: colors.white,
+        fontSize: 16,
+        fontWeight: 'bold',
+        fontFamily: getNormalFontFamily(),
+    }}>Search</Text>;
+
     return (
         <TouchableOpacity
-            style={{
-                backgroundColor: colors.lightTeal,
-                borderRadius: values.roundedBorderRadius,
-                alignSelf: 'flex-start',
-                flexDirection: 'row',
-            }}
+            style={[applicationStyles.searchButton, { backgroundColor: colors.lightTeal }]}
             onPress={(): void => {
                 saveSearchTerm(searchTerm);
                 saveLocation(location);
             }}>
-            <Icon
-                type={'MaterialIcons'} name={'search'}
-                style={{ color: colors.white, fontSize: 20, margin: 10 }}
-            />
-            <Text style={{
-                color: colors.white,
-                fontSize: 16,
-                marginVertical: 10,
-                marginRight: 16,
-                fontWeight: 'bold',
-            }}>Search</Text>
+            {icon}{text}
         </TouchableOpacity>
     );
 };
@@ -99,7 +98,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     return <I18n>
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
 
-            <View style={{ padding: 10, backgroundColor: colors.teal }}>
+            <View style={{ padding: 4, backgroundColor: colors.teal }}>
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='search' />
                     <TextInput
@@ -132,7 +131,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     />
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
-                <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 6 }}>
+                <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 4 }}>
                     {renderSearchButton(searchInputField, locationInputField, props.saveSearchTerm, props.setLocation)}
                     {renderMyLocationButton(hideMyLocationButton, setLocationInputField)}
                 </View>
