@@ -31,21 +31,23 @@ export const ServiceListItemComponent: React.StatelessComponent<Props> =
         const addBookmark = (): BookmarkServiceAction => props.bookmarkService(props.service);
         const removeBookmark = (): UnbookmarkServiceAction => props.unbookmarkService(props.service);
         return (
-            <View style={{ backgroundColor: colors.white, marginTop: 8, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
-                <View style={{flex: 2, paddingLeft: 15}}>
-                    {renderName(serviceName, props.onPress)}
-                    {renderOrganizationName(props.service.organizationName)}
-                    {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
-                    {renderDescription(props.service.description)}
+            <TouchableOpacity onPress={props.onPress}>
+                <View style={{ backgroundColor: colors.white, marginTop: 8, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
+                    <View style={{flex: 2, paddingLeft: 15}}>
+                        {renderName(serviceName)}
+                        {renderOrganizationName(props.service.organizationName)}
+                        {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
+                        {renderDescription(props.service.description)}
+                    </View>
+                    <View>
+                        <BookmarkButtonComponent isBookmarked={props.isBookmarked}
+                        textColor={colors.teal}
+                        bookmark={addBookmark}
+                        unbookmark={removeBookmark}
+                        />
+                    </View>
                 </View>
-                <View>
-                    <BookmarkButtonComponent isBookmarked={props.isBookmarked}
-                    textColor={colors.teal}
-                    bookmark={addBookmark}
-                    unbookmark={removeBookmark}
-                    />
-                </View>
-            </View>
+            </TouchableOpacity>
         );
     };
 
@@ -53,10 +55,8 @@ const buildServiceName = (organizationName: string, serviceName: string): string
     `${organizationName} - ${serviceName}`
 );
 
-const renderName = (name: string, onPress: () => void): JSX.Element => (
-    <TouchableOpacity onPress={onPress}>
-        <Text style={[textStyles.headlineH3StyleBlackLeft]}>{name}</Text>
-    </TouchableOpacity>
+const renderName = (name: string): JSX.Element => (
+    <Text style={[textStyles.headlineH3StyleBlackLeft]}>{name}</Text>
 );
 
 const renderOrganizationName = (name: string): JSX.Element => (
