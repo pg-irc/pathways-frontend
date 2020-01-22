@@ -8,7 +8,7 @@ import { ServiceListItemActions, ServiceListItemComponent } from '../services/se
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
 import { emptyTopicServicesList } from '../../application/images';
-import { EmptyBookmarksComponent } from '../empty_component/empty_bookmarks_component';
+import { EmptyBookmarksComponent } from './empty_bookmarks_component';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;

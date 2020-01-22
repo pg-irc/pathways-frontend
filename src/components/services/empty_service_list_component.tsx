@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Icon } from 'native-base';
 import { colors, textStyles, imageStyles } from '../../application/styles';
 import { ImageSourcePropType, Image, TouchableOpacity } from 'react-native';
-import { EmptyComponent } from './empty_component';
+import { EmptyComponent } from '../empty_component/empty_component';
 import { Trans } from '@lingui/react';
 
 export interface EmptyServiceListProps {

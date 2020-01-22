@@ -19,7 +19,7 @@ import { getSentryMessageForError } from '../../validation/errors/sentry_message
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import * as R from 'ramda';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
-import { EmptyServiceListComponent } from '../empty_component/empty_service_list_component';
+import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
 
 export interface ServiceListProps {

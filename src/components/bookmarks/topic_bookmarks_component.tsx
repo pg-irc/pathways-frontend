@@ -7,7 +7,7 @@ import { View } from 'native-base';
 import { colors } from '../../application/styles';
 import { emptyTopicServicesList } from '../../application/images';
 import { Trans } from '@lingui/react';
-import { EmptyBookmarksComponent } from '../empty_component/empty_bookmarks_component';
+import { EmptyBookmarksComponent } from './empty_bookmarks_component';
 
 export interface TopicBookmarksProps {
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
