@@ -10,7 +10,7 @@ import { Topic } from '../../selectors/topics/types';
 import { ServiceListItemComponent } from './service_list_item_component';
 import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { textStyles, colors, values } from '../../application/styles';
-import { isErrorSelectorTopicServices } from '../../selectors/services/is_error_selector_topic_services';
+import { isSelectorErrorServicesForTopic } from '../../selectors/services/is_selector_error_services_for_topic';
 import * as constants from '../../application/constants';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
@@ -48,7 +48,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     const [lastScreenRefresh, setLastScreenRefresh]: readonly [Timestamp, TimestampSetter] = useState(Date.now());
     useEffect(() => refreshServices(props), [lastScreenRefresh]);
 
-    if (isErrorSelectorTopicServices(props.topicServicesOrError)) {
+    if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
         return (
             <ErrorComponent
                 errorType={determineErrorType(props.topicServicesOrError)}
@@ -112,7 +112,7 @@ const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScr
 };
 
 const determineErrorType = (topicServicesOrError: SelectorTopicServices): Errors => {
-    if (isErrorSelectorTopicServices(topicServicesOrError)) {
+    if (isSelectorErrorServicesForTopic(topicServicesOrError)) {
         return topicServicesOrError.errorMessageType;
     }
     return Errors.Exception;

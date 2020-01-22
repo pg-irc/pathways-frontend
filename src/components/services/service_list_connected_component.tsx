@@ -5,7 +5,7 @@ import { buildServicesRequest, BuildServicesRequestAction, ServicesAction, Bookm
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/types';
-import { selectTopicServices } from '../../selectors/services/select_topic_services';
+import { selectServicesForTopic } from '../../selectors/services/select_services_for_topic';
 import {
     ServiceListComponent, ServiceListProps,
     ServiceListActions, ServicesUpdater,
@@ -21,7 +21,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
     const manualUserLocation = selectManualUserLocation(store);
     return {
         topic,
-        topicServicesOrError: selectTopicServices(topic.id, store),
+        topicServicesOrError: selectServicesForTopic(topic.id, store),
         manualUserLocation,
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
     };
