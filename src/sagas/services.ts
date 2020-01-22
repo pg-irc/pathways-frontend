@@ -11,11 +11,11 @@ import { HumanServiceData } from '../validation/services/types';
 import { selectBookmarkedServicesIds } from '../selectors/services/select_bookmarked_services_ids';
 import { deviceIsOnline } from '../async/network';
 
-export function* watchUpdateTaskServices(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateTaskServices);
+export function* watchUpdateServicesForTopic(): IterableIterator<ForkEffect> {
+    yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateServicesForTopic);
 }
 
-export function* updateTaskServices(action: actions.BuildServicesRequestAction): UpdateResult {
+export function* updateServicesForTopic(action: actions.BuildServicesRequestAction): UpdateResult {
     const topicId = action.payload.topicId;
     try {
         const isOnline = yield call(deviceIsOnline);

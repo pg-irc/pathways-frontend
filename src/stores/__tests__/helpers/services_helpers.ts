@@ -12,18 +12,18 @@ import * as constants from '../../../application/constants';
 
 export const buildNormalizedServices = (
     services: ReadonlyArray<ServiceBuilder>,
-    taskServicesOrError: ReadonlyArray<TaskServicesBuilder | TaskServicesErrorBuilder>,
+    servicesForTopicOrError: ReadonlyArray<ServicesForTopicBuilder | ServicesForTopicErrorBuilder>,
 ): ServiceStore => ({
     services: buildServiceMap(services),
-    servicesByTopic: buildTaskServicesOrErrorMap(taskServicesOrError),
+    servicesByTopic: buildServicesForTopicOrErrorMap(servicesForTopicOrError),
 });
 
 export const buildNormalizedServicesFromBuilders = (
     services: ReadonlyArray<HumanServiceData>,
-    taskServices: ReadonlyArray<ServicesForTopic>,
+    servicesForTopic: ReadonlyArray<ServicesForTopic>,
 ): ServiceStore => ({
     services: buildServiceMapFromBuilder(services),
-    servicesByTopic: buildTaskServicesMapFromBuilder(taskServices),
+    servicesByTopic: buildServicesForTopicMapFromBuilder(servicesForTopic),
 });
 
 export const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {
@@ -40,22 +40,22 @@ export const buildServiceMapFromBuilder = (services: ReadonlyArray<HumanServiceD
     return services.reduce(buildAndMapToId, {});
 };
 
-const buildTaskServicesOrErrorMap = (
-    taskServicesOrError: ReadonlyArray<TaskServicesBuilder | TaskServicesErrorBuilder>,
+const buildServicesForTopicOrErrorMap = (
+    servicesForTopicOrError: ReadonlyArray<ServicesForTopicBuilder | ServicesForTopicErrorBuilder>,
 ): ServicesForAllTopics => {
-    const buildAndMapToId = (map: ServicesForAllTopics, builder: TaskServicesBuilder | TaskServicesErrorBuilder):
+    const buildAndMapToId = (map: ServicesForAllTopics, builder: ServicesForTopicBuilder | ServicesForTopicErrorBuilder):
         ServicesForAllTopics => {
         return { ...map, [builder.topicId]: builder.build() };
     };
-    return taskServicesOrError.reduce(buildAndMapToId, {});
+    return servicesForTopicOrError.reduce(buildAndMapToId, {});
 };
 
-const buildTaskServicesMapFromBuilder = (taskServicesOrError: ReadonlyArray<ServicesForTopic>): ServicesForAllTopics => {
-    const buildAndMapToId = (map: ServicesForAllTopics, taskServices: ServicesForTopic): ServicesForAllTopics => {
+const buildServicesForTopicMapFromBuilder = (servicesForTopicOrError: ReadonlyArray<ServicesForTopic>): ServicesForAllTopics => {
+    const buildAndMapToId = (map: ServicesForAllTopics, servicesForTopic: ServicesForTopic): ServicesForAllTopics => {
         const topicId = aString();
-        return { ...map, [topicId]: taskServices };
+        return { ...map, [topicId]: servicesForTopic };
     };
-    return taskServicesOrError.reduce(buildAndMapToId, {});
+    return servicesForTopicOrError.reduce(buildAndMapToId, {});
 };
 
 export class PhoneNumberBuilder {
@@ -186,24 +186,24 @@ export class ServiceBuilder {
     }
 }
 
-export class TaskServicesBuilder {
+export class ServicesForTopicBuilder {
     topicId: string = aString();
     loading: boolean = false;
     message: string = aString();
     serviceIds: ReadonlyArray<Id> = [];
     expiresAt: number = Date.now();
 
-    withLoading(loading: boolean): TaskServicesBuilder {
+    withLoading(loading: boolean): ServicesForTopicBuilder {
         this.loading = loading;
         return this;
     }
 
-    withServiceIds(serviceIds: ReadonlyArray<Id>): TaskServicesBuilder {
+    withServiceIds(serviceIds: ReadonlyArray<Id>): ServicesForTopicBuilder {
         this.serviceIds = serviceIds;
         return this;
     }
 
-    withExpiresAt(expiresAt: number): TaskServicesBuilder {
+    withExpiresAt(expiresAt: number): ServicesForTopicBuilder {
         this.expiresAt = expiresAt;
         return this;
     }
@@ -222,17 +222,17 @@ export class TaskServicesBuilder {
     }
 }
 
-export class TaskServicesErrorBuilder {
+export class ServicesForTopicErrorBuilder {
     topicId: string = aString();
     loading: boolean = false;
     errorMessageType: Errors = Errors.BadServerResponse;
 
-    withLoading(loading: boolean): TaskServicesErrorBuilder {
+    withLoading(loading: boolean): ServicesForTopicErrorBuilder {
         this.loading = loading;
         return this;
     }
 
-    withErrorMessageType(errorMessageType: Errors): TaskServicesErrorBuilder {
+    withErrorMessageType(errorMessageType: Errors): ServicesForTopicErrorBuilder {
         this.errorMessageType = errorMessageType;
         return this;
     }

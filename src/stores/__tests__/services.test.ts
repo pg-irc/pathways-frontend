@@ -13,7 +13,7 @@ import { HumanServiceData, ServiceStore } from '../../validation/services/types'
 import { Errors } from '../../validation/errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../helpers/random_test_values';
-import { ServiceBuilder, buildNormalizedServices, TaskServicesBuilder, TaskServicesErrorBuilder, buildServiceMap } from './helpers/services_helpers';
+import { ServiceBuilder, buildNormalizedServices, ServicesForTopicBuilder, ServicesForTopicErrorBuilder, buildServiceMap } from './helpers/services_helpers';
 import { isServiceLoading } from '../../validation/services/types';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
@@ -21,22 +21,22 @@ import { DataPersistence } from '../persisted_data';
 
 describe('services reducer', () => {
     const aServiceBuilder = new ServiceBuilder();
-    const loadedTaskServices = new TaskServicesBuilder().withServiceIds([aServiceBuilder.id]);
-    const loadingTaskServices = new TaskServicesBuilder().withLoading(true);
-    const loadedTaskServicesError = new TaskServicesErrorBuilder();
-    const loadingTaskServicesError = new TaskServicesErrorBuilder().withLoading(true);
+    const loadedServicesForTopic = new ServicesForTopicBuilder().withServiceIds([aServiceBuilder.id]);
+    const loadingServicesForTopic = new ServicesForTopicBuilder().withLoading(true);
+    const loadedServicesForTopicError = new ServicesForTopicErrorBuilder();
+    const loadingServicesForTopicError = new ServicesForTopicErrorBuilder().withLoading(true);
     const theStore = buildNormalizedServices(
         [aServiceBuilder],
-        [loadedTaskServices, loadingTaskServices, loadedTaskServicesError, loadingTaskServicesError],
+        [loadedServicesForTopic, loadingServicesForTopic, loadedServicesForTopicError, loadingServicesForTopicError],
     );
 
     it('returns a unmodified store when the action is missing', () => {
         expect(reducer(theStore)).toBe(theStore);
     });
 
-    describe('when sending a topic services request', () => {
+    describe('when sending a services for topic request', () => {
 
-        it('creates loading topic services object', () => {
+        it('creates loading services for topic object', () => {
             const topicId = aString();
             const action: BuildServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
@@ -50,20 +50,20 @@ describe('services reducer', () => {
         it('sets state of the topic service to loading', () => {
             const action: BuildServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { topicId: loadedTaskServices.topicId, manualUserLocation: undefined },
+                payload: { topicId: loadedServicesForTopic.topicId, manualUserLocation: undefined },
             };
             const store = reducer(theStore, action);
-            const topicServices = store.servicesByTopic[loadedTaskServices.topicId];
+            const topicServices = store.servicesByTopic[loadedServicesForTopic.topicId];
             expect(isServiceLoading(topicServices)).toBe(true);
         });
 
-        it('sets loading to true on pre existing topic services error objects', () => {
+        it('sets loading to true on pre existing services for topic error objects', () => {
             const action: BuildServicesRequestAction = {
                 type: constants.LOAD_SERVICES_REQUEST,
-                payload: { topicId: loadedTaskServicesError.topicId, manualUserLocation: undefined },
+                payload: { topicId: loadedServicesForTopicError.topicId, manualUserLocation: undefined },
             };
             const store = reducer(theStore, action);
-            const topicServicesError = store.servicesByTopic[loadedTaskServicesError.topicId];
+            const topicServicesError = store.servicesByTopic[loadedServicesForTopicError.topicId];
             expect(isServiceLoading(topicServicesError)).toBe(true);
         });
 
@@ -77,8 +77,8 @@ describe('services reducer', () => {
         });
     });
 
-    describe('when populating topic services objects from a success response', () => {
-        const topic = new TopicBuilder().withId(loadingTaskServices.topicId).build();
+    describe('when populating services for topic objects from a success response', () => {
+        const topic = new TopicBuilder().withId(loadingServicesForTopic.topicId).build();
         const services: ReadonlyArray<HumanServiceData> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
         const action: BuildServicesSuccessAction = {
             type: constants.LOAD_SERVICES_SUCCESS,
@@ -120,7 +120,7 @@ describe('services reducer', () => {
             }
         });
 
-        it('sets service ids on topic services object', () => {
+        it('sets service ids on services for topic object', () => {
             if (isValidServicesForTopic(topicServicesOrErrorEntry)) {
                 const serviceIds = topicServicesOrErrorEntry.serviceIds;
                 services.forEach((service: HumanServiceData) => {
@@ -131,7 +131,7 @@ describe('services reducer', () => {
             }
         });
 
-        it('replaces service ids on existing topic services object', () => {
+        it('replaces service ids on existing services for topic object', () => {
             if (isValidServicesForTopic(topicServicesOrErrorEntry)) {
                 const serviceIds = topicServicesOrErrorEntry.serviceIds;
                 expect(serviceIds).not.toContain(aServiceBuilder.id);
@@ -150,10 +150,10 @@ describe('services reducer', () => {
 
         it('sets services by topic expiration to 24 hours from now', () => {
             const expiresAt = Date.now();
-            const taskServicesBuilder = new TaskServicesBuilder().withExpiresAt(expiresAt);
-            const topicId = taskServicesBuilder.topicId;
+            const servicesForTopicBuilder = new ServicesForTopicBuilder().withExpiresAt(expiresAt);
+            const topicId = servicesForTopicBuilder.topicId;
             const serviceBuilder = new ServiceBuilder().withId(topicId);
-            const storeBeforeAction = buildNormalizedServices([serviceBuilder], [taskServicesBuilder]);
+            const storeBeforeAction = buildNormalizedServices([serviceBuilder], [servicesForTopicBuilder]);
             const theAction: BuildServicesSuccessAction = {
                 type: constants.LOAD_SERVICES_SUCCESS,
                 payload: {
@@ -175,8 +175,8 @@ describe('services reducer', () => {
         });
     });
 
-    describe('when populating topic services error object from an error response', () => {
-        const topic = new TopicBuilder().withId(loadingTaskServicesError.topicId).build();
+    describe('when populating services for topic error object from an error response', () => {
+        const topic = new TopicBuilder().withId(loadingServicesForTopicError.topicId).build();
         const action: BuildServicesErrorAction = {
             type: constants.LOAD_SERVICES_FAILURE,
             payload: {
@@ -187,7 +187,7 @@ describe('services reducer', () => {
         const store = reducer(theStore, action);
         const topicServicesOrErrorEntry = store.servicesByTopic[topic.id];
 
-        it('sets the error message type on the topic services error object', () => {
+        it('sets the error message type on the services for topic error object', () => {
             if (topicServicesOrErrorEntry.type === constants.ERROR_SERVICES_FOR_TOPIC) {
                 expect(topicServicesOrErrorEntry.errorMessageType).toBe(Errors.BadServerResponse);
             } else {
