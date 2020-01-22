@@ -67,12 +67,14 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
                 ...store,
                 showOnboarding: action.payload.showOnboarding,
                 disableAnalytics: action.payload.disableAnalytics,
+                showPartialLocalizationMessage: action.payload.showPartialLocalizationMessage,
             });
         case constants.CLEAR_ALL_USER_DATA:
             return ({
                 ...store,
                 showOnboarding: true,
                 disableAnalytics: false,
+                showPartialLocalizationMessage: true,
             });
         default:
             return store;

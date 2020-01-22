@@ -102,5 +102,28 @@ describe('user profile reducer', () => {
             const newStore = reducer(oldStore, setShowPartialLocalizationMessage());
             expect(newStore.showPartialLocalizationMessage).toBe(false);
         });
+        test('is loaded from persisted data' , () => {
+            const partialLocalizationMessageFlag = aBoolean();
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: aBoolean(),
+                showPartialLocalizationMessage: partialLocalizationMessageFlag,
+            };
+            const dataFlippingFlag = new PersistedDataBuilder().
+                withShowPartialLocalizationMessage(!partialLocalizationMessageFlag).
+                build();
+            const actionFlippingFlag = DataPersistence.loadSuccess(dataFlippingFlag);
+            const newStore = reducer(oldStore, actionFlippingFlag);
+            expect(newStore.showPartialLocalizationMessage).toBe(!partialLocalizationMessageFlag);
+        });
+        test('is cleared by clean all user data action', () => {
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: aBoolean(),
+                showPartialLocalizationMessage: false,
+            };
+            const newStore = reducer(oldStore, clearAllUserData());
+            expect(newStore.showPartialLocalizationMessage).toBe(true);
+        });
     });
 });
