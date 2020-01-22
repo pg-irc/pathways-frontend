@@ -85,18 +85,15 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     const [hideMyLocationButton, setHideMyLocationButton] = useState(true);
     useEffect(() => {
         debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
-        console.log('Subscription to latlong changed', props.latLong);
         props.refine(props.searchTerm);
     }, [props.latLong]);
     const buildTranslatedPlaceholder = (i18n: ReactI18n, placeholder: string): string => {
         const _ = i18n._.bind(i18n);
         return _(placeholder);
     };
-    const clearSearch = (): string => props.refine('');
-    const clearLocation = (): void => {
-        setLocationInputField('');
-        props.setLocation('');
-    };
+    const clearSearch = (): void => setSearchInputField('');
+    const clearLocation = (): void => setLocationInputField('');
+
     const getOpacity = (input: string): number => input === '' ? .6 : 1;
 
     return <I18n>
@@ -106,7 +103,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='search' />
                     <TextInput
-                        style={[applicationStyles.searchInput, { opacity: getOpacity(props.currentRefinement) }]}
+                        style={[applicationStyles.searchInput, { opacity: getOpacity(searchInputField) }]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent search text changed to '${d}'`);
                             setSearchInputField(d);
