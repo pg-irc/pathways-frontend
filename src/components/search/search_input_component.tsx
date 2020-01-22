@@ -85,6 +85,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     const [hideMyLocationButton, setHideMyLocationButton] = useState(true);
     useEffect(() => {
         debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
+        console.log('Subscription to latlong changed', props.latLong);
         props.refine(props.searchTerm);
     }, [props.latLong]);
     const buildTranslatedPlaceholder = (i18n: ReactI18n, placeholder: string): string => {

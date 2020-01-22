@@ -48,6 +48,9 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
     useEffect(() => {
         props.saveSearchLocation(location);
+        if (location === '') {
+            setLatLong(undefined);
+        }
     }, [location]);
 
     useFetchLatLongFromLocation(location, setLatLong);
