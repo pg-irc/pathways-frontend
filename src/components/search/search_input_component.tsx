@@ -22,8 +22,8 @@ export interface Actions {
     readonly setLocation: (s: string) => void;
 }
 
-const renderMyLocationButton = (hideMyLocationButton: boolean, saveLocation: Function): JSX.Element => {
-    if (hideMyLocationButton) {
+const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Function): JSX.Element => {
+    if (!showMyLocationButton) {
         return <EmptyComponent />;
     }
 
@@ -48,8 +48,10 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, saveLocation: Fun
     );
 };
 
-const renderSearchButton = (hideSearchButton: boolean, searchTerm: string, location: string, setSearchTerm: Function, setSearchLocation: Function): JSX.Element => {
-    if (hideSearchButton) {
+const renderSearchButton = (showSearchButton: boolean, searchTerm: string, location: string,
+    setSearchTerm: Function, setSearchLocation: Function): JSX.Element => {
+
+    if (!showSearchButton) {
         return <EmptyComponent />;
     }
 
@@ -84,13 +86,13 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
     // linter doesn't understand state hooks with booleans for some reason
     // tslint:disable-next-line:typedef
-    const [hideMyLocationButton, setHideMyLocationButton] = useState(true);
+    const [showMyLocationButton, setShowMyLocationButton] = useState(false);
     // tslint:disable-next-line:typedef
-    const [hideSearchButton, setHideSearchButton] = useState(false);
+    const [showSearchButton, setShowSearchButton] = useState(false);
     useEffect(() => {
         debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
         props.refine(props.searchTerm);
-        setHideSearchButton(true);
+        setShowSearchButton(false);
     }, [props.latLong]);
     const buildTranslatedPlaceholder = (i18n: ReactI18n, placeholder: string): string => {
         const _ = i18n._.bind(i18n);
@@ -113,7 +115,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             debug(`SearchInputComponent search text changed to '${d}'`);
                             setSearchInputField(d);
                         }}
-                        onFocus={(): void => setHideSearchButton(false)}
+                        onFocus={(): void => setShowSearchButton(true)}
                         value={searchInputField}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
                         placeholderTextColor={colors.greyishBrown}
@@ -130,10 +132,10 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             setLocationInputField(d);
                         }}
                         onFocus={(): void => {
-                            setHideMyLocationButton(false);
-                            setHideSearchButton(false);
+                            setShowMyLocationButton(true);
+                            setShowSearchButton(true);
                         }}
-                        onBlur={(): void => setHideMyLocationButton(true)}
+                        onBlur={(): void => setShowMyLocationButton(false)}
                         value={locationInputField}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Enter city, address, or postal code')} // TODO translate
                         placeholderTextColor={colors.greyishBrown}
@@ -142,8 +144,8 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 4 }}>
-                    {renderSearchButton(hideSearchButton, searchInputField, locationInputField, props.saveSearchTerm, props.setLocation)}
-                    {renderMyLocationButton(hideMyLocationButton, setLocationInputField)}
+                    {renderSearchButton(showSearchButton, searchInputField, locationInputField, props.saveSearchTerm, props.setLocation)}
+                    {renderMyLocationButton(showMyLocationButton, setLocationInputField)}
                 </View>
             </View >
         )}
