@@ -48,7 +48,10 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, saveLocation: Fun
     );
 };
 
-const renderSearchButton = (searchTerm: string, location: string, saveSearchTerm: Function, saveLocation: Function): JSX.Element => {
+const renderSearchButton = (hideSearchButton: boolean, searchTerm: string, location: string, saveSearchTerm: Function, saveLocation: Function): JSX.Element => {
+    if (hideSearchButton) {
+        return <EmptyComponent />;
+    }
 
     const icon = <Icon
         type={'MaterialIcons'} name={'search'}
@@ -82,9 +85,12 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     // linter doesn't understand state hooks with booleans for some reason
     // tslint:disable-next-line:typedef
     const [hideMyLocationButton, setHideMyLocationButton] = useState(true);
+    // tslint:disable-next-line:typedef
+    const [hideSearchButton, setHideSearchButton] = useState(false);
     useEffect(() => {
         debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
         props.refine(props.searchTerm);
+        setHideSearchButton(true);
     }, [props.latLong]);
     const buildTranslatedPlaceholder = (i18n: ReactI18n, placeholder: string): string => {
         const _ = i18n._.bind(i18n);
@@ -107,6 +113,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             debug(`SearchInputComponent search text changed to '${d}'`);
                             setSearchInputField(d);
                         }}
+                        onFocus={(): void => setHideSearchButton(false)}
                         value={searchInputField}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
                         placeholderTextColor={colors.greyishBrown}
@@ -122,7 +129,10 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             debug(`SearchInputComponent location text changed to '${d}'`);
                             setLocationInputField(d);
                         }}
-                        onFocus={(): void => setHideMyLocationButton(false)}
+                        onFocus={(): void => {
+                            setHideMyLocationButton(false);
+                            setHideSearchButton(false);
+                        }}
                         onBlur={(): void => setHideMyLocationButton(true)}
                         value={locationInputField}
                         placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Enter city, address, or postal code')} // TODO translate
@@ -132,7 +142,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     <ClearInputButton visible={locationInputField !== ''} onPress={clearLocation} />
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 4 }}>
-                    {renderSearchButton(searchInputField, locationInputField, props.saveSearchTerm, props.setLocation)}
+                    {renderSearchButton(hideSearchButton, searchInputField, locationInputField, props.saveSearchTerm, props.setLocation)}
                     {renderMyLocationButton(hideMyLocationButton, setLocationInputField)}
                 </View>
             </View >
