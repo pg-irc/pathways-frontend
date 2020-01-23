@@ -53,7 +53,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             ListEmptyComponent={EmptyComponent}
             ItemSeparatorComponent={SearchListSeparator} />
     );
-    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey }}>{serviceList}{loadMoreButton}</View>;
+    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{serviceList}{loadMoreButton}</View>;
 };
 
 const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Element => {
