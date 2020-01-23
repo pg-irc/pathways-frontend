@@ -144,7 +144,24 @@ describe('user data schema', () => {
                 const validUserData = new PersistedDataBuilder().withShowPartialLocalizationMessage(showPartialLocalizationMessage).build();
                 const validator = validateUserData(validUserData);
                 expect(validator.isValid).toBe(false);
-            })
+            });
+        });
+
+        describe('the disableAnalytics property', () => {
+
+            test('passes with valid data', () => {
+                const disableAnalytics = aBoolean();
+                const validUserData = new PersistedDataBuilder().withDisableAnalytics(disableAnalytics).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('fails with valid data', () => {
+                const disableAnalytics: any = null;
+                const validUserData = new PersistedDataBuilder().withDisableAnalytics(disableAnalytics).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(false);
+            });
         });
     });
 });

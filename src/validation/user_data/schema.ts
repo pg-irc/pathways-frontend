@@ -138,6 +138,9 @@ export const userData = {
         "bookmarkedServices": serviceMap,
         "showPartialLocalizationMessage": {
             "type": "boolean"
+        },
+        "disableAnalytics": {
+            "type": "boolean"
         }
     }
 };

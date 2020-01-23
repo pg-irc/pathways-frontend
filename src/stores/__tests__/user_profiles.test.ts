@@ -6,7 +6,9 @@ import { DataPersistence } from '../persisted_data';
 import { clearAllUserData } from '../questionnaire/actions';
 
 describe('user profile reducer', () => {
+
     describe('the onboarding flag', () => {
+
         test('is cleared by the set onboarding action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: true,
@@ -45,8 +47,10 @@ describe('user profile reducer', () => {
             expect(newStore.showOnboarding).toBe(true);
         });
     });
+
     describe('the disable analytics flag', () => {
-        it('is set by the disable analytics action', () => {
+
+        test('is set by the disable analytics action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: false,
@@ -55,7 +59,8 @@ describe('user profile reducer', () => {
             const newStore = reducer(oldStore, disableAnalytics(true));
             expect(newStore.disableAnalytics).toBe(true);
         });
-        it('is set by the disable analytics action', () => {
+
+        test('is set by the disable analytics action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: true,
@@ -65,6 +70,7 @@ describe('user profile reducer', () => {
             expect(newStore.disableAnalytics).toBe(false);
 
         });
+
         test('is loaded from persisted data', () => {
             const disableAnalyticsFlag = aBoolean();
             const oldStore: UserProfileStore = {
@@ -81,6 +87,7 @@ describe('user profile reducer', () => {
 
             expect(newStore.disableAnalytics).toBe(!disableAnalyticsFlag);
         });
+
         test('is cleared by clean all user data action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
@@ -92,8 +99,10 @@ describe('user profile reducer', () => {
             expect(newStore.disableAnalytics).toBe(false);
         });
     });
+
     describe('the showPartialLocalizationMessage flag', () => {
-        test('is cleared by the set show partial localization message action', () => {
+
+        test('is cleared by the set partial localization message action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
@@ -102,6 +111,7 @@ describe('user profile reducer', () => {
             const newStore = reducer(oldStore, setShowPartialLocalizationMessage());
             expect(newStore.showPartialLocalizationMessage).toBe(false);
         });
+
         test('is loaded from persisted data' , () => {
             const partialLocalizationMessageFlag = aBoolean();
             const oldStore: UserProfileStore = {
@@ -116,6 +126,7 @@ describe('user profile reducer', () => {
             const newStore = reducer(oldStore, actionFlippingFlag);
             expect(newStore.showPartialLocalizationMessage).toBe(!partialLocalizationMessageFlag);
         });
+
         test('is cleared by clean all user data action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),

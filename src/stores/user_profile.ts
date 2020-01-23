@@ -5,7 +5,7 @@ import { ClearAllUserDataAction } from './questionnaire/actions';
 
 export type SetOnboardingAction = Readonly<ReturnType<typeof setOnboarding>>;
 export type DisableAnalyticsAction = Readonly<ReturnType<typeof disableAnalytics>>;
-export type SetShowPartialLocalizationMessageAction = Readonly<ReturnType<typeof setShowPartialLocalizationMessage>>;
+export type SetPartialLocalizationMessageAction = Readonly<ReturnType<typeof setShowPartialLocalizationMessage>>;
 
 // tslint:disable-next-line:typedef
 export const setOnboarding = () => (
@@ -27,7 +27,7 @@ export type UserProfileAction =
     ClearAllUserDataAction |
     DisableAnalyticsAction |
     DataPersistence.LoadSuccessAction |
-    SetShowPartialLocalizationMessageAction;
+    SetPartialLocalizationMessageAction;
 
 export interface UserProfileStore {
     readonly showOnboarding: boolean;
