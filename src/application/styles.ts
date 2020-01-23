@@ -326,8 +326,8 @@ export const applicationStyles = StyleSheet.create({
         borderRadius: values.roundedBorderRadius,
         alignSelf: 'flex-start',
         flexDirection: 'row',
-        paddingHorizontal: 16,
-        paddingVertical: 8,
+        paddingHorizontal: 15,
+        paddingVertical: 4,
     },
     whiteTealButton: {
         backgroundColor: colors.white,
@@ -339,7 +339,7 @@ export const applicationStyles = StyleSheet.create({
         fontSize: 16,
         fontFamily: getNormalFontFamily(),
         flex: 1,
-        height: 48,
+        height: 36,
     },
     searchContainer: {
         backgroundColor: colors.white,

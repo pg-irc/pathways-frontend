@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
-import { values, applicationStyles, colors, getNormalFontFamily } from '../../application/styles';
+import { values, applicationStyles, colors, textStyles } from '../../application/styles';
 import { LatLong } from '../../validation/latlong/types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
@@ -29,15 +29,14 @@ const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Fun
 
     const icon = <Icon
         type={'MaterialIcons'} name={'my-location'}
-        style={{ color: colors.greyishBrown, fontSize: 16, marginRight: 8 }}
+        style={{ color: colors.greyishBrown, fontSize: 16, padding: 3 }}
     />;
 
-    const text = <Text style={{
-        color: colors.greyishBrown,
-        fontSize: 12,
-        fontWeight: 'bold',
-        fontFamily: getNormalFontFamily(),
-    }}><Trans>My Location</Trans></Text>;
+    const text = <Text style={[textStyles.button, { color: colors.greyishBrown, fontSize: 12, padding: 3 }]}>
+        <Trans>
+            My Location
+        </Trans>
+    </Text>;
 
     return (
         <TouchableOpacity
@@ -50,22 +49,15 @@ const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Fun
 
 const renderSearchButton = (showSearchButton: boolean, searchTerm: string, location: string,
     setSearchTerm: Function, setSearchLocation: Function): JSX.Element => {
-
     if (!showSearchButton) {
         return <EmptyComponent />;
     }
 
-    const icon = <Icon
-        type={'MaterialIcons'} name={'search'}
-        style={{ color: colors.white, fontSize: values.smallIconSize, marginRight: 8 }}
-    />;
-
-    const text = <Text style={{
-        color: colors.white,
-        fontSize: 16,
-        fontWeight: 'bold',
-        fontFamily: getNormalFontFamily(),
-    }}>Search</Text>;
+    const text = <Text style={[textStyles.button, { fontSize: 16, padding: 5 }]}>
+        <Trans>
+            Search
+        </Trans>
+    </Text>;
 
     return (
         <TouchableOpacity
@@ -74,7 +66,7 @@ const renderSearchButton = (showSearchButton: boolean, searchTerm: string, locat
                 setSearchTerm(searchTerm);
                 setSearchLocation(location);
             }}>
-            {icon}{text}
+            {text}
         </TouchableOpacity>
     );
 };
@@ -158,12 +150,10 @@ interface IconProps {
 }
 
 const InputIcon = ({ name }: IconProps): JSX.Element => (
-    <View style={{ width: 48 }}>
-        <Icon name={name}
-            type='MaterialIcons'
-            style={{ color: colors.teal, fontSize: values.mediumIconSize, paddingLeft: 12 }}
-        />
-    </View>
+    <Icon name={name}
+        type='MaterialIcons'
+        style={{ color: colors.teal, fontSize: values.mediumIconSize, padding: 5 }}
+    />
 );
 
 export const extractSearchStrings = (): JSX.Element => (
