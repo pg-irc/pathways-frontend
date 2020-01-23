@@ -48,7 +48,7 @@ const renderMyLocationButton = (hideMyLocationButton: boolean, saveLocation: Fun
     );
 };
 
-const renderSearchButton = (hideSearchButton: boolean, searchTerm: string, location: string, saveSearchTerm: Function, saveLocation: Function): JSX.Element => {
+const renderSearchButton = (hideSearchButton: boolean, searchTerm: string, location: string, setSearchTerm: Function, setSearchLocation: Function): JSX.Element => {
     if (hideSearchButton) {
         return <EmptyComponent />;
     }
@@ -69,8 +69,8 @@ const renderSearchButton = (hideSearchButton: boolean, searchTerm: string, locat
         <TouchableOpacity
             style={[applicationStyles.searchButton, { backgroundColor: colors.lightTeal }]}
             onPress={(): void => {
-                saveSearchTerm(searchTerm);
-                saveLocation(location);
+                setSearchTerm(searchTerm);
+                setSearchLocation(location);
             }}>
             {icon}{text}
         </TouchableOpacity>
