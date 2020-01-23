@@ -51,23 +51,26 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             keyExtractor={keyExtractor}
             renderItem={renderSearchHit(props)}
             ListEmptyComponent={EmptyComponent}
-            ItemSeparatorComponent={SearchListSeparator} />
+            ItemSeparatorComponent={SearchListSeparator}
+            ListFooterComponent={loadMoreButton} />
     );
-    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey }}>{serviceList}{loadMoreButton}</View>;
+    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{serviceList}</View>;
 };
 
 const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Element => {
     if (hasMore) {
         return (
-            <Button onPress={refineNext} style={{
-                backgroundColor: colors.teal,
-                borderRadius: values.roundedBorderRadius,
-                justifyContent: 'center',
-                marginVertical: 16,
-                marginHorizontal: 24,
-            }} >
-                <Text style={textStyles.button} uppercase={false}><Trans>Show more services</Trans></Text>
-            </Button>);
+            <View style={{ backgroundColor: colors.lightGrey }}>
+                <Button onPress={refineNext} style={{
+                    backgroundColor: colors.teal,
+                    borderRadius: values.roundedBorderRadius,
+                    justifyContent: 'center',
+                    marginVertical: 16,
+                    marginHorizontal: 24,
+                }} >
+                    <Text style={textStyles.button} uppercase={false}><Trans>Show more services</Trans></Text>
+                </Button>
+            </View>);
     }
     return <EmptyComponent />;
 };

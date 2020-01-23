@@ -65,7 +65,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     );
     return <I18n>{(): JSX.Element => {
 
-        return <View style={{ backgroundColor: colors.pale }}>
+        return <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <InstantSearch indexName={servicesIndex()} searchClient={searchClient} {...props} >
                 <SearchInputConnectedComponent
                     latLong={latLong}
