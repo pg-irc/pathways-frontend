@@ -27,19 +27,21 @@ export const PartialLocalizationMessageComponent = (props: Props): JSX.Element =
     }
 
     return (
-        <View style={{ backgroundColor: colors.white, paddingVertical: 19, paddingHorizontal: 24 }}>
+        <View style={{ backgroundColor: colors.lightGrey }}>
+            <View style={{ backgroundColor: colors.white, paddingVertical: 19, paddingHorizontal: 24, marginBottom: 8 }}>
             <Message />
             <RemoveMessageButton onPress={onPress} />
+        </View>
         </View>
     );
 };
 
 const Message = (): JSX.Element => (
-    <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
+    <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
         <Text style={[textStyles.listItemDetail, { fontSize: 14 }]}>
             <Trans>
                 Information about services is currently only available in English. For support in other languages, please
-                </Trans> <Text onPress={onPressForPhoneNumber} style={[textStyles.listItemDetail, { color: 'teal', fontWeight: 'bold'} ]}>
+                </Trans> <Text onPress={onPressForPhoneNumber} style={[textStyles.listItemDetail, { color: 'teal', fontWeight: 'bold'}]}>
                 <Trans>call BC211.</Trans>
             </Text>
         </Text>
@@ -57,7 +59,7 @@ export interface RemoveMessageButtonProps {
 }
 
 const RemoveMessageButton = (props: RemoveMessageButtonProps): JSX.Element => (
-    <View style={{marginTop: 10}}>
+    <View style={{ marginTop: 10, flexDirection: 'row-reverse' }}>
         <TouchableOpacity onPress={props.onPress}>
             <Text style={[textStyles.listItemDetail, {fontSize: 16, color: 'teal', fontWeight: 'bold'}]}>
                 <Trans>Don't show again</Trans>
