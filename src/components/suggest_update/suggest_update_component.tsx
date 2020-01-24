@@ -1,5 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import { View, TextInput, Text, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import { Trans, I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { Icon } from 'native-base';
@@ -10,7 +10,8 @@ interface Props {
     readonly isEnabled: boolean;
     readonly onChangeText: (text: string) => void;
     readonly textValue: string;
-    readonly children: JSX.Element;
+    readonly label: JSX.Element;
+    readonly style?: ViewStyle;
 }
 
 export const SuggestUpdateComponent = (props: Props): JSX.Element => {
@@ -18,22 +19,16 @@ export const SuggestUpdateComponent = (props: Props): JSX.Element => {
     const onEditingTogglePress = (): void => setIsEditing(!isEditing);
 
     if (!props.isEnabled) {
-        return props.children;
+        return <EmptyComponent />;
     }
 
     return (
-        <View>
-            <View style={{ flexDirection: 'row', flex: 4, alignItems: 'center' }}>
-                <View style={{ flex: 3 }}>
-                    {props.children}
-                </View>
-                <View style={{ flex: 1 }}>
-                    <ToggleInputComponent
-                        onPress={onEditingTogglePress}
-                        isEditing={isEditing}
-                    />
-                </View>
-            </View>
+        <View style={[{  }, props.style]}>
+            <ToggleInputComponent
+                onPress={onEditingTogglePress}
+                isEditing={isEditing}
+                label={props.label}
+            />
             <InputComponent
                 onChangeText={props.onChangeText}
                 isEditing={isEditing}
@@ -44,37 +39,45 @@ export const SuggestUpdateComponent = (props: Props): JSX.Element => {
 
 };
 
-interface EditingToggleComponentProps {
+interface ToggleInputComponentProps {
     readonly onPress: () => void;
     readonly isEditing: boolean;
+    readonly label: JSX.Element;
 }
 
-const ToggleInputComponent = (props: EditingToggleComponentProps): JSX.Element => {
+const ToggleInputComponent = (props: ToggleInputComponentProps): JSX.Element => {
     const iconName = props.isEditing ? 'check-square' : 'square-o';
     const color = props.isEditing ? colors.teal : colors.darkGreyWithAlpha;
+    const textStyle = [textStyles.headline6, { color }];
+
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-            <TouchableOpacity onPress={props.onPress}>
-                <Icon
-                    type={'FontAwesome'}
-                    name={iconName}
-                    style={{ padding: 5, color }}
-                />
-            </TouchableOpacity>
-            <Text style={[textStyles.headline6, { textAlign: 'right', color }]}>
-                <Trans>Suggest an update</Trans>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} >
+            <Text style={textStyle}>
+                {props.label}
             </Text>
+            <TouchableOpacity onPress={props.onPress}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={textStyle}>
+                        <Trans>Suggest an update</Trans>
+                    </Text>
+                    <Icon
+                        type={'FontAwesome'}
+                        name={iconName}
+                        style={{ padding: 5, color }}
+                    />
+                </View>
+            </TouchableOpacity>
         </View>
     );
 };
 
-interface EditingInputComponentProps {
+interface InputComponentProps {
     readonly onChangeText: (text: string) => void;
     readonly isEditing: boolean;
     readonly textValue: string;
 }
 
-const InputComponent = (props: EditingInputComponentProps): JSX.Element => {
+const InputComponent = (props: InputComponentProps): JSX.Element => {
     const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.black);
     const onBlur = (): void => setTextcolor(colors.teal);
     const onFocus = (): void => setTextcolor(colors.black);
@@ -102,6 +105,7 @@ const InputComponent = (props: EditingInputComponentProps): JSX.Element => {
                         borderRadius: 5,
                         padding: 5,
                         color: textColor,
+                        marginBottom: 10,
                     }}
                 />
             )

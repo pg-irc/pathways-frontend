@@ -52,15 +52,17 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     return (
         <Content padder style={{ flex: 1 }}>
             <BannerImageComponent imageSource={undefined} />
+            {/* TODO: Remove and replace this temporary button */}
             <SuggestAnUpdateButton onPress={onSuggestAnUpdatePress} />
             <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
             <SuggestUpdateComponent
                 isEnabled={isSuggestingUpdates}
                 onChangeText={setSuggestedUpdateForField('nameSuggestion')}
                 textValue={suggestedUpdates.nameSuggestion || ''}
-            >
-                <TitleComponent title={props.service.name} />
-            </SuggestUpdateComponent>
+                label={<Trans>Name</Trans>}
+                style={{ paddingHorizontal: values.backgroundTextPadding }}
+            />
+            <TitleComponent title={props.service.name} />
             <ServiceOrganization
                 history={props.history}
                 name={props.service.organizationName}
@@ -72,9 +74,10 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 isEnabled={isSuggestingUpdates}
                 onChangeText={setSuggestedUpdateForField('descriptionSuggestion')}
                 textValue={suggestedUpdates.descriptionSuggestion || ''}
-            >
-                <MarkdownBodyComponent body={props.service.description} shouldBeExpandable={true} />
-            </SuggestUpdateComponent>
+                label={<Trans>Description</Trans>}
+                style={{ paddingHorizontal: values.backgroundTextPadding }}
+            />
+            <MarkdownBodyComponent body={props.service.description} shouldBeExpandable={true} />
             <DividerComponent />
             <ServiceContactDetails
                 service={props.service}
@@ -100,18 +103,16 @@ const ServiceOrganization = (props: ServiceOrganizationProps): JSX.Element => (
         <DividerComponent />
         <SuggestUpdateComponent
             isEnabled={props.isSuggestingUpdates}
-            onChangeText={props.setSuggestedUpdateForField('organizationSuggestion')}
-            textValue={props.suggestedUpdates.organizationSuggestion || ''}
-        >
-            <View>
-                <Text style={[textStyles.paragraphBoldBlackLeft, { marginRight: 5 }]}>
-                    <Trans>Provided by</Trans>:
-                </Text>
-                <TouchableOpacity onPress={(): void => undefined}>
-                    <Text style={textStyles.URL}>{props.name.toUpperCase()}</Text>
-                </TouchableOpacity>
-            </View>
-        </SuggestUpdateComponent>
+            onChangeText={props.setSuggestedUpdateForField('nameSuggestion')}
+            textValue={props.suggestedUpdates.nameSuggestion || ''}
+            label={<Trans>Organization</Trans>}
+        />
+        <Text style={[textStyles.paragraphBoldBlackLeft, { marginRight: 5 }]}>
+            <Trans>Provided by</Trans>:
+        </Text>
+        <TouchableOpacity onPress={(): void => undefined}>
+            <Text style={textStyles.URL}>{props.name.toUpperCase()}</Text>
+        </TouchableOpacity>
         <DividerComponent />
     </View>
 );
@@ -147,50 +148,50 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('addressSuggestion')}
                 textValue={props.suggestedUpdates.addressSuggestion || ''}
-            >
-                <AddressesComponent
-                    addresses={filterPhysicalAddresses(props.service.addresses)}
-                    linkContextForAnalytics={linkContextForAnalytics}
-                    currentPathForAnalytics={props.currentPathForAnaltyics}
-                    onPressForAddress={onPressForAddress}
-                />
-            </SuggestUpdateComponent>
+                label={<Trans>Addresses</Trans>}
+            />
+            <AddressesComponent
+                addresses={filterPhysicalAddresses(props.service.addresses)}
+                linkContextForAnalytics={linkContextForAnalytics}
+                currentPathForAnalytics={props.currentPathForAnaltyics}
+                onPressForAddress={onPressForAddress}
+            />
             <DividerComponent />
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('phoneSuggestion')}
                 textValue={props.suggestedUpdates.phoneSuggestion || ''}
-            >
-                <PhoneNumbersComponent
-                    phoneNumbers={props.service.phoneNumbers}
-                    linkContextForAnalytics={linkContextForAnalytics}
-                    currentPathForAnalytics={props.currentPathForAnaltyics}
-                />
-            </SuggestUpdateComponent>
+                label={<Trans>Phone numbers</Trans>}
+            />
+            <PhoneNumbersComponent
+                phoneNumbers={props.service.phoneNumbers}
+                linkContextForAnalytics={linkContextForAnalytics}
+                currentPathForAnalytics={props.currentPathForAnaltyics}
+            />
             <DividerComponent />
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('websiteSuggestion')}
                 textValue={props.suggestedUpdates.websiteSuggestion || ''}
-            >
-                <WebsiteComponent
-                    website={props.service.website}
-                    linkContextForAnalytics={linkContextForAnalytics}
-                    currentPathForAnalytics={props.currentPathForAnaltyics}
-                />
-            </SuggestUpdateComponent>
+                label={<Trans>Website</Trans>}
+            />
+            <WebsiteComponent
+                website={props.service.website}
+                linkContextForAnalytics={linkContextForAnalytics}
+                currentPathForAnalytics={props.currentPathForAnaltyics}
+            />
             <DividerComponent />
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('emailSuggestion')}
                 textValue={props.suggestedUpdates.emailSuggestion || ''}
-            >
-                <EmailComponent
-                    email={props.service.email}
-                    linkContextForAnalytics={linkContextForAnalytics}
-                    currentPathForAnalytics={props.currentPathForAnaltyics}
-                />
-            </SuggestUpdateComponent>
+                label={<Trans>Email</Trans>}
+            />
+            <EmailComponent
+                email={props.service.email}
+                linkContextForAnalytics={linkContextForAnalytics}
+                currentPathForAnalytics={props.currentPathForAnaltyics}
+            />
             <DividerComponent />
             <ContentVerificationComponent verificationDate={'N/A'} />
             <DividerComponent />
