@@ -50,7 +50,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const onSuggestAnUpdatePress = (): void => setIsSuggestingUpdates(!isSuggestingUpdates);
 
     return (
-        <Content padder style={{ flex: 1 }}>
+        <Content padder style={{ flex: 1 }} enableResetScrollToCoords={false} extraHeight={150}>
             <BannerImageComponent imageSource={undefined} />
             {/* TODO: Remove and replace this temporary button */}
             <SuggestAnUpdateButton onPress={onSuggestAnUpdatePress} />
@@ -103,8 +103,8 @@ const ServiceOrganization = (props: ServiceOrganizationProps): JSX.Element => (
         <DividerComponent />
         <SuggestUpdateComponent
             isEnabled={props.isSuggestingUpdates}
-            onChangeText={props.setSuggestedUpdateForField('nameSuggestion')}
-            textValue={props.suggestedUpdates.nameSuggestion || ''}
+            onChangeText={props.setSuggestedUpdateForField('organizationSuggestion')}
+            textValue={props.suggestedUpdates.organizationSuggestion || ''}
             label={<Trans>Organization</Trans>}
         />
         <Text style={[textStyles.paragraphBoldBlackLeft, { marginRight: 5 }]}>
