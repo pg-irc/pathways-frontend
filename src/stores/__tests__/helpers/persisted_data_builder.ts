@@ -47,7 +47,7 @@ export class PersistedDataBuilder {
         return this;
     }
 
-    withSearchLocatuib(searchLocation: string): PersistedDataBuilder {
+    withSearchLocation(searchLocation: string): PersistedDataBuilder {
         this.searchLocation = searchLocation;
         return this;
     }

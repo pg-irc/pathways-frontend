@@ -141,6 +141,12 @@ export const userData = {
         },
         "disableAnalytics": {
             "type": "boolean"
-        }
+        },
+        "searchTerm": {
+            "type": "string"
+        },
+        "searchLocation": {
+            "type": "string"
+        },
     }
 };

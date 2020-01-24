@@ -163,5 +163,39 @@ describe('user data schema', () => {
                 expect(validator.isValid).toBe(false);
             });
         });
+
+        describe('searchTerm property', () => {
+
+            test('passes with valid data', () => {
+                const searchTerm = aString();
+                const validUserData = new PersistedDataBuilder().withSearchTerm(searchTerm).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('fails with valid data', () => {
+                const searchTerm: any = null;
+                const validUserData = new PersistedDataBuilder().withSearchTerm(searchTerm).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(false);
+            });
+        });
+
+        describe('searchLocation property', () => {
+
+            test('passes with valid data', () => {
+                const searchLocation = aString();
+                const validUserData = new PersistedDataBuilder().withSearchLocation(searchLocation).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('fails with valid data', () => {
+                const searchLocation: any = null;
+                const validUserData = new PersistedDataBuilder().withSearchLocation(searchLocation).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(false);
+            });
+        });
     });
 });
