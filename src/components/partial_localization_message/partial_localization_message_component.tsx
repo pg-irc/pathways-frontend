@@ -18,7 +18,7 @@ export interface PartialLocalizationMessageComponentActions {
 type Props = PartialLocalizationMessageComponentProps & PartialLocalizationMessageComponentActions;
 
 export const PartialLocalizationMessageComponent = (props: Props): JSX.Element => {
-    const onPress = (): SetPartialLocalizationMessageAction => (
+    const onPressRemovebutton = (): SetPartialLocalizationMessageAction => (
         props.setPartialLocalizationMessage()
     );
 
@@ -29,14 +29,14 @@ export const PartialLocalizationMessageComponent = (props: Props): JSX.Element =
     return (
         <View style={{ backgroundColor: colors.lightGrey }}>
             <View style={{ backgroundColor: colors.white, paddingVertical: 19, paddingHorizontal: 24, marginBottom: 8 }}>
-            <Message />
-            <RemoveMessageButton onPress={onPress} />
-        </View>
+                {renderMessage()}
+                {renderRemoveButton(onPressRemovebutton)}
+            </View>
         </View>
     );
 };
 
-const Message = (): JSX.Element => (
+const renderMessage = (): JSX.Element => (
     <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
         <Text style={[textStyles.listItemDetail, { fontSize: 14 }]}>
             <Trans>
@@ -54,13 +54,9 @@ const onPressForPhoneNumber = (): void => {
     openURL(linkValue);
 };
 
-export interface RemoveMessageButtonProps {
-    readonly onPress: () => void;
-}
-
-const RemoveMessageButton = (props: RemoveMessageButtonProps): JSX.Element => (
+const renderRemoveButton = (onPress: () => void): JSX.Element => (
     <View style={{ marginTop: 10, flexDirection: 'row-reverse' }}>
-        <TouchableOpacity onPress={props.onPress}>
+        <TouchableOpacity onPress={onPress}>
             <Text style={[textStyles.listItemDetail, {fontSize: 16, color: 'teal', fontWeight: 'bold'}]}>
                 <Trans>Don't show again</Trans>
             </Text>
