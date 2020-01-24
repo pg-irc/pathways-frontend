@@ -53,7 +53,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         <Content padder style={{ flex: 1 }} enableResetScrollToCoords={false} extraHeight={150}>
             <BannerImageComponent imageSource={undefined} />
             {/* TODO: Remove and replace this temporary button */}
-            <SuggestAnUpdateButton onPress={onSuggestAnUpdatePress} />
+            <TemporarySuggestAnUpdateButton onPress={onSuggestAnUpdatePress} />
             <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
             <SuggestUpdateComponent
                 isEnabled={isSuggestingUpdates}
@@ -194,12 +194,11 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <DividerComponent />
             <ContentVerificationComponent verificationDate={'N/A'} />
-            <DividerComponent />
         </View>
     );
  };
 
-const SuggestAnUpdateButton = (props: { readonly onPress: () => void } ): JSX.Element => (
+const TemporarySuggestAnUpdateButton = (props: { readonly onPress: () => void } ): JSX.Element => (
     <TouchableOpacity
         onPress={props.onPress}
         style={{ borderWidth: 5, borderColor: colors.darkGreyWithAlpha, padding: 10 }}

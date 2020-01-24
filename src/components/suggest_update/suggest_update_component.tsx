@@ -23,7 +23,7 @@ export const SuggestUpdateComponent = (props: Props): JSX.Element => {
     }
 
     return (
-        <View style={[{  }, props.style]}>
+        <View style={props.style}>
             <ToggleInputComponent
                 onPress={onEditingTogglePress}
                 isEditing={isEditing}
