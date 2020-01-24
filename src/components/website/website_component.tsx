@@ -4,7 +4,6 @@ import { View, Text } from 'react-native';
 import { Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { CardButtonComponent } from '../card_button/card_button_component';
-import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles, colors, values } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
 import { sendLinkPressedEvent } from '../../sagas/analytics/events';
@@ -33,7 +32,6 @@ export const WebsiteComponent = (props: Props): JSX.Element => (
             }
             onPress={getOnPressForWebsite(props.website, props.currentPathForAnalytics, props.linkContextForAnalytics)}
         />
-        <DividerComponent />
     </View>
 );
 

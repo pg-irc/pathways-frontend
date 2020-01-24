@@ -9,6 +9,7 @@ import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles, colors, values } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
 import { sendLinkPressedEvent } from '../../sagas/analytics/events';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
@@ -38,7 +39,7 @@ export const PhoneNumbersComponent = (props: Props): JSX.Element => {
                             getOnPressForPhoneNumber(phoneNumber, props.currentPathForAnalytics, props.linkContextForAnalytics)
                         }
                     />
-                    <DividerComponent />
+                    { index === props.phoneNumbers.length - 1 ? <EmptyComponent /> : <DividerComponent /> }
                 </View>
             , props.phoneNumbers)}
         </View>
