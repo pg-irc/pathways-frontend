@@ -1,6 +1,7 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
+import { t } from '@lingui/macro';
 import { Icon } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
@@ -12,10 +13,8 @@ interface Props {
     readonly children: JSX.Element;
 }
 
-type StateAndSetState = readonly [boolean, Dispatch<SetStateAction<boolean>>];
-
 export const SuggestUpdateComponent = (props: Props): JSX.Element => {
-    const [isEditing, setIsEditing]: StateAndSetState = useState(false);
+    const [isEditing, setIsEditing]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const onEditingTogglePress = (): void => setIsEditing(!isEditing);
 
     if (!props.isEnabled) {
@@ -76,22 +75,37 @@ interface EditingInputComponentProps {
 }
 
 const InputComponent = (props: EditingInputComponentProps): JSX.Element => {
+    const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.black);
+    const onBlur = (): void => setTextcolor(colors.teal);
+    const onFocus = (): void => setTextcolor(colors.black);
+
     if (!props.isEditing) {
         return <EmptyComponent />;
     }
+
     return (
-        <TextInput
-            numberOfLines={5}
-            multiline={true}
-            onChangeText={props.onChangeText}
-            value={props.textValue}
-            textAlignVertical={'top'}
-            style={{
-                borderColor: colors.teal,
-                borderWidth: 1,
-                borderRadius: 5,
-                padding: 5,
-            }}
-        />
+        <I18n>
+        {
+            (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
+                <TextInput
+                    numberOfLines={5}
+                    multiline={true}
+                    onChangeText={props.onChangeText}
+                    value={props.textValue}
+                    textAlignVertical={'top'}
+                    placeholder={i18n._(t`Comment or suggest edits (optional)`)}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
+                    style={{
+                        borderColor: colors.teal,
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        padding: 5,
+                        color: textColor,
+                    }}
+                />
+            )
+        }
+        </I18n>
     );
 };
