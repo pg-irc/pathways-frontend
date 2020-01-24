@@ -37,7 +37,7 @@ export const PartialLocalizationMessageComponent = (props: Props): JSX.Element =
 };
 
 const renderMessage = (): JSX.Element => (
-    <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+    <View>
         <Text style={[textStyles.listItemDetail, { fontSize: 14 }]}>
             <Trans>
                 Information about services is currently only available in English. For support in other languages, please

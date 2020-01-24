@@ -5,7 +5,7 @@ import { SearchComponentProps, SearchComponent, SearchComponentActions } from '.
 import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
 import { saveService, SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
-import { disableAnalytics, DisableAnalyticsAction, SetPartialLocalizationMessageAction, setShowPartialLocalizationMessage } from '../../stores/user_profile';
+import { disableAnalytics, DisableAnalyticsAction, SetPartialLocalizationMessageAction, setPartialLocalizationMessage } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import { SaveSearchTermAction, SaveSearchLocationAction, saveSearchLocation, saveSearchTerm } from '../../stores/search';
 import { selectSearchTerm } from '../../selectors/search/select_search_term';
@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
         dispatch(saveSearchLocation(searchLocation))
     ),
     setPartialLocalizationMessage: (): SetPartialLocalizationMessageAction => (
-        dispatch(setShowPartialLocalizationMessage())
+        dispatch(setPartialLocalizationMessage())
     ),
 });
 

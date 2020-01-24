@@ -5,7 +5,7 @@ import { ClearAllUserDataAction } from './questionnaire/actions';
 
 export type SetOnboardingAction = Readonly<ReturnType<typeof setOnboarding>>;
 export type DisableAnalyticsAction = Readonly<ReturnType<typeof disableAnalytics>>;
-export type SetPartialLocalizationMessageAction = Readonly<ReturnType<typeof setShowPartialLocalizationMessage>>;
+export type SetPartialLocalizationMessageAction = Readonly<ReturnType<typeof setPartialLocalizationMessage>>;
 
 // tslint:disable-next-line:typedef
 export const setOnboarding = () => (
@@ -18,7 +18,7 @@ export const disableAnalytics = (disable: boolean) => (
 );
 
 // tslint:disable-next-line: typedef
-export const setShowPartialLocalizationMessage = () => (
+export const setPartialLocalizationMessage = () => (
     helpers.makeAction(constants.SET_PARTIAL_LOCALIZATION_MESSAGE)
 );
 
