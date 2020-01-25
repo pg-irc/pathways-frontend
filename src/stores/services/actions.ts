@@ -6,6 +6,7 @@ import { Errors } from '../../validation/errors/types';
 import { LatLong } from '../../validation/latlong/types';
 import { DataPersistence } from '../persisted_data';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
+import { SetPartialLocalizationMessageAction } from '../user_profile';
 
 export type BuildServicesRequestAction = Readonly<ReturnType<typeof buildServicesRequest>>;
 
@@ -28,7 +29,8 @@ export type ServicesAction =
     DataPersistence.LoadRequestAction |
     DataPersistence.LoadSuccessAction |
     DataPersistence.LoadFailureAction |
-    ClearAllUserDataAction;
+    ClearAllUserDataAction |
+    SetPartialLocalizationMessageAction;
 
 // tslint:disable-next-line:typedef
 export const buildServicesRequest = (topicId: TopicId, manualUserLocation?: LatLong) => (

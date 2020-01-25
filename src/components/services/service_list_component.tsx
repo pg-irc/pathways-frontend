@@ -21,18 +21,22 @@ import * as R from 'ramda';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
+import { PartialLocalizationMessageComponent } from '../partial_localization_message/partial_localization_message_component';
+import { SetPartialLocalizationMessageAction } from '../../stores/user_profile';
 
 export interface ServiceListProps {
     readonly topic: Topic;
     readonly topicServicesOrError: SelectorTopicServices;
     readonly manualUserLocation?: LatLong;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly showPartialLocalizationMessage: boolean;
 }
 
 export interface ServiceListActions {
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly setPartialLocalizationMessage: () => SetPartialLocalizationMessageAction;
 }
 
 export interface ServicesUpdater {
@@ -59,17 +63,33 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     }
 
     if (isLoadingServices(props.topicServicesOrError) || isInitialEmptyTopicServices(props.topicServicesOrError)) {
-        return <LoadingServiceListComponent header={<ServiceListHeaderComponent title={props.topic.title} />} />;
+        return (
+            <LoadingServiceListComponent
+                header={
+                    <View style={{ marginBottom: -8}}>
+                        <ServiceListHeaderComponent title={props.topic.title} />
+                        <PartialLocalizationMessageComponent
+                            showPartialLocalizationMessage={props.showPartialLocalizationMessage}
+                            setPartialLocalizationMessage={props.setPartialLocalizationMessage}
+                        />
+                    </View>
+                }
+            />
+        );
     }
 
     if (isValidEmptyTopicServices(props.topicServicesOrError)) {
         return (
-            <EmptyServiceListComponent
-                title={<Trans>No services to show</Trans>}
-                imageSource={emptyTopicServicesList}
-                refreshScreen={(): void => setLastScreenRefresh(Date.now())} />
-            );
-        }
+                <EmptyServiceListComponent
+                    title={<Trans>No services to show</Trans>}
+                    imageSource={emptyTopicServicesList}
+                    refreshScreen={(): void => setLastScreenRefresh(Date.now())}
+                    header={
+                        <ServiceListHeaderComponent title={props.topic.title} />
+                    }
+                />
+        );
+    }
 
     return (
         <FlatList
@@ -80,7 +100,15 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             data={getServicesIfValid(props.topicServicesOrError)}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceListItem(props)}
-            ListHeaderComponent={<ServiceListHeaderComponent title={props.topic.title} />}
+            ListHeaderComponent={
+            <View style={{ marginBottom: -8}}>
+                <ServiceListHeaderComponent title={props.topic.title} />
+                <PartialLocalizationMessageComponent
+                    showPartialLocalizationMessage={props.showPartialLocalizationMessage}
+                    setPartialLocalizationMessage={props.setPartialLocalizationMessage}
+                />
+            </View>
+            }
         />
     );
 };
