@@ -117,7 +117,7 @@ const renderHeader = (props: Props): JSX.Element => (
     <View style={{ marginBottom: -8}}>
         <ServiceListHeaderComponent title={props.topic.title} />
         <MessageComponent
-            showPartialLocalizationMessage={props.showPartialLocalizationMessage}
+            isVisible={props.showPartialLocalizationMessage}
             hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
         />
     </View>

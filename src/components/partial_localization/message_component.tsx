@@ -8,7 +8,7 @@ import { openURL } from '../link/link';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface MessageComponentProps {
-    readonly showPartialLocalizationMessage: boolean;
+    readonly isVisible: boolean;
 }
 
 export interface MessageComponentActions {
@@ -22,7 +22,7 @@ export const MessageComponent = (props: Props): JSX.Element => {
         props.hidePartialLocalizationMessage()
     );
 
-    if (!props.showPartialLocalizationMessage) {
+    if (!props.isVisible) {
         return <EmptyComponent />;
     }
 

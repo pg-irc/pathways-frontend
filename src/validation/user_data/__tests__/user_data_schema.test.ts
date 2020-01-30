@@ -173,7 +173,7 @@ describe('user data schema', () => {
                 expect(validator.isValid).toBe(true);
             });
 
-            test('fails with valid data', () => {
+            test('fails with invalid data', () => {
                 const searchTerm: any = null;
                 const validUserData = new PersistedDataBuilder().withSearchTerm(searchTerm).build();
                 const validator = validateUserData(validUserData);
@@ -190,7 +190,7 @@ describe('user data schema', () => {
                 expect(validator.isValid).toBe(true);
             });
 
-            test('fails with valid data', () => {
+            test('fails with invalid data', () => {
                 const searchLocation: any = null;
                 const validUserData = new PersistedDataBuilder().withSearchLocation(searchLocation).build();
                 const validator = validateUserData(validUserData);

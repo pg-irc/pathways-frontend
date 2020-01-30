@@ -58,7 +58,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={
                 <MessageComponent
-                    showPartialLocalizationMessage={props.showPartialLocalizationMessage}
+                    isVisible={props.showPartialLocalizationMessage}
                     hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
                 />
             }
