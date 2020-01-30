@@ -21,7 +21,7 @@ import * as R from 'ramda';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
-import { PartialLocalizationMessageComponent } from '../partial_localization_message/partial_localization_message_component';
+import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 
 export interface ServiceListProps {
@@ -68,7 +68,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 header={
                     <View style={{ marginBottom: -8}}>
                         <ServiceListHeaderComponent title={props.topic.title} />
-                        <PartialLocalizationMessageComponent
+                        <MessageComponent
                             showPartialLocalizationMessage={props.showPartialLocalizationMessage}
                             hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
                         />
@@ -103,7 +103,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             ListHeaderComponent={
             <View style={{ marginBottom: -8}}>
                 <ServiceListHeaderComponent title={props.topic.title} />
-                <PartialLocalizationMessageComponent
+                <MessageComponent
                     showPartialLocalizationMessage={props.showPartialLocalizationMessage}
                     hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
                 />

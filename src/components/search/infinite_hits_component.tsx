@@ -18,7 +18,7 @@ import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { View, Text, Button } from 'native-base';
 import { Trans } from '@lingui/react';
-import { PartialLocalizationMessageComponent } from '../partial_localization_message/partial_localization_message_component';
+import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 
 export interface InfiniteHitsProps {
@@ -57,7 +57,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             ListEmptyComponent={EmptyComponent}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={
-                <PartialLocalizationMessageComponent
+                <MessageComponent
                     showPartialLocalizationMessage={props.showPartialLocalizationMessage}
                     hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
                 />

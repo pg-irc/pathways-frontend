@@ -7,17 +7,17 @@ import { TouchableOpacity } from 'react-native';
 import { openURL } from '../link/link';
 import { EmptyComponent } from '../empty_component/empty_component';
 
-export interface PartialLocalizationMessageComponentProps {
+export interface MessageComponentProps {
     readonly showPartialLocalizationMessage: boolean;
 }
 
-export interface PartialLocalizationMessageComponentActions {
+export interface MessageComponentActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
-type Props = PartialLocalizationMessageComponentProps & PartialLocalizationMessageComponentActions;
+type Props = MessageComponentProps & MessageComponentActions;
 
-export const PartialLocalizationMessageComponent = (props: Props): JSX.Element => {
+export const MessageComponent = (props: Props): JSX.Element => {
     const onPressRemovebutton = (): HidePartialLocalizationMessageAction => (
         props.hidePartialLocalizationMessage()
     );
