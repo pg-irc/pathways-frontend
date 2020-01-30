@@ -3,13 +3,13 @@ import * as helpers from './helpers/make_action';
 import { DataPersistence } from './persisted_data';
 import { ClearAllUserDataAction } from './questionnaire/actions';
 
-export type SetOnboardingAction = Readonly<ReturnType<typeof setOnboarding>>;
+export type HideOnboardingAction = Readonly<ReturnType<typeof hideOnboarding>>;
 export type DisableAnalyticsAction = Readonly<ReturnType<typeof disableAnalytics>>;
 export type HidePartialLocalizationMessageAction = Readonly<ReturnType<typeof hidePartialLocalizationMessage>>;
 
 // tslint:disable-next-line:typedef
-export const setOnboarding = () => (
-    helpers.makeAction(constants.SET_ONBOARDING)
+export const hideOnboarding = () => (
+    helpers.makeAction(constants.HIDE_ONBOARDING)
 );
 
 // tslint:disable-next-line:typedef
@@ -23,7 +23,7 @@ export const hidePartialLocalizationMessage = () => (
 );
 
 export type UserProfileAction =
-    SetOnboardingAction |
+    HideOnboardingAction |
     ClearAllUserDataAction |
     DisableAnalyticsAction |
     DataPersistence.LoadSuccessAction |
@@ -46,7 +46,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
         return store;
     }
     switch (action.type) {
-        case constants.SET_ONBOARDING:
+        case constants.HIDE_ONBOARDING:
             return ({
                 ...store,
                 showOnboarding: false,

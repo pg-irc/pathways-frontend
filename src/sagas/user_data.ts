@@ -16,7 +16,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.UNBOOKMARK_TOPIC,
             constants.TOGGLE_IS_TOPIC_COMPLETED,
             constants.CLEAR_ALL_USER_DATA,
-            constants.SET_ONBOARDING,
+            constants.HIDE_ONBOARDING,
             constants.BOOKMARK_SERVICE,
             constants.UNBOOKMARK_SERVICE,
             constants.SAVE_SEARCH_TERM,

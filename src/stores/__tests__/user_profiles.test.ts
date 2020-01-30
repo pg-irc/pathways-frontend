@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { UserProfileStore, reducer, setOnboarding, disableAnalytics, hidePartialLocalizationMessage } from '../user_profile';
+import { UserProfileStore, reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage } from '../user_profile';
 import { aBoolean } from '../../helpers/random_test_values';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
@@ -9,13 +9,13 @@ describe('user profile reducer', () => {
 
     describe('the onboarding flag', () => {
 
-        test('is cleared by the set onboarding action', () => {
+        test('is cleared by the hide onboarding action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: true,
                 disableAnalytics: aBoolean(),
                 showPartialLocalizationMessage: aBoolean(),
             };
-            const newStore = reducer(oldStore, setOnboarding());
+            const newStore = reducer(oldStore, hideOnboarding());
             expect(newStore.showOnboarding).toBe(false);
         });
 
