@@ -15,7 +15,7 @@ import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
-import { DisableAnalyticsAction, SetPartialLocalizationMessageAction } from '../../stores/user_profile';
+import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import algoliasearch from 'algoliasearch/lite';
@@ -37,7 +37,7 @@ export interface SearchComponentActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly saveSearchTerm: (searchTerm: string) => SaveSearchTermAction;
     readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
-    readonly setPartialLocalizationMessage: () => SetPartialLocalizationMessageAction;
+    readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;

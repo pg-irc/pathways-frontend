@@ -5,7 +5,7 @@ import { ClearAllUserDataAction } from './questionnaire/actions';
 
 export type SetOnboardingAction = Readonly<ReturnType<typeof setOnboarding>>;
 export type DisableAnalyticsAction = Readonly<ReturnType<typeof disableAnalytics>>;
-export type SetPartialLocalizationMessageAction = Readonly<ReturnType<typeof setPartialLocalizationMessage>>;
+export type HidePartialLocalizationMessageAction = Readonly<ReturnType<typeof hidePartialLocalizationMessage>>;
 
 // tslint:disable-next-line:typedef
 export const setOnboarding = () => (
@@ -18,8 +18,8 @@ export const disableAnalytics = (disable: boolean) => (
 );
 
 // tslint:disable-next-line: typedef
-export const setPartialLocalizationMessage = () => (
-    helpers.makeAction(constants.SET_PARTIAL_LOCALIZATION_MESSAGE)
+export const hidePartialLocalizationMessage = () => (
+    helpers.makeAction(constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE)
 );
 
 export type UserProfileAction =
@@ -27,7 +27,7 @@ export type UserProfileAction =
     ClearAllUserDataAction |
     DisableAnalyticsAction |
     DataPersistence.LoadSuccessAction |
-    SetPartialLocalizationMessageAction;
+    HidePartialLocalizationMessageAction;
 
 export interface UserProfileStore {
     readonly showOnboarding: boolean;
@@ -57,7 +57,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
                 disableAnalytics: action.payload.disable,
             });
 
-        case constants.SET_PARTIAL_LOCALIZATION_MESSAGE:
+        case constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE:
             return ({
                 ...store,
                 showPartialLocalizationMessage: false,

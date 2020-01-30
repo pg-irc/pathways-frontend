@@ -21,7 +21,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.UNBOOKMARK_SERVICE,
             constants.SAVE_SEARCH_TERM,
             constants.SAVE_SEARCH_LOCATION,
-            constants.SET_PARTIAL_LOCALIZATION_MESSAGE,
+            constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE,
         ],
         saveUserData);
 }

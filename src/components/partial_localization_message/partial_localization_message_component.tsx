@@ -1,5 +1,5 @@
 import React from 'react';
-import { SetPartialLocalizationMessageAction } from '../../stores/user_profile';
+import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { View, Text } from 'native-base';
 import { textStyles, colors } from '../../application/styles';
 import { Trans } from '@lingui/react';
@@ -12,14 +12,14 @@ export interface PartialLocalizationMessageComponentProps {
 }
 
 export interface PartialLocalizationMessageComponentActions {
-    readonly setPartialLocalizationMessage: () => SetPartialLocalizationMessageAction;
+    readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
 type Props = PartialLocalizationMessageComponentProps & PartialLocalizationMessageComponentActions;
 
 export const PartialLocalizationMessageComponent = (props: Props): JSX.Element => {
-    const onPressRemovebutton = (): SetPartialLocalizationMessageAction => (
-        props.setPartialLocalizationMessage()
+    const onPressRemovebutton = (): HidePartialLocalizationMessageAction => (
+        props.hidePartialLocalizationMessage()
     );
 
     if (!props.showPartialLocalizationMessage) {

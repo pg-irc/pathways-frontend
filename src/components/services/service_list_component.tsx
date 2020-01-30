@@ -22,7 +22,7 @@ import { LoadingServiceListComponent } from '../loading_screen/loading_service_l
 import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
 import { PartialLocalizationMessageComponent } from '../partial_localization_message/partial_localization_message_component';
-import { SetPartialLocalizationMessageAction } from '../../stores/user_profile';
+import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -36,7 +36,7 @@ export interface ServiceListActions {
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly setPartialLocalizationMessage: () => SetPartialLocalizationMessageAction;
+    readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
 export interface ServicesUpdater {
@@ -70,7 +70,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                         <ServiceListHeaderComponent title={props.topic.title} />
                         <PartialLocalizationMessageComponent
                             showPartialLocalizationMessage={props.showPartialLocalizationMessage}
-                            setPartialLocalizationMessage={props.setPartialLocalizationMessage}
+                            hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
                         />
                     </View>
                 }
@@ -105,7 +105,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 <ServiceListHeaderComponent title={props.topic.title} />
                 <PartialLocalizationMessageComponent
                     showPartialLocalizationMessage={props.showPartialLocalizationMessage}
-                    setPartialLocalizationMessage={props.setPartialLocalizationMessage}
+                    hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
                 />
             </View>
             }

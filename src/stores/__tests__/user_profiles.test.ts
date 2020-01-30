@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { UserProfileStore, reducer, setOnboarding, disableAnalytics, setPartialLocalizationMessage } from '../user_profile';
+import { UserProfileStore, reducer, setOnboarding, disableAnalytics, hidePartialLocalizationMessage } from '../user_profile';
 import { aBoolean } from '../../helpers/random_test_values';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
@@ -102,13 +102,13 @@ describe('user profile reducer', () => {
 
     describe('the showPartialLocalizationMessage flag', () => {
 
-        test('is cleared by the set partial localization message action', () => {
+        test('is cleared by the sewt partial localization message action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
                 showPartialLocalizationMessage: true,
             };
-            const newStore = reducer(oldStore, setPartialLocalizationMessage());
+            const newStore = reducer(oldStore, hidePartialLocalizationMessage());
             expect(newStore.showPartialLocalizationMessage).toBe(false);
         });
 

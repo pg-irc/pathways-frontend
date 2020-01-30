@@ -19,7 +19,7 @@ import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/ser
 import { View, Text, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { PartialLocalizationMessageComponent } from '../partial_localization_message/partial_localization_message_component';
-import { SetPartialLocalizationMessageAction } from '../../stores/user_profile';
+import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -37,7 +37,7 @@ export interface InfiniteHitsProps {
 export interface InfiniteHitsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly setPartialLocalizationMessage: () => SetPartialLocalizationMessageAction;
+    readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
 type Props = InfiniteHitsProps & InfiniteHitsActions;
@@ -59,7 +59,7 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             ListHeaderComponent={
                 <PartialLocalizationMessageComponent
                     showPartialLocalizationMessage={props.showPartialLocalizationMessage}
-                    setPartialLocalizationMessage={props.setPartialLocalizationMessage}
+                    hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
                 />
             }
             ListFooterComponent={loadMoreButton} />
