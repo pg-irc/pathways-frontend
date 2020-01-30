@@ -89,7 +89,7 @@ const InputComponent = (props: InputComponentProps): JSX.Element => {
     return (
         <I18n>
         {
-            (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
+            (({ i18n }: I18nProps): JSX.Element =>
                 <TextInput
                     numberOfLines={5}
                     multiline={true}

@@ -23,8 +23,9 @@ import { openInMapsApplication } from '../maps_application_popup/open_in_maps_ap
 import { getLocationTitleFromAddresses } from '../services/get_location_title_from_addresses';
 import { EmailComponent } from '../email/email_component';
 import { SuggestUpdateComponent } from '../suggest_update/suggest_update_component';
+import { isAndroid } from '../../helpers/is_android';
 
-type SuggestedUpdates = Partial<{
+type SuggestedUpdates = {
     readonly nameSuggestion: string;
     readonly organizationSuggestion: string;
     readonly descriptionSuggestion: string;
@@ -32,7 +33,7 @@ type SuggestedUpdates = Partial<{
     readonly phoneSuggestion: string;
     readonly websiteSuggestion: string;
     readonly emailSuggestion: string;
-}>;
+};
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -43,14 +44,20 @@ type Props = ServiceDetailProps & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const [isSuggestingUpdates, setIsSuggestingUpdates]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-    const [suggestedUpdates, setSuggestedUpdates]: readonly [SuggestedUpdates, Dispatch<SetStateAction<SuggestedUpdates>>] = useState({});
-    const setSuggestedUpdateForField = R.curry((field: string, value: string): void => (
+    const [suggestedUpdates, setSuggestedUpdates]: readonly [SuggestedUpdates, Dispatch<SetStateAction<SuggestedUpdates>>] =
+        useState(getDefaultSuggestedUpdates());
+    const setSuggestedUpdateForField = R.curry((field: keyof SuggestedUpdates, value: string): void => (
         setSuggestedUpdates({...suggestedUpdates, [field]: value})
     ));
     const onSuggestAnUpdatePress = (): void => setIsSuggestingUpdates(!isSuggestingUpdates);
 
     return (
-        <Content padder style={{ flex: 1 }} enableResetScrollToCoords={false} extraHeight={150}>
+        <Content
+            padder
+            enableResetScrollToCoords={false}
+            extraHeight={isAndroid() ? 200 : 100}
+            enableOnAndroid={true}
+        >
             <BannerImageComponent imageSource={undefined} />
             {/* TODO: Remove and replace this temporary button */}
             <TemporarySuggestAnUpdateButton onPress={onSuggestAnUpdatePress} />
@@ -58,7 +65,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             <SuggestUpdateComponent
                 isEnabled={isSuggestingUpdates}
                 onChangeText={setSuggestedUpdateForField('nameSuggestion')}
-                textValue={suggestedUpdates.nameSuggestion || ''}
+                textValue={suggestedUpdates.nameSuggestion}
                 label={<Trans>Name</Trans>}
                 style={{ paddingHorizontal: values.backgroundTextPadding }}
             />
@@ -73,7 +80,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             <SuggestUpdateComponent
                 isEnabled={isSuggestingUpdates}
                 onChangeText={setSuggestedUpdateForField('descriptionSuggestion')}
-                textValue={suggestedUpdates.descriptionSuggestion || ''}
+                textValue={suggestedUpdates.descriptionSuggestion}
                 label={<Trans>Description</Trans>}
                 style={{ paddingHorizontal: values.backgroundTextPadding }}
             />
@@ -90,12 +97,22 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     );
 };
 
+const getDefaultSuggestedUpdates = (): SuggestedUpdates => ({
+    nameSuggestion: '',
+    organizationSuggestion: '',
+    descriptionSuggestion: '',
+    addressSuggestion: '',
+    phoneSuggestion: '',
+    websiteSuggestion: '',
+    emailSuggestion: '',
+});
+
 interface ServiceOrganizationProps {
     readonly history: History;
     readonly name: string;
     readonly suggestedUpdates: SuggestedUpdates;
     readonly isSuggestingUpdates: boolean;
-    readonly setSuggestedUpdateForField: (field: string) => (value: string) => void;
+    readonly setSuggestedUpdateForField: (field: keyof SuggestedUpdates) => (value: string) => void;
 }
 
 const ServiceOrganization = (props: ServiceOrganizationProps): JSX.Element => (
@@ -104,7 +121,7 @@ const ServiceOrganization = (props: ServiceOrganizationProps): JSX.Element => (
         <SuggestUpdateComponent
             isEnabled={props.isSuggestingUpdates}
             onChangeText={props.setSuggestedUpdateForField('organizationSuggestion')}
-            textValue={props.suggestedUpdates.organizationSuggestion || ''}
+            textValue={props.suggestedUpdates.organizationSuggestion}
             label={<Trans>Organization</Trans>}
         />
         <Text style={[textStyles.paragraphBoldBlackLeft, { marginRight: 5 }]}>
@@ -122,7 +139,7 @@ interface ServiceContactDetailsProps {
     readonly currentPathForAnaltyics: string;
     readonly suggestedUpdates: SuggestedUpdates;
     readonly isSuggestingUpdates: boolean;
-    readonly setSuggestedUpdateForField: (field: string) => (value: string) => void;
+    readonly setSuggestedUpdateForField: (field: keyof SuggestedUpdates) => (value: string) => void;
 }
 
 const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element => {
@@ -147,7 +164,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('addressSuggestion')}
-                textValue={props.suggestedUpdates.addressSuggestion || ''}
+                textValue={props.suggestedUpdates.addressSuggestion}
                 label={<Trans>Addresses</Trans>}
             />
             <AddressesComponent
@@ -160,7 +177,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('phoneSuggestion')}
-                textValue={props.suggestedUpdates.phoneSuggestion || ''}
+                textValue={props.suggestedUpdates.phoneSuggestion}
                 label={<Trans>Phone numbers</Trans>}
             />
             <PhoneNumbersComponent
@@ -172,7 +189,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('websiteSuggestion')}
-                textValue={props.suggestedUpdates.websiteSuggestion || ''}
+                textValue={props.suggestedUpdates.websiteSuggestion}
                 label={<Trans>Website</Trans>}
             />
             <WebsiteComponent
@@ -184,7 +201,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('emailSuggestion')}
-                textValue={props.suggestedUpdates.emailSuggestion || ''}
+                textValue={props.suggestedUpdates.emailSuggestion}
                 label={<Trans>Email</Trans>}
             />
             <EmailComponent
