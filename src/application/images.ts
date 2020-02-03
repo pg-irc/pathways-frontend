@@ -15,3 +15,4 @@ export const locationOff = require('../../assets/images/aa_location_off.png');
 export const locationTimeout = require('../../assets/images/aa_location_timeout.png');
 export const serverError = require('../../assets/images/aa_server_error.png');
 export const emptyTopicServicesList = require('../../assets/images/aa_empty_list.png');
+export const emptySearch = require('../../assets/images/aa_empty_search.png');

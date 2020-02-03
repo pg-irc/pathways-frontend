@@ -20,6 +20,7 @@ import { View, Text, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
+import { EmptyComponent as EmptySearchComponent } from './empty_component';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -55,7 +56,6 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             data={searchResults}
             keyExtractor={keyExtractor}
             renderItem={renderSearchHit(props)}
-            ListEmptyComponent={EmptyComponent}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={
                 <MessageComponent
@@ -66,9 +66,10 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             ListFooterComponent={loadMoreButton} />
     );
 
-    if (!props.searchTerm) {
-        return <EmptyComponent />;
+    if (searchTermIsEmpty(props.searchTerm)) {
+        return <EmptySearchComponent />;
     }
+
     return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{serviceList}</View>;
 };
 
@@ -119,3 +120,7 @@ const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItem
         unbookmarkService={props.unbookmarkService}
     />;
 });
+
+const searchTermIsEmpty = (searchTerm: string): boolean => (
+    !searchTerm
+);
