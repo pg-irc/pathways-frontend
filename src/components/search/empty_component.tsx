@@ -17,7 +17,7 @@ export const EmptyComponent = (): JSX.Element => (
         >
             {renderImage()}
             {renderTitle()}
-            {renderUnorderedListOfText()}
+            {renderSuggestionsList()}
         </View>
 );
 
@@ -35,7 +35,7 @@ const renderTitle = (): JSX.Element => (
         </Text>
 );
 
-const renderUnorderedListOfText = (): JSX.Element => (
+const renderSuggestionsList = (): JSX.Element => (
     <View>
         <Text style={textStyles.paragraphStyleBrown}>
             {bulletPoint} <Trans>Search for a different keyword</Trans>

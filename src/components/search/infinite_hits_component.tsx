@@ -53,7 +53,6 @@ export interface InfiniteHitsActions {
 export type InfiniteHitsAndStateResultsProps = InfiniteHitsProps & InfiniteHitsActions & StateResultsProvided;
 
 export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResultsProps>): JSX.Element => {
-    // tslint:disable-next-line:no-expression-statement
     useTraceUpdate('InfiniteHitsComponent', props);
     const searchResults = getValidSearchResults(props);
     const loadMoreButton = renderLoadMoreButton(props.hasMore, props.refineNext);
