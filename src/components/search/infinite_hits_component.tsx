@@ -99,17 +99,18 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
     if (hasNoResultsFromSearchTermQuery(searchResults)) {
         return (
             <ErrorComponent
-            errorType={Errors.NoMatchingSearchResults}
-            refreshScreen={(): string => refreshSearchServices()}
-          />
+                errorType={Errors.NoMatchingSearchResults}
+                refreshScreen={(): string => refreshSearchServices()}
+            />
         );
     }
 
     if (hasNoResultsFromLocationQuery(props.latLong)) {
         return (
-            <View>
-                <Text>Invalid location</Text>
-            </View>
+            <ErrorComponent
+                errorType={Errors.InvalidSearchLocation}
+                refreshScreen={(): string => refreshSearchServices()}
+            />
         );
     }
 
