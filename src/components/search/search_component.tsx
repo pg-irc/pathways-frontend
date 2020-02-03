@@ -46,9 +46,9 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
 
-    const [location, setLocation]: [string, (s: string) => void] = useState(props.searchLocation);
-    const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
-    const [isLatLongLoading, setIsLatLongLoading]: [boolean, SetIsLatLongLoading] = useState(false);
+    const [location, setLocation]: readonly [string, (s: string) => void] = useState(props.searchLocation);
+    const [latLong, setLatLong]: readonly [LatLong, (latLong: LatLong) => void] = useState(undefined);
+    const [isLatLongLoading, setIsLatLongLoading]: readonly [boolean, SetIsLatLongLoading] = useState(false);
 
     useEffect(() => {
         props.saveSearchLocation(location);
