@@ -21,6 +21,9 @@ import { Trans } from '@lingui/react';
 import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { EmptyComponent as EmptySearchComponent } from './empty_component';
+import { useOnlineStatus, OnlineStatus } from '../../hooks/use_online_status';
+import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
+import { Errors } from '../../validation/errors/types';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -49,6 +52,10 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
     useTraceUpdate('InfiniteHitsComponent', props);
     const searchResults = getValidSearchResults(props);
     const loadMoreButton = renderLoadMoreButton(props.hasMore, props.refineNext);
+    const onlineStatus = useOnlineStatus();
+    const refreshSearchServices = (): string => (
+        props.refine()
+    );
     const serviceList = (
         <FlatList
             style={{ backgroundColor: colors.white }}
@@ -68,6 +75,15 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
 
     if (searchTermIsEmpty(props.searchTerm)) {
         return <EmptySearchComponent />;
+    }
+
+    if (isOffline(onlineStatus)) {
+        return (
+          <ErrorComponent
+            errorType={Errors.Offline}
+            refreshScreen={(): string => refreshSearchServices()}
+          />
+        );
     }
 
     return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{serviceList}</View>;
@@ -123,4 +139,15 @@ const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItem
 
 const searchTermIsEmpty = (searchTerm: string): boolean => (
     !searchTerm
+);
+
+const isOffline = (onlineStatus: OnlineStatus): boolean => (
+    onlineStatus === OnlineStatus.Offline
+);
+
+const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void }): JSX.Element => (
+    <ErrorScreenSwitcherComponent
+        refreshScreen={props.refreshScreen}
+        errorType={props.errorType}
+    />
 );
