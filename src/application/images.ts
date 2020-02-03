@@ -16,3 +16,4 @@ export const locationTimeout = require('../../assets/images/aa_location_timeout.
 export const serverError = require('../../assets/images/aa_server_error.png');
 export const emptyTopicServicesList = require('../../assets/images/aa_empty_list.png');
 export const emptySearch = require('../../assets/images/aa_empty_search.png');
+export const noMatchingSearchResults = require('../../assets/images/aa_no_matching_search_results.png');

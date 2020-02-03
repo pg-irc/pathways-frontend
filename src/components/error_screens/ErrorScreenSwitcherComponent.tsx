@@ -7,10 +7,13 @@ import {
     locationTimeout,
     serverError,
     arrivalAdvisorGlyphLogo,
+    noMatchingSearchResults,
 } from '../../application/images';
 import { ErrorScreenComponent } from './ErrorScreenComponent';
 import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button/app_settings_button_component';
 import { isAndroid } from '../../helpers/is_android';
+import { View, Text } from 'native-base';
+import { textStyles } from '../../application/styles';
 
 type ErrorScreenSwitcherComponentProps = {
     readonly errorType: Errors;
@@ -60,6 +63,15 @@ export const ErrorScreenSwitcherComponent = (props: ErrorScreenSwitcherComponent
                     imageSource={serverError}
                     title={<Trans>Server error</Trans>}
                     subTitle={getSubTitleForError(Errors.BadServerResponse)}
+                    {...sharedProps}
+                />
+            );
+        case Errors.NoMatchingSearchResults:
+            return (
+                <ErrorScreenComponent
+                    imageSource={noMatchingSearchResults}
+                    title={<Trans>Your search did not match any services. Try to:</Trans>}
+                    additionalContent={getAdditionalContentForError(Errors.NoMatchingSearchResults)}
                     {...sharedProps}
                 />
             );
@@ -124,7 +136,23 @@ const getAdditionalContentForError = (error: Errors): JSX.Element | undefined =>
                 <AppSettingsButtonComponent settingsType={SettingsType.AndroidAppLocation} />
                 :
                 undefined;
+        case (Errors.NoMatchingSearchResults):
+            return (
+                <View>
+                    <Text style={textStyles.paragraphStyleBrown}>
+                        {bulletPoint} <Trans>Search for a different keyword</Trans>
+                    </Text>
+                    <Text style={textStyles.paragraphStyleBrown}>
+                        {bulletPoint} <Trans>Double check for spelling</Trans>
+                    </Text>
+                    <Text style={textStyles.paragraphStyleBrown}>
+                        {bulletPoint} <Trans>Ensure your search is in English</Trans>
+                    </Text>
+                </View>
+            );
         default:
             return undefined;
     }
 };
+
+const bulletPoint = '\u2022';

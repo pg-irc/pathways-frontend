@@ -86,6 +86,15 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
         );
     }
 
+    if (hasNoSearchResultsFromQuery(searchResults)) {
+        return (
+            <ErrorComponent
+            errorType={Errors.NoMatchingSearchResults}
+            refreshScreen={(): string => refreshSearchServices()}
+          />
+        );
+    }
+
     return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{serviceList}</View>;
 };
 
@@ -143,6 +152,10 @@ const searchTermIsEmpty = (searchTerm: string): boolean => (
 
 const isOffline = (onlineStatus: OnlineStatus): boolean => (
     onlineStatus === OnlineStatus.Offline
+);
+
+const hasNoSearchResultsFromQuery = (searchResults: ReadonlyArray<SearchServiceData>): boolean => (
+    searchResults.length === 0
 );
 
 const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void }): JSX.Element => (
