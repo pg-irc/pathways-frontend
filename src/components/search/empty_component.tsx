@@ -1,7 +1,7 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
-import { textStyles, imageStyles, colors } from '../../application/styles';
+import { textStyles, imageStyles, colors, bulletPoint } from '../../application/styles';
 import { emptySearch } from '../../application/images';
 import { Image } from 'react-native';
 
@@ -48,5 +48,3 @@ const renderUnorderedListOfText = (): JSX.Element => (
         </Text>
     </View>
 );
-
-const bulletPoint = '\u2022';

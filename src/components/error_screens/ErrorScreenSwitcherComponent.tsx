@@ -14,7 +14,7 @@ import { ErrorScreenComponent } from './ErrorScreenComponent';
 import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button/app_settings_button_component';
 import { isAndroid } from '../../helpers/is_android';
 import { View, Text } from 'native-base';
-import { textStyles } from '../../application/styles';
+import { textStyles, bulletPoint } from '../../application/styles';
 
 type ErrorScreenSwitcherComponentProps = {
     readonly errorType: Errors;
@@ -181,5 +181,3 @@ const getAdditionalContentForError = (error: Errors): JSX.Element | undefined =>
             return undefined;
     }
 };
-
-const bulletPoint = '\u2022';
