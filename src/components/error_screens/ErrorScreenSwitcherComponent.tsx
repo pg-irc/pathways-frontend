@@ -147,37 +147,41 @@ const getAdditionalContentForError = (error: Errors): JSX.Element | undefined =>
                 :
                 undefined;
         case (Errors.NoMatchingSearchResults):
-            return (
-                <View>
-                    <Text style={textStyles.paragraphStyleBrown}>
-                        {bulletPoint} <Trans>Search for a different keyword</Trans>
-                    </Text>
-                    <Text style={textStyles.paragraphStyleBrown}>
-                        {bulletPoint} <Trans>Double check for spelling</Trans>
-                    </Text>
-                    <Text style={textStyles.paragraphStyleBrown}>
-                        {bulletPoint} <Trans>Ensure your search is in English</Trans>
-                    </Text>
-                </View>
-            );
+            return renderNoMatchingResultsSuggestions();
         case (Errors.InvalidSearchLocation):
-            return (
-                <View>
-                    <Text style={textStyles.paragraphStyleBrown}>
-                        {bulletPoint} <Trans>My location</Trans>
-                    </Text>
-                    <Text style={textStyles.paragraphStyleBrown}>
-                        {bulletPoint} <Trans>City - "Vancouver"</Trans>
-                    </Text>
-                    <Text style={textStyles.paragraphStyleBrown}>
-                        {bulletPoint} <Trans>Street - "Kingsway"</Trans>
-                    </Text>
-                    <Text style={textStyles.paragraphStyleBrown}>
-                        {bulletPoint} <Trans>Postal Code - "V5Y 1V4" </Trans>
-                    </Text>
-                </View>
-            );
+            return renderInvalidSearchLocationSuggestions();
         default:
             return undefined;
     }
 };
+
+const renderNoMatchingResultsSuggestions = (): JSX.Element => (
+    <View>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>Search for a different keyword</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>Double check for spelling</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>Ensure your search is in English</Trans>
+        </Text>
+    </View>
+);
+
+const renderInvalidSearchLocationSuggestions = (): JSX.Element => (
+    <View>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>My location</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>City - "Vancouver"</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>Street - "Kingsway"</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>Postal Code - "V5Y 1V4" </Trans>
+        </Text>
+    </View>
+);
