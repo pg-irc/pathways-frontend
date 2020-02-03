@@ -32,6 +32,7 @@ export interface InfiniteHitsProps {
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
+    readonly searchTerm: string;
 }
 
 export interface InfiniteHitsActions {
@@ -64,6 +65,10 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             }
             ListFooterComponent={loadMoreButton} />
     );
+
+    if (!props.searchTerm) {
+        return <EmptyComponent />;
+    }
     return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{serviceList}</View>;
 };
 

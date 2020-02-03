@@ -61,10 +61,27 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
-    const searchClient = algoliasearch(
+    const algoliaClient = algoliasearch(
         props.appId,
         props.apiKey,
     );
+        // TO DO: add types
+    const searchClient = {
+        search(requests) {
+          if (requests.every(({ params }) => !params.query)) {
+            return Promise.resolve({
+              results: requests.map(() => ({
+                hits: [],
+                nbHits: 0,
+                nbPages: 0,
+                processingTimeMS: 0,
+              })),
+            });
+          }
+          return algoliaClient.search(requests);
+        },
+      };
+
     return <I18n>{(): JSX.Element => {
 
         return <View style={{ backgroundColor: colors.pale, flex: 1 }}>
