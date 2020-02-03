@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import React, { useState, useEffect } from 'react';
-import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox } from 'react-instantsearch-native';
+import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox, connectStateResults } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
@@ -20,6 +20,7 @@ import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import { SaveSearchTermAction, SaveSearchLocationAction } from '../../stores/search';
 import { searchClient } from './api/search_client';
+import { InfiniteHitsAndStateResultsProps } from './infinite_hits_component';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -58,7 +59,11 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
-    const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
+    const InfiniteHitsConnectedComponent = connectInfiniteHits(connectStateResults(
+        (infiniteHitsAndStateResultsProps: InfiniteHitsAndStateResultsProps) =>
+            <InfiniteHitsComponent {...infiniteHitsAndStateResultsProps} />,
+        ),
+    );
 
     return <I18n>{(): JSX.Element => {
 

@@ -24,6 +24,7 @@ import { EmptyComponent as EmptySearchComponent } from './empty_component';
 import { useOnlineStatus, OnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
+import { StateResultsProvided } from 'react-instantsearch-core';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -45,9 +46,9 @@ export interface InfiniteHitsActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
-type Props = InfiniteHitsProps & InfiniteHitsActions;
+export type InfiniteHitsAndStateResultsProps = InfiniteHitsProps & InfiniteHitsActions & StateResultsProvided;
 
-export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
+export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResultsProps>): JSX.Element => {
     // tslint:disable-next-line:no-expression-statement
     useTraceUpdate('InfiniteHitsComponent', props);
     const searchResults = getValidSearchResults(props);
@@ -116,7 +117,7 @@ const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Ele
     return <EmptyComponent />;
 };
 
-const getValidSearchResults = (props: Partial<Props>): ReadonlyArray<SearchServiceData> => {
+const getValidSearchResults = (props: Partial<InfiniteHitsAndStateResultsProps>): ReadonlyArray<SearchServiceData> => {
     const validationResult = validateServiceSearchResponse(props.hits);
     if (!validationResult.isValid) {
         throw new Error(validationResult.errors);
@@ -128,7 +129,7 @@ const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
 );
 
-const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
+const renderSearchHit = R.curry((props: Partial<InfiniteHitsAndStateResultsProps>, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
     const item: SearchServiceData = itemInfo.item;
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
