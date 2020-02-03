@@ -18,12 +18,10 @@ import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
-import algoliasearch from 'algoliasearch/lite';
 import { SaveSearchTermAction, SaveSearchLocationAction } from '../../stores/search';
+import { searchClient } from './api/search_client';
 
 export interface SearchComponentProps {
-    readonly apiKey: string;
-    readonly appId: string;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly searchTerm: string;
     readonly searchLocation: string;
@@ -61,26 +59,6 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(InfiniteHitsComponent);
-    const algoliaClient = algoliasearch(
-        props.appId,
-        props.apiKey,
-    );
-        // TO DO: add types
-    const searchClient = {
-        search(requests) {
-          if (requests.every(({ params }) => !params.query)) {
-            return Promise.resolve({
-              results: requests.map(() => ({
-                hits: [],
-                nbHits: 0,
-                nbPages: 0,
-                processingTimeMS: 0,
-              })),
-            });
-          }
-          return algoliaClient.search(requests);
-        },
-      };
 
     return <I18n>{(): JSX.Element => {
 

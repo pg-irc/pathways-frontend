@@ -2,7 +2,6 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { SearchComponentProps, SearchComponent, SearchComponentActions } from './search_component';
-import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
 import { saveService, SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { disableAnalytics, DisableAnalyticsAction, HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
@@ -13,8 +12,6 @@ import { selectSearchLocation } from '../../selectors/search/select_search_locat
 import { selectShowPartialLocalizationMessage } from '../../selectors/user_profile/select_show_partial_localization_message';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
-    apiKey: ALGOLIA_SEARCH_API_KEY,
-    appId: 'MMYH1Z0D3O',
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
     searchTerm: selectSearchTerm(store),
     searchLocation: selectSearchLocation(store),
