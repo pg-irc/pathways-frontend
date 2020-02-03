@@ -63,5 +63,5 @@ const getTextIfValidOrThrow = (response: Response): Promise<string> => {
 };
 
 const handleError = R.curry((setLatLong: (latLong: LatLong) => void, _: string): void => {
-    setLatLong(undefined);
+    setLatLong({lat: 0, lng: 0});
 });

@@ -26,6 +26,7 @@ import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitch
 import { Errors } from '../../validation/errors/types';
 import { StateResultsProvided } from 'react-instantsearch-core';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
+import { LatLong } from '../../validation/latlong/types';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -39,6 +40,7 @@ export interface InfiniteHitsProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
     readonly searchTerm: string;
+    readonly latLong: LatLong;
 }
 
 export interface InfiniteHitsActions {
@@ -58,6 +60,7 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
     const refreshSearchServices = (): string => (
         props.refine()
     );
+
     const serviceList = (
         <FlatList
             style={{ backgroundColor: colors.white }}
@@ -92,12 +95,20 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
         return <LoadingServiceListComponent />;
     }
 
-    if (hasNoSearchResultsFromQuery(searchResults)) {
+    if (hasNoResultsFromSearchTermQuery(searchResults)) {
         return (
             <ErrorComponent
             errorType={Errors.NoMatchingSearchResults}
             refreshScreen={(): string => refreshSearchServices()}
           />
+        );
+    }
+
+    if (hasNoResultsFromLocationQuery(props.latLong)) {
+        return (
+            <View>
+                <Text>Invalid location</Text>
+            </View>
         );
     }
 
@@ -160,12 +171,16 @@ const isOffline = (onlineStatus: OnlineStatus): boolean => (
     onlineStatus === OnlineStatus.Offline
 );
 
-const hasNoSearchResultsFromQuery = (searchResults: ReadonlyArray<SearchServiceData>): boolean => (
+const hasNoResultsFromSearchTermQuery = (searchResults: ReadonlyArray<SearchServiceData>): boolean => (
     searchResults.length === 0
 );
 
 const isLoading = (searching: boolean): boolean => (
     searching
+);
+
+const hasNoResultsFromLocationQuery = (latLong: LatLong): boolean => (
+   latLong && latLong.lat === 0 && latLong.lng === 0
 );
 
 const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void }): JSX.Element => (

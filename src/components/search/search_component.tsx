@@ -61,7 +61,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(connectStateResults(
         (infiniteHitsAndStateResultsProps: InfiniteHitsAndStateResultsProps) =>
-            <InfiniteHitsComponent {...infiniteHitsAndStateResultsProps} />,
+            <InfiniteHitsComponent {...infiniteHitsAndStateResultsProps} latLong={latLong} />,
         ),
     );
 
