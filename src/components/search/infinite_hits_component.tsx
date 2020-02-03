@@ -25,6 +25,7 @@ import { useOnlineStatus, OnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
 import { StateResultsProvided } from 'react-instantsearch-core';
+import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -85,6 +86,10 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
             refreshScreen={(): string => refreshSearchServices()}
           />
         );
+    }
+
+    if (isLoading(props.searching)) {
+        return <LoadingServiceListComponent />;
     }
 
     if (hasNoSearchResultsFromQuery(searchResults)) {
@@ -157,6 +162,10 @@ const isOffline = (onlineStatus: OnlineStatus): boolean => (
 
 const hasNoSearchResultsFromQuery = (searchResults: ReadonlyArray<SearchServiceData>): boolean => (
     searchResults.length === 0
+);
+
+const isLoading = (searching: boolean): boolean => (
+    searching
 );
 
 const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void }): JSX.Element => (
