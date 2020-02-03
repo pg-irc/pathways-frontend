@@ -7,24 +7,29 @@ import BuildUrl from 'build-url';
 import * as R from 'ramda';
 import { getDeviceLocation, NoLocationPermissionErrorAction, LocationFetchTimeoutErrorAction } from '../../../async/location';
 import * as errors from '../../../validation/errors/is_error';
+import { SetIsLatLongLoading } from '../search_component';
 
-export const useFetchLatLongFromLocation = (location: string, setLatLong: (latLong: LatLong) => void): void => {
+export const useFetchLatLongFromLocation =
+(location: string, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
     const onlineStatus = useOnlineStatus();
     useEffect(
-        () => fetchLatLongFromLocation(location, onlineStatus, setLatLong),
+        () => fetchLatLongFromLocation(location, onlineStatus, setLatLong, setIsLatLongLoading),
         [onlineStatus, location],
     );
 };
 
-const fetchLatLongFromLocation = (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void): void => {
+const fetchLatLongFromLocation =
+(location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
     if (location === 'Near My Location') {
-        fetchLatLongFromDevice(setLatLong);
+        setIsLatLongLoading(true);
+        fetchLatLongFromDevice(setLatLong, setIsLatLongLoading);
     } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
-        fetchLatLongFromAddress(location, setLatLong);
+        setIsLatLongLoading(true);
+        fetchLatLongFromAddress(location, setLatLong, setIsLatLongLoading);
     }
 };
 
-const fetchLatLongFromDevice = (setLatLong: (latLong: LatLong) => void): void => {
+const fetchLatLongFromDevice = (setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
     getDeviceLocation().then((location: DeviceLocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction): void => {
         if (errors.isNoLocationPermissionError(location)) {
             setLatLong({ lat: 0, lng: 0 });
@@ -33,10 +38,11 @@ const fetchLatLongFromDevice = (setLatLong: (latLong: LatLong) => void): void =>
         } else {
             setLatLong({ lat: location.coords.latitude, lng: location.coords.longitude });
         }
+        setIsLatLongLoading(false);
     });
 };
 
-const fetchLatLongFromAddress = (location: string, setLatLong: (latLong: LatLong) => void): void => {
+const fetchLatLongFromAddress = (location: string, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
     const url = buildGeoCoderUrl(location);
     fetch(url).
         then(getTextIfValidOrThrow).
@@ -44,6 +50,7 @@ const fetchLatLongFromAddress = (location: string, setLatLong: (latLong: LatLong
         then(toGeoCoderLatLong).
         then(setLatLong).
         catch(handleError(setLatLong));
+    setIsLatLongLoading(false);
 };
 
 const buildGeoCoderUrl = (location: string): string => (

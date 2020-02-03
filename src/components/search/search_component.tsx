@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox, connectStateResults } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
@@ -39,6 +39,8 @@ export interface SearchComponentActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
+export type SetIsLatLongLoading = Dispatch<SetStateAction<boolean>>;
+
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 
 export const SearchComponent = (props: Props): JSX.Element => {
@@ -46,6 +48,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
     const [location, setLocation]: [string, (s: string) => void] = useState(props.searchLocation);
     const [latLong, setLatLong]: [LatLong, (latLong: LatLong) => void] = useState(undefined);
+    const [isLatLongLoading, setIsLatLongLoading]: [boolean, SetIsLatLongLoading] = useState(false);
 
     useEffect(() => {
         props.saveSearchLocation(location);
@@ -54,14 +57,14 @@ export const SearchComponent = (props: Props): JSX.Element => {
         }
     }, [location]);
 
-    useFetchLatLongFromLocation(location, setLatLong);
+    useFetchLatLongFromLocation(location, setLatLong, setIsLatLongLoading);
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
 
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(connectStateResults(
         (infiniteHitsAndStateResultsProps: InfiniteHitsAndStateResultsProps) =>
-            <InfiniteHitsComponent {...infiniteHitsAndStateResultsProps} latLong={latLong} />,
+            <InfiniteHitsComponent {...infiniteHitsAndStateResultsProps} latLong={latLong} isLatLongLoading={isLatLongLoading} />,
         ),
     );
 

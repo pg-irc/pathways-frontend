@@ -41,6 +41,7 @@ export interface InfiniteHitsProps {
     readonly showPartialLocalizationMessage: boolean;
     readonly searchTerm: string;
     readonly latLong: LatLong;
+    readonly isLatLongLoading: boolean;
 }
 
 export interface InfiniteHitsActions {
@@ -60,7 +61,7 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
     const refreshSearchServices = (): string => (
         props.refine()
     );
-
+    
     const serviceList = (
         <FlatList
             style={{ backgroundColor: colors.white }}
@@ -91,7 +92,7 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
         );
     }
 
-    if (isLoading(props.searching)) {
+    if (isLoading(props.searching, props.isLatLongLoading)) {
         return <LoadingServiceListComponent />;
     }
 
@@ -175,8 +176,8 @@ const hasNoResultsFromSearchTermQuery = (searchResults: ReadonlyArray<SearchServ
     searchResults.length === 0
 );
 
-const isLoading = (searching: boolean): boolean => (
-    searching
+const isLoading = (searching: boolean, isLatLongLoading: boolean): boolean => (
+    searching || isLatLongLoading
 );
 
 const hasNoResultsFromLocationQuery = (latLong: LatLong): boolean => (
