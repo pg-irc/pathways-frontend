@@ -61,8 +61,8 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
     const refreshSearchServices = (): string => (
         props.refine()
     );
-    
-    const serviceList = (
+
+    const ServiceList = (
         <FlatList
             style={{ backgroundColor: colors.white }}
             refreshing={false}
@@ -83,38 +83,15 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
         return <EmptySearchComponent />;
     }
 
-    if (isOffline(onlineStatus)) {
-        return (
-          <ErrorComponent
-            errorType={Errors.Offline}
-            refreshScreen={(): string => refreshSearchServices()}
-          />
-        );
-    }
-
     if (isLoading(props.searching, props.isLatLongLoading)) {
         return <LoadingServiceListComponent />;
     }
 
-    if (hasNoResultsFromSearchTermQuery(searchResults)) {
-        return (
-            <ErrorComponent
-                errorType={Errors.NoMatchingSearchResults}
-                refreshScreen={(): string => refreshSearchServices()}
-            />
-        );
+    if (isSearchErrorType(onlineStatus, searchResults, props.latLong)) {
+        return renderErrorComponent(onlineStatus, searchResults, props.latLong, (): string => refreshSearchServices());
     }
 
-    if (hasNoResultsFromLocationQuery(props.latLong)) {
-        return (
-            <ErrorComponent
-                errorType={Errors.InvalidSearchLocation}
-                refreshScreen={(): string => refreshSearchServices()}
-            />
-        );
-    }
-
-    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{serviceList}</View>;
+    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{ServiceList}</View>;
 };
 
 const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Element => {
@@ -169,6 +146,14 @@ const searchTermIsEmpty = (searchTerm: string): boolean => (
     !searchTerm
 );
 
+const isLoading = (searching: boolean, isLatLongLoading: boolean): boolean => (
+    searching || isLatLongLoading
+);
+
+const isSearchErrorType = (onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong): boolean => (
+    isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults) || hasNoResultsFromLocationQuery(latLong)
+);
+
 const isOffline = (onlineStatus: OnlineStatus): boolean => (
     onlineStatus === OnlineStatus.Offline
 );
@@ -177,12 +162,16 @@ const hasNoResultsFromSearchTermQuery = (searchResults: ReadonlyArray<SearchServ
     searchResults.length === 0
 );
 
-const isLoading = (searching: boolean, isLatLongLoading: boolean): boolean => (
-    searching || isLatLongLoading
-);
-
 const hasNoResultsFromLocationQuery = (latLong: LatLong): boolean => (
    latLong && latLong.lat === 0 && latLong.lng === 0
+);
+
+const renderErrorComponent =
+(onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong, refreshServices: () => void): JSX.Element => (
+    <ErrorComponent
+        errorType={determineErrorType(onlineStatus, searchResults, latLong)}
+        refreshScreen={refreshServices}
+    />
 );
 
 const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void }): JSX.Element => (
@@ -191,3 +180,18 @@ const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScr
         errorType={props.errorType}
     />
 );
+
+const determineErrorType = (onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong): Errors => {
+    if (isOffline(onlineStatus)) {
+        return Errors.Offline;
+    }
+
+    if (hasNoResultsFromSearchTermQuery(searchResults)) {
+        return Errors.NoMatchingSearchResults;
+    }
+
+    if (hasNoResultsFromLocationQuery(latLong)) {
+        return Errors.InvalidSearchLocation;
+    }
+    return Errors.Exception;
+};
