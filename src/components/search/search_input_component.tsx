@@ -10,6 +10,7 @@ import { debug, useTraceUpdate } from '../../helpers/debug';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ClearInputButton } from './clear_input_button';
+import * as Permissions from 'expo-permissions';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -43,7 +44,14 @@ const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Fun
     return (
         <TouchableOpacity
             style={[applicationStyles.searchButton, { backgroundColor: colors.white }]}
-            onPress={(): void => saveLocation('Near My Location')}>
+            onPress={(): void => {
+                // tslint:disable-next-line: no-expression-statement
+                Permissions.askAsync(Permissions.LOCATION).then((response: object) => {
+                    if (Object(response)['granted']) {
+                        saveLocation('Near My Location');
+                    }
+                });
+            }}>
             {icon}{text}
         </TouchableOpacity>
     );
