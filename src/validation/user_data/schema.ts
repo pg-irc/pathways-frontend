@@ -135,6 +135,18 @@ export const userData = {
         "showOnboarding": {
             "type": "boolean"
         },
-        "bookmarkedServices": serviceMap
+        "bookmarkedServices": serviceMap,
+        "showPartialLocalizationMessage": {
+            "type": "boolean"
+        },
+        "disableAnalytics": {
+            "type": "boolean"
+        },
+        "searchTerm": {
+            "type": "string"
+        },
+        "searchLocation": {
+            "type": "string"
+        },
     }
 };

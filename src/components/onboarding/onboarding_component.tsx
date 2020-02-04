@@ -11,7 +11,7 @@ import {
 } from '../../application/images';
 import { Trans } from '@lingui/react';
 import { SwipeableContentComponent } from '../swipeable_content/swipeable_content_component';
-import { SetOnboardingAction } from '../../stores/user_profile';
+import { HideOnboardingAction } from '../../stores/user_profile';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
@@ -29,14 +29,14 @@ interface OnboardingComponentProps {
 }
 
 export interface OnboardingActions {
-    readonly setOnboarding: () => SetOnboardingAction;
+    readonly hideOnboarding: () => HideOnboardingAction;
 }
 
 type Props = OnboardingComponentProps & OnboardingActions;
 
 export const OnboardingComponent = (props: Props): JSX.Element => {
     const onButtonPress = (): void => {
-        props.setOnboarding();
+        props.hideOnboarding();
         goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)();
     };
     const swipeableContent = buildSwipeableContent(onButtonPress);

@@ -20,7 +20,7 @@ export interface Store {
     readonly exploreSections: explore.ExploreStore;
     readonly taxonomies: taxonomies.TaxonomyStore;
     readonly notifications: notifications.NotificationStore;
-    readonly userProfile: userProfile.OnboardingStore;
+    readonly userProfile: userProfile.UserProfileStore;
     readonly manualUserLocation: location.ManualUserLocationStore;
     readonly search: search.SearchStore;
 }

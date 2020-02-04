@@ -18,6 +18,8 @@ import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { View, Text, Button } from 'native-base';
 import { Trans } from '@lingui/react';
+import { MessageComponent } from '../partial_localization/message_component';
+import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -29,11 +31,13 @@ export interface InfiniteHitsProps {
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly showPartialLocalizationMessage: boolean;
 }
 
 export interface InfiniteHitsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
 type Props = InfiniteHitsProps & InfiniteHitsActions;
@@ -52,6 +56,12 @@ export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
             renderItem={renderSearchHit(props)}
             ListEmptyComponent={EmptyComponent}
             ItemSeparatorComponent={SearchListSeparator}
+            ListHeaderComponent={
+                <MessageComponent
+                    isVisible={props.showPartialLocalizationMessage}
+                    hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
+                />
+            }
             ListFooterComponent={loadMoreButton} />
     );
     return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{serviceList}</View>;

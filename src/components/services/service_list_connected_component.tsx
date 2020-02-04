@@ -15,6 +15,8 @@ import { selectManualUserLocation } from '../../selectors/services/select_manual
 import { LatLong } from '../../validation/latlong/types';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import { HumanServiceData } from '../../validation/services/types';
+import { selectShowPartialLocalizationMessage } from '../../selectors/user_profile/select_show_partial_localization_message';
+import { HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
     const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);
@@ -24,6 +26,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
         topicServicesOrError: selectServicesForTopic(topic.id, store),
         manualUserLocation,
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
+        showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
     };
 };
 
@@ -32,6 +35,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ServicesAction>): ServiceListActi
         dispatch(buildServicesRequest(topic.id, manualUserLocation)),
     bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
     unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
+    hidePartialLocalizationMessage: (): HidePartialLocalizationMessageAction => dispatch(hidePartialLocalizationMessage())
 });
 
 type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;

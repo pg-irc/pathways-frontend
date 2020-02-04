@@ -21,18 +21,22 @@ import * as R from 'ramda';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
+import { MessageComponent } from '../partial_localization/message_component';
+import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 
 export interface ServiceListProps {
     readonly topic: Topic;
     readonly topicServicesOrError: SelectorTopicServices;
     readonly manualUserLocation?: LatLong;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly showPartialLocalizationMessage: boolean;
 }
 
 export interface ServiceListActions {
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
 export interface ServicesUpdater {
@@ -49,27 +53,16 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     useEffect(() => refreshServices(props), [lastScreenRefresh]);
 
     if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
-        return (
-            <ErrorComponent
-                errorType={determineErrorType(props.topicServicesOrError)}
-                refreshScreen={(): void => setLastScreenRefresh(Date.now())}
-                title={props.topic.title}
-            />
-        );
+        return renderErrorComponent(props.topicServicesOrError, props.topic.title, (): void => setLastScreenRefresh(Date.now()));
     }
 
     if (isLoadingServices(props.topicServicesOrError) || isInitialEmptyTopicServices(props.topicServicesOrError)) {
-        return <LoadingServiceListComponent header={<ServiceListHeaderComponent title={props.topic.title} />} />;
+        return renderLoadingComponent(props);
     }
 
     if (isValidEmptyTopicServices(props.topicServicesOrError)) {
-        return (
-            <EmptyServiceListComponent
-                title={<Trans>No services to show</Trans>}
-                imageSource={emptyTopicServicesList}
-                refreshScreen={(): void => setLastScreenRefresh(Date.now())} />
-            );
-        }
+        return renderEmptyComponent(props, (): void => setLastScreenRefresh(Date.now()));
+    }
 
     return (
         <FlatList
@@ -80,7 +73,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             data={getServicesIfValid(props.topicServicesOrError)}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceListItem(props)}
-            ListHeaderComponent={<ServiceListHeaderComponent title={props.topic.title} />}
+            ListHeaderComponent={renderHeader(props)}
         />
     );
 };
@@ -95,6 +88,39 @@ const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boo
     topicServicesOrError.type === constants.ERROR_SERVICES_FOR_TOPIC ||
     topicServicesOrError.type === constants.VALID_SERVICES_FOR_TOPIC && topicServicesOrError.isExpired ||
     topicServicesOrError.type === constants.INITIAL_EMPTY_SERVICES_FOR_TOPIC
+);
+
+const renderErrorComponent = (topicServicesOrError: SelectorTopicServices, title: string, refreshScreen: () => void): JSX.Element => (
+    <ErrorComponent
+        errorType={determineErrorType(topicServicesOrError)}
+        refreshScreen={refreshScreen}
+        title={title}
+    />
+);
+
+const renderLoadingComponent = (props: Props): JSX.Element => (
+    <LoadingServiceListComponent
+        header={renderHeader(props)}
+    />
+);
+
+const renderEmptyComponent = (props: Props, refreshScreen: () => void): JSX.Element => (
+    <EmptyServiceListComponent
+        title={<Trans>No services to show</Trans>}
+        imageSource={emptyTopicServicesList}
+        refreshScreen={refreshScreen}
+        header={renderHeader(props)}
+    />
+);
+
+const renderHeader = (props: Props): JSX.Element => (
+    <View style={{ marginBottom: -8}}>
+        <ServiceListHeaderComponent title={props.topic.title} />
+        <MessageComponent
+            isVisible={props.showPartialLocalizationMessage}
+            hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
+        />
+    </View>
 );
 
 const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void, readonly title: string }): JSX.Element => {

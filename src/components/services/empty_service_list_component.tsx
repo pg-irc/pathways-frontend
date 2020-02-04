@@ -9,10 +9,12 @@ export interface EmptyServiceListProps {
     readonly refreshScreen: () => void;
     readonly imageSource: ImageSourcePropType;
     readonly title: JSX.Element;
+    readonly header: JSX.Element;
 }
 
 export const EmptyServiceListComponent = (props: EmptyServiceListProps): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
+        {props.header}
         <View
             style={{
                 flex: 1,
