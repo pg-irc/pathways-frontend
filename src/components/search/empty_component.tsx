@@ -3,9 +3,15 @@ import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { textStyles, imageStyles, colors, bulletPoint } from '../../application/styles';
 import { emptySearch } from '../../application/images';
-import { Image } from 'react-native';
+import { Image, ScrollView } from 'react-native';
 
-export const EmptyComponent = (): JSX.Element => (
+export interface EmptyComponentProps {
+    readonly header?: JSX.Element;
+}
+
+export const EmptyComponent = (props: EmptyComponentProps): JSX.Element => (
+    <ScrollView style={{ flex: 1, backgroundColor: colors.lightGrey }}>
+        {props.header}
         <View
             style={{
                 flex: 1,
@@ -19,6 +25,7 @@ export const EmptyComponent = (): JSX.Element => (
             {renderTitle()}
             {renderSuggestionsList()}
         </View>
+    </ScrollView>
 );
 
 const renderImage = (): JSX.Element => (

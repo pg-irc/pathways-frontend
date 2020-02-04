@@ -79,7 +79,7 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
     );
 
     if (searchTermIsEmpty(props.searchTerm)) {
-        return <EmptySearchComponent />;
+        return renderEmptyComponent(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage);
     }
 
     if (isLoading(props.searching, props.isLatLongLoading)) {
@@ -163,6 +163,18 @@ const hasNoResultsFromSearchTermQuery = (searchResults: ReadonlyArray<SearchServ
 
 const hasNoResultsFromLocationQuery = (latLong: LatLong): boolean => (
    latLong && latLong.lat === 0 && latLong.lng === 0
+);
+
+const renderEmptyComponent =
+(showPartialLocalizationMessage: boolean, hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction): JSX.Element => (
+    <EmptySearchComponent
+        header={
+            <MessageComponent
+                isVisible={showPartialLocalizationMessage}
+                hidePartialLocalizationMessage={hidePartialLocalizationMessage}
+            />
+        }
+    />
 );
 
 const renderErrorComponent =
