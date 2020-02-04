@@ -64,7 +64,9 @@ describe('Search response validation', () => {
             expect(result.validData[0].phone_numbers[1].phone_number).toEqual(secondPhoneNumber);
         });
     });
+
     describe('with invalid data', () => {
+
         it('returns invalid on missing field in service data', () => {
             const validationResult = validateServiceSearchResponse([{
                 service_name: aString(),
@@ -91,5 +93,35 @@ describe('Search response validation', () => {
             expect(validationResult.isValid).toBe(false);
             expect(validationResult.errors).toContain('service_id');
         });
+    });
+    describe('with valid data', () => {
+
+        it('accepts data without email', () => {
+            const serviceId = aString();
+            const serviceData: ReadonlyArray<any> = [{
+                service_name: aString(),
+                service_id: serviceId,
+                service_description: aString(),
+                address: anAddress(),
+                organization: anOrganization(),
+                _geoloc: aGeoLocation(),
+            }];
+            const result = validateServiceSearchResponse(serviceData);
+            expect(result.validData).toEqual(serviceData);
+        });
+    });
+
+    it('accepts data with email', () => {
+        const serviceData: ReadonlyArray<any> = [{
+            service_name: aString(),
+            service_id: aString(),
+            service_description: aString(),
+            address: anAddress(),
+            organization: anOrganization(),
+            _geoloc: aGeoLocation(),
+            email: aString()
+        }];
+        const result = validateServiceSearchResponse(serviceData);
+        expect(result.validData).toEqual(serviceData);
     });
 });
