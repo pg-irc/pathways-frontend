@@ -6,7 +6,6 @@ import { Icon } from 'native-base';
 import { mapWithIndex } from '../../application/map_with_index';
 import { Address } from '../../validation/services/types';
 import { CardButtonComponent } from '../card_button/card_button_component';
-import { DividerComponent } from '../content_layout/divider_component';
 import { colors, values, textStyles } from '../../application/styles';
 
 interface Props {
@@ -49,7 +48,6 @@ const buildAddress = R.curry((props: Props, address: Address, index: number): JS
                 rightContent={rightContent}
                 onPress={props.onPressForAddress(address)}
             />
-            <DividerComponent />
         </View>
     );
 });
