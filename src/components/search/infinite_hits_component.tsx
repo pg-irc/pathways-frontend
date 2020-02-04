@@ -60,6 +60,9 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
     const refreshSearchServices = (): string => (
         props.refine()
     );
+    const latLong = props.latLong;
+    const showPartialLocalizationMessage = props.showPartialLocalizationMessage;
+    const hidePartialLocalizationMessage = props.hidePartialLocalizationMessage;
 
     const ServiceList = (
         <FlatList
@@ -71,23 +74,31 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={
                 <MessageComponent
-                    isVisible={props.showPartialLocalizationMessage}
-                    hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
+                    isVisible={showPartialLocalizationMessage}
+                    hidePartialLocalizationMessage={hidePartialLocalizationMessage}
                 />
             }
             ListFooterComponent={loadMoreButton} />
     );
 
     if (searchTermIsEmpty(props.searchTerm)) {
-        return renderEmptyComponent(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage);
+        return renderEmptyComponent(showPartialLocalizationMessage, hidePartialLocalizationMessage);
     }
 
     if (isLoading(props.searching, props.isLatLongLoading)) {
         return <LoadingServiceListComponent />;
     }
 
-    if (isSearchErrorType(onlineStatus, searchResults, props.latLong)) {
-        return renderErrorComponent(onlineStatus, searchResults, props.latLong, (): string => refreshSearchServices());
+    if (isSearchErrorType(onlineStatus, searchResults, latLong)) {
+        const searchErrorProps = {
+            onlineStatus,
+            searchResults,
+            latLong,
+            showPartialLocalizationMessage,
+            hidePartialLocalizationMessage,
+            refreshSearchServices,
+        };
+        return renderErrorComponent(searchErrorProps);
     }
 
     return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{ServiceList}</View>;
@@ -177,18 +188,33 @@ const renderEmptyComponent =
     />
 );
 
-const renderErrorComponent =
-(onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong, refreshServices: () => void): JSX.Element => (
+export interface SearchErrorComponentProps {
+    readonly onlineStatus: OnlineStatus;
+    readonly searchResults: ReadonlyArray<SearchServiceData>;
+    readonly latLong: LatLong;
+    readonly showPartialLocalizationMessage: boolean;
+    readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
+    readonly refreshSearchServices: () => void;
+}
+
+const renderErrorComponent = (props: SearchErrorComponentProps ): JSX.Element => (
     <ErrorComponent
-        errorType={determineErrorType(onlineStatus, searchResults, latLong)}
-        refreshScreen={refreshServices}
+        errorType={determineErrorType(props.onlineStatus, props.searchResults, props.latLong)}
+        refreshScreen={props.refreshSearchServices}
+        header={
+            <MessageComponent
+                isVisible={props.showPartialLocalizationMessage}
+                hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
+            />
+        }
     />
 );
 
-const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void }): JSX.Element => (
+const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void, readonly header: JSX.Element }): JSX.Element => (
     <ErrorScreenSwitcherComponent
         refreshScreen={props.refreshScreen}
         errorType={props.errorType}
+        header={props.header}
     />
 );
 
