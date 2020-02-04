@@ -71,7 +71,7 @@ export const ErrorScreenSwitcherComponent = (props: ErrorScreenSwitcherComponent
             return (
                 <ErrorScreenComponent
                     imageSource={noMatchingSearchResults}
-                    title={<Trans>Your search did not match any services. Try to:</Trans>}
+                    title={<Trans>No results found. Try to:</Trans>}
                     additionalContent={getAdditionalContentForError(Errors.NoMatchingSearchResults)}
                     {...sharedProps}
                 />
