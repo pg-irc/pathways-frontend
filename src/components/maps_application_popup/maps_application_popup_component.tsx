@@ -27,8 +27,6 @@ export const MapsApplicationPopupComponent: React.StatelessComponent<MapsApplica
             props.locationTitle,
             props.latitude,
             props.longitude,
-            props.currentPathForAnalytics,
-            props.linkContextForAnalytics,
         );
 
         const button = (
