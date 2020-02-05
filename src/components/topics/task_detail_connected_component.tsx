@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { Routes, getParametersFromPath } from '../../application/routing';
+import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/analytics';
 
 type OwnProps = {
     readonly history: History;
@@ -32,13 +33,15 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
     };
 };
 
-type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction | ExpandDetailAction | CollapseDetailAction;
+type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction | ExpandDetailAction | CollapseDetailAction | AnalyticsLinkPressedAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActions => ({
     bookmarkTopic: (topicId: TaskId): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
     unbookmarkTopic: (topicId: TaskId): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
     onExpand: (contentId: string): ExpandDetailAction => dispatch(expandDetail(contentId)),
     onCollapse: (contentId: string): CollapseDetailAction => dispatch(collapseDeail(contentId)),
+    analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
+        dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
 });
 
 export const TaskDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TaskDetailComponent);
