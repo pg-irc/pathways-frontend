@@ -45,13 +45,7 @@ const PhoneNumberCardComponent = (props: PhoneNumberCardComponentProps): JSX.Ele
         <View key={props.index}>
             <CardButtonComponent
                 leftContent={renderPhoneNumber(props.phoneNumber)}
-                rightContent={
-                    <Icon
-                        name={'phone'}
-                        type={'FontAwesome'}
-                        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-                    />
-                }
+                rightContent={renderIcon()}
                 onPress={onPress}
             />
             <DividerComponent />
@@ -71,3 +65,11 @@ const renderPhoneNumber = (phoneNumber: PhoneNumber): JSX.Element => {
         </View>
     );
 };
+
+const renderIcon = (): JSX.Element => (
+    <Icon
+        name={'phone'}
+        type={'FontAwesome'}
+        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
+    />
+);

@@ -25,22 +25,26 @@ export const EmailComponent = (props: Props): JSX.Element => {
     return (
         <View>
             <CardButtonComponent
-                leftContent={(
-                    <View>
-                        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email</Trans>: </Text>
-                        <Text style={textStyles.paragraphStyle}>{props.email}</Text>
-                    </View>)
-                }
-                rightContent={
-                    <Icon
-                        name={'envelope'}
-                        type={'FontAwesome'}
-                        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-                    />
-                }
+                leftContent={renderEmail(props.email)}
+                rightContent={renderIcon()}
                 onPress={onPress}
             />
             <DividerComponent />
     </View>
     );
 };
+
+const renderEmail = (email: string): JSX.Element => (
+    <View>
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email</Trans>: </Text>
+        <Text style={textStyles.paragraphStyle}>{email}</Text>
+    </View>
+);
+
+const renderIcon = (): JSX.Element => (
+    <Icon
+        name={'envelope'}
+        type={'FontAwesome'}
+        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
+    />
+);

@@ -24,22 +24,26 @@ export const WebsiteComponent = (props: Props): JSX.Element => {
     return (
         <View>
             <CardButtonComponent
-                leftContent={(
-                    <View>
-                        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website</Trans>: </Text>
-                        <Text style={textStyles.paragraphStyle}>{props.website}</Text>
-                    </View>)
-                }
-                rightContent={
-                    <Icon
-                        name={'external-link'}
-                        type={'FontAwesome'}
-                        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-                    />
-                }
+                leftContent={renderWebsite(props.website)}
+                rightContent={renderIcon()}
                 onPress={onPress}
             />
             <DividerComponent />
         </View>
     );
 };
+
+const renderWebsite = (website: string): JSX.Element => (
+    <View>
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website</Trans>: </Text>
+        <Text style={textStyles.paragraphStyle}>{website}</Text>
+    </View>
+);
+
+const renderIcon = (): JSX.Element => (
+    <Icon
+        name={'external-link'}
+        type={'FontAwesome'}
+        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
+    />
+);
