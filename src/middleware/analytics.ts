@@ -25,12 +25,14 @@ const sendServicesCountReport = (store: Store, action: UpdateServicesActions): v
     const newStore = servicesReducer(store.services, action);
     const oldServicesCount = R.length(R.keys(oldStore.services));
     const newServicesCount = R.length(R.keys(newStore.services));
+    const analyticsIsDisabled = store.userProfile.disableAnalytics;
 
-    if (shouldSendServicesReport(oldServicesCount, newServicesCount, MEMORY_REPORT_SEND_EVERY_SERVICES_COUNT)) {
+    if (shouldSendServicesReport(oldServicesCount, newServicesCount, MEMORY_REPORT_SEND_EVERY_SERVICES_COUNT, analyticsIsDisabled)) {
         sendServicesCountEvent(newServicesCount);
     }
 };
 
-export const shouldSendServicesReport = (oldServicesCount: number, newServicesCount: number, sendEveryCount: number): boolean => (
-    Math.floor(oldServicesCount / sendEveryCount) < Math.floor(newServicesCount / sendEveryCount)
-);
+export const shouldSendServicesReport =
+    (oldServicesCount: number, newServicesCount: number, sendEveryCount: number, analyticsIsDisabled: boolean): boolean => (
+        Math.floor(oldServicesCount / sendEveryCount) < Math.floor(newServicesCount / sendEveryCount) && !analyticsIsDisabled
+    );
