@@ -21,13 +21,18 @@ import { buildServiceName } from '../services//build_service_name';
 import { openInMapsApplication } from '../maps_application_popup/open_in_maps_application';
 import { getLocationTitleFromAddresses } from '../services/get_location_title_from_addresses';
 import { EmailComponent } from '../email/email_component';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 
 export interface ServiceDetailProps {
     readonly history: History;
     readonly service: HumanServiceData;
 }
 
-type Props = ServiceDetailProps & RouterProps;
+export interface ServiceDetailActions {
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+}
+
+type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     return (
@@ -38,7 +43,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             <ServiceOrganization history={props.history} name={props.service.organizationName} />
             <MarkdownBodyComponent body={props.service.description} shouldBeExpandable={true} />
             <DividerComponent />
-            <ServiceContactDetails service={props.service} currentPathForAnaltyics={props.location.pathname}/>
+            <ServiceContactDetails {...props}/>
         </Content>
     );
 };
@@ -58,17 +63,18 @@ const ServiceOrganization = (props: { readonly history: History, readonly name: 
     </View>
 );
 
-const ServiceContactDetails = (props: { readonly service: HumanServiceData, readonly currentPathForAnaltyics: string }): JSX.Element => {
+const ServiceContactDetails = (props: Props): JSX.Element => {
     const serviceName = buildServiceName(props.service.organizationName, props.service.name);
     const linkContextForAnalytics = buildAnalyticsLinkContext('Service', serviceName);
     const locationTitle = getLocationTitleFromAddresses(filterPhysicalAddresses(props.service.addresses));
+    const currentPathForAnalytics = props.location.pathname;
     const onPressForAddress = (_: Address): () => Promise<void> => {
         if (serviceHasLatLng(props.service)) {
             return openInMapsApplication(
                 locationTitle,
                 props.service.latlong.lat,
                 props.service.latlong.lng,
-                props.currentPathForAnaltyics,
+                currentPathForAnalytics,
                 linkContextForAnalytics,
             );
         }
@@ -80,23 +86,25 @@ const ServiceContactDetails = (props: { readonly service: HumanServiceData, read
             <AddressesComponent
                 addresses={filterPhysicalAddresses(props.service.addresses)}
                 linkContextForAnalytics={linkContextForAnalytics}
-                currentPathForAnalytics={props.currentPathForAnaltyics}
+                currentPathForAnalytics={currentPathForAnalytics}
                 onPressForAddress={onPressForAddress}
             />
             <PhoneNumbersComponent
                 phoneNumbers={props.service.phoneNumbers}
                 linkContextForAnalytics={linkContextForAnalytics}
-                currentPathForAnalytics={props.currentPathForAnaltyics}
+                currentPathForAnalytics={currentPathForAnalytics}
             />
             <WebsiteComponent
                 website={props.service.website}
                 linkContextForAnalytics={linkContextForAnalytics}
-                currentPathForAnalytics={props.currentPathForAnaltyics}
+                currentPathForAnalytics={currentPathForAnalytics}
+                analyticsLinkPressed={props.analyticsLinkPressed}
             />
             <EmailComponent
                 email={props.service.email}
                 linkContextForAnalytics={linkContextForAnalytics}
-                currentPathForAnalytics={props.currentPathForAnaltyics}
+                currentPathForAnalytics={currentPathForAnalytics}
+                analyticsLinkPressed={props.analyticsLinkPressed}
             />
             <ContentVerificationComponent verificationDate={'N/A'} />
             <DividerComponent />

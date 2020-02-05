@@ -7,40 +7,39 @@ import { CardButtonComponent } from '../card_button/card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles, colors, values } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
-import { sendLinkPressedEvent } from '../../sagas/analytics/events';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 
 interface Props {
     readonly website: string;
     readonly linkContextForAnalytics: string;
     readonly currentPathForAnalytics: string;
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
-export const WebsiteComponent = (props: Props): JSX.Element => (
-    <View>
-        <CardButtonComponent
-            leftContent={(
-                <View>
-                    <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website</Trans>: </Text>
-                    <Text style={textStyles.paragraphStyle}>{props.website}</Text>
-                </View>)
-            }
-            rightContent={
-                <Icon
-                    name={'external-link'}
-                    type={'FontAwesome'}
-                    style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-                />
-            }
-            onPress={getOnPressForWebsite(props.website, props.currentPathForAnalytics, props.linkContextForAnalytics)}
-        />
-        <DividerComponent />
-    </View>
-);
-
-const getOnPressForWebsite = (website: string, currentPathForAnalytics: string, linkContextForAnalytics: string): () => void => {
+export const WebsiteComponent = (props: Props): JSX.Element => {
     const onPress = (): void => {
-        sendLinkPressedEvent(currentPathForAnalytics, linkContextForAnalytics, LinkTypes.website, website);
-        openURL(website);
+        props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.website, props.website);
+        openURL(props.website);
     };
-    return onPress;
-}
+    return (
+        <View>
+            <CardButtonComponent
+                leftContent={(
+                    <View>
+                        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website</Trans>: </Text>
+                        <Text style={textStyles.paragraphStyle}>{props.website}</Text>
+                    </View>)
+                }
+                rightContent={
+                    <Icon
+                        name={'external-link'}
+                        type={'FontAwesome'}
+                        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
+                    />
+                }
+                onPress={onPress}
+            />
+            <DividerComponent />
+        </View>
+    );
+};
