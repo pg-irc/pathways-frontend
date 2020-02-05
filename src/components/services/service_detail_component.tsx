@@ -93,6 +93,7 @@ const ServiceContactDetails = (props: Props): JSX.Element => {
                 phoneNumbers={props.service.phoneNumbers}
                 linkContextForAnalytics={linkContextForAnalytics}
                 currentPathForAnalytics={currentPathForAnalytics}
+                analyticsLinkPressed={props.analyticsLinkPressed}
             />
             <WebsiteComponent
                 website={props.service.website}

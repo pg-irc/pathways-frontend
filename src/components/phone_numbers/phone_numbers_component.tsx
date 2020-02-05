@@ -8,65 +8,66 @@ import { CardButtonComponent } from '../card_button/card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles, colors, values } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
-import { sendLinkPressedEvent } from '../../sagas/analytics/events';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
     readonly linkContextForAnalytics: string;
     readonly currentPathForAnalytics: string;
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
 export const PhoneNumbersComponent = (props: Props): JSX.Element => {
     return (
         <View>
             {mapWithIndex((phoneNumber: PhoneNumber, index: number): JSX.Element =>
-                <View key={index}>
-                    <CardButtonComponent
-                        leftContent={
-                            <SinglePhoneNumberComponent
-                                phoneNumber={phoneNumber}
-                            />
-                        }
-                        rightContent={
-                            <Icon
-                                name={'phone'}
-                                type={'FontAwesome'}
-                                style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-                            />
-                        }
-                        onPress={
-                            getOnPressForPhoneNumber(phoneNumber, props.currentPathForAnalytics, props.linkContextForAnalytics)
-                        }
-                    />
-                    <DividerComponent />
-                </View>
+                <PhoneNumberCardComponent {...props} phoneNumber={phoneNumber} index={index} />
             , props.phoneNumbers)}
         </View>
     );
 };
 
-interface SinglePhoneNumberProps {
+export interface PhoneNumberCardComponentProps {
+    readonly index: number;
     readonly phoneNumber: PhoneNumber;
+    readonly linkContextForAnalytics: string;
+    readonly currentPathForAnalytics: string;
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
-const SinglePhoneNumberComponent = (props: SinglePhoneNumberProps): JSX.Element => {
-    const capitalizeFirstLetter = (s: string): string => (
-        s.charAt(0).toUpperCase() + s.slice(1)
-    );
-    const fieldLabel = capitalizeFirstLetter(props.phoneNumber.type);
+const PhoneNumberCardComponent = (props: PhoneNumberCardComponentProps): JSX.Element => {
+    const onPress = (): void => {
+        const linkValue = 'tel: ' + props.phoneNumber.phone_number;
+        props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.phone, linkValue);
+        openURL(linkValue);
+    };
     return (
-        <View>
-            <Text style={textStyles.paragraphBoldBlackLeft}>{fieldLabel}: </Text>
-            <Text style={textStyles.paragraphStyle}>{props.phoneNumber.phone_number}</Text>
+        <View key={props.index}>
+            <CardButtonComponent
+                leftContent={renderPhoneNumber(props.phoneNumber)}
+                rightContent={
+                    <Icon
+                        name={'phone'}
+                        type={'FontAwesome'}
+                        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
+                    />
+                }
+                onPress={onPress}
+            />
+            <DividerComponent />
         </View>
     );
 };
 
-const getOnPressForPhoneNumber = (phoneNumber: PhoneNumber, currentPathForAnalytics: string, linkContextForAnalytics: string): () => void => {
-    const linkValue = 'tel: ' + phoneNumber.phone_number;
-    const onPress = (): void => {
-        sendLinkPressedEvent(currentPathForAnalytics, linkContextForAnalytics, LinkTypes.phone, linkValue);
-        openURL(linkValue);
-    };
-    return onPress;
-}
+const renderPhoneNumber = (phoneNumber: PhoneNumber): JSX.Element => {
+    const capitalizeFirstLetter = (s: string): string => (
+        s.charAt(0).toUpperCase() + s.slice(1)
+    );
+    const fieldLabel = capitalizeFirstLetter(phoneNumber.type);
+    return (
+        <View>
+            <Text style={textStyles.paragraphBoldBlackLeft}>{fieldLabel}: </Text>
+            <Text style={textStyles.paragraphStyle}>{phoneNumber.phone_number}</Text>
+        </View>
+    );
+};
