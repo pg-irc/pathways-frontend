@@ -2,7 +2,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Icon } from 'native-base';
-import { mapWithIndex } from '../../application/map_with_index';
 import { PhoneNumber } from '../../validation/services/types';
 import { CardButtonComponent } from '../card_button/card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
@@ -21,19 +20,19 @@ interface Props {
 export const PhoneNumbersComponent = (props: Props): JSX.Element => {
     return (
         <View>
-            {mapWithIndex(buildPhoneNumber(props), props.phoneNumbers)}
+            {R.map(buildPhoneNumber(props), props.phoneNumbers)}
         </View>
     );
 };
 
-const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index: number): JSX.Element => {
+const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber): JSX.Element => {
     const onPress = (): void => {
         const linkValue = 'tel: ' + phoneNumber.phone_number;
         props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.phone, linkValue);
         openURL(linkValue);
     };
     return (
-        <View key={index}>
+        <View key={phoneNumber.phone_number}>
             <CardButtonComponent
                 leftContent={renderSinglePhoneNumber(phoneNumber)}
                 rightContent={renderIcon()}

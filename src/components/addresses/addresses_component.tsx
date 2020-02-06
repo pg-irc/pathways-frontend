@@ -1,10 +1,8 @@
- // tslint:disable: no-expression-statement
 import React from 'react';
 import * as R from 'ramda';
 import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
 import { Icon } from 'native-base';
-import { mapWithIndex } from '../../application/map_with_index';
 import { Address } from '../../validation/services/types';
 import { CardButtonComponent } from '../card_button/card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
@@ -24,23 +22,24 @@ interface Props {
 
 export const AddressesComponent = (props: Props): JSX.Element => (
     <View>
-        {mapWithIndex(buildAddress(props), props.addresses)}
+        {R.map(buildAddress(props), props.addresses)}
     </View>
 );
 
-const buildAddress = R.curry((props: Props, address: Address, index: number): JSX.Element => {
+const buildAddress = R.curry((props: Props, address: Address): JSX.Element => {
     const onPress = (): Promise<void> => {
         if (props.latLong) {
             const linkType = 'Button';
             const linkValue = 'Open in maps';
+             // tslint:disable-next-line: no-expression-statement
             props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, linkType, linkValue);
-            return openInMapsApplication(props.locationTitle, props.latLong.lat, props.latLong.lng);
+            return openInMapsApplication(props.locationTitle, props.latLong);
         }
         return undefined;
     };
 
     return (
-        <View key={index}>
+        <View key={address.id}>
             <CardButtonComponent
                 leftContent={renderSingleAddress(address)}
                 rightContent={renderIcon()}

@@ -33,6 +33,10 @@ const sendServicesCountReport = (store: Store, action: UpdateServicesActions): v
 };
 
 export const shouldSendServicesReport =
-    (oldServicesCount: number, newServicesCount: number, sendEveryCount: number, analyticsIsDisabled: boolean): boolean => (
-        Math.floor(oldServicesCount / sendEveryCount) < Math.floor(newServicesCount / sendEveryCount) && !analyticsIsDisabled
-    );
+(oldServicesCount: number, newServicesCount: number, memoryReportThreshhold: number, analyticsIsDisabled: boolean): boolean => (
+    !servicesCountIsLessThanThreshhold(oldServicesCount, newServicesCount, memoryReportThreshhold) && !analyticsIsDisabled
+);
+
+const servicesCountIsLessThanThreshhold = (oldServicesCount: number, newServicesCount: number, memoryReportThreshhold: number): boolean => (
+    Math.floor(oldServicesCount / memoryReportThreshhold) >= Math.floor(newServicesCount / memoryReportThreshhold)
+);
