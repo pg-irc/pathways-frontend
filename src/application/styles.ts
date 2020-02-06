@@ -223,7 +223,6 @@ export const textStyles = StyleSheet.create({
     URL: {
         fontSize: 15,
         lineHeight: 21,
-        textDecorationLine: 'underline',
         textAlign: 'left',
         color: colors.teal,
         letterSpacing,

@@ -51,7 +51,7 @@ const ServiceOrganization = (props: { readonly history: History, readonly name: 
                 <Trans>Provided by</Trans>:
             </Text>
             <TouchableOpacity onPress={(): void => undefined}>
-                <Text style={textStyles.URL}>{props.name.toUpperCase()}</Text>
+                <Text style={textStyles.URL}>{props.name}</Text>
             </TouchableOpacity>
         </View>
         <DividerComponent />
