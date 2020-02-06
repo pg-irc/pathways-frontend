@@ -20,6 +20,13 @@ import { View, Text, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
+import { EmptyComponent as EmptySearchComponent } from './empty_component';
+import { useOnlineStatus, OnlineStatus } from '../../hooks/use_online_status';
+import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
+import { Errors } from '../../validation/errors/types';
+import { StateResultsProvided } from 'react-instantsearch-core';
+import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
+import { LatLong } from '../../validation/latlong/types';
 
 export interface InfiniteHitsProps {
     readonly currentPath: string;
@@ -32,6 +39,9 @@ export interface InfiniteHitsProps {
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
+    readonly searchTerm: string;
+    readonly latLong: LatLong;
+    readonly isLatLongLoading: boolean;
 }
 
 export interface InfiniteHitsActions {
@@ -40,31 +50,53 @@ export interface InfiniteHitsActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
-type Props = InfiniteHitsProps & InfiniteHitsActions;
+export type InfiniteHitsAndStateResultsProps = InfiniteHitsProps & InfiniteHitsActions & StateResultsProvided;
 
-export const InfiniteHitsComponent = (props: Partial<Props>): JSX.Element => {
-    // tslint:disable-next-line:no-expression-statement
+export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResultsProps>): JSX.Element => {
     useTraceUpdate('InfiniteHitsComponent', props);
     const searchResults = getValidSearchResults(props);
     const loadMoreButton = renderLoadMoreButton(props.hasMore, props.refineNext);
-    const serviceList = (
+    const onlineStatus = useOnlineStatus();
+    const refreshSearchServices = (): string => (
+        props.refine()
+    );
+    const latLong = props.latLong;
+    const showPartialLocalizationMessage = props.showPartialLocalizationMessage;
+    const hidePartialLocalizationMessage = props.hidePartialLocalizationMessage;
+
+    if (searchTermIsEmpty(props.searchTerm)) {
+        return renderEmptyComponent(showPartialLocalizationMessage, hidePartialLocalizationMessage);
+    }
+
+    if (isLoading(props.searching, props.isLatLongLoading)) {
+        return <LoadingServiceListComponent />;
+    }
+
+    if (isSearchErrorType(onlineStatus, searchResults, latLong)) {
+        const searchErrorProps = {
+            onlineStatus,
+            searchResults,
+            latLong,
+            showPartialLocalizationMessage,
+            hidePartialLocalizationMessage,
+            refreshSearchServices,
+        };
+        return renderErrorComponent(searchErrorProps);
+    }
+
+    const ServiceList = (
         <FlatList
             style={{ backgroundColor: colors.white }}
             refreshing={false}
             data={searchResults}
             keyExtractor={keyExtractor}
             renderItem={renderSearchHit(props)}
-            ListEmptyComponent={EmptyComponent}
             ItemSeparatorComponent={SearchListSeparator}
-            ListHeaderComponent={
-                <MessageComponent
-                    isVisible={props.showPartialLocalizationMessage}
-                    hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
-                />
-            }
+            ListHeaderComponent={renderHeader(showPartialLocalizationMessage, hidePartialLocalizationMessage)}
             ListFooterComponent={loadMoreButton} />
     );
-    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{serviceList}</View>;
+
+    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{ServiceList}</View>;
 };
 
 const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Element => {
@@ -85,7 +117,7 @@ const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Ele
     return <EmptyComponent />;
 };
 
-const getValidSearchResults = (props: Partial<Props>): ReadonlyArray<SearchServiceData> => {
+const getValidSearchResults = (props: Partial<InfiniteHitsAndStateResultsProps>): ReadonlyArray<SearchServiceData> => {
     const validationResult = validateServiceSearchResponse(props.hits);
     if (!validationResult.isValid) {
         throw new Error(validationResult.errors);
@@ -97,7 +129,7 @@ const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
 );
 
-const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
+const renderSearchHit = R.curry((props: Partial<InfiniteHitsAndStateResultsProps>, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
     const item: SearchServiceData = itemInfo.item;
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
@@ -114,3 +146,82 @@ const renderSearchHit = R.curry((props: Partial<Props>, itemInfo: ListRenderItem
         unbookmarkService={props.unbookmarkService}
     />;
 });
+
+const searchTermIsEmpty = (searchTerm: string): boolean => (
+    !searchTerm
+);
+
+const isLoading = (searching: boolean, isLatLongLoading: boolean): boolean => (
+    searching || isLatLongLoading
+);
+
+const isSearchErrorType = (onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong): boolean => (
+    isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults) || hasNoResultsFromLocationQuery(latLong)
+);
+
+const isOffline = (onlineStatus: OnlineStatus): boolean => (
+    onlineStatus === OnlineStatus.Offline
+);
+
+const hasNoResultsFromSearchTermQuery = (searchResults: ReadonlyArray<SearchServiceData>): boolean => (
+    searchResults.length === 0
+);
+
+const hasNoResultsFromLocationQuery = (latLong: LatLong): boolean => (
+   latLong && latLong.lat === 0 && latLong.lng === 0
+);
+
+const renderEmptyComponent =
+(showPartialLocalizationMessage: boolean, hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction): JSX.Element => (
+    <EmptySearchComponent
+        header={renderHeader(showPartialLocalizationMessage, hidePartialLocalizationMessage)}
+    />
+);
+
+export interface SearchErrorComponentProps {
+    readonly onlineStatus: OnlineStatus;
+    readonly searchResults: ReadonlyArray<SearchServiceData>;
+    readonly latLong: LatLong;
+    readonly showPartialLocalizationMessage: boolean;
+    readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
+    readonly refreshSearchServices: () => void;
+}
+
+const renderErrorComponent = (props: SearchErrorComponentProps ): JSX.Element => (
+    <ErrorComponent
+        errorType={determineErrorType(props.onlineStatus, props.searchResults, props.latLong)}
+        refreshScreen={props.refreshSearchServices}
+        header={renderHeader(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage)}
+    />
+);
+
+const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void, readonly header: JSX.Element }): JSX.Element => (
+    <ErrorScreenSwitcherComponent
+        refreshScreen={props.refreshScreen}
+        errorType={props.errorType}
+        header={props.header}
+    />
+);
+
+const determineErrorType = (onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong): Errors => {
+    if (isOffline(onlineStatus)) {
+        return Errors.Offline;
+    }
+
+    if (hasNoResultsFromSearchTermQuery(searchResults)) {
+        return Errors.NoMatchingSearchResults;
+    }
+
+    if (hasNoResultsFromLocationQuery(latLong)) {
+        return Errors.InvalidSearchLocation;
+    }
+    return Errors.Exception;
+};
+
+const renderHeader =
+(showPartialLocalizationMessage: boolean, hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction): JSX.Element => (
+    <MessageComponent
+        isVisible={showPartialLocalizationMessage}
+        hidePartialLocalizationMessage={hidePartialLocalizationMessage}
+    />
+);

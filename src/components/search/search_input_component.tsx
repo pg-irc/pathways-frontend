@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+// tslint:disable: no-expression-statement
+
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
@@ -71,16 +73,16 @@ const renderSearchButton = (showSearchButton: boolean, searchTerm: string, locat
     );
 };
 
-// tslint:disable:no-expression-statement
+export type SetShowMyLocationButton = Dispatch<SetStateAction<boolean>>;
+
+export type SetShowSearchButton = Dispatch<SetStateAction<boolean>>;
+
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
     const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.location);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
-    // linter doesn't understand state hooks with booleans for some reason
-    // tslint:disable-next-line:typedef
-    const [showMyLocationButton, setShowMyLocationButton] = useState(false);
-    // tslint:disable-next-line:typedef
-    const [showSearchButton, setShowSearchButton] = useState(false);
+    const [showMyLocationButton, setShowMyLocationButton]: readonly [boolean, SetShowMyLocationButton] = useState(false);
+    const [showSearchButton, setShowSearchButton]: readonly [boolean, SetShowSearchButton] = useState(false);
     useEffect(() => {
         debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
         props.refine(props.searchTerm);

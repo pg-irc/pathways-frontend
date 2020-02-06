@@ -1,6 +1,7 @@
 import React from 'react';
 import { Content, View } from 'native-base';
 import { colors } from '../../application/styles';
+import { ActivityIndicator } from 'react-native';
 
 export interface LoadingServiceListComponentProps {
     readonly header?: JSX.Element;
@@ -14,6 +15,7 @@ export const LoadingServiceListComponent = (props: LoadingServiceListComponentPr
             <LoadingServiceListItemComponent />
             <LoadingServiceListItemComponent />
             <LoadingServiceListItemComponent />
+            <LoadingSpinner />
         </Content>
     );
 };
@@ -40,4 +42,18 @@ const LoadingSubtitle = (): JSX.Element => (
 
 const LoadingText = (): JSX.Element => (
     <View style={{ height: 8, width: 312, backgroundColor: colors.fadedGrey, marginTop: 10 }}/>
+);
+
+const LoadingSpinner = (): JSX.Element => (
+    <View style={{
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+          <ActivityIndicator size='large' />
+    </View>
 );

@@ -7,10 +7,14 @@ import {
     locationTimeout,
     serverError,
     arrivalAdvisorGlyphLogo,
+    noMatchingSearchResults,
+    invalidSearchLocation,
 } from '../../application/images';
 import { ErrorScreenComponent } from './ErrorScreenComponent';
 import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button/app_settings_button_component';
 import { isAndroid } from '../../helpers/is_android';
+import { View, Text } from 'native-base';
+import { textStyles, bulletPoint } from '../../application/styles';
 
 type ErrorScreenSwitcherComponentProps = {
     readonly errorType: Errors;
@@ -63,6 +67,24 @@ export const ErrorScreenSwitcherComponent = (props: ErrorScreenSwitcherComponent
                     {...sharedProps}
                 />
             );
+        case Errors.NoMatchingSearchResults:
+            return (
+                <ErrorScreenComponent
+                    imageSource={noMatchingSearchResults}
+                    title={<Trans>No results found. Try to:</Trans>}
+                    additionalContent={getAdditionalContentForError(Errors.NoMatchingSearchResults)}
+                    {...sharedProps}
+                />
+            );
+        case Errors.InvalidSearchLocation:
+            return (
+                <ErrorScreenComponent
+                    imageSource={invalidSearchLocation}
+                    title={<Trans>Invalid location. Try:</Trans>}
+                    additionalContent={getAdditionalContentForError(Errors.InvalidSearchLocation)}
+                    {...sharedProps}
+                />
+            )
         default:
         case Errors.Exception:
             return (
@@ -124,7 +146,42 @@ const getAdditionalContentForError = (error: Errors): JSX.Element | undefined =>
                 <AppSettingsButtonComponent settingsType={SettingsType.AndroidAppLocation} />
                 :
                 undefined;
+        case (Errors.NoMatchingSearchResults):
+            return renderNoMatchingResultsSuggestions();
+        case (Errors.InvalidSearchLocation):
+            return renderInvalidSearchLocationSuggestions();
         default:
             return undefined;
     }
 };
+
+const renderNoMatchingResultsSuggestions = (): JSX.Element => (
+    <View>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>Search for a different keyword</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>Double check for spelling</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>Ensure your search is in English</Trans>
+        </Text>
+    </View>
+);
+
+const renderInvalidSearchLocationSuggestions = (): JSX.Element => (
+    <View>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>My location</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>City - "Vancouver"</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>Street - "Kingsway"</Trans>
+        </Text>
+        <Text style={textStyles.paragraphStyleBrown}>
+            {bulletPoint} <Trans>Postal Code - "V5Y 1V4" </Trans>
+        </Text>
+    </View>
+);
