@@ -2,14 +2,14 @@ import React from 'react';
 import * as R from 'ramda';
 import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
-import { Icon } from 'native-base';
 import { Address } from '../../validation/services/types';
 import { CardButtonComponent } from '../card_button/card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
-import { colors, values, textStyles } from '../../application/styles';
+import { textStyles } from '../../application/styles';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { LatLong } from '../../validation/latlong/types';
 import { openInMapsApplication } from '../maps_application_popup/open_in_maps_application';
+import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 
 interface Props {
     readonly addresses: ReadonlyArray<Address>;
@@ -42,7 +42,7 @@ const buildAddress = R.curry((props: Props, address: Address): JSX.Element => {
         <View key={address.id}>
             <CardButtonComponent
                 leftContent={renderSingleAddress(address)}
-                rightContent={renderIcon()}
+                rightContent={<ServiceDetailIconComponent name={'location-arrow'} />}
                 onPress={onPress}
             />
             <DividerComponent />
@@ -58,12 +58,4 @@ export const renderSingleAddress = (address: Address): JSX.Element => (
             {address.city} {address.stateProvince} {address.postalCode}
         </Text>
     </View>
-);
-
-const renderIcon = (): JSX.Element => (
-    <Icon
-        name={'location-arrow'}
-        type={'FontAwesome'}
-        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-    />
 );

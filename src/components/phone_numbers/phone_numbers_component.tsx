@@ -1,14 +1,14 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Icon } from 'native-base';
 import { PhoneNumber } from '../../validation/services/types';
 import { CardButtonComponent } from '../card_button/card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
-import { textStyles, colors, values } from '../../application/styles';
+import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import * as R from 'ramda';
+import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
@@ -35,7 +35,7 @@ const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber): JSX.E
         <View key={phoneNumber.phone_number}>
             <CardButtonComponent
                 leftContent={renderSinglePhoneNumber(phoneNumber)}
-                rightContent={renderIcon()}
+                rightContent={<ServiceDetailIconComponent name={'phone'} />}
                 onPress={onPress}
             />
             <DividerComponent />
@@ -55,11 +55,3 @@ const renderSinglePhoneNumber = (phoneNumber: PhoneNumber): JSX.Element => {
         </View>
     );
 };
-
-const renderIcon = (): JSX.Element => (
-    <Icon
-        name={'phone'}
-        type={'FontAwesome'}
-        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-    />
-);

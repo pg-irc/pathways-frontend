@@ -1,13 +1,13 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { CardButtonComponent } from '../card_button/card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
-import { textStyles, colors, values } from '../../application/styles';
+import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 
 interface Props {
     readonly website: string;
@@ -25,7 +25,7 @@ export const WebsiteComponent = (props: Props): JSX.Element => {
         <View>
             <CardButtonComponent
                 leftContent={renderWebsite(props.website)}
-                rightContent={renderIcon()}
+                rightContent={<ServiceDetailIconComponent name={'external-link'} />}
                 onPress={onPress}
             />
             <DividerComponent />
@@ -38,12 +38,4 @@ const renderWebsite = (website: string): JSX.Element => (
         <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website</Trans>: </Text>
         <Text style={textStyles.paragraphStyle}>{website}</Text>
     </View>
-);
-
-const renderIcon = (): JSX.Element => (
-    <Icon
-        name={'external-link'}
-        type={'FontAwesome'}
-        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-    />
 );
