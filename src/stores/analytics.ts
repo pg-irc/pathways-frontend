@@ -1,23 +1,29 @@
 // tslint:disable:typedef
 
-import { AnalyticsAsync as constants } from '../application/constants';
+import * as constants  from '../application/constants';
 import * as helpers from './helpers/make_action';
 
 export namespace AnalyticsAsync {
 
     export const request = () => (
-        helpers.makeAction(constants.REQUEST)
+        helpers.makeAction(constants.AnalyticsAsync.REQUEST)
     );
 
     export const success = () => (
-        helpers.makeAction(constants.SUCCESS)
+        helpers.makeAction(constants.AnalyticsAsync.SUCCESS)
     );
 
     export const failure = (error: string) => (
-        helpers.makeAction(constants.FAILURE, { error })
+        helpers.makeAction(constants.AnalyticsAsync.FAILURE, { error })
     );
 
     export type RequestAction = Readonly<ReturnType<typeof request>>;
     export type SuccessAction = Readonly<ReturnType<typeof success>>;
     export type FailureAction = Readonly<ReturnType<typeof failure>>;
 }
+
+export type AnalyticsLinkPressedAction = Readonly<ReturnType<typeof analyticsLinkPressed>>;
+
+export const analyticsLinkPressed = (currentPath: string, linkContext: string, linkType: string, linkValue: string) => (
+    helpers.makeAction(constants.ANALYTICS_LINK_PRESSED, {currentPath, linkContext, linkType, linkValue})
+);

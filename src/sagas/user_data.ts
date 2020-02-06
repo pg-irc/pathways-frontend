@@ -22,6 +22,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.SAVE_SEARCH_TERM,
             constants.SAVE_SEARCH_LOCATION,
             constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE,
+            constants.DISABLE_ANALYTICS,
         ],
         saveUserData);
 }
