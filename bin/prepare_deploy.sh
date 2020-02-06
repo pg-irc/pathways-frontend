@@ -281,8 +281,7 @@ createClientEnvironment() {
 
     echo "VERSION=$VERSION"                                >  "$CLIENT_DIRECTORY/.env"
     echo "DEBUG_GOOGLE_ANALYTICS=false"                    >> "$CLIENT_DIRECTORY/.env"
-    echo "ALGOLIA_SERVICES_INDEX='dev_services'"           >> "$CLIENT_DIRECTORY/.env"
-    echo "ALGOLIA_ORGANIZATIONS_INDEX='dev_organizations'" >> "$CLIENT_DIRECTORY/.env"
+    echo "ALGOLIA_SERVICES_INDEX='dev_phones'"             >> "$CLIENT_DIRECTORY/.env"
     echo "SENTRY_DEBUG=false"                              >> "$CLIENT_DIRECTORY/.env"
     echo "SENTRY_ENABLE_IN_DEV=false"                      >> "$CLIENT_DIRECTORY/.env"
     echo                                                   >> "$CLIENT_DIRECTORY/.env"

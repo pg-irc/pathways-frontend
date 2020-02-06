@@ -55,6 +55,7 @@ export const serviceSearchItem = {
         'address': address,
         'phone_numbers': phoneNumbers,
         '_geoloc': geoLocation,
+        'email': { 'type': 'string' },
     },
     'required': [
         'service_name',
