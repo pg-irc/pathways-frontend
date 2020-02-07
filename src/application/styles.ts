@@ -44,6 +44,8 @@ const fontStyle = 'normal';
 const letterSpacing = 0;
 const buttonLetterSpacing = 0.2;
 
+export const bulletPoint = '\u2022';
+
 export const getNormalFontFamily = (): string => (
     isAndroid() ? 'AvenirBook' : 'Avenir'
 );
@@ -221,7 +223,6 @@ export const textStyles = StyleSheet.create({
     URL: {
         fontSize: 15,
         lineHeight: 21,
-        textDecorationLine: 'underline',
         textAlign: 'left',
         color: colors.teal,
         letterSpacing,

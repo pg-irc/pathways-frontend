@@ -129,5 +129,73 @@ describe('user data schema', () => {
                 expect(validator.isValid).toBe(false);
             });
         });
+
+        describe('the showPartialLocalizationMessage property', () => {
+
+            test('passes with valid data', () => {
+                const showPartialLocalizationMessage = aBoolean();
+                const validUserData = new PersistedDataBuilder().withShowPartialLocalizationMessage(showPartialLocalizationMessage).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('fails with invalid data', () => {
+                const showPartialLocalizationMessage: any = null;
+                const validUserData = new PersistedDataBuilder().withShowPartialLocalizationMessage(showPartialLocalizationMessage).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(false);
+            });
+        });
+
+        describe('the disableAnalytics property', () => {
+
+            test('passes with valid data', () => {
+                const disableAnalytics = aBoolean();
+                const validUserData = new PersistedDataBuilder().withDisableAnalytics(disableAnalytics).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('fails with valid data', () => {
+                const disableAnalytics: any = null;
+                const validUserData = new PersistedDataBuilder().withDisableAnalytics(disableAnalytics).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(false);
+            });
+        });
+
+        describe('searchTerm property', () => {
+
+            test('passes with valid data', () => {
+                const searchTerm = aString();
+                const validUserData = new PersistedDataBuilder().withSearchTerm(searchTerm).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('fails with invalid data', () => {
+                const searchTerm: any = null;
+                const validUserData = new PersistedDataBuilder().withSearchTerm(searchTerm).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(false);
+            });
+        });
+
+        describe('searchLocation property', () => {
+
+            test('passes with valid data', () => {
+                const searchLocation = aString();
+                const validUserData = new PersistedDataBuilder().withSearchLocation(searchLocation).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('fails with invalid data', () => {
+                const searchLocation: any = null;
+                const validUserData = new PersistedDataBuilder().withSearchLocation(searchLocation).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(false);
+            });
+        });
     });
 });

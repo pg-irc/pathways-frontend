@@ -10,8 +10,9 @@ import { Topic } from '../../selectors/topics/types';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
 import { TaskListComponent } from './task_list_component';
-import { sendLinkPressedEvent, buildAnalyticsLinkContext } from '../../sagas/analytics/events';
+import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 
 export interface TaskDetailProps {
     readonly topic: Topic;
@@ -26,6 +27,7 @@ export interface TaskDetailActions {
     readonly unbookmarkTopic: (topicId: TaskId) => UnbookmarkTopicAction;
     readonly onExpand?: (contentId: string) => ExpandDetailAction;
     readonly onCollapse?: (contentId: string) => CollapseDetailAction;
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
 type Props = TaskDetailProps & TaskDetailActions;
@@ -70,7 +72,7 @@ const onServicesTextPress = (props: Props): () => void => {
         const analyticsLinkContext = buildAnalyticsLinkContext('Topic', props.topic.title);
         const linkType = 'Button';
         const linkValue = 'Find related services near me';
-        sendLinkPressedEvent(props.currentPath, analyticsLinkContext, linkType, linkValue);
+        props.analyticsLinkPressed(props.currentPath, analyticsLinkContext, linkType, linkValue);
         goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
     };
 };

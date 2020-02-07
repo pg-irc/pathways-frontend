@@ -1,44 +1,41 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { CardButtonComponent } from '../card_button/card_button_component';
-import { textStyles, colors, values } from '../../application/styles';
+import { DividerComponent } from '../content_layout/divider_component';
+import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
-import { sendLinkPressedEvent } from '../../sagas/analytics/events';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 
 interface Props {
     readonly website: string;
     readonly linkContextForAnalytics: string;
     readonly currentPathForAnalytics: string;
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
-export const WebsiteComponent = (props: Props): JSX.Element => (
+export const WebsiteComponent = (props: Props): JSX.Element => {
+    const onPress = (): void => {
+        props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.website, props.website);
+        openURL(props.website);
+    };
+    return (
+        <View>
+            <CardButtonComponent
+                leftContent={renderWebsite(props.website)}
+                rightContent={<ServiceDetailIconComponent name={'external-link'} />}
+                onPress={onPress}
+            />
+            <DividerComponent />
+        </View>
+    );
+};
+
+const renderWebsite = (website: string): JSX.Element => (
     <View>
-        <CardButtonComponent
-            leftContent={(
-                <View>
-                    <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website</Trans>: </Text>
-                    <Text style={textStyles.paragraphStyle}>{props.website}</Text>
-                </View>)
-            }
-            rightContent={
-                <Icon
-                    name={'external-link'}
-                    type={'FontAwesome'}
-                    style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-                />
-            }
-            onPress={getOnPressForWebsite(props.website, props.currentPathForAnalytics, props.linkContextForAnalytics)}
-        />
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website</Trans>: </Text>
+        <Text style={textStyles.paragraphStyle}>{website}</Text>
     </View>
 );
-
-const getOnPressForWebsite = (website: string, currentPathForAnalytics: string, linkContextForAnalytics: string): () => void => {
-    const onPress = (): void => {
-        sendLinkPressedEvent(currentPathForAnalytics, linkContextForAnalytics, LinkTypes.website, website);
-        openURL(website);
-    };
-    return onPress;
-}

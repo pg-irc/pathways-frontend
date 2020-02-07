@@ -1,73 +1,57 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Icon } from 'native-base';
-import { mapWithIndex } from '../../application/map_with_index';
 import { PhoneNumber } from '../../validation/services/types';
 import { CardButtonComponent } from '../card_button/card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
-import { textStyles, colors, values } from '../../application/styles';
+import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
-import { sendLinkPressedEvent } from '../../sagas/analytics/events';
-import { EmptyComponent } from '../empty_component/empty_component';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import * as R from 'ramda';
+import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
     readonly linkContextForAnalytics: string;
     readonly currentPathForAnalytics: string;
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
 export const PhoneNumbersComponent = (props: Props): JSX.Element => {
     return (
         <View>
-            {mapWithIndex((phoneNumber: PhoneNumber, index: number): JSX.Element =>
-                <View key={index}>
-                    <CardButtonComponent
-                        leftContent={
-                            <SinglePhoneNumberComponent
-                                phoneNumber={phoneNumber}
-                            />
-                        }
-                        rightContent={
-                            <Icon
-                                name={'phone'}
-                                type={'FontAwesome'}
-                                style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-                            />
-                        }
-                        onPress={
-                            getOnPressForPhoneNumber(phoneNumber, props.currentPathForAnalytics, props.linkContextForAnalytics)
-                        }
-                    />
-                    { index === props.phoneNumbers.length - 1 ? <EmptyComponent /> : <DividerComponent /> }
-                </View>
-            , props.phoneNumbers)}
+            {R.map(buildPhoneNumber(props), props.phoneNumbers)}
         </View>
     );
 };
 
-interface SinglePhoneNumberProps {
-    readonly phoneNumber: PhoneNumber;
-}
+const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber): JSX.Element => {
+    const onPress = (): void => {
+        const linkValue = 'tel: ' + phoneNumber.phone_number;
+        props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.phone, linkValue);
+        openURL(linkValue);
+    };
+    return (
+        <View key={phoneNumber.phone_number}>
+            <CardButtonComponent
+                leftContent={renderSinglePhoneNumber(phoneNumber)}
+                rightContent={<ServiceDetailIconComponent name={'phone'} />}
+                onPress={onPress}
+            />
+            <DividerComponent />
+        </View>
+    );
+});
 
-const SinglePhoneNumberComponent = (props: SinglePhoneNumberProps): JSX.Element => {
+const renderSinglePhoneNumber = (phoneNumber: PhoneNumber): JSX.Element => {
     const capitalizeFirstLetter = (s: string): string => (
         s.charAt(0).toUpperCase() + s.slice(1)
     );
-    const fieldLabel = capitalizeFirstLetter(props.phoneNumber.type);
+    const fieldLabel = capitalizeFirstLetter(phoneNumber.type);
     return (
         <View>
             <Text style={textStyles.paragraphBoldBlackLeft}>{fieldLabel}: </Text>
-            <Text style={textStyles.paragraphStyle}>{props.phoneNumber.phone_number}</Text>
+            <Text style={textStyles.paragraphStyle}>{phoneNumber.phone_number}</Text>
         </View>
     );
 };
-
-const getOnPressForPhoneNumber = (phoneNumber: PhoneNumber, currentPathForAnalytics: string, linkContextForAnalytics: string): () => void => {
-    const linkValue = 'tel: ' + phoneNumber.phone_number;
-    const onPress = (): void => {
-        sendLinkPressedEvent(currentPathForAnalytics, linkContextForAnalytics, LinkTypes.phone, linkValue);
-        openURL(linkValue);
-    };
-    return onPress;
-}

@@ -1,45 +1,42 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { CardButtonComponent } from '../card_button/card_button_component';
-import { textStyles, colors, values } from '../../application/styles';
+import { DividerComponent } from '../content_layout/divider_component';
+import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
-import { sendLinkPressedEvent } from '../../sagas/analytics/events';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 
 interface Props {
     readonly email: string;
     readonly linkContextForAnalytics: string;
     readonly currentPathForAnalytics: string;
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
-export const EmailComponent = (props: Props): JSX.Element => (
-    <View>
-        <CardButtonComponent
-            leftContent={(
-                <View>
-                    <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email</Trans>: </Text>
-                    <Text style={textStyles.paragraphStyle}>{props.email}</Text>
-                </View>)
-            }
-            rightContent={
-                <Icon
-                    name={'envelope'}
-                    type={'FontAwesome'}
-                    style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
-                />
-            }
-            onPress={getOnPressForEmail(props.email, props.currentPathForAnalytics, props.linkContextForAnalytics)}
-        />
-    </View>
-);
-
-const getOnPressForEmail = (email: string, currentPathForAnalytics: string, linkContextForAnalytics: string): () => void => {
-    const linkValue = 'mailto:' + email;
+export const EmailComponent = (props: Props): JSX.Element => {
     const onPress = (): void => {
-        sendLinkPressedEvent(currentPathForAnalytics, linkContextForAnalytics, LinkTypes.email, email);
+        const linkValue = 'mailto:' + props.email;
+        props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.email, props.email);
         openURL(linkValue);
     };
-    return onPress;
+    return (
+        <View>
+            <CardButtonComponent
+                leftContent={renderEmail(props.email)}
+                rightContent={<ServiceDetailIconComponent name={'envelope'} />}
+                onPress={onPress}
+            />
+            <DividerComponent />
+    </View>
+    );
 };
+
+const renderEmail = (email: string): JSX.Element => (
+    <View>
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email</Trans>: </Text>
+        <Text style={textStyles.paragraphStyle}>{email}</Text>
+    </View>
+);

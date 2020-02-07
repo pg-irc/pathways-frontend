@@ -3,20 +3,10 @@ import React from 'react';
 import { Linking } from 'react-native';
 import { Text } from 'native-base';
 import { textStyles } from '../../application/styles';
-import { sendLinkPressedEvent } from '../../sagas/analytics/events';
 
 interface LinkProps {
     readonly children: string;
     readonly href: string;
-    readonly style?: object;
-}
-
-interface AnalyticsLinkProps {
-    readonly children: string;
-    readonly href: string;
-    readonly currentPath: string;
-    readonly linkContext: string;
-    readonly linkType: string;
     readonly style?: object;
 }
 
@@ -38,14 +28,6 @@ export const openURL = (url: string): void => {
 
 export const Link = (props: LinkProps): JSX.Element => {
     const onPress = (): void => openURL(props.href);
-    return renderLink(onPress, props.style, props.children);
-};
-
-export const AnalyticsLink = (props: AnalyticsLinkProps): JSX.Element => {
-    const onPress = (): void => {
-        sendLinkPressedEvent(props.currentPath, props.linkContext, props.linkType, props.href);
-        openURL(props.href);
-    };
     return renderLink(onPress, props.style, props.children);
 };
 

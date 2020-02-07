@@ -10,11 +10,11 @@ export interface CardButtonProps {
 export const CardButtonComponent = (props: CardButtonProps): JSX.Element => {
     return (
         <TouchableOpacity onPress={props.onPress}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flex: 6 }}>
+                <View style={{ flex: 5.5, alignItems: 'flex-start' }}>
                     {props.leftContent}
                 </View>
-                <View>
+                <View style={{ flex: .5, alignItems: 'flex-end' }}>
                     {props.rightContent}
                 </View>
             </View>

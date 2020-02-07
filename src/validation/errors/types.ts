@@ -5,4 +5,6 @@ export enum Errors {
     InvalidServerData,
     NoLocationPermission,
     LocationFetchTimeout,
+    NoMatchingSearchResults,
+    InvalidSearchLocation,
 }

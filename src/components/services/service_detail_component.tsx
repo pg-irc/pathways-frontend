@@ -12,18 +12,18 @@ import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { RouterProps } from '../../application/routing';
 import { ContentVerificationComponent } from '../content_verification/content_verification_component';
-import { HumanServiceData, Address } from '../../validation/services/types';
+import { HumanServiceData } from '../../validation/services/types';
 import { AddressesComponent } from '../addresses/addresses_component';
 import { PhoneNumbersComponent } from '../phone_numbers/phone_numbers_component';
 import { WebsiteComponent } from '../website/website_component';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { buildServiceName } from '../services//build_service_name';
-import { openInMapsApplication } from '../maps_application_popup/open_in_maps_application';
 import { getLocationTitleFromAddresses } from '../services/get_location_title_from_addresses';
 import { EmailComponent } from '../email/email_component';
 import { SuggestUpdateComponent } from '../suggest_update/suggest_update_component';
 import { isAndroid } from '../../helpers/is_android';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 
 type SuggestedUpdates = {
     readonly nameSuggestion: string;
@@ -40,7 +40,11 @@ export interface ServiceDetailProps {
     readonly service: HumanServiceData;
 }
 
-type Props = ServiceDetailProps & RouterProps;
+export interface ServiceDetailActions {
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+}
+
+type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const [isSuggestingUpdates, setIsSuggestingUpdates]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
@@ -92,6 +96,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 isSuggestingUpdates={isSuggestingUpdates}
                 setSuggestedUpdateForField={setSuggestedUpdateForField}
                 suggestedUpdates={suggestedUpdates}
+                analyticsLinkPressed={props.analyticsLinkPressed}
+                {...props}
             />
         </Content>
     );
@@ -128,7 +134,7 @@ const ServiceOrganization = (props: ServiceOrganizationProps): JSX.Element => (
             <Trans>Provided by</Trans>:
         </Text>
         <TouchableOpacity onPress={(): void => undefined}>
-            <Text style={textStyles.URL}>{props.name.toUpperCase()}</Text>
+        <Text style={textStyles.URL}>{props.name}</Text>
         </TouchableOpacity>
         <DividerComponent />
     </View>
@@ -140,24 +146,13 @@ interface ServiceContactDetailsProps {
     readonly suggestedUpdates: SuggestedUpdates;
     readonly isSuggestingUpdates: boolean;
     readonly setSuggestedUpdateForField: (field: keyof SuggestedUpdates) => (value: string) => void;
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
-const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element => {
+const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps): JSX.Element => {
     const serviceName = buildServiceName(props.service.organizationName, props.service.name);
     const linkContextForAnalytics = buildAnalyticsLinkContext('Service', serviceName);
-    const locationTitle = getLocationTitleFromAddresses(filterPhysicalAddresses(props.service.addresses));
-    const onPressForAddress = (_: Address): () => Promise<void> => {
-        if (serviceHasLatLng(props.service)) {
-            return openInMapsApplication(
-                locationTitle,
-                props.service.latlong.lat,
-                props.service.latlong.lng,
-                props.currentPathForAnaltyics,
-                linkContextForAnalytics,
-            );
-        }
-        return undefined;
-    };
+    const currentPathForAnalytics = props.location.pathname;
 
     return (
         <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
@@ -169,11 +164,12 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <AddressesComponent
                 addresses={filterPhysicalAddresses(props.service.addresses)}
+                latLong={props.service.latlong}
                 linkContextForAnalytics={linkContextForAnalytics}
-                currentPathForAnalytics={props.currentPathForAnaltyics}
-                onPressForAddress={onPressForAddress}
+                currentPathForAnalytics={currentPathForAnalytics}
+                locationTitle={getLocationTitleFromAddresses(filterPhysicalAddresses(props.service.addresses))}
+                analyticsLinkPressed={props.analyticsLinkPressed}
             />
-            <DividerComponent />
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('phoneSuggestion')}
@@ -183,9 +179,9 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <PhoneNumbersComponent
                 phoneNumbers={props.service.phoneNumbers}
                 linkContextForAnalytics={linkContextForAnalytics}
-                currentPathForAnalytics={props.currentPathForAnaltyics}
+                currentPathForAnalytics={currentPathForAnalytics}
+                analyticsLinkPressed={props.analyticsLinkPressed}
             />
-            <DividerComponent />
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('websiteSuggestion')}
@@ -195,9 +191,9 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <WebsiteComponent
                 website={props.service.website}
                 linkContextForAnalytics={linkContextForAnalytics}
-                currentPathForAnalytics={props.currentPathForAnaltyics}
+                currentPathForAnalytics={currentPathForAnalytics}
+                analyticsLinkPressed={props.analyticsLinkPressed}
             />
-            <DividerComponent />
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
                 onChangeText={props.setSuggestedUpdateForField('emailSuggestion')}
@@ -207,10 +203,11 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <EmailComponent
                 email={props.service.email}
                 linkContextForAnalytics={linkContextForAnalytics}
-                currentPathForAnalytics={props.currentPathForAnaltyics}
+                currentPathForAnalytics={currentPathForAnalytics}
+                analyticsLinkPressed={props.analyticsLinkPressed}
             />
-            <DividerComponent />
             <ContentVerificationComponent verificationDate={'N/A'} />
+            <DividerComponent />
         </View>
     );
  };
@@ -224,8 +221,4 @@ const TemporarySuggestAnUpdateButton = (props: { readonly onPress: () => void } 
             Suggest an update
         </Text>
     </TouchableOpacity>
-);
-
-const serviceHasLatLng = (service: HumanServiceData): number => (
-    service.latlong && service.latlong.lat && service.latlong.lng
 );
