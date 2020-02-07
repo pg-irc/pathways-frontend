@@ -21,7 +21,7 @@
         "babel-core": "^7.0.0-bridge.0",
         "babel-plugin-macros": "^2.8.0",
         "babel-preset-expo": "^8.0.0",
-        "handlebars": "^4.6.0",
+        "handlebars": "^4.7.3",
         "jest-expo": "^36.0.0",
         "js-yaml": "^3.13.1",
         "react-dom": "16.9.0",
