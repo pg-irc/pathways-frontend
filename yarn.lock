@@ -6473,10 +6473,10 @@ react-native-keyboard-aware-scroll-view@0.9.1:
     prop-types "^15.6.2"
     react-native-iphone-x-helper "^1.0.3"
 
-react-native-map-link@^2.1.4:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/react-native-map-link/-/react-native-map-link-2.7.0.tgz#834f879cf5951275ed0115ade6375f39d7f004d7"
-  integrity sha512-UiPAL1LPmZNrcy9zTze3gLHTOitA1/wpHXi1xSi6KAh/yURtZ5n3CLpPt+SK5e8CEvRsea4+vo4Kb6fTFgdThw==
+react-native-map-link@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/react-native-map-link/-/react-native-map-link-2.7.3.tgz#4e3cc7b5b9e5dc640cd45f4514dacf5dc36fc4ae"
+  integrity sha512-2C3gYWYi+x0Tjfiu14K0hPtP1Dgyc9eJC9QqpS1p1oXID4huPv3hvqMXuXVTNpjQnW0HEUc7y3tPKxboJCNdCA==
   dependencies:
     prop-types "^15.7.2"
     react-native-modal "^10.0.0"
