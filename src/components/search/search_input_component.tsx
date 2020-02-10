@@ -10,7 +10,10 @@ import { debug, useTraceUpdate } from '../../helpers/debug';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ClearInputButton } from './clear_input_button';
+import * as IntentLauncher from 'expo-intent-launcher';
 import * as Permissions from 'expo-permissions';
+import { isAndroid } from '../../helpers/is_android';
+import { openURL } from '../link/link';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -24,6 +27,14 @@ export interface Actions {
     readonly saveSearchTerm: (s: string) => void;
     readonly setLocation: (s: string) => void;
 }
+
+const toLocationSetting = (): void => {
+    if (isAndroid()) {
+        IntentLauncher.startActivityAsync(
+            IntentLauncher.ACTION_LOCATION_SOURCE_SETTINGS,
+        );
+    } else openURL('app-settings:');
+};
 
 const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Function): JSX.Element => {
     if (!showMyLocationButton) {
@@ -49,7 +60,7 @@ const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Fun
                 Permissions.askAsync(Permissions.LOCATION).then((response: object) => {
                     if (Object(response)['granted']) {
                         saveLocation('Near My Location');
-                    }
+                    } else toLocationSetting();
                 });
             }}>
             {icon}{text}
