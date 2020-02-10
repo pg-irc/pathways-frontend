@@ -68,9 +68,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
             <SuggestUpdateComponent
                 isEnabled={isSuggestingUpdates}
-                onChangeText={setSuggestedUpdateForField('nameSuggestion')}
-                textValue={suggestedUpdates.nameSuggestion}
-                label={<Trans>Name</Trans>}
+                onChangeSuggestionText={setSuggestedUpdateForField('nameSuggestion')}
+                suggestionText={suggestedUpdates.nameSuggestion}
+                fieldLabel={<Trans>Name</Trans>}
                 style={{ paddingHorizontal: values.backgroundTextPadding }}
             />
             <TitleComponent title={props.service.name} />
@@ -83,9 +83,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             />
             <SuggestUpdateComponent
                 isEnabled={isSuggestingUpdates}
-                onChangeText={setSuggestedUpdateForField('descriptionSuggestion')}
-                textValue={suggestedUpdates.descriptionSuggestion}
-                label={<Trans>Description</Trans>}
+                onChangeSuggestionText={setSuggestedUpdateForField('descriptionSuggestion')}
+                suggestionText={suggestedUpdates.descriptionSuggestion}
+                fieldLabel={<Trans>Description</Trans>}
                 style={{ paddingHorizontal: values.backgroundTextPadding }}
             />
             <MarkdownBodyComponent body={props.service.description} shouldBeExpandable={true} />
@@ -126,9 +126,9 @@ const ServiceOrganization = (props: ServiceOrganizationProps): JSX.Element => (
         <DividerComponent />
         <SuggestUpdateComponent
             isEnabled={props.isSuggestingUpdates}
-            onChangeText={props.setSuggestedUpdateForField('organizationSuggestion')}
-            textValue={props.suggestedUpdates.organizationSuggestion}
-            label={<Trans>Organization</Trans>}
+            onChangeSuggestionText={props.setSuggestedUpdateForField('organizationSuggestion')}
+            suggestionText={props.suggestedUpdates.organizationSuggestion}
+            fieldLabel={<Trans>Organization</Trans>}
         />
         <Text style={[textStyles.paragraphBoldBlackLeft, { marginRight: 5 }]}>
             <Trans>Provided by</Trans>:
@@ -158,9 +158,9 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
         <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
-                onChangeText={props.setSuggestedUpdateForField('addressSuggestion')}
-                textValue={props.suggestedUpdates.addressSuggestion}
-                label={<Trans>Addresses</Trans>}
+                onChangeSuggestionText={props.setSuggestedUpdateForField('addressSuggestion')}
+                suggestionText={props.suggestedUpdates.addressSuggestion}
+                fieldLabel={<Trans>Addresses</Trans>}
             />
             <AddressesComponent
                 addresses={filterPhysicalAddresses(props.service.addresses)}
@@ -172,9 +172,9 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
             />
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
-                onChangeText={props.setSuggestedUpdateForField('phoneSuggestion')}
-                textValue={props.suggestedUpdates.phoneSuggestion}
-                label={<Trans>Phone numbers</Trans>}
+                onChangeSuggestionText={props.setSuggestedUpdateForField('phoneSuggestion')}
+                suggestionText={props.suggestedUpdates.phoneSuggestion}
+                fieldLabel={<Trans>Phone numbers</Trans>}
             />
             <PhoneNumbersComponent
                 phoneNumbers={props.service.phoneNumbers}
@@ -184,9 +184,9 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
             />
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
-                onChangeText={props.setSuggestedUpdateForField('websiteSuggestion')}
-                textValue={props.suggestedUpdates.websiteSuggestion}
-                label={<Trans>Website</Trans>}
+                onChangeSuggestionText={props.setSuggestedUpdateForField('websiteSuggestion')}
+                suggestionText={props.suggestedUpdates.websiteSuggestion}
+                fieldLabel={<Trans>Website</Trans>}
             />
             <WebsiteComponent
                 website={props.service.website}
@@ -196,9 +196,9 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
             />
             <SuggestUpdateComponent
                 isEnabled={props.isSuggestingUpdates}
-                onChangeText={props.setSuggestedUpdateForField('emailSuggestion')}
-                textValue={props.suggestedUpdates.emailSuggestion}
-                label={<Trans>Email</Trans>}
+                onChangeSuggestionText={props.setSuggestedUpdateForField('emailSuggestion')}
+                suggestionText={props.suggestedUpdates.emailSuggestion}
+                fieldLabel={<Trans>Email</Trans>}
             />
             <EmailComponent
                 email={props.service.email}

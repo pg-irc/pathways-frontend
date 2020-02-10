@@ -8,9 +8,9 @@ import { colors, textStyles } from '../../application/styles';
 
 interface Props {
     readonly isEnabled: boolean;
-    readonly onChangeText: (text: string) => void;
-    readonly textValue: string;
-    readonly label: JSX.Element;
+    readonly suggestionText: string;
+    readonly onChangeSuggestionText: (text: string) => void;
+    readonly fieldLabel: JSX.Element;
     readonly style?: ViewStyle;
 }
 
@@ -27,12 +27,12 @@ export const SuggestUpdateComponent = (props: Props): JSX.Element => {
             <ToggleInputComponent
                 onPress={onEditingTogglePress}
                 isEditing={isEditing}
-                label={props.label}
+                label={props.fieldLabel}
             />
             <InputComponent
-                onChangeText={props.onChangeText}
+                onChangeText={props.onChangeSuggestionText}
                 isEditing={isEditing}
-                textValue={props.textValue}
+                textValue={props.suggestionText}
              />
         </View>
     );
