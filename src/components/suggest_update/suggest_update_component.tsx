@@ -1,5 +1,5 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
-import { View, TextInput, Text, TouchableOpacity, ViewStyle } from 'react-native';
+import React, { useState, Dispatch, SetStateAction  } from 'react';
+import { View, TextInput, Text, TouchableOpacity, TextStyle, StyleProp } from 'react-native';
 import { Trans, I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { Icon } from 'native-base';
@@ -7,33 +7,36 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
 
 interface Props {
-    readonly isEnabled: boolean;
+    readonly suggestingEnabled: boolean;
     readonly suggestionText: string;
     readonly onChangeSuggestionText: (text: string) => void;
     readonly fieldLabel: JSX.Element;
-    readonly style?: ViewStyle;
+    readonly suggestingEnabledComponent: JSX.Element;
+    readonly suggestingDisabledComponent: JSX.Element;
 }
 
 export const SuggestUpdateComponent = (props: Props): JSX.Element => {
     const [isEditing, setIsEditing]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const onEditingTogglePress = (): void => setIsEditing(!isEditing);
 
-    if (!props.isEnabled) {
-        return <EmptyComponent />;
+    if (!props.suggestingEnabled) {
+        return props.suggestingDisabledComponent;
     }
 
     return (
-        <View style={props.style}>
+        <View style={{ marginVertical: 10 }}>
+            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+                <Text style={[textStyles.headline6, { color: colors.black }]}>
+                    {props.fieldLabel}
+                </Text>
+                {props.suggestingEnabledComponent}
+            </View>
             <ToggleInputComponent
                 onPress={onEditingTogglePress}
                 isEditing={isEditing}
-                label={props.fieldLabel}
+                onChangeSuggestionText={props.onChangeSuggestionText}
+                suggestionText={props.suggestionText}
             />
-            <InputComponent
-                onChangeText={props.onChangeSuggestionText}
-                isEditing={isEditing}
-                textValue={props.suggestionText}
-             />
         </View>
     );
 
@@ -42,43 +45,59 @@ export const SuggestUpdateComponent = (props: Props): JSX.Element => {
 interface ToggleInputComponentProps {
     readonly onPress: () => void;
     readonly isEditing: boolean;
-    readonly label: JSX.Element;
+    readonly onChangeSuggestionText: (text: string) => void;
+    readonly suggestionText: string;
 }
 
-const ToggleInputComponent = (props: ToggleInputComponentProps): JSX.Element => {
-    const iconName = props.isEditing ? 'check-square' : 'square-o';
-    const color = props.isEditing ? colors.teal : colors.darkGreyWithAlpha;
-    const textStyle = [textStyles.headline6, { color }];
+const ToggleInputComponent = (props: ToggleInputComponentProps): JSX.Element => (
+    <View
+        style={{
+            borderColor: getEditingColor(props.isEditing),
+            borderWidth: 1,
+            borderRadius: 10,
+            padding: 10,
+        }}
+    >
+        <ToggleTextInputComponent
+            onPress={props.onPress}
+            isEditing={props.isEditing}
+        />
+        <TextInputComponent
+            onChangeSuggestionText={props.onChangeSuggestionText}
+            isEditing={props.isEditing}
+            suggestionText={props.suggestionText}
+        />
+    </View>
+);
 
-    return (
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} >
-            <Text style={textStyle}>
-                {props.label}
+interface ToggleButtonComponentProps {
+    readonly onPress: () => void;
+    readonly isEditing: boolean;
+}
+
+const ToggleTextInputComponent = (props: ToggleButtonComponentProps): JSX.Element => (
+    <TouchableOpacity onPress={props.onPress}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+            <Text style={getEditingTextStyle(props.isEditing)}>
+                <Trans>Suggest an update</Trans>
             </Text>
-            <TouchableOpacity onPress={props.onPress}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={textStyle}>
-                        <Trans>Suggest an update</Trans>
-                    </Text>
-                    <Icon
-                        type={'FontAwesome'}
-                        name={iconName}
-                        style={{ padding: 5, color }}
-                    />
-                </View>
-            </TouchableOpacity>
+            <Icon
+                type={'FontAwesome'}
+                name={getEditingIcon(props.isEditing)}
+                style={{ padding: 5, color: getEditingColor(props.isEditing) }}
+            />
         </View>
-    );
-};
+    </TouchableOpacity>
+);
 
 interface InputComponentProps {
-    readonly onChangeText: (text: string) => void;
+    readonly onChangeSuggestionText: (text: string) => void;
     readonly isEditing: boolean;
-    readonly textValue: string;
+    readonly suggestionText: string;
 }
 
-const InputComponent = (props: InputComponentProps): JSX.Element => {
-    const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.black);
+const TextInputComponent = (props: InputComponentProps): JSX.Element => {
+    const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.teal);
     const onBlur = (): void => setTextcolor(colors.teal);
     const onFocus = (): void => setTextcolor(colors.black);
 
@@ -91,21 +110,19 @@ const InputComponent = (props: InputComponentProps): JSX.Element => {
         {
             (({ i18n }: I18nProps): JSX.Element =>
                 <TextInput
-                    numberOfLines={5}
                     multiline={true}
-                    onChangeText={props.onChangeText}
-                    value={props.textValue}
+                    onChangeText={props.onChangeSuggestionText}
+                    value={props.suggestionText}
                     textAlignVertical={'top'}
-                    placeholder={i18n._(t`Comment or suggest edits (optional)`)}
+                    placeholder={i18n._(t`Comment or suggest edits`)}
                     onFocus={onFocus}
                     onBlur={onBlur}
                     style={{
-                        borderColor: colors.teal,
-                        borderWidth: 1,
-                        borderRadius: 5,
-                        padding: 5,
                         color: textColor,
-                        marginBottom: 10,
+                        marginTop: 10,
+                        borderBottomColor: colors.grey,
+                        borderBottomWidth: 1,
+                        paddingBottom: 5,
                     }}
                 />
             )
@@ -113,3 +130,18 @@ const InputComponent = (props: InputComponentProps): JSX.Element => {
         </I18n>
     );
 };
+
+const getEditingTextStyle = (isEditing: boolean): StyleProp<TextStyle> => (
+    isEditing ?
+        [ textStyles.paragraphBoldBlackLeft, { color: getEditingColor(isEditing) }]
+        :
+        [ textStyles.paragraphStyle, { color: getEditingColor(isEditing) }]
+);
+
+const getEditingColor = (isEditing: boolean): string => (
+    isEditing ? colors.teal : colors.grey
+);
+
+const getEditingIcon = (isEditing: boolean): string => (
+    isEditing ? 'check-square' : 'square-o'
+);

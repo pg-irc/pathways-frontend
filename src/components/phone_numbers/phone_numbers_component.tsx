@@ -9,6 +9,7 @@ import { openURL, LinkTypes } from '../link/link';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import * as R from 'ramda';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
+import { mapWithIndex } from '../../application/map_with_index';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
@@ -20,25 +21,27 @@ interface Props {
 export const PhoneNumbersComponent = (props: Props): JSX.Element => {
     return (
         <View>
-            {R.map(buildPhoneNumber(props), props.phoneNumbers)}
+            {mapWithIndex(buildPhoneNumber(props), props.phoneNumbers)}
         </View>
     );
 };
 
-const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber): JSX.Element => {
+const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index: number): JSX.Element => {
     const onPress = (): void => {
         const linkValue = 'tel: ' + phoneNumber.phone_number;
         props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.phone, linkValue);
         openURL(linkValue);
     };
+    const shouldAddDivider = index !== 0;
+
     return (
         <View key={phoneNumber.phone_number}>
+            {shouldAddDivider && <DividerComponent />}
             <CardButtonComponent
                 leftContent={renderSinglePhoneNumber(phoneNumber)}
                 rightContent={<ServiceDetailIconComponent name={'phone'} />}
                 onPress={onPress}
             />
-            <DividerComponent />
         </View>
     );
 });

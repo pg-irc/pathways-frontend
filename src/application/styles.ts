@@ -8,6 +8,7 @@ export const colors = {
     teal: '#00838f',
     blueGreen: '#0d9790',
     blueGreenDark: '#136f63',
+    grey: '#a8a8a8',
     // Rename to surface
     lightGrey: '#eee5d9',
     darkerGrey: '#d0d0c5',
@@ -306,6 +307,15 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
         letterSpacing,
         ...getBoldFontStylesForOS(),
+    },
+    suggestionText: {
+        fontSize: 16,
+        lineHeight: 21,
+        textAlign: 'left',
+        color: colors.black,
+        letterSpacing,
+        paddingHorizontal: 0,
+        ...getNormalFontStylesForOS(),
     },
 });
 

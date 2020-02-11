@@ -10,6 +10,7 @@ import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { LatLong } from '../../validation/latlong/types';
 import { openInMapsApplication } from '../maps_application_popup/open_in_maps_application';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
+import { mapWithIndex } from '../../application/map_with_index';
 
 interface Props {
     readonly addresses: ReadonlyArray<Address>;
@@ -22,11 +23,11 @@ interface Props {
 
 export const AddressesComponent = (props: Props): JSX.Element => (
     <View>
-        {R.map(buildAddress(props), props.addresses)}
+        {mapWithIndex(buildAddress(props), props.addresses)}
     </View>
 );
 
-const buildAddress = R.curry((props: Props, address: Address): JSX.Element => {
+const buildAddress = R.curry((props: Props, address: Address, index: number): JSX.Element => {
     const onPress = (): Promise<void> => {
         if (props.latLong) {
             const linkType = 'Button';
@@ -37,15 +38,16 @@ const buildAddress = R.curry((props: Props, address: Address): JSX.Element => {
         }
         return undefined;
     };
+    const shouldAddDivider = index !== 0;
 
     return (
         <View key={address.id}>
+            {shouldAddDivider && <DividerComponent />}
             <CardButtonComponent
                 leftContent={renderSingleAddress(address)}
                 rightContent={<ServiceDetailIconComponent name={'location-arrow'} />}
                 onPress={onPress}
             />
-            <DividerComponent />
         </View>
     );
 });
