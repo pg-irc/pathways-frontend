@@ -56,9 +56,14 @@ const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Fun
         <TouchableOpacity
             style={[applicationStyles.searchButton, { backgroundColor: colors.white }]}
             onPress={(): void => {
-                // tslint:disable-next-line: no-expression-statement
-                Permissions.askAsync(Permissions.LOCATION).then((response: object) => {
-                    if (Object(response)['granted']) {
+                Permissions.getAsync(Permissions.LOCATION).then((Response: Permissions.PermissionResponse) => {
+                    if (Response.status === 'undetermined') {
+                        Permissions.askAsync(Permissions.LOCATION).then((response: Permissions.PermissionResponse) => {
+                            if (response.granted) {
+                                saveLocation('Near My Location');
+                            }
+                        });
+                    } else if (Response.granted) {
                         saveLocation('Near My Location');
                     } else toLocationSetting();
                 });
