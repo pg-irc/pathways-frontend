@@ -5,13 +5,14 @@ import { t } from '@lingui/macro';
 import { Icon } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
+import { stripMarkdown } from '../strip_markdown/strip_markdown';
 
 interface Props {
     readonly suggestingEnabled: boolean;
     readonly suggestionText: string;
     readonly onChangeSuggestionText: (text: string) => void;
     readonly fieldLabel: JSX.Element;
-    readonly suggestingEnabledComponent: JSX.Element;
+    readonly fieldValue: string;
     readonly suggestingDisabledComponent: JSX.Element;
 }
 
@@ -26,10 +27,8 @@ export const SuggestUpdateComponent = (props: Props): JSX.Element => {
     return (
         <View style={{ marginVertical: 10 }}>
             <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
-                <Text style={[textStyles.headline6, { color: colors.black }]}>
-                    {props.fieldLabel}
-                </Text>
-                {props.suggestingEnabledComponent}
+                <FieldLabel fieldLabel={props.fieldLabel} />
+                <FieldValue fieldValue={props.fieldValue} />
             </View>
             <ToggleInputComponent
                 onPress={onEditingTogglePress}
@@ -41,6 +40,18 @@ export const SuggestUpdateComponent = (props: Props): JSX.Element => {
     );
 
 };
+
+const FieldLabel = (props: { readonly fieldLabel: Props['fieldLabel'] }): JSX.Element => (
+    <Text style={[textStyles.headline6, { color: colors.black }]}>
+        {props.fieldLabel}
+    </Text>
+);
+
+const FieldValue = (props: { readonly fieldValue: Props['fieldValue'] }): JSX.Element => (
+    <Text style={textStyles.suggestionText}>
+        {props.fieldValue && stripMarkdown(props.fieldValue)}
+    </Text>
+);
 
 interface ToggleInputComponentProps {
     readonly onPress: () => void;

@@ -24,7 +24,6 @@ import { EmailComponent } from '../email/email_component';
 import { SuggestUpdateComponent } from '../suggest_update/suggest_update_component';
 import { isAndroid } from '../../helpers/is_android';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
-import { SuggestingEnabledComponent } from '../suggest_update/suggesting_enabled_component';
 
 type SuggestedUpdates = {
     readonly nameSuggestion: string;
@@ -48,13 +47,13 @@ export interface ServiceDetailActions {
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
-    const [isSuggestingUpdates, setIsSuggestingUpdates]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+    const [suggestingEnabled, setSuggestingEnabled]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const [suggestedUpdates, setSuggestedUpdates]: readonly [SuggestedUpdates, Dispatch<SetStateAction<SuggestedUpdates>>] =
         useState(getDefaultSuggestedUpdates());
     const setSuggestedUpdateForField = R.curry((field: keyof SuggestedUpdates, value: string): void => (
         setSuggestedUpdates({...suggestedUpdates, [field]: value})
     ));
-    const onSuggestAnUpdatePress = (): void => setIsSuggestingUpdates(!isSuggestingUpdates);
+    const onSuggestAnUpdatePress = (): void => setSuggestingEnabled(!suggestingEnabled);
 
     return (
         <Content
@@ -71,8 +70,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 onChangeSuggestionText={setSuggestedUpdateForField('nameSuggestion')}
                 suggestionText={suggestedUpdates.nameSuggestion}
                 fieldLabel={<Trans>Name</Trans>}
-                suggestingEnabled={isSuggestingUpdates}
-                suggestingEnabledComponent={<SuggestingEnabledComponent value={props.service.name} />}
+                fieldValue={props.service.name}
+                suggestingEnabled={suggestingEnabled}
                 suggestingDisabledComponent={<Name name={props.service.name} />}
             />
             <DividerComponent />
@@ -80,8 +79,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 onChangeSuggestionText={setSuggestedUpdateForField('organizationSuggestion')}
                 suggestionText={suggestedUpdates.organizationSuggestion}
                 fieldLabel={<Trans>Organization</Trans>}
-                suggestingEnabled={isSuggestingUpdates}
-                suggestingEnabledComponent={<SuggestingEnabledComponent value={props.service.organizationName} />}
+                fieldValue={props.service.organizationName}
+                suggestingEnabled={suggestingEnabled}
                 suggestingDisabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
             />
             <DividerComponent />
@@ -89,15 +88,15 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 onChangeSuggestionText={setSuggestedUpdateForField('descriptionSuggestion')}
                 suggestionText={suggestedUpdates.descriptionSuggestion}
                 fieldLabel={<Trans>Description</Trans>}
-                suggestingEnabled={isSuggestingUpdates}
-                suggestingEnabledComponent={<Description description={props.service.description} />}
+                fieldValue={props.service.description}
+                suggestingEnabled={suggestingEnabled}
                 suggestingDisabledComponent={<Description description={props.service.description} />}
             />
             <DividerComponent />
             <ServiceContactDetails
                 service={props.service}
                 currentPathForAnaltyics={props.location.pathname}
-                isSuggestingUpdates={isSuggestingUpdates}
+                suggestingEnabled={suggestingEnabled}
                 setSuggestedUpdateForField={setSuggestedUpdateForField}
                 suggestedUpdates={suggestedUpdates}
                 analyticsLinkPressed={props.analyticsLinkPressed}
@@ -156,7 +155,7 @@ interface ServiceContactDetailsProps {
     readonly service: HumanServiceData;
     readonly currentPathForAnaltyics: string;
     readonly suggestedUpdates: SuggestedUpdates;
-    readonly isSuggestingUpdates: boolean;
+    readonly suggestingEnabled: boolean;
     readonly setSuggestedUpdateForField: (field: keyof SuggestedUpdates) => (value: string) => void;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
@@ -173,8 +172,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 onChangeSuggestionText={props.setSuggestedUpdateForField('addressSuggestion')}
                 suggestionText={props.suggestedUpdates.addressSuggestion}
                 fieldLabel={<Trans>Address</Trans>}
-                suggestingEnabled={props.isSuggestingUpdates}
-                suggestingEnabledComponent={<SuggestingEnabledComponent value={getAddressesString(physicalAddresses)} />}
+                fieldValue={getAddressesString(physicalAddresses)}
+                suggestingEnabled={props.suggestingEnabled}
                 suggestingDisabledComponent={
                     <AddressesComponent
                         addresses={physicalAddresses}
@@ -191,8 +190,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 onChangeSuggestionText={props.setSuggestedUpdateForField('phoneSuggestion')}
                 suggestionText={props.suggestedUpdates.phoneSuggestion}
                 fieldLabel={<Trans>Phone numbers</Trans>}
-                suggestingEnabled={props.isSuggestingUpdates}
-                suggestingEnabledComponent={<SuggestingEnabledComponent value={getPhonesString(props.service.phoneNumbers)} />}
+                fieldValue={getPhonesString(props.service.phoneNumbers)}
+                suggestingEnabled={props.suggestingEnabled}
                 suggestingDisabledComponent={
                     <PhoneNumbersComponent
                         phoneNumbers={props.service.phoneNumbers}
@@ -207,8 +206,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 onChangeSuggestionText={props.setSuggestedUpdateForField('websiteSuggestion')}
                 suggestionText={props.suggestedUpdates.websiteSuggestion}
                 fieldLabel={<Trans>Website</Trans>}
-                suggestingEnabled={props.isSuggestingUpdates}
-                suggestingEnabledComponent={<SuggestingEnabledComponent value={props.service.website} />}
+                fieldValue={props.service.website}
+                suggestingEnabled={props.suggestingEnabled}
                 suggestingDisabledComponent={
                     <WebsiteComponent
                         website={props.service.website}
@@ -223,8 +222,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 onChangeSuggestionText={props.setSuggestedUpdateForField('emailSuggestion')}
                 suggestionText={props.suggestedUpdates.emailSuggestion}
                 fieldLabel={<Trans>Email</Trans>}
-                suggestingEnabled={props.isSuggestingUpdates}
-                suggestingEnabledComponent={<SuggestingEnabledComponent value={props.service.email} />}
+                fieldValue={props.service.email}
+                suggestingEnabled={props.suggestingEnabled}
                 suggestingDisabledComponent={
                     <EmailComponent
                         email={props.service.email}
