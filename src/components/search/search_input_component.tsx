@@ -28,14 +28,6 @@ export interface Actions {
     readonly setLocation: (s: string) => void;
 }
 
-const toLocationSetting = (): void => {
-    if (isAndroid()) {
-        IntentLauncher.startActivityAsync(
-            IntentLauncher.ACTION_LOCATION_SOURCE_SETTINGS,
-        );
-    } else openURL('app-settings:');
-};
-
 const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Function): JSX.Element => {
     if (!showMyLocationButton) {
         return <EmptyComponent />;
@@ -55,22 +47,47 @@ const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Fun
     return (
         <TouchableOpacity
             style={[applicationStyles.searchButton, { backgroundColor: colors.white }]}
-            onPress={(): void => {
-                Permissions.getAsync(Permissions.LOCATION).then((Response: Permissions.PermissionResponse) => {
-                    if (Response.status === 'undetermined') {
-                        Permissions.askAsync(Permissions.LOCATION).then((response: Permissions.PermissionResponse) => {
-                            if (response.granted) {
-                                saveLocation('Near My Location');
-                            }
-                        });
-                    } else if (Response.granted) {
-                        saveLocation('Near My Location');
-                    } else toLocationSetting();
-                });
-            }}>
+            onPress={(): Promise<void> => myLocationOnPress(saveLocation)}
+        >
             {icon}{text}
         </TouchableOpacity>
     );
+};
+
+const myLocationOnPress = async (saveLocation: Function): Promise<void> => {
+    const status = await getPermission();
+    switch (status) {
+        case Permissions.PermissionStatus.GRANTED: saveLocation('Near My Location');
+            break;
+        case Permissions.PermissionStatus.DENIED: openAppSettings();
+            break;
+        case Permissions.PermissionStatus.UNDETERMINED: askPermission(saveLocation);
+            break;
+        default:
+            return;
+    }
+};
+
+const getPermission = (): Promise<Permissions.PermissionStatus> => {
+    return Permissions.getAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse) => {
+        return permissionResponse.status;
+    });
+};
+
+const openAppSettings = (): void => {
+    if (isAndroid()) {
+        IntentLauncher.startActivityAsync(
+            IntentLauncher.ACTION_APPLICATION_SETTINGS,
+        );
+    } else openURL('app-settings:');
+};
+
+const askPermission = async (saveLocation: Function): Promise<void> => {
+    Permissions.askAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse) => {
+        if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
+            saveLocation('Near My Location');
+        }
+    });
 };
 
 const renderSearchButton = (showSearchButton: boolean, searchTerm: string, location: string,
