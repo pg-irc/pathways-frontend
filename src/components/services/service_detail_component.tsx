@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { Text, TouchableOpacity } from 'react-native';
-import { Content } from 'native-base';
+import { Content, View } from 'native-base';
 import { textStyles, colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
@@ -24,6 +24,7 @@ import { EmailComponent } from '../email/email_component';
 import { SuggestUpdateComponent } from '../suggest_update/suggest_update_component';
 import { isAndroid } from '../../helpers/is_android';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { ServiceDetailIconComponent } from './service_detail_icon';
 
 type SuggestedUpdates = {
     readonly nameSuggestion: string;
@@ -64,8 +65,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             enableOnAndroid={true}
         >
             <BannerImageComponent imageSource={undefined} />
-            {/* TODO: Remove and replace this temporary button */}
-            <TemporarySuggestAnUpdateButton onPress={onSuggestAnUpdatePress} />
+            <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
             <SuggestUpdateComponent
                 onChangeSuggestionText={setSuggestedUpdateForField('nameSuggestion')}
                 suggestionText={suggestedUpdates.nameSuggestion}
@@ -102,6 +102,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 analyticsLinkPressed={props.analyticsLinkPressed}
                 {...props}
             />
+            <SuggestAnUpdateButton onPress={onSuggestAnUpdatePress} />
         </Content>
     );
 };
@@ -239,21 +240,26 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
     );
  };
 
-const TemporarySuggestAnUpdateButton = (props: { readonly onPress: () => void } ): JSX.Element => (
-    <TouchableOpacity
-        onPress={props.onPress}
-        style={{ borderWidth: 5, borderColor: colors.darkGreyWithAlpha, padding: 10 }}
-    >
-        <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 20 }}>
-            Suggest an update
-        </Text>
-    </TouchableOpacity>
-);
-
 const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
     addresses.map((address: Address) => `${address.address}\n${address.city} ${address.stateProvince} ${address.postalCode}`).join('\n')
 );
 
 const getPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber) => `${phone.type}: ${phone.phone_number}`).join('\n')
+);
+
+const SuggestAnUpdateButton = (props: { readonly onPress: () => void } ): JSX.Element => (
+    <View style={{flexDirection: 'row-reverse', marginBottom: 20}}>
+        <TouchableOpacity
+            onPress={props.onPress}
+            style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
+        >
+            <View style={{ flexDirection: 'row'}}>
+                <ServiceDetailIconComponent name={'edit'} />
+                <Text style={textStyles.paragraphBoldBlackLeft}>
+                    <Trans>Suggest an update</Trans>
+                </Text>
+            </View>
+        </TouchableOpacity>
+    </View>
 );

@@ -27,6 +27,7 @@ export const colors = {
     burntSienna: '#ED604B',
     sunshine: '#f2b134',
     topaz: '#11cac0',
+    greyBorder: '#dedede',
 };
 
 export const values = {
