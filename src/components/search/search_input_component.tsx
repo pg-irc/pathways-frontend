@@ -58,13 +58,17 @@ const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Fun
 const myLocationOnPress = async (saveLocation: Function): Promise<void> => {
     const status = await getPermission();
     switch (status) {
-        case Permissions.PermissionStatus.GRANTED: saveLocation(NEAR_MY_LOCATION);
+        case Permissions.PermissionStatus.GRANTED:
+            saveLocation(NEAR_MY_LOCATION);
             break;
-        case Permissions.PermissionStatus.DENIED: openAppSettings();
+        case Permissions.PermissionStatus.DENIED:
+            openAppSettings();
             break;
-        case Permissions.PermissionStatus.UNDETERMINED: askPermission(saveLocation);
+        case Permissions.PermissionStatus.UNDETERMINED:
+            askPermission(saveLocation);
             break;
-        default: return;
+        default:
+            break;
     }
 };
 
@@ -79,7 +83,9 @@ const openAppSettings = (): void => {
         IntentLauncher.startActivityAsync(
             IntentLauncher.ACTION_APPLICATION_SETTINGS,
         );
-    } else { openURL('app-settings:'); }
+    } else {
+        openURL('app-settings:');
+    }
 };
 
 const askPermission = async (saveLocation: Function): Promise<void> => {
