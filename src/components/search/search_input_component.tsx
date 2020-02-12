@@ -14,6 +14,7 @@ import * as IntentLauncher from 'expo-intent-launcher';
 import * as Permissions from 'expo-permissions';
 import { isAndroid } from '../../helpers/is_android';
 import { openURL } from '../link/link';
+import { NEAR_MY_LOCATION } from '../../application/constants';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -57,14 +58,13 @@ const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Fun
 const myLocationOnPress = async (saveLocation: Function): Promise<void> => {
     const status = await getPermission();
     switch (status) {
-        case Permissions.PermissionStatus.GRANTED: saveLocation('Near My Location');
+        case Permissions.PermissionStatus.GRANTED: saveLocation(NEAR_MY_LOCATION);
             break;
         case Permissions.PermissionStatus.DENIED: openAppSettings();
             break;
         case Permissions.PermissionStatus.UNDETERMINED: askPermission(saveLocation);
             break;
-        default:
-            return;
+        default: return;
     }
 };
 
@@ -79,13 +79,13 @@ const openAppSettings = (): void => {
         IntentLauncher.startActivityAsync(
             IntentLauncher.ACTION_APPLICATION_SETTINGS,
         );
-    } else openURL('app-settings:');
+    } else { openURL('app-settings:'); }
 };
 
 const askPermission = async (saveLocation: Function): Promise<void> => {
     Permissions.askAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse) => {
         if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
-            saveLocation('Near My Location');
+            saveLocation(NEAR_MY_LOCATION);
         }
     });
 };
