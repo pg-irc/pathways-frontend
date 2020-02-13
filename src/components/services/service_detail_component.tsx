@@ -27,6 +27,7 @@ import { isAndroid } from '../../helpers/is_android';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from './service_detail_icon';
 import { FeedbackModalComponent } from '../feedback_modal/feedback_modal_component';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 type SuggestedUpdates = {
     readonly nameSuggestion: string;
@@ -110,7 +111,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 {...props}
             />
             <DividerComponent />
-            <SuggestAnUpdateButton onPress={(): void => setShowModal(true)} />
+            <SuggestAnUpdateButton isVisible={!suggestingEnabled} onPress={(): void => setShowModal(true)} />
             <FeedbackModalComponent isVisible={showModal} setShowModal={setShowModal} onSuggestAnUpdatePress={onSuggestAnUpdatePress}/>
         </Content>
     );
@@ -257,10 +258,14 @@ const getPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber) => `${phone.type}: ${phone.phone_number}`).join('\n')
 );
 
-const SuggestAnUpdateButton = (props: { readonly onPress: () => void } ): JSX.Element => (
-    <View style={{flexDirection: 'row-reverse', marginBottom: 20}}>
+const SuggestAnUpdateButton = (props: { readonly isVisible: boolean, readonly onPress: SetShowModal } ): JSX.Element => {
+    if (!props.isVisible) {
+        return <EmptyComponent />;
+    }
+    return (
+        <View style={{flexDirection: 'row-reverse', marginBottom: 20}}>
         <TouchableOpacity
-            onPress={props.onPress}
+            onPress={(): void => props.onPress(true)}
             style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
         >
             <View style={{ flexDirection: 'row'}}>
@@ -271,4 +276,5 @@ const SuggestAnUpdateButton = (props: { readonly onPress: () => void } ): JSX.El
             </View>
         </TouchableOpacity>
     </View>
-);
+    );
+};
