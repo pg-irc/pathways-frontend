@@ -79,6 +79,8 @@ export type SetShowSearchButton = Dispatch<SetStateAction<boolean>>;
 
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
+    const searchInputRef = React.useRef(undefined);
+    const searchLocationRef = React.useRef(undefined);
     const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.location);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
     const [showMyLocationButton, setShowMyLocationButton]: readonly [boolean, SetShowMyLocationButton] = useState(false);
@@ -92,8 +94,16 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         const _ = i18n._.bind(i18n);
         return _(placeholder);
     };
-    const clearSearch = (): void => setSearchInputField('');
-    const clearLocation = (): void => setLocationInputField('');
+
+    const clearSearch = (): void => {
+        setSearchInputField('');
+        searchInputRef.current.focus();
+    };
+
+    const clearLocation = (): void => {
+        setLocationInputField('');
+        searchLocationRef.current.focus();
+    };
 
     const getOpacity = (input: string): number => input === '' ? .6 : 1;
 
@@ -104,6 +114,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='search' />
                     <TextInput
+                        ref={searchInputRef}
                         style={[applicationStyles.searchInput, { opacity: getOpacity(searchInputField) }]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent search text changed to '${d}'`);
@@ -120,6 +131,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='location-on' />
                     <TextInput
+                        ref={searchLocationRef}
                         style={[applicationStyles.searchInput, { opacity: getOpacity(locationInputField) }]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent location text changed to '${d}'`);
