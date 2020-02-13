@@ -1,3 +1,4 @@
+// tslint:disable: no-expression-statement
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
@@ -25,6 +26,7 @@ import { SuggestUpdateComponent } from '../suggest_update/suggest_update_compone
 import { isAndroid } from '../../helpers/is_android';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from './service_detail_icon';
+import { FeedbackModalComponent } from '../feedback_modal/feedback_modal_component';
 
 type SuggestedUpdates = {
     readonly nameSuggestion: string;
@@ -46,6 +48,7 @@ export interface ServiceDetailActions {
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
+type SetShowModal = Dispatch<SetStateAction<boolean>>;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const [suggestingEnabled, setSuggestingEnabled]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
@@ -54,7 +57,11 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const setSuggestedUpdateForField = R.curry((field: keyof SuggestedUpdates, value: string): void => (
         setSuggestedUpdates({...suggestedUpdates, [field]: value})
     ));
-    const onSuggestAnUpdatePress = (): void => setSuggestingEnabled(!suggestingEnabled);
+    const onSuggestAnUpdatePress = (): void => {
+        setSuggestingEnabled(!suggestingEnabled);
+        setShowModal(false);
+    };
+    const [showModal, setShowModal]: readonly[boolean, SetShowModal] = useState(false);
 
     return (
         <Content
@@ -102,7 +109,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 analyticsLinkPressed={props.analyticsLinkPressed}
                 {...props}
             />
-            <SuggestAnUpdateButton onPress={onSuggestAnUpdatePress} />
+            <DividerComponent />
+            <SuggestAnUpdateButton onPress={(): void => setShowModal(true)} />
+            <FeedbackModalComponent isVisible={showModal} setShowModal={setShowModal} onSuggestAnUpdatePress={onSuggestAnUpdatePress}/>
         </Content>
     );
 };
