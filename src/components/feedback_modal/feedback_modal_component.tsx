@@ -24,7 +24,7 @@ export const FeedbackModalComponent = (props: Props): JSX.Element => (
         onBackdropPress={(): void => props.setShowModal(false)}
         style={{ justifyContent: 'flex-end', margin: 0 }}
     >
-        <View padder style={{backgroundColor: colors.white, borderRadius: 20}}>
+        <View padder style={{backgroundColor: colors.white, borderTopStartRadius: 20, borderTopEndRadius: 20}}>
            <HeaderComponent setShowModal={props.setShowModal}/>
            <DividerComponent />
            <ButtonsComponent {...props} />
