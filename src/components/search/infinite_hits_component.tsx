@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
@@ -225,3 +225,20 @@ const renderHeader =
         hidePartialLocalizationMessage={hidePartialLocalizationMessage}
     />
 );
+
+// tslint:disable
+// TODO see if this can work.
+const useBookmarkServices = (defaultBookmarkedServices: ReadonlyArray<HumanServiceData>) => {
+    const [bookmarks, setBookmarks] = useState(defaultBookmarkedServices);
+    const bookmarkService = (service: HumanServiceData) => {
+        // TODO we need to think about duplicates .. proplly use a map here
+        setBookmarks(
+            [...bookmarks, {...service, bookmarked: true}]
+        );
+    }
+    const unbookmarkService = (service: HumanServiceData) => {
+        setBookmarks(
+            [...bookmarks, {...service, bookmarked: false}]
+        );
+    }
+}
