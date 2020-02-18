@@ -1,10 +1,10 @@
 // tslint:disable: no-expression-statement
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState, Dispatch, SetStateAction, useRef } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { Text, TouchableOpacity } from 'react-native';
-import { Content, View } from 'native-base';
+import { View } from 'native-base';
 import { textStyles, colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
@@ -28,6 +28,7 @@ import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from './service_detail_icon';
 import { FeedbackModalComponent } from '../feedback_modal/feedback_modal_component';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type SuggestedUpdates = {
     readonly nameSuggestion: string;
@@ -58,62 +59,72 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const setSuggestedUpdateForField = R.curry((field: keyof SuggestedUpdates, value: string): void => (
         setSuggestedUpdates({...suggestedUpdates, [field]: value})
     ));
+    const [showModal, setShowModal]: readonly[boolean, SetShowModal] = useState(false);
+    const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
+
     const onSuggestAnUpdatePress = (): void => {
         setSuggestingEnabled(!suggestingEnabled);
         setShowModal(false);
+        scrollToTop();
     };
-    const [showModal, setShowModal]: readonly[boolean, SetShowModal] = useState(false);
+
+    const scrollToTop = (): void => {
+        const scrollParameters = { x: 0, y: 0, animated: false };
+        scrollViewRef.current.scrollToPosition(scrollParameters.x, scrollParameters.y, scrollParameters.animated);
+    };
 
     return (
-        <Content
-            padder
+        <KeyboardAwareScrollView
             enableResetScrollToCoords={false}
             extraHeight={100}
             extraScrollHeight={isAndroid() ? 100 : 0}
             enableOnAndroid={true}
+            ref={scrollViewRef}
         >
             <BannerImageComponent imageSource={undefined} />
-            <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
-            <SuggestUpdateComponent
-                onChangeSuggestionText={setSuggestedUpdateForField('nameSuggestion')}
-                suggestionText={suggestedUpdates.nameSuggestion}
-                fieldLabel={<Trans>Name</Trans>}
-                fieldValue={props.service.name}
-                suggestingEnabled={suggestingEnabled}
-                suggestingDisabledComponent={<Name name={props.service.name} />}
-            />
-            <DividerComponent />
-            <SuggestUpdateComponent
-                onChangeSuggestionText={setSuggestedUpdateForField('organizationSuggestion')}
-                suggestionText={suggestedUpdates.organizationSuggestion}
-                fieldLabel={<Trans>Organization</Trans>}
-                fieldValue={props.service.organizationName}
-                suggestingEnabled={suggestingEnabled}
-                suggestingDisabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
-            />
-            <DividerComponent />
-            <SuggestUpdateComponent
-                onChangeSuggestionText={setSuggestedUpdateForField('descriptionSuggestion')}
-                suggestionText={suggestedUpdates.descriptionSuggestion}
-                fieldLabel={<Trans>Description</Trans>}
-                fieldValue={props.service.description}
-                suggestingEnabled={suggestingEnabled}
-                suggestingDisabledComponent={<Description description={props.service.description} />}
-            />
-            <DividerComponent />
-            <ServiceContactDetails
-                service={props.service}
-                currentPathForAnaltyics={props.location.pathname}
-                suggestingEnabled={suggestingEnabled}
-                setSuggestedUpdateForField={setSuggestedUpdateForField}
-                suggestedUpdates={suggestedUpdates}
-                analyticsLinkPressed={props.analyticsLinkPressed}
-                {...props}
-            />
-            <DividerComponent />
-            <SuggestAnUpdateButton isVisible={!suggestingEnabled} onPress={(): void => setShowModal(true)} />
-            <FeedbackModalComponent isVisible={showModal} setShowModal={setShowModal} onSuggestAnUpdatePress={onSuggestAnUpdatePress}/>
-        </Content>
+            <View padder>
+                <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
+                <SuggestUpdateComponent
+                    onChangeSuggestionText={setSuggestedUpdateForField('nameSuggestion')}
+                    suggestionText={suggestedUpdates.nameSuggestion}
+                    fieldLabel={<Trans>Name</Trans>}
+                    fieldValue={props.service.name}
+                    suggestingEnabled={suggestingEnabled}
+                    suggestingDisabledComponent={<Name name={props.service.name} />}
+                />
+                <DividerComponent />
+                <SuggestUpdateComponent
+                    onChangeSuggestionText={setSuggestedUpdateForField('organizationSuggestion')}
+                    suggestionText={suggestedUpdates.organizationSuggestion}
+                    fieldLabel={<Trans>Organization</Trans>}
+                    fieldValue={props.service.organizationName}
+                    suggestingEnabled={suggestingEnabled}
+                    suggestingDisabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
+                />
+                <DividerComponent />
+                <SuggestUpdateComponent
+                    onChangeSuggestionText={setSuggestedUpdateForField('descriptionSuggestion')}
+                    suggestionText={suggestedUpdates.descriptionSuggestion}
+                    fieldLabel={<Trans>Description</Trans>}
+                    fieldValue={props.service.description}
+                    suggestingEnabled={suggestingEnabled}
+                    suggestingDisabledComponent={<Description description={props.service.description} />}
+                />
+                <DividerComponent />
+                <ServiceContactDetails
+                    service={props.service}
+                    currentPathForAnaltyics={props.location.pathname}
+                    suggestingEnabled={suggestingEnabled}
+                    setSuggestedUpdateForField={setSuggestedUpdateForField}
+                    suggestedUpdates={suggestedUpdates}
+                    analyticsLinkPressed={props.analyticsLinkPressed}
+                    {...props}
+                />
+                <DividerComponent />
+                <SuggestAnUpdateButton isVisible={!suggestingEnabled} onPress={(): void => setShowModal(true)} />
+                <FeedbackModalComponent isVisible={showModal} setShowModal={setShowModal} onSuggestAnUpdatePress={onSuggestAnUpdatePress}/>
+            </View>
+        </KeyboardAwareScrollView>
     );
 };
 
