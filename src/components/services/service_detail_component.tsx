@@ -125,6 +125,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     setIsVisible={setShowFeedbackOptionsModal}
                     onSuggestAnUpdatePress={onFeedbackButtonPress}
                 />
+                <SuggestUpdateSubmitButton isVisible={feedbackEnabled}/>
             </View>
         </KeyboardAwareScrollView>
     );
@@ -271,7 +272,7 @@ const getPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber) => `${phone.type}: ${phone.phone_number}`).join('\n')
 );
 
-const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void } ): JSX.Element => {
+const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void }): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
@@ -289,5 +290,20 @@ const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: 
             </View>
         </TouchableOpacity>
     </View>
+    );
+};
+
+const SuggestUpdateSubmitButton = (props: { readonly isVisible: boolean}): JSX.Element => {
+    if (!props.isVisible) {
+        return <EmptyComponent />;
+    }
+    return (
+        <TouchableOpacity
+        style={{ backgroundColor: colors.teal, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
+        >
+            <Text style={textStyles.headlineH3StyleWhiteCenter}>
+                <Trans>Submit</Trans>
+            </Text>
+    </TouchableOpacity>
     );
 };
