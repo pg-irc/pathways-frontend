@@ -40,6 +40,7 @@ export interface SearchComponentActions {
 }
 
 export type SetIsLatLongLoading = Dispatch<SetStateAction<boolean>>;
+export type SetIsInputCollapsed = Dispatch<SetStateAction<boolean>>;
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 
@@ -49,6 +50,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [location, setLocation]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [latLong, setLatLong]: readonly [LatLong, (latLong: LatLong) => void] = useState(undefined);
     const [isLatLongLoading, setIsLatLongLoading]: readonly [boolean, SetIsLatLongLoading] = useState(false);
+    const [collapseInput, setCollapseInput]: readonly [boolean, SetIsInputCollapsed] = useState(false);
 
     useEffect(() => {
         props.saveSearchLocation(location);
@@ -65,7 +67,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const InfiniteHitsConnectedComponent = connectInfiniteHits(connectStateResults(
         (infiniteHitsAndStateResultsProps: InfiniteHitsAndStateResultsProps) =>
             <InfiniteHitsComponent {...infiniteHitsAndStateResultsProps} latLong={latLong} isLatLongLoading={isLatLongLoading} />,
-        ),
+    ),
     );
 
     return <I18n>{(): JSX.Element => {
@@ -77,7 +79,9 @@ export const SearchComponent = (props: Props): JSX.Element => {
                     searchTerm={props.searchTerm}
                     saveSearchTerm={props.saveSearchTerm}
                     location={location}
-                    setLocation={setLocation} />
+                    setLocation={setLocation}
+                    collapseInput={collapseInput}
+                    setCollapseInput={setCollapseInput} />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
                 <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>
