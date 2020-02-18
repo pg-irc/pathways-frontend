@@ -167,7 +167,11 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                     <Text> near </Text>
                     <Text style={{ fontWeight: 'bold' }}>{locationInputField}</Text>
                 </View>
-                <ClearInputButton visible={true} onPress={clearSearch} />
+                <ClearInputButton visible={true} onPress={(): void => {
+                    props.saveSearchTerm('');
+                    props.setLocation('');
+                    props.setCollapseInput(false);
+                }} />
             </TouchableOpacity>
         </View>
     );
