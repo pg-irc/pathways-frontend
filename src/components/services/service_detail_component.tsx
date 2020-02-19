@@ -29,6 +29,7 @@ import { ServiceDetailIconComponent } from './service_detail_icon';
 import { FeedbackOptionsModalComponent } from '../feedback/feedback_options_modal_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { ReceiveUpdatesModalComponent } from '../receive_updates_modal/receive_updates_modal_component';
 
 type Feedback = {
     readonly nameFeedback: string;
@@ -50,6 +51,7 @@ export interface ServiceDetailActions {
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
+type SetShowModal = Dispatch<SetStateAction<boolean>>;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const [feedbackEnabled, setFeedbackEnabled]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
@@ -70,6 +72,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const scrollToTop = (): void => {
         scrollViewRef.current.scrollToPosition(0, 0, false);
     };
+
+    const [showReceiveUpdatesModal, setShowReceiveUpdatesModal]: readonly[boolean, SetShowModal] = useState(false);
 
     return (
         <KeyboardAwareScrollView
@@ -125,7 +129,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     setIsVisible={setShowFeedbackOptionsModal}
                     onSuggestAnUpdatePress={onFeedbackButtonPress}
                 />
-                <SuggestUpdateSubmitButton isVisible={feedbackEnabled}/>
+                <ReceiveUpdatesModalComponent isVisible={showReceiveUpdatesModal} setIsVisible={setShowReceiveUpdatesModal} />
+                <SuggestUpdateSubmitButton isVisible={feedbackEnabled} onPress={(): void => setShowReceiveUpdatesModal(true)}/>
             </View>
         </KeyboardAwareScrollView>
     );
@@ -293,12 +298,13 @@ const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: 
     );
 };
 
-const SuggestUpdateSubmitButton = (props: { readonly isVisible: boolean}): JSX.Element => {
+const SuggestUpdateSubmitButton = (props: { readonly isVisible: boolean, readonly onPress: () => void}): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
     return (
         <TouchableOpacity
+        onPress={props.onPress}
         style={{ backgroundColor: colors.teal, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
         >
             <Text style={textStyles.headlineH3StyleWhiteCenter}>
