@@ -12,20 +12,20 @@ export interface FeedbackModalProps {
 }
 
 export interface FeedbackModalActions {
-    readonly setShowModal: (showModal: boolean) => void;
+    readonly setIsVisible: (isVisible: boolean) => void;
     readonly onSuggestAnUpdatePress: () => void;
 }
 
 type Props = FeedbackModalProps & FeedbackModalActions;
 
-export const FeedbackModalComponent = (props: Props): JSX.Element => (
+export const FeedbackOptionsModalComponent = (props: Props): JSX.Element => (
     <Modal
         isVisible={props.isVisible}
-        onBackdropPress={(): void => props.setShowModal(false)}
+        onBackdropPress={(): void => props.setIsVisible(false)}
         style={{ justifyContent: 'flex-end', margin: 0 }}
     >
         <View padder style={{backgroundColor: colors.white, borderTopStartRadius: 20, borderTopEndRadius: 20}}>
-           <HeaderComponent setShowModal={props.setShowModal}/>
+           <HeaderComponent setShowModal={props.setIsVisible}/>
            <DividerComponent />
            <ButtonsComponent {...props} />
            <DividerComponent />

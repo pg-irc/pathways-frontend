@@ -26,7 +26,7 @@ import { SuggestUpdateComponent } from '../suggest_update/suggest_update_compone
 import { isAndroid } from '../../helpers/is_android';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from './service_detail_icon';
-import { FeedbackModalComponent } from '../feedback_modal/feedback_modal_component';
+import { FeedbackOptionsModalComponent } from '../feedback_options_modal/feedback_options_modal_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -59,12 +59,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const setSuggestedUpdateForField = R.curry((field: keyof SuggestedUpdates, value: string): void => (
         setSuggestedUpdates({...suggestedUpdates, [field]: value})
     ));
-    const [showModal, setShowModal]: readonly[boolean, SetShowModal] = useState(false);
+    const [showFeedbackOptionsModal, setShowFeedbackOptionsModal]: readonly[boolean, SetShowModal] = useState(false);
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
 
     const onSuggestAnUpdatePress = (): void => {
         setSuggestingEnabled(!suggestingEnabled);
-        setShowModal(false);
+        setShowFeedbackOptionsModal(false);
         scrollToTop();
     };
 
@@ -121,8 +121,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     {...props}
                 />
                 <DividerComponent />
-                <SuggestAnUpdateButton isVisible={!suggestingEnabled} onPress={(): void => setShowModal(true)} />
-                <FeedbackModalComponent isVisible={showModal} setShowModal={setShowModal} onSuggestAnUpdatePress={onSuggestAnUpdatePress}/>
+                <SuggestAnUpdateButton isVisible={!suggestingEnabled} onPress={(): void => setShowFeedbackOptionsModal(true)} />
+                <FeedbackOptionsModalComponent
+                    isVisible={showFeedbackOptionsModal}
+                    setIsVisible={setShowFeedbackOptionsModal}
+                    onSuggestAnUpdatePress={onSuggestAnUpdatePress}
+                />
             </View>
         </KeyboardAwareScrollView>
     );
