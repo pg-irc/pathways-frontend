@@ -1,11 +1,14 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import Modal from 'react-native-modal';
-import { View, Text } from 'native-base';
+import { View, Text, Icon } from 'native-base';
 import { textStyles, colors } from '../../application/styles';
 import { Trans, I18n } from '@lingui/react';
 import { CloseButtonComponent } from '../close_button/close_button_component';
-import { TextInput } from 'react-native';
+import { TextInput, TouchableOpacity } from 'react-native';
 import { ReactI18nRenderProp } from '../../locale/types';
+import { getEditingColor, getEditingIcon } from '../suggest_update/suggest_update_component';
+import { EmptyComponent } from '../empty_component/empty_component';
+import * as R from 'ramda';
 
 export interface ReceiveUpdatesModalProps {
     readonly isVisible: boolean;
@@ -17,8 +20,18 @@ export interface ReceiveUpdatesModalActions {
 
 type Props = ReceiveUpdatesModalProps & ReceiveUpdatesModalActions;
 
+export interface ServiceProviderDetails {
+    readonly name: string;
+    readonly organization: string;
+    readonly jobTitle: string;
+}
+
 export const ReceiveUpdatesModalComponent = (props: Props): JSX.Element => {
     const [email, setEmail]: readonly [string, Dispatch<SetStateAction<string>>] = useState('');
+    const [isServiceProvider, setIsServiceProvder]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+    const onServiceProviderTogglePress = (): void => setIsServiceProvder(!isServiceProvider);
+    const [serviceProviderDetails, setServiceProviderDetails]: readonly [ServiceProviderDetails, Dispatch<SetStateAction<ServiceProviderDetails>>] =
+        useState(getDefaultServiceProviderDetails());
     return (
         <Modal
             isVisible={props.isVisible}
@@ -30,7 +43,22 @@ export const ReceiveUpdatesModalComponent = (props: Props): JSX.Element => {
                     <View padder style={{backgroundColor: colors.white, borderRadius: 10}}>
                         <HeaderComponent setIsVisible={props.setIsVisible} />
                         <InstructionsComponent />
-                        <InputComponent inputFieldText={email} onChangeFieldText={setEmail} placeholder={'Enter Email'} i18n={i18nRenderProp.i18n} />
+                        <InputComponent
+                            inputFieldText={email}
+                            onChangeFieldText={setEmail}
+                            placeholder={'Enter Email'}
+                            i18n={i18nRenderProp.i18n}
+                        />
+                        <ToggleServiceProviderInputComponent
+                            isServiceProvider={isServiceProvider}
+                            onPress={onServiceProviderTogglePress}
+                        />
+                        <ServiceProviderInputComponent
+                            isServiceProvider={isServiceProvider}
+                            serviceProviderDetails={serviceProviderDetails}
+                            setServiceProviderDetails={setServiceProviderDetails}
+                            i18n={i18nRenderProp.i18n}
+                        />
                     </View>
                     ))
                 }
@@ -38,6 +66,12 @@ export const ReceiveUpdatesModalComponent = (props: Props): JSX.Element => {
        </Modal>
     );
 };
+
+const getDefaultServiceProviderDetails = (): ServiceProviderDetails => ({
+    name: '',
+    organization: '',
+    jobTitle: '',
+});
 
 const HeaderComponent = (props: { readonly setIsVisible: (b: boolean) => void }): JSX.Element => (
     <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 10}}>
@@ -76,7 +110,7 @@ const InputComponent = (props: InputComponentProps & ReactI18nRenderProp): JSX.E
                 onBlur={onBlur}
                 style={{
                     color: textColor,
-                    marginTop: 10,
+                    margin: 10,
                     borderBottomColor: colors.grey,
                     borderBottomWidth: 1,
                     paddingBottom: 5,
@@ -85,8 +119,95 @@ const InputComponent = (props: InputComponentProps & ReactI18nRenderProp): JSX.E
     );
 };
 
+export interface ToggleServiceProviderInputComponentProps {
+    readonly isServiceProvider: boolean;
+    readonly onPress: () => void;
+}
+
+const ToggleServiceProviderInputComponent = (props: ToggleServiceProviderInputComponentProps): JSX.Element => (
+    <View style={{flexDirection: 'row', margin: 10 }}>
+        <Text style={[textStyles.headlineH4StyleBlackLeft, { fontSize: 14, flexBasis: '75%' }]}>
+            <Trans>Do you work at this service or organization?</Trans>
+        </Text>
+        <ToggleTextInputComponent
+            isServiceProvider={props.isServiceProvider}
+            onPress={props.onPress}
+        />
+    </View>
+);
+
+interface ToggleButtonComponentProps {
+    readonly isServiceProvider: boolean;
+    readonly onPress: () => void;
+}
+
+const ToggleTextInputComponent = (props: ToggleButtonComponentProps): JSX.Element => (
+    <TouchableOpacity onPress={props.onPress}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Icon
+                type={'FontAwesome'}
+                name={getEditingIcon(props.isServiceProvider)}
+                style={{ color: getEditingColor(props.isServiceProvider) }}
+            />
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { paddingLeft: 5 }]}>
+                <Trans>Yes</Trans>
+            </Text>
+        </View>
+    </TouchableOpacity>
+);
+
+export interface ServiceProviderInputComponent {
+    readonly isServiceProvider: boolean;
+    readonly serviceProviderDetails: ServiceProviderDetails;
+    readonly setServiceProviderDetails: Dispatch<SetStateAction<ServiceProviderDetails>>;
+}
+
+const ServiceProviderInputComponent = (props: ServiceProviderInputComponent & ReactI18nRenderProp): JSX.Element => {
+    const setServiceProviderDetailsForField = R.curry((field: keyof ServiceProviderDetails, value: string): void => (
+        props.setServiceProviderDetails({...props.serviceProviderDetails, [field]: value})
+    ));
+
+    if (!props.isServiceProvider) {
+        return <EmptyComponent />;
+    }
+    return (
+        <View>
+            <InputLabel label={<Trans>Name</Trans>} />
+            <InputComponent
+                onChangeFieldText={setServiceProviderDetailsForField('name')}
+                inputFieldText={props.serviceProviderDetails.name}
+                placeholder={'Enter your name'}
+                i18n={props.i18n}
+            />
+            <InputLabel label={<Trans>Organization</Trans>} />
+            <InputComponent
+                onChangeFieldText={setServiceProviderDetailsForField('organization')}
+                inputFieldText={props.serviceProviderDetails.organization}
+                placeholder={'Enter your organization name'}
+                i18n={props.i18n}
+            />
+            <InputLabel label={<Trans>Job Title</Trans>} />
+            <InputComponent
+                onChangeFieldText={setServiceProviderDetailsForField('jobTitle')}
+                inputFieldText={props.serviceProviderDetails.jobTitle}
+                placeholder={'Enter your job title'}
+                i18n={props.i18n}
+            />
+        </View>
+    );
+};
+
+const InputLabel = (props: { readonly label: JSX.Element }): JSX.Element => (
+    <Text style={[textStyles.headlineH3StyleBlackLeft, { fontSize: 14, marginHorizontal: 10 }]}>
+        {props.label}
+    </Text>
+);
+
 export const extractTextInputStrings = (): JSX.Element => (
     <View>
         <Text><Trans>Enter email</Trans></Text>
+        <Text><Trans>Enter your name</Trans></Text>
+        <Text><Trans>Enter your organization name</Trans></Text>
+        <Text><Trans>Enter your job title</Trans></Text>
     </View>
 );

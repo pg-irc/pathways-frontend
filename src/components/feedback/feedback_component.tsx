@@ -149,10 +149,10 @@ const getEditingTextStyle = (isEditing: boolean): StyleProp<TextStyle> => (
         [ textStyles.paragraphStyle, { color: getEditingColor(isEditing) }]
 );
 
-const getEditingColor = (isEditing: boolean): string => (
+export const getEditingColor = (isEditing: boolean): string => (
     isEditing ? colors.teal : colors.grey
 );
 
-const getEditingIcon = (isEditing: boolean): string => (
+export const getEditingIcon = (isEditing: boolean): string => (
     isEditing ? 'check-square' : 'square-o'
 );
