@@ -50,7 +50,7 @@ const getBookmarkButtonOnPress = (props: Props, i18n: I18n): ButtonOnPress => {
     const toastProps = {
         style: applicationStyles.toast,
         textStyle: textStyles.toast,
-        duration: 4000,
+        duration: 2000,
     };
     if (props.isBookmarked) {
         return (): void => {
