@@ -4,8 +4,8 @@ import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { Text, TouchableOpacity } from 'react-native';
-import { View } from 'native-base';
-import { textStyles, colors } from '../../application/styles';
+import { View, Button } from 'native-base';
+import { textStyles, colors, applicationStyles } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
@@ -303,13 +303,14 @@ const SuggestUpdateSubmitButton = (props: { readonly isVisible: boolean, readonl
         return <EmptyComponent />;
     }
     return (
-        <TouchableOpacity
-        onPress={props.onPress}
-        style={{ backgroundColor: colors.teal, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
+        <Button
+            full
+            onPress={props.onPress}
+            style={applicationStyles.tealButton}
         >
-            <Text style={textStyles.headlineH3StyleWhiteCenter}>
+            <Text style={textStyles.tealButton}>
                 <Trans>Submit</Trans>
             </Text>
-    </TouchableOpacity>
+        </Button>
     );
 };

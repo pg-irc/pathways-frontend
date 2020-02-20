@@ -6,7 +6,7 @@ import { Trans, I18n } from '@lingui/react';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { ReactI18nRenderProp } from '../../locale/types';
-import { getEditingColor, getEditingIcon } from '../suggest_update/suggest_update_component';
+import { getEditingColor, getEditingIcon } from '../feedback/feedback_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import * as R from 'ramda';
 
@@ -28,8 +28,8 @@ export interface ServiceProviderDetails {
 
 export const ReceiveUpdatesModalComponent = (props: Props): JSX.Element => {
     const [email, setEmail]: readonly [string, Dispatch<SetStateAction<string>>] = useState('');
-    const [isServiceProvider, setIsServiceProvder]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-    const onServiceProviderTogglePress = (): void => setIsServiceProvder(!isServiceProvider);
+    const [isServiceProvider, setIsServiceProvider]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+    const onServiceProviderTogglePress = (): void => setIsServiceProvider(!isServiceProvider);
     const [serviceProviderDetails, setServiceProviderDetails]: readonly [ServiceProviderDetails, Dispatch<SetStateAction<ServiceProviderDetails>>] =
         useState(getDefaultServiceProviderDetails());
     return (
@@ -88,44 +88,13 @@ const InstructionsComponent = (): JSX.Element => (
     </Text>
 );
 
-interface InputComponentProps {
-    readonly onChangeFieldText: (text: string) => void;
-    readonly inputFieldText: string;
-    readonly placeholder: string;
-}
-
-const InputComponent = (props: InputComponentProps & ReactI18nRenderProp): JSX.Element => {
-    const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.teal);
-    const onBlur = (): void => setTextcolor(colors.teal);
-    const onFocus = (): void => setTextcolor(colors.black);
-    const _ = props.i18n._.bind(props.i18n);
-    return (
-            <TextInput
-                multiline={true}
-                onChangeText={props.onChangeFieldText}
-                value={props.inputFieldText}
-                textAlignVertical={'top'}
-                placeholder={_(props.placeholder)}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                style={{
-                    color: textColor,
-                    margin: 10,
-                    borderBottomColor: colors.grey,
-                    borderBottomWidth: 1,
-                    paddingBottom: 5,
-                }}
-            />
-    );
-};
-
 export interface ToggleServiceProviderInputComponentProps {
     readonly isServiceProvider: boolean;
     readonly onPress: () => void;
 }
 
 const ToggleServiceProviderInputComponent = (props: ToggleServiceProviderInputComponentProps): JSX.Element => (
-    <View style={{flexDirection: 'row', margin: 10 }}>
+    <View style={{flexDirection: 'row', margin: 10, alignItems: 'center' }}>
         <Text style={[textStyles.headlineH4StyleBlackLeft, { fontSize: 14, flexBasis: '75%' }]}>
             <Trans>Do you work at this service or organization?</Trans>
         </Text>
@@ -194,6 +163,37 @@ const ServiceProviderInputComponent = (props: ServiceProviderInputComponent & Re
                 i18n={props.i18n}
             />
         </View>
+    );
+};
+
+interface InputComponentProps {
+    readonly onChangeFieldText: (text: string) => void;
+    readonly inputFieldText: string;
+    readonly placeholder: string;
+}
+
+const InputComponent = (props: InputComponentProps & ReactI18nRenderProp): JSX.Element => {
+    const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.teal);
+    const onBlur = (): void => setTextcolor(colors.teal);
+    const onFocus = (): void => setTextcolor(colors.black);
+    const _ = props.i18n._.bind(props.i18n);
+    return (
+            <TextInput
+                multiline={true}
+                onChangeText={props.onChangeFieldText}
+                value={props.inputFieldText}
+                textAlignVertical={'top'}
+                placeholder={_(props.placeholder)}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                style={{
+                    color: textColor,
+                    margin: 10,
+                    borderBottomColor: colors.grey,
+                    borderBottomWidth: 1,
+                    paddingBottom: 5,
+                }}
+            />
     );
 };
 
