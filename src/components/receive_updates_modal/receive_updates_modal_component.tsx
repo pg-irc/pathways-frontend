@@ -1,14 +1,15 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import Modal from 'react-native-modal';
-import { View, Text, Icon } from 'native-base';
-import { textStyles, colors } from '../../application/styles';
+import { View, Text, Icon, Button } from 'native-base';
+import { textStyles, colors, applicationStyles } from '../../application/styles';
 import { Trans, I18n } from '@lingui/react';
 import { CloseButtonComponent } from '../close_button/close_button_component';
-import { TextInput, TouchableOpacity } from 'react-native';
+import { TextInput, TouchableOpacity, StyleProp, ViewStyle, TextStyle } from 'react-native';
 import { ReactI18nRenderProp } from '../../locale/types';
 import { getEditingColor, getEditingIcon } from '../feedback/feedback_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import * as R from 'ramda';
+import { DividerComponent } from '../content_layout/divider_component';
 
 export interface ReceiveUpdatesModalProps {
     readonly isVisible: boolean;
@@ -59,6 +60,10 @@ export const ReceiveUpdatesModalComponent = (props: Props): JSX.Element => {
                             setServiceProviderDetails={setServiceProviderDetails}
                             i18n={i18nRenderProp.i18n}
                         />
+                        <DividerComponent />
+                        <View style={{ flexDirection: 'row-reverse'}}>
+                            <SubmitButton email={email}/>
+                        </View>
                     </View>
                     ))
                 }
@@ -211,3 +216,27 @@ export const extractTextInputStrings = (): JSX.Element => (
         <Text><Trans>Enter your job title</Trans></Text>
     </View>
 );
+
+const SubmitButton = (props: { readonly email: string }): JSX.Element => (
+    <Button style={getButtonStyle(props.email)}>
+        <Text style={getTextStyle(props.email)}>
+            {
+                props.email ? <Trans>Email me updates</Trans> : <Trans>Finish without email</Trans>
+            }
+        </Text>
+    </Button>
+);
+
+const getButtonStyle = (email: string): StyleProp<ViewStyle> => {
+    if (!email) {
+        return applicationStyles.whiteTealButton;
+    }
+    return applicationStyles.tealButton;
+};
+
+const getTextStyle = (email: string): StyleProp<TextStyle> => {
+    if (!email) {
+        return textStyles.whiteTealButton;
+    }
+    return textStyles.tealButton;
+};
