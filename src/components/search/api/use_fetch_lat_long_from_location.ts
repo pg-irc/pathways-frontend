@@ -8,7 +8,7 @@ import * as R from 'ramda';
 import { getDeviceLocation, NoLocationPermissionErrorAction, LocationFetchTimeoutErrorAction } from '../../../async/location';
 import * as errors from '../../../validation/errors/is_error';
 import { SetIsLatLongLoading } from '../search_component';
-import { NEAR_MY_LOCATION } from '../../../application/constants';
+import { MY_LOCATION } from '../../../application/constants';
 
 export const useFetchLatLongFromLocation =
     (location: string, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
@@ -21,7 +21,7 @@ export const useFetchLatLongFromLocation =
 
 const fetchLatLongFromLocation =
     (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
-        if (location === NEAR_MY_LOCATION) {
+        if (location === MY_LOCATION) {
             setIsLatLongLoading(true);
             fetchLatLongFromDevice(setLatLong, setIsLatLongLoading);
         } else if (location !== '' && onlineStatus === OnlineStatus.Online) {

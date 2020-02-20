@@ -62,7 +62,7 @@ export const INITIAL_EMPTY_SERVICES_FOR_TOPIC = 'SERVICES_FOR_TOPIC:INITIAL_EMPT
 
 export const SET_MANUAL_USER_LOCATION = 'SetManualLocation';
 export const CLEAR_MANUAL_USER_LOCATION = 'ClearManualLocation';
-export const NEAR_MY_LOCATION = 'My Location';
+export const MY_LOCATION = 'My Location';
 
 export const SENTRY_SERVICES_LISTING_ERROR_CONTEXT = 'ServicesListing';
 

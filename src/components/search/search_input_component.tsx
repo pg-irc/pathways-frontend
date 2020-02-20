@@ -13,7 +13,7 @@ import * as IntentLauncher from 'expo-intent-launcher';
 import * as Permissions from 'expo-permissions';
 import { isAndroid } from '../../helpers/is_android';
 import { openURL } from '../link/link';
-import { NEAR_MY_LOCATION } from '../../application/constants';
+import { MY_LOCATION } from '../../application/constants';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -56,7 +56,7 @@ const myLocationOnPress = async (saveLocation: Function): Promise<void> => {
     const status = await getPermission();
     switch (status) {
         case Permissions.PermissionStatus.GRANTED:
-            saveLocation(NEAR_MY_LOCATION);
+            saveLocation(MY_LOCATION);
             break;
         case Permissions.PermissionStatus.DENIED:
             openAppSettings();
@@ -88,7 +88,7 @@ const openAppSettings = (): void => {
 const askPermission = async (saveLocation: Function): Promise<void> => {
     Permissions.askAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse) => {
         if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
-            saveLocation(NEAR_MY_LOCATION);
+            saveLocation(MY_LOCATION);
         }
     });
 };
@@ -126,7 +126,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.location);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
 
-    useEffect(() => {
+    useEffect((): void => {
         debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
         props.refine(props.searchTerm);
     }, [props.latLong]);
@@ -148,21 +148,33 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
 
     const getOpacity = (input: string): number => input === '' ? .6 : 1;
 
+    const getTranslatedSnapshot = (searchInput: string, locationInput: string, i18nRenderProp: ReactI18nRenderProp): string => {
+        if (locationInputField === MY_LOCATION) {
+            return searchInput + ' ' + buildTranslatedString(i18nRenderProp.i18n, 'near ' + MY_LOCATION);
+        }
+        return searchInput + ' near ' + locationInput;
+    };
+
     const smallInput = (
-        <View style={{ padding: 4, backgroundColor: colors.teal }}>
-            <TouchableOpacity style={applicationStyles.searchContainer}
-                onPress={(): void => props.setCollapseInput(false)}>
-                <InputIcon name='search' />
-                <Text numberOfLines={1} style={{ flex: 1 }}>
-                    {searchInputField + ' near ' + locationInputField}
-                </Text>
-                <ClearInputButton visible={true} onPress={(): void => {
-                    props.saveSearchTerm('');
-                    props.setLocation('');
-                    props.setCollapseInput(false);
-                }} />
-            </TouchableOpacity>
-        </View>
+        <I18n>
+            {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
+                <View style={{ padding: 4, backgroundColor: colors.teal }}>
+                    <TouchableOpacity style={applicationStyles.searchContainer}
+                        onPress={(): void => props.setCollapseInput(false)}>
+                        <InputIcon name='search' />
+                        <Text numberOfLines={1} style={{ flex: 1 }}>
+                            {getTranslatedSnapshot(searchInputField, locationInputField, i18nRenderProp)}
+                        </Text>
+                        <ClearInputButton visible={true} onPress={(): void => {
+                            props.saveSearchTerm('');
+                            props.setLocation('');
+                            props.setCollapseInput(false);
+                        }} />
+                    </TouchableOpacity>
+                </View>
+            )}
+
+        </I18n>
     );
 
     const bigInput = (
@@ -215,9 +227,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     if (props.collapseInput) {
         return <View>{smallInput}</View>;
     }
-    else {
-        return <View>{bigInput}</View>;
-    }
+    return <View>{bigInput}</View>;
 };
 
 interface IconProps {
