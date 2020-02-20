@@ -125,10 +125,12 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     const searchLocationRef = React.useRef(undefined);
     const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.location);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
+
     useEffect(() => {
         debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
         props.refine(props.searchTerm);
     }, [props.latLong]);
+
     const buildTranslatedString = (i18n: ReactI18n, placeholder: string): string => {
         const _ = i18n._.bind(i18n);
         return _(placeholder);
@@ -147,26 +149,20 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     const getOpacity = (input: string): number => input === '' ? .6 : 1;
 
     const smallInput = (
-        <I18n>
-            {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                <View style={{ padding: 4, backgroundColor: colors.teal }}>
-                    <TouchableOpacity style={applicationStyles.searchContainer}
-                        onPress={(): void => props.setCollapseInput(false)}>
-                        <InputIcon name='search' />
-                        <View style={{ flex: 1, flexDirection: 'row' }}>
-                            <Text style={{ fontWeight: 'bold' }}>{searchInputField}</Text>
-                            <Text> <Trans>near</Trans> </Text>
-                            <Text style={{ fontWeight: 'bold' }}>{buildTranslatedString(i18nRenderProp.i18n, locationInputField)}</Text>
-                        </View>
-                        <ClearInputButton visible={true} onPress={(): void => {
-                            props.saveSearchTerm('');
-                            props.setLocation('');
-                            props.setCollapseInput(false);
-                        }} />
-                    </TouchableOpacity>
-                </View>
-            )}
-        </I18n>
+        <View style={{ padding: 4, backgroundColor: colors.teal }}>
+            <TouchableOpacity style={applicationStyles.searchContainer}
+                onPress={(): void => props.setCollapseInput(false)}>
+                <InputIcon name='search' />
+                <Text numberOfLines={1} style={{ flex: 1 }}>
+                    {searchInputField + ' near ' + locationInputField}
+                </Text>
+                <ClearInputButton visible={true} onPress={(): void => {
+                    props.saveSearchTerm('');
+                    props.setLocation('');
+                    props.setCollapseInput(false);
+                }} />
+            </TouchableOpacity>
+        </View>
     );
 
     const bigInput = (
