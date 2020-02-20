@@ -140,7 +140,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         props.refine(props.searchTerm);
         setShowSearchButton(false);
     }, [props.latLong]);
-    const buildTranslatedPlaceholder = (i18n: ReactI18n, placeholder: string): string => {
+    const buildTranslatedString = (i18n: ReactI18n, placeholder: string): string => {
         const _ = i18n._.bind(i18n);
         return _(placeholder);
     };
@@ -158,22 +158,26 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     const getOpacity = (input: string): number => input === '' ? .6 : 1;
 
     const smallInput = (
-        <View style={{ padding: 4, backgroundColor: colors.teal }}>
-            <TouchableOpacity style={applicationStyles.searchContainer}
-                onPress={(): void => props.setCollapseInput(false)}>
-                <InputIcon name='search' />
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Text style={{ fontWeight: 'bold' }}>{searchInputField}</Text>
-                    <Text> near </Text>
-                    <Text style={{ fontWeight: 'bold' }}>{locationInputField}</Text>
+        <I18n>
+            {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
+                <View style={{ padding: 4, backgroundColor: colors.teal }}>
+                    <TouchableOpacity style={applicationStyles.searchContainer}
+                        onPress={(): void => props.setCollapseInput(false)}>
+                        <InputIcon name='search' />
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            <Text style={{ fontWeight: 'bold' }}>{searchInputField}</Text>
+                            <Text> <Trans>near</Trans> </Text>
+                            <Text style={{ fontWeight: 'bold' }}>{buildTranslatedString(i18nRenderProp.i18n, locationInputField)}</Text>
+                        </View>
+                        <ClearInputButton visible={true} onPress={(): void => {
+                            props.saveSearchTerm('');
+                            props.setLocation('');
+                            props.setCollapseInput(false);
+                        }} />
+                    </TouchableOpacity>
                 </View>
-                <ClearInputButton visible={true} onPress={(): void => {
-                    props.saveSearchTerm('');
-                    props.setLocation('');
-                    props.setCollapseInput(false);
-                }} />
-            </TouchableOpacity>
-        </View>
+            )}
+        </I18n>
     );
 
     const bigInput = (
@@ -193,7 +197,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             }}
                             onFocus={(): void => setShowSearchButton(true)}
                             value={searchInputField}
-                            placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Search for services')} // TODO translate
+                            placeholder={buildTranslatedString(i18nRenderProp.i18n, 'Search for services')} // TODO translate
                             placeholderTextColor={colors.greyishBrown}
                             selectionColor={colors.black}
                         />
@@ -214,7 +218,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                             }}
                             onBlur={(): void => setShowMyLocationButton(false)}
                             value={locationInputField}
-                            placeholder={buildTranslatedPlaceholder(i18nRenderProp.i18n, 'Enter city, address, or postal code')} // TODO translate
+                            placeholder={buildTranslatedString(i18nRenderProp.i18n, 'Enter city, address, or postal code')} // TODO translate
                             placeholderTextColor={colors.greyishBrown}
                             selectionColor={colors.black}
                         />
