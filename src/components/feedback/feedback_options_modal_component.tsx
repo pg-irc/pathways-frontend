@@ -9,14 +9,14 @@ import { Trans } from '@lingui/react';
 
 export interface FeedbackModalProps {
     readonly isVisible: boolean;
+    readonly setIsVisible: (isVisible: boolean) => void;
 }
 
-export interface FeedbackModalActions {
-    readonly setIsVisible: (isVisible: boolean) => void;
+export interface FeedbackOptionsModalProps {
     readonly onSuggestAnUpdatePress: () => void;
 }
 
-type Props = FeedbackModalProps & FeedbackModalActions;
+type Props = FeedbackModalProps & FeedbackOptionsModalProps;
 
 export const FeedbackOptionsModalComponent = (props: Props): JSX.Element => (
     <Modal
@@ -44,7 +44,7 @@ const HeaderComponent = (props: { readonly setShowModal: (b: boolean) => void })
     </View>
 );
 
-const ButtonsComponent = (props: FeedbackModalActions): JSX.Element => (
+const ButtonsComponent = (props: FeedbackOptionsModalProps): JSX.Element => (
     <View style={{ marginHorizontal: 10 }}>
        <OptionButton name={<Trans>Change name or other details</Trans>} onPress={props.onSuggestAnUpdatePress}/>
        <OptionButton name={<Trans>Remove this service</Trans>} onPress={(): void => undefined}/>

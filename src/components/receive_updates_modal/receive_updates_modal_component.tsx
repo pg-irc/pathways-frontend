@@ -10,16 +10,7 @@ import { getEditingColor, getEditingIcon } from '../feedback/feedback_component'
 import { EmptyComponent } from '../empty_component/empty_component';
 import * as R from 'ramda';
 import { DividerComponent } from '../content_layout/divider_component';
-
-export interface ReceiveUpdatesModalProps {
-    readonly isVisible: boolean;
-}
-
-export interface ReceiveUpdatesModalActions {
-    readonly setIsVisible: (isVisible: boolean) => void;
-}
-
-type Props = ReceiveUpdatesModalProps & ReceiveUpdatesModalActions;
+import { FeedbackModalProps } from '../feedback/feedback_options_modal_component';
 
 export interface ServiceProviderDetails {
     readonly name: string;
@@ -27,7 +18,7 @@ export interface ServiceProviderDetails {
     readonly jobTitle: string;
 }
 
-export const ReceiveUpdatesModalComponent = (props: Props): JSX.Element => {
+export const ReceiveUpdatesModalComponent = (props: FeedbackModalProps): JSX.Element => {
     const [email, setEmail]: readonly [string, Dispatch<SetStateAction<string>>] = useState('');
     const [isServiceProvider, setIsServiceProvider]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const onServiceProviderTogglePress = (): void => setIsServiceProvider(!isServiceProvider);
