@@ -26,7 +26,7 @@ import { FeedbackComponent } from '../feedback/feedback_component';
 import { isAndroid } from '../../helpers/is_android';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from './service_detail_icon';
-import { FeedbackOptionsModalComponent } from '../feedback_options_modal/feedback_options_modal_component';
+import { FeedbackOptionsModalComponent } from '../feedback/feedback_options_modal_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -50,7 +50,6 @@ export interface ServiceDetailActions {
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
-type SetShowModal = Dispatch<SetStateAction<boolean>>;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const [feedbackEnabled, setFeedbackEnabled]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
@@ -59,18 +58,17 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const setFeedbackForField = R.curry((field: keyof Feedback, value: string): void => (
         setFeedback({...feedback, [field]: value})
     ));
-    const [showFeedbackOptionsModal, setShowFeedbackOptionsModal]: readonly[boolean, SetShowModal] = useState(false);
+    const [showFeedbackOptionsModal, setShowFeedbackOptionsModal]: readonly[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
 
     const onFeedbackButtonPress = (): void => {
-        setFeedbackEnabled(!feedbackEnabled);
+        setFeedbackEnabled(true);
         setShowFeedbackOptionsModal(false);
         scrollToTop();
     };
 
     const scrollToTop = (): void => {
-        const scrollParameters = { x: 0, y: 0, animated: false };
-        scrollViewRef.current.scrollToPosition(scrollParameters.x, scrollParameters.y, scrollParameters.animated);
+        scrollViewRef.current.scrollToPosition(0, 0, false);
     };
 
     return (
@@ -273,14 +271,14 @@ const getPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber) => `${phone.type}: ${phone.phone_number}`).join('\n')
 );
 
-const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: SetShowModal } ): JSX.Element => {
+const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void } ): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
     return (
         <View style={{flexDirection: 'row-reverse', marginBottom: 20}}>
         <TouchableOpacity
-            onPress={(): void => props.onPress(true)}
+            onPress={props.onPress}
             style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
         >
             <View style={{ flexDirection: 'row'}}>
