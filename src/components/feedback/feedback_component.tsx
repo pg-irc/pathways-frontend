@@ -8,20 +8,20 @@ import { colors, textStyles } from '../../application/styles';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 
 interface Props {
-    readonly suggestingEnabled: boolean;
-    readonly suggestionText: string;
-    readonly onChangeSuggestionText: (text: string) => void;
+    readonly feedbackEnabled: boolean;
+    readonly feedbackText: string;
+    readonly onChangeFeedbackText: (text: string) => void;
     readonly fieldLabel: JSX.Element;
     readonly fieldValue: string;
-    readonly suggestingDisabledComponent: JSX.Element;
+    readonly feedbackDisabledComponent: JSX.Element;
 }
 
-export const SuggestUpdateComponent = (props: Props): JSX.Element => {
+export const FeedbackComponent = (props: Props): JSX.Element => {
     const [isEditing, setIsEditing]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const onEditingTogglePress = (): void => setIsEditing(!isEditing);
 
-    if (!props.suggestingEnabled) {
-        return props.suggestingDisabledComponent;
+    if (!props.feedbackEnabled) {
+        return props.feedbackDisabledComponent;
     }
 
     return (
@@ -33,8 +33,8 @@ export const SuggestUpdateComponent = (props: Props): JSX.Element => {
             <ToggleInputComponent
                 onPress={onEditingTogglePress}
                 isEditing={isEditing}
-                onChangeSuggestionText={props.onChangeSuggestionText}
-                suggestionText={props.suggestionText}
+                onChangeFeedbackText={props.onChangeFeedbackText}
+                feedbackText={props.feedbackText}
             />
         </View>
     );
@@ -56,8 +56,8 @@ const FieldValue = (props: { readonly fieldValue: Props['fieldValue'] }): JSX.El
 interface ToggleInputComponentProps {
     readonly onPress: () => void;
     readonly isEditing: boolean;
-    readonly onChangeSuggestionText: (text: string) => void;
-    readonly suggestionText: string;
+    readonly onChangeFeedbackText: (text: string) => void;
+    readonly feedbackText: string;
 }
 
 const ToggleInputComponent = (props: ToggleInputComponentProps): JSX.Element => (
@@ -74,9 +74,9 @@ const ToggleInputComponent = (props: ToggleInputComponentProps): JSX.Element => 
             isEditing={props.isEditing}
         />
         <TextInputComponent
-            onChangeSuggestionText={props.onChangeSuggestionText}
+            onChangeFeedbackText={props.onChangeFeedbackText}
             isEditing={props.isEditing}
-            suggestionText={props.suggestionText}
+            feedbackText={props.feedbackText}
         />
     </View>
 );
@@ -102,9 +102,9 @@ const ToggleTextInputComponent = (props: ToggleButtonComponentProps): JSX.Elemen
 );
 
 interface InputComponentProps {
-    readonly onChangeSuggestionText: (text: string) => void;
+    readonly onChangeFeedbackText: (text: string) => void;
     readonly isEditing: boolean;
-    readonly suggestionText: string;
+    readonly feedbackText: string;
 }
 
 const TextInputComponent = (props: InputComponentProps): JSX.Element => {
@@ -122,8 +122,8 @@ const TextInputComponent = (props: InputComponentProps): JSX.Element => {
             (({ i18n }: I18nProps): JSX.Element =>
                 <TextInput
                     multiline={true}
-                    onChangeText={props.onChangeSuggestionText}
-                    value={props.suggestionText}
+                    onChangeText={props.onChangeFeedbackText}
+                    value={props.feedbackText}
                     textAlignVertical={'top'}
                     placeholder={i18n._(t`Comment or suggest edits`)}
                     onFocus={onFocus}

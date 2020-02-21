@@ -22,7 +22,7 @@ import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { buildServiceName } from '../services//build_service_name';
 import { getLocationTitleFromAddresses } from '../services/get_location_title_from_addresses';
 import { EmailComponent } from '../email/email_component';
-import { SuggestUpdateComponent } from '../suggest_update/suggest_update_component';
+import { FeedbackComponent } from '../feedback/feedback_component';
 import { isAndroid } from '../../helpers/is_android';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from './service_detail_icon';
@@ -30,14 +30,14 @@ import { FeedbackOptionsModalComponent } from '../feedback_options_modal/feedbac
 import { EmptyComponent } from '../empty_component/empty_component';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-type SuggestedUpdates = {
-    readonly nameSuggestion: string;
-    readonly organizationSuggestion: string;
-    readonly descriptionSuggestion: string;
-    readonly addressSuggestion: string;
-    readonly phoneSuggestion: string;
-    readonly websiteSuggestion: string;
-    readonly emailSuggestion: string;
+type Feedback = {
+    readonly nameFeedback: string;
+    readonly organizationFeedback: string;
+    readonly descriptionFeedback: string;
+    readonly addressFeedback: string;
+    readonly phoneFeedback: string;
+    readonly websiteFeedback: string;
+    readonly emailFeedback: string;
 };
 
 export interface ServiceDetailProps {
@@ -53,17 +53,17 @@ type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 type SetShowModal = Dispatch<SetStateAction<boolean>>;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
-    const [suggestingEnabled, setSuggestingEnabled]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-    const [suggestedUpdates, setSuggestedUpdates]: readonly [SuggestedUpdates, Dispatch<SetStateAction<SuggestedUpdates>>] =
-        useState(getDefaultSuggestedUpdates());
-    const setSuggestedUpdateForField = R.curry((field: keyof SuggestedUpdates, value: string): void => (
-        setSuggestedUpdates({...suggestedUpdates, [field]: value})
+    const [feedbackEnabled, setFeedbackEnabled]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+    const [feedback, setFeedback]: readonly [Feedback, Dispatch<SetStateAction<Feedback>>] =
+        useState(getDefaultFeedbackValues());
+    const setFeedbackForField = R.curry((field: keyof Feedback, value: string): void => (
+        setFeedback({...feedback, [field]: value})
     ));
     const [showFeedbackOptionsModal, setShowFeedbackOptionsModal]: readonly[boolean, SetShowModal] = useState(false);
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
 
-    const onSuggestAnUpdatePress = (): void => {
-        setSuggestingEnabled(!suggestingEnabled);
+    const onFeedbackButtonPress = (): void => {
+        setFeedbackEnabled(!feedbackEnabled);
         setShowFeedbackOptionsModal(false);
         scrollToTop();
     };
@@ -84,62 +84,62 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             <BannerImageComponent imageSource={undefined} />
             <View padder>
                 <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
-                <SuggestUpdateComponent
-                    onChangeSuggestionText={setSuggestedUpdateForField('nameSuggestion')}
-                    suggestionText={suggestedUpdates.nameSuggestion}
+                <FeedbackComponent
+                    onChangeFeedbackText={setFeedbackForField('nameFeedback')}
+                    feedbackText={feedback.nameFeedback}
                     fieldLabel={<Trans>Name</Trans>}
                     fieldValue={props.service.name}
-                    suggestingEnabled={suggestingEnabled}
-                    suggestingDisabledComponent={<Name name={props.service.name} />}
+                    feedbackEnabled={feedbackEnabled}
+                    feedbackDisabledComponent={<Name name={props.service.name} />}
                 />
                 <DividerComponent />
-                <SuggestUpdateComponent
-                    onChangeSuggestionText={setSuggestedUpdateForField('organizationSuggestion')}
-                    suggestionText={suggestedUpdates.organizationSuggestion}
+                <FeedbackComponent
+                    onChangeFeedbackText={setFeedbackForField('organizationFeedback')}
+                    feedbackText={feedback.organizationFeedback}
                     fieldLabel={<Trans>Organization</Trans>}
                     fieldValue={props.service.organizationName}
-                    suggestingEnabled={suggestingEnabled}
-                    suggestingDisabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
+                    feedbackEnabled={feedbackEnabled}
+                    feedbackDisabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
                 />
                 <DividerComponent />
-                <SuggestUpdateComponent
-                    onChangeSuggestionText={setSuggestedUpdateForField('descriptionSuggestion')}
-                    suggestionText={suggestedUpdates.descriptionSuggestion}
+                <FeedbackComponent
+                    onChangeFeedbackText={setFeedbackForField('descriptionFeedback')}
+                    feedbackText={feedback.descriptionFeedback}
                     fieldLabel={<Trans>Description</Trans>}
                     fieldValue={props.service.description}
-                    suggestingEnabled={suggestingEnabled}
-                    suggestingDisabledComponent={<Description description={props.service.description} />}
+                    feedbackEnabled={feedbackEnabled}
+                    feedbackDisabledComponent={<Description description={props.service.description} />}
                 />
                 <DividerComponent />
                 <ServiceContactDetails
                     service={props.service}
                     currentPathForAnaltyics={props.location.pathname}
-                    suggestingEnabled={suggestingEnabled}
-                    setSuggestedUpdateForField={setSuggestedUpdateForField}
-                    suggestedUpdates={suggestedUpdates}
+                    feedbackEnabled={feedbackEnabled}
+                    setFeedbackForField={setFeedbackForField}
+                    feedback={feedback}
                     analyticsLinkPressed={props.analyticsLinkPressed}
                     {...props}
                 />
                 <DividerComponent />
-                <SuggestAnUpdateButton isVisible={!suggestingEnabled} onPress={(): void => setShowFeedbackOptionsModal(true)} />
+                <FeedbackButton isVisible={!feedbackEnabled} onPress={(): void => setShowFeedbackOptionsModal(true)} />
                 <FeedbackOptionsModalComponent
                     isVisible={showFeedbackOptionsModal}
                     setIsVisible={setShowFeedbackOptionsModal}
-                    onSuggestAnUpdatePress={onSuggestAnUpdatePress}
+                    onSuggestAnUpdatePress={onFeedbackButtonPress}
                 />
             </View>
         </KeyboardAwareScrollView>
     );
 };
 
-const getDefaultSuggestedUpdates = (): SuggestedUpdates => ({
-    nameSuggestion: '',
-    organizationSuggestion: '',
-    descriptionSuggestion: '',
-    addressSuggestion: '',
-    phoneSuggestion: '',
-    websiteSuggestion: '',
-    emailSuggestion: '',
+const getDefaultFeedbackValues = (): Feedback => ({
+    nameFeedback: '',
+    organizationFeedback: '',
+    descriptionFeedback: '',
+    addressFeedback: '',
+    phoneFeedback: '',
+    websiteFeedback: '',
+    emailFeedback: '',
 });
 
 interface NameProps {
@@ -180,9 +180,9 @@ const Description = (props: DescriptionProps): JSX.Element => (
 interface ServiceContactDetailsProps {
     readonly service: HumanServiceData;
     readonly currentPathForAnaltyics: string;
-    readonly suggestedUpdates: SuggestedUpdates;
-    readonly suggestingEnabled: boolean;
-    readonly setSuggestedUpdateForField: (field: keyof SuggestedUpdates) => (value: string) => void;
+    readonly feedback: Feedback;
+    readonly feedbackEnabled: boolean;
+    readonly setFeedbackForField: (field: keyof Feedback) => (value: string) => void;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
@@ -194,13 +194,13 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
 
     return (
         <>
-            <SuggestUpdateComponent
-                onChangeSuggestionText={props.setSuggestedUpdateForField('addressSuggestion')}
-                suggestionText={props.suggestedUpdates.addressSuggestion}
+            <FeedbackComponent
+                onChangeFeedbackText={props.setFeedbackForField('addressFeedback')}
+                feedbackText={props.feedback.addressFeedback}
                 fieldLabel={<Trans>Address</Trans>}
                 fieldValue={getAddressesString(physicalAddresses)}
-                suggestingEnabled={props.suggestingEnabled}
-                suggestingDisabledComponent={
+                feedbackEnabled={props.feedbackEnabled}
+                feedbackDisabledComponent={
                     <AddressesComponent
                         addresses={physicalAddresses}
                         latLong={props.service.latlong}
@@ -212,13 +212,13 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 }
             />
             <DividerComponent />
-            <SuggestUpdateComponent
-                onChangeSuggestionText={props.setSuggestedUpdateForField('phoneSuggestion')}
-                suggestionText={props.suggestedUpdates.phoneSuggestion}
+            <FeedbackComponent
+                onChangeFeedbackText={props.setFeedbackForField('phoneFeedback')}
+                feedbackText={props.feedback.phoneFeedback}
                 fieldLabel={<Trans>Phone numbers</Trans>}
                 fieldValue={getPhonesString(props.service.phoneNumbers)}
-                suggestingEnabled={props.suggestingEnabled}
-                suggestingDisabledComponent={
+                feedbackEnabled={props.feedbackEnabled}
+                feedbackDisabledComponent={
                     <PhoneNumbersComponent
                         phoneNumbers={props.service.phoneNumbers}
                         linkContextForAnalytics={linkContextForAnalytics}
@@ -228,13 +228,13 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 }
             />
             <DividerComponent />
-            <SuggestUpdateComponent
-                onChangeSuggestionText={props.setSuggestedUpdateForField('websiteSuggestion')}
-                suggestionText={props.suggestedUpdates.websiteSuggestion}
+            <FeedbackComponent
+                onChangeFeedbackText={props.setFeedbackForField('websiteFeedback')}
+                feedbackText={props.feedback.websiteFeedback}
                 fieldLabel={<Trans>Website</Trans>}
                 fieldValue={props.service.website}
-                suggestingEnabled={props.suggestingEnabled}
-                suggestingDisabledComponent={
+                feedbackEnabled={props.feedbackEnabled}
+                feedbackDisabledComponent={
                     <WebsiteComponent
                         website={props.service.website}
                         linkContextForAnalytics={linkContextForAnalytics}
@@ -244,13 +244,13 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 }
             />
             <DividerComponent />
-            <SuggestUpdateComponent
-                onChangeSuggestionText={props.setSuggestedUpdateForField('emailSuggestion')}
-                suggestionText={props.suggestedUpdates.emailSuggestion}
+            <FeedbackComponent
+                onChangeFeedbackText={props.setFeedbackForField('emailFeedback')}
+                feedbackText={props.feedback.emailFeedback}
                 fieldLabel={<Trans>Email</Trans>}
                 fieldValue={props.service.email}
-                suggestingEnabled={props.suggestingEnabled}
-                suggestingDisabledComponent={
+                feedbackEnabled={props.feedbackEnabled}
+                feedbackDisabledComponent={
                     <EmailComponent
                         email={props.service.email}
                         linkContextForAnalytics={linkContextForAnalytics}
@@ -273,7 +273,7 @@ const getPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber) => `${phone.type}: ${phone.phone_number}`).join('\n')
 );
 
-const SuggestAnUpdateButton = (props: { readonly isVisible: boolean, readonly onPress: SetShowModal } ): JSX.Element => {
+const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: SetShowModal } ): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
