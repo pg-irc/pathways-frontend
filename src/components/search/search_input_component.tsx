@@ -126,6 +126,10 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.location);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
 
+    if (props.searchTerm !== '') {
+        props.setCollapseInput(true);
+    }
+
     useEffect((): void => {
         debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
         props.refine(props.searchTerm);
