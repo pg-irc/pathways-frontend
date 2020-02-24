@@ -19,6 +19,9 @@ export type BookmarkServiceAction = Readonly<ReturnType<typeof bookmarkService>>
 
 export type UnbookmarkServiceAction = Readonly<ReturnType<typeof unbookmarkService>>;
 
+export type EnableServiceFeedbackAction = Readonly<ReturnType<typeof enableServiceFeedback>>;
+export type DisableServiceFeedbackAction = Readonly<ReturnType<typeof disableServiceFeedback>>;
+
 export type ServicesAction =
     BuildServicesRequestAction |
     BuildServicesSuccessAction |
@@ -30,7 +33,10 @@ export type ServicesAction =
     DataPersistence.LoadSuccessAction |
     DataPersistence.LoadFailureAction |
     ClearAllUserDataAction |
-    HidePartialLocalizationMessageAction;
+    HidePartialLocalizationMessageAction |
+    EnableServiceFeedbackAction |
+    DisableServiceFeedbackAction
+    ;
 
 // tslint:disable-next-line:typedef
 export const buildServicesRequest = (topicId: TopicId, manualUserLocation?: LatLong) => (
@@ -60,4 +66,14 @@ export const bookmarkService = (service: HumanServiceData) => (
 // tslint:disable-next-line: typedef
 export const unbookmarkService = (service: HumanServiceData) => (
     helpers.makeAction(constants.UNBOOKMARK_SERVICE, { service })
+);
+
+// tslint:disable-next-line: typedef
+export const enableServiceFeedback = () => (
+    helpers.makeAction(constants.ENABLE_SERVICE_FEEDBACK)
+);
+
+// tslint:disable-next-line: typedef
+export const disableServiceFeedback = () => (
+    helpers.makeAction(constants.DISABLE_SERVICE_FEEDBACK)
 );

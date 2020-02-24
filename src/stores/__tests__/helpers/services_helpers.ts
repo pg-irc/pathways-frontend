@@ -13,17 +13,21 @@ import * as constants from '../../../application/constants';
 export const buildNormalizedServices = (
     services: ReadonlyArray<ServiceBuilder>,
     servicesForTopicOrError: ReadonlyArray<ServicesForTopicBuilder | ServicesForTopicErrorBuilder>,
+    serviceFeedbackEnabled: boolean,
 ): ServiceStore => ({
     services: buildServiceMap(services),
     servicesByTopic: buildServicesForTopicOrErrorMap(servicesForTopicOrError),
+    serviceFeedbackEnabled,
 });
 
 export const buildNormalizedServicesFromBuilders = (
     services: ReadonlyArray<HumanServiceData>,
     servicesForTopic: ReadonlyArray<ServicesForTopic>,
+    serviceFeedbackEnabled: boolean,
 ): ServiceStore => ({
     services: buildServiceMapFromBuilder(services),
     servicesByTopic: buildServicesForTopicMapFromBuilder(servicesForTopic),
+    serviceFeedbackEnabled,
 });
 
 export const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {

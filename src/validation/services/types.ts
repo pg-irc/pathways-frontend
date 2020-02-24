@@ -69,4 +69,5 @@ export interface ServiceMap {
 export interface ServiceStore {
     readonly services: ServiceMap;
     readonly servicesByTopic: ServicesForAllTopics;
+    readonly serviceFeedbackEnabled: boolean;
 }

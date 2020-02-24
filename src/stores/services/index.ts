@@ -12,6 +12,7 @@ export function buildDefaultStore(): types.ServiceStore {
     return {
         services: {},
         servicesByTopic: {},
+        serviceFeedbackEnabled: false,
     };
 }
 
@@ -36,6 +37,10 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return clearServicesData(store);
         case constants.LOAD_USER_DATA_SUCCESS:
             return loadServicesFromUserData(store, action);
+        case constants.ENABLE_SERVICE_FEEDBACK:
+            return updateServiceFeedback(store, true);
+        case constants.DISABLE_SERVICE_FEEDBACK:
+            return updateServiceFeedback(store, false);
         default:
             return store;
     }
@@ -127,6 +132,7 @@ const clearServicesData = (store: types.ServiceStore): types.ServiceStore => (
     {
         ...store,
         services: {},
+        serviceFeedbackEnabled: false,
     }
 );
 
@@ -139,3 +145,8 @@ const loadServicesFromUserData = (store: types.ServiceStore, action: DataPersist
         },
     };
 };
+
+const updateServiceFeedback = (store: types.ServiceStore, feedbackState: boolean): types.ServiceStore => ({
+    ...store,
+    serviceFeedbackEnabled: feedbackState,
+});
