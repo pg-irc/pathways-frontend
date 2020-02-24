@@ -31,6 +31,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ReceiveUpdatesModalComponent } from '../receive_updates_modal/receive_updates_modal_component';
 import { DiscardFeedbackModal } from '../discard_feedback_modal./discard_feedback_modal_component';
+import { EnableServiceFeedbackAction, DisableServiceFeedbackAction } from '../../stores/services/actions';
 
 type Feedback = {
     readonly nameFeedback: string;
@@ -45,17 +46,19 @@ type Feedback = {
 export interface ServiceDetailProps {
     readonly history: History;
     readonly service: HumanServiceData;
+    readonly feedbackEnabled: boolean;
 }
 
 export interface ServiceDetailActions {
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly enableFeedback: () => EnableServiceFeedbackAction;
+    readonly disableFeedback: () => DisableServiceFeedbackAction;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 type SetShowModal = Dispatch<SetStateAction<boolean>>;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
-    const [feedbackEnabled, setFeedbackEnabled]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const [feedback, setFeedback]: readonly [Feedback, Dispatch<SetStateAction<Feedback>>] =
         useState(getDefaultFeedbackValues());
     const setFeedbackForField = R.curry((field: keyof Feedback, value: string): void => (
@@ -65,7 +68,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
 
     const onFeedbackButtonPress = (): void => {
-        setFeedbackEnabled(true);
+        props.enableFeedback();
         setShowFeedbackOptionsModal(false);
         scrollToTop();
     };
@@ -93,7 +96,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     feedbackText={feedback.nameFeedback}
                     fieldLabel={<Trans>Name</Trans>}
                     fieldValue={props.service.name}
-                    feedbackEnabled={feedbackEnabled}
+                    feedbackEnabled={props.feedbackEnabled}
                     feedbackDisabledComponent={<Name name={props.service.name} />}
                 />
                 <DividerComponent />
@@ -102,7 +105,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     feedbackText={feedback.organizationFeedback}
                     fieldLabel={<Trans>Organization</Trans>}
                     fieldValue={props.service.organizationName}
-                    feedbackEnabled={feedbackEnabled}
+                    feedbackEnabled={props.feedbackEnabled}
                     feedbackDisabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
                 />
                 <DividerComponent />
@@ -111,21 +114,21 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     feedbackText={feedback.descriptionFeedback}
                     fieldLabel={<Trans>Description</Trans>}
                     fieldValue={props.service.description}
-                    feedbackEnabled={feedbackEnabled}
+                    feedbackEnabled={props.feedbackEnabled}
                     feedbackDisabledComponent={<Description description={props.service.description} />}
                 />
                 <DividerComponent />
                 <ServiceContactDetails
                     service={props.service}
                     currentPathForAnaltyics={props.location.pathname}
-                    feedbackEnabled={feedbackEnabled}
+                    feedbackEnabled={props.feedbackEnabled}
                     setFeedbackForField={setFeedbackForField}
                     feedback={feedback}
                     analyticsLinkPressed={props.analyticsLinkPressed}
                     {...props}
                 />
                 <DividerComponent />
-                <FeedbackButton isVisible={!feedbackEnabled} onPress={(): void => setShowFeedbackOptionsModal(true)} />
+                <FeedbackButton isVisible={!props.feedbackEnabled} onPress={(): void => setShowFeedbackOptionsModal(true)} />
                 <FeedbackOptionsModalComponent
                     isVisible={showFeedbackOptionsModal}
                     setIsVisible={setShowFeedbackOptionsModal}
@@ -136,7 +139,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     setIsVisible={setShowReceiveUpdatesModal}
                     />
                 <DiscardFeedbackModal isVisible={showDiscardFeedbackModal} setIsVisible={setShowDiscardFeedbackModal}/>
-                <SuggestUpdateSubmitButton isVisible={feedbackEnabled} onPress={(): void => setShowReceiveUpdatesModal(true)} />
+                <SuggestUpdateSubmitButton isVisible={props.feedbackEnabled} onPress={(): void => setShowReceiveUpdatesModal(true)} />
             </View>
         </KeyboardAwareScrollView>
     );
