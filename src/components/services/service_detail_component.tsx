@@ -31,7 +31,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { ReceiveUpdatesModalComponent } from '../receive_updates_modal/receive_updates_modal_component';
 import { DiscardFeedbackModal } from '../discard_feedback_modal./discard_feedback_modal_component';
-import { EnableServiceFeedbackAction, DisableServiceFeedbackAction } from '../../stores/services/actions';
+import { EnableServiceFeedbackAction, DisableServiceFeedbackAction, CloseDiscardFeedbackModalAction, OpenDiscardFeedbackModalAction } from '../../stores/services/actions';
 
 type Feedback = {
     readonly nameFeedback: string;
@@ -47,12 +47,15 @@ export interface ServiceDetailProps {
     readonly history: History;
     readonly service: HumanServiceData;
     readonly feedbackEnabled: boolean;
+    readonly discardFeedbackModalIsVisible: boolean;
 }
 
 export interface ServiceDetailActions {
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
     readonly enableFeedback: () => EnableServiceFeedbackAction;
     readonly disableFeedback: () => DisableServiceFeedbackAction;
+    readonly openDiscardFeedbackModal: () => OpenDiscardFeedbackModalAction;
+    readonly closeDiscardFeedbackModal: () => CloseDiscardFeedbackModalAction;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
@@ -78,7 +81,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     };
 
     const [showReceiveUpdatesModal, setShowReceiveUpdatesModal]: readonly[boolean, SetShowModal] = useState(false);
-    const [showDiscardFeedbackModal, setShowDiscardFeedbackModal]: readonly[boolean, SetShowModal] = useState(false);
 
     return (
         <KeyboardAwareScrollView
@@ -138,7 +140,11 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     isVisible={showReceiveUpdatesModal}
                     setIsVisible={setShowReceiveUpdatesModal}
                     />
-                <DiscardFeedbackModal isVisible={showDiscardFeedbackModal} setIsVisible={setShowDiscardFeedbackModal}/>
+                <DiscardFeedbackModal
+                    isVisible={props.discardFeedbackModalIsVisible}
+                    closeModal={props.closeDiscardFeedbackModal}
+                    disableFeedback={props.disableFeedback}
+                />
                 <SuggestUpdateSubmitButton isVisible={props.feedbackEnabled} onPress={(): void => setShowReceiveUpdatesModal(true)} />
             </View>
         </KeyboardAwareScrollView>

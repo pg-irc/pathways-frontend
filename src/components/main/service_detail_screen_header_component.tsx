@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { Locale } from '../../locale';
 import { Id } from '../../stores/services';
 import { HumanServiceData } from '../../validation/services/types';
-import { BookmarkServiceAction, UnbookmarkServiceAction, DisableServiceFeedbackAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction, OpenDiscardFeedbackModalAction } from '../../stores/services/actions';
 import { HeaderOwnProps } from './header_component';
 import { getParametersFromPath, Routes } from '../../application/routing';
 import { BackButtonComponent, getIconForBackButton } from '../header_button/back_button_component';
@@ -27,7 +27,7 @@ export interface ServiceDetailScreenHeaderProps {
 export interface ServiceDetailScreenHeaderActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly disableFeedback: () => DisableServiceFeedbackAction;
+    readonly openDiscardFeedbackModal: () => OpenDiscardFeedbackModalAction;
 }
 
 type Props = ServiceDetailScreenHeaderProps & ServiceDetailScreenHeaderActions & HeaderOwnProps;
@@ -61,17 +61,17 @@ const FeedbackHeaderComponent = (props: Props): JSX.Element => {
     const marginTop = getStatusBarHeightForPlatform();
     return (
         <Header style={{ marginTop, backgroundColor: colors.white }}>
-            <FeedbackBackButtonComponent />
+            <FeedbackBackButtonComponent {...props}/>
             <Right>
-                <CloseButtonComponent onPress={props.disableFeedback} color={colors.black} additionalStyle={{ paddingTop: 0 }}/>
+                <CloseButtonComponent onPress={props.openDiscardFeedbackModal} color={colors.black} additionalStyle={{ paddingTop: 0 }}/>
             </Right>
         </Header>
     );
 };
 
-const FeedbackBackButtonComponent = (): JSX.Element => (
+const FeedbackBackButtonComponent = (props: Props): JSX.Element => (
     <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-        <TouchableOpacity style={{ paddingRight: 10}}>
+        <TouchableOpacity style={{ paddingRight: 10}} onPress={props.openDiscardFeedbackModal}>
             <Icon name={getIconForBackButton()} style={{ color: colors.teal, fontWeight: 'bold' }} />
         </TouchableOpacity>
         <Text style={[textStyles.headlineH3StyleBlackLeft, { color: colors.teal }]}>
