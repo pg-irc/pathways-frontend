@@ -10,6 +10,8 @@ import {
     UnbookmarkServiceAction,
     EnableServiceFeedbackAction,
     DisableServiceFeedbackAction,
+    OpenDiscardFeedbackModalAction,
+    CloseDiscardFeedbackModalAction,
 } from '../services/actions';
 import { HumanServiceData, ServiceStore } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
@@ -27,11 +29,12 @@ describe('services reducer', () => {
     const loadingServicesForTopic = new ServicesForTopicBuilder().withLoading(true);
     const loadedServicesForTopicError = new ServicesForTopicErrorBuilder();
     const loadingServicesForTopicError = new ServicesForTopicErrorBuilder().withLoading(true);
-    const initialServiceFeedbackState = aBoolean();
+    const serviceFeedbackEnabled = aBoolean();
+    const discardFeedbackModalIsVisible = aBoolean();
     const theStore = buildNormalizedServices(
         [aServiceBuilder],
         [loadedServicesForTopic, loadingServicesForTopic, loadedServicesForTopicError, loadingServicesForTopicError],
-        initialServiceFeedbackState,
+        serviceFeedbackEnabled, discardFeedbackModalIsVisible,
     );
 
     it('returns a unmodified store when the action is missing', () => {
@@ -157,7 +160,7 @@ describe('services reducer', () => {
             const servicesForTopicBuilder = new ServicesForTopicBuilder().withExpiresAt(expiresAt);
             const topicId = servicesForTopicBuilder.topicId;
             const serviceBuilder = new ServiceBuilder().withId(topicId);
-            const storeBeforeAction = buildNormalizedServices([serviceBuilder], [servicesForTopicBuilder], aBoolean());
+            const storeBeforeAction = buildNormalizedServices([serviceBuilder], [servicesForTopicBuilder], aBoolean(), aBoolean());
             const theAction: BuildServicesSuccessAction = {
                 type: constants.LOAD_SERVICES_SUCCESS,
                 payload: {
@@ -221,7 +224,7 @@ describe('services reducer', () => {
         it('overwrites an existing service with the same id', () => {
             const serviceId = aString();
             const oldService = new ServiceBuilder().withId(serviceId);
-            const oldStore = buildNormalizedServices([oldService], [], aBoolean());
+            const oldStore = buildNormalizedServices([oldService], [], aBoolean(), aBoolean());
 
             const newService = new ServiceBuilder().withId(serviceId).build();
             const action: SaveServiceAction = {
@@ -237,7 +240,7 @@ describe('services reducer', () => {
     });
 
     describe('when bookmarking a service', () => {
-        const store = buildNormalizedServices([], [], aBoolean());
+        const store = buildNormalizedServices([], [], aBoolean(), aBoolean());
         const service = new ServiceBuilder().build();
         const action: BookmarkServiceAction = {
             type: constants.BOOKMARK_SERVICE,
@@ -254,7 +257,7 @@ describe('services reducer', () => {
 
     describe('when removing a bookmarked service', () => {
         const bookmarkedServiceBuilder = new ServiceBuilder().withBookmarked(true);
-        const store = buildNormalizedServices([bookmarkedServiceBuilder], [], aBoolean());
+        const store = buildNormalizedServices([bookmarkedServiceBuilder], [], aBoolean(), aBoolean());
         const bookmarkedService = bookmarkedServiceBuilder.build();
         const action: UnbookmarkServiceAction = {
             type: constants.UNBOOKMARK_SERVICE,
@@ -268,7 +271,7 @@ describe('services reducer', () => {
 
     describe('when clear all user data action is dispatched', () => {
         const serviceBuilder = new ServiceBuilder();
-        const store = buildNormalizedServices([serviceBuilder], [], aBoolean());
+        const store = buildNormalizedServices([serviceBuilder], [], aBoolean(), aBoolean());
         const action: ClearAllUserDataAction = {
             type: constants.CLEAR_ALL_USER_DATA,
         };
@@ -280,7 +283,7 @@ describe('services reducer', () => {
 
     describe('when loading bookmarked services', () => {
         let storeState: ServiceStore = undefined;
-        const store = buildNormalizedServices([], [], aBoolean());
+        const store = buildNormalizedServices([], [], aBoolean(), aBoolean());
         const bookmarkedServiceId = aString();
         const bookmarkedServiceBuilder = new ServiceBuilder().withId(bookmarkedServiceId).withBookmarked(true);
         const bookmarkedServiceMap = buildServiceMap([bookmarkedServiceBuilder]);
@@ -302,7 +305,7 @@ describe('services reducer', () => {
 
     describe('when enabling service feedback', () => {
         const serviceFeedbackState = false;
-        const store = buildNormalizedServices([], [], serviceFeedbackState);
+        const store = buildNormalizedServices([], [], serviceFeedbackState, aBoolean());
         const action: EnableServiceFeedbackAction = {
             type: constants.ENABLE_SERVICE_FEEDBACK,
         };
@@ -314,13 +317,37 @@ describe('services reducer', () => {
 
     describe('when disabling service feedback', () => {
         const serviceFeedbackState = true;
-        const store = buildNormalizedServices([], [], serviceFeedbackState);
+        const store = buildNormalizedServices([], [], serviceFeedbackState, aBoolean());
         const action: DisableServiceFeedbackAction = {
             type: constants.DISABLE_SERVICE_FEEDBACK,
         };
         const storeState = reducer(store, action);
         it('sets serviceFeedbackEnabled to false', () => {
             expect(storeState.serviceFeedbackEnabled).toBe(false);
+        });
+    });
+
+    describe('when opening the discard feedback modal', () => {
+        const discardFeedbackModalIsVisibleState = false;
+        const store = buildNormalizedServices([], [], aBoolean(), discardFeedbackModalIsVisibleState);
+        const action: OpenDiscardFeedbackModalAction = {
+            type: constants.OPEN_DISCARD_FEEDBACK_MODAL,
+        };
+        const storeState = reducer(store, action);
+        it('sets discardFeedbackModalIsVisible to true', () => {
+            expect(storeState.discardFeedbackModalIsVisible).toBe(true);
+        });
+    });
+
+    describe('when closing the discard feedback modal', () => {
+        const discardFeedbackModalIsVisibleState = true;
+        const store = buildNormalizedServices([], [], aBoolean(), discardFeedbackModalIsVisibleState);
+        const action: CloseDiscardFeedbackModalAction = {
+            type: constants.CLOSE_DISCARD_FEEDBACK_MODAL,
+        };
+        const storeState = reducer(store, action);
+        it('sets discardFeedbackModalIsVisible to false', () => {
+            expect(storeState.discardFeedbackModalIsVisible).toBe(false);
         });
     });
 });

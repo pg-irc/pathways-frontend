@@ -13,6 +13,7 @@ export function buildDefaultStore(): types.ServiceStore {
         services: {},
         servicesByTopic: {},
         serviceFeedbackEnabled: false,
+        discardFeedbackModalIsVisible: false,
     };
 }
 
@@ -41,6 +42,10 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServiceFeedback(store, true);
         case constants.DISABLE_SERVICE_FEEDBACK:
             return updateServiceFeedback(store, false);
+        case constants.OPEN_DISCARD_FEEDBACK_MODAL:
+            return updateDiscardFeedbackIsVisible(store, true);
+        case constants.CLOSE_DISCARD_FEEDBACK_MODAL:
+            return updateDiscardFeedbackIsVisible(store, false);
         default:
             return store;
     }
@@ -149,4 +154,9 @@ const loadServicesFromUserData = (store: types.ServiceStore, action: DataPersist
 const updateServiceFeedback = (store: types.ServiceStore, feedbackState: boolean): types.ServiceStore => ({
     ...store,
     serviceFeedbackEnabled: feedbackState,
+});
+
+const updateDiscardFeedbackIsVisible = (store: types.ServiceStore, isVisible: boolean): types.ServiceStore => ({
+    ...store,
+    discardFeedbackModalIsVisible: isVisible,
 });

@@ -14,20 +14,24 @@ export const buildNormalizedServices = (
     services: ReadonlyArray<ServiceBuilder>,
     servicesForTopicOrError: ReadonlyArray<ServicesForTopicBuilder | ServicesForTopicErrorBuilder>,
     serviceFeedbackEnabled: boolean,
+    discardFeedbackModalIsVisible: boolean,
 ): ServiceStore => ({
     services: buildServiceMap(services),
     servicesByTopic: buildServicesForTopicOrErrorMap(servicesForTopicOrError),
     serviceFeedbackEnabled,
+    discardFeedbackModalIsVisible,
 });
 
 export const buildNormalizedServicesFromBuilders = (
     services: ReadonlyArray<HumanServiceData>,
     servicesForTopic: ReadonlyArray<ServicesForTopic>,
     serviceFeedbackEnabled: boolean,
+    discardFeedbackModalIsVisible: boolean,
 ): ServiceStore => ({
     services: buildServiceMapFromBuilder(services),
     servicesByTopic: buildServicesForTopicMapFromBuilder(servicesForTopic),
     serviceFeedbackEnabled,
+    discardFeedbackModalIsVisible,
 });
 
 export const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {

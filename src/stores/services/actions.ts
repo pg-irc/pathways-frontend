@@ -22,6 +22,9 @@ export type UnbookmarkServiceAction = Readonly<ReturnType<typeof unbookmarkServi
 export type EnableServiceFeedbackAction = Readonly<ReturnType<typeof enableServiceFeedback>>;
 export type DisableServiceFeedbackAction = Readonly<ReturnType<typeof disableServiceFeedback>>;
 
+export type OpenDiscardFeedbackModalAction = Readonly<ReturnType<typeof openDiscardFeedbackModal>>;
+export type CloseDiscardFeedbackModalAction = Readonly<ReturnType<typeof closeDiscardFeedbackModal>>;
+
 export type ServicesAction =
     BuildServicesRequestAction |
     BuildServicesSuccessAction |
@@ -35,7 +38,9 @@ export type ServicesAction =
     ClearAllUserDataAction |
     HidePartialLocalizationMessageAction |
     EnableServiceFeedbackAction |
-    DisableServiceFeedbackAction
+    DisableServiceFeedbackAction |
+    OpenDiscardFeedbackModalAction |
+    CloseDiscardFeedbackModalAction
     ;
 
 // tslint:disable-next-line:typedef
@@ -76,4 +81,14 @@ export const enableServiceFeedback = () => (
 // tslint:disable-next-line: typedef
 export const disableServiceFeedback = () => (
     helpers.makeAction(constants.DISABLE_SERVICE_FEEDBACK)
+);
+
+// tslint:disable-next-line: typedef
+export const openDiscardFeedbackModal = () => (
+    helpers.makeAction(constants.OPEN_DISCARD_FEEDBACK_MODAL)
+);
+
+// tslint:disable-next-line: typedef
+export const closeDiscardFeedbackModal = () => (
+    helpers.makeAction(constants.CLOSE_DISCARD_FEEDBACK_MODAL)
 );
