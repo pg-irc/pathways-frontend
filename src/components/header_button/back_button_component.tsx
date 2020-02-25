@@ -17,7 +17,7 @@ export const BackButtonComponent = (props: BackButtonProps): JSX.Element => {
     );
 };
 
-const getIconForBackButton = (): string => {
+export const getIconForBackButton = (): string => {
     if (I18nManager.isRTL) {
         return 'arrow-forward';
     }
