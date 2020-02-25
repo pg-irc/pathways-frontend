@@ -15,7 +15,7 @@ export const DiscardFeedbackModal = (props: DiscardFeedbackModalProps): JSX.Elem
     <Modal
         isVisible={props.isVisible}
     >
-        <View padder style={{backgroundColor: colors.white, borderRadius: 10}}>
+        <View padder style={{ backgroundColor: colors.white, borderRadius: 15 }}>
             <HeaderComponent />
             <ButtonsComponent {...props} />
         </View>
@@ -23,8 +23,8 @@ export const DiscardFeedbackModal = (props: DiscardFeedbackModalProps): JSX.Elem
 );
 
 const HeaderComponent = (): JSX.Element => (
-        <Text style={textStyles.headlineH4StyleBlackLeft}>
-            <Trans>Discard the change suggested?</Trans>
+        <Text style={[textStyles.headlineH4StyleBlackLeft, { margin: 20, color: colors.greyishBrown }]}>
+            <Trans>Discard the change you suggested?</Trans>
         </Text>
 );
 
@@ -34,14 +34,14 @@ const ButtonsComponent = (props: DiscardFeedbackModalProps): JSX.Element => {
         props.closeModal();
     };
     return (
-        <View style={{ flexDirection: 'row-reverse'}}>
-            <Button style={applicationStyles.whiteTealButton} onPress={props.closeModal}>
-                <Text>Keep editing</Text>
-            </Button>
-            <Button style={applicationStyles.tealButton} onPress={onDiscardPress}>
-                <Text>
+        <View style={{ flexDirection: 'row-reverse', marginBottom: 20, marginTop: 10, marginHorizontal: 20 }}>
+            <Button style={[applicationStyles.tealButton, { marginHorizontal: 5 }]} onPress={onDiscardPress}>
+                <Text style={textStyles.tealButton}>
                     Discard
                 </Text>
+            </Button>
+            <Button style={applicationStyles.whiteTealButton} onPress={props.closeModal}>
+                <Text style={textStyles.whiteTealButton}>Keep editing</Text>
             </Button>
         </View>
     );
