@@ -45,13 +45,13 @@ const renderTitle = (): JSX.Element => (
 const renderSuggestionsList = (): JSX.Element => (
     <View>
         <Text style={textStyles.paragraphStyleBrown}>
-            {bulletPoint} <Trans>Search for a different keyword</Trans>
+            {bulletPoint} <Trans>Employment</Trans>
         </Text>
         <Text style={textStyles.paragraphStyleBrown}>
-            {bulletPoint} <Trans>Double check for spelling</Trans>
+            {bulletPoint} <Trans>English class</Trans>
         </Text>
         <Text style={textStyles.paragraphStyleBrown}>
-            {bulletPoint} <Trans>Ensure your search is in English</Trans>
+            {bulletPoint} <Trans>Child care</Trans>
         </Text>
     </View>
 );
