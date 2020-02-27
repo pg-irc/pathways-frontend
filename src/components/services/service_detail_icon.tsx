@@ -10,6 +10,6 @@ export const ServiceDetailIconComponent = (props: Props): JSX.Element => (
     <Icon
         name={props.name}
         type={'FontAwesome'}
-        style={{ color: colors.teal, fontSize: values.smallIconSize, paddingRight: 10 }}
+        style={{ color: colors.teal, fontSize: values.smallIconSize }}
     />
 );
