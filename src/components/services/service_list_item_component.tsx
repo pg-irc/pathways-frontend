@@ -6,8 +6,6 @@ import { TouchableOpacity } from 'react-native';
 import { mapWithIndex } from '../../application/map_with_index';
 import { Trans } from '@lingui/react';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
-import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
-import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
 import { History } from 'history';
 
 export interface ServiceListItemProps {
