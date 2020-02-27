@@ -7,7 +7,6 @@ import { values, textStyles } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
-import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { RouterProps } from '../../application/routing';
 import { ContentVerificationComponent } from '../content_verification/content_verification_component';
@@ -36,7 +35,6 @@ type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     return (
         <Content padder style={{ flex: 1 }}>
-            <BannerImageComponent imageSource={undefined} />
             <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
             <TitleComponent title={props.service.name} />
             <ServiceOrganization history={props.history} name={props.service.organizationName} />

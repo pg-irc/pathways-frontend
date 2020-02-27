@@ -18,34 +18,16 @@ export interface ServiceListItemProps {
     readonly isBookmarked: boolean;
 }
 
-export interface ServiceListItemActions {
-    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
-    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-}
-
-type Props = ServiceListItemProps & ServiceListItemActions;
-
-export const ServiceListItemComponent: React.StatelessComponent<Props> =
+export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
     (props: Props): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
-        const addBookmark = (): BookmarkServiceAction => props.bookmarkService(props.service);
-        const removeBookmark = (): UnbookmarkServiceAction => props.unbookmarkService(props.service);
         return (
             <TouchableOpacity onPress={props.onPress}>
-                <View style={{ backgroundColor: colors.white, marginTop: 8, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
-                    <View style={{flex: 2, paddingLeft: 15}}>
-                        {renderName(serviceName)}
-                        {renderOrganizationName(props.service.organizationName)}
-                        {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
-                        {renderDescription(props.service.description)}
-                    </View>
-                    <View>
-                        <BookmarkButtonComponent isBookmarked={props.isBookmarked}
-                        textColor={colors.teal}
-                        bookmark={addBookmark}
-                        unbookmark={removeBookmark}
-                        />
-                    </View>
+                <View style={{ backgroundColor: colors.white, marginTop: 8, padding: 15 }}>
+                    {renderName(serviceName)}
+                    {renderOrganizationName(props.service.organizationName)}
+                    {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
+                    {renderDescription(props.service.description)}
                 </View>
             </TouchableOpacity>
         );
