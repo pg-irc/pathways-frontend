@@ -9,6 +9,7 @@ import { selectBookmarkedServiceMap } from '../services/select_bookmarked_servic
 import { selectSearchTerm } from '../search/select_search_term';
 import { selectSearchLocation } from '../search/select_search_location';
 import { selectShowPartialLocalizationMessage } from '../user_profile/select_show_partial_localization_message';
+import { selectIsInputCollapsed } from '../search/select_is_input_collapsed';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedData => ({
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
@@ -18,5 +19,6 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedDat
     disableAnalytics: selectDisableAnalytics(appStore),
     searchTerm: selectSearchTerm(appStore),
     searchLocation: selectSearchLocation(appStore),
+    isInputCollapsed: selectIsInputCollapsed(appStore),
     showPartialLocalizationMessage: selectShowPartialLocalizationMessage(appStore),
 });

@@ -18,7 +18,7 @@ import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
-import { SaveSearchTermAction, SaveSearchLocationAction } from '../../stores/search';
+import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction } from '../../stores/search';
 import { searchClient } from './api/search_client';
 import { InfiniteHitsAndStateResultsProps } from './infinite_hits_component';
 
@@ -26,6 +26,7 @@ export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly searchTerm: string;
     readonly searchLocation: string;
+    readonly isInputCollapsed: boolean;
     readonly showPartialLocalizationMessage: boolean;
 }
 
@@ -36,6 +37,7 @@ export interface SearchComponentActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly saveSearchTerm: (searchTerm: string) => SaveSearchTermAction;
     readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
+    readonly setIsInputCollapsed: (isInputCollapsed: boolean) => SetIsInputCollapsedAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
@@ -50,9 +52,8 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [location, setLocation]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [latLong, setLatLong]: readonly [LatLong, (latLong: LatLong) => void] = useState(undefined);
     const [isLatLongLoading, setIsLatLongLoading]: readonly [boolean, SetIsLatLongLoading] = useState(false);
-    const [collapseInput, setCollapseInput]: readonly [boolean, SetIsInputCollapsed] = useState(false);
 
-    useEffect(() => {
+    useEffect((): void => {
         props.saveSearchLocation(location);
         if (location === '') {
             setLatLong(undefined);
@@ -63,7 +64,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
 
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
-    const ConfigureConnectedComponent = connectConfigure(() => emptyComponent());
+    const ConfigureConnectedComponent = connectConfigure((): JSX.Element => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(connectStateResults(
         (infiniteHitsAndStateResultsProps: InfiniteHitsAndStateResultsProps) =>
             <InfiniteHitsComponent {...infiniteHitsAndStateResultsProps} latLong={latLong} isLatLongLoading={isLatLongLoading} />,
@@ -80,8 +81,8 @@ export const SearchComponent = (props: Props): JSX.Element => {
                     saveSearchTerm={props.saveSearchTerm}
                     location={location}
                     setLocation={setLocation}
-                    collapseInput={collapseInput}
-                    setCollapseInput={setCollapseInput} />
+                    isInputCollapsed={props.isInputCollapsed}
+                    setIsInputCollapsed={props.setIsInputCollapsed} />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
                 <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>

@@ -3,6 +3,7 @@ import * as helpers from './helpers/make_action';
 
 export type SaveSearchTermAction = Readonly<ReturnType<typeof saveSearchTerm>>;
 export type SaveSearchLocationAction = Readonly<ReturnType<typeof saveSearchLocation>>;
+export type SetIsInputCollapsedAction = Readonly<ReturnType<typeof setIsInputCollapsed>>;
 
 // tslint:disable-next-line:typedef
 export const saveSearchTerm = (searchTerm: string) => (
@@ -14,16 +15,23 @@ export const saveSearchLocation = (searchLocation: string) => (
     helpers.makeAction(constants.SAVE_SEARCH_LOCATION, { searchLocation })
 );
 
-export type SearchAction = SaveSearchTermAction | SaveSearchLocationAction;
+// tslint:disable-next-line:typedef
+export const setIsInputCollapsed = (isInputCollapsed: boolean) => (
+    helpers.makeAction(constants.SET_IS_INPUT_COLLAPSED, { isInputCollapsed })
+);
+
+export type SearchAction = SaveSearchTermAction | SaveSearchLocationAction | SetIsInputCollapsedAction;
 
 export interface SearchStore {
     readonly searchTerm: string;
     readonly searchLocation: string;
+    readonly isInputCollapsed: boolean;
 }
 
 export const buildDefaultStore = (): SearchStore => ({
     searchTerm: '',
     searchLocation: '',
+    isInputCollapsed: false,
 });
 
 export const reducer = (store: SearchStore = buildDefaultStore(), action?: SearchAction): SearchStore => {
@@ -40,6 +48,11 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
             return ({
                 ...store,
                 searchLocation: action.payload.searchLocation,
+            });
+        case constants.SET_IS_INPUT_COLLAPSED:
+            return ({
+                ...store,
+                isInputCollapsed: action.payload.isInputCollapsed,
             });
         default:
             return store;

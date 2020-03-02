@@ -21,6 +21,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.UNBOOKMARK_SERVICE,
             constants.SAVE_SEARCH_TERM,
             constants.SAVE_SEARCH_LOCATION,
+            constants.SET_IS_INPUT_COLLAPSED,
             constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE,
             constants.DISABLE_ANALYTICS,
         ],
@@ -92,6 +93,7 @@ export const setUserDataDefaultValues = (data: any): PersistedData => (
         disableAnalytics: typeof data.disableAnalytics === 'undefined' ? false : data.disableAnalytics,
         searchTerm: data.searchTerm || '',
         searchLocation: data.searchLocation || '',
+        isInputCollapsed: typeof data.isInputCollapsed === 'undefined' ? false : data.isInputCollapsed,
         showPartialLocalizationMessage: typeof data.showPartialLocalizationMessage === 'undefined' ? true : data.showPartialLocalizationMessage,
     }
 );

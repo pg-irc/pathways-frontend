@@ -20,14 +20,14 @@ export interface Props {
     readonly latLong: LatLong;
     readonly searchTerm: string;
     readonly location: string;
-    readonly collapseInput: boolean;
+    readonly isInputCollapsed: boolean;
 }
 
 export interface Actions {
     readonly refine: (searchTerms: string) => string;
     readonly saveSearchTerm: (s: string) => void;
     readonly setLocation: (s: string) => void;
-    readonly setCollapseInput: (b: boolean) => void;
+    readonly setIsInputCollapsed: (b: boolean) => void;
 }
 
 const renderMyLocationButton = (saveLocation: Function): JSX.Element => {
@@ -105,7 +105,7 @@ const renderSearchButton = (props: Props & Actions, state: SearchInputState): JS
         <TouchableOpacity
             style={[applicationStyles.searchButton, { backgroundColor: colors.lightTeal }]}
             onPress={(): void => {
-                props.setCollapseInput(true);
+                props.setIsInputCollapsed(true);
                 props.saveSearchTerm(state.searchInputField);
                 props.setLocation(state.locationInputField);
             }}>
@@ -119,7 +119,7 @@ const collapsedInput = (props: Props & Actions, state: SearchInputState): JSX.El
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
             <View style={{ padding: 4, backgroundColor: colors.teal }}>
                 <TouchableOpacity style={applicationStyles.searchContainer}
-                    onPress={(): void => props.setCollapseInput(false)}>
+                    onPress={(): void => props.setIsInputCollapsed(false)}>
                     <InputIcon name='search' />
                     <Text numberOfLines={1} style={{ flex: 1 }}>
                         {state.getTranslatedSnapshot(state.searchInputField, state.locationInputField, i18nRenderProp)}
@@ -127,7 +127,7 @@ const collapsedInput = (props: Props & Actions, state: SearchInputState): JSX.El
                     <ClearInputButton visible={true} onPress={(): void => {
                         props.saveSearchTerm('');
                         props.setLocation('');
-                        props.setCollapseInput(false);
+                        props.setIsInputCollapsed(false);
                     }} />
                 </TouchableOpacity>
             </View>
@@ -233,7 +233,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         buildTranslatedString,
     };
 
-    if (props.collapseInput) {
+    if (props.isInputCollapsed) {
         return <View>{collapsedInput(props, searchInputState)}</View>;
     }
     return <View>{expandedInput(props, searchInputState)}</View>;
