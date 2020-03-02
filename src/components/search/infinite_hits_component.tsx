@@ -82,33 +82,30 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
         return renderErrorComponent(searchErrorProps);
     }
 
-    const renderLoadingScreen = (): JSX.Element => {
-        if (!isLoading(props.searching, props.isLatLongLoading)) {
-            return <EmptyComponent />;
-        }
-        return (
-            <View style={{ height: '100%', width: '100%' }}>
-                <LoadingServiceListComponent />
-            </View>
-        );
-    };
-
-    const ServiceList = (
-        <FlatList
-            style={{ backgroundColor: colors.white }}
-            refreshing={false}
-            data={searchResults}
-            keyExtractor={keyExtractor}
-            renderItem={renderSearchHit(props)}
-            ItemSeparatorComponent={SearchListSeparator}
-            ListHeaderComponent={renderHeader(showPartialLocalizationMessage, hidePartialLocalizationMessage)}
-            ListFooterComponent={loadMoreButton} />
-    );
-
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
-            {renderLoadingScreen()}
-            {ServiceList}
+            {renderLoadingScreen(props.searching, props.isLatLongLoading)}
+            <FlatList
+                style={{ backgroundColor: colors.white }}
+                refreshing={false}
+                data={searchResults}
+                keyExtractor={keyExtractor}
+                renderItem={renderSearchHit(props)}
+                ItemSeparatorComponent={SearchListSeparator}
+                ListHeaderComponent={renderHeader(showPartialLocalizationMessage, hidePartialLocalizationMessage)}
+                ListFooterComponent={loadMoreButton}
+            />
+        </View>
+    );
+};
+
+const renderLoadingScreen = (searching: boolean, isLatLongLoading: boolean): JSX.Element => {
+    if (!isLoading(searching, isLatLongLoading)) {
+        return <EmptyComponent />;
+    }
+    return (
+        <View style={{ height: '100%', width: '100%' }}>
+            <LoadingServiceListComponent />
         </View>
     );
 };
