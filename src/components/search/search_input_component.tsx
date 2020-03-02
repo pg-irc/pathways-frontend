@@ -218,6 +218,9 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     };
 
     const getTranslatedSnapshot = (searchInput: string, locationInput: string, i18nRenderProp: ReactI18nRenderProp): string => {
+        if (locationInputField === '') {
+            return searchInput;
+        }
         if (locationInputField === MY_LOCATION) {
             return searchInput + ' ' + buildTranslatedString(i18nRenderProp.i18n, 'near ' + MY_LOCATION);
         }
