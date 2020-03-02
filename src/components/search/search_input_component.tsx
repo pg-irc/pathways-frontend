@@ -114,8 +114,13 @@ const renderSearchButton = (props: Props & Actions, state: SearchInputState): JS
     );
 };
 
-const collapsedInput = (props: Props & Actions, state: SearchInputState): JSX.Element => (
-    <I18n>
+const collapsedInput = (props: Props & Actions, state: SearchInputState): JSX.Element => {
+    const clearSearch = (): void => {
+        props.saveSearchTerm('');
+        props.setLocation('');
+    };
+
+    return <I18n>
         {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
             <View style={{ padding: 4, backgroundColor: colors.teal }}>
                 <TouchableOpacity style={applicationStyles.searchContainer}
@@ -125,16 +130,14 @@ const collapsedInput = (props: Props & Actions, state: SearchInputState): JSX.El
                         {state.getTranslatedSnapshot(state.searchInputField, state.locationInputField, i18nRenderProp)}
                     </Text>
                     <ClearInputButton visible={true} onPress={(): void => {
-                        props.saveSearchTerm('');
-                        props.setLocation('');
+                        clearSearch();
                         props.setIsInputCollapsed(false);
                     }} />
                 </TouchableOpacity>
             </View>
         )}
-
-    </I18n>
-);
+    </I18n>;
+};
 
 const expandedInput = (props: Props & Actions, state: SearchInputState): JSX.Element => {
     const searchInputRef = React.useRef(undefined);
