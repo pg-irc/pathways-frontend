@@ -68,10 +68,6 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
         return renderEmptyComponent(showPartialLocalizationMessage, hidePartialLocalizationMessage);
     }
 
-    if (isLoading(props.searching, props.isLatLongLoading)) {
-        return <LoadingServiceListComponent />;
-    }
-
     if (isSearchErrorType(onlineStatus, searchResults, latLong)) {
         const searchErrorProps = {
             onlineStatus,
@@ -83,6 +79,17 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
         };
         return renderErrorComponent(searchErrorProps);
     }
+
+    const renderLoadingScreen = (): JSX.Element => {
+        if (!isLoading(props.searching, props.isLatLongLoading)) {
+            return <EmptyComponent />;
+        }
+        return (
+            <View style={{ height: '100%', width: '100%' }}>
+                <LoadingServiceListComponent />
+            </View>
+        );
+    };
 
     const ServiceList = (
         <FlatList
@@ -96,7 +103,12 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
             ListFooterComponent={loadMoreButton} />
     );
 
-    return <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>{ServiceList}</View>;
+    return (
+        <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
+            {renderLoadingScreen()}
+            {ServiceList}
+        </View>
+    );
 };
 
 const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Element => {
