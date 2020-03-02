@@ -63,12 +63,13 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
     const latLong = props.latLong;
     const showPartialLocalizationMessage = props.showPartialLocalizationMessage;
     const hidePartialLocalizationMessage = props.hidePartialLocalizationMessage;
+    const searching = props.searching;
 
     if (searchTermIsEmpty(props.searchTerm)) {
         return renderEmptyComponent(showPartialLocalizationMessage, hidePartialLocalizationMessage);
     }
 
-    if (isSearchErrorType(onlineStatus, searchResults, latLong)) {
+    if (isSearchErrorType(onlineStatus, searchResults, latLong, searching)) {
         const searchErrorProps = {
             onlineStatus,
             searchResults,
@@ -76,6 +77,7 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
             showPartialLocalizationMessage,
             hidePartialLocalizationMessage,
             refreshSearchServices,
+            searching,
         };
         return renderErrorComponent(searchErrorProps);
     }
@@ -166,16 +168,17 @@ const isLoading = (searching: boolean, isLatLongLoading: boolean): boolean => (
     searching || isLatLongLoading
 );
 
-const isSearchErrorType = (onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong): boolean => (
-    isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults) || hasNoResultsFromLocationQuery(latLong)
+const isSearchErrorType =
+(onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong, searching: boolean): boolean => (
+    isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults, searching) || hasNoResultsFromLocationQuery(latLong)
 );
 
 const isOffline = (onlineStatus: OnlineStatus): boolean => (
     onlineStatus === OnlineStatus.Offline
 );
 
-const hasNoResultsFromSearchTermQuery = (searchResults: ReadonlyArray<SearchServiceData>): boolean => (
-    searchResults.length === 0
+const hasNoResultsFromSearchTermQuery = (searchResults: ReadonlyArray<SearchServiceData>, searching: boolean): boolean => (
+    searchResults.length === 0 && !searching
 );
 
 const hasNoResultsFromLocationQuery = (latLong: LatLong): boolean => (
@@ -194,13 +197,14 @@ export interface SearchErrorComponentProps {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly latLong: LatLong;
     readonly showPartialLocalizationMessage: boolean;
+    readonly searching: boolean;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly refreshSearchServices: () => void;
 }
 
-const renderErrorComponent = (props: SearchErrorComponentProps ): JSX.Element => (
+const renderErrorComponent = (props: SearchErrorComponentProps): JSX.Element => (
     <ErrorComponent
-        errorType={determineErrorType(props.onlineStatus, props.searchResults, props.latLong)}
+        errorType={determineErrorType(props.onlineStatus, props.searchResults, props.latLong, props.searching)}
         refreshScreen={props.refreshSearchServices}
         header={renderHeader(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage)}
     />
@@ -214,15 +218,14 @@ const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScr
     />
 );
 
-const determineErrorType = (onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong): Errors => {
+const determineErrorType =
+(onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong, searching: boolean): Errors => {
     if (isOffline(onlineStatus)) {
         return Errors.Offline;
     }
-
-    if (hasNoResultsFromSearchTermQuery(searchResults)) {
+    if (hasNoResultsFromSearchTermQuery(searchResults, searching)) {
         return Errors.NoMatchingSearchResults;
     }
-
     if (hasNoResultsFromLocationQuery(latLong)) {
         return Errors.InvalidSearchLocation;
     }
