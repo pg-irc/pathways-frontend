@@ -3,7 +3,7 @@ import * as helpers from './helpers/make_action';
 
 export type SaveSearchTermAction = Readonly<ReturnType<typeof saveSearchTerm>>;
 export type SaveSearchLocationAction = Readonly<ReturnType<typeof saveSearchLocation>>;
-export type SetIsInputCollapsedAction = Readonly<ReturnType<typeof setIsInputCollapsed>>;
+export type SetIsInputCollapsedAction = Readonly<ReturnType<typeof setIsSearchInputCollapsed>>;
 
 // tslint:disable-next-line:typedef
 export const saveSearchTerm = (searchTerm: string) => (
@@ -16,8 +16,8 @@ export const saveSearchLocation = (searchLocation: string) => (
 );
 
 // tslint:disable-next-line:typedef
-export const setIsInputCollapsed = (isInputCollapsed: boolean) => (
-    helpers.makeAction(constants.SET_IS_INPUT_COLLAPSED, { isInputCollapsed })
+export const setIsSearchInputCollapsed = (isSearchInputCollapsed: boolean) => (
+    helpers.makeAction(constants.SET_IS_INPUT_COLLAPSED, { isSearchInputCollapsed })
 );
 
 export type SearchAction = SaveSearchTermAction | SaveSearchLocationAction | SetIsInputCollapsedAction;
@@ -25,13 +25,13 @@ export type SearchAction = SaveSearchTermAction | SaveSearchLocationAction | Set
 export interface SearchStore {
     readonly searchTerm: string;
     readonly searchLocation: string;
-    readonly isInputCollapsed: boolean;
+    readonly isSearchInputCollapsed: boolean;
 }
 
 export const buildDefaultStore = (): SearchStore => ({
     searchTerm: '',
     searchLocation: '',
-    isInputCollapsed: false,
+    isSearchInputCollapsed: false,
 });
 
 export const reducer = (store: SearchStore = buildDefaultStore(), action?: SearchAction): SearchStore => {
@@ -52,7 +52,7 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
         case constants.SET_IS_INPUT_COLLAPSED:
             return ({
                 ...store,
-                isInputCollapsed: action.payload.isInputCollapsed,
+                isSearchInputCollapsed: action.payload.isSearchInputCollapsed,
             });
         default:
             return store;

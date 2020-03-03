@@ -26,7 +26,7 @@ export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly searchTerm: string;
     readonly searchLocation: string;
-    readonly isInputCollapsed: boolean;
+    readonly isSearchInputCollapsed: boolean;
     readonly showPartialLocalizationMessage: boolean;
 }
 
@@ -37,7 +37,7 @@ export interface SearchComponentActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly saveSearchTerm: (searchTerm: string) => SaveSearchTermAction;
     readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
-    readonly setIsInputCollapsed: (isInputCollapsed: boolean) => SetIsInputCollapsedAction;
+    readonly setIsSearchInputCollapsed: (isSearchInputCollapsed: boolean) => SetIsInputCollapsedAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
@@ -81,8 +81,8 @@ export const SearchComponent = (props: Props): JSX.Element => {
                     saveSearchTerm={props.saveSearchTerm}
                     location={location}
                     setLocation={setLocation}
-                    isInputCollapsed={props.isInputCollapsed}
-                    setIsInputCollapsed={props.setIsInputCollapsed} />
+                    isSearchInputCollapsed={props.isSearchInputCollapsed}
+                    setIsSearchInputCollapsed={props.setIsSearchInputCollapsed} />
                 <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
                 <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>

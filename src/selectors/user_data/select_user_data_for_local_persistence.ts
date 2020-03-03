@@ -19,6 +19,6 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedDat
     disableAnalytics: selectDisableAnalytics(appStore),
     searchTerm: selectSearchTerm(appStore),
     searchLocation: selectSearchLocation(appStore),
-    isInputCollapsed: selectIsInputCollapsed(appStore),
+    isSearchInputCollapsed: selectIsInputCollapsed(appStore),
     showPartialLocalizationMessage: selectShowPartialLocalizationMessage(appStore),
 });

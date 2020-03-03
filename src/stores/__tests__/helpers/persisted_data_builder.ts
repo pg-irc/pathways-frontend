@@ -12,7 +12,7 @@ export class PersistedDataBuilder {
     disableAnalytics: boolean = false;
     searchTerm: string = '';
     searchLocation: string = '';
-    isInputCollapsed: boolean = false;
+    isSearchInputCollapsed: boolean = false;
     showPartialLocalizationMessage: boolean = true;
 
     withChosenAnswer(id: AnswerId): PersistedDataBuilder {
@@ -53,8 +53,8 @@ export class PersistedDataBuilder {
         return this;
     }
 
-    withIsInputCollapsed(isInputCollapsed: boolean): PersistedDataBuilder {
-        this.isInputCollapsed = isInputCollapsed;
+    withIsInputCollapsed(isSearchInputCollapsed: boolean): PersistedDataBuilder {
+        this.isSearchInputCollapsed = isSearchInputCollapsed;
         return this;
     }
 
@@ -72,7 +72,7 @@ export class PersistedDataBuilder {
             disableAnalytics: this.disableAnalytics,
             searchTerm: this.searchTerm,
             searchLocation: this.searchLocation,
-            isInputCollapsed: this.isInputCollapsed,
+            isSearchInputCollapsed: this.isSearchInputCollapsed,
             showPartialLocalizationMessage: this.showPartialLocalizationMessage,
         };
     }

@@ -6,7 +6,7 @@ import { saveService, SaveServiceAction, BookmarkServiceAction, UnbookmarkServic
 import { HumanServiceData } from '../../validation/services/types';
 import { disableAnalytics, DisableAnalyticsAction, HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
-import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction, saveSearchLocation, saveSearchTerm, setIsInputCollapsed } from '../../stores/search';
+import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction, saveSearchLocation, saveSearchTerm, setIsSearchInputCollapsed } from '../../stores/search';
 import { selectSearchTerm } from '../../selectors/search/select_search_term';
 import { selectSearchLocation } from '../../selectors/search/select_search_location';
 import { selectIsInputCollapsed } from '../../selectors/search/select_is_input_collapsed';
@@ -16,7 +16,7 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
     searchTerm: selectSearchTerm(store),
     searchLocation: selectSearchLocation(store),
-    isInputCollapsed: selectIsInputCollapsed(store),
+    isSearchInputCollapsed: selectIsInputCollapsed(store),
     showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
 });
 
@@ -49,8 +49,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     saveSearchLocation: (searchLocation: string): SaveSearchLocationAction => (
         dispatch(saveSearchLocation(searchLocation))
     ),
-    setIsInputCollapsed: (isInputCollapsed: boolean): SetIsInputCollapsedAction => (
-        dispatch(setIsInputCollapsed(isInputCollapsed))
+    setIsSearchInputCollapsed: (isSearchInputCollapsed: boolean): SetIsInputCollapsedAction => (
+        dispatch(setIsSearchInputCollapsed(isSearchInputCollapsed))
     ),
     hidePartialLocalizationMessage: (): HidePartialLocalizationMessageAction => (
         dispatch(hidePartialLocalizationMessage())
