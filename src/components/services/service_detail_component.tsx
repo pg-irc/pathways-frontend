@@ -96,7 +96,6 @@ const ServiceContactDetails = (props: Props): JSX.Element => {
                 analyticsLinkPressed={props.analyticsLinkPressed}
             />
             <ContentVerificationComponent verificationDate={'N/A'} />
-            <DividerComponent />
         </View>
     );
  };

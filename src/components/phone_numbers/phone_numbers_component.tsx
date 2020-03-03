@@ -9,6 +9,9 @@ import { openURL, LinkTypes } from '../link/link';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import * as R from 'ramda';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
+import { isServiceDetailArrayEmpty } from '../services/is_service_detail_empty';
+import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
+import { Trans } from '@lingui/react';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
@@ -18,6 +21,10 @@ interface Props {
 }
 
 export const PhoneNumbersComponent = (props: Props): JSX.Element => {
+    if (isServiceDetailArrayEmpty(props.phoneNumbers)) {
+        return <MissingServiceDetailComponent title={<Trans>Phone</Trans>} />;
+    }
+
     return (
         <View>
             {R.map(buildPhoneNumber(props), props.phoneNumbers)}
