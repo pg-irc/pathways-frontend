@@ -62,7 +62,10 @@ const buildTranslatedString = (i18n: ReactI18n, placeholder: string): string => 
     return _(placeholder);
 };
 
-const getTranslatedSnapshot = (searchInput: string, locationInput: string, i18nRenderProp: ReactI18nRenderProp): string => {
+const combineSearchInputs = (searchInput: string, locationInput: string, i18nRenderProp: ReactI18nRenderProp): string => {
+    if (searchInput === '') {
+        return '';
+    }
     if (locationInput === '') {
         return searchInput;
     }
@@ -85,7 +88,7 @@ const collapsedInput = (props: Props & Actions, inputs: SearchInputFields): JSX.
                     onPress={(): void => props.setIsSearchInputCollapsed(false)}>
                     <InputIcon name='search' />
                     <Text numberOfLines={1} style={{ flex: 1 }}>
-                        {getTranslatedSnapshot(inputs.searchInputField, inputs.locationInputField, i18nRenderProp)}
+                        {combineSearchInputs(inputs.searchInputField, inputs.locationInputField, i18nRenderProp)}
                     </Text>
                     <ClearInputButton visible={true} onPress={(): void => {
                         clearSearch();
