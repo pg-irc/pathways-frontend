@@ -150,9 +150,12 @@ const isLoading = (searching: boolean, isLatLongLoading: boolean): boolean => (
 );
 
 const isSearchErrorType =
-(onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong, searching: boolean): boolean => (
-    isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults) && !searching || hasNoResultsFromLocationQuery(latLong)
-);
+(onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong, searching: boolean): boolean => {
+    if (searching) {
+        return false;
+    }
+    return isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults) || hasNoResultsFromLocationQuery(latLong);
+};
 
 const renderErrorComponent =
 (props: Partial<InfiniteHitsAndStateResultsProps>, onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>): JSX.Element => {
