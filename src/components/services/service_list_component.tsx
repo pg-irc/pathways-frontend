@@ -17,7 +17,6 @@ import { Errors } from '../../validation/errors/types';
 import { LatLong } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
-import * as R from 'ramda';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
@@ -169,9 +168,6 @@ const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX
             onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
             currentPath={props.location.pathname}
             history={props.history}
-            isBookmarked={R.contains(item.id, props.bookmarkedServicesIds)}
-            bookmarkService={props.bookmarkService}
-            unbookmarkService={props.unbookmarkService}
         />
     );
 };

@@ -14,7 +14,7 @@ export const CardButtonComponent = (props: CardButtonProps): JSX.Element => {
                 <View style={{ flex: 5.5, alignItems: 'flex-start' }}>
                     {props.leftContent}
                 </View>
-                <View style={{ flex: .5, alignItems: 'flex-end' }}>
+                <View style={{ flex: .5, alignItems: 'flex-end', paddingRight: 10 }}>
                     {props.rightContent}
                 </View>
             </View>

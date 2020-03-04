@@ -7,6 +7,8 @@ import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
+import { isServiceDetailStringEmpty } from '../services/is_service_detail_empty';
+import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
 
 interface Props {
     readonly website: string;
@@ -20,6 +22,11 @@ export const WebsiteComponent = (props: Props): JSX.Element => {
         props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.website, props.website);
         openURL(props.website);
     };
+
+    if (isServiceDetailStringEmpty(props.website)) {
+        return <MissingServiceDetailComponent title={<Trans>Website</Trans>} />;
+    }
+
     return (
         <View>
             <CardButtonComponent

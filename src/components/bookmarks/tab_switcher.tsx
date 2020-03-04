@@ -8,13 +8,13 @@ import { Trans } from '@lingui/react';
 import { colors, textStyles } from '../../application/styles';
 import { BookmarksProps } from './bookmarks_component';
 import { View, Text } from 'native-base';
-import { ListActions } from './bookmarks_connected_component';
 import { RouterProps } from '../../application/routing';
+import { TaskListActions } from '../topics/task_list_component';
 
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
 
-type Props = ReactI18nRenderProp & BookmarksProps & ListActions & RouterProps;
+type Props = ReactI18nRenderProp & BookmarksProps & TaskListActions & RouterProps;
 
 export const TabSwitcher = (props: Props): JSX.Element => {
     const _ = props.i18n._.bind(props.i18n);
@@ -23,7 +23,7 @@ export const TabSwitcher = (props: Props): JSX.Element => {
         { key: 'services', title: _('Services') },
     ];
 
-    const [index, setIndex]: [number, (n: number) => void] = useState(0);
+    const [index, setIndex]: readonly [number, (n: number) => void] = useState(0);
 
     const TopicsComponent = (): JSX.Element => (
         <View style={{backgroundColor: colors.white}}>

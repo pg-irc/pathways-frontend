@@ -11,6 +11,8 @@ import { LatLong } from '../../validation/latlong/types';
 import { openInMapsApplication } from '../maps_application_popup/open_in_maps_application';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { mapWithIndex } from '../../application/map_with_index';
+import { isServiceDetailArrayEmpty } from '../services/is_service_detail_empty';
+import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
 
 interface Props {
     readonly addresses: ReadonlyArray<Address>;
@@ -21,11 +23,16 @@ interface Props {
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
-export const AddressesComponent = (props: Props): JSX.Element => (
+export const AddressesComponent = (props: Props): JSX.Element => {
+    if (isServiceDetailArrayEmpty(props.addresses)) {
+        return <MissingServiceDetailComponent title={<Trans>Address</Trans>} />;
+    }
+    return (
     <View>
         {mapWithIndex(buildAddress(props), props.addresses)}
     </View>
-);
+    );
+};
 
 const buildAddress = R.curry((props: Props, address: Address, index: number): JSX.Element => {
     const onPress = (): Promise<void> => {

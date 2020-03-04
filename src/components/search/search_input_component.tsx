@@ -10,6 +10,11 @@ import { debug, useTraceUpdate } from '../../helpers/debug';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ClearInputButton } from './clear_input_button';
+import * as IntentLauncher from 'expo-intent-launcher';
+import * as Permissions from 'expo-permissions';
+import { isAndroid } from '../../helpers/is_android';
+import { openURL } from '../link/link';
+import { NEAR_MY_LOCATION } from '../../application/constants';
 
 export interface Props {
     readonly currentRefinement: string;
@@ -43,10 +48,52 @@ const renderMyLocationButton = (showMyLocationButton: boolean, saveLocation: Fun
     return (
         <TouchableOpacity
             style={[applicationStyles.searchButton, { backgroundColor: colors.white }]}
-            onPress={(): void => saveLocation('Near My Location')}>
+            onPress={(): Promise<void> => myLocationOnPress(saveLocation)}
+        >
             {icon}{text}
         </TouchableOpacity>
     );
+};
+
+const myLocationOnPress = async (saveLocation: Function): Promise<void> => {
+    const status = await getPermission();
+    switch (status) {
+        case Permissions.PermissionStatus.GRANTED:
+            saveLocation(NEAR_MY_LOCATION);
+            break;
+        case Permissions.PermissionStatus.DENIED:
+            openAppSettings();
+            break;
+        case Permissions.PermissionStatus.UNDETERMINED:
+            askPermission(saveLocation);
+            break;
+        default:
+            break;
+    }
+};
+
+const getPermission = (): Promise<Permissions.PermissionStatus> => {
+    return Permissions.getAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse) => {
+        return permissionResponse.status;
+    });
+};
+
+const openAppSettings = (): void => {
+    if (isAndroid()) {
+        IntentLauncher.startActivityAsync(
+            IntentLauncher.ACTION_APPLICATION_SETTINGS,
+        );
+    } else {
+        openURL('app-settings:');
+    }
+};
+
+const askPermission = async (saveLocation: Function): Promise<void> => {
+    Permissions.askAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse) => {
+        if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
+            saveLocation(NEAR_MY_LOCATION);
+        }
+    });
 };
 
 const renderSearchButton = (showSearchButton: boolean, searchTerm: string, location: string,
@@ -79,6 +126,8 @@ export type SetShowSearchButton = Dispatch<SetStateAction<boolean>>;
 
 export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
+    const searchInputRef = React.useRef(undefined);
+    const searchLocationRef = React.useRef(undefined);
     const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.location);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
     const [showMyLocationButton, setShowMyLocationButton]: readonly [boolean, SetShowMyLocationButton] = useState(false);
@@ -92,8 +141,16 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
         const _ = i18n._.bind(i18n);
         return _(placeholder);
     };
-    const clearSearch = (): void => setSearchInputField('');
-    const clearLocation = (): void => setLocationInputField('');
+
+    const clearSearch = (): void => {
+        setSearchInputField('');
+        searchInputRef.current.focus();
+    };
+
+    const clearLocation = (): void => {
+        setLocationInputField('');
+        searchLocationRef.current.focus();
+    };
 
     const getOpacity = (input: string): number => input === '' ? .6 : 1;
 
@@ -104,6 +161,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='search' />
                     <TextInput
+                        ref={searchInputRef}
                         style={[applicationStyles.searchInput, { opacity: getOpacity(searchInputField) }]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent search text changed to '${d}'`);
@@ -120,6 +178,7 @@ export const SearchInputComponent = (props: Props & Actions): JSX.Element => {
                 <TouchableOpacity style={applicationStyles.searchContainer}>
                     <InputIcon name='location-on' />
                     <TextInput
+                        ref={searchLocationRef}
                         style={[applicationStyles.searchInput, { opacity: getOpacity(locationInputField) }]}
                         onChangeText={(d: string): void => {
                             debug(`SearchInputComponent location text changed to '${d}'`);

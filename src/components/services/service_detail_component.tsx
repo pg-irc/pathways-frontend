@@ -9,7 +9,6 @@ import { textStyles, colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
-import { BannerImageComponent } from '../content_layout/banner_image_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { RouterProps } from '../../application/routing';
 import { ContentVerificationComponent } from '../content_verification/content_verification_component';
@@ -79,7 +78,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             enableOnAndroid={true}
             ref={scrollViewRef}
         >
-            <BannerImageComponent imageSource={undefined} />
             <View padder>
                 <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
                 <FeedbackComponent
@@ -118,7 +116,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     analyticsLinkPressed={props.analyticsLinkPressed}
                     {...props}
                 />
-                <DividerComponent />
                 <FeedbackButton isVisible={!feedbackEnabled} onPress={(): void => setShowFeedbackOptionsModal(true)} />
                 <FeedbackOptionsModalComponent
                     isVisible={showFeedbackOptionsModal}

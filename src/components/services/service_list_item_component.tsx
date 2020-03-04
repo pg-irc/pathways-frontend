@@ -6,8 +6,6 @@ import { TouchableOpacity } from 'react-native';
 import { mapWithIndex } from '../../application/map_with_index';
 import { Trans } from '@lingui/react';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
-import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
-import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
 import { History } from 'history';
 
 export interface ServiceListItemProps {
@@ -15,37 +13,18 @@ export interface ServiceListItemProps {
     readonly currentPath: string;
     readonly onPress: () => void;
     readonly history: History;
-    readonly isBookmarked: boolean;
 }
 
-export interface ServiceListItemActions {
-    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
-    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-}
-
-type Props = ServiceListItemProps & ServiceListItemActions;
-
-export const ServiceListItemComponent: React.StatelessComponent<Props> =
-    (props: Props): JSX.Element => {
+export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
+    (props: ServiceListItemProps): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
-        const addBookmark = (): BookmarkServiceAction => props.bookmarkService(props.service);
-        const removeBookmark = (): UnbookmarkServiceAction => props.unbookmarkService(props.service);
         return (
             <TouchableOpacity onPress={props.onPress}>
-                <View style={{ backgroundColor: colors.white, marginTop: 8, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
-                    <View style={{flex: 2, paddingLeft: 15}}>
-                        {renderName(serviceName)}
-                        {renderOrganizationName(props.service.organizationName)}
-                        {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
-                        {renderDescription(props.service.description)}
-                    </View>
-                    <View>
-                        <BookmarkButtonComponent isBookmarked={props.isBookmarked}
-                        textColor={colors.teal}
-                        bookmark={addBookmark}
-                        unbookmark={removeBookmark}
-                        />
-                    </View>
+                <View style={{ backgroundColor: colors.white, marginTop: 8, padding: 15 }}>
+                    {renderName(serviceName)}
+                    {renderOrganizationName(props.service.organizationName)}
+                    {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
+                    {renderDescription(props.service.description)}
                 </View>
             </TouchableOpacity>
         );
