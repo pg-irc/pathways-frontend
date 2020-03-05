@@ -8,26 +8,27 @@ import * as R from 'ramda';
 import { getDeviceLocation, NoLocationPermissionErrorAction, LocationFetchTimeoutErrorAction } from '../../../async/location';
 import * as errors from '../../../validation/errors/is_error';
 import { SetIsLatLongLoading } from '../search_component';
+import { MY_LOCATION } from '../../../application/constants';
 
 export const useFetchLatLongFromLocation =
-(location: string, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
-    const onlineStatus = useOnlineStatus();
-    useEffect(
-        () => fetchLatLongFromLocation(location, onlineStatus, setLatLong, setIsLatLongLoading),
-        [onlineStatus, location],
-    );
-};
+    (location: string, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
+        const onlineStatus = useOnlineStatus();
+        useEffect(
+            () => fetchLatLongFromLocation(location, onlineStatus, setLatLong, setIsLatLongLoading),
+            [onlineStatus, location],
+        );
+    };
 
 const fetchLatLongFromLocation =
-(location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
-    if (location === 'Near My Location') {
-        setIsLatLongLoading(true);
-        fetchLatLongFromDevice(setLatLong, setIsLatLongLoading);
-    } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
-        setIsLatLongLoading(true);
-        fetchLatLongFromAddress(location, setLatLong, setIsLatLongLoading);
-    }
-};
+    (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
+        if (location === MY_LOCATION) {
+            setIsLatLongLoading(true);
+            fetchLatLongFromDevice(setLatLong, setIsLatLongLoading);
+        } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
+            setIsLatLongLoading(true);
+            fetchLatLongFromAddress(location, setLatLong, setIsLatLongLoading);
+        }
+    };
 
 const fetchLatLongFromDevice = (setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
     getDeviceLocation().then((location: DeviceLocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction): void => {
@@ -70,5 +71,5 @@ const getTextIfValidOrThrow = (response: Response): Promise<string> => {
 };
 
 const handleError = R.curry((setLatLong: (latLong: LatLong) => void, _: string): void => {
-    setLatLong({lat: 0, lng: 0});
+    setLatLong({ lat: 0, lng: 0 });
 });

@@ -97,31 +97,31 @@ const serviceMap = {
             "type": "object",
             "properties": {
                 "id": {
-                        "type": "string"
-                    },
-                    "latlong": latLong,
-                    "name": {
-                        "type": "string"
-                    },
-                    "description": {
-                        "type": ["string", "null"]
-                    },
-                    "addresses": addressWithTypeArray,
-                    "phoneNumbers": phoneNumberArray,
-                    "website": {
-                        "type": ["string", "null"]
-                    },
-                    "email": {
-                        "type": ["string", "null"]
-                    },
-                    "organizationName": {
-                        "type": ["string", "null"]
-                    },
-                    "bookmarked": {
-                        "type": "boolean"
-                    }
+                    "type": "string"
                 },
-                "required": ["id", "name", "description", "phoneNumbers", "addresses", "website", "email", "organizationName", "bookmarked"]
+                "latlong": latLong,
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": ["string", "null"]
+                },
+                "addresses": addressWithTypeArray,
+                "phoneNumbers": phoneNumberArray,
+                "website": {
+                    "type": ["string", "null"]
+                },
+                "email": {
+                    "type": ["string", "null"]
+                },
+                "organizationName": {
+                    "type": ["string", "null"]
+                },
+                "bookmarked": {
+                    "type": "boolean"
+                }
+            },
+            "required": ["id", "name", "description", "phoneNumbers", "addresses", "website", "email", "organizationName", "bookmarked"]
         }
     }
 };
@@ -147,6 +147,9 @@ export const userData = {
         },
         "searchLocation": {
             "type": "string"
+        },
+        "isSearchInputCollapsed": {
+            "type": "boolean"
         },
     }
 };

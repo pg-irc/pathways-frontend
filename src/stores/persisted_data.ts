@@ -12,6 +12,7 @@ export interface PersistedData {
     readonly disableAnalytics: boolean;
     readonly searchTerm: string;
     readonly searchLocation: string;
+    readonly isSearchInputCollapsed: boolean;
     readonly showPartialLocalizationMessage: boolean;
 }
 
