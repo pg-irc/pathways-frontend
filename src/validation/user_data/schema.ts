@@ -148,6 +148,7 @@ export const userData = {
         "searchLocation": {
             "type": "string"
         },
+        "searchLatLong": latLong,
         "isSearchInputCollapsed": {
             "type": "boolean"
         },

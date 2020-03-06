@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-any no-null-keyword
 import { PersistedDataBuilder } from '../../../stores/__tests__/helpers/persisted_data_builder';
 import { validateUserData } from '..';
-import { aString, aBoolean } from '../../../helpers/random_test_values';
+import { aString, aBoolean, aNumber } from '../../../helpers/random_test_values';
 import { ServiceBuilder, buildServiceMap } from '../../../stores/__tests__/helpers/services_helpers';
 import { buildDefaultStore, Store } from '../../../stores';
 import { selectUserDataForLocalPersistence } from '../../../selectors/user_data/select_user_data_for_local_persistence';
@@ -194,6 +194,29 @@ describe('user data schema', () => {
                 const searchLocation: any = null;
                 const validUserData = new PersistedDataBuilder().withSearchLocation(searchLocation).build();
                 const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(false);
+            });
+        });
+
+        describe('searchLatLong property', () => {
+
+            test('passes with valid data', () => {
+                const searchLatLong = {
+                    lat: aNumber(),
+                    lng: aNumber(),
+                };
+                const validUserData = new PersistedDataBuilder().withSearchLatLong(searchLatLong).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('passes with invalid data', () => {
+                const searchLatLong: any = {
+                    lat: aString(),
+                    lng: aString(),
+                };
+                const invalidUserData = new PersistedDataBuilder().withSearchLatLong(searchLatLong).build();
+                const validator = validateUserData(invalidUserData);
                 expect(validator.isValid).toBe(false);
             });
         });

@@ -18,7 +18,7 @@ import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
-import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction } from '../../stores/search';
+import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction, SaveSearchLatLongAction } from '../../stores/search';
 import { searchClient } from './api/search_client';
 import { InfiniteHitsAndStateResultsProps } from './infinite_hits_component';
 
@@ -27,6 +27,7 @@ export interface SearchComponentProps {
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly isSearchInputCollapsed: boolean;
+    readonly searchLatLong: LatLong;
     readonly showPartialLocalizationMessage: boolean;
 }
 
@@ -37,6 +38,7 @@ export interface SearchComponentActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly saveSearchTerm: (searchTerm: string) => SaveSearchTermAction;
     readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
+    readonly saveSearchLatLong: (searchLatLong: LatLong) => SaveSearchLatLongAction;
     readonly setIsSearchInputCollapsed: (isSearchInputCollapsed: boolean) => SetIsInputCollapsedAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
@@ -50,24 +52,23 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
 
     const [location, setLocation]: readonly [string, (s: string) => void] = useState(props.searchLocation);
-    const [latLong, setLatLong]: readonly [LatLong, (latLong: LatLong) => void] = useState(undefined);
     const [isLatLongLoading, setIsLatLongLoading]: readonly [boolean, SetIsLatLongLoading] = useState(false);
 
     useEffect((): void => {
         props.saveSearchLocation(location);
         if (location === '') {
-            setLatLong(undefined);
+            props.saveSearchLatLong(undefined);
         }
     }, [location]);
 
-    useFetchLatLongFromLocation(location, setLatLong, setIsLatLongLoading);
+    useFetchLatLongFromLocation(location, props.saveSearchLatLong, setIsLatLongLoading);
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
 
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure((): JSX.Element => emptyComponent());
     const InfiniteHitsConnectedComponent = connectInfiniteHits(connectStateResults(
         (infiniteHitsAndStateResultsProps: InfiniteHitsAndStateResultsProps) =>
-            <InfiniteHitsComponent {...infiniteHitsAndStateResultsProps} latLong={latLong} isLatLongLoading={isLatLongLoading} />,
+            <InfiniteHitsComponent {...infiniteHitsAndStateResultsProps} latLong={props.searchLatLong} isLatLongLoading={isLatLongLoading} />,
     ),
     );
 
@@ -76,14 +77,15 @@ export const SearchComponent = (props: Props): JSX.Element => {
         return <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <InstantSearch indexName={servicesIndex()} searchClient={searchClient} {...props} >
                 <SearchInputConnectedComponent
-                    latLong={latLong}
+                    searchLatLong={props.searchLatLong}
                     searchTerm={props.searchTerm}
                     saveSearchTerm={props.saveSearchTerm}
                     location={location}
                     setLocation={setLocation}
                     isSearchInputCollapsed={props.isSearchInputCollapsed}
-                    setIsSearchInputCollapsed={props.setIsSearchInputCollapsed} />
-                <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
+                    setIsSearchInputCollapsed={props.setIsSearchInputCollapsed}
+                />
+                <ConfigureConnectedComponent {...toServiceSearchConfiguration(props.searchLatLong)} />
                 <InfiniteHitsConnectedComponent {...props} />
             </InstantSearch>
         </View>;

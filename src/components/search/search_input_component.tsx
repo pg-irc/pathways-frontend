@@ -17,7 +17,7 @@ import { MY_LOCATION } from '../../application/constants';
 
 export interface SearchProps {
     readonly currentRefinement: string;
-    readonly latLong: LatLong;
+    readonly searchLatLong: LatLong;
     readonly searchTerm: string;
     readonly location: string;
     readonly isSearchInputCollapsed: boolean;
@@ -56,7 +56,7 @@ export const SearchInputComponent = (props: SearchProps & SearchActions): JSX.El
     useEffect((): void => {
         debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
         props.refine(props.searchTerm);
-    }, [props.latLong]);
+    }, [props.searchLatLong]);
 
     if (props.isSearchInputCollapsed) {
         return (

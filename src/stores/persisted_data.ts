@@ -3,6 +3,7 @@ import * as helpers from './helpers/make_action';
 import { Id as AnswerId } from './questionnaire';
 import { Id as TopicId } from './topics';
 import { ServiceMap } from '../validation/services/types';
+import { LatLong } from '../validation/latlong/types';
 
 export interface PersistedData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
@@ -12,6 +13,7 @@ export interface PersistedData {
     readonly disableAnalytics: boolean;
     readonly searchTerm: string;
     readonly searchLocation: string;
+    readonly searchLatLong: LatLong;
     readonly isSearchInputCollapsed: boolean;
     readonly showPartialLocalizationMessage: boolean;
 }
