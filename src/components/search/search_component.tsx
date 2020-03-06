@@ -50,19 +50,10 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
-
-    const [location, setLocation]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [isLatLongLoading, setIsLatLongLoading]: readonly [boolean, SetIsLatLongLoading] = useState(false);
-
-    useEffect((): void => {
-        props.saveSearchLocation(location);
-        if (location === '') {
-            props.saveSearchLatLong(undefined);
-        }
-    }, [location]);
-
-    useFetchLatLongFromLocation(location, props.saveSearchLatLong, setIsLatLongLoading);
-    useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
+    
+    useFetchLatLongFromLocation(props.searchLocation, props.saveSearchLatLong, setIsLatLongLoading);
+    useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
     const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
     const ConfigureConnectedComponent = connectConfigure((): JSX.Element => emptyComponent());
@@ -80,8 +71,8 @@ export const SearchComponent = (props: Props): JSX.Element => {
                     searchLatLong={props.searchLatLong}
                     searchTerm={props.searchTerm}
                     saveSearchTerm={props.saveSearchTerm}
-                    location={location}
-                    setLocation={setLocation}
+                    saveSearchLocation={props.saveSearchLocation}
+                    searchLocation={props.searchLocation}
                     isSearchInputCollapsed={props.isSearchInputCollapsed}
                     setIsSearchInputCollapsed={props.setIsSearchInputCollapsed}
                 />

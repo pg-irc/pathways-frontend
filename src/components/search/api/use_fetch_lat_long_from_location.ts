@@ -11,46 +11,50 @@ import { SetIsLatLongLoading } from '../search_component';
 import { MY_LOCATION } from '../../../application/constants';
 
 export const useFetchLatLongFromLocation =
-    (location: string, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
+    (location: string, saveSearchLatLong: (searchLatLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
         const onlineStatus = useOnlineStatus();
         useEffect(
-            () => fetchLatLongFromLocation(location, onlineStatus, setLatLong, setIsLatLongLoading),
+            () => fetchLatLongFromLocation(location, onlineStatus, saveSearchLatLong, setIsLatLongLoading),
             [onlineStatus, location],
         );
     };
 
 const fetchLatLongFromLocation =
-    (location: string, onlineStatus: OnlineStatus, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
-        if (location === MY_LOCATION) {
+    (location: string, onlineStatus: OnlineStatus, saveSearchLatLong: (searchLatLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading)
+    : void => {
+        if (location === '') {
+            saveSearchLatLong(undefined);
+            setIsLatLongLoading(false);
+        } else if (location === MY_LOCATION) {
             setIsLatLongLoading(true);
-            fetchLatLongFromDevice(setLatLong, setIsLatLongLoading);
+            fetchLatLongFromDevice(saveSearchLatLong, setIsLatLongLoading);
         } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
             setIsLatLongLoading(true);
-            fetchLatLongFromAddress(location, setLatLong, setIsLatLongLoading);
+            fetchLatLongFromAddress(location, saveSearchLatLong, setIsLatLongLoading);
         }
     };
 
-const fetchLatLongFromDevice = (setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
+const fetchLatLongFromDevice = (saveSearchLatLong: (searchLatLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
     getDeviceLocation().then((location: DeviceLocationData | NoLocationPermissionErrorAction | LocationFetchTimeoutErrorAction): void => {
         if (errors.isNoLocationPermissionError(location)) {
-            setLatLong({ lat: 0, lng: 0 });
+            saveSearchLatLong({ lat: 0, lng: 0 });
         } else if (errors.isLocationFetchTimeoutError(location)) {
-            setLatLong({ lat: 0, lng: 0 });
+            saveSearchLatLong({ lat: 0, lng: 0 });
         } else {
-            setLatLong({ lat: location.coords.latitude, lng: location.coords.longitude });
+            saveSearchLatLong({ lat: location.coords.latitude, lng: location.coords.longitude });
         }
         setIsLatLongLoading(false);
     });
 };
 
-const fetchLatLongFromAddress = (location: string, setLatLong: (latLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
+const fetchLatLongFromAddress = (location: string, saveSearchLatLong: (searchLatLong: LatLong) => void, setIsLatLongLoading: SetIsLatLongLoading): void => {
     const url = buildGeoCoderUrl(location);
     fetch(url).
         then(getTextIfValidOrThrow).
         then(JSON.parse).
         then(toGeoCoderLatLong).
-        then(setLatLong).
-        catch(handleError(setLatLong));
+        then(saveSearchLatLong).
+        catch(handleError(saveSearchLatLong));
     setIsLatLongLoading(false);
 };
 
@@ -70,6 +74,6 @@ const getTextIfValidOrThrow = (response: Response): Promise<string> => {
     return response.text();
 };
 
-const handleError = R.curry((setLatLong: (latLong: LatLong) => void, _: string): void => {
-    setLatLong({ lat: 0, lng: 0 });
+const handleError = R.curry((saveSearchLatLong: (searchLatLong: LatLong) => void, _: string): void => {
+    saveSearchLatLong({ lat: 0, lng: 0 });
 });

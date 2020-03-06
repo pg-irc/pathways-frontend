@@ -19,14 +19,14 @@ export interface SearchProps {
     readonly currentRefinement: string;
     readonly searchLatLong: LatLong;
     readonly searchTerm: string;
-    readonly location: string;
+    readonly searchLocation: string;
     readonly isSearchInputCollapsed: boolean;
 }
 
 export interface SearchActions {
     readonly refine: (searchTerms: string) => string;
     readonly saveSearchTerm: (s: string) => void;
-    readonly setLocation: (s: string) => void;
+    readonly saveSearchLocation: (location: string) => void;
     readonly setIsSearchInputCollapsed: (b: boolean) => void;
 }
 
@@ -49,7 +49,7 @@ export type SetShowSearchButton = Dispatch<SetStateAction<boolean>>;
 
 export const SearchInputComponent = (props: SearchProps & SearchActions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
-    const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.location);
+    const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
     const searchProps = { ...props, searchInputField, locationInputField, setSearchInputField, setLocationInputField };
 
@@ -93,7 +93,7 @@ const combineSearchInputs = (searchInput: string, locationInput: string, i18nRen
 const collapsedInput = (props: Props): JSX.Element => {
     const clearSearch = (): void => {
         props.saveSearchTerm('');
-        props.setLocation('');
+        props.saveSearchLocation('');
     };
 
     return (
@@ -203,7 +203,7 @@ const renderSearchButton = (props: Props): JSX.Element => {
             onPress={(): void => {
                 props.setIsSearchInputCollapsed(true);
                 props.saveSearchTerm(props.searchInputField);
-                props.setLocation(props.locationInputField);
+                props.saveSearchLocation(props.locationInputField);
             }}>
             {text}
         </TouchableOpacity>
