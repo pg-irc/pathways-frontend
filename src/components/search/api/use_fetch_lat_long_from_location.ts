@@ -54,8 +54,8 @@ const fetchLatLongFromAddress = (location: string, saveSearchLatLong: (searchLat
         then(JSON.parse).
         then(toGeoCoderLatLong).
         then(saveSearchLatLong).
+        then((): void => setIsLatLongLoading(false)).
         catch(handleError(saveSearchLatLong));
-    setIsLatLongLoading(false);
 };
 
 const buildGeoCoderUrl = (location: string): string => (
