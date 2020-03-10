@@ -26,7 +26,7 @@ export interface SearchActions {
     readonly saveSearchTerm: (s: string) => void;
     readonly setLocation: (s: string) => void;
     readonly setIsSearchInputCollapsed: (b: boolean) => void;
-    readonly onSearchPress: (searchTerm: string) => void;
+    readonly onSearchPress: (searchTerm: string, location: string) => void;
 }
 
 interface SearchInputProps {
@@ -195,7 +195,7 @@ const renderSearchButton = (props: Props): JSX.Element => {
         <TouchableOpacity
             style={[applicationStyles.searchButton, { backgroundColor: colors.lightTeal }]}
             onPress={(): void => {
-                props.onSearchPress(props.searchInputField);
+                props.onSearchPress(props.searchInputField, props.locationInputField);
             }}>
             {text}
         </TouchableOpacity>
