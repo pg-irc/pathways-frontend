@@ -28,7 +28,7 @@ import { LatLong } from '../../validation/latlong/types';
 export interface InfiniteHitsProps {
     readonly currentPath: string;
     // tslint:disable-next-line:no-any
-    readonly hits: ReadonlyArray<any>;
+    readonly searchResults: ReadonlyArray<any>;
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -54,8 +54,8 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
         return renderEmptyComponent(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage);
     }
 
-    if (isSearchErrorType(onlineStatus, props.hits, props.latLong)) {
-        return renderErrorComponent(props, onlineStatus, props.hits);
+    if (isSearchErrorType(onlineStatus, props.searchResults, props.latLong)) {
+        return renderErrorComponent(props, onlineStatus, props.searchResults);
     }
 
     return (
@@ -64,7 +64,7 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
             <FlatList
                 style={{ backgroundColor: colors.white }}
                 refreshing={false}
-                data={props.hits}
+                data={props.searchResults}
                 keyExtractor={keyExtractor}
                 renderItem={renderSearchHit(props)}
                 ItemSeparatorComponent={SearchListSeparator}

@@ -8,6 +8,8 @@ import { selectUserDataForLocalPersistence } from '../../../selectors/user_data/
 import { DataPersistence } from '../../../stores/persisted_data';
 import * as constants from '../../../application/constants';
 import { reducer } from '../../../stores';
+import { SearchServiceData } from '../../search/types';
+import { anAddress, anOrganization, aGeoLocation } from '../../search/__tests__/helpers/search_schema';
 
 describe('user data schema', () => {
 
@@ -193,6 +195,32 @@ describe('user data schema', () => {
             test('fails with invalid data', () => {
                 const searchLocation: any = null;
                 const validUserData = new PersistedDataBuilder().withSearchLocation(searchLocation).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(false);
+            });
+        });
+
+        describe('searchResults property', () => {
+
+            test('passes with valid data', () => {
+                const searchResults: ReadonlyArray<SearchServiceData> = [{
+                    type: 'SearchServiceData',
+                    service_name: aString(),
+                    service_id: aString(),
+                    service_description: aString(),
+                    address: anAddress(),
+                    organization: anOrganization(),
+                    _geoloc: aGeoLocation(),
+                    email: aString(),
+                }];
+                const validUserData = new PersistedDataBuilder().withSearchResults(searchResults).build();
+                const validator = validateUserData(validUserData);
+                expect(validator.isValid).toBe(true);
+            });
+
+            test('fails with invalid data', () => {
+                const searchResults: any = null;
+                const validUserData = new PersistedDataBuilder().withSearchResults(searchResults).build();
                 const validator = validateUserData(validUserData);
                 expect(validator.isValid).toBe(false);
             });

@@ -13,15 +13,17 @@ import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
-import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction } from '../../stores/search';
+import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction, SaveSearchResultsAction } from '../../stores/search';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
 import { useOnlineStatus } from '../../hooks/use_online_status';
+import { SearchServiceData } from '../../validation/search/types';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly searchTerm: string;
     readonly searchLocation: string;
+    readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly isSearchInputCollapsed: boolean;
     readonly showPartialLocalizationMessage: boolean;
 }
@@ -33,6 +35,7 @@ export interface SearchComponentActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly saveSearchTerm: (searchTerm: string) => SaveSearchTermAction;
     readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
+    readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => SaveSearchResultsAction;
     readonly setIsSearchInputCollapsed: (isSearchInputCollapsed: boolean) => SetIsInputCollapsedAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
@@ -50,7 +53,6 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [location, setLocation]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [latLong, setLatLong]: readonly [LatLong, (latLong: LatLong) => void] = useState(undefined);
     // tslint:disable-next-line: no-any
-    const [hits, setHits]: readonly [ReadonlyArray<any>, Dispatch<SetStateAction<any>>] = useState([]);
     const onlineStatus = useOnlineStatus();
 
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
@@ -59,10 +61,9 @@ export const SearchComponent = (props: Props): JSX.Element => {
         props.saveSearchTerm(searchTerm);
         const geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
         const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong);
-        setHits(searchResults);
+        props.saveSearchResults(searchResults);
     };
 
-    const infiniteHitsProps = {...props, hits};
     return <I18n>{(): JSX.Element => {
 
         return <View style={{ backgroundColor: colors.pale, flex: 1 }}>
@@ -76,7 +77,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
                     setIsSearchInputCollapsed={props.setIsSearchInputCollapsed}
                     onSearchPress={onSearchPress}
                 />
-                <InfiniteHitsComponent {...infiniteHitsProps} />
+                <InfiniteHitsComponent {...props} />
         </View>;
     }}</I18n>;
 };

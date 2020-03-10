@@ -1,30 +1,10 @@
 // tslint:disable:no-any no-expression-statement
 import { validateServiceSearchHits } from '..';
 import { aString, aNumber } from '../../../helpers/random_test_values';
+import { anAddress, anOrganization, aGeoLocation } from './helpers/search_schema';
+
 
 describe('Search response validation', () => {
-
-    const anAddress = (): any => ({
-        address: aString(),
-        city: aString(),
-        state_province: aString(),
-        postal_code: aString(),
-        country: aString(),
-    });
-
-    const anOrganization = (): any => ({
-        id: aString(),
-        name: aString(),
-        website: aString(),
-        email: aString(),
-        service_count: aNumber(),
-    });
-
-    const aGeoLocation = (): any => ({
-        lat: aNumber(),
-        lng: aNumber(),
-    });
-
     describe('with valid data', () => {
 
         it('accepts data without phone number', () => {
