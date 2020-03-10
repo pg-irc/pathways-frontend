@@ -1,9 +1,8 @@
 // tslint:disable:no-expression-statement
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
-import { InfiniteHitsComponent } from './infinite_hits_component';
+import React, { useEffect, Dispatch, SetStateAction } from 'react';
+import { SearchResultsComponent } from './search_results_component';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
-import { LatLong } from '../../validation/latlong/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { I18n } from '@lingui/react';
 import { SearchInputComponent } from './search_input_component';
@@ -40,22 +39,14 @@ export interface SearchComponentActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
-export type SetIsLatLongLoading = Dispatch<SetStateAction<boolean>>;
 export type SetIsInputCollapsed = Dispatch<SetStateAction<boolean>>;
-// tslint:disable-next-line: no-any
-export type SetHits = Dispatch<SetStateAction<ReadonlyArray<any>>>;
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
-
-    const [location, setLocation]: readonly [string, (s: string) => void] = useState(props.searchLocation);
-    const [latLong, setLatLong]: readonly [LatLong, (latLong: LatLong) => void] = useState(undefined);
-    // tslint:disable-next-line: no-any
     const onlineStatus = useOnlineStatus();
-
-    useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
+    useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
     const onSearchPress = async (searchTerm: string, location: string): Promise<void> => {
         props.saveSearchTerm(searchTerm);
@@ -65,22 +56,25 @@ export const SearchComponent = (props: Props): JSX.Element => {
         props.saveSearchResults(searchResults);
     };
 
-    return <I18n>{(): JSX.Element => {
-
-        return <View style={{ backgroundColor: colors.pale, flex: 1 }}>
-                <SearchInputComponent
-                    latLong={latLong}
-                    searchTerm={props.searchTerm}
-                    saveSearchTerm={props.saveSearchTerm}
-                    location={location}
-                    setLocation={setLocation}
-                    isSearchInputCollapsed={props.isSearchInputCollapsed}
-                    setIsSearchInputCollapsed={props.setIsSearchInputCollapsed}
-                    onSearchPress={onSearchPress}
-                />
-                <InfiniteHitsComponent {...props} />
-        </View>;
-    }}</I18n>;
+    return (
+        <I18n>{(): JSX.Element => {
+             return (
+                <View style={{ backgroundColor: colors.pale, flex: 1 }}>
+                    <SearchInputComponent
+                        searchTerm={props.searchTerm}
+                        searchLocation={props.searchLocation}
+                        saveSearchTerm={props.saveSearchTerm}
+                        saveSearchLocation={props.saveSearchLocation}
+                        isSearchInputCollapsed={props.isSearchInputCollapsed}
+                        setIsSearchInputCollapsed={props.setIsSearchInputCollapsed}
+                        onSearchPress={onSearchPress}
+                    />
+                    <SearchResultsComponent {...props} />
+                </View>
+            );
+        }}
+    </I18n>
+    );
 };
 
 const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction): void => {
