@@ -1,5 +1,5 @@
 // tslint:disable:no-any no-expression-statement
-import { validateServiceSearchResponse } from '..';
+import { validateServiceSearchHits } from '..';
 import { aString, aNumber } from '../../../helpers/random_test_values';
 
 describe('Search response validation', () => {
@@ -37,7 +37,7 @@ describe('Search response validation', () => {
                 organization: anOrganization(),
                 _geoloc: aGeoLocation(),
             }];
-            const result = validateServiceSearchResponse(serviceData);
+            const result = validateServiceSearchHits(serviceData);
             expect(result.validData).toEqual(serviceData);
         });
 
@@ -59,7 +59,7 @@ describe('Search response validation', () => {
                 organization: anOrganization(),
                 _geoloc: aGeoLocation(),
             }];
-            const result = validateServiceSearchResponse(serviceData);
+            const result = validateServiceSearchHits(serviceData);
             expect(result.validData[0].phone_numbers[0].type).toEqual(firstPhoneNumberType);
             expect(result.validData[0].phone_numbers[1].phone_number).toEqual(secondPhoneNumber);
         });
@@ -68,7 +68,7 @@ describe('Search response validation', () => {
     describe('with invalid data', () => {
 
         it('returns invalid on missing field in service data', () => {
-            const validationResult = validateServiceSearchResponse([{
+            const validationResult = validateServiceSearchHits([{
                 service_name: aString(),
                 // service_id: serviceId,
                 service_description: aString(),
@@ -82,7 +82,7 @@ describe('Search response validation', () => {
 
         it('returns invalid on wrong field type in service data', () => {
             const invalidValue = aNumber();
-            const validationResult = validateServiceSearchResponse([{
+            const validationResult = validateServiceSearchHits([{
                 service_name: aString(),
                 service_id: invalidValue,
                 service_description: aString(),
@@ -106,7 +106,7 @@ describe('Search response validation', () => {
                 organization: anOrganization(),
                 _geoloc: aGeoLocation(),
             }];
-            const result = validateServiceSearchResponse(serviceData);
+            const result = validateServiceSearchHits(serviceData);
             expect(result.validData).toEqual(serviceData);
         });
     });
@@ -121,7 +121,7 @@ describe('Search response validation', () => {
             _geoloc: aGeoLocation(),
             email: aString()
         }];
-        const result = validateServiceSearchResponse(serviceData);
+        const result = validateServiceSearchHits(serviceData);
         expect(result.validData).toEqual(serviceData);
     });
 });

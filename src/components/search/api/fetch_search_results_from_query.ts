@@ -2,6 +2,7 @@
 import BuildUrl from 'build-url';;
 import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
 import { validateServiceSearchResponse } from '../../../validation/search';
+import { LatLong } from '../../../validation/latlong/types';
 
 export interface AlgoliaResponse {
     readonly exhaustiveNbHits: boolean;
@@ -16,7 +17,7 @@ export interface AlgoliaResponse {
     readonly query: string;
 }
 
-export const fetchSearchResultsFromQuery = async (searchTerm: string): Promise<any> => {
+export const fetchSearchResultsFromQuery = async (searchTerm: string, latLong: LatLong): Promise<any> => {
     const url = buildAlgoliaSearchUrl();
     const response = await fetch(url, {
         'method': 'POST',
@@ -28,14 +29,17 @@ export const fetchSearchResultsFromQuery = async (searchTerm: string): Promise<a
         body: JSON.stringify({
             query: searchTerm,
             hitsPerPage: '20',
+            aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
         }),
-    })
+    });
     const responseJSON: AlgoliaResponse = await response.json();
-
-    const responseHits = validateServiceSearchResponse(responseJSON.hits);
-    return responseHits;
+    return validateServiceSearchResponse(responseJSON.hits);
 };
 
 const buildAlgoliaSearchUrl = (): string => (
     BuildUrl('https://MMYH1Z0D3O-dsn.algolia.net/1/indexes/dev_phones/query')
+);
+
+const toAlgoliaParameter = (latlong: LatLong): string => (
+    `${latlong.lat},${latlong.lng}`
 );

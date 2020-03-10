@@ -15,6 +15,8 @@ import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction } from '../../stores/search';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
+import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
+import { useOnlineStatus } from '../../hooks/use_online_status';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -49,11 +51,14 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [latLong, setLatLong]: readonly [LatLong, (latLong: LatLong) => void] = useState(undefined);
     // tslint:disable-next-line: no-any
     const [hits, setHits]: readonly [ReadonlyArray<any>, Dispatch<SetStateAction<any>>] = useState([]);
+    const onlineStatus = useOnlineStatus();
 
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
-    const onSearchPress = async (searchTerm: string): Promise<void> => {
+
+    const onSearchPress = async (searchTerm: string, location: string): Promise<void> => {
         props.saveSearchTerm(searchTerm);
-        const searchResults = await fetchSearchResultsFromQuery(searchTerm);
+        const geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
+        const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong);
         setHits(searchResults);
     };
 
