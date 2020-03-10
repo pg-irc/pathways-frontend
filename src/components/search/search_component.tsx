@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect, Dispatch, SetStateAction } from 'react';
+import React, { useEffect, Dispatch, SetStateAction, useState } from 'react';
 import { SearchResultsComponent } from './search_results_component';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
@@ -45,17 +45,20 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
+    const [isLoading, setIsLoading]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
     const onSearchPress = async (searchTerm: string, location: string): Promise<void> => {
         props.saveSearchTerm(searchTerm);
         props.saveSearchLocation(location);
+        setIsLoading(true);
         const geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
         const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong);
         props.saveSearchResults(searchResults);
+        setIsLoading(false);
     };
-
+    const searchResultsProps = {...props, isLoading};
     return (
         <I18n>{(): JSX.Element => {
              return (
@@ -69,7 +72,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
                         setIsSearchInputCollapsed={props.setIsSearchInputCollapsed}
                         onSearchPress={onSearchPress}
                     />
-                    <SearchResultsComponent {...props} />
+                    <SearchResultsComponent {...searchResultsProps} />
                 </View>
             );
         }}
