@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
 
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
@@ -16,7 +16,6 @@ import { openURL } from '../link/link';
 import { MY_LOCATION } from '../../application/constants';
 
 export interface SearchProps {
-    readonly currentRefinement: string;
     readonly latLong: LatLong;
     readonly searchTerm: string;
     readonly location: string;
@@ -24,7 +23,6 @@ export interface SearchProps {
 }
 
 export interface SearchActions {
-    readonly refine: (searchTerms: string) => string;
     readonly saveSearchTerm: (s: string) => void;
     readonly setLocation: (s: string) => void;
     readonly setIsSearchInputCollapsed: (b: boolean) => void;
@@ -52,11 +50,6 @@ export const SearchInputComponent = (props: SearchProps & SearchActions): JSX.El
     const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.location);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
     const searchProps = { ...props, searchInputField, locationInputField, setSearchInputField, setLocationInputField };
-
-    useEffect((): void => {
-        debug(`SearchInput Component useEffect with '${props.searchTerm}'`);
-        props.refine(props.searchTerm);
-    }, [props.latLong]);
 
     if (props.isSearchInputCollapsed) {
         return (

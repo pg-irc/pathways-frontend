@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors, values, textStyles } from '../../application/styles';
+import { colors } from '../../application/styles';
 import { SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
@@ -16,15 +16,13 @@ import { SaveServiceAction } from '../../stores/services/actions';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
-import { View, Text, Button } from 'native-base';
-import { Trans } from '@lingui/react';
+import { View } from 'native-base';
 import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { EmptyComponent as EmptySearchComponent } from './empty_component';
 import { useOnlineStatus, OnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
-import { StateResultsProvided } from 'react-instantsearch-core';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { LatLong } from '../../validation/latlong/types';
 
@@ -32,9 +30,6 @@ export interface InfiniteHitsProps {
     readonly currentPath: string;
     // tslint:disable-next-line:no-any
     readonly hits: ReadonlyArray<any>;
-    readonly hasMore: boolean;
-    readonly refine: (searchTerms?: string) => string;
-    readonly refineNext: () => void;
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -50,25 +45,24 @@ export interface InfiniteHitsActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
-export type InfiniteHitsAndStateResultsProps = InfiniteHitsProps & InfiniteHitsActions & StateResultsProvided;
+export type InfiniteHitsAndStateResultsProps = InfiniteHitsProps & InfiniteHitsActions;
 
 export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResultsProps>): JSX.Element => {
     useTraceUpdate('InfiniteHitsComponent', props);
     const searchResults = getValidSearchResults(props);
-    const loadMoreButton = renderLoadMoreButton(props.hasMore, props.refineNext);
     const onlineStatus = useOnlineStatus();
 
     if (searchTermIsEmpty(props.searchTerm)) {
         return renderEmptyComponent(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage);
     }
 
-    if (isSearchErrorType(onlineStatus, searchResults, props.latLong, props.searching)) {
+    if (isSearchErrorType(onlineStatus, searchResults, props.latLong)) {
         return renderErrorComponent(props, onlineStatus, searchResults);
     }
 
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
-            {renderLoadingScreen(props.searching, props.isLatLongLoading)}
+            {renderLoadingScreen(props.isLatLongLoading)}
             <FlatList
                 style={{ backgroundColor: colors.white }}
                 refreshing={false}
@@ -77,14 +71,13 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
                 renderItem={renderSearchHit(props)}
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={renderHeader(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage)}
-                ListFooterComponent={loadMoreButton}
             />
         </View>
     );
 };
 
-const renderLoadingScreen = (searching: boolean, isLatLongLoading: boolean): JSX.Element => {
-    if (!isLoading(searching, isLatLongLoading)) {
+const renderLoadingScreen = (isLatLongLoading: boolean): JSX.Element => {
+    if (!isLoading(isLatLongLoading)) {
         return <EmptyComponent />;
     }
     return (
@@ -92,24 +85,6 @@ const renderLoadingScreen = (searching: boolean, isLatLongLoading: boolean): JSX
             <LoadingServiceListComponent />
         </View>
     );
-};
-
-const renderLoadMoreButton = (hasMore: boolean, refineNext: () => void): JSX.Element => {
-    if (hasMore) {
-        return (
-            <View style={{ backgroundColor: colors.lightGrey }}>
-                <Button onPress={refineNext} style={{
-                    backgroundColor: colors.teal,
-                    borderRadius: values.roundedBorderRadius,
-                    justifyContent: 'center',
-                    marginVertical: 16,
-                    marginHorizontal: 24,
-                }} >
-                    <Text style={textStyles.button} uppercase={false}><Trans>Show more services</Trans></Text>
-                </Button>
-            </View>);
-    }
-    return <EmptyComponent />;
 };
 
 const getValidSearchResults = (props: Partial<InfiniteHitsAndStateResultsProps>): ReadonlyArray<SearchServiceData> => {
@@ -145,17 +120,13 @@ const searchTermIsEmpty = (searchTerm: string): boolean => (
     !searchTerm
 );
 
-const isLoading = (searching: boolean, isLatLongLoading: boolean): boolean => (
-    searching || isLatLongLoading
+const isLoading = (isLatLongLoading: boolean): boolean => (
+    isLatLongLoading
 );
 
-const isSearchErrorType =
-(onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong, searching: boolean): boolean => {
-    if (searching) {
-        return false;
-    }
-    return isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults) || hasNoResultsFromLocationQuery(latLong);
-};
+const isSearchErrorType = (onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, latLong: LatLong): boolean => (
+    isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults) || hasNoResultsFromLocationQuery(latLong)
+);
 
 const renderErrorComponent =
 (props: Partial<InfiniteHitsAndStateResultsProps>, onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>): JSX.Element => {
@@ -173,7 +144,7 @@ const renderErrorComponent =
 
 const renderComponentByErrorType = (props: Partial<InfiniteHitsAndStateResultsProps>, errorType: Errors): JSX.Element => (
     <ErrorScreenSwitcherComponent
-        refreshScreen={props.refine}
+        refreshScreen={undefined}
         errorType={errorType}
         header={renderHeader(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage)}
     />
