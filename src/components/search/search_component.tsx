@@ -14,6 +14,7 @@ import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '..
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction } from '../../stores/search';
+import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -36,6 +37,8 @@ export interface SearchComponentActions {
 
 export type SetIsLatLongLoading = Dispatch<SetStateAction<boolean>>;
 export type SetIsInputCollapsed = Dispatch<SetStateAction<boolean>>;
+// tslint:disable-next-line: no-any
+export type SetHits = Dispatch<SetStateAction<ReadonlyArray<any>>>;
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 
@@ -44,9 +47,16 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
     const [location, setLocation]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [latLong, setLatLong]: readonly [LatLong, (latLong: LatLong) => void] = useState(undefined);
+    // tslint:disable-next-line: no-any
+    const [hits, setHits]: readonly [ReadonlyArray<any>, Dispatch<SetStateAction<any>>] = useState([]);
 
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
+    const onSearchPress = (searchTerm: string): void => {
+        props.saveSearchTerm(searchTerm);
+        fetchSearchResultsFromQuery(searchTerm, setHits);
+    };
 
+    const infiniteHitsProps = {...props, hits};
     return <I18n>{(): JSX.Element => {
 
         return <View style={{ backgroundColor: colors.pale, flex: 1 }}>
@@ -57,8 +67,10 @@ export const SearchComponent = (props: Props): JSX.Element => {
                     location={location}
                     setLocation={setLocation}
                     isSearchInputCollapsed={props.isSearchInputCollapsed}
-                    setIsSearchInputCollapsed={props.setIsSearchInputCollapsed} />
-                <InfiniteHitsComponent {...props} />
+                    setIsSearchInputCollapsed={props.setIsSearchInputCollapsed}
+                    onSearchPress={onSearchPress}
+                />
+                <InfiniteHitsComponent {...infiniteHitsProps} />
         </View>;
     }}</I18n>;
 };
