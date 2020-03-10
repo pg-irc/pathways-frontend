@@ -59,6 +59,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
     const onSearchPress = async (searchTerm: string, location: string): Promise<void> => {
         props.saveSearchTerm(searchTerm);
+        props.saveSearchLocation(location);
         const geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
         const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong);
         props.saveSearchResults(searchResults);
