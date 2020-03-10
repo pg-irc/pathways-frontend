@@ -1,23 +1,39 @@
 // tslint:disable: no-expression-statement
 import BuildUrl from 'build-url';;
-import { SetHits } from '../search_component';
+import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
+import { validateServiceSearchResponse } from '../../../validation/search';
 
-export const fetchSearchResultsFromQuery = (searchTerm: string, setHits: SetHits): void => {
+export interface AlgoliaResponse {
+    readonly exhaustiveNbHits: boolean;
+    // tslint:disable-next-line: no-any
+    readonly hits: ReadonlyArray<any>;
+    readonly hitsPerPage: number;
+    readonly nbHits: number;
+    readonly nbPages: number;
+    readonly page: number;
+    readonly params: string;
+    readonly processingTimesMs: number;
+    readonly query: string;
+}
+
+export const fetchSearchResultsFromQuery = async (searchTerm: string): Promise<any> => {
     const url = buildAlgoliaSearchUrl();
-    fetch(url, {
+    const response = await fetch(url, {
         'method': 'POST',
         headers: {
-            'X-Algolia-API-Key': '2ccc9aae1b8184fa912795078f8727f5',
+            'X-Algolia-API-Key': ALGOLIA_SEARCH_API_KEY,
             'Content-Type': 'application/json',
             'X-Algolia-Application-Id': 'MMYH1Z0D3O',
         },
         body: JSON.stringify({
             query: searchTerm,
-            hitsPerPage: '5',
+            hitsPerPage: '20',
         }),
-    }).
-    then((data) => data.json()).
-    then((dataJSON) => setHits(dataJSON.hits));
+    })
+    const responseJSON: AlgoliaResponse = await response.json();
+
+    const responseHits = validateServiceSearchResponse(responseJSON.hits);
+    return responseHits;
 };
 
 const buildAlgoliaSearchUrl = (): string => (
