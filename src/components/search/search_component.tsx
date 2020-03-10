@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect, Dispatch, SetStateAction } from 'react';
+import React, { useEffect, Dispatch, SetStateAction, useState } from 'react';
 import { SearchResultsComponent } from './search_results_component';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
@@ -17,6 +17,7 @@ import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_que
 import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
 import { useOnlineStatus } from '../../hooks/use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
+import { LatLong } from '../../validation/latlong/types';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -45,17 +46,20 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
+    const [isLoading, setIsLoading]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
     const onSearchPress = async (searchTerm: string, location: string): Promise<void> => {
         props.saveSearchTerm(searchTerm);
         props.saveSearchLocation(location);
-        const geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
-        const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong);
-        props.saveSearchResults(searchResults);
+        setIsLoading(true);
+        fetchLatLongFromLocation(location, onlineStatus).
+        then((geocoderLatLong: LatLong): Promise<ReadonlyArray<SearchServiceData>> => fetchSearchResultsFromQuery(searchTerm, geocoderLatLong)).
+        then((searchResults: ReadonlyArray<SearchServiceData>): SaveSearchResultsAction => props.saveSearchResults(searchResults)).
+        then((): void => setIsLoading(false));
     };
-
+    const searchResultsProps = {...props, isLoading};
     return (
         <I18n>{(): JSX.Element => {
              return (
@@ -69,7 +73,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
                         setIsSearchInputCollapsed={props.setIsSearchInputCollapsed}
                         onSearchPress={onSearchPress}
                     />
-                    <SearchResultsComponent {...props} />
+                    <SearchResultsComponent {...searchResultsProps} />
                 </View>
             );
         }}

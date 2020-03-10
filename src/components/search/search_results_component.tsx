@@ -21,6 +21,8 @@ import { EmptyComponent as EmptySearchComponent } from './empty_component';
 import { useOnlineStatus, OnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
+import { EmptyComponent } from '../empty_component/empty_component';
+import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 
 export interface SearchResultsProps {
     // tslint:disable-next-line:no-any
@@ -30,6 +32,7 @@ export interface SearchResultsProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
     readonly searchTerm: string;
+    readonly isLoading: boolean;
 }
 
 export interface SearchResultsActions {
@@ -48,12 +51,13 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
         return renderEmptyComponent(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage);
     }
 
-    if (isSearchErrorType(onlineStatus, props.searchResults)) {
+    if (isSearchErrorType(onlineStatus, props.searchResults, props.isLoading)) {
         return renderErrorComponent(props, onlineStatus, props.searchResults);
     }
 
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
+            {renderLoadingScreen(props.isLoading)}
             <FlatList
                 style={{ backgroundColor: colors.white }}
                 refreshing={false}
@@ -88,13 +92,29 @@ const renderSearchHit = R.curry((props: Props, itemInfo: ListRenderItemInfo<Sear
     );
 });
 
+const renderLoadingScreen = (isLoading: boolean): JSX.Element => {
+    if (!isLoading) {
+        console.log('foo')
+        return <EmptyComponent />;
+    }
+    console.log('bar')
+    return (
+        <View style={{ height: '100%', width: '100%' }}>
+            <LoadingServiceListComponent />
+        </View>
+    );
+};
+
 const searchTermIsEmpty = (searchTerm: string): boolean => (
     !searchTerm
 );
 
-const isSearchErrorType = (onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>): boolean => (
-    isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults)
-);
+const isSearchErrorType = (onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, isLoading: boolean): boolean => {
+    if (isLoading) {
+        return false;
+    }
+    return isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults)
+};
 
 const renderErrorComponent =
 (props: Partial<Props>, onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>): JSX.Element => {
