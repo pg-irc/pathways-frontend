@@ -51,9 +51,10 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [hits, setHits]: readonly [ReadonlyArray<any>, Dispatch<SetStateAction<any>>] = useState([]);
 
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
-    const onSearchPress = (searchTerm: string): void => {
+    const onSearchPress = async (searchTerm: string): Promise<void> => {
         props.saveSearchTerm(searchTerm);
-        fetchSearchResultsFromQuery(searchTerm, setHits);
+        const searchResults = await fetchSearchResultsFromQuery(searchTerm);
+        setHits(searchResults);
     };
 
     const infiniteHitsProps = {...props, hits};

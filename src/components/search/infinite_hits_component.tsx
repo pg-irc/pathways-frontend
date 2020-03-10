@@ -9,7 +9,6 @@ import { SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
-import { validateServiceSearchResponse } from '../../validation/search';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction } from '../../stores/services/actions';
@@ -49,15 +48,14 @@ export type InfiniteHitsAndStateResultsProps = InfiniteHitsProps & InfiniteHitsA
 
 export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResultsProps>): JSX.Element => {
     useTraceUpdate('InfiniteHitsComponent', props);
-    const searchResults = getValidSearchResults(props);
     const onlineStatus = useOnlineStatus();
 
     if (searchTermIsEmpty(props.searchTerm)) {
         return renderEmptyComponent(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage);
     }
 
-    if (isSearchErrorType(onlineStatus, searchResults, props.latLong)) {
-        return renderErrorComponent(props, onlineStatus, searchResults);
+    if (isSearchErrorType(onlineStatus, props.hits, props.latLong)) {
+        return renderErrorComponent(props, onlineStatus, props.hits);
     }
 
     return (
@@ -66,7 +64,7 @@ export const InfiniteHitsComponent = (props: Partial<InfiniteHitsAndStateResults
             <FlatList
                 style={{ backgroundColor: colors.white }}
                 refreshing={false}
-                data={searchResults}
+                data={props.hits}
                 keyExtractor={keyExtractor}
                 renderItem={renderSearchHit(props)}
                 ItemSeparatorComponent={SearchListSeparator}
@@ -85,14 +83,6 @@ const renderLoadingScreen = (isLatLongLoading: boolean): JSX.Element => {
             <LoadingServiceListComponent />
         </View>
     );
-};
-
-const getValidSearchResults = (props: Partial<InfiniteHitsAndStateResultsProps>): ReadonlyArray<SearchServiceData> => {
-    const validationResult = validateServiceSearchResponse(props.hits);
-    if (!validationResult.isValid) {
-        throw new Error(validationResult.errors);
-    }
-    return validationResult.validData;
 };
 
 const keyExtractor = (item: SearchServiceData): string => (
