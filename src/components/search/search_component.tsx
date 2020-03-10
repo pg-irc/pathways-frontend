@@ -1,15 +1,10 @@
 // tslint:disable:no-expression-statement
 import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
-import { InstantSearch, connectInfiniteHits, connectConfigure, connectSearchBox, connectStateResults } from 'react-instantsearch-native';
 import { InfiniteHitsComponent } from './infinite_hits_component';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
-import { emptyComponent } from '../empty_component/empty_component';
 import { LatLong } from '../../validation/latlong/types';
-import { useFetchLatLongFromLocation } from './api/use_fetch_lat_long_from_location';
-import { toServiceSearchConfiguration } from './api/configuration';
 import { useTraceUpdate } from '../../helpers/debug';
-import { ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { I18n } from '@lingui/react';
 import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
@@ -19,8 +14,6 @@ import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '..
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction } from '../../stores/search';
-import { searchClient } from './api/search_client';
-import { InfiniteHitsAndStateResultsProps } from './infinite_hits_component';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -51,31 +44,13 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
     const [location, setLocation]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [latLong, setLatLong]: readonly [LatLong, (latLong: LatLong) => void] = useState(undefined);
-    const [isLatLongLoading, setIsLatLongLoading]: readonly [boolean, SetIsLatLongLoading] = useState(false);
 
-    useEffect((): void => {
-        props.saveSearchLocation(location);
-        if (location === '') {
-            setLatLong(undefined);
-        }
-    }, [location]);
-
-    useFetchLatLongFromLocation(location, setLatLong, setIsLatLongLoading);
     useDisableAnalyticsOnEasterEgg(location, props.disableAnalytics);
-
-    const SearchInputConnectedComponent = connectSearchBox(SearchInputComponent);
-    const ConfigureConnectedComponent = connectConfigure((): JSX.Element => emptyComponent());
-    const InfiniteHitsConnectedComponent = connectInfiniteHits(connectStateResults(
-        (infiniteHitsAndStateResultsProps: InfiniteHitsAndStateResultsProps) =>
-            <InfiniteHitsComponent {...infiniteHitsAndStateResultsProps} latLong={latLong} isLatLongLoading={isLatLongLoading} />,
-    ),
-    );
 
     return <I18n>{(): JSX.Element => {
 
         return <View style={{ backgroundColor: colors.pale, flex: 1 }}>
-            <InstantSearch indexName={servicesIndex()} searchClient={searchClient} {...props} >
-                <SearchInputConnectedComponent
+                <SearchInputComponent
                     latLong={latLong}
                     searchTerm={props.searchTerm}
                     saveSearchTerm={props.saveSearchTerm}
@@ -83,9 +58,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
                     setLocation={setLocation}
                     isSearchInputCollapsed={props.isSearchInputCollapsed}
                     setIsSearchInputCollapsed={props.setIsSearchInputCollapsed} />
-                <ConfigureConnectedComponent {...toServiceSearchConfiguration(latLong)} />
-                <InfiniteHitsConnectedComponent {...props} />
-            </InstantSearch>
+                <InfiniteHitsComponent {...props} />
         </View>;
     }}</I18n>;
 };
@@ -102,6 +75,3 @@ const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (dis
     };
     useEffect(effect, [location]);
 };
-const servicesIndex = (): string => (
-    ALGOLIA_SERVICES_INDEX || 'dev_services'
-);
