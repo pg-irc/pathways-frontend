@@ -5,7 +5,6 @@ import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { values, applicationStyles, colors, textStyles } from '../../application/styles';
-import { LatLong } from '../../validation/latlong/types';
 import { debug, useTraceUpdate } from '../../helpers/debug';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import { ClearInputButton } from './clear_input_button';
@@ -16,15 +15,14 @@ import { openURL } from '../link/link';
 import { MY_LOCATION } from '../../application/constants';
 
 export interface SearchProps {
-    readonly latLong: LatLong;
     readonly searchTerm: string;
-    readonly location: string;
+    readonly searchLocation: string;
     readonly isSearchInputCollapsed: boolean;
 }
 
 export interface SearchActions {
     readonly saveSearchTerm: (s: string) => void;
-    readonly setLocation: (s: string) => void;
+    readonly saveSearchLocation: (location: string) => void;
     readonly setIsSearchInputCollapsed: (b: boolean) => void;
     readonly onSearchPress: (searchTerm: string, location: string) => void;
 }
@@ -48,7 +46,7 @@ export type SetShowSearchButton = Dispatch<SetStateAction<boolean>>;
 
 export const SearchInputComponent = (props: SearchProps & SearchActions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
-    const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.location);
+    const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
     const searchProps = { ...props, searchInputField, locationInputField, setSearchInputField, setLocationInputField };
 
@@ -87,7 +85,7 @@ const combineSearchInputs = (searchInput: string, locationInput: string, i18nRen
 const collapsedInput = (props: Props): JSX.Element => {
     const clearSearch = (): void => {
         props.saveSearchTerm('');
-        props.setLocation('');
+        props.saveSearchLocation('');
     };
 
     return (
