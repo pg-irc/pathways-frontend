@@ -62,7 +62,7 @@ export const INITIAL_EMPTY_SERVICES_FOR_TOPIC = 'SERVICES_FOR_TOPIC:INITIAL_EMPT
 
 export const SET_MANUAL_USER_LOCATION = 'SetManualLocation';
 export const CLEAR_MANUAL_USER_LOCATION = 'ClearManualLocation';
-export const NEAR_MY_LOCATION = 'Near My Location';
+export const MY_LOCATION = 'My Location';
 
 export const SENTRY_SERVICES_LISTING_ERROR_CONTEXT = 'ServicesListing';
 
@@ -76,5 +76,6 @@ export const COLLAPSE_DETAIL = 'COLLAPSE_DETAIL';
 
 export const SAVE_SEARCH_TERM = 'SAVE_SEARCH_TERM';
 export const SAVE_SEARCH_LOCATION = 'SAVE_SEARCH_LOCATION';
+export const SET_IS_INPUT_COLLAPSED = 'SET_IS_INPUT_COLLAPSED';
 
 export const ANALYTICS_LINK_PRESSED = 'ANALYTICS_LINK_PRESSED';

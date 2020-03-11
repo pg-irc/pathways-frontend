@@ -6,15 +6,17 @@ import { saveService, SaveServiceAction, BookmarkServiceAction, UnbookmarkServic
 import { HumanServiceData } from '../../validation/services/types';
 import { disableAnalytics, DisableAnalyticsAction, HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
-import { SaveSearchTermAction, SaveSearchLocationAction, saveSearchLocation, saveSearchTerm } from '../../stores/search';
+import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction, saveSearchLocation, saveSearchTerm, setIsSearchInputCollapsed } from '../../stores/search';
 import { selectSearchTerm } from '../../selectors/search/select_search_term';
 import { selectSearchLocation } from '../../selectors/search/select_search_location';
+import { selectIsInputCollapsed } from '../../selectors/search/select_is_input_collapsed';
 import { selectShowPartialLocalizationMessage } from '../../selectors/user_profile/select_show_partial_localization_message';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
     searchTerm: selectSearchTerm(store),
     searchLocation: selectSearchLocation(store),
+    isSearchInputCollapsed: selectIsInputCollapsed(store),
     showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
 });
 
@@ -25,6 +27,7 @@ type Actions =
     UnbookmarkServiceAction |
     SaveSearchTermAction |
     SaveSearchLocationAction |
+    SetIsInputCollapsedAction |
     HidePartialLocalizationMessageAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
@@ -45,6 +48,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     ),
     saveSearchLocation: (searchLocation: string): SaveSearchLocationAction => (
         dispatch(saveSearchLocation(searchLocation))
+    ),
+    setIsSearchInputCollapsed: (isSearchInputCollapsed: boolean): SetIsInputCollapsedAction => (
+        dispatch(setIsSearchInputCollapsed(isSearchInputCollapsed))
     ),
     hidePartialLocalizationMessage: (): HidePartialLocalizationMessageAction => (
         dispatch(hidePartialLocalizationMessage())
