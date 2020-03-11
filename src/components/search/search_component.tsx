@@ -58,14 +58,14 @@ export const SearchComponent = (props: Props): JSX.Element => {
         // tslint:disable-next-line: no-let
         let geocoderLatLong = props.searchLatLong;
         if (props.searchLocation !== location) {
-            geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
+            geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus).catch((): undefined => undefined);
             props.saveSearchLatLong(geocoderLatLong);
         }
-        const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong);
+        const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong).catch((): undefined => undefined);
         props.saveSearchResults(searchResults);
         setIsLoading(false);
     };
-    const searchResultsProps = {...props, isLoading};
+    const searchResultsProps = {...props, isLoading, onlineStatus};
     return (
         <I18n>{(): JSX.Element => {
              return (

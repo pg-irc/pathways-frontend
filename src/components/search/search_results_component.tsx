@@ -18,7 +18,7 @@ import { View } from 'native-base';
 import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { EmptyComponent as EmptySearchComponent } from './empty_component';
-import { useOnlineStatus, OnlineStatus } from '../../hooks/use_online_status';
+import { OnlineStatus } from '../../hooks/use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -35,6 +35,7 @@ export interface SearchResultsProps {
     readonly searchTerm: string;
     readonly searchLatLong: LatLong;
     readonly isLoading: boolean;
+    readonly onlineStatus: OnlineStatus;
 }
 
 export interface SearchResultsActions {
@@ -47,16 +48,14 @@ type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 
 export const SearchResultsComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchResultsComponent', props);
-    const onlineStatus = useOnlineStatus();
 
-    if (searchTermIsEmpty(props.searchTerm)) {
+    if (searchTermIsEmpty(props.searchTerm, props.onlineStatus)) {
         return renderEmptyComponent(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage);
     }
 
-    if (isSearchErrorType(onlineStatus, props.searchResults, props.isLoading, props.searchLatLong)) {
-        return renderErrorComponent(props, onlineStatus, props.searchResults);
+    if (isSearchErrorType(props.onlineStatus, props.searchResults, props.isLoading, props.searchLatLong)) {
+        return renderErrorComponent(props, props.onlineStatus, props.searchResults);
     }
-
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
             {renderLoadingScreen(props.isLoading)}
@@ -105,8 +104,8 @@ const renderLoadingScreen = (isLoading: boolean): JSX.Element => {
     );
 };
 
-const searchTermIsEmpty = (searchTerm: string): boolean => (
-    !searchTerm
+const searchTermIsEmpty = (searchTerm: string, onlineStatus: OnlineStatus): boolean => (
+    !searchTerm && onlineStatus !== OnlineStatus.Offline
 );
 
 const isSearchErrorType =

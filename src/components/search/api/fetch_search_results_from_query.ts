@@ -19,22 +19,23 @@ export interface AlgoliaResponse {
 
 export const fetchSearchResultsFromQuery = async (searchTerm: string, latLong: LatLong): Promise<any> => {
     const url = buildAlgoliaSearchUrl();
-    const response = await fetch(url, {
-        'method': 'POST',
-        headers: {
-            'X-Algolia-API-Key': ALGOLIA_SEARCH_API_KEY,
-            'Content-Type': 'application/json',
-            'X-Algolia-Application-Id': 'MMYH1Z0D3O',
-        },
-        body: JSON.stringify({
-            query: searchTerm,
-            hitsPerPage: '20',
-            aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
-        }),
-    });
     try {
-        const responseJSON: AlgoliaResponse = await response.json();
-        return validateServiceSearchResponse(responseJSON.hits);
+        const response = await fetch(url, {
+            'method': 'POST',
+            headers: {
+                'X-Algolia-API-Key': ALGOLIA_SEARCH_API_KEY,
+                'Content-Type': 'application/json',
+                'X-Algolia-Application-Id': 'MMYH1Z0D3O',
+            },
+            body: JSON.stringify({
+                query: searchTerm,
+                hitsPerPage: '20',
+                aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
+            }),
+        });
+
+            const responseJSON: AlgoliaResponse = await response.json();
+            return validateServiceSearchResponse(responseJSON.hits);
     } catch (Error) {
         return [];
     }
