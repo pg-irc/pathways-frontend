@@ -150,6 +150,7 @@ export const userData = {
         "searchLocation": {
             "type": "string"
         },
+        "searchLatLong": latLong,
         "searchResults": serviceSearchItemArray,
         "isSearchInputCollapsed": {
             "type": "boolean"

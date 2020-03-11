@@ -4,6 +4,7 @@ import { Id as TopicId } from '../../topics';
 import { ServiceMap } from '../../../validation/services/types';
 import { PersistedData } from '../../persisted_data';
 import { SearchServiceData } from '../../../validation/search/types';
+import { LatLong } from '../../../validation/latlong/types';
 
 export class PersistedDataBuilder {
     chosenAnswers: AnswerId[] = [];
@@ -13,6 +14,7 @@ export class PersistedDataBuilder {
     disableAnalytics: boolean = false;
     searchTerm: string = '';
     searchLocation: string = '';
+    searchLatLong: LatLong = undefined;
     searchResults: ReadonlyArray<SearchServiceData> = [];
     isSearchInputCollapsed: boolean = false;
     showPartialLocalizationMessage: boolean = true;
@@ -55,6 +57,11 @@ export class PersistedDataBuilder {
         return this;
     }
 
+    withSearchLatLong(searchLatLong: LatLong): PersistedDataBuilder {
+        this.searchLatLong = searchLatLong;
+        return this;
+    }
+
     withSearchResults(searchResults: ReadonlyArray<SearchServiceData>): PersistedDataBuilder {
         this.searchResults = searchResults;
         return this;
@@ -79,6 +86,7 @@ export class PersistedDataBuilder {
             disableAnalytics: this.disableAnalytics,
             searchTerm: this.searchTerm,
             searchLocation: this.searchLocation,
+            searchLatLong: this.searchLatLong,
             searchResults: this.searchResults,
             isSearchInputCollapsed: this.isSearchInputCollapsed,
             showPartialLocalizationMessage: this.showPartialLocalizationMessage,

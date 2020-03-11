@@ -1,9 +1,11 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 import { SearchServiceData } from '../validation/search/types';
+import { LatLong } from '../validation/latlong/types';
 
 export type SaveSearchTermAction = Readonly<ReturnType<typeof saveSearchTerm>>;
 export type SaveSearchLocationAction = Readonly<ReturnType<typeof saveSearchLocation>>;
+export type SaveSearchLatLongAction = Readonly<ReturnType<typeof saveSearchLatLong>>;
 export type SaveSearchResultsAction = Readonly<ReturnType<typeof saveSearchResults>>;
 export type SetIsInputCollapsedAction = Readonly<ReturnType<typeof setIsSearchInputCollapsed>>;
 
@@ -17,6 +19,11 @@ export const saveSearchLocation = (searchLocation: string) => (
     helpers.makeAction(constants.SAVE_SEARCH_LOCATION, { searchLocation })
 );
 
+// tslint:disable-next-line: typedef
+export const saveSearchLatLong = (searchLatLong: LatLong) => (
+    helpers.makeAction(constants.SAVE_SEARCH_LAT_LONG, { searchLatLong })
+);
+
 // tslint:disable-next-line:typedef
 export const saveSearchResults = (searchResults: ReadonlyArray<SearchServiceData>) => (
     helpers.makeAction(constants.SAVE_SEARCH_RESULTS, { searchResults })
@@ -27,20 +34,27 @@ export const setIsSearchInputCollapsed = (isSearchInputCollapsed: boolean) => (
     helpers.makeAction(constants.SET_IS_INPUT_COLLAPSED, { isSearchInputCollapsed })
 );
 
-export type SearchAction = SaveSearchTermAction | SaveSearchLocationAction | SaveSearchResultsAction |SetIsInputCollapsedAction;
+export type SearchAction =
+SaveSearchTermAction |
+SaveSearchLocationAction |
+SaveSearchLatLongAction |
+SaveSearchResultsAction |
+SetIsInputCollapsedAction;
 
 export interface SearchStore {
     readonly searchTerm: string;
     readonly searchLocation: string;
-    readonly isSearchInputCollapsed: boolean;
+    readonly searchLatLong: LatLong;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
+    readonly isSearchInputCollapsed: boolean;
 }
 
 export const buildDefaultStore = (): SearchStore => ({
     searchTerm: '',
     searchLocation: '',
-    isSearchInputCollapsed: false,
+    searchLatLong: undefined,
     searchResults: [],
+    isSearchInputCollapsed: false,
 });
 
 export const reducer = (store: SearchStore = buildDefaultStore(), action?: SearchAction): SearchStore => {
@@ -57,6 +71,11 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
             return ({
                 ...store,
                 searchLocation: action.payload.searchLocation,
+            });
+        case constants.SAVE_SEARCH_LAT_LONG:
+            return ({
+                ...store,
+                searchLatLong: action.payload.searchLatLong,
             });
         case constants.SAVE_SEARCH_RESULTS:
             return ({

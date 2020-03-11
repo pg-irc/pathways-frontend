@@ -12,16 +12,18 @@ import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
-import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction, SaveSearchResultsAction } from '../../stores/search';
+import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction, SaveSearchResultsAction, SaveSearchLatLongAction } from '../../stores/search';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
 import { useOnlineStatus } from '../../hooks/use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
+import { LatLong } from '../../validation/latlong/types';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly searchTerm: string;
     readonly searchLocation: string;
+    readonly searchLatLong: LatLong;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly isSearchInputCollapsed: boolean;
     readonly showPartialLocalizationMessage: boolean;
@@ -34,6 +36,7 @@ export interface SearchComponentActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly saveSearchTerm: (searchTerm: string) => SaveSearchTermAction;
     readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
+    readonly saveSearchLatLong: (searchLatLong: LatLong) => SaveSearchLatLongAction;
     readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => SaveSearchResultsAction;
     readonly setIsSearchInputCollapsed: (isSearchInputCollapsed: boolean) => SetIsInputCollapsedAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
@@ -56,6 +59,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
         const geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
         const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong);
         props.saveSearchResults(searchResults);
+        props.saveSearchLatLong(geocoderLatLong);
         setIsLoading(false);
     };
     const searchResultsProps = {...props, isLoading};

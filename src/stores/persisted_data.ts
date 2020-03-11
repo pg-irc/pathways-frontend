@@ -4,6 +4,7 @@ import { Id as AnswerId } from './questionnaire';
 import { Id as TopicId } from './topics';
 import { ServiceMap } from '../validation/services/types';
 import { SearchServiceData } from '../validation/search/types';
+import { LatLong } from '../validation/latlong/types';
 
 export interface PersistedData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
@@ -13,6 +14,7 @@ export interface PersistedData {
     readonly disableAnalytics: boolean;
     readonly searchTerm: string;
     readonly searchLocation: string;
+    readonly searchLatLong: LatLong;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly isSearchInputCollapsed: boolean;
     readonly showPartialLocalizationMessage: boolean;

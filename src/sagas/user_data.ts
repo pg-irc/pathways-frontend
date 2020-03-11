@@ -94,6 +94,7 @@ export const setUserDataDefaultValues = (data: any): PersistedData => (
         disableAnalytics: typeof data.disableAnalytics === 'undefined' ? false : data.disableAnalytics,
         searchTerm: data.searchTerm || '',
         searchLocation: data.searchLocation || '',
+        searchLatLong: data.searchLatLong || undefined,
         searchResults: data.searchResults || [],
         isSearchInputCollapsed: typeof data.isSearchInputCollapsed === 'undefined' ? false : data.isSearchInputCollapsed,
         showPartialLocalizationMessage: typeof data.showPartialLocalizationMessage === 'undefined' ? true : data.showPartialLocalizationMessage,
