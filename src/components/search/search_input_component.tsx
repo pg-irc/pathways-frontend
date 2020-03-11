@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
 
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState, Dispatch, SetStateAction, MutableRefObject } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
@@ -30,6 +30,8 @@ export interface SearchActions {
 interface SearchInputProps {
     readonly searchInputField: string;
     readonly locationInputField: string;
+    readonly searchInputRef: MutableRefObject<any>;
+    readonly searchLocationRef: MutableRefObject<any>;
     readonly setSearchInputField: (s: string) => void;
     readonly setLocationInputField: (s: string) => void;
 }
@@ -48,7 +50,9 @@ export const SearchInputComponent = (props: SearchProps & SearchActions): JSX.El
     useTraceUpdate('SearchInputComponent', props);
     const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
-    const searchProps = { ...props, searchInputField, locationInputField, setSearchInputField, setLocationInputField };
+    const searchInputRef = React.useRef(undefined);
+    const searchLocationRef = React.useRef(undefined);
+    const searchProps = { ...props, searchInputField, locationInputField, setSearchInputField, setLocationInputField, searchInputRef, searchLocationRef };
 
     if (props.isSearchInputCollapsed) {
         return (
@@ -110,16 +114,15 @@ const collapsedInput = (props: Props): JSX.Element => {
 };
 
 const expandedInput = (props: Props): JSX.Element => {
-    const searchInputRef = React.useRef(undefined);
-    const searchLocationRef = React.useRef(undefined);
+
     const clearSearch = (): void => {
         props.setSearchInputField('');
-        searchInputRef.current.focus();
+        props.searchInputRef.current.focus();
     };
 
     const clearLocation = (): void => {
         props.setLocationInputField('');
-        searchLocationRef.current.focus();
+        props.searchLocationRef.current.focus();
     };
 
     const getOpacity = (input: string): number => input === '' ? .6 : 1;
@@ -133,7 +136,7 @@ const expandedInput = (props: Props): JSX.Element => {
                     <TouchableOpacity style={applicationStyles.searchContainer}>
                         <InputIcon name='search' />
                         <TextInput
-                            ref={searchInputRef}
+                            ref={props.searchInputRef}
                             style={[applicationStyles.searchInput, { opacity: getOpacity(props.searchInputField) }]}
                             onChangeText={(d: string): void => {
                                 debug(`SearchInputComponent search text changed to '${d}'`);
@@ -149,7 +152,7 @@ const expandedInput = (props: Props): JSX.Element => {
                     <TouchableOpacity style={applicationStyles.searchContainer}>
                         <InputIcon name='location-on' />
                         <TextInput
-                            ref={searchLocationRef}
+                            ref={props.searchLocationRef}
                             style={[applicationStyles.searchInput, { opacity: getOpacity(props.locationInputField) }]}
                             onChangeText={(d: string): void => {
                                 debug(`SearchInputComponent location text changed to '${d}'`);

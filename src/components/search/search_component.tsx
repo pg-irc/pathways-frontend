@@ -52,6 +52,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
     const onSearchPress = async (searchTerm: string, location: string): Promise<void> => {
+        props.setIsSearchInputCollapsed(true);
         props.saveSearchTerm(searchTerm);
         props.saveSearchLocation(location);
         setIsLoading(true);
