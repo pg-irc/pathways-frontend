@@ -32,8 +32,12 @@ export const fetchSearchResultsFromQuery = async (searchTerm: string, latLong: L
             aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
         }),
     });
-    const responseJSON: AlgoliaResponse = await response.json();
-    return validateServiceSearchResponse(responseJSON.hits);
+    try {
+        const responseJSON: AlgoliaResponse = await response.json();
+        return validateServiceSearchResponse(responseJSON.hits);
+    } catch (Error) {
+        return [];
+    }
 };
 
 const buildAlgoliaSearchUrl = (): string => (

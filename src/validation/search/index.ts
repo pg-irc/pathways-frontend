@@ -4,7 +4,6 @@ import { serviceSearchItemArray } from './schema';
 import { ValidationResult } from '../validation_result';
 const Ajv = require('ajv');
 
-// TODO add union type for Hits that is either error or success
 export const validateServiceSearchResponse = (hits: ReadonlyArray<any>): any => {
     const validationResult = validateServiceSearchHits(hits);
     if (!validationResult.isValid) {
