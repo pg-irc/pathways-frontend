@@ -23,6 +23,7 @@ import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitch
 import { Errors } from '../../validation/errors/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
+import { LatLong } from '../../validation/latlong/types';
 
 export interface SearchResultsProps {
     // tslint:disable-next-line:no-any
@@ -32,6 +33,7 @@ export interface SearchResultsProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
     readonly searchTerm: string;
+    readonly searchLatLong: LatLong;
     readonly isLoading: boolean;
 }
 
@@ -51,7 +53,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
         return renderEmptyComponent(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage);
     }
 
-    if (isSearchErrorType(onlineStatus, props.searchResults, props.isLoading)) {
+    if (isSearchErrorType(onlineStatus, props.searchResults, props.isLoading, props.searchLatLong)) {
         return renderErrorComponent(props, onlineStatus, props.searchResults);
     }
 
@@ -107,11 +109,12 @@ const searchTermIsEmpty = (searchTerm: string): boolean => (
     !searchTerm
 );
 
-const isSearchErrorType = (onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, isLoading: boolean): boolean => {
+const isSearchErrorType =
+(onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, isLoading: boolean, latLong: LatLong): boolean => {
     if (isLoading) {
         return false;
     }
-    return isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults)
+    return isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults) || hasNoResultsFromLocationQuery(latLong);
 };
 
 const renderErrorComponent =
@@ -121,6 +124,9 @@ const renderErrorComponent =
     }
     if (hasNoResultsFromSearchTermQuery(searchResults)) {
         return renderComponentByErrorType(props, Errors.NoMatchingSearchResults);
+    }
+    if (hasNoResultsFromLocationQuery(props.searchLatLong)) {
+        return renderComponentByErrorType(props, Errors.InvalidSearchLocation);
     }
     return renderComponentByErrorType(props, Errors.Exception);
 };
@@ -140,6 +146,10 @@ const isOffline = (onlineStatus: OnlineStatus): boolean => (
 const hasNoResultsFromSearchTermQuery = (searchResults: ReadonlyArray<SearchServiceData>): boolean => (
     searchResults.length === 0
 );
+
+const hasNoResultsFromLocationQuery = (latLong: LatLong): boolean => (
+    latLong && latLong.lat === 0 && latLong.lng === 0
+ );
 
 const renderEmptyComponent =
 (showPartialLocalizationMessage: boolean, hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction): JSX.Element => (

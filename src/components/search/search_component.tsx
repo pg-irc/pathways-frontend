@@ -51,15 +51,18 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [isLoading, setIsLoading]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
-
     const onSearchPress = async (searchTerm: string, location: string): Promise<void> => {
         props.saveSearchTerm(searchTerm);
         props.saveSearchLocation(location);
         setIsLoading(true);
-        const geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
+        // tslint:disable-next-line: no-let
+        let geocoderLatLong = props.searchLatLong;
+        if (props.searchLocation !== location) {
+            geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
+            props.saveSearchLatLong(geocoderLatLong);
+        }
         const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong);
         props.saveSearchResults(searchResults);
-        props.saveSearchLatLong(geocoderLatLong);
         setIsLoading(false);
     };
     const searchResultsProps = {...props, isLoading};
