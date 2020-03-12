@@ -101,7 +101,7 @@ const collapsedInput = (props: Props): JSX.Element => {
                     <TouchableOpacity style={applicationStyles.searchContainer}
                         onPress={(): void => props.setIsSearchInputCollapsed(false)}>
                         <InputIcon name='search' />
-                        <Text numberOfLines={1} style={{ flex: 1 }}>
+                        <Text numberOfLines={1} style={[textStyles.paragraphStyle, { flex: 1 }]}>
                             {combineSearchInputs(props.searchInputField, props.locationInputField, i18nRenderProp)}
                         </Text>
                         <ClearInputButton visible={true} onPress={(): void => {
