@@ -33,6 +33,7 @@ export interface SearchResultsProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
     readonly searchTerm: string;
+    readonly searchLocation: string;
     readonly searchLatLong: LatLong;
     readonly isLoading: boolean;
     readonly onlineStatus: OnlineStatus;
@@ -42,6 +43,7 @@ export interface SearchResultsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
+    readonly onSearchPress: (searchTerm: string, location: string) => Promise<void>;
 }
 
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
@@ -54,7 +56,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     }
 
     if (isSearchErrorType(props.onlineStatus, props.searchResults, props.isLoading, props.searchLatLong)) {
-        return renderErrorComponent(props, props.onlineStatus, props.searchResults);
+        return renderErrorComponent(props, props.onlineStatus, props.searchResults, props.onSearchPress);
     }
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
@@ -117,22 +119,22 @@ const isSearchErrorType =
 };
 
 const renderErrorComponent =
-(props: Props, onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>): JSX.Element => {
+(props: Props, onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, onSearchPress: (searchTerm: string, location: string) => Promise<void>): JSX.Element => {
     if (isOffline(onlineStatus)) {
-        return renderComponentByErrorType(props, Errors.Offline);
+        return renderComponentByErrorType(props, Errors.Offline, onSearchPress);
     }
     if (hasNoResultsFromSearchTermQuery(searchResults)) {
-        return renderComponentByErrorType(props, Errors.NoMatchingSearchResults);
+        return renderComponentByErrorType(props, Errors.NoMatchingSearchResults, onSearchPress);
     }
     if (hasNoResultsFromLocationQuery(props.searchLatLong)) {
-        return renderComponentByErrorType(props, Errors.InvalidSearchLocation);
+        return renderComponentByErrorType(props, Errors.InvalidSearchLocation, onSearchPress);
     }
-    return renderComponentByErrorType(props, Errors.Exception);
+    return renderComponentByErrorType(props, Errors.Exception, onSearchPress);
 };
 
-const renderComponentByErrorType = (props: Props, errorType: Errors): JSX.Element => (
+const renderComponentByErrorType = (props: Props, errorType: Errors, onSearchPress: (searchTerm: string, location: string) => Promise<void>): JSX.Element => (
     <ErrorScreenSwitcherComponent
-        refreshScreen={undefined}
+        refreshScreen={() => onSearchPress(props.searchTerm, props.searchLocation)}
         errorType={errorType}
         header={renderHeader(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage)}
     />
