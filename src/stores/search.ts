@@ -2,6 +2,7 @@ import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 import { SearchServiceData } from '../validation/search/types';
 import { LatLong } from '../validation/latlong/types';
+import { ClearAllUserDataAction } from './questionnaire/actions';
 
 export type SaveSearchTermAction = Readonly<ReturnType<typeof saveSearchTerm>>;
 export type SaveSearchLocationAction = Readonly<ReturnType<typeof saveSearchLocation>>;
@@ -39,7 +40,8 @@ SaveSearchTermAction |
 SaveSearchLocationAction |
 SaveSearchLatLongAction |
 SaveSearchResultsAction |
-SetIsInputCollapsedAction;
+SetIsInputCollapsedAction |
+ClearAllUserDataAction;
 
 export interface SearchStore {
     readonly searchTerm: string;
@@ -87,6 +89,8 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
                 ...store,
                 isSearchInputCollapsed: action.payload.isSearchInputCollapsed,
             });
+        case constants.CLEAR_ALL_USER_DATA:
+            return buildDefaultStore();
         default:
             return store;
     }
