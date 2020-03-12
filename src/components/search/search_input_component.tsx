@@ -13,6 +13,7 @@ import * as Permissions from 'expo-permissions';
 import { isAndroid } from '../../helpers/is_android';
 import { openURL } from '../link/link';
 import { MY_LOCATION } from '../../application/constants';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface SearchProps {
     readonly searchTerm: string;
@@ -32,6 +33,8 @@ interface SearchInputProps {
     readonly locationInputField: string;
     readonly searchInputRef: MutableRefObject<any>;
     readonly searchLocationRef: MutableRefObject<any>;
+    readonly showMyLocationButton: boolean;
+    readonly setShowMyLocationButton: (b: boolean) => void;
     readonly setSearchInputField: (s: string) => void;
     readonly setLocationInputField: (s: string) => void;
 }
@@ -50,9 +53,10 @@ export const SearchInputComponent = (props: SearchProps & SearchActions): JSX.El
     useTraceUpdate('SearchInputComponent', props);
     const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
+    const [showMyLocationButton, setShowMyLocationButton]: readonly [boolean, SetShowMyLocationButton] = useState(false);
     const searchInputRef = React.useRef(undefined);
     const searchLocationRef = React.useRef(undefined);
-    const searchProps = { ...props, searchInputField, locationInputField, setSearchInputField, setLocationInputField, searchInputRef, searchLocationRef };
+    const searchProps = { ...props, searchInputField, locationInputField, setSearchInputField, setLocationInputField, searchInputRef, searchLocationRef, showMyLocationButton, setShowMyLocationButton: setShowMyLocationButton };
 
     if (props.isSearchInputCollapsed) {
         return (
@@ -88,6 +92,7 @@ const combineSearchInputs = (searchInput: string, locationInput: string, i18nRen
 
 const collapsedInput = (props: Props): JSX.Element => {
     const clearSearch = (): void => {
+        props.setShowMyLocationButton(true);
         props.saveSearchTerm('');
         props.saveSearchLocation('');
         props.setSearchInputField('');
@@ -124,6 +129,7 @@ const expandedInput = (props: Props): JSX.Element => {
 
     const clearLocation = (): void => {
         props.setLocationInputField('');
+        props.setShowMyLocationButton(true);
         props.searchLocationRef.current.focus();
     };
 
@@ -160,6 +166,7 @@ const expandedInput = (props: Props): JSX.Element => {
                                 debug(`SearchInputComponent location text changed to '${d}'`);
                                 props.setLocationInputField(d);
                             }}
+                            onFocus= {(): void => props.setShowMyLocationButton(true)}
                             value={props.locationInputField}
                             placeholder={buildTranslatedString(i18nRenderProp.i18n, 'Enter city, address, or postal code')} // TODO translate
                             placeholderTextColor={colors.greyishBrown}
@@ -169,7 +176,7 @@ const expandedInput = (props: Props): JSX.Element => {
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 4 }}>
                         {renderSearchButton(props)}
-                        {renderMyLocationButton(props.setLocationInputField)}
+                        {renderMyLocationButton(props.setLocationInputField, props.showMyLocationButton, props.setShowMyLocationButton)}
                     </View>
                 </View >
             )}
@@ -205,7 +212,10 @@ const renderSearchButton = (props: Props): JSX.Element => {
     );
 };
 
-const renderMyLocationButton = (saveLocation: Function): JSX.Element => {
+const renderMyLocationButton = (saveLocation: Function, showMyLocationButton: boolean, setShowMyLocationButton: Function): JSX.Element => {
+    if (!showMyLocationButton) {
+        return <EmptyComponent />;
+    }
     const icon = (
         <Icon
             type={'MaterialIcons'} name={'my-location'}
@@ -223,7 +233,11 @@ const renderMyLocationButton = (saveLocation: Function): JSX.Element => {
     return (
         <TouchableOpacity
             style={[applicationStyles.searchButton, { backgroundColor: colors.white }]}
-            onPress={(): Promise<void> => myLocationOnPress(saveLocation)}
+            onPress={(): void => {
+                setShowMyLocationButton(false);
+                myLocationOnPress(saveLocation);
+                }
+            }
         >
             {icon}{text}
         </TouchableOpacity>
