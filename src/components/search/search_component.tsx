@@ -66,7 +66,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
         props.saveSearchResults(searchResults);
         setIsLoading(false);
     };
-    const searchResultsProps = {...props, isLoading, onlineStatus};
+    const searchResultsProps = {...props, isLoading, onlineStatus, onSearchPress};
     return (
         <I18n>{(): JSX.Element => {
              return (

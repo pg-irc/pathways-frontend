@@ -51,12 +51,12 @@ type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 export const SearchResultsComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchResultsComponent', props);
 
-    if (searchTermIsEmpty(props.searchTerm, props.onlineStatus, props.searchResults)) {
-        return renderEmptyComponent(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage);
+    if (searchTermIsEmpty(props)) {
+        return renderEmptyComponent(props);
     }
 
-    if (isSearchErrorType(props.onlineStatus, props.searchResults, props.isLoading, props.searchLatLong)) {
-        return renderErrorComponent(props, props.onlineStatus, props.searchResults, props.onSearchPress);
+    if (isSearchErrorType(props)) {
+        return renderErrorComponent(props);
     }
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
@@ -68,7 +68,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
                 keyExtractor={keyExtractor}
                 renderItem={renderSearchHit(props)}
                 ItemSeparatorComponent={SearchListSeparator}
-                ListHeaderComponent={renderHeader(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage)}
+                ListHeaderComponent={renderHeader(props)}
             />
         </View>
     );
@@ -106,37 +106,37 @@ const renderLoadingScreen = (isLoading: boolean): JSX.Element => {
     );
 };
 
-const searchTermIsEmpty = (searchTerm: string, onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>): boolean => (
-    !searchTerm && onlineStatus !== OnlineStatus.Offline && searchResults.length === 0
+const searchTermIsEmpty = (props: Props): boolean => (
+    !props.searchTerm && props.onlineStatus !== OnlineStatus.Offline && props.searchResults.length === 0
 );
 
-const isSearchErrorType =
-(onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, isLoading: boolean, latLong: LatLong): boolean => {
-    if (isLoading) {
+const isSearchErrorType = (props: Props): boolean => {
+    if (props.isLoading) {
         return false;
     }
-    return isOffline(onlineStatus) || hasNoResultsFromSearchTermQuery(searchResults) || hasNoResultsFromLocationQuery(latLong);
+    return (
+        isOffline(props.onlineStatus) || hasNoResultsFromSearchTermQuery(props.searchResults) || hasNoResultsFromLocationQuery(props.searchLatLong)
+    );
 };
 
-const renderErrorComponent =
-(props: Props, onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>, onSearchPress: (searchTerm: string, location: string) => Promise<void>): JSX.Element => {
-    if (isOffline(onlineStatus)) {
-        return renderComponentByErrorType(props, Errors.Offline, onSearchPress);
+const renderErrorComponent = (props: Props): JSX.Element => {
+    if (isOffline(props.onlineStatus)) {
+        return renderComponentByErrorType(props, Errors.Offline);
     }
-    if (hasNoResultsFromSearchTermQuery(searchResults)) {
-        return renderComponentByErrorType(props, Errors.NoMatchingSearchResults, onSearchPress);
+    if (hasNoResultsFromSearchTermQuery(props.searchResults)) {
+        return renderComponentByErrorType(props, Errors.NoMatchingSearchResults);
     }
     if (hasNoResultsFromLocationQuery(props.searchLatLong)) {
-        return renderComponentByErrorType(props, Errors.InvalidSearchLocation, onSearchPress);
+        return renderComponentByErrorType(props, Errors.InvalidSearchLocation);
     }
-    return renderComponentByErrorType(props, Errors.Exception, onSearchPress);
+    return renderComponentByErrorType(props, Errors.Exception);
 };
 
-const renderComponentByErrorType = (props: Props, errorType: Errors, onSearchPress: (searchTerm: string, location: string) => Promise<void>): JSX.Element => (
+const renderComponentByErrorType = (props: Props, errorType: Errors): JSX.Element => (
     <ErrorScreenSwitcherComponent
-        refreshScreen={() => onSearchPress(props.searchTerm, props.searchLocation)}
+        refreshScreen={(): Promise<void> => props.onSearchPress(props.searchTerm, props.searchLocation)}
         errorType={errorType}
-        header={renderHeader(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage)}
+        header={renderHeader(props)}
     />
 );
 
@@ -152,17 +152,15 @@ const hasNoResultsFromLocationQuery = (latLong: LatLong): boolean => (
     latLong && latLong.lat === 0 && latLong.lng === 0
  );
 
-const renderEmptyComponent =
-(showPartialLocalizationMessage: boolean, hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction): JSX.Element => (
+const renderEmptyComponent = (props: Props): JSX.Element => (
     <EmptySearchComponent
-        header={renderHeader(showPartialLocalizationMessage, hidePartialLocalizationMessage)}
+        header={renderHeader(props)}
     />
 );
 
-const renderHeader =
-(showPartialLocalizationMessage: boolean, hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction): JSX.Element => (
+const renderHeader = (props: Props): JSX.Element => (
     <MessageComponent
-        isVisible={showPartialLocalizationMessage}
-        hidePartialLocalizationMessage={hidePartialLocalizationMessage}
+        isVisible={props.showPartialLocalizationMessage}
+        hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
     />
 );
