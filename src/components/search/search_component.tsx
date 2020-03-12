@@ -51,6 +51,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const [isLoading, setIsLoading]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
+
     const onSearchPress = async (searchTerm: string, location: string): Promise<void> => {
         props.setIsSearchInputCollapsed(true);
         props.saveSearchTerm(searchTerm);
@@ -66,6 +67,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
         props.saveSearchResults(searchResults);
         setIsLoading(false);
     };
+
     const searchResultsProps = {...props, isLoading, onlineStatus, onSearchPress};
     return (
         <I18n>{(): JSX.Element => {

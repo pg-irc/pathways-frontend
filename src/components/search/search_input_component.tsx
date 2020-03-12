@@ -1,5 +1,4 @@
 // tslint:disable: no-expression-statement
-
 import React, { useState, Dispatch, SetStateAction, MutableRefObject, useRef } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
@@ -51,23 +50,25 @@ export type SetShowSearchButton = Dispatch<SetStateAction<boolean>>;
 
 export const SearchInputComponent = (props: SearchProps & SearchActions): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
-    const [locationInput, setLocationInput]: readonly [string, (s: string) => void] = useState(props.searchLocation);
-    const [termInput, setTermInput]: readonly [string, (s: string) => void] = useState(props.searchTerm);
+    const [locationInput, setLocationInput]: readonly [string, (location: string) => void] = useState(props.searchLocation);
+    const [termInput, setTermInput]: readonly [string, (term: string) => void] = useState(props.searchTerm);
     const [showMyLocationButton, setShowMyLocationButton]: readonly [boolean, SetShowMyLocationButton] = useState(false);
     const termInputRef = useRef<TextInput>(undefined);
     const locationInputRef = useRef<TextInput>(undefined);
-    const searchProps = { ...props, termInput, locationInput, setTermInput, setLocationInput, termInputRef, locationInputRef, showMyLocationButton, setShowMyLocationButton };
+    const searchProps = { ...props, termInput, locationInput, setTermInput, setLocationInput,
+        termInputRef, locationInputRef, showMyLocationButton, setShowMyLocationButton,
+    };
 
     if (props.isSearchInputCollapsed) {
         return (
             <View>
-                {collapsedInput(searchProps)}
+                <CollapsedInput {...searchProps} />
             </View>
         );
     }
     return (
         <View>
-            {expandedInput(searchProps)}
+            <ExpandedInput {...searchProps} />
         </View>
     );
 };
@@ -90,7 +91,7 @@ const combineSearchInputs = (searchInput: string, locationInput: string, i18nRen
     return searchInput + ' near ' + locationInput;
 };
 
-const collapsedInput = (props: Props): JSX.Element => {
+const CollapsedInput = (props: Props): JSX.Element => {
     const clearSearchInputs = (): void => {
         props.setShowMyLocationButton(true);
         props.saveSearchTerm('');
@@ -120,7 +121,7 @@ const collapsedInput = (props: Props): JSX.Element => {
     );
 };
 
-const expandedInput = (props: Props): JSX.Element => {
+const ExpandedInput = (props: Props): JSX.Element => {
 
     const clearTermInput = (): void => {
         props.setTermInput('');
@@ -146,9 +147,9 @@ const expandedInput = (props: Props): JSX.Element => {
                         <TextInput
                             ref={props.termInputRef}
                             style={[applicationStyles.searchInput, { opacity: getOpacity(props.termInput) }]}
-                            onChangeText={(d: string): void => {
-                                debug(`SearchInputComponent search text changed to '${d}'`);
-                                props.setTermInput(d);
+                            onChangeText={(text: string): void => {
+                                debug(`SearchInputComponent search text changed to '${text}'`);
+                                props.setTermInput(text);
                             }}
                             value={props.termInput}
                             placeholder={buildTranslatedString(i18nRenderProp.i18n, 'Search for services')} // TODO translate
@@ -162,9 +163,9 @@ const expandedInput = (props: Props): JSX.Element => {
                         <TextInput
                             ref={props.locationInputRef}
                             style={[applicationStyles.searchInput, { opacity: getOpacity(props.locationInput) }]}
-                            onChangeText={(d: string): void => {
-                                debug(`SearchInputComponent location text changed to '${d}'`);
-                                props.setLocationInput(d);
+                            onChangeText={(text: string): void => {
+                                debug(`SearchInputComponent location text changed to '${text}'`);
+                                props.setLocationInput(text);
                             }}
                             onFocus= {(): void => props.setShowMyLocationButton(true)}
                             value={props.locationInput}
@@ -176,7 +177,7 @@ const expandedInput = (props: Props): JSX.Element => {
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 4 }}>
                         {renderSearchButton(props)}
-                        {renderMyLocationButton(props.setLocationInput, props.showMyLocationButton, props.setShowMyLocationButton)}
+                        {renderMyLocationButton(props)}
                     </View>
                 </View >
             )}
@@ -212,10 +213,8 @@ const renderSearchButton = (props: Props): JSX.Element => {
     );
 };
 
-const renderMyLocationButton =
-(saveLocation: (location: string) => void, showMyLocationButton: boolean, setShowMyLocationButton: (showMyLocationButtn: boolean) => void)
-: JSX.Element => {
-    if (!showMyLocationButton) {
+const renderMyLocationButton = (props: Props): JSX.Element => {
+    if (!props.showMyLocationButton) {
         return <EmptyComponent />;
     }
     const icon = (
@@ -236,8 +235,8 @@ const renderMyLocationButton =
         <TouchableOpacity
             style={[applicationStyles.searchButton, { backgroundColor: colors.white }]}
             onPress={(): void => {
-                setShowMyLocationButton(false);
-                myLocationOnPress(saveLocation);
+                props.setShowMyLocationButton(false);
+                myLocationOnPress(props.setLocationInput);
                 }
             }
         >
@@ -246,17 +245,17 @@ const renderMyLocationButton =
     );
 };
 
-const myLocationOnPress = async (saveLocation: (location: string) => void): Promise<void> => {
+const myLocationOnPress = async (setLocationInput: (location: string) => void): Promise<void> => {
     const status = await getPermission();
     switch (status) {
         case Permissions.PermissionStatus.GRANTED:
-            saveLocation(MY_LOCATION);
+            setLocationInput(MY_LOCATION);
             break;
         case Permissions.PermissionStatus.DENIED:
             openAppSettings();
             break;
         case Permissions.PermissionStatus.UNDETERMINED:
-            askPermission(saveLocation);
+            askPermission(setLocationInput);
             break;
         default:
             break;
@@ -279,10 +278,10 @@ const openAppSettings = (): void => {
     }
 };
 
-const askPermission = async (saveLocation: (location: string) => void): Promise<void> => {
+const askPermission = async (setLocationInput: (location: string) => void): Promise<void> => {
     Permissions.askAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse): void => {
         if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
-            saveLocation(MY_LOCATION);
+            setLocationInput(MY_LOCATION);
         }
     });
 };
