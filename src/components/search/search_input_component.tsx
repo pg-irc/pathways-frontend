@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
 
-import React, { useState, Dispatch, SetStateAction, MutableRefObject } from 'react';
+import React, { useState, Dispatch, SetStateAction, MutableRefObject, useRef } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
@@ -31,8 +31,8 @@ export interface SearchActions {
 interface SearchInputProps {
     readonly searchInputField: string;
     readonly locationInputField: string;
-    readonly searchInputRef: MutableRefObject<any>;
-    readonly searchLocationRef: MutableRefObject<any>;
+    readonly searchInputRef: MutableRefObject<TextInput>;
+    readonly searchLocationRef: MutableRefObject<TextInput>;
     readonly showMyLocationButton: boolean;
     readonly setShowMyLocationButton: (b: boolean) => void;
     readonly setSearchInputField: (s: string) => void;
@@ -54,8 +54,8 @@ export const SearchInputComponent = (props: SearchProps & SearchActions): JSX.El
     const [locationInputField, setLocationInputField]: readonly [string, (s: string) => void] = useState(props.searchLocation);
     const [searchInputField, setSearchInputField]: readonly [string, (s: string) => void] = useState(props.searchTerm);
     const [showMyLocationButton, setShowMyLocationButton]: readonly [boolean, SetShowMyLocationButton] = useState(false);
-    const searchInputRef = React.useRef(undefined);
-    const searchLocationRef = React.useRef(undefined);
+    const searchInputRef = useRef<TextInput>(undefined);
+    const searchLocationRef = useRef<TextInput>(undefined);
     const searchProps = { ...props, searchInputField, locationInputField, setSearchInputField, setLocationInputField, searchInputRef, searchLocationRef, showMyLocationButton, setShowMyLocationButton: setShowMyLocationButton };
 
     if (props.isSearchInputCollapsed) {
@@ -212,7 +212,9 @@ const renderSearchButton = (props: Props): JSX.Element => {
     );
 };
 
-const renderMyLocationButton = (saveLocation: Function, showMyLocationButton: boolean, setShowMyLocationButton: Function): JSX.Element => {
+const renderMyLocationButton =
+(saveLocation: (location: string) => void, showMyLocationButton: boolean, setShowMyLocationButton: (showMyLocationButtn: boolean) => void)
+: JSX.Element => {
     if (!showMyLocationButton) {
         return <EmptyComponent />;
     }
@@ -244,7 +246,7 @@ const renderMyLocationButton = (saveLocation: Function, showMyLocationButton: bo
     );
 };
 
-const myLocationOnPress = async (saveLocation: Function): Promise<void> => {
+const myLocationOnPress = async (saveLocation: (location: string) => void): Promise<void> => {
     const status = await getPermission();
     switch (status) {
         case Permissions.PermissionStatus.GRANTED:
@@ -262,7 +264,7 @@ const myLocationOnPress = async (saveLocation: Function): Promise<void> => {
 };
 
 const getPermission = (): Promise<Permissions.PermissionStatus> => {
-    return Permissions.getAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse) => {
+    return Permissions.getAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse): Permissions.PermissionStatus => {
         return permissionResponse.status;
     });
 };
@@ -277,8 +279,8 @@ const openAppSettings = (): void => {
     }
 };
 
-const askPermission = async (saveLocation: Function): Promise<void> => {
-    Permissions.askAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse) => {
+const askPermission = async (saveLocation: (location: string) => void): Promise<void> => {
+    Permissions.askAsync(Permissions.LOCATION).then((permissionResponse: Permissions.PermissionResponse): void => {
         if (permissionResponse.status === Permissions.PermissionStatus.GRANTED) {
             saveLocation(MY_LOCATION);
         }
