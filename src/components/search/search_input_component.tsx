@@ -90,6 +90,8 @@ const collapsedInput = (props: Props): JSX.Element => {
     const clearSearch = (): void => {
         props.saveSearchTerm('');
         props.saveSearchLocation('');
+        props.setSearchInputField('');
+        props.setLocationInputField('');
     };
 
     return (
