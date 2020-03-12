@@ -49,7 +49,7 @@ type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 export const SearchResultsComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchResultsComponent', props);
 
-    if (searchTermIsEmpty(props.searchTerm, props.onlineStatus)) {
+    if (searchTermIsEmpty(props.searchTerm, props.onlineStatus, props.searchResults)) {
         return renderEmptyComponent(props.showPartialLocalizationMessage, props.hidePartialLocalizationMessage);
     }
 
@@ -104,8 +104,8 @@ const renderLoadingScreen = (isLoading: boolean): JSX.Element => {
     );
 };
 
-const searchTermIsEmpty = (searchTerm: string, onlineStatus: OnlineStatus): boolean => (
-    !searchTerm && onlineStatus !== OnlineStatus.Offline
+const searchTermIsEmpty = (searchTerm: string, onlineStatus: OnlineStatus, searchResults: ReadonlyArray<SearchServiceData>): boolean => (
+    !searchTerm && onlineStatus !== OnlineStatus.Offline && searchResults.length === 0
 );
 
 const isSearchErrorType =

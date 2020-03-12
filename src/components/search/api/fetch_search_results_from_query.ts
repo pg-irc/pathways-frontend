@@ -18,6 +18,9 @@ export interface AlgoliaResponse {
 }
 
 export const fetchSearchResultsFromQuery = async (searchTerm: string, latLong: LatLong): Promise<any> => {
+    if (!searchTerm) {
+        return [];
+    }
     const url = buildAlgoliaSearchUrl();
     try {
         const response = await fetch(url, {
