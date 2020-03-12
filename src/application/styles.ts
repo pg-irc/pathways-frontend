@@ -8,6 +8,7 @@ export const colors = {
     teal: '#00838f',
     blueGreen: '#0d9790',
     blueGreenDark: '#136f63',
+    grey: '#a8a8a8',
     // Rename to surface
     lightGrey: '#eee5d9',
     darkerGrey: '#d0d0c5',
@@ -293,7 +294,7 @@ export const textStyles = StyleSheet.create({
         ...getNormalFontStylesForOS(),
     },
     listItemDetail: {
-        fontSize: 13,
+        fontSize: 15,
         lineHeight: 21,
         textAlign: 'left',
         color: colors.greyishBrown,
@@ -372,7 +373,7 @@ export const applicationStyles = StyleSheet.create({
         backgroundColor: colors.lightGrey,
     },
     toast: {
-        marginBottom: 65,
+        bottom: '10%',
         borderRadius: 10,
         ...Platform.select({
             ios: {
