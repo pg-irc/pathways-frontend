@@ -8,7 +8,7 @@ export const colors = {
     teal: '#00838f',
     blueGreen: '#0d9790',
     blueGreenDark: '#136f63',
-    grey: '#a8a8a8',
+    grey: '#DEDEDE',
     // Rename to surface
     lightGrey: '#eee5d9',
     darkerGrey: '#d0d0c5',
