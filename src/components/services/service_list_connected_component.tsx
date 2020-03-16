@@ -12,7 +12,7 @@ import {
 } from './service_list_component';
 import { RouterProps } from '../../application/routing';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
-import { LatLong } from '../../validation/latlong/types';
+import { UserLocation } from '../../validation/latlong/types';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import { HumanServiceData } from '../../validation/services/types';
 import { selectShowPartialLocalizationMessage } from '../../selectors/user_profile/select_show_partial_localization_message';
@@ -31,7 +31,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<ServicesAction>): ServiceListActions => ({
-    dispatchServicesRequest: (topic: Topic, manualUserLocation?: LatLong): BuildServicesRequestAction =>
+    dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): BuildServicesRequestAction =>
         dispatch(buildServicesRequest(topic.id, manualUserLocation)),
     bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
     unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),

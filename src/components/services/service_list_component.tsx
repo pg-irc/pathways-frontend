@@ -14,7 +14,7 @@ import { isSelectorErrorServicesForTopic } from '../../selectors/services/is_sel
 import * as constants from '../../application/constants';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
-import { LatLong } from '../../validation/latlong/types';
+import { UserLocation } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
@@ -26,13 +26,13 @@ import { HidePartialLocalizationMessageAction } from '../../stores/user_profile'
 export interface ServiceListProps {
     readonly topic: Topic;
     readonly topicServicesOrError: SelectorTopicServices;
-    readonly manualUserLocation?: LatLong;
+    readonly manualUserLocation?: UserLocation;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
 }
 
 export interface ServiceListActions {
-    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;

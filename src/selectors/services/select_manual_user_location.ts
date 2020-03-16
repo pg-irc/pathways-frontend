@@ -1,6 +1,6 @@
 import { Store } from '../../stores';
-import { LatLong } from '../../validation/latlong/types';
+import { UserLocation } from '../../validation/latlong/types';
 
-export const selectManualUserLocation = (store: Store): LatLong | undefined => (
+export const selectManualUserLocation = (store: Store): UserLocation => (
     store.manualUserLocation.userLocation
 );

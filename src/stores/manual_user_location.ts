@@ -1,9 +1,9 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
-import { LatLong } from '../validation/latlong/types';
+import { UserLocation } from '../validation/latlong/types';
 
 // tslint:disable-next-line:typedef
-export const setManualUserLocation = (userLocation: LatLong) => (
+export const setManualUserLocation = (userLocation: UserLocation) => (
     helpers.makeAction(constants.SET_MANUAL_USER_LOCATION, { userLocation })
 );
 
@@ -16,12 +16,15 @@ export type SetManualUserLocationAction = Readonly<ReturnType<typeof setManualUs
 export type ClearManualUserLocationAction = Readonly<ReturnType<typeof clearManualUserLocation>>;
 
 export interface ManualUserLocationStore {
-    readonly userLocation?: LatLong;
+    readonly userLocation: UserLocation;
 }
 
-export const buildDefaultStore = (): ManualUserLocationStore => (
-    {}
-);
+export const buildDefaultStore = (): ManualUserLocationStore => ({
+    userLocation: {
+        label: '',
+        latLong: undefined,
+    },
+});
 
 type Actions = SetManualUserLocationAction | ClearManualUserLocationAction;
 
@@ -33,7 +36,7 @@ export const reducer = (store: ManualUserLocationStore = buildDefaultStore(), ac
         return { ...store, userLocation: action.payload.userLocation };
     }
     if (action.type === constants.CLEAR_MANUAL_USER_LOCATION) {
-        return { ...store, userLocation: undefined };
+        return { ...store, ...buildDefaultStore() };
     }
     return store;
 };
