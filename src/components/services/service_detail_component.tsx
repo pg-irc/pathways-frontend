@@ -1,7 +1,7 @@
 import React from 'react';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import { Content } from 'native-base';
 import { values, textStyles } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
@@ -49,12 +49,8 @@ const ServiceOrganization = (props: { readonly history: History, readonly name: 
     <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
         <DividerComponent />
         <View>
-            <Text style={[textStyles.paragraphBoldBlackLeft, { marginRight: 5 }]}>
-                <Trans>Provided by</Trans>:
-            </Text>
-            <TouchableOpacity onPress={(): void => undefined}>
-                <Text style={textStyles.URL}>{props.name}</Text>
-            </TouchableOpacity>
+            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Provided by</Trans>: </Text>
+            <Text style={textStyles.paragraphStyle}>{props.name}</Text>
         </View>
         <DividerComponent />
     </View>
