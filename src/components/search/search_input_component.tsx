@@ -210,7 +210,7 @@ const renderSearchButton = (props: Props & ExpandedInputProps): JSX.Element => (
         onPress={(): void => {
             props.onSearchRequest(props.searchTermInput, props.searchLocationInput);
         }}>
-        <Text style={[textStyles.button, { fontSize: 16, padding: 5 }]}>
+        <Text style={[textStyles.button, { fontSize: 16 }]}>
             <Trans>
                 Search
             </Trans>

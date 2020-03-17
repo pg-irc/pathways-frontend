@@ -327,10 +327,10 @@ export const applicationStyles = StyleSheet.create({
     },
     searchButton: {
         borderRadius: values.roundedBorderRadius,
-        alignSelf: 'flex-start',
         flexDirection: 'row',
-        paddingHorizontal: 15,
-        paddingVertical: 4,
+        paddingHorizontal: 20,
+        paddingVertical: 9,
+        alignItems: 'center',
     },
     whiteTealButton: {
         backgroundColor: colors.white,
