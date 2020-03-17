@@ -3,6 +3,7 @@ import BuildUrl from 'build-url';;
 import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
 import { validateServiceSearchResponse } from '../../../validation/search';
 import { LatLong } from '../../../validation/latlong/types';
+import { SearchServiceData } from '../../../validation/search/types';
 
 export interface AlgoliaResponse {
     readonly exhaustiveNbHits: boolean;
@@ -17,7 +18,7 @@ export interface AlgoliaResponse {
     readonly query: string;
 }
 
-export const fetchSearchResultsFromQuery = async (searchTerm: string, latLong: LatLong): Promise<any> => {
+export const fetchSearchResultsFromQuery = async (searchTerm: string, latLong: LatLong): Promise<ReadonlyArray<SearchServiceData>> => {
     if (!searchTerm) {
         return [];
     }

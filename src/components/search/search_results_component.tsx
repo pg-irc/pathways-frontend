@@ -26,8 +26,7 @@ import { LoadingServiceListComponent } from '../loading_screen/loading_service_l
 import { LatLong } from '../../validation/latlong/types';
 
 export interface SearchResultsProps {
-    // tslint:disable-next-line:no-any
-    readonly searchResults: ReadonlyArray<any>;
+    readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -148,9 +147,9 @@ const hasNoResultsFromSearchTermQuery = (searchResults: ReadonlyArray<SearchServ
     searchResults.length === 0
 );
 
-const hasNoResultsFromLocationQuery = (latLong: LatLong): boolean => (
+const hasNoResultsFromLocationQuery = (latLong?: LatLong): boolean => (
     latLong && latLong.lat === 0 && latLong.lng === 0
- );
+);
 
 const renderEmptyComponent = (props: Props): JSX.Element => (
     <EmptySearchComponent

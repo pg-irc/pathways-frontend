@@ -42,13 +42,14 @@ export interface SearchComponentActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
-export type SetIsInputCollapsed = Dispatch<SetStateAction<boolean>>;
+export type StringSetterFunction = Dispatch<SetStateAction<string>>;
+export type BooleanSetterFunction = Dispatch<SetStateAction<boolean>>;
 
 type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
-    const [isLoading, setIsLoading]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+    const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
@@ -59,13 +60,16 @@ export const SearchComponent = (props: Props): JSX.Element => {
         setIsLoading(true);
         // tslint:disable-next-line: no-let
         let geocoderLatLong = props.searchLatLong;
-        if (props.searchLocation !== location) {
-            geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus).catch((): undefined => undefined);
-            props.saveSearchLatLong(geocoderLatLong);
+        try {
+            if (props.searchLocation !== location) {
+                geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
+                props.saveSearchLatLong(geocoderLatLong);
+            }
+            const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong);
+            props.saveSearchResults(searchResults);
+        } finally {
+            setIsLoading(false);
         }
-        const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong).catch((): undefined => undefined);
-        props.saveSearchResults(searchResults);
-        setIsLoading(false);
     };
 
     const searchResultsProps = {...props, isLoading, onlineStatus, onSearchPress};

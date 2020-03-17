@@ -4,7 +4,7 @@ import { serviceSearchItemArray } from './schema';
 import { ValidationResult } from '../validation_result';
 const Ajv = require('ajv');
 
-export const validateServiceSearchResponse = (hits: ReadonlyArray<any>): any => {
+export const validateServiceSearchResponse = (hits: ReadonlyArray<any>): ReadonlyArray<SearchServiceData> => {
     const validationResult = validateServiceSearchHits(hits);
     if (!validationResult.isValid) {
         throw new Error(validationResult.errors);
