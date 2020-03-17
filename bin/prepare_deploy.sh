@@ -190,7 +190,7 @@ checkOutClientByTag() {
     (cd "$CLIENT_DIRECTORY" && git checkout "tags/$VERSION" -b "appRelease/$VERSION")
     checkForSuccess "check out tag for client"
 
-    (cd "$CLIENT_DIRECTORY" && git submodule update)
+    (cd "$CLIENT_DIRECTORY" && git submodule update --remote --merge)
     checkForSuccess "check out client submodules"
 }
 
