@@ -42,7 +42,7 @@ export interface SearchResultsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
-    readonly onSearchPress: (searchTerm: string, location: string) => Promise<void>;
+    readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
 }
 
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
@@ -135,7 +135,7 @@ const renderErrorComponent = (props: Props): JSX.Element => {
 
 const renderComponentByErrorType = (props: Props, errorType: Errors): JSX.Element => (
     <ErrorScreenSwitcherComponent
-        refreshScreen={(): Promise<void> => props.onSearchPress(props.searchTerm, props.searchLocation)}
+        refreshScreen={(): Promise<void> => props.onSearchRequest(props.searchTerm, props.searchLocation)}
         errorType={errorType}
         header={renderHeader(props)}
     />

@@ -4,7 +4,6 @@ import { SearchResultsComponent } from './search_results_component';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
 import { useTraceUpdate } from '../../helpers/debug';
-import { I18n } from '@lingui/react';
 import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
@@ -53,7 +52,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
-    const onSearchPress = async (searchTerm: string, location: string): Promise<void> => {
+    const onSearchRequest = async (searchTerm: string, location: string): Promise<void> => {
         props.setCollapseSearchInput(true);
         props.saveSearchTerm(searchTerm);
         props.saveSearchLocation(location);
@@ -72,25 +71,20 @@ export const SearchComponent = (props: Props): JSX.Element => {
         }
     };
 
-    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchPress };
+    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchRequest };
     return (
-        <I18n>{(): JSX.Element => {
-            return (
-                <View style={{ backgroundColor: colors.pale, flex: 1 }}>
-                    <SearchInputComponent
-                        searchTerm={props.searchTerm}
-                        searchLocation={props.searchLocation}
-                        saveSearchTerm={props.saveSearchTerm}
-                        saveSearchLocation={props.saveSearchLocation}
-                        collapseSearchInput={props.collapseSearchInput}
-                        setCollapseSearchInput={props.setCollapseSearchInput}
-                        onSearchPress={onSearchPress}
-                    />
-                    <SearchResultsComponent {...searchResultsProps} />
-                </View>
-            );
-        }}
-        </I18n>
+        <View style={{ backgroundColor: colors.pale, flex: 1 }}>
+            <SearchInputComponent
+                searchTerm={props.searchTerm}
+                searchLocation={props.searchLocation}
+                saveSearchTerm={props.saveSearchTerm}
+                saveSearchLocation={props.saveSearchLocation}
+                collapseSearchInput={props.collapseSearchInput}
+                setCollapseSearchInput={props.setCollapseSearchInput}
+                onSearchRequest={onSearchRequest}
+            />
+            <SearchResultsComponent {...searchResultsProps} />
+        </View>
     );
 };
 

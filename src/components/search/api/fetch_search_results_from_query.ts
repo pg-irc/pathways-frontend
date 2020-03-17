@@ -1,6 +1,5 @@
 // tslint:disable: no-expression-statement
-import BuildUrl from 'build-url';;
-import { ALGOLIA_SEARCH_API_KEY } from 'react-native-dotenv';
+import { ALGOLIA_SEARCH_API_KEY, ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
 import { validateServiceSearchResponse } from '../../../validation/search';
 import { LatLong } from '../../../validation/latlong/types';
 import { SearchServiceData } from '../../../validation/search/types';
@@ -22,9 +21,8 @@ export const fetchSearchResultsFromQuery = async (searchTerm: string, latLong: L
     if (!searchTerm) {
         return [];
     }
-    const url = buildAlgoliaSearchUrl();
     try {
-        const response = await fetch(url, {
+        const response = await fetch(`https://MMYH1Z0D3O-dsn.algolia.net/1/indexes/${ALGOLIA_SERVICES_INDEX}/query`, {
             'method': 'POST',
             headers: {
                 'X-Algolia-API-Key': ALGOLIA_SEARCH_API_KEY,
@@ -38,16 +36,12 @@ export const fetchSearchResultsFromQuery = async (searchTerm: string, latLong: L
             }),
         });
 
-            const responseJSON: AlgoliaResponse = await response.json();
-            return validateServiceSearchResponse(responseJSON.hits);
+        const responseJSON: AlgoliaResponse = await response.json();
+        return validateServiceSearchResponse(responseJSON.hits);
     } catch (Error) {
         return [];
     }
 };
-
-const buildAlgoliaSearchUrl = (): string => (
-    BuildUrl('https://MMYH1Z0D3O-dsn.algolia.net/1/indexes/dev_phones/query')
-);
 
 const toAlgoliaParameter = (latlong: LatLong): string => (
     `${latlong.lat},${latlong.lng}`

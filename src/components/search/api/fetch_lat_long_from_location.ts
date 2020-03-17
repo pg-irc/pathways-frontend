@@ -3,7 +3,6 @@ import { OnlineStatus } from '../../../hooks/use_online_status';
 import { LatLong } from '../../../validation/latlong/types';
 import { toGeoCoderLatLong } from '../../../validation/latlong';
 import BuildUrl from 'build-url';
-// import * as R from 'ramda';
 import { getDeviceLocation } from '../../../async/location';
 import * as errors from '../../../validation/errors/is_error';
 import { MY_LOCATION } from '../../../application/constants';
