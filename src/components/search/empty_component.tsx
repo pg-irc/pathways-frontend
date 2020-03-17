@@ -38,8 +38,8 @@ const renderImage = (): JSX.Element => (
 
 const renderTitle = (): JSX.Element => (
     <Text style={[textStyles.headlineH2StyleBlackCenter, {marginBottom: 20}]}>
-            Need suggestions? Try:
-        </Text>
+        <Trans>Need suggestions? Try</Trans>:
+    </Text>
 );
 
 const renderSuggestionsList = (): JSX.Element => (
