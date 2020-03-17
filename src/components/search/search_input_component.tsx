@@ -18,13 +18,13 @@ import { BooleanSetterFunction, StringSetterFunction } from './search_component'
 export interface SearchProps {
     readonly searchTerm: string;
     readonly searchLocation: string;
-    readonly isSearchInputCollapsed: boolean;
+    readonly collapseSearchInput: boolean;
 }
 
 export interface SearchActions {
     readonly saveSearchTerm: (searchTerm: string) => void;
     readonly saveSearchLocation: (location: string) => void;
-    readonly setIsSearchInputCollapsed: (isSearchInputCollapsed: boolean) => void;
+    readonly setCollapseSearchInput: (collapseSearchInput: boolean) => void;
     readonly onSearchPress: (searchTerm: string, location: string) => void;
 }
 
@@ -42,8 +42,9 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
     const termInputRef = useRef<TextInput>();
     const locationInputRef = useRef<TextInput>();
 
-    if (props.isSearchInputCollapsed) {
-        const collapsedInputProps = { ...props, termInput, locationInput, setTermInput, setLocationInput,
+    if (props.collapseSearchInput) {
+        const collapsedInputProps = {
+            ...props, termInput, locationInput, setTermInput, setLocationInput,
             showMyLocationButton, setShowMyLocationButton,
         };
         return (
@@ -52,9 +53,10 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
             </View>
         );
     }
-    const searchProps = { ...props, termInput, locationInput, setTermInput, setLocationInput,
-            termInputRef, locationInputRef, showMyLocationButton, setShowMyLocationButton,
-        };
+    const searchProps = {
+        ...props, termInput, locationInput, setTermInput, setLocationInput,
+        termInputRef, locationInputRef, showMyLocationButton, setShowMyLocationButton,
+    };
     return (
         <View>
             <ExpandedInput {...searchProps} />
@@ -103,14 +105,14 @@ const CollapsedInput = (props: Props & CollapsedInputProps): JSX.Element => {
             {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
                 <View style={{ padding: 4, backgroundColor: colors.teal }}>
                     <TouchableOpacity style={applicationStyles.searchContainer}
-                        onPress={(): void => props.setIsSearchInputCollapsed(false)}>
+                        onPress={(): void => props.setCollapseSearchInput(false)}>
                         <InputIcon name='search' />
                         <Text numberOfLines={1} style={[textStyles.paragraphStyle, { flex: 1 }]}>
                             {combineSearchInputs(props.termInput, props.locationInput, i18nRenderProp)}
                         </Text>
                         <ClearInputButton visible={true} onPress={(): void => {
                             clearSearchInputs();
-                            props.setIsSearchInputCollapsed(false);
+                            props.setCollapseSearchInput(false);
                         }} />
                     </TouchableOpacity>
                 </View>
@@ -176,7 +178,7 @@ const ExpandedInput = (props: Props & ExpandedInputProps): JSX.Element => {
                                 debug(`SearchInputComponent location text changed to '${text}'`);
                                 props.setLocationInput(text);
                             }}
-                            onFocus= {(): void => props.setShowMyLocationButton(true)}
+                            onFocus={(): void => props.setShowMyLocationButton(true)}
                             value={props.locationInput}
                             placeholder={buildTranslatedString(i18nRenderProp.i18n, 'Enter city, address, or postal code')} // TODO translate
                             placeholderTextColor={colors.greyishBrown}
@@ -246,7 +248,7 @@ const renderMyLocationButton = (props: ExpandedInputProps): JSX.Element => {
             onPress={(): void => {
                 props.setShowMyLocationButton(false);
                 myLocationOnPress(props.setLocationInput);
-                }
+            }
             }
         >
             {icon}{text}

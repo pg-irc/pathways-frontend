@@ -23,6 +23,6 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedDat
     searchLocation: selectSearchLocation(appStore),
     searchLatLong: selectSearchLatLong(appStore),
     searchResults: selectSearchResults(appStore),
-    isSearchInputCollapsed: selectIsInputCollapsed(appStore),
+    collapseSearchInput: selectIsInputCollapsed(appStore),
     showPartialLocalizationMessage: selectShowPartialLocalizationMessage(appStore),
 });

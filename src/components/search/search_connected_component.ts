@@ -7,8 +7,8 @@ import { HumanServiceData } from '../../validation/services/types';
 import { disableAnalytics, DisableAnalyticsAction, HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import {
-    SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction,
-    saveSearchLocation, saveSearchTerm, setIsSearchInputCollapsed, SaveSearchResultsAction, saveSearchResults,
+    SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction,
+    saveSearchLocation, saveSearchTerm, setCollapseSearchInput, SaveSearchResultsAction, saveSearchResults,
     SaveSearchLatLongAction, saveSearchLatLong,
 } from '../../stores/search';
 import { selectSearchTerm } from '../../selectors/search/select_search_term';
@@ -26,7 +26,7 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     searchLocation: selectSearchLocation(store),
     searchResults: selectSearchResults(store),
     searchLatLong: selectSearchLatLong(store),
-    isSearchInputCollapsed: selectIsInputCollapsed(store),
+    collapseSearchInput: selectIsInputCollapsed(store),
     showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
 });
 
@@ -39,7 +39,7 @@ type Actions =
     SaveSearchLocationAction |
     SaveSearchLatLongAction |
     SaveSearchResultsAction |
-    SetIsInputCollapsedAction |
+    SetCollapseSearchInputAction |
     HidePartialLocalizationMessageAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
@@ -67,8 +67,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>): SaveSearchResultsAction => (
         dispatch(saveSearchResults(searchResults))
     ),
-    setIsSearchInputCollapsed: (isSearchInputCollapsed: boolean): SetIsInputCollapsedAction => (
-        dispatch(setIsSearchInputCollapsed(isSearchInputCollapsed))
+    setCollapseSearchInput: (collapseSearchInput: boolean): SetCollapseSearchInputAction => (
+        dispatch(setCollapseSearchInput(collapseSearchInput))
     ),
     hidePartialLocalizationMessage: (): HidePartialLocalizationMessageAction => (
         dispatch(hidePartialLocalizationMessage())

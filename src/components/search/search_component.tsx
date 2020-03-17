@@ -12,7 +12,7 @@ import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
-import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction, SaveSearchResultsAction, SaveSearchLatLongAction } from '../../stores/search';
+import { SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction, SaveSearchResultsAction, SaveSearchLatLongAction } from '../../stores/search';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
 import { useOnlineStatus } from '../../hooks/use_online_status';
@@ -25,7 +25,7 @@ export interface SearchComponentProps {
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
-    readonly isSearchInputCollapsed: boolean;
+    readonly collapseSearchInput: boolean;
     readonly showPartialLocalizationMessage: boolean;
 }
 
@@ -38,7 +38,7 @@ export interface SearchComponentActions {
     readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
     readonly saveSearchLatLong: (searchLatLong: LatLong) => SaveSearchLatLongAction;
     readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => SaveSearchResultsAction;
-    readonly setIsSearchInputCollapsed: (isSearchInputCollapsed: boolean) => SetIsInputCollapsedAction;
+    readonly setCollapseSearchInput: (collapseSearchInput: boolean) => SetCollapseSearchInputAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
 }
 
@@ -54,7 +54,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
     const onSearchPress = async (searchTerm: string, location: string): Promise<void> => {
-        props.setIsSearchInputCollapsed(true);
+        props.setCollapseSearchInput(true);
         props.saveSearchTerm(searchTerm);
         props.saveSearchLocation(location);
         setIsLoading(true);
@@ -72,25 +72,25 @@ export const SearchComponent = (props: Props): JSX.Element => {
         }
     };
 
-    const searchResultsProps = {...props, isLoading, onlineStatus, onSearchPress};
+    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchPress };
     return (
         <I18n>{(): JSX.Element => {
-             return (
+            return (
                 <View style={{ backgroundColor: colors.pale, flex: 1 }}>
                     <SearchInputComponent
                         searchTerm={props.searchTerm}
                         searchLocation={props.searchLocation}
                         saveSearchTerm={props.saveSearchTerm}
                         saveSearchLocation={props.saveSearchLocation}
-                        isSearchInputCollapsed={props.isSearchInputCollapsed}
-                        setIsSearchInputCollapsed={props.setIsSearchInputCollapsed}
+                        collapseSearchInput={props.collapseSearchInput}
+                        setCollapseSearchInput={props.setCollapseSearchInput}
                         onSearchPress={onSearchPress}
                     />
                     <SearchResultsComponent {...searchResultsProps} />
                 </View>
             );
         }}
-    </I18n>
+        </I18n>
     );
 };
 

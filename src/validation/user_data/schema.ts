@@ -152,7 +152,7 @@ export const userData = {
         },
         "searchLatLong": latLong,
         "searchResults": serviceSearchItemArray,
-        "isSearchInputCollapsed": {
+        "collapseSearchInput": {
             "type": "boolean"
         },
     }

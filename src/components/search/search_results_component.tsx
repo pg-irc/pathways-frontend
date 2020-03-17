@@ -57,21 +57,23 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     if (isSearchErrorType(props)) {
         return renderErrorComponent(props);
     }
-    return (
-        <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
-            {renderLoadingScreen(props.isLoading)}
-            <FlatList
-                style={{ backgroundColor: colors.white }}
-                refreshing={false}
-                data={props.searchResults}
-                keyExtractor={keyExtractor}
-                renderItem={renderSearchHit(props)}
-                ItemSeparatorComponent={SearchListSeparator}
-                ListHeaderComponent={renderHeader(props)}
-            />
-        </View>
-    );
+    return renderComponentWithResults(props);
 };
+
+const renderComponentWithResults = (props: Props): JSX.Element => (
+    <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
+        {renderLoadingScreen(props.isLoading)}
+        <FlatList
+            style={{ backgroundColor: colors.white }}
+            refreshing={false}
+            data={props.searchResults}
+            keyExtractor={keyExtractor}
+            renderItem={renderSearchHit(props)}
+            ItemSeparatorComponent={SearchListSeparator}
+            ListHeaderComponent={renderHeader(props)}
+        />
+    </View>
+);
 
 const keyExtractor = (item: SearchServiceData): string => (
     item.service_id

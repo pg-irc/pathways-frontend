@@ -9,13 +9,13 @@ import * as errors from '../../../validation/errors/is_error';
 import { MY_LOCATION } from '../../../application/constants';
 
 export const fetchLatLongFromLocation =
-async (location: string, onlineStatus: OnlineStatus): Promise<LatLong> => {
-    if (location === MY_LOCATION) {
-        return fetchLatLongFromDevice();
-    } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
-        return fetchLatLongFromAddress(location);
-    } else
-        return undefined;
+    async (location: string, onlineStatus: OnlineStatus): Promise<LatLong> => {
+        if (location === MY_LOCATION) {
+            return fetchLatLongFromDevice();
+        } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
+            return fetchLatLongFromAddress(location);
+        } else
+            return undefined;
     };
 
 const fetchLatLongFromDevice = async (): Promise<LatLong> => {
@@ -33,7 +33,7 @@ const fetchLatLongFromAddress = async (location: string): Promise<LatLong> => {
     const url = buildGeoCoderUrl(location);
     try {
         const geocoderResponse = await fetch(url);
-        const responseText = await getTextIfValidOrThrow(geocoderResponse) ;
+        const responseText = await getTextIfValidOrThrow(geocoderResponse);
         const responseJSON = JSON.parse(responseText);
         const latlong = toGeoCoderLatLong(responseJSON);
         return latlong;

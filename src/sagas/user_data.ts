@@ -22,7 +22,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.SAVE_SEARCH_TERM,
             constants.SAVE_SEARCH_LOCATION,
             constants.SAVE_SEARCH_RESULTS,
-            constants.SET_IS_INPUT_COLLAPSED,
+            constants.SET_COLLAPSE_SEARCH_INPUT,
             constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE,
             constants.DISABLE_ANALYTICS,
         ],
@@ -96,7 +96,7 @@ export const setUserDataDefaultValues = (data: any): PersistedData => (
         searchLocation: data.searchLocation || '',
         searchLatLong: data.searchLatLong || undefined,
         searchResults: data.searchResults || [],
-        isSearchInputCollapsed: typeof data.isSearchInputCollapsed === 'undefined' ? false : data.isSearchInputCollapsed,
+        collapseSearchInput: typeof data.collapseSearchInput === 'undefined' ? false : data.collapseSearchInput,
         showPartialLocalizationMessage: typeof data.showPartialLocalizationMessage === 'undefined' ? true : data.showPartialLocalizationMessage,
     }
 );

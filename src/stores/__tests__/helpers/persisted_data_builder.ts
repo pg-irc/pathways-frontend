@@ -16,7 +16,7 @@ export class PersistedDataBuilder {
     searchLocation: string = '';
     searchLatLong: LatLong = undefined;
     searchResults: ReadonlyArray<SearchServiceData> = [];
-    isSearchInputCollapsed: boolean = false;
+    collapseSearchInput: boolean = false;
     showPartialLocalizationMessage: boolean = true;
 
     withChosenAnswer(id: AnswerId): PersistedDataBuilder {
@@ -67,8 +67,8 @@ export class PersistedDataBuilder {
         return this;
     }
 
-    withIsInputCollapsed(isSearchInputCollapsed: boolean): PersistedDataBuilder {
-        this.isSearchInputCollapsed = isSearchInputCollapsed;
+    withIsInputCollapsed(collapseSearchInput: boolean): PersistedDataBuilder {
+        this.collapseSearchInput = collapseSearchInput;
         return this;
     }
 
@@ -88,7 +88,7 @@ export class PersistedDataBuilder {
             searchLocation: this.searchLocation,
             searchLatLong: this.searchLatLong,
             searchResults: this.searchResults,
-            isSearchInputCollapsed: this.isSearchInputCollapsed,
+            collapseSearchInput: this.collapseSearchInput,
             showPartialLocalizationMessage: this.showPartialLocalizationMessage,
         };
     }
