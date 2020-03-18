@@ -1,4 +1,5 @@
-import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro';
+import { Trans, I18n } from '@lingui/react';
 import { Button, Container, Content, Footer, FooterTab, Icon, Item, Input, Label, Text } from 'native-base';
 import React from 'react';
 import Modal from 'react-native-modal';
@@ -45,7 +46,9 @@ const HeaderComponent = (props: HeaderComponentProps) => {
 	)];
 
 	const title = (
-		<Text style={textStyles.headline6}>{props.headerLabel}</Text>
+		<Text style={textStyles.headline6}>
+            <Trans id={props.headerLabel} />
+        </Text>
 	);
 
 	const noTopPadding = true;
@@ -61,19 +64,27 @@ const HeaderComponent = (props: HeaderComponentProps) => {
 
 const ContentComponent = (props: ContentComponentProps) => {
 	return (
-		<Content padder>
-			<Item placeholderLabel={true} stackedLabel>
-				<Label style={styles.inputLabel}>{props.inputLabel}</Label>
-				<Input
-					multiline
-					numberOfLines={5}
-					placeholder={props.placeholder}
-					placeholderTextColor={colors.darkerGrey}
-					style={styles.input}
-					textAlignVertical='top'
-				/>
-			</Item>
-		</Content>
+        <I18n>
+            {
+                ({ i18n }: I18nProps): JSX.Element => (
+                    <Content padder>
+                        <Item placeholderLabel={true} stackedLabel>
+                            <Label style={styles.inputLabel}>
+                                <Trans id ={props.inputLabel} />
+                            </Label>
+                            <Input
+                                multiline
+                                numberOfLines={5}
+                                placeholder={i18n._(t`${props.placeholder}`)}
+                                placeholderTextColor={colors.darkerGrey}
+                                style={styles.input}
+                                textAlignVertical='top'
+                            />
+                        </Item>
+                    </Content>
+                )
+            }
+        </I18n>
 	);
 }
 
