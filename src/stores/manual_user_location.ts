@@ -36,7 +36,7 @@ export const reducer = (store: ManualUserLocationStore = buildDefaultStore(), ac
         return { ...store, userLocation: action.payload.userLocation };
     }
     if (action.type === constants.CLEAR_MANUAL_USER_LOCATION) {
-        return { ...store, ...buildDefaultStore() };
+        return buildDefaultStore();
     }
     return store;
 };
