@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import React, { useEffect } from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';

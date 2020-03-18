@@ -202,28 +202,39 @@ const getSearchOnPress = (
     setManualUserLocation: Props['setManualUserLocation'],
 ): () => Promise<void> => async (): Promise<void> => {
     if (locationInputValue === MY_LOCATION) return;
-    setIsFetchingLatLng(true);
-    const latLong = await fetchLatLngFromServer(locationInputValue);
-    setIsFetchingLatLng(false);
-
-    if (!latLong) return;
-    setManualUserLocation({
-        label: locationInputValue,
-        latLong,
-    });
+    const fetchFn = (): Promise<LatLong | undefined> => fetchLatLngFromServer(locationInputValue);
+    fetchLatLng(
+        setIsFetchingLatLng,
+        fetchFn,
+        setManualUserLocation,
+        locationInputValue,
+    );
 };
 
 const getLocateOnPress = (
     setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
     setManualUserLocation: Props['setManualUserLocation'],
 ): () => Promise<void> => async (): Promise<void> => {
-    setIsFetchingLatLng(true);
-    const latLong = await fetchLatLngFromDevice();
-    setIsFetchingLatLng(false);
+    fetchLatLng(
+        setIsFetchingLatLng,
+        fetchLatLngFromDevice,
+        setManualUserLocation,
+        MY_LOCATION,
+    );
+};
 
+const fetchLatLng = async (
+    setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
+    fetchFn: () => Promise<LatLong | undefined>,
+    setManualUserLocation: Props['setManualUserLocation'],
+    locationLabel: string,
+): Promise<void> => {
+    setIsFetchingLatLng(true);
+    const latLong = await fetchFn();
+    setIsFetchingLatLng(false);
     if (!latLong) return;
     setManualUserLocation({
-        label: MY_LOCATION,
+        label: locationLabel,
         latLong,
     });
 };
