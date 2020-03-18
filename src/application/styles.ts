@@ -39,6 +39,7 @@ export const values = {
     roundedBorderRadius: 25,
     lessRoundedBorderRadius: 10,
     backgroundTextPadding: 5,
+    disabledOpacity: .5,
 };
 
 const fontStyle = 'normal';
