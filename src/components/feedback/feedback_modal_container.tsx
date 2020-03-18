@@ -9,10 +9,18 @@ interface SuggestionContent {
 	placeholder: string;
 };
 
+interface UseFeedbackContent {
+	content: SuggestionContent;
+	isVisible: boolean;
+	showRemoveService: () => void;
+	showOther: () => void;
+	close: () => void;
+}
+
 type FeedbackOptionsModalProps = {
-	isFeedbackOptionModalVisible: boolean,
-	setShowFeedbackOptionsModal: (isVisible: boolean) => void,
-	onSuggestAnUpdatePress: () => void,
+	isFeedbackOptionModalVisible: boolean;
+	setShowFeedbackOptionsModal: (isVisible: boolean) => void;
+	onSuggestAnUpdatePress: () => void;
 };
 
 type FeedbackModalContainerProps = FeedbackOptionsModalProps;
@@ -30,17 +38,18 @@ const SUGGESTION_CONTENT = {
 	},
 };
 
-function useToggleState(initialValue: boolean): readonly [boolean, () => void] {
+const useToggleState = (initialValue: boolean): readonly [boolean, () => void] => {
 	const [state, toggleState] = useState<boolean>(initialValue);
 
-	function toggle() {
-		toggleState(prevState => !prevState);
-	}
+	const toggle = useCallback(
+		() => toggleState(prevState => !prevState),
+		[toggleState],
+	);
 
 	return [state, toggle];
 }
 
-function useFeedbackSuggestionContent() {
+const useFeedbackSuggestionContent = (): UseFeedbackContent => {
 	const [isVisible, toggle] = useToggleState(false);
 	const [content, setContent] = useState<SuggestionContent>(SUGGESTION_CONTENT.OTHER);
 
