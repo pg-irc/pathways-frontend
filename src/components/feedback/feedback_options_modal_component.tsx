@@ -16,9 +16,9 @@ export interface FeedbackModalActions {
 }
 
 export interface ButtonsComponentProps {
-  readonly onSuggestAnUpdatePress: () => void;
-  readonly onOtherOptionPress: () => void;
-  readonly onRemoveServicePress: () => void;
+    readonly onSuggestAnUpdatePress: () => void;
+    readonly onOtherOptionPress: () => void;
+    readonly onRemoveServicePress: () => void;
 }
 
 type Props = FeedbackModalProps & FeedbackModalActions & ButtonsComponentProps;
