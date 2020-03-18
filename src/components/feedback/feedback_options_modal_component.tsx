@@ -13,10 +13,15 @@ export interface FeedbackModalProps {
 
 export interface FeedbackModalActions {
     readonly setIsVisible: (isVisible: boolean) => void;
-    readonly onSuggestAnUpdatePress: () => void;
 }
 
-type Props = FeedbackModalProps & FeedbackModalActions;
+export interface ButtonsComponentProps {
+  readonly onSuggestAnUpdatePress: () => void;
+  readonly onOtherOptionPress: () => void;
+  readonly onRemoveServicePress: () => void;
+}
+
+type Props = FeedbackModalProps & FeedbackModalActions & ButtonsComponentProps;
 
 export const FeedbackOptionsModalComponent = (props: Props): JSX.Element => (
     <Modal
@@ -44,11 +49,11 @@ const HeaderComponent = (props: { readonly setShowModal: (b: boolean) => void })
     </View>
 );
 
-const ButtonsComponent = (props: FeedbackModalActions): JSX.Element => (
+const ButtonsComponent = (props: ButtonsComponentProps): JSX.Element => (
     <View style={{ marginHorizontal: 10 }}>
        <OptionButton name={<Trans>Change name or other details</Trans>} onPress={props.onSuggestAnUpdatePress}/>
-       <OptionButton name={<Trans>Remove this service</Trans>} onPress={(): void => undefined}/>
-       <OptionButton name={<Trans>Other</Trans>} onPress={(): void => undefined}/>
+       <OptionButton name={<Trans>Remove this service</Trans>} onPress={props.onRemoveServicePress}/>
+       <OptionButton name={<Trans>Other</Trans>} onPress={props.onOtherOptionPress}/>
     </View>
 );
 
