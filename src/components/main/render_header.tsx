@@ -10,10 +10,11 @@ interface RenderHeaderProps {
     readonly leftButton?: JSX.Element;
     readonly rightButtons: ReadonlyArray<JSX.Element>;
     readonly title?: JSX.Element;
+    readonly noTopPadding?: boolean;
 }
 
 export const renderHeader = (props: RenderHeaderProps): JSX.Element => {
-    const marginTop = getStatusBarHeightForPlatform();
+    const marginTop = props.noTopPadding ? 0 : getStatusBarHeightForPlatform();
     return (
         <Header style={{ marginTop, backgroundColor: props.backgroundColor, borderBottomColor: 'transparent' }}>
             {buildLeftButton(props.leftButton)}
