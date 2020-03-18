@@ -2,7 +2,7 @@
 
 This repository contains the client for providing access to data about services for refugees and immigrants to BC.
 
-The client is implemented in react-native, using create-react-native-app, redux, redux-first-router, native-base and lingui.
+The client is implemented in react-native, using expo, redux, react-router-native, native-base and lingui.
 
 # Getting started
 
@@ -89,7 +89,7 @@ It's suggested you first apply [Expo SDK updates](#expo-sdk-updates) then non Ex
 
 ## Changelog
 
-Changes that are made in each release are tracked following [Expo's](https://github.com/expo/expo/blob/master/CHANGELOG.md) procedure. 
+Changes that are made in each release are tracked following [Expo's](https://github.com/expo/expo/blob/master/CHANGELOG.md) procedure.
 
 
 * changelog is updated with every PR that affects functionality.
