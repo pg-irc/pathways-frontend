@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { useState, Dispatch, SetStateAction, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
@@ -25,7 +25,7 @@ import { FeedbackComponent } from '../feedback/feedback_component';
 import { isAndroid } from '../../helpers/is_android';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from './service_detail_icon';
-import { FeedbackOptionsModalComponent } from '../feedback/feedback_options_modal_component';
+import { FeedbackModalContainer } from '../feedback/feedback_modal_container';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -51,14 +51,15 @@ export interface ServiceDetailActions {
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
-    const [feedbackEnabled, setFeedbackEnabled]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-    const [feedback, setFeedback]: readonly [Feedback, Dispatch<SetStateAction<Feedback>>] =
-        useState(getDefaultFeedbackValues());
+    const [feedback, setFeedback] = useState<Feedback>(getDefaultFeedbackValues());
+    const [feedbackEnabled, setFeedbackEnabled] = useState<boolean>(false);
+    const [showFeedbackOptionsModal, setShowFeedbackOptionsModal] = useState<boolean>(false);
+
+    const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
+
     const setFeedbackForField = R.curry((field: keyof Feedback, value: string): void => (
         setFeedback({...feedback, [field]: value})
     ));
-    const [showFeedbackOptionsModal, setShowFeedbackOptionsModal]: readonly[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-    const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
 
     const onFeedbackButtonPress = (): void => {
         setFeedbackEnabled(true);
@@ -117,9 +118,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     {...props}
                 />
                 <FeedbackButton isVisible={!feedbackEnabled} onPress={(): void => setShowFeedbackOptionsModal(true)} />
-                <FeedbackOptionsModalComponent
-                    isVisible={showFeedbackOptionsModal}
-                    setIsVisible={setShowFeedbackOptionsModal}
+                <FeedbackModalContainer
+                    isFeedbackOptionModalVisible={showFeedbackOptionsModal}
+                    setShowFeedbackOptionsModal={setShowFeedbackOptionsModal}
                     onSuggestAnUpdatePress={onFeedbackButtonPress}
                 />
             </View>
