@@ -47,16 +47,11 @@ export interface ServicesUpdater {
 
 type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterProps;
 
-type Timestamp = number;
-type TimestampSetter = Dispatch<SetStateAction<Timestamp>>;
-
 export const ServiceListComponent = (props: Props): JSX.Element => {
-    const [lastScreenRefresh, setLastScreenRefresh]: readonly [Timestamp, TimestampSetter] = useState(Date.now());
-    useEffect(() => { refreshServices(props); }, [lastScreenRefresh, props.manualUserLocation]);
-    const refreshScreen = (): void => setLastScreenRefresh(Date.now());
+    useEffect(refreshServices(props), [props.manualUserLocation]);
 
     if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
-        return renderErrorComponent(props, refreshScreen);
+        return renderErrorComponent(props, refreshServices(props));
     }
 
     if (isLoadingServices(props.topicServicesOrError) || isInitialEmptyTopicServices(props.topicServicesOrError)) {
@@ -64,7 +59,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     }
 
     if (isValidEmptyTopicServices(props.topicServicesOrError)) {
-        return renderEmptyComponent(props, refreshScreen);
+        return renderEmptyComponent(props, refreshServices(props));
     }
 
     return (
@@ -80,11 +75,13 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     );
 };
 
-const refreshServices = (props: Props): void => {
-    if (servicesFetchRequired(props.topicServicesOrError) || hasManualUserLocation(props.manualUserLocation)) {
-        props.dispatchServicesRequest();
+const refreshServices = (props: Props): () => void => (
+    (): void => {
+        if (servicesFetchRequired(props.topicServicesOrError) || hasManualUserLocation(props.manualUserLocation)) {
+            props.dispatchServicesRequest();
+        }
     }
-};
+);
 
 const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boolean => (
     topicServicesOrError.type === constants.ERROR_SERVICES_FOR_TOPIC ||
