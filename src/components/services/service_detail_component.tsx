@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { useState, useRef } from 'react';
+import React, { Dispatch, SetStateAction, useState, useRef } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
@@ -51,9 +51,12 @@ export interface ServiceDetailActions {
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
-    const [feedback, setFeedback] = useState<Feedback>(getDefaultFeedbackValues());
-    const [feedbackEnabled, setFeedbackEnabled] = useState<boolean>(false);
-    const [showFeedbackOptionsModal, setShowFeedbackOptionsModal] = useState<boolean>(false);
+    const [feedback, setFeedback]: readonly[Feedback, Dispatch<SetStateAction<Feedback>>]
+        = useState<Feedback>(getDefaultFeedbackValues());
+    const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
+        = useState<boolean>(false);
+    const [showFeedbackOptionsModal, setShowFeedbackOptionsModal]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
+        = useState<boolean>(false);
 
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
 

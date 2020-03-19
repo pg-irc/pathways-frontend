@@ -89,7 +89,7 @@
         "no-this": true,
         "no-class": true,
         "no-mixed-interface": false,
-        "no-expression-statement": true,
+        "no-expression-statement": false,
         "no-if-statement": false,
         "radix": true,
         "switch-default": true,
