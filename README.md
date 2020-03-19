@@ -2,7 +2,7 @@
 
 This repository contains the client for providing access to data about services for refugees and immigrants to BC.
 
-The client is implemented in react-native, using create-react-native-app, redux, redux-first-router, native-base and lingui.
+The client is implemented in react-native, using expo, redux, react-router-native, native-base and lingui.
 
 # Getting started
 
@@ -61,14 +61,13 @@ All commits are labelled with the issue they are being done under. This ensures 
 * Client specifies the minimum server version required for proper client operation.
 * We use [semantic versioning](https://semver.org/) of the form X.Y.Z.
 * We start with version 1.0.0 for client and server.
-* The version string of the client or server is done in the same pull request that contains the changes that require the version to change.
-* We bump the Z each sprint, except for sprints where no changes went in. We also bump Z for any hotfixes that may go in independenty of the sprint cadence.
-* We bump the Y when we add features that are backwards compatible as per semantic versioning.
-* We bump the X when we add features that are backwards incompatible, i.e. when the client would fail to operate correctly with an older server version, as per [semantic versioning](https://semver.org/).
+* Version strings in server and client are updated on the release branch as part of the release process. When the release is done (QA passed and show stopper bugs fixed in the release branch), the release branch is merged into both develop and master, thereby updating the version strings in those branches.
+* For client version string X.Y.Z, X is 1, Y is incremented on each release, and Z is incremented for hot fixes only, which we have not needed to do yet.
+* For the server, X is 1 and is updated on API changes that makes old clients incompatible with the new API, Y is updated on API changes that are not incompatible, and Z is updated each release.
 * Versions are stored as git tags in each git repo (client and server).
 * On the server side, the version is stored in VERSION.txt.
 * On the client side, the version is stored in VERSION.txt and several other files, with unit tests making sure that all version strings are the same.
-* Client About screen shows the version of the client.
+* Client About screen shows the version of the client and server.
 
 ## Expo SDK updates
 
@@ -90,7 +89,7 @@ It's suggested you first apply [Expo SDK updates](#expo-sdk-updates) then non Ex
 
 ## Changelog
 
-Changes that are made in each release are tracked following [Expo's](https://github.com/expo/expo/blob/master/CHANGELOG.md) procedure. 
+Changes that are made in each release are tracked following [Expo's](https://github.com/expo/expo/blob/master/CHANGELOG.md) procedure.
 
 
 * changelog is updated with every PR that affects functionality.

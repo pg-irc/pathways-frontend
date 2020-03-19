@@ -3,9 +3,9 @@ import React, { useState, Dispatch, SetStateAction, useRef } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
-import { Text, TouchableOpacity } from 'react-native';
-import { View } from 'native-base';
-import { textStyles, colors } from '../../application/styles';
+import { TouchableOpacity } from 'react-native';
+import { View, Text } from 'native-base';
+import { values, textStyles, colors} from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
@@ -79,7 +79,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             ref={scrollViewRef}
         >
             <View padder>
-                <DescriptorComponent descriptor={<Trans>SERVICE</Trans>} />
                 <FeedbackComponent
                     onChangeFeedbackText={setFeedbackForField('nameFeedback')}
                     feedbackText={feedback.nameFeedback}
@@ -116,6 +115,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     analyticsLinkPressed={props.analyticsLinkPressed}
                     {...props}
                 />
+                <DividerComponent />
                 <FeedbackButton isVisible={!feedbackEnabled} onPress={(): void => setShowFeedbackOptionsModal(true)} />
                 <FeedbackOptionsModalComponent
                     isVisible={showFeedbackOptionsModal}
@@ -148,20 +148,13 @@ const Name = (props: NameProps): JSX.Element => (
     </>
 );
 
-interface OrganizationProps {
-    readonly history: History;
-    readonly name: string;
-}
-
-const Organization = (props: OrganizationProps): JSX.Element => (
-    <>
-        <Text style={[textStyles.paragraphBoldBlackLeft, { marginRight: 5 }]}>
-            <Trans>Provided by</Trans>:
-        </Text>
-        <TouchableOpacity onPress={(): void => undefined}>
-            <Text style={textStyles.URL}>{props.name}</Text>
-        </TouchableOpacity>
-    </>
+const Organization = (props: { readonly history: History, readonly name: string }): JSX.Element => (
+    <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
+        <View>
+            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Provided by</Trans>: </Text>
+            <Text style={textStyles.paragraphStyle}>{props.name}</Text>
+        </View>
+    </View>
 );
 
 interface DescriptionProps {
