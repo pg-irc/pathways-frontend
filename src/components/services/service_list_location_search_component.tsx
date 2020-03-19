@@ -200,7 +200,7 @@ const getSearchOnPress = (
     setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
     locationInputValue: string,
     setManualUserLocation: Props['setManualUserLocation'],
-): () => Promise<void> => async (): Promise<void> => {
+): () => void => (): void => {
     if (locationInputValue === MY_LOCATION) return;
     const fetchFn = (): Promise<LatLong | undefined> => fetchLatLngFromServer(locationInputValue);
     fetchLatLng(
@@ -214,7 +214,7 @@ const getSearchOnPress = (
 const getLocateOnPress = (
     setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
     setManualUserLocation: Props['setManualUserLocation'],
-): () => Promise<void> => async (): Promise<void> => {
+): () => void => (): void => {
     fetchLatLng(
         setIsFetchingLatLng,
         fetchLatLngFromDevice,
@@ -230,13 +230,18 @@ const fetchLatLng = async (
     locationLabel: string,
 ): Promise<void> => {
     setIsFetchingLatLng(true);
-    const latLong = await fetchFn();
+    const latLong = await fetchFn().catch(handleFetchError);
     setIsFetchingLatLng(false);
-    if (!latLong) return;
+    if (!latLong) return undefined;
     setManualUserLocation({
         label: locationLabel,
         latLong,
     });
+};
+
+const handleFetchError = (error: string): undefined => {
+    console.log(error);
+    return undefined;
 };
 
 // TODO: These both may be handy elsewhere and could be moved into a helper file.
