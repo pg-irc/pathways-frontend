@@ -7,7 +7,7 @@ import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { UserLocation, LatLong } from '../../validation/latlong/types';
 import { SetManualUserLocationAction } from '../../stores/manual_user_location';
-import { buildGeoCoderUrl, getTextIfValidOrThrow } from '../search/api/use_fetch_lat_long_from_location';
+import { buildGeoCoderUrl, getTextIfValidOrThrow } from '../search/api/fetch_lat_long_from_location';
 import { toGeoCoderLatLong } from '../../validation/latlong';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { MY_LOCATION } from '../../application/constants';
