@@ -28,6 +28,7 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
         return (
             <CollapsedSearch
                 locationInputValue={locationInputValue}
+                setLocationInputValue={setLocationInputValue}
                 setSearchIsCollapsed={setSearchIsCollapsed}
             />
         );
@@ -40,6 +41,7 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
             isFetchingLatLng={isFetchingLatLng}
             setIsFetchingLatLng={setIsFetchingLatLng}
             setManualUserLocation={props.setManualUserLocation}
+            manualUserLocation={props.manualUserLocation}
         />
     );
 };
@@ -47,13 +49,20 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
 interface CollapsedSearchProps {
     readonly locationInputValue: string;
     readonly setSearchIsCollapsed: (b: boolean) => void;
+    readonly setLocationInputValue: (s: string) => void;
 }
 
 const CollapsedSearch = (props: CollapsedSearchProps): JSX.Element => {
-    const closeOnPress = (): void => props.setSearchIsCollapsed(false);
+    const closeOnPress = (): void => {
+        props.setSearchIsCollapsed(false);
+        props.setLocationInputValue('');
+    };
+    const wrapperOnPress = (): void => {
+        props.setSearchIsCollapsed(false);
+    };
     const translatedLocation = props.locationInputValue === MY_LOCATION ? <Trans>My Location</Trans> : props.locationInputValue;
     return (
-        <View style={[applicationStyles.searchContainer, { justifyContent: 'space-between', marginTop: 10 }]}>
+        <TouchableOpacity onPress={wrapperOnPress} style={[applicationStyles.searchContainer, { justifyContent: 'space-between', marginTop: 10 }]}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <LocationIcon />
                 <Text style={[textStyles.paragraphStyle, { paddingVertical: 10 }]}>
@@ -63,7 +72,7 @@ const CollapsedSearch = (props: CollapsedSearchProps): JSX.Element => {
             <TouchableOpacity onPress={closeOnPress}>
                 <CloseIcon />
             </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
     );
 };
 
@@ -73,6 +82,7 @@ interface ExpandedSearchProps {
     readonly isFetchingLatLng: boolean;
     readonly setIsFetchingLatLng: (b: boolean) => void;
     readonly setManualUserLocation: Props['setManualUserLocation'];
+    readonly manualUserLocation: Props['manualUserLocation'];
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
@@ -82,6 +92,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                 <SearchInput
                     locationInputValue={props.locationInputValue}
                     setLocationInputValue={props.setLocationInputValue}
+                    autoFocus={!!props.manualUserLocation.label}
                 />
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 3 }}>
@@ -107,6 +118,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
 
 interface SearchInputProps {
     readonly locationInputValue: string;
+    readonly autoFocus: boolean;
     readonly setLocationInputValue: (s: string) => void;
 }
 
@@ -123,6 +135,7 @@ const SearchInput = (props: SearchInputProps): JSX.Element => (
                         placeholder={i18n._(t`Enter city, address, or postal code`)}
                         placeholderTextColor={colors.greyishBrown}
                         selectionColor={colors.black}
+                        autoFocus={props.autoFocus}
                     />
                 )
             }
