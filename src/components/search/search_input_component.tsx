@@ -77,7 +77,7 @@ const buildBriefSearchString = (searchInput: string, searchLocationInput: string
         return searchInput;
     }
     if (searchLocationInput === MY_LOCATION) {
-        return searchInput + ' ' + buildTranslatedString(i18nRenderProp.i18n, 'near ' + MY_LOCATION);
+        return searchInput + ' ' + buildTranslatedString(i18nRenderProp.i18n, 'near my location');
     }
     return searchInput + ' near ' + searchLocationInput;
 };
