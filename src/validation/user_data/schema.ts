@@ -1,3 +1,5 @@
+import { serviceSearchItemArray } from "../search/schema";
+
 // tslint:disable:quotemark trailing-comma
 
 const chosenAnswersArray = {
@@ -148,7 +150,9 @@ export const userData = {
         "searchLocation": {
             "type": "string"
         },
-        "isSearchInputCollapsed": {
+        "searchLatLong": latLong,
+        "searchResults": serviceSearchItemArray,
+        "collapseSearchInput": {
             "type": "boolean"
         },
     }

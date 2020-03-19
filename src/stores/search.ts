@@ -1,9 +1,14 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
+import { SearchServiceData } from '../validation/search/types';
+import { LatLong } from '../validation/latlong/types';
+import { ClearAllUserDataAction } from './questionnaire/actions';
 
 export type SaveSearchTermAction = Readonly<ReturnType<typeof saveSearchTerm>>;
 export type SaveSearchLocationAction = Readonly<ReturnType<typeof saveSearchLocation>>;
-export type SetIsInputCollapsedAction = Readonly<ReturnType<typeof setIsSearchInputCollapsed>>;
+export type SaveSearchLatLongAction = Readonly<ReturnType<typeof saveSearchLatLong>>;
+export type SaveSearchResultsAction = Readonly<ReturnType<typeof saveSearchResults>>;
+export type SetCollapseSearchInputAction = Readonly<ReturnType<typeof setCollapseSearchInput>>;
 
 // tslint:disable-next-line:typedef
 export const saveSearchTerm = (searchTerm: string) => (
@@ -15,23 +20,43 @@ export const saveSearchLocation = (searchLocation: string) => (
     helpers.makeAction(constants.SAVE_SEARCH_LOCATION, { searchLocation })
 );
 
-// tslint:disable-next-line:typedef
-export const setIsSearchInputCollapsed = (isSearchInputCollapsed: boolean) => (
-    helpers.makeAction(constants.SET_IS_INPUT_COLLAPSED, { isSearchInputCollapsed })
+// tslint:disable-next-line: typedef
+export const saveSearchLatLong = (searchLatLong: LatLong) => (
+    helpers.makeAction(constants.SAVE_SEARCH_LAT_LONG, { searchLatLong })
 );
 
-export type SearchAction = SaveSearchTermAction | SaveSearchLocationAction | SetIsInputCollapsedAction;
+// tslint:disable-next-line:typedef
+export const saveSearchResults = (searchResults: ReadonlyArray<SearchServiceData>) => (
+    helpers.makeAction(constants.SAVE_SEARCH_RESULTS, { searchResults })
+);
+
+// tslint:disable-next-line:typedef
+export const setCollapseSearchInput = (collapseSearchInput: boolean) => (
+    helpers.makeAction(constants.SET_COLLAPSE_SEARCH_INPUT, { collapseSearchInput })
+);
+
+export type SearchAction =
+    SaveSearchTermAction |
+    SaveSearchLocationAction |
+    SaveSearchLatLongAction |
+    SaveSearchResultsAction |
+    SetCollapseSearchInputAction |
+    ClearAllUserDataAction;
 
 export interface SearchStore {
     readonly searchTerm: string;
     readonly searchLocation: string;
-    readonly isSearchInputCollapsed: boolean;
+    readonly searchLatLong: LatLong;
+    readonly searchResults: ReadonlyArray<SearchServiceData>;
+    readonly collapseSearchInput: boolean;
 }
 
 export const buildDefaultStore = (): SearchStore => ({
     searchTerm: '',
     searchLocation: '',
-    isSearchInputCollapsed: false,
+    searchLatLong: undefined,
+    searchResults: [],
+    collapseSearchInput: false,
 });
 
 export const reducer = (store: SearchStore = buildDefaultStore(), action?: SearchAction): SearchStore => {
@@ -49,11 +74,23 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
                 ...store,
                 searchLocation: action.payload.searchLocation,
             });
-        case constants.SET_IS_INPUT_COLLAPSED:
+        case constants.SAVE_SEARCH_LAT_LONG:
             return ({
                 ...store,
-                isSearchInputCollapsed: action.payload.isSearchInputCollapsed,
+                searchLatLong: action.payload.searchLatLong,
             });
+        case constants.SAVE_SEARCH_RESULTS:
+            return ({
+                ...store,
+                searchResults: action.payload.searchResults,
+            });
+        case constants.SET_COLLAPSE_SEARCH_INPUT:
+            return ({
+                ...store,
+                collapseSearchInput: action.payload.collapseSearchInput,
+            });
+        case constants.CLEAR_ALL_USER_DATA:
+            return buildDefaultStore();
         default:
             return store;
     }
