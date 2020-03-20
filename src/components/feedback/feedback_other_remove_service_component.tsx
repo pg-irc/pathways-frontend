@@ -1,24 +1,37 @@
-import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
-import { Button, Container, Content, Footer, FooterTab, Icon, Item, Input, Label, Text } from 'native-base';
+import {
+    Button,
+    Container,
+    Content,
+    Footer,
+    FooterTab,
+    Header,
+    Icon,
+    Item,
+    Input,
+    Label,
+    Left,
+    Right,
+    Text,
+    Title,
+} from 'native-base';
 import React from 'react';
 import Modal from 'react-native-modal';
 
 import { colors, textStyles } from '../../application/styles';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
-import { renderHeader } from '../main/render_header';
 
 import styles from './styles';
 
 type HeaderComponentProps = {
-    readonly headerLabel: string;
+    readonly headerLabel: TemplateStringsArray;
     readonly onClose: () => void;
 };
 
 type ContentComponentProps = {
-    readonly inputLabel: string;
-    readonly placeholder: string;
+    readonly inputLabel: TemplateStringsArray;
+    readonly placeholder: TemplateStringsArray;
 };
 
 type FooterComponentProps = {
@@ -31,35 +44,27 @@ type ModalProps = {
 };
 
 const HeaderComponent = (props: HeaderComponentProps): JSX.Element => {
-    const leftButton = (
-        <Button onPress={props.onClose} transparent>
-        <Icon name='chevron-left' type='FontAwesome' style={styles.headerElement}/>
-        </Button>
+    return (
+        <Header style={styles.headerContainer}>
+            <Left style={styles.headerBackButton}>
+                <Button onPress={props.onClose} transparent>
+                    <Icon name='chevron-left' type='FontAwesome' style={styles.headerElement}/>
+                </Button>
+                <Title style={styles.headerLeftTitle}>
+                    <Text style={textStyles.headline6}>
+                        <Trans id={props.headerLabel} />
+                    </Text>
+                </Title>
+            </Left>
+            <Right>
+                <CloseButtonComponent
+                    color={colors.greyishBrown}
+                    additionalStyle={{ paddingTop: 0 }}
+                    onPress={props.onClose}
+                />
+            </Right>
+        </Header>
     );
-
-    const rightButtons: ReadonlyArray<JSX.Element> = [(
-        <CloseButtonComponent
-            color={colors.greyishBrown}
-            additionalStyle={{ paddingTop: 0 }}
-            onPress={props.onClose}
-        />
-    )];
-
-    const title = (
-        <Text style={textStyles.headline6}>
-            <Trans id={props.headerLabel} />
-        </Text>
-    );
-
-    const noTopPadding = true;
-
-    return renderHeader({
-        backgroundColor: 'white',
-        noTopPadding,
-        title,
-        leftButton,
-        rightButtons,
-    });
 };
 
 const ContentComponent = (props: ContentComponentProps): JSX.Element => {
@@ -70,12 +75,12 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
                     <Content padder>
                         <Item placeholderLabel={true} stackedLabel>
                             <Label style={styles.inputLabel}>
-                                <Trans id ={props.inputLabel} />
+                                <Trans id={props.inputLabel} />
                             </Label>
                             <Input
                                 multiline
                                 numberOfLines={5}
-                                placeholder={i18n._(t`${props.placeholder}`)}
+                                placeholder={i18n._(props.placeholder)}
                                 placeholderTextColor={colors.darkerGrey}
                                 style={styles.input}
                                 textAlignVertical='top'

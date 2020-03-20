@@ -9,6 +9,7 @@ import { Trans } from '@lingui/react';
 
 export interface FeedbackModalProps {
     readonly isVisible: boolean;
+    readonly onModalHide: () => void;
 }
 
 export interface FeedbackModalActions {
@@ -27,6 +28,7 @@ export const FeedbackOptionsModalComponent = (props: Props): JSX.Element => (
     <Modal
         isVisible={props.isVisible}
         onBackdropPress={(): void => props.setIsVisible(false)}
+        onModalHide={props.onModalHide}
         style={{ justifyContent: 'flex-end', margin: 0 }}
     >
         <View padder style={{backgroundColor: colors.white, borderTopStartRadius: 20, borderTopEndRadius: 20}}>
