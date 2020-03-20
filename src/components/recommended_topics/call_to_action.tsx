@@ -1,13 +1,82 @@
-import React from 'react';
+// tslint:disable: no-expression-statement
+import React, { useCallback } from 'react';
 import { History } from 'history';
 import { Dimensions, Image, TouchableOpacity, I18nManager } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Button, Icon } from 'native-base';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
-import { textStyles, applicationStyles, colors, values } from '../../application/styles';
+import { textStyles, applicationStyles, colors, markdownStyles, values } from '../../application/styles';
 import { advisor, recommendationBubble } from '../../application/images';
+import { openURL, LinkTypes } from '../link/link';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 
 type Props = { readonly history: History };
+
+type CovidComponentProps = {
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly currentPathForAnalytics: string;
+};
+
+const BCCDC_COVID_LINK = 'http://www.bccdc.ca/health-info/diseases-conditions/covid-19';
+const LINK_CONTEXT_MODEL = 'Alert';
+const LINK_CONTEXT_TITLE = 'covid19';
+
+export const CovidComponent = ({
+    analyticsLinkPressed,
+    currentPathForAnalytics,
+}: CovidComponentProps): JSX.Element => {
+    const onLinkPress = useCallback(
+        (): void => {
+            openURL(BCCDC_COVID_LINK);
+
+            analyticsLinkPressed(
+                currentPathForAnalytics,
+                buildAnalyticsLinkContext(LINK_CONTEXT_MODEL, LINK_CONTEXT_TITLE),
+                LinkTypes.website,
+                BCCDC_COVID_LINK,
+            );
+        },
+        [analyticsLinkPressed, currentPathForAnalytics],
+    );
+
+    return (
+        <View style={[
+            applicationStyles.boxShadowBelow,
+            {
+                backgroundColor: colors.lightGrey,
+                borderRadius: values.lessRoundedBorderRadius,
+                padding: 20,
+                marginBottom: 10,
+            },
+        ]}>
+            <View style={{ flex: 5, flexDirection: 'row', marginBottom: 10 }}>
+                <View style={{ flex: 3 }}>
+                    <Text style={textStyles.headlineH2StyleBlackLeft}>
+                        <Trans>COVID-19 information</Trans>
+                    </Text>
+                </View>
+            </View>
+            <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 20 }]}>
+                <Trans>
+                    Many of our listed services are transitioning to alternate
+                    service delivery methods. Please check service providers'
+                    websites for details.
+                </Trans>
+            </Text>
+            <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 20 }]}>
+                <Trans>
+                    Questions about COVID-19? Get the latest information from 
+                    <Text style={markdownStyles.link} onPress={onLinkPress}>
+                        BC Centre for Disease Control
+                        <Text>{' '}</Text>
+                        <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: colors.teal }} />
+                    </Text>
+                </Trans>
+            </Text>
+        </View>
+    );
+}
 
 export const CallToActionFullComponent = (props: Props): JSX.Element => {
     return (
