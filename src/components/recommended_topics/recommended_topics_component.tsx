@@ -17,6 +17,7 @@ import {
 import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
