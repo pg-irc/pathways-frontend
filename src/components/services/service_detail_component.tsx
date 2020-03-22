@@ -3,9 +3,8 @@ import React, { Dispatch, SetStateAction, useState, useRef } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
-import { TouchableOpacity } from 'react-native';
 import { View, Text } from 'native-base';
-import { values, textStyles, colors} from '../../application/styles';
+import { values, textStyles } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
@@ -24,9 +23,8 @@ import { EmailComponent } from '../email/email_component';
 import { FeedbackComponent } from '../feedback/feedback_component';
 import { isAndroid } from '../../helpers/is_android';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
-import { ServiceDetailIconComponent } from './service_detail_icon';
 import { FeedbackModalContainer } from '../feedback/feedback_modal_container';
-import { EmptyComponent } from '../empty_component/empty_component';
+import { useQuery } from '../../hooks/use_query';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type Feedback = {
@@ -55,23 +53,22 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         = useState<Feedback>(getDefaultFeedbackValues());
     const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
         = useState<boolean>(false);
-    const [showFeedbackOptionsModal, setShowFeedbackOptionsModal]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(false);
 
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
+
+    const query = useQuery();
 
     const setFeedbackForField = R.curry((field: keyof Feedback, value: string): void => (
         setFeedback({...feedback, [field]: value})
     ));
 
-    const onFeedbackButtonPress = (): void => {
-        setFeedbackEnabled(true);
-        setShowFeedbackOptionsModal(false);
-        scrollToTop();
-    };
-
     const scrollToTop = (): void => {
         scrollViewRef.current.scrollToPosition(0, 0, false);
+    };
+
+    const onFeedbackButtonPress = (): void => {
+        setFeedbackEnabled(true);
+        scrollToTop();
     };
 
     return (
@@ -120,11 +117,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     {...props}
                 />
                 <DividerComponent />
-                <FeedbackButton isVisible={!feedbackEnabled} onPress={(): void => setShowFeedbackOptionsModal(true)} />
                 <FeedbackModalContainer
-                    isFeedbackOptionModalVisible={showFeedbackOptionsModal}
-                    setShowFeedbackOptionsModal={setShowFeedbackOptionsModal}
+                    // TODO: Formulate a more robust typed query param getter
+                    isModalVisible={query.feedbackModalVisible === 'true'}
+                    feedbackEnabled={feedbackEnabled}
                     onSuggestAnUpdatePress={onFeedbackButtonPress}
+                    serviceId={props.service.id}
                 />
             </View>
         </KeyboardAwareScrollView>
@@ -258,30 +256,9 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
  };
 
 const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
-    addresses.map((address: Address) => `${address.address}\n${address.city} ${address.stateProvince} ${address.postalCode}`).join('\n')
+    addresses.map((address: Address): string => `${address.address}\n${address.city} ${address.stateProvince} ${address.postalCode}`).join('\n')
 );
 
 const getPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
-    phones.map((phone: PhoneNumber) => `${phone.type}: ${phone.phone_number}`).join('\n')
+    phones.map((phone: PhoneNumber): string => `${phone.type}: ${phone.phone_number}`).join('\n')
 );
-
-const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void } ): JSX.Element => {
-    if (!props.isVisible) {
-        return <EmptyComponent />;
-    }
-    return (
-        <View style={{flexDirection: 'row-reverse', marginBottom: 20}}>
-        <TouchableOpacity
-            onPress={props.onPress}
-            style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
-        >
-            <View style={{ flexDirection: 'row'}}>
-                <ServiceDetailIconComponent name={'edit'} />
-                <Text style={textStyles.paragraphBoldBlackLeft}>
-                    <Trans>Suggest an update</Trans>
-                </Text>
-            </View>
-        </TouchableOpacity>
-    </View>
-    );
-};

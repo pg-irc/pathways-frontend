@@ -3,6 +3,7 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { Platform } from 'react-native';
 
 import { colors } from '../../../application/styles';
+import { getStatusBarHeightForPlatform } from '../../main/get_status_bar_height_for_platform';
 
 interface Styles {
     readonly closeButton: TextStyle;
@@ -28,7 +29,7 @@ const styles = StyleSheet.create<Styles>({
 
     headerContainer: {
         backgroundColor: 'white',
-        marginTop: 0,
+        marginTop: getStatusBarHeightForPlatform(),
     },
 
     headerBackButton: {

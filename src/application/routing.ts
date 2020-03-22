@@ -1,3 +1,4 @@
+import buildUrl from 'build-url';
 import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
 import { History, Location } from 'history';
@@ -31,6 +32,7 @@ export enum Routes {
     Search,
     OrganizationDetail,
     ServiceDetail,
+    Feedback,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -63,6 +65,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/organization/:organizationId';
         case Routes.ServiceDetail:
             return '/service/:serviceId';
+        case Routes.Feedback:
+            return '/feedback/:serviceId';
     }
 };
 
@@ -94,6 +98,18 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
     return (): void => history.push(path);
 };
 
+export const goToRouteWithParameters = (route: Routes, parameter: string, queryParams: Record<string, string>, history: History): () => void => {
+    const path = `${routePathWithParameter(route, parameter)}${buildUrl('', { queryParams })}`;
+    // tslint:disable-next-line:no-expression-statement
+    return (): void => history.push(path);
+};
+
+export const replaceRouteWithParameters = (route: Routes, parameter: string, queryParams: Record<string, string>, history: History): () => void => {
+    const path = `${routePathWithParameter(route, parameter)}${buildUrl('', { queryParams })}`;
+    // tslint:disable-next-line:no-expression-statement
+    return (): void => history.replace(path);
+};
+
 export const goBack = (history: History): void => (
     history.goBack()
 );
@@ -103,7 +119,7 @@ export const pathMatchesRoute = (path: string, route: Routes): boolean => {
 };
 
 export const pathMatchesAnyRoute = (path: string, routes: ReadonlyArray<Routes>): boolean => (
-    R.any((route: Routes) => pathMatchesRoute(path, route), routes)
+    R.any((route: Routes): boolean => pathMatchesRoute(path, route), routes)
 );
 
 const routeHasParameter = (route: Routes): boolean => (

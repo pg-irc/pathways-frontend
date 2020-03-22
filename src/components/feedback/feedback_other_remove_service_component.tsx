@@ -1,3 +1,4 @@
+import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
 import {
     Button,
@@ -15,10 +16,12 @@ import {
     Text,
     Title,
 } from 'native-base';
-import React from 'react';
-import Modal from 'react-native-modal';
+import React, { useCallback } from 'react';
+import { useHistory, useParams } from 'react-router-native';
 
 import { colors, textStyles } from '../../application/styles';
+import { Routes, replaceRouteWithParameters } from '../../application/routing';
+import { useQuery } from '../../hooks/use_query';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
@@ -26,7 +29,6 @@ import styles from './styles';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
-    readonly onClose: () => void;
 };
 
 type ContentComponentProps = {
@@ -39,15 +41,72 @@ type FooterComponentProps = {
     readonly onSubmit: () => void;
 };
 
-type ModalProps = {
-    readonly isVisible: boolean;
+interface RouteParams {
+    readonly serviceId: string;
+}
+
+interface SuggestionContent {
+    readonly header: TemplateStringsArray;
+    readonly label: TemplateStringsArray;
+    readonly placeholder: TemplateStringsArray;
+}
+
+interface SuggestionContentMap {
+    readonly [key: string]: SuggestionContent;
+}
+
+const SUGGESTION_CONTENT: SuggestionContentMap = {
+    OTHER: {
+        header: t`Other`,
+        label: t`Tell us more about this service`,
+        placeholder: t`Comment or suggest edits`,
+    },
+    REMOVE_SERVICE: {
+        header: t`Remove Service`,
+        label: t`What is your reason for removal?`,
+        placeholder: t`e.g. Service is permanently closed`,
+    },
+};
+
+const useServiceDetailRoute = (queryParam: Record<string, string>): () => void => {
+    const params = useParams<RouteParams>();
+    const history = useHistory();
+
+    return replaceRouteWithParameters(
+        Routes.ServiceDetail,
+        params.serviceId,
+        queryParam,
+        history,
+    );
 };
 
 const HeaderComponent = (props: HeaderComponentProps): JSX.Element => {
+    const history = useHistory();
+
+    const goBackShowModal = useServiceDetailRoute(
+        // TODO useQuery only supports string Records for now
+        { feedbackModalVisible: 'false' },
+    );
+
+    const goBackHideModal = useServiceDetailRoute(
+        // TODO useQuery only supports string Records for now
+        { feedbackModalVisible: 'true' },
+    );
+
+    const onClose = useCallback(
+        (): void => goBackHideModal(),
+        [history],
+    );
+
+    const onBack = useCallback(
+        (): void => goBackShowModal(),
+        [history],
+    );
+
     return (
         <Header style={styles.headerContainer}>
             <Left style={styles.headerBackButton}>
-                <Button onPress={props.onClose} transparent>
+                <Button onPress={onBack} transparent>
                     <Icon name='chevron-left' type='FontAwesome' style={styles.headerElement}/>
                 </Button>
                 <Title style={styles.headerLeftTitle}>
@@ -60,7 +119,7 @@ const HeaderComponent = (props: HeaderComponentProps): JSX.Element => {
                 <CloseButtonComponent
                     color={colors.greyishBrown}
                     additionalStyle={{ paddingTop: 0 }}
-                    onPress={props.onClose}
+                    onPress={onClose}
                 />
             </Right>
         </Header>
@@ -118,16 +177,16 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
     );
 };
 
-type FeedbackSuggestionProps = HeaderComponentProps & ContentComponentProps & ModalProps;
+export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
+    const query = useQuery();
+   // TODO: Formulate a more robust typed query param getter
+    const content: SuggestionContent = SUGGESTION_CONTENT[query.mode];
 
-export const FeedbackOtherRemoveServiceModal = (props: FeedbackSuggestionProps): JSX.Element => {
     return (
-        <Modal isVisible={props.isVisible} style={{ margin: 0 }}>
-            <Container>
-                <HeaderComponent headerLabel={props.headerLabel} onClose={props.onClose} />
-                <ContentComponent inputLabel={props.inputLabel} placeholder={props.placeholder} />
-                <FooterComponent disabled={true} onSubmit={(): undefined => undefined} />
-            </Container>
-        </Modal>
+        <Container>
+            <HeaderComponent headerLabel={content.header} />
+            <ContentComponent inputLabel={content.label} placeholder={content.placeholder} />
+            <FooterComponent disabled={true} onSubmit={(): undefined => undefined} />
+        </Container>
     );
 };

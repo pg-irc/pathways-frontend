@@ -1,71 +1,58 @@
 // tslint:disable:no-expression-statement
-import { t } from '@lingui/macro';
+import { Trans } from '@lingui/react';
 import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import { TouchableOpacity, Text, View } from 'react-native';
+import { useHistory } from 'react-router-native';
+
+import { textStyles, colors } from '../../application/styles';
+import { Routes, goToRouteWithParameters } from '../../application/routing';
+import { ServiceDetailIconComponent } from '../services/service_detail_icon';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 import { FeedbackOptionsModalComponent } from './feedback_options_modal_component';
-import { FeedbackOtherRemoveServiceModal } from './feedback_other_remove_service_component';
-
-const SUGGESTION_CONTENT = {
-    OTHER: {
-        header: t`Other`,
-        label: t`Tell us more about this service`,
-        placeholder: t`Comment or suggest edits`,
-    },
-    REMOVE_SERVICE: {
-        header: t`Remove Service`,
-        label: t`What is your reason for removal?`,
-        placeholder: t`e.g. Service is permanently closed`,
-    },
-};
-
-interface SuggestionContent {
-    readonly header: TemplateStringsArray;
-    readonly label: TemplateStringsArray;
-    readonly placeholder: TemplateStringsArray;
-}
-
-interface UseFeedbackContent {
-    readonly suggestionFormContent: SuggestionContent;
-    readonly showRemoveService: () => void;
-    readonly showOther: () => void;
-}
 
 interface FeedbackModalContainerProps {
-    readonly isFeedbackOptionModalVisible: boolean;
-    readonly setShowFeedbackOptionsModal: (isVisible: boolean) => void;
+    readonly feedbackEnabled: boolean;
     readonly onSuggestAnUpdatePress: () => void;
+    readonly serviceId: string;
+    readonly isModalVisible: boolean;
 }
 
-interface FeedbackSuggestionControls {
-    readonly suggestionFormContent: SuggestionContent;
-    readonly showSuggestion: boolean;
-    readonly setShowSuggestion: Dispatch<SetStateAction<boolean>>;
+interface FeedbackModalControls {
+    readonly onFeedbackButtonPress: () => void;
+    readonly onSuggestAnUpdatePress: () => void;
     readonly onOtherPress: () => void;
     readonly onRemoveServicePress: () => void;
+    readonly onCloseFeedbackOptions: () => void;
 }
 
-/**
- * This hook manages the content state of the suggestion modal
- */
-const useFeedbackSuggestionContent = (): UseFeedbackContent => {
-    const [suggestionFormContent, setSuggestionFormContent]: readonly[SuggestionContent, Dispatch<SetStateAction<SuggestionContent>>]
-        = useState<SuggestionContent>(SUGGESTION_CONTENT.OTHER);
+interface ModalState {
+    readonly visible: boolean;
+    readonly show: () => void;
+    readonly hide: () => void;
+    readonly toggle: () => void;
+}
 
-    const showRemoveService = useCallback<() => void>(
-        (): void => setSuggestionFormContent(SUGGESTION_CONTENT.REMOVE_SERVICE),
-        [setSuggestionFormContent],
+const useModalState = (initialValue: boolean): ModalState => {
+    const [visible, setVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
+        = useState<boolean>(initialValue);
+
+    const show = useCallback(
+        (): void => setVisible(true),
+        [setVisible],
     );
 
-    const showOther = useCallback<() => void>(
-        (): void => setSuggestionFormContent(SUGGESTION_CONTENT.OTHER),
-        [setSuggestionFormContent],
+    const hide = useCallback(
+        (): void => setVisible(false),
+        [setVisible],
     );
 
-    return {
-        suggestionFormContent,
-        showRemoveService,
-        showOther,
-    };
+    const toggle = useCallback(
+        (): void => setVisible(!visible),
+        [visible, setVisible],
+    );
+
+    return { visible, show, hide, toggle };
 };
 
 /**
@@ -73,94 +60,111 @@ const useFeedbackSuggestionContent = (): UseFeedbackContent => {
  * The controls do not attempt to manage the state of suggestion modal visibility.
  *
  */
-const useFeedbackSuggestionControls = (setShowFeedbackOptionsModal: (show: boolean) => void): FeedbackSuggestionControls => {
-    // This state does not control the modal visibility.
-    const [showSuggestion, setShowSuggestion]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState(false);
+const useFeedbackModalControls = (modalState: ModalState, serviceId: string, onSuggestAnUpdate: () => void): FeedbackModalControls => {
+    const history = useHistory();
 
-    const { suggestionFormContent, showRemoveService, showOther }: UseFeedbackContent
-        = useFeedbackSuggestionContent();
-
-    const onOtherPress = useCallback(
-        (): void => {
-            showOther();
-            setShowSuggestion(true);
-            setShowFeedbackOptionsModal(false);
-        },
-        [setShowSuggestion, showOther, setShowFeedbackOptionsModal],
+    const goToFeedbackOtherScreen = goToRouteWithParameters(
+        Routes.Feedback,
+        serviceId,
+        { mode: 'OTHER' },
+        history,
     );
 
-    const onRemoveServicePress = useCallback(
+    const goToFeedbackRemoveServiceScreen = goToRouteWithParameters(
+        Routes.Feedback,
+        serviceId,
+        { mode: 'REMOVE_SERVICE' },
+        history,
+    );
+
+    const onOtherPress = useCallback<() => void>(
         (): void => {
-            showRemoveService();
-            setShowSuggestion(true);
-            setShowFeedbackOptionsModal(false);
+            goToFeedbackOtherScreen();
         },
-        [setShowSuggestion, showRemoveService, setShowFeedbackOptionsModal],
+        [history],
+    );
+
+    const onRemoveServicePress = useCallback<() => void>(
+        (): void => {
+            goToFeedbackRemoveServiceScreen();
+        },
+        [history],
+    );
+
+    const onSuggestAnUpdatePress = useCallback<() => void>(
+        (): void => {
+            modalState.hide();
+            onSuggestAnUpdate();
+        },
+        [modalState, onSuggestAnUpdate],
+    );
+
+    const onFeedbackButtonPress = useCallback<() => void>(
+        (): void => modalState.show(),
+        [modalState],
+    );
+
+    const onCloseFeedbackOptions = useCallback(
+        (): void => modalState.hide(),
+        [modalState],
     );
 
     return {
-        suggestionFormContent,
-        showSuggestion,
-        setShowSuggestion,
+        onFeedbackButtonPress,
+        onSuggestAnUpdatePress,
         onOtherPress,
         onRemoveServicePress,
+        onCloseFeedbackOptions,
     };
 };
 
 export const FeedbackModalContainer = ({
-    onSuggestAnUpdatePress,
-    setShowFeedbackOptionsModal,
-    isFeedbackOptionModalVisible,
+    feedbackEnabled,
+    onSuggestAnUpdatePress: onSuggestAnUpdate,
+    serviceId,
+    isModalVisible,
 }: FeedbackModalContainerProps): JSX.Element => {
+    const modalState: ModalState = useModalState(isModalVisible);
+
     const {
-        suggestionFormContent,
-        showSuggestion,
-        setShowSuggestion,
+        onFeedbackButtonPress,
+        onSuggestAnUpdatePress,
         onOtherPress,
         onRemoveServicePress,
-    }: FeedbackSuggestionControls = useFeedbackSuggestionControls(setShowFeedbackOptionsModal);
-
-    const [showModal, setShowModal]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(false);
-
-    const onHideOptionsModal = useCallback(
-        (): void => {
-            // Only show the suggestion modal once the options modal is successfull hidden
-            if (showSuggestion) {
-                setShowModal(true);
-            }
-        },
-        [showSuggestion, setShowModal],
-    );
-
-    const onCloseSuggestionModal = useCallback(
-        (): void => {
-            // If the close button is pressed, hide the modal and
-            // set the flag to false
-            setShowSuggestion(false);
-            setShowModal(false);
-        },
-        [setShowSuggestion],
-    );
+        onCloseFeedbackOptions,
+    }: FeedbackModalControls = useFeedbackModalControls(modalState, serviceId, onSuggestAnUpdate);
 
     return (
         <>
+            <FeedbackButton isVisible={!feedbackEnabled} onPress={onFeedbackButtonPress} />
             <FeedbackOptionsModalComponent
-                isVisible={isFeedbackOptionModalVisible}
-                setIsVisible={setShowFeedbackOptionsModal}
-                onModalHide={onHideOptionsModal}
+                isVisible={modalState.visible}
+                onClose={onCloseFeedbackOptions}
                 onSuggestAnUpdatePress={onSuggestAnUpdatePress}
-                onOtherOptionPress={onOtherPress}
+                onOtherPress={onOtherPress}
                 onRemoveServicePress={onRemoveServicePress}
             />
-            <FeedbackOtherRemoveServiceModal
-                headerLabel={suggestionFormContent.header}
-                isVisible={showModal}
-                inputLabel={suggestionFormContent.label}
-                onClose={onCloseSuggestionModal}
-                placeholder={suggestionFormContent.placeholder}
-            />
         </>
+    );
+};
+
+const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void } ): JSX.Element => {
+    if (!props.isVisible) {
+        return <EmptyComponent />;
+    }
+    return (
+        <View style={{flexDirection: 'row-reverse', marginBottom: 20}}>
+        <TouchableOpacity
+            onPress={props.onPress}
+            style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
+        >
+            <View style={{ flexDirection: 'row'}}>
+                <ServiceDetailIconComponent name={'edit'} />
+                <Text style={textStyles.paragraphBoldBlackLeft}>
+                    <Trans>Suggest an update</Trans>
+                </Text>
+            </View>
+        </TouchableOpacity>
+    </View>
     );
 };
