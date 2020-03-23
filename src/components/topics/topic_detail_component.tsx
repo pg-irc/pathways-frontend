@@ -40,7 +40,7 @@ export interface TopicDetailActions {
 type Props = TopicDetailsProps & TopicDetailActions;
 
 export const TopicDetailComponent = (props: Props): JSX.Element => (
-    <View>
+    <View style={{ flex: 1 }}>
         <Header {...props} />
         <TaskListComponent
             tasks={props.topic.relatedTopics}
