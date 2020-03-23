@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { History, Location } from 'history';
 import * as R from 'ramda';
 import { Store } from '../../stores';
-import { TaskDetailProps, TaskDetailActions, TaskDetailComponent } from './task_detail_component';
+import { TopicDetailsProps, TopicDetailActions, TopicDetailComponent } from './topic_detail_component';
 import {
     Id as TaskId, BookmarkTopicAction, bookmarkTopic, UnbookmarkTopicAction, unbookmarkTopic,
     ExpandDetailAction, expandDetail,
@@ -21,7 +21,7 @@ type OwnProps = {
     readonly location?: Location;
 };
 
-const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
+const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.TopicDetail);
     const topic = selectCurrentTopic(store, matchParams.topicId);
     const savedTasksIdList = pickBookmarkedTopicIds(store);
@@ -31,7 +31,6 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
         taskIsBookmarked,
         savedTasksIdList,
         history: ownProps.history,
-        currentPath: ownProps.location.pathname,
         location: ownProps.location,
         currentLocale: selectLocale(store),
     };
@@ -45,7 +44,7 @@ type DispatchActions =
     AnalyticsLinkPressedAction |
     OpenHeaderMenuAction;
 
-const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TopicDetailActions => ({
     bookmarkTopic: (topicId: TaskId): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
     unbookmarkTopic: (topicId: TaskId): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
     onExpand: (contentId: string): ExpandDetailAction => dispatch(expandDetail(contentId)),
@@ -55,4 +54,4 @@ const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActi
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
 });
 
-export const TaskDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TaskDetailComponent);
+export const TopicDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TopicDetailComponent);

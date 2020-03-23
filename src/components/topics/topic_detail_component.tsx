@@ -21,17 +21,16 @@ import { renderHeader } from '../main/render_header';
 import { Locale } from '../../locale';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 
-export interface TaskDetailProps {
+export interface TopicDetailsProps {
     readonly topic: Topic;
     readonly taskIsBookmarked: boolean;
     readonly savedTasksIdList: ReadonlyArray<TaskId>;
     readonly history: History;
-    readonly currentPath: string;
     readonly location: Location;
     readonly currentLocale: Locale;
 }
 
-export interface TaskDetailActions {
+export interface TopicDetailActions {
     readonly bookmarkTopic: (topicId: TaskId) => BookmarkTopicAction;
     readonly unbookmarkTopic: (topicId: TaskId) => UnbookmarkTopicAction;
     readonly onExpand?: (contentId: string) => ExpandDetailAction;
@@ -40,9 +39,9 @@ export interface TaskDetailActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
-type Props = TaskDetailProps & TaskDetailActions;
+type Props = TopicDetailsProps & TopicDetailActions;
 
-export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+export const TopicDetailComponent = (props: Props): JSX.Element => (
     <View>
         <Header {...props} />
         <TaskListComponent
@@ -52,7 +51,7 @@ export const TaskDetailComponent: React.StatelessComponent<Props> = (props: Prop
             unbookmarkTopic={props.unbookmarkTopic}
             history={props.history}
             emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
-            headerContent={<TaskListHeaderComponent {...props} />}
+            headerContent={<ListHeaderComponent {...props} />}
             headerContentIdentifier={props.topic.id}
         />
     </View>
@@ -79,7 +78,7 @@ const Header = (props: Props): JSX.Element => {
     return renderHeader({ backgroundColor, leftButton, rightButtons });
 };
 
-const TaskListHeaderComponent = (props: Props): JSX.Element => (
+const ListHeaderComponent = (props: Props): JSX.Element => (
     <View padder>
         <TaskDetailContentComponent
             topic={props.topic}
@@ -106,7 +105,8 @@ const onServicesTextPress = (props: Props): () => void => {
         const analyticsLinkContext = buildAnalyticsLinkContext('Topic', props.topic.title);
         const linkType = 'Button';
         const linkValue = 'Find related services near me';
-        props.analyticsLinkPressed(props.currentPath, analyticsLinkContext, linkType, linkValue);
+        const currentPath = props.location.pathname;
+        props.analyticsLinkPressed(currentPath, analyticsLinkContext, linkType, linkValue);
         goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
     };
 };
