@@ -17,7 +17,6 @@ import {
     CloseHeaderMenuAction, OpenHeaderMenuAction, CloseAboutModalAction,
     OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction,
 } from '../../stores/header_menu';
-import { HeaderComponent } from './header_component';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -76,13 +75,6 @@ export const MainComponent = (props: Props): JSX.Element => {
                 }
             >
                 <Container>
-                    <HeaderComponent
-                        history={props.history}
-                        location={props.location}
-                        openHeaderMenu={(): OpenHeaderMenuAction => props.openHeaderMenu()}
-                        closeAboutModal={(): CloseAboutModalAction => props.closeAboutModal()}
-                        closeDisclaimerModal={(): CloseDisclaimerModalAction => props.closeDisclaimerModal()}
-                    />
                     <MainPageSwitcherComponent {...props} />
                     <FooterComponent {...props} />
                     <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={onHardwareBackButtonPress} />
