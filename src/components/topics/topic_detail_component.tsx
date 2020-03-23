@@ -18,7 +18,6 @@ import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_comp
 import * as R from 'ramda';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { renderHeader } from '../main/render_header';
-import { Locale } from '../../locale';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 
 export interface TopicDetailsProps {
@@ -27,7 +26,6 @@ export interface TopicDetailsProps {
     readonly savedTasksIdList: ReadonlyArray<TaskId>;
     readonly history: History;
     readonly location: Location;
-    readonly currentLocale: Locale;
 }
 
 export interface TopicDetailActions {
@@ -71,7 +69,6 @@ const Header = (props: Props): JSX.Element => {
         />,
         <MenuButtonComponent
             onPress={props.openHeaderMenu}
-            locale={props.currentLocale}
             textColor={colors.black}
         />,
     ];

@@ -6,7 +6,6 @@ import { Id as TaskId, UnbookmarkTopicAction, BookmarkTopicAction } from '../../
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { HelpButtonComponent } from '../header_button/help_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { Locale } from '../../locale';
 import {
     Routes, isOnParentScreen, isOnChildScreen, pathMatchesRoute } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -26,7 +25,6 @@ export type HeaderOwnProps = {
 };
 
 export interface HeaderProps {
-    readonly currentLocale: Locale;
     readonly savedTasksIdList: ReadonlyArray<TaskId>;
     readonly bookmarkedServicesIds: ReadonlyArray<ServiceId>;
 }
@@ -117,7 +115,6 @@ const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
     const rightButton =
         <MenuButtonComponent
             onPress={props.openMenu}
-            locale={props.currentLocale}
             textColor={props.textColor}
         />;
     return renderHeader({ ...props, leftButton, rightButtons: [rightButton] });
@@ -127,7 +124,6 @@ const SearchHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
     const rightButton =
         <MenuButtonComponent
             onPress={props.openMenu}
-            locale={props.currentLocale}
             textColor={props.textColor}
         />;
     return renderHeader({ ...props, rightButtons: [rightButton] });
@@ -140,7 +136,6 @@ const ParentScreenHeader = (props: Props): JSX.Element => {
     const rightButton =
         <MenuButtonComponent
             onPress={props.openMenu}
-            locale={props.currentLocale}
             textColor={textColor}
         />;
     return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
@@ -153,9 +148,7 @@ const ChildScreenHeader = (props: Props): JSX.Element => {
     const rightButton =
         <MenuButtonComponent
             onPress={props.openMenu}
-            locale={props.currentLocale}
             textColor={textColor}
         />;
     return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
 };
-

@@ -13,7 +13,6 @@ import { selectCurrentTopic } from '../../selectors/topics/select_current_topic'
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { Routes, getParametersFromPath } from '../../application/routing';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/analytics';
-import { selectLocale } from '../../selectors/locale/select_locale';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
 
 type OwnProps = {
@@ -32,7 +31,6 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps =>
         savedTasksIdList,
         history: ownProps.history,
         location: ownProps.location,
-        currentLocale: selectLocale(store),
     };
 };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Locale } from '../../locale';
 import { Id } from '../../stores/services';
 import { HumanServiceData } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
@@ -13,7 +12,6 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { renderHeader } from './render_header';
 
 export interface ServiceDetailScreenHeaderProps {
-    readonly currentLocale: Locale;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly service: HumanServiceData;
 }
@@ -39,7 +37,6 @@ export const ServiceDetailScreenHeaderComponent: React.StatelessComponent<Props>
         />,
         <MenuButtonComponent
             onPress={props.openMenu}
-            locale={props.currentLocale}
             textColor={colors.black}
         />,
     ];
