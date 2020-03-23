@@ -2,7 +2,6 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { History, Location } from 'history';
 import { Text } from 'native-base';
-import { Id as TaskId, UnbookmarkTopicAction, BookmarkTopicAction } from '../../stores/topics';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { HelpButtonComponent } from '../header_button/help_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
@@ -10,10 +9,6 @@ import {
     Routes, isOnParentScreen, isOnChildScreen, pathMatchesRoute } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
-import { Id as ServiceId } from '../../stores/services';
-import { HumanServiceData } from '../../validation/services/types';
-import { UnbookmarkServiceAction, BookmarkServiceAction } from '../../stores/services/actions';
-import { ServiceDetailScreenHeaderConnectedComponent } from './service_detail_screen_header_connected_component';
 import { renderHeader } from './render_header';
 
 export type HeaderOwnProps = {
@@ -24,24 +19,11 @@ export type HeaderOwnProps = {
     readonly openMenu: () => void;
 };
 
-export interface HeaderProps {
-    readonly savedTasksIdList: ReadonlyArray<TaskId>;
-    readonly bookmarkedServicesIds: ReadonlyArray<ServiceId>;
-}
-
-export interface HeaderActions {
-    readonly bookmarkTopic: (topicId: TaskId) => BookmarkTopicAction;
-    readonly unbookmarkTopic: (topicId: TaskId) => UnbookmarkTopicAction;
-    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
-    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-}
-
-type Props = HeaderOwnProps & HeaderProps & HeaderActions;
+type Props = HeaderOwnProps;
 
 export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const path = props.location.pathname;
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
-    const isOnServiceDetailScreen = pathMatchesRoute(path, Routes.ServiceDetail);
     const isOnTopicServicesScreen = pathMatchesRoute(path, Routes.Services);
     const isOnServiceSearchScreen = pathMatchesRoute(path, Routes.Search);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
@@ -50,10 +32,6 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
     if (isOnQuestionnaireScreen || isOnOnboardingScreen) {
         return <EmptyComponent />;
-    }
-
-    if (isOnServiceDetailScreen) {
-        return <ServiceDetailScreenHeaderConnectedComponent {...props} />;
     }
 
     if (isOnTopicServicesScreen) {

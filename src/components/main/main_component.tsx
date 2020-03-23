@@ -1,7 +1,6 @@
 // tslint:disable:no-expression-statement
 import React, { useEffect } from 'react';
 import { Container, Drawer, Root } from 'native-base';
-import { HeaderConnectedComponent } from './header_connected_component';
 import { MainPageSwitcherComponent } from './main_page_switcher';
 import { FooterComponent, FooterProps } from './footer_component';
 import { HeaderMenuConnectedComponent } from '../header_menu/header_menu_connected_component';
@@ -18,6 +17,7 @@ import {
     CloseHeaderMenuAction, OpenHeaderMenuAction, CloseAboutModalAction,
     OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction,
 } from '../../stores/header_menu';
+import { HeaderComponent } from './header_component';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -76,7 +76,7 @@ export const MainComponent = (props: Props): JSX.Element => {
                 }
             >
                 <Container>
-                    <HeaderConnectedComponent
+                    <HeaderComponent
                         history={props.history}
                         location={props.location}
                         openMenu={(): OpenHeaderMenuAction => props.openHeaderMenu()}
