@@ -1,8 +1,8 @@
 // tslint:disable:no-expression-statement
 import React, { useEffect, Dispatch, SetStateAction, useState } from 'react';
 import { SearchResultsComponent } from './search_results_component';
-import { colors } from '../../application/styles';
-import { View } from 'native-base';
+import { colors, textStyles } from '../../application/styles';
+import { View, Text } from 'native-base';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
@@ -17,6 +17,11 @@ import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
 import { useOnlineStatus } from '../../hooks/use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
+import { BackAndMenuButtonsHeaderProps } from '../main/header_component';
+import { MenuButtonComponent } from '../header_button/menu_button_component';
+import { renderHeader } from '../main/render_header';
+import { Trans } from '@lingui/react';
+import { OpenHeaderMenuAction } from '../../stores/header_menu';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -39,6 +44,7 @@ export interface SearchComponentActions {
     readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => SaveSearchResultsAction;
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => SetCollapseSearchInputAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
 export type StringSetterFunction = Dispatch<SetStateAction<string>>;
@@ -85,6 +91,10 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const searchResultsProps = { ...props, isLoading, onlineStatus, searchPage, numberOfPages, onSearchRequest, onLoadMore, setSearchPage };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
+            <Header
+                {...props}
+                title={<Text style={[textStyles.headlineH5StyleBlackCenter, { color: colors.white }]}><Trans>FIND A SERVICE</Trans></Text>}
+                {...{ textColor: colors.white, backgroundColor: colors.teal }}/>
             <SearchInputComponent
                 searchTerm={props.searchTerm}
                 searchLocation={props.searchLocation}
@@ -110,4 +120,13 @@ const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (dis
         }
     };
     useEffect(effect, [location]);
+};
+
+const Header = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
+    const rightButton =
+        <MenuButtonComponent
+            onPress={props.openHeaderMenu}
+            textColor={props.textColor}
+        />;
+    return renderHeader({ ...props, rightButtons: [rightButton] });
 };

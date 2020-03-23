@@ -79,7 +79,7 @@ export const MainComponent = (props: Props): JSX.Element => {
                     <HeaderComponent
                         history={props.history}
                         location={props.location}
-                        openMenu={(): OpenHeaderMenuAction => props.openHeaderMenu()}
+                        openHeaderMenu={(): OpenHeaderMenuAction => props.openHeaderMenu()}
                         closeAboutModal={(): CloseAboutModalAction => props.closeAboutModal()}
                         closeDisclaimerModal={(): CloseDisclaimerModalAction => props.closeDisclaimerModal()}
                     />

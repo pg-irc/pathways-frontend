@@ -1,22 +1,21 @@
 import React from 'react';
-import { Trans } from '@lingui/react';
 import { History, Location } from 'history';
-import { Text } from 'native-base';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { HelpButtonComponent } from '../header_button/help_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import {
     Routes, isOnParentScreen, isOnChildScreen, pathMatchesRoute } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors, textStyles } from '../../application/styles';
+import { colors } from '../../application/styles';
 import { renderHeader } from './render_header';
+import { OpenHeaderMenuAction } from '../../stores/header_menu';
 
 export type HeaderOwnProps = {
     readonly history: History;
     readonly location: Location;
     readonly closeAboutModal: () => void;
     readonly closeDisclaimerModal: () => void;
-    readonly openMenu: () => void;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 };
 
 type Props = HeaderOwnProps;
@@ -25,7 +24,6 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     const path = props.location.pathname;
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
     const isOnTopicServicesScreen = pathMatchesRoute(path, Routes.Services);
-    const isOnServiceSearchScreen = pathMatchesRoute(path, Routes.Search);
     const isOnHelpScreen = pathMatchesRoute(path, Routes.Help);
     const isOnOnboardingScreen = pathMatchesRoute(path, Routes.Onboarding);
     const isOnOrganizationDetailScreen = pathMatchesRoute(path, Routes.OrganizationDetail);
@@ -37,16 +35,6 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     if (isOnTopicServicesScreen) {
         return (
             <TwoButtonHeader
-                {...props}
-                {...{ textColor: colors.white, backgroundColor: colors.teal }}
-            />
-        );
-    }
-
-    if (isOnServiceSearchScreen) {
-        return (
-            <SearchHeader
-                title={<Text style={[textStyles.headlineH5StyleBlackCenter, { color: colors.white }]}><Trans>FIND A SERVICE</Trans></Text>}
                 {...props}
                 {...{ textColor: colors.white, backgroundColor: colors.teal }}
             />
@@ -82,29 +70,22 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     return <EmptyComponent />;
 };
 
-interface BackAndMenuButtonsHeaderProps extends Props {
+export interface BackAndMenuButtonsHeaderProps {
     readonly textColor: string;
     readonly backgroundColor: string;
     readonly title?: JSX.Element;
+    readonly history: History;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
 const TwoButtonHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
     const leftButton = <BackButtonComponent history={props.history} textColor={props.textColor} />;
     const rightButton =
         <MenuButtonComponent
-            onPress={props.openMenu}
+            onPress={props.openHeaderMenu}
             textColor={props.textColor}
         />;
     return renderHeader({ ...props, leftButton, rightButtons: [rightButton] });
-};
-
-const SearchHeader = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
-    const rightButton =
-        <MenuButtonComponent
-            onPress={props.openMenu}
-            textColor={props.textColor}
-        />;
-    return renderHeader({ ...props, rightButtons: [rightButton] });
 };
 
 const ParentScreenHeader = (props: Props): JSX.Element => {
@@ -113,7 +94,7 @@ const ParentScreenHeader = (props: Props): JSX.Element => {
     const leftButton = <HelpButtonComponent history={props.history} />;
     const rightButton =
         <MenuButtonComponent
-            onPress={props.openMenu}
+            onPress={props.openHeaderMenu}
             textColor={textColor}
         />;
     return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
@@ -125,7 +106,7 @@ const ChildScreenHeader = (props: Props): JSX.Element => {
     const leftButton = <BackButtonComponent history={props.history} textColor={textColor} />;
     const rightButton =
         <MenuButtonComponent
-            onPress={props.openMenu}
+            onPress={props.openHeaderMenu}
             textColor={textColor}
         />;
     return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
