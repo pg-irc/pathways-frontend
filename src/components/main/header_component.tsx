@@ -1,17 +1,14 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import * as R from 'ramda';
 import { History, Location } from 'history';
 import { Text } from 'native-base';
 import { Id as TaskId, UnbookmarkTopicAction, BookmarkTopicAction } from '../../stores/topics';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { HelpButtonComponent } from '../header_button/help_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
 import { Locale } from '../../locale';
 import {
-    Routes, isOnParentScreen, isOnChildScreen, pathMatchesRoute, getParametersFromPath,
-} from '../../application/routing';
+    Routes, isOnParentScreen, isOnChildScreen, pathMatchesRoute } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
 import { Id as ServiceId } from '../../stores/services';
@@ -46,7 +43,6 @@ type Props = HeaderOwnProps & HeaderProps & HeaderActions;
 export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const path = props.location.pathname;
     const isOnQuestionnaireScreen = pathMatchesRoute(path, Routes.Questionnaire);
-    const isOnTopicDetailScreen = pathMatchesRoute(path, Routes.TopicDetail);
     const isOnServiceDetailScreen = pathMatchesRoute(path, Routes.ServiceDetail);
     const isOnTopicServicesScreen = pathMatchesRoute(path, Routes.Services);
     const isOnServiceSearchScreen = pathMatchesRoute(path, Routes.Search);
@@ -56,10 +52,6 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
 
     if (isOnQuestionnaireScreen || isOnOnboardingScreen) {
         return <EmptyComponent />;
-    }
-
-    if (isOnTopicDetailScreen) {
-        return <TopicDetailScreenHeader {...props} />;
     }
 
     if (isOnServiceDetailScreen) {
@@ -112,27 +104,6 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
     }
 
     return <EmptyComponent />;
-};
-
-const TopicDetailScreenHeader = (props: Props): JSX.Element => {
-    const params = getParametersFromPath(props.location, Routes.TopicDetail);
-    const topicId = params.topicId;
-    const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
-    const rightButtons: ReadonlyArray<JSX.Element> = [
-        <BookmarkButtonComponent
-            isBookmarked={R.contains(topicId, props.savedTasksIdList)}
-            bookmark={(): BookmarkTopicAction => props.bookmarkTopic(topicId)}
-            unbookmark={(): UnbookmarkTopicAction => props.unbookmarkTopic(topicId)}
-            textColor={colors.teal}
-        />,
-        <MenuButtonComponent
-            onPress={props.openMenu}
-            locale={props.currentLocale}
-            textColor={colors.black}
-        />,
-    ];
-    return renderHeader({ backgroundColor, leftButton, rightButtons });
 };
 
 interface BackAndMenuButtonsHeaderProps extends Props {

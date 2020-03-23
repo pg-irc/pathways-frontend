@@ -13,6 +13,8 @@ import { selectCurrentTopic } from '../../selectors/topics/select_current_topic'
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { Routes, getParametersFromPath } from '../../application/routing';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/analytics';
+import { selectLocale } from '../../selectors/locale/select_locale';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
 
 type OwnProps = {
     readonly history: History;
@@ -30,10 +32,18 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TaskDetailProps => {
         savedTasksIdList,
         history: ownProps.history,
         currentPath: ownProps.location.pathname,
+        location: ownProps.location,
+        currentLocale: selectLocale(store),
     };
 };
 
-type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction | ExpandDetailAction | CollapseDetailAction | AnalyticsLinkPressedAction;
+type DispatchActions =
+    BookmarkTopicAction |
+    UnbookmarkTopicAction |
+    ExpandDetailAction |
+    CollapseDetailAction |
+    AnalyticsLinkPressedAction |
+    OpenHeaderMenuAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActions => ({
     bookmarkTopic: (topicId: TaskId): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
@@ -42,6 +52,7 @@ const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TaskDetailActi
     onCollapse: (contentId: string): CollapseDetailAction => dispatch(collapseDeail(contentId)),
     analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
         dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
+    openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
 });
 
 export const TaskDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TaskDetailComponent);
