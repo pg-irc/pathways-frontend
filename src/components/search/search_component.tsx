@@ -17,11 +17,11 @@ import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
 import { useOnlineStatus } from '../../hooks/use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
-import { BackAndMenuButtonsHeaderProps } from '../main/header_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { renderHeader } from '../main/render_header';
 import { Trans } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { TwoButtonHeaderProps } from '../two_button_header.tsx/two_button_header_component';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -122,7 +122,7 @@ const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (dis
     useEffect(effect, [location]);
 };
 
-const Header = (props: BackAndMenuButtonsHeaderProps): JSX.Element => {
+const Header = (props: TwoButtonHeaderProps): JSX.Element => {
     const rightButton =
         <MenuButtonComponent
             onPress={props.openHeaderMenu}

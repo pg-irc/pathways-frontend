@@ -25,6 +25,9 @@ import { HidePartialLocalizationMessageAction } from '../../stores/user_profile'
 import { SetManualUserLocationAction } from '../../stores/manual_user_location';
 import { ServiceListLocationSearchComponent } from './service_list_location_search_component';
 import { SearchListSeparator } from '../search/separators';
+import { TwoButtonHeaderComponent } from '../two_button_header.tsx/two_button_header_component';
+import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { History } from 'history';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -40,6 +43,7 @@ export interface ServiceListActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
 export interface ServicesUpdater {
@@ -62,7 +66,6 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     if (isValidEmptyTopicServices(props.topicServicesOrError)) {
         return renderEmptyComponent(props, refreshServices(props));
     }
-
     return (
         <ServiceListWrapper {...props}>
             <FlatList
@@ -129,9 +132,11 @@ const renderEmptyComponent = (props: Props, refreshScreen: () => void): JSX.Elem
 
 const renderHeader = (props: Props): JSX.Element => (
     <ServiceListHeaderComponent
-        title={props.topic.title}
+        topicTitle={props.topic.title}
         manualUserLocation={props.manualUserLocation}
         setManualUserLocation={props.setManualUserLocation}
+        history={props.history}
+        openHeaderMenu={props.openHeaderMenu}
     />
 );
 
@@ -172,12 +177,19 @@ const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX
 };
 
 interface ServiceListHeaderComponentProps {
-    readonly title: string;
+    readonly topicTitle: string;
     readonly manualUserLocation: UserLocation;
+    readonly history: History;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
 export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => (
+    <View>
+        <TwoButtonHeaderComponent
+            {...props}
+            {...{ textColor: colors.white, backgroundColor: colors.teal }}
+        />
     <View
         style={{
             backgroundColor: colors.teal,
@@ -187,11 +199,12 @@ export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProp
         }}
     >
         <Text style={[textStyles.headlineH2StyleWhiteLeft, { paddingHorizontal: 10, marginBottom: 10 }]}>
-            {props.title}
+            {props.topicTitle}
         </Text>
         <ServiceListLocationSearchComponent
             manualUserLocation={props.manualUserLocation}
             setManualUserLocation={props.setManualUserLocation}
         />
+    </View>
     </View>
 );
