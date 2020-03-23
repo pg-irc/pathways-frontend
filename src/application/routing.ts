@@ -110,13 +110,6 @@ const routeHasParameter = (route: Routes): boolean => (
     routePathDefinition(route).indexOf(':') !== -1
 );
 
-export const isOnParentScreen = (path: string): boolean => (
-    pathMatchesAnyRoute(
-        path,
-        [Routes.Help, Routes.Learn, Routes.Questionnaire, Routes.RecommendedTopics, Routes.Bookmarks],
-    )
-);
-
 export const isOnChildScreen = (path: string): boolean => (
     pathMatchesAnyRoute(path, [Routes.TopicDetail, Routes.Services, Routes.LearnDetail])
 );
