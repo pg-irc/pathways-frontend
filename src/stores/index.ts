@@ -10,6 +10,7 @@ import * as notifications from './notifications';
 import * as userProfile from './user_profile';
 import * as location from './manual_user_location';
 import * as search from './search';
+import * as headerMenu from './header_menu';
 
 export interface Store {
     readonly fonts: fonts.FontsStore;
@@ -23,6 +24,7 @@ export interface Store {
     readonly userProfile: userProfile.UserProfileStore;
     readonly manualUserLocation: location.ManualUserLocationStore;
     readonly search: search.SearchStore;
+    readonly headerMenu: headerMenu.HeaderMenuStore,
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -37,6 +39,7 @@ export const buildDefaultStore = (): Store => ({
     userProfile: userProfile.buildDefaultStore(),
     manualUserLocation: location.buildDefaultStore(),
     search: search.buildDefaultStore(),
+    headerMenu: headerMenu.buildDefaultStore(),
 });
 
 export const reducer = combineReducers<Store>({
@@ -51,4 +54,5 @@ export const reducer = combineReducers<Store>({
     userProfile: userProfile.reducer,
     manualUserLocation: location.reducer,
     search: search.reducer,
+    headerMenu: headerMenu.reducer,
 });

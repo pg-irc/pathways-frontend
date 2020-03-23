@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { SetStateAction, Dispatch, useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Container, Drawer, Root } from 'native-base';
 import { HeaderConnectedComponent } from './header_connected_component';
 import { MainPageSwitcherComponent } from './main_page_switcher';
@@ -14,11 +14,21 @@ import { AppModalsComponent } from './app_modals_component';
 import { Notifications } from 'expo';
 import { History } from 'history';
 import { notificationListener } from './notification';
+import {
+    CloseHeaderMenuAction, OpenHeaderMenuAction, CloseAboutModalAction,
+    OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction,
+} from '../../stores/header_menu';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
 export interface MainComponentActions {
     readonly sendAnalyticsData: (location: Location, locale: Locale) => RouteChangedAction;
+    readonly closeHeaderMenu: () => CloseHeaderMenuAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly closeAboutModal: () => CloseAboutModalAction;
+    readonly openAboutModal: () => OpenAboutModalAction;
+    readonly closeDisclaimerModal: () => CloseDisclaimerModalAction;
+    readonly openDisclaimerModal: () => OpenDisclaimerModalAction;
 }
 
 interface MainProps {
@@ -26,17 +36,14 @@ interface MainProps {
     readonly locale: Locale;
     readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;
+    readonly isHeaderMenuVisible: boolean;
+    readonly isAboutModalVisible: boolean;
+    readonly isDisclaimerModalVisible: boolean;
 }
 
 type Props = MainComponentProps & MainComponentActions;
 
-type BooleanSetterFunction = Dispatch<SetStateAction<boolean>>;
-
 export const MainComponent = (props: Props): JSX.Element => {
-    const [isHeaderMenuVisible, setIsHeaderMenuVisible]: readonly [boolean, BooleanSetterFunction] = useState(false);
-    const [isAboutModalVisible, setIsAboutModalVisible]: readonly [boolean, BooleanSetterFunction] = useState(false);
-    const [isDisclaimerModalVisible, setIsDisclaimerModalVisible]: readonly [boolean, BooleanSetterFunction] = useState(false);
-
     useEffect((): void => {
         props.history.listen((location: Location, _: Action): RouteChangedAction =>
             props.sendAnalyticsData(location, props.locale),
@@ -45,10 +52,10 @@ export const MainComponent = (props: Props): JSX.Element => {
     }, []);
 
     const onHardwareBackButtonPress = (): boolean => {
-        if (!isHeaderMenuVisible) {
+        if (!props.isHeaderMenuVisible) {
             goBack(props.history);
         } else {
-            setIsHeaderMenuVisible(false);
+            props.closeHeaderMenu();
         }
         return true;
     };
@@ -57,14 +64,14 @@ export const MainComponent = (props: Props): JSX.Element => {
         <Root>
             <Drawer
                 side='right'
-                onClose={(): void => setIsHeaderMenuVisible(false)}
-                open={isHeaderMenuVisible}
+                onClose={(): CloseHeaderMenuAction => props.closeHeaderMenu()}
+                open={props.isHeaderMenuVisible}
                 content={
                     <HeaderMenuConnectedComponent
                         history={props.history}
-                        closeMenu={(): void => setIsHeaderMenuVisible(false)}
-                        openAboutModal={(): void => setIsAboutModalVisible(true)}
-                        openDisclaimerModal={(): void => setIsDisclaimerModalVisible(true)}
+                        closeMenu={(): CloseHeaderMenuAction => props.closeHeaderMenu()}
+                        openAboutModal={(): OpenAboutModalAction => props.openAboutModal()}
+                        openDisclaimerModal={(): OpenDisclaimerModalAction => props.openDisclaimerModal()}
                     />
                 }
             >
@@ -72,18 +79,18 @@ export const MainComponent = (props: Props): JSX.Element => {
                     <HeaderConnectedComponent
                         history={props.history}
                         location={props.location}
-                        openMenu={(): void => setIsHeaderMenuVisible(true)}
-                        closeAboutModal={(): void => setIsAboutModalVisible(false)}
-                        closeDisclaimerModal={(): void => setIsDisclaimerModalVisible(false)}
+                        openMenu={(): OpenHeaderMenuAction => props.openHeaderMenu()}
+                        closeAboutModal={(): CloseAboutModalAction => props.closeAboutModal()}
+                        closeDisclaimerModal={(): CloseDisclaimerModalAction => props.closeDisclaimerModal()}
                     />
                     <MainPageSwitcherComponent {...props} />
                     <FooterComponent {...props} />
                     <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={onHardwareBackButtonPress} />
                     <AppModalsComponent
-                        isAboutVisible={isAboutModalVisible}
-                        isDisclaimerVisible={isDisclaimerModalVisible}
-                        closeAboutModal={(): void => setIsAboutModalVisible(false)}
-                        closeDisclaimerModal={(): void => setIsDisclaimerModalVisible(false)}
+                        isAboutVisible={props.isAboutModalVisible}
+                        isDisclaimerVisible={props.isDisclaimerModalVisible}
+                        closeAboutModal={(): CloseAboutModalAction => props.closeAboutModal()}
+                        closeDisclaimerModal={(): CloseDisclaimerModalAction => props.closeDisclaimerModal()}
                     />
                 </Container>
             </Drawer>
