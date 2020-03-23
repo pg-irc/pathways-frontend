@@ -7,15 +7,24 @@ import { Trans } from '@lingui/react';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
 import { mapWithIndex } from '../../application/map_with_index';
+import { BackButtonComponent } from '../header_button/back_button_component';
+import { MenuButtonComponent } from '../header_button/menu_button_component';
+import { renderHeader } from '../main/render_header';
+import { OpenHeaderMenuAction } from '../../stores/header_menu';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
 }
 
-type AllExploreProps = ExploreAllProps & RouterProps;
+export interface ExploreAllActions {
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
+}
 
-export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
-    (props: AllExploreProps): JSX.Element => (
+type Props = ExploreAllProps & ExploreAllActions & RouterProps;
+
+export const ExploreAllComponent = (props: Props): JSX.Element => (
+    <View style={{ flex: 1 }}>
+        <Header {...props} />
         <Content padder style={{ backgroundColor: colors.white }}>
             <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding } ]}>
                 <Trans>Learn all about B.C.</Trans>
@@ -30,7 +39,20 @@ export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
                 ), props.sections)}
             </View>
         </Content>
-    );
+    </View>
+);
+
+const Header = (props: Props): JSX.Element => {
+    const textColor = colors.black;
+    const backgroundColor = colors.white;
+    const leftButton = <BackButtonComponent history={props.history} textColor={textColor} />;
+    const rightButton =
+        <MenuButtonComponent
+            onPress={props.openHeaderMenu}
+            textColor={textColor}
+        />;
+    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
+};
 
 const buildButton = (buttonContent: JSX.Element, buttonOnPress: () => void, index: number): JSX.Element => (
     <TouchableOpacity onPress={buttonOnPress} style={[applicationStyles.boxShadowBelow, styles.button]} key={index}>

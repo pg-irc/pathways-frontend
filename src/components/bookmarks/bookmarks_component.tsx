@@ -8,28 +8,51 @@ import { Trans, I18n } from '@lingui/react';
 import { colors, textStyles, values } from '../../application/styles';
 import { ReactI18nRenderProp } from '../../locale/types';
 import { TaskListActions } from '../topics/task_list_component';
+import { BackButtonComponent } from '../header_button/back_button_component';
+import { MenuButtonComponent } from '../header_button/menu_button_component';
+import { renderHeader } from '../main/render_header';
+import { OpenHeaderMenuAction } from '../../stores/header_menu';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
 }
 
-type Props = BookmarksProps & TaskListActions & RouterProps ;
+export interface BookmarkActions {
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
+}
 
-export const BookmarksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
+type Props = BookmarksProps & BookmarkActions & TaskListActions & RouterProps ;
+
+export const BookmarksComponent = (props: Props): JSX.Element => {
     return (
-        <Container style={{ backgroundColor: colors.lightGrey }}>
-            <HeaderComponent/>
+        <View style={{ flex: 1 }}>
+            <Header {...props} />
+            <Container style={{ backgroundColor: colors.lightGrey }}>
+            <TitleComponent/>
             <I18n>
                 {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
                     <TabSwitcher i18n={i18nRenderProp.i18n} {...props}/>
                 )}
             </I18n>
         </Container>
+        </View>
     );
 };
 
-const HeaderComponent = (): JSX.Element => (
+const Header = (props: Props): JSX.Element => {
+    const textColor = colors.black;
+    const backgroundColor = colors.white;
+    const leftButton = <BackButtonComponent history={props.history} textColor={textColor} />;
+    const rightButton =
+        <MenuButtonComponent
+            onPress={props.openHeaderMenu}
+            textColor={textColor}
+        />;
+    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
+};
+
+const TitleComponent = (): JSX.Element => (
     <View padder style={{ backgroundColor: colors.white, paddingHorizontal: values.backgroundTextPadding }}>
         <Text style={textStyles.headlineH1StyleBlackLeft} >
             <Trans>My bookmarks</Trans>

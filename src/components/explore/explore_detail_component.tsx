@@ -6,9 +6,13 @@ import { RouterProps } from '../../application/routing';
 import { Id as TaskId, BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
 import { ExploreDetailContentComponent } from './explore_detail_content_component';
 import { TopicListItem } from '../../selectors/topics/types';
-import { textStyles, values } from '../../application/styles';
+import { textStyles, values, colors } from '../../application/styles';
 import { TaskListComponent } from '../topics/task_list_component';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
+import { BackButtonComponent } from '../header_button/back_button_component';
+import { MenuButtonComponent } from '../header_button/menu_button_component';
+import { renderHeader } from '../main/render_header';
+import { OpenHeaderMenuAction } from '../../stores/header_menu';
 
 export interface ExploreDetailProps {
     readonly section: ExploreSection;
@@ -19,24 +23,25 @@ export interface ExploreDetailProps {
 export interface ExploreDetailActions {
     readonly bookmarkTopic: (topicId: TaskId) => BookmarkTopicAction;
     readonly unbookmarkTopic: (topicId: TaskId) => UnbookmarkTopicAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
 type Props = ExploreDetailProps & ExploreDetailActions & RouterProps;
 
-export const ExploreDetailComponent: React.StatelessComponent<Props> =
-    (props: Props): JSX.Element => {
-        return (
-            <TaskListComponent
-                tasks={props.topics}
-                savedTasksIdList={props.bookmarkedTopics}
-                bookmarkTopic={props.bookmarkTopic}
-                unbookmarkTopic={props.unbookmarkTopic}
-                history={props.history}
-                emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
-                headerContent={<TaskListHeaderComponent {...props} />}
-            />
-        );
-    };
+export const ExploreDetailComponent = (props: Props): JSX.Element => (
+    <View style={{ flex: 1}}>
+        <Header {...props} />
+        <TaskListComponent
+            tasks={props.topics}
+            savedTasksIdList={props.bookmarkedTopics}
+            bookmarkTopic={props.bookmarkTopic}
+            unbookmarkTopic={props.unbookmarkTopic}
+            history={props.history}
+            emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
+            headerContent={<TaskListHeaderComponent {...props} />}
+        />
+    </View>
+);
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View padder>
@@ -57,3 +62,15 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
         </Text>
     </View>
 );
+
+const Header = (props: Props): JSX.Element => {
+    const textColor = colors.black;
+    const backgroundColor = colors.lightGrey;
+    const leftButton = <BackButtonComponent history={props.history} textColor={textColor} />;
+    const rightButton =
+        <MenuButtonComponent
+            onPress={props.openHeaderMenu}
+            textColor={textColor}
+        />;
+    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
+};

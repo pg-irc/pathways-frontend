@@ -1,12 +1,8 @@
 import React from 'react';
 import { History, Location } from 'history';
-import { BackButtonComponent } from '../header_button/back_button_component';
-import { MenuButtonComponent } from '../header_button/menu_button_component';
 import {
-    Routes, isOnChildScreen, pathMatchesRoute } from '../../application/routing';
+    Routes, pathMatchesRoute } from '../../application/routing';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors } from '../../application/styles';
-import { renderHeader } from './render_header';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 
 export type HeaderOwnProps = {
@@ -28,21 +24,5 @@ export const HeaderComponent: React.StatelessComponent<Props> = (props: Props): 
         return <EmptyComponent />;
     }
 
-    if (isOnChildScreen(path)) {
-        return <ChildScreenHeader {...props} />;
-    }
-
     return <EmptyComponent />;
-};
-
-const ChildScreenHeader = (props: Props): JSX.Element => {
-    const textColor = colors.black;
-    const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} textColor={textColor} />;
-    const rightButton =
-        <MenuButtonComponent
-            onPress={props.openHeaderMenu}
-            textColor={textColor}
-        />;
-    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
 };

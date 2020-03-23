@@ -110,10 +110,6 @@ const routeHasParameter = (route: Routes): boolean => (
     routePathDefinition(route).indexOf(':') !== -1
 );
 
-export const isOnChildScreen = (path: string): boolean => (
-    pathMatchesAnyRoute(path, [Routes.TopicDetail, Routes.Services, Routes.LearnDetail])
-);
-
 // By (arguably poor) design the router's match.params is empty when trying to access it outside a "Route" component.
 // This makes it impossible to access params in components like the Header and Footer.
 // This helper function remedies this by parsing the parameters from the route url which is always available globally.
