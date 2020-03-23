@@ -49,6 +49,7 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
+    const [searchPage, setSearchPage]: readonly [number, (n: number) => void] = useState(0);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
@@ -64,14 +65,14 @@ export const SearchComponent = (props: Props): JSX.Element => {
                 geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
                 props.saveSearchLatLong(geocoderLatLong);
             }
-            const searchResults = await fetchSearchResultsFromQuery(searchTerm, geocoderLatLong);
+            const searchResults = await fetchSearchResultsFromQuery(searchTerm, searchPage, geocoderLatLong);
             props.saveSearchResults(searchResults);
         } finally {
             setIsLoading(false);
         }
     };
 
-    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchRequest };
+    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchRequest, setSearchPage };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <SearchInputComponent

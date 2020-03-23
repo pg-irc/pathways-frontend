@@ -44,6 +44,7 @@ export interface SearchResultsActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
+    readonly setSearchPage: (searchPage: number) => void;
 }
 
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;

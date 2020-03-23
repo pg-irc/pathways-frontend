@@ -18,7 +18,7 @@ export interface AlgoliaResponse {
     readonly query: string;
 }
 
-export const fetchSearchResultsFromQuery = async (searchTerm: string, latLong: LatLong): Promise<ReadonlyArray<SearchServiceData>> => {
+export const fetchSearchResultsFromQuery = async (searchTerm: string, searchPage: number, latLong: LatLong): Promise<ReadonlyArray<SearchServiceData>> => {
     if (!searchTerm) {
         return [];
     }
@@ -33,6 +33,7 @@ export const fetchSearchResultsFromQuery = async (searchTerm: string, latLong: L
             },
             body: JSON.stringify({
                 query: searchTerm,
+                page: searchPage,
                 hitsPerPage: '20',
                 aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
             }),
