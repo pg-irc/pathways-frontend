@@ -50,12 +50,10 @@ export const CovidComponent = ({
                 marginBottom: 10,
             },
         ]}>
-            <View style={{ flex: 5, flexDirection: 'row', marginBottom: 10 }}>
-                <View style={{ flex: 3 }}>
-                    <Text style={textStyles.headlineH2StyleBlackLeft}>
-                        <Trans>COVID-19 information</Trans>
-                    </Text>
-                </View>
+            <View style={{ flex: 1, marginBottom: 10 }}>
+                <Text style={textStyles.headlineH2StyleBlackLeft}>
+                    <Trans>COVID-19 information</Trans>
+                </Text>
             </View>
             <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 20 }]}>
                 <Trans>
@@ -66,7 +64,8 @@ export const CovidComponent = ({
             </Text>
             <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 20 }]}>
                 <Trans>
-                    Questions about COVID-19? Get the latest information from 
+                    Questions about COVID-19? Get the latest information from
+                    <Text>{' '}</Text>
                     <Text style={markdownStyles.link} onPress={onLinkPress}>
                         BC Centre for Disease Control
                         <Text>{' '}</Text>
