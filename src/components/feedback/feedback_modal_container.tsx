@@ -19,12 +19,16 @@ interface FeedbackModalContainerProps {
     readonly serviceId: string;
 }
 
-interface FeedbackModalControls {
+interface FeedbackOptionsModalControls {
     readonly onFeedbackButtonPress: () => void;
     readonly onSuggestAnUpdatePress: () => void;
     readonly onOtherPress: () => void;
     readonly onRemoveServicePress: () => void;
     readonly onCloseFeedbackOptions: () => void;
+}
+
+interface FeedbackReceiveUpdatesModalControls {
+    readonly onHide: () => void;
 }
 
 interface ModalState {
@@ -61,7 +65,7 @@ const useModalState = (initialValue: boolean): ModalState => {
  * The controls do not attempt to manage the state of suggestion modal visibility.
  *
  */
-const useFeedbackModalControls = (modalState: ModalState, serviceId: string, onSuggestAnUpdate: () => void): FeedbackModalControls => {
+const useFeedbackOptionsModalControls = (modalState: ModalState, serviceId: string, onSuggestAnUpdate: () => void): FeedbackOptionsModalControls => {
     const history = useHistory();
 
     const goToFeedbackOtherScreen = goToRouteWithParameters(
@@ -119,6 +123,17 @@ const useFeedbackModalControls = (modalState: ModalState, serviceId: string, onS
     };
 };
 
+const useReceiveUpdateControls = (modalState: ModalState): FeedbackReceiveUpdatesModalControls => {
+    const onHide = useCallback<() => void>(
+        (): void => modalState.hide(),
+        [modalState],
+    );
+
+    return {
+        onHide,
+    };
+};
+
 export const FeedbackModalContainer = ({
     feedbackEnabled,
     onSuggestAnUpdatePress: onSuggestAnUpdate,
@@ -136,7 +151,9 @@ export const FeedbackModalContainer = ({
         onOtherPress,
         onRemoveServicePress,
         onCloseFeedbackOptions,
-    }: FeedbackModalControls = useFeedbackModalControls(optionsModalState, serviceId, onSuggestAnUpdate);
+    }: FeedbackOptionsModalControls = useFeedbackOptionsModalControls(optionsModalState, serviceId, onSuggestAnUpdate);
+
+    const { onHide }: FeedbackReceiveUpdatesModalControls = useReceiveUpdateControls(receiveUpdatesModalState);
 
     return (
         <>
@@ -148,7 +165,7 @@ export const FeedbackModalContainer = ({
                 onOtherPress={onOtherPress}
                 onRemoveServicePress={onRemoveServicePress}
             />
-            <FeedbackReceiveUpdatesModal isVisible={receiveUpdatesModalState.visible} />
+            <FeedbackReceiveUpdatesModal isVisible={receiveUpdatesModalState.visible} onHide={onHide} />
         </>
     );
 };

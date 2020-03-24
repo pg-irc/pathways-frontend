@@ -12,6 +12,7 @@ import { receiveUpdatesStyles as styles } from './styles';
 
 interface FeedbackReceiveUpdatesProps {
     readonly isVisible: boolean;
+    readonly onHide: () => void;
 }
 
 const INPUT_PLACEHOLDER = t`Enter email`;
@@ -39,7 +40,7 @@ const useEmailInputControl = (): readonly [string, (value: string) => void] => {
     return [emailInput, onInputChange];
 };
 
-export const FeedbackReceiveUpdatesModal = (props: FeedbackReceiveUpdatesProps): JSX.Element => {
+export const FeedbackReceiveUpdatesModal = ({ isVisible, onHide }: FeedbackReceiveUpdatesProps): JSX.Element => {
     const [checked, toggleChecked]: readonly[boolean, () => void]
         = useToggleState();
 
@@ -48,8 +49,13 @@ export const FeedbackReceiveUpdatesModal = (props: FeedbackReceiveUpdatesProps):
 
     const buttonLabel = emailInput.length ? t`Finish` : t`Finish without email`;
 
+    const onFinish = useCallback<() => void>(
+        (): void => onHide(),
+        [onHide],
+    );
+
     return (
-        <Modal isVisible={props.isVisible}>
+        <Modal isVisible={isVisible} onBackdropPress={onHide}>
             <I18n>
                 {
                     ({ i18n }: I18nProps): JSX.Element => (
@@ -79,7 +85,7 @@ export const FeedbackReceiveUpdatesModal = (props: FeedbackReceiveUpdatesProps):
                                 </View>
                             </View>
                             <View style={styles.finishButtonContainer}>
-                                <TouchableOpacity onPress={() => {}} style={styles.finishButton}>
+                                <TouchableOpacity onPress={onFinish} style={styles.finishButton}>
                                     <Text style={styles.finishText}>
                                         <Trans id={buttonLabel} />
                                     </Text>
