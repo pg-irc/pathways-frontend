@@ -318,6 +318,11 @@ export const textStyles = StyleSheet.create({
         paddingHorizontal: 0,
         ...getNormalFontStylesForOS(),
     },
+    captionStyleLeft: {
+        fontSize: 16,
+        textAlign: 'left',
+        ...getNormalFontStylesForOS(),
+    },
 });
 
 export const applicationStyles = StyleSheet.create({

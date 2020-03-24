@@ -24,7 +24,6 @@ import { FeedbackComponent } from '../feedback/feedback_component';
 import { isAndroid } from '../../helpers/is_android';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { FeedbackModalContainer } from '../feedback/feedback_modal_container';
-import { useQuery } from '../../hooks/use_query';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type Feedback = {
@@ -55,8 +54,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         = useState<boolean>(false);
 
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
-
-    const query = useQuery();
 
     const setFeedbackForField = R.curry((field: keyof Feedback, value: string): void => (
         setFeedback({...feedback, [field]: value})
@@ -118,8 +115,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 />
                 <DividerComponent />
                 <FeedbackModalContainer
-                    // TODO: Formulate a more robust typed query param getter
-                    isModalVisible={query.feedbackModalVisible === 'true'}
                     feedbackEnabled={feedbackEnabled}
                     onSuggestAnUpdatePress={onFeedbackButtonPress}
                     serviceId={props.service.id}

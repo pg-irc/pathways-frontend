@@ -2,10 +2,10 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { Platform } from 'react-native';
 
-import { colors } from '../../../application/styles';
+import { colors, values } from '../../../application/styles';
 import { getStatusBarHeightForPlatform } from '../../main/get_status_bar_height_for_platform';
 
-interface Styles {
+interface OtherRemoveServiceStyles {
     readonly closeButton: TextStyle;
     readonly footerContainer: ViewStyle;
     readonly footerTab: ViewStyle;
@@ -21,7 +21,21 @@ interface Styles {
     readonly submitTextDisabled: TextStyle;
 }
 
-const styles = StyleSheet.create<Styles>({
+interface ReceiveUpdatesStyles {
+    readonly checkboxContainer: ViewStyle;
+    readonly checkBox: ViewStyle;
+    readonly checkBoxDescription: ViewStyle;
+    readonly description: TextStyle;
+    readonly emailInputStyle: ViewStyle;
+    readonly finishButtonContainer: ViewStyle;
+    readonly finishButton: ViewStyle;
+    readonly finishText: TextStyle;
+    readonly checkBoxIcon: TextStyle;
+    readonly receiveUpdatesContainer: ViewStyle;
+    readonly receiveUpdatesInnerContainer: ViewStyle;
+}
+
+const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
     closeButton: {
         color: colors.greyishBrown,
         fontSize: 16,
@@ -97,4 +111,86 @@ const styles = StyleSheet.create<Styles>({
     },
 });
 
-export default styles;
+const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
+    checkboxContainer: {
+        alignItems: 'center',
+        flex: 3,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingTop: 24,
+        paddingBottom: 24,
+    },
+
+    checkBoxDescription: {
+        flex: 3,
+    },
+
+    checkBox: {
+        alignItems: 'center',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
+
+    checkBoxIcon: {
+        color: colors.teal,
+        fontSize: values.smallIconSize,
+        paddingRight: 12,
+    },
+
+    finishButtonContainer: {
+        alignItems: 'center',
+        borderTopWidth: 0.5,
+        borderTopColor: colors.greyBorder,
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
+        padding: 16,
+    },
+
+    finishButton: {
+        // justifyContent: 'flex-start',
+        alignSelf: 'flex-end',
+        backgroundColor: 'white',
+        borderWidth: 2,
+        borderColor: colors.teal,
+        borderRadius: values.roundedBorderRadius,
+        color: colors.teal,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+    },
+
+    finishText: {
+        color: colors.teal,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+
+    receiveUpdatesContainer: {
+        backgroundColor: 'white',
+        borderRadius: 15,
+        minHeight: 315,
+    },
+
+    receiveUpdatesInnerContainer: {
+        flex: 1,
+        paddingTop: 24,
+        paddingLeft: 24,
+        paddingRight: 24,
+    },
+
+    description: {
+        paddingTop: 8,
+        paddingBottom: 8,
+    },
+
+    emailInputStyle: {
+        fontSize: 14,
+        paddingLeft: 0,
+        paddingTop: 8,
+        paddingBottom: 8,
+        borderBottomWidth: 0.5,
+        borderBottomColor: colors.darkerGrey,
+    },
+});
+
+export { otherRemoveServiceStyles, receiveUpdatesStyles };

@@ -25,7 +25,7 @@ import { useQuery } from '../../hooks/use_query';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
-import styles from './styles';
+import { otherRemoveServiceStyles as styles } from './styles';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
@@ -85,20 +85,20 @@ const HeaderComponent = (props: HeaderComponentProps): JSX.Element => {
 
     const goBackShowModal = useServiceDetailRoute(
         // TODO useQuery only supports string Records for now
-        { feedbackModalVisible: 'false' },
+        { optionsModalVisible: 'false' },
     );
 
     const goBackHideModal = useServiceDetailRoute(
         // TODO useQuery only supports string Records for now
-        { feedbackModalVisible: 'true' },
+        { optionsModalVisible: 'true' },
     );
 
-    const onClose = useCallback(
+    const onClose = useCallback<() => void>(
         (): void => goBackHideModal(),
         [history],
     );
 
-    const onBack = useCallback(
+    const onBack = useCallback<() => void>(
         (): void => goBackShowModal(),
         [history],
     );

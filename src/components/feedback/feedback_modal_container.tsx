@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-native';
 
 import { textStyles, colors } from '../../application/styles';
 import { Routes, goToRouteWithParameters } from '../../application/routing';
+import { useQuery } from '../../hooks/use_query';
+import { FeedbackReceiveUpdatesModal } from '../feedback/feedback_receive_updates_modal';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
 
@@ -15,7 +17,6 @@ interface FeedbackModalContainerProps {
     readonly feedbackEnabled: boolean;
     readonly onSuggestAnUpdatePress: () => void;
     readonly serviceId: string;
-    readonly isModalVisible: boolean;
 }
 
 interface FeedbackModalControls {
@@ -122,9 +123,12 @@ export const FeedbackModalContainer = ({
     feedbackEnabled,
     onSuggestAnUpdatePress: onSuggestAnUpdate,
     serviceId,
-    isModalVisible,
 }: FeedbackModalContainerProps): JSX.Element => {
-    const modalState: ModalState = useModalState(isModalVisible);
+    const query = useQuery();
+
+    const optionsModalState: ModalState = useModalState(query.optionsModalVisible === 'true');
+
+    const receiveUpdatesModalState: ModalState = useModalState(query.receiveUpdatesModalVisible === 'true');
 
     const {
         onFeedbackButtonPress,
@@ -132,18 +136,19 @@ export const FeedbackModalContainer = ({
         onOtherPress,
         onRemoveServicePress,
         onCloseFeedbackOptions,
-    }: FeedbackModalControls = useFeedbackModalControls(modalState, serviceId, onSuggestAnUpdate);
+    }: FeedbackModalControls = useFeedbackModalControls(optionsModalState, serviceId, onSuggestAnUpdate);
 
     return (
         <>
             <FeedbackButton isVisible={!feedbackEnabled} onPress={onFeedbackButtonPress} />
             <FeedbackOptionsModalComponent
-                isVisible={modalState.visible}
+                isVisible={optionsModalState.visible}
                 onClose={onCloseFeedbackOptions}
                 onSuggestAnUpdatePress={onSuggestAnUpdatePress}
                 onOtherPress={onOtherPress}
                 onRemoveServicePress={onRemoveServicePress}
             />
+            <FeedbackReceiveUpdatesModal isVisible={receiveUpdatesModalState.visible} />
         </>
     );
 };
