@@ -8,12 +8,16 @@ import { TaskListComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { textStyles, colors, values } from '../../application/styles';
 import {
-    CallToActionFullComponent, CallToActionFullSubComponent,
-    CallToActionPartialComponent, CallToActionPartialSubComponent,
+    CallToActionFullComponent,
+    CallToActionFullSubComponent,
+    CallToActionPartialComponent,
+    CallToActionPartialSubComponent,
+    CovidComponent,
 } from './call_to_action';
 import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
+import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -21,7 +25,11 @@ export interface RecommendedTopicsProps {
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
 }
 
-type Props = RecommendedTopicsProps & TaskListActions & RouterProps;
+export type AnalyticsAction = {
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+};
+
+type Props = RecommendedTopicsProps & TaskListActions & RouterProps & AnalyticsAction;
 
 export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <TaskListComponent
@@ -52,6 +60,10 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             >
                 <Trans>Start settling in B.C.</Trans>
             </Text>
+            <CovidComponent
+                analyticsLinkPressed={props.analyticsLinkPressed}
+                currentPathForAnalytics={props.location.pathname}
+            />
             {props.hasChosenAnswers ?
                 <CallToActionPartialComponent {...props} />
                 :
