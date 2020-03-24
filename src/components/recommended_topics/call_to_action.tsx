@@ -68,9 +68,10 @@ export const CovidComponent = ({
                     <Text>{' '}</Text>
                     <Text style={markdownStyles.link} onPress={onLinkPress}>
                         BC Centre for Disease Control
-                        <Text>{' '}</Text>
+                        <Text style={markdownStyles.link}>{' '}</Text>
                         <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: colors.teal }} />
                     </Text>
+                    .
                 </Trans>
             </Text>
         </View>
