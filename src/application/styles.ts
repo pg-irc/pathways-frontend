@@ -52,7 +52,7 @@ export const getNormalFontFamily = (): string => (
     isAndroid() ? 'AvenirBook' : 'Avenir'
 );
 
-const getNormalFontStylesForOS = (): object => (
+export const getNormalFontStylesForOS = (): object => (
     {
         fontFamily: getNormalFontFamily(),
         fontWeight: 'normal',
@@ -60,7 +60,7 @@ const getNormalFontStylesForOS = (): object => (
     }
 );
 
-const getBoldFontStylesForOS = (): object => (
+export const getBoldFontStylesForOS = (): object => (
     isAndroid() ?
         {
             fontFamily: 'AvenirBlack',
