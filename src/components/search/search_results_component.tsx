@@ -36,6 +36,8 @@ export interface SearchResultsProps {
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
     readonly isLoading: boolean;
+    readonly searchPage: number;
+    readonly nbPages: number;
     readonly onlineStatus: OnlineStatus;
 }
 
@@ -74,7 +76,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => (
             renderItem={renderSearchHit(props)}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={renderHeader(props)}
-            ListFooterComponent={renderLoadMoreButton(true, props.onLoadMore)}
+            ListFooterComponent={renderLoadMoreButton(props.searchPage, props.nbPages, props.onLoadMore)}
         />
     </View>
 );
@@ -170,8 +172,8 @@ const renderHeader = (props: Props): JSX.Element => (
     />
 );
 
-const renderLoadMoreButton = (hasMore: boolean, onLoadMore: () => Promise<void>): JSX.Element => {
-    if (hasMore) {
+const renderLoadMoreButton = (searchPage: number, nbPages: number, onLoadMore: () => Promise<void>): JSX.Element => {
+    if (searchPage + 1 < nbPages) {
         return (
             <View style={{ backgroundColor: colors.lightGrey }}>
                 <Button
