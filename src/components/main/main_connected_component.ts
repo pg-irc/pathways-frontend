@@ -12,10 +12,11 @@ import { selectLocale } from '../../selectors/locale/select_locale';
 import { Locale } from '../../locale';
 import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
-import { selectIsHeaderMenuVisible } from '../../selectors/header_menu/select_is_header_menu_visible';
-import { selectIsAboutModalVisible } from '../../selectors/header_menu/select_is_about_modal_visible';
-import { selectIsDisclaimerModalVisible } from '../../selectors/header_menu/select_is_disclaimer_modal_visible';
-import { CloseHeaderMenuAction, closeHeaderMenu, OpenHeaderMenuAction, openHeaderMenu, CloseAboutModalAction, closeAboutModal, openAboutModal, CloseDisclaimerModalAction, closeDisclaimerModal, OpenAboutModalAction, OpenDisclaimerModalAction, openDisclaimerModal } from '../../stores/header_menu';
+import { 
+    CloseHeaderMenuAction, closeHeaderMenu, OpenHeaderMenuAction, openHeaderMenu, CloseAboutModalAction, closeAboutModal,
+    openAboutModal, CloseDisclaimerModalAction, closeDisclaimerModal, OpenAboutModalAction, OpenDisclaimerModalAction, openDisclaimerModal,
+} from '../../stores/header_menu';
+import { selectHeaderMenuState } from '../../selectors/header_menu/select_header_menu_state';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 
@@ -32,9 +33,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     locale: selectLocale(store),
     localeIsSet: selectIsLocaleSet(store),
     showOnboarding: selectShowOnboarding(store),
-    isHeaderMenuVisible: selectIsHeaderMenuVisible(store),
-    isAboutModalVisible: selectIsAboutModalVisible(store),
-    isDisclaimerModalVisible: selectIsDisclaimerModalVisible(store),
+    headerMenuState: selectHeaderMenuState(store),
 });
 
 type Actions =

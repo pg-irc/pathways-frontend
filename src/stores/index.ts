@@ -24,7 +24,7 @@ export interface Store {
     readonly userProfile: userProfile.UserProfileStore;
     readonly manualUserLocation: location.ManualUserLocationStore;
     readonly search: search.SearchStore;
-    readonly headerMenu: headerMenu.HeaderMenuStore,
+    readonly headerMenu: headerMenu.HeaderMenuStore;
 }
 
 export const buildDefaultStore = (): Store => ({

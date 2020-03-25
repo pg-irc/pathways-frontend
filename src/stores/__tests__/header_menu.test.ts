@@ -1,75 +1,44 @@
 // tslint:disable:no-expression-statement
 import { HeaderMenuStore, reducer, closeHeaderMenu, openHeaderMenu, closeAboutModal, closeDisclaimerModal, openDisclaimerModal, openAboutModal } from '../header_menu';
-import { aBoolean } from '../../helpers/random_test_values';
 
-describe('header menu reducer', () => {
+describe('the header menu reducer', () => {
 
-    describe('the header menu flag', () => {
+    describe('the header menu state', () => {
 
-        it('is set to false by the close header menu action', () => {
-            const oldStore: HeaderMenuStore = {
-                isHeaderMenuVisible: true,
-                isAboutModalVisible: aBoolean(),
-                isDisclaimerModalVisible: aBoolean(),
-            };
+        it('is set to header menu is closed by the close header menu action', () => {
+            const oldStore = HeaderMenuStore.HeaderMenuIsOpen;
             const newStore = reducer(oldStore, closeHeaderMenu());
-            expect(newStore.isHeaderMenuVisible).toBe(false);
+            expect(newStore).toBe(HeaderMenuStore.HeaderMenuIsClosed);
         });
 
-        it('is set to true by the open header menu action', () => {
-            const oldStore: HeaderMenuStore = {
-                isHeaderMenuVisible: false,
-                isAboutModalVisible: aBoolean(),
-                isDisclaimerModalVisible: aBoolean(),
-            };
+        it('is set to header menu is open by the open header menu action', () => {
+            const oldStore = HeaderMenuStore.HeaderMenuIsClosed;
             const newStore = reducer(oldStore, openHeaderMenu());
-            expect(newStore.isHeaderMenuVisible).toBe(true);
+            expect(newStore).toBe(HeaderMenuStore.HeaderMenuIsOpen);
         });
-    });
 
-    describe('the about modal flag', () => {
-
-        it('is set to false by the close about modal action', () => {
-            const oldStore: HeaderMenuStore = {
-                isHeaderMenuVisible: aBoolean(),
-                isAboutModalVisible: true,
-                isDisclaimerModalVisible: aBoolean(),
-            };
+        it('is set to header menu is open by the close about modal action', () => {
+            const oldStore = HeaderMenuStore.AboutModalIsOpen;
             const newStore = reducer(oldStore, closeAboutModal());
-            expect(newStore.isAboutModalVisible).toBe(false);
+            expect(newStore).toBe(HeaderMenuStore.HeaderMenuIsOpen);
         });
 
-        it('is set to true by the open about modal action', () => {
-            const oldStore: HeaderMenuStore = {
-                isHeaderMenuVisible: aBoolean(),
-                isAboutModalVisible: false,
-                isDisclaimerModalVisible: aBoolean(),
-            };
+        it('is set to about modal is open by the open about modal action', () => {
+            const oldStore = HeaderMenuStore.HeaderMenuIsOpen;
             const newStore = reducer(oldStore, openAboutModal());
-            expect(newStore.isAboutModalVisible).toBe(true);
+            expect(newStore).toBe(HeaderMenuStore.AboutModalIsOpen);
         });
-    });
 
-    describe('the disclaimer modal flag', () => {
-
-        it('is set to false by the close disclaimer modal action', () => {
-            const oldStore: HeaderMenuStore = {
-                isHeaderMenuVisible: aBoolean(),
-                isAboutModalVisible: aBoolean(),
-                isDisclaimerModalVisible: true,
-            };
+        it('is set to header menu is open by the close disclaimer modal action', () => {
+            const oldStore = HeaderMenuStore.DisclaimerModalIsOpen;
             const newStore = reducer(oldStore, closeDisclaimerModal());
-            expect(newStore.isDisclaimerModalVisible).toBe(false);
+            expect(newStore).toBe(HeaderMenuStore.HeaderMenuIsOpen);
         });
 
-        it('is set to true by the open disclaimer modal action', () => {
-            const oldStore: HeaderMenuStore = {
-                isHeaderMenuVisible: aBoolean(),
-                isAboutModalVisible: aBoolean(),
-                isDisclaimerModalVisible: false,
-            };
+        it ('is set disclaimer modal is open by the open disclaimer modal action', () => {
+            const oldStore = HeaderMenuStore.HeaderMenuIsOpen;
             const newStore = reducer(oldStore, openDisclaimerModal());
-            expect(newStore.isDisclaimerModalVisible).toBe(true);
+            expect(newStore).toBe(HeaderMenuStore.DisclaimerModalIsOpen);
         });
     });
 });

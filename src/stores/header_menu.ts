@@ -46,17 +46,14 @@ export const openDisclaimerModal = () => (
     helpers.makeAction(constants.OPEN_DISCLAIMER_MODAL)
 );
 
-export interface HeaderMenuStore {
-    readonly isHeaderMenuVisible: boolean;
-    readonly isAboutModalVisible: boolean;
-    readonly isDisclaimerModalVisible: boolean;
+export enum HeaderMenuStore {
+    HeaderMenuIsClosed,
+    HeaderMenuIsOpen,
+    AboutModalIsOpen,
+    DisclaimerModalIsOpen,
 }
 
-export const buildDefaultStore = (): HeaderMenuStore => ({
-    isHeaderMenuVisible: false,
-    isAboutModalVisible: false,
-    isDisclaimerModalVisible: false,
-});
+export const buildDefaultStore = (): HeaderMenuStore => HeaderMenuStore.HeaderMenuIsClosed;
 
 export const reducer = (store: HeaderMenuStore = buildDefaultStore(), action?: HeaderMenuAction): HeaderMenuStore => {
     if (!action) {
@@ -64,35 +61,17 @@ export const reducer = (store: HeaderMenuStore = buildDefaultStore(), action?: H
     }
     switch (action.type) {
         case constants.CLOSE_HEADER_MENU:
-            return ({
-                ...store,
-                isHeaderMenuVisible: false,
-            });
+            return HeaderMenuStore.HeaderMenuIsClosed;
         case constants.OPEN_HEADER_MENU:
-            return ({
-                ...store,
-                isHeaderMenuVisible: true,
-            });
+            return HeaderMenuStore.HeaderMenuIsOpen;
         case constants.CLOSE_ABOUT_MODAL:
-            return ({
-                ...store,
-                isAboutModalVisible: false,
-            });
+            return HeaderMenuStore.HeaderMenuIsOpen;
         case constants.OPEN_ABOUT_MODAL:
-            return ({
-                ...store,
-                isAboutModalVisible: true,
-            });
+            return HeaderMenuStore.AboutModalIsOpen;
         case constants.CLOSE_DISCLAIMER_MODAL:
-            return ({
-                ...store,
-                isDisclaimerModalVisible: false,
-            });
+            return HeaderMenuStore.HeaderMenuIsOpen;
         case constants.OPEN_DISCLAIMER_MODAL:
-            return ({
-                ...store,
-                isDisclaimerModalVisible: true,
-            });
+            return HeaderMenuStore.DisclaimerModalIsOpen;
         default:
             return store;
     }
