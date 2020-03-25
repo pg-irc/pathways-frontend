@@ -14,7 +14,7 @@ export const ClearInputButton = (props: Props): JSX.Element => {
         return <EmptyComponent />;
     }
     return (
-        <TouchableOpacity onPress={props.onPress} style={{ padding: 6 }}>
+        <TouchableOpacity onPress={props.onPress} style={{ padding: 10 }}>
             <Icon name={'window-close'} type='MaterialCommunityIcons' style={{ fontSize: values.smallIconSize, color: colors.black }} />
         </TouchableOpacity>
     );

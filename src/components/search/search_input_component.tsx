@@ -104,7 +104,7 @@ const CollapsedInput = (props: Props & CollapsedInputProps): JSX.Element => {
         <I18n>
             {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
                 <View style={{ padding: 4, backgroundColor: colors.teal }}>
-                    <TouchableOpacity style={applicationStyles.searchContainer}
+                    <TouchableOpacity style={applicationStyles.searchContainerCollapsed}
                         onPress={(): void => props.setCollapseSearchInput(false)}>
                         <InputIcon name='search' />
                         <Text numberOfLines={1} style={[textStyles.paragraphStyle, { flex: 1 }]}>
@@ -153,7 +153,7 @@ const ExpandedInput = (props: Props & ExpandedInputProps): JSX.Element => {
 
                 <View style={{ padding: 4, backgroundColor: colors.teal }}>
 
-                    <TouchableOpacity style={applicationStyles.searchContainer}>
+                    <TouchableOpacity style={applicationStyles.searchContainerExpanded}>
                         <InputIcon name='search' />
                         <TextInput
                             ref={props.searchTermInputRef}
@@ -169,7 +169,7 @@ const ExpandedInput = (props: Props & ExpandedInputProps): JSX.Element => {
                         />
                         <ClearInputButton visible={props.searchTermInput !== ''} onPress={clearTermInput} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={applicationStyles.searchContainer}>
+                    <TouchableOpacity style={applicationStyles.searchContainerExpanded}>
                         <InputIcon name='location-on' />
                         <TextInput
                             ref={props.searchLocationInputRef}
@@ -200,7 +200,7 @@ const ExpandedInput = (props: Props & ExpandedInputProps): JSX.Element => {
 const InputIcon = ({ name }: IconProps): JSX.Element => (
     <Icon name={name}
         type='MaterialIcons'
-        style={{ color: colors.teal, fontSize: values.mediumIconSize, padding: 5 }}
+        style={{ color: colors.teal, fontSize: values.smallIconSize, padding: 10 }}
     />
 );
 

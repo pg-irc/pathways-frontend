@@ -345,12 +345,24 @@ export const applicationStyles = StyleSheet.create({
         flex: 1,
         height: 36,
     },
-    searchContainer: {
+    searchContainerExpanded: {
         backgroundColor: colors.white,
         borderRadius: values.lessRoundedBorderRadius,
         margin: 4,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 1,
+    },
+    searchContainerCollapsed: {
+        backgroundColor: colors.white,
+        borderRadius: values.lessRoundedBorderRadius,
+        margin: 4,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        overflow: 'hidden',
+        maxWidth: '100%',
     },
     boxShadowBelow: {
         shadowColor: colors.black,

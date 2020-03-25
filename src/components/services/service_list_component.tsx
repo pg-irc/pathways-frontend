@@ -24,6 +24,7 @@ import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { SetManualUserLocationAction } from '../../stores/manual_user_location';
 import { ServiceListLocationSearchComponent } from './service_list_location_search_component';
+import { SearchListSeparator } from '../search/separators';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -63,15 +64,21 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     }
 
     return (
-        <View>
-            {renderHeader(props)}
+        <ServiceListWrapper {...props}>
             <FlatList
-                style={{ backgroundColor: colors.lightGrey }}
+                style={{ backgroundColor: colors.white }}
                 data={getServicesIfValid(props.topicServicesOrError)}
                 keyExtractor={(service: HumanServiceData): string => service.id}
                 renderItem={renderServiceListItem(props)}
+                ItemSeparatorComponent={SearchListSeparator}
+                ListHeaderComponent={
+                    <MessageComponent
+                        isVisible={props.showPartialLocalizationMessage}
+                        hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
+                    />
+                }
             />
-        </View>
+        </ServiceListWrapper>
     );
 };
 
@@ -90,7 +97,16 @@ const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boo
 );
 
 const hasManualUserLocation = (manualUserLocation: UserLocation): boolean => (
-    !!(manualUserLocation.label && manualUserLocation.latLong.lat && manualUserLocation.latLong.lng)
+    !!(manualUserLocation.label && manualUserLocation.latLong)
+);
+
+type ServiceListWrapperProps = Props & { readonly children: JSX.Element };
+
+const ServiceListWrapper = (props: ServiceListWrapperProps): JSX.Element => (
+    <View style={{ flex: 1 }}>
+        {renderHeader(props)}
+        {props.children}
+    </View>
 );
 
 const renderErrorComponent = (props: Props, refreshScreen: () => void): JSX.Element => {
@@ -98,41 +114,37 @@ const renderErrorComponent = (props: Props, refreshScreen: () => void): JSX.Elem
     const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
     Sentry.captureMessage(sentryMessage);
     return (
-        <ErrorScreenSwitcherComponent
-            refreshScreen={refreshScreen}
-            errorType={errorType}
-            header={renderHeader(props)}
-        />
+        <ServiceListWrapper {...props}>
+            <ErrorScreenSwitcherComponent
+                refreshScreen={refreshScreen}
+                errorType={errorType}
+            />
+        </ServiceListWrapper>
     );
 };
 
 const renderLoadingComponent = (props: Props): JSX.Element => (
-    <LoadingServiceListComponent
-        header={renderHeader(props)}
-    />
+    <ServiceListWrapper {...props}>
+        <LoadingServiceListComponent />
+    </ServiceListWrapper>
 );
 
 const renderEmptyComponent = (props: Props, refreshScreen: () => void): JSX.Element => (
-    <EmptyServiceListComponent
-        title={<Trans>No services to show</Trans>}
-        imageSource={emptyTopicServicesList}
-        refreshScreen={refreshScreen}
-        header={renderHeader(props)}
-    />
+    <ServiceListWrapper {...props}>
+        <EmptyServiceListComponent
+            title={<Trans>No services to show</Trans>}
+            imageSource={emptyTopicServicesList}
+            refreshScreen={refreshScreen}
+        />
+    </ServiceListWrapper>
 );
 
 const renderHeader = (props: Props): JSX.Element => (
-    <View>
-        <ServiceListHeaderComponent
-            title={props.topic.title}
-            manualUserLocation={props.manualUserLocation}
-            setManualUserLocation={props.setManualUserLocation}
-        />
-        <MessageComponent
-            isVisible={props.showPartialLocalizationMessage}
-            hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
-        />
-    </View>
+    <ServiceListHeaderComponent
+        title={props.topic.title}
+        manualUserLocation={props.manualUserLocation}
+        setManualUserLocation={props.setManualUserLocation}
+    />
 );
 
 const determineErrorType = (topicServicesOrError: SelectorTopicServices): Errors => {
@@ -181,9 +193,9 @@ export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProp
     <View
         style={{
             backgroundColor: colors.teal,
-            paddingTop: 25,
+            paddingTop: 10,
             paddingHorizontal: 10,
-            paddingBottom: 10,
+            paddingBottom: 4,
         }}
     >
         <Text style={[textStyles.headlineH2StyleWhiteLeft, { paddingHorizontal: 10}]}>

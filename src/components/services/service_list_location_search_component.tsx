@@ -42,6 +42,7 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
             setIsFetchingLatLng={setIsFetchingLatLng}
             setManualUserLocation={props.setManualUserLocation}
             manualUserLocation={props.manualUserLocation}
+            setSearchIsCollapsed={setSearchIsCollapsed}
         />
     );
 };
@@ -60,13 +61,15 @@ const CollapsedSearch = (props: CollapsedSearchProps): JSX.Element => {
     const wrapperOnPress = (): void => {
         props.setSearchIsCollapsed(false);
     };
-    const translatedLocation = props.locationInputValue === MY_LOCATION ? <Trans>My Location</Trans> : props.locationInputValue;
+    const locationLabel = props.locationInputValue ? <><Trans>Near</Trans>{' '}</> : undefined;
+    const locationText = props.locationInputValue === MY_LOCATION ? <Trans>My Location</Trans> : props.locationInputValue;
     return (
-        <TouchableOpacity onPress={wrapperOnPress} style={[applicationStyles.searchContainer, { justifyContent: 'space-between', marginTop: 10 }]}>
+        <TouchableOpacity onPress={wrapperOnPress} style={applicationStyles.searchContainerCollapsed}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <LocationIcon />
                 <Text style={[textStyles.paragraphStyle, { paddingVertical: 10 }]}>
-                    <Trans>Near</Trans> <Text style={textStyles.paragraphBoldBlackLeft}>{translatedLocation}</Text>
+                    {locationLabel}
+                    <Text style={textStyles.paragraphBoldBlackLeft}>{locationText}</Text>
                 </Text>
             </View>
             <TouchableOpacity onPress={closeOnPress}>
@@ -83,24 +86,22 @@ interface ExpandedSearchProps {
     readonly setIsFetchingLatLng: (b: boolean) => void;
     readonly setManualUserLocation: Props['setManualUserLocation'];
     readonly manualUserLocation: Props['manualUserLocation'];
+    readonly setSearchIsCollapsed: (b: boolean) => void;
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
     return (
         <View>
-            <View style={[applicationStyles.searchContainer, { marginTop: 10 } ]}>
+            <View style={[applicationStyles.searchContainerExpanded, { marginBottom: 4 }]}>
                 <SearchInput
                     locationInputValue={props.locationInputValue}
                     setLocationInputValue={props.setLocationInputValue}
                     autoFocus={!!props.manualUserLocation.label}
                 />
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 3 }}>
+            <View style={[applicationStyles.searchContainerExpanded, { backgroundColor: colors.teal }]}>
                 <LocateButton
-                    onPress={getLocateOnPress(
-                        props.setIsFetchingLatLng,
-                        props.setManualUserLocation,
-                    )}
+                    onPress={getLocateOnPress(props.setLocationInputValue)}
                     isFetchingLatLng={props.isFetchingLatLng}
                 />
                 <SearchButton
@@ -108,6 +109,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                         props.setIsFetchingLatLng,
                         props.locationInputValue,
                         props.setManualUserLocation,
+                        props.setSearchIsCollapsed,
                     )}
                     isFetchingLatLng={props.isFetchingLatLng}
                 />
@@ -203,7 +205,7 @@ const LocateButton = (props: LocateButtonProps): JSX.Element => (
             type={'MaterialIcons'} name={'my-location'}
             style={{ color: colors.greyishBrown, fontSize: 16, marginRight: 5 }}
         />
-        <Text style={[textStyles.button, { color: colors.greyishBrown, fontSize: 12 }]}>
+        <Text style={[textStyles.button, { color: colors.greyishBrown, fontSize: 12, padding: 3 }]}>
             <Trans>My Location</Trans>
         </Text>
     </TouchableOpacity>
@@ -213,27 +215,30 @@ const getSearchOnPress = (
     setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
     locationInputValue: string,
     setManualUserLocation: Props['setManualUserLocation'],
+    setSearchIsCollapsed: (b: boolean) => void,
 ): () => void => (): void => {
-    if (locationInputValue === MY_LOCATION) return;
-    const fetchFn = (): Promise<LatLong | undefined> => fetchLatLngFromServer(locationInputValue);
-    fetchLatLng(
-        setIsFetchingLatLng,
-        fetchFn,
-        setManualUserLocation,
-        locationInputValue,
-    );
+    setSearchIsCollapsed(true);
+    if (locationInputValue === MY_LOCATION) {
+        fetchLatLng(
+            setIsFetchingLatLng,
+            fetchLatLngFromDevice,
+            setManualUserLocation,
+            MY_LOCATION,
+        );
+    } else {
+        fetchLatLng(
+            setIsFetchingLatLng,
+            () => fetchLatLngFromServer(locationInputValue),
+            setManualUserLocation,
+            locationInputValue,
+        );
+    }
 };
 
 const getLocateOnPress = (
-    setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
-    setManualUserLocation: Props['setManualUserLocation'],
+    setLocationInputValue: (s: string) => void,
 ): () => void => (): void => {
-    fetchLatLng(
-        setIsFetchingLatLng,
-        fetchLatLngFromDevice,
-        setManualUserLocation,
-        MY_LOCATION,
-    );
+    setLocationInputValue(MY_LOCATION);
 };
 
 const fetchLatLng = async (
@@ -245,7 +250,6 @@ const fetchLatLng = async (
     setIsFetchingLatLng(true);
     const latLong = await fetchFn().catch(handleFetchError);
     setIsFetchingLatLng(false);
-    if (!latLong) return undefined;
     setManualUserLocation({
         label: locationLabel,
         latLong,
