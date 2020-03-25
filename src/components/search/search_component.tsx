@@ -21,7 +21,7 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { renderHeader } from '../main/render_header';
 import { Trans } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
-import { TwoButtonHeaderProps } from '../two_button_header.tsx/two_button_header_component';
+import { MenuAndBackButtonHeaderProps } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -93,8 +93,9 @@ export const SearchComponent = (props: Props): JSX.Element => {
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <Header
                 {...props}
+                {...{ textColor: colors.white, backgroundColor: colors.teal }}
                 title={<Text style={[textStyles.headlineH5StyleBlackCenter, { color: colors.white }]}><Trans>FIND A SERVICE</Trans></Text>}
-                {...{ textColor: colors.white, backgroundColor: colors.teal }}/>
+            />
             <SearchInputComponent
                 searchTerm={props.searchTerm}
                 searchLocation={props.searchLocation}
@@ -122,7 +123,7 @@ const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (dis
     useEffect(effect, [location]);
 };
 
-const Header = (props: TwoButtonHeaderProps): JSX.Element => {
+const Header = (props: MenuAndBackButtonHeaderProps): JSX.Element => {
     const rightButton =
         <MenuButtonComponent
             onPress={props.openHeaderMenu}

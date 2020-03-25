@@ -5,7 +5,7 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History } from 'history';
 import { renderHeader } from '../main/render_header';
 
-export interface TwoButtonHeaderProps {
+export interface MenuAndBackButtonHeaderProps {
     readonly textColor: string;
     readonly backgroundColor: string;
     readonly title?: JSX.Element;
@@ -13,7 +13,7 @@ export interface TwoButtonHeaderProps {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
-export const TwoButtonHeaderComponent = (props: TwoButtonHeaderProps): JSX.Element => {
+export const MenuAndBackButtonHeaderComponent = (props: MenuAndBackButtonHeaderProps): JSX.Element => {
     const leftButton = <BackButtonComponent history={props.history} textColor={props.textColor} />;
     const rightButton =
         <MenuButtonComponent

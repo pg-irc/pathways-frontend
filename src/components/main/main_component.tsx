@@ -45,6 +45,9 @@ export const MainComponent = (props: Props): JSX.Element => {
         props.history.listen((location: Location, _: Action): RouteChangedAction =>
             props.sendAnalyticsData(location, props.locale),
         );
+    }, [props.location, props.locale]);
+
+    useEffect((): void => {
         Notifications.addListener(notificationListener(props.history));
     }, []);
 
@@ -61,14 +64,14 @@ export const MainComponent = (props: Props): JSX.Element => {
         <Root>
             <Drawer
                 side='right'
-                onClose={(): CloseHeaderMenuAction => props.closeHeaderMenu()}
+                onClose={props.closeHeaderMenu}
                 open={isHeaderMenuOpen(props.headerMenuState)}
                 content={
                     <HeaderMenuConnectedComponent
                         history={props.history}
-                        closeMenu={(): CloseHeaderMenuAction => props.closeHeaderMenu()}
-                        openAboutModal={(): OpenAboutModalAction => props.openAboutModal()}
-                        openDisclaimerModal={(): OpenDisclaimerModalAction => props.openDisclaimerModal()}
+                        closeMenu={props.closeHeaderMenu}
+                        openAboutModal={props.openAboutModal}
+                        openDisclaimerModal={props.openDisclaimerModal}
                     />
                 }
             >
@@ -78,8 +81,8 @@ export const MainComponent = (props: Props): JSX.Element => {
                     <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={onHardwareBackButtonPress} />
                     <AppModalsComponent
                         headerMenuState={props.headerMenuState}
-                        closeAboutModal={(): CloseAboutModalAction => props.closeAboutModal()}
-                        closeDisclaimerModal={(): CloseDisclaimerModalAction => props.closeDisclaimerModal()}
+                        closeAboutModal={props.closeAboutModal}
+                        closeDisclaimerModal={props.closeDisclaimerModal}
                     />
                 </Container>
             </Drawer>

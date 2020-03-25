@@ -25,7 +25,7 @@ import { HidePartialLocalizationMessageAction } from '../../stores/user_profile'
 import { SetManualUserLocationAction } from '../../stores/manual_user_location';
 import { ServiceListLocationSearchComponent } from './service_list_location_search_component';
 import { SearchListSeparator } from '../search/separators';
-import { TwoButtonHeaderComponent } from '../two_button_header.tsx/two_button_header_component';
+import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { History } from 'history';
 
@@ -186,25 +186,25 @@ interface ServiceListHeaderComponentProps {
 
 export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => (
     <View>
-        <TwoButtonHeaderComponent
+        <MenuAndBackButtonHeaderComponent
             {...props}
             {...{ textColor: colors.white, backgroundColor: colors.teal }}
         />
-    <View
-        style={{
-            backgroundColor: colors.teal,
-            paddingTop: 10,
-            paddingHorizontal: 10,
-            paddingBottom: 4,
-        }}
-    >
-        <Text style={[textStyles.headlineH2StyleWhiteLeft, { paddingHorizontal: 10, marginBottom: 10 }]}>
-            {props.topicTitle}
-        </Text>
-        <ServiceListLocationSearchComponent
-            manualUserLocation={props.manualUserLocation}
-            setManualUserLocation={props.setManualUserLocation}
-        />
-    </View>
+        <View
+            style={{
+                backgroundColor: colors.teal,
+                paddingTop: 10,
+                paddingHorizontal: 10,
+                paddingBottom: 4,
+            }}
+        >
+            <Text style={[textStyles.headlineH2StyleWhiteLeft, { paddingHorizontal: 10, marginBottom: 10 }]}>
+                {props.topicTitle}
+            </Text>
+            <ServiceListLocationSearchComponent
+                manualUserLocation={props.manualUserLocation}
+                setManualUserLocation={props.setManualUserLocation}
+            />
+        </View>
     </View>
 );

@@ -14,8 +14,8 @@ import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import * as R from 'ramda';
 import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
 import { UserLocation } from '../../validation/latlong/types';
-import { TwoButtonHeaderComponent } from '../two_button_header.tsx/two_button_header_component';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -76,7 +76,7 @@ type Props = HelpComponentProps & HelpComponentActions;
 
 export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View style={{ flex: 1 }}>
-        <TwoButtonHeaderComponent
+        <MenuAndBackButtonHeaderComponent
             {...props}
             {...{ textColor: colors.teal, backgroundColor: colors.white }}
         />
