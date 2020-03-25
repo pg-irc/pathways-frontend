@@ -6,17 +6,27 @@ import { saveService, SaveServiceAction, BookmarkServiceAction, UnbookmarkServic
 import { HumanServiceData } from '../../validation/services/types';
 import { disableAnalytics, DisableAnalyticsAction, HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
-import { SaveSearchTermAction, SaveSearchLocationAction, SetIsInputCollapsedAction, saveSearchLocation, saveSearchTerm, setIsSearchInputCollapsed } from '../../stores/search';
+import {
+    SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction,
+    saveSearchLocation, saveSearchTerm, setCollapseSearchInput, SaveSearchResultsAction, saveSearchResults,
+    SaveSearchLatLongAction, saveSearchLatLong,
+} from '../../stores/search';
 import { selectSearchTerm } from '../../selectors/search/select_search_term';
 import { selectSearchLocation } from '../../selectors/search/select_search_location';
 import { selectIsInputCollapsed } from '../../selectors/search/select_is_input_collapsed';
 import { selectShowPartialLocalizationMessage } from '../../selectors/user_profile/select_show_partial_localization_message';
+import { selectSearchResults } from '../../selectors/search/select_search_results';
+import { SearchServiceData } from '../../validation/search/types';
+import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
+import { LatLong } from '../../validation/latlong/types';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
     searchTerm: selectSearchTerm(store),
     searchLocation: selectSearchLocation(store),
-    isSearchInputCollapsed: selectIsInputCollapsed(store),
+    searchResults: selectSearchResults(store),
+    searchLatLong: selectSearchLatLong(store),
+    collapseSearchInput: selectIsInputCollapsed(store),
     showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
 });
 
@@ -27,7 +37,9 @@ type Actions =
     UnbookmarkServiceAction |
     SaveSearchTermAction |
     SaveSearchLocationAction |
-    SetIsInputCollapsedAction |
+    SaveSearchLatLongAction |
+    SaveSearchResultsAction |
+    SetCollapseSearchInputAction |
     HidePartialLocalizationMessageAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
@@ -49,8 +61,14 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     saveSearchLocation: (searchLocation: string): SaveSearchLocationAction => (
         dispatch(saveSearchLocation(searchLocation))
     ),
-    setIsSearchInputCollapsed: (isSearchInputCollapsed: boolean): SetIsInputCollapsedAction => (
-        dispatch(setIsSearchInputCollapsed(isSearchInputCollapsed))
+    saveSearchLatLong: (searchLatLong: LatLong): SaveSearchLatLongAction => (
+        dispatch(saveSearchLatLong(searchLatLong))
+    ),
+    saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>): SaveSearchResultsAction => (
+        dispatch(saveSearchResults(searchResults))
+    ),
+    setCollapseSearchInput: (collapseSearchInput: boolean): SetCollapseSearchInputAction => (
+        dispatch(setCollapseSearchInput(collapseSearchInput))
     ),
     hidePartialLocalizationMessage: (): HidePartialLocalizationMessageAction => (
         dispatch(hidePartialLocalizationMessage())
