@@ -54,7 +54,7 @@ interface CollapsedSearchProps {
 }
 
 const CollapsedSearch = (props: CollapsedSearchProps): JSX.Element => {
-    const closeOnPress = (): void => {
+    const clearOnPress = (): void => {
         props.setSearchIsCollapsed(false);
         props.setLocationInputValue('');
     };
@@ -72,9 +72,7 @@ const CollapsedSearch = (props: CollapsedSearchProps): JSX.Element => {
                     <Text style={textStyles.paragraphBoldBlackLeft}>{locationText}</Text>
                 </Text>
             </View>
-            <TouchableOpacity onPress={closeOnPress}>
-                <CloseIcon />
-            </TouchableOpacity>
+            <ClearButton onPress={clearOnPress}/>
         </TouchableOpacity>
     );
 };
@@ -124,25 +122,38 @@ interface SearchInputProps {
     readonly setLocationInputValue: (s: string) => void;
 }
 
-const SearchInput = (props: SearchInputProps): JSX.Element => (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <LocationIcon />
-        <I18n>
-            {
-                (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
-                    <TextInput
-                        style={applicationStyles.searchInput}
-                        onChangeText={props.setLocationInputValue}
-                        value={props.locationInputValue}
-                        placeholder={i18n._(t`Enter city, address, or postal code`)}
-                        placeholderTextColor={colors.greyishBrown}
-                        selectionColor={colors.black}
-                        autoFocus={props.autoFocus}
-                    />
-                )
-            }
-        </I18n>
-    </View>
+const SearchInput = (props: SearchInputProps): JSX.Element => {
+    const clearOnPress = (): void => {
+        props.setLocationInputValue('');
+    };
+    const ClearButtonOrEmpty = props.locationInputValue ? <ClearButton onPress={clearOnPress} /> : undefined;
+    return (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <LocationIcon />
+            <I18n>
+                {
+                    (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
+                        <TextInput
+                            style={applicationStyles.searchInput}
+                            onChangeText={props.setLocationInputValue}
+                            value={props.locationInputValue}
+                            placeholder={i18n._(t`Enter city, address, or postal code`)}
+                            placeholderTextColor={colors.greyishBrown}
+                            selectionColor={colors.black}
+                            autoFocus={props.autoFocus}
+                        />
+                    )
+                }
+            </I18n>
+            {ClearButtonOrEmpty}
+        </View>
+    );
+};
+
+const ClearButton = (props: { readonly onPress: () => void }): JSX.Element => (
+    <TouchableOpacity onPress={props.onPress}>
+        <CloseIcon />
+    </TouchableOpacity>
 );
 
 const LocationIcon = (): JSX.Element => (
