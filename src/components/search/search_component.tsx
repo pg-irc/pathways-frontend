@@ -72,7 +72,16 @@ export const SearchComponent = (props: Props): JSX.Element => {
         }
     };
 
-    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchRequest, setSearchPage };
+    const onLoadMore = async (): Promise<void> => {
+        try {
+            const moreResults = await fetchSearchResultsFromQuery(props.searchTerm, searchPage + 1, props.searchLatLong);
+            props.saveSearchResults([...props.searchResults, ...moreResults]);
+        } finally {
+            setSearchPage(searchPage + 1);
+        }
+    };
+
+    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchRequest, onLoadMore, setSearchPage };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <SearchInputComponent

@@ -44,6 +44,7 @@ export interface SearchResultsActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
+    readonly onLoadMore: () => Promise<void>;
     readonly setSearchPage: (searchPage: number) => void;
 }
 
@@ -73,7 +74,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => (
             renderItem={renderSearchHit(props)}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={renderHeader(props)}
-            ListFooterComponent={renderLoadMoreButton(true)}
+            ListFooterComponent={renderLoadMoreButton(true, props.onLoadMore)}
         />
     </View>
 );
@@ -169,12 +170,12 @@ const renderHeader = (props: Props): JSX.Element => (
     />
 );
 
-const renderLoadMoreButton = (hasMore: boolean): JSX.Element => {
+const renderLoadMoreButton = (hasMore: boolean, onLoadMore: () => Promise<void>): JSX.Element => {
     if (hasMore) {
         return (
             <View style={{ backgroundColor: colors.lightGrey }}>
                 <Button
-                    onPress={undefined}
+                    onPress={onLoadMore}
                     style={{
                         backgroundColor: colors.teal,
                         borderRadius: values.roundedBorderRadius,
