@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
@@ -50,35 +50,58 @@ type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterPro
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
     useEffect(refreshServices(props), [props.manualUserLocation]);
+    const [isFetchingLatLng, setIsFetchingLatLng]: readonly [boolean, (b: boolean) => void] = useState<boolean>(false);
 
-    if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
-        return renderErrorComponent(props, refreshServices(props));
-    }
+    // if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
+    //     const errorType = determineErrorType(props.topicServicesOrError);
+    //     const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
+    //     Sentry.captureMessage(sentryMessage);
+    //     return (
+    //         <ServiceListWrapper {...props}>
+    //             <ErrorScreenSwitcherComponent
+    //                 refreshScreen={refreshServices(props)}
+    //                 errorType={errorType}
+    //             />
+    //         </ServiceListWrapper>
+    //     );
+    // }
 
-    if (isLoadingServices(props.topicServicesOrError) || isInitialEmptyTopicServices(props.topicServicesOrError)) {
-        return renderLoadingComponent(props);
-    }
+    // if (isFetchingLatLng || isLoadingServices(props.topicServicesOrError) || isInitialEmptyTopicServices(props.topicServicesOrError)) {
+    //     return renderLoadingComponent(wrapperProps);
+    // }
 
-    if (isValidEmptyTopicServices(props.topicServicesOrError)) {
-        return renderEmptyComponent(props, refreshServices(props));
-    }
+    // if (isValidEmptyTopicServices(props.topicServicesOrError)) {
+    //     return renderEmptyComponent(props, refreshServices(props));
+    // }
 
+    // return (
+    //     <ServiceListWrapper {...props}>
+    //         <FlatList
+    //             style={{ backgroundColor: colors.white }}
+    //             data={getServicesIfValid(props.topicServicesOrError)}
+    //             keyExtractor={(service: HumanServiceData): string => service.id}
+    //             renderItem={renderServiceListItem(props)}
+    //             ItemSeparatorComponent={SearchListSeparator}
+    //             ListHeaderComponent={
+    //                 <MessageComponent
+    //                     isVisible={props.showPartialLocalizationMessage}
+    //                     hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
+    //                 />
+    //             }
+    //         />
+    //     </ServiceListWrapper>
+    // );
     return (
-        <ServiceListWrapper {...props}>
-            <FlatList
-                style={{ backgroundColor: colors.white }}
-                data={getServicesIfValid(props.topicServicesOrError)}
-                keyExtractor={(service: HumanServiceData): string => service.id}
-                renderItem={renderServiceListItem(props)}
-                ItemSeparatorComponent={SearchListSeparator}
-                ListHeaderComponent={
-                    <MessageComponent
-                        isVisible={props.showPartialLocalizationMessage}
-                        hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
-                    />
-                }
+        <View style={{ flex: 1 }}>
+            <ServiceListHeaderComponent
+                title={props.topic.title}
+                manualUserLocation={props.manualUserLocation}
+                setManualUserLocation={props.setManualUserLocation}
+                isFetchingLatLng={isFetchingLatLng}
+                setIsFetchingLatLng={setIsFetchingLatLng}
             />
-        </ServiceListWrapper>
+            {getContent(props, getIsLoading(props, isFetchingLatLng))}
+        </View>
     );
 };
 
@@ -88,52 +111,104 @@ const refreshServices = (props: Props): () => void => (
     }
 );
 
-type ServiceListWrapperProps = Props & { readonly children: JSX.Element };
-
-const ServiceListWrapper = (props: ServiceListWrapperProps): JSX.Element => (
-    <View style={{ flex: 1 }}>
-        {renderHeader(props)}
-        {props.children}
-    </View>
+const getIsLoading = (props: Props, isFetchingLatLng: boolean): boolean => (
+    isFetchingLatLng ||
+    isLoadingServices(props.topicServicesOrError) ||
+    isInitialEmptyTopicServices(props.topicServicesOrError)
 );
 
-const renderErrorComponent = (props: Props, refreshScreen: () => void): JSX.Element => {
-    const errorType = determineErrorType(props.topicServicesOrError);
-    const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
-    Sentry.captureMessage(sentryMessage);
-    return (
-        <ServiceListWrapper {...props}>
+const getContent = (props: Props, isLoading: boolean): JSX.Element => {
+    if (isLoading) {
+        return <LoadingServiceListComponent />;
+    }
+
+    if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
+        return (
             <ErrorScreenSwitcherComponent
-                refreshScreen={refreshScreen}
-                errorType={errorType}
+                refreshScreen={refreshServices(props)}
+                errorType={determineErrorType(props.topicServicesOrError)}
             />
-        </ServiceListWrapper>
+        );
+    }
+
+    if (isValidEmptyTopicServices(props.topicServicesOrError)) {
+        return (
+            <EmptyServiceListComponent
+                title={<Trans>No services to show</Trans>}
+                imageSource={emptyTopicServicesList}
+                refreshScreen={refreshServices(props)}
+            />
+        );
+    }
+
+    return (
+        <FlatList
+            style={{ backgroundColor: colors.white }}
+            data={getServicesIfValid(props.topicServicesOrError)}
+            keyExtractor={(service: HumanServiceData): string => service.id}
+            renderItem={renderServiceListItem(props)}
+            ItemSeparatorComponent={SearchListSeparator}
+            ListHeaderComponent={
+                <MessageComponent
+                    isVisible={props.showPartialLocalizationMessage}
+                    hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
+                />
+            }
+        />
     );
 };
 
-const renderLoadingComponent = (props: Props): JSX.Element => (
-    <ServiceListWrapper {...props}>
-        <LoadingServiceListComponent />
-    </ServiceListWrapper>
-);
+// interface ServiceListWrapperProps {
+//     readonly title: string;
+//     readonly isFetchingLatLng: boolean;
+//     readonly setIsFetchingLatLng: (b: boolean) => void;
+//     readonly manualUserLocation: ServiceListProps['manualUserLocation'];
+//     readonly setManualUserLocation: ServiceListActions['setManualUserLocation'];
+//     readonly children?: JSX.Element;
+// }
 
-const renderEmptyComponent = (props: Props, refreshScreen: () => void): JSX.Element => (
-    <ServiceListWrapper {...props}>
-        <EmptyServiceListComponent
-            title={<Trans>No services to show</Trans>}
-            imageSource={emptyTopicServicesList}
-            refreshScreen={refreshScreen}
-        />
-    </ServiceListWrapper>
-);
+// const ServiceListWrapper = (props: ServiceListWrapperProps): JSX.Element => (
+//     <View style={{ flex: 1 }}>
+//         <ServiceListHeaderComponent
+//             title={props.title}
+//             manualUserLocation={props.manualUserLocation}
+//             setManualUserLocation={props.setManualUserLocation}
+//             isFetchingLatLng={props.isFetchingLatLng}
+//             setIsFetchingLatLng={props.setIsFetchingLatLng}
+//         />
+//         {props.children}
+//     </View>
+// );
 
-const renderHeader = (props: Props): JSX.Element => (
-    <ServiceListHeaderComponent
-        title={props.topic.title}
-        manualUserLocation={props.manualUserLocation}
-        setManualUserLocation={props.setManualUserLocation}
-    />
-);
+// const renderErrorComponent = (props: ServiceListWrapperProps, refreshScreen: () => void): JSX.Element => {
+//     const errorType = determineErrorType(props.topicServicesOrError);
+//     const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
+//     Sentry.captureMessage(sentryMessage);
+//     return (
+//         <ServiceListWrapper {...props}>
+//             <ErrorScreenSwitcherComponent
+//                 refreshScreen={refreshScreen}
+//                 errorType={errorType}
+//             />
+//         </ServiceListWrapper>
+//     );
+// };
+
+// const renderLoadingComponent = (props: ServiceListWrapperProps): JSX.Element => (
+//     <ServiceListWrapper {...props}>
+//         <LoadingServiceListComponent />
+//     </ServiceListWrapper>
+// );
+
+// const renderEmptyComponent = (props: ServiceListWrapperProps, refreshScreen: () => void): JSX.Element => (
+//     <ServiceListWrapper {...props}>
+//         <EmptyServiceListComponent
+//             title={<Trans>No services to show</Trans>}
+//             imageSource={emptyTopicServicesList}
+//             refreshScreen={refreshScreen}
+//         />
+//     </ServiceListWrapper>
+// );
 
 const determineErrorType = (topicServicesOrError: SelectorTopicServices): Errors => {
     if (isSelectorErrorServicesForTopic(topicServicesOrError)) {
@@ -175,6 +250,8 @@ interface ServiceListHeaderComponentProps {
     readonly title: string;
     readonly manualUserLocation: UserLocation;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
+    readonly isFetchingLatLng: boolean;
+    readonly setIsFetchingLatLng: (b: boolean) => void;
 }
 
 export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => (
@@ -192,6 +269,8 @@ export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProp
         <ServiceListLocationSearchComponent
             manualUserLocation={props.manualUserLocation}
             setManualUserLocation={props.setManualUserLocation}
+            isFetchingLatLng={props.isFetchingLatLng}
+            setIsFetchingLatLng={props.setIsFetchingLatLng}
         />
     </View>
 );

@@ -17,11 +17,13 @@ import { isLocationFetchTimeoutError, isNoLocationPermissionError } from '../../
 interface Props {
     readonly manualUserLocation: UserLocation;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
+    readonly isFetchingLatLng: boolean;
+    readonly setIsFetchingLatLng: (b: boolean) => void;
 }
 
 export const ServiceListLocationSearchComponent = (props: Props): JSX.Element => {
     const [locationInputValue, setLocationInputValue]: readonly [string, (s: string) => void] = useState(props.manualUserLocation.label);
-    const [isFetchingLatLng, setIsFetchingLatLng]: readonly [boolean, (b: boolean) => void] = useState<boolean>(false);
+    // const [isFetchingLatLng, setIsFetchingLatLng]: readonly [boolean, (b: boolean) => void] = useState<boolean>(false);
     const [searchIsCollapsed, setSearchIsCollapsed]: readonly [boolean, (b: boolean) => void] = useState<boolean>(!!props.manualUserLocation.label);
 
     if (searchIsCollapsed) {
@@ -38,8 +40,8 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
         <ExpandedSearch
             locationInputValue={locationInputValue}
             setLocationInputValue={setLocationInputValue}
-            isFetchingLatLng={isFetchingLatLng}
-            setIsFetchingLatLng={setIsFetchingLatLng}
+            isFetchingLatLng={props.isFetchingLatLng}
+            setIsFetchingLatLng={props.setIsFetchingLatLng}
             setManualUserLocation={props.setManualUserLocation}
             manualUserLocation={props.manualUserLocation}
             setSearchIsCollapsed={setSearchIsCollapsed}
