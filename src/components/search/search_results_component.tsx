@@ -3,7 +3,7 @@ import React from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
-import { colors } from '../../application/styles';
+import { colors, values, textStyles } from '../../application/styles';
 import { SearchServiceData } from '../../validation/search/types';
 import { useTraceUpdate } from '../../helpers/debug';
 import { SearchListSeparator } from './separators';
@@ -14,7 +14,8 @@ import { SaveServiceAction } from '../../stores/services/actions';
 import { goToRouteWithParameter, Routes, RouterProps } from '../../application/routing';
 import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
-import { View } from 'native-base';
+import { View, Text, Button } from 'native-base';
+import { Trans } from '@lingui/react';
 import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { EmptyComponent as EmptySearchComponent } from './empty_component';
@@ -35,6 +36,8 @@ export interface SearchResultsProps {
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
     readonly isLoading: boolean;
+    readonly searchPage: number;
+    readonly numberOfPages: number;
     readonly onlineStatus: OnlineStatus;
 }
 
@@ -43,6 +46,8 @@ export interface SearchResultsActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
+    readonly onLoadMore: () => Promise<void>;
+    readonly setSearchPage: (searchPage: number) => void;
 }
 
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
@@ -71,6 +76,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => (
             renderItem={renderSearchHit(props)}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={renderHeader(props)}
+            ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfPages, props.onLoadMore)}
         />
     </View>
 );
@@ -165,3 +171,23 @@ const renderHeader = (props: Props): JSX.Element => (
         hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
     />
 );
+
+const renderLoadMoreButton = (searchPage: number, numberOfPages: number, onLoadMore: () => Promise<void>): JSX.Element => {
+    if (searchPage + 1 >= numberOfPages) {
+        return <EmptyComponent />;
+    }
+    return (
+        <View style={{ backgroundColor: colors.lightGrey }}>
+            <Button
+                onPress={onLoadMore}
+                style={{
+                    backgroundColor: colors.teal,
+                    borderRadius: values.roundedBorderRadius,
+                    justifyContent: 'center',
+                    marginVertical: 16,
+                    marginHorizontal: 24,
+                }} >
+                <Text style={textStyles.button} uppercase={false}><Trans>Show more services</Trans></Text>
+            </Button>
+        </View>);
+};
