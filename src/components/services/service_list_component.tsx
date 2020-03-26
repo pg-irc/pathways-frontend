@@ -186,7 +186,7 @@ export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProp
             paddingBottom: 4,
         }}
     >
-        <Text style={[textStyles.headlineH2StyleWhiteLeft, { paddingHorizontal: 10}]}>
+        <Text style={[textStyles.headlineH2StyleWhiteLeft, { paddingHorizontal: 10, marginBottom: 10 }]}>
             {props.title}
         </Text>
         <ServiceListLocationSearchComponent
