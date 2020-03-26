@@ -41,7 +41,7 @@ const fetchLatLongFromAddress = async (location: string): Promise<LatLong> => {
     }
 };
 
-const buildGeoCoderUrl = (location: string): string => (
+export const buildGeoCoderUrl = (location: string): string => (
     BuildUrl('https://geocoder.ca', {
         queryParams: {
             locate: location,
@@ -50,7 +50,7 @@ const buildGeoCoderUrl = (location: string): string => (
     })
 );
 
-const getTextIfValidOrThrow = (response: Response): Promise<string> => {
+export const getTextIfValidOrThrow = (response: Response): Promise<string> => {
     if (!response.ok) {
         throw new Error(`Invalid response ${JSON
             .stringify(response)}`);

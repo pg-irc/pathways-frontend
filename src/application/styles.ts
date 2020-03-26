@@ -39,6 +39,7 @@ export const values = {
     roundedBorderRadius: 25,
     lessRoundedBorderRadius: 10,
     backgroundTextPadding: 5,
+    disabledOpacity: .5,
 };
 
 const fontStyle = 'normal';
@@ -327,10 +328,10 @@ export const applicationStyles = StyleSheet.create({
     },
     searchButton: {
         borderRadius: values.roundedBorderRadius,
-        alignSelf: 'flex-start',
         flexDirection: 'row',
-        paddingHorizontal: 15,
-        paddingVertical: 4,
+        paddingHorizontal: 20,
+        paddingVertical: 9,
+        alignItems: 'center',
     },
     whiteTealButton: {
         backgroundColor: colors.white,
@@ -344,12 +345,24 @@ export const applicationStyles = StyleSheet.create({
         flex: 1,
         height: 36,
     },
-    searchContainer: {
+    searchContainerExpanded: {
         backgroundColor: colors.white,
         borderRadius: values.lessRoundedBorderRadius,
         margin: 4,
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 1,
+    },
+    searchContainerCollapsed: {
+        backgroundColor: colors.white,
+        borderRadius: values.lessRoundedBorderRadius,
+        margin: 4,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        overflow: 'hidden',
+        maxWidth: '100%',
     },
     boxShadowBelow: {
         shadowColor: colors.black,

@@ -191,7 +191,6 @@ export class ServicesForTopicBuilder {
     loading: boolean = false;
     message: string = aString();
     serviceIds: ReadonlyArray<Id> = [];
-    expiresAt: number = Date.now();
 
     withLoading(loading: boolean): ServicesForTopicBuilder {
         this.loading = loading;
@@ -200,11 +199,6 @@ export class ServicesForTopicBuilder {
 
     withServiceIds(serviceIds: ReadonlyArray<Id>): ServicesForTopicBuilder {
         this.serviceIds = serviceIds;
-        return this;
-    }
-
-    withExpiresAt(expiresAt: number): ServicesForTopicBuilder {
-        this.expiresAt = expiresAt;
         return this;
     }
 
@@ -217,7 +211,6 @@ export class ServicesForTopicBuilder {
         return {
             type: constants.VALID_SERVICES_FOR_TOPIC,
             serviceIds: this.serviceIds,
-            expiresAt: this.expiresAt,
         };
     }
 }

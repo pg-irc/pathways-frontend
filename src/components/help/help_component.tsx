@@ -13,7 +13,7 @@ import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_co
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import * as R from 'ramda';
 import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
-import { LatLong } from '../../validation/latlong/types';
+import { UserLocation } from '../../validation/latlong/types';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -60,12 +60,12 @@ const fixture: ReadonlyArray<HelpContact> = [
 
 export interface HelpComponentProps {
     readonly history: History;
-    readonly manualUserLocation?: LatLong;
+    readonly manualUserLocation: UserLocation;
 }
 
 export interface HelpComponentActions {
     readonly clearAllUserState: () => ClearAllUserDataAction;
-    readonly setManualUserLocation: (userLocation: LatLong) => SetManualUserLocationAction;
+    readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly clearManualUserLocation: () => ClearManualUserLocationAction;
 }
 

@@ -11,7 +11,7 @@ import {
     setManualUserLocation,
 } from '../../stores/manual_user_location';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
-import { LatLong } from '../../validation/latlong/types';
+import { UserLocation } from '../../validation/latlong/types';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): HelpComponentProps => ({
     history: ownProps.history,
@@ -22,7 +22,7 @@ type Actions = ClearAllUserDataAction | SetManualUserLocationAction | ClearManua
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): HelpComponentActions => ({
     clearAllUserState: (): ClearAllUserDataAction => dispatch(clearAllUserData()),
-    setManualUserLocation: (userLocation: LatLong): SetManualUserLocationAction => dispatch(setManualUserLocation(userLocation)),
+    setManualUserLocation: (userLocation: UserLocation): SetManualUserLocationAction => dispatch(setManualUserLocation(userLocation)),
     clearManualUserLocation: (): ClearManualUserLocationAction => dispatch(clearManualUserLocation()),
 });
 
