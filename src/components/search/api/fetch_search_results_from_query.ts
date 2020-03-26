@@ -19,7 +19,7 @@ export interface AlgoliaResponse {
 }
 
 export const fetchSearchResultsFromQuery = async (
-    searchTerm: string, searchPage: number, latLong: LatLong, setNbPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
+    searchTerm: string, searchPage: number, latLong: LatLong, setNumberOfPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
     if (!searchTerm) {
         return [];
     }
@@ -41,7 +41,7 @@ export const fetchSearchResultsFromQuery = async (
         });
 
         const responseJSON: AlgoliaResponse = await response.json();
-        setNbPages(responseJSON.nbPages);
+        setNumberOfPages(responseJSON.nbPages);
         return validateServiceSearchResponse(responseJSON.hits);
     } catch (Error) {
         return [];

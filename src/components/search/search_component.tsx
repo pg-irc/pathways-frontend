@@ -50,7 +50,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
     const [searchPage, setSearchPage]: readonly [number, (n: number) => void] = useState(0);
-    const [nbPages, setNbPages]: readonly [number, (n: number) => void] = useState(1);
+    const [numberOfPages, setNumberOfPages]: readonly [number, (n: number) => void] = useState(1);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
@@ -66,7 +66,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
                 geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
                 props.saveSearchLatLong(geocoderLatLong);
             }
-            const searchResults = await fetchSearchResultsFromQuery(searchTerm, searchPage, geocoderLatLong, setNbPages);
+            const searchResults = await fetchSearchResultsFromQuery(searchTerm, searchPage, geocoderLatLong, setNumberOfPages);
             props.saveSearchResults(searchResults);
         } finally {
             setIsLoading(false);
@@ -75,14 +75,14 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
     const onLoadMore = async (): Promise<void> => {
         try {
-            const moreResults = await fetchSearchResultsFromQuery(props.searchTerm, searchPage + 1, props.searchLatLong, setNbPages);
+            const moreResults = await fetchSearchResultsFromQuery(props.searchTerm, searchPage + 1, props.searchLatLong, setNumberOfPages);
             props.saveSearchResults([...props.searchResults, ...moreResults]);
         } finally {
             setSearchPage(searchPage + 1);
         }
     };
 
-    const searchResultsProps = { ...props, isLoading, onlineStatus, searchPage, nbPages, onSearchRequest, onLoadMore, setSearchPage };
+    const searchResultsProps = { ...props, isLoading, onlineStatus, searchPage, numberOfPages, onSearchRequest, onLoadMore, setSearchPage };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <SearchInputComponent

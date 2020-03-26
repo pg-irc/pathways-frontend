@@ -37,7 +37,7 @@ export interface SearchResultsProps {
     readonly searchLatLong: LatLong;
     readonly isLoading: boolean;
     readonly searchPage: number;
-    readonly nbPages: number;
+    readonly numberOfPages: number;
     readonly onlineStatus: OnlineStatus;
 }
 
@@ -76,7 +76,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => (
             renderItem={renderSearchHit(props)}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={renderHeader(props)}
-            ListFooterComponent={renderLoadMoreButton(props.searchPage, props.nbPages, props.onLoadMore)}
+            ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfPages, props.onLoadMore)}
         />
     </View>
 );
@@ -172,22 +172,22 @@ const renderHeader = (props: Props): JSX.Element => (
     />
 );
 
-const renderLoadMoreButton = (searchPage: number, nbPages: number, onLoadMore: () => Promise<void>): JSX.Element => {
-    if (searchPage + 1 < nbPages) {
-        return (
-            <View style={{ backgroundColor: colors.lightGrey }}>
-                <Button
-                    onPress={onLoadMore}
-                    style={{
-                        backgroundColor: colors.teal,
-                        borderRadius: values.roundedBorderRadius,
-                        justifyContent: 'center',
-                        marginVertical: 16,
-                        marginHorizontal: 24,
-                    }} >
-                    <Text style={textStyles.button} uppercase={false}><Trans>Show more services</Trans></Text>
-                </Button>
-            </View>);
+const renderLoadMoreButton = (searchPage: number, numberOfPages: number, onLoadMore: () => Promise<void>): JSX.Element => {
+    if (searchPage + 1 >= numberOfPages) {
+        return <EmptyComponent />;
     }
-    return <EmptyComponent />;
+    return (
+        <View style={{ backgroundColor: colors.lightGrey }}>
+            <Button
+                onPress={onLoadMore}
+                style={{
+                    backgroundColor: colors.teal,
+                    borderRadius: values.roundedBorderRadius,
+                    justifyContent: 'center',
+                    marginVertical: 16,
+                    marginHorizontal: 24,
+                }} >
+                <Text style={textStyles.button} uppercase={false}><Trans>Show more services</Trans></Text>
+            </Button>
+        </View>);
 };
