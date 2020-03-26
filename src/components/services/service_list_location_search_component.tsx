@@ -13,6 +13,7 @@ import { applicationStyles, colors, textStyles, values } from '../../application
 import { MY_LOCATION } from '../../application/constants';
 import { getDeviceLocation, DeviceLocation } from '../../async/location';
 import { isLocationFetchTimeoutError, isNoLocationPermissionError } from '../../validation/errors/is_error';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface Props {
     readonly manualUserLocation: UserLocation;
@@ -88,6 +89,14 @@ interface ExpandedSearchProps {
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
+    const hasMyLocation = props.locationInputValue === MY_LOCATION;
+    const LocateButtonOrEmpty = !hasMyLocation ?
+        <LocateButton
+            onPress={getLocateOnPress(props.setLocationInputValue)}
+            isFetchingLatLng={props.isFetchingLatLng}
+        />
+        :
+        <EmptyComponent />;
     return (
         <View>
             <View style={[applicationStyles.searchContainerExpanded, { marginBottom: 4 }]}>
@@ -97,11 +106,16 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                     autoFocus={!!props.manualUserLocation.label}
                 />
             </View>
-            <View style={[applicationStyles.searchContainerExpanded, { backgroundColor: colors.teal }]}>
-                <LocateButton
-                    onPress={getLocateOnPress(props.setLocationInputValue)}
-                    isFetchingLatLng={props.isFetchingLatLng}
-                />
+            <View
+                style={[
+                    applicationStyles.searchContainerExpanded,
+                    {
+                        backgroundColor: colors.teal,
+                        justifyContent: hasMyLocation ? 'flex-end' : 'space-between',
+                    },
+                ]}
+            >
+                {LocateButtonOrEmpty}
                 <SearchButton
                     onPress={getSearchOnPress(
                         props.setIsFetchingLatLng,
@@ -126,7 +140,10 @@ const SearchInput = (props: SearchInputProps): JSX.Element => {
     const clearOnPress = (): void => {
         props.setLocationInputValue('');
     };
-    const ClearButtonOrEmpty = props.locationInputValue ? <ClearButton onPress={clearOnPress} /> : undefined;
+    const ClearButtonOrEmpty = props.locationInputValue ?
+        <ClearButton onPress={clearOnPress} />
+        :
+        <EmptyComponent />;
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <LocationIcon />
