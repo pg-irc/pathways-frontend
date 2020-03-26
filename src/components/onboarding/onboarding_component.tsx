@@ -1,23 +1,22 @@
 // tslint:disable:no-expression-statement
 import { Trans } from '@lingui/react';
 import { t } from '@lingui/macro';
+import { History } from 'history';
 import * as R from 'ramda';
-import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
 import {
-    Dimensions,
     Image,
     ImageSourcePropType,
-    View,
     SafeAreaView,
     TouchableOpacity,
     Text,
+    View,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-import { History } from 'history';
 
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
 import { mapWithIndex } from '../../application/map_with_index';
-import { textStyles, colors } from '../../application/styles';
+import { textStyles } from '../../application/styles';
 import {
     communityOnBoardingImage,
     answerQuestionsOnBoardingImage,
@@ -28,12 +27,6 @@ import { HideOnboardingAction } from '../../stores/user_profile';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import styles from './styles';
-
-const onboardingImageWidth = Dimensions.get('screen').width / 1.55;
-
-const onboardingImageHeight = Dimensions.get('screen').height / 2.25;
-
-const startButtonWidth = Dimensions.get('screen').width / 2;
 
 export interface OnboardingActions {
     readonly hideOnboarding: () => HideOnboardingAction;
@@ -79,12 +72,8 @@ type Props = OnboardingComponentProps & OnboardingActions;
 const OnboardingImage = (props: { readonly source: ImageSourcePropType }): JSX.Element => (
     <Image
         source={props.source}
-        resizeMode={'contain'}
-        style={{
-            height: onboardingImageHeight,
-            width: onboardingImageWidth,
-            marginBottom: 30,
-        }}
+        resizeMode='contain'
+        style={styles.onboardingImage}
     />
 );
 
@@ -95,14 +84,7 @@ const OnboardingText = (props: { readonly children: JSX.Element }): JSX.Element 
 );
 
 const OnboardingSlide = (props: { readonly children: ReadonlyArray<JSX.Element> }): JSX.Element => (
-    <View
-        style={{
-            flex: 3,
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingHorizontal: 10,
-        }}
-    >
+    <View style={styles.onboardingSlide}>
         {props.children}
     </View>
 );
@@ -118,28 +100,21 @@ const SkipButton = ({ onPress }: { readonly onPress: () => void }): JSX.Element 
 };
 
 const NavigationDots = (props: { readonly currentIndex: number, readonly count: number }): JSX.Element => {
-    const renderDot = (_: undefined, loopIndex: number): JSX.Element => {
-        return <NavigationDot key={loopIndex} currentIndex={props.currentIndex} loopIndex={loopIndex} />;
-    };
+    const navigationDots = R.range(0, props.count).map(
+        (_: undefined, loopIndex: number): JSX.Element => {
+            const dotStyle = props.currentIndex === loopIndex
+                ? [styles.dotStyle, styles.activeDot]
+                : styles.dotStyle;
+
+            return <View key={loopIndex} style={dotStyle} />;
+        },
+    );
+
     return (
-        <View style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingTop: 50,
-        }}>
-            {R.range(0, props.count).map(renderDot)}
+        <View style={styles.dotContainer}>
+            {navigationDots}
         </View>
     );
-};
-
-const NavigationDot = (props: { readonly currentIndex: number, readonly loopIndex: number}): JSX.Element => {
-    const dotSize = 8;
-    const dotStyle = { width: dotSize, height: dotSize, borderRadius: dotSize / 2, marginHorizontal: 5 };
-    if (props.currentIndex === props.loopIndex) {
-        return <View style={{ ...dotStyle, backgroundColor: colors.topaz }} />;
-    }
-    return <View style={{ ...dotStyle, backgroundColor: colors.lightGrey }} />;
 };
 
 const useIndexHandler = (): readonly [number, (index: number) => void] => {
@@ -154,51 +129,72 @@ const useIndexHandler = (): readonly [number, (index: number) => void] => {
     return [index, onIndexChanged];
 };
 
-export const OnboardingComponent = (props: Props): JSX.Element => {
+export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Element => {
+    const swiperRef = useRef<Swiper>();
+
     const [index, onIndexChanged]: readonly [number, (index: number) => void]
         = useIndexHandler();
 
-    const onButtonPress = (): void => {
-        props.hideOnboarding();
-        goToRouteWithoutParameter(Routes.RecommendedTopics, props.history)();
-    };
+    const onSkipPress = useCallback<() => void>(
+        (): void => {
+            hideOnboarding();
+            goToRouteWithoutParameter(Routes.RecommendedTopics, history)();
+        },
+        [hideOnboarding, history],
+    );
+    const onActionPress = useCallback<() => void>(
+        (): void => {
+            if (index === ONBOARDING_DATA.length - 1) {
+                onSkipPress();
+            } else {
+                swiperRef.current.scrollBy(1);
+            }
+        },
+        [index, onSkipPress],
+    );
+
+    const slides = mapWithIndex(
+        (item: OnboardingData, key: number): JSX.Element => {
+            return (
+                <OnboardingSlide key={key}>
+                    <OnboardingImage source={item.image} />
+                    <OnboardingText>
+                        <Trans id={item.title} />
+                    </OnboardingText>
+                </OnboardingSlide>
+            );
+        },
+        ONBOARDING_DATA,
+    );
 
     return (
-        <SafeAreaView style={styles.onboardingContainer}>
-            <SkipButton onPress={onButtonPress}/>
-                <Swiper
-                    activeDot={<View style={{ display: 'none' }} />}
-                    dot={<View style={{ display: 'none' }} />}
-                    index={0}
-                    horizontal={true}
-                    loadMinimal={true}
-                    loop={false}
-                    onIndexChanged={onIndexChanged}
-                    showsButtons={false}
-                >
-                    {
-                        mapWithIndex((item: OnboardingData, key: number): JSX.Element => {
-                            return (
-                                <OnboardingSlide key={key}>
-                                    <OnboardingImage source={item.image} />
-                                    <OnboardingText>
-                                        <Trans id={item.title} />
-                                    </OnboardingText>
-                                </OnboardingSlide>
-                            );
-                        }, ONBOARDING_DATA)
-                    }
-                </Swiper>
-                <View style={styles.skipButtonSection}>
-                    <MultiLineButtonComponent
-                        onPress={() => {}}
-                        additionalStyles={{ flex: 0, width: startButtonWidth }}>
+        <SafeAreaView style={styles.container}>
+            <SkipButton onPress={onSkipPress}/>
+            <View style={styles.onboardingContainer}>
+                <View style={styles.onboardingSlideContainer}>
+                    <Swiper
+                        // We don't want to display Swiper's built in dot display
+                        activeDot={<View style={{ display: 'none' }} />}
+                        dot={<View style={{ display: 'none' }} />}
+                        index={0}
+                        horizontal={true}
+                        loop={false}
+                        onIndexChanged={onIndexChanged}
+                        ref={swiperRef}
+                        showsButtons={false}
+                    >
+                    { slides }
+                    </Swiper>
+                </View>
+                <View style={styles.nextButtonSection}>
+                    <MultiLineButtonComponent onPress={onActionPress} additionalStyles={styles.nextButton}>
                         <Text style={textStyles.button}>
                             <Trans id={index === ONBOARDING_DATA.length - 1 ? START_LABEL : NEXT_LABEL } />
                         </Text>
                     </MultiLineButtonComponent>
                     <NavigationDots currentIndex={index} count={ONBOARDING_DATA.length}/>
                 </View>
+            </View>
         </SafeAreaView>
     );
 };
