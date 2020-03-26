@@ -36,7 +36,6 @@ export interface HumanServiceData {
 export interface ValidServicesForTopic {
     readonly type: 'SERVICES_FOR_TOPIC:VALID';
     readonly serviceIds: ReadonlyArray<Id>;
-    readonly expiresAt: number;
 }
 
 export interface LoadingServicesForTopic {

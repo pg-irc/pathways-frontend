@@ -84,20 +84,8 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 
 const refreshServices = (props: Props): () => void => (
     (): void => {
-        if (servicesFetchRequired(props.topicServicesOrError) || hasManualUserLocation(props.manualUserLocation)) {
-            props.dispatchServicesRequest();
-        }
+        props.dispatchServicesRequest();
     }
-);
-
-const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boolean => (
-    topicServicesOrError.type === constants.ERROR_SERVICES_FOR_TOPIC ||
-    topicServicesOrError.type === constants.VALID_SERVICES_FOR_TOPIC && topicServicesOrError.isExpired ||
-    topicServicesOrError.type === constants.INITIAL_EMPTY_SERVICES_FOR_TOPIC
-);
-
-const hasManualUserLocation = (manualUserLocation: UserLocation): boolean => (
-    !!(manualUserLocation.label && manualUserLocation.latLong)
 );
 
 type ServiceListWrapperProps = Props & { readonly children: JSX.Element };
