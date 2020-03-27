@@ -96,6 +96,7 @@ const onboardingStyles = StyleSheet.create<OnboardingStyles>({
         fontSize: 18,
         textAlign: 'center',
         paddingHorizontal: 32,
+        paddingTop: 16,
         ...getNormalFontStylesForOS(),
     },
 

@@ -3,8 +3,9 @@ import { Trans } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { History } from 'history';
 import * as R from 'ramda';
-import React, { Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
+import React, { Dispatch, MutableRefObject, SetStateAction, useCallback, useRef, useState } from 'react';
 import {
+    I18nManager,
     Image,
     ImageSourcePropType,
     SafeAreaView,
@@ -28,7 +29,7 @@ import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_co
 
 import styles from './styles';
 
-export interface OnboardingActions {
+export interface OnboardingComponentActions {
     readonly hideOnboarding: () => HideOnboardingAction;
 }
 interface OnboardingComponentProps {
@@ -41,6 +42,14 @@ interface OnboardingData {
     readonly title: string;
 }
 
+interface IndexHandlerInterface {
+    readonly index: number;
+    readonly swiperIndex: number;
+    readonly isLastSwiperSlide: () => boolean;
+    readonly scrollNext: () => void;
+    readonly onSwiperIndexChanged: (i: number) => void;
+}
+
 const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
     {
       id: 1,
@@ -49,8 +58,8 @@ const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
     },
     {
       id: 2,
-      image: answerQuestionsOnBoardingImage,
-      title: t`Answer a few optional questions to get tailored recommendations for your needs.`,
+      image: bookmarkOnBoardingImage,
+      title: t`Bookmark the topics that you find helpful for future use.`,
     },
     {
       id: 3,
@@ -59,15 +68,12 @@ const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
     },
     {
       id: 4,
-      image: bookmarkOnBoardingImage,
-      title: t`Bookmark the topics that you find helpful for future use.`,
+      image: answerQuestionsOnBoardingImage,
+      title: t`Answer a few optional questions to get tailored recommendations for your needs.`,
     },
 ];
 
-const START_LABEL = t`Start`;
-const NEXT_LABEL = t`Next`;
-
-type Props = OnboardingComponentProps & OnboardingActions;
+type Props = OnboardingComponentProps & OnboardingComponentActions;
 
 const OnboardingImage = (props: { readonly source: ImageSourcePropType }): JSX.Element => (
     <Image
@@ -89,6 +95,12 @@ const OnboardingSlide = (props: { readonly children: ReadonlyArray<JSX.Element> 
     </View>
 );
 
+const WelcomeText = (props: { readonly children: JSX.Element }): JSX.Element => (
+    <Text style={textStyles.headlineH2StyleBlackCenter}>
+        {props.children}
+    </Text>
+);
+
 const SkipButton = ({ onPress }: { readonly onPress: () => void }): JSX.Element => {
     return (
         <TouchableOpacity style={styles.skipButton} onPress={onPress}>
@@ -100,14 +112,16 @@ const SkipButton = ({ onPress }: { readonly onPress: () => void }): JSX.Element 
 };
 
 const NavigationDots = (props: { readonly currentIndex: number, readonly count: number }): JSX.Element => {
-    const navigationDots = R.range(0, props.count).map(
-        (_: undefined, loopIndex: number): JSX.Element => {
+    const navigationDots = R.map((loopIndex: number): JSX.Element => {
             const dotStyle = props.currentIndex === loopIndex
                 ? [styles.dotStyle, styles.activeDot]
                 : styles.dotStyle;
 
+            console.log();
+
             return <View key={loopIndex} style={dotStyle} />;
         },
+        R.range(0, props.count),
     );
 
     return (
@@ -117,23 +131,66 @@ const NavigationDots = (props: { readonly currentIndex: number, readonly count: 
     );
 };
 
-const useIndexHandler = (): readonly [number, (index: number) => void] => {
+enum STEP {
+    FORWARD = 1,
+    BACKWARD = -1,
+}
+
+/**
+ * This hook aims to abstract out the confusing handling of indexes.
+ * Though the natural indexing works for the UI elements. A separate indexer is needed for
+ * react-native-swiper to handle the RTL scenario
+ */
+const useIndexHandler = (swiperRef: MutableRefObject<Swiper>): IndexHandlerInterface  => {
+    const initialSwiperIndex = I18nManager.isRTL ? ONBOARDING_DATA.length - 1 : 0;
+
+    const lastSwiperIndex = I18nManager.isRTL ? 0 : ONBOARDING_DATA.length - 1;
+
     const [index, setIndex]: readonly [number, Dispatch<SetStateAction<number>>]
         = useState<number>(0);
 
-    const onIndexChanged = useCallback<(index: number) => void>(
-        (newIndex: number): void => setIndex(newIndex),
-        [setIndex],
+    const [swiperIndex, setSwiperIndex]: readonly [number, Dispatch<SetStateAction<number>>]
+        = useState<number>(initialSwiperIndex);
+
+    const isLastSwiperSlide = useCallback<() => boolean>(
+        (): boolean => swiperIndex === lastSwiperIndex,
+        [swiperIndex],
     );
 
-    return [index, onIndexChanged];
+    const onSwiperIndexChanged = useCallback<(i: number) => void>(
+        (newIndex: number): void => {
+            setSwiperIndex(newIndex);
+            setIndex(I18nManager.isRTL ? ONBOARDING_DATA.length - 1 - newIndex : newIndex);
+        },
+        [setIndex, setSwiperIndex],
+    );
+
+    const scrollNext = useCallback<() => void>(
+        (): void => {
+            swiperRef.current.scrollBy(I18nManager.isRTL ? STEP.BACKWARD : STEP.FORWARD);
+        },
+        [],
+    );
+
+    return {
+        index,
+        swiperIndex,
+        isLastSwiperSlide,
+        scrollNext,
+        onSwiperIndexChanged,
+    };
 };
 
 export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Element => {
     const swiperRef = useRef<Swiper>();
 
-    const [index, onIndexChanged]: readonly [number, (index: number) => void]
-        = useIndexHandler();
+    const {
+        index,
+        swiperIndex,
+        onSwiperIndexChanged,
+        isLastSwiperSlide,
+        scrollNext,
+    }: IndexHandlerInterface = useIndexHandler(swiperRef);
 
     const onSkipPress = useCallback<() => void>(
         (): void => {
@@ -142,29 +199,16 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
         },
         [hideOnboarding, history],
     );
+
     const onActionPress = useCallback<() => void>(
         (): void => {
-            if (index === ONBOARDING_DATA.length - 1) {
+            if (isLastSwiperSlide()) {
                 onSkipPress();
             } else {
-                swiperRef.current.scrollBy(1);
+                scrollNext();
             }
         },
-        [index, onSkipPress],
-    );
-
-    const slides = mapWithIndex(
-        (item: OnboardingData, key: number): JSX.Element => {
-            return (
-                <OnboardingSlide key={key}>
-                    <OnboardingImage source={item.image} />
-                    <OnboardingText>
-                        <Trans id={item.title} />
-                    </OnboardingText>
-                </OnboardingSlide>
-            );
-        },
-        ONBOARDING_DATA,
+        [scrollNext, onSkipPress],
     );
 
     return (
@@ -176,20 +220,40 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
                         // We don't want to display Swiper's built in dot display
                         activeDot={<View style={{ display: 'none' }} />}
                         dot={<View style={{ display: 'none' }} />}
-                        index={0}
+                        index={swiperIndex}
                         horizontal={true}
                         loop={false}
-                        onIndexChanged={onIndexChanged}
+                        onIndexChanged={onSwiperIndexChanged}
                         ref={swiperRef}
                         showsButtons={false}
                     >
-                    { slides }
+                        {
+                            mapWithIndex(
+                                (item: OnboardingData, slideIndex: number): JSX.Element => {
+                                    return (
+                                        <OnboardingSlide key={slideIndex}>
+                                            <OnboardingImage source={item.image} />
+                                            {
+                                                slideIndex === 0 &&
+                                                <WelcomeText>
+                                                    <Trans>Welcome to Arrival Advisor</Trans>
+                                                </WelcomeText>
+                                            }
+                                            <OnboardingText>
+                                                <Trans id={item.title} />
+                                            </OnboardingText>
+                                        </OnboardingSlide>
+                                    );
+                                },
+                                ONBOARDING_DATA,
+                            )
+                        }
                     </Swiper>
                 </View>
                 <View style={styles.nextButtonSection}>
                     <MultiLineButtonComponent onPress={onActionPress} additionalStyles={styles.nextButton}>
                         <Text style={textStyles.button}>
-                            <Trans id={index === ONBOARDING_DATA.length - 1 ? START_LABEL : NEXT_LABEL } />
+                            <Trans id={isLastSwiperSlide() ? t`Start` : t`Next` } />
                         </Text>
                     </MultiLineButtonComponent>
                     <NavigationDots currentIndex={index} count={ONBOARDING_DATA.length}/>
