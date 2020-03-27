@@ -18,10 +18,8 @@ import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
-import { HelpButtonComponent } from '../header_button/help_button_component';
-import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { renderHeader } from '../main/render_header';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -38,7 +36,7 @@ type Props = RecommendedTopicsProps & RecommendedTopicsActions & TaskListActions
 
 export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View style={{ flex: 1 }}>
-        <Header {...props} />
+        <HelpAndMenuButtonHeaderComponent {...props} />
         <TaskListComponent
         {...props}
         tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
@@ -48,18 +46,6 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
     />
     </View>
 );
-
-const Header = (props: Props): JSX.Element => {
-    const textColor = colors.teal;
-    const backgroundColor = colors.white;
-    const leftButton = <HelpButtonComponent history={props.history} />;
-    const rightButton =
-        <MenuButtonComponent
-            onPress={props.openHeaderMenu}
-            textColor={textColor}
-        />;
-    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
-};
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View>

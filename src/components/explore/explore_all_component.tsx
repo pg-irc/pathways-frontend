@@ -7,10 +7,8 @@ import { Trans } from '@lingui/react';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
 import { mapWithIndex } from '../../application/map_with_index';
-import { BackButtonComponent } from '../header_button/back_button_component';
-import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { renderHeader } from '../main/render_header';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
@@ -24,7 +22,7 @@ type Props = ExploreAllProps & ExploreAllActions & RouterProps;
 
 export const ExploreAllComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1 }}>
-        <Header {...props} />
+        <HelpAndMenuButtonHeaderComponent {...props} />
         <Content padder style={{ backgroundColor: colors.white }}>
             <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding } ]}>
                 <Trans>Learn all about B.C.</Trans>
@@ -41,18 +39,6 @@ export const ExploreAllComponent = (props: Props): JSX.Element => (
         </Content>
     </View>
 );
-
-const Header = (props: Props): JSX.Element => {
-    const textColor = colors.black;
-    const backgroundColor = colors.white;
-    const leftButton = <BackButtonComponent history={props.history} textColor={textColor} />;
-    const rightButton =
-        <MenuButtonComponent
-            onPress={props.openHeaderMenu}
-            textColor={textColor}
-        />;
-    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
-};
 
 const buildButton = (buttonContent: JSX.Element, buttonOnPress: () => void, index: number): JSX.Element => (
     <TouchableOpacity onPress={buttonOnPress} style={[applicationStyles.boxShadowBelow, styles.button]} key={index}>
