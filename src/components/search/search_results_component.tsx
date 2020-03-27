@@ -37,7 +37,7 @@ export interface SearchResultsProps {
     readonly searchLatLong: LatLong;
     readonly isLoading: boolean;
     readonly searchPage: number;
-    readonly numberOfPages: number;
+    readonly numberOfSearchPages: number;
     readonly onlineStatus: OnlineStatus;
 }
 
@@ -75,7 +75,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => (
             renderItem={renderSearchHit(props)}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={renderHeader(props)}
-            ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfPages, props.onLoadMore)}
+            ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
         />
     </View>
 );

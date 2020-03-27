@@ -8,6 +8,7 @@ export type SaveSearchTermAction = Readonly<ReturnType<typeof saveSearchTerm>>;
 export type SaveSearchLocationAction = Readonly<ReturnType<typeof saveSearchLocation>>;
 export type SaveSearchLatLongAction = Readonly<ReturnType<typeof saveSearchLatLong>>;
 export type SaveSearchPageAction = Readonly<ReturnType<typeof saveSearchPage>>;
+export type SaveNumberOfSearchPagesAction = Readonly<ReturnType<typeof saveNumberOfSearchPages>>;
 export type SaveSearchResultsAction = Readonly<ReturnType<typeof saveSearchResults>>;
 export type SetCollapseSearchInputAction = Readonly<ReturnType<typeof setCollapseSearchInput>>;
 
@@ -31,6 +32,11 @@ export const saveSearchPage = (searchPage: number) => (
     helpers.makeAction(constants.SAVE_SEARCH_PAGE, { searchPage })
 );
 
+// tslint:disable-next-line: typedef
+export const saveNumberOfSearchPages = (numberOfSearchPages: number) => (
+    helpers.makeAction(constants.SAVE_NUMBER_OF_SEARCH_PAGES, { numberOfSearchPages })
+);
+
 // tslint:disable-next-line:typedef
 export const saveSearchResults = (searchResults: ReadonlyArray<SearchServiceData>) => (
     helpers.makeAction(constants.SAVE_SEARCH_RESULTS, { searchResults })
@@ -46,6 +52,7 @@ export type SearchAction =
     SaveSearchLocationAction |
     SaveSearchLatLongAction |
     SaveSearchPageAction |
+    SaveNumberOfSearchPagesAction |
     SaveSearchResultsAction |
     SetCollapseSearchInputAction |
     ClearAllUserDataAction;
@@ -55,6 +62,7 @@ export interface SearchStore {
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
     readonly searchPage: number;
+    readonly numberOfSearchPages: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
 }
@@ -64,6 +72,7 @@ export const buildDefaultStore = (): SearchStore => ({
     searchLocation: '',
     searchLatLong: undefined,
     searchPage: 0,
+    numberOfSearchPages: 0,
     searchResults: [],
     collapseSearchInput: false,
 });
@@ -92,6 +101,11 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
             return ({
                 ...store,
                 searchPage: action.payload.searchPage,
+            });
+        case constants.SAVE_NUMBER_OF_SEARCH_PAGES:
+            return ({
+                ...store,
+                numberOfSearchPages: action.payload.numberOfSearchPages,
             });
         case constants.SAVE_SEARCH_RESULTS:
             return ({
