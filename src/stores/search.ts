@@ -7,6 +7,7 @@ import { ClearAllUserDataAction } from './questionnaire/actions';
 export type SaveSearchTermAction = Readonly<ReturnType<typeof saveSearchTerm>>;
 export type SaveSearchLocationAction = Readonly<ReturnType<typeof saveSearchLocation>>;
 export type SaveSearchLatLongAction = Readonly<ReturnType<typeof saveSearchLatLong>>;
+export type SaveSearchPageAction = Readonly<ReturnType<typeof saveSearchPage>>;
 export type SaveSearchResultsAction = Readonly<ReturnType<typeof saveSearchResults>>;
 export type SetCollapseSearchInputAction = Readonly<ReturnType<typeof setCollapseSearchInput>>;
 
@@ -25,6 +26,11 @@ export const saveSearchLatLong = (searchLatLong: LatLong) => (
     helpers.makeAction(constants.SAVE_SEARCH_LAT_LONG, { searchLatLong })
 );
 
+// tslint:disable-next-line: typedef
+export const saveSearchPage = (searchPage: number) => (
+    helpers.makeAction(constants.SAVE_SEARCH_PAGE, { searchPage })
+);
+
 // tslint:disable-next-line:typedef
 export const saveSearchResults = (searchResults: ReadonlyArray<SearchServiceData>) => (
     helpers.makeAction(constants.SAVE_SEARCH_RESULTS, { searchResults })
@@ -39,6 +45,7 @@ export type SearchAction =
     SaveSearchTermAction |
     SaveSearchLocationAction |
     SaveSearchLatLongAction |
+    SaveSearchPageAction |
     SaveSearchResultsAction |
     SetCollapseSearchInputAction |
     ClearAllUserDataAction;
@@ -47,6 +54,7 @@ export interface SearchStore {
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
+    readonly searchPage: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
 }
@@ -55,6 +63,7 @@ export const buildDefaultStore = (): SearchStore => ({
     searchTerm: '',
     searchLocation: '',
     searchLatLong: undefined,
+    searchPage: 0,
     searchResults: [],
     collapseSearchInput: false,
 });
@@ -78,6 +87,11 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
             return ({
                 ...store,
                 searchLatLong: action.payload.searchLatLong,
+            });
+        case constants.SAVE_SEARCH_PAGE:
+            return ({
+                ...store,
+                searchPage: action.payload.searchPage,
             });
         case constants.SAVE_SEARCH_RESULTS:
             return ({

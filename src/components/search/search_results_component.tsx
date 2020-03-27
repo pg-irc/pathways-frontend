@@ -47,7 +47,6 @@ export interface SearchResultsActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
-    readonly setSearchPage: (searchPage: number) => void;
 }
 
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;

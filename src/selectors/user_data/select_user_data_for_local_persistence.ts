@@ -12,6 +12,7 @@ import { selectShowPartialLocalizationMessage } from '../user_profile/select_sho
 import { selectIsInputCollapsed } from '../search/select_is_input_collapsed';
 import { selectSearchResults } from '../search/select_search_results';
 import { selectSearchLatLong } from '../search/select_search_lat_long';
+import { selectSearchPage } from '../search/select_search_page';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedData => ({
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
@@ -22,6 +23,7 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedDat
     searchTerm: selectSearchTerm(appStore),
     searchLocation: selectSearchLocation(appStore),
     searchLatLong: selectSearchLatLong(appStore),
+    searchPage: selectSearchPage(appStore),
     searchResults: selectSearchResults(appStore),
     collapseSearchInput: selectIsInputCollapsed(appStore),
     showPartialLocalizationMessage: selectShowPartialLocalizationMessage(appStore),
