@@ -3,7 +3,7 @@ import { Trans } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { History } from 'history';
 import * as R from 'ramda';
-import React, { Dispatch, MutableRefObject, SetStateAction, useCallback, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import {
     I18nManager,
     Image,
@@ -40,14 +40,6 @@ interface OnboardingData {
     readonly id: number;
     readonly image: ImageSourcePropType;
     readonly title: string;
-}
-
-interface IndexHandlerInterface {
-    readonly index: number;
-    readonly swiperIndex: number;
-    readonly isLastSwiperSlide: () => boolean;
-    readonly scrollNext: () => void;
-    readonly onSwiperIndexChanged: (i: number) => void;
 }
 
 const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
@@ -136,12 +128,9 @@ enum STEP {
     BACKWARD = -1,
 }
 
-/**
- * This hook aims to abstract out the confusing handling of indexes.
- * Though the natural indexing works for the UI elements. A separate indexer is needed for
- * react-native-swiper to handle the RTL scenario
- */
-const useIndexHandler = (swiperRef: MutableRefObject<Swiper>): IndexHandlerInterface  => {
+export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Element => {
+    const swiperRef = useRef<Swiper>();
+
     const initialSwiperIndex = I18nManager.isRTL ? ONBOARDING_DATA.length - 1 : 0;
 
     const lastSwiperIndex = I18nManager.isRTL ? 0 : ONBOARDING_DATA.length - 1;
@@ -152,64 +141,25 @@ const useIndexHandler = (swiperRef: MutableRefObject<Swiper>): IndexHandlerInter
     const [swiperIndex, setSwiperIndex]: readonly [number, Dispatch<SetStateAction<number>>]
         = useState<number>(initialSwiperIndex);
 
-    const isLastSwiperSlide = useCallback<() => boolean>(
-        (): boolean => swiperIndex === lastSwiperIndex,
-        [swiperIndex],
-    );
+    const isLastSwiperSlide = (): boolean => swiperIndex === lastSwiperIndex;
 
-    const onSwiperIndexChanged = useCallback<(i: number) => void>(
-        (newIndex: number): void => {
-            setSwiperIndex(newIndex);
-            setIndex(I18nManager.isRTL ? ONBOARDING_DATA.length - 1 - newIndex : newIndex);
-        },
-        [setIndex, setSwiperIndex],
-    );
-
-    const scrollNext = useCallback<() => void>(
-        (): void => {
-            swiperRef.current.scrollBy(I18nManager.isRTL ? STEP.BACKWARD : STEP.FORWARD);
-        },
-        [],
-    );
-
-    return {
-        index,
-        swiperIndex,
-        isLastSwiperSlide,
-        scrollNext,
-        onSwiperIndexChanged,
+    const onSwiperIndexChanged = (newIndex: number): void => {
+        setSwiperIndex(newIndex);
+        setIndex(I18nManager.isRTL ? ONBOARDING_DATA.length - 1 - newIndex : newIndex);
     };
-};
 
-export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Element => {
-    const swiperRef = useRef<Swiper>();
+    const onSkipPress = (): void => {
+        hideOnboarding();
+        goToRouteWithoutParameter(Routes.RecommendedTopics, history)();
+    };
 
-    const {
-        index,
-        swiperIndex,
-        onSwiperIndexChanged,
-        isLastSwiperSlide,
-        scrollNext,
-    }: IndexHandlerInterface = useIndexHandler(swiperRef);
-
-    const onSkipPress = useCallback<() => void>(
-        (): void => {
-            hideOnboarding();
-            goToRouteWithoutParameter(Routes.RecommendedTopics, history)();
-        },
-        [hideOnboarding, history],
-    );
-
-    const onActionPress = useCallback<() => void>(
-        (): void => {
-            if (isLastSwiperSlide()) {
-                onSkipPress();
-            } else {
-                scrollNext();
-            }
-        },
-        [scrollNext, onSkipPress],
-    );
+    const onActionPress = (): void => {
+        if (isLastSwiperSlide()) {
+            onSkipPress();
+        } else {
+            swiperRef.current.scrollBy(I18nManager.isRTL ? STEP.BACKWARD : STEP.FORWARD);
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
