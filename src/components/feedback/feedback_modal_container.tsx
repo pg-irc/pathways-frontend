@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { Trans } from '@lingui/react';
-import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { useHistory } from 'react-router-native';
 
@@ -19,54 +19,20 @@ interface FeedbackModalContainerProps {
     readonly serviceId: string;
 }
 
-interface FeedbackOptionsModalControls {
-    readonly onFeedbackButtonPress: () => void;
-    readonly onSuggestAnUpdatePress: () => void;
-    readonly onOtherPress: () => void;
-    readonly onRemoveServicePress: () => void;
-    readonly onCloseFeedbackOptions: () => void;
-}
+export const FeedbackModalContainer = ({
+    feedbackEnabled,
+    onSuggestAnUpdatePress: onSuggestAnUpdate,
+    serviceId,
+}: FeedbackModalContainerProps): JSX.Element => {
+    const query = useQuery();
 
-interface FeedbackReceiveUpdatesModalControls {
-    readonly onHide: () => void;
-}
-
-interface ModalState {
-    readonly visible: boolean;
-    readonly show: () => void;
-    readonly hide: () => void;
-    readonly toggle: () => void;
-}
-
-const useModalState = (initialValue: boolean): ModalState => {
-    const [visible, setVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(initialValue);
-
-    const show = useCallback(
-        (): void => setVisible(true),
-        [setVisible],
-    );
-
-    const hide = useCallback(
-        (): void => setVisible(false),
-        [setVisible],
-    );
-
-    const toggle = useCallback(
-        (): void => setVisible(!visible),
-        [visible, setVisible],
-    );
-
-    return { visible, show, hide, toggle };
-};
-
-/**
- * This hook attempts to abstract the onPress callbacks for Other and Remove Service options.
- * The controls do not attempt to manage the state of suggestion modal visibility.
- *
- */
-const useFeedbackOptionsModalControls = (modalState: ModalState, serviceId: string, onSuggestAnUpdate: () => void): FeedbackOptionsModalControls => {
     const history = useHistory();
+
+    const [optionsModalVisible, setOptionsModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
+        = useState<boolean>(query.optionsModalVisible === 'true');
+
+    const [receiveUpdatesModalVisible, setReceiveUpdatesModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
+        = useState<boolean>(query.optionsModalVisible === 'true');
 
     const goToFeedbackOtherScreen = goToRouteWithParameters(
         Routes.Feedback,
@@ -82,90 +48,42 @@ const useFeedbackOptionsModalControls = (modalState: ModalState, serviceId: stri
         history,
     );
 
-    const onOtherPress = useCallback<() => void>(
-        (): void => {
-            goToFeedbackOtherScreen();
-        },
-        [history],
-    );
-
-    const onRemoveServicePress = useCallback<() => void>(
-        (): void => {
-            goToFeedbackRemoveServiceScreen();
-        },
-        [history],
-    );
-
-    const onSuggestAnUpdatePress = useCallback<() => void>(
-        (): void => {
-            modalState.hide();
-            onSuggestAnUpdate();
-        },
-        [modalState, onSuggestAnUpdate],
-    );
-
-    const onFeedbackButtonPress = useCallback<() => void>(
-        (): void => modalState.show(),
-        [modalState],
-    );
-
-    const onCloseFeedbackOptions = useCallback(
-        (): void => modalState.hide(),
-        [modalState],
-    );
-
-    return {
-        onFeedbackButtonPress,
-        onSuggestAnUpdatePress,
-        onOtherPress,
-        onRemoveServicePress,
-        onCloseFeedbackOptions,
+    const onOtherPress = (): void => {
+        goToFeedbackOtherScreen();
     };
-};
 
-const useReceiveUpdateControls = (modalState: ModalState): FeedbackReceiveUpdatesModalControls => {
-    const onHide = useCallback<() => void>(
-        (): void => modalState.hide(),
-        [modalState],
-    );
-
-    return {
-        onHide,
+    const onRemoveServicePress = (): void => {
+        goToFeedbackRemoveServiceScreen();
     };
-};
 
-export const FeedbackModalContainer = ({
-    feedbackEnabled,
-    onSuggestAnUpdatePress: onSuggestAnUpdate,
-    serviceId,
-}: FeedbackModalContainerProps): JSX.Element => {
-    const query = useQuery();
+    const onSuggestAnUpdatePress = (): void => {
+        setOptionsModalVisible(false);
+        onSuggestAnUpdate();
+    };
 
-    const optionsModalState: ModalState = useModalState(query.optionsModalVisible === 'true');
+    const onFeedbackButtonPress = (): void => {
+        setOptionsModalVisible(true);
+    };
 
-    const receiveUpdatesModalState: ModalState = useModalState(query.receiveUpdatesModalVisible === 'true');
+    const onCloseFeedbackOptions = (): void => {
+        setOptionsModalVisible(false);
+    };
 
-    const {
-        onFeedbackButtonPress,
-        onSuggestAnUpdatePress,
-        onOtherPress,
-        onRemoveServicePress,
-        onCloseFeedbackOptions,
-    }: FeedbackOptionsModalControls = useFeedbackOptionsModalControls(optionsModalState, serviceId, onSuggestAnUpdate);
-
-    const { onHide }: FeedbackReceiveUpdatesModalControls = useReceiveUpdateControls(receiveUpdatesModalState);
+    const onHideReceiveUpdatesModal = (): void => {
+        setReceiveUpdatesModalVisible(false);
+    };
 
     return (
         <>
             <FeedbackButton isVisible={!feedbackEnabled} onPress={onFeedbackButtonPress} />
             <FeedbackOptionsModalComponent
-                isVisible={optionsModalState.visible}
+                isVisible={optionsModalVisible}
                 onClose={onCloseFeedbackOptions}
                 onSuggestAnUpdatePress={onSuggestAnUpdatePress}
                 onOtherPress={onOtherPress}
                 onRemoveServicePress={onRemoveServicePress}
             />
-            <FeedbackReceiveUpdatesModal isVisible={receiveUpdatesModalState.visible} onHide={onHide} />
+            <FeedbackReceiveUpdatesModal isVisible={receiveUpdatesModalVisible} onHide={onHideReceiveUpdatesModal} />
         </>
     );
 };

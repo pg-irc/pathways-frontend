@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
 import { Input } from 'native-base';
-import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import Modal from 'react-native-modal';
 import { View, Text, TouchableOpacity } from 'react-native';
 
@@ -20,39 +20,21 @@ const INPUT_PLACEHOLDER = t`Enter email`;
 const useToggleState = (initialValue: boolean = false): readonly[boolean, () => void] => {
     const [state, setState]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(initialValue);
 
-    const toggle = useCallback<() => void>(
-        (): void => setState(!state),
-        [state, setState],
-    );
+    const toggle = (): void => setState(!state);
 
     return [state, toggle];
-};
-
-const useEmailInputControl = (): readonly [string, (value: string) => void] => {
-    const [emailInput, setEmailInput]: readonly [string, Dispatch<SetStateAction<string>>]
-        = useState<string>('');
-
-    const onInputChange = useCallback<(value: string) => void>(
-        (value: string): void => setEmailInput(value),
-        [setEmailInput],
-    );
-
-    return [emailInput, onInputChange];
 };
 
 export const FeedbackReceiveUpdatesModal = ({ isVisible, onHide }: FeedbackReceiveUpdatesProps): JSX.Element => {
     const [checked, toggleChecked]: readonly[boolean, () => void]
         = useToggleState();
 
-    const [emailInput, onInputChange]: readonly [string, (value: string) => void]
-        = useEmailInputControl();
+    const [emailInput, setEmailInput]: readonly [string, Dispatch<SetStateAction<string>>]
+        = useState<string>('');
 
     const buttonLabel = emailInput.length ? t`Finish` : t`Finish without email`;
 
-    const onFinish = useCallback<() => void>(
-        (): void => onHide(),
-        [onHide],
-    );
+    const onFinish = (): void => onHide();
 
     return (
         <Modal isVisible={isVisible} onBackdropPress={onHide}>
@@ -69,7 +51,7 @@ export const FeedbackReceiveUpdatesModal = ({ isVisible, onHide }: FeedbackRecei
                                 </Text>
                                 <Input
                                     style={styles.emailInputStyle}
-                                    onChangeText={onInputChange}
+                                    onChangeText={setEmailInput}
                                     placeholder={i18n._(INPUT_PLACEHOLDER)}
                                     placeholderTextColor={colors.darkerGrey}
                                     value={emailInput}
@@ -97,4 +79,4 @@ export const FeedbackReceiveUpdatesModal = ({ isVisible, onHide }: FeedbackRecei
             </I18n>
         </Modal>
     );
-}
+};

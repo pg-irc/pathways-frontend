@@ -16,7 +16,7 @@ import {
     Text,
     Title,
 } from 'native-base';
-import React, { Dispatch, SetStateAction, useCallback, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useHistory, useParams } from 'react-router-native';
 
 import { colors, textStyles } from '../../application/styles';
@@ -86,29 +86,12 @@ const useFeedbackInputControl = (): readonly [string, (value: string) => void] =
     const [input, setInput]: readonly [string, Dispatch<SetStateAction<string>>]
         = useState<string>('');
 
-    const onInputChange = useCallback<(value: string) => void>(
-        (value: string): void => setInput(value),
-        [setInput],
-    );
+    const onInputChange = (value: string): void => setInput(value);
 
     return [input, onInputChange];
 };
 
-const useOnSubmit = (): () => void => {
-    const goBackReceiveUpdatesShow = useServiceDetailRoute(
-        // TODO useQuery only supports string Records for now
-        { receiveUpdatesModalVisible: 'true' },
-    );
-
-    return useCallback<() => void>(
-        (): void => goBackReceiveUpdatesShow(),
-        [],
-    );
-}
-
 const HeaderComponent = (props: HeaderComponentProps): JSX.Element => {
-    const history = useHistory();
-
     const goBackShowModal = useServiceDetailRoute(
         // TODO useQuery only supports string Records for now
         { optionsModalVisible: 'false' },
@@ -119,15 +102,9 @@ const HeaderComponent = (props: HeaderComponentProps): JSX.Element => {
         { optionsModalVisible: 'true' },
     );
 
-    const onClose = useCallback<() => void>(
-        (): void => goBackHideModal(),
-        [history],
-    );
+    const onBack = (): void => goBackShowModal();
 
-    const onBack = useCallback<() => void>(
-        (): void => goBackShowModal(),
-        [history],
-    );
+    const onClose = (): void => goBackHideModal();
 
     return (
         <Header style={styles.headerContainer}>
@@ -211,10 +188,15 @@ export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
     const [input, onInputChange]: readonly [string, (value: string) => void]
         = useFeedbackInputControl();
 
-    const onSubmit = useOnSubmit();
+    const goBackReceiveUpdatesShow = useServiceDetailRoute(
+        // TODO useQuery only supports string Records for now
+        { receiveUpdatesModalVisible: 'true' },
+    );
 
-   // TODO: Formulate a more robust typed query param getter
-   const content: SuggestionContent = SUGGESTION_CONTENT[query.mode];
+    const onSubmit = (): void => goBackReceiveUpdatesShow();
+
+    // TODO: Formulate a more robust typed query param getter
+    const content: SuggestionContent = SUGGESTION_CONTENT[query.mode];
 
     return (
         <Container>
