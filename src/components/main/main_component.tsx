@@ -41,15 +41,22 @@ interface MainProps {
 type Props = MainComponentProps & MainComponentActions;
 
 export const MainComponent = (props: Props): JSX.Element => {
-    useEffect((): void => {
+    useEffect((): () => void => {
         props.history.listen((location: Location, _: Action): RouteChangedAction =>
             props.sendAnalyticsData(location, props.locale),
         );
-    }, [props.location, props.locale]);
-
-    useEffect((): void => {
-        Notifications.addListener(notificationListener(props.history));
+        const unlisten = props.history.listen((_: Location): void => {
+            return;
+        });
+        return (): void => unlisten();
     }, []);
+
+    useEffect((): () => void => {
+            const notificationsListener = Notifications.addListener(notificationListener(props.history));
+            // tslint:disable-next-line: no-unused-expression
+            notificationsListener;
+            return (): void => notificationsListener.remove();
+        }, []);
 
     const onHardwareBackButtonPress = (): boolean => {
         if (props.headerMenuState === HeaderMenuStore.HeaderMenuIsClosed) {
