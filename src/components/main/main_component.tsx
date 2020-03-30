@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect } from 'react';
+import React, { useEffect, EffectCallback } from 'react';
 import { Container, Drawer, Root } from 'native-base';
 import { MainPageSwitcherComponent } from './main_page_switcher';
 import { FooterComponent, FooterProps } from './footer_component';
@@ -41,7 +41,7 @@ interface MainProps {
 type Props = MainComponentProps & MainComponentActions;
 
 export const MainComponent = (props: Props): JSX.Element => {
-    useEffect((): () => void => {
+    useEffect((): EffectCallback => {
         props.history.listen((location: Location, _: Action): RouteChangedAction =>
             props.sendAnalyticsData(location, props.locale),
         );
@@ -51,7 +51,7 @@ export const MainComponent = (props: Props): JSX.Element => {
         return (): void => unlisten();
     }, []);
 
-    useEffect((): () => void => {
+    useEffect((): EffectCallback => {
             const notificationsListener = Notifications.addListener(notificationListener(props.history));
             // tslint:disable-next-line: no-unused-expression
             notificationsListener;

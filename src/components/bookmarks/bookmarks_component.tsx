@@ -3,7 +3,7 @@ import { TopicListItem } from '../../selectors/topics/types';
 import { RouterProps } from '../../application/routing';
 import { TabSwitcher } from './tab_switcher';
 import { HumanServiceData } from '../../validation/services/types';
-import { View, Text, Container } from 'native-base';
+import { View, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { colors, textStyles, values } from '../../application/styles';
 import { ReactI18nRenderProp } from '../../locale/types';
@@ -26,14 +26,12 @@ export const BookmarksComponent = (props: Props): JSX.Element => {
     return (
         <View style={{ flex: 1 }}>
             <HelpAndMenuButtonHeaderComponent {...props} />
-            <Container style={{ backgroundColor: colors.lightGrey }}>
             <TitleComponent/>
             <I18n>
                 {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
                     <TabSwitcher i18n={i18nRenderProp.i18n} {...props}/>
                 )}
             </I18n>
-        </Container>
         </View>
     );
 };

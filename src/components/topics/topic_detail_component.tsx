@@ -79,7 +79,7 @@ const ListHeaderComponent = (props: Props): JSX.Element => (
     <View padder>
         <TaskDetailContentComponent
             topic={props.topic}
-            onServicesTextPress={onServicesTextPress(props)}
+            onServicesTextPress={(): void => onServicesTextPress(props)}
             onExpand={(): ExpandDetailAction => props.onExpand(props.topic.id)}
             onCollapse={(): CollapseDetailAction => props.onCollapse(props.topic.id)}
         />
@@ -97,13 +97,11 @@ const ListHeaderComponent = (props: Props): JSX.Element => (
     </View>
 );
 
-const onServicesTextPress = (props: Props): () => void => {
-    return (): void => {
-        const analyticsLinkContext = buildAnalyticsLinkContext('Topic', props.topic.title);
-        const linkType = 'Button';
-        const linkValue = 'Find related services near me';
-        const currentPath = props.location.pathname;
-        props.analyticsLinkPressed(currentPath, analyticsLinkContext, linkType, linkValue);
-        goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
-    };
+const onServicesTextPress = (props: Props): void => {
+    const analyticsLinkContext = buildAnalyticsLinkContext('Topic', props.topic.title);
+    const linkType = 'Button';
+    const linkValue = 'Find related services near me';
+    const currentPath = props.location.pathname;
+    props.analyticsLinkPressed(currentPath, analyticsLinkContext, linkType, linkValue);
+    goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
 };
