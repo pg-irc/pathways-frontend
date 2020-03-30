@@ -4,7 +4,7 @@ import { HumanServiceData } from '../../validation/services/types';
 import { ServiceItemInfo } from '../services/service_list_component';
 import { Trans } from '@lingui/react';
 import { RouterProps, goToRouteWithParameter, Routes } from '../../application/routing';
-import { ServiceListItemComponent } from '../services/service_list_item_component';
+import { ServiceListItemComponent, ServiceListItemActions } from '../services/service_list_item_component';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
 import { emptyTopicServicesList } from '../../application/images';
@@ -14,9 +14,9 @@ export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
 }
 
-type Props = ServiceBookmarksProps & RouterProps;
+type Props = ServiceBookmarksProps & RouterProps & ServiceListItemActions;
 
-export const ServiceBookmarksComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+export const ServiceBookmarksComponent = (props: Props): JSX.Element => (
     <FlatList
         style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
         data={props.bookmarkedServices}
@@ -40,6 +40,9 @@ export const renderServiceItems = (props: Props): ({ item }: ServiceItemInfo) =>
             service={item}
             onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
             currentPath={props.location.pathname}
+            isBookmarked={item.bookmarked}
+            bookmarkService={props.bookmarkService}
+            unbookmarkService={props.unbookmarkService}
         />
     );
 };

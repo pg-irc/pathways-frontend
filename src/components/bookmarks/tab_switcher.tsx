@@ -9,12 +9,12 @@ import { colors, textStyles } from '../../application/styles';
 import { BookmarksProps } from './bookmarks_component';
 import { View, Text } from 'native-base';
 import { RouterProps } from '../../application/routing';
-import { TaskListActions } from '../topics/task_list_component';
+import { ListActions } from './bookmarks_connected_component';
 
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
 
-type Props = ReactI18nRenderProp & BookmarksProps & TaskListActions & RouterProps;
+type Props = ReactI18nRenderProp & BookmarksProps & ListActions & RouterProps;
 
 export const TabSwitcher = (props: Props): JSX.Element => {
     const _ = props.i18n._.bind(props.i18n);

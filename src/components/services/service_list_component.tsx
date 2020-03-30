@@ -172,6 +172,9 @@ const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX
             onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
             currentPath={props.location.pathname}
             history={props.history}
+            isBookmarked={item.bookmarked}
+            bookmarkService={props.bookmarkService}
+            unbookmarkService={props.unbookmarkService}
         />
     );
 };

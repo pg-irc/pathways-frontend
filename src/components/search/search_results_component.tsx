@@ -98,6 +98,9 @@ const renderSearchHit = R.curry((props: Props, itemInfo: ListRenderItemInfo<Sear
             history={props.history}
             currentPath={props.location.pathname}
             onPress={onPress}
+            isBookmarked={service.bookmarked}
+            bookmarkService={props.bookmarkService}
+            unbookmarkService={props.unbookmarkService}
         />
     );
 });
