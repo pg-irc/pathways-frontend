@@ -9,6 +9,7 @@ import {
     Image,
     ImageSourcePropType,
     SafeAreaView,
+    Platform,
     TouchableOpacity,
     Text,
     View,
@@ -141,11 +142,29 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
     const [swiperIndex, setSwiperIndex]: readonly [number, Dispatch<SetStateAction<number>>]
         = useState<number>(initialSwiperIndex);
 
-    const isLastSwiperSlide = (): boolean => swiperIndex === lastSwiperIndex;
+    const isLastSwiperSlide = (): boolean => {
+        if (Platform.OS === 'android') {
+            return swiperIndex === lastSwiperIndex;
+        }
+
+        return index === ONBOARDING_DATA.length - 1;
+    };
+
+    const getInitialIndex = (): number => {
+        if (Platform.OS === 'android') {
+            return I18nManager.isRTL ? ONBOARDING_DATA.length - 1 : 0;
+        }
+
+        return 0;
+    };
 
     const onSwiperIndexChanged = (newIndex: number): void => {
-        setSwiperIndex(newIndex);
-        setIndex(I18nManager.isRTL ? ONBOARDING_DATA.length - 1 - newIndex : newIndex);
+        if (Platform.OS === 'android') {
+            setSwiperIndex(newIndex);
+            setIndex(I18nManager.isRTL ? ONBOARDING_DATA.length - 1 - newIndex : newIndex);
+        } else {
+            setIndex(newIndex);
+        }
     };
 
     const onSkipPress = (): void => {
@@ -156,8 +175,10 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
     const onActionPress = (): void => {
         if (isLastSwiperSlide()) {
             onSkipPress();
-        } else {
+        } else if (Platform.OS === 'android') {
             swiperRef.current.scrollBy(I18nManager.isRTL ? STEP.BACKWARD : STEP.FORWARD);
+        } else {
+            swiperRef.current.scrollBy(STEP.FORWARD);
         }
     };
 
@@ -170,7 +191,7 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
                         // We don't want to display Swiper's built in dot display
                         activeDot={<View style={{ display: 'none' }} />}
                         dot={<View style={{ display: 'none' }} />}
-                        index={swiperIndex}
+                        index={getInitialIndex()}
                         horizontal={true}
                         loop={false}
                         onIndexChanged={onSwiperIndexChanged}
