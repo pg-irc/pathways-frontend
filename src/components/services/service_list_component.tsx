@@ -1,9 +1,11 @@
 // tslint:disable:no-expression-statement
 import React, { useEffect } from 'react';
+import * as Sentry from 'sentry-expo';
+import * as R from 'ramda';
+import * as constants from '../../application/constants';
 import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
-import * as Sentry from 'sentry-expo';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/types';
@@ -11,7 +13,6 @@ import { ServiceListItemComponent } from './service_list_item_component';
 import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { textStyles, colors } from '../../application/styles';
 import { isSelectorErrorServicesForTopic } from '../../selectors/services/is_selector_error_services_for_topic';
-import * as constants from '../../application/constants';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
 import { UserLocation } from '../../validation/latlong/types';
@@ -165,19 +166,22 @@ const isInitialEmptyTopicServices = (topicServicesOrError: SelectorTopicServices
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
 
-const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX.Element => {
-    return ({ item }: ServiceItemInfo): JSX.Element => (
+const renderServiceListItem = R.curry((props: Props, itemInfo: ServiceItemInfo): JSX.Element => {
+    const service = itemInfo.item;
+    const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
+    const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
+    return (
         <ServiceListItemComponent
-            service={item}
-            onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
+            service={service}
+            onPress={goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)}
             currentPath={props.location.pathname}
             history={props.history}
-            isBookmarked={item.bookmarked}
-            bookmarkService={props.bookmarkService}
-            unbookmarkService={props.unbookmarkService}
+            isBookmarked={service.bookmarked}
+            onBookmark={onBookmark}
+            onUnbookmark={onUnbookmark}
         />
     );
-};
+});
 
 interface ServiceListHeaderComponentProps {
     readonly topicTitle: string;

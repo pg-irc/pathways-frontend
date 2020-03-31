@@ -18,16 +18,14 @@ export interface ServiceListItemProps {
 }
 
 export interface ServiceListItemActions {
-    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
-    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly onBookmark: () => BookmarkServiceAction;
+    readonly onUnbookmark: () => UnbookmarkServiceAction;
 }
 
 type Props = ServiceListItemProps & ServiceListItemActions;
 
 export const ServiceListItemComponent = (props: Props): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
-        const addBookmark = (): BookmarkServiceAction => props.bookmarkService(props.service);
-        const removeBookmark = (): UnbookmarkServiceAction => props.unbookmarkService(props.service);
         return (
             <TouchableOpacity onPress={props.onPress}>
                  <View style={{ backgroundColor: colors.white, marginTop: 8, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
@@ -41,8 +39,8 @@ export const ServiceListItemComponent = (props: Props): JSX.Element => {
                         <BookmarkButtonComponent
                             isBookmarked={props.isBookmarked}
                             textColor={colors.teal}
-                            bookmark={addBookmark}
-                            unbookmark={removeBookmark}
+                            bookmark={props.onBookmark}
+                            unbookmark={props.onUnbookmark}
                         />
                     </View>
                 </View>

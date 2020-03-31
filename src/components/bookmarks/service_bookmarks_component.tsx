@@ -1,19 +1,26 @@
 import React from 'react';
+import * as R from 'ramda';
 import { FlatList } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
 import { ServiceItemInfo } from '../services/service_list_component';
 import { Trans } from '@lingui/react';
 import { RouterProps, goToRouteWithParameter, Routes } from '../../application/routing';
-import { ServiceListItemComponent, ServiceListItemActions } from '../services/service_list_item_component';
+import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
 import { EmptyBookmarksComponent } from './empty_bookmarks_component';
+import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
 }
 
-type Props = ServiceBookmarksProps & RouterProps & ServiceListItemActions;
+export interface ServiceBookmarksActions {
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+}
+
+type Props = ServiceBookmarksProps & ServiceBookmarksActions & RouterProps;
 
 export const ServiceBookmarksComponent = (props: Props): JSX.Element => (
     <FlatList
@@ -30,16 +37,19 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => (
     />
 );
 
-export const renderServiceItems = (props: Props): ({ item }: ServiceItemInfo) => JSX.Element => {
-    return ({ item }: ServiceItemInfo): JSX.Element => (
+export const renderServiceItems = R.curry((props: Props, itemInfo: ServiceItemInfo): JSX.Element => {
+    const service = itemInfo.item;
+    const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
+    const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
+    return (
         <ServiceListItemComponent
             history={props.history}
-            service={item}
-            onPress={goToRouteWithParameter(Routes.ServiceDetail, item.id, props.history)}
+            service={service}
+            onPress={goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)}
             currentPath={props.location.pathname}
-            isBookmarked={item.bookmarked}
-            bookmarkService={props.bookmarkService}
-            unbookmarkService={props.unbookmarkService}
+            isBookmarked={service.bookmarked}
+            onBookmark={onBookmark}
+            onUnbookmark={onUnbookmark}
         />
     );
-};
+});

@@ -8,8 +8,8 @@ import { selectBookmarkedTopics } from '../../selectors/topics/select_bookmarked
 import { selectBookmarkedServices } from '../../selectors/services/select_bookmarked_services';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
-import { ServiceListItemActions } from '../services/service_list_item_component';
 import { HumanServiceData } from '../../validation/services/types';
+import { ServiceBookmarksActions } from './service_bookmarks_component';
 
 const mapStateToProps = (store: Store): BookmarksProps => ({
     bookmarkedServices: selectBookmarkedServices(store),
@@ -20,7 +20,7 @@ type ServiceDispatchActions = BookmarkServiceAction | UnbookmarkServiceAction;
 type TopicDispatchActions = BookmarkTopicAction | UnbookmarkTopicAction;
 type Actions = ServiceDispatchActions | TopicDispatchActions | OpenHeaderMenuAction;
 
-export type ListActions = TaskListActions & ServiceListItemActions & BookmarkActions;
+export type ListActions = TaskListActions & ServiceBookmarksActions & BookmarkActions;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): ListActions => ({
     bookmarkTopic: (topicId: Id): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
