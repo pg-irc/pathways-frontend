@@ -44,21 +44,16 @@ type Props = MainComponentProps & MainComponentActions;
 
 export const MainComponent = (props: Props): JSX.Element => {
     useEffect((): EffectCallback => {
-        props.history.listen((location: Location, _: Action): RouteChangedAction =>
+        const unsubscribe = props.history.listen((location: Location, _: Action): RouteChangedAction =>
             props.sendAnalyticsData(location, props.locale),
         );
-        const unlisten = props.history.listen((_: Location): void => {
-            return;
-        });
-        return (): void => unlisten();
+        return unsubscribe;
     }, []);
 
     useEffect((): EffectCallback => {
-            const notificationsListener = Notifications.addListener(notificationListener(props.history));
-            // tslint:disable-next-line: no-unused-expression
-            notificationsListener;
-            return (): void => notificationsListener.remove();
-        }, []);
+        const subscription = Notifications.addListener(notificationListener(props.history));
+        return (): void => subscription.remove();
+    }, []);
 
     const onHardwareBackButtonPress = (): boolean => {
         if (!props.isHeaderMenuVisible) {
