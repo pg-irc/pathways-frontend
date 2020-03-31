@@ -42,7 +42,7 @@ export const WebsiteComponent = (props: Props): JSX.Element => {
 
 const renderWebsite = (website: string): JSX.Element => (
     <View>
-        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website</Trans>: </Text>
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website:</Trans> </Text>
         <Text style={textStyles.paragraphStyle}>{website}</Text>
     </View>
 );
