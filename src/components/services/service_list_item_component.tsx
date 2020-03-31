@@ -11,7 +11,6 @@ import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_comp
 
 export interface ServiceListItemProps {
     readonly service: HumanServiceData;
-    readonly currentPath: string;
     readonly onPress: () => void;
     readonly history: History;
     readonly isBookmarked: boolean;

@@ -1,15 +1,13 @@
 // tslint:disable:no-expression-statement
 import React, { useEffect } from 'react';
 import * as Sentry from 'sentry-expo';
-import * as R from 'ramda';
 import * as constants from '../../application/constants';
-import { ListRenderItemInfo, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/types';
-import { ServiceListItemComponent } from './service_list_item_component';
 import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { textStyles, colors } from '../../application/styles';
 import { isSelectorErrorServicesForTopic } from '../../selectors/services/is_selector_error_services_for_topic';
@@ -17,7 +15,7 @@ import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitch
 import { Errors } from '../../validation/errors/types';
 import { UserLocation } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
-import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
+import { RouterProps } from '../../application/routing';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
@@ -29,6 +27,7 @@ import { SearchListSeparator } from '../search/separators';
 import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { History } from 'history';
+import { renderServiceItems } from './render_service_items';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -73,7 +72,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 style={{ backgroundColor: colors.white }}
                 data={getServicesIfValid(props.topicServicesOrError)}
                 keyExtractor={(service: HumanServiceData): string => service.id}
-                renderItem={renderServiceListItem(props)}
+                renderItem={renderServiceItems(props)}
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={
                     <MessageComponent
@@ -163,25 +162,6 @@ const isValidEmptyTopicServices = (topicServicesOrError: SelectorTopicServices):
 const isInitialEmptyTopicServices = (topicServicesOrError: SelectorTopicServices): boolean => (
     topicServicesOrError.type === constants.INITIAL_EMPTY_SERVICES_FOR_TOPIC
 );
-
-export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
-
-const renderServiceListItem = R.curry((props: Props, itemInfo: ServiceItemInfo): JSX.Element => {
-    const service = itemInfo.item;
-    const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
-    const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
-    return (
-        <ServiceListItemComponent
-            service={service}
-            onPress={goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)}
-            currentPath={props.location.pathname}
-            history={props.history}
-            isBookmarked={service.bookmarked}
-            onBookmark={onBookmark}
-            onUnbookmark={onUnbookmark}
-        />
-    );
-});
 
 interface ServiceListHeaderComponentProps {
     readonly topicTitle: string;
