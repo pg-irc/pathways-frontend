@@ -15,7 +15,7 @@ import { History } from 'history';
 import { notificationListener } from './notification';
 import {
     CloseHeaderMenuAction, OpenHeaderMenuAction, CloseAboutModalAction,
-    OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction, HeaderMenuStore,
+    OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction,
 } from '../../stores/header_menu';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
@@ -35,7 +35,9 @@ interface MainProps {
     readonly locale: Locale;
     readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;
-    readonly headerMenuState: HeaderMenuStore;
+    readonly isHeaderMenuVisible: boolean;
+    readonly isAboutModalVisible: boolean;
+    readonly isDisclaimerModalVisible: boolean;
 }
 
 type Props = MainComponentProps & MainComponentActions;
@@ -59,7 +61,7 @@ export const MainComponent = (props: Props): JSX.Element => {
         }, []);
 
     const onHardwareBackButtonPress = (): boolean => {
-        if (props.headerMenuState === HeaderMenuStore.HeaderMenuIsClosed) {
+        if (!props.isHeaderMenuVisible) {
             goBack(props.history);
         } else {
             props.closeHeaderMenu();
@@ -72,7 +74,7 @@ export const MainComponent = (props: Props): JSX.Element => {
             <Drawer
                 side='right'
                 onClose={props.closeHeaderMenu}
-                open={isHeaderMenuOpen(props.headerMenuState)}
+                open={props.isHeaderMenuVisible}
                 content={
                     <HeaderMenuConnectedComponent
                         history={props.history}
@@ -87,7 +89,8 @@ export const MainComponent = (props: Props): JSX.Element => {
                     <FooterComponent {...props} />
                     <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={onHardwareBackButtonPress} />
                     <AppModalsComponent
-                        headerMenuState={props.headerMenuState}
+                        isAboutModalVisible={props.isAboutModalVisible}
+                        isDisclaimerModalVisible={props.isDisclaimerModalVisible}
                         closeAboutModal={props.closeAboutModal}
                         closeDisclaimerModal={props.closeDisclaimerModal}
                     />
@@ -96,7 +99,3 @@ export const MainComponent = (props: Props): JSX.Element => {
         </Root>
     );
 };
-
-const isHeaderMenuOpen = (headerMenuState: HeaderMenuStore): boolean => (
-    headerMenuState !== HeaderMenuStore.HeaderMenuIsClosed
-);
