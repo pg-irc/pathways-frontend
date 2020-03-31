@@ -7,7 +7,6 @@ import { RouterProps, goToRouteWithParameter, Routes } from '../../application/r
 import { ServiceListItemComponent, ServiceListItemActions } from '../services/service_list_item_component';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
-import { emptyTopicServicesList } from '../../application/images';
 import { EmptyBookmarksComponent } from './empty_bookmarks_component';
 
 export interface ServiceBookmarksProps {
@@ -25,8 +24,6 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => (
         ListEmptyComponent={
             <EmptyBookmarksComponent
                 title={<Trans>No services to show</Trans>}
-                // TO DO replace this image once we receive mocks
-                imageSource={emptyTopicServicesList}
             />
             }
         ListHeaderComponent={<View />}
