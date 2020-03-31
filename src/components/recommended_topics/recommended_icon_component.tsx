@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon } from 'native-base';
-import { colors, values } from '../../application/styles';
+
+import { callToActionStyles } from './styles';
 
 export interface RecommendedIconComponentProps {
     readonly additionalStyles?: object;
@@ -8,14 +9,8 @@ export interface RecommendedIconComponentProps {
 
 export const RecommendedIconComponent = (props: RecommendedIconComponentProps): JSX.Element => (
     <Icon
-        style={
-            {
-                fontSize: values.smallerIconSize,
-                color: colors.lightTeal,
-                ...props.additionalStyles,
-            }
-        }
-        name={'check-decagram'}
-        type={'MaterialCommunityIcons'}
+        style={[callToActionStyles.recommendationIcon, props.additionalStyles]}
+        name='check-decagram'
+        type='MaterialCommunityIcons'
     />
 );

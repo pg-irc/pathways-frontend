@@ -1,15 +1,17 @@
 // tslint:disable: no-expression-statement
-import React, { useCallback } from 'react';
+import React from 'react';
 import { History } from 'history';
-import { Dimensions, Image, TouchableOpacity, I18nManager } from 'react-native';
+import { Image, TouchableOpacity, I18nManager } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Button, Icon } from 'native-base';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
-import { textStyles, applicationStyles, colors, markdownStyles, values } from '../../application/styles';
+import { textStyles, applicationStyles, colors, markdownStyles } from '../../application/styles';
 import { advisor, recommendationBubble } from '../../application/images';
 import { openURL, LinkTypes } from '../link/link';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
+
+import { callToActionStyles } from './styles';
 
 type Props = { readonly history: History };
 
@@ -26,43 +28,35 @@ export const CovidComponent = ({
     analyticsLinkPressed,
     currentPathForAnalytics,
 }: CovidComponentProps): JSX.Element => {
-    const onLinkPress = useCallback(
-        (): void => {
-            openURL(BCCDC_COVID_LINK);
+    const onLinkPress = (): void => {
+        openURL(BCCDC_COVID_LINK);
 
-            analyticsLinkPressed(
-                currentPathForAnalytics,
-                buildAnalyticsLinkContext(LINK_CONTEXT_MODEL, LINK_CONTEXT_TITLE),
-                LinkTypes.website,
-                BCCDC_COVID_LINK,
-            );
-        },
-        [analyticsLinkPressed, currentPathForAnalytics],
-    );
+        analyticsLinkPressed(
+            currentPathForAnalytics,
+            buildAnalyticsLinkContext(LINK_CONTEXT_MODEL, LINK_CONTEXT_TITLE),
+            LinkTypes.website,
+            BCCDC_COVID_LINK,
+        );
+    };
 
     return (
         <View style={[
             applicationStyles.boxShadowBelow,
-            {
-                backgroundColor: colors.lightGrey,
-                borderRadius: values.lessRoundedBorderRadius,
-                padding: 20,
-                marginBottom: 10,
-            },
+            callToActionStyles.callToActionContainer,
         ]}>
-            <View style={{ flex: 1, marginBottom: 10 }}>
+            <View style={callToActionStyles.covidTitleContainer}>
                 <Text style={textStyles.headlineH2StyleBlackLeft}>
                     <Trans>COVID-19 information</Trans>
                 </Text>
             </View>
-            <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 20 }]}>
+            <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.covidUpperContent]}>
                 <Trans>
                     Many of our listed services are transitioning to alternate
                     service delivery methods. Please check service providers'
                     websites for details.
                 </Trans>
             </Text>
-            <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 20 }]}>
+            <Text style={textStyles.paragraphStyleBrown}>
                 <Trans>
                     Questions about COVID-19? Get the latest information from
                     <Text>{' '}</Text>
@@ -76,19 +70,14 @@ export const CovidComponent = ({
             </Text>
         </View>
     );
-}
+};
 
 export const CallToActionFullComponent = (props: Props): JSX.Element => {
     return (
         <View>
             <View style={[
                 applicationStyles.boxShadowBelow,
-                {
-                    backgroundColor: colors.lightGrey,
-                    borderRadius: values.lessRoundedBorderRadius,
-                    padding: 20,
-                    marginBottom: 10,
-                },
+                callToActionStyles.callToActionContainer,
             ]}>
                 <FullComponentContent />
                 <FullComponentButton {...props} />
@@ -98,12 +87,11 @@ export const CallToActionFullComponent = (props: Props): JSX.Element => {
 };
 
 const FullComponentContent = (): JSX.Element => {
-    const logoSize = Dimensions.get('screen').width / 4;
     return (
         <View>
-            <View style={{ flex: 5, flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
-                <View style={{ flex: 3 }}>
-                    <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.greyishBrown, marginBottom: 20 }]}>
+            <View style={callToActionStyles.callToActionContent}>
+                <View style={callToActionStyles.callToActionUpperContent}>
+                    <Text style={[textStyles.headlineH5StyleBlackLeft, callToActionStyles.callToActionTitle]}>
                         <Trans>GETTING STARTED</Trans>
                     </Text>
                     <Text style={textStyles.headlineH2StyleBlackLeft}>
@@ -112,15 +100,11 @@ const FullComponentContent = (): JSX.Element => {
                 </View>
                 <Image
                     source={advisor}
-                    resizeMode={'contain'}
-                    style={{
-                        flex: 2,
-                        width: logoSize,
-                        height: logoSize,
-                    }}
+                    resizeMode='contain'
+                    style={callToActionStyles.advisorImage}
                 />
             </View>
-            <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 20 }]}>
+            <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionBottomContent]}>
                 <Trans>
                     Answer a few questions about your situation to get personalized
                     recommendations of topics and services to help you settle in British Columbia.
@@ -144,7 +128,7 @@ const FullComponentButton = (props: Props): JSX.Element => (
 
 export const CallToActionFullSubComponent = (): JSX.Element => {
     const rightColumnContent = (
-        <Text style={[textStyles.paragraphStyleBrown, { paddingLeft: 5 }]}>
+        <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionRightContent]}>
             <Trans>
                 Once you answer some questions, your recommendations will show up below.
                 For now, here are some topics we recommend for everyone:
@@ -157,20 +141,17 @@ export const CallToActionFullSubComponent = (): JSX.Element => {
 export const CallToActionPartialComponent = (props: Props): JSX.Element => {
     const rightColumnContent = (
         <View>
-            <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.greyishBrown, paddingTop: 4 }]}>
+            <Text style={[textStyles.headlineH5StyleBlackLeft, callToActionStyles.updateRecommendationTitle]}>
                 <Trans>UPDATE MY RECOMMENDATIONS</Trans>
             </Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={[textStyles.headline6, { marginRight: 10 }]}>
+            <View style={callToActionStyles.updateRecommendationContainer}>
+                <Text style={[textStyles.headline6, callToActionStyles.updateRecommendationSubtitle]}>
                     <Trans>Go back to questions</Trans>
                 </Text>
                 <Icon
-                    type={'FontAwesome'}
+                    type='FontAwesome'
                     name={I18nManager.isRTL ? 'arrow-left' : 'arrow-right'}
-                    style={{
-                        color: colors.teal,
-                        fontSize: 15,
-                    }}
+                    style={callToActionStyles.updateRecommendationIcon}
                 />
             </View>
         </View>
@@ -180,15 +161,7 @@ export const CallToActionPartialComponent = (props: Props): JSX.Element => {
             onPress={goToRouteWithoutParameter(Routes.Questionnaire, props.history)}
             style={[
                 applicationStyles.boxShadowBelow,
-                {
-                    backgroundColor: colors.lightGrey,
-                    borderRadius: values.lessRoundedBorderRadius,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    paddingVertical: 15,
-                    paddingHorizontal: 10,
-                    marginBottom: 15,
-                },
+                callToActionStyles.callToActionPartialContainer,
             ]}
         >
             {buildRecommendationContent(rightColumnContent)}
@@ -198,7 +171,7 @@ export const CallToActionPartialComponent = (props: Props): JSX.Element => {
 
 export const CallToActionPartialSubComponent = (): JSX.Element => {
     return (
-        <Text style={[textStyles.paragraphStyleBrown, { paddingHorizontal: values.backgroundTextPadding }]}>
+        <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.callToActionPartialContent]}>
             <Trans>
                 Based on your answers, we recommend these topics for you:
             </Trans>
@@ -207,20 +180,14 @@ export const CallToActionPartialSubComponent = (): JSX.Element => {
 };
 
 const buildRecommendationContent = (rightColumnContent: JSX.Element): JSX.Element => {
-    const logoSize = Dimensions.get('screen').width / 9;
     return (
         <View style={{ flex: 4, flexDirection: 'row', alignItems: 'center' }}>
             <Image
                 source={recommendationBubble}
-                resizeMode={'contain'}
-                style={{
-                    flex: 1,
-                    width: logoSize,
-                    height: logoSize,
-                    padding: 5,
-                }}
+                resizeMode='contain'
+                style={callToActionStyles.recommendationBubbleImage}
             />
-            <View style={{ flex: 3 }}>
+            <View style={callToActionStyles.recommendationRightContent}>
                 {rightColumnContent}
             </View>
         </View>

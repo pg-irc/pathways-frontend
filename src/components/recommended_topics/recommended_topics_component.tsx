@@ -6,7 +6,7 @@ import { TopicListItem } from '../../selectors/topics/types';
 import { TaskListActions } from '../topics/task_list_component';
 import { TaskListComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
-import { textStyles, colors, values } from '../../application/styles';
+import { textStyles } from '../../application/styles';
 import {
     CallToActionFullComponent,
     CallToActionFullSubComponent,
@@ -18,6 +18,8 @@ import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+
+import { recommendedTopicsStyles } from './styles';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
@@ -43,19 +45,11 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (
     <View>
-        <View
-            padder
-            style={{
-                backgroundColor: colors.white,
-            }}
-        >
+        <View style={recommendedTopicsStyles.taskListHeaderContainer}>
             <Text
                 style={[
                     textStyles.headlineH1StyleBlackLeft,
-                    {
-                        marginBottom: 10,
-                        paddingHorizontal: values.backgroundTextPadding,
-                    },
+                    recommendedTopicsStyles.taskListHeaderTitle,
                 ]}
             >
                 <Trans>Start settling in B.C.</Trans>
@@ -70,16 +64,12 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                 <CallToActionFullComponent {...props} />
             }
         </View>
-        <View padder style={{ backgroundColor: colors.lightGrey }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View padder style={recommendedTopicsStyles.recommendedListContainer}>
+            <View style={recommendedTopicsStyles.recommendedListTitleContainer}>
                 <Text
                     style={[
                         textStyles.headlineH2StyleBlackLeft,
-                        {
-                            marginVertical: 15,
-                            marginRight: 5,
-                            paddingHorizontal: values.backgroundTextPadding,
-                        },
+                        recommendedTopicsStyles.recommendedListTitle,
                     ]}
                 >
                     <Trans>Recommended for you</Trans>
