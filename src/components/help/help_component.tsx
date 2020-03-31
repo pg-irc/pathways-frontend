@@ -14,6 +14,8 @@ import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import * as R from 'ramda';
 import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
 import { UserLocation } from '../../validation/latlong/types';
+import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
 
@@ -67,45 +69,52 @@ export interface HelpComponentActions {
     readonly clearAllUserState: () => ClearAllUserDataAction;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly clearManualUserLocation: () => ClearManualUserLocationAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
 type Props = HelpComponentProps & HelpComponentActions;
 
 export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <Content padder style={applicationStyles.body}>
-        <View
-            style={{
-                backgroundColor: colors.white,
-                marginTop: -10,
-                marginHorizontal: -10,
-                padding: 10,
-                marginBottom: 10,
-            }}
-        >
-            <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
-                <Trans>{'Help & Support'}</Trans>
+    <View style={{ flex: 1 }}>
+        <MenuAndBackButtonHeaderComponent
+            {...props}
+            {...{ textColor: colors.teal, backgroundColor: colors.white }}
+        />
+        <Content padder style={applicationStyles.body}>
+            <View
+                style={{
+                    backgroundColor: colors.white,
+                    marginTop: -10,
+                    marginHorizontal: -10,
+                    padding: 10,
+                    marginBottom: 10,
+                }}
+            >
+                <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
+                    <Trans>{'Help & Support'}</Trans>
+                </Text>
+                <Text style={[textStyles.headlineH4StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
+                    <Trans>If you are having difficulty with settlement in Canada, we suggest getting in touch with a settlement worker.</Trans>
+                </Text>
+                <View style={{
+                    marginTop: 15,
+                    marginBottom: 20,
+                }}>
+                    <ContactSettlementWorkerButton {...props} />
+                </View>
+            </View>
+            <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
+                <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
             </Text>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
-                <Trans>If you are having difficulty with settlement in Canada, we suggest getting in touch with a settlement worker.</Trans>
-            </Text>
+            {mapWithIndex(renderContactComponent, fixture)}
             <View style={{
                 marginTop: 15,
                 marginBottom: 20,
             }}>
-                <ContactSettlementWorkerButton {...props} />
+                <ClearAppMemoryButton {...props} />
             </View>
-        </View>
-        <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
-            <Trans>FOR ADDITIONAL ASSISTANCE</Trans>
-        </Text>
-        {mapWithIndex(renderContactComponent, fixture)}
-        <View style={{
-            marginTop: 15,
-            marginBottom: 20,
-        }}>
-            <ClearAppMemoryButton {...props} />
-        </View>
-    </Content>
+        </Content>
+    </View>
 );
 
 const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => (

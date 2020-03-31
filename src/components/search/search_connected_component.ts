@@ -19,6 +19,7 @@ import { selectSearchResults } from '../../selectors/search/select_search_result
 import { SearchServiceData } from '../../validation/search/types';
 import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
 import { LatLong } from '../../validation/latlong/types';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
@@ -40,7 +41,8 @@ type Actions =
     SaveSearchLatLongAction |
     SaveSearchResultsAction |
     SetCollapseSearchInputAction |
-    HidePartialLocalizationMessageAction;
+    HidePartialLocalizationMessageAction |
+    OpenHeaderMenuAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
     saveService: (service: HumanServiceData): SaveServiceAction => (
@@ -72,6 +74,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     ),
     hidePartialLocalizationMessage: (): HidePartialLocalizationMessageAction => (
         dispatch(hidePartialLocalizationMessage())
+    ),
+    openHeaderMenu: (): OpenHeaderMenuAction => (
+        dispatch(openHeaderMenu())
     ),
 });
 

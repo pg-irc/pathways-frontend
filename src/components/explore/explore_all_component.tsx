@@ -7,15 +7,22 @@ import { Trans } from '@lingui/react';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
 import { mapWithIndex } from '../../application/map_with_index';
+import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 
 export interface ExploreAllProps {
     readonly sections: ReadonlyArray<ExploreSection>;
 }
 
-type AllExploreProps = ExploreAllProps & RouterProps;
+export interface ExploreAllActions {
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
+}
 
-export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
-    (props: AllExploreProps): JSX.Element => (
+type Props = ExploreAllProps & ExploreAllActions & RouterProps;
+
+export const ExploreAllComponent = (props: Props): JSX.Element => (
+    <View style={{ flex: 1 }}>
+        <HelpAndMenuButtonHeaderComponent {...props} />
         <Content padder style={{ backgroundColor: colors.white }}>
             <Text style={[textStyles.headlineH1StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding } ]}>
                 <Trans>Learn all about B.C.</Trans>
@@ -30,7 +37,8 @@ export const ExploreAllComponent: React.StatelessComponent<AllExploreProps> =
                 ), props.sections)}
             </View>
         </Content>
-    );
+    </View>
+);
 
 const buildButton = (buttonContent: JSX.Element, buttonOnPress: () => void, index: number): JSX.Element => (
     <TouchableOpacity onPress={buttonOnPress} style={[applicationStyles.boxShadowBelow, styles.button]} key={index}>

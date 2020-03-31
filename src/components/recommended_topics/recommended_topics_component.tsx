@@ -18,6 +18,8 @@ import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 
 import { recommendedTopicsStyles } from './styles';
 
@@ -27,20 +29,24 @@ export interface RecommendedTopicsProps {
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
 }
 
-export type AnalyticsAction = {
+export interface RecommendedTopicsActions {
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
-};
+}
 
-type Props = RecommendedTopicsProps & TaskListActions & RouterProps & AnalyticsAction;
+type Props = RecommendedTopicsProps & RecommendedTopicsActions & TaskListActions & RouterProps;
 
 export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <TaskListComponent
+    <View style={{ flex: 1 }}>
+        <HelpAndMenuButtonHeaderComponent {...props} />
+        <TaskListComponent
         {...props}
         tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
         savedTasksIdList={props.bookmarkedTopics}
         emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to recommend</Trans>}/>}
         headerContent={<TaskListHeaderComponent {...props} />}
     />
+    </View>
 );
 
 const TaskListHeaderComponent = (props: Props): JSX.Element => (

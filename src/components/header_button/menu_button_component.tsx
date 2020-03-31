@@ -1,10 +1,8 @@
 import React from 'react';
 import { Button, Icon } from 'native-base';
-import { Locale } from '../../locale';
 import { values } from '../../application/styles';
 
 export interface MenuButtonProps {
-    readonly locale: Locale;
     readonly textColor: string;
 }
 
