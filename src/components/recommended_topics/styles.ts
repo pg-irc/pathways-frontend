@@ -1,6 +1,6 @@
 import { Dimensions, ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
-import { colors, values } from '../../../application/styles';
+import { colors, values } from '../../application/styles';
 
 interface CallToActionStyles {
     readonly advisorImage: ImageStyle;
