@@ -1,6 +1,18 @@
 ## Internationalization (i18n)
 
-We are using [jsLingui](https://github.com/lingui/js-lingui) and [Weblate](https://weblate.org) for translation and internationalization. We translate strings through our own Weblate application here: [translate.peacegeeks.org](https://translate.peacegeeks.org). The source strings for Arrival Advisor, as well as information on how we integrate Weblate into our workflow can be found here: [https://github.com/pg-irc/ui-strings](https://github.com/pg-irc/ui-strings). 
+We are using [jsLingui](https://github.com/lingui/js-lingui) and [Weblate](https://weblate.org) for translation and internationalization. We translate strings through our own Weblate application here: [translate.peacegeeks.org](https://translate.peacegeeks.org). The source strings for Arrival Advisor, as well as information on how we integrate Weblate into our workflow can be found here: [https://github.com/pg-irc/ui-strings](https://github.com/pg-irc/ui-strings).
+
+## Adding App strings:
+
+All strings that need to be translated must be either placed within Lingui's `<Trans>` tag or `t` macro. Be sure to include all punctuations in the string as many languages handle these differently.
+
+For example:
+
+English: `Address:`
+
+French: `Address :`
+
+Chinese Simplified `地址：`
 
 ## Weblate Usage:
 
