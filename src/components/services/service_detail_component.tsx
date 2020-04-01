@@ -84,7 +84,7 @@ const ServiceOrganization = (props: { readonly history: History, readonly name: 
     <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
         <DividerComponent />
         <View>
-            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Provided by</Trans>: </Text>
+            <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Provided by:</Trans> </Text>
             <Text style={textStyles.paragraphStyle}>{props.name}</Text>
         </View>
         <DividerComponent />

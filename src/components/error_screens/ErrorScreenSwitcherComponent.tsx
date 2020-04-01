@@ -158,13 +158,13 @@ const getAdditionalContentForError = (error: Errors): JSX.Element | undefined =>
 const renderNoMatchingResultsSuggestions = (): JSX.Element => (
     <View>
         <Text style={textStyles.paragraphStyleBrown}>
-            {bulletPoint} <Trans>Search for a different keyword</Trans>
+            {bulletPoint} <Trans>Ensure your search is in English</Trans>
         </Text>
         <Text style={textStyles.paragraphStyleBrown}>
             {bulletPoint} <Trans>Double check for spelling</Trans>
         </Text>
         <Text style={textStyles.paragraphStyleBrown}>
-            {bulletPoint} <Trans>Ensure your search is in English</Trans>
+            {bulletPoint} <Trans>Search for a different keyword</Trans>
         </Text>
     </View>
 );

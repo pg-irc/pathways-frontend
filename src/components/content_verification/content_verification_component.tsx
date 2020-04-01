@@ -18,7 +18,7 @@ export const ContentVerificationComponent = (props: Props): JSX.Element => {
     return (
         <View style={{ flexDirection: 'row' }}>
             <Text style={[textStyles.paragraphBoldBlackLeft, { marginRight: 5 }]}>
-                <Trans>Last verified</Trans>:
+                <Trans>Last verified:</Trans>
             </Text>
             <Text style={textStyles.paragraphStyle}>
                 {props.verificationDate}

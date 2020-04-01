@@ -43,7 +43,7 @@ export const EmailComponent = (props: Props): JSX.Element => {
 
 const renderEmail = (email: string): JSX.Element => (
     <View>
-        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email</Trans>: </Text>
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>
         <Text style={textStyles.paragraphStyle}>{email}</Text>
     </View>
 );

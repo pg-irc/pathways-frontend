@@ -60,7 +60,7 @@ const buildAddress = R.curry((props: Props, address: Address): JSX.Element => {
 
 export const renderSingleAddress = (address: Address): JSX.Element => (
     <View>
-        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address</Trans>: </Text>
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address:</Trans> </Text>
         <Text style={textStyles.paragraphStyle}>{address.address}</Text>
         <Text style={textStyles.paragraphStyle}>
             {address.city} {address.stateProvince} {address.postalCode}
