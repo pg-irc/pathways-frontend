@@ -19,8 +19,8 @@ export class ManualUserLocation extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            latitude: props.manualUserLocation && '' + props.manualUserLocation.lat,
-            longitude: props.manualUserLocation && '' + props.manualUserLocation.lng,
+            latitude: props.manualUserLocation && '' + props.manualUserLocation.latLong.lat,
+            longitude: props.manualUserLocation && '' + props.manualUserLocation.latLong.lng,
         };
         this.onSetManualLocation = this.onSetManualLocation.bind(this);
         this.onClearManualLocation = this.onClearManualLocation.bind(this);
@@ -30,7 +30,10 @@ export class ManualUserLocation extends React.Component<Props, State> {
         const latitude = parseFloat(this.state.latitude);
         const longitude = parseFloat(this.state.longitude);
         if (latitude && longitude) {
-            this.props.setManualUserLocation({ lat: latitude, lng: longitude });
+            this.props.setManualUserLocation({
+                ...this.props.manualUserLocation,
+                latLong: { lat: latitude, lng: longitude },
+            });
         }
     }
 

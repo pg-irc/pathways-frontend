@@ -23,7 +23,7 @@ export function* updateServicesForTopic(action: actions.BuildServicesRequestActi
             return yield put(actions.buildServicesError(topicId, Errors.Offline));
         }
 
-        const deviceLocationResponse: DeviceLocation = yield call(getDeviceLocation, action.payload.manualUserLocation);
+        const deviceLocationResponse: DeviceLocation = yield call(getDeviceLocation, action.payload.manualUserLocation.latLong);
         if (errors.isNoLocationPermissionError(deviceLocationResponse)) {
             return yield put(actions.buildServicesError(topicId, deviceLocationResponse.type));
         }

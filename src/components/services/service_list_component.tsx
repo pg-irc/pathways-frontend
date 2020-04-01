@@ -1,20 +1,20 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { ListRenderItemInfo, FlatList, RefreshControl } from 'react-native';
+import React, { useEffect } from 'react';
+import { ListRenderItemInfo, FlatList } from 'react-native';
 import { Trans } from '@lingui/react';
-import { View, Text, Icon } from 'native-base';
+import { View, Text } from 'native-base';
 import * as Sentry from 'sentry-expo';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/types';
 import { ServiceListItemComponent } from './service_list_item_component';
 import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
-import { textStyles, colors, values } from '../../application/styles';
+import { textStyles, colors } from '../../application/styles';
 import { isSelectorErrorServicesForTopic } from '../../selectors/services/is_selector_error_services_for_topic';
 import * as constants from '../../application/constants';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
-import { LatLong } from '../../validation/latlong/types';
+import { UserLocation } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 import { Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
@@ -22,20 +22,28 @@ import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
 import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
+import { SetManualUserLocationAction } from '../../stores/manual_user_location';
+import { ServiceListLocationSearchComponent } from './service_list_location_search_component';
+import { SearchListSeparator } from '../search/separators';
+import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
+import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { History } from 'history';
 
 export interface ServiceListProps {
     readonly topic: Topic;
     readonly topicServicesOrError: SelectorTopicServices;
-    readonly manualUserLocation?: LatLong;
+    readonly manualUserLocation: UserLocation;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
 }
 
 export interface ServiceListActions {
-    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: LatLong) => BuildServicesRequestAction;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
+    readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
 export interface ServicesUpdater {
@@ -44,15 +52,11 @@ export interface ServicesUpdater {
 
 type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterProps;
 
-type Timestamp = number;
-type TimestampSetter = Dispatch<SetStateAction<Timestamp>>;
-
 export const ServiceListComponent = (props: Props): JSX.Element => {
-    const [lastScreenRefresh, setLastScreenRefresh]: readonly [Timestamp, TimestampSetter] = useState(Date.now());
-    useEffect(() => refreshServices(props), [lastScreenRefresh]);
+    useEffect(refreshServices(props), [props.manualUserLocation]);
 
     if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
-        return renderErrorComponent(props.topicServicesOrError, props.topic.title, (): void => setLastScreenRefresh(Date.now()));
+        return renderErrorComponent(props, refreshServices(props));
     }
 
     if (isLoadingServices(props.topicServicesOrError) || isInitialEmptyTopicServices(props.topicServicesOrError)) {
@@ -60,81 +64,81 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     }
 
     if (isValidEmptyTopicServices(props.topicServicesOrError)) {
-        return renderEmptyComponent(props, (): void => setLastScreenRefresh(Date.now()));
+        return renderEmptyComponent(props, refreshServices(props));
     }
-
     return (
-        <FlatList
-            style={{ backgroundColor: colors.lightGrey }}
-            refreshing={isLoadingServices(props.topicServicesOrError)}
-            onRefresh={(): void => refreshServices(props)}
-            refreshControl={renderRefreshControl(isLoadingServices(props.topicServicesOrError))}
-            data={getServicesIfValid(props.topicServicesOrError)}
-            keyExtractor={(service: HumanServiceData): string => service.id}
-            renderItem={renderServiceListItem(props)}
-            ListHeaderComponent={renderHeader(props)}
-        />
+        <ServiceListWrapper {...props}>
+            <FlatList
+                style={{ backgroundColor: colors.white }}
+                data={getServicesIfValid(props.topicServicesOrError)}
+                keyExtractor={(service: HumanServiceData): string => service.id}
+                renderItem={renderServiceListItem(props)}
+                ItemSeparatorComponent={SearchListSeparator}
+                ListHeaderComponent={
+                    <MessageComponent
+                        isVisible={props.showPartialLocalizationMessage}
+                        hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
+                    />
+                }
+            />
+        </ServiceListWrapper>
     );
 };
 
-const refreshServices = (props: Props): void => {
-    if (servicesFetchRequired(props.topicServicesOrError)) {
+const refreshServices = (props: Props): () => void => (
+    (): void => {
         props.dispatchServicesRequest();
     }
-};
-
-const servicesFetchRequired = (topicServicesOrError: SelectorTopicServices): boolean => (
-    topicServicesOrError.type === constants.ERROR_SERVICES_FOR_TOPIC ||
-    topicServicesOrError.type === constants.VALID_SERVICES_FOR_TOPIC && topicServicesOrError.isExpired ||
-    topicServicesOrError.type === constants.INITIAL_EMPTY_SERVICES_FOR_TOPIC
 );
 
-const renderErrorComponent = (topicServicesOrError: SelectorTopicServices, title: string, refreshScreen: () => void): JSX.Element => (
-    <ErrorComponent
-        errorType={determineErrorType(topicServicesOrError)}
-        refreshScreen={refreshScreen}
-        title={title}
-    />
-);
+type ServiceListWrapperProps = Props & { readonly children: JSX.Element };
 
-const renderLoadingComponent = (props: Props): JSX.Element => (
-    <LoadingServiceListComponent
-        header={renderHeader(props)}
-    />
-);
-
-const renderEmptyComponent = (props: Props, refreshScreen: () => void): JSX.Element => (
-    <EmptyServiceListComponent
-        title={<Trans>No services to show</Trans>}
-        imageSource={emptyTopicServicesList}
-        refreshScreen={refreshScreen}
-        header={renderHeader(props)}
-    />
-);
-
-const renderHeader = (props: Props): JSX.Element => (
-    <View style={{ marginBottom: -8}}>
-        <ServiceListHeaderComponent title={props.topic.title} />
-        <MessageComponent
-            isVisible={props.showPartialLocalizationMessage}
-            hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
-        />
+const ServiceListWrapper = (props: ServiceListWrapperProps): JSX.Element => (
+    <View style={{ flex: 1 }}>
+        {renderHeader(props)}
+        {props.children}
     </View>
 );
 
-const ErrorComponent = (props: { readonly errorType: Errors, readonly refreshScreen: () => void, readonly title: string }): JSX.Element => {
-    const sentryMessage = getSentryMessageForError(props.errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
+const renderErrorComponent = (props: Props, refreshScreen: () => void): JSX.Element => {
+    const errorType = determineErrorType(props.topicServicesOrError);
+    const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
     Sentry.captureMessage(sentryMessage);
     return (
-        <ErrorScreenSwitcherComponent
-            refreshScreen={props.refreshScreen}
-            errorType={props.errorType}
-            header={
-                <ServiceListHeaderComponent title={props.title} />
-            }
-        />
+        <ServiceListWrapper {...props}>
+            <ErrorScreenSwitcherComponent
+                refreshScreen={refreshScreen}
+                errorType={errorType}
+            />
+        </ServiceListWrapper>
     );
 };
+
+const renderLoadingComponent = (props: Props): JSX.Element => (
+    <ServiceListWrapper {...props}>
+        <LoadingServiceListComponent />
+    </ServiceListWrapper>
+);
+
+const renderEmptyComponent = (props: Props, refreshScreen: () => void): JSX.Element => (
+    <ServiceListWrapper {...props}>
+        <EmptyServiceListComponent
+            title={<Trans>No services to show</Trans>}
+            imageSource={emptyTopicServicesList}
+            refreshScreen={refreshScreen}
+        />
+    </ServiceListWrapper>
+);
+
+const renderHeader = (props: Props): JSX.Element => (
+    <ServiceListHeaderComponent
+        topicTitle={props.topic.title}
+        manualUserLocation={props.manualUserLocation}
+        setManualUserLocation={props.setManualUserLocation}
+        history={props.history}
+        openHeaderMenu={props.openHeaderMenu}
+    />
+);
 
 const determineErrorType = (topicServicesOrError: SelectorTopicServices): Errors => {
     if (isSelectorErrorServicesForTopic(topicServicesOrError)) {
@@ -173,48 +177,34 @@ const renderServiceListItem = (props: Props): ({ item }: ServiceItemInfo) => JSX
 };
 
 interface ServiceListHeaderComponentProps {
-    readonly title: string;
+    readonly topicTitle: string;
+    readonly manualUserLocation: UserLocation;
+    readonly history: History;
+    readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
-export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => {
-    const icon = (
-        <View style={{
-            flexDirection: 'row',
-        }}>
-            <Icon
-                type={'FontAwesome'} name={'map-marker'}
-                style={{
-                    color: colors.white,
-                    padding: 5,
-                    fontSize: values.smallIconSize,
-                }}
+export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => (
+    <View>
+        <MenuAndBackButtonHeaderComponent
+            {...props}
+            {...{ textColor: colors.white, backgroundColor: colors.teal }}
+        />
+        <View
+            style={{
+                backgroundColor: colors.teal,
+                paddingTop: 10,
+                paddingHorizontal: 10,
+                paddingBottom: 4,
+            }}
+        >
+            <Text style={[textStyles.headlineH2StyleWhiteLeft, { paddingHorizontal: 10, marginBottom: 10 }]}>
+                {props.topicTitle}
+            </Text>
+            <ServiceListLocationSearchComponent
+                manualUserLocation={props.manualUserLocation}
+                setManualUserLocation={props.setManualUserLocation}
             />
         </View>
-    );
-    const heading = (
-        <Text style={[textStyles.headlineH5StyleBlackLeft, { color: colors.white }]}>
-            <Trans>FIND A SERVICE NEAR YOU</Trans>
-        </Text>
-    );
-    const title = (
-        <Text style={textStyles.headlineH2StyleWhiteLeft}>
-            {props.title}
-        </Text>);
-    return (
-        <View style={{
-            backgroundColor: colors.teal,
-            marginHorizontal: -10,
-            marginTop: -10,
-            padding: 20,
-        }}
-        >
-            {icon}
-            {heading}
-            {title}
-        </View >
-    );
-};
-
-const renderRefreshControl = (refreshing: boolean): JSX.Element => (
-    <RefreshControl refreshing={refreshing} style={{backgroundColor: colors.teal}} tintColor={colors.white} />
+    </View>
 );

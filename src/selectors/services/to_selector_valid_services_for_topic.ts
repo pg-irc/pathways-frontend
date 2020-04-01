@@ -6,5 +6,4 @@ export const toSelectorValidServicesForTopic = (topicServices: ValidServicesForT
     SelectorValidServicesForTopic => ({
         services: topicServices.serviceIds.map((serviceId: ServiceId) => services[serviceId]),
         type: constants.VALID_SERVICES_FOR_TOPIC,
-        isExpired: topicServices.expiresAt < Date.now(),
     });

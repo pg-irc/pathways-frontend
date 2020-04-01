@@ -1,8 +1,5 @@
 // tslint:disable:no-expression-statement
-import {
-    Routes, routePathDefinition, routePathWithoutParameter,
-    isOnParentScreen, isOnChildScreen, routePathWithParameter,
-} from '../routing';
+import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter } from '../routing';
 import { aString } from '../../helpers/random_test_values';
 
 describe('the routePathDefinition function', () => {
@@ -76,50 +73,4 @@ describe('the routePathWithParameter function', () => {
         expect(() => routePathWithParameter(Routes.Learn, parameter)).toThrow();
     });
 
-});
-
-describe('the isOnParentScreen function', () => {
-
-    it('returns true on path: "/help"', () => {
-        expect(isOnParentScreen('/help')).toStrictEqual(true);
-    });
-
-    it('returns true on path: "/learn"', () => {
-        expect(isOnParentScreen('/learn')).toStrictEqual(true);
-    });
-
-    it('returns true on path: "/questionnaire"', () => {
-        expect(isOnParentScreen('/questionnaire')).toStrictEqual(true);
-    });
-
-    it('returns true on path: "/recommended-topics"', () => {
-        expect(isOnParentScreen('/recommended-topics')).toStrictEqual(true);
-    });
-
-    it('returns true on path: "/bookmarks"', () => {
-        expect(isOnParentScreen('/bookmarks')).toStrictEqual(true);
-    });
-
-    it('returns false on non parent screen path', () => {
-        expect(isOnParentScreen('/')).toStrictEqual(false);
-    });
-});
-
-describe('the isOnChildScreen function', () => {
-
-    it('returns true on path: "/task/A task"', () => {
-        expect(isOnChildScreen('/task/A task')).toStrictEqual(true);
-    });
-
-    it('returns true on path: "/services/A task service"', () => {
-        expect(isOnChildScreen('/services/A task service')).toStrictEqual(true);
-    });
-
-    it('returns true on path: "/learn/A learn section"', () => {
-        expect(isOnChildScreen('/learn/A learn section')).toStrictEqual(true);
-    });
-
-    it('returns false on non child screen path', () => {
-        expect(isOnChildScreen('/')).toStrictEqual(false);
-    });
 });

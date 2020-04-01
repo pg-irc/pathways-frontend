@@ -59,8 +59,6 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildS
     const topicId = action.payload.topicId;
     const newServicesAsMap = createServiceMap(newServices);
     const newServiceIds = R.map((service: types.HumanServiceData): string => service.id, newServices);
-    const twentyFourHoursInMilliseconds = 24 * 60 * 60 * 1000;
-    const expiresAt = Date.now() + twentyFourHoursInMilliseconds;
     return {
         ...store,
         services: {
@@ -72,7 +70,6 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildS
             [topicId]: {
                 type: constants.VALID_SERVICES_FOR_TOPIC,
                 serviceIds: newServiceIds,
-                expiresAt,
             },
         },
     };

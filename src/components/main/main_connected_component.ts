@@ -12,6 +12,13 @@ import { selectLocale } from '../../selectors/locale/select_locale';
 import { Locale } from '../../locale';
 import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
+import { 
+    CloseHeaderMenuAction, closeHeaderMenu, OpenHeaderMenuAction, openHeaderMenu, CloseAboutModalAction, closeAboutModal,
+    openAboutModal, CloseDisclaimerModalAction, closeDisclaimerModal, OpenAboutModalAction, OpenDisclaimerModalAction, openDisclaimerModal,
+} from '../../stores/header_menu';
+import { selectIsHeaderMenuVisible } from '../../selectors/header_menu/select_is_header_menu_visible';
+import { selectIsAboutModalVisible } from '../../selectors/header_menu/select_is_about_modal_visible';
+import { selectIsDisclaimerModalVisible } from '../../selectors/header_menu/select_is_disclaimer_modal_visible';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 
@@ -28,10 +35,29 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     locale: selectLocale(store),
     localeIsSet: selectIsLocaleSet(store),
     showOnboarding: selectShowOnboarding(store),
+    isHeaderMenuVisible: selectIsHeaderMenuVisible(store),
+    isAboutModalVisible: selectIsAboutModalVisible(store),
+    isDisclaimerModalVisible: selectIsDisclaimerModalVisible(store),
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<RouteChangedAction>): MainComponentActions => ({
+type Actions =
+    RouteChangedAction |
+    CloseHeaderMenuAction |
+    OpenHeaderMenuAction |
+    CloseAboutModalAction |
+    OpenAboutModalAction |
+    CloseDisclaimerModalAction |
+    OpenDisclaimerModalAction |
+    RouteChangedAction;
+
+const mapDispatchToProps = (dispatch: Dispatch<Actions>): MainComponentActions => ({
     sendAnalyticsData: (location: Location, locale: Locale): RouteChangedAction => dispatch(routeChanged(location, locale)),
+    closeHeaderMenu: (): CloseHeaderMenuAction => dispatch(closeHeaderMenu()),
+    openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
+    closeAboutModal: (): CloseAboutModalAction => dispatch(closeAboutModal()),
+    openAboutModal: (): OpenAboutModalAction => dispatch(openAboutModal()),
+    closeDisclaimerModal: (): CloseDisclaimerModalAction => dispatch(closeDisclaimerModal()),
+    openDisclaimerModal: (): OpenDisclaimerModalAction => dispatch(openDisclaimerModal()),
 });
 
 const componentWithLoader = withLoader<MainComponentProps>(MainComponent);
