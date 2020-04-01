@@ -2,7 +2,6 @@
 import { Trans } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { History } from 'history';
-import _ from 'lodash';
 import * as R from 'ramda';
 import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import {
@@ -115,9 +114,6 @@ const NavigationDots = (props: { readonly currentIndex: number, readonly count: 
             const dotStyle = props.currentIndex === loopIndex
                 ? [styles.dotStyle, styles.activeDot]
                 : styles.dotStyle;
-
-            console.log();
-
             return <View key={loopIndex} style={dotStyle} />;
         },
         R.range(0, props.count),
@@ -153,17 +149,17 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
         goToRouteWithoutParameter(Routes.RecommendedTopics, history)();
     };
 
-    const onIndexChange = _.debounce((newIndex: number): void => {
+    const onIndexChange = (newIndex: number): void => {
         setIndex(computeSwiperIndex(newIndex, I18nManager.isRTL, Platform.OS));
-    }, 300, { leading: true });
+    };
 
-    const onActionPress = _.debounce((): void => {
+    const onActionPress = (): void => {
         if (index === ONBOARDING_DATA.length - 1) {
             onSkipPress();
         } else {
             swiperRef.current.scrollBy(scrollDirection);
         }
-    }, 300, { leading: true });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
