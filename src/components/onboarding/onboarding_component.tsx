@@ -2,6 +2,7 @@
 import { Trans } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { History } from 'history';
+import _ from 'lodash';
 import * as R from 'ramda';
 import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
 import {
@@ -10,6 +11,7 @@ import {
     ImageSourcePropType,
     SafeAreaView,
     Platform,
+    PlatformOSType,
     TouchableOpacity,
     Text,
     View,
@@ -30,6 +32,10 @@ import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_co
 
 import styles from './styles';
 
+enum STEP {
+    FORWARD = 1,
+    BACKWARD = -1,
+}
 export interface OnboardingComponentActions {
     readonly hideOnboarding: () => HideOnboardingAction;
 }
@@ -124,63 +130,40 @@ const NavigationDots = (props: { readonly currentIndex: number, readonly count: 
     );
 };
 
-enum STEP {
-    FORWARD = 1,
-    BACKWARD = -1,
+function computeSwiperIndex(index: number, isRTL: boolean, platform: PlatformOSType): number {
+    if (platform === 'android' && isRTL) {
+        return ONBOARDING_DATA.length - 1 - index;
+    }
+
+    return index;
 }
 
 export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Element => {
     const swiperRef = useRef<Swiper>();
 
-    const initialSwiperIndex = I18nManager.isRTL ? ONBOARDING_DATA.length - 1 : 0;
-
-    const lastSwiperIndex = I18nManager.isRTL ? 0 : ONBOARDING_DATA.length - 1;
-
     const [index, setIndex]: readonly [number, Dispatch<SetStateAction<number>>]
         = useState<number>(0);
 
-    const [swiperIndex, setSwiperIndex]: readonly [number, Dispatch<SetStateAction<number>>]
-        = useState<number>(initialSwiperIndex);
+    const swiperIndex: number = computeSwiperIndex(index, I18nManager.isRTL, Platform.OS);
 
-    const isLastSwiperSlide = (): boolean => {
-        if (Platform.OS === 'android') {
-            return swiperIndex === lastSwiperIndex;
-        }
-
-        return index === ONBOARDING_DATA.length - 1;
-    };
-
-    const getInitialIndex = (): number => {
-        if (Platform.OS === 'android') {
-            return I18nManager.isRTL ? ONBOARDING_DATA.length - 1 : 0;
-        }
-
-        return 0;
-    };
-
-    const onSwiperIndexChanged = (newIndex: number): void => {
-        if (Platform.OS === 'android') {
-            setSwiperIndex(newIndex);
-            setIndex(I18nManager.isRTL ? ONBOARDING_DATA.length - 1 - newIndex : newIndex);
-        } else {
-            setIndex(newIndex);
-        }
-    };
+    const scrollDirection: STEP = I18nManager.isRTL && Platform.OS === 'android' ? STEP.BACKWARD : STEP.FORWARD;
 
     const onSkipPress = (): void => {
         hideOnboarding();
         goToRouteWithoutParameter(Routes.RecommendedTopics, history)();
     };
 
-    const onActionPress = (): void => {
-        if (isLastSwiperSlide()) {
+    const onIndexChange = _.debounce((newIndex: number): void => {
+        setIndex(computeSwiperIndex(newIndex, I18nManager.isRTL, Platform.OS));
+    }, 300, { leading: true });
+
+    const onActionPress = _.debounce((): void => {
+        if (index === ONBOARDING_DATA.length - 1) {
             onSkipPress();
-        } else if (Platform.OS === 'android') {
-            swiperRef.current.scrollBy(I18nManager.isRTL ? STEP.BACKWARD : STEP.FORWARD);
         } else {
-            swiperRef.current.scrollBy(STEP.FORWARD);
+            swiperRef.current.scrollBy(scrollDirection);
         }
-    };
+    }, 300, { leading: true });
 
     return (
         <SafeAreaView style={styles.container}>
@@ -191,10 +174,10 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
                         // We don't want to display Swiper's built in dot display
                         activeDot={<View style={{ display: 'none' }} />}
                         dot={<View style={{ display: 'none' }} />}
-                        index={getInitialIndex()}
+                        index={swiperIndex}
                         horizontal={true}
                         loop={false}
-                        onIndexChanged={onSwiperIndexChanged}
+                        onIndexChanged={onIndexChange}
                         ref={swiperRef}
                         showsButtons={false}
                     >
@@ -224,7 +207,7 @@ export const OnboardingComponent = ({ hideOnboarding, history }: Props): JSX.Ele
                 <View style={styles.nextButtonSection}>
                     <MultiLineButtonComponent onPress={onActionPress} additionalStyles={styles.nextButton}>
                         <Text style={textStyles.button}>
-                            <Trans id={isLastSwiperSlide() ? t`Start` : t`Next` } />
+                            <Trans id={index === ONBOARDING_DATA.length - 1 ? t`Start` : t`Next` } />
                         </Text>
                     </MultiLineButtonComponent>
                     <NavigationDots currentIndex={index} count={ONBOARDING_DATA.length}/>
