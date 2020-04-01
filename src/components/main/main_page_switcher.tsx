@@ -13,6 +13,7 @@ import { BookmarksConnectedComponent } from '../bookmarks/bookmarks_connected_co
 import { SearchConnectedComponent } from '../search/search_connected_component';
 import { OrganizationDetailComponent } from '../organizations/organization_detail_component';
 import { ServiceDetailConnectedComponent } from '../services/service_detail_connected_component';
+import { FeedbackOtherRemoveServiceModal } from '../feedback/feedback_other_remove_service_component';
 import { Routes, routePathDefinition, routePathWithoutParameter } from '../../application/routing';
 import { Locale } from '../../locale';
 
@@ -37,6 +38,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
         <Route exact path={routePathDefinition(Routes.Search)} component={SearchConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.OrganizationDetail)} component={OrganizationDetailComponent} />
         <Route exact path={routePathDefinition(Routes.ServiceDetail)} component={ServiceDetailConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.Feedback)} component={FeedbackOtherRemoveServiceModal} />
         <Redirect to={defaultPath(props)} />
     </Switch>
 );
