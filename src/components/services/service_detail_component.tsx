@@ -4,7 +4,7 @@ import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
-import { values, textStyles } from '../../application/styles';
+import { values, textStyles, colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
