@@ -24,7 +24,7 @@ interface Props {
 
 export const AddressesComponent = (props: Props): JSX.Element => {
     if (isServiceDetailArrayEmpty(props.addresses)) {
-        return <MissingServiceDetailComponent title={<Trans>Address</Trans>} />;
+        return <MissingServiceDetailComponent title={<Trans>Address:</Trans>} />;
     }
 
     return (
