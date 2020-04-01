@@ -26,7 +26,7 @@ export const EmailComponent = (props: Props): JSX.Element => {
     };
 
     if (isServiceDetailStringEmpty(props.email)) {
-        return <MissingServiceDetailComponent title={<Trans>Email</Trans>} />;
+        return <MissingServiceDetailComponent title={<Trans>Email:</Trans>} />;
     }
 
     return (

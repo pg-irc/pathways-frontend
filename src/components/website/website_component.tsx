@@ -25,7 +25,7 @@ export const WebsiteComponent = (props: Props): JSX.Element => {
     };
 
     if (isServiceDetailStringEmpty(props.website)) {
-        return <MissingServiceDetailComponent title={<Trans>Website</Trans>} />;
+        return <MissingServiceDetailComponent title={<Trans>Website:</Trans>} />;
     }
 
     return (

@@ -12,7 +12,7 @@ interface Props {
 
 export const ContentVerificationComponent = (props: Props): JSX.Element => {
     if (isServiceDetailStringEmpty(props.verificationDate)) {
-        return <MissingServiceDetailComponent title={<Trans>Last verified</Trans>} />;
+        return <MissingServiceDetailComponent title={<Trans>Last verified:</Trans>} />;
     }
 
     return (
