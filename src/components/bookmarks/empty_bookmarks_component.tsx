@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text, View } from 'native-base';
 import { colors, textStyles, imageStyles } from '../../application/styles';
-import { ImageSourcePropType, Image } from 'react-native';
+import { Image } from 'react-native';
+import { emptyBookmarks } from '../../application/images';
 
 export interface EmptyListProps {
-    readonly imageSource: ImageSourcePropType;
     readonly title: JSX.Element;
 }
 
@@ -18,15 +18,15 @@ export const EmptyBookmarksComponent = (props: EmptyListProps): JSX.Element => (
                 paddingHorizontal: 20,
             }}
         >
-            <EmptyBookmarksImage imageSource={props.imageSource} />
+            <EmptyBookmarksImage />
             <EmptyBookmarksTitle title={props.title} />
         </View>
     </View>
 );
 
-const EmptyBookmarksImage = (props: { readonly imageSource: ImageSourcePropType }): JSX.Element => (
+const EmptyBookmarksImage = (): JSX.Element => (
     <Image
-        source={props.imageSource}
+        source={emptyBookmarks}
         resizeMode={'contain'}
         style={imageStyles.emptyOrErrorComponentImage}
     />

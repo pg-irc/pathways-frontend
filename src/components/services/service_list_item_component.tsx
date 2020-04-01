@@ -6,24 +6,42 @@ import { TouchableOpacity } from 'react-native';
 import { mapWithIndex } from '../../application/map_with_index';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
 import { History } from 'history';
+import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
+import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
 
 export interface ServiceListItemProps {
     readonly service: HumanServiceData;
-    readonly currentPath: string;
     readonly onPress: () => void;
     readonly history: History;
+    readonly isBookmarked: boolean;
 }
 
-export const ServiceListItemComponent: React.StatelessComponent<ServiceListItemProps> =
-    (props: ServiceListItemProps): JSX.Element => {
+export interface ServiceListItemActions {
+    readonly onBookmark: () => BookmarkServiceAction;
+    readonly onUnbookmark: () => UnbookmarkServiceAction;
+}
+
+type Props = ServiceListItemProps & ServiceListItemActions;
+
+export const ServiceListItemComponent = (props: Props): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
         return (
             <TouchableOpacity onPress={props.onPress}>
-                <View style={{ backgroundColor: colors.white, marginTop: 8, padding: 15 }}>
+                 <View style={{ backgroundColor: colors.white, marginTop: 8, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
+                    <View style={{flex: 2, paddingLeft: 15}}>
                     {renderName(serviceName)}
                     {/* {renderOrganizationName(props.service.organizationName)} */}
                     {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
                     {renderDescription(props.service.description)}
+                    </View>
+                    <View>
+                        <BookmarkButtonComponent
+                            isBookmarked={props.isBookmarked}
+                            textColor={colors.teal}
+                            bookmark={props.onBookmark}
+                            unbookmark={props.onUnbookmark}
+                        />
+                    </View>
                 </View>
             </TouchableOpacity>
         );

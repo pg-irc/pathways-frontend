@@ -91,12 +91,17 @@ const renderSearchHit = R.curry((props: Props, itemInfo: ListRenderItemInfo<Sear
         props.saveService(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };
+
+    const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
+    const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
     return (
         <ServiceListItemComponent
             service={service}
             history={props.history}
-            currentPath={props.location.pathname}
             onPress={onPress}
+            isBookmarked={service.bookmarked}
+            onBookmark={onBookmark}
+            onUnbookmark={onUnbookmark}
         />
     );
 });

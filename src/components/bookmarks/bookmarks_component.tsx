@@ -7,9 +7,9 @@ import { View, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { colors, textStyles, values } from '../../application/styles';
 import { ReactI18nRenderProp } from '../../locale/types';
-import { TaskListActions } from '../topics/task_list_component';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
+import { ListActions } from './bookmarks_connected_component';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -20,7 +20,7 @@ export interface BookmarkActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
-type Props = BookmarksProps & BookmarkActions & TaskListActions & RouterProps ;
+type Props = BookmarksProps & ListActions & RouterProps ;
 
 export const BookmarksComponent = (props: Props): JSX.Element => {
     return (
