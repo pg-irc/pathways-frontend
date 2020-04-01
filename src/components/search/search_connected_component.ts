@@ -9,15 +9,17 @@ import { selectBookmarkedServicesIds } from '../../selectors/services/select_boo
 import {
     SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction,
     saveSearchLocation, saveSearchTerm, setCollapseSearchInput, SaveSearchResultsAction, saveSearchResults,
-    SaveSearchLatLongAction, saveSearchLatLong,
+    SaveSearchLatLongAction, saveSearchLatLong, SaveSearchPageAction, saveSearchPage, SaveNumberOfSearchPagesAction, saveNumberOfSearchPages,
 } from '../../stores/search';
 import { selectSearchTerm } from '../../selectors/search/select_search_term';
 import { selectSearchLocation } from '../../selectors/search/select_search_location';
+import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
+import { selectSearchPage } from '../../selectors/search/select_search_page';
+import { selectNumberOfSearchPages } from '../../selectors/search/select_number_of_search_pages';
 import { selectIsInputCollapsed } from '../../selectors/search/select_is_input_collapsed';
 import { selectShowPartialLocalizationMessage } from '../../selectors/user_profile/select_show_partial_localization_message';
 import { selectSearchResults } from '../../selectors/search/select_search_results';
 import { SearchServiceData } from '../../validation/search/types';
-import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
 import { LatLong } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
 
@@ -25,6 +27,8 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
     searchTerm: selectSearchTerm(store),
     searchLocation: selectSearchLocation(store),
+    searchPage: selectSearchPage(store),
+    numberOfSearchPages: selectNumberOfSearchPages(store),
     searchResults: selectSearchResults(store),
     searchLatLong: selectSearchLatLong(store),
     collapseSearchInput: selectIsInputCollapsed(store),
@@ -39,6 +43,8 @@ type Actions =
     SaveSearchTermAction |
     SaveSearchLocationAction |
     SaveSearchLatLongAction |
+    SaveSearchPageAction |
+    SaveNumberOfSearchPagesAction |
     SaveSearchResultsAction |
     SetCollapseSearchInputAction |
     HidePartialLocalizationMessageAction |
@@ -65,6 +71,12 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     ),
     saveSearchLatLong: (searchLatLong: LatLong): SaveSearchLatLongAction => (
         dispatch(saveSearchLatLong(searchLatLong))
+    ),
+    saveSearchPage: (searchPage: number): SaveSearchPageAction => (
+        dispatch(saveSearchPage(searchPage))
+    ),
+    saveNumberOfSearchPages: (numberOfSearchPages: number): SaveNumberOfSearchPagesAction => (
+        dispatch(saveNumberOfSearchPages(numberOfSearchPages))
     ),
     saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>): SaveSearchResultsAction => (
         dispatch(saveSearchResults(searchResults))

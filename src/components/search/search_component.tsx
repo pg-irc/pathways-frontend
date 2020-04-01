@@ -11,7 +11,7 @@ import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
-import { SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction, SaveSearchResultsAction, SaveSearchLatLongAction } from '../../stores/search';
+import { SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction, SaveSearchResultsAction, SaveSearchLatLongAction, SaveSearchPageAction, SaveNumberOfSearchPagesAction } from '../../stores/search';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
 import { useOnlineStatus } from '../../hooks/use_online_status';
@@ -28,6 +28,8 @@ export interface SearchComponentProps {
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
+    readonly searchPage: number;
+    readonly numberOfSearchPages: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
     readonly showPartialLocalizationMessage: boolean;
@@ -41,6 +43,8 @@ export interface SearchComponentActions {
     readonly saveSearchTerm: (searchTerm: string) => SaveSearchTermAction;
     readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
     readonly saveSearchLatLong: (searchLatLong: LatLong) => SaveSearchLatLongAction;
+    readonly saveSearchPage: (searchPage: number) => SaveSearchPageAction;
+    readonly saveNumberOfSearchPages: (numberOfSearchPages: number) => SaveNumberOfSearchPagesAction;
     readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => SaveSearchResultsAction;
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => SetCollapseSearchInputAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
@@ -55,8 +59,6 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
-    const [searchPage, setSearchPage]: readonly [number, (n: number) => void] = useState(0);
-    const [numberOfPages, setNumberOfPages]: readonly [number, (n: number) => void] = useState(1);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
@@ -72,7 +74,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
                 geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
                 props.saveSearchLatLong(geocoderLatLong);
             }
-            const searchResults = await fetchSearchResultsFromQuery(searchTerm, searchPage, geocoderLatLong, setNumberOfPages);
+            const searchResults = await fetchSearchResultsFromQuery(searchTerm, props.searchPage, geocoderLatLong, props.saveNumberOfSearchPages);
             props.saveSearchResults(searchResults);
         } finally {
             setIsLoading(false);
@@ -81,14 +83,15 @@ export const SearchComponent = (props: Props): JSX.Element => {
 
     const onLoadMore = async (): Promise<void> => {
         try {
-            const moreResults = await fetchSearchResultsFromQuery(props.searchTerm, searchPage + 1, props.searchLatLong, setNumberOfPages);
+            const moreResults = await fetchSearchResultsFromQuery(props.searchTerm, props.searchPage + 1, props.searchLatLong, props.saveNumberOfSearchPages);
             props.saveSearchResults([...props.searchResults, ...moreResults]);
         } finally {
-            setSearchPage(searchPage + 1);
+            props.saveSearchPage(props.searchPage + 1);
         }
     };
 
-    const searchResultsProps = { ...props, isLoading, onlineStatus, searchPage, numberOfPages, onSearchRequest, onLoadMore, setSearchPage };
+    // tslint:disable-next-line: max-line-length
+    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchRequest, onLoadMore };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <Header

@@ -15,6 +15,8 @@ export interface PersistedData {
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
+    readonly searchPage: number;
+    readonly numberOfSearchPages: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
     readonly showPartialLocalizationMessage: boolean;
