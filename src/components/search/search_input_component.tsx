@@ -9,7 +9,7 @@ import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import { ClearInputButton } from './clear_input_button';
 import * as IntentLauncher from 'expo-intent-launcher';
 import * as Permissions from 'expo-permissions';
-import { isAndroid } from '../../helpers/is_android';
+import { isAndroid } from '../../application/is_android';
 import { openURL } from '../link/link';
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';

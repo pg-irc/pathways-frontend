@@ -1,6 +1,6 @@
 import { StyleSheet, Platform, Dimensions } from 'react-native';
 import { I18nManager } from 'react-native';
-import { isAndroid } from '../helpers/is_android';
+import { isAndroid } from './is_android';
 
 export const colors = {
     pale: '#ffebcb',
