@@ -1,6 +1,6 @@
 // tslint:disable:typedef
 
-import * as constants  from '../application/constants';
+import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 
 export namespace AnalyticsAsync {
@@ -23,7 +23,12 @@ export namespace AnalyticsAsync {
 }
 
 export type AnalyticsLinkPressedAction = Readonly<ReturnType<typeof analyticsLinkPressed>>;
+export type SearchQueriedAction = Readonly<ReturnType<typeof searchQueried>>;
 
 export const analyticsLinkPressed = (currentPath: string, linkContext: string, linkType: string, linkValue: string) => (
-    helpers.makeAction(constants.ANALYTICS_LINK_PRESSED, {currentPath, linkContext, linkType, linkValue})
+    helpers.makeAction(constants.ANALYTICS_LINK_PRESSED, { currentPath, linkContext, linkType, linkValue })
+);
+
+export const searchQueried = (searchTerm: string, searchLocation: string) => (
+    helpers.makeAction(constants.SEARCH_QUERIED, { searchTerm, searchLocation })
 );

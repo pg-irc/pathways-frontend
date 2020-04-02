@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-any
 
 import * as constants from '../../application/constants';
-import { AnalyticsAsync, AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { AnalyticsAsync, AnalyticsLinkPressedAction, SearchQueriedAction } from '../../stores/analytics';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { selectDisableAnalytics } from '../../selectors/user_profile/select_disable_analytics';
@@ -15,7 +15,8 @@ export type WatchedAction =
     BookmarkTopicAction |
     ExpandDetailAction |
     CollapseDetailAction |
-    AnalyticsLinkPressedAction;
+    AnalyticsLinkPressedAction |
+    SearchQueriedAction;
 
 export function* watchAnalytics(): IterableIterator<ForkEffect> {
     yield takeLatest(
@@ -26,6 +27,7 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
             constants.COLLAPSE_DETAIL,
             constants.BOOKMARK_TOPIC,
             constants.ANALYTICS_LINK_PRESSED,
+            constants.SEARCH_QUERIED,
         ],
         sendAnalyticsData);
 }
@@ -67,6 +69,9 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
             break;
         case constants.ANALYTICS_LINK_PRESSED:
             events.sendLinkPressedEvent(action.payload.currentPath, action.payload.linkContext, action.payload.linkType, action.payload.linkValue);
+            break;
+        case constants.SEARCH_QUERIED:
+            events.sendSearchQueriedEvent(action.payload.searchTerm, action.payload.searchLocation);
             break;
         default:
             break;

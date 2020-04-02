@@ -22,6 +22,12 @@ export const sendBookmarkAddedEvent = (topicId: string): void => {
     analytics.hit(event);
 };
 
+export const sendSearchQueriedEvent = (searchTerm: string, searchLocation: string): void => {
+    const analytics = createAnalytics();
+    const event = createEvent('Search', 'SearchQueried', [searchTerm, searchLocation]);
+    analytics.hit(event);
+};
+
 export const sendExpandDetail = (contentId: string): void => {
     const analytics = createAnalytics();
     const event = createEvent('Detail', 'DetailExpanded', contentId);
@@ -72,7 +78,7 @@ const createScreenHit = (path: string): any => (
 );
 
 // tslint:disable-next-line:no-any
-const createEvent = (category: string, action: string, label?: string, value?: number): any => (
+const createEvent = (category: string, action: string, label?: string | readonly string[], value?: number): any => (
     new Event(category, action, label, value)
 );
 
