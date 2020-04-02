@@ -4,7 +4,7 @@ import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { values, applicationStyles, colors, textStyles } from '../../application/styles';
-import { debug, useTraceUpdate } from '../../helpers/debug';
+import { debug, useTraceUpdate } from '../../application/use_trace_update';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import { ClearInputButton } from './clear_input_button';
 import * as IntentLauncher from 'expo-intent-launcher';

@@ -5,7 +5,7 @@ import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { colors, values, textStyles } from '../../application/styles';
 import { SearchServiceData } from '../../validation/search/types';
-import { useTraceUpdate } from '../../helpers/debug';
+import { useTraceUpdate } from '../../application/use_trace_update';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
