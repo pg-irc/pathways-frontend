@@ -95,12 +95,12 @@ const useFeedbackInputControl = (): readonly [string, (value: string) => void] =
 const HeaderComponent = (props: HeaderComponentProps): JSX.Element => {
     const goBackShowModal = useServiceDetailRoute(
         // TODO useQuery only supports string Records for now
-        { optionsModalVisible: 'false' },
+        { feedbackOptionsModalMode: 'hidden' },
     );
 
     const goBackHideModal = useServiceDetailRoute(
         // TODO useQuery only supports string Records for now
-        { optionsModalVisible: 'true' },
+        { feedbackOptionsModalMode: 'visible' },
     );
 
     const onBack = (): void => goBackShowModal();
@@ -183,7 +183,7 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
     );
 };
 
-const getFeedbackJSON = (mode: QueryParameters['mode'], input: string): string => {
+const getFeedbackJSON = (mode: QueryParameters['feedbackContentMode'], input: string): string => {
     const emptyFeedback = getEmptyFeedback();
     const feedbackField = mode === 'OTHER' ?
         { other: {...emptyFeedback.other, value: input }}
@@ -200,13 +200,13 @@ export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
 
     const goBackReceiveUpdatesShow = useServiceDetailRoute(
         // TODO useQuery only supports string Records for now
-        { receiveUpdatesModalVisible: 'true', feedback: getFeedbackJSON(query.mode, input) },
+        { feedbackSubmitModalMode: 'visible', feedback: getFeedbackJSON(query.feedbackContentMode, input) },
     );
 
     const onSubmit = (): void => goBackReceiveUpdatesShow();
 
     // TODO: Formulate a more robust typed query param getter
-    const content: SuggestionContent = SUGGESTION_CONTENT[query.mode];
+    const content: SuggestionContent = SUGGESTION_CONTENT[query.feedbackContentMode];
 
     return (
         <Container>
