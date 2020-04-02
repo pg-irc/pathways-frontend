@@ -3,9 +3,9 @@ import React from 'react';
 import { Text } from 'react-native';
 import { Trans } from '@lingui/react';
 import * as IntentLauncher from 'expo-intent-launcher';
-import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
-import { textStyles } from '../../application/styles';
-import { openURL } from '../link/link';
+import { MultiLineButtonComponent } from './mutiline_button/multiline_button_component';
+import { textStyles } from '../application/styles';
+import { openURL } from './link/link';
 
 export enum SettingsType {
     AndroidAppLocation,

@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
-import { CardButtonComponent } from '../card_button/card_button_component';
+import { CardButtonComponent } from '../card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';

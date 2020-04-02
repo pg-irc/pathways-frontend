@@ -1,9 +1,9 @@
 // tslint:disable:no-expression-statement
-import { OnlineStatus } from '../../../hooks/use_online_status';
+import { OnlineStatus } from '../use_online_status';
 import { LatLong } from '../../../validation/latlong/types';
 import { toGeoCoderLatLong } from '../../../validation/latlong';
 import BuildUrl from 'build-url';
-import { getDeviceLocation } from '../../../async/location';
+import { getDeviceLocation } from '../../../application/helpers/get_device_location';
 import * as errors from '../../../validation/errors/is_error';
 import { MY_LOCATION } from '../../../application/constants';
 

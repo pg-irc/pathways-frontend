@@ -6,7 +6,7 @@ import { BookmarkTopicAction, UnbookmarkTopicAction, Id } from '../../stores/top
 import { I18nManager, TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
-import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
+import { BookmarkButtonComponent } from '../bookmark_button_component';
 import { RecommendedIconComponent } from '../recommended_topics/recommended_icon_component';
 
 export interface TaskListItemProps {

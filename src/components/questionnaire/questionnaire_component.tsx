@@ -12,7 +12,7 @@ import { Id, ChooseAnswerAction, SetActiveQuestionAction, AnswersMap } from '../
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { CloseButtonComponent } from '../close_button/close_button_component';
+import { CloseButtonComponent } from '../close_button_component';
 import { NewTopicsModalConnectedComponent } from './new_topics_modal_connected_component';
 import { CloseQuestionnaireAction } from '../../stores/questionnaire/actions';
 import { Id as TopicId, TopicMap } from '../../stores/topics';

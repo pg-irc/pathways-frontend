@@ -3,7 +3,7 @@
 
 import { selectIconFromExploreTaxonomy } from '../explore/select_icon_from_explore_taxonomy';
 import { ExploreTaxonomyId, TaxonomyTermReference, Taxonomy } from '../../stores/taxonomies';
-import { aString } from '../../helpers/random_test_values';
+import { aString } from '../../application/helpers/random_test_values';
 
 const taxonomyRefsWithExploreTerm = (term: string): ReadonlyArray<TaxonomyTermReference> => ([
     {

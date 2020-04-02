@@ -1,7 +1,7 @@
 import * as Permissions from 'expo-permissions';
 import * as Location from 'expo-location';
-import { Errors } from '../validation/errors/types';
-import { LatLong } from '../validation/latlong/types';
+import { Errors } from '../../validation/errors/types';
+import { LatLong } from '../../validation/latlong/types';
 
 export type NoLocationPermissionErrorAction = Readonly<ReturnType<typeof noLocationPermissionError>>;
 

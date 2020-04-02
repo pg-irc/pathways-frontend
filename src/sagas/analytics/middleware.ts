@@ -1,11 +1,11 @@
 // tslint:disable:no-expression-statement
 import { Dispatch, MiddlewareAPI } from 'redux';
-import { Store } from '../stores';
+import { Store } from '../../stores';
 import * as R from 'ramda';
-import { sendServicesCountEvent } from '../sagas/analytics/events';
-import { SAVE_SERVICE, LOAD_SERVICES_SUCCESS, MEMORY_REPORT_SEND_EVERY_SERVICES_COUNT } from '../application/constants';
-import { reducer as servicesReducer } from '../stores/services';
-import { SaveServiceAction, BuildServicesSuccessAction } from '../stores/services/actions';
+import { sendServicesCountEvent } from './events';
+import { SAVE_SERVICE, LOAD_SERVICES_SUCCESS, MEMORY_REPORT_SEND_EVERY_SERVICES_COUNT } from '../../application/constants';
+import { reducer as servicesReducer } from '../../stores/services';
+import { SaveServiceAction, BuildServicesSuccessAction } from '../../stores/services/actions';
 
 // tslint:disable-next-line:no-any
 export const middleware = R.curry((store: MiddlewareAPI<Dispatch, Store>, next: Dispatch, action: any) => {

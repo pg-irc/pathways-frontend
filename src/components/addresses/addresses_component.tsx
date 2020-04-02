@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
 import { Address } from '../../validation/services/types';
-import { CardButtonComponent } from '../card_button/card_button_component';
+import { CardButtonComponent } from '../card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles } from '../../application/styles';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';

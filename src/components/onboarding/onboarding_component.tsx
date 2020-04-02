@@ -18,7 +18,7 @@ import {
 import Swiper from 'react-native-swiper';
 
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
-import { mapWithIndex } from '../../application/map_with_index';
+import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { textStyles } from '../../application/styles';
 import {
     communityOnBoardingImage,

@@ -1,6 +1,6 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 import { LocalizedText } from '../../../locale';
-import { aString } from '../../../helpers/random_test_values';
+import { aString } from '../../../application/helpers/random_test_values';
 import { Locale, LocaleInfo } from '../../../locale';
 import { LocaleStore } from '../../locale';
 

@@ -3,9 +3,9 @@ import React from 'react';
 import { Icon, Button, Toast } from 'native-base';
 import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
-import { BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
-import { values, textStyles, applicationStyles } from '../../application/styles';
-import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
+import { BookmarkTopicAction, UnbookmarkTopicAction } from '../stores/topics';
+import { values, textStyles, applicationStyles } from '../application/styles';
+import { BookmarkServiceAction, UnbookmarkServiceAction } from '../stores/services/actions';
 
 export interface BookmarkButtonProps {
     readonly isBookmarked: boolean;

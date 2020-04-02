@@ -5,7 +5,7 @@ import { Content, Text, View } from 'native-base';
 import { ParagraphComponent } from '../paragraph/paragraph_component';
 import { values, colors, textStyles } from '../../application/styles';
 import { Link } from '../link/link';
-import { CloseButtonComponent } from '../close_button/close_button_component';
+import { CloseButtonComponent } from '../close_button_component';
 
 type Props = {
     readonly isVisible: boolean;
