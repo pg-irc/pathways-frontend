@@ -11,7 +11,7 @@ import { buildGeoCoderUrl, getTextIfValidOrThrow } from '../search/api/fetch_lat
 import { toGeoCoderLatLong } from '../../validation/latlong';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { MY_LOCATION } from '../../application/constants';
-import { getDeviceLocation, DeviceLocation } from '../../async/location';
+import { getDeviceLocation, DeviceLocation } from '../../application/get_device_location';
 import { isLocationFetchTimeoutError, isNoLocationPermissionError } from '../../validation/errors/is_error';
 import { EmptyComponent } from '../empty_component/empty_component';
 
