@@ -4,12 +4,12 @@ import * as constants from '../application/constants';
 import * as actions from '../stores/services/actions';
 import { validateServicesAtLocationArray, toServicesFromValidatedData } from '../validation/services';
 import { searchServices, APIResponse } from '../api';
-import { getDeviceLocation, DeviceLocation } from '../application/get_device_location';
+import { getDeviceLocation, DeviceLocation } from '../application/helpers/get_device_location';
 import * as errors from '../validation/errors/is_error';
 import { Errors } from '../validation/errors/types';
 import { HumanServiceData } from '../validation/services/types';
 import { selectBookmarkedServicesIds } from '../selectors/services/select_bookmarked_services_ids';
-import { isDeviceOnline } from '../application/is_device_online';
+import { isDeviceOnline } from '../application/helpers/is_device_online';
 
 export function* watchUpdateServicesForTopic(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateServicesForTopic);

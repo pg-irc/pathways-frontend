@@ -3,7 +3,7 @@ import React, { useEffect, Dispatch, SetStateAction, useState } from 'react';
 import { SearchResultsComponent } from './search_results_component';
 import { colors, textStyles } from '../../application/styles';
 import { View, Text } from 'native-base';
-import { useTraceUpdate } from '../../application/use_trace_update';
+import { useTraceUpdate } from '../../application/helpers/use_trace_update';
 import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';

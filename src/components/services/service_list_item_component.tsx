@@ -3,7 +3,7 @@ import { textStyles, colors } from '../../application/styles';
 import { HumanServiceData, Address } from '../../validation/services/types';
 import { View, Text } from 'native-base';
 import { TouchableOpacity } from 'react-native';
-import { mapWithIndex } from '../../application/map_with_index';
+import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
 import { History } from 'history';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';

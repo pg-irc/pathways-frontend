@@ -1,6 +1,6 @@
 // tslint:disable:no-any no-expression-statement
 import { validateServiceSearchHits } from '..';
-import { aString, aNumber } from '../../../application/random_test_values';
+import { aString, aNumber } from '../../../application/helpers/random_test_values';
 import { anAddress, anOrganization, aGeoLocation } from './helpers/search_schema';
 
 

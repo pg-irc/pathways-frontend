@@ -2,10 +2,10 @@
 import * as R from 'ramda';
 import * as selector from '../questionnaire/question';
 import { getIdsOfChosenAnswers } from '../questionnaire/get_ids_of_chosen_answers';
-import { anInteger } from '../../application/random_test_values';
+import { anInteger } from '../../application/helpers/random_test_values';
 import { ValidStoreBuilder, AnswerBuilder, QuestionBuilder } from '../../stores/__tests__/helpers/questionnaire_helpers';
 import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
-import { aString } from '../../application/random_test_values';
+import { aString } from '../../application/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { toValidOrThrow } from '../../stores/questionnaire/stores';
 import { toSelectorQuestion } from '../questionnaire/to_selector_question';

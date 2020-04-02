@@ -12,7 +12,7 @@ import {
 } from '../../application/images';
 import { ErrorScreenComponent } from './ErrorScreenComponent';
 import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button/app_settings_button_component';
-import { isAndroid } from '../../application/is_android';
+import { isAndroid } from '../../application/helpers/is_android';
 import { View, Text } from 'native-base';
 import { textStyles, bulletPoint } from '../../application/styles';
 

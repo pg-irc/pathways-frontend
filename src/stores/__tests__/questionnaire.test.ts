@@ -3,7 +3,7 @@
 import * as store from '../questionnaire';
 import { ValidStoreBuilder, QuestionBuilder, AnswerBuilder, buildLoadingStore } from './helpers/questionnaire_helpers';
 import { CHOOSE_ANSWER } from '../../application/constants';
-import { aString } from '../../application/random_test_values';
+import { aString } from '../../application/helpers/random_test_values';
 import { toValidOrThrow, LoadingQuestionnaireStore, InvalidQuestionnaireStore } from '../questionnaire/stores';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';

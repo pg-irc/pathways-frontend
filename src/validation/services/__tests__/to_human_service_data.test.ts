@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { toServicesFromValidatedData } from '../index';
-import { aNumber, aString } from '../../../application/random_test_values';
+import { aNumber, aString } from '../../../application/helpers/random_test_values';
 
 describe('Adapting server service object to client service object', () => {
     const serverServiceObject = {

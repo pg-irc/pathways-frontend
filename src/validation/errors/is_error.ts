@@ -1,5 +1,5 @@
 import { Errors } from './types';
-import { NoLocationPermissionErrorAction, LocationFetchTimeoutErrorAction } from '../../application/get_device_location';
+import { NoLocationPermissionErrorAction, LocationFetchTimeoutErrorAction } from '../../application/helpers/get_device_location';
 import { APIResponse } from '../../api';
 
 export const isBadResponseError = (response: APIResponse): boolean => (

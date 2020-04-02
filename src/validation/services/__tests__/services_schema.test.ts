@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement no-any no-null-keyword
-import { aString, aNumber } from '../../../application/random_test_values';
+import { aString, aNumber } from '../../../application/helpers/random_test_values';
 import * as helpers from './helpers/services_schema_helpers';
 import { validateServicesAtLocationArray } from '..';
 

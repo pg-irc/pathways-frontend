@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { isDeviceOnline } from '../../application/is_device_online';
+import { isDeviceOnline } from '../../application/helpers/is_device_online';
 
 export enum OnlineStatus {
     Loading,

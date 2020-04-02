@@ -1,7 +1,7 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 
 import { ExploreSection } from '../../explore/types';
-import { aString, aBoolean } from '../../../application/random_test_values';
+import { aString, aBoolean } from '../../../application/helpers/random_test_values';
 import { TopicListItem } from '../../topics/types';
 
 export class TaskListItemBuilder {

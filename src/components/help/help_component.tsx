@@ -5,7 +5,7 @@ import { Trans, I18n } from '@lingui/react';
 import { I18nManager, Alert, TouchableOpacity, AlertButton } from 'react-native';
 import { applicationStyles, colors, textStyles, values, getNormalFontFamily } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { mapWithIndex } from '../../application/map_with_index';
+import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { ClearAllUserDataAction } from '../../stores/questionnaire/actions';
 import { openURL } from '../link/link';
 import { goToRouteWithParameter, Routes } from '../../application/routing';

@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { buildParameters } from '..';
-import { aString, aNumber } from '../../application/random_test_values';
+import { aString, aNumber } from '../../application/helpers/random_test_values';
 
 describe('build parameters', () => {
     it('with just a topic id', () => {

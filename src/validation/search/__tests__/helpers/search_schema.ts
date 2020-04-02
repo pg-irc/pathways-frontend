@@ -1,4 +1,4 @@
-import { aString, aNumber } from '../../../../application/random_test_values';
+import { aString, aNumber } from '../../../../application/helpers/random_test_values';
 
 export const anAddress = (): any => ({
     address: aString(),

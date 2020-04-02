@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { toHumanServiceData } from '../to_human_service_data';
-import { aString, aNumber } from '../../../application/random_test_values';
+import { aString, aNumber } from '../../../application/helpers/random_test_values';
 import { Id } from '../../services/types';
 
 describe('Adapting search result to service data', () => {

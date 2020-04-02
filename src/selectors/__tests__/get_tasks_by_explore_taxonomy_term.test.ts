@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-let
 import { ExploreTaxonomyId, TaxonomyTermReference } from '../../stores/taxonomies';
-import { aString } from '../../application/random_test_values';
+import { aString } from '../../application/helpers/random_test_values';
 import { TopicBuilder } from '../../stores/__tests__/helpers/topics_helpers';
 import { TopicMap } from '../../stores/topics';
 import { findItemsByExploreTaxonomyTerm } from '../taxonomies/find_items_by_explore_taxonomy_term';

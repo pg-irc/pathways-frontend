@@ -4,7 +4,7 @@
 // tslint:disable:no-expression-statement
 
 import * as store from '../../taxonomies';
-import { aString } from '../../../application/random_test_values';
+import { aString } from '../../../application/helpers/random_test_values';
 
 interface TaxonomyTerm {
     icon?: string;

@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { aString } from '../../application/random_test_values';
+import { aString } from '../../application/helpers/random_test_values';
 import * as fonts from '../fonts';
 import * as constants from '../../application/constants';
 
