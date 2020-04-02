@@ -82,58 +82,58 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     return (
         <View style={{ flex: 1 }}>
             <HeaderComponent {...props} />
-        <KeyboardAwareScrollView
-            enableResetScrollToCoords={false}
-            extraHeight={100}
-            extraScrollHeight={isAndroid() ? 100 : 0}
-            enableOnAndroid={true}
-            ref={scrollViewRef}
-        >
-            <View padder>
-                <FeedbackComponent
-                    onChangeFeedbackText={setFeedbackForField('nameFeedback')}
-                    feedbackText={feedback.nameFeedback}
-                    fieldLabel={<Trans>Name</Trans>}
-                    fieldValue={props.service.name}
-                    feedbackEnabled={feedbackEnabled}
-                    feedbackDisabledComponent={<Name name={props.service.name} />}
-                />
-                <DividerComponent />
-                <FeedbackComponent
-                    onChangeFeedbackText={setFeedbackForField('organizationFeedback')}
-                    feedbackText={feedback.organizationFeedback}
-                    fieldLabel={<Trans>Organization</Trans>}
-                    fieldValue={props.service.organizationName}
-                    feedbackEnabled={feedbackEnabled}
-                    feedbackDisabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
-                />
-                <DividerComponent />
-                <FeedbackComponent
-                    onChangeFeedbackText={setFeedbackForField('descriptionFeedback')}
-                    feedbackText={feedback.descriptionFeedback}
-                    fieldLabel={<Trans>Description</Trans>}
-                    fieldValue={props.service.description}
-                    feedbackEnabled={feedbackEnabled}
-                    feedbackDisabledComponent={<Description description={props.service.description} />}
-                />
-                <DividerComponent />
-                <ServiceContactDetails
-                    service={props.service}
-                    currentPathForAnaltyics={props.location.pathname}
-                    feedbackEnabled={feedbackEnabled}
-                    setFeedbackForField={setFeedbackForField}
-                    feedback={feedback}
-                    analyticsLinkPressed={props.analyticsLinkPressed}
-                    {...props}
-                />
-                <DividerComponent />
-                <FeedbackModalContainer
-                    feedbackEnabled={feedbackEnabled}
-                    onSuggestAnUpdatePress={onFeedbackButtonPress}
-                    serviceId={props.service.id}
-                />
-            </View>
-        </KeyboardAwareScrollView>
+            <KeyboardAwareScrollView
+                enableResetScrollToCoords={false}
+                extraHeight={100}
+                extraScrollHeight={isAndroid() ? 100 : 0}
+                enableOnAndroid={true}
+                ref={scrollViewRef}
+            >
+                <View padder>
+                    <FeedbackComponent
+                        onChangeFeedbackText={setFeedbackForField('nameFeedback')}
+                        feedbackText={feedback.nameFeedback}
+                        fieldLabel={<Trans>Name</Trans>}
+                        fieldValue={props.service.name}
+                        feedbackEnabled={feedbackEnabled}
+                        feedbackDisabledComponent={<Name name={props.service.name} />}
+                    />
+                    <DividerComponent />
+                    <FeedbackComponent
+                        onChangeFeedbackText={setFeedbackForField('organizationFeedback')}
+                        feedbackText={feedback.organizationFeedback}
+                        fieldLabel={<Trans>Organization</Trans>}
+                        fieldValue={props.service.organizationName}
+                        feedbackEnabled={feedbackEnabled}
+                        feedbackDisabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
+                    />
+                    <DividerComponent />
+                    <FeedbackComponent
+                        onChangeFeedbackText={setFeedbackForField('descriptionFeedback')}
+                        feedbackText={feedback.descriptionFeedback}
+                        fieldLabel={<Trans>Description</Trans>}
+                        fieldValue={props.service.description}
+                        feedbackEnabled={feedbackEnabled}
+                        feedbackDisabledComponent={<Description description={props.service.description} />}
+                    />
+                    <DividerComponent />
+                    <ServiceContactDetails
+                        service={props.service}
+                        currentPathForAnaltyics={props.location.pathname}
+                        feedbackEnabled={feedbackEnabled}
+                        setFeedbackForField={setFeedbackForField}
+                        feedback={feedback}
+                        analyticsLinkPressed={props.analyticsLinkPressed}
+                        {...props}
+                    />
+                    <DividerComponent />
+                    <FeedbackModalContainer
+                        feedbackEnabled={feedbackEnabled}
+                        onSuggestAnUpdatePress={onFeedbackButtonPress}
+                        serviceId={props.service.id}
+                    />
+                </View>
+            </KeyboardAwareScrollView>
         </View>
     );
 };
