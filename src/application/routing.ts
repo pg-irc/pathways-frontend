@@ -106,14 +106,11 @@ export const goToRouteWithoutParameter = (route: Routes, history: History): () =
     return (): void => history.push(path);
 };
 
-export const goToRouteWithParameter = (route: Routes, parameter: string, history: History): () => void => {
-    const path = routePathWithParameter(route, parameter);
-    // tslint:disable-next-line:no-expression-statement
-    return (): void => history.push(path);
-};
-
-export const goToRouteWithParameters = (route: Routes, parameter: string, queryParams: QueryParameters, history: History): () => void => {
-    const path = `${routePathWithParameter(route, parameter)}${buildUrl('', { queryParams })}`;
+export const goToRouteWithParameter = (route: Routes, parameter: string, history: History, queryParams?: QueryParameters): () => void => {
+    const path = queryParams ?
+        `${routePathWithParameter(route, parameter)}${buildUrl('', { queryParams })}`
+        :
+        routePathWithParameter(route, parameter);
     // tslint:disable-next-line:no-expression-statement
     return (): void => history.push(path);
 };
