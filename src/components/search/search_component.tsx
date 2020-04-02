@@ -14,7 +14,7 @@ import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-
 import { SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction, SaveSearchResultsAction, SaveSearchLatLongAction, SaveSearchPageAction, SaveNumberOfSearchPagesAction } from '../../stores/search';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
-import { useOnlineStatus } from '../../hooks/use_online_status';
+import { useOnlineStatus } from './use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { MenuButtonComponent } from '../header_button/menu_button_component';

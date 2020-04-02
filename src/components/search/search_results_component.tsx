@@ -19,7 +19,7 @@ import { Trans } from '@lingui/react';
 import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { EmptyComponent as EmptySearchComponent } from './empty_component';
-import { OnlineStatus } from '../../hooks/use_online_status';
+import { OnlineStatus } from './use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
 import { Errors } from '../../validation/errors/types';
 import { EmptyComponent } from '../empty_component/empty_component';
