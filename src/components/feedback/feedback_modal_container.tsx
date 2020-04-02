@@ -17,14 +17,15 @@ interface FeedbackModalContainerProps {
     readonly feedbackEnabled: boolean;
     readonly onSuggestAnUpdatePress: () => void;
     readonly serviceId: string;
+    readonly query: ParsedQueryParameters;
 }
 
 export const FeedbackModalContainer = ({
     feedbackEnabled,
     onSuggestAnUpdatePress: onSuggestAnUpdate,
     serviceId,
+    query,
 }: FeedbackModalContainerProps): JSX.Element => {
-    const query = useQuery();
 
     const history = useHistory();
 

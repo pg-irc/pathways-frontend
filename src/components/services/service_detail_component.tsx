@@ -32,16 +32,8 @@ import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/ser
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { renderHeader } from '../main/render_header';
 import { Id } from '../../stores/services';
-
-type Feedback = {
-    readonly nameFeedback: string;
-    readonly organizationFeedback: string;
-    readonly descriptionFeedback: string;
-    readonly addressFeedback: string;
-    readonly phoneFeedback: string;
-    readonly websiteFeedback: string;
-    readonly emailFeedback: string;
-};
+import { Feedback,  getEmptyFeedback } from '../feedback/hooks/use_send_feedback';
+import { useQuery } from '../../hooks/use_query';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -59,8 +51,9 @@ export interface ServiceDetailActions {
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
+    const query = useQuery();
     const [feedback, setFeedback]: readonly[Feedback, Dispatch<SetStateAction<Feedback>>]
-        = useState<Feedback>(getDefaultFeedbackValues());
+        = useState<Feedback>(getDefaultFeedback(query.feedback));
     const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
         = useState<boolean>(false);
 
@@ -91,8 +84,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             >
                 <View padder>
                     <FeedbackComponent
-                        onChangeFeedbackText={setFeedbackForField('nameFeedback')}
-                        feedbackText={feedback.nameFeedback}
+                        onChangeFeedbackText={setFeedbackForField('name')}
+                        feedbackText={feedback.name.value}
                         fieldLabel={<Trans>Name</Trans>}
                         fieldValue={props.service.name}
                         feedbackEnabled={feedbackEnabled}
@@ -100,8 +93,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     />
                     <DividerComponent />
                     <FeedbackComponent
-                        onChangeFeedbackText={setFeedbackForField('organizationFeedback')}
-                        feedbackText={feedback.organizationFeedback}
+                        onChangeFeedbackText={setFeedbackForField('organization')}
+                        feedbackText={feedback.organization.value}
                         fieldLabel={<Trans>Organization</Trans>}
                         fieldValue={props.service.organizationName}
                         feedbackEnabled={feedbackEnabled}
@@ -109,8 +102,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     />
                     <DividerComponent />
                     <FeedbackComponent
-                        onChangeFeedbackText={setFeedbackForField('descriptionFeedback')}
-                        feedbackText={feedback.descriptionFeedback}
+                        onChangeFeedbackText={setFeedbackForField('description')}
+                        feedbackText={feedback.description.value}
                         fieldLabel={<Trans>Description</Trans>}
                         fieldValue={props.service.description}
                         feedbackEnabled={feedbackEnabled}
@@ -131,6 +124,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         feedbackEnabled={feedbackEnabled}
                         onSuggestAnUpdatePress={onFeedbackButtonPress}
                         serviceId={props.service.id}
+                        query={query}
                     />
                 </View>
             </KeyboardAwareScrollView>
@@ -138,14 +132,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     );
 };
 
-const getDefaultFeedbackValues = (): Feedback => ({
-    nameFeedback: '',
-    organizationFeedback: '',
-    descriptionFeedback: '',
-    addressFeedback: '',
-    phoneFeedback: '',
-    websiteFeedback: '',
-    emailFeedback: '',
+const getDefaultFeedback = (feedbackFromQuery: Feedback | undefined): Feedback => ({
+    ...getEmptyFeedback(), ...feedbackFromQuery,
 });
 
 interface NameProps {
@@ -214,8 +202,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
     return (
         <>
             <FeedbackComponent
-                onChangeFeedbackText={props.setFeedbackForField('addressFeedback')}
-                feedbackText={props.feedback.addressFeedback}
+                onChangeFeedbackText={props.setFeedbackForField('address')}
+                feedbackText={props.feedback.address.value}
                 fieldLabel={<Trans>Address</Trans>}
                 fieldValue={getAddressesString(physicalAddresses)}
                 feedbackEnabled={props.feedbackEnabled}
@@ -232,8 +220,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
             />
             <DividerComponent />
             <FeedbackComponent
-                onChangeFeedbackText={props.setFeedbackForField('phoneFeedback')}
-                feedbackText={props.feedback.phoneFeedback}
+                onChangeFeedbackText={props.setFeedbackForField('phone')}
+                feedbackText={props.feedback.phone.value}
                 fieldLabel={<Trans>Phone numbers</Trans>}
                 fieldValue={getPhonesString(props.service.phoneNumbers)}
                 feedbackEnabled={props.feedbackEnabled}
@@ -248,8 +236,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
             />
             <DividerComponent />
             <FeedbackComponent
-                onChangeFeedbackText={props.setFeedbackForField('websiteFeedback')}
-                feedbackText={props.feedback.websiteFeedback}
+                onChangeFeedbackText={props.setFeedbackForField('website')}
+                feedbackText={props.feedback.website.value}
                 fieldLabel={<Trans>Website</Trans>}
                 fieldValue={props.service.website}
                 feedbackEnabled={props.feedbackEnabled}
@@ -264,8 +252,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
             />
             <DividerComponent />
             <FeedbackComponent
-                onChangeFeedbackText={props.setFeedbackForField('emailFeedback')}
-                feedbackText={props.feedback.emailFeedback}
+                onChangeFeedbackText={props.setFeedbackForField('email')}
+                feedbackText={props.feedback.email.value}
                 fieldLabel={<Trans>Email</Trans>}
                 fieldValue={props.service.email}
                 feedbackEnabled={props.feedbackEnabled}

@@ -20,12 +20,13 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useHistory, useParams } from 'react-router-native';
 
 import { colors, textStyles } from '../../application/styles';
-import { Routes, replaceRouteWithParameters } from '../../application/routing';
+import { Routes, replaceRouteWithParameters, QueryParameters } from '../../application/routing';
 import { useQuery } from '../../hooks/use_query';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import { otherRemoveServiceStyles as styles } from './styles';
+import { getEmptyFeedback } from './hooks/use_send_feedback';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
@@ -70,7 +71,7 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
     },
 };
 
-const useServiceDetailRoute = (queryParam: Record<string, string>): () => void => {
+const useServiceDetailRoute = (queryParam: QueryParameters): () => void => {
     const params = useParams<RouteParams>();
     const history = useHistory();
 
@@ -182,6 +183,15 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
     );
 };
 
+const getFeedbackJSON = (mode: QueryParameters['mode'], input: string): string => {
+    const emptyFeedback = getEmptyFeedback();
+    const feedbackField = mode === 'OTHER' ?
+        { other: {...emptyFeedback.other, value: input }}
+        :
+        { removalReason: {...emptyFeedback.removalReason, value: input }};
+    return JSON.stringify({ ...emptyFeedback, ...feedbackField });
+};
+
 export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
     const query = useQuery();
 
@@ -190,7 +200,7 @@ export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
 
     const goBackReceiveUpdatesShow = useServiceDetailRoute(
         // TODO useQuery only supports string Records for now
-        { receiveUpdatesModalVisible: 'true' },
+        { receiveUpdatesModalVisible: 'true', feedback: getFeedbackJSON(query.mode, input) },
     );
 
     const onSubmit = (): void => goBackReceiveUpdatesShow();
