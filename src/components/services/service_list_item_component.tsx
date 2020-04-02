@@ -7,7 +7,7 @@ import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
 import { History } from 'history';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
-import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
+import { BookmarkButtonComponent } from '../bookmark_button_component';
 
 export interface ServiceListItemProps {
     readonly service: HumanServiceData;

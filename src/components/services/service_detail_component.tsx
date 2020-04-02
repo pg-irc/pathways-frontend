@@ -12,7 +12,7 @@ import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { RouterProps, getParametersFromPath, Routes } from '../../application/routing';
-import { ContentVerificationComponent } from '../content_verification/content_verification_component';
+import { ContentVerificationComponent } from '../content_verification_component';
 import { AddressesComponent } from '../addresses/addresses_component';
 import { PhoneNumbersComponent } from '../phone_numbers/phone_numbers_component';
 import { WebsiteComponent } from '../website/website_component';
@@ -23,7 +23,7 @@ import { getLocationTitleFromAddresses } from '../services/get_location_title_fr
 import { EmailComponent } from '../email/email_component';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { BackButtonComponent } from '../header_button/back_button_component';
-import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
+import { BookmarkButtonComponent } from '../bookmark_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
