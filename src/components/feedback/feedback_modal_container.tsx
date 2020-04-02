@@ -5,7 +5,7 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { useHistory } from 'react-router-native';
 
 import { textStyles, colors } from '../../application/styles';
-import { Routes, goToRouteWithParameters } from '../../application/routing';
+import { Routes, goToRouteWithParameter, ParsedQueryParameters } from '../../application/routing';
 import { FeedbackReceiveUpdatesModal } from '../feedback/feedback_receive_updates_modal';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -35,18 +35,18 @@ export const FeedbackModalContainer = ({
     const [receiveUpdatesModalVisible, setReceiveUpdatesModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
         = useState<boolean>(query.receiveUpdatesModalVisible === 'true');
 
-    const goToFeedbackOtherScreen = goToRouteWithParameters(
+    const goToFeedbackOtherScreen = goToRouteWithParameter(
         Routes.Feedback,
         serviceId,
-        { mode: 'OTHER' },
         history,
+        { mode: 'OTHER' },
     );
 
-    const goToFeedbackRemoveServiceScreen = goToRouteWithParameters(
+    const goToFeedbackRemoveServiceScreen = goToRouteWithParameter(
         Routes.Feedback,
         serviceId,
-        { mode: 'REMOVE_SERVICE' },
         history,
+        { mode: 'REMOVE_SERVICE' },
     );
 
     const onOtherPress = (): void => {
