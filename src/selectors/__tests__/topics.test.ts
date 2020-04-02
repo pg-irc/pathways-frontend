@@ -5,7 +5,7 @@ import { aLocale } from '../../stores/__tests__/helpers/locale_helpers';
 import * as stores from '../../stores/topics';
 import { Taxonomies as TaxonomyConstants } from '../../application/constants';
 import { Locale } from '../../locale/types';
-import { aString, aBoolean } from '../../helpers/random_test_values';
+import { aString, aBoolean } from '../../application/random_test_values';
 import { TaxonomyTermReference } from '../../stores/taxonomies';
 import { ExploreSectionBuilder } from './helpers/explore_section_helpers';
 import { ExploreSection } from '../explore/types';

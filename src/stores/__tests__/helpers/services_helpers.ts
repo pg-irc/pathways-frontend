@@ -1,5 +1,5 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import { aString, aNumber } from '../../../helpers/random_test_values';
+import { aString, aNumber } from '../../../application/random_test_values';
 import { Id } from '../../services';
 import { Errors } from '../../../validation/errors/types';
 import {

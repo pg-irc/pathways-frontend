@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { UserProfileStore, reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage } from '../user_profile';
-import { aBoolean } from '../../helpers/random_test_values';
+import { aBoolean } from '../../application/random_test_values';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
 import { clearAllUserData } from '../questionnaire/actions';

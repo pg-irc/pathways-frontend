@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter } from '../routing';
-import { aString } from '../../helpers/random_test_values';
+import { aString } from '../random_test_values';
 
 describe('the routePathDefinition function', () => {
 

@@ -1,6 +1,6 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class
 
-import { aString, aBoolean } from '../../../helpers/random_test_values';
+import { aString, aBoolean } from '../../../application/random_test_values';
 import { TaxonomyTermReference } from '../../../stores/taxonomies';
 import { ExploreSection } from '../../explore/types';
 import { Topic } from '../../topics/types';

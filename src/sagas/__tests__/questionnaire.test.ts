@@ -2,7 +2,7 @@
 import { call, put, select } from 'redux-saga/effects';
 import { loadUserData, saveUserData, loadUserDataAsync, saveUserDataAsync } from '../user_data';
 import { DataPersistence } from '../../stores/persisted_data';
-import { aString, anError } from '../../helpers/random_test_values';
+import { aString, anError } from '../../application/random_test_values';
 import { selectUserDataForLocalPersistence } from '../../selectors/user_data/select_user_data_for_local_persistence';
 import { PersistedDataBuilder } from '../../stores/__tests__/helpers/persisted_data_builder';
 

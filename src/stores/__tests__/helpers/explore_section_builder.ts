@@ -1,7 +1,7 @@
 // tslint:disable:no-class readonly-keyword no-this no-expression-statement
 import { Id, ExploreSection } from '../../explore';
 import { TaxonomyTermReference } from '../../taxonomies';
-import { aString } from '../../../helpers/random_test_values';
+import { aString } from '../../../application/random_test_values';
 
 export class ExploreSectionBuilder {
     id: Id = aString();
