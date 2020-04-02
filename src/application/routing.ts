@@ -18,9 +18,9 @@ export type MatchParameters = Partial<{
 }>;
 
 export type QueryParameters = Partial<{
-    readonly mode: 'OTHER' | 'REMOVE_SERVICE';
-    readonly optionsModalVisible: 'true' | 'false';
-    readonly receiveUpdatesModalVisible: 'true' | 'false';
+    readonly feedbackContentMode: 'OTHER' | 'REMOVE_SERVICE';
+    readonly feedbackOptionsModalMode: 'visible' | 'hidden';
+    readonly feedbackSubmitModalMode: 'visible' | 'hidden';
     readonly feedback: string;
 }>;
 
