@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { shouldSendServicesReport } from '../middleware';
+import { shouldSendServicesReport } from '../../sagas/analytics/middleware';
 import { aNumber } from '../../helpers/random_test_values';
 
 describe('Analytics memory report middleware helpers', () => {
