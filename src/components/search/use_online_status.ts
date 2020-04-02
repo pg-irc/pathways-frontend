@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import { deviceIsOnline } from '../../async/network';
+import { isDeviceOnline } from '../../application/is_device_online';
 
 export enum OnlineStatus {
     Loading,
@@ -14,6 +14,6 @@ type SetOnlineStatus = Dispatch<SetStateAction<OnlineStatus>>;
 
 export const useOnlineStatus = (): OnlineStatus => {
     const [onlineStatus, setOnlineStatus]: [OnlineStatus, SetOnlineStatus] = useState(OnlineStatus.Loading);
-    useEffect(() => { deviceIsOnline().then((isOnline: boolean) => setOnlineStatus(toStatus(isOnline))); });
+    useEffect(() => { isDeviceOnline().then((isOnline: boolean) => setOnlineStatus(toStatus(isOnline))); });
     return onlineStatus;
 };

@@ -9,7 +9,7 @@ import * as errors from '../validation/errors/is_error';
 import { Errors } from '../validation/errors/types';
 import { HumanServiceData } from '../validation/services/types';
 import { selectBookmarkedServicesIds } from '../selectors/services/select_bookmarked_services_ids';
-import { deviceIsOnline } from '../async/network';
+import { isDeviceOnline } from '../application/is_device_online';
 
 export function* watchUpdateServicesForTopic(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateServicesForTopic);
@@ -18,7 +18,7 @@ export function* watchUpdateServicesForTopic(): IterableIterator<ForkEffect> {
 export function* updateServicesForTopic(action: actions.BuildServicesRequestAction): UpdateResult {
     const topicId = action.payload.topicId;
     try {
-        const isOnline = yield call(deviceIsOnline);
+        const isOnline = yield call(isDeviceOnline);
         if (!isOnline) {
             return yield put(actions.buildServicesError(topicId, Errors.Offline));
         }
