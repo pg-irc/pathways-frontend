@@ -2,7 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import { Header, Left, Right, Body, Title } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 
 interface RenderHeaderProps {
@@ -12,16 +11,13 @@ interface RenderHeaderProps {
     readonly title?: JSX.Element;
 }
 
-export const renderHeader = (props: RenderHeaderProps): JSX.Element => {
-    const marginTop = getStatusBarHeightForPlatform();
-    return (
-        <Header style={{ marginTop, backgroundColor: props.backgroundColor, borderBottomColor: 'transparent' }}>
-            {buildLeftButton(props.leftButton)}
-            {buildTitle(props.title)}
-            {buildRightButtons(props.rightButtons)}
-        </Header>
-    );
-};
+export const renderHeader = (props: RenderHeaderProps): JSX.Element => (
+    <Header style={{ backgroundColor: props.backgroundColor, borderBottomColor: 'transparent' }}>
+        {buildLeftButton(props.leftButton)}
+        {buildTitle(props.title)}
+        {buildRightButtons(props.rightButtons)}
+    </Header>
+);
 
 const buildLeftButton = (leftButton?: JSX.Element): JSX.Element => {
     if (!leftButton) {
