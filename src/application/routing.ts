@@ -5,16 +5,30 @@ import { History, Location } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
 import * as R from 'ramda';
+import { Feedback } from '../components/feedback/hooks/use_send_feedback';
 
 // The property names of this structure are defined by the corresponding
 // route definitions, e.g. parsing a url '/learn/1' which matches
 // '/learn/:learnId' will put '1' in the attribute `learnId`.
-export interface MatchParameters {
-    readonly learnId?: LearnId;
-    readonly topicId?: TopicId;
-    readonly organizationId?: string;
-    readonly serviceId?: string;
-}
+export type MatchParameters = Partial<{
+    readonly learnId: LearnId;
+    readonly topicId: TopicId;
+    readonly organizationId: string;
+    readonly serviceId: string;
+}>;
+
+export type QueryParameters = Partial<{
+    readonly mode: 'OTHER' | 'REMOVE_SERVICE';
+    readonly optionsModalVisible: 'true' | 'false';
+    readonly receiveUpdatesModalVisible: 'true' | 'false';
+    readonly feedback: string;
+}>;
+
+type ParsedQueryStrings = Omit<QueryParameters, 'feedback'>;
+
+type ParsedQueryObjects = Partial<{ readonly feedback: Feedback; }>;
+
+export type ParsedQueryParameters = ParsedQueryStrings & ParsedQueryObjects;
 
 export type RouterProps = RouteComponentProps<MatchParameters>;
 
@@ -98,13 +112,13 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
     return (): void => history.push(path);
 };
 
-export const goToRouteWithParameters = (route: Routes, parameter: string, queryParams: Record<string, string>, history: History): () => void => {
+export const goToRouteWithParameters = (route: Routes, parameter: string, queryParams: QueryParameters, history: History): () => void => {
     const path = `${routePathWithParameter(route, parameter)}${buildUrl('', { queryParams })}`;
     // tslint:disable-next-line:no-expression-statement
     return (): void => history.push(path);
 };
 
-export const replaceRouteWithParameters = (route: Routes, parameter: string, queryParams: Record<string, string>, history: History): () => void => {
+export const replaceRouteWithParameters = (route: Routes, parameter: string, queryParams: QueryParameters, history: History): () => void => {
     const path = `${routePathWithParameter(route, parameter)}${buildUrl('', { queryParams })}`;
     // tslint:disable-next-line:no-expression-statement
     return (): void => history.replace(path);
