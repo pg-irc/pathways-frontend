@@ -31,7 +31,7 @@ import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/ser
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { renderHeader } from '../main/render_header';
 import { Id } from '../../stores/services';
-import { Feedback,  getEmptyFeedback } from '../feedback/hooks/use_send_feedback';
+import { Feedback,  getEmptyFeedback, useSendFeedback, UseSendFeedback } from '../feedback/hooks/use_send_feedback';
 import { useQuery } from '../../hooks/use_query';
 import { isAndroid } from '../../application/helpers/is_android';
 
@@ -53,9 +53,10 @@ type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const query = useQuery();
     const [feedback, setFeedback]: readonly[Feedback, Dispatch<SetStateAction<Feedback>>]
-        = useState<Feedback>(getDefaultFeedback(query.feedback));
+        = useState<Feedback>(getDefaultFeedback(props.service.id, query.feedback));
     const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
         = useState<boolean>(false);
+    const { isSendingFeedback, sendFeedback }: UseSendFeedback = useSendFeedback(feedback, (): void => setFeedback(getEmptyFeedback()));
 
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
 
@@ -125,6 +126,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         onSuggestAnUpdatePress={onFeedbackButtonPress}
                         serviceId={props.service.id}
                         query={query}
+                        sendFeedback={sendFeedback}
+                        isSendingFeedback={isSendingFeedback}
                     />
                 </View>
             </KeyboardAwareScrollView>
@@ -132,9 +135,18 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     );
 };
 
-const getDefaultFeedback = (feedbackFromQuery: Feedback | undefined): Feedback => ({
-    ...getEmptyFeedback(), ...feedbackFromQuery,
-});
+const getDefaultFeedback = (serviceId: string, feedbackFromQuery: Feedback | undefined): Feedback => {
+    if (feedbackFromQuery) {
+        return feedbackFromQuery;
+    }
+    return {
+        ...getEmptyFeedback(),
+        bc211Id: {
+            value: serviceId,
+            shouldSend: true,
+        },
+    };
+};
 
 interface NameProps {
     readonly name: string;

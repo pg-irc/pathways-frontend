@@ -29,6 +29,7 @@ interface ReceiveUpdatesStyles {
     readonly emailInputStyle: ViewStyle;
     readonly finishButtonContainer: ViewStyle;
     readonly finishButton: ViewStyle;
+    readonly finishButtonSending: ViewStyle;
     readonly finishText: TextStyle;
     readonly checkBoxIcon: TextStyle;
     readonly receiveUpdatesContainer: ViewStyle;
@@ -157,6 +158,11 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         color: colors.teal,
         paddingVertical: 10,
         paddingHorizontal: 15,
+    },
+
+    finishButtonSending: {
+        // justifyContent: 'flex-start',
+        opacity: values.disabledOpacity,
     },
 
     finishText: {
