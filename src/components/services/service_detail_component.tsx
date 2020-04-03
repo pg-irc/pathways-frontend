@@ -51,13 +51,15 @@ export interface ServiceDetailActions {
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
+    const defaultFeedback = getDefaultFeedback(props.service.id);
+    const clearFeedback = (): void => setFeedback(defaultFeedback);
     const query = useQuery();
-    const [feedback, setFeedback]: readonly[Feedback, Dispatch<SetStateAction<Feedback>>]
-        = useState<Feedback>(getDefaultFeedback(props.service.id, query.feedback));
-    const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(false);
+    const [feedback, setFeedback]: readonly[Feedback, Dispatch<SetStateAction<Feedback>>] =
+        useState<Feedback>(query.feedback || defaultFeedback);
+    const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>] =
+        useState<boolean>(false);
     const { isSendingFeedback, sendFeedback }: UseSendFeedback =
-        useSendFeedback(feedback, (): void => setFeedback(getEmptyFeedback()));
+        useSendFeedback(feedback, clearFeedback);
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
 
     const setFeedbackForField = R.curry((fieldName: keyof Feedback, fieldValue: FeedbackField): void => (
@@ -135,18 +137,13 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     );
 };
 
-const getDefaultFeedback = (serviceId: string, feedbackFromQuery: Feedback | undefined): Feedback => {
-    if (feedbackFromQuery) {
-        return feedbackFromQuery;
-    }
-    return {
-        ...getEmptyFeedback(),
-        bc211Id: {
-            value: serviceId,
-            shouldSend: true,
-        },
-    };
-};
+const getDefaultFeedback = (serviceId: string): Feedback => ({
+    ...getEmptyFeedback(),
+    bc211Id: {
+        value: serviceId,
+        shouldSend: true,
+    },
+});
 
 interface NameProps {
     readonly name: string;
