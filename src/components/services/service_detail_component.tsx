@@ -130,6 +130,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         query={query}
                         sendFeedback={sendFeedback}
                         isSendingFeedback={isSendingFeedback}
+                        setFeedback={setFeedback}
+                        feedback={feedback}
                     />
                 </View>
             </KeyboardAwareScrollView>
