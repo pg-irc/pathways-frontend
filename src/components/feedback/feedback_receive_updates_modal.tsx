@@ -9,10 +9,12 @@ import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 
 import { receiveUpdatesStyles as styles } from './styles';
+import { UseSendFeedback } from './hooks/use_send_feedback';
 
 interface FeedbackReceiveUpdatesProps {
     readonly isVisible: boolean;
     readonly onHide: () => void;
+    readonly isSendingFeedback: UseSendFeedback['isSendingFeedback'];
 }
 
 const INPUT_PLACEHOLDER = t`Enter email`;
@@ -25,7 +27,7 @@ const useToggleState = (initialValue: boolean = false): readonly[boolean, () => 
     return [state, toggle];
 };
 
-export const FeedbackReceiveUpdatesModal = ({ isVisible, onHide }: FeedbackReceiveUpdatesProps): JSX.Element => {
+export const FeedbackReceiveUpdatesModal = ({ isVisible, onHide, isSendingFeedback }: FeedbackReceiveUpdatesProps): JSX.Element => {
     const [checked, toggleChecked]: readonly[boolean, () => void]
         = useToggleState();
 
@@ -67,7 +69,11 @@ export const FeedbackReceiveUpdatesModal = ({ isVisible, onHide }: FeedbackRecei
                                 </View>
                             </View>
                             <View style={styles.finishButtonContainer}>
-                                <TouchableOpacity onPress={onFinish} style={styles.finishButton}>
+                                <TouchableOpacity
+                                    onPress={onFinish}
+                                    style={isSendingFeedback ? [styles.finishButton, styles.finishButtonSending] : styles.finishButton}
+                                    disabled={isSendingFeedback}
+                                >
                                     <Text style={styles.finishText}>
                                         <Trans id={buttonLabel} />
                                     </Text>
