@@ -32,7 +32,7 @@ export const FeedbackModalContainer = ({
         = useState<boolean>(query.optionsModalVisible === 'true');
 
     const [receiveUpdatesModalVisible, setReceiveUpdatesModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(query.optionsModalVisible === 'true');
+        = useState<boolean>(query.receiveUpdatesModalVisible === 'true');
 
     const goToFeedbackOtherScreen = goToRouteWithParameters(
         Routes.Feedback,
