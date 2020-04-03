@@ -173,6 +173,7 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
                 <MultiLineButtonComponent
                     onPress={props.onSubmit}
                     additionalStyles={submitButtonStyle}
+                    disabled={props.disabled}
                 >
                     <Text style={submitTextStyle}>
                         <Trans>Submit</Trans>

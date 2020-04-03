@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { applicationStyles } from '../../application/styles';
 
-export interface MultiLineButtonProps {
+export interface MultiLineButtonProps extends TouchableOpacityProps {
     readonly children: any; // tslint:disable-line:no-any
     readonly additionalStyles?: object;
 }
@@ -15,7 +15,6 @@ type Props = MultiLineButtonProps & MultiLineButtonActions;
 
 export const MultiLineButtonComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <TouchableOpacity
-        onPress={props.onPress}
         style={[
             applicationStyles.tealButton,
             applicationStyles.boxShadowBelow,
@@ -29,7 +28,9 @@ export const MultiLineButtonComponent: React.StatelessComponent<Props> = (props:
                 paddingHorizontal: 15,
             },
             props.additionalStyles,
-        ]}>
+        ]}
+        {...props}
+    >
         {props.children}
     </TouchableOpacity>
 );
