@@ -1,11 +1,12 @@
 // tslint:disable:no-expression-statement
 import React from 'react';
-import { Icon, Button, Toast } from 'native-base';
+import { Icon, Button } from 'native-base';
 import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { BookmarkTopicAction, UnbookmarkTopicAction } from '../../stores/topics';
-import { values, textStyles, applicationStyles } from '../../application/styles';
+import { values } from '../../application/styles';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
+import { showToast } from '../../application/toast';
 
 export interface BookmarkButtonProps {
     readonly isBookmarked: boolean;
@@ -47,25 +48,14 @@ const BookmarkIcon = (props: Props): JSX.Element => (
 type ButtonOnPress = () => void;
 
 const getBookmarkButtonOnPress = (props: Props, i18n: I18n): ButtonOnPress => {
-    const toastProps = {
-        style: applicationStyles.toast,
-        textStyle: textStyles.toast,
-        duration: 2000,
-    };
     if (props.isBookmarked) {
         return (): void => {
             props.unbookmark();
-            Toast.show({
-                ...toastProps,
-                text: i18n._(t`Bookmark removed`),
-            });
+            showToast(i18n._(t`Bookmark removed`));
         };
     }
     return (): void => {
         props.bookmark();
-        Toast.show({
-            ...toastProps,
-            text: i18n._(t`Bookmark added`),
-        });
+        showToast(i18n._(t`Bookmark added`));
     };
 };

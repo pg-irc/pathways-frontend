@@ -1,5 +1,6 @@
 // tslint:disable:no-expression-statement
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
+import { t } from '@lingui/macro';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
 import { useHistory } from 'react-router-native';
@@ -12,6 +13,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 
 import { FeedbackOptionsModalComponent } from './feedback_options_modal_component';
 import { UseSendFeedback, Feedback } from './hooks/use_send_feedback';
+import { showToast } from '../../application/toast';
 
 interface FeedbackModalContainerProps {
     readonly feedbackEnabled: boolean;
@@ -78,32 +80,39 @@ export const FeedbackModalContainer = ({
         setOptionsModalVisible(false);
     };
 
-    const onHideReceiveUpdatesModal = async (): Promise<void> => {
+    const onHideReceiveUpdatesModal = (i18n: I18n) => async () => {
         try {
             await sendFeedback();
         } finally {
             setReceiveUpdatesModalVisible(false);
+            showToast(i18n._(t`Thank you for your contribution!`));
         }
     };
 
     return (
-        <>
-            <FeedbackButton isVisible={!feedbackEnabled} onPress={onFeedbackButtonPress} />
-            <FeedbackOptionsModalComponent
-                isVisible={optionsModalVisible}
-                onClose={onCloseFeedbackOptions}
-                onSuggestAnUpdatePress={onSuggestAnUpdatePress}
-                onOtherPress={onOtherPress}
-                onRemoveServicePress={onRemoveServicePress}
-            />
-            <FeedbackReceiveUpdatesModal
-                isVisible={receiveUpdatesModalVisible}
-                onHide={onHideReceiveUpdatesModal}
-                isSendingFeedback={isSendingFeedback}
-                setFeedback={setFeedback}
-                feedback={feedback}
-            />
-        </>
+        <I18n>
+            {
+                (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
+                    <>
+                        <FeedbackButton isVisible={!feedbackEnabled} onPress={onFeedbackButtonPress} />
+                        <FeedbackOptionsModalComponent
+                            isVisible={optionsModalVisible}
+                            onClose={onCloseFeedbackOptions}
+                            onSuggestAnUpdatePress={onSuggestAnUpdatePress}
+                            onOtherPress={onOtherPress}
+                            onRemoveServicePress={onRemoveServicePress}
+                        />
+                        <FeedbackReceiveUpdatesModal
+                            isVisible={receiveUpdatesModalVisible}
+                            onHide={onHideReceiveUpdatesModal(i18n)}
+                            isSendingFeedback={isSendingFeedback}
+                            setFeedback={setFeedback}
+                            feedback={feedback}
+                        />
+                    </>
+                )
+            }
+        </I18n>
     );
 };
 
