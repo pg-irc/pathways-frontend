@@ -2,7 +2,7 @@
 // tslint:disable:no-let
 import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import * as R from 'ramda';
-import { AIRTABLE_TABLE_ID, AIRTABLE_API_KEY } from 'react-native-dotenv';
+import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID } from 'react-native-dotenv';
 
 export interface FeedbackField {
     readonly value: string;
@@ -100,11 +100,15 @@ export const toValidFeedbackJSON = (feedback: Feedback): string => {
 };
 
 const getRequestUrl = (): string => {
+    if (!AIRTABLE_BASE_ID) {
+        throw new Error('AIRTABLE_BASE_ID is missing.');
+    }
+
     if (!AIRTABLE_TABLE_ID) {
         throw new Error('AIRTABLE_TABLE_ID is missing.');
     }
 
-    return `https://api.airtable.com/v0/${AIRTABLE_TABLE_ID}/Table%201`;
+    return `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_ID}`;
 };
 
 const getRequestInit = (feedbackJSON: string): RequestInit => {
