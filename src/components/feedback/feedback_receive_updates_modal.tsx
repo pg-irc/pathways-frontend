@@ -1,7 +1,8 @@
+// tslint:disable:no-expression-statement
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
 import { Input } from 'native-base';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import Modal from 'react-native-modal';
 import { View, Text, TouchableOpacity } from 'react-native';
 
@@ -9,32 +10,40 @@ import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 
 import { receiveUpdatesStyles as styles } from './styles';
-import { UseSendFeedback } from './hooks/use_send_feedback';
+import { UseSendFeedback, Feedback } from './hooks/use_send_feedback';
 
 interface FeedbackReceiveUpdatesProps {
     readonly isVisible: boolean;
     readonly onHide: () => void;
     readonly isSendingFeedback: UseSendFeedback['isSendingFeedback'];
+    readonly setFeedback: Dispatch<SetStateAction<Feedback>>;
+    readonly feedback: Feedback;
 }
 
 const INPUT_PLACEHOLDER = t`Enter email`;
 
-const useToggleState = (initialValue: boolean = false): readonly[boolean, () => void] => {
-    const [state, setState]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(initialValue);
+export const FeedbackReceiveUpdatesModal =
+({ isVisible, onHide, isSendingFeedback, setFeedback, feedback }: FeedbackReceiveUpdatesProps): JSX.Element => {
 
-    const toggle = (): void => setState(!state);
+    const onChangeEmail = (value: string): void =>
+        setFeedback({
+            ...feedback,
+            authorEmail: {
+                ...feedback.authorEmail,
+                value,
+            },
+        });
 
-    return [state, toggle];
-};
+    const onPressIsEmployee = (): void =>
+        setFeedback({
+            ...feedback,
+            authorIsEmployee: {
+                ...feedback.authorIsEmployee,
+                value: feedback.authorIsEmployee.value === 'true' ? 'false' : 'true',
+            },
+        });
 
-export const FeedbackReceiveUpdatesModal = ({ isVisible, onHide, isSendingFeedback }: FeedbackReceiveUpdatesProps): JSX.Element => {
-    const [checked, toggleChecked]: readonly[boolean, () => void]
-        = useToggleState();
-
-    const [emailInput, setEmailInput]: readonly [string, Dispatch<SetStateAction<string>>]
-        = useState<string>('');
-
-    const buttonLabel = emailInput.length ? t`Finish` : t`Finish without email`;
+    const buttonLabel = feedback.authorEmail.value.length ? t`Finish` : t`Finish without email`;
 
     const onFinish = (): void => onHide();
 
@@ -53,17 +62,21 @@ export const FeedbackReceiveUpdatesModal = ({ isVisible, onHide, isSendingFeedba
                                 </Text>
                                 <Input
                                     style={styles.emailInputStyle}
-                                    onChangeText={setEmailInput}
+                                    onChangeText={onChangeEmail}
                                     placeholder={i18n._(INPUT_PLACEHOLDER)}
                                     placeholderTextColor={colors.darkerGrey}
-                                    value={emailInput}
+                                    value={feedback.authorEmail.value}
                                 />
                                 <View style={styles.checkboxContainer}>
                                     <Text style={[textStyles.captionStyleLeft, styles.checkBoxDescription]}>
                                         <Trans>Do you work at this service or organization?</Trans>
                                     </Text>
                                     <View style={styles.checkBox}>
-                                        <CheckBox checked={checked} iconStyle={styles.checkBoxIcon} onPress={toggleChecked} />
+                                        <CheckBox
+                                            checked={feedback.authorIsEmployee.value === 'true'}
+                                            iconStyle={styles.checkBoxIcon}
+                                            onPress={onPressIsEmployee}
+                                        />
                                         <Text style={textStyles.paragraphStyleBrown}><Trans>Yes</Trans></Text>
                                     </View>
                                 </View>
