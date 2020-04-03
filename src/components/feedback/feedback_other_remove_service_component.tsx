@@ -26,10 +26,11 @@ import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import { otherRemoveServiceStyles as styles } from './styles';
-import { getEmptyFeedback } from './hooks/use_send_feedback';
+import { getEmptyFeedback, Feedback } from './hooks/use_send_feedback';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
+    readonly serviceId: string;
 };
 
 type ContentComponentProps = {
@@ -71,13 +72,12 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
     },
 };
 
-const useServiceDetailRoute = (queryParam: QueryParameters): () => void => {
-    const params = useParams<RouteParams>();
+const useServiceDetailRoute = (serviceId: string, queryParam: QueryParameters): () => void => {
     const history = useHistory();
 
     return replaceRouteWithParameters(
         Routes.ServiceDetail,
-        params.serviceId,
+        serviceId,
         queryParam,
         history,
     );
@@ -92,14 +92,14 @@ const useFeedbackInputControl = (): readonly [string, (value: string) => void] =
     return [input, onInputChange];
 };
 
-const HeaderComponent = (props: HeaderComponentProps): JSX.Element => {
+const HeaderComponent = ({ headerLabel, serviceId }: HeaderComponentProps): JSX.Element => {
     const goBackShowModal = useServiceDetailRoute(
-        // TODO useQuery only supports string Records for now
+        serviceId,
         { feedbackOptionsModalMode: 'hidden' },
     );
 
     const goBackHideModal = useServiceDetailRoute(
-        // TODO useQuery only supports string Records for now
+        serviceId,
         { feedbackOptionsModalMode: 'visible' },
     );
 
@@ -115,7 +115,7 @@ const HeaderComponent = (props: HeaderComponentProps): JSX.Element => {
                 </Button>
                 <Title style={styles.headerLeftTitle}>
                     <Text style={textStyles.headline6}>
-                        <Trans id={props.headerLabel} />
+                        <Trans id={headerLabel} />
                     </Text>
                 </Title>
             </Left>
@@ -183,25 +183,29 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
     );
 };
 
-const getFeedbackJSON = (mode: QueryParameters['feedbackContentMode'], input: string): string => {
-    const emptyFeedback = getEmptyFeedback();
+const getFeedbackJSON = (mode: QueryParameters['feedbackContentMode'], input: string, serviceId: string): string => {
+    const feedback: Feedback = { ...getEmptyFeedback(), bc211Id: { value: serviceId, shouldSend: true }};
     const feedbackField = mode === 'OTHER' ?
-        { other: {...emptyFeedback.other, value: input }}
+        { other: {...feedback.other, value: input } }
         :
-        { removalReason: {...emptyFeedback.removalReason, value: input }};
-    return JSON.stringify({ ...emptyFeedback, ...feedbackField });
+        { removalReason: {...feedback.removalReason, value: input }};
+    return JSON.stringify({ ...feedback, ...feedbackField });
 };
 
 export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
     const query = useQuery();
 
+    const params = useParams<RouteParams>();
+
+    const serviceId = params.serviceId;
+
     const [input, onInputChange]: readonly [string, (value: string) => void]
         = useFeedbackInputControl();
 
-    const goBackReceiveUpdatesShow = useServiceDetailRoute(
-        // TODO useQuery only supports string Records for now
-        { feedbackSubmitModalMode: 'visible', feedback: getFeedbackJSON(query.feedbackContentMode, input) },
-    );
+    const goBackReceiveUpdatesShow = useServiceDetailRoute(serviceId, {
+        feedbackSubmitModalMode: 'visible',
+        feedback: getFeedbackJSON(query.feedbackContentMode, input, serviceId),
+    });
 
     const onSubmit = (): void => goBackReceiveUpdatesShow();
 
@@ -210,7 +214,7 @@ export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
 
     return (
         <Container>
-            <HeaderComponent headerLabel={content.header} />
+            <HeaderComponent headerLabel={content.header} serviceId={serviceId} />
             <ContentComponent
                 inputLabel={content.label}
                 input={input}

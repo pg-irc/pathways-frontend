@@ -11,12 +11,15 @@ import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 import { FeedbackOptionsModalComponent } from './feedback_options_modal_component';
+import { UseSendFeedback } from './hooks/use_send_feedback';
 
 interface FeedbackModalContainerProps {
     readonly feedbackEnabled: boolean;
     readonly onSuggestAnUpdatePress: () => void;
     readonly serviceId: string;
     readonly query: ParsedQueryParameters;
+    readonly sendFeedback: UseSendFeedback['sendFeedback'];
+    readonly isSendingFeedback: UseSendFeedback['isSendingFeedback']
 }
 
 export const FeedbackModalContainer = ({
@@ -24,6 +27,8 @@ export const FeedbackModalContainer = ({
     onSuggestAnUpdatePress: onSuggestAnUpdate,
     serviceId,
     query,
+    sendFeedback,
+    isSendingFeedback,
 }: FeedbackModalContainerProps): JSX.Element => {
 
     const history = useHistory();
@@ -69,8 +74,12 @@ export const FeedbackModalContainer = ({
         setOptionsModalVisible(false);
     };
 
-    const onHideReceiveUpdatesModal = (): void => {
-        setReceiveUpdatesModalVisible(false);
+    const onHideReceiveUpdatesModal = async (): Promise<void> => {
+        try {
+            await sendFeedback();
+        } finally {
+            setReceiveUpdatesModalVisible(false);
+        }
     };
 
     return (
@@ -83,7 +92,11 @@ export const FeedbackModalContainer = ({
                 onOtherPress={onOtherPress}
                 onRemoveServicePress={onRemoveServicePress}
             />
-            <FeedbackReceiveUpdatesModal isVisible={receiveUpdatesModalVisible} onHide={onHideReceiveUpdatesModal} />
+            <FeedbackReceiveUpdatesModal
+                isVisible={receiveUpdatesModalVisible}
+                onHide={onHideReceiveUpdatesModal}
+                isSendingFeedback={isSendingFeedback}
+            />
         </>
     );
 };
