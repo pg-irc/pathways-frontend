@@ -11,7 +11,7 @@ import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 import { FeedbackOptionsModalComponent } from './feedback_options_modal_component';
-import { UseSendFeedback } from './hooks/use_send_feedback';
+import { UseSendFeedback, Feedback } from './hooks/use_send_feedback';
 
 interface FeedbackModalContainerProps {
     readonly feedbackEnabled: boolean;
@@ -19,7 +19,9 @@ interface FeedbackModalContainerProps {
     readonly serviceId: string;
     readonly query: ParsedQueryParameters;
     readonly sendFeedback: UseSendFeedback['sendFeedback'];
-    readonly isSendingFeedback: UseSendFeedback['isSendingFeedback']
+    readonly isSendingFeedback: UseSendFeedback['isSendingFeedback'];
+    readonly setFeedback: Dispatch<SetStateAction<Feedback>>;
+    readonly feedback: Feedback;
 }
 
 export const FeedbackModalContainer = ({
@@ -29,6 +31,8 @@ export const FeedbackModalContainer = ({
     query,
     sendFeedback,
     isSendingFeedback,
+    setFeedback,
+    feedback,
 }: FeedbackModalContainerProps): JSX.Element => {
 
     const history = useHistory();
@@ -96,6 +100,8 @@ export const FeedbackModalContainer = ({
                 isVisible={receiveUpdatesModalVisible}
                 onHide={onHideReceiveUpdatesModal}
                 isSendingFeedback={isSendingFeedback}
+                setFeedback={setFeedback}
+                feedback={feedback}
             />
         </>
     );
