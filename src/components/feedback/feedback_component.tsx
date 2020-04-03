@@ -1,4 +1,5 @@
-import React, { useState, Dispatch, SetStateAction  } from 'react';
+// tslint:disable:no-expression-statement
+import React, { useState, Dispatch, SetStateAction, useEffect  } from 'react';
 import { View, TextInput, Text, TouchableOpacity, TextStyle, StyleProp } from 'react-native';
 import { Trans, I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
@@ -6,11 +7,12 @@ import { Icon } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
+import { FeedbackField } from './hooks/use_send_feedback';
 
 interface Props {
     readonly feedbackEnabled: boolean;
-    readonly feedbackText: string;
-    readonly onChangeFeedbackText: (text: string) => void;
+    readonly feedbackField: FeedbackField;
+    readonly setFeedbackField: (field: FeedbackField) => void;
     readonly fieldLabel: JSX.Element;
     readonly fieldValue: string;
     readonly feedbackDisabledComponent: JSX.Element;
@@ -18,6 +20,10 @@ interface Props {
 
 export const FeedbackComponent = (props: Props): JSX.Element => {
     const [isEditing, setIsEditing]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+    useEffect((): void => {
+        props.setFeedbackField({ ...props.feedbackField, shouldSend: isEditing });
+    }, [isEditing]);
+
     const onEditingTogglePress = (): void => setIsEditing(!isEditing);
 
     if (!props.feedbackEnabled) {
@@ -33,8 +39,8 @@ export const FeedbackComponent = (props: Props): JSX.Element => {
             <ToggleInputComponent
                 onPress={onEditingTogglePress}
                 isEditing={isEditing}
-                onChangeFeedbackText={props.onChangeFeedbackText}
-                feedbackText={props.feedbackText}
+                setFeedbackField={props.setFeedbackField}
+                feedbackField={props.feedbackField}
             />
         </View>
     );
@@ -56,8 +62,8 @@ const FieldValue = (props: { readonly fieldValue: Props['fieldValue'] }): JSX.El
 interface ToggleInputComponentProps {
     readonly onPress: () => void;
     readonly isEditing: boolean;
-    readonly onChangeFeedbackText: (text: string) => void;
-    readonly feedbackText: string;
+    readonly setFeedbackField: Props['setFeedbackField'];
+    readonly feedbackField: Props['feedbackField'];
 }
 
 const ToggleInputComponent = (props: ToggleInputComponentProps): JSX.Element => (
@@ -74,9 +80,9 @@ const ToggleInputComponent = (props: ToggleInputComponentProps): JSX.Element => 
             isEditing={props.isEditing}
         />
         <TextInputComponent
-            onChangeFeedbackText={props.onChangeFeedbackText}
+            setFeedbackField={props.setFeedbackField}
             isEditing={props.isEditing}
-            feedbackText={props.feedbackText}
+            feedbackField={props.feedbackField}
         />
     </View>
 );
@@ -102,15 +108,19 @@ const ToggleTextInputComponent = (props: ToggleButtonComponentProps): JSX.Elemen
 );
 
 interface InputComponentProps {
-    readonly onChangeFeedbackText: (text: string) => void;
+    readonly setFeedbackField: Props['setFeedbackField'];
     readonly isEditing: boolean;
-    readonly feedbackText: string;
+    readonly feedbackField: Props['feedbackField'];
 }
 
 const TextInputComponent = (props: InputComponentProps): JSX.Element => {
     const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.teal);
+
     const onBlur = (): void => setTextcolor(colors.teal);
+
     const onFocus = (): void => setTextcolor(colors.black);
+
+    const onChangeText = (value: string): void => props.setFeedbackField({ ...props.feedbackField, value });
 
     if (!props.isEditing) {
         return <EmptyComponent />;
@@ -122,8 +132,8 @@ const TextInputComponent = (props: InputComponentProps): JSX.Element => {
             (({ i18n }: I18nProps): JSX.Element =>
                 <TextInput
                     multiline={true}
-                    onChangeText={props.onChangeFeedbackText}
-                    value={props.feedbackText}
+                    onChangeText={onChangeText}
+                    value={props.feedbackField.value}
                     textAlignVertical={'top'}
                     placeholder={i18n._(t`Comment or suggest edits`)}
                     onFocus={onFocus}

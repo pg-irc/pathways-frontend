@@ -4,7 +4,7 @@ import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import * as R from 'ramda';
 import { AIRTABLE_TABLE_ID, AIRTABLE_API_KEY } from 'react-native-dotenv';
 
-interface FeedbackField {
+export interface FeedbackField {
     readonly value: string;
     readonly shouldSend: boolean;
 }
