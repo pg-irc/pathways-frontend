@@ -65,7 +65,7 @@
         "build-url": "^2.0.0",
         "cross-fetch": "^3.0.4",
         "expo": "^37.0.0",
-        "expo-analytics": "^1.0.9",
+        "expo-analytics": "^1.0.14",
         "expo-intent-launcher": "~8.1.0",
         "expo-location": "~8.1.0",
         "extend": "^3.0.2",
