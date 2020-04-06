@@ -69,7 +69,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     return (
         <ServiceListWrapper {...props}>
             <FlatList
-                style={{ backgroundColor: colors.white }}
+                style={{ backgroundColor: colors.lightGrey }}
                 data={getServicesIfValid(props.topicServicesOrError)}
                 keyExtractor={(service: HumanServiceData): string => service.id}
                 renderItem={renderServiceItems(props)}

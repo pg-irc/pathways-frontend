@@ -68,8 +68,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => (
     <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
         {renderLoadingScreen(props.isLoading)}
         <FlatList
-            style={{ backgroundColor: colors.white }}
-            refreshing={false}
+            style={{ backgroundColor: colors.lightGrey}}
             data={props.searchResults}
             keyExtractor={keyExtractor}
             renderItem={renderSearchHit(props)}

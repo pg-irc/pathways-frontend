@@ -27,7 +27,7 @@ export const ServiceListItemComponent = (props: Props): JSX.Element => {
         const serviceName = buildServiceName(props.service.organizationName, props.service.name);
         return (
             <TouchableOpacity onPress={props.onPress}>
-                 <View style={{ backgroundColor: colors.white, marginTop: 8, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
+                 <View style={{ backgroundColor: colors.white, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
                     <View style={{flex: 2, paddingLeft: 15}}>
                     {renderName(serviceName)}
                     {/* {renderOrganizationName(props.service.organizationName)} */}
