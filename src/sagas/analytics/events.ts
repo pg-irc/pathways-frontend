@@ -2,6 +2,7 @@
 import { Analytics as ExpoAnalytics, ScreenHit, Event } from 'expo-analytics';
 import { GOOGLE_ANALYTICS_TRACKING_ID, DEBUG_GOOGLE_ANALYTICS } from 'react-native-dotenv';
 import { RouteChangedAction } from '../../stores/router_actions';
+import { HumanServiceData } from '../../validation/services/types';
 
 export const sendScreenHit = (action: RouteChangedAction): void => {
     const additionalParameters = createGoogleAnalyticsLanguageParameter(action);
@@ -16,9 +17,15 @@ export const sendAnswerChosenEvent = (answerId: string): void => {
     analytics.hit(event);
 };
 
-export const sendBookmarkAddedEvent = (topicId: string): void => {
+export const sendBookmarkTopicEvent = (topicId: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Bookmarks', 'BookmarkAdded', topicId);
+    const event = createEvent('Bookmarks', 'TopicBookmarkAdded', topicId);
+    analytics.hit(event);
+};
+
+export const sendBookmarkServiceEvent = (service: HumanServiceData): void => {
+    const analytics = createAnalytics();
+    const event = createEvent('Bookmarks', 'ServiceBookmarkAdded', [service.id, service.name, service.organizationName]);
     analytics.hit(event);
 };
 
