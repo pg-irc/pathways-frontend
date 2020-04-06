@@ -28,6 +28,7 @@ import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
+import { openURL } from '../link/link';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -74,14 +75,31 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
                 keyExtractor={(service: HumanServiceData): string => service.id}
                 renderItem={renderServiceItems(props)}
                 ItemSeparatorComponent={SearchListSeparator}
-                ListHeaderComponent={
-                    <MessageComponent
-                        isVisible={props.showPartialLocalizationMessage}
-                        hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
-                    />
-                }
+                ListHeaderComponent={<ListHeaderComponent {...props} />}
             />
         </ServiceListWrapper>
+    );
+};
+
+const ListHeaderComponent = (props: Props): JSX.Element => {
+    const messageText = (
+        <>
+            <Trans>
+                Information about services is currently only available in English. For support in other languages, please
+                </Trans> <Text onPress={(): void => openURL('tel: 211')} style={textStyles.messageLink}>
+                <Trans>call BC211.</Trans>
+            </Text>
+        </>
+    );
+    const linkText = <Trans>Don't show again</Trans>;
+    const onLinkPress = (): void => { props.hidePartialLocalizationMessage(); };
+    return (
+        <MessageComponent
+            isVisible={props.showPartialLocalizationMessage}
+            messageText={messageText}
+            linkText={linkText}
+            onLinkPress={onLinkPress}
+        />
     );
 };
 

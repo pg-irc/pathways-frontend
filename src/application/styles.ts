@@ -309,6 +309,14 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
+    messageLink: {
+        fontSize: 15,
+        lineHeight: 21,
+        textAlign: 'left',
+        color: colors.teal,
+        letterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
 });
 
 export const applicationStyles = StyleSheet.create({

@@ -4,7 +4,7 @@ import { Store } from '../../stores';
 import { SearchComponentProps, SearchComponent, SearchComponentActions } from './search_component';
 import { saveService, SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
-import { disableAnalytics, DisableAnalyticsAction, HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
+import { disableAnalytics, DisableAnalyticsAction } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import {
     SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction,
@@ -17,7 +17,6 @@ import { selectSearchLatLong } from '../../selectors/search/select_search_lat_lo
 import { selectSearchPage } from '../../selectors/search/select_search_page';
 import { selectNumberOfSearchPages } from '../../selectors/search/select_number_of_search_pages';
 import { selectIsInputCollapsed } from '../../selectors/search/select_is_input_collapsed';
-import { selectShowPartialLocalizationMessage } from '../../selectors/user_profile/select_show_partial_localization_message';
 import { selectSearchResults } from '../../selectors/search/select_search_results';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
@@ -32,7 +31,6 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     searchResults: selectSearchResults(store),
     searchLatLong: selectSearchLatLong(store),
     collapseSearchInput: selectIsInputCollapsed(store),
-    showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
 });
 
 type Actions =
@@ -47,7 +45,6 @@ type Actions =
     SaveNumberOfSearchPagesAction |
     SaveSearchResultsAction |
     SetCollapseSearchInputAction |
-    HidePartialLocalizationMessageAction |
     OpenHeaderMenuAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
@@ -83,9 +80,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     ),
     setCollapseSearchInput: (collapseSearchInput: boolean): SetCollapseSearchInputAction => (
         dispatch(setCollapseSearchInput(collapseSearchInput))
-    ),
-    hidePartialLocalizationMessage: (): HidePartialLocalizationMessageAction => (
-        dispatch(hidePartialLocalizationMessage())
     ),
     openHeaderMenu: (): OpenHeaderMenuAction => (
         dispatch(openHeaderMenu())

@@ -17,7 +17,6 @@ import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/ser
 import { View, Text, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { MessageComponent } from '../partial_localization/message_component';
-import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
 import { EmptyComponent as EmptySearchComponent } from './empty_component';
 import { OnlineStatus } from './use_online_status';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
@@ -25,13 +24,15 @@ import { Errors } from '../../validation/errors/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { LatLong } from '../../validation/latlong/types';
+import { openURL } from '../link/link';
+import buildUrl from 'build-url';
+import { VERSION } from 'react-native-dotenv';
 
 export interface SearchResultsProps {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
-    readonly showPartialLocalizationMessage: boolean;
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
@@ -44,7 +45,6 @@ export interface SearchResultsProps {
 export interface SearchResultsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
 }
@@ -55,7 +55,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchResultsComponent', props);
 
     if (searchTermIsEmpty(props)) {
-        return renderEmptyComponent(props);
+        return renderEmptyComponent();
     }
 
     if (isSearchErrorType(props)) {
@@ -74,7 +74,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => (
             keyExtractor={keyExtractor}
             renderItem={renderSearchHit(props)}
             ItemSeparatorComponent={SearchListSeparator}
-            ListHeaderComponent={renderHeader(props)}
+            ListHeaderComponent={<ListHeaderComponent />}
             ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
         />
     </View>
@@ -147,7 +147,7 @@ const renderComponentByErrorType = (props: Props, errorType: Errors): JSX.Elemen
     <ErrorScreenSwitcherComponent
         refreshScreen={(): Promise<void> => props.onSearchRequest(props.searchTerm, props.searchLocation)}
         errorType={errorType}
-        header={renderHeader(props)}
+        header={<ListHeaderComponent />}
     />
 );
 
@@ -163,18 +163,35 @@ const hasNoResultsFromLocationQuery = (latLong?: LatLong): boolean => (
     latLong && latLong.lat === 0 && latLong.lng === 0
 );
 
-const renderEmptyComponent = (props: Props): JSX.Element => (
+const renderEmptyComponent = (): JSX.Element => (
     <EmptySearchComponent
-        header={renderHeader(props)}
+        header={<ListHeaderComponent />}
     />
 );
 
-const renderHeader = (props: Props): JSX.Element => (
-    <MessageComponent
-        isVisible={props.showPartialLocalizationMessage}
-        hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
-    />
-);
+const ListHeaderComponent = (): JSX.Element => {
+    const messageText = (
+        <>
+            <Trans>
+                Search is currently in beta and only available in English. For support in other languages, please
+                </Trans> <Text onPress={(): void => openURL('tel: 211')} style={textStyles.messageLink}>
+            <Trans>call BC211.</Trans></Text>
+        </>
+    );
+    const linkText = <Trans>Give feedback</Trans>;
+    const onLinkPress = (): void => openURL(buildUrl(
+        'mailto:info@arrivaladvisor.ca',
+        { queryParams: { subject: 'Arrival Advisor - Feedback on Search', body: `Version number: ${VERSION}.`} },
+    ));
+    return (
+        <MessageComponent
+            isVisible={true}
+            messageText={messageText}
+            linkText={linkText}
+            onLinkPress={onLinkPress}
+        />
+    );
+};
 
 const renderLoadMoreButton = (searchPage: number, numberOfPages: number, onLoadMore: () => Promise<void>): JSX.Element => {
     if (searchPage + 1 >= numberOfPages) {

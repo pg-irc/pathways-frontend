@@ -8,7 +8,7 @@ import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
-import { DisableAnalyticsAction, HidePartialLocalizationMessageAction } from '../../stores/user_profile';
+import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import { SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction, SaveSearchResultsAction, SaveSearchLatLongAction, SaveSearchPageAction, SaveNumberOfSearchPagesAction } from '../../stores/search';
@@ -32,7 +32,6 @@ export interface SearchComponentProps {
     readonly numberOfSearchPages: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
-    readonly showPartialLocalizationMessage: boolean;
 }
 
 export interface SearchComponentActions {
@@ -47,7 +46,6 @@ export interface SearchComponentActions {
     readonly saveNumberOfSearchPages: (numberOfSearchPages: number) => SaveNumberOfSearchPagesAction;
     readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => SaveSearchResultsAction;
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => SetCollapseSearchInputAction;
-    readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
