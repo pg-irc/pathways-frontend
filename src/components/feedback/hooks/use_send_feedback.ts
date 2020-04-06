@@ -3,6 +3,7 @@
 import { useState, Dispatch, SetStateAction, useEffect } from 'react';
 import * as R from 'ramda';
 import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID } from 'react-native-dotenv';
+import buildUrl from 'build-url';
 
 export interface FeedbackField {
     readonly value: string;
@@ -108,7 +109,7 @@ const getRequestUrl = (): string => {
         throw new Error('AIRTABLE_TABLE_ID is missing.');
     }
 
-    return `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_ID}`;
+    return buildUrl('https://api.airtable.com', { path: `v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_ID}` });
 };
 
 const getRequestInit = (feedbackJSON: string): RequestInit => {
