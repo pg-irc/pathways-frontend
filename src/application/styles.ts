@@ -332,6 +332,15 @@ export const applicationStyles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 9,
         alignItems: 'center',
+        backgroundColor: colors.lightTeal,
+    },
+    locateButton: {
+        borderRadius: values.roundedBorderRadius,
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+        paddingVertical: 9,
+        alignItems: 'center',
+        backgroundColor: colors.white,
     },
     whiteTealButton: {
         backgroundColor: colors.white,
@@ -396,6 +405,9 @@ export const applicationStyles = StyleSheet.create({
                 marginHorizontal: 10,
             },
         }),
+    },
+    disabled: {
+        opacity: values.disabledOpacity,
     },
 });
 

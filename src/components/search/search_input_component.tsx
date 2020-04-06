@@ -206,10 +206,12 @@ const InputIcon = ({ name }: IconProps): JSX.Element => (
 
 const renderSearchButton = (props: Props & ExpandedInputProps): JSX.Element => (
     <TouchableOpacity
-        style={[applicationStyles.searchButton, { backgroundColor: colors.lightTeal }]}
+        style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
+        disabled={props.searchTermInput.length === 0}
         onPress={(): void => {
             props.onSearchRequest(props.searchTermInput, props.searchLocationInput);
-        }}>
+        }}
+    >
         <Text style={[textStyles.button, { fontSize: 16 }]}>
             <Trans>
                 Search
@@ -224,7 +226,7 @@ const renderMyLocationButton = (props: ExpandedInputProps): JSX.Element => {
     }
     return (
         <TouchableOpacity
-            style={[applicationStyles.searchButton, { backgroundColor: colors.white }]}
+            style={applicationStyles.locateButton}
             onPress={(): void => {
                 props.setShowMyLocationButton(false);
                 myLocationOnPress(props.setSearchLocationInput);
