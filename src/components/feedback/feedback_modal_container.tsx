@@ -6,7 +6,7 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { useHistory } from 'react-router-native';
 
 import { textStyles, colors } from '../../application/styles';
-import { Routes, goToRouteWithParameter, ParsedQueryParameters } from '../../application/routing';
+import { Routes, goToRouteWithParameter, NonSerializedFeedbackState } from '../../application/routing';
 import { FeedbackReceiveUpdatesModal } from '../feedback/feedback_receive_updates_modal';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -19,7 +19,7 @@ interface FeedbackModalContainerProps {
     readonly feedbackEnabled: boolean;
     readonly onSuggestAnUpdatePress: () => void;
     readonly serviceId: string;
-    readonly query: ParsedQueryParameters;
+    readonly query: NonSerializedFeedbackState;
     readonly sendFeedback: UseSendFeedback['sendFeedback'];
     readonly isSendingFeedback: UseSendFeedback['isSendingFeedback'];
     readonly setFeedback: Dispatch<SetStateAction<ServiceFeedback>>;
