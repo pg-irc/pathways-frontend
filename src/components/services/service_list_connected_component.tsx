@@ -1,7 +1,9 @@
 import { Dispatch } from 'redux';
 import { Store } from '../../stores';
-import { buildServicesRequest, BuildServicesRequestAction, ServicesAction, BookmarkServiceAction,
-        UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
+import {
+    buildServicesRequest, BuildServicesRequestAction, ServicesAction, BookmarkServiceAction,
+    UnbookmarkServiceAction, bookmarkService, unbookmarkService, openService, OpenServiceAction,
+} from '../../stores/services/actions';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/types';
@@ -40,6 +42,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ServicesAction | SetManualUserLoc
     hidePartialLocalizationMessage: (): HidePartialLocalizationMessageAction => dispatch(hidePartialLocalizationMessage()),
     setManualUserLocation: (userLocation: UserLocation): SetManualUserLocationAction => dispatch(setManualUserLocation(userLocation)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
+    openService: (service: HumanServiceData): OpenServiceAction => dispatch(openService(service)),
 });
 
 type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;

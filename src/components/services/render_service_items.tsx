@@ -1,7 +1,7 @@
 import React from 'react';
 import * as R from 'ramda';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
-import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { ServiceListItemComponent } from './service_list_item_component';
 import { ListRenderItemInfo } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
@@ -11,6 +11,7 @@ export interface ServiceItemsProps {
     readonly history: History;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly openService: (service: HumanServiceData) => OpenServiceAction;
 }
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
@@ -19,11 +20,16 @@ export const renderServiceItems = R.curry((props: ServiceItemsProps, itemInfo: S
     const service = itemInfo.item;
     const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
     const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
+    const onOpenService = (): void => {
+        // tslint:disable: no-expression-statement
+        props.openService(service);
+        goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
+    };
     return (
         <ServiceListItemComponent
             history={props.history}
             service={service}
-            onPress={goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)}
+            onPress={onOpenService}
             isBookmarked={service.bookmarked}
             onBookmark={onBookmark}
             onUnbookmark={onUnbookmark}

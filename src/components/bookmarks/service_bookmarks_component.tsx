@@ -6,7 +6,7 @@ import { RouterProps } from '../../application/routing';
 import { colors } from '../../application/styles';
 import { View } from 'native-base';
 import { EmptyBookmarksComponent } from './empty_bookmarks_component';
-import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { renderServiceItems } from '../services/render_service_items';
 import { SearchListSeparator } from '../search/separators';
 
@@ -17,6 +17,7 @@ export interface ServiceBookmarksProps {
 export interface ServiceBookmarksActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly openService: (service: HumanServiceData) => OpenServiceAction;
 }
 
 type Props = ServiceBookmarksProps & ServiceBookmarksActions & RouterProps;

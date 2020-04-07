@@ -28,6 +28,7 @@ export type ServicesAction =
     SaveServiceAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
+    OpenServiceAction |
     DataPersistence.LoadRequestAction |
     DataPersistence.LoadSuccessAction |
     DataPersistence.LoadFailureAction |
@@ -55,11 +56,6 @@ export const saveService = (service: HumanServiceData) => (
     helpers.makeAction(constants.SAVE_SERVICE, { service })
 );
 
-// tslint:disable-next-line:typedef
-export const openService = (service: HumanServiceData) => (
-    helpers.makeAction(constants.OPEN_SERVICE, { service })
-);
-
 // tslint:disable-next-line: typedef
 export const bookmarkService = (service: HumanServiceData) => (
     helpers.makeAction(constants.BOOKMARK_SERVICE, { service })
@@ -68,4 +64,9 @@ export const bookmarkService = (service: HumanServiceData) => (
 // tslint:disable-next-line: typedef
 export const unbookmarkService = (service: HumanServiceData) => (
     helpers.makeAction(constants.UNBOOKMARK_SERVICE, { service })
+);
+
+// tslint:disable-next-line:typedef
+export const openService = (service: HumanServiceData) => (
+    helpers.makeAction(constants.OPEN_SERVICE, { service })
 );
