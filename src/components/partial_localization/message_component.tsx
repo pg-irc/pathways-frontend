@@ -4,7 +4,7 @@ import { textStyles, colors } from '../../application/styles';
 import { TouchableOpacity } from 'react-native';
 import { EmptyComponent } from '../empty_component/empty_component';
 
-export interface Props {
+interface Props {
     readonly isVisible: boolean;
     readonly messageText: JSX.Element;
     readonly linkText: JSX.Element;
