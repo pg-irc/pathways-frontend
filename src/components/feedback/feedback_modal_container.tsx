@@ -12,7 +12,7 @@ import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 import { FeedbackOptionsModalComponent } from './feedback_options_modal_component';
-import { UseSendFeedback, ServiceFeedback } from './hooks/use_send_feedback';
+import { SendFeedbackPromise, ServiceFeedback } from './hooks/use_send_feedback';
 import { showToast } from '../../application/toast';
 
 interface FeedbackModalContainerProps {
@@ -20,8 +20,8 @@ interface FeedbackModalContainerProps {
     readonly onSuggestAnUpdatePress: () => void;
     readonly serviceId: string;
     readonly query: NonSerializedFeedbackState;
-    readonly sendFeedback: UseSendFeedback['sendFeedback'];
-    readonly isSendingFeedback: UseSendFeedback['isSendingFeedback'];
+    readonly sendFeedback: SendFeedbackPromise['sendFeedback'];
+    readonly isSendingFeedback: SendFeedbackPromise['isSendingFeedback'];
     readonly setFeedback: Dispatch<SetStateAction<ServiceFeedback>>;
     readonly feedback: ServiceFeedback;
 }
