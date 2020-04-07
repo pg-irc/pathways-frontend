@@ -106,20 +106,13 @@ export const goToRouteWithoutParameter = (route: Routes, history: History): () =
     return (): void => history.push(path);
 };
 
-export const goToRouteWithParameter = (route: Routes, parameter: string, history: History, queryParams?: QueryParameters): () => void => {
-    const path = queryParams ?
-        `${routePathWithParameter(route, parameter)}${buildUrl('', { queryParams })}`
-        :
-        routePathWithParameter(route, parameter);
-    // tslint:disable-next-line:no-expression-statement
-    return (): void => history.push(path);
-};
+export const goToRouteWithParameter = (route: Routes, parameter: string, history: History, queryParams?: QueryParameters): () => void => (
+    (): void => history.push(getPathWithOptionalQuery(routePathWithParameter(route, parameter), queryParams))
+);
 
-export const replaceRouteWithParameters = (route: Routes, parameter: string, queryParams: QueryParameters, history: History): () => void => {
-    const path = `${routePathWithParameter(route, parameter)}${buildUrl('', { queryParams })}`;
-    // tslint:disable-next-line:no-expression-statement
-    return (): void => history.replace(path);
-};
+export const replaceRouteWithParameter = (route: Routes, parameter: string, history: History, queryParams?: QueryParameters): () => void => (
+    (): void => history.replace(getPathWithOptionalQuery(routePathWithParameter(route, parameter), queryParams))
+);
 
 export const goBack = (history: History): void => (
     history.goBack()
@@ -148,3 +141,7 @@ export const getParametersFromPath = (location: Location, route: Routes): MatchP
     });
     return match.params;
 };
+
+const getPathWithOptionalQuery = (path: string, queryParams?: QueryParameters): string => (
+    queryParams ? `${path}${buildUrl('', { queryParams })}` : path
+);

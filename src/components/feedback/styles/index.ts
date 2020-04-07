@@ -149,7 +149,6 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
     },
 
     finishButton: {
-        // justifyContent: 'flex-start',
         alignSelf: 'flex-end',
         backgroundColor: 'white',
         borderWidth: 2,
@@ -161,7 +160,6 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
     },
 
     finishButtonSending: {
-        // justifyContent: 'flex-start',
         opacity: values.disabledOpacity,
     },
 
