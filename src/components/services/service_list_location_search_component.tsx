@@ -97,6 +97,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
         />
         :
         <EmptyComponent />;
+    const searchIsDisabled = props.locationInputValue.length === 0 || props.isFetchingLatLng;
     return (
         <View>
             <View style={[applicationStyles.searchContainerExpanded, { marginBottom: 4 }]}>
@@ -123,7 +124,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                         props.setManualUserLocation,
                         props.setSearchIsCollapsed,
                     )}
-                    isFetchingLatLng={props.isFetchingLatLng}
+                    isDisabled={searchIsDisabled}
                 />
             </View>
         </View>
@@ -191,20 +192,14 @@ const CloseIcon = (): JSX.Element => (
 
 interface SearchButtonProps {
     readonly onPress: () => void;
-    readonly isFetchingLatLng: boolean;
+    readonly isDisabled: boolean;
 }
 
 const SearchButton = (props: SearchButtonProps): JSX.Element => (
     <TouchableOpacity
-        style={[
-            applicationStyles.searchButton,
-            {
-                backgroundColor: colors.lightTeal,
-                opacity: props.isFetchingLatLng ? values.disabledOpacity : 1,
-            },
-        ]}
+        style={props.isDisabled ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
         onPress={props.onPress}
-        disabled={props.isFetchingLatLng}
+        disabled={props.isDisabled}
     >
         <Text style={[textStyles.button, { fontSize: 16 }]}>
             <Trans>Search</Trans>
@@ -219,13 +214,7 @@ interface LocateButtonProps {
 
 const LocateButton = (props: LocateButtonProps): JSX.Element => (
     <TouchableOpacity
-        style={[
-            applicationStyles.searchButton,
-            {
-                backgroundColor: colors.white,
-                opacity: props.isFetchingLatLng ? values.disabledOpacity : 1,
-            },
-        ]}
+        style={props.isFetchingLatLng ? [applicationStyles.locateButton, applicationStyles.disabled] : applicationStyles.locateButton}
         onPress={props.onPress}
         disabled={props.isFetchingLatLng}
     >
