@@ -1,9 +1,9 @@
 // tslint:disable: no-expression-statement
 import { useLocation } from 'react-router-native';
-import { ParsedQueryParameters } from '../application/routing';
+import { NonSerializedFeedbackState } from '../application/routing';
 
 // TODO Replace with a third party library once we start supporting other types.
-function parseSearch(search: string): ParsedQueryParameters {
+function parseSearch(search: string): NonSerializedFeedbackState {
     const normalizedSearch = search.replace('?', '');
     const result: Record<string, string> = {};
     const records = normalizedSearch.split('&');
@@ -20,7 +20,7 @@ function parseSearch(search: string): ParsedQueryParameters {
     return result;
 }
 
-export const useQuery = (): ParsedQueryParameters => {
+export const useQuery = (): NonSerializedFeedbackState => {
     const location = useLocation();
     return parseSearch(location.search);
 };
