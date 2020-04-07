@@ -24,9 +24,7 @@ export type FeedbackState = Partial<{
     readonly serializedFeedback: string;
 }>;
 
-type ParsedQueryObjects = Partial<{ readonly feedback: ServiceFeedback; }>;
-
-export type ParsedQueryParameters = Omit<FeedbackState, 'serializedFeedback'> & ParsedQueryObjects;
+export type NonSerializedFeedbackState = Omit<FeedbackState, 'serializedFeedback'> & Partial<{ readonly feedback: ServiceFeedback; }>;
 
 export type RouterProps = RouteComponentProps<RouteParameters>;
 
