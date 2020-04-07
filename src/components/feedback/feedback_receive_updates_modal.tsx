@@ -10,12 +10,12 @@ import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 
 import { receiveUpdatesStyles as styles } from './styles';
-import { UseSendFeedback, ServiceFeedback } from './hooks/use_send_feedback';
+import { SendFeedbackPromise, ServiceFeedback } from './hooks/use_send_feedback';
 
 interface FeedbackReceiveUpdatesProps {
     readonly isVisible: boolean;
     readonly onHide: () => void;
-    readonly isSendingFeedback: UseSendFeedback['isSendingFeedback'];
+    readonly isSendingFeedback: SendFeedbackPromise['isSendingFeedback'];
     readonly setFeedback: Dispatch<SetStateAction<ServiceFeedback>>;
     readonly feedback: ServiceFeedback;
 }
