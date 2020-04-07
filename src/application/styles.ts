@@ -1,4 +1,4 @@
-import { StyleSheet, Platform, Dimensions } from 'react-native';
+import { StyleSheet, Platform, Dimensions, TextStyle } from 'react-native';
 import { I18nManager } from 'react-native';
 import { isAndroid } from './helpers/is_android';
 
@@ -75,8 +75,10 @@ export const getBoldFontStylesForOS = (): object => (
         }
 );
 
-// return 'right' when in RTL mode to align to the left also in RTL mode
-const getAlwaysLeftTextAlign = (): object => (
+// For most components setting textAlign to 'left' ensures it's properly
+// swapped over to 'right' when we switch to a RTL language. For others, like the TextInput component,
+// this is not the case so we need to call this to set it explicitly.
+const getTextAlignForLanguage = (): TextStyle => (
     { textAlign: I18nManager.isRTL ? 'right' : 'left' }
 );
 
@@ -170,9 +172,6 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getNormalFontStylesForOS(),
     },
-    alwaysLeftAlign: {
-        ...getAlwaysLeftTextAlign(),
-    },
     paragraphStyle: {
         fontSize: 16,
         lineHeight: 21,
@@ -180,14 +179,6 @@ export const textStyles = StyleSheet.create({
         color: colors.black,
         letterSpacing,
         ...getNormalFontStylesForOS(),
-    },
-    alwaysLeftParagraphStyle: {
-        fontSize: 16,
-        lineHeight: 21,
-        color: colors.black,
-        letterSpacing,
-        ...getNormalFontStylesForOS(),
-        ...getAlwaysLeftTextAlign(),
     },
     paragraphStyleBrown: {
         fontSize: 16,
@@ -353,6 +344,7 @@ export const applicationStyles = StyleSheet.create({
         fontFamily: getNormalFontFamily(),
         flex: 1,
         height: 36,
+        ...getTextAlignForLanguage(),
     },
     searchContainerExpanded: {
         backgroundColor: colors.white,
