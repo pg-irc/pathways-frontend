@@ -10,7 +10,7 @@ import { ServiceFeedback } from '../components/feedback/hooks/use_send_feedback'
 // The property names of this structure are defined by the corresponding
 // route definitions, e.g. parsing a url '/learn/1' which matches
 // '/learn/:learnId' will put '1' in the attribute `learnId`.
-export type MatchParameters = Partial<{
+export type RouteParameters = Partial<{
     readonly learnId: LearnId;
     readonly topicId: TopicId;
     readonly organizationId: string;
@@ -30,7 +30,7 @@ type ParsedQueryObjects = Partial<{ readonly feedback: ServiceFeedback; }>;
 
 export type ParsedQueryParameters = ParsedQueryStrings & ParsedQueryObjects;
 
-export type RouterProps = RouteComponentProps<MatchParameters>;
+export type RouterProps = RouteComponentProps<RouteParameters>;
 
 export enum Routes {
     Welcome,
@@ -134,7 +134,7 @@ const routeHasParameter = (route: Routes): boolean => (
 // This makes it impossible to access params in components like the Header and Footer.
 // This helper function remedies this by parsing the parameters from the route url which is always available globally.
 // For more details see: https://github.com/ReactTraining/react-router/issues/5870.
-export const getParametersFromPath = (location: Location, route: Routes): MatchParameters => {
+export const getParametersFromPath = (location: Location, route: Routes): RouteParameters => {
     const match = matchPath(location.pathname, {
         path: routePathDefinition(route),
         exact: true,
