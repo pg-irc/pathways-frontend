@@ -20,7 +20,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useHistory, useParams } from 'react-router-native';
 
 import { colors, textStyles } from '../../application/styles';
-import { Routes, replaceRouteWithParameter, QueryParameters } from '../../application/routing';
+import { Routes, replaceRouteWithParameter, FeedbackState } from '../../application/routing';
 import { useQuery } from '../../hooks/use_query';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
@@ -72,7 +72,7 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
     },
 };
 
-const useServiceDetailRoute = (serviceId: string, queryParam: QueryParameters): () => void => {
+const useServiceDetailRoute = (serviceId: string, queryParam: FeedbackState): () => void => {
     const history = useHistory();
 
     return replaceRouteWithParameter(
@@ -95,12 +95,12 @@ const useFeedbackInputControl = (): readonly [string, (value: string) => void] =
 const HeaderComponent = ({ headerLabel, serviceId }: HeaderComponentProps): JSX.Element => {
     const goBackShowModal = useServiceDetailRoute(
         serviceId,
-        { feedbackOptionsModalMode: 'hidden' },
+        { isOptionsModalVisible: 'hidden' },
     );
 
     const goBackHideModal = useServiceDetailRoute(
         serviceId,
-        { feedbackOptionsModalMode: 'visible' },
+        { isOptionsModalVisible: 'visible' },
     );
 
     const onBack = (): void => goBackShowModal();
@@ -184,7 +184,7 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
     );
 };
 
-const getFeedbackJSON = (mode: QueryParameters['feedbackContentMode'], input: string, serviceId: string): string => {
+const getFeedbackJSON = (mode: FeedbackState['otherFeedbackMode'], input: string, serviceId: string): string => {
     const feedback: ServiceFeedback = { ...getEmptyFeedback(), bc211Id: { value: serviceId, shouldSend: true }};
     const feedbackField = mode === 'OTHER' ?
         { other: {...feedback.other, value: input } }
@@ -204,14 +204,14 @@ export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
         = useFeedbackInputControl();
 
     const goBackReceiveUpdatesShow = useServiceDetailRoute(serviceId, {
-        feedbackSubmitModalMode: 'visible',
-        feedback: getFeedbackJSON(query.feedbackContentMode, input, serviceId),
+        isReceiveUpdatesModalVisible: 'visible',
+        serializedFeedback: getFeedbackJSON(query.otherFeedbackMode, input, serviceId),
     });
 
     const onSubmit = (): void => goBackReceiveUpdatesShow();
 
     // TODO: Formulate a more robust typed query param getter
-    const content: SuggestionContent = SUGGESTION_CONTENT[query.feedbackContentMode];
+    const content: SuggestionContent = SUGGESTION_CONTENT[query.otherFeedbackMode];
 
     return (
         <Container>
