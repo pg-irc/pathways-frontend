@@ -5,7 +5,7 @@ import { History, Location } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
 import * as R from 'ramda';
-import { Feedback } from '../components/feedback/hooks/use_send_feedback';
+import { ServiceFeedback } from '../components/feedback/hooks/use_send_feedback';
 
 // The property names of this structure are defined by the corresponding
 // route definitions, e.g. parsing a url '/learn/1' which matches
@@ -26,7 +26,7 @@ export type QueryParameters = Partial<{
 
 type ParsedQueryStrings = Omit<QueryParameters, 'feedback'>;
 
-type ParsedQueryObjects = Partial<{ readonly feedback: Feedback; }>;
+type ParsedQueryObjects = Partial<{ readonly feedback: ServiceFeedback; }>;
 
 export type ParsedQueryParameters = ParsedQueryStrings & ParsedQueryObjects;
 
