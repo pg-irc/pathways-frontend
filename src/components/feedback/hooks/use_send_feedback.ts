@@ -9,7 +9,7 @@ export interface FeedbackField {
     readonly shouldSend: boolean;
 }
 
-export interface Feedback {
+export interface ServiceFeedback {
     readonly bc211Id: FeedbackField;
     readonly name: FeedbackField;
     readonly organization: FeedbackField;
@@ -27,7 +27,7 @@ export interface Feedback {
     readonly authorJobTitle: FeedbackField;
 }
 
-export const getEmptyFeedback = (shouldSend: boolean = true): Feedback => {
+export const getEmptyFeedback = (shouldSend: boolean = true): ServiceFeedback => {
     const emptyFeedbackField = { value: '', shouldSend };
     return {
         bc211Id: emptyFeedbackField,
@@ -53,7 +53,7 @@ export interface UseSendFeedback {
     readonly sendFeedback: () => Promise<void>;
 }
 
-export const useSendFeedback = (feedback: Feedback, clearFeedback: () => void): UseSendFeedback => {
+export const useSendFeedback = (feedback: ServiceFeedback, clearFeedback: () => void): UseSendFeedback => {
     const sendCancelled = useRef<boolean>(false);
     useEffect(() => () => { sendCancelled.current = true; }, []);
     const [isSendingFeedback, setisSendingFeedback]: readonly[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
@@ -81,12 +81,12 @@ export const useSendFeedback = (feedback: Feedback, clearFeedback: () => void): 
     };
 };
 
-export const toValidFeedbackJSON = (feedback: Feedback): string => {
-    const feedbackToSend: Feedback = R.pickBy(
+export const toValidFeedbackJSON = (feedback: ServiceFeedback): string => {
+    const feedbackToSend: ServiceFeedback = R.pickBy(
         (value: FeedbackField): boolean => value.shouldSend && !!value.value,
         feedback,
     );
-    const feedbackFields: ReadonlyArray<keyof Feedback> = R.keys(feedbackToSend);
+    const feedbackFields: ReadonlyArray<keyof ServiceFeedback> = R.keys(feedbackToSend);
     const isMissingBC211Id = R.indexOf('bc211Id', feedbackFields) === -1;
     const hasLessThanTwoFields = feedbackFields.length < 2;
 
@@ -94,7 +94,7 @@ export const toValidFeedbackJSON = (feedback: Feedback): string => {
         throw new Error('Feedback must have a bc211Id and at least one other value.');
     }
 
-    const buildFieldValuePair = (acc: object, field: keyof Feedback): object =>
+    const buildFieldValuePair = (acc: object, field: keyof ServiceFeedback): object =>
         ({...acc, [field]: feedbackToSend[field].value});
 
     return JSON.stringify({ fields: R.reduce(buildFieldValuePair, {}, feedbackFields) });

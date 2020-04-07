@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement typedef no-let
-import { toValidFeedbackJSON, getEmptyFeedback, Feedback } from '../use_send_feedback';
+import { toValidFeedbackJSON, getEmptyFeedback, ServiceFeedback } from '../use_send_feedback';
 import { aString, aBoolean } from '../../../../helpers/random_test_values';
 
 describe('toValidFeedbackJSON', () => {
@@ -13,7 +13,7 @@ describe('toValidFeedbackJSON', () => {
     });
 
     it('Throws when providing a bc211Id field but no other fields', () => {
-        const feedback: Feedback = {
+        const feedback: ServiceFeedback = {
             ...getEmptyFeedback(),
             bc211Id: {
                 value: aString(),
@@ -27,7 +27,7 @@ describe('toValidFeedbackJSON', () => {
         const emptyFeedback = getEmptyFeedback();
         const bc211IdValue = aString();
         const nameValue = aString();
-        const feedback: Feedback = {
+        const feedback: ServiceFeedback = {
             ...emptyFeedback,
             bc211Id: {
                 ...emptyFeedback.bc211Id,

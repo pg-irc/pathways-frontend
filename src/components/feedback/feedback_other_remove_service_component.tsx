@@ -26,7 +26,7 @@ import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import { otherRemoveServiceStyles as styles } from './styles';
-import { getEmptyFeedback, Feedback } from './hooks/use_send_feedback';
+import { getEmptyFeedback, ServiceFeedback } from './hooks/use_send_feedback';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
@@ -185,7 +185,7 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
 };
 
 const getFeedbackJSON = (mode: QueryParameters['feedbackContentMode'], input: string, serviceId: string): string => {
-    const feedback: Feedback = { ...getEmptyFeedback(), bc211Id: { value: serviceId, shouldSend: true }};
+    const feedback: ServiceFeedback = { ...getEmptyFeedback(), bc211Id: { value: serviceId, shouldSend: true }};
     const feedbackField = mode === 'OTHER' ?
         { other: {...feedback.other, value: input } }
         :

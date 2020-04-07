@@ -32,7 +32,7 @@ import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/ser
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { renderHeader } from '../main/render_header';
 import { Id } from '../../stores/services';
-import { Feedback, FeedbackField, getEmptyFeedback, useSendFeedback, UseSendFeedback } from '../feedback/hooks/use_send_feedback';
+import { ServiceFeedback, FeedbackField, getEmptyFeedback, useSendFeedback, UseSendFeedback } from '../feedback/hooks/use_send_feedback';
 import { useQuery } from '../../hooks/use_query';
 
 export interface ServiceDetailProps {
@@ -54,15 +54,15 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const defaultFeedback = getDefaultFeedback(props.service.id);
     const clearFeedback = (): void => setFeedback(defaultFeedback);
     const query = useQuery();
-    const [feedback, setFeedback]: readonly[Feedback, Dispatch<SetStateAction<Feedback>>] =
-        useState<Feedback>(query.feedback || defaultFeedback);
+    const [feedback, setFeedback]: readonly[ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] =
+        useState<ServiceFeedback>(query.feedback || defaultFeedback);
     const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>] =
         useState<boolean>(false);
     const { isSendingFeedback, sendFeedback }: UseSendFeedback =
         useSendFeedback(feedback, clearFeedback);
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
 
-    const setFeedbackForField = R.curry((fieldName: keyof Feedback, fieldValue: FeedbackField): void => (
+    const setFeedbackForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField): void => (
         setFeedback({...feedback, [fieldName]: fieldValue })
     ));
 
@@ -139,7 +139,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     );
 };
 
-const getDefaultFeedback = (serviceId: string): Feedback => ({
+const getDefaultFeedback = (serviceId: string): ServiceFeedback => ({
     ...getEmptyFeedback(),
     bc211Id: {
         value: serviceId,
@@ -198,9 +198,9 @@ const Description = (props: DescriptionProps): JSX.Element => (
 interface ServiceContactDetailsProps {
     readonly service: HumanServiceData;
     readonly currentPathForAnaltyics: string;
-    readonly feedback: Feedback;
+    readonly feedback: ServiceFeedback;
     readonly feedbackEnabled: boolean;
-    readonly setFeedbackForField: (fieldName: keyof Feedback) => (field: FeedbackField) => void;
+    readonly setFeedbackForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
 
