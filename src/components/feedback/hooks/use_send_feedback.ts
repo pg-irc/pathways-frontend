@@ -1,6 +1,5 @@
 // tslint:disable:no-expression-statement
-// tslint:disable:no-let
-import { useState, Dispatch, SetStateAction, useEffect } from 'react';
+import { useState, Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import * as R from 'ramda';
 import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID } from 'react-native-dotenv';
 import buildUrl from 'build-url';
@@ -55,20 +54,21 @@ export interface UseSendFeedback {
 }
 
 export const useSendFeedback = (feedback: Feedback, clearFeedback: () => void): UseSendFeedback => {
-    let sendCancelled = false;
-    useEffect(() => () => { sendCancelled = true; }, []);
+    const sendCancelled = useRef<boolean>(false);
+    useEffect(() => () => { sendCancelled.current = true; }, []);
     const [isSendingFeedback, setisSendingFeedback]: readonly[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const sendFeedback = async (): Promise<void> => {
         try {
             setisSendingFeedback(true);
-            await handleResponse(await fetch(
+            const response = await fetch(
                 getRequestUrl(),
                 getRequestInit(toValidFeedbackJSON(feedback)),
-            ));
+            );
+            await handleResponse(response);
         } catch (error) {
             console.warn(`An error occured while sending feedback: ${error}`);
         } finally {
-            if (!sendCancelled) {
+            if (!sendCancelled.current) {
                 setisSendingFeedback(false);
                 clearFeedback();
             }
@@ -122,7 +122,7 @@ const getRequestInit = (feedbackJSON: string): RequestInit => {
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+            Authorization: `Bearer ${AIRTABLE_API_KEY}`,
         },
         body: feedbackJSON,
     };

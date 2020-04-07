@@ -20,7 +20,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useHistory, useParams } from 'react-router-native';
 
 import { colors, textStyles } from '../../application/styles';
-import { Routes, replaceRouteWithParameters, QueryParameters } from '../../application/routing';
+import { Routes, replaceRouteWithParameter, QueryParameters } from '../../application/routing';
 import { useQuery } from '../../hooks/use_query';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
@@ -75,11 +75,11 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
 const useServiceDetailRoute = (serviceId: string, queryParam: QueryParameters): () => void => {
     const history = useHistory();
 
-    return replaceRouteWithParameters(
+    return replaceRouteWithParameter(
         Routes.ServiceDetail,
         serviceId,
-        queryParam,
         history,
+        queryParam,
     );
 };
 
