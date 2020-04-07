@@ -8,13 +8,14 @@ import { selectDisableAnalytics } from '../../selectors/user_profile/select_disa
 import { ForkEffect, takeLatest, call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
 import { BookmarkTopicAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 import * as events from './events';
-import { BookmarkServiceAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 
 export type WatchedAction =
     RouteChangedAction |
     ChooseAnswerAction |
     BookmarkTopicAction |
     BookmarkServiceAction |
+    OpenServiceAction |
     ExpandDetailAction |
     CollapseDetailAction |
     AnalyticsLinkPressedAction |
@@ -29,6 +30,7 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
             constants.COLLAPSE_DETAIL,
             constants.BOOKMARK_TOPIC,
             constants.BOOKMARK_SERVICE,
+            constants.OPEN_SERVICE,
             constants.ANALYTICS_LINK_PRESSED,
             constants.SEARCH_QUERIED,
         ],
@@ -66,6 +68,9 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
             break;
         case constants.BOOKMARK_SERVICE:
             events.sendBookmarkServiceEvent(action.payload.service);
+            break;
+        case constants.OPEN_SERVICE:
+            events.sendOpenService(action.payload.service);
             break;
         case constants.EXPAND_DETAIL:
             events.sendExpandDetail(action.payload.contentId);

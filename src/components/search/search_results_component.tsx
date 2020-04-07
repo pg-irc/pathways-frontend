@@ -10,7 +10,7 @@ import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 import { HumanServiceData } from '../../validation/services/types';
-import { SaveServiceAction } from '../../stores/services/actions';
+import { SaveServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { goToRouteWithParameter, Routes, RouterProps } from '../../application/routing';
 import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
@@ -32,6 +32,7 @@ export interface SearchResultsProps {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly openService: (service: HumanServiceData) => OpenServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly searchTerm: string;
     readonly searchLocation: string;
@@ -88,6 +89,7 @@ const renderSearchHit = R.curry((props: Props, itemInfo: ListRenderItemInfo<Sear
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
         props.saveService(service);
+        props.openService(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };
 

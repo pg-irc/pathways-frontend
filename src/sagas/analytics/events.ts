@@ -35,6 +35,12 @@ export const sendSearchQueriedEvent = (searchTerm: string, searchLocation: strin
     analytics.hit(event);
 };
 
+export const sendOpenService = (service: HumanServiceData): void => {
+    const analytics = createAnalytics();
+    const event = createEvent('Services', 'ServiceOpened', [service.id, service.name, service.organizationName]);
+    analytics.hit(event);
+};
+
 export const sendExpandDetail = (contentId: string): void => {
     const analytics = createAnalytics();
     const event = createEvent('Detail', 'DetailExpanded', contentId);

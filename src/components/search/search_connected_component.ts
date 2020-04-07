@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { SearchComponentProps, SearchComponent, SearchComponentActions } from './search_component';
-import { saveService, SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
+import { saveService, SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService, OpenServiceAction, openService } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { disableAnalytics, DisableAnalyticsAction } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
@@ -36,6 +36,7 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
 
 type Actions =
     SaveServiceAction |
+    OpenServiceAction |
     DisableAnalyticsAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
@@ -52,6 +53,9 @@ type Actions =
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
     saveService: (service: HumanServiceData): SaveServiceAction => (
         dispatch(saveService(service))
+    ),
+    openService: (service: HumanServiceData): OpenServiceAction => (
+        dispatch(openService(service))
     ),
     disableAnalytics: (disable: boolean): DisableAnalyticsAction => (
         dispatch(disableAnalytics(disable))
