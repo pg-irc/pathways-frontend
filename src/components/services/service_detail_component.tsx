@@ -32,7 +32,7 @@ import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/ser
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { renderHeader } from '../main/render_header';
 import { Id } from '../../stores/services';
-import { ServiceFeedback, FeedbackField, getEmptyFeedback, useSendFeedback, UseSendFeedback } from '../feedback/hooks/use_send_feedback';
+import { ServiceFeedback, FeedbackField, getEmptyFeedback, useSendFeedback, SendFeedbackPromise } from '../feedback/hooks/use_send_feedback';
 import { useQuery } from '../../hooks/use_query';
 
 export interface ServiceDetailProps {
@@ -58,7 +58,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         useState<ServiceFeedback>(query.feedback || defaultFeedback);
     const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>] =
         useState<boolean>(false);
-    const { isSendingFeedback, sendFeedback }: UseSendFeedback =
+    const { isSendingFeedback, sendFeedback }: SendFeedbackPromise =
         useSendFeedback(feedback, clearFeedback);
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
 

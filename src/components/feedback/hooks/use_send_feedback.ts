@@ -48,12 +48,12 @@ export const getEmptyFeedback = (shouldSend: boolean = true): ServiceFeedback =>
     };
 };
 
-export interface UseSendFeedback {
+export interface SendFeedbackPromise {
     readonly isSendingFeedback: boolean;
     readonly sendFeedback: () => Promise<void>;
 }
 
-export const useSendFeedback = (feedback: ServiceFeedback, clearFeedback: () => void): UseSendFeedback => {
+export const useSendFeedback = (feedback: ServiceFeedback, clearFeedback: () => void): SendFeedbackPromise => {
     const sendCancelled = useRef<boolean>(false);
     useEffect(() => () => { sendCancelled.current = true; }, []);
     const [isSendingFeedback, setisSendingFeedback]: readonly[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
