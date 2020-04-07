@@ -40,23 +40,23 @@ export const FeedbackModalContainer = ({
     const history = useHistory();
 
     const [optionsModalVisible, setOptionsModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(query.feedbackOptionsModalMode === 'visible');
+        = useState<boolean>(query.isOptionsModalVisible === 'visible');
 
     const [receiveUpdatesModalVisible, setReceiveUpdatesModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(query.feedbackSubmitModalMode === 'visible');
+        = useState<boolean>(query.isReceiveUpdatesModalVisible === 'visible');
 
     const goToFeedbackOtherScreen = goToRouteWithParameter(
         Routes.Feedback,
         serviceId,
         history,
-        { feedbackContentMode: 'OTHER' },
+        { otherFeedbackMode: 'OTHER' },
     );
 
     const goToFeedbackRemoveServiceScreen = goToRouteWithParameter(
         Routes.Feedback,
         serviceId,
         history,
-        { feedbackContentMode: 'REMOVE_SERVICE' },
+        { otherFeedbackMode: 'REMOVE_SERVICE' },
     );
 
     const onOtherPress = (): void => {
