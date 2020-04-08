@@ -27,7 +27,7 @@ import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import { otherRemoveServiceStyles as styles } from './styles';
-import { getEmptyFeedback, ServiceFeedback } from './hooks/use_send_feedback';
+import { getEmptyFeedback, ServiceFeedback } from '../services/use_send_feedback';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;

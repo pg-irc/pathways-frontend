@@ -7,7 +7,7 @@ import { Icon } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
-import { FeedbackField } from './hooks/use_send_feedback';
+import { FeedbackField } from '../services/use_send_feedback';
 
 interface Props {
     readonly feedbackEnabled: boolean;
