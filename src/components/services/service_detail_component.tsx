@@ -33,7 +33,7 @@ import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { renderHeader } from '../main/render_header';
 import { Id } from '../../stores/services';
 import { ServiceFeedback, FeedbackField, getEmptyFeedback, useSendFeedback, SendFeedbackPromise } from '../feedback/hooks/use_send_feedback';
-import { useQuery } from '../../hooks/use_query';
+import { useFeedbackQuery } from '../../hooks/use_feedback_query';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -53,7 +53,7 @@ type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const defaultFeedback = getDefaultFeedback(props.service.id);
     const clearFeedback = (): void => setFeedback(defaultFeedback);
-    const query = useQuery();
+    const query = useFeedbackQuery();
     const [feedback, setFeedback]: readonly[ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] =
         useState<ServiceFeedback>(query.feedback || defaultFeedback);
     const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>] =

@@ -21,7 +21,7 @@ function parseSearch(search: string): NonSerializedFeedbackState {
     return result;
 }
 
-export const useQuery = (): NonSerializedFeedbackState => {
+export const useFeedbackQuery = (): NonSerializedFeedbackState => {
     const location = useLocation();
     return parseSearch(location.search);
 };

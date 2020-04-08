@@ -21,8 +21,8 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useHistory, useParams } from 'react-router-native';
 
 import { colors, textStyles } from '../../application/styles';
-import { Routes, replaceRouteWithParameter, FeedbackState } from '../../application/routing';
-import { useQuery } from '../../hooks/use_query';
+import { Routes, replaceRouteWithParameter, FeedbackState, OtherFeedbackMode } from '../../application/routing';
+import { useFeedbackQuery } from '../../hooks/use_feedback_query';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
@@ -74,12 +74,12 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
     },
 };
 
-const gotoServiceDetail = (serviceId: string, history: History, queryParam: FeedbackState): () => void => (
+const gotoServiceDetail = (serviceId: string, history: History, feedbackState: FeedbackState): () => void => (
     replaceRouteWithParameter(
         Routes.ServiceDetail,
         serviceId,
         history,
-        queryParam,
+        feedbackState,
     )
 );
 
@@ -186,7 +186,7 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
     );
 };
 
-const getFeedbackJSON = (mode: FeedbackState['otherFeedbackMode'], input: string, serviceId: string): string => {
+const getFeedbackJSON = (mode: OtherFeedbackMode, input: string, serviceId: string): string => {
     const feedback: ServiceFeedback = { ...getEmptyFeedback(), bc211Id: { value: serviceId, shouldSend: true }};
     const feedbackField = mode === 'OTHER' ?
         { other: {...feedback.other, value: input } }
@@ -196,7 +196,7 @@ const getFeedbackJSON = (mode: FeedbackState['otherFeedbackMode'], input: string
 };
 
 export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
-    const query = useQuery();
+    const query = useFeedbackQuery();
 
     const params = useParams<RouteParams>();
 
