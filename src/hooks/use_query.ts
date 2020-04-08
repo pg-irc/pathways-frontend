@@ -10,10 +10,11 @@ function parseSearch(search: string): NonSerializedFeedbackState {
 
     for (const record of records) {
         const [key, value]: readonly string[] = record.split('=');
+        const resultKey = key === 'serializedFeedback' ? 'feedback' : key;
         try {
-            result[key] = JSON.parse(decodeURIComponent(value));
+            result[resultKey] = JSON.parse(decodeURIComponent(value));
         } catch (error) {
-            result[key] = value;
+            result[resultKey] = value;
         }
     }
 
