@@ -17,6 +17,7 @@ import {
     CloseHeaderMenuAction, OpenHeaderMenuAction, CloseAboutModalAction,
     OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction,
 } from '../../stores/header_menu';
+import { StatusBar } from 'react-native';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -66,6 +67,7 @@ export const MainComponent = (props: Props): JSX.Element => {
 
     return (
         <Root>
+            <StatusBar translucent={true} />
             <Drawer
                 side='right'
                 onClose={props.closeHeaderMenu}
