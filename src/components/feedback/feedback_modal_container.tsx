@@ -12,7 +12,7 @@ import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 import { FeedbackOptionsModalComponent } from './feedback_options_modal_component';
-import { SendFeedbackPromise, ServiceFeedback } from './hooks/use_send_feedback';
+import { SendFeedbackPromise, ServiceFeedback } from '../services/use_send_feedback';
 import { showToast } from '../../application/toast';
 
 interface FeedbackModalContainerProps {

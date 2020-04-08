@@ -31,9 +31,9 @@ import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/ser
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { renderHeader } from '../main/render_header';
 import { Id } from '../../stores/services';
-import { ServiceFeedback, FeedbackField, getEmptyFeedback, useSendFeedback, SendFeedbackPromise } from '../feedback/hooks/use_send_feedback';
-import { isAndroid } from '../../application/helpers/is_android';
+import { ServiceFeedback, FeedbackField, getEmptyFeedback, useSendFeedback, SendFeedbackPromise } from './use_send_feedback';
 import { useFeedbackQuery } from '../../hooks/use_feedback_query';
+import { isAndroid } from '../../application/helpers/is_android';
 
 export interface ServiceDetailProps {
     readonly history: History;
