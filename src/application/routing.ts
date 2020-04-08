@@ -17,10 +17,14 @@ export type RouteParameters = Partial<{
     readonly serviceId: string;
 }>;
 
+export type OtherFeedbackMode = 'OTHER' | 'REMOVE_SERVICE';
+
+export type FeedbackModalVisibilityMode = 'visible' | 'hidden';
+
 export type FeedbackState = Partial<{
-    readonly otherFeedbackMode: 'OTHER' | 'REMOVE_SERVICE';
-    readonly isOptionsModalVisible: 'visible' | 'hidden';
-    readonly isReceiveUpdatesModalVisible: 'visible' | 'hidden';
+    readonly otherFeedbackMode: OtherFeedbackMode;
+    readonly isOptionsModalVisible: FeedbackModalVisibilityMode;
+    readonly isReceiveUpdatesModalVisible: FeedbackModalVisibilityMode;
     readonly serializedFeedback: string;
 }>;
 
@@ -102,12 +106,12 @@ export const goToRouteWithoutParameter = (route: Routes, history: History): () =
     return (): void => history.push(path);
 };
 
-export const goToRouteWithParameter = (route: Routes, parameter: string, history: History, queryParams?: FeedbackState): () => void => (
-    (): void => history.push(getPathWithOptionalQuery(routePathWithParameter(route, parameter), queryParams))
+export const goToRouteWithParameter = (route: Routes, parameter: string, history: History, feedbackState?: FeedbackState): () => void => (
+    (): void => history.push(getPathWithOptionalFeedbackState(routePathWithParameter(route, parameter), feedbackState))
 );
 
-export const replaceRouteWithParameter = (route: Routes, parameter: string, history: History, queryParams?: FeedbackState): () => void => (
-    (): void => history.replace(getPathWithOptionalQuery(routePathWithParameter(route, parameter), queryParams))
+export const replaceRouteWithParameter = (route: Routes, parameter: string, history: History, feedbackState?: FeedbackState): () => void => (
+    (): void => history.replace(getPathWithOptionalFeedbackState(routePathWithParameter(route, parameter), feedbackState))
 );
 
 export const goBack = (history: History): void => (
@@ -138,6 +142,6 @@ export const getParametersFromPath = (location: Location, route: Routes): RouteP
     return match.params;
 };
 
-const getPathWithOptionalQuery = (path: string, queryParams?: FeedbackState): string => (
-    queryParams ? `${path}${buildUrl('', { queryParams })}` : path
+const getPathWithOptionalFeedbackState = (path: string, feedbackState?: FeedbackState): string => (
+    feedbackState ? `${path}${buildUrl('', { queryParams: feedbackState })}` : path
 );
