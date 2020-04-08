@@ -1,5 +1,6 @@
-import { Platform, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
+import { isAndroid } from '../../application/helpers/is_android';
 
 export const getStatusBarHeightForPlatform = (): number => (
-    Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
+    isAndroid() ? StatusBar.currentHeight : 0
 );
