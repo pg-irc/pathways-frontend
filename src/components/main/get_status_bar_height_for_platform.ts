@@ -1,11 +1,5 @@
-import { StatusBar } from 'react-native';
-import Constants, { AppOwnership } from 'expo-constants';
-import { isAndroid } from '../../application/helpers/is_android';
+import { Platform, StatusBar } from 'react-native';
 
 export const getStatusBarHeightForPlatform = (): number => (
-    isStandaloneAndroidBuild() ? StatusBar.currentHeight : 0
-);
-
-const isStandaloneAndroidBuild = (): boolean => (
-    isAndroid() && Constants.appOwnership === AppOwnership.Standalone
+    Platform.OS === 'ios' ? 0 : StatusBar.currentHeight
 );
