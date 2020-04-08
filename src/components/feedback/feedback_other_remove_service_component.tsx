@@ -1,5 +1,6 @@
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
+import { History } from 'history';
 import {
     Button,
     Container,
@@ -31,6 +32,7 @@ import { getEmptyFeedback, ServiceFeedback } from './hooks/use_send_feedback';
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
     readonly serviceId: string;
+    readonly history: History;
 };
 
 type ContentComponentProps = {
@@ -72,16 +74,14 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
     },
 };
 
-const useServiceDetailRoute = (serviceId: string, queryParam: FeedbackState): () => void => {
-    const history = useHistory();
-
-    return replaceRouteWithParameter(
+const gotoServiceDetail = (serviceId: string, history: History, queryParam: FeedbackState): () => void => (
+    replaceRouteWithParameter(
         Routes.ServiceDetail,
         serviceId,
         history,
         queryParam,
-    );
-};
+    )
+);
 
 const useFeedbackInputControl = (): readonly [string, (value: string) => void] => {
     const [input, setInput]: readonly [string, Dispatch<SetStateAction<string>>]
@@ -92,14 +92,16 @@ const useFeedbackInputControl = (): readonly [string, (value: string) => void] =
     return [input, onInputChange];
 };
 
-const HeaderComponent = ({ headerLabel, serviceId }: HeaderComponentProps): JSX.Element => {
-    const goBackShowModal = useServiceDetailRoute(
+const HeaderComponent = ({ headerLabel, serviceId, history }: HeaderComponentProps): JSX.Element => {
+    const goBackShowModal = gotoServiceDetail(
         serviceId,
+        history,
         { isOptionsModalVisible: 'hidden' },
     );
 
-    const goBackHideModal = useServiceDetailRoute(
+    const goBackHideModal = gotoServiceDetail(
         serviceId,
+        history,
         { isOptionsModalVisible: 'visible' },
     );
 
@@ -203,19 +205,19 @@ export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
     const [input, onInputChange]: readonly [string, (value: string) => void]
         = useFeedbackInputControl();
 
-    const goBackReceiveUpdatesShow = useServiceDetailRoute(serviceId, {
+    const history = useHistory();
+
+    const onSubmit = gotoServiceDetail(serviceId, history, {
         isReceiveUpdatesModalVisible: 'visible',
         serializedFeedback: getFeedbackJSON(query.otherFeedbackMode, input, serviceId),
     });
-
-    const onSubmit = (): void => goBackReceiveUpdatesShow();
 
     // TODO: Formulate a more robust typed query param getter
     const content: SuggestionContent = SUGGESTION_CONTENT[query.otherFeedbackMode];
 
     return (
         <Container>
-            <HeaderComponent headerLabel={content.header} serviceId={serviceId} />
+            <HeaderComponent headerLabel={content.header} serviceId={serviceId} history={history} />
             <ContentComponent
                 inputLabel={content.label}
                 input={input}
