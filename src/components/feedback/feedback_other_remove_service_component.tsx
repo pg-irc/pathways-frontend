@@ -27,7 +27,7 @@ import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import { otherRemoveServiceStyles as styles } from './styles';
-import { getEmptyFeedback, ServiceFeedback } from '../services/use_send_feedback';
+import { getEmptyFeedback, ServiceFeedback, FeedbackField } from '../services/use_send_feedback';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
@@ -186,14 +186,18 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
     );
 };
 
-const getFeedbackJSON = (mode: OtherFeedbackMode, input: string, serviceId: string): string => {
-    const feedback: ServiceFeedback = { ...getEmptyFeedback(), bc211Id: { value: serviceId, shouldSend: true }};
-    const feedbackField = mode === 'OTHER' ?
-        { other: {...feedback.other, value: input } }
-        :
-        { removalReason: {...feedback.removalReason, value: input }};
-    return JSON.stringify({ ...feedback, ...feedbackField });
-};
+const getFeedbackJSON = (mode: OtherFeedbackMode, value: string, serviceId: string): string => (
+    JSON.stringify({ ...getDefaultFeedback(serviceId), ...getFeedbackFieldForMode(mode, value) })
+);
+
+const getDefaultFeedback = (serviceId: string): ServiceFeedback => ({
+    ...getEmptyFeedback(),
+    bc211Id: { value: serviceId, shouldSend: true },
+});
+
+const getFeedbackFieldForMode = (mode: OtherFeedbackMode, value: string): Record<string, FeedbackField> => (
+    mode === 'OTHER' ? { other: { shouldSend: true , value } } : { removalReason: { shouldSend: true , value } }
+);
 
 export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
     const query = useFeedbackQuery();
