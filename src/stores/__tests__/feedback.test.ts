@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement no-let
-import { reduce, FeedbackScreen, suggestAnUpdate, chooseChangeNameOrDetails, chooseRemoveService, chooseOtherChanges, submit, discardChanges } from '../feedback/actions';
+import { reduce, FeedbackScreen, suggestAnUpdate, chooseChangeNameOrDetails, chooseRemoveService, chooseOtherChanges, submit, discardChanges, close, back } from '../feedback/actions';
 
 describe('feedback reducer', () => {
     test('suggest update opens choose mode modal', () => {
@@ -53,5 +53,23 @@ describe('feedback reducer', () => {
         const action = discardChanges();
         const newStore = reduce(oldStore, action);
         expect(newStore.screen).toEqual(FeedbackScreen.ServiceDetail);
+    });
+
+    test('closing dialog brings up confirmation modal', () => {
+        const oldStore = {
+            screen: FeedbackScreen.OtherChangesPage,
+        };
+        const action = close();
+        const newStore = reduce(oldStore, action);
+        expect(newStore.screen).toEqual(FeedbackScreen.ConfirmDiscardChangesModal);
+    });
+
+    test('backing out brings up confirmation modal', () => {
+        const oldStore = {
+            screen: FeedbackScreen.OtherChangesPage,
+        };
+        const action = back();
+        const newStore = reduce(oldStore, action);
+        expect(newStore.screen).toEqual(FeedbackScreen.ConfirmDiscardChangesModal);
     });
 });

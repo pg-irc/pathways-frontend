@@ -22,6 +22,8 @@ const CHOOSE_CHANGE_NAME_AND_DETAILS = 'CHOOSE_CHANGE_NAME_AND_DETAILS';
 const CHOOSE_REMOVE_SERVICE = 'CHOOSE_REMOVE_SERVICE';
 const CHOOSE_OTHER_CHANGES = 'CHOOSE_OTHER_CHANGES';
 const DISCARD_CHANGES = 'DISCARD_CHANGES';
+const CLOSE = 'CLOSE';
+const BACK = 'BACK';
 const SUBMIT = 'SUBMIT';
 
 // tslint:disable: typedef
@@ -30,6 +32,8 @@ export const chooseChangeNameOrDetails = () => helpers.makeAction(CHOOSE_CHANGE_
 export const chooseRemoveService = () => helpers.makeAction(CHOOSE_REMOVE_SERVICE);
 export const chooseOtherChanges = () => helpers.makeAction(CHOOSE_OTHER_CHANGES);
 export const discardChanges = () => helpers.makeAction(DISCARD_CHANGES);
+export const close = () => helpers.makeAction(CLOSE);
+export const back = () => helpers.makeAction(BACK);
 export const submit = () => helpers.makeAction(SUBMIT);
 
 export type SuggestAnUpdateAction = Readonly<ReturnType<typeof suggestAnUpdate>>;
@@ -37,6 +41,8 @@ export type ChooseChangeNameOrDetailsAction = Readonly<ReturnType<typeof chooseC
 export type ChooseRemoveServiceAction = Readonly<ReturnType<typeof chooseRemoveService>>;
 export type ChooseOtherChangesAction = Readonly<ReturnType<typeof chooseOtherChanges>>;
 export type DiscardChangesAction = Readonly<ReturnType<typeof discardChanges>>;
+export type CloseAction = Readonly<ReturnType<typeof close>>;
+export type BackAction = Readonly<ReturnType<typeof back>>;
 export type SubmitAction = Readonly<ReturnType<typeof submit>>;
 
 type ReducerActions = SuggestAnUpdateAction |
@@ -44,6 +50,8 @@ type ReducerActions = SuggestAnUpdateAction |
         ChooseRemoveServiceAction |
         ChooseOtherChangesAction |
         DiscardChangesAction |
+        CloseAction |
+        BackAction |
         SubmitAction;
 
 export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: ReducerActions): FeedbackStore => {
@@ -61,6 +69,10 @@ export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: Redu
             return { screen: FeedbackScreen.RemoveServicePage };
         case CHOOSE_OTHER_CHANGES:
             return { screen: FeedbackScreen.OtherChangesPage };
+        case CLOSE:
+            return { screen: FeedbackScreen.ConfirmDiscardChangesModal };
+        case BACK:
+            return { screen: FeedbackScreen.ConfirmDiscardChangesModal };
         case SUBMIT:
             return { screen: FeedbackScreen.ReceiveUpdatesModal };
         default:
