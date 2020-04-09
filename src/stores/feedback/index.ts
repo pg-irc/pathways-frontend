@@ -67,7 +67,7 @@ type ReducerActions = SuggestAnUpdateAction |
         SubmitAction |
         FinishAction;
 
-export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: ReducerActions): FeedbackStore => {
+export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: ReducerActions): FeedbackStore => {
     if (!action) {
         return store;
     }
