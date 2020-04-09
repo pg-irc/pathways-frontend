@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement no-let
-import { reduce, FeedbackScreen, suggestAnUpdate, chooseChangeNameOrDetails } from '../feedback/actions';
+import { reduce, FeedbackScreen, suggestAnUpdate, chooseChangeNameOrDetails, chooseRemoveService } from '../feedback/actions';
 
 describe('feedback reducer', () => {
     test('suggest update opens choose mode modal', () => {
@@ -17,6 +17,15 @@ describe('feedback reducer', () => {
         const action = chooseChangeNameOrDetails();
         const newStore = reduce(oldStore, action);
         expect(newStore.screen).toEqual(FeedbackScreen.EditableServiceDetailPage);
+    });
+
+    test('remove service opens remove service page', () => {
+        const oldStore = {
+            screen: FeedbackScreen.ChooseFeedbackModeModal,
+        };
+        const action = chooseRemoveService();
+        const newStore = reduce(oldStore, action);
+        expect(newStore.screen).toEqual(FeedbackScreen.RemoveServicePage);
     });
 
 });
