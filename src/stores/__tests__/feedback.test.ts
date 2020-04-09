@@ -88,7 +88,10 @@ describe('feedback reducer', () => {
         });
 
         test('user information can be omitted', () => {
-
+            const oldStore = makeStoreWithScreen(FeedbackScreen.ReceiveUpdatesModal);
+            const action = finishFeedback();
+            const newStore = reduce(oldStore, action);
+            expect(newStore.userInformation.name).toEqual('');
         });
     });
 });
