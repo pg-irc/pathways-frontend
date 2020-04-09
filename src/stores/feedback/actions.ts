@@ -13,6 +13,7 @@ export enum FeedbackScreen {
 // tslint:disable-next-line:typedef
 export const buildDefaultStore = () => ({
     screen: FeedbackScreen.ServiceDetail,
+    userInformation: { email: '', name: '', organizationName: '', jobTitle: ''},
 });
 
 export type FeedbackStore = Readonly<ReturnType<typeof buildDefaultStore>>;
@@ -43,7 +44,7 @@ export const discardChanges = () => helpers.makeAction(DISCARD_CHANGES);
 export const close = () => helpers.makeAction(CLOSE);
 export const back = () => helpers.makeAction(BACK);
 export const submit = () => helpers.makeAction(SUBMIT);
-export const finishFeedback = (userInfo: UserInformation | undefined) => helpers.makeAction(FINISH_FEEDBACK, {userInfo});
+export const finishFeedback = (userInformation: UserInformation) => helpers.makeAction(FINISH_FEEDBACK, { userInformation });
 
 export type SuggestAnUpdateAction = Readonly<ReturnType<typeof suggestAnUpdate>>;
 export type ChooseChangeNameOrDetailsAction = Readonly<ReturnType<typeof chooseChangeNameOrDetails>>;
@@ -71,23 +72,26 @@ export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: Redu
     }
     switch (action.type) {
         case SUGGEST_AN_UPDATE:
-            return { screen: FeedbackScreen.ChooseFeedbackModeModal };
+            return { ...store, screen: FeedbackScreen.ChooseFeedbackModeModal };
         case DISCARD_CHANGES:
-            return { screen: FeedbackScreen.ServiceDetail };
+            return { ...store, screen: FeedbackScreen.ServiceDetail };
         case CHOOSE_CHANGE_NAME_AND_DETAILS:
-            return { screen: FeedbackScreen.EditableServiceDetailPage };
+            return { ...store, screen: FeedbackScreen.EditableServiceDetailPage};
         case CHOOSE_REMOVE_SERVICE:
-            return { screen: FeedbackScreen.RemoveServicePage };
+            return { ...store, screen: FeedbackScreen.RemoveServicePage};
         case CHOOSE_OTHER_CHANGES:
-            return { screen: FeedbackScreen.OtherChangesPage };
+            return { ...store, screen: FeedbackScreen.OtherChangesPage};
         case CLOSE:
-            return { screen: FeedbackScreen.ConfirmDiscardChangesModal };
+            return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
         case BACK:
-            return { screen: FeedbackScreen.ConfirmDiscardChangesModal };
+            return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
         case SUBMIT:
-            return { screen: FeedbackScreen.ReceiveUpdatesModal };
+            return { ...store, screen: FeedbackScreen.ReceiveUpdatesModal};
         case FINISH_FEEDBACK:
-            return { screen: FeedbackScreen.ServiceDetail };
+            return {
+                ...store,
+                screen: FeedbackScreen.ServiceDetail,
+                userInformation: action.payload.userInformation};
         default:
             return store;
     }
