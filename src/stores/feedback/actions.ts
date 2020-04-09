@@ -9,11 +9,12 @@ export enum FeedbackScreen {
     ReceiveUpdatesModal,
     ConfirmDiscardChangesModal,
 }
+const emptyUserInformation = { email: '', name: '', organizationName: '', jobTitle: ''};
 
 // tslint:disable-next-line:typedef
 export const buildDefaultStore = () => ({
     screen: FeedbackScreen.ServiceDetail,
-    userInformation: { email: '', name: '', organizationName: '', jobTitle: ''},
+    userInformation: emptyUserInformation,
 });
 
 export type FeedbackStore = Readonly<ReturnType<typeof buildDefaultStore>>;
@@ -44,7 +45,7 @@ export const discardChanges = () => helpers.makeAction(DISCARD_CHANGES);
 export const close = () => helpers.makeAction(CLOSE);
 export const back = () => helpers.makeAction(BACK);
 export const submit = () => helpers.makeAction(SUBMIT);
-export const finishFeedback = (userInformation: UserInformation) => helpers.makeAction(FINISH_FEEDBACK, { userInformation });
+export const finishFeedback = (userInformation: UserInformation = emptyUserInformation) => helpers.makeAction(FINISH_FEEDBACK, { userInformation });
 
 export type SuggestAnUpdateAction = Readonly<ReturnType<typeof suggestAnUpdate>>;
 export type ChooseChangeNameOrDetailsAction = Readonly<ReturnType<typeof chooseChangeNameOrDetails>>;
