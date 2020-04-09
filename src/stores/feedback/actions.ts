@@ -74,18 +74,17 @@ export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: Redu
     if (store.screen === FeedbackScreen.ChooseFeedbackModeModal) {
         return chooseFeedbackModeReducer(store, action);
     }
+    if (store.screen === FeedbackScreen.EditableServiceDetailPage ||
+        store.screen === FeedbackScreen.RemoveServicePage ||
+        store.screen === FeedbackScreen.OtherChangesPage) {
+            return submitOrDiscardReducer(store, action);
+        }
     switch (action.type) {
         case SUGGEST_AN_UPDATE:
             return { ...store, screen: FeedbackScreen.ChooseFeedbackModeModal };
         case DISCARD_CHANGES:
             return { ...store, screen: FeedbackScreen.ServiceDetail };
-       case CLOSE:
-            return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
-        case BACK:
-            return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
-        case SUBMIT:
-            return { ...store, screen: FeedbackScreen.ReceiveUpdatesModal};
-        case FINISH_FEEDBACK:
+       case FINISH_FEEDBACK:
             return {
                 ...store,
                 screen: FeedbackScreen.ServiceDetail,
@@ -103,6 +102,21 @@ const chooseFeedbackModeReducer = (store: FeedbackStore, action: ReducerActions)
             return { ...store, screen: FeedbackScreen.RemoveServicePage};
         case CHOOSE_OTHER_CHANGES:
             return { ...store, screen: FeedbackScreen.OtherChangesPage};
+        case CLOSE:
+            return {...store, screen: FeedbackScreen.ServiceDetail };
+        default:
+            return store;
+    }
+};
+
+const submitOrDiscardReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
+    switch (action.type) {
+        case SUBMIT:
+            return { ...store, screen: FeedbackScreen.ReceiveUpdatesModal};
+        case CLOSE:
+            return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
+        case BACK:
+            return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
         default:
             return store;
     }
