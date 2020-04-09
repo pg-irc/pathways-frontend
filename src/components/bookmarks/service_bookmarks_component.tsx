@@ -8,6 +8,7 @@ import { View } from 'native-base';
 import { EmptyBookmarksComponent } from './empty_bookmarks_component';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { renderServiceItems } from '../services/render_service_items';
+import { SearchListSeparator } from '../search/separators';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -31,6 +32,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => (
                 title={<Trans>No services to show</Trans>}
             />
             }
+        ItemSeparatorComponent={SearchListSeparator}
         ListHeaderComponent={<View />}
     />
 );
