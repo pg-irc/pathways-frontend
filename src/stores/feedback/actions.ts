@@ -25,6 +25,14 @@ const DISCARD_CHANGES = 'DISCARD_CHANGES';
 const CLOSE = 'CLOSE';
 const BACK = 'BACK';
 const SUBMIT = 'SUBMIT';
+const FINISH_FEEDBACK = 'FINISH_FEEDBACK';
+
+interface UserInformation {
+    readonly email: string;
+    readonly name: string;
+    readonly organizationName: string;
+    readonly jobTitle: string;
+}
 
 // tslint:disable: typedef
 export const suggestAnUpdate = () => helpers.makeAction(SUGGEST_AN_UPDATE);
@@ -35,6 +43,7 @@ export const discardChanges = () => helpers.makeAction(DISCARD_CHANGES);
 export const close = () => helpers.makeAction(CLOSE);
 export const back = () => helpers.makeAction(BACK);
 export const submit = () => helpers.makeAction(SUBMIT);
+export const finishFeedback = (userInfo: UserInformation | undefined) => helpers.makeAction(FINISH_FEEDBACK, {userInfo});
 
 export type SuggestAnUpdateAction = Readonly<ReturnType<typeof suggestAnUpdate>>;
 export type ChooseChangeNameOrDetailsAction = Readonly<ReturnType<typeof chooseChangeNameOrDetails>>;
@@ -44,6 +53,7 @@ export type DiscardChangesAction = Readonly<ReturnType<typeof discardChanges>>;
 export type CloseAction = Readonly<ReturnType<typeof close>>;
 export type BackAction = Readonly<ReturnType<typeof back>>;
 export type SubmitAction = Readonly<ReturnType<typeof submit>>;
+export type FinishAction = Readonly<ReturnType<typeof finishFeedback>>;
 
 type ReducerActions = SuggestAnUpdateAction |
         ChooseChangeNameOrDetailsAction |
@@ -52,7 +62,8 @@ type ReducerActions = SuggestAnUpdateAction |
         DiscardChangesAction |
         CloseAction |
         BackAction |
-        SubmitAction;
+        SubmitAction |
+        FinishAction;
 
 export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: ReducerActions): FeedbackStore => {
     if (!action) {
@@ -75,6 +86,8 @@ export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: Redu
             return { screen: FeedbackScreen.ConfirmDiscardChangesModal };
         case SUBMIT:
             return { screen: FeedbackScreen.ReceiveUpdatesModal };
+        case FINISH_FEEDBACK:
+            return { screen: FeedbackScreen.ServiceDetail };
         default:
             return store;
     }
