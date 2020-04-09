@@ -71,18 +71,15 @@ export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: Redu
     if (!action) {
         return store;
     }
+    if (store.screen === FeedbackScreen.ChooseFeedbackModeModal) {
+        return chooseFeedbackModeReducer(store, action);
+    }
     switch (action.type) {
         case SUGGEST_AN_UPDATE:
             return { ...store, screen: FeedbackScreen.ChooseFeedbackModeModal };
         case DISCARD_CHANGES:
             return { ...store, screen: FeedbackScreen.ServiceDetail };
-        case CHOOSE_CHANGE_NAME_AND_DETAILS:
-            return { ...store, screen: FeedbackScreen.EditableServiceDetailPage};
-        case CHOOSE_REMOVE_SERVICE:
-            return { ...store, screen: FeedbackScreen.RemoveServicePage};
-        case CHOOSE_OTHER_CHANGES:
-            return { ...store, screen: FeedbackScreen.OtherChangesPage};
-        case CLOSE:
+       case CLOSE:
             return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
         case BACK:
             return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
@@ -93,6 +90,19 @@ export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: Redu
                 ...store,
                 screen: FeedbackScreen.ServiceDetail,
                 userInformation: action.payload.userInformation};
+        default:
+            return store;
+    }
+};
+
+const chooseFeedbackModeReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
+    switch (action.type) {
+        case CHOOSE_CHANGE_NAME_AND_DETAILS:
+            return { ...store, screen: FeedbackScreen.EditableServiceDetailPage};
+        case CHOOSE_REMOVE_SERVICE:
+            return { ...store, screen: FeedbackScreen.RemoveServicePage};
+        case CHOOSE_OTHER_CHANGES:
+            return { ...store, screen: FeedbackScreen.OtherChangesPage};
         default:
             return store;
     }
