@@ -7,6 +7,7 @@ export enum FeedbackScreen {
     RemoveServicePage,
     OtherChangesPage,
     ReceiveUpdatesModal,
+    ConfirmDiscardChangesModal,
 }
 
 // tslint:disable-next-line:typedef
@@ -20,6 +21,7 @@ const SUGGEST_AN_UPDATE = 'SUGGEST_AN_UPDATE';
 const CHOOSE_CHANGE_NAME_AND_DETAILS = 'CHOOSE_CHANGE_NAME_AND_DETAILS';
 const CHOOSE_REMOVE_SERVICE = 'CHOOSE_REMOVE_SERVICE';
 const CHOOSE_OTHER_CHANGES = 'CHOOSE_OTHER_CHANGES';
+const DISCARD_CHANGES = 'DISCARD_CHANGES';
 const SUBMIT = 'SUBMIT';
 
 // tslint:disable: typedef
@@ -27,18 +29,21 @@ export const suggestAnUpdate = () => helpers.makeAction(SUGGEST_AN_UPDATE);
 export const chooseChangeNameOrDetails = () => helpers.makeAction(CHOOSE_CHANGE_NAME_AND_DETAILS);
 export const chooseRemoveService = () => helpers.makeAction(CHOOSE_REMOVE_SERVICE);
 export const chooseOtherChanges = () => helpers.makeAction(CHOOSE_OTHER_CHANGES);
+export const discardChanges = () => helpers.makeAction(DISCARD_CHANGES);
 export const submit = () => helpers.makeAction(SUBMIT);
 
 export type SuggestAnUpdateAction = Readonly<ReturnType<typeof suggestAnUpdate>>;
 export type ChooseChangeNameOrDetailsAction = Readonly<ReturnType<typeof chooseChangeNameOrDetails>>;
 export type ChooseRemoveServiceAction = Readonly<ReturnType<typeof chooseRemoveService>>;
 export type ChooseOtherChangesAction = Readonly<ReturnType<typeof chooseOtherChanges>>;
+export type DiscardChangesAction = Readonly<ReturnType<typeof discardChanges>>;
 export type SubmitAction = Readonly<ReturnType<typeof submit>>;
 
 type ReducerActions = SuggestAnUpdateAction |
         ChooseChangeNameOrDetailsAction |
         ChooseRemoveServiceAction |
         ChooseOtherChangesAction |
+        DiscardChangesAction |
         SubmitAction;
 
 export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: ReducerActions): FeedbackStore => {
@@ -48,6 +53,8 @@ export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: Redu
     switch (action.type) {
         case SUGGEST_AN_UPDATE:
             return { screen: FeedbackScreen.ChooseFeedbackModeModal };
+        case DISCARD_CHANGES:
+            return { screen: FeedbackScreen.ServiceDetail };
         case CHOOSE_CHANGE_NAME_AND_DETAILS:
             return { screen: FeedbackScreen.EditableServiceDetailPage };
         case CHOOSE_REMOVE_SERVICE:
