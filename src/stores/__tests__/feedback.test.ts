@@ -38,11 +38,13 @@ describe('feedback reducer', () => {
         expect(newStore.screen).toEqual(FeedbackScreen.OtherChangesPage);
     });
 
-    test('hitting the submit button opens the modal for receiving updates', () => {
-        const oldStore = makeStoreWithScreen(FeedbackScreen.EditableServiceDetailPage);
-        const action = submit();
-        const newStore = reduce(oldStore, action);
-        expect(newStore.screen).toEqual(FeedbackScreen.ReceiveUpdatesModal);
+    describe('submit button', () => {
+        test('hitting the submit button opens the modal for receiving updates', () => {
+            const oldStore = makeStoreWithScreen(FeedbackScreen.EditableServiceDetailPage);
+            const action = submit();
+            const newStore = reduce(oldStore, action);
+            expect(newStore.screen).toEqual(FeedbackScreen.ReceiveUpdatesModal);
+        });
     });
 
    test('discarding changes navigates back to service detail', () => {

@@ -72,13 +72,15 @@ export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: Redu
         return store;
     }
     if (store.screen === FeedbackScreen.ChooseFeedbackModeModal) {
-        return chooseFeedbackModeReducer(store, action);
+        return chooseModeReducer(store, action);
     }
-    if (store.screen === FeedbackScreen.EditableServiceDetailPage ||
+    const isDataEntryScreen = store.screen === FeedbackScreen.EditableServiceDetailPage ||
         store.screen === FeedbackScreen.RemoveServicePage ||
-        store.screen === FeedbackScreen.OtherChangesPage) {
-            return submitOrDiscardReducer(store, action);
-        }
+        store.screen === FeedbackScreen.OtherChangesPage;
+
+    if (isDataEntryScreen) {
+        return submitOrDiscardReducer(store, action);
+    }
     switch (action.type) {
         case SUGGEST_AN_UPDATE:
             return { ...store, screen: FeedbackScreen.ChooseFeedbackModeModal };
@@ -94,7 +96,7 @@ export const reduce = (store: FeedbackStore = buildDefaultStore(), action?: Redu
     }
 };
 
-const chooseFeedbackModeReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
+const chooseModeReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
     switch (action.type) {
         case CHOOSE_CHANGE_NAME_AND_DETAILS:
             return { ...store, screen: FeedbackScreen.EditableServiceDetailPage};
