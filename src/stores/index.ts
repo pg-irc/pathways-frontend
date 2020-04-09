@@ -11,6 +11,7 @@ import * as userProfile from './user_profile';
 import * as location from './manual_user_location';
 import * as search from './search';
 import * as headerMenu from './header_menu';
+import * as feedback from './feedback';
 
 export interface Store {
     readonly fonts: fonts.FontsStore;
@@ -25,6 +26,7 @@ export interface Store {
     readonly manualUserLocation: location.ManualUserLocationStore;
     readonly search: search.SearchStore;
     readonly headerMenu: headerMenu.HeaderMenuStore;
+    readonly feedback: feedback.FeedbackStore;
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -40,6 +42,7 @@ export const buildDefaultStore = (): Store => ({
     manualUserLocation: location.buildDefaultStore(),
     search: search.buildDefaultStore(),
     headerMenu: headerMenu.buildDefaultStore(),
+    feedback: feedback.buildDefaultStore(),
 });
 
 export const reducer = combineReducers<Store>({
@@ -55,4 +58,5 @@ export const reducer = combineReducers<Store>({
     manualUserLocation: location.reducer,
     search: search.reducer,
     headerMenu: headerMenu.reducer,
+    feedback: feedback.reducer,
 });
