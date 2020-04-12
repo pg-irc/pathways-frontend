@@ -1,6 +1,7 @@
 // tslint:disable:no-expression-statement typedef no-let
-import { toValidFeedbackJSON, getEmptyFeedback, ServiceFeedback } from '../use_send_feedback';
+import { toValidFeedbackJSON, getEmptyFeedback } from '../use_send_feedback';
 import { aString, aBoolean } from '../../../helpers/random_test_values';
+import { ServiceFeedback } from '../../../stores/feedback/types';
 
 describe('toValidFeedbackJSON', () => {
 
