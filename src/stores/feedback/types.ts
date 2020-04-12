@@ -1,9 +1,13 @@
 export enum FeedbackScreen {
     ServiceDetail,
-    ChooseFeedbackModeModal,
     EditableServiceDetailPage,
     RemoveServicePage,
     OtherChangesPage,
+}
+
+export enum FeedbackModal {
+    None,
+    ChooseFeedbackModeModal,
     ReceiveUpdatesModal,
     ConfirmDiscardChangesModal,
 }

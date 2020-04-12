@@ -1,12 +1,13 @@
 import * as helpers from '../helpers/make_action';
 import * as constants from '../../application/constants';
-import { FeedbackScreen, UserInformation } from './types';
+import { FeedbackScreen, UserInformation, FeedbackModal } from './types';
 export { reducer } from './reducer';
 export { FeedbackScreen } from './types';
 
 // tslint:disable-next-line:typedef
 export const buildDefaultStore = () => ({
     screen: FeedbackScreen.ServiceDetail,
+    modal: FeedbackModal.None,
     userInformation: emptyUserInformation,
 });
 
