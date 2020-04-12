@@ -1,17 +1,8 @@
 import * as helpers from '../helpers/make_action';
 import * as constants from '../../application/constants';
-export {reducer} from './reducer';
-
-export enum FeedbackScreen {
-    ServiceDetail,
-    ChooseFeedbackModeModal,
-    EditableServiceDetailPage,
-    RemoveServicePage,
-    OtherChangesPage,
-    ReceiveUpdatesModal,
-    ConfirmDiscardChangesModal,
-}
-const emptyUserInformation = { email: '', name: '', organizationName: '', jobTitle: ''};
+import { FeedbackScreen, UserInformation } from './types';
+export { reducer } from './reducer';
+export { FeedbackScreen } from './types';
 
 // tslint:disable-next-line:typedef
 export const buildDefaultStore = () => ({
@@ -19,14 +10,9 @@ export const buildDefaultStore = () => ({
     userInformation: emptyUserInformation,
 });
 
-export type FeedbackStore = Readonly<ReturnType<typeof buildDefaultStore>>;
+const emptyUserInformation = { email: '', name: '', organizationName: '', jobTitle: ''};
 
-export interface UserInformation {
-    readonly email: string;
-    readonly name: string;
-    readonly organizationName: string;
-    readonly jobTitle: string;
-}
+export type FeedbackStore = Readonly<ReturnType<typeof buildDefaultStore>>;
 
 // tslint:disable: typedef
 export const suggestAnUpdate = () => helpers.makeAction(constants.SUGGEST_AN_UPDATE);
