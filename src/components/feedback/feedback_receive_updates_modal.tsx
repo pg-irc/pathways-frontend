@@ -10,7 +10,8 @@ import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 
 import { receiveUpdatesStyles as styles } from './styles';
-import { SendFeedbackPromise, ServiceFeedback } from '../services/use_send_feedback';
+import { SendFeedbackPromise } from '../services/use_send_feedback';
+import { ServiceFeedback } from '../../stores/feedback/types';
 
 interface FeedbackReceiveUpdatesProps {
     readonly isVisible: boolean;

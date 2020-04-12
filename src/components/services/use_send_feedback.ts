@@ -3,29 +3,7 @@ import { useState, Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import * as R from 'ramda';
 import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID } from 'react-native-dotenv';
 import buildUrl from 'build-url';
-
-export interface FeedbackField {
-    readonly value: string;
-    readonly shouldSend: boolean;
-}
-
-export interface ServiceFeedback {
-    readonly bc211Id: FeedbackField;
-    readonly name: FeedbackField;
-    readonly organization: FeedbackField;
-    readonly description: FeedbackField;
-    readonly address: FeedbackField;
-    readonly phone: FeedbackField;
-    readonly website: FeedbackField;
-    readonly email: FeedbackField;
-    readonly removalReason: FeedbackField;
-    readonly other: FeedbackField;
-    readonly authorIsEmployee: FeedbackField;
-    readonly authorEmail: FeedbackField;
-    readonly authorName: FeedbackField;
-    readonly authorOrganization: FeedbackField;
-    readonly authorJobTitle: FeedbackField;
-}
+import { ServiceFeedback, FeedbackField } from '../../stores/feedback/types';
 
 export const getEmptyFeedback = (shouldSend: boolean = true): ServiceFeedback => {
     const emptyFeedbackField = { value: '', shouldSend };
