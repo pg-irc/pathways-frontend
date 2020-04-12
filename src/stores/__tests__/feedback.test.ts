@@ -68,13 +68,18 @@ describe('feedback reducer', () => {
         });
     });
 
-    test('hitting the submit button opens the modal for receiving updates', () => {
-        const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
-        const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
-        const action = submit();
-        const newStore = reducer(oldStore, action);
-        expect(newStore.screen).toEqual(oldScreen);
-        expect(newStore.modal).toEqual(FeedbackModal.ReceiveUpdatesModal);
+    describe('submit button', ()=>{
+        test('stores feedback data', ()=>{
+
+        });
+        test('opens the modal for receiving updates', () => {
+            const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
+            const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
+            const action = submit();
+            const newStore = reducer(oldStore, action);
+            expect(newStore.screen).toEqual(oldScreen);
+            expect(newStore.modal).toEqual(FeedbackModal.ReceiveUpdatesModal);
+        });
     });
 
    test('discarding changes navigates back to service detail', () => {

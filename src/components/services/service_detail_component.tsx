@@ -32,8 +32,9 @@ import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/ser
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { renderHeader } from '../main/render_header';
 import { Id } from '../../stores/services';
-import { ServiceFeedback, FeedbackField, getEmptyFeedback, useSendFeedback, SendFeedbackPromise } from './use_send_feedback';
+import { getEmptyFeedback, useSendFeedback, SendFeedbackPromise } from './use_send_feedback';
 import { useFeedbackQuery } from '../../hooks/use_feedback_query';
+import { ServiceFeedback, FeedbackField } from '../../stores/feedback/types';
 
 export interface ServiceDetailProps {
     readonly history: History;
