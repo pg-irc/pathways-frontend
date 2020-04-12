@@ -1,12 +1,12 @@
 import {FeedbackStore, buildDefaultStore, ReducerActions } from '.';
 import * as constants from '../../application/constants';
-import { FeedbackScreen } from './types';
+import { FeedbackScreen, FeedbackModal } from './types';
 
 export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: ReducerActions): FeedbackStore => {
     if (!action) {
         return store;
     }
-    if (store.screen === FeedbackScreen.ChooseFeedbackModeModal) {
+    if (store.modal === FeedbackModal.ChooseFeedbackModeModal) {
         return chooseModeReducer(store, action);
     }
     const isDataEntryScreen = store.screen === FeedbackScreen.EditableServiceDetailPage ||
@@ -18,7 +18,7 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
     }
     switch (action.type) {
         case constants.SUGGEST_AN_UPDATE:
-            return { ...store, screen: FeedbackScreen.ChooseFeedbackModeModal };
+            return { ...store, modal: FeedbackModal.ChooseFeedbackModeModal };
         case constants.DISCARD_CHANGES:
             return { ...store, screen: FeedbackScreen.ServiceDetail };
        case constants.FINISH_FEEDBACK:
@@ -49,11 +49,11 @@ const chooseModeReducer = (store: FeedbackStore, action: ReducerActions): Feedba
 const submitOrDiscardReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
     switch (action.type) {
         case constants.SUBMIT:
-            return { ...store, screen: FeedbackScreen.ReceiveUpdatesModal};
+            return { ...store, modal: FeedbackModal.ReceiveUpdatesModal};
         case constants.CLOSE:
-            return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
+            return { ...store, modal: FeedbackModal.ConfirmDiscardChangesModal};
         case constants.BACK:
-            return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
+            return { ...store, modal:  FeedbackModal.ConfirmDiscardChangesModal};
         default:
             return store;
     }
