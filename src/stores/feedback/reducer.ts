@@ -1,7 +1,6 @@
-import {FeedbackStore, buildDefaultStore, ReducerActions, FeedbackScreen } from '.';
-import { SUGGEST_AN_UPDATE, DISCARD_CHANGES, FINISH_FEEDBACK,
-     CHOOSE_CHANGE_NAME_AND_DETAILS, CHOOSE_REMOVE_SERVICE,
-     CHOOSE_OTHER_CHANGES, CLOSE, SUBMIT, BACK } from '../../application/constants';
+import {FeedbackStore, buildDefaultStore, ReducerActions } from '.';
+import * as constants from '../../application/constants';
+import { FeedbackScreen } from './types';
 
 export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: ReducerActions): FeedbackStore => {
     if (!action) {
@@ -18,11 +17,11 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
         return submitOrDiscardReducer(store, action);
     }
     switch (action.type) {
-        case SUGGEST_AN_UPDATE:
+        case constants.SUGGEST_AN_UPDATE:
             return { ...store, screen: FeedbackScreen.ChooseFeedbackModeModal };
-        case DISCARD_CHANGES:
+        case constants.DISCARD_CHANGES:
             return { ...store, screen: FeedbackScreen.ServiceDetail };
-       case FINISH_FEEDBACK:
+       case constants.FINISH_FEEDBACK:
             return {
                 ...store,
                 screen: FeedbackScreen.ServiceDetail,
@@ -34,13 +33,13 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
 
 const chooseModeReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
     switch (action.type) {
-        case CHOOSE_CHANGE_NAME_AND_DETAILS:
+        case constants.CHOOSE_CHANGE_NAME_AND_DETAILS:
             return { ...store, screen: FeedbackScreen.EditableServiceDetailPage};
-        case CHOOSE_REMOVE_SERVICE:
+        case constants.CHOOSE_REMOVE_SERVICE:
             return { ...store, screen: FeedbackScreen.RemoveServicePage};
-        case CHOOSE_OTHER_CHANGES:
+        case constants.CHOOSE_OTHER_CHANGES:
             return { ...store, screen: FeedbackScreen.OtherChangesPage};
-        case CLOSE:
+        case constants.CLOSE:
             return {...store, screen: FeedbackScreen.ServiceDetail };
         default:
             return store;
@@ -49,11 +48,11 @@ const chooseModeReducer = (store: FeedbackStore, action: ReducerActions): Feedba
 
 const submitOrDiscardReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
     switch (action.type) {
-        case SUBMIT:
+        case constants.SUBMIT:
             return { ...store, screen: FeedbackScreen.ReceiveUpdatesModal};
-        case CLOSE:
+        case constants.CLOSE:
             return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
-        case BACK:
+        case constants.BACK:
             return { ...store, screen: FeedbackScreen.ConfirmDiscardChangesModal};
         default:
             return store;
