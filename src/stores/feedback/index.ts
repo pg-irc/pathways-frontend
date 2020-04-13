@@ -1,20 +1,17 @@
 import * as helpers from '../helpers/make_action';
 import * as constants from '../../application/constants';
-import { FeedbackScreen, UserInformation, FeedbackModal } from './types';
+import { FeedbackScreen, UserInformation, FeedbackModal, ServiceFeedback, FeedbackStore } from './types';
 export { reducer } from './reducer';
-export { FeedbackScreen } from './types';
+export { FeedbackStore } from './types';
 
-// tslint:disable-next-line:typedef
-export const buildDefaultStore = () => ({
+export const buildDefaultStore = (): FeedbackStore => ({
     screen: FeedbackScreen.ServiceDetail,
     modal: FeedbackModal.None,
     userInformation: emptyUserInformation,
+    feedback: undefined,
 });
 
 const emptyUserInformation = { email: '', name: '', organizationName: '', jobTitle: ''};
-
-export type FeedbackStore = Readonly<ReturnType<typeof buildDefaultStore>>;
-
 // tslint:disable: typedef
 export const suggestAnUpdate = () => helpers.makeAction(constants.SUGGEST_AN_UPDATE);
 export const chooseChangeNameOrDetails = () => helpers.makeAction(constants.CHOOSE_CHANGE_NAME_AND_DETAILS);
@@ -23,7 +20,10 @@ export const chooseOtherChanges = () => helpers.makeAction(constants.CHOOSE_OTHE
 export const discardChanges = () => helpers.makeAction(constants.DISCARD_CHANGES);
 export const close = () => helpers.makeAction(constants.CLOSE);
 export const back = () => helpers.makeAction(constants.BACK);
-export const submit = () => helpers.makeAction(constants.SUBMIT);
+export const submit = (serviceFeedback: ServiceFeedback) => (
+    helpers.makeAction(constants.SUBMIT, { serviceFeedback })
+);
+
 export const finishFeedback = (userInformation: UserInformation = emptyUserInformation) => (
     helpers.makeAction(constants.FINISH_FEEDBACK, { userInformation })
 );

@@ -1,16 +1,17 @@
 // tslint:disable:no-expression-statement no-let
-import { reducer, FeedbackScreen, suggestAnUpdate,
+import { reducer, suggestAnUpdate,
     chooseChangeNameOrDetails, chooseRemoveService,
     chooseOtherChanges, submit, discardChanges, close,
-    back, finishFeedback, FeedbackStore } from '../feedback';
+    back, finishFeedback } from '../feedback';
 import { aString, aBoolean } from '../../helpers/random_test_values';
-import { FeedbackModal, UserInformation } from '../feedback/types';
+import { FeedbackModal, UserInformation, FeedbackField, ServiceFeedback, FeedbackScreen, FeedbackStore } from '../feedback/types';
 
 // tslint:disable: no-class readonly-keyword no-this
 class FeedbackStoreBuilder {
     screen: FeedbackScreen = FeedbackScreen.ServiceDetail;
     modal: FeedbackModal = FeedbackModal.None;
     userInformation: UserInformation =  { email: '', name: '', organizationName: '', jobTitle: '' };
+    feedback: ServiceFeedback | undefined = undefined;
 
     withScreen(screen: FeedbackScreen): FeedbackStoreBuilder {
         this.screen = screen;
@@ -27,11 +28,17 @@ class FeedbackStoreBuilder {
         return this;
     }
 
+    withFeedbackData(feedback: ServiceFeedback): FeedbackStoreBuilder {
+        this.feedback = feedback;
+        return this;
+    }
+
     build(): FeedbackStore {
         return {
             screen: this.screen,
             modal: this.modal,
             userInformation: this.userInformation,
+            feedback: this.feedback,
         };
     }
 }
@@ -68,14 +75,46 @@ describe('feedback reducer', () => {
         });
     });
 
-    describe('submit button', ()=>{
-        test('stores feedback data', ()=>{
+    const aFeedbackField = (): FeedbackField => ({
+        value: aString(),
+        shouldSend: aBoolean(),
+    });
 
+    const aFeedbackData = (): ServiceFeedback => ({
+        type: 'service_feedback',
+        bc211Id: aFeedbackField(),
+        name: aFeedbackField(),
+        organization: aFeedbackField(),
+        description: aFeedbackField(),
+        address: aFeedbackField(),
+        phone: aFeedbackField(),
+        website: aFeedbackField(),
+        email: aFeedbackField(),
+        removalReason: aFeedbackField(),
+        other: aFeedbackField(),
+        authorIsEmployee: aFeedbackField(),
+        authorEmail: aFeedbackField(),
+        authorName: aFeedbackField(),
+        authorOrganization: aFeedbackField(),
+        authorJobTitle: aFeedbackField(),
+    });
+
+    describe('submit button', () => {
+        test('stores feedback data', () => {
+            const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.EditableServiceDetailPage).build();
+            const feedbackData = aFeedbackData();
+            const action = submit(feedbackData);
+            const newStore = reducer(oldStore, action);
+            if (newStore.feedback && newStore.feedback.type === 'service_feedback') {
+                expect(newStore.feedback.name).toEqual(feedbackData.name);
+            } else {
+                fail();
+            }
         });
         test('opens the modal for receiving updates', () => {
             const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
             const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
-            const action = submit();
+            const action = submit(aFeedbackData());
             const newStore = reducer(oldStore, action);
             expect(newStore.screen).toEqual(oldScreen);
             expect(newStore.modal).toEqual(FeedbackModal.ReceiveUpdatesModal);

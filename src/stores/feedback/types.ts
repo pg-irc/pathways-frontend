@@ -1,3 +1,10 @@
+export interface FeedbackStore {
+    readonly screen: FeedbackScreen;
+    readonly modal: FeedbackModal;
+    readonly userInformation: undefined | UserInformation;
+    readonly feedback: undefined | ServiceFeedback | RemoveServiceFeedback | OtherFeedback;
+}
+
 export enum FeedbackScreen {
     ServiceDetail,
     EditableServiceDetailPage,
@@ -25,6 +32,7 @@ export interface FeedbackField {
 }
 
 export interface ServiceFeedback {
+    readonly type: 'service_feedback';
     readonly bc211Id: FeedbackField;
     readonly name: FeedbackField;
     readonly organization: FeedbackField;
@@ -33,6 +41,7 @@ export interface ServiceFeedback {
     readonly phone: FeedbackField;
     readonly website: FeedbackField;
     readonly email: FeedbackField;
+    // TODO remove all fields below and use other types in this file
     readonly removalReason: FeedbackField;
     readonly other: FeedbackField;
     readonly authorIsEmployee: FeedbackField;
@@ -40,4 +49,14 @@ export interface ServiceFeedback {
     readonly authorName: FeedbackField;
     readonly authorOrganization: FeedbackField;
     readonly authorJobTitle: FeedbackField;
+}
+
+export interface OtherFeedback {
+    readonly type: 'other_feedback';
+    readonly value: string;
+}
+
+export interface RemoveServiceFeedback {
+    readonly type: 'remove_service';
+    readonly reason: string;
 }
