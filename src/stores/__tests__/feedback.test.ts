@@ -80,7 +80,7 @@ describe('feedback reducer', () => {
         shouldSend: aBoolean(),
     });
 
-    const aFeedbackData = (): ServiceFeedback => ({
+    const sampleServiceFeedback = (): ServiceFeedback => ({
         type: 'service_feedback',
         bc211Id: aFeedbackField(),
         name: aFeedbackField(),
@@ -102,7 +102,7 @@ describe('feedback reducer', () => {
     describe('submit button', () => {
         test('stores feedback data', () => {
             const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.EditableServiceDetailPage).build();
-            const feedbackData = aFeedbackData();
+            const feedbackData = sampleServiceFeedback();
             const action = submit(feedbackData);
             const newStore = reducer(oldStore, action);
             if (newStore.feedback && newStore.feedback.type === 'service_feedback') {
@@ -111,10 +111,21 @@ describe('feedback reducer', () => {
                 fail();
             }
         });
+
+        test('stores other feedback', () => {
+            const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.OtherChangesPage).build();
+            const aValue = aString();
+            const action = submit({ type: 'other_feedback', value: aValue});
+            const newStore = reducer(oldStore, action);
+            if (newStore.feedback && newStore.feedback.type === 'other_feedback') {
+                expect(newStore.feedback.value).toEqual(aValue);
+            }
+        });
+
         test('opens the modal for receiving updates', () => {
             const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
             const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
-            const action = submit(aFeedbackData());
+            const action = submit(sampleServiceFeedback());
             const newStore = reducer(oldStore, action);
             expect(newStore.screen).toEqual(oldScreen);
             expect(newStore.modal).toEqual(FeedbackModal.ReceiveUpdatesModal);
