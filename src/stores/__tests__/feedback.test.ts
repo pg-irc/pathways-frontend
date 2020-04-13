@@ -4,44 +4,8 @@ import { reducer, suggestAnUpdate,
     chooseOtherChanges, submit, discardChanges, close,
     back, finishFeedback } from '../feedback';
 import { aString, aBoolean } from '../../helpers/random_test_values';
-import { FeedbackModal, UserInformation, FeedbackField, ServiceFeedback, FeedbackScreen, FeedbackStore } from '../feedback/types';
-
-// tslint:disable: no-class readonly-keyword no-this
-class FeedbackStoreBuilder {
-    screen: FeedbackScreen = FeedbackScreen.ServiceDetail;
-    modal: FeedbackModal = FeedbackModal.None;
-    userInformation: UserInformation =  { email: '', name: '', organizationName: '', jobTitle: '' };
-    feedback: ServiceFeedback | undefined = undefined;
-
-    withScreen(screen: FeedbackScreen): FeedbackStoreBuilder {
-        this.screen = screen;
-        return this;
-    }
-
-    withModal(modal: FeedbackModal): FeedbackStoreBuilder {
-        this.modal = modal;
-        return this;
-    }
-
-    withUserData(userInfo: UserInformation): FeedbackStoreBuilder {
-        this.userInformation = userInfo;
-        return this;
-    }
-
-    withFeedbackData(feedback: ServiceFeedback): FeedbackStoreBuilder {
-        this.feedback = feedback;
-        return this;
-    }
-
-    build(): FeedbackStore {
-        return {
-            screen: this.screen,
-            modal: this.modal,
-            userInformation: this.userInformation,
-            feedback: this.feedback,
-        };
-    }
-}
+import { FeedbackModal, FeedbackField, ServiceFeedback, FeedbackScreen } from '../feedback/types';
+import { FeedbackStoreBuilder } from './helpers/feedback_store_builder';
 
 describe('feedback reducer', () => {
     test('suggest update opens choose mode modal', () => {
@@ -80,7 +44,7 @@ describe('feedback reducer', () => {
         shouldSend: aBoolean(),
     });
 
-    const sampleServiceFeedback = (): ServiceFeedback => ({
+    const someServiceFeedbackData = (): ServiceFeedback => ({
         type: 'service_feedback',
         bc211Id: aFeedbackField(),
         name: aFeedbackField(),
@@ -102,7 +66,7 @@ describe('feedback reducer', () => {
     describe('submit button', () => {
         test('stores feedback data', () => {
             const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.EditableServiceDetailPage).build();
-            const feedbackData = sampleServiceFeedback();
+            const feedbackData = someServiceFeedbackData();
             const action = submit(feedbackData);
             const newStore = reducer(oldStore, action);
             if (newStore.feedback && newStore.feedback.type === 'service_feedback') {
@@ -139,7 +103,7 @@ describe('feedback reducer', () => {
         test('opens the modal for receiving updates', () => {
             const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
             const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
-            const action = submit(sampleServiceFeedback());
+            const action = submit(someServiceFeedbackData());
             const newStore = reducer(oldStore, action);
             expect(newStore.screen).toEqual(oldScreen);
             expect(newStore.modal).toEqual(FeedbackModal.ReceiveUpdatesModal);
