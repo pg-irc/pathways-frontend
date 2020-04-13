@@ -1,3 +1,4 @@
+// tslint:disable: typedef
 import * as helpers from '../helpers/make_action';
 import * as constants from '../../application/constants';
 import { FeedbackScreen, UserInformation, FeedbackModal, ServiceFeedback, FeedbackStore, OtherFeedback, RemoveServiceFeedback } from './types';
@@ -7,12 +8,10 @@ export { FeedbackStore } from './types';
 export const buildDefaultStore = (): FeedbackStore => ({
     screen: FeedbackScreen.ServiceDetail,
     modal: FeedbackModal.None,
-    userInformation: emptyUserInformation,
+    userInformation: undefined,
     feedback: undefined,
 });
 
-const emptyUserInformation = { email: '', name: '', organizationName: '', jobTitle: ''};
-// tslint:disable: typedef
 export const suggestAnUpdate = () => helpers.makeAction(constants.SUGGEST_AN_UPDATE);
 export const chooseChangeNameOrDetails = () => helpers.makeAction(constants.CHOOSE_CHANGE_NAME_AND_DETAILS);
 export const chooseRemoveService = () => helpers.makeAction(constants.CHOOSE_REMOVE_SERVICE);
@@ -24,7 +23,7 @@ export const submit = (feedback: ServiceFeedback | OtherFeedback | RemoveService
     helpers.makeAction(constants.SUBMIT, { feedback })
 );
 
-export const finishFeedback = (userInformation: UserInformation = emptyUserInformation) => (
+export const finishFeedback = (userInformation: UserInformation = undefined) => (
     helpers.makeAction(constants.FINISH_FEEDBACK, { userInformation })
 );
 
