@@ -1,6 +1,6 @@
-import {FeedbackStore, buildDefaultStore, ReducerActions } from '.';
+import { buildDefaultStore, ReducerActions } from '.';
 import * as constants from '../../application/constants';
-import { FeedbackScreen, FeedbackModal } from './types';
+import { FeedbackScreen, FeedbackModal, FeedbackStore } from './types';
 
 export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: ReducerActions): FeedbackStore => {
     if (!action) {
@@ -49,7 +49,7 @@ const chooseModeReducer = (store: FeedbackStore, action: ReducerActions): Feedba
 const submitOrDiscardReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
     switch (action.type) {
         case constants.SUBMIT:
-            return { ...store, modal: FeedbackModal.ReceiveUpdatesModal};
+            return { ...store, modal: FeedbackModal.ReceiveUpdatesModal, feedback: action.payload.serviceFeedback };
         case constants.CLOSE:
             return { ...store, modal: FeedbackModal.ConfirmDiscardChangesModal};
         case constants.BACK:

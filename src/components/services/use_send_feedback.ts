@@ -8,6 +8,7 @@ import { ServiceFeedback, FeedbackField } from '../../stores/feedback/types';
 export const getEmptyFeedback = (shouldSend: boolean = true): ServiceFeedback => {
     const emptyFeedbackField = { value: '', shouldSend };
     return {
+        type: 'service_feedback',
         bc211Id: emptyFeedbackField,
         name: emptyFeedbackField,
         organization: emptyFeedbackField,
@@ -68,12 +69,21 @@ export const toValidFeedbackJSON = (feedback: ServiceFeedback): string => {
     const isMissingBC211Id = R.indexOf('bc211Id', feedbackFields) === -1;
     const hasLessThanTwoFields = feedbackFields.length < 2;
 
+    // TODO use the type system to express this, bc211id cannot be optional, the
+    // other fields can.
     if (isMissingBC211Id || hasLessThanTwoFields) {
         throw new Error('Feedback must have a bc211Id and at least one other value.');
     }
 
-    const buildFieldValuePair = (acc: object, field: keyof ServiceFeedback): object =>
-        ({...acc, [field]: feedbackToSend[field].value});
+    // TODO write instead a selector that pulls data from the store in a form that can be
+    // directly JSON.stringified here. Selectors are easy to unit test, unlike this code.
+
+    const buildFieldValuePair = (acc: object, field: keyof ServiceFeedback): object => (
+        {
+            ...acc,
+            [field]: field === 'type' ? '' : feedbackToSend[field].value,
+        }
+    );
 
     return JSON.stringify({ fields: R.reduce(buildFieldValuePair, {}, feedbackFields) });
 };
