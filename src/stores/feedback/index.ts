@@ -1,6 +1,6 @@
 import * as helpers from '../helpers/make_action';
 import * as constants from '../../application/constants';
-import { FeedbackScreen, UserInformation, FeedbackModal, ServiceFeedback, FeedbackStore } from './types';
+import { FeedbackScreen, UserInformation, FeedbackModal, ServiceFeedback, FeedbackStore, OtherFeedback } from './types';
 export { reducer } from './reducer';
 export { FeedbackStore } from './types';
 
@@ -20,8 +20,8 @@ export const chooseOtherChanges = () => helpers.makeAction(constants.CHOOSE_OTHE
 export const discardChanges = () => helpers.makeAction(constants.DISCARD_CHANGES);
 export const close = () => helpers.makeAction(constants.CLOSE);
 export const back = () => helpers.makeAction(constants.BACK);
-export const submit = (serviceFeedback: ServiceFeedback) => (
-    helpers.makeAction(constants.SUBMIT, { serviceFeedback })
+export const submit = (feedback: ServiceFeedback | OtherFeedback) => (
+    helpers.makeAction(constants.SUBMIT, { serviceFeedback: feedback })
 );
 
 export const finishFeedback = (userInformation: UserInformation = emptyUserInformation) => (
