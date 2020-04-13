@@ -119,6 +119,20 @@ describe('feedback reducer', () => {
             const newStore = reducer(oldStore, action);
             if (newStore.feedback && newStore.feedback.type === 'other_feedback') {
                 expect(newStore.feedback.value).toEqual(aValue);
+            } else {
+                fail();
+            }
+        });
+
+        test('stores remove service feedback', ()=>{
+            const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.RemoveServicePage).build();
+            const aReason = aString();
+            const action = submit({ type: 'remove_service', reason: aReason });
+            const newStore = reducer(oldStore, action);
+            if (newStore.feedback && newStore.feedback.type === 'remove_service') {
+                expect(newStore.feedback.reason).toEqual(aReason);
+            } else {
+                fail();
             }
         });
 
