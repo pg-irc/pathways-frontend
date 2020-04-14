@@ -1,8 +1,9 @@
 import React from 'react';
 import Modal from 'react-native-modal';
-import { View, Button, Text, Icon } from 'native-base';
+import { View, Text, Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { textStyles, colors, values, applicationStyles } from '../../application/styles';
+import { TouchableOpacity } from 'react-native';
 
 export interface NewTopicsModalProps {
     readonly isVisible: boolean;
@@ -57,17 +58,17 @@ const ButtonComponent = (props: Props): JSX.Element => (
             marginVertical: 15,
         }}
     >
-        <Button
+        <TouchableOpacity
             style={[
                 applicationStyles.tealButton,
                 applicationStyles.boxShadowBelow,
-                { paddingHorizontal: 20 },
+                { paddingHorizontal: 20, paddingVertical: 10},
             ]}
             onPress={props.onModalButtonPress}
         >
             <Text style={textStyles.button}>
                 <Trans>See recommendations</Trans>
             </Text>
-        </Button>
+        </TouchableOpacity>
     </View>
 );
