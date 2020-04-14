@@ -30,7 +30,7 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
             constants.COLLAPSE_DETAIL,
             constants.BOOKMARK_TOPIC,
             constants.BOOKMARK_SERVICE,
-            constants.OPEN_SERVICE,
+            constants.OPEN_SERVICE_DETAIL,
             constants.ANALYTICS_LINK_PRESSED,
             constants.SEARCH_EXECUTED,
         ],
@@ -69,7 +69,7 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
         case constants.BOOKMARK_SERVICE:
             events.sendBookmarkServiceEvent(action.payload.service);
             break;
-        case constants.OPEN_SERVICE:
+        case constants.OPEN_SERVICE_DETAIL:
             events.sendOpenService(action.payload.service);
             break;
         case constants.EXPAND_DETAIL:

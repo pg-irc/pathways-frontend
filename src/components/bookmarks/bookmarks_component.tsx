@@ -19,7 +19,7 @@ export interface BookmarksProps {
 
 export interface BookmarkActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly openService: (service: HumanServiceData) => OpenServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
 
 type Props = BookmarksProps & ListActions & RouterProps;

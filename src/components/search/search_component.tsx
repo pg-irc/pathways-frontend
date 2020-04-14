@@ -11,7 +11,7 @@ import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
-import { SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction, SaveSearchResultsAction, SaveSearchLatLongAction, SaveSearchPageAction, SaveNumberOfSearchPagesAction } from '../../stores/search';
+import * as actions from '../../stores/search';
 import { SearchExecutedAction } from '../../stores/analytics';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
@@ -37,17 +37,17 @@ export interface SearchComponentProps {
 
 export interface SearchComponentActions {
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
-    readonly openService: (service: HumanServiceData) => OpenServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly disableAnalytics: (disable: boolean) => DisableAnalyticsAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly saveSearchTerm: (searchTerm: string) => SaveSearchTermAction;
-    readonly saveSearchLocation: (searchLocation: string) => SaveSearchLocationAction;
-    readonly saveSearchLatLong: (searchLatLong: LatLong) => SaveSearchLatLongAction;
-    readonly saveSearchPage: (searchPage: number) => SaveSearchPageAction;
-    readonly saveNumberOfSearchPages: (numberOfSearchPages: number) => SaveNumberOfSearchPagesAction;
-    readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => SaveSearchResultsAction;
-    readonly setCollapseSearchInput: (collapseSearchInput: boolean) => SetCollapseSearchInputAction;
+    readonly saveSearchTerm: (searchTerm: string) => actions.SaveSearchTermAction;
+    readonly saveSearchLocation: (searchLocation: string) => actions.SaveSearchLocationAction;
+    readonly saveSearchLatLong: (searchLatLong: LatLong) => actions.SaveSearchLatLongAction;
+    readonly saveSearchPage: (searchPage: number) => actions.SaveSearchPageAction;
+    readonly saveNumberOfSearchPages: (numberOfSearchPages: number) => actions.SaveNumberOfSearchPagesAction;
+    readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => actions.SaveSearchResultsAction;
+    readonly setCollapseSearchInput: (collapseSearchInput: boolean) => actions.SetCollapseSearchInputAction;
     readonly searchExecuted: (searchTerm: string, searchLocation: string) => SearchExecutedAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }

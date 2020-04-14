@@ -1,3 +1,4 @@
+// tslint:disable: no-expression-statement
 import React from 'react';
 import * as R from 'ramda';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
@@ -11,7 +12,7 @@ export interface ServiceItemsProps {
     readonly history: History;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly openService: (service: HumanServiceData) => OpenServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
@@ -21,8 +22,7 @@ export const renderServiceItems = R.curry((props: ServiceItemsProps, itemInfo: S
     const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
     const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
     const onOpenService = (): void => {
-        // tslint:disable: no-expression-statement
-        props.openService(service);
+        props.openServiceDetail(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };
     return (

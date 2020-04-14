@@ -7,7 +7,7 @@ import { Id, UnbookmarkTopicAction, unbookmarkTopic, BookmarkTopicAction, bookma
 import { selectBookmarkedTopics } from '../../selectors/topics/select_bookmarked_topics';
 import { selectBookmarkedServices } from '../../selectors/services/select_bookmarked_services';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
-import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService, OpenServiceAction, openService } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { ServiceBookmarksActions } from './service_bookmarks_component';
 
@@ -27,7 +27,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ListActions => ({
     unbookmarkTopic: (topicId: Id): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
     bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
     unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
-    openService: (service: HumanServiceData): OpenServiceAction => dispatch(openService(service)),
+    openServiceDetail: (service: HumanServiceData): OpenServiceAction => dispatch(openServiceDetail(service)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
 });
 

@@ -42,7 +42,7 @@ export interface ServiceListActions {
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly openService: (service: HumanServiceData) => OpenServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;

@@ -17,7 +17,7 @@ export interface ServiceBookmarksProps {
 export interface ServiceBookmarksActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly openService: (service: HumanServiceData) => OpenServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
 
 type Props = ServiceBookmarksProps & ServiceBookmarksActions & RouterProps;
@@ -32,7 +32,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => (
             <EmptyBookmarksComponent
                 title={<Trans>No services to show</Trans>}
             />
-            }
+        }
         ItemSeparatorComponent={SearchListSeparator}
         ListHeaderComponent={<View />}
     />

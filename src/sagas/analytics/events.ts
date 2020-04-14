@@ -12,45 +12,38 @@ export const sendScreenHit = (action: RouteChangedAction): void => {
 };
 
 export const sendAnswerChosenEvent = (answerId: string): void => {
-    const analytics = createAnalytics();
     const event = createEvent('Questionnaire', 'AnswerChosen', [answerId]);
-    analytics.hit(event);
+    analyticsHit(event);
 };
 
 export const sendBookmarkTopicEvent = (topicId: string): void => {
-    const analytics = createAnalytics();
     const event = createEvent('Bookmarks', 'TopicBookmarkAdded', [topicId]);
-    analytics.hit(event);
+    analyticsHit(event);
 };
 
 export const sendBookmarkServiceEvent = (service: HumanServiceData): void => {
-    const analytics = createAnalytics();
     const event = createEvent('Bookmarks', 'ServiceBookmarkAdded', [service.id, service.name, service.organizationName]);
-    analytics.hit(event);
+    analyticsHit(event);
 };
 
 export const sendSearchExecutedEvent = (searchTerm: string, searchLocation: string): void => {
-    const analytics = createAnalytics();
     const event = createEvent('Search', 'SearchExecuted', [searchTerm, searchLocation]);
-    analytics.hit(event);
+    analyticsHit(event);
 };
 
 export const sendOpenService = (service: HumanServiceData): void => {
-    const analytics = createAnalytics();
     const event = createEvent('Services', 'ServiceOpened', [service.id, service.name, service.organizationName]);
-    analytics.hit(event);
+    analyticsHit(event);
 };
 
 export const sendExpandDetail = (contentId: string): void => {
-    const analytics = createAnalytics();
     const event = createEvent('Detail', 'DetailExpanded', [contentId]);
-    analytics.hit(event);
+    analyticsHit(event);
 };
 
 export const sendCollapseDetail = (contentId: string): void => {
-    const analytics = createAnalytics();
     const event = createEvent('Detail', 'DetailCollapsed', [contentId]);
-    analytics.hit(event);
+    analyticsHit(event);
 };
 
 export const sendLinkPressedEvent = (currentPath: string, linkContext: string, linkType: string, linkValue: string)
@@ -62,14 +55,18 @@ export const sendLinkPressedEvent = (currentPath: string, linkContext: string, l
 };
 
 export const sendServicesCountEvent = (count: number): void => {
-    const analytics = createAnalytics();
     const event = createEvent('MemoryReport', `ServicesCount: ${count}`);
-    analytics.hit(event);
+    analyticsHit(event);
 };
 
 export const buildAnalyticsLinkContext = (model: string, title: string): string => (
     `${model} - ${title}`
 );
+
+const analyticsHit = (event: Event): void => {
+    const analytics = createAnalytics();
+    analytics.hit(event);
+};
 
 // tslint:disable-next-line:no-any
 const createAnalytics = (additionalParameters?: object): any => {

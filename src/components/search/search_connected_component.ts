@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { SearchComponentProps, SearchComponent, SearchComponentActions } from './search_component';
-import { saveService, SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService, OpenServiceAction, openService } from '../../stores/services/actions';
+import * as actions from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { disableAnalytics, DisableAnalyticsAction } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
@@ -35,11 +35,11 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
 });
 
 type Actions =
-    SaveServiceAction |
-    OpenServiceAction |
+    actions.SaveServiceAction |
+    actions.OpenServiceAction |
     DisableAnalyticsAction |
-    BookmarkServiceAction |
-    UnbookmarkServiceAction |
+    actions.BookmarkServiceAction |
+    actions.UnbookmarkServiceAction |
     SaveSearchTermAction |
     SaveSearchLocationAction |
     SaveSearchLatLongAction |
@@ -51,20 +51,20 @@ type Actions =
     OpenHeaderMenuAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
-    saveService: (service: HumanServiceData): SaveServiceAction => (
-        dispatch(saveService(service))
+    saveService: (service: HumanServiceData): actions.SaveServiceAction => (
+        dispatch(actions.saveService(service))
     ),
-    openService: (service: HumanServiceData): OpenServiceAction => (
-        dispatch(openService(service))
+    openServiceDetail: (service: HumanServiceData): actions.OpenServiceAction => (
+        dispatch(actions.openServiceDetail(service))
     ),
     disableAnalytics: (disable: boolean): DisableAnalyticsAction => (
         dispatch(disableAnalytics(disable))
     ),
-    bookmarkService: (service: HumanServiceData): BookmarkServiceAction => (
-        dispatch(bookmarkService(service))
+    bookmarkService: (service: HumanServiceData): actions.BookmarkServiceAction => (
+        dispatch(actions.bookmarkService(service))
     ),
-    unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => (
-        dispatch(unbookmarkService(service))
+    unbookmarkService: (service: HumanServiceData): actions.UnbookmarkServiceAction => (
+        dispatch(actions.unbookmarkService(service))
     ),
     saveSearchTerm: (searchTerm: string): SaveSearchTermAction => (
         dispatch(saveSearchTerm(searchTerm))

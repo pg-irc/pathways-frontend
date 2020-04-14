@@ -1,9 +1,6 @@
 import { Dispatch } from 'redux';
 import { Store } from '../../stores';
-import {
-    buildServicesRequest, BuildServicesRequestAction, ServicesAction, BookmarkServiceAction,
-    UnbookmarkServiceAction, bookmarkService, unbookmarkService, openService, OpenServiceAction,
-} from '../../stores/services/actions';
+import * as actions from '../../stores/services/actions';
 import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { Topic } from '../../selectors/topics/types';
@@ -34,22 +31,22 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<ServicesAction | SetManualUserLocationAction>): ServiceListActions => ({
-    dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): BuildServicesRequestAction =>
-        dispatch(buildServicesRequest(topic.id, manualUserLocation)),
-    bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
-    unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
+const mapDispatchToProps = (dispatch: Dispatch<actions.ServicesAction | SetManualUserLocationAction>): ServiceListActions => ({
+    dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): actions.BuildServicesRequestAction =>
+        dispatch(actions.buildServicesRequest(topic.id, manualUserLocation)),
+    bookmarkService: (service: HumanServiceData): actions.BookmarkServiceAction => dispatch(actions.bookmarkService(service)),
+    unbookmarkService: (service: HumanServiceData): actions.UnbookmarkServiceAction => dispatch(actions.unbookmarkService(service)),
     hidePartialLocalizationMessage: (): HidePartialLocalizationMessageAction => dispatch(hidePartialLocalizationMessage()),
     setManualUserLocation: (userLocation: UserLocation): SetManualUserLocationAction => dispatch(setManualUserLocation(userLocation)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
-    openService: (service: HumanServiceData): OpenServiceAction => dispatch(openService(service)),
+    openServiceDetail: (service: HumanServiceData): actions.OpenServiceAction => dispatch(actions.openServiceDetail(service)),
 });
 
 type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;
 
 const mergeProps = (stateProps: ServiceListProps, dispatchProps: ServiceListActions, ownProps: RouterProps): ComponentProps => ({
     ...stateProps, ...dispatchProps, ...ownProps,
-    dispatchServicesRequest: (): BuildServicesRequestAction => {
+    dispatchServicesRequest: (): actions.BuildServicesRequestAction => {
         return dispatchProps.dispatchServicesRequest(stateProps.topic, stateProps.manualUserLocation);
     },
 });
