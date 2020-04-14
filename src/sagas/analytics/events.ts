@@ -29,9 +29,9 @@ export const sendBookmarkServiceEvent = (service: HumanServiceData): void => {
     analytics.hit(event);
 };
 
-export const sendSearchQueriedEvent = (searchTerm: string, searchLocation: string): void => {
+export const sendSearchExecutedEvent = (searchTerm: string, searchLocation: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Search', 'SearchQueried', [searchTerm, searchLocation]);
+    const event = createEvent('Search', 'SearchExecuted', [searchTerm, searchLocation]);
     analytics.hit(event);
 };
 

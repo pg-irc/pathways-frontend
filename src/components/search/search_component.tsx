@@ -12,7 +12,7 @@ import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import { SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction, SaveSearchResultsAction, SaveSearchLatLongAction, SaveSearchPageAction, SaveNumberOfSearchPagesAction } from '../../stores/search';
-import { SearchQueriedAction } from '../../stores/analytics';
+import { SearchExecutedAction } from '../../stores/analytics';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
 import { useOnlineStatus } from './use_online_status';
@@ -48,7 +48,7 @@ export interface SearchComponentActions {
     readonly saveNumberOfSearchPages: (numberOfSearchPages: number) => SaveNumberOfSearchPagesAction;
     readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => SaveSearchResultsAction;
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => SetCollapseSearchInputAction;
-    readonly searchQueried: (searchTerm: string, searchLocation: string) => SearchQueriedAction;
+    readonly searchExecuted: (searchTerm: string, searchLocation: string) => SearchExecutedAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
@@ -79,7 +79,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
             props.saveSearchResults(searchResults);
         } finally {
             setIsLoading(false);
-            props.searchQueried(searchTerm, location);
+            props.searchExecuted(searchTerm, location);
         }
     };
 

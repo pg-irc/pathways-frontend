@@ -23,12 +23,12 @@ export namespace AnalyticsAsync {
 }
 
 export type AnalyticsLinkPressedAction = Readonly<ReturnType<typeof analyticsLinkPressed>>;
-export type SearchQueriedAction = Readonly<ReturnType<typeof searchQueried>>;
+export type SearchExecutedAction = Readonly<ReturnType<typeof searchExecuted>>;
 
 export const analyticsLinkPressed = (currentPath: string, linkContext: string, linkType: string, linkValue: string) => (
     helpers.makeAction(constants.ANALYTICS_LINK_PRESSED, { currentPath, linkContext, linkType, linkValue })
 );
 
-export const searchQueried = (searchTerm: string, searchLocation: string) => (
-    helpers.makeAction(constants.SEARCH_QUERIED, { searchTerm, searchLocation })
+export const searchExecuted = (searchTerm: string, searchLocation: string) => (
+    helpers.makeAction(constants.SEARCH_EXECUTED, { searchTerm, searchLocation })
 );

@@ -11,7 +11,7 @@ import {
     saveSearchLocation, saveSearchTerm, setCollapseSearchInput, SaveSearchResultsAction, saveSearchResults,
     SaveSearchLatLongAction, saveSearchLatLong, SaveSearchPageAction, saveSearchPage, SaveNumberOfSearchPagesAction, saveNumberOfSearchPages,
 } from '../../stores/search';
-import { SearchQueriedAction, searchQueried } from '../../stores/analytics';
+import { SearchExecutedAction, searchExecuted } from '../../stores/analytics';
 import { selectSearchTerm } from '../../selectors/search/select_search_term';
 import { selectSearchLocation } from '../../selectors/search/select_search_location';
 import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
@@ -47,7 +47,7 @@ type Actions =
     SaveNumberOfSearchPagesAction |
     SaveSearchResultsAction |
     SetCollapseSearchInputAction |
-    SearchQueriedAction |
+    SearchExecutedAction |
     OpenHeaderMenuAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
@@ -87,8 +87,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     setCollapseSearchInput: (collapseSearchInput: boolean): SetCollapseSearchInputAction => (
         dispatch(setCollapseSearchInput(collapseSearchInput))
     ),
-    searchQueried: (searchTerm: string, searchLocation: string): SearchQueriedAction => (
-        dispatch(searchQueried(searchTerm, searchLocation))
+    searchExecuted: (searchTerm: string, searchLocation: string): SearchExecutedAction => (
+        dispatch(searchExecuted(searchTerm, searchLocation))
     ),
     openHeaderMenu: (): OpenHeaderMenuAction => (
         dispatch(openHeaderMenu())
