@@ -22,6 +22,7 @@ export const toHumanServiceData = (data: SearchServiceData, bookmarkedServicesId
     email: data.organization.email,
     organizationName: data.organization.name,
     bookmarked: R.contains(data.service_id, bookmarkedServicesIds),
+    lastVerifiedDate: data.last_verified_date,
 });
 
 const validateLatLong = (latitude: number | string, longitude: number | string): LatLong | undefined => {

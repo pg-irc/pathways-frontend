@@ -279,7 +279,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 }
             />
             <DividerComponent />
-            <ContentVerificationComponent verificationDate={'N/A'} />
+            <ContentVerificationComponent verificationDate={props.service.lastVerifiedDate} />
         </>
     );
  };

@@ -38,6 +38,7 @@ interface ValidatedServiceJSON {
     readonly organization_url: string;
     readonly organization_email: string;
     readonly organization_name: string;
+    readonly last_verified_date: string;
 }
 
 interface ValidatedLocationJSON {
@@ -74,6 +75,7 @@ const buildHumanService = R.curry((bookmarkedServiceIds: ReadonlyArray<Id>, data
             website: data.service.organization_url,
             email: data.service.organization_email,
             organizationName: data.service.organization_name,
+            lastVerifiedDate: data.service.last_verified_date,
             bookmarked: R.contains(data.service.id, bookmarkedServiceIds),
         };
 });

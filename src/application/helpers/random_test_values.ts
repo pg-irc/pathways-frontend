@@ -18,6 +18,11 @@ export const aBoolean = (): boolean => {
     return Math.random() > 0.5;
 };
 
+export const aDate = (): Date => {
+    const now = Date.now();
+    return new Date(now - Math.floor(Math.random() * 1e10));
+};
+
 export function anError(): Error {
     return new Error(aString());
 }
