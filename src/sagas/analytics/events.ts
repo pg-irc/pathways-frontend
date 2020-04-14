@@ -13,13 +13,13 @@ export const sendScreenHit = (action: RouteChangedAction): void => {
 
 export const sendAnswerChosenEvent = (answerId: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Questionnaire', 'AnswerChosen', answerId);
+    const event = createEvent('Questionnaire', 'AnswerChosen', [answerId]);
     analytics.hit(event);
 };
 
 export const sendBookmarkTopicEvent = (topicId: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Bookmarks', 'TopicBookmarkAdded', topicId);
+    const event = createEvent('Bookmarks', 'TopicBookmarkAdded', [topicId]);
     analytics.hit(event);
 };
 
@@ -43,13 +43,13 @@ export const sendOpenService = (service: HumanServiceData): void => {
 
 export const sendExpandDetail = (contentId: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Detail', 'DetailExpanded', contentId);
+    const event = createEvent('Detail', 'DetailExpanded', [contentId]);
     analytics.hit(event);
 };
 
 export const sendCollapseDetail = (contentId: string): void => {
     const analytics = createAnalytics();
-    const event = createEvent('Detail', 'DetailCollapsed', contentId);
+    const event = createEvent('Detail', 'DetailCollapsed', [contentId]);
     analytics.hit(event);
 };
 
@@ -57,7 +57,7 @@ export const sendLinkPressedEvent = (currentPath: string, linkContext: string, l
     : void => {
     const additionalParameters = createGoogleAnalyticsScreenNameParameter(currentPath);
     const analytics = createAnalytics(additionalParameters);
-    const event = createEvent('Links', `LinkPressed:${linkValue}`, `${linkContext}:${linkType}`);
+    const event = createEvent('Links', `LinkPressed:${linkValue}`, [`${linkContext}:${linkType}`]);
     analytics.hit(event);
 };
 
@@ -91,7 +91,7 @@ const createScreenHit = (path: string): any => (
 );
 
 // tslint:disable-next-line:no-any
-const createEvent = (category: string, action: string, label?: string | readonly string[], value?: number): any => (
+const createEvent = (category: string, action: string, label?: readonly string[], value?: number): any => (
     new Event(category, action, label, value)
 );
 
