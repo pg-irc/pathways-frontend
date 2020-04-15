@@ -12,7 +12,7 @@ describe('Adapting server service object to client service object', () => {
             organization_url: aString(),
             organization_email: aString(),
             organization_name: aString(),
-            last_verified_date: aDate().toISOString(),
+            last_verified_date: aDate(),
         },
         location: {
             latitude: aNumber(),

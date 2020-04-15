@@ -15,7 +15,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
-                last_verified_date: aDate().toISOString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -48,7 +48,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
-                last_verified_date: aDate().toISOString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -86,7 +86,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
-                last_verified_date: aDate().toISOString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -116,7 +116,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
-                last_verified_date: aDate().toISOString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -148,7 +148,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
-                last_verified_date: aDate().toISOString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -177,7 +177,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
-                last_verified_date: aDate().toISOString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -209,7 +209,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: serviceId,
                 service_description: aString(),
-                last_verified_date: aDate().toISOString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -240,7 +240,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
-                last_verified_date: aDate().toISOString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
