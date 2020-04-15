@@ -57,7 +57,7 @@ const ONBOARDING_DATA: ReadonlyArray<OnboardingData> = [
     {
       id: 2,
       image: bookmarkOnBoardingImage,
-      title: t`Bookmark the topics that you find helpful for future use.`,
+      title: t`Bookmark the topics and services that you find helpful for future use.`,
     },
     {
       id: 3,
