@@ -1,12 +1,12 @@
 // tslint:disable: no-class readonly-keyword no-this no-expression-statement
-import { FeedbackScreen, FeedbackModal, UserInformation, ServiceFeedback,
+import { FeedbackScreen, FeedbackModal, UserInformation, Feedback,
     FeedbackStore } from '../../feedback/types';
 
 export class FeedbackStoreBuilder {
     screen: FeedbackScreen = FeedbackScreen.ServiceDetail;
     modal: FeedbackModal = FeedbackModal.None;
-    userInformation: UserInformation =  { email: '', name: '', organizationName: '', jobTitle: '' };
-    feedback: ServiceFeedback | undefined = undefined;
+    userInformation: UserInformation =  { email: '', name: '', organizationName: '', jobTitle: '', isEmployee: false };
+    feedback: Feedback | undefined = undefined;
 
     withScreen(screen: FeedbackScreen): FeedbackStoreBuilder {
         this.screen = screen;
@@ -23,7 +23,7 @@ export class FeedbackStoreBuilder {
         return this;
     }
 
-    withFeedbackData(feedback: ServiceFeedback): FeedbackStoreBuilder {
+    withFeedbackData(feedback: Feedback): FeedbackStoreBuilder {
         this.feedback = feedback;
         return this;
     }

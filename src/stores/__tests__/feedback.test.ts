@@ -46,7 +46,6 @@ describe('feedback reducer', () => {
 
     const someServiceFeedbackData = (): ServiceFeedback => ({
         type: 'service_feedback',
-        bc211Id: aFeedbackField(),
         name: aFeedbackField(),
         organization: aFeedbackField(),
         description: aFeedbackField(),
@@ -149,6 +148,7 @@ describe('feedback reducer', () => {
                 name: aString(),
                 organizationName: aString(),
                 jobTitle: aString(),
+                isEmployee: aBoolean(),
             };
             const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ReceiveUpdatesModal).build();
             const action = finishFeedback(userData);

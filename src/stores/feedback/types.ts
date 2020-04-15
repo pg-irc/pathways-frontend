@@ -2,7 +2,7 @@ export interface FeedbackStore {
     readonly screen: FeedbackScreen;
     readonly modal: FeedbackModal;
     readonly userInformation: undefined | UserInformation;
-    readonly feedback: undefined | ServiceFeedback | RemoveServiceFeedback | OtherFeedback;
+    readonly feedback: undefined | Feedback;
 }
 
 export enum FeedbackScreen {
@@ -24,6 +24,7 @@ export interface UserInformation {
     readonly name: string;
     readonly organizationName: string;
     readonly jobTitle: string;
+    readonly isEmployee: boolean;
 }
 
 export interface FeedbackField {
@@ -33,7 +34,6 @@ export interface FeedbackField {
 
 export interface ServiceFeedback {
     readonly type: 'service_feedback';
-    readonly bc211Id: FeedbackField;
     readonly name: FeedbackField;
     readonly organization: FeedbackField;
     readonly description: FeedbackField;
@@ -60,3 +60,5 @@ export interface RemoveServiceFeedback {
     readonly type: 'remove_service';
     readonly reason: string;
 }
+
+export type Feedback = ServiceFeedback | OtherFeedback | RemoveServiceFeedback;
