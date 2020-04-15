@@ -10,7 +10,7 @@ import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 import { HumanServiceData } from '../../validation/services/types';
-import { SaveServiceAction } from '../../stores/services/actions';
+import { SaveServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { goToRouteWithParameter, Routes, RouterProps } from '../../application/routing';
 import { Id } from '../../stores/services';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
@@ -32,6 +32,7 @@ export interface SearchResultsProps {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly history: History;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly searchTerm: string;
     readonly searchLocation: string;
@@ -68,7 +69,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => (
     <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
         {renderLoadingScreen(props.isLoading)}
         <FlatList
-            style={{ backgroundColor: colors.lightGrey}}
+            style={{ backgroundColor: colors.lightGrey }}
             data={props.searchResults}
             keyExtractor={keyExtractor}
             renderItem={renderSearchHit(props)}
@@ -88,6 +89,7 @@ const renderSearchHit = R.curry((props: Props, itemInfo: ListRenderItemInfo<Sear
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
         props.saveService(service);
+        props.openServiceDetail(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };
 
@@ -174,13 +176,13 @@ const ListHeaderComponent = (): JSX.Element => {
             <Trans>
                 Search is currently in beta and only available in English. For support in other languages, please
                 </Trans> <Text onPress={(): void => openURL('tel: 211')} style={textStyles.messageLink}>
-            <Trans>call BC211.</Trans></Text>
+                <Trans>call BC211.</Trans></Text>
         </>
     );
     const linkText = <Trans>Give feedback</Trans>;
     const onLinkPress = (): void => openURL(buildUrl(
         'mailto:info@arrivaladvisor.ca',
-        { queryParams: { subject: 'Arrival Advisor - Feedback on Search', body: `Version number: ${VERSION}.`} },
+        { queryParams: { subject: 'Arrival Advisor - Feedback on Search', body: `Version number: ${VERSION}.` } },
     ));
     return (
         <MessageComponent

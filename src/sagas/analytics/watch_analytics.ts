@@ -1,21 +1,25 @@
 // tslint:disable:no-expression-statement no-any
 
 import * as constants from '../../application/constants';
-import { AnalyticsAsync, AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { AnalyticsAsync, AnalyticsLinkPressedAction, SearchExecutedAction } from '../../stores/analytics';
 import { ChooseAnswerAction } from '../../stores/questionnaire';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { selectDisableAnalytics } from '../../selectors/user_profile/select_disable_analytics';
 import { ForkEffect, takeLatest, call, CallEffect, PutEffect, put, select, SelectEffect } from 'redux-saga/effects';
 import { BookmarkTopicAction, ExpandDetailAction, CollapseDetailAction } from '../../stores/topics';
 import * as events from './events';
+import { BookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 
 export type WatchedAction =
     RouteChangedAction |
     ChooseAnswerAction |
     BookmarkTopicAction |
+    BookmarkServiceAction |
+    OpenServiceAction |
     ExpandDetailAction |
     CollapseDetailAction |
-    AnalyticsLinkPressedAction;
+    AnalyticsLinkPressedAction |
+    SearchExecutedAction;
 
 export function* watchAnalytics(): IterableIterator<ForkEffect> {
     yield takeLatest(
@@ -25,7 +29,10 @@ export function* watchAnalytics(): IterableIterator<ForkEffect> {
             constants.EXPAND_DETAIL,
             constants.COLLAPSE_DETAIL,
             constants.BOOKMARK_TOPIC,
+            constants.BOOKMARK_SERVICE,
+            constants.OPEN_SERVICE_DETAIL,
             constants.ANALYTICS_LINK_PRESSED,
+            constants.SEARCH_EXECUTED,
         ],
         sendAnalyticsData);
 }
@@ -57,7 +64,13 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
             events.sendAnswerChosenEvent(action.payload.answerId);
             break;
         case constants.BOOKMARK_TOPIC:
-            events.sendBookmarkAddedEvent(action.payload.topicId);
+            events.sendBookmarkTopicEvent(action.payload.topicId);
+            break;
+        case constants.BOOKMARK_SERVICE:
+            events.sendBookmarkServiceEvent(action.payload.service);
+            break;
+        case constants.OPEN_SERVICE_DETAIL:
+            events.sendOpenService(action.payload.service);
             break;
         case constants.EXPAND_DETAIL:
             events.sendExpandDetail(action.payload.contentId);
@@ -67,6 +80,9 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
             break;
         case constants.ANALYTICS_LINK_PRESSED:
             events.sendLinkPressedEvent(action.payload.currentPath, action.payload.linkContext, action.payload.linkType, action.payload.linkValue);
+            break;
+        case constants.SEARCH_EXECUTED:
+            events.sendSearchExecutedEvent(action.payload.searchTerm, action.payload.searchLocation);
             break;
         default:
             break;

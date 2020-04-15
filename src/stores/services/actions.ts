@@ -16,8 +16,9 @@ export type BuildServicesSuccessAction = Readonly<ReturnType<typeof buildService
 export type BuildServicesErrorAction = Readonly<ReturnType<typeof buildServicesError>>;
 
 export type SaveServiceAction = Readonly<ReturnType<typeof saveService>>;
-export type BookmarkServiceAction = Readonly<ReturnType<typeof bookmarkService>>;
+export type OpenServiceAction = Readonly<ReturnType<typeof openServiceDetail>>;
 
+export type BookmarkServiceAction = Readonly<ReturnType<typeof bookmarkService>>;
 export type UnbookmarkServiceAction = Readonly<ReturnType<typeof unbookmarkService>>;
 
 export type ServicesAction =
@@ -27,6 +28,7 @@ export type ServicesAction =
     SaveServiceAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
+    OpenServiceAction |
     DataPersistence.LoadRequestAction |
     DataPersistence.LoadSuccessAction |
     DataPersistence.LoadFailureAction |
@@ -62,4 +64,9 @@ export const bookmarkService = (service: HumanServiceData) => (
 // tslint:disable-next-line: typedef
 export const unbookmarkService = (service: HumanServiceData) => (
     helpers.makeAction(constants.UNBOOKMARK_SERVICE, { service })
+);
+
+// tslint:disable-next-line:typedef
+export const openServiceDetail = (service: HumanServiceData) => (
+    helpers.makeAction(constants.OPEN_SERVICE_DETAIL, { service })
 );

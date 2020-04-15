@@ -8,7 +8,7 @@ import { View, Text } from 'native-base';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/types';
-import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
+import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { textStyles, colors } from '../../application/styles';
 import { isSelectorErrorServicesForTopic } from '../../selectors/services/is_selector_error_services_for_topic';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
@@ -42,6 +42,7 @@ export interface ServiceListActions {
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;

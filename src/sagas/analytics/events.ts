@@ -2,6 +2,7 @@
 import { Analytics as ExpoAnalytics, ScreenHit, Event } from 'expo-analytics';
 import { GOOGLE_ANALYTICS_TRACKING_ID, DEBUG_GOOGLE_ANALYTICS } from 'react-native-dotenv';
 import { RouteChangedAction } from '../../stores/router_actions';
+import { HumanServiceData } from '../../validation/services/types';
 
 export const sendScreenHit = (action: RouteChangedAction): void => {
     const additionalParameters = createGoogleAnalyticsLanguageParameter(action);
@@ -11,46 +12,61 @@ export const sendScreenHit = (action: RouteChangedAction): void => {
 };
 
 export const sendAnswerChosenEvent = (answerId: string): void => {
-    const analytics = createAnalytics();
-    const event = createEvent('Questionnaire', 'AnswerChosen', answerId);
-    analytics.hit(event);
+    const event = createEvent('Questionnaire', 'AnswerChosen', [answerId]);
+    analyticsHit(event);
 };
 
-export const sendBookmarkAddedEvent = (topicId: string): void => {
-    const analytics = createAnalytics();
-    const event = createEvent('Bookmarks', 'BookmarkAdded', topicId);
-    analytics.hit(event);
+export const sendBookmarkTopicEvent = (topicId: string): void => {
+    const event = createEvent('Bookmarks', 'TopicBookmarkAdded', [topicId]);
+    analyticsHit(event);
+};
+
+export const sendBookmarkServiceEvent = (service: HumanServiceData): void => {
+    const event = createEvent('Bookmarks', 'ServiceBookmarkAdded', [service.id, service.name, service.organizationName]);
+    analyticsHit(event);
+};
+
+export const sendSearchExecutedEvent = (searchTerm: string, searchLocation: string): void => {
+    const event = createEvent('Search', 'SearchExecuted', [searchTerm, searchLocation]);
+    analyticsHit(event);
+};
+
+export const sendOpenService = (service: HumanServiceData): void => {
+    const event = createEvent('Services', 'ServiceOpened', [service.id, service.name, service.organizationName]);
+    analyticsHit(event);
 };
 
 export const sendExpandDetail = (contentId: string): void => {
-    const analytics = createAnalytics();
-    const event = createEvent('Detail', 'DetailExpanded', contentId);
-    analytics.hit(event);
+    const event = createEvent('Detail', 'DetailExpanded', [contentId]);
+    analyticsHit(event);
 };
 
 export const sendCollapseDetail = (contentId: string): void => {
-    const analytics = createAnalytics();
-    const event = createEvent('Detail', 'DetailCollapsed', contentId);
-    analytics.hit(event);
+    const event = createEvent('Detail', 'DetailCollapsed', [contentId]);
+    analyticsHit(event);
 };
 
 export const sendLinkPressedEvent = (currentPath: string, linkContext: string, linkType: string, linkValue: string)
     : void => {
     const additionalParameters = createGoogleAnalyticsScreenNameParameter(currentPath);
     const analytics = createAnalytics(additionalParameters);
-    const event = createEvent('Links', `LinkPressed:${linkValue}`, `${linkContext}:${linkType}`);
+    const event = createEvent('Links', `LinkPressed:${linkValue}`, [`${linkContext}:${linkType}`]);
     analytics.hit(event);
 };
 
 export const sendServicesCountEvent = (count: number): void => {
-    const analytics = createAnalytics();
     const event = createEvent('MemoryReport', `ServicesCount: ${count}`);
-    analytics.hit(event);
+    analyticsHit(event);
 };
 
 export const buildAnalyticsLinkContext = (model: string, title: string): string => (
     `${model} - ${title}`
 );
+
+const analyticsHit = (event: Event): void => {
+    const analytics = createAnalytics();
+    analytics.hit(event);
+};
 
 // tslint:disable-next-line:no-any
 const createAnalytics = (additionalParameters?: object): any => {
@@ -72,7 +88,7 @@ const createScreenHit = (path: string): any => (
 );
 
 // tslint:disable-next-line:no-any
-const createEvent = (category: string, action: string, label?: string, value?: number): any => (
+const createEvent = (category: string, action: string, label?: readonly string[], value?: number): any => (
     new Event(category, action, label, value)
 );
 

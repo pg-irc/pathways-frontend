@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { SearchComponentProps, SearchComponent, SearchComponentActions } from './search_component';
-import { saveService, SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
+import * as actions from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { disableAnalytics, DisableAnalyticsAction } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
@@ -11,6 +11,7 @@ import {
     saveSearchLocation, saveSearchTerm, setCollapseSearchInput, SaveSearchResultsAction, saveSearchResults,
     SaveSearchLatLongAction, saveSearchLatLong, SaveSearchPageAction, saveSearchPage, SaveNumberOfSearchPagesAction, saveNumberOfSearchPages,
 } from '../../stores/search';
+import { SearchExecutedAction, searchExecuted } from '../../stores/analytics';
 import { selectSearchTerm } from '../../selectors/search/select_search_term';
 import { selectSearchLocation } from '../../selectors/search/select_search_location';
 import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
@@ -34,10 +35,11 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
 });
 
 type Actions =
-    SaveServiceAction |
+    actions.SaveServiceAction |
+    actions.OpenServiceAction |
     DisableAnalyticsAction |
-    BookmarkServiceAction |
-    UnbookmarkServiceAction |
+    actions.BookmarkServiceAction |
+    actions.UnbookmarkServiceAction |
     SaveSearchTermAction |
     SaveSearchLocationAction |
     SaveSearchLatLongAction |
@@ -45,20 +47,24 @@ type Actions =
     SaveNumberOfSearchPagesAction |
     SaveSearchResultsAction |
     SetCollapseSearchInputAction |
+    SearchExecutedAction |
     OpenHeaderMenuAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
-    saveService: (service: HumanServiceData): SaveServiceAction => (
-        dispatch(saveService(service))
+    saveService: (service: HumanServiceData): actions.SaveServiceAction => (
+        dispatch(actions.saveService(service))
+    ),
+    openServiceDetail: (service: HumanServiceData): actions.OpenServiceAction => (
+        dispatch(actions.openServiceDetail(service))
     ),
     disableAnalytics: (disable: boolean): DisableAnalyticsAction => (
         dispatch(disableAnalytics(disable))
     ),
-    bookmarkService: (service: HumanServiceData): BookmarkServiceAction => (
-        dispatch(bookmarkService(service))
+    bookmarkService: (service: HumanServiceData): actions.BookmarkServiceAction => (
+        dispatch(actions.bookmarkService(service))
     ),
-    unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => (
-        dispatch(unbookmarkService(service))
+    unbookmarkService: (service: HumanServiceData): actions.UnbookmarkServiceAction => (
+        dispatch(actions.unbookmarkService(service))
     ),
     saveSearchTerm: (searchTerm: string): SaveSearchTermAction => (
         dispatch(saveSearchTerm(searchTerm))
@@ -80,6 +86,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     ),
     setCollapseSearchInput: (collapseSearchInput: boolean): SetCollapseSearchInputAction => (
         dispatch(setCollapseSearchInput(collapseSearchInput))
+    ),
+    searchExecuted: (searchTerm: string, searchLocation: string): SearchExecutedAction => (
+        dispatch(searchExecuted(searchTerm, searchLocation))
     ),
     openHeaderMenu: (): OpenHeaderMenuAction => (
         dispatch(openHeaderMenu())
