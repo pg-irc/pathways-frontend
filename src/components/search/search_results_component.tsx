@@ -1,11 +1,10 @@
 // tslint:disable:no-expression-statement
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { colors, values, textStyles } from '../../application/styles';
 import { SearchServiceData } from '../../validation/search/types';
-import { useTraceUpdate } from '../../application/helpers/use_trace_update';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
@@ -53,8 +52,6 @@ export interface SearchResultsActions {
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 
 export const SearchResultsComponent = (props: Props): JSX.Element => {
-    useTraceUpdate('SearchResultsComponent', props);
-
     if (searchTermIsEmpty(props)) {
         return renderEmptyComponent();
     }
@@ -65,20 +62,30 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     return renderComponentWithResults(props);
 };
 
-const renderComponentWithResults = (props: Props): JSX.Element => (
-    <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
-        {renderLoadingScreen(props.isLoading)}
-        <FlatList
-            style={{ backgroundColor: colors.lightGrey }}
-            data={props.searchResults}
-            keyExtractor={keyExtractor}
-            renderItem={renderSearchHit(props)}
-            ItemSeparatorComponent={SearchListSeparator}
-            ListHeaderComponent={<ListHeaderComponent />}
-            ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
-        />
-    </View>
-);
+const renderComponentWithResults = (props: Props): JSX.Element => {
+    const flatListRef = useRef<FlatList<SearchServiceData>>(undefined);
+    useEffect((): void => {
+        if (props.searchTerm) {
+            flatListRef.current.scrollToOffset({animated: false, offset: 0});
+        }
+    }, [props.searchTerm, props.searchLocation]);
+
+    return (
+        <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
+            {renderLoadingScreen(props.isLoading)}
+            <FlatList
+                ref={flatListRef}
+                style={{ backgroundColor: colors.lightGrey }}
+                data={props.searchResults}
+                keyExtractor={keyExtractor}
+                renderItem={renderSearchHit(props)}
+                ItemSeparatorComponent={SearchListSeparator}
+                ListHeaderComponent={<ListHeaderComponent />}
+                ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
+            />
+        </View>
+    );
+};
 
 const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
