@@ -37,6 +37,7 @@ export const fetchSearchResultsFromQuery = async (
                 page: searchPage,
                 hitsPerPage: '20',
                 aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
+                aroundPrecision: latLong ? 5000 : 0,
             }),
         });
 
