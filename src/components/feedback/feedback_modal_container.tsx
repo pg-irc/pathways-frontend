@@ -6,7 +6,7 @@ import { TouchableOpacity, Text, View } from 'react-native';
 import { useHistory } from 'react-router-native';
 
 import { textStyles, colors } from '../../application/styles';
-import { Routes, goToRouteWithParameter, NonSerializedFeedbackState } from '../../application/routing';
+import { Routes, goToRouteWithParameter } from '../../application/routing';
 import { FeedbackReceiveUpdatesModal } from '../feedback/feedback_receive_updates_modal';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -20,7 +20,6 @@ interface FeedbackModalContainerProps {
     readonly feedbackEnabled: boolean;
     readonly onSuggestAnUpdatePress: () => void;
     readonly serviceId: string;
-    readonly query: NonSerializedFeedbackState;
     readonly sendFeedback: SendFeedbackPromise['sendFeedback'];
     readonly isSendingFeedback: SendFeedbackPromise['isSendingFeedback'];
     readonly setFeedback: Dispatch<SetStateAction<ServiceFeedback>>;
@@ -31,7 +30,6 @@ export const FeedbackModalContainer = ({
     feedbackEnabled,
     onSuggestAnUpdatePress: onSuggestAnUpdate,
     serviceId,
-    query,
     sendFeedback,
     isSendingFeedback,
     setFeedback,
@@ -40,24 +38,25 @@ export const FeedbackModalContainer = ({
 
     const history = useHistory();
 
+    // TODO Implement.
     const [optionsModalVisible, setOptionsModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(query.isOptionsModalVisible === 'visible');
+        = useState<boolean>(false);
 
+    // TODO Implement.
     const [receiveUpdatesModalVisible, setReceiveUpdatesModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(query.isReceiveUpdatesModalVisible === 'visible');
+        = useState<boolean>(false);
 
+    // TODO Implement.
     const goToFeedbackOtherScreen = goToRouteWithParameter(
         Routes.Feedback,
         serviceId,
         history,
-        { otherFeedbackMode: 'OTHER' },
     );
 
     const goToFeedbackRemoveServiceScreen = goToRouteWithParameter(
         Routes.Feedback,
         serviceId,
         history,
-        { otherFeedbackMode: 'REMOVE_SERVICE' },
     );
 
     const onOtherPress = (): void => {

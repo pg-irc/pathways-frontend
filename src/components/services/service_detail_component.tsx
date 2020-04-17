@@ -32,9 +32,8 @@ import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { renderHeader } from '../main/render_header';
 import { Id } from '../../stores/services';
 import { getEmptyFeedback, useSendFeedback, SendFeedbackPromise } from './use_send_feedback';
-import { useFeedbackQuery } from '../../hooks/use_feedback_query';
-import { isAndroid } from '../../application/helpers/is_android';
 import { ServiceFeedback, FeedbackField } from '../../stores/feedback/types';
+import { isAndroid } from '../../application/helpers/is_android';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -52,11 +51,10 @@ export interface ServiceDetailActions {
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
-    const defaultFeedback = getDefaultFeedback(props.service.id);
+    const defaultFeedback = getEmptyFeedback();
     const clearFeedback = (): void => setFeedback(defaultFeedback);
-    const query = useFeedbackQuery();
     const [feedback, setFeedback]: readonly[ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] =
-        useState<ServiceFeedback>(query.feedback || defaultFeedback);
+        useState<ServiceFeedback>(defaultFeedback);
     const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>] =
         useState<boolean>(false);
     const { isSendingFeedback, sendFeedback }: SendFeedbackPromise =
@@ -128,7 +126,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         feedbackEnabled={feedbackEnabled}
                         onSuggestAnUpdatePress={onFeedbackButtonPress}
                         serviceId={props.service.id}
-                        query={query}
                         sendFeedback={sendFeedback}
                         isSendingFeedback={isSendingFeedback}
                         setFeedback={setFeedback}
@@ -139,14 +136,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         </View>
     );
 };
-
-const getDefaultFeedback = (serviceId: string): ServiceFeedback => ({
-    ...getEmptyFeedback(),
-    bc211Id: {
-        value: serviceId,
-        shouldSend: true,
-    },
-});
 
 interface NameProps {
     readonly name: string;

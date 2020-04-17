@@ -21,14 +21,11 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { useHistory, useParams } from 'react-router-native';
 
 import { colors, textStyles } from '../../application/styles';
-import { Routes, replaceRouteWithParameter, FeedbackState, OtherFeedbackMode } from '../../application/routing';
-import { useFeedbackQuery } from '../../hooks/use_feedback_query';
+import { Routes, goToRouteWithParameter } from '../../application/routing';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import { otherRemoveServiceStyles as styles } from './styles';
-import { getEmptyFeedback } from '../services/use_send_feedback';
-import { ServiceFeedback, FeedbackField } from '../../stores/feedback/types';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
@@ -75,15 +72,6 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
     },
 };
 
-const gotoServiceDetail = (serviceId: string, history: History, feedbackState: FeedbackState): () => void => (
-    replaceRouteWithParameter(
-        Routes.ServiceDetail,
-        serviceId,
-        history,
-        feedbackState,
-    )
-);
-
 const useFeedbackInputControl = (): readonly [string, (value: string) => void] => {
     const [input, setInput]: readonly [string, Dispatch<SetStateAction<string>>]
         = useState<string>('');
@@ -94,16 +82,18 @@ const useFeedbackInputControl = (): readonly [string, (value: string) => void] =
 };
 
 const HeaderComponent = ({ headerLabel, serviceId, history }: HeaderComponentProps): JSX.Element => {
-    const goBackShowModal = gotoServiceDetail(
+    // TODO Implement.
+    const goBackShowModal = goToRouteWithParameter(
+        Routes.Feedback,
         serviceId,
         history,
-        { isOptionsModalVisible: 'hidden' },
     );
 
-    const goBackHideModal = gotoServiceDetail(
+    // TODO Implement.
+    const goBackHideModal = goToRouteWithParameter(
+        Routes.Feedback,
         serviceId,
         history,
-        { isOptionsModalVisible: 'visible' },
     );
 
     const onBack = (): void => goBackShowModal();
@@ -187,22 +177,7 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
     );
 };
 
-const getFeedbackJSON = (mode: OtherFeedbackMode, value: string, serviceId: string): string => (
-    JSON.stringify({ ...getDefaultFeedback(serviceId), ...getFeedbackFieldForMode(mode, value) })
-);
-
-const getDefaultFeedback = (serviceId: string): ServiceFeedback => ({
-    ...getEmptyFeedback(),
-    bc211Id: { value: serviceId, shouldSend: true },
-});
-
-const getFeedbackFieldForMode = (mode: OtherFeedbackMode, value: string): Record<string, FeedbackField> => (
-    mode === 'OTHER' ? { other: { shouldSend: true , value } } : { removalReason: { shouldSend: true , value } }
-);
-
 export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
-    const query = useFeedbackQuery();
-
     const params = useParams<RouteParams>();
 
     const serviceId = params.serviceId;
@@ -212,13 +187,11 @@ export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
 
     const history = useHistory();
 
-    const onSubmit = gotoServiceDetail(serviceId, history, {
-        isReceiveUpdatesModalVisible: 'visible',
-        serializedFeedback: getFeedbackJSON(query.otherFeedbackMode, input, serviceId),
-    });
+    // TODO Implement.
+    const onSubmit = (): void => undefined;
 
-    // TODO: Formulate a more robust typed query param getter
-    const content: SuggestionContent = SUGGESTION_CONTENT[query.otherFeedbackMode];
+    // TODO Implement.
+    const content: SuggestionContent = SUGGESTION_CONTENT.OTHER;
 
     return (
         <Container>
