@@ -13,7 +13,7 @@ import { selectSearchLocation } from '../../selectors/search/select_search_locat
 import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
 import { selectSearchPage } from '../../selectors/search/select_search_page';
 import { selectNumberOfSearchPages } from '../../selectors/search/select_number_of_search_pages';
-import { selectSearchIndex } from '../../selectors/search/select_search_index';
+import { selectSearchOffset } from '../../selectors/search/select_search_offset';
 import { selectIsInputCollapsed } from '../../selectors/search/select_is_input_collapsed';
 import { selectSearchResults } from '../../selectors/search/select_search_results';
 import { SearchServiceData } from '../../validation/search/types';
@@ -26,7 +26,7 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     searchLocation: selectSearchLocation(store),
     searchPage: selectSearchPage(store),
     numberOfSearchPages: selectNumberOfSearchPages(store),
-    searchIndex: selectSearchIndex(store),
+    searchOffset: selectSearchOffset(store),
     searchResults: selectSearchResults(store),
     searchLatLong: selectSearchLatLong(store),
     collapseSearchInput: selectIsInputCollapsed(store),
@@ -44,7 +44,7 @@ type Actions =
     searchActions.SaveSearchPageAction |
     searchActions.SaveNumberOfSearchPagesAction |
     searchActions.SaveSearchResultsAction |
-    searchActions.SaveSearchIndexAction |
+    searchActions.SaveSearchOffsetAction |
     searchActions.SetCollapseSearchInputAction |
     SearchExecutedAction |
     OpenHeaderMenuAction;
@@ -80,8 +80,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     saveNumberOfSearchPages: (numberOfSearchPages: number): searchActions.SaveNumberOfSearchPagesAction => (
         dispatch(searchActions.saveNumberOfSearchPages(numberOfSearchPages))
     ),
-    saveSearchIndex: (searchIndex: number): searchActions.SaveSearchIndexAction => (
-        dispatch(searchActions.saveSearchIndex(searchIndex))
+    saveSearchOffset: (searchOffset: number): searchActions.SaveSearchOffsetAction => (
+        dispatch(searchActions.saveSearchOffset(searchOffset))
     ),
     saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>): searchActions.SaveSearchResultsAction => (
         dispatch(searchActions.saveSearchResults(searchResults))

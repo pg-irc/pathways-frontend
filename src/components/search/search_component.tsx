@@ -31,7 +31,7 @@ export interface SearchComponentProps {
     readonly searchLatLong: LatLong;
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
-    readonly searchIndex: number;
+    readonly searchOffset: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
 }
@@ -47,7 +47,7 @@ export interface SearchComponentActions {
     readonly saveSearchLatLong: (searchLatLong: LatLong) => actions.SaveSearchLatLongAction;
     readonly saveSearchPage: (searchPage: number) => actions.SaveSearchPageAction;
     readonly saveNumberOfSearchPages: (numberOfSearchPages: number) => actions.SaveNumberOfSearchPagesAction;
-    readonly saveSearchIndex: (index: number) => actions.SaveSearchIndexAction;
+    readonly saveSearchOffset: (index: number) => actions.SaveSearchOffsetAction;
     readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => actions.SaveSearchResultsAction;
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => actions.SetCollapseSearchInputAction;
     readonly searchExecuted: (searchTerm: string, searchLocation: string) => SearchExecutedAction;
@@ -62,7 +62,7 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
-    const [scrollIndex, setScrollIndex]: readonly [number, (n: number) => void] = useState(props.searchIndex);
+    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
@@ -96,7 +96,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     };
 
     // tslint:disable-next-line: max-line-length
-    const searchResultsProps = { ...props, isLoading, onlineStatus, scrollIndex, setScrollIndex, onSearchRequest, onLoadMore };
+    const searchResultsProps = { ...props, isLoading, onlineStatus, scrollOffset, setScrollOffset, onSearchRequest, onLoadMore };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <Header

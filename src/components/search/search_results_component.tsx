@@ -39,16 +39,16 @@ export interface SearchResultsProps {
     readonly isLoading: boolean;
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
-    readonly scrollIndex: number;
-    readonly searchIndex: number;
+    readonly scrollOffset: number;
+    readonly searchOffset: number;
     readonly onlineStatus: OnlineStatus;
 }
 
 export interface SearchResultsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly setScrollIndex: (index: number) => void;
-    readonly saveSearchIndex: (index: number) => void;
+    readonly setScrollOffset: (index: number) => void;
+    readonly saveSearchOffset: (index: number) => void;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
 }
@@ -75,16 +75,16 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
     }, [props.searchTerm, props.searchLocation]);
     useEffect((): void => {
         if (props.searchResults.length > 0) {
-            flatListRef.current.scrollToOffset({ animated: false, offset: props.searchIndex });
+            flatListRef.current.scrollToOffset({ animated: false, offset: props.searchOffset });
         }
-    }, [props.searchIndex]);
+    }, [props.searchOffset]);
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
             {renderLoadingScreen(props.isLoading)}
             <FlatList
                 ref={flatListRef}
-                onScroll={(e: any): void => props.setScrollIndex(e.nativeEvent.contentOffset.y)}
-                initialNumToRender={props.searchIndex ? props.searchResults.length : 20}
+                onScroll={(e: any): void => props.setScrollOffset(e.nativeEvent.contentOffset.y)}
+                initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={props.searchResults}
                 keyExtractor={keyExtractor}
@@ -106,7 +106,7 @@ const renderSearchHit = R.curry((props: Props, itemInfo: ListRenderItemInfo<Sear
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
         props.saveService(service);
-        props.saveSearchIndex(props.scrollIndex);
+        props.saveSearchOffset(props.scrollOffset);
         props.openServiceDetail(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };
