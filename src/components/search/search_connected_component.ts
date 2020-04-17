@@ -2,21 +2,18 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { SearchComponentProps, SearchComponent, SearchComponentActions } from './search_component';
-import * as actions from '../../stores/services/actions';
+import * as serviceActions from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { disableAnalytics, DisableAnalyticsAction } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
-import {
-    SaveSearchTermAction, SaveSearchLocationAction, SetCollapseSearchInputAction,
-    saveSearchLocation, saveSearchTerm, setCollapseSearchInput, SaveSearchResultsAction, saveSearchResults,
-    SaveSearchLatLongAction, saveSearchLatLong, SaveSearchPageAction, saveSearchPage, SaveNumberOfSearchPagesAction, saveNumberOfSearchPages,
-} from '../../stores/search';
+import * as searchActions from '../../stores/search';
 import { SearchExecutedAction, searchExecuted } from '../../stores/analytics';
 import { selectSearchTerm } from '../../selectors/search/select_search_term';
 import { selectSearchLocation } from '../../selectors/search/select_search_location';
 import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
 import { selectSearchPage } from '../../selectors/search/select_search_page';
 import { selectNumberOfSearchPages } from '../../selectors/search/select_number_of_search_pages';
+import { selectSearchIndex } from '../../selectors/search/select_search_index';
 import { selectIsInputCollapsed } from '../../selectors/search/select_is_input_collapsed';
 import { selectSearchResults } from '../../selectors/search/select_search_results';
 import { SearchServiceData } from '../../validation/search/types';
@@ -29,63 +26,68 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     searchLocation: selectSearchLocation(store),
     searchPage: selectSearchPage(store),
     numberOfSearchPages: selectNumberOfSearchPages(store),
+    searchIndex: selectSearchIndex(store),
     searchResults: selectSearchResults(store),
     searchLatLong: selectSearchLatLong(store),
     collapseSearchInput: selectIsInputCollapsed(store),
 });
 
 type Actions =
-    actions.SaveServiceAction |
-    actions.OpenServiceAction |
+    serviceActions.SaveServiceAction |
+    serviceActions.OpenServiceAction |
     DisableAnalyticsAction |
-    actions.BookmarkServiceAction |
-    actions.UnbookmarkServiceAction |
-    SaveSearchTermAction |
-    SaveSearchLocationAction |
-    SaveSearchLatLongAction |
-    SaveSearchPageAction |
-    SaveNumberOfSearchPagesAction |
-    SaveSearchResultsAction |
-    SetCollapseSearchInputAction |
+    serviceActions.BookmarkServiceAction |
+    serviceActions.UnbookmarkServiceAction |
+    searchActions.SaveSearchTermAction |
+    searchActions.SaveSearchLocationAction |
+    searchActions.SaveSearchLatLongAction |
+    searchActions.SaveSearchPageAction |
+    searchActions.SaveNumberOfSearchPagesAction |
+    searchActions.SaveSearchResultsAction |
+    searchActions.SaveSearchIndexAction |
+    searchActions.SetCollapseSearchInputAction |
     SearchExecutedAction |
     OpenHeaderMenuAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
-    saveService: (service: HumanServiceData): actions.SaveServiceAction => (
-        dispatch(actions.saveService(service))
+    saveService: (service: HumanServiceData): serviceActions.SaveServiceAction => (
+        dispatch(serviceActions.saveService(service))
     ),
-    openServiceDetail: (service: HumanServiceData): actions.OpenServiceAction => (
-        dispatch(actions.openServiceDetail(service))
+    openServiceDetail: (service: HumanServiceData): serviceActions.OpenServiceAction => (
+        dispatch(serviceActions.openServiceDetail(service))
     ),
     disableAnalytics: (disable: boolean): DisableAnalyticsAction => (
         dispatch(disableAnalytics(disable))
     ),
-    bookmarkService: (service: HumanServiceData): actions.BookmarkServiceAction => (
-        dispatch(actions.bookmarkService(service))
+    bookmarkService: (service: HumanServiceData): serviceActions.BookmarkServiceAction => (
+        dispatch(serviceActions.bookmarkService(service))
     ),
-    unbookmarkService: (service: HumanServiceData): actions.UnbookmarkServiceAction => (
-        dispatch(actions.unbookmarkService(service))
+    unbookmarkService: (service: HumanServiceData): serviceActions.UnbookmarkServiceAction => (
+        dispatch(serviceActions.unbookmarkService(service))
     ),
-    saveSearchTerm: (searchTerm: string): SaveSearchTermAction => (
-        dispatch(saveSearchTerm(searchTerm))
+    saveSearchTerm: (searchTerm: string): searchActions.SaveSearchTermAction => (
+        dispatch(searchActions.saveSearchTerm(searchTerm))
     ),
-    saveSearchLocation: (searchLocation: string): SaveSearchLocationAction => (
-        dispatch(saveSearchLocation(searchLocation))
+    saveSearchLocation: (searchLocation: string): searchActions.SaveSearchLocationAction => (
+        dispatch(searchActions.saveSearchLocation(searchLocation))
     ),
-    saveSearchLatLong: (searchLatLong: LatLong): SaveSearchLatLongAction => (
-        dispatch(saveSearchLatLong(searchLatLong))
+    saveSearchLatLong: (searchLatLong: LatLong): searchActions.SaveSearchLatLongAction => (
+        dispatch(searchActions.saveSearchLatLong(searchLatLong))
     ),
-    saveSearchPage: (searchPage: number): SaveSearchPageAction => (
-        dispatch(saveSearchPage(searchPage))
+    saveSearchPage: (searchPage: number): searchActions.SaveSearchPageAction => (
+        dispatch(searchActions.saveSearchPage(searchPage))
     ),
-    saveNumberOfSearchPages: (numberOfSearchPages: number): SaveNumberOfSearchPagesAction => (
-        dispatch(saveNumberOfSearchPages(numberOfSearchPages))
+    saveNumberOfSearchPages: (numberOfSearchPages: number): searchActions.SaveNumberOfSearchPagesAction => (
+        dispatch(searchActions.saveNumberOfSearchPages(numberOfSearchPages))
     ),
-    saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>): SaveSearchResultsAction => (
-        dispatch(saveSearchResults(searchResults))
+    saveSearchIndex: (searchIndex: number): searchActions.SaveSearchIndexAction => (
+        dispatch(searchActions.saveSearchIndex(searchIndex))
     ),
-    setCollapseSearchInput: (collapseSearchInput: boolean): SetCollapseSearchInputAction => (
-        dispatch(setCollapseSearchInput(collapseSearchInput))
+    saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>): searchActions.SaveSearchResultsAction => (
+        dispatch(searchActions.saveSearchResults(searchResults))
+    ),
+    setCollapseSearchInput: (collapseSearchInput: boolean): searchActions.SetCollapseSearchInputAction => (
+        dispatch(searchActions.setCollapseSearchInput(collapseSearchInput))
     ),
     searchExecuted: (searchTerm: string, searchLocation: string): SearchExecutedAction => (
         dispatch(searchExecuted(searchTerm, searchLocation))
