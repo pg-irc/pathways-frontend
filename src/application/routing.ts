@@ -1,11 +1,9 @@
-import buildUrl from 'build-url';
 import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
 import { History, Location } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
 import * as R from 'ramda';
-import { ServiceFeedback } from '../stores/feedback/types';
 
 // The property names of this structure are defined by the corresponding
 // route definitions, e.g. parsing a url '/learn/1' which matches
@@ -16,19 +14,6 @@ export type RouteParameters = Partial<{
     readonly organizationId: string;
     readonly serviceId: string;
 }>;
-
-export type OtherFeedbackMode = 'OTHER' | 'REMOVE_SERVICE';
-
-export type FeedbackModalVisibilityMode = 'visible' | 'hidden';
-
-export type FeedbackState = Partial<{
-    readonly otherFeedbackMode: OtherFeedbackMode;
-    readonly isOptionsModalVisible: FeedbackModalVisibilityMode;
-    readonly isReceiveUpdatesModalVisible: FeedbackModalVisibilityMode;
-    readonly serializedFeedback: string;
-}>;
-
-export type NonSerializedFeedbackState = Omit<FeedbackState, 'serializedFeedback'> & Partial<{ readonly feedback: ServiceFeedback; }>;
 
 export type RouterProps = RouteComponentProps<RouteParameters>;
 
@@ -106,12 +91,8 @@ export const goToRouteWithoutParameter = (route: Routes, history: History): () =
     return (): void => history.push(path);
 };
 
-export const goToRouteWithParameter = (route: Routes, parameter: string, history: History, feedbackState?: FeedbackState): () => void => (
-    (): void => history.push(getPathWithOptionalFeedbackState(routePathWithParameter(route, parameter), feedbackState))
-);
-
-export const replaceRouteWithParameter = (route: Routes, parameter: string, history: History, feedbackState?: FeedbackState): () => void => (
-    (): void => history.replace(getPathWithOptionalFeedbackState(routePathWithParameter(route, parameter), feedbackState))
+export const goToRouteWithParameter = (route: Routes, parameter: string, history: History): () => void => (
+    (): void => history.push(routePathWithParameter(route, parameter))
 );
 
 export const goBack = (history: History): void => (
@@ -141,7 +122,3 @@ export const getParametersFromPath = (location: Location, route: Routes): RouteP
     });
     return match.params;
 };
-
-const getPathWithOptionalFeedbackState = (path: string, feedbackState?: FeedbackState): string => (
-    feedbackState ? `${path}${buildUrl('', { queryParams: feedbackState })}` : path
-);
