@@ -1,11 +1,10 @@
 // tslint:disable:no-expression-statement
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
 import { colors, values, textStyles } from '../../application/styles';
 import { SearchServiceData } from '../../validation/search/types';
-import { useTraceUpdate } from '../../application/helpers/use_trace_update';
 import { SearchListSeparator } from './separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
@@ -40,12 +39,16 @@ export interface SearchResultsProps {
     readonly isLoading: boolean;
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
+    readonly scrollOffset: number;
+    readonly searchOffset: number;
     readonly onlineStatus: OnlineStatus;
 }
 
 export interface SearchResultsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly setScrollOffset: (index: number) => void;
+    readonly saveSearchOffset: (index: number) => void;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
 }
@@ -53,8 +56,6 @@ export interface SearchResultsActions {
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
 
 export const SearchResultsComponent = (props: Props): JSX.Element => {
-    useTraceUpdate('SearchResultsComponent', props);
-
     if (searchTermIsEmpty(props)) {
         return renderEmptyComponent();
     }
@@ -65,20 +66,36 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
     return renderComponentWithResults(props);
 };
 
-const renderComponentWithResults = (props: Props): JSX.Element => (
-    <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
-        {renderLoadingScreen(props.isLoading)}
-        <FlatList
-            style={{ backgroundColor: colors.lightGrey }}
-            data={props.searchResults}
-            keyExtractor={keyExtractor}
-            renderItem={renderSearchHit(props)}
-            ItemSeparatorComponent={SearchListSeparator}
-            ListHeaderComponent={<ListHeaderComponent />}
-            ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
-        />
-    </View>
-);
+const renderComponentWithResults = (props: Props): JSX.Element => {
+    const flatListRef = useRef<FlatList<SearchServiceData>>(undefined);
+    useEffect((): void => {
+        if (props.searchTerm) {
+            flatListRef.current.scrollToOffset({ animated: false, offset: 0 });
+        }
+    }, [props.searchTerm, props.searchLocation]);
+    useEffect((): void => {
+        if (props.searchResults.length > 0) {
+            flatListRef.current.scrollToOffset({ animated: false, offset: props.searchOffset });
+        }
+    }, [props.searchOffset]);
+    return (
+        <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
+            {renderLoadingScreen(props.isLoading)}
+            <FlatList
+                ref={flatListRef}
+                onScroll={(e: any): void => props.setScrollOffset(e.nativeEvent.contentOffset.y)}
+                initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
+                style={{ backgroundColor: colors.lightGrey }}
+                data={props.searchResults}
+                keyExtractor={keyExtractor}
+                renderItem={renderSearchHit(props)}
+                ItemSeparatorComponent={SearchListSeparator}
+                ListHeaderComponent={<ListHeaderComponent />}
+                ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
+            />
+        </View>
+    );
+};
 
 const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
@@ -89,6 +106,7 @@ const renderSearchHit = R.curry((props: Props, itemInfo: ListRenderItemInfo<Sear
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
         props.saveService(service);
+        props.saveSearchOffset(props.scrollOffset);
         props.openServiceDetail(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };
