@@ -3,7 +3,6 @@ const BuildUrl = require('build-url');
 import { Id } from '../stores/topics';
 import { fetch } from 'cross-fetch';
 import { Locale } from '../locale';
-import { PATHWAYS_API_KEY } from 'react-native-dotenv';
 
 export interface APIResponse {
     readonly hasError: boolean;
@@ -76,7 +75,7 @@ async function createAPIResponse(response: Response): Promise<APIResponse> {
     return { hasError: false, message, response, results };
 }
 
-export async function putPushNotificationToken(token: string, locale: Locale): Promise<APIResponse> {
+export async function putPushNotificationToken(token: string, locale: Locale, api_key: string): Promise<APIResponse> {
     const url = createPushNotificationTokenUrl(baseUrl, token);
     const response = await fetch(url,
         {
@@ -86,7 +85,7 @@ export async function putPushNotificationToken(token: string, locale: Locale): P
             ],
             body: JSON.stringify({
                 'locale': locale.code,
-                'api_key': PATHWAYS_API_KEY,
+                'api_key': api_key,
              }),
         },
     );
