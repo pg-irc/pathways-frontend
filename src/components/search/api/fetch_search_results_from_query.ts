@@ -23,6 +23,7 @@ export const fetchSearchResultsFromQuery = async (
     if (!searchTerm) {
         return [];
     }
+    console.log(ALGOLIA_SERVICES_INDEX);
     const url = buildAlgoliaSearchUrl();
     try {
         const response = await fetch(url, {
@@ -37,7 +38,7 @@ export const fetchSearchResultsFromQuery = async (
                 page: searchPage,
                 hitsPerPage: '20',
                 aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
-                aroundPrecision: latLong ? 5000 : 0,
+                aroundPrecision: latLong ? 5000 : '',
             }),
         });
 
