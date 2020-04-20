@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Arrival Advisor",
-    "version": "1.28.0",
+    "version": "1.29.0",
     "slug": "arrival_advisor",
     "orientation": "portrait",
     "primaryColor": "#3A818D",
@@ -18,7 +18,7 @@
     "android": {
       "icon": "./assets/images/phone_icon_android.png",
       "package": "org.peacegeeks.ArrivalAdvisor",
-      "versionCode": 128000,
+      "versionCode": 129000,
       "permissions": [
         "ACCESS_FINE_LOCATION"
       ]
