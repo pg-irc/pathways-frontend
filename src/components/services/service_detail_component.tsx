@@ -1,7 +1,6 @@
 // tslint:disable: no-expression-statement
 import React, { Dispatch, SetStateAction, useState, useRef, useEffect, MutableRefObject } from 'react';
 import * as R from 'ramda';
-// import { t } from '@lingui/macro';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
@@ -47,7 +46,6 @@ import {
     getEmptyServiceFeedback,
     getEmptyUserInfo,
 } from '../../stores/feedback';
-// import { showToast } from '../../application/toast';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -88,8 +86,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     function onSendFeedbackFinished(): void {
         resetLocalFeedbackState();
         props.discardFeedback();
-        // TODO upgrade i18n: https://lingui.js.org/releases/migration-3.html
-        // showToast(i18n._(t`Thank you for your contribution!`));
     }
 
     function navigateOnScreenChange(): void {
