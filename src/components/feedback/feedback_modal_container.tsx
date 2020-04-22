@@ -6,7 +6,7 @@ import { textStyles, colors } from '../../application/styles';
 import { FeedbackReceiveUpdatesModal } from '../feedback/feedback_receive_updates_modal';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { FeedbackOptionsModalComponent } from './feedback_options_modal_component';
+import { FeedbackChooseModeModal } from './feedback_choose_mode_modal';
 import { UserInformation } from '../../stores/feedback/types';
 
 interface FeedbackModalContainerProps {
@@ -30,19 +30,16 @@ export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.
             isVisible={props.showSuggestAnUpdate}
             onPress={props.onSuggestAnUpdatePress}
         />
-        {/* TODO Rename. */}
-        <FeedbackOptionsModalComponent
+        <FeedbackChooseModeModal
             isVisible={props.showChoooseFeedbackModeModal}
-            onClose={props.closeModal}
-            // TODO Rename these.
-            onSuggestAnUpdatePress={props.onChangeNameOrDetailsPress}
+            closeModal={props.closeModal}
+            onChangeNameOrDetailsPress={props.onChangeNameOrDetailsPress}
             onOtherPress={props.onOtherChangesPress}
             onRemoveServicePress={props.onRemoveThisServicePress}
         />
         <FeedbackReceiveUpdatesModal
             isVisible={props.showReceiveUpdatesModal}
-            // TODO Rename.
-            onHide={props.onFinishPress}
+            onFinishPress={props.onFinishPress}
             isSendingFeedback={props.isSendingFeedback}
             setUserInformation={props.setUserInformation}
             userInformation={props.userInformation}

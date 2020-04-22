@@ -37,7 +37,6 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProp
         service: selectServiceById(store, ownProps.match.params.serviceId),
         history: ownProps.history,
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
-        // TODO should we useParams()?
         feedbackPostData: selectFeedbackPostData(store, ownProps.match.params.serviceId),
         feedbackScreen: selectFeedbackScreen(store),
         feedbackModal: selectFeedbackModal(store),

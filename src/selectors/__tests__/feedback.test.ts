@@ -5,40 +5,32 @@ import { toFeedbackPostDataContent } from '../feedback/to_feedback_post_data_con
 import { FeedbackStoreBuilder } from '../../stores/__tests__/helpers/feedback_store_builder';
 import { aString } from '../../helpers/random_test_values';
 import { Feedback, UserInformation } from '../../stores/feedback/types';
+import { getEmptyServiceFeedback } from '../../stores/feedback';
 
 describe('picking feedback properties to send with: pickSendableFeedback()', () => {
 
-    it('picks properties that are strings', () => {
+    it('will pick properties that are strings', () => {
         const feedback: Feedback = {
-            type: 'other_feedback', value: aString(),
+            type: 'other_feedback',
+            value: aString(),
         };
+        const sendableProperties = { type: feedback.type, value: feedback.value };
         const store = new FeedbackStoreBuilder().withFeedbackData(feedback).build();
-        expect(pickSendableFeedback(store)).toEqual(feedback);
+        expect(pickSendableFeedback(store)).toEqual(sendableProperties);
     });
 
-    it('picks properties that are sendable feedback fields', () => {
+    it('will pick properties that are sendable feedback fields', () => {
         const feedback = {
-            type: 'service_feedback',
+            ...getEmptyServiceFeedback({ shouldSend: false }),
             organization: {
                 shouldSend: true, value: aString(),
             },
         };
-        // TODO Remove Feedback cast here once we've cleaned up the ServiceFeedback type.
-        const store = new FeedbackStoreBuilder().withFeedbackData(feedback as Feedback).build();
-        expect(pickSendableFeedback(store)).toEqual(feedback);
+        const sendableProperties = { type: feedback.type, organization: feedback.organization };
+        const store = new FeedbackStoreBuilder().withFeedbackData(feedback).build();
+        expect(pickSendableFeedback(store)).toEqual(sendableProperties);
     });
 
-    it('does not pick properties that are not sendable feedback fields', () => {
-        const feedback = {
-            type: 'service_feedback',
-            organization: {
-                shouldSend: false, value: aString(),
-            },
-        };
-        // TODO Remove Feedback cast here once we've cleaned up the ServiceFeedback type.
-        const store = new FeedbackStoreBuilder().withFeedbackData(feedback as Feedback).build();
-        expect(pickSendableFeedback(store)).toEqual({ type: 'service_feedback' });
-    });
 });
 
 describe('converting UserInformation to FeedbackPostDataAuthor with: toFeedbackPostDataAuthor()', () => {
@@ -61,8 +53,6 @@ describe('converting UserInformation to FeedbackPostDataAuthor with: toFeedbackP
         });
     });
 
-    // This is to keep the conversion code more simple and consistent with feedback.
-    // JSON.stringify will exclude undefined values.
     it('sets any missing author fields to undefined', () => {
         const userInformation = {};
         expect(toFeedbackPostDataAuthor(userInformation as UserInformation)).toEqual({
@@ -84,7 +74,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
             shouldSend: true,
             value: aString(),
         };
-        const feedback = {
+        const feedback: Feedback = {
             type: 'service_feedback',
             name: feedbackField,
             organization: feedbackField,
@@ -95,8 +85,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
             email: feedbackField,
         };
 
-        // TODO Remove Feedback cast here once we've cleaned up the ServiceFeedback type.
-        expect(toFeedbackPostDataContent(feedback as Feedback, serviceId)).toEqual({
+        expect(toFeedbackPostDataContent(feedback, serviceId)).toEqual({
             bc211Id: serviceId,
             name: feedback.name.value,
             organization: feedback.organization.value,
@@ -110,13 +99,12 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
     it('builds expected FeedbackPostDataContent object from "other" Feedback', () => {
         const serviceId = aString();
-        const feedback = {
+        const feedback: Feedback = {
             type: 'other_feedback',
             value: aString(),
         };
 
-        // TODO Remove Feedback cast here once we've cleaned up the ServiceFeedback type.
-        expect(toFeedbackPostDataContent(feedback as Feedback, serviceId)).toEqual({
+        expect(toFeedbackPostDataContent(feedback, serviceId)).toEqual({
             bc211Id: serviceId,
             other: feedback.value,
         });
@@ -124,13 +112,12 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
     it('builds expected FeedbackPostDataContent object from "remove service" Feedback', () => {
         const serviceId = aString();
-        const feedback = {
+        const feedback: Feedback = {
             type: 'remove_service',
             reason: aString(),
         };
 
-        // TODO Remove Feedback cast here once we've cleaned up the ServiceFeedback type.
-        expect(toFeedbackPostDataContent(feedback as Feedback, serviceId)).toEqual({
+        expect(toFeedbackPostDataContent(feedback, serviceId)).toEqual({
             bc211Id: serviceId,
             removalReason: feedback.reason,
         });
