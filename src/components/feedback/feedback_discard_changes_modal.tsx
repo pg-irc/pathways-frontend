@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const FeedbackDiscardChangesModal = (props: Props): JSX.Element => (
-    <Modal isVisible={props.isVisible}>
+    <Modal isVisible={props.isVisible} backdropTransitionOutTiming={0}>
         <View style={{ backgroundColor: colors.white, borderRadius: 20, padding: 20 }}>
             <PromptText />
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
