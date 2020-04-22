@@ -44,6 +44,8 @@ import {
     ChooseOtherChangesAction,
     CloseAction,
     DiscardChangesAction,
+    getEmptyServiceFeedback,
+    getEmptyUserInfo,
 } from '../../stores/feedback';
 // import { showToast } from '../../application/toast';
 
@@ -88,8 +90,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         props.discardFeedback();
         // TODO upgrade i18n: https://lingui.js.org/releases/migration-3.html
         // showToast(i18n._(t`Thank you for your contribution!`));
-        // TODO Clear store feedback?
-        // Double check "discard" action works as expected and review mocks for discard confirmation modal
     }
 
     function navigateOnScreenChange(): void {
@@ -131,7 +131,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     };
 
     const closeModal = (): void => {
-        // TODO see if you can make this not flicker.
         props.close();
     };
 
@@ -217,28 +216,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         </View>
     );
 };
-
-const getEmptyServiceFeedback = (shouldSend: boolean = true): ServiceFeedback => {
-    const emptyFeedbackField = { value: '', shouldSend };
-    return {
-        type: 'service_feedback',
-        name: emptyFeedbackField,
-        organization: emptyFeedbackField,
-        description: emptyFeedbackField,
-        address: emptyFeedbackField,
-        phone: emptyFeedbackField,
-        website: emptyFeedbackField,
-        email: emptyFeedbackField,
-    };
-};
-
-const getEmptyUserInfo = (): UserInformation => ({
-    email: '',
-    name: '',
-    organizationName: '',
-    jobTitle: '',
-    isEmployee: undefined,
-});
 
 const scrollToTop = (scrollViewRef: MutableRefObject<KeyboardAwareScrollView>): void => {
     scrollViewRef.current.scrollToPosition(0, 0, false);

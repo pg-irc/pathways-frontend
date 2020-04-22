@@ -1,7 +1,7 @@
 // tslint:disable: typedef
 import * as helpers from '../helpers/make_action';
 import * as constants from '../../application/constants';
-import { FeedbackScreen, UserInformation, FeedbackModal, FeedbackStore, Feedback } from './types';
+import { FeedbackScreen, UserInformation, FeedbackModal, FeedbackStore, Feedback, ServiceFeedback } from './types';
 export { reducer } from './reducer';
 export { FeedbackStore } from './types';
 
@@ -48,3 +48,26 @@ export type ReducerActions = SuggestAnUpdateAction |
         BackAction |
         SubmitAction |
         FinishAction;
+
+export const getEmptyUserInfo = (): UserInformation => ({
+    email: '',
+    name: '',
+    organizationName: '',
+    jobTitle: '',
+    isEmployee: undefined,
+});
+
+export const getEmptyServiceFeedback = (config: { readonly shouldSend: boolean } = undefined): ServiceFeedback => {
+    const shouldSend = !config || !!config.shouldSend;
+    const emptyFeedbackField = { value: '', shouldSend };
+    return {
+        type: 'service_feedback',
+        name: emptyFeedbackField,
+        organization: emptyFeedbackField,
+        description: emptyFeedbackField,
+        address: emptyFeedbackField,
+        phone: emptyFeedbackField,
+        website: emptyFeedbackField,
+        email: emptyFeedbackField,
+    };
+};

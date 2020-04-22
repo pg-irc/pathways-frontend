@@ -14,7 +14,7 @@ import { UserInformation } from '../../stores/feedback/types';
 
 interface FeedbackReceiveUpdatesProps {
     readonly isVisible: boolean;
-    readonly onHide: () => void;
+    readonly onFinishPress: () => void;
     readonly isSendingFeedback: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
@@ -23,7 +23,7 @@ interface FeedbackReceiveUpdatesProps {
 const INPUT_PLACEHOLDER = t`Enter email`;
 
 export const FeedbackReceiveUpdatesModal =
-({ isVisible, onHide, isSendingFeedback, userInformation, setUserInformation }: FeedbackReceiveUpdatesProps): JSX.Element => {
+({ isVisible, onFinishPress, isSendingFeedback, userInformation, setUserInformation }: FeedbackReceiveUpdatesProps): JSX.Element => {
 
     const onChangeEmail = (value: string): void =>
         setUserInformation({
@@ -39,10 +39,8 @@ export const FeedbackReceiveUpdatesModal =
 
     const buttonLabel = userInformation.email.length ? t`Finish` : t`Finish without email`;
 
-    const onFinish = (): void => onHide();
-
     return (
-        <Modal isVisible={isVisible} onBackdropPress={onHide}>
+        <Modal isVisible={isVisible} onBackdropPress={onFinishPress}>
             <I18n>
                 {
                     ({ i18n }: I18nProps): JSX.Element => (
@@ -77,7 +75,7 @@ export const FeedbackReceiveUpdatesModal =
                             </View>
                             <View style={styles.finishButtonContainer}>
                                 <TouchableOpacity
-                                    onPress={onFinish}
+                                    onPress={onFinishPress}
                                     style={isSendingFeedback ? [styles.finishButton, styles.finishButtonSending] : styles.finishButton}
                                     disabled={isSendingFeedback}
                                 >
