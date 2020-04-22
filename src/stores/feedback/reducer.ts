@@ -20,7 +20,7 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
         case constants.SUGGEST_AN_UPDATE:
             return { ...store, modal: FeedbackModal.ChooseFeedbackModeModal };
         case constants.DISCARD_CHANGES:
-            return { ...store, screen: FeedbackScreen.ServiceDetail };
+            return buildDefaultStore();
        case constants.FINISH_FEEDBACK:
             return {
                 ...store,
@@ -34,13 +34,13 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
 const chooseModeReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
     switch (action.type) {
         case constants.CHOOSE_CHANGE_NAME_AND_DETAILS:
-            return { ...store, screen: FeedbackScreen.EditableServiceDetailPage};
+            return { ...store, screen: FeedbackScreen.EditableServiceDetailPage, modal: FeedbackModal.None };
         case constants.CHOOSE_REMOVE_SERVICE:
-            return { ...store, screen: FeedbackScreen.RemoveServicePage};
+            return { ...store, screen: FeedbackScreen.RemoveServicePage, modal: FeedbackModal.None };
         case constants.CHOOSE_OTHER_CHANGES:
-            return { ...store, screen: FeedbackScreen.OtherChangesPage};
+            return { ...store, screen: FeedbackScreen.OtherChangesPage, modal: FeedbackModal.None };
         case constants.CLOSE:
-            return {...store, screen: FeedbackScreen.ServiceDetail };
+            return {...store, screen: FeedbackScreen.ServiceDetail, modal: FeedbackModal.None };
         default:
             return store;
     }
@@ -49,11 +49,15 @@ const chooseModeReducer = (store: FeedbackStore, action: ReducerActions): Feedba
 const submitOrDiscardReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
     switch (action.type) {
         case constants.SUBMIT:
-            return { ...store, modal: FeedbackModal.ReceiveUpdatesModal, feedback: action.payload.feedback };
+            return { ...store, modal: FeedbackModal.ReceiveUpdatesModal, feedback: action.payload.feedback, screen: FeedbackScreen.ServiceDetail };
         case constants.CLOSE:
             return { ...store, modal: FeedbackModal.ConfirmDiscardChangesModal};
         case constants.BACK:
             return { ...store, modal:  FeedbackModal.ConfirmDiscardChangesModal};
+        case constants.DISCARD_CHANGES:
+            return buildDefaultStore();
+        case constants.CANCEL_DISCARD_CHANGES:
+            return { ...store, modal: FeedbackModal.None };
         default:
             return store;
     }
