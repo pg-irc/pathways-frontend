@@ -2,7 +2,7 @@
 import { reducer, suggestAnUpdate,
     chooseChangeNameOrDetails, chooseRemoveService,
     chooseOtherChanges, submit, discardChanges, close,
-    back, finishFeedback } from '../feedback';
+    back, finishFeedback, buildDefaultStore, cancelDiscardChanges } from '../feedback';
 import { aString, aBoolean } from '../../helpers/random_test_values';
 import { FeedbackModal, FeedbackField, ServiceFeedback, FeedbackScreen } from '../feedback/types';
 import { FeedbackStoreBuilder } from './helpers/feedback_store_builder';
@@ -17,24 +17,27 @@ describe('feedback reducer', () => {
     });
 
     describe('with chose feedback mode modal', () => {
-        test('change name and details opens editable service detail', () => {
-                const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ChooseFeedbackModeModal).build();
+        test('change name and details opens editable service detail and closes modals', () => {
+            const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ChooseFeedbackModeModal).build();
             const action = chooseChangeNameOrDetails();
             const newStore = reducer(oldStore, action);
+            expect(newStore.modal).toEqual(FeedbackModal.None);
             expect(newStore.screen).toEqual(FeedbackScreen.EditableServiceDetailPage);
         });
 
-        test('remove service opens remove service page', () => {
+        test('remove service opens remove service page and closes modals', () => {
             const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ChooseFeedbackModeModal).build();
             const action = chooseRemoveService();
             const newStore = reducer(oldStore, action);
+            expect(newStore.modal).toEqual(FeedbackModal.None);
             expect(newStore.screen).toEqual(FeedbackScreen.RemoveServicePage);
         });
 
-        test('other service feedback opens other service feedback page', () => {
+        test('other service feedback opens other service feedback page and closes modals', () => {
             const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ChooseFeedbackModeModal).build();
             const action = chooseOtherChanges();
             const newStore = reducer(oldStore, action);
+            expect(newStore.modal).toEqual(FeedbackModal.None);
             expect(newStore.screen).toEqual(FeedbackScreen.OtherChangesPage);
         });
     });
@@ -53,13 +56,6 @@ describe('feedback reducer', () => {
         phone: aFeedbackField(),
         website: aFeedbackField(),
         email: aFeedbackField(),
-        removalReason: aFeedbackField(),
-        other: aFeedbackField(),
-        authorIsEmployee: aFeedbackField(),
-        authorEmail: aFeedbackField(),
-        authorName: aFeedbackField(),
-        authorOrganization: aFeedbackField(),
-        authorJobTitle: aFeedbackField(),
     });
 
     describe('submit button', () => {
@@ -87,7 +83,7 @@ describe('feedback reducer', () => {
             }
         });
 
-        test('stores remove service feedback', ()=>{
+        test('stores remove service feedback', () => {
             const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.RemoveServicePage).build();
             const aReason = aString();
             const action = submit({ type: 'remove_service', reason: aReason });
@@ -99,30 +95,37 @@ describe('feedback reducer', () => {
             }
         });
 
-        test('opens the modal for receiving updates', () => {
+        test('opens the modal for receiving updates and navigates to service detail', () => {
             const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
             const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
             const action = submit(someServiceFeedbackData());
             const newStore = reducer(oldStore, action);
-            expect(newStore.screen).toEqual(oldScreen);
+            expect(newStore.screen).toEqual(FeedbackScreen.ServiceDetail);
             expect(newStore.modal).toEqual(FeedbackModal.ReceiveUpdatesModal);
         });
     });
 
-   test('discarding changes navigates back to service detail', () => {
+   test('discarding changes resets to the default store', () => {
         const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ConfirmDiscardChangesModal).build();
         const action = discardChanges();
         const newStore = reducer(oldStore, action);
-        expect(newStore.screen).toEqual(FeedbackScreen.ServiceDetail);
+        expect(newStore).toEqual(buildDefaultStore());
     });
 
-    test('closing dialog brings up confirmation modal', () => {
+    test('closing dialog from a data entry screen brings up confirmation modal', () => {
         const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
         const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
         const action = close();
         const newStore = reducer(oldStore, action);
         expect(newStore.screen).toEqual(oldScreen);
         expect(newStore.modal).toEqual(FeedbackModal.ConfirmDiscardChangesModal);
+    });
+
+    test('can close the choose feedback mode dialog', () => {
+        const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ChooseFeedbackModeModal).build();
+        const action = close();
+        const newStore = reducer(oldStore, action);
+        expect(newStore.modal).toEqual(FeedbackModal.None);
     });
 
     test('backing out brings up confirmation modal', () => {
@@ -132,6 +135,15 @@ describe('feedback reducer', () => {
         const newStore = reducer(oldStore, action);
         expect(newStore.screen).toEqual(oldScreen);
         expect(newStore.modal).toEqual(FeedbackModal.ConfirmDiscardChangesModal);
+    });
+
+    test('cancelling confirmation closes modals', () => {
+        const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
+        const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
+        const action = cancelDiscardChanges();
+        const newStore = reducer(oldStore, action);
+        expect(newStore.screen).toEqual(oldScreen);
+        expect(newStore.modal).toEqual(FeedbackModal.None);
     });
 
     describe('finish feedback flow', () => {

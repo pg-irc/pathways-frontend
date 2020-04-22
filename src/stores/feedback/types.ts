@@ -24,7 +24,7 @@ export interface UserInformation {
     readonly name: string;
     readonly organizationName: string;
     readonly jobTitle: string;
-    readonly isEmployee: boolean;
+    readonly isEmployee: undefined | boolean;
 }
 
 export interface FeedbackField {
@@ -41,14 +41,6 @@ export interface ServiceFeedback {
     readonly phone: FeedbackField;
     readonly website: FeedbackField;
     readonly email: FeedbackField;
-    // TODO remove all fields below and use other types in this file
-    readonly removalReason: FeedbackField;
-    readonly other: FeedbackField;
-    readonly authorIsEmployee: FeedbackField;
-    readonly authorEmail: FeedbackField;
-    readonly authorName: FeedbackField;
-    readonly authorOrganization: FeedbackField;
-    readonly authorJobTitle: FeedbackField;
 }
 
 export interface OtherFeedback {
