@@ -1,6 +1,7 @@
 // tslint:disable: no-expression-statement
-import React, { Dispatch, SetStateAction, useState, useRef } from 'react';
+import React, { Dispatch, SetStateAction, useState, useRef, useEffect, MutableRefObject } from 'react';
 import * as R from 'ramda';
+// import { t } from '@lingui/macro';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
@@ -9,9 +10,9 @@ import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 import { DividerComponent } from '../content_layout/divider_component';
-import { RouterProps, getParametersFromPath, Routes } from '../../application/routing';
-import { HumanServiceData, Address, PhoneNumber } from '../../validation/services/types';
+import { RouterProps, getParametersFromPath, Routes, goToRouteWithParameter } from '../../application/routing';
 import { ContentVerificationComponent } from '../content_verification_component';
+import { HumanServiceData, Address, PhoneNumber } from '../../validation/services/types';
 import { AddressesComponent } from '../addresses/addresses_component';
 import { PhoneNumbersComponent } from '../phone_numbers/phone_numbers_component';
 import { WebsiteComponent } from '../website/website_component';
@@ -31,14 +32,28 @@ import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/ser
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { renderHeader } from '../main/render_header';
 import { Id } from '../../stores/services';
-import { getEmptyFeedback, useSendFeedback, SendFeedbackPromise } from './use_send_feedback';
-import { ServiceFeedback, FeedbackField } from '../../stores/feedback/types';
-import { isAndroid } from '../../application/helpers/is_android';
+import { useSendFeedback, SendFeedbackPromise } from './use_send_feedback';
+import { ServiceFeedback, FeedbackField, Feedback, FeedbackScreen, FeedbackModal, UserInformation } from '../../stores/feedback/types';
+import { FeedbackPostData } from '../../selectors/feedback/types';
+import {
+    SubmitAction,
+    FinishAction,
+    SuggestAnUpdateAction,
+    ChooseChangeNameOrDetailsAction,
+    ChooseRemoveServiceAction,
+    ChooseOtherChangesAction,
+    CloseAction,
+    DiscardChangesAction,
+} from '../../stores/feedback';
+// import { showToast } from '../../application/toast';
 
 export interface ServiceDetailProps {
     readonly history: History;
     readonly service: HumanServiceData;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly feedbackPostData: FeedbackPostData;
+    readonly feedbackScreen: FeedbackScreen;
+    readonly feedbackModal: FeedbackModal;
 }
 
 export interface ServiceDetailActions {
@@ -46,32 +61,93 @@ export interface ServiceDetailActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly suggestAnUpdate: () => SuggestAnUpdateAction;
+    readonly chooseChangeNameOrDetail: () => ChooseChangeNameOrDetailsAction;
+    readonly chooseRemoveService: () => ChooseRemoveServiceAction;
+    readonly chooseOtherChanges: () => ChooseOtherChangesAction;
+    readonly submitFeedback: (feedback: Feedback) => SubmitAction;
+    readonly finishFeedback: (userInformation: UserInformation) => FinishAction;
+    readonly close: () => CloseAction;
+    readonly discardFeedback: () => DiscardChangesAction;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
-    const defaultFeedback = getEmptyFeedback();
-    const clearFeedback = (): void => setFeedback(defaultFeedback);
-    const [feedback, setFeedback]: readonly[ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] =
-        useState<ServiceFeedback>(defaultFeedback);
-    const [feedbackEnabled, setFeedbackEnabled]: readonly[boolean, Dispatch<SetStateAction<boolean>>] =
-        useState<boolean>(false);
-    const { isSendingFeedback, sendFeedback }: SendFeedbackPromise =
-        useSendFeedback(feedback, clearFeedback);
+    const isEditableService = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
+    const [feedback, setFeedback]: readonly[ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] = useState(getEmptyServiceFeedback());
+    const [userInformation, setUserInformation]: readonly[UserInformation, Dispatch<SetStateAction<UserInformation>>] = useState(getEmptyUserInfo());
+    const [feedbackIsReadyToSend, setFeedbackIsReadyToSend]: readonly[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+    const [isSendingFeedback, sendFeedback]: SendFeedbackPromise = useSendFeedback(props.feedbackPostData, onSendFeedbackFinished);
+    useEffect(sendFeedbackWhenReady, [feedbackIsReadyToSend]);
+    useEffect(navigateOnScreenChange, [props.feedbackScreen]);
+
+    function onSendFeedbackFinished(): void {
+        resetLocalFeedbackState();
+        props.discardFeedback();
+        // TODO upgrade i18n: https://lingui.js.org/releases/migration-3.html
+        // showToast(i18n._(t`Thank you for your contribution!`));
+        // TODO Clear store feedback?
+        // Double check "discard" action works as expected and review mocks for discard confirmation modal
+    }
+
+    function navigateOnScreenChange(): void {
+        switch (props.feedbackScreen) {
+            case FeedbackScreen.OtherChangesPage:
+            case FeedbackScreen.RemoveServicePage:
+                return goToRouteWithParameter(Routes.Feedback, props.match.params.serviceId, props.history)();
+            case FeedbackScreen.EditableServiceDetailPage:
+                return scrollToTop(scrollViewRef);
+            default:
+                return undefined;
+        }
+    }
+
+    function sendFeedbackWhenReady(): void {
+        if (feedbackIsReadyToSend) {
+            sendFeedback();
+        }
+    }
 
     const setFeedbackForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField): void => (
         setFeedback({...feedback, [fieldName]: fieldValue })
     ));
 
-    const scrollToTop = (): void => {
-        scrollViewRef.current.scrollToPosition(0, 0, false);
+    const onSuggestAnUpdatePress = (): void => {
+        props.suggestAnUpdate();
     };
 
-    const onFeedbackButtonPress = (): void => {
-        setFeedbackEnabled(true);
-        scrollToTop();
+    const onChangeNameOrDetailsPress = (): void => {
+        props.chooseChangeNameOrDetail();
+    };
+
+    const onRemoveThisServicePress = (): void => {
+        props.chooseRemoveService();
+    };
+
+    const onOtherChangesPress = (): void => {
+        props.chooseOtherChanges();
+    };
+
+    const closeModal = (): void => {
+        // TODO see if you can make this not flicker.
+        props.close();
+    };
+
+    // TODO Wire this up to the submit button for service feedback.
+    // const onSubmitPress = (): void => {
+    //     props.submitFeedback(feedback);
+    // };
+
+    const onFinishPress = (): void => {
+        props.finishFeedback(userInformation);
+        setFeedbackIsReadyToSend(true);
+    };
+
+    const resetLocalFeedbackState = (): void => {
+        setFeedback(getEmptyServiceFeedback());
+        setUserInformation(getEmptyUserInfo());
     };
 
     return (
@@ -90,7 +166,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         feedbackField={feedback.name}
                         fieldLabel={<Trans>Name</Trans>}
                         fieldValue={props.service.name}
-                        feedbackEnabled={feedbackEnabled}
+                        feedbackEnabled={isEditableService}
                         feedbackDisabledComponent={<Name name={props.service.name} />}
                     />
                     <DividerComponent />
@@ -99,7 +175,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         feedbackField={feedback.organization}
                         fieldLabel={<Trans>Organization</Trans>}
                         fieldValue={props.service.organizationName}
-                        feedbackEnabled={feedbackEnabled}
+                        feedbackEnabled={isEditableService}
                         feedbackDisabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
                     />
                     <DividerComponent />
@@ -108,14 +184,14 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         feedbackField={feedback.description}
                         fieldLabel={<Trans>Description</Trans>}
                         fieldValue={props.service.description}
-                        feedbackEnabled={feedbackEnabled}
+                        feedbackEnabled={isEditableService}
                         feedbackDisabledComponent={<Description description={props.service.description} />}
                     />
                     <DividerComponent />
                     <ServiceContactDetails
                         service={props.service}
                         currentPathForAnaltyics={props.location.pathname}
-                        feedbackEnabled={feedbackEnabled}
+                        isEditableService={isEditableService}
                         setFeedbackForField={setFeedbackForField}
                         feedback={feedback}
                         analyticsLinkPressed={props.analyticsLinkPressed}
@@ -123,18 +199,49 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     />
                     <DividerComponent />
                     <FeedbackModalContainer
-                        feedbackEnabled={feedbackEnabled}
-                        onSuggestAnUpdatePress={onFeedbackButtonPress}
-                        serviceId={props.service.id}
-                        sendFeedback={sendFeedback}
                         isSendingFeedback={isSendingFeedback}
-                        setFeedback={setFeedback}
-                        feedback={feedback}
+                        showSuggestAnUpdate={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
+                        showChoooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
+                        showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ReceiveUpdatesModal}
+                        userInformation={userInformation}
+                        setUserInformation={setUserInformation}
+                        onSuggestAnUpdatePress={onSuggestAnUpdatePress}
+                        onChangeNameOrDetailsPress={onChangeNameOrDetailsPress}
+                        onRemoveThisServicePress={onRemoveThisServicePress}
+                        onOtherChangesPress={onOtherChangesPress}
+                        onFinishPress={onFinishPress}
+                        closeModal={closeModal}
                     />
                 </View>
             </KeyboardAwareScrollView>
         </View>
     );
+};
+
+const getEmptyServiceFeedback = (shouldSend: boolean = true): ServiceFeedback => {
+    const emptyFeedbackField = { value: '', shouldSend };
+    return {
+        type: 'service_feedback',
+        name: emptyFeedbackField,
+        organization: emptyFeedbackField,
+        description: emptyFeedbackField,
+        address: emptyFeedbackField,
+        phone: emptyFeedbackField,
+        website: emptyFeedbackField,
+        email: emptyFeedbackField,
+    };
+};
+
+const getEmptyUserInfo = (): UserInformation => ({
+    email: '',
+    name: '',
+    organizationName: '',
+    jobTitle: '',
+    isEmployee: undefined,
+});
+
+const scrollToTop = (scrollViewRef: MutableRefObject<KeyboardAwareScrollView>): void => {
+    scrollViewRef.current.scrollToPosition(0, 0, false);
 };
 
 interface NameProps {
@@ -189,7 +296,7 @@ interface ServiceContactDetailsProps {
     readonly service: HumanServiceData;
     readonly currentPathForAnaltyics: string;
     readonly feedback: ServiceFeedback;
-    readonly feedbackEnabled: boolean;
+    readonly isEditableService: boolean;
     readonly setFeedbackForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
 }
@@ -207,7 +314,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 feedbackField={props.feedback.address}
                 fieldLabel={<Trans>Address</Trans>}
                 fieldValue={getAddressesString(physicalAddresses)}
-                feedbackEnabled={props.feedbackEnabled}
+                feedbackEnabled={props.isEditableService}
                 feedbackDisabledComponent={
                     <AddressesComponent
                         addresses={physicalAddresses}
@@ -225,7 +332,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 feedbackField={props.feedback.phone}
                 fieldLabel={<Trans>Phone numbers</Trans>}
                 fieldValue={getPhonesString(props.service.phoneNumbers)}
-                feedbackEnabled={props.feedbackEnabled}
+                feedbackEnabled={props.isEditableService}
                 feedbackDisabledComponent={
                     <PhoneNumbersComponent
                         phoneNumbers={props.service.phoneNumbers}
@@ -241,7 +348,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 feedbackField={props.feedback.website}
                 fieldLabel={<Trans>Website</Trans>}
                 fieldValue={props.service.website}
-                feedbackEnabled={props.feedbackEnabled}
+                feedbackEnabled={props.isEditableService}
                 feedbackDisabledComponent={
                     <WebsiteComponent
                         website={props.service.website}
@@ -257,7 +364,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
                 feedbackField={props.feedback.email}
                 fieldLabel={<Trans>Email</Trans>}
                 fieldValue={props.service.email}
-                feedbackEnabled={props.feedbackEnabled}
+                feedbackEnabled={props.isEditableService}
                 feedbackDisabledComponent={
                     <EmailComponent
                         email={props.service.email}
