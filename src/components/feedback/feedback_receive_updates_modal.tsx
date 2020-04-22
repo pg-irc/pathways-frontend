@@ -10,41 +10,34 @@ import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 
 import { receiveUpdatesStyles as styles } from './styles';
-import { SendFeedbackPromise } from '../services/use_send_feedback';
-import { ServiceFeedback } from '../../stores/feedback/types';
+import { UserInformation } from '../../stores/feedback/types';
 
 interface FeedbackReceiveUpdatesProps {
     readonly isVisible: boolean;
     readonly onHide: () => void;
-    readonly isSendingFeedback: SendFeedbackPromise['isSendingFeedback'];
-    readonly setFeedback: Dispatch<SetStateAction<ServiceFeedback>>;
-    readonly feedback: ServiceFeedback;
+    readonly isSendingFeedback: boolean;
+    readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
+    readonly userInformation: UserInformation;
 }
 
 const INPUT_PLACEHOLDER = t`Enter email`;
 
 export const FeedbackReceiveUpdatesModal =
-({ isVisible, onHide, isSendingFeedback, setFeedback, feedback }: FeedbackReceiveUpdatesProps): JSX.Element => {
+({ isVisible, onHide, isSendingFeedback, userInformation, setUserInformation }: FeedbackReceiveUpdatesProps): JSX.Element => {
 
     const onChangeEmail = (value: string): void =>
-        setFeedback({
-            ...feedback,
-            authorEmail: {
-                ...feedback.authorEmail,
-                value,
-            },
+        setUserInformation({
+            ...userInformation,
+            email: value,
         });
 
     const onPressIsEmployee = (): void =>
-        setFeedback({
-            ...feedback,
-            authorIsEmployee: {
-                ...feedback.authorIsEmployee,
-                value: feedback.authorIsEmployee.value === 'true' ? 'false' : 'true',
-            },
+        setUserInformation({
+            ...userInformation,
+            isEmployee: !userInformation.isEmployee,
         });
 
-    const buttonLabel = feedback.authorEmail.value.length ? t`Finish` : t`Finish without email`;
+    const buttonLabel = userInformation.email.length ? t`Finish` : t`Finish without email`;
 
     const onFinish = (): void => onHide();
 
@@ -66,7 +59,7 @@ export const FeedbackReceiveUpdatesModal =
                                     onChangeText={onChangeEmail}
                                     placeholder={i18n._(INPUT_PLACEHOLDER)}
                                     placeholderTextColor={colors.darkerGrey}
-                                    value={feedback.authorEmail.value}
+                                    value={userInformation.email}
                                 />
                                 <View style={styles.checkboxContainer}>
                                     <Text style={[textStyles.captionStyleLeft, styles.checkBoxDescription]}>
@@ -74,7 +67,7 @@ export const FeedbackReceiveUpdatesModal =
                                     </Text>
                                     <View style={styles.checkBox}>
                                         <CheckBox
-                                            checked={feedback.authorIsEmployee.value === 'true'}
+                                            checked={userInformation.isEmployee}
                                             iconStyle={styles.checkBoxIcon}
                                             onPress={onPressIsEmployee}
                                         />

@@ -1,122 +1,56 @@
 // tslint:disable:no-expression-statement
-import { Trans, I18n } from '@lingui/react';
-import { t } from '@lingui/macro';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import { Trans } from '@lingui/react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { TouchableOpacity, Text, View } from 'react-native';
-import { useHistory } from 'react-router-native';
-
 import { textStyles, colors } from '../../application/styles';
-import { Routes, goToRouteWithParameter } from '../../application/routing';
 import { FeedbackReceiveUpdatesModal } from '../feedback/feedback_receive_updates_modal';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
-
 import { FeedbackOptionsModalComponent } from './feedback_options_modal_component';
-import { SendFeedbackPromise } from '../services/use_send_feedback';
-import { showToast } from '../../application/toast';
-import { ServiceFeedback } from '../../stores/feedback/types';
+import { UserInformation } from '../../stores/feedback/types';
 
 interface FeedbackModalContainerProps {
-    readonly feedbackEnabled: boolean;
+    readonly isSendingFeedback: boolean;
+    readonly showSuggestAnUpdate: boolean;
+    readonly showChoooseFeedbackModeModal: boolean;
+    readonly showReceiveUpdatesModal: boolean;
+    readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
+    readonly userInformation: UserInformation;
     readonly onSuggestAnUpdatePress: () => void;
-    readonly serviceId: string;
-    readonly sendFeedback: SendFeedbackPromise['sendFeedback'];
-    readonly isSendingFeedback: SendFeedbackPromise['isSendingFeedback'];
-    readonly setFeedback: Dispatch<SetStateAction<ServiceFeedback>>;
-    readonly feedback: ServiceFeedback;
+    readonly onChangeNameOrDetailsPress: () => void;
+    readonly onRemoveThisServicePress: () => void;
+    readonly onOtherChangesPress: () => void;
+    readonly onFinishPress: () => void;
+    readonly closeModal: () => void;
 }
 
-export const FeedbackModalContainer = ({
-    feedbackEnabled,
-    onSuggestAnUpdatePress: onSuggestAnUpdate,
-    serviceId,
-    sendFeedback,
-    isSendingFeedback,
-    setFeedback,
-    feedback,
-}: FeedbackModalContainerProps): JSX.Element => {
+export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.Element => (
+    <>
+        <SuggestAnUpdateButton
+            isVisible={props.showSuggestAnUpdate}
+            onPress={props.onSuggestAnUpdatePress}
+        />
+        {/* TODO Rename. */}
+        <FeedbackOptionsModalComponent
+            isVisible={props.showChoooseFeedbackModeModal}
+            onClose={props.closeModal}
+            // TODO Rename these.
+            onSuggestAnUpdatePress={props.onChangeNameOrDetailsPress}
+            onOtherPress={props.onOtherChangesPress}
+            onRemoveServicePress={props.onRemoveThisServicePress}
+        />
+        <FeedbackReceiveUpdatesModal
+            isVisible={props.showReceiveUpdatesModal}
+            // TODO Rename.
+            onHide={props.onFinishPress}
+            isSendingFeedback={props.isSendingFeedback}
+            setUserInformation={props.setUserInformation}
+            userInformation={props.userInformation}
+        />
+    </>
+);
 
-    const history = useHistory();
-
-    // TODO Implement.
-    const [optionsModalVisible, setOptionsModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(false);
-
-    // TODO Implement.
-    const [receiveUpdatesModalVisible, setReceiveUpdatesModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(false);
-
-    // TODO Implement.
-    const goToFeedbackOtherScreen = goToRouteWithParameter(
-        Routes.Feedback,
-        serviceId,
-        history,
-    );
-
-    const goToFeedbackRemoveServiceScreen = goToRouteWithParameter(
-        Routes.Feedback,
-        serviceId,
-        history,
-    );
-
-    const onOtherPress = (): void => {
-        goToFeedbackOtherScreen();
-    };
-
-    const onRemoveServicePress = (): void => {
-        goToFeedbackRemoveServiceScreen();
-    };
-
-    const onSuggestAnUpdatePress = (): void => {
-        setOptionsModalVisible(false);
-        onSuggestAnUpdate();
-    };
-
-    const onFeedbackButtonPress = (): void => {
-        setOptionsModalVisible(true);
-    };
-
-    const onCloseFeedbackOptions = (): void => {
-        setOptionsModalVisible(false);
-    };
-
-    const onHideReceiveUpdatesModal = (i18n: I18n) => async () => {
-        try {
-            await sendFeedback();
-        } finally {
-            setReceiveUpdatesModalVisible(false);
-            showToast(i18n._(t`Thank you for your contribution!`));
-        }
-    };
-
-    return (
-        <I18n>
-            {
-                (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
-                    <>
-                        <FeedbackButton isVisible={!feedbackEnabled} onPress={onFeedbackButtonPress} />
-                        <FeedbackOptionsModalComponent
-                            isVisible={optionsModalVisible}
-                            onClose={onCloseFeedbackOptions}
-                            onSuggestAnUpdatePress={onSuggestAnUpdatePress}
-                            onOtherPress={onOtherPress}
-                            onRemoveServicePress={onRemoveServicePress}
-                        />
-                        <FeedbackReceiveUpdatesModal
-                            isVisible={receiveUpdatesModalVisible}
-                            onHide={onHideReceiveUpdatesModal(i18n)}
-                            isSendingFeedback={isSendingFeedback}
-                            setFeedback={setFeedback}
-                            feedback={feedback}
-                        />
-                    </>
-                )
-            }
-        </I18n>
-    );
-};
-
-const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void } ): JSX.Element => {
+const SuggestAnUpdateButton = (props: { readonly isVisible: boolean, readonly onPress: () => void } ): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;
     }

@@ -2,43 +2,21 @@
 import { useState, Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID } from 'react-native-dotenv';
 import buildUrl from 'build-url';
-import { ServiceFeedback } from '../../stores/feedback/types';
 import { FeedbackPostData } from '../../selectors/feedback/types';
 
-export const getEmptyFeedback = (shouldSend: boolean = true): ServiceFeedback => {
-    const emptyFeedbackField = { value: '', shouldSend };
-    return {
-        type: 'service_feedback',
-        name: emptyFeedbackField,
-        organization: emptyFeedbackField,
-        description: emptyFeedbackField,
-        address: emptyFeedbackField,
-        phone: emptyFeedbackField,
-        website: emptyFeedbackField,
-        email: emptyFeedbackField,
-        removalReason: emptyFeedbackField,
-        other: emptyFeedbackField,
-        authorIsEmployee: emptyFeedbackField,
-        authorEmail: emptyFeedbackField,
-        authorName: emptyFeedbackField,
-        authorJobTitle: emptyFeedbackField,
-        authorOrganization: emptyFeedbackField,
-    };
-};
+export type SendFeedbackPromise = readonly [
+    boolean,
+    () => Promise<void>,
+];
 
-export interface SendFeedbackPromise {
-    readonly isSendingFeedback: boolean;
-    readonly sendFeedback: () => Promise<void>;
-}
-
-export const useSendFeedback = (feedback: FeedbackPostData, clearFeedback: () => void): SendFeedbackPromise => {
+export const useSendFeedback = (feedback: FeedbackPostData, onSendFeedbackFinished: () => void): SendFeedbackPromise => {
     const sendCancelled = useRef<boolean>(false);
     useEffect(() => () => { sendCancelled.current = true; }, []);
     const [isSendingFeedback, setisSendingFeedback]: readonly[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const sendFeedback = async (): Promise<void> => {
         try {
             setisSendingFeedback(true);
-            const feedbackJSON = JSON.stringify(feedback);
+            const feedbackJSON = toFeedbackJSON(feedback);
             const response = await fetch(
                 getRequestUrl(),
                 getRequestInit(feedbackJSON),
@@ -49,16 +27,20 @@ export const useSendFeedback = (feedback: FeedbackPostData, clearFeedback: () =>
         } finally {
             if (!sendCancelled.current) {
                 setisSendingFeedback(false);
-                clearFeedback();
+                onSendFeedbackFinished();
             }
         }
     };
 
-    return {
+    return [
         isSendingFeedback,
         sendFeedback,
-    };
+    ];
 };
+
+const toFeedbackJSON = (feedback: FeedbackPostData): string => (
+    JSON.stringify({ fields: feedback })
+);
 
 const getRequestUrl = (): string => {
     if (!AIRTABLE_BASE_ID) {

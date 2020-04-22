@@ -1,6 +1,6 @@
+// tslint:disable:no-expression-statement
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
-import { History } from 'history';
 import {
     Button,
     Container,
@@ -17,20 +17,23 @@ import {
     Text,
     Title,
 } from 'native-base';
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { useHistory, useParams } from 'react-router-native';
+import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-native';
 
 import { colors, textStyles } from '../../application/styles';
-import { Routes, goToRouteWithParameter } from '../../application/routing';
+import { goBack } from '../../application/routing';
 import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import { otherRemoveServiceStyles as styles } from './styles';
+import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
+import { SubmitAction, DiscardChangesAction, CloseAction, BackAction, CancelDiscardChangesAction } from '../../stores/feedback';
+import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
-    readonly serviceId: string;
-    readonly history: History;
+    readonly onClosePress: () => void;
+    readonly onBackPress: () => void;
 };
 
 type ContentComponentProps = {
@@ -42,12 +45,8 @@ type ContentComponentProps = {
 
 type FooterComponentProps = {
     readonly disabled: boolean;
-    readonly onSubmit: () => void;
+    readonly onSubmitPress: () => void;
 };
-
-interface RouteParams {
-    readonly serviceId: string;
-}
 
 interface SuggestionContent {
     readonly header: TemplateStringsArray;
@@ -58,6 +57,21 @@ interface SuggestionContent {
 interface SuggestionContentMap {
     readonly [key: string]: SuggestionContent;
 }
+
+export interface FeedbackOtherRemoveServiceState {
+    readonly feedbackScreen: FeedbackScreen;
+    readonly feedbackModal: FeedbackModal;
+}
+
+export interface FeedbackOtherRemoveServiceActions {
+    readonly submitFeedback: (feedback: Feedback) => SubmitAction;
+    readonly discardFeedback: () => DiscardChangesAction;
+    readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
+    readonly close: () => CloseAction;
+    readonly back: () => BackAction;
+}
+
+export type FeedbackOtherRemoveServiceProps = FeedbackOtherRemoveServiceState & FeedbackOtherRemoveServiceActions;
 
 const SUGGESTION_CONTENT: SuggestionContentMap = {
     OTHER: {
@@ -72,56 +86,27 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
     },
 };
 
-const useFeedbackInputControl = (): readonly [string, (value: string) => void] => {
-    const [input, setInput]: readonly [string, Dispatch<SetStateAction<string>>]
-        = useState<string>('');
-
-    const onInputChange = (value: string): void => setInput(value);
-
-    return [input, onInputChange];
-};
-
-const HeaderComponent = ({ headerLabel, serviceId, history }: HeaderComponentProps): JSX.Element => {
-    // TODO Implement.
-    const goBackShowModal = goToRouteWithParameter(
-        Routes.Feedback,
-        serviceId,
-        history,
-    );
-
-    // TODO Implement.
-    const goBackHideModal = goToRouteWithParameter(
-        Routes.Feedback,
-        serviceId,
-        history,
-    );
-
-    const onBack = (): void => goBackShowModal();
-
-    const onClose = (): void => goBackHideModal();
-
-    return (
-        <Header style={styles.headerContainer}>
-            <Left style={styles.headerBackButton}>
-                <Button onPress={onBack} transparent>
-                    <Icon name='chevron-left' type='FontAwesome' style={styles.headerElement}/>
-                </Button>
-                <Title style={styles.headerLeftTitle}>
-                    <Text style={textStyles.headline6}>
-                        <Trans id={headerLabel} />
-                    </Text>
-                </Title>
-            </Left>
-            <Right>
-                <CloseButtonComponent
-                    color={colors.greyishBrown}
-                    additionalStyle={{ paddingTop: 0 }}
-                    onPress={onClose}
-                />
-            </Right>
-        </Header>
-    );
-};
+const HeaderComponent = ({ headerLabel, onClosePress, onBackPress}: HeaderComponentProps): JSX.Element => (
+    <Header style={styles.headerContainer}>
+        <Left style={styles.headerBackButton}>
+            <Button onPress={onBackPress} transparent>
+                <Icon name='chevron-left' type='FontAwesome' style={styles.headerElement}/>
+            </Button>
+            <Title style={styles.headerLeftTitle}>
+                <Text style={textStyles.headline6}>
+                    <Trans id={headerLabel} />
+                </Text>
+            </Title>
+        </Left>
+        <Right>
+            <CloseButtonComponent
+                color={colors.greyishBrown}
+                additionalStyle={{ paddingTop: 0 }}
+                onPress={onClosePress}
+            />
+        </Right>
+    </Header>
+);
 
 const ContentComponent = (props: ContentComponentProps): JSX.Element => {
   return (
@@ -164,7 +149,7 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
         <Footer style={styles.footerContainer}>
             <FooterTab style={styles.footerTab}>
                 <MultiLineButtonComponent
-                    onPress={props.onSubmit}
+                    onPress={props.onSubmitPress}
                     additionalStyles={submitButtonStyle}
                     disabled={props.disabled}
                 >
@@ -177,32 +162,58 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
     );
 };
 
-export const FeedbackOtherRemoveServiceModal = (): JSX.Element => {
-    const params = useParams<RouteParams>();
-
-    const serviceId = params.serviceId;
-
-    const [input, onInputChange]: readonly [string, (value: string) => void]
-        = useFeedbackInputControl();
-
+export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveServiceProps): JSX.Element => {
+    const isOtherFeedback = props.feedbackScreen === FeedbackScreen.OtherChangesPage;
+    const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
     const history = useHistory();
+    const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
+    useEffect(navigateOnScreenChange, [props.feedbackScreen]);
 
-    // TODO Implement.
-    const onSubmit = (): void => undefined;
+    function navigateOnScreenChange(): void {
+        if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
+            goBack(history);
+        }
+    }
 
-    // TODO Implement.
-    const content: SuggestionContent = SUGGESTION_CONTENT.OTHER;
+    const onSubmitPress = (): void => {
+        if (isOtherFeedback) {
+            props.submitFeedback({ type: 'other_feedback', value: feedback });
+        } else {
+            props.submitFeedback({ type: 'remove_service', reason: feedback });
+        }
+    };
+
+    const onBackPress = (): void => {
+        props.back();
+    };
+
+    const onClosePress = (): void => {
+        props.close();
+    };
+
+    const onDiscardPress = (): void => {
+        props.discardFeedback();
+    };
+
+    const onKeepEditingPress = (): void => {
+        props.cancelDiscardFeedback();
+    };
 
     return (
         <Container>
-            <HeaderComponent headerLabel={content.header} serviceId={serviceId} history={history} />
+            <HeaderComponent headerLabel={content.header} onBackPress={onBackPress} onClosePress={onClosePress} />
             <ContentComponent
                 inputLabel={content.label}
-                input={input}
-                onInputChange={onInputChange}
+                input={feedback}
+                onInputChange={setFeedback}
                 placeholder={content.placeholder}
             />
-            <FooterComponent disabled={input.length === 0} onSubmit={onSubmit} />
+            <FooterComponent disabled={feedback.length === 0} onSubmitPress={onSubmitPress} />
+            <FeedbackDiscardChangesModal
+                isVisible={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
+                onDiscardPress={onDiscardPress}
+                onKeepEditingPress={onKeepEditingPress}
+            />
         </Container>
     );
 };
