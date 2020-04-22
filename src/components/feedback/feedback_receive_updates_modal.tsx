@@ -40,7 +40,7 @@ export const FeedbackReceiveUpdatesModal =
     const buttonLabel = userInformation.email.length ? t`Finish` : t`Finish without email`;
 
     return (
-        <Modal isVisible={isVisible} onBackdropPress={onFinishPress}>
+        <Modal isVisible={isVisible} onBackdropPress={onFinishPress} backdropTransitionOutTiming={0}>
             <I18n>
                 {
                     ({ i18n }: I18nProps): JSX.Element => (
