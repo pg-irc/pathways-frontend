@@ -45,6 +45,8 @@ import {
     DiscardChangesAction,
     getEmptyServiceFeedback,
     getEmptyUserInfo,
+    BackAction,
+    CancelDiscardChangesAction,
 } from '../../stores/feedback';
 
 export interface ServiceDetailProps {
@@ -69,6 +71,8 @@ export interface ServiceDetailActions {
     readonly finishFeedback: (userInformation: UserInformation) => FinishAction;
     readonly close: () => CloseAction;
     readonly discardFeedback: () => DiscardChangesAction;
+    readonly back: () => BackAction;
+    readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
@@ -79,11 +83,11 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const [feedback, setFeedback]: readonly[ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] = useState(getEmptyServiceFeedback());
     const [userInformation, setUserInformation]: readonly[UserInformation, Dispatch<SetStateAction<UserInformation>>] = useState(getEmptyUserInfo());
     const [feedbackIsReadyToSend, setFeedbackIsReadyToSend]: readonly[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-    const [isSendingFeedback, sendFeedback]: SendFeedbackPromise = useSendFeedback(props.feedbackPostData, onSendFeedbackFinished);
+    const [isSendingFeedback, sendFeedback]: SendFeedbackPromise = useSendFeedback(props.feedbackPostData, clearAllFeedback);
     useEffect(sendFeedbackWhenReady, [feedbackIsReadyToSend]);
     useEffect(navigateOnScreenChange, [props.feedbackScreen]);
 
-    function onSendFeedbackFinished(): void {
+    function clearAllFeedback(): void {
         resetLocalFeedbackState();
         props.discardFeedback();
     }
@@ -126,14 +130,34 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         props.chooseOtherChanges();
     };
 
-    const closeModal = (): void => {
+    const closeChooseFeedbackModeModal = (): void => {
         props.close();
     };
 
-    // TODO Wire this up to the submit button for service feedback.
-    // const onSubmitPress = (): void => {
+    // TODO Wire up to submit button.
+    // const onSubmit = (): void => {
     //     props.submitFeedback(feedback);
     // };
+
+    // TODO Wire up to back button.
+    // const onBackPress = (): void => {
+    //     props.back();
+    // };
+
+    // TODO Wire up to close button.
+    // const onClosePress = (): void => {
+    //     Note: This may seem odd as it's the same as closeChooseFeedbackModeModal() but it actually
+    //     acts differently depending on what screen you're on. See the reducer for details.
+    //     props.close();
+    // };
+
+    const onDiscardPress = (): void => {
+        props.discardFeedback();
+    };
+
+    const onKeepEditingPress = (): void => {
+        props.discardFeedback();
+    };
 
     const onFinishPress = (): void => {
         props.finishFeedback(userInformation);
@@ -143,6 +167,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const resetLocalFeedbackState = (): void => {
         setFeedback(getEmptyServiceFeedback());
         setUserInformation(getEmptyUserInfo());
+        setFeedbackIsReadyToSend(false);
     };
 
     return (
@@ -198,6 +223,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         showSuggestAnUpdate={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                         showChoooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
                         showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ReceiveUpdatesModal}
+                        showFeedbackDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
                         userInformation={userInformation}
                         setUserInformation={setUserInformation}
                         onSuggestAnUpdatePress={onSuggestAnUpdatePress}
@@ -205,7 +231,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         onRemoveThisServicePress={onRemoveThisServicePress}
                         onOtherChangesPress={onOtherChangesPress}
                         onFinishPress={onFinishPress}
-                        closeModal={closeModal}
+                        closeChooseFeedbackModeModal={closeChooseFeedbackModeModal}
+                        onDiscardPress={onDiscardPress}
+                        onKeepEditingPress={onKeepEditingPress}
                     />
                 </View>
             </KeyboardAwareScrollView>

@@ -8,12 +8,14 @@ import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { FeedbackChooseModeModal } from './feedback_choose_mode_modal';
 import { UserInformation } from '../../stores/feedback/types';
+import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
 
 interface FeedbackModalContainerProps {
     readonly isSendingFeedback: boolean;
     readonly showSuggestAnUpdate: boolean;
     readonly showChoooseFeedbackModeModal: boolean;
     readonly showReceiveUpdatesModal: boolean;
+    readonly showFeedbackDiscardChangesModal: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
     readonly onSuggestAnUpdatePress: () => void;
@@ -21,7 +23,9 @@ interface FeedbackModalContainerProps {
     readonly onRemoveThisServicePress: () => void;
     readonly onOtherChangesPress: () => void;
     readonly onFinishPress: () => void;
-    readonly closeModal: () => void;
+    readonly closeChooseFeedbackModeModal: () => void;
+    readonly onDiscardPress: () => void;
+    readonly onKeepEditingPress: () => void;
 }
 
 export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.Element => (
@@ -32,7 +36,7 @@ export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.
         />
         <FeedbackChooseModeModal
             isVisible={props.showChoooseFeedbackModeModal}
-            closeModal={props.closeModal}
+            closeModal={props.closeChooseFeedbackModeModal}
             onChangeNameOrDetailsPress={props.onChangeNameOrDetailsPress}
             onOtherPress={props.onOtherChangesPress}
             onRemoveServicePress={props.onRemoveThisServicePress}
@@ -43,6 +47,11 @@ export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.
             isSendingFeedback={props.isSendingFeedback}
             setUserInformation={props.setUserInformation}
             userInformation={props.userInformation}
+        />
+        <FeedbackDiscardChangesModal
+            isVisible={props.showFeedbackDiscardChangesModal}
+            onDiscardPress={props.onDiscardPress}
+            onKeepEditingPress={props.onKeepEditingPress}
         />
     </>
 );
