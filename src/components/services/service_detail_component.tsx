@@ -48,6 +48,9 @@ import {
     BackAction,
     CancelDiscardChangesAction,
 } from '../../stores/feedback';
+import { EmptyComponent } from '../empty_component/empty_component';
+import { TouchableOpacity } from 'react-native';
+import { ServiceDetailIconComponent } from './service_detail_icon';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -215,18 +218,20 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         setFeedbackForField={setFeedbackForField}
                         feedback={feedback}
                         analyticsLinkPressed={props.analyticsLinkPressed}
-                        {...props}
+                        currentPathForAnalytics={props.location.pathname}
                     />
                     <DividerComponent />
+                    <SuggestAnUpdateButton
+                        isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
+                        onPress={onSuggestAnUpdatePress}
+                    />
                     <FeedbackModalContainer
                         isSendingFeedback={isSendingFeedback}
-                        showSuggestAnUpdate={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                         showChoooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
                         showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ReceiveUpdatesModal}
                         showFeedbackDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
                         userInformation={userInformation}
                         setUserInformation={setUserInformation}
-                        onSuggestAnUpdatePress={onSuggestAnUpdatePress}
                         onChangeNameOrDetailsPress={onChangeNameOrDetailsPress}
                         onRemoveThisServicePress={onRemoveThisServicePress}
                         onOtherChangesPress={onOtherChangesPress}
@@ -300,12 +305,13 @@ interface ServiceContactDetailsProps {
     readonly isEditableService: boolean;
     readonly setFeedbackForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly currentPathForAnalytics: string;
 }
 
-const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps): JSX.Element => {
+const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element => {
     const serviceName = buildServiceName(props.service.organizationName, props.service.name);
     const linkContextForAnalytics = buildAnalyticsLinkContext('Service', serviceName);
-    const currentPathForAnalytics = props.location.pathname;
+    const currentPathForAnalytics = props.currentPathForAnaltyics;
     const physicalAddresses = filterPhysicalAddresses(props.service.addresses);
 
     return (
@@ -380,6 +386,27 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps & RouterProps):
         </>
     );
  };
+
+const SuggestAnUpdateButton = (props: { readonly isVisible: boolean, readonly onPress: () => void } ): JSX.Element => {
+    if (!props.isVisible) {
+        return <EmptyComponent />;
+    }
+    return (
+        <View style={{flexDirection: 'row-reverse', marginBottom: 20}}>
+        <TouchableOpacity
+            onPress={props.onPress}
+            style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
+        >
+            <View style={{ flexDirection: 'row'}}>
+                <ServiceDetailIconComponent name={'edit'} />
+                <Text style={[textStyles.paragraphBoldBlackLeft, { marginLeft: 5 }]}>
+                    <Trans>Suggest an update</Trans>
+                </Text>
+            </View>
+        </TouchableOpacity>
+    </View>
+    );
+};
 
 const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
     addresses.map((address: Address): string => `${address.address}\n${address.city} ${address.stateProvince} ${address.postalCode}`).join('\n')
