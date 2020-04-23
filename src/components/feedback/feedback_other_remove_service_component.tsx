@@ -21,11 +21,11 @@ import { useHistory, useParams } from 'react-router-native';
 
 import { colors, textStyles } from '../../application/styles';
 import { Routes, replaceRouteWithParameters } from '../../application/routing';
-import { useQuery } from '../../hooks/use_query';
-import { CloseButtonComponent } from '../close_button/close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import { otherRemoveServiceStyles as styles } from './styles';
+import { CloseButtonComponent } from '../close_button_component';
+import { useQuery } from '../search/use_query';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;

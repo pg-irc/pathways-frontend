@@ -6,12 +6,12 @@ import { useHistory } from 'react-router-native';
 
 import { textStyles, colors } from '../../application/styles';
 import { Routes, goToRouteWithParameters } from '../../application/routing';
-import { useQuery } from '../../hooks/use_query';
 import { FeedbackReceiveUpdatesModal } from '../feedback/feedback_receive_updates_modal';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 import { FeedbackOptionsModalComponent } from './feedback_options_modal_component';
+import { useQuery } from '../search/use_query';
 
 interface FeedbackModalContainerProps {
     readonly feedbackEnabled: boolean;

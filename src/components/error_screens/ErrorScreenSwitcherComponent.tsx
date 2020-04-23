@@ -11,8 +11,8 @@ import {
     invalidSearchLocation,
 } from '../../application/images';
 import { ErrorScreenComponent } from './ErrorScreenComponent';
-import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button/app_settings_button_component';
-import { isAndroid } from '../../helpers/is_android';
+import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button_component';
+import { isAndroid } from '../../application/helpers/is_android';
 import { View, Text } from 'native-base';
 import { textStyles, bulletPoint } from '../../application/styles';
 
@@ -158,13 +158,13 @@ const getAdditionalContentForError = (error: Errors): JSX.Element | undefined =>
 const renderNoMatchingResultsSuggestions = (): JSX.Element => (
     <View>
         <Text style={textStyles.paragraphStyleBrown}>
-            {bulletPoint} <Trans>Search for a different keyword</Trans>
+            {bulletPoint} <Trans>Ensure your search is in English</Trans>
         </Text>
         <Text style={textStyles.paragraphStyleBrown}>
             {bulletPoint} <Trans>Double check for spelling</Trans>
         </Text>
         <Text style={textStyles.paragraphStyleBrown}>
-            {bulletPoint} <Trans>Ensure your search is in English</Trans>
+            {bulletPoint} <Trans>Search for a different keyword</Trans>
         </Text>
     </View>
 );

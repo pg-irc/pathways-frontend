@@ -4,23 +4,23 @@ import { ServiceBookmarksComponent } from './service_bookmarks_component';
 import { TabView, SceneMap, TabBar, SceneRendererProps, NavigationState, Route } from 'react-native-tab-view';
 import { Dimensions } from 'react-native';
 import { ReactI18nRenderProp } from '../../locale/types';
-import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro';
 import { colors, textStyles } from '../../application/styles';
 import { BookmarksProps } from './bookmarks_component';
-import { View, Text } from 'native-base';
+import { View } from 'native-base';
 import { RouterProps } from '../../application/routing';
-import { TaskListActions } from '../topics/task_list_component';
+import { ListActions } from './bookmarks_connected_component';
 
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
 
-type Props = ReactI18nRenderProp & BookmarksProps & TaskListActions & RouterProps;
+type Props = ReactI18nRenderProp & BookmarksProps & ListActions & RouterProps;
 
 export const TabSwitcher = (props: Props): JSX.Element => {
     const _ = props.i18n._.bind(props.i18n);
     const routes: TabRoutes = [
-        { key: 'topics', title: _('Topics') },
-        { key: 'services', title: _('Services') },
+        { key: 'topics', title: _(t`Topics`) },
+        { key: 'services', title: _(t`Services`) },
     ];
 
     const [index, setIndex]: readonly [number, (n: number) => void] = useState(0);
@@ -62,23 +62,10 @@ type TabBarProps = SceneRendererProps & NavigationStateRoute;
 
 const renderTabBar = (tabBarProps: TabBarProps): JSX.Element => (
     <TabBar
-    {...tabBarProps}
-    style={{ backgroundColor: colors.white, width: '55%', elevation: 0, marginHorizontal: 8 }}
-    indicatorStyle={{ backgroundColor: colors.teal, height: 4 }}
-    getLabelText={({ route }: { readonly route: Route}): string => route.title}
-    labelStyle={textStyles.headlineH3StyleBlackCenter}
+        {...tabBarProps}
+        style={{ backgroundColor: colors.white, width: '55%', elevation: 0, marginHorizontal: 8 }}
+        indicatorStyle={{ backgroundColor: colors.teal, height: 4 }}
+        getLabelText={({ route }: { readonly route: Route}): string => route.title}
+        labelStyle={textStyles.headlineH3StyleBlackCenter}
     />
-);
-
-// This is here to be able to extract heading strings with yarn extract-strings-clean.
-// These strings must match the strings within the BookmarksTabSwitcher component.
-export const extractBookmarkComponentStrings = (): JSX.Element => (
-    <View>
-        <Text>
-            <Trans>Topics</Trans>
-        </Text>
-        <Text>
-            <Trans>Services</Trans>
-        </Text>
-    </View>
 );

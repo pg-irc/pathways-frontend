@@ -3,16 +3,16 @@ import * as R from 'ramda';
 import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
 import { Address } from '../../validation/services/types';
-import { CardButtonComponent } from '../card_button/card_button_component';
+import { CardButtonComponent } from '../card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles } from '../../application/styles';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { LatLong } from '../../validation/latlong/types';
 import { openInMapsApplication } from '../maps_application_popup/open_in_maps_application';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
-import { mapWithIndex } from '../../application/map_with_index';
 import { isServiceDetailArrayEmpty } from '../services/is_service_detail_empty';
 import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
+import { mapWithIndex } from '../../application/helpers/map_with_index';
 
 interface Props {
     readonly addresses: ReadonlyArray<Address>;
@@ -25,7 +25,7 @@ interface Props {
 
 export const AddressesComponent = (props: Props): JSX.Element => {
     if (isServiceDetailArrayEmpty(props.addresses)) {
-        return <MissingServiceDetailComponent title={<Trans>Address</Trans>} />;
+        return <MissingServiceDetailComponent title={<Trans>Address:</Trans>} />;
     }
     return (
     <View>
@@ -61,7 +61,7 @@ const buildAddress = R.curry((props: Props, address: Address, index: number): JS
 
 export const renderSingleAddress = (address: Address): JSX.Element => (
     <View>
-        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address</Trans>: </Text>
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address:</Trans> </Text>
         <Text style={textStyles.paragraphStyle}>{address.address}</Text>
         <Text style={textStyles.paragraphStyle}>
             {address.city} {address.stateProvince} {address.postalCode}

@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-any no-null-keyword
 import { PersistedDataBuilder } from '../../../stores/__tests__/helpers/persisted_data_builder';
 import { validateUserData } from '..';
-import { aString, aBoolean, aNumber } from '../../../helpers/random_test_values';
+import { aString, aBoolean, aNumber } from '../../../application/helpers/random_test_values';
 import { ServiceBuilder, buildServiceMap } from '../../../stores/__tests__/helpers/services_helpers';
 import { buildDefaultStore, Store } from '../../../stores';
 import { selectUserDataForLocalPersistence } from '../../../selectors/user_data/select_user_data_for_local_persistence';

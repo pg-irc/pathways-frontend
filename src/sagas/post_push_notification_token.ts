@@ -5,6 +5,7 @@ import * as helpers from '../stores/helpers/make_action';
 import * as Permissions from 'expo-permissions';
 import { Notifications } from 'expo';
 import { putPushNotificationToken, APIResponse } from '../api';
+import { PATHWAYS_API_KEY } from 'react-native-dotenv';
 import { selectLocale } from '../selectors/locale/select_locale';
 import { Locale } from '../locale';
 
@@ -47,7 +48,7 @@ function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction)
         return yield put(failure('Error retrieving push notification token'));
     }
     const locale: Locale = yield select(selectLocale);
-    const result: APIResponse = yield call(putPushNotificationToken, token, locale);
+    const result: APIResponse = yield call(putPushNotificationToken, token, locale, PATHWAYS_API_KEY);
     if (!result || result.hasError) {
         // TODO log error to sentry
         return yield put(failure('Error posting push notification token'));

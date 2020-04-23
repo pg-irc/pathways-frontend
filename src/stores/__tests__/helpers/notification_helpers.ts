@@ -1,5 +1,5 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class no-let
-import { aString } from '../../../helpers/random_test_values';
+import { aString } from '../../../application/helpers/random_test_values';
 import { NotificationType, Notification } from '../../notifications';
 
 export class NotificationBuilder {

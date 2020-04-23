@@ -14,7 +14,7 @@ import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { BackButtonComponent } from '../header_button/back_button_component';
-import { BookmarkButtonComponent } from '../bookmark_button/bookmark_button_component';
+import { BookmarkButtonComponent } from '../bookmark_button_component';
 import * as R from 'ramda';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { renderHeader } from '../main/render_header';

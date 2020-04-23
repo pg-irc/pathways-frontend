@@ -2,17 +2,17 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { PhoneNumber } from '../../validation/services/types';
-import { CardButtonComponent } from '../card_button/card_button_component';
+import { CardButtonComponent } from '../card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import * as R from 'ramda';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
-import { mapWithIndex } from '../../application/map_with_index';
 import { isServiceDetailArrayEmpty } from '../services/is_service_detail_empty';
 import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
 import { Trans } from '@lingui/react';
+import { mapWithIndex } from '../../application/helpers/map_with_index';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;

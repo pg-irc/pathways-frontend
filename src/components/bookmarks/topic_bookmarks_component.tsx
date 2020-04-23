@@ -5,7 +5,6 @@ import { TaskListActions, TaskListComponent } from '../topics/task_list_componen
 import { RouterProps } from '../../application/routing';
 import { View } from 'native-base';
 import { colors } from '../../application/styles';
-import { emptyTopicServicesList } from '../../application/images';
 import { Trans } from '@lingui/react';
 import { EmptyBookmarksComponent } from './empty_bookmarks_component';
 
@@ -25,7 +24,6 @@ export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: 
                 emptyTaskListContent={
                     <EmptyBookmarksComponent
                         title={<Trans>No topics to show</Trans>}
-                        imageSource={emptyTopicServicesList}
                     />
                 }
                 headerContent={<View />}

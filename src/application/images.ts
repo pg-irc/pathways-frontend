@@ -18,3 +18,4 @@ export const emptyTopicServicesList = require('../../assets/images/aa_empty_list
 export const emptySearch = require('../../assets/images/aa_empty_search.png');
 export const noMatchingSearchResults = require('../../assets/images/aa_no_matching_search_results.png');
 export const invalidSearchLocation = require('../../assets/images/aa_invalid_search_location.png');
+export const emptyBookmarks = require('../../assets/images/aa_empty_bookmarks.png');

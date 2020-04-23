@@ -1,7 +1,7 @@
 // tslint:disable:readonly-keyword no-this no-expression-statement readonly-array no-class no-let
 
 import * as store from '../../questionnaire';
-import { aString, aBoolean } from '../../../helpers/random_test_values';
+import { aString, aBoolean } from '../../../application/helpers/random_test_values';
 import { TaxonomyTermReference } from '../../../selectors/taxonomies/pull_explore_taxonomy';
 import { ValidQuestionnaireStore, LoadingQuestionnaireStore } from '../../questionnaire/stores';
 

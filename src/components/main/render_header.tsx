@@ -2,8 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { Header, Left, Right, Body, Title } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
-import { mapWithIndex } from '../../application/map_with_index';
 
 interface RenderHeaderProps {
     readonly backgroundColor: string;

@@ -75,7 +75,7 @@ async function createAPIResponse(response: Response): Promise<APIResponse> {
     return { hasError: false, message, response, results };
 }
 
-export async function putPushNotificationToken(token: string, locale: Locale): Promise<APIResponse> {
+export async function putPushNotificationToken(token: string, locale: Locale, api_key: string): Promise<APIResponse> {
     const url = createPushNotificationTokenUrl(baseUrl, token);
     const response = await fetch(url,
         {
@@ -83,7 +83,10 @@ export async function putPushNotificationToken(token: string, locale: Locale): P
             headers: [
                 ['Content-Type', 'application/json'],
             ],
-            body: JSON.stringify({ 'locale': locale.code }),
+            body: JSON.stringify({
+                'locale': locale.code,
+                'api_key': api_key,
+             }),
         },
     );
     return createAPIResponse(response);

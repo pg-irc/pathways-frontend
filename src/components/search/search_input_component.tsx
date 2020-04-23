@@ -4,12 +4,12 @@ import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { values, applicationStyles, colors, textStyles } from '../../application/styles';
-import { debug, useTraceUpdate } from '../../helpers/debug';
+import { debug, useTraceUpdate } from '../../application/helpers/use_trace_update';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import { ClearInputButton } from './clear_input_button';
 import * as IntentLauncher from 'expo-intent-launcher';
 import * as Permissions from 'expo-permissions';
-import { isAndroid } from '../../helpers/is_android';
+import { isAndroid } from '../../application/helpers/is_android';
 import { openURL } from '../link/link';
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -77,7 +77,7 @@ const buildBriefSearchString = (searchInput: string, searchLocationInput: string
         return searchInput;
     }
     if (searchLocationInput === MY_LOCATION) {
-        return searchInput + ' ' + buildTranslatedString(i18nRenderProp.i18n, 'near my location');
+        return searchInput + ' ' + buildTranslatedString(i18nRenderProp.i18n, 'near My Location');
     }
     return searchInput + ' near ' + searchLocationInput;
 };
@@ -206,10 +206,12 @@ const InputIcon = ({ name }: IconProps): JSX.Element => (
 
 const renderSearchButton = (props: Props & ExpandedInputProps): JSX.Element => (
     <TouchableOpacity
-        style={[applicationStyles.searchButton, { backgroundColor: colors.lightTeal }]}
+        style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
+        disabled={props.searchTermInput.length === 0}
         onPress={(): void => {
             props.onSearchRequest(props.searchTermInput, props.searchLocationInput);
-        }}>
+        }}
+    >
         <Text style={[textStyles.button, { fontSize: 16 }]}>
             <Trans>
                 Search
@@ -224,7 +226,7 @@ const renderMyLocationButton = (props: ExpandedInputProps): JSX.Element => {
     }
     return (
         <TouchableOpacity
-            style={[applicationStyles.searchButton, { backgroundColor: colors.white }]}
+            style={applicationStyles.locateButton}
             onPress={(): void => {
                 props.setShowMyLocationButton(false);
                 myLocationOnPress(props.setSearchLocationInput);

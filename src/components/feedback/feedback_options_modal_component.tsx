@@ -4,8 +4,8 @@ import { View, Text } from 'native-base';
 import { colors, textStyles } from '../../application/styles';
 import { TouchableOpacity } from 'react-native';
 import { DividerComponent } from '../content_layout/divider_component';
-import { CloseButtonComponent } from '../close_button/close_button_component';
 import { Trans } from '@lingui/react';
+import { CloseButtonComponent } from '../close_button_component';
 
 export interface FeedbackModalProps {
     readonly isVisible: boolean;

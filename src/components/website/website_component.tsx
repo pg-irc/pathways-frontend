@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
-import { CardButtonComponent } from '../card_button/card_button_component';
+import { CardButtonComponent } from '../card_button_component';
 import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
@@ -24,7 +24,7 @@ export const WebsiteComponent = (props: Props): JSX.Element => {
     };
 
     if (isServiceDetailStringEmpty(props.website)) {
-        return <MissingServiceDetailComponent title={<Trans>Website</Trans>} />;
+        return <MissingServiceDetailComponent title={<Trans>Website:</Trans>} />;
     }
 
     return (
@@ -40,7 +40,7 @@ export const WebsiteComponent = (props: Props): JSX.Element => {
 
 const renderWebsite = (website: string): JSX.Element => (
     <View>
-        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website</Trans>: </Text>
+        <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website:</Trans> </Text>
         <Text style={textStyles.paragraphStyle}>{website}</Text>
     </View>
 );

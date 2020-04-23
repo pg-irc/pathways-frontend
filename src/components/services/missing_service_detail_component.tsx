@@ -10,7 +10,7 @@ export const MissingServiceDetailComponent = (props: Props): JSX.Element => {
     return (
         <View>
             <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}>
-                {props.title}:
+                {props.title}
             </Text>
         </View>
     );
