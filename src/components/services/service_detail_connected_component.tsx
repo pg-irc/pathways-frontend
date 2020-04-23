@@ -30,6 +30,10 @@ import {
     CloseAction,
     DiscardChangesAction,
     discardChanges,
+    BackAction,
+    back,
+    CancelDiscardChangesAction,
+    cancelDiscardChanges,
 } from '../../stores/feedback';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
@@ -55,7 +59,9 @@ type Actions =
     SubmitAction |
     FinishAction |
     CloseAction |
-    DiscardChangesAction;
+    DiscardChangesAction |
+    BackAction |
+    CancelDiscardChangesAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions => ({
     analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
@@ -71,6 +77,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     finishFeedback: (userInformation: UserInformation): FinishAction => dispatch(finishFeedback(userInformation)),
     close: (): CloseAction => dispatch(close()),
     discardFeedback: (): DiscardChangesAction => dispatch(discardChanges()),
+    back: (): BackAction => dispatch(back()),
+    cancelDiscardFeedback: (): CancelDiscardChangesAction => dispatch(cancelDiscardChanges()),
 });
 
 export const ServiceDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceDetailComponent);
