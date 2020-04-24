@@ -8,7 +8,6 @@ import { Trans } from '@lingui/react';
 import { CloseButtonComponent } from '../close_button_component';
 
 export interface FeedbackModalProps {
-    readonly isVisible: boolean;
     readonly closeModal: () => void;
 }
 
@@ -22,7 +21,7 @@ type Props = FeedbackModalProps & ButtonsComponentProps;
 
 export const FeedbackChooseModeModal = (props: Props): JSX.Element => (
     <Modal
-        isVisible={props.isVisible}
+        isVisible={true}
         onBackdropPress={props.closeModal}
         style={{ justifyContent: 'flex-end', margin: 0 }}
         backdropTransitionOutTiming={0}

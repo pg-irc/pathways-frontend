@@ -7,13 +7,12 @@ import Modal from 'react-native-modal';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 interface Props {
-    readonly isVisible: boolean;
     readonly onKeepEditingPress: () => void;
     readonly onDiscardPress: () => void;
 }
 
 export const FeedbackDiscardChangesModal = (props: Props): JSX.Element => (
-    <Modal isVisible={props.isVisible} backdropTransitionOutTiming={0}>
+    <Modal isVisible={true} backdropTransitionOutTiming={0}>
         <View style={{ backgroundColor: colors.white, borderRadius: 20, padding: 20 }}>
             <PromptText />
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
