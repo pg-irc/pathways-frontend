@@ -1,5 +1,6 @@
 // tslint:disable: no-expression-statement
 import React, { Dispatch, SetStateAction, useState, useRef, useEffect, MutableRefObject } from 'react';
+import { TouchableOpacity } from 'react-native';
 import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
@@ -34,6 +35,8 @@ import { Id } from '../../stores/services';
 import { useSendFeedback, SendFeedbackPromise } from './use_send_feedback';
 import { ServiceFeedback, FeedbackField, Feedback, FeedbackScreen, FeedbackModal, UserInformation } from '../../stores/feedback/types';
 import { FeedbackPostData } from '../../selectors/feedback/types';
+import { EmptyComponent } from '../empty_component/empty_component';
+import { ServiceDetailIconComponent } from './service_detail_icon';
 import {
     SubmitAction,
     FinishAction,
@@ -48,9 +51,7 @@ import {
     BackAction,
     CancelDiscardChangesAction,
 } from '../../stores/feedback';
-import { EmptyComponent } from '../empty_component/empty_component';
-import { TouchableOpacity } from 'react-native';
-import { ServiceDetailIconComponent } from './service_detail_icon';
+import { isAndroid } from '../../application/helpers/is_android';
 
 export interface ServiceDetailProps {
     readonly history: History;

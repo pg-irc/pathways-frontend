@@ -3,7 +3,7 @@ import { reducer, suggestAnUpdate,
     chooseChangeNameOrDetails, chooseRemoveService,
     chooseOtherChanges, submit, discardChanges, close,
     back, finishFeedback, buildDefaultStore, cancelDiscardChanges } from '../feedback';
-import { aString, aBoolean } from '../../helpers/random_test_values';
+import { aString, aBoolean } from '../../application/helpers/random_test_values';
 import { FeedbackModal, FeedbackField, ServiceFeedback, FeedbackScreen } from '../feedback/types';
 import { FeedbackStoreBuilder } from './helpers/feedback_store_builder';
 
