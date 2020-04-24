@@ -89,14 +89,14 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const [feedbackIsReadyToSend, setFeedbackIsReadyToSend]: readonly[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
     const [isSendingFeedback, sendFeedback]: SendFeedbackPromise = useSendFeedback(props.feedbackPostData, clearAllFeedback);
     useEffect(sendFeedbackWhenReady, [feedbackIsReadyToSend]);
-    useEffect(navigateOnScreenChange, [props.feedbackScreen]);
+    useEffect(navigateToFeedbackScreen, [props.feedbackScreen]);
 
     function clearAllFeedback(): void {
         resetLocalFeedbackState();
         props.discardFeedback();
     }
 
-    function navigateOnScreenChange(): void {
+    function navigateToFeedbackScreen(): void {
         switch (props.feedbackScreen) {
             case FeedbackScreen.OtherChangesPage:
             case FeedbackScreen.RemoveServicePage:
@@ -118,52 +118,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         setFeedback({...feedback, [fieldName]: fieldValue })
     ));
 
-    const onSuggestAnUpdatePress = (): void => {
-        props.suggestAnUpdate();
-    };
-
-    const onChangeNameOrDetailsPress = (): void => {
-        props.chooseChangeNameOrDetail();
-    };
-
-    const onRemoveThisServicePress = (): void => {
-        props.chooseRemoveService();
-    };
-
-    const onOtherChangesPress = (): void => {
-        props.chooseOtherChanges();
-    };
-
-    const closeChooseFeedbackModeModal = (): void => {
-        props.close();
-    };
-
-    // TODO Wire up to submit button.
-    // const onSubmit = (): void => {
-    //     props.submitFeedback(feedback);
-    // };
-
-    // TODO Wire up to back button.
-    // const onBackPress = (): void => {
-    //     props.back();
-    // };
-
-    // TODO Wire up to close button.
-    // const onClosePress = (): void => {
-    //     Note: This may seem odd as it's the same as closeChooseFeedbackModeModal() but it actually
-    //     acts differently depending on what screen you're on. See the reducer for details.
-    //     props.close();
-    // };
-
-    const onDiscardPress = (): void => {
-        props.discardFeedback();
-    };
-
-    const onKeepEditingPress = (): void => {
-        props.discardFeedback();
-    };
-
-    const onFinishPress = (): void => {
+    const finishAndSendFeedback = (): void => {
         props.finishFeedback(userInformation);
         setFeedbackIsReadyToSend(true);
     };
@@ -224,22 +179,22 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     <DividerComponent />
                     <SuggestAnUpdateButton
                         isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
-                        onPress={onSuggestAnUpdatePress}
+                        suggestAnUpdate={props.suggestAnUpdate}
                     />
                     <FeedbackModalContainer
                         isSendingFeedback={isSendingFeedback}
+                        finishAndSendFeedback={finishAndSendFeedback}
+                        userInformation={userInformation}
+                        setUserInformation={setUserInformation}
                         showChoooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
                         showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ReceiveUpdatesModal}
                         showFeedbackDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
-                        userInformation={userInformation}
-                        setUserInformation={setUserInformation}
-                        onChangeNameOrDetailsPress={onChangeNameOrDetailsPress}
-                        onRemoveThisServicePress={onRemoveThisServicePress}
-                        onOtherChangesPress={onOtherChangesPress}
-                        onFinishPress={onFinishPress}
-                        closeChooseFeedbackModeModal={closeChooseFeedbackModeModal}
-                        onDiscardPress={onDiscardPress}
-                        onKeepEditingPress={onKeepEditingPress}
+                        chooseChangeNameOrDetail={props.chooseChangeNameOrDetail}
+                        chooseRemoveService={props.chooseRemoveService}
+                        chooseOtherChanges={props.chooseOtherChanges}
+                        close={props.close}
+                        discardFeedback={props.discardFeedback}
+                        cancelDiscardFeedback={props.cancelDiscardFeedback}
                     />
                 </View>
             </KeyboardAwareScrollView>
@@ -388,14 +343,14 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
     );
  };
 
-const SuggestAnUpdateButton = (props: { readonly isVisible: boolean, readonly onPress: () => void } ): JSX.Element => {
+const SuggestAnUpdateButton = (props: { readonly isVisible: boolean, readonly suggestAnUpdate: () => void } ): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
     return (
         <View style={{flexDirection: 'row-reverse', marginBottom: 20}}>
         <TouchableOpacity
-            onPress={props.onPress}
+            onPress={props.suggestAnUpdate}
             style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
         >
             <View style={{ flexDirection: 'row'}}>

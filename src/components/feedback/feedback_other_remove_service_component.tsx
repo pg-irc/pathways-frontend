@@ -32,8 +32,8 @@ import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
-    readonly onClosePress: () => void;
-    readonly onBackPress: () => void;
+    readonly close: () => void;
+    readonly back: () => void;
 };
 
 type ContentComponentProps = {
@@ -45,7 +45,7 @@ type ContentComponentProps = {
 
 type FooterComponentProps = {
     readonly disabled: boolean;
-    readonly onSubmitPress: () => void;
+    readonly submitFeedback: () => void;
 };
 
 interface SuggestionContent {
@@ -86,10 +86,10 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
     },
 };
 
-const HeaderComponent = ({ headerLabel, onClosePress, onBackPress}: HeaderComponentProps): JSX.Element => (
+const HeaderComponent = ({ headerLabel, close, back }: HeaderComponentProps): JSX.Element => (
     <Header style={styles.headerContainer}>
         <Left style={styles.headerBackButton}>
-            <Button onPress={onBackPress} transparent>
+            <Button onPress={back} transparent>
                 <Icon name='chevron-left' type='FontAwesome' style={styles.headerElement}/>
             </Button>
             <Title style={styles.headerLeftTitle}>
@@ -102,7 +102,7 @@ const HeaderComponent = ({ headerLabel, onClosePress, onBackPress}: HeaderCompon
             <CloseButtonComponent
                 color={colors.greyishBrown}
                 additionalStyle={{ paddingTop: 0 }}
-                onPress={onClosePress}
+                onPress={close}
             />
         </Right>
     </Header>
@@ -149,7 +149,7 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
         <Footer style={styles.footerContainer}>
             <FooterTab style={styles.footerTab}>
                 <MultiLineButtonComponent
-                    onPress={props.onSubmitPress}
+                    onPress={props.submitFeedback}
                     additionalStyles={submitButtonStyle}
                     disabled={props.disabled}
                 >
@@ -168,15 +168,15 @@ export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveSe
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
     const history = useHistory();
     const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
-    useEffect(navigateOnScreenChange, [props.feedbackScreen]);
+    useEffect(navigateToFeedbackScreen, [props.feedbackScreen]);
 
-    function navigateOnScreenChange(): void {
+    function navigateToFeedbackScreen(): void {
         if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
             goBack(history);
         }
     }
 
-    const onSubmitPress = (): void => {
+    const submitFeedback = (): void => {
         if (isOtherFeedback) {
             props.submitFeedback({ type: 'other_feedback', value: feedback });
         } else {
@@ -184,33 +184,22 @@ export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveSe
         }
     };
 
-    const onBackPress = (): void => {
-        props.back();
-    };
-
-    const onClosePress = (): void => {
-        props.close();
-    };
-
-    const onDiscardPress = (): void => {
-        props.discardFeedback();
-    };
-
-    const onKeepEditingPress = (): void => {
-        props.cancelDiscardFeedback();
-    };
-
     return (
         <Container>
-            <HeaderComponent headerLabel={content.header} onBackPress={onBackPress} onClosePress={onClosePress} />
+            <HeaderComponent headerLabel={content.header} back={props.back} close={props.close} />
             <ContentComponent
                 inputLabel={content.label}
                 input={feedback}
                 onInputChange={setFeedback}
                 placeholder={content.placeholder}
             />
-            <FooterComponent disabled={feedback.length === 0} onSubmitPress={onSubmitPress} />
-            {showDiscardChangesModal && <FeedbackDiscardChangesModal onDiscardPress={onDiscardPress} onKeepEditingPress={onKeepEditingPress} />}
+            <FooterComponent disabled={feedback.length === 0} submitFeedback={submitFeedback} />
+            {showDiscardChangesModal
+             &&
+             <FeedbackDiscardChangesModal
+                 discardFeedback={props.discardFeedback}
+                 cancelDiscardFeedback={props.cancelDiscardFeedback}
+             />}
         </Container>
     );
 };
