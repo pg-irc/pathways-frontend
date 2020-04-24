@@ -145,7 +145,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         feedbackField={feedback.name}
                         fieldLabel={<Trans>Name</Trans>}
                         fieldValue={props.service.name}
-                        feedbackEnabled={isEditableService}
+                        isEditableService={isEditableService}
                         feedbackDisabledComponent={<Name name={props.service.name} />}
                     />
                     <DividerComponent />
@@ -154,7 +154,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         feedbackField={feedback.organization}
                         fieldLabel={<Trans>Organization</Trans>}
                         fieldValue={props.service.organizationName}
-                        feedbackEnabled={isEditableService}
+                        isEditableService={isEditableService}
                         feedbackDisabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
                     />
                     <DividerComponent />
@@ -163,7 +163,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         feedbackField={feedback.description}
                         fieldLabel={<Trans>Description</Trans>}
                         fieldValue={props.service.description}
-                        feedbackEnabled={isEditableService}
+                        isEditableService={isEditableService}
                         feedbackDisabledComponent={<Description description={props.service.description} />}
                     />
                     <DividerComponent />
@@ -277,7 +277,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
                 feedbackField={props.feedback.address}
                 fieldLabel={<Trans>Address</Trans>}
                 fieldValue={getAddressesString(physicalAddresses)}
-                feedbackEnabled={props.isEditableService}
+                isEditableService={props.isEditableService}
                 feedbackDisabledComponent={
                     <AddressesComponent
                         addresses={physicalAddresses}
@@ -295,7 +295,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
                 feedbackField={props.feedback.phone}
                 fieldLabel={<Trans>Phone numbers</Trans>}
                 fieldValue={getPhonesString(props.service.phoneNumbers)}
-                feedbackEnabled={props.isEditableService}
+                isEditableService={props.isEditableService}
                 feedbackDisabledComponent={
                     <PhoneNumbersComponent
                         phoneNumbers={props.service.phoneNumbers}
@@ -311,7 +311,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
                 feedbackField={props.feedback.website}
                 fieldLabel={<Trans>Website</Trans>}
                 fieldValue={props.service.website}
-                feedbackEnabled={props.isEditableService}
+                isEditableService={props.isEditableService}
                 feedbackDisabledComponent={
                     <WebsiteComponent
                         website={props.service.website}
@@ -327,7 +327,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
                 feedbackField={props.feedback.email}
                 fieldLabel={<Trans>Email</Trans>}
                 fieldValue={props.service.email}
-                feedbackEnabled={props.isEditableService}
+                isEditableService={props.isEditableService}
                 feedbackDisabledComponent={
                     <EmailComponent
                         email={props.service.email}

@@ -10,7 +10,7 @@ import { stripMarkdown } from '../strip_markdown/strip_markdown';
 import { FeedbackField } from '../../stores/feedback/types';
 
 interface Props {
-    readonly feedbackEnabled: boolean;
+    readonly isEditableService: boolean;
     readonly feedbackField: FeedbackField;
     readonly setFeedbackField: (field: FeedbackField) => void;
     readonly fieldLabel: JSX.Element;
@@ -26,7 +26,7 @@ export const FeedbackComponent = (props: Props): JSX.Element => {
 
     const onEditingTogglePress = (): void => setIsEditing(!isEditing);
 
-    if (!props.feedbackEnabled) {
+    if (!props.isEditableService) {
         return props.feedbackDisabledComponent;
     }
 
