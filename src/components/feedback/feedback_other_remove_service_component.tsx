@@ -22,7 +22,7 @@ import { useHistory } from 'react-router-native';
 
 import { colors, textStyles } from '../../application/styles';
 import { goBack } from '../../application/routing';
-import { CloseButtonComponent } from '../close_button/close_button_component';
+import { CloseButtonComponent } from '../close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 import { otherRemoveServiceStyles as styles } from './styles';

@@ -3,7 +3,7 @@ import { pickSendableFeedback } from '../feedback/pick_sendable_feedback';
 import { toFeedbackPostDataAuthor } from '../feedback/to_feedback_post_data_author';
 import { toFeedbackPostDataContent } from '../feedback/to_feedback_post_data_content';
 import { FeedbackStoreBuilder } from '../../stores/__tests__/helpers/feedback_store_builder';
-import { aString } from '../../helpers/random_test_values';
+import { aString } from '../../application/helpers/random_test_values';
 import { Feedback, UserInformation } from '../../stores/feedback/types';
 import { getEmptyServiceFeedback } from '../../stores/feedback';
 
