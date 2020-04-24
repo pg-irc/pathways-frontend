@@ -164,6 +164,7 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
 
 export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveServiceProps): JSX.Element => {
     const isOtherFeedback = props.feedbackScreen === FeedbackScreen.OtherChangesPage;
+    const showDiscardChangesModal = props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal;
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
     const history = useHistory();
     const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
@@ -209,11 +210,7 @@ export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveSe
                 placeholder={content.placeholder}
             />
             <FooterComponent disabled={feedback.length === 0} onSubmitPress={onSubmitPress} />
-            <FeedbackDiscardChangesModal
-                isVisible={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
-                onDiscardPress={onDiscardPress}
-                onKeepEditingPress={onKeepEditingPress}
-            />
+            {showDiscardChangesModal && <FeedbackDiscardChangesModal onDiscardPress={onDiscardPress} onKeepEditingPress={onKeepEditingPress} />}
         </Container>
     );
 };

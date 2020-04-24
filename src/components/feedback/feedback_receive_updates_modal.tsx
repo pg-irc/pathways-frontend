@@ -12,7 +12,6 @@ import { UserInformation } from '../../stores/feedback/types';
 import { showToast } from '../../application/toast';
 
 interface FeedbackReceiveUpdatesProps {
-    readonly isVisible: boolean;
     readonly onFinishPress: () => void;
     readonly isSendingFeedback: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
@@ -22,7 +21,7 @@ interface FeedbackReceiveUpdatesProps {
 const INPUT_PLACEHOLDER = t`Enter email`;
 
 export const FeedbackReceiveUpdatesModal =
-({ isVisible, onFinishPress, isSendingFeedback, userInformation, setUserInformation }: FeedbackReceiveUpdatesProps): JSX.Element => {
+({ onFinishPress, isSendingFeedback, userInformation, setUserInformation }: FeedbackReceiveUpdatesProps): JSX.Element => {
 
     const onChangeEmail = (value: string): void =>
         setUserInformation({
@@ -44,7 +43,7 @@ export const FeedbackReceiveUpdatesModal =
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
-                <Modal isVisible={isVisible} onBackdropPress={onFinishPress} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
+                <Modal isVisible={true} onBackdropPress={onFinishPress} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
                     <View style={styles.receiveUpdatesContainer}>
                         <View style={styles.receiveUpdatesInnerContainer}>
                             <Text style={textStyles.headlineH2StyleBlackLeft}>
