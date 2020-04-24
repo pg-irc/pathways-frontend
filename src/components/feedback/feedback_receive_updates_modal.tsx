@@ -12,7 +12,7 @@ import { UserInformation } from '../../stores/feedback/types';
 import { showToast } from '../../application/toast';
 
 interface FeedbackReceiveUpdatesProps {
-    readonly onFinishPress: () => void;
+    readonly finishAndSendFeedback: () => void;
     readonly isSendingFeedback: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
@@ -21,7 +21,7 @@ interface FeedbackReceiveUpdatesProps {
 const INPUT_PLACEHOLDER = t`Enter email`;
 
 export const FeedbackReceiveUpdatesModal =
-({ onFinishPress, isSendingFeedback, userInformation, setUserInformation }: FeedbackReceiveUpdatesProps): JSX.Element => {
+({ finishAndSendFeedback: onFinishPress, isSendingFeedback, userInformation, setUserInformation }: FeedbackReceiveUpdatesProps): JSX.Element => {
 
     const onChangeEmail = (value: string): void =>
         setUserInformation({
