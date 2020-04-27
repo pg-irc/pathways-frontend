@@ -36,15 +36,22 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
     }
 
     return (
-        <ExpandedSearch
-            locationInputValue={locationInputValue}
-            setLocationInputValue={setLocationInputValue}
-            isFetchingLatLng={isFetchingLatLng}
-            setIsFetchingLatLng={setIsFetchingLatLng}
-            setManualUserLocation={props.setManualUserLocation}
-            manualUserLocation={props.manualUserLocation}
-            setSearchIsCollapsed={setSearchIsCollapsed}
-        />
+        <I18n>
+        {
+            (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
+            <ExpandedSearch
+                locationInputValue={locationInputValue}
+                setLocationInputValue={setLocationInputValue}
+                isFetchingLatLng={isFetchingLatLng}
+                setIsFetchingLatLng={setIsFetchingLatLng}
+                setManualUserLocation={props.setManualUserLocation}
+                manualUserLocation={props.manualUserLocation}
+                setSearchIsCollapsed={setSearchIsCollapsed}
+                i18n={i18n}
+            />
+            )
+            }
+        </I18n>
     );
 };
 
@@ -86,13 +93,14 @@ interface ExpandedSearchProps {
     readonly setManualUserLocation: Props['setManualUserLocation'];
     readonly manualUserLocation: Props['manualUserLocation'];
     readonly setSearchIsCollapsed: (b: boolean) => void;
+    readonly i18n: I18n;
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
     const hasMyLocation = props.locationInputValue === MY_LOCATION;
     const LocateButtonOrEmpty = !hasMyLocation ?
         <LocateButton
-            onPress={getLocateOnPress(props.setLocationInputValue)}
+            onPress={getLocateOnPress(props.setLocationInputValue, props.i18n)}
             isFetchingLatLng={props.isFetchingLatLng}
         />
         :
@@ -257,10 +265,8 @@ const getSearchOnPress = (
     }
 };
 
-const getLocateOnPress = (
-    setLocationInputValue: (s: string) => void,
-): () => void => (): void => {
-    setLocationInputValue(MY_LOCATION);
+const getLocateOnPress = (setLocationInputValue: (s: string) => void, i18n: I18n): () => void => (): void => {
+    setLocationInputValue(i18n._(t`My Location`));
 };
 
 const fetchLatLng = async (
