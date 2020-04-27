@@ -65,17 +65,17 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
     );
 };
 
-const buildBriefSearchString = (searchInput: string, searchLocationInput: string): string => {
-    if (searchInput === '') {
-        return '';
-    }
+const buildBriefSearchString = (searchInput: string, searchLocationInput: string, i18n: I18n): string | JSX.Element => {
+    const myLocation = i18n._(t`My Location`);
     if (searchLocationInput === '') {
         return searchInput;
     }
-    if (searchLocationInput === MY_LOCATION) {
-        return searchInput + ' ' + 'near my location';
+    if (searchLocationInput === myLocation) {
+        // TODO TRANSLATE STRING
+        return <Trans>{searchInput} near My Location</Trans>;
     }
-    return searchInput + ' near ' + searchLocationInput;
+    // TODO TRANSLATE STRING
+    return <Trans>{searchInput} near {searchLocationInput}</Trans>;
 };
 
 export interface CollapsedInputProps {
@@ -102,7 +102,7 @@ const CollapsedInput = (props: Props & CollapsedInputProps): JSX.Element => {
                 onPress={(): void => props.setCollapseSearchInput(false)}>
                 <InputIcon name='search' />
                 <Text numberOfLines={1} style={[textStyles.paragraphStyle, { flex: 1 }]}>
-                    {buildBriefSearchString(props.searchTermInput, props.searchLocationInput)}
+                    {buildBriefSearchString(props.searchTermInput, props.searchLocationInput, props.i18n)}
                 </Text>
                 <ClearInputButton visible={true} onPress={(): void => {
                     clearSearchInputs();
