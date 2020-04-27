@@ -29,10 +29,6 @@ export interface SearchActions {
     readonly onSearchRequest: (searchTerm: string, location: string) => void;
 }
 
-interface IconProps {
-    readonly name: string;
-}
-
 type Props = SearchProps & SearchActions;
 
 export const SearchInputComponent = (props: Props): JSX.Element => {
@@ -44,50 +40,55 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
     const searchLocationInputRef = useRef<TextInput>();
 
     if (props.collapseSearchInput) {
-        const collapsedInputProps = {
-            ...props, searchTermInput, searchLocationInput, setSearchTermInput, setSearchLocationInput: setSearchLocationInput,
-            showMyLocationButton, setShowMyLocationButton,
-        };
         return (
             <View>
-                <CollapsedInput {...collapsedInputProps} />
+                <CollapsedInput
+                    searchTermInput={searchTermInput}
+                    searchLocationInput={searchLocationInput}
+                    showMyLocationButton={showMyLocationButton}
+                    i18n={props.i18n}
+                    setShowMyLocationButton={setShowMyLocationButton}
+                    setSearchTermInput={setSearchTermInput}
+                    setSearchLocationInput={setSearchLocationInput}
+                    saveSearchTerm={props.saveSearchTerm}
+                    saveSearchLocation={props.saveSearchLocation}
+                    setCollapseSearchInput={props.setCollapseSearchInput}
+                />
             </View>
         );
     }
-    const searchProps = {
-        ...props, searchTermInput, searchLocationInput, setSearchTermInput, setSearchLocationInput: setSearchLocationInput,
-        searchTermInputRef, searchLocationInputRef, showMyLocationButton, setShowMyLocationButton,
-    };
     return (
         <View>
-            <ExpandedInput {...searchProps} />
+            <ExpandedInput
+                  searchTermInput={searchTermInput}
+                  searchLocationInput={searchLocationInput}
+                  showMyLocationButton={showMyLocationButton}
+                  i18n={props.i18n}
+                  setShowMyLocationButton={setShowMyLocationButton}
+                  setSearchTermInput={setSearchTermInput}
+                  setSearchLocationInput={setSearchLocationInput}
+                  searchTermInputRef={searchTermInputRef}
+                  searchLocationInputRef={searchLocationInputRef}
+                  onSearchRequest={props.onSearchRequest}
+            />
         </View>
     );
-};
-
-const buildBriefSearchString = (searchInput: string, searchLocationInput: string, i18n: I18n): string | JSX.Element => {
-    const myLocation = i18n._(t`My Location`);
-    if (searchLocationInput === '') {
-        return searchInput;
-    }
-    if (searchLocationInput === myLocation) {
-        // TODO TRANSLATE STRING
-        return <Trans>{searchInput} near My Location</Trans>;
-    }
-    // TODO TRANSLATE STRING
-    return <Trans>{searchInput} near {searchLocationInput}</Trans>;
 };
 
 export interface CollapsedInputProps {
     readonly searchTermInput: string;
     readonly searchLocationInput: string;
     readonly showMyLocationButton: boolean;
+    readonly i18n: I18n;
     readonly setShowMyLocationButton: (b: boolean) => void;
     readonly setSearchTermInput: (s: string) => void;
     readonly setSearchLocationInput: (s: string) => void;
+    readonly saveSearchTerm: (s: string) => void;
+    readonly saveSearchLocation: (s: string) => void;
+    readonly setCollapseSearchInput: (b: boolean) => void;
 }
 
-const CollapsedInput = (props: Props & CollapsedInputProps): JSX.Element => {
+const CollapsedInput = (props: CollapsedInputProps): JSX.Element => {
     const clearSearchInputs = (): void => {
         props.setShowMyLocationButton(true);
         props.saveSearchTerm('');
@@ -113,6 +114,19 @@ const CollapsedInput = (props: Props & CollapsedInputProps): JSX.Element => {
     );
 };
 
+const buildBriefSearchString = (searchInput: string, searchLocationInput: string, i18n: I18n): string | JSX.Element => {
+    const myLocation = i18n._(t`My Location`);
+    if (searchLocationInput === '') {
+        return searchInput;
+    }
+    if (searchLocationInput === myLocation) {
+        // TODO TRANSLATE STRING
+        return <Trans>{searchInput} near My Location</Trans>;
+    }
+    // TODO TRANSLATE STRING
+    return <Trans>{searchInput} near {searchLocationInput}</Trans>;
+};
+
 export interface ExpandedInputProps {
     readonly searchTermInput: string;
     readonly searchLocationInput: string;
@@ -123,9 +137,10 @@ export interface ExpandedInputProps {
     readonly searchTermInputRef: MutableRefObject<TextInput>;
     readonly searchLocationInputRef: MutableRefObject<TextInput>;
     readonly i18n: I18n;
+    readonly onSearchRequest: (searchTerm: string, location: string) => void;
 }
 
-const ExpandedInput = (props: Props & ExpandedInputProps): JSX.Element => {
+const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
     const searchTermPlaceholder = t`Search for services`;
     const searchLocationPlaceholder = t`Enter city, address, or postal code`;
 
@@ -177,12 +192,25 @@ const ExpandedInput = (props: Props & ExpandedInputProps): JSX.Element => {
                 <ClearInputButton visible={props.searchLocationInput !== ''} onPress={clearLocationInput} />
             </TouchableOpacity>
             <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 4 }}>
-                {renderSearchButton(props)}
-                {renderMyLocationButton(props)}
+                <SearchButton
+                    searchTermInput={props.searchTermInput}
+                    searchLocationInput={props.searchLocationInput}
+                    onSearchRequest={props.onSearchRequest}
+                />
+                <MyLocationButton
+                    showMyLocationButton={props.showMyLocationButton}
+                    i18n={props.i18n}
+                    setShowMyLocationButton={props.setShowMyLocationButton}
+                    setSearchLocationInput={props.setSearchLocationInput}
+                />
             </View>
         </View >
     );
 };
+
+interface IconProps {
+    readonly name: string;
+}
 
 const InputIcon = ({ name }: IconProps): JSX.Element => (
     <Icon name={name}
@@ -191,7 +219,11 @@ const InputIcon = ({ name }: IconProps): JSX.Element => (
     />
 );
 
-const renderSearchButton = (props: Props & ExpandedInputProps): JSX.Element => (
+const SearchButton = (props: {
+    readonly searchTermInput: string,
+    readonly searchLocationInput: string,
+    readonly onSearchRequest: (searchTerm: string, location: string) => void,
+}): JSX.Element => (
     <TouchableOpacity
         style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
         disabled={props.searchTermInput.length === 0}
@@ -207,7 +239,12 @@ const renderSearchButton = (props: Props & ExpandedInputProps): JSX.Element => (
     </TouchableOpacity>
 );
 
-const renderMyLocationButton = (props: ExpandedInputProps): JSX.Element => {
+const MyLocationButton = (props: {
+    readonly showMyLocationButton: boolean,
+    readonly i18n: I18n,
+    readonly setShowMyLocationButton: (b: boolean) => void,
+    readonly setSearchLocationInput: (s: string) => void,
+}): JSX.Element => {
     if (!props.showMyLocationButton) {
         return <EmptyComponent />;
     }
