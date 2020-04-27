@@ -5,14 +5,6 @@ import { FeedbackChooseModeModal } from './feedback_choose_mode_modal';
 import { UserInformation } from '../../stores/feedback/types';
 import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
 import { EmptyComponent } from '../empty_component/empty_component';
-import {
-    ChooseChangeNameOrDetailsAction,
-    ChooseRemoveServiceAction,
-    ChooseOtherChangesAction,
-    CloseAction,
-    DiscardChangesAction,
-    CancelDiscardChangesAction,
-} from '../../stores/feedback';
 
 interface FeedbackModalContainerProps {
     readonly isSendingFeedback: boolean;
@@ -22,40 +14,41 @@ interface FeedbackModalContainerProps {
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
     readonly finishAndSendFeedback: () => void;
-    readonly chooseChangeNameOrDetail: () => ChooseChangeNameOrDetailsAction;
-    readonly chooseRemoveService: () => ChooseRemoveServiceAction;
-    readonly chooseOtherChanges: () => ChooseOtherChangesAction;
-    readonly close: () => CloseAction;
-    readonly discardFeedback: () => DiscardChangesAction;
-    readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
+    readonly resetFeedback: () => void;
+    readonly onChangeNameOrOtherDetailPress: () => void;
+    readonly onChooseRemoveServicePress: () => void;
+    readonly onChooseOtherChangesPress: () => void;
+    readonly onClosePress: () => void;
+    readonly onKeepEditingPress: () => void;
 }
 
 export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.Element => {
     if (props.showChoooseFeedbackModeModal) {
         return (
             <FeedbackChooseModeModal
-                close={props.close}
-                chooseChangeNameOrOtherDetail={props.chooseChangeNameOrDetail}
-                chooseOtherChanges={props.chooseOtherChanges}
-                chooseRemoveService={props.chooseRemoveService}
+                onClosePress={props.onClosePress}
+                onChangeNameOrOtherDetailPress={props.onChangeNameOrOtherDetailPress}
+                onChooseOtherChangesPress={props.onChooseOtherChangesPress}
+                onChooseRemoveServicePress={props.onChooseRemoveServicePress}
             />
         );
     }
     if (props.showReceiveUpdatesModal) {
         return (
             <FeedbackReceiveUpdatesModal
-                finishAndSendFeedback={props.finishAndSendFeedback}
                 isSendingFeedback={props.isSendingFeedback}
                 setUserInformation={props.setUserInformation}
                 userInformation={props.userInformation}
+                resetFeedback={props.resetFeedback}
+                onFinishPress={props.finishAndSendFeedback}
             />
         );
     }
     if (props.showFeedbackDiscardChangesModal) {
         return (
             <FeedbackDiscardChangesModal
-                discardFeedback={props.discardFeedback}
-                cancelDiscardFeedback={props.cancelDiscardFeedback}
+                onDiscardPress={props.resetFeedback}
+                onKeepEditingPress={props.onKeepEditingPress}
             />
         );
     }

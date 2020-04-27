@@ -7,8 +7,8 @@ import Modal from 'react-native-modal';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 
 interface Props {
-    readonly cancelDiscardFeedback: () => void;
-    readonly discardFeedback: () => void;
+    readonly onKeepEditingPress: () => void;
+    readonly onDiscardPress: () => void;
 }
 
 export const FeedbackDiscardChangesModal = (props: Props): JSX.Element => (
@@ -16,8 +16,8 @@ export const FeedbackDiscardChangesModal = (props: Props): JSX.Element => (
         <View style={{ backgroundColor: colors.white, borderRadius: 20, padding: 20 }}>
             <PromptText />
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                <KeepEditingButton onKeepEditingPress={props.cancelDiscardFeedback} />
-                <DiscardButton onDiscardPress={props.discardFeedback} />
+                <KeepEditingButton onKeepEditingPress={props.onKeepEditingPress} />
+                <DiscardButton onDiscardPress={props.onDiscardPress} />
             </View>
         </View>
     </Modal>

@@ -104,3 +104,6 @@ export const CLOSE = 'FEEDBACK:CLOSE';
 export const BACK = 'FEEDBACK:BACK';
 export const SUBMIT = 'FEEDBACK:SUBMIT';
 export const FINISH_FEEDBACK = 'FEEDBACK:FINISH';
+export const SEND_FEEDBACK = 'FEEDBACK:SEND';
+export const SET_IS_SENDING = 'FEEDBACK:SET_IS_SENDING';
+export const SET_ERROR = 'FEEDBACK:SET_ERROR';

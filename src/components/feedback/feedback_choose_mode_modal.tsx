@@ -8,13 +8,13 @@ import { Trans } from '@lingui/react';
 import { CloseButtonComponent } from '../close_button_component';
 
 export interface FeedbackModalProps {
-    readonly close: () => void;
+    readonly onClosePress: () => void;
 }
 
 export interface ButtonsComponentProps {
-    readonly chooseChangeNameOrOtherDetail: () => void;
-    readonly chooseOtherChanges: () => void;
-    readonly chooseRemoveService: () => void;
+    readonly onChangeNameOrOtherDetailPress: () => void;
+    readonly onChooseOtherChangesPress: () => void;
+    readonly onChooseRemoveServicePress: () => void;
 }
 
 type Props = FeedbackModalProps & ButtonsComponentProps;
@@ -22,12 +22,12 @@ type Props = FeedbackModalProps & ButtonsComponentProps;
 export const FeedbackChooseModeModal = (props: Props): JSX.Element => (
     <Modal
         isVisible={true}
-        onBackdropPress={props.close}
+        onBackdropPress={props.onClosePress}
         style={{ justifyContent: 'flex-end', margin: 0 }}
         backdropTransitionOutTiming={0}
     >
         <View padder style={{backgroundColor: colors.white, borderTopStartRadius: 20, borderTopEndRadius: 20}}>
-           <HeaderComponent closeModal={props.close}/>
+           <HeaderComponent closeModal={props.onClosePress}/>
            <DividerComponent />
            <ButtonsComponent {...props} />
            <DividerComponent />
@@ -52,9 +52,9 @@ const HeaderComponent = (props: { readonly closeModal: () => void }): JSX.Elemen
 
 const ButtonsComponent = (props: ButtonsComponentProps): JSX.Element => (
     <View style={{ marginHorizontal: 10 }}>
-       <OptionButton name={<Trans>Change name or other details</Trans>} onPress={props.chooseChangeNameOrOtherDetail}/>
-       <OptionButton name={<Trans>Remove this service</Trans>} onPress={props.chooseRemoveService}/>
-       <OptionButton name={<Trans>Other</Trans>} onPress={props.chooseOtherChanges}/>
+       <OptionButton name={<Trans>Change name or other details</Trans>} onPress={props.onChangeNameOrOtherDetailPress}/>
+       <OptionButton name={<Trans>Remove this service</Trans>} onPress={props.onChooseRemoveServicePress}/>
+       <OptionButton name={<Trans>Other</Trans>} onPress={props.onChooseOtherChangesPress}/>
     </View>
 );
 

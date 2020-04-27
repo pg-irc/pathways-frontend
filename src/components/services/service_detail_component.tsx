@@ -32,9 +32,7 @@ import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/ser
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { renderHeader } from '../main/render_header';
 import { Id } from '../../stores/services';
-import { useSendFeedback, SendFeedbackPromise } from './use_send_feedback';
 import { ServiceFeedback, FeedbackField, Feedback, FeedbackScreen, FeedbackModal, UserInformation } from '../../stores/feedback/types';
-import { FeedbackPostData } from '../../selectors/feedback/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ServiceDetailIconComponent } from './service_detail_icon';
 import {
@@ -50,6 +48,7 @@ import {
     getEmptyUserInfo,
     BackAction,
     CancelDiscardChangesAction,
+    SendFeedbackAction,
 } from '../../stores/feedback';
 import { isAndroid } from '../../application/helpers/is_android';
 
@@ -57,9 +56,9 @@ export interface ServiceDetailProps {
     readonly history: History;
     readonly service: HumanServiceData;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
-    readonly feedbackPostData: FeedbackPostData;
     readonly feedbackScreen: FeedbackScreen;
     readonly feedbackModal: FeedbackModal;
+    readonly isSendingFeedback: boolean;
 }
 
 export interface ServiceDetailActions {
@@ -77,26 +76,19 @@ export interface ServiceDetailActions {
     readonly discardFeedback: () => DiscardChangesAction;
     readonly back: () => BackAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
+    readonly sendFeedback: (serviceId: string) => SendFeedbackAction;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
+    const serviceId = props.match.params.serviceId;
     const isEditableService = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
     const [feedback, setFeedback]: readonly[ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] = useState(getEmptyServiceFeedback());
     const [userInformation, setUserInformation]: readonly[UserInformation, Dispatch<SetStateAction<UserInformation>>] = useState(getEmptyUserInfo());
-    const [feedbackIsReadyToSend, setFeedbackIsReadyToSend]: readonly[boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-    const [isSendingFeedback, sendFeedback]: SendFeedbackPromise = useSendFeedback(props.feedbackPostData, clearAllFeedback);
-    useEffect(sendFeedbackWhenReady, [feedbackIsReadyToSend]);
-    useEffect(navigateToFeedbackScreen, [props.feedbackScreen]);
 
-    function clearAllFeedback(): void {
-        resetLocalFeedbackState();
-        props.discardFeedback();
-    }
-
-    function navigateToFeedbackScreen(): void {
+    useEffect((): void => {
         switch (props.feedbackScreen) {
             case FeedbackScreen.OtherChangesPage:
             case FeedbackScreen.RemoveServicePage:
@@ -106,13 +98,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             default:
                 return undefined;
         }
-    }
-
-    function sendFeedbackWhenReady(): void {
-        if (feedbackIsReadyToSend) {
-            sendFeedback();
-        }
-    }
+    }, [props.feedbackScreen]);
 
     const setFeedbackForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField): void => (
         setFeedback({...feedback, [fieldName]: fieldValue })
@@ -120,13 +106,14 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
 
     const finishAndSendFeedback = (): void => {
         props.finishFeedback(userInformation);
-        setFeedbackIsReadyToSend(true);
+        props.sendFeedback(serviceId);
     };
 
-    const resetLocalFeedbackState = (): void => {
+    // TODO fix after we decided exacly how we're clearing feeedback....
+    const resetFeedback = (): void => {
         setFeedback(getEmptyServiceFeedback());
         setUserInformation(getEmptyUserInfo());
-        setFeedbackIsReadyToSend(false);
+        props.discardFeedback();
     };
 
     return (
@@ -182,19 +169,19 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         suggestAnUpdate={props.suggestAnUpdate}
                     />
                     <FeedbackModalContainer
-                        isSendingFeedback={isSendingFeedback}
+                        isSendingFeedback={props.isSendingFeedback}
                         finishAndSendFeedback={finishAndSendFeedback}
                         userInformation={userInformation}
                         setUserInformation={setUserInformation}
+                        resetFeedback={resetFeedback}
                         showChoooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
                         showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ReceiveUpdatesModal}
                         showFeedbackDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
-                        chooseChangeNameOrDetail={props.chooseChangeNameOrDetail}
-                        chooseRemoveService={props.chooseRemoveService}
-                        chooseOtherChanges={props.chooseOtherChanges}
-                        close={props.close}
-                        discardFeedback={props.discardFeedback}
-                        cancelDiscardFeedback={props.cancelDiscardFeedback}
+                        onChangeNameOrOtherDetailPress={props.chooseChangeNameOrDetail}
+                        onChooseRemoveServicePress={props.chooseRemoveService}
+                        onChooseOtherChangesPress={props.chooseOtherChanges}
+                        onClosePress={props.close}
+                        onKeepEditingPress={props.cancelDiscardFeedback}
                     />
                 </View>
             </KeyboardAwareScrollView>

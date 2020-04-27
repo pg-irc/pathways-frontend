@@ -9,7 +9,6 @@ import { selectBookmarkedServicesIds } from '../../selectors/services/select_boo
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
-import { selectFeedbackPostData } from '../../selectors/feedback/select_feedback_post_data';
 import { Feedback, UserInformation } from '../../stores/feedback/types';
 import { selectFeedbackScreen } from '../../selectors/feedback/select_feedback_screen';
 import { selectFeedbackModal } from '../../selectors/feedback/select_feedback_modal';
@@ -34,16 +33,19 @@ import {
     back,
     CancelDiscardChangesAction,
     cancelDiscardChanges,
+    SendFeedbackAction,
+    sendFeedback,
 } from '../../stores/feedback';
+import { selectIsSendingFeedback } from '../../selectors/feedback/select_is_sending_feedback';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
     return {
         service: selectServiceById(store, ownProps.match.params.serviceId),
         history: ownProps.history,
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
-        feedbackPostData: selectFeedbackPostData(store, ownProps.match.params.serviceId),
         feedbackScreen: selectFeedbackScreen(store),
         feedbackModal: selectFeedbackModal(store),
+        isSendingFeedback: selectIsSendingFeedback(store),
     };
 };
 
@@ -61,7 +63,8 @@ type Actions =
     CloseAction |
     DiscardChangesAction |
     BackAction |
-    CancelDiscardChangesAction;
+    CancelDiscardChangesAction |
+    SendFeedbackAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions => ({
     analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
@@ -79,6 +82,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     discardFeedback: (): DiscardChangesAction => dispatch(discardChanges()),
     back: (): BackAction => dispatch(back()),
     cancelDiscardFeedback: (): CancelDiscardChangesAction => dispatch(cancelDiscardChanges()),
+    sendFeedback: (serviceId: string): SendFeedbackAction => dispatch(sendFeedback(serviceId)),
 });
 
 export const ServiceDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceDetailComponent);

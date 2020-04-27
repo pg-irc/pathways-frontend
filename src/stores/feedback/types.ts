@@ -3,6 +3,8 @@ export interface FeedbackStore {
     readonly modal: FeedbackModal;
     readonly userInformation: undefined | UserInformation;
     readonly feedback: undefined | Feedback;
+    readonly isSending: boolean;
+    readonly error: string;
 }
 
 export enum FeedbackScreen {

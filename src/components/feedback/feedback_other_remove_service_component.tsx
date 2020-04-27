@@ -168,13 +168,12 @@ export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveSe
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
     const history = useHistory();
     const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
-    useEffect(navigateToFeedbackScreen, [props.feedbackScreen]);
 
-    function navigateToFeedbackScreen(): void {
+    useEffect((): void => {
         if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
             goBack(history);
         }
-    }
+    }, [props.feedbackScreen]);
 
     const submitFeedback = (): void => {
         if (isOtherFeedback) {
@@ -197,8 +196,8 @@ export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveSe
             {showDiscardChangesModal
              &&
              <FeedbackDiscardChangesModal
-                 discardFeedback={props.discardFeedback}
-                 cancelDiscardFeedback={props.cancelDiscardFeedback}
+                 onDiscardPress={props.discardFeedback}
+                 onKeepEditingPress={props.cancelDiscardFeedback}
              />}
         </Container>
     );
