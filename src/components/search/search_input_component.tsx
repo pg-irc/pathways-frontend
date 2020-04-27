@@ -31,6 +31,8 @@ export interface SearchActions {
 
 type Props = SearchProps & SearchActions;
 
+const LOCALIZED_MY_LOCATION = t`My Location`;
+
 export const SearchInputComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
     const [searchLocationInput, setSearchLocationInput]: readonly [string, StringSetterFunction] = useState(props.searchLocation);
@@ -46,7 +48,6 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
                     searchTermInput={searchTermInput}
                     searchLocationInput={searchLocationInput}
                     showMyLocationButton={showMyLocationButton}
-                    i18n={props.i18n}
                     setShowMyLocationButton={setShowMyLocationButton}
                     setSearchTermInput={setSearchTermInput}
                     setSearchLocationInput={setSearchLocationInput}
@@ -79,7 +80,6 @@ export interface CollapsedInputProps {
     readonly searchTermInput: string;
     readonly searchLocationInput: string;
     readonly showMyLocationButton: boolean;
-    readonly i18n: I18n;
     readonly setShowMyLocationButton: (b: boolean) => void;
     readonly setSearchTermInput: (s: string) => void;
     readonly setSearchLocationInput: (s: string) => void;
@@ -103,7 +103,7 @@ const CollapsedInput = (props: CollapsedInputProps): JSX.Element => {
                 onPress={(): void => props.setCollapseSearchInput(false)}>
                 <InputIcon name='search' />
                 <Text numberOfLines={1} style={[textStyles.paragraphStyle, { flex: 1 }]}>
-                    {buildBriefSearchString(props.searchTermInput, props.searchLocationInput, props.i18n)}
+                    {buildBriefSearchString(props.searchTermInput, props.searchLocationInput)}
                 </Text>
                 <ClearInputButton visible={true} onPress={(): void => {
                     clearSearchInputs();
@@ -114,12 +114,11 @@ const CollapsedInput = (props: CollapsedInputProps): JSX.Element => {
     );
 };
 
-const buildBriefSearchString = (searchInput: string, searchLocationInput: string, i18n: I18n): string | JSX.Element => {
-    const myLocation = i18n._(t`My Location`);
+const buildBriefSearchString = (searchInput: string, searchLocationInput: string): string | JSX.Element => {
     if (searchLocationInput === '') {
         return searchInput;
     }
-    if (searchLocationInput === myLocation) {
+    if (searchLocationInput === LOCALIZED_MY_LOCATION) {
         // TODO TRANSLATE STRING
         return <Trans>{searchInput} near My Location</Trans>;
     }
@@ -196,6 +195,7 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                     searchTermInput={props.searchTermInput}
                     searchLocationInput={props.searchLocationInput}
                     onSearchRequest={props.onSearchRequest}
+                    i18n={props.i18n}
                 />
                 <MyLocationButton
                     showMyLocationButton={props.showMyLocationButton}
@@ -222,13 +222,16 @@ const InputIcon = ({ name }: IconProps): JSX.Element => (
 const SearchButton = (props: {
     readonly searchTermInput: string,
     readonly searchLocationInput: string,
+    readonly i18n: I18n,
     readonly onSearchRequest: (searchTerm: string, location: string) => void,
-}): JSX.Element => (
-    <TouchableOpacity
+}): JSX.Element => {
+    const searchLocation = getLocalizedTextOrLocationInput(props.searchLocationInput, props.i18n);
+    return (
+        <TouchableOpacity
         style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
         disabled={props.searchTermInput.length === 0}
         onPress={(): void => {
-            props.onSearchRequest(props.searchTermInput, props.searchLocationInput);
+            props.onSearchRequest(props.searchTermInput, searchLocation);
         }}
     >
         <Text style={[textStyles.button, { fontSize: 16 }]}>
@@ -237,6 +240,11 @@ const SearchButton = (props: {
             </Trans>
         </Text>
     </TouchableOpacity>
+    );
+};
+
+const getLocalizedTextOrLocationInput = (locationInput: string, i18n: I18n): string => (
+    locationInput === i18n._(LOCALIZED_MY_LOCATION) ? MY_LOCATION : locationInput
 );
 
 const MyLocationButton = (props: {
@@ -272,10 +280,9 @@ const MyLocationButton = (props: {
 
 const myLocationOnPress = async (setSearchLocationInput: (location: string) => void, i18n: I18n): Promise<void> => {
     const status = await getPermission();
-    const myLocationInput = t`My Location`;
     switch (status) {
         case Permissions.PermissionStatus.GRANTED:
-            setSearchLocationInput(i18n._(myLocationInput));
+            setSearchLocationInput(i18n._(LOCALIZED_MY_LOCATION));
             break;
         case Permissions.PermissionStatus.DENIED:
             openAppSettings();
