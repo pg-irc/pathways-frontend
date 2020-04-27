@@ -12,6 +12,7 @@ import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { useOnlineStatus, OnlineStatus } from '../search/use_online_status';
 import { fetchLatLongFromLocation } from '../search/api/fetch_lat_long_from_location';
+import { getLocalizedTextOrLocationInput } from '../partial_localization/get_localized_text_or_location_input';
 
 interface Props {
     readonly manualUserLocation: UserLocation;
@@ -135,6 +136,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                         props.setManualUserLocation,
                         props.setSearchIsCollapsed,
                         onlineStatus,
+                        props.i18n,
                         );
                     }
                 }
@@ -243,10 +245,12 @@ const getSearchOnPress = async (
     setManualUserLocation: Props['setManualUserLocation'],
     setSearchIsCollapsed: (b: boolean) => void,
     onlineStatus: OnlineStatus,
+    i18n: I18n,
 ): Promise<void> => {
+    const locationInput = getLocalizedTextOrLocationInput(locationInputValue, LOCALIZED_MY_LOCATION, i18n);
     setIsFetchingLatLng(true);
     setSearchIsCollapsed(true);
-    const geoCoderLatLong = await fetchLatLongFromLocation(locationInputValue, onlineStatus);
+    const geoCoderLatLong = await fetchLatLongFromLocation(locationInput, onlineStatus);
     setIsFetchingLatLng(false);
     setManualUserLocation({
         label: locationInputValue,
