@@ -3,6 +3,7 @@ import React, { useState, MutableRefObject, useRef } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
+import { t } from '@lingui/macro';
 import { values, applicationStyles, colors, textStyles } from '../../application/styles';
 import { debug, useTraceUpdate } from '../../application/helpers/use_trace_update';
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
@@ -188,7 +189,7 @@ const ExpandedInput = (props: Props & ExpandedInputProps): JSX.Element => {
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 4 }}>
                         {renderSearchButton(props)}
-                        {renderMyLocationButton(props)}
+                        {renderMyLocationButton(props, i18nRenderProp)}
                     </View>
                 </View >
             )}
@@ -220,7 +221,7 @@ const renderSearchButton = (props: Props & ExpandedInputProps): JSX.Element => (
     </TouchableOpacity>
 );
 
-const renderMyLocationButton = (props: ExpandedInputProps): JSX.Element => {
+const renderMyLocationButton = (props: ExpandedInputProps, i18nRenderProp: ReactI18nRenderProp): JSX.Element => {
     if (!props.showMyLocationButton) {
         return <EmptyComponent />;
     }
@@ -229,7 +230,7 @@ const renderMyLocationButton = (props: ExpandedInputProps): JSX.Element => {
             style={applicationStyles.locateButton}
             onPress={(): void => {
                 props.setShowMyLocationButton(false);
-                myLocationOnPress(props.setSearchLocationInput);
+                myLocationOnPress(props.setSearchLocationInput, i18nRenderProp);
             }
             }
         >
@@ -246,11 +247,12 @@ const renderMyLocationButton = (props: ExpandedInputProps): JSX.Element => {
     );
 };
 
-const myLocationOnPress = async (setSearchLocationInput: (location: string) => void): Promise<void> => {
+const myLocationOnPress = async (setSearchLocationInput: (location: string) => void, i18nRenderProp: ReactI18nRenderProp): Promise<void> => {
     const status = await getPermission();
+    const myLocation = i18nRenderProp.i18n._(t`My Location`);
     switch (status) {
         case Permissions.PermissionStatus.GRANTED:
-            setSearchLocationInput(MY_LOCATION);
+            setSearchLocationInput(myLocation);
             break;
         case Permissions.PermissionStatus.DENIED:
             openAppSettings();
