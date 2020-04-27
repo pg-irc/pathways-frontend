@@ -20,6 +20,8 @@ interface Props {
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
 }
 
+const LOCALIZED_MY_LOCATION = t`My Location`;
+
 export const ServiceListLocationSearchComponent = (props: Props): JSX.Element => {
     const [locationInputValue, setLocationInputValue]: readonly [string, (s: string) => void] = useState(props.manualUserLocation.label);
     const [isFetchingLatLng, setIsFetchingLatLng]: readonly [boolean, (b: boolean) => void] = useState<boolean>(false);
@@ -132,6 +134,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                         props.locationInputValue,
                         props.setManualUserLocation,
                         props.setSearchIsCollapsed,
+                        props.i18n,
                     )}
                     isDisabled={searchIsDisabled}
                 />
@@ -237,9 +240,10 @@ const getSearchOnPress = (
     locationInputValue: string,
     setManualUserLocation: Props['setManualUserLocation'],
     setSearchIsCollapsed: (b: boolean) => void,
+    i18n: I18n,
 ): () => void => (): void => {
     setSearchIsCollapsed(true);
-    if (locationInputValue === MY_LOCATION) {
+    if (locationInputIsMyLocation(locationInputValue, i18n)) {
         fetchLatLng(
             setIsFetchingLatLng,
             fetchLatLngFromDevice,
@@ -256,8 +260,12 @@ const getSearchOnPress = (
     }
 };
 
+const locationInputIsMyLocation = (locationInput: string, i18n: I18n): boolean => (
+    locationInput === MY_LOCATION || locationInput === i18n._(LOCALIZED_MY_LOCATION)
+);
+
 const getLocateOnPress = (setLocationInputValue: (s: string) => void, i18n: I18n): () => void => (): void => {
-    setLocationInputValue(i18n._(t`My Location`));
+    setLocationInputValue(i18n._(LOCALIZED_MY_LOCATION));
 };
 
 const fetchLatLng = async (
