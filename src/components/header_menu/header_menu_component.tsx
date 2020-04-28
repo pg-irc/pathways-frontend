@@ -1,14 +1,16 @@
 import React from 'react';
 import * as R from 'ramda';
-import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager } from 'react-native';
+import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { LocaleInfo } from '../../locale/types';
-import { Content, View, Icon, Header } from 'native-base';
+import { Content, View, Icon, Header, Title } from 'native-base';
 import { colors, values, textStyles } from '../../application/styles';
 import { openURL } from '../link/link';
 import { isRTL } from '../../locale/effects';
 import { DividerComponent } from '../content_layout/divider_component';
+import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
+import { arrivalAdvisorGlyphLogo } from '../../application/images';
 
 type OwnProps = {
     readonly history: History;
@@ -30,7 +32,10 @@ type Props = OwnProps & HeaderMenuProps & HeaderMenuActions;
 
 export const HeaderMenuComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
-        <Header style={{ backgroundColor: colors.lightTeal }} />
+        <Header style={{ backgroundColor: colors.lightTeal, marginTop: getStatusBarHeightForPlatform(), alignItems: 'center', justifyContent: 'flex-start' }}>
+            <Image source={arrivalAdvisorGlyphLogo} style={{ height: 24, width: 24, marginHorizontal: 10 }}/>
+            <Title style={textStyles.headlineH3StyleWhiteCenter}>Arrival Advisor</Title>
+        </Header>
         <Content>
             <LocaleSection {...props} />
             <DividerComponent />
