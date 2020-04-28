@@ -1,5 +1,6 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
+import { SaveLocaleRequestAction } from './locale/actions';
 
 export type CloseHeaderMenuAction = Readonly<ReturnType<typeof closeHeaderMenu>>;
 export type OpenHeaderMenuAction = Readonly<ReturnType<typeof openHeaderMenu>>;
@@ -14,7 +15,8 @@ export type HeaderMenuAction =
     CloseAboutModalAction |
     OpenAboutModalAction |
     CloseDisclaimerModalAction |
-    OpenDisclaimerModalAction;
+    OpenDisclaimerModalAction |
+    SaveLocaleRequestAction;
 
 // tslint:disable-next-line: typedef
 export const closeHeaderMenu = () => (
@@ -72,6 +74,8 @@ export const reducer = (store: HeaderMenuStore = buildDefaultStore(), action?: H
             return HeaderMenuStore.HeaderMenuIsOpen;
         case constants.OPEN_DISCLAIMER_MODAL:
             return HeaderMenuStore.DisclaimerModalIsOpen;
+        case constants.SAVE_LOCALE_REQUEST:
+            return HeaderMenuStore.HeaderMenuIsClosed;
         default:
             return store;
     }
