@@ -14,7 +14,7 @@ import { openURL } from '../link/link';
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { BooleanSetterFunction, StringSetterFunction } from './search_component';
-import { getLocalizedTextOrLocationInput, LOCALIZED_MY_LOCATION } from '../partial_localization/get_localized_text_or_location_input';
+import { getMyLocationOrLocationInput, LOCALIZED_MY_LOCATION } from '../partial_localization/get_my_location_or_location_input';
 
 export interface SearchProps {
     readonly searchTerm: string;
@@ -229,7 +229,7 @@ const SearchButton = (props: {
     readonly i18n: I18n,
     readonly onSearchRequest: (searchTerm: string, location: string) => void,
 }): JSX.Element => {
-    const searchLocation = getLocalizedTextOrLocationInput(props.searchLocationInput, props.i18n);
+    const searchLocation = getMyLocationOrLocationInput(props.searchLocationInput, props.i18n);
     return (
         <TouchableOpacity
         style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}

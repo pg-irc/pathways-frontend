@@ -12,7 +12,7 @@ import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { useOnlineStatus, OnlineStatus } from '../search/use_online_status';
 import { fetchLatLongFromLocation } from '../search/api/fetch_lat_long_from_location';
-import { getLocalizedTextOrLocationInput, LOCALIZED_MY_LOCATION } from '../partial_localization/get_localized_text_or_location_input';
+import { getMyLocationOrLocationInput, LOCALIZED_MY_LOCATION } from '../partial_localization/get_my_location_or_location_input';
 
 interface Props {
     readonly manualUserLocation: UserLocation;
@@ -245,7 +245,7 @@ const onSearchPress = async (
     setManualUserLocation: Props['setManualUserLocation'],
     setSearchIsCollapsed: (b: boolean) => void,
 ): Promise<void> => {
-    const locationInput = getLocalizedTextOrLocationInput(locationInputValue, i18n);
+    const locationInput = getMyLocationOrLocationInput(locationInputValue, i18n);
     setIsFetchingLatLng(true);
     setSearchIsCollapsed(true);
     const geoCoderLatLong = await fetchLatLongFromLocation(locationInput, onlineStatus);
