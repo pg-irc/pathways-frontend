@@ -63,7 +63,7 @@ type SelectedLocaleListItemInfo = {
 };
 
 const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element => (
-    <Text style={[textStyles.headlineH5StyleBlackLeft, { marginVertical: 10 }]}>
+    <Text style={[textStyles.headlineH5StyleBlackLeft, { marginVertical: 10, marginHorizontal: 10 }]}>
         {props.title}
     </Text>
 );
@@ -125,22 +125,22 @@ const AboutListItems = (props: Props): JSX.Element => {
     return (
         <View>
             <AboutItem
-                icon={<AboutIcon name='mobile' fontSize={35} marginRight={10} />}
+                icon={<AboutIcon name='mobile' fontSize={35} marginRight={8} />}
                 text={<Trans>About Arrival Advisor</Trans>}
                 onPress={props.openAboutModal}
             />
             <AboutItem
-                icon={<AboutIcon name='file' fontSize={20} marginRight={7} />}
+                icon={<AboutIcon name='file' fontSize={20} marginRight={5} />}
                 text={<Trans>Disclaimer</Trans>}
                 onPress={props.openDisclaimerModal}
             />
             <AboutItem
-                icon={<AboutIcon name='lock' fontSize={30} marginRight={5} />}
+                icon={<AboutIcon name='lock' fontSize={30} marginRight={3} />}
                 text={<Trans>Privacy policy</Trans>}
                 onPress={buildOnPressForURL('https://peacegeeks.org/privacy')}
             />
             <AboutItem
-                icon={<AboutIcon name='file' fontSize={20} marginRight={7} />}
+                icon={<AboutIcon name='file' fontSize={20} marginRight={5} />}
                 text={<Trans>Terms of Use</Trans>}
                 onPress={buildOnPressForURL('https://arrivaladvisor.ca/terms-of-use/')}
             />
@@ -170,7 +170,6 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
                 justifyContent: 'space-between',
                 paddingVertical: 10,
                 paddingLeft: 10,
-                marginBottom: 10,
             }}
             onPress={props.onPress}
         >
