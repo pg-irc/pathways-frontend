@@ -8,6 +8,7 @@ import { Content, View, Icon, Header } from 'native-base';
 import { colors, values, textStyles } from '../../application/styles';
 import { openURL } from '../link/link';
 import { isRTL } from '../../locale/effects';
+import { DividerComponent } from '../content_layout/divider_component';
 
 type OwnProps = {
     readonly history: History;
@@ -28,10 +29,11 @@ export interface HeaderMenuActions {
 type Props = OwnProps & HeaderMenuProps & HeaderMenuActions;
 
 export const HeaderMenuComponent = (props: Props): JSX.Element => (
-    <View style={{ flex: 1, backgroundColor: colors.lightGrey }}>
+    <View style={{ flex: 1, backgroundColor: colors.white }}>
+        <Header style={{ backgroundColor: colors.lightTeal }} />
         <Content>
-            <Header style={{ backgroundColor: colors.lightTeal }} />
             <LocaleSection {...props} />
+            <DividerComponent />
             <AboutSection {...props} />
         </Content>
     </View>
@@ -108,7 +110,7 @@ const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Elemen
 };
 
 const AboutSection = (props: Props): JSX.Element => (
-    <View padder>
+    <View padder style={{ backgroundColor: colors.white }}>
         <MenuSectionTitle title={<Trans>ABOUT THE APP</Trans>} />
         <AboutListItems {...props} />
     </View>
