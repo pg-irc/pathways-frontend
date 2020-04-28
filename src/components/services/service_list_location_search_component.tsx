@@ -12,14 +12,12 @@ import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { useOnlineStatus, OnlineStatus } from '../search/use_online_status';
 import { fetchLatLongFromLocation } from '../search/api/fetch_lat_long_from_location';
-import { getLocalizedTextOrLocationInput } from '../partial_localization/get_localized_text_or_location_input';
+import { getLocalizedTextOrLocationInput, LOCALIZED_MY_LOCATION } from '../partial_localization/get_localized_text_or_location_input';
 
 interface Props {
     readonly manualUserLocation: UserLocation;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
 }
-
-const LOCALIZED_MY_LOCATION = t`My Location`;
 
 export const ServiceListLocationSearchComponent = (props: Props): JSX.Element => {
     const [locationInputValue, setLocationInputValue]: readonly [string, (s: string) => void] = useState(props.manualUserLocation.label);
@@ -130,13 +128,13 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                 {LocateButtonOrEmpty}
                 <SearchButton
                     onPress={(): void => {
-                        getSearchOnPress(
-                        props.setIsFetchingLatLng,
+                        onSearchPress(
                         props.locationInputValue,
-                        props.setManualUserLocation,
-                        props.setSearchIsCollapsed,
                         onlineStatus,
                         props.i18n,
+                        props.setIsFetchingLatLng,
+                        props.setManualUserLocation,
+                        props.setSearchIsCollapsed,
                         );
                     }
                 }
@@ -239,15 +237,15 @@ const LocateButton = (props: LocateButtonProps): JSX.Element => (
     </TouchableOpacity>
 );
 
-const getSearchOnPress = async (
-    setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
+const onSearchPress = async (
     locationInputValue: string,
-    setManualUserLocation: Props['setManualUserLocation'],
-    setSearchIsCollapsed: (b: boolean) => void,
     onlineStatus: OnlineStatus,
     i18n: I18n,
+    setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
+    setManualUserLocation: Props['setManualUserLocation'],
+    setSearchIsCollapsed: (b: boolean) => void,
 ): Promise<void> => {
-    const locationInput = getLocalizedTextOrLocationInput(locationInputValue, LOCALIZED_MY_LOCATION, i18n);
+    const locationInput = getLocalizedTextOrLocationInput(locationInputValue, i18n);
     setIsFetchingLatLng(true);
     setSearchIsCollapsed(true);
     const geoCoderLatLong = await fetchLatLongFromLocation(locationInput, onlineStatus);

@@ -2,7 +2,7 @@
 import React, { useState, MutableRefObject, useRef } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { values, applicationStyles, colors, textStyles } from '../../application/styles';
 import { debug, useTraceUpdate } from '../../application/helpers/use_trace_update';
@@ -14,13 +14,12 @@ import { openURL } from '../link/link';
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { BooleanSetterFunction, StringSetterFunction } from './search_component';
-import { getLocalizedTextOrLocationInput } from '../partial_localization/get_localized_text_or_location_input';
+import { getLocalizedTextOrLocationInput, LOCALIZED_MY_LOCATION } from '../partial_localization/get_localized_text_or_location_input';
 
 export interface SearchProps {
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly collapseSearchInput: boolean;
-    readonly i18n: I18n;
 }
 
 export interface SearchActions {
@@ -31,8 +30,6 @@ export interface SearchActions {
 }
 
 type Props = SearchProps & SearchActions;
-
-const LOCALIZED_MY_LOCATION = t`My Location`;
 
 export const SearchInputComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchInputComponent', props);
@@ -60,20 +57,26 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
         );
     }
     return (
-        <View>
-            <ExpandedInput
-                  searchTermInput={searchTermInput}
-                  searchLocationInput={searchLocationInput}
-                  showMyLocationButton={showMyLocationButton}
-                  i18n={props.i18n}
-                  setShowMyLocationButton={setShowMyLocationButton}
-                  setSearchTermInput={setSearchTermInput}
-                  setSearchLocationInput={setSearchLocationInput}
-                  searchTermInputRef={searchTermInputRef}
-                  searchLocationInputRef={searchLocationInputRef}
-                  onSearchRequest={props.onSearchRequest}
-            />
-        </View>
+        <I18n>
+        {
+            (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
+                <View>
+                    <ExpandedInput
+                        searchTermInput={searchTermInput}
+                        searchLocationInput={searchLocationInput}
+                        showMyLocationButton={showMyLocationButton}
+                        setShowMyLocationButton={setShowMyLocationButton}
+                        setSearchTermInput={setSearchTermInput}
+                        setSearchLocationInput={setSearchLocationInput}
+                        searchTermInputRef={searchTermInputRef}
+                        searchLocationInputRef={searchLocationInputRef}
+                        onSearchRequest={props.onSearchRequest}
+                        i18n={i18n}
+                    />
+                </View>
+            )
+        }
+        </I18n>
     );
 };
 
@@ -226,7 +229,7 @@ const SearchButton = (props: {
     readonly i18n: I18n,
     readonly onSearchRequest: (searchTerm: string, location: string) => void,
 }): JSX.Element => {
-    const searchLocation = getLocalizedTextOrLocationInput(props.searchLocationInput, LOCALIZED_MY_LOCATION, props.i18n);
+    const searchLocation = getLocalizedTextOrLocationInput(props.searchLocationInput, props.i18n);
     return (
         <TouchableOpacity
         style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
