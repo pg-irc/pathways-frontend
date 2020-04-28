@@ -3,7 +3,6 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
 import { CardButtonComponent } from '../card_button_component';
-import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
@@ -35,7 +34,6 @@ export const WebsiteComponent = (props: Props): JSX.Element => {
                 rightContent={<ServiceDetailIconComponent name={'external-link'} />}
                 onPress={onPress}
             />
-            <DividerComponent />
         </View>
     );
 };

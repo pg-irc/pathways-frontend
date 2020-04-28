@@ -27,6 +27,7 @@ export const colors = {
     burntSienna: '#ED604B',
     sunshine: '#f2b134',
     topaz: '#11cac0',
+    greyBorder: '#dedede',
 };
 
 export const values = {
@@ -299,6 +300,20 @@ export const textStyles = StyleSheet.create({
         color: colors.white,
         letterSpacing,
         ...getBoldFontStylesForOS(),
+    },
+    suggestionText: {
+        fontSize: 16,
+        lineHeight: 21,
+        textAlign: 'left',
+        color: colors.black,
+        letterSpacing,
+        paddingHorizontal: 0,
+        ...getNormalFontStylesForOS(),
+    },
+    captionStyleLeft: {
+        fontSize: 16,
+        textAlign: 'left',
+        ...getNormalFontStylesForOS(),
     },
     messageLink: {
         fontSize: 15,

@@ -12,6 +12,7 @@ import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { isServiceDetailArrayEmpty } from '../services/is_service_detail_empty';
 import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
 import { Trans } from '@lingui/react';
+import { mapWithIndex } from '../../application/helpers/map_with_index';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
@@ -27,25 +28,27 @@ export const PhoneNumbersComponent = (props: Props): JSX.Element => {
 
     return (
         <View>
-            {R.map(buildPhoneNumber(props), props.phoneNumbers)}
+            {mapWithIndex(buildPhoneNumber(props), props.phoneNumbers)}
         </View>
     );
 };
 
-const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber): JSX.Element => {
+const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index: number): JSX.Element => {
     const onPress = (): void => {
         const linkValue = 'tel: ' + phoneNumber.phone_number;
         props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.phone, linkValue);
         openURL(linkValue);
     };
+    const shouldAddDivider = index !== 0;
+
     return (
         <View key={phoneNumber.phone_number}>
+            {shouldAddDivider && <DividerComponent />}
             <CardButtonComponent
                 leftContent={renderSinglePhoneNumber(phoneNumber)}
                 rightContent={<ServiceDetailIconComponent name={'phone'} />}
                 onPress={onPress}
             />
-            <DividerComponent />
         </View>
     );
 });

@@ -12,6 +12,7 @@ import { openInMapsApplication } from '../maps_application_popup/open_in_maps_ap
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { isServiceDetailArrayEmpty } from '../services/is_service_detail_empty';
 import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
+import { mapWithIndex } from '../../application/helpers/map_with_index';
 
 interface Props {
     readonly addresses: ReadonlyArray<Address>;
@@ -26,15 +27,14 @@ export const AddressesComponent = (props: Props): JSX.Element => {
     if (isServiceDetailArrayEmpty(props.addresses)) {
         return <MissingServiceDetailComponent title={<Trans>Address:</Trans>} />;
     }
-
     return (
-        <View>
-            {R.map(buildAddress(props), props.addresses)}
-        </View>
+    <View>
+        {mapWithIndex(buildAddress(props), props.addresses)}
+    </View>
     );
 };
 
-const buildAddress = R.curry((props: Props, address: Address): JSX.Element => {
+const buildAddress = R.curry((props: Props, address: Address, index: number): JSX.Element => {
     const onPress = (): Promise<void> => {
         if (props.latLong) {
             const linkType = 'Button';
@@ -45,15 +45,16 @@ const buildAddress = R.curry((props: Props, address: Address): JSX.Element => {
         }
         return undefined;
     };
+    const shouldAddDivider = index !== 0;
 
     return (
         <View key={address.id}>
+            {shouldAddDivider && <DividerComponent />}
             <CardButtonComponent
                 leftContent={renderSingleAddress(address)}
                 rightContent={<ServiceDetailIconComponent name={'location-arrow'} />}
                 onPress={onPress}
             />
-            <DividerComponent />
         </View>
     );
 });
