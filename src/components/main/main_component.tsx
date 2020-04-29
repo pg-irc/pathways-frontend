@@ -8,7 +8,6 @@ import { RouterProps, goBack } from '../../application/routing';
 import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { Locale } from '../../locale';
-import { HardwareBackButtonHandlerComponent } from './hardware_back_button_handler_component';
 import { AppModalsComponent } from './app_modals_component';
 import { Notifications } from 'expo';
 import { History } from 'history';
@@ -17,6 +16,7 @@ import {
     CloseHeaderMenuAction, OpenHeaderMenuAction, CloseAboutModalAction,
     OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction,
 } from '../../stores/header_menu';
+import { useHardwareBackButtonPress } from './use_hardware_back_button_press';
 import { StatusBar } from 'react-native';
 import Animated from 'react-native-reanimated';
 
@@ -72,6 +72,18 @@ export const MainComponent = (props: Props): JSX.Element => {
         ),
     );
 
+    useHardwareBackButtonPress((): boolean => {
+        const shouldNotBubbleUpEvent = true;
+
+        if (props.isHeaderMenuVisible) {
+            props.closeHeaderMenu();
+        } else {
+            goBack(props.history);
+        }
+
+        return shouldNotBubbleUpEvent;
+    });
+
     useEffect((): EffectCallback => {
         const unsubscribe = props.history.listen((location: Location, _: Action): RouteChangedAction =>
             props.sendAnalyticsData(location, props.locale),
@@ -83,15 +95,6 @@ export const MainComponent = (props: Props): JSX.Element => {
         const subscription = Notifications.addListener(notificationListener(props.history));
         return (): void => subscription.remove();
     }, []);
-
-    const onHardwareBackButtonPress = (): boolean => {
-        if (!props.isHeaderMenuVisible) {
-            goBack(props.history);
-        } else {
-            props.closeHeaderMenu();
-        }
-        return true;
-    };
 
     // Only pass the animation contexts, not the Ref object
     const scrollAnimationContext: ScrollAnimationContext  = {
@@ -120,7 +123,6 @@ export const MainComponent = (props: Props): JSX.Element => {
                     <ScrollContext.Provider value={scrollAnimationContext}>
                     <MainPageSwitcherComponent {...props} />
                     <FooterComponent {...props} />
-                    <HardwareBackButtonHandlerComponent onHardwareBackButtonPress={onHardwareBackButtonPress} />
                     <AppModalsComponent
                         isAboutModalVisible={props.isAboutModalVisible}
                         isDisclaimerModalVisible={props.isDisclaimerModalVisible}
