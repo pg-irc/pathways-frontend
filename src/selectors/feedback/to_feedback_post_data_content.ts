@@ -1,4 +1,4 @@
-import { Feedback, FeedbackField } from '../../stores/feedback/types';
+import { Feedback } from '../../stores/feedback/types';
 import { FeedbackPostDataContent }  from './types';
 
 export const toFeedbackPostDataContent = (feedback: Feedback, serviceId: string): FeedbackPostDataContent => {
@@ -6,13 +6,13 @@ export const toFeedbackPostDataContent = (feedback: Feedback, serviceId: string)
         case 'service_feedback':
             return {
                 bc211Id: serviceId,
-                name: undefinedOrFeedbackFieldValue(feedback.name),
-                organization: undefinedOrFeedbackFieldValue(feedback.organization),
-                description: undefinedOrFeedbackFieldValue(feedback.description),
-                address: undefinedOrFeedbackFieldValue(feedback.address),
-                phone: undefinedOrFeedbackFieldValue(feedback.phone),
-                website: undefinedOrFeedbackFieldValue(feedback.website),
-                email: undefinedOrFeedbackFieldValue(feedback.email),
+                name: feedback.name?.value,
+                organization: feedback.organization?.value,
+                description: feedback.description?.value,
+                address: feedback.address?.value,
+                phone: feedback.phone?.value,
+                website: feedback.website?.value,
+                email: feedback.email?.value,
             };
         case 'other_feedback':
             return {
@@ -30,7 +30,3 @@ export const toFeedbackPostDataContent = (feedback: Feedback, serviceId: string)
             };
     }
 };
-
-const undefinedOrFeedbackFieldValue = (field: undefined | FeedbackField): undefined | string => (
-    field && field.value
-);

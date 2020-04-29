@@ -164,17 +164,15 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
 
 export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveServiceProps): JSX.Element => {
     const isOtherFeedback = props.feedbackScreen === FeedbackScreen.OtherChangesPage;
-    const showDiscardChangesModal = props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal;
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
     const history = useHistory();
     const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
-    useEffect(navigateToFeedbackScreen, [props.feedbackScreen]);
 
-    function navigateToFeedbackScreen(): void {
+    useEffect((): void => {
         if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
             goBack(history);
         }
-    }
+    }, [props.feedbackScreen]);
 
     const submitFeedback = (): void => {
         if (isOtherFeedback) {
@@ -194,12 +192,11 @@ export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveSe
                 placeholder={content.placeholder}
             />
             <FooterComponent disabled={feedback.length === 0} submitFeedback={submitFeedback} />
-            {showDiscardChangesModal
-             &&
-             <FeedbackDiscardChangesModal
-                 discardFeedback={props.discardFeedback}
-                 cancelDiscardFeedback={props.cancelDiscardFeedback}
-             />}
+            <FeedbackDiscardChangesModal
+                onDiscardPress={props.discardFeedback}
+                onKeepEditingPress={props.cancelDiscardFeedback}
+                isVisible={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
+            />
         </Container>
     );
 };

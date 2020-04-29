@@ -9,19 +9,20 @@ import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 import { receiveUpdatesStyles as styles } from './styles';
 import { UserInformation } from '../../stores/feedback/types';
-import { showToast } from '../../application/toast';
 
 interface FeedbackReceiveUpdatesProps {
-    readonly finishAndSendFeedback: () => void;
     readonly isSendingFeedback: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
+    readonly onFinishPress: () => void;
+    readonly isVisible: boolean;
+    readonly onModalHide: (i18n: I18n) => () => void;
 }
 
 const INPUT_PLACEHOLDER = t`Enter email`;
 
 export const FeedbackReceiveUpdatesModal =
-({ finishAndSendFeedback: onFinishPress, isSendingFeedback, userInformation, setUserInformation }: FeedbackReceiveUpdatesProps): JSX.Element => {
+({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: FeedbackReceiveUpdatesProps): JSX.Element => {
 
     const onChangeEmail = (value: string): void =>
         setUserInformation({
@@ -35,15 +36,12 @@ export const FeedbackReceiveUpdatesModal =
             isEmployee: !userInformation.isEmployee,
         });
 
-    const onModalHide = (i18n: I18n) =>
-        () => showToast(i18n._(t`Thank you for your contribution!`));
-
     const buttonLabel = userInformation.email.length ? t`Finish` : t`Finish without email`;
 
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
-                <Modal isVisible={true} onBackdropPress={onFinishPress} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
+                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
                     <View style={styles.receiveUpdatesContainer}>
                         <View style={styles.receiveUpdatesInnerContainer}>
                             <Text style={textStyles.headlineH2StyleBlackLeft}>

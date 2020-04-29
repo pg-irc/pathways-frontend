@@ -1,17 +1,18 @@
 // tslint:disable:no-expression-statement
 import React, { Dispatch, SetStateAction } from 'react';
+import { t } from '@lingui/macro';
 import { FeedbackReceiveUpdatesModal } from '../feedback/feedback_receive_updates_modal';
 import { FeedbackChooseModeModal } from './feedback_choose_mode_modal';
 import { UserInformation } from '../../stores/feedback/types';
 import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
-import { EmptyComponent } from '../empty_component/empty_component';
+import { showToast } from '../../application/toast';
 import {
+    DiscardChangesAction,
+    CancelDiscardChangesAction,
     ChooseChangeNameOrDetailsAction,
     ChooseRemoveServiceAction,
     ChooseOtherChangesAction,
     CloseAction,
-    DiscardChangesAction,
-    CancelDiscardChangesAction,
 } from '../../stores/feedback';
 
 interface FeedbackModalContainerProps {
@@ -22,43 +23,49 @@ interface FeedbackModalContainerProps {
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
     readonly finishAndSendFeedback: () => void;
+    readonly discardFeedback: () => DiscardChangesAction;
+    readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
     readonly chooseChangeNameOrDetail: () => ChooseChangeNameOrDetailsAction;
     readonly chooseRemoveService: () => ChooseRemoveServiceAction;
     readonly chooseOtherChanges: () => ChooseOtherChangesAction;
     readonly close: () => CloseAction;
-    readonly discardFeedback: () => DiscardChangesAction;
-    readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
+    readonly resetFeedbackAndUserInput: () => void;
 }
 
 export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.Element => {
-    if (props.showChoooseFeedbackModeModal) {
-        return (
+
+    const onReceiveUpdatesModalHide = (i18n: I18n) => () => {
+        showToast(i18n._(t`Thank you for your contribution!`));
+        props.resetFeedbackAndUserInput();
+    };
+
+    const onDiscardModalDiscardPress = (): void => {
+        props.discardFeedback();
+        props.resetFeedbackAndUserInput();
+    };
+
+    return (
+        <>
             <FeedbackChooseModeModal
-                close={props.close}
-                chooseChangeNameOrOtherDetail={props.chooseChangeNameOrDetail}
-                chooseOtherChanges={props.chooseOtherChanges}
-                chooseRemoveService={props.chooseRemoveService}
+                onClosePress={props.close}
+                onChangeNameOrOtherDetailPress={props.chooseChangeNameOrDetail}
+                onChooseOtherChangesPress={props.chooseOtherChanges}
+                onChooseRemoveServicePress={props.chooseRemoveService}
+                isVisible={props.showChoooseFeedbackModeModal}
             />
-        );
-    }
-    if (props.showReceiveUpdatesModal) {
-        return (
             <FeedbackReceiveUpdatesModal
-                finishAndSendFeedback={props.finishAndSendFeedback}
                 isSendingFeedback={props.isSendingFeedback}
                 setUserInformation={props.setUserInformation}
                 userInformation={props.userInformation}
+                onFinishPress={props.finishAndSendFeedback}
+                isVisible={props.showReceiveUpdatesModal}
+                onModalHide={onReceiveUpdatesModalHide}
             />
-        );
-    }
-    if (props.showFeedbackDiscardChangesModal) {
-        return (
             <FeedbackDiscardChangesModal
-                discardFeedback={props.discardFeedback}
-                cancelDiscardFeedback={props.cancelDiscardFeedback}
+                onDiscardPress={onDiscardModalDiscardPress}
+                onKeepEditingPress={props.cancelDiscardFeedback}
+                isVisible={props.showFeedbackDiscardChangesModal}
             />
-        );
-    }
-
-    return <EmptyComponent />;
+        </>
+    );
 };
