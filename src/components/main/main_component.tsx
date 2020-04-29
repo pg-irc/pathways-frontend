@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect, useRef, EffectCallback } from 'react';
+import React, { useEffect, EffectCallback } from 'react';
 import { Container, Drawer, Root } from 'native-base';
 import { MainPageSwitcherComponent } from './main_page_switcher';
 import { FooterComponent, FooterProps } from './footer_component';
@@ -18,7 +18,7 @@ import {
 } from '../../stores/header_menu';
 import { useHardwareBackButtonPress } from './use_hardware_back_button_press';
 import { StatusBar } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { ScrollContext, createScrollAnimationContext } from './scroll_animation_context';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -44,34 +44,7 @@ interface MainProps {
 
 type Props = MainComponentProps & MainComponentActions;
 
-export interface ScrollAnimationContext {
-    readonly scrollAnim: Animated.Value<number>;
-    readonly offsetAnim: Animated.Value<number>;
-    readonly clampedScroll: Animated.Node<number>;
-}
-
-export const ScrollContext = React.createContext<ScrollAnimationContext | undefined>(undefined);
-
 export const MainComponent = (props: Props): JSX.Element => {
-    const scrollAnim = useRef<Animated.Value<number>>(new Animated.Value(0));
-
-    const offsetAnim = useRef<Animated.Value<number>>(new Animated.Value(0));
-
-    const clampedScroll = useRef<Animated.Node<number>>(
-        Animated.diffClamp(
-            Animated.add(
-              scrollAnim.current.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 1],
-                extrapolateLeft: Animated.Extrapolate.CLAMP,
-              }),
-              offsetAnim.current,
-            ),
-            0,
-            100,
-        ),
-    );
-
     useHardwareBackButtonPress((): boolean => {
         const shouldNotBubbleUpEvent = true;
 
@@ -96,12 +69,7 @@ export const MainComponent = (props: Props): JSX.Element => {
         return (): void => subscription.remove();
     }, []);
 
-    // Only pass the animation contexts, not the Ref object
-    const scrollAnimationContext: ScrollAnimationContext  = {
-        scrollAnim: scrollAnim.current,
-        offsetAnim: offsetAnim.current,
-        clampedScroll: clampedScroll.current,
-    };
+    const scrollAnimationContext = createScrollAnimationContext();
 
     return (
         <Root>
@@ -121,14 +89,14 @@ export const MainComponent = (props: Props): JSX.Element => {
             >
                 <Container>
                     <ScrollContext.Provider value={scrollAnimationContext}>
-                    <MainPageSwitcherComponent {...props} />
-                    <FooterComponent {...props} />
-                    <AppModalsComponent
-                        isAboutModalVisible={props.isAboutModalVisible}
-                        isDisclaimerModalVisible={props.isDisclaimerModalVisible}
-                        closeAboutModal={props.closeAboutModal}
-                        closeDisclaimerModal={props.closeDisclaimerModal}
-                    />
+                        <MainPageSwitcherComponent {...props} />
+                        <FooterComponent {...props} />
+                        <AppModalsComponent
+                            isAboutModalVisible={props.isAboutModalVisible}
+                            isDisclaimerModalVisible={props.isDisclaimerModalVisible}
+                            closeAboutModal={props.closeAboutModal}
+                            closeDisclaimerModal={props.closeDisclaimerModal}
+                        />
                     </ScrollContext.Provider>
                 </Container>
             </Drawer>

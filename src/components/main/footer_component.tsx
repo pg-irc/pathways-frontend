@@ -9,9 +9,7 @@ import Animated from 'react-native-reanimated';
 import { Routes, goToRouteWithoutParameter, pathMatchesRoute, pathMatchesAnyRoute } from '../../application/routing';
 import { colors, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { ScrollAnimationContext, ScrollContext } from '../main/main_component';
-
-const FOOTER_HEIGHT: number = 55;
+import { ScrollAnimationContext, ScrollContext } from '../main/scroll_animation_context';
 
 const AnimatedFooter = Animated.createAnimatedComponent(Footer);
 
@@ -31,20 +29,6 @@ export interface FooterStyles {
     readonly paddingBottom: number;
 }
 
-const getFooterStyles = (): FooterStyles => {
-    if (variables.isIphoneX) {
-        return {
-            height: FOOTER_HEIGHT + variables.Inset.portrait.bottomInset,
-            paddingBottom: variables.Inset.portrait.bottomInset,
-        };
-    }
-
-    return {
-        height: FOOTER_HEIGHT,
-        paddingBottom: 0,
-    };
-};
-
 const NavigationButton = (props: NavigationButtonProps): JSX.Element => {
     return (
         <Button vertical onPress={props.onPress} style={{ flexWrap: 'nowrap' }}>
@@ -59,21 +43,7 @@ const NavigationButton = (props: NavigationButtonProps): JSX.Element => {
 };
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
-    const  { clampedScroll }: ScrollAnimationContext = useContext(ScrollContext);
-
-    const { height, paddingBottom }: FooterStyles = getFooterStyles();
-
-    const footerAnimatedHeight = Animated.interpolate(clampedScroll, {
-        inputRange: [0, height],
-        outputRange: [height, 0],
-        extrapolate: Animated.Extrapolate.CLAMP,
-    });
-
-    const footerAnimatedBottomPadding = Animated.interpolate(clampedScroll, {
-        inputRange: [0, paddingBottom],
-        outputRange: [paddingBottom, 0],
-        extrapolate: Animated.Extrapolate.CLAMP,
-    });
+    const  { footerAnimatedHeight, footerAnimatedBottomPadding }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
 
     const [keyboardIsVisible, setKeyboardIsVisible]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 

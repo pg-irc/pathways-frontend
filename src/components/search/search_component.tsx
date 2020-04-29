@@ -22,11 +22,7 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { Trans } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import Animated from 'react-native-reanimated';
-import Constants from 'expo-constants';
-import { ScrollContext, ScrollAnimationContext } from '../main/main_component';
-
-// Based from inspecting React Native's Element inspector
-const HEADER_HEIGHT: number = 44;
+import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -158,16 +154,10 @@ const HeaderRight = (props: { readonly onMenuButtonPress: () => void }): JSX.Ele
 );
 
 const SearchComponentHeader = (props: { readonly onMenuButtonPress: () => void }): JSX.Element => {
-    const { clampedScroll }: ScrollAnimationContext = useContext(ScrollContext);
-
-    const headerTranslate = Animated.interpolate(clampedScroll, {
-        inputRange: [0, (HEADER_HEIGHT + Constants.statusBarHeight)],
-        outputRange: [HEADER_HEIGHT + Constants.statusBarHeight, Constants.statusBarHeight],
-        extrapolate: Animated.Extrapolate.CLAMP,
-    });
+    const { headerAnimatedHeight }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
 
     return (
-        <Animated.View style={{ height: headerTranslate }}>
+        <Animated.View style={{ height: headerAnimatedHeight }}>
             <Header style={[applicationStyles.header, { backgroundColor: colors.teal }]}>
                 <HeaderLeft />
                 <HeaderRight onMenuButtonPress={props.onMenuButtonPress} />

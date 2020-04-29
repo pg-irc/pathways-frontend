@@ -27,7 +27,7 @@ import { openURL } from '../link/link';
 import buildUrl from 'build-url';
 import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
-import { ScrollContext, ScrollAnimationContext } from '../main/main_component'
+import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -71,10 +71,9 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
 };
 
 const renderComponentWithResults = (props: Props): JSX.Element => {
-    // $FIXME Animated.createAnimatedComponent only has any as its return type
-    const flatListRef = useRef<any>(undefined);
+    const flatListRef = useRef<any>();
 
-    const { scrollAnim }: ScrollAnimationContext = useContext(ScrollContext);
+    const { scrollAnimatedValue }: Partial<ScrollAnimationContext> = useContext(ScrollContext);
 
     useEffect((): void => {
         if (props.searchTerm) {
@@ -94,7 +93,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
             <AnimatedFlatList
                 ref={flatListRef}
                 onScroll={Animated.event(
-                    [{nativeEvent: {contentOffset: { y: scrollAnim }}}],
+                    [{nativeEvent: {contentOffset: { y: scrollAnimatedValue }}}],
                     {
                         listener: ((e: any): void => props.setScrollOffset(e.nativeEvent.contentOffset.y)),
                         useNativeDriver: true,
