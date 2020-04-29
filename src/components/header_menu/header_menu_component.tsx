@@ -11,6 +11,7 @@ import { isRTL } from '../../locale/effects';
 import { DividerComponent } from '../content_layout/divider_component';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
+import { isAndroid } from '../../application/helpers/is_android';
 
 type OwnProps = {
     readonly history: History;
@@ -31,17 +32,21 @@ export interface HeaderMenuActions {
 type Props = OwnProps & HeaderMenuProps & HeaderMenuActions;
 
 export const HeaderMenuComponent = (props: Props): JSX.Element => (
-    <View style={{ flex: 1, backgroundColor: colors.white }}>
+    <View style={{ flex: 1, backgroundColor: getViewBackgroundColorForPlatform() }}>
         <Header style={{ backgroundColor: colors.lightTeal, marginTop: getStatusBarHeightForPlatform(), alignItems: 'center', justifyContent: 'flex-start' }}>
             <Image source={arrivalAdvisorGlyphLogo} style={{ height: 24, width: 24, marginHorizontal: 10 }}/>
             <Title style={textStyles.headlineH3StyleWhiteCenter}>Arrival Advisor</Title>
         </Header>
-        <Content>
+        <Content style={{ backgroundColor: colors.white}}>
             <LocaleSection {...props} />
             <DividerComponent />
             <AboutSection {...props} />
         </Content>
     </View>
+);
+
+const getViewBackgroundColorForPlatform = (): string => (
+    isAndroid() ? colors.teal : colors.white
 );
 
 type LocaleListItem = LocaleInfo & {
