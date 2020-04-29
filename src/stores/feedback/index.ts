@@ -10,6 +10,8 @@ export const buildDefaultStore = (): FeedbackStore => ({
     modal: FeedbackModal.None,
     userInformation: undefined,
     feedback: undefined,
+    isSending: false,
+    error: '',
 });
 
 export const suggestAnUpdate = () => helpers.makeAction(constants.SUGGEST_AN_UPDATE);
@@ -26,6 +28,15 @@ export const submit = (feedback: Feedback) => (
 export const finishFeedback = (userInformation: UserInformation = undefined) => (
     helpers.makeAction(constants.FINISH_FEEDBACK, { userInformation })
 );
+export const sendFeedback = (serviceId: string) => (
+    helpers.makeAction(constants.SEND_FEEDBACK, { serviceId })
+);
+export const setIsSending = (isSending: boolean) => (
+    helpers.makeAction(constants.SET_IS_SENDING, { isSending })
+);
+export const setError = (error: string) => (
+    helpers.makeAction(constants.SET_ERROR, { error })
+);
 
 export type SuggestAnUpdateAction = Readonly<ReturnType<typeof suggestAnUpdate>>;
 export type ChooseChangeNameOrDetailsAction = Readonly<ReturnType<typeof chooseChangeNameOrDetails>>;
@@ -37,6 +48,9 @@ export type CloseAction = Readonly<ReturnType<typeof close>>;
 export type BackAction = Readonly<ReturnType<typeof back>>;
 export type SubmitAction = Readonly<ReturnType<typeof submit>>;
 export type FinishAction = Readonly<ReturnType<typeof finishFeedback>>;
+export type SendFeedbackAction = Readonly<ReturnType<typeof sendFeedback>>;
+export type SetIsSendingAction = Readonly<ReturnType<typeof setIsSending>>;
+export type SetErrorAction = Readonly<ReturnType<typeof setError>>;
 
 export type ReducerActions = SuggestAnUpdateAction |
         ChooseChangeNameOrDetailsAction |
@@ -47,7 +61,10 @@ export type ReducerActions = SuggestAnUpdateAction |
         CloseAction |
         BackAction |
         SubmitAction |
-        FinishAction;
+        FinishAction |
+        SendFeedbackAction |
+        SetIsSendingAction |
+        SetErrorAction;
 
 export const getEmptyUserInfo = (): UserInformation => ({
     email: '',

@@ -7,6 +7,8 @@ export class FeedbackStoreBuilder {
     modal: FeedbackModal = FeedbackModal.None;
     userInformation: UserInformation =  { email: '', name: '', organizationName: '', jobTitle: '', isEmployee: false };
     feedback: Feedback | undefined = undefined;
+    isSending: boolean = false;
+    error: string = '';
 
     withScreen(screen: FeedbackScreen): FeedbackStoreBuilder {
         this.screen = screen;
@@ -34,6 +36,8 @@ export class FeedbackStoreBuilder {
             modal: this.modal,
             userInformation: this.userInformation,
             feedback: this.feedback,
+            isSending: this.isSending,
+            error: this.error,
         };
     }
 }

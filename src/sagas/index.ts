@@ -7,6 +7,7 @@ import { watchUpdateServicesForTopic } from './services';
 import { watchLoadUserData, watchUserStateChangesToSaveUserData } from './user_data';
 import { watchAnalytics } from './analytics/watch_analytics';
 import { watchRequestPostPushNotificationToken } from './post_push_notification_token';
+import { watchSendFeedback } from './feedback';
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -30,4 +31,5 @@ export function runSaga(middleware: SagaMiddleware<object>): void {
     middleware.run(watchUpdateServicesForTopic);
     middleware.run(watchAnalytics);
     middleware.run(watchRequestPostPushNotificationToken);
+    middleware.run(watchSendFeedback);
 }

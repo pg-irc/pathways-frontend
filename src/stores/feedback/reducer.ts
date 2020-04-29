@@ -26,6 +26,10 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
                 ...store,
                 screen: FeedbackScreen.ServiceDetail,
                 userInformation: action.payload.userInformation};
+        case constants.SET_IS_SENDING:
+            return { ...store, isSending: action.payload.isSending };
+        case constants.SET_ERROR:
+            return { ...store, error: action.payload.error };
         default:
             return store;
     }
