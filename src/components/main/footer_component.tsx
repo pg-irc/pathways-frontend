@@ -1,8 +1,9 @@
 // tslint:disable: no-expression-statement
 import { History, Location } from 'history';
-import { Footer, FooterTab, Button, Icon } from 'native-base';
+// @ts-ignore variables is exported by native base but is not defined by the types file
+import { Button, Footer, FooterTab, Icon, variables } from 'native-base';
 import React, { useContext, useState, useEffect, SetStateAction, Dispatch } from 'react';
-import { Keyboard, StyleProp, TextStyle, Platform } from 'react-native';
+import { Keyboard, StyleProp, TextStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { Routes, goToRouteWithoutParameter, pathMatchesRoute, pathMatchesAnyRoute } from '../../application/routing';
@@ -10,45 +11,48 @@ import { colors, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ScrollAnimationContext, ScrollContext } from '../main/main_component';
 
-// Based from inspecting React Native's Element inspector
 const FOOTER_HEIGHT: number = 55;
-const FOOTER_SPACING: number = 35;
 
 const AnimatedFooter = Animated.createAnimatedComponent(Footer);
-
-const AnimatedFooterTab = Animated.createAnimatedComponent(FooterTab);
 
 export interface FooterProps {
     readonly history: History;
     readonly location: Location;
 }
 
+export interface FooterStyles {
+    readonly height: number;
+    readonly paddingBottom: number;
+}
+
+const getFooterStyles = (): FooterStyles => {
+    if (variables.isIphoneX) {
+        return {
+            height: FOOTER_HEIGHT + variables.Inset.portrait.bottomInset,
+            paddingBottom: variables.Inset.portrait.bottomInset,
+        };
+    }
+
+    return {
+        height: FOOTER_HEIGHT,
+        paddingBottom: 0,
+    };
+};
+
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
     const  { clampedScroll }: ScrollAnimationContext = useContext(ScrollContext);
 
-    const footerHeight = Platform.OS === 'android' ? FOOTER_HEIGHT : FOOTER_HEIGHT + FOOTER_SPACING;
+    const { height, paddingBottom }: FooterStyles = getFooterStyles();
 
-    // Animate Footer Height
-    const footerTranslatedHeight = Animated.interpolate(clampedScroll, {
-        inputRange: [0, footerHeight],
-        outputRange: [footerHeight, 0],
+    const footerAnimatedHeight = Animated.interpolate(clampedScroll, {
+        inputRange: [0, height],
+        outputRange: [height, 0],
         extrapolate: Animated.Extrapolate.CLAMP,
     });
 
-    // Animate Footer Tab Height
-    const footerTabTranslatedHeight = Animated.interpolate(clampedScroll, {
-        // Only translate the footer tab height once the extra spacing of the footer container is gone
-        inputRange: [FOOTER_HEIGHT, footerHeight],
-        outputRange: [FOOTER_HEIGHT, 0],
-        extrapolate: Animated.Extrapolate.CLAMP,
-    });
-
-    // Translate Footer Tab on the Y Axis
-    // Needed for Android because icons are still displayed even when the height is already at minimum
-    const footerTabTranslateY = Animated.interpolate(clampedScroll, {
-        // Only translate the footer y axis once the extra spacing of the footer container is gone
-        inputRange: [FOOTER_HEIGHT, footerHeight],
-        outputRange: [0, footerHeight],
+    const footerAnimatedBottomPadding = Animated.interpolate(clampedScroll, {
+        inputRange: [0, paddingBottom],
+        outputRange: [paddingBottom, 0],
         extrapolate: Animated.Extrapolate.CLAMP,
     });
 
@@ -82,19 +86,13 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     }
 
     return (
-        <AnimatedFooter style={{ height: footerTranslatedHeight }}>
-            <AnimatedFooterTab
-                style={{
-                    backgroundColor: colors.lightTeal,
-                    height: footerTabTranslatedHeight,
-                    transform: [{ translateY: footerTabTranslateY }],
-                }}
-            >
+        <AnimatedFooter style={{ height: footerAnimatedHeight, paddingBottom: footerAnimatedBottomPadding }}>
+            <FooterTab style={{ backgroundColor: colors.lightTeal }}>
                 {navigationButton(props.history, Routes.RecommendedTopics, 'home', isOnRecommendedTopicsPage(props))}
                 {navigationButton(props.history, Routes.Learn, 'book', isOnLearnPage(props))}
                 {navigationButton(props.history, Routes.Bookmarks, 'bookmark', isOnBookmarksPage(props))}
                 {navigationButton(props.history, Routes.Search, 'search', isOnSearchPage(props))}
-            </AnimatedFooterTab>
+            </FooterTab>
         </AnimatedFooter>
     );
 };
