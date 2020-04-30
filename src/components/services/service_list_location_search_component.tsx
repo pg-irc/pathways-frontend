@@ -98,6 +98,16 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
         :
         <EmptyComponent />;
     const searchIsDisabled = props.locationInputValue.length === 0 || props.isFetchingLatLng;
+    const isCachedLocationValid = props.locationInputValue === props.manualUserLocation.label;
+    const collapseSearch = (): void => { props.setSearchIsCollapsed(true); };
+    const lookupLocationLatLong = getSearchOnPress(
+        props.setIsFetchingLatLng,
+        props.locationInputValue,
+        props.setManualUserLocation,
+        props.setSearchIsCollapsed,
+    );
+    const onSearchButtonPress = isCachedLocationValid ? collapseSearch : lookupLocationLatLong;
+
     return (
         <View>
             <View style={[applicationStyles.searchContainerExpanded, { marginBottom: 4 }]}>
@@ -118,13 +128,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
             >
                 {LocateButtonOrEmpty}
                 <SearchButton
-                    onPress={getSearchOnPress(
-                        props.setIsFetchingLatLng,
-                        props.locationInputValue,
-                        props.setManualUserLocation,
-                        props.setSearchIsCollapsed,
-                        props.locationInputValue === props.manualUserLocation.label,
-                    )}
+                    onPress={onSearchButtonPress}
                     isDisabled={searchIsDisabled}
                 />
             </View>
@@ -234,12 +238,8 @@ const getSearchOnPress = (
     locationInputValue: string,
     setManualUserLocation: Props['setManualUserLocation'],
     setSearchIsCollapsed: (b: boolean) => void,
-    locationIsUnchanged: boolean,
 ): () => void => (): void => {
     setSearchIsCollapsed(true);
-    if (locationIsUnchanged) {
-        return;
-    }
     if (locationInputValue === MY_LOCATION) {
         fetchLatLng(
             setIsFetchingLatLng,
