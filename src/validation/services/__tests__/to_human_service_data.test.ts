@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { toServicesFromValidatedData } from '../index';
-import { aNumber, aString } from '../../../application/helpers/random_test_values';
+import { aDate, aNumber, aString } from '../../../application/helpers/random_test_values';
 
 describe('Adapting server service object to client service object', () => {
     const serverServiceObject = {
@@ -12,6 +12,7 @@ describe('Adapting server service object to client service object', () => {
             organization_url: aString(),
             organization_email: aString(),
             organization_name: aString(),
+            last_verified_date: aDate(),
         },
         location: {
             latitude: aNumber(),
@@ -59,6 +60,7 @@ describe('Adapting server service object to client service object', () => {
             email: serverServiceObject.service.organization_email,
             organizationName: serverServiceObject.service.organization_name,
             bookmarked: false,
+            lastVerifiedDate: serverServiceObject.service.last_verified_date,
         };
 
         expect(clientServiceObject).toEqual(expectedClientServiceObject);

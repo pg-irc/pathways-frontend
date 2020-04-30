@@ -31,4 +31,5 @@ export interface SearchServiceData {
     readonly phone_numbers?: ReadonlyArray<PhoneNumber>;
     readonly _geoloc: AlgoliaLatLong;
     readonly email?: string;
+    readonly last_verified_date?: string;
 }

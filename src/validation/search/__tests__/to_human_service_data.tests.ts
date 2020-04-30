@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { toHumanServiceData } from '../to_human_service_data';
-import { aString, aNumber } from '../../../application/helpers/random_test_values';
+import { aDate, aString, aNumber } from '../../../application/helpers/random_test_values';
 import { Id } from '../../services/types';
 
 describe('Adapting search result to service data', () => {
@@ -15,6 +15,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -47,6 +48,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -84,6 +86,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -113,6 +116,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -144,6 +148,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -172,6 +177,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -203,6 +209,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: serviceId,
                 service_description: aString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),
@@ -233,6 +240,7 @@ describe('Adapting search result to service data', () => {
                 service_name: aString(),
                 service_id: aString(),
                 service_description: aString(),
+                last_verified_date: aDate(),
                 address: {
                     address: aString(),
                     city: aString(),

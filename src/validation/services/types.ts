@@ -31,6 +31,7 @@ export interface HumanServiceData {
     readonly email: string;
     readonly organizationName: string;
     readonly bookmarked: boolean;
+    readonly lastVerifiedDate: string;
 }
 
 export interface ValidServicesForTopic {

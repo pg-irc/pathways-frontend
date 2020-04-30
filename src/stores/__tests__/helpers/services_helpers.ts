@@ -1,5 +1,5 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
-import { aString, aNumber } from '../../../application/helpers/random_test_values';
+import { aDate, aString, aNumber } from '../../../application/helpers/random_test_values';
 import { Id } from '../../services';
 import { Errors } from '../../../validation/errors/types';
 import {
@@ -114,6 +114,7 @@ export class ServiceBuilder {
     email: string = aString();
     organizationName: string = aString();
     bookmarked: boolean = false;
+    lastVerifiedDate: string = aDate();
 
     withId(id: Id): ServiceBuilder {
         this.id = id;
@@ -170,6 +171,11 @@ export class ServiceBuilder {
         return this;
     }
 
+    withLastVerifiedDate(lastVerifiedDate: string): ServiceBuilder {
+        this.lastVerifiedDate = lastVerifiedDate;
+        return this;
+    }
+
     build(): HumanServiceData {
         return {
             id: this.id,
@@ -182,6 +188,7 @@ export class ServiceBuilder {
             email: this.email,
             organizationName: this.organizationName,
             bookmarked: this.bookmarked,
+            lastVerifiedDate: this.lastVerifiedDate,
         };
     }
 }
