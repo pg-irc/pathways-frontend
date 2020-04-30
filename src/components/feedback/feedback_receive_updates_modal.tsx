@@ -1,82 +1,90 @@
+// tslint:disable:no-expression-statement
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
 import { Input } from 'native-base';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import Modal from 'react-native-modal';
 import { View, Text, TouchableOpacity } from 'react-native';
-
 import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
-
 import { receiveUpdatesStyles as styles } from './styles';
+import { UserInformation } from '../../stores/feedback/types';
 
 interface FeedbackReceiveUpdatesProps {
+    readonly isSendingFeedback: boolean;
+    readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
+    readonly userInformation: UserInformation;
+    readonly onFinishPress: () => void;
     readonly isVisible: boolean;
-    readonly onHide: () => void;
+    readonly onModalHide: (i18n: I18n) => () => void;
 }
 
 const INPUT_PLACEHOLDER = t`Enter email`;
 
-const useToggleState = (initialValue: boolean = false): readonly[boolean, () => void] => {
-    const [state, setState]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(initialValue);
+export const FeedbackReceiveUpdatesModal =
+({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: FeedbackReceiveUpdatesProps): JSX.Element => {
 
-    const toggle = (): void => setState(!state);
+    const onChangeEmail = (value: string): void =>
+        setUserInformation({
+            ...userInformation,
+            email: value,
+        });
 
-    return [state, toggle];
-};
+    const onPressIsEmployee = (): void =>
+        setUserInformation({
+            ...userInformation,
+            isEmployee: !userInformation.isEmployee,
+        });
 
-export const FeedbackReceiveUpdatesModal = ({ isVisible, onHide }: FeedbackReceiveUpdatesProps): JSX.Element => {
-    const [checked, toggleChecked]: readonly[boolean, () => void]
-        = useToggleState();
-
-    const [emailInput, setEmailInput]: readonly [string, Dispatch<SetStateAction<string>>]
-        = useState<string>('');
-
-    const buttonLabel = emailInput.length ? t`Finish` : t`Finish without email`;
-
-    const onFinish = (): void => onHide();
+    const buttonLabel = userInformation.email.length ? t`Finish` : t`Finish without email`;
 
     return (
-        <Modal isVisible={isVisible} onBackdropPress={onHide}>
-            <I18n>
-                {
-                    ({ i18n }: I18nProps): JSX.Element => (
-                        <View style={styles.receiveUpdatesContainer}>
-                            <View style={styles.receiveUpdatesInnerContainer}>
-                                <Text style={textStyles.headlineH2StyleBlackLeft}>
-                                    <Trans>Receiving Updates</Trans>
+        <I18n>
+            {({ i18n }: I18nProps): JSX.Element => (
+                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
+                    <View style={styles.receiveUpdatesContainer}>
+                        <View style={styles.receiveUpdatesInnerContainer}>
+                            <Text style={textStyles.headlineH2StyleBlackLeft}>
+                                <Trans>Receiving Updates</Trans>
+                            </Text>
+                            <Text style={[textStyles.paragraphStyleBrown, styles.description]}>
+                                <Trans>Enter your email if you would like to receive updates about this issue</Trans>
+                            </Text>
+                            <Input
+                                style={styles.emailInputStyle}
+                                onChangeText={onChangeEmail}
+                                placeholder={i18n._(INPUT_PLACEHOLDER)}
+                                placeholderTextColor={colors.darkerGrey}
+                                value={userInformation.email}
+                            />
+                            <View style={styles.checkboxContainer}>
+                                <Text style={[textStyles.captionStyleLeft, styles.checkBoxDescription]}>
+                                    <Trans>Do you work at this service or organization?</Trans>
                                 </Text>
-                                <Text style={[textStyles.paragraphStyleBrown, styles.description]}>
-                                    <Trans>Enter your email if you would like to receive updates about this issue</Trans>
-                                </Text>
-                                <Input
-                                    style={styles.emailInputStyle}
-                                    onChangeText={setEmailInput}
-                                    placeholder={i18n._(INPUT_PLACEHOLDER)}
-                                    placeholderTextColor={colors.darkerGrey}
-                                    value={emailInput}
-                                />
-                                <View style={styles.checkboxContainer}>
-                                    <Text style={[textStyles.captionStyleLeft, styles.checkBoxDescription]}>
-                                        <Trans>Do you work at this service or organization?</Trans>
-                                    </Text>
-                                    <View style={styles.checkBox}>
-                                        <CheckBox checked={checked} iconStyle={styles.checkBoxIcon} onPress={toggleChecked} />
-                                        <Text style={textStyles.paragraphStyleBrown}><Trans>Yes</Trans></Text>
-                                    </View>
+                                <View style={styles.checkBox}>
+                                    <CheckBox
+                                        checked={userInformation.isEmployee}
+                                        iconStyle={styles.checkBoxIcon}
+                                        onPress={onPressIsEmployee}
+                                    />
+                                    <Text style={textStyles.paragraphStyleBrown}><Trans>Yes</Trans></Text>
                                 </View>
                             </View>
-                            <View style={styles.finishButtonContainer}>
-                                <TouchableOpacity onPress={onFinish} style={styles.finishButton}>
-                                    <Text style={styles.finishText}>
-                                        <Trans id={buttonLabel} />
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
                         </View>
-                    )
-                }
-            </I18n>
-        </Modal>
+                        <View style={styles.finishButtonContainer}>
+                            <TouchableOpacity
+                                onPress={onFinishPress}
+                                style={isSendingFeedback ? [styles.finishButton, styles.finishButtonSending] : styles.finishButton}
+                                disabled={isSendingFeedback}
+                            >
+                                <Text style={styles.finishText}>
+                                    <Trans id={buttonLabel} />
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+            )}
+        </I18n>
     );
 };

@@ -8,26 +8,27 @@ import { Trans } from '@lingui/react';
 import { CloseButtonComponent } from '../close_button_component';
 
 export interface FeedbackModalProps {
+    readonly onClosePress: () => void;
     readonly isVisible: boolean;
-    readonly onClose: () => void;
 }
 
 export interface ButtonsComponentProps {
-    readonly onSuggestAnUpdatePress: () => void;
-    readonly onOtherPress: () => void;
-    readonly onRemoveServicePress: () => void;
+    readonly onChangeNameOrOtherDetailPress: () => void;
+    readonly onChooseOtherChangesPress: () => void;
+    readonly onChooseRemoveServicePress: () => void;
 }
 
 type Props = FeedbackModalProps & ButtonsComponentProps;
 
-export const FeedbackOptionsModalComponent = (props: Props): JSX.Element => (
+export const FeedbackChooseModeModal = (props: Props): JSX.Element => (
     <Modal
         isVisible={props.isVisible}
-        onBackdropPress={props.onClose}
+        onBackdropPress={props.onClosePress}
         style={{ justifyContent: 'flex-end', margin: 0 }}
+        backdropTransitionOutTiming={0}
     >
         <View padder style={{backgroundColor: colors.white, borderTopStartRadius: 20, borderTopEndRadius: 20}}>
-           <HeaderComponent onClose={props.onClose}/>
+           <HeaderComponent onClosePress={props.onClosePress}/>
            <DividerComponent />
            <ButtonsComponent {...props} />
            <DividerComponent />
@@ -37,24 +38,24 @@ export const FeedbackOptionsModalComponent = (props: Props): JSX.Element => (
     </Modal>
 );
 
-const HeaderComponent = (props: { readonly onClose: () => void }): JSX.Element => (
+const HeaderComponent = (props: { readonly onClosePress: () => void }): JSX.Element => (
     <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 10}}>
         <Text style={textStyles.paragraphStyleBrown}>
             <Trans>Suggest an Update</Trans>
         </Text>
         <CloseButtonComponent
             color={colors.greyishBrown}
-            additionalStyle={{ paddingTop: 0 }} 
-            onPress={props.onClose}
+            additionalStyle={{ paddingTop: 0 }}
+            onPress={props.onClosePress}
         />
     </View>
 );
 
 const ButtonsComponent = (props: ButtonsComponentProps): JSX.Element => (
     <View style={{ marginHorizontal: 10 }}>
-       <OptionButton name={<Trans>Change name or other details</Trans>} onPress={props.onSuggestAnUpdatePress}/>
-       <OptionButton name={<Trans>Remove this service</Trans>} onPress={props.onRemoveServicePress}/>
-       <OptionButton name={<Trans>Other</Trans>} onPress={props.onOtherPress}/>
+       <OptionButton name={<Trans>Change name or other details</Trans>} onPress={props.onChangeNameOrOtherDetailPress}/>
+       <OptionButton name={<Trans>Remove this service</Trans>} onPress={props.onChooseRemoveServicePress}/>
+       <OptionButton name={<Trans>Other</Trans>} onPress={props.onChooseOtherChangesPress}/>
     </View>
 );
 

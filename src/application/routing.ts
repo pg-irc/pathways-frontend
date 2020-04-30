@@ -1,4 +1,3 @@
-import buildUrl from 'build-url';
 import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
 import { History, Location } from 'history';
@@ -9,14 +8,14 @@ import * as R from 'ramda';
 // The property names of this structure are defined by the corresponding
 // route definitions, e.g. parsing a url '/learn/1' which matches
 // '/learn/:learnId' will put '1' in the attribute `learnId`.
-export interface MatchParameters {
-    readonly learnId?: LearnId;
-    readonly topicId?: TopicId;
-    readonly organizationId?: string;
-    readonly serviceId?: string;
-}
+export type RouteParameters = Partial<{
+    readonly learnId: LearnId;
+    readonly topicId: TopicId;
+    readonly organizationId: string;
+    readonly serviceId: string;
+}>;
 
-export type RouterProps = RouteComponentProps<MatchParameters>;
+export type RouterProps = RouteComponentProps<RouteParameters>;
 
 export enum Routes {
     Welcome,
@@ -92,23 +91,9 @@ export const goToRouteWithoutParameter = (route: Routes, history: History): () =
     return (): void => history.push(path);
 };
 
-export const goToRouteWithParameter = (route: Routes, parameter: string, history: History): () => void => {
-    const path = routePathWithParameter(route, parameter);
-    // tslint:disable-next-line:no-expression-statement
-    return (): void => history.push(path);
-};
-
-export const goToRouteWithParameters = (route: Routes, parameter: string, queryParams: Record<string, string>, history: History): () => void => {
-    const path = `${routePathWithParameter(route, parameter)}${buildUrl('', { queryParams })}`;
-    // tslint:disable-next-line:no-expression-statement
-    return (): void => history.push(path);
-};
-
-export const replaceRouteWithParameters = (route: Routes, parameter: string, queryParams: Record<string, string>, history: History): () => void => {
-    const path = `${routePathWithParameter(route, parameter)}${buildUrl('', { queryParams })}`;
-    // tslint:disable-next-line:no-expression-statement
-    return (): void => history.replace(path);
-};
+export const goToRouteWithParameter = (route: Routes, parameter: string, history: History): () => void => (
+    (): void => history.push(routePathWithParameter(route, parameter))
+);
 
 export const goBack = (history: History): void => (
     history.goBack()
@@ -130,7 +115,7 @@ const routeHasParameter = (route: Routes): boolean => (
 // This makes it impossible to access params in components like the Header and Footer.
 // This helper function remedies this by parsing the parameters from the route url which is always available globally.
 // For more details see: https://github.com/ReactTraining/react-router/issues/5870.
-export const getParametersFromPath = (location: Location, route: Routes): MatchParameters => {
+export const getParametersFromPath = (location: Location, route: Routes): RouteParameters => {
     const match = matchPath(location.pathname, {
         path: routePathDefinition(route),
         exact: true,

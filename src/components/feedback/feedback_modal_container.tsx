@@ -1,110 +1,71 @@
 // tslint:disable:no-expression-statement
-import { Trans } from '@lingui/react';
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
-import { useHistory } from 'react-router-native';
-
-import { textStyles, colors } from '../../application/styles';
-import { Routes, goToRouteWithParameters } from '../../application/routing';
+import React, { Dispatch, SetStateAction } from 'react';
+import { t } from '@lingui/macro';
 import { FeedbackReceiveUpdatesModal } from '../feedback/feedback_receive_updates_modal';
-import { ServiceDetailIconComponent } from '../services/service_detail_icon';
-import { EmptyComponent } from '../empty_component/empty_component';
-
-import { FeedbackOptionsModalComponent } from './feedback_options_modal_component';
-import { useQuery } from '../search/use_query';
+import { FeedbackChooseModeModal } from './feedback_choose_mode_modal';
+import { UserInformation } from '../../stores/feedback/types';
+import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
+import { showToast } from '../../application/toast';
+import {
+    DiscardChangesAction,
+    CancelDiscardChangesAction,
+    ChooseChangeNameOrDetailsAction,
+    ChooseRemoveServiceAction,
+    ChooseOtherChangesAction,
+    CloseAction,
+} from '../../stores/feedback';
 
 interface FeedbackModalContainerProps {
-    readonly feedbackEnabled: boolean;
-    readonly onSuggestAnUpdatePress: () => void;
-    readonly serviceId: string;
+    readonly isSendingFeedback: boolean;
+    readonly showChoooseFeedbackModeModal: boolean;
+    readonly showReceiveUpdatesModal: boolean;
+    readonly showFeedbackDiscardChangesModal: boolean;
+    readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
+    readonly userInformation: UserInformation;
+    readonly finishAndSendFeedback: () => void;
+    readonly discardFeedback: () => DiscardChangesAction;
+    readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
+    readonly chooseChangeNameOrDetail: () => ChooseChangeNameOrDetailsAction;
+    readonly chooseRemoveService: () => ChooseRemoveServiceAction;
+    readonly chooseOtherChanges: () => ChooseOtherChangesAction;
+    readonly close: () => CloseAction;
+    readonly resetFeedbackAndUserInput: () => void;
 }
 
-export const FeedbackModalContainer = ({
-    feedbackEnabled,
-    onSuggestAnUpdatePress: onSuggestAnUpdate,
-    serviceId,
-}: FeedbackModalContainerProps): JSX.Element => {
-    const query = useQuery();
+export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.Element => {
 
-    const history = useHistory();
-
-    const [optionsModalVisible, setOptionsModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(query.optionsModalVisible === 'true');
-
-    const [receiveUpdatesModalVisible, setReceiveUpdatesModalVisible]: readonly[boolean, Dispatch<SetStateAction<boolean>>]
-        = useState<boolean>(query.receiveUpdatesModalVisible === 'true');
-
-    const goToFeedbackOtherScreen = goToRouteWithParameters(
-        Routes.Feedback,
-        serviceId,
-        { mode: 'OTHER' },
-        history,
-    );
-
-    const goToFeedbackRemoveServiceScreen = goToRouteWithParameters(
-        Routes.Feedback,
-        serviceId,
-        { mode: 'REMOVE_SERVICE' },
-        history,
-    );
-
-    const onOtherPress = (): void => {
-        goToFeedbackOtherScreen();
+    const onReceiveUpdatesModalHide = (i18n: I18n) => () => {
+        showToast(i18n._(t`Thank you for your contribution!`));
+        props.resetFeedbackAndUserInput();
     };
 
-    const onRemoveServicePress = (): void => {
-        goToFeedbackRemoveServiceScreen();
-    };
-
-    const onSuggestAnUpdatePress = (): void => {
-        setOptionsModalVisible(false);
-        onSuggestAnUpdate();
-    };
-
-    const onFeedbackButtonPress = (): void => {
-        setOptionsModalVisible(true);
-    };
-
-    const onCloseFeedbackOptions = (): void => {
-        setOptionsModalVisible(false);
-    };
-
-    const onHideReceiveUpdatesModal = (): void => {
-        setReceiveUpdatesModalVisible(false);
+    const onDiscardModalDiscardPress = (): void => {
+        props.discardFeedback();
+        props.resetFeedbackAndUserInput();
     };
 
     return (
         <>
-            <FeedbackButton isVisible={!feedbackEnabled} onPress={onFeedbackButtonPress} />
-            <FeedbackOptionsModalComponent
-                isVisible={optionsModalVisible}
-                onClose={onCloseFeedbackOptions}
-                onSuggestAnUpdatePress={onSuggestAnUpdatePress}
-                onOtherPress={onOtherPress}
-                onRemoveServicePress={onRemoveServicePress}
+            <FeedbackChooseModeModal
+                onClosePress={props.close}
+                onChangeNameOrOtherDetailPress={props.chooseChangeNameOrDetail}
+                onChooseOtherChangesPress={props.chooseOtherChanges}
+                onChooseRemoveServicePress={props.chooseRemoveService}
+                isVisible={props.showChoooseFeedbackModeModal}
             />
-            <FeedbackReceiveUpdatesModal isVisible={receiveUpdatesModalVisible} onHide={onHideReceiveUpdatesModal} />
+            <FeedbackReceiveUpdatesModal
+                isSendingFeedback={props.isSendingFeedback}
+                setUserInformation={props.setUserInformation}
+                userInformation={props.userInformation}
+                onFinishPress={props.finishAndSendFeedback}
+                isVisible={props.showReceiveUpdatesModal}
+                onModalHide={onReceiveUpdatesModalHide}
+            />
+            <FeedbackDiscardChangesModal
+                onDiscardPress={onDiscardModalDiscardPress}
+                onKeepEditingPress={props.cancelDiscardFeedback}
+                isVisible={props.showFeedbackDiscardChangesModal}
+            />
         </>
-    );
-};
-
-const FeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void } ): JSX.Element => {
-    if (!props.isVisible) {
-        return <EmptyComponent />;
-    }
-    return (
-        <View style={{flexDirection: 'row-reverse', marginBottom: 20}}>
-        <TouchableOpacity
-            onPress={props.onPress}
-            style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
-        >
-            <View style={{ flexDirection: 'row'}}>
-                <ServiceDetailIconComponent name={'edit'} />
-                <Text style={textStyles.paragraphBoldBlackLeft}>
-                    <Trans>Suggest an update</Trans>
-                </Text>
-            </View>
-        </TouchableOpacity>
-    </View>
     );
 };
