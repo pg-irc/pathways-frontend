@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Header, Left, Right, Body, Title } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
-import { getStatusBarHeightForPlatform } from './get_status_bar_height_for_platform';
+import { applicationStyles } from '../../application/styles';
 
 interface RenderHeaderProps {
     readonly backgroundColor: string;
@@ -12,22 +12,19 @@ interface RenderHeaderProps {
     readonly title?: JSX.Element;
 }
 
-export const renderHeader = (props: RenderHeaderProps): JSX.Element => {
-    const marginTop = getStatusBarHeightForPlatform();
-    return (
-        <Header style={{ marginTop, backgroundColor: props.backgroundColor, borderBottomColor: 'transparent' }}>
-            {buildLeftButton(props.leftButton)}
-            {buildTitle(props.title)}
-            {buildRightButtons(props.rightButtons)}
-        </Header>
-    );
-};
+export const renderHeader = (props: RenderHeaderProps): JSX.Element => (
+    <Header style={[ applicationStyles.header, { backgroundColor: props.backgroundColor }]}>
+        {buildLeftButton(props.leftButton)}
+        {buildTitle(props.title)}
+        {buildRightButtons(props.rightButtons)}
+    </Header>
+);
 
 const buildLeftButton = (leftButton?: JSX.Element): JSX.Element => {
     if (!leftButton) {
         return <EmptyComponent />;
     }
-    return <Left style={{ justifyContent: 'flex-end', paddingLeft: 5 }}>
+    return <Left style={applicationStyles.headerLeft}>
         {leftButton}
     </Left>;
 };
@@ -47,7 +44,7 @@ const buildRightButtons = (rightButtons: ReadonlyArray<JSX.Element>): JSX.Elemen
             {button}
         </View>
     );
-    return <Right style={{ alignItems: 'center' }}>
+    return <Right style={applicationStyles.headerRight}>
         {mapWithIndex(buildView, rightButtons)}
     </Right>;
 };

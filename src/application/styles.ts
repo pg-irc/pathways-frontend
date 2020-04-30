@@ -1,6 +1,7 @@
 import { StyleSheet, Platform, Dimensions, TextStyle } from 'react-native';
 import { I18nManager } from 'react-native';
 import { isAndroid } from './helpers/is_android';
+import { getStatusBarHeightForPlatform } from '../components/main/get_status_bar_height_for_platform';
 
 export const colors = {
     pale: '#ffebcb',
@@ -245,6 +246,13 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
+    headlineH5StyleWhiteLeft: {
+        fontSize: 11,
+        textAlign: 'left',
+        color: colors.white,
+        letterSpacing,
+        ...getBoldFontStylesForOS(),
+    },
     headlineH5StyleBlackCenter: {
         fontSize: 11,
         textAlign: 'center',
@@ -423,6 +431,17 @@ export const applicationStyles = StyleSheet.create({
     },
     disabled: {
         opacity: values.disabledOpacity,
+    },
+    header: {
+        marginTop: getStatusBarHeightForPlatform(),
+        borderBottomColor: 'transparent',
+    },
+    headerLeft: {
+        justifyContent: 'flex-end',
+        paddingLeft: 5,
+    },
+    headerRight: {
+        alignItems: 'center'
     },
 });
 

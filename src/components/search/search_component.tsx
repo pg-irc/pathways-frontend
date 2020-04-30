@@ -1,8 +1,8 @@
 // tslint:disable:no-expression-statement
 import React, { useEffect, Dispatch, SetStateAction, useState } from 'react';
 import { SearchResultsComponent } from './search_results_component';
-import { colors, textStyles } from '../../application/styles';
-import { View, Text } from 'native-base';
+import { colors, textStyles, applicationStyles } from '../../application/styles';
+import { View, Text, Header, Left, Right } from 'native-base';
 import { useTraceUpdate } from '../../application/helpers/use_trace_update';
 import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
@@ -19,10 +19,8 @@ import { useOnlineStatus } from './use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { renderHeader } from '../main/render_header';
 import { Trans } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
-import { MenuAndBackButtonHeaderProps } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -99,11 +97,10 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const searchResultsProps = { ...props, isLoading, onlineStatus, scrollOffset, setScrollOffset, onSearchRequest, onLoadMore };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
-            <Header
-                {...props}
-                {...{ textColor: colors.white, backgroundColor: colors.teal }}
-                title={<Text style={[textStyles.headlineH5StyleBlackCenter, { color: colors.white }]}><Trans>FIND A SERVICE</Trans></Text>}
-            />
+            <Header style={[applicationStyles.header, { backgroundColor: colors.teal }]}>
+                <HeaderLeft />
+                <HeaderRight onMenuButtonPress={props.openHeaderMenu}/>
+            </Header>
             <SearchInputComponent
                 searchTerm={props.searchTerm}
                 searchLocation={props.searchLocation}
@@ -131,11 +128,17 @@ const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (dis
     useEffect(effect, [location]);
 };
 
-const Header = (props: MenuAndBackButtonHeaderProps): JSX.Element => {
-    const rightButton =
+const HeaderLeft = (): JSX.Element => (
+    <Left style={applicationStyles.headerLeft}>
+        <Text style={textStyles.headlineH5StyleWhiteLeft}><Trans>FIND A SERVICE</Trans></Text>
+    </Left>
+);
+
+const HeaderRight = (props: { readonly onMenuButtonPress: () => void }): JSX.Element => (
+    <Right style={applicationStyles.headerRight}>
         <MenuButtonComponent
-            onPress={props.openHeaderMenu}
-            textColor={props.textColor}
-        />;
-    return renderHeader({ ...props, rightButtons: [rightButton] });
-};
+            onPress={props.onMenuButtonPress}
+            textColor={colors.white}
+        />
+    </Right>
+);
