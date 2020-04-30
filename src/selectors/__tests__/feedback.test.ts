@@ -9,7 +9,16 @@ import { getEmptyServiceFeedback } from '../../stores/feedback';
 
 describe('picking feedback properties to send with: pickSendableFeedback()', () => {
 
-    it('will pick properties that are strings', () => {
+    it('will always pick the type field', () => {
+        const feedback = {
+            type: 'service_feedback',
+        };
+        const sendableProperties = { type: 'service_feedback' };
+        const store = new FeedbackStoreBuilder().withFeedbackData(feedback as Feedback).build();
+        expect(pickSendableFeedback(store)).toEqual(sendableProperties);
+    });
+
+    it('will pick "other" and "remove" feedback properties that are strings', () => {
         const feedback: Feedback = {
             type: 'other_feedback',
             value: aString(),
@@ -19,9 +28,9 @@ describe('picking feedback properties to send with: pickSendableFeedback()', () 
         expect(pickSendableFeedback(store)).toEqual(sendableProperties);
     });
 
-    it('will pick properties that are sendable feedback fields', () => {
+    it('will pick "service" feedback properties that have shouldSend set to true', () => {
         const feedback = {
-            ...getEmptyServiceFeedback({ shouldSend: false }),
+            ...getEmptyServiceFeedback(false),
             organization: {
                 shouldSend: true, value: aString(),
             },
@@ -53,11 +62,18 @@ describe('converting UserInformation to FeedbackPostDataAuthor with: toFeedbackP
         });
     });
 
-    it('sets any missing author fields to undefined', () => {
+    it('sets is employee field to "false" if missing', () => {
         const userInformation = {};
         expect(toFeedbackPostDataAuthor(userInformation as UserInformation)).toEqual({
+            authorIsEmployee: 'false',
+        });
+    });
+
+    it('sets other missing author fields to undefined', () => {
+        const userInformation = {};
+        expect(toFeedbackPostDataAuthor(userInformation as UserInformation)).toEqual({
+            authorIsEmployee: 'false',
             authorName: undefined,
-            authorIsEmployee: undefined,
             authorEmail: undefined,
             authorJobTitle: undefined,
             authorOrganization: undefined,

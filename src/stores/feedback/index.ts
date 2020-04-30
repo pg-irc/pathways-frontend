@@ -71,11 +71,10 @@ export const getEmptyUserInfo = (): UserInformation => ({
     name: '',
     organizationName: '',
     jobTitle: '',
-    isEmployee: undefined,
+    isEmployee: false,
 });
 
-export const getEmptyServiceFeedback = (config: { readonly shouldSend: boolean } = undefined): ServiceFeedback => {
-    const shouldSend = !config || !!config.shouldSend;
+export const getEmptyServiceFeedback = (shouldSend: boolean = true): ServiceFeedback => {
     const emptyFeedbackField = { value: '', shouldSend };
     return {
         type: 'service_feedback',

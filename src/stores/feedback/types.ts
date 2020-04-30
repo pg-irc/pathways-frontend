@@ -26,7 +26,7 @@ export interface UserInformation {
     readonly name: string;
     readonly organizationName: string;
     readonly jobTitle: string;
-    readonly isEmployee: undefined | boolean;
+    readonly isEmployee: boolean;
 }
 
 export interface FeedbackField {
