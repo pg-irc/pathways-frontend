@@ -123,6 +123,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                         props.locationInputValue,
                         props.setManualUserLocation,
                         props.setSearchIsCollapsed,
+                        props.locationInputValue === props.manualUserLocation.label,
                     )}
                     isDisabled={searchIsDisabled}
                 />
@@ -233,8 +234,12 @@ const getSearchOnPress = (
     locationInputValue: string,
     setManualUserLocation: Props['setManualUserLocation'],
     setSearchIsCollapsed: (b: boolean) => void,
+    locationIsUnchanged: boolean,
 ): () => void => (): void => {
     setSearchIsCollapsed(true);
+    if (locationIsUnchanged) {
+        return;
+    }
     if (locationInputValue === MY_LOCATION) {
         fetchLatLng(
             setIsFetchingLatLng,
