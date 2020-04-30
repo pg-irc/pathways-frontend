@@ -73,7 +73,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
 const renderComponentWithResults = (props: Props): JSX.Element => {
     const flatListRef = useRef<any>();
 
-    const { scrollAnimatedValue }: Partial<ScrollAnimationContext> = useContext(ScrollContext);
+    const { getAnimatedFlatListScrollHandler }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
 
     useEffect((): void => {
         if (props.searchTerm) {
@@ -87,18 +87,18 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         }
     }, [props.searchOffset]);
 
+    const onScroll = (e: any): void => {
+        props.setScrollOffset(e.nativeEvent.contentOffset.y);
+    };
+
+    const onScrollAnimated = getAnimatedFlatListScrollHandler(onScroll);
+
     return (
-        <Animated.View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
+        <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
             {renderLoadingScreen(props.isLoading)}
             <AnimatedFlatList
                 ref={flatListRef}
-                onScroll={Animated.event(
-                    [{nativeEvent: {contentOffset: { y: scrollAnimatedValue }}}],
-                    {
-                        listener: ((e: any): void => props.setScrollOffset(e.nativeEvent.contentOffset.y)),
-                        useNativeDriver: true,
-                    },
-                )}
+                onScroll={onScrollAnimated}
                 initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
                 style={{ backgroundColor: colors.lightGrey, flex: 1  }}
                 data={props.searchResults}
@@ -108,7 +108,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
                 ListHeaderComponent={<ListHeaderComponent />}
                 ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
             />
-        </Animated.View>
+        </View>
     );
 };
 

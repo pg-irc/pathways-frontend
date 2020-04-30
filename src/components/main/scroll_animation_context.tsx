@@ -31,7 +31,7 @@ export interface ScrollAnimationContext {
     readonly footerAnimatedHeight: Animated.Node<number>;
     readonly footerAnimatedBottomPadding: Animated.Node<number>;
     readonly headerAnimatedHeight: Animated.Node<number>;
-    readonly scrollAnimatedValue: Animated.Value<number>;
+    readonly getAnimatedFlatListScrollHandler: (onScroll: (e: any) => void) => (...args: readonly any[]) => void;
 }
 
 const { height: footerHeight, paddingBottom: footerPaddingBottom }: FooterStyles = getFooterStyles();
@@ -79,11 +79,26 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         extrapolate: Animated.Extrapolate.CLAMP,
     });
 
+    const getAnimatedFlatListScrollHandler = (onScroll: (e: any) => void): (...args: readonly any[]) => void => {
+        return Animated.event([{
+                nativeEvent: {
+                    contentOffset: {
+                        y: scrollAnimatedValueRef.current,
+                    },
+                },
+            }],
+            {
+                listener: onScroll,
+                useNativeDriver: true,
+            },
+        );
+    };
+
     return {
         footerAnimatedHeight,
         footerAnimatedBottomPadding,
         headerAnimatedHeight,
-        scrollAnimatedValue: scrollAnimatedValueRef.current,
+        getAnimatedFlatListScrollHandler,
     };
 };
 
