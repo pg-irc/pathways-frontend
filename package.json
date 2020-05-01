@@ -3,7 +3,7 @@
     "version": "1.30.0",
     "private": true,
     "devDependencies": {
-        "@babel/core": "^7.9.0",
+        "@babel/core": "^7.9.6",
         "@lingui/babel-preset-react": "^2.9.1",
         "@lingui/cli": "^2.9.1",
         "@lingui/macro": "^2.9.1",
@@ -61,7 +61,7 @@
     },
     "dependencies": {
         "@expo/vector-icons": "^10.0.0",
-        "@react-native-community/netinfo": "5.5.0",
+        "@react-native-community/netinfo": "^5.8.0",
         "build-url": "^2.0.0",
         "cross-fetch": "^3.0.4",
         "expo": "^37.0.0",
