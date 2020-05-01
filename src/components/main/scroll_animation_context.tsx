@@ -34,6 +34,19 @@ export interface ScrollAnimationContext {
     readonly getAnimatedFlatListScrollHandler: (onScroll: (e: any) => void) => (...args: readonly any[]) => void;
 }
 
+interface ScrollEventMap {
+    readonly nativeEvent: {
+        readonly contentOffset: {
+            readonly y: Animated.Value<number>,
+        },
+    };
+}
+
+interface EventConfig {
+    readonly listener?: Function;
+    readonly useNativeDriver: boolean;
+}
+
 const { height: footerHeight, paddingBottom: footerPaddingBottom }: FooterStyles = getFooterStyles();
 
 const TOTAL_HEADER_HEIGHT: number = HEADER_HEIGHT + Constants.statusBarHeight;
@@ -79,19 +92,21 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         extrapolate: Animated.Extrapolate.CLAMP,
     });
 
-    const getAnimatedFlatListScrollHandler = (onScroll: (e: any) => void): (...args: readonly any[]) => void => {
-        return Animated.event([{
-                nativeEvent: {
-                    contentOffset: {
-                        y: scrollAnimatedValueRef.current,
-                    },
+    const getAnimatedFlatListScrollHandler = (onScroll: (e: any) => void): (mapping: readonly ScrollEventMap[], config: EventConfig) => void => {
+        const eventArgumentMapping: readonly [ScrollEventMap] = [{
+            nativeEvent: {
+                contentOffset: {
+                    y: scrollAnimatedValueRef.current,
                 },
-            }],
-            {
-                listener: onScroll,
-                useNativeDriver: true,
             },
-        );
+        }];
+
+        const eventConfig =  {
+            listener: onScroll,
+            useNativeDriver: true,
+        };
+
+        return Animated.event<ScrollEventMap>(eventArgumentMapping, eventConfig);
     };
 
     return {
