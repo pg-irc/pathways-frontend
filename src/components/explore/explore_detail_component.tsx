@@ -11,7 +11,7 @@ import { TaskListComponent } from '../topics/task_list_component';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { renderHeader } from '../main/render_header';
+import { HeaderComponent } from '../main/header_component';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 
 export interface ExploreDetailProps {
@@ -72,5 +72,12 @@ const Header = (props: Props): JSX.Element => {
             onPress={props.openHeaderMenu}
             textColor={textColor}
         />;
-    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
+
+    return (
+        <HeaderComponent
+            backgroundColor={backgroundColor}
+            leftButton={leftButton}
+            rightButtons={[rightButton]}
+        />
+    );
 };

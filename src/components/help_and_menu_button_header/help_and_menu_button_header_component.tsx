@@ -4,7 +4,7 @@ import { History } from 'history';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { HelpButtonComponent } from '../header_button/help_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { renderHeader } from '../main/render_header';
+import { HeaderComponent } from '../main/header_component';
 
 export interface HelpAndMenuButtonHeaderProps {
     readonly history: History;
@@ -20,5 +20,12 @@ export const HelpAndMenuButtonHeaderComponent = (props: HelpAndMenuButtonHeaderP
             onPress={props.openHeaderMenu}
             textColor={textColor}
         />;
-    return renderHeader({ backgroundColor, leftButton, rightButtons: [rightButton] });
+
+    return (
+        <HeaderComponent
+            backgroundColor={backgroundColor}
+            leftButton={leftButton}
+            rightButtons={[rightButton]}
+        />
+    );
 };
