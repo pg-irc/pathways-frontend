@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { useState, SetStateAction, Dispatch } from 'react';
+import React, { useState, useEffect, SetStateAction, Dispatch } from 'react';
 import { StyleProp, TextStyle, Keyboard } from 'react-native';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { History, Location } from 'history';
@@ -16,23 +16,28 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
 
     const [keyboardIsVisible, setKeyboardIsVisible]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
-    React.useEffect((): () => void => {
-        Keyboard.addListener('keyboardDidShow', keyboardOpens);
-        Keyboard.addListener('keyboardDidHide', keyboardCloses);
+    useEffect((): () => void => {
+        const keyboardOpens = (): void => {
+            setKeyboardIsVisible(true);
+        };
 
-        return (): void => {
+        const keyboardCloses = (): void => {
+            setKeyboardIsVisible(false);
+        };
+
+        const addListener = (): void => {
+            Keyboard.addListener('keyboardDidShow', keyboardOpens);
+            Keyboard.addListener('keyboardDidHide', keyboardCloses);
+        };
+
+        const removeListener = (): void => {
             Keyboard.removeListener('keyboardDidShow', keyboardOpens);
             Keyboard.removeListener('keyboardDidHide', keyboardCloses);
         };
-    }, [keyboardIsVisible]);
 
-    const keyboardOpens = (): void => {
-        setKeyboardIsVisible(true);
-    };
-
-    const keyboardCloses = (): void => {
-        setKeyboardIsVisible(false);
-    };
+        addListener();
+        return removeListener;
+    }, []);
 
     if (isFooterHidden(props, keyboardIsVisible)) {
         return <EmptyComponent />;
