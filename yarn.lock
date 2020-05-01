@@ -4312,10 +4312,10 @@ expo-font@~8.1.0:
   dependencies:
     fontfaceobserver "^2.1.0"
 
-expo-intent-launcher@~8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/expo-intent-launcher/-/expo-intent-launcher-8.0.0.tgz#1242d4e9122f69a1ec9637a621a35caf6ae73cca"
-  integrity sha512-Rf+AprbFKJx4YH1+DooCGg92Y4jjlP3iMpW3rpinTD4N1TJzqkpsflMphARGsF/GKxcrhzvqX52D/JrmXrcjhA==
+expo-intent-launcher@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-intent-launcher/-/expo-intent-launcher-8.1.0.tgz#cbd3ee4c497d4856827037922c494a68634a0373"
+  integrity sha512-rSS50BEWA3p4Ws9unaKD8QHj8r7xOH1bmPjYZ2gtt1XvsFeDrJQtlrRhVRD+kQnYebBTwV8ncf4NG5yD5vkYRA==
 
 expo-keep-awake@~8.1.0:
   version "8.1.0"
@@ -4327,14 +4327,7 @@ expo-linear-gradient@~8.1.0:
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-8.1.0.tgz#6933765cf1e76ef2928fd8495e779929699ac4c6"
   integrity sha512-AIy2pOXQRcgk2XE5IgAzd1S2jTFLutiDfveNm6m3fPAk00Rw4qFe98qzte1ayNrGYLJvQ2xq/Y7C0BmBP051mg==
 
-expo-location@~8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-8.0.0.tgz#58dd54e47b12e26f9f2a97ded3cd15f8fa959b85"
-  integrity sha512-48i4dUCaqPTwSri79yummKwg6vE6loI7d4iHCrbG4EEuN3fhS8I9xU60CEkoNZTziH9zK0iw4KSjr7DbXUAaCw==
-  dependencies:
-    invariant "^2.2.4"
-
-expo-location@~8.1.0:
+expo-location@^8.1.0, expo-location@~8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-8.1.0.tgz#6a71ad9a8b78d5f016a30a02013c3b28f46d0b1b"
   integrity sha512-G9JvsK1t9Z5Iybf+FCG81Jgm9Ee9leqpazxOPVabUJEWu/55Iex3yLGX04BuIA4ozAlJKBPzkhPdyqKdC7zrSw==
