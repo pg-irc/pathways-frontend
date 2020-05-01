@@ -68,7 +68,6 @@
         "expo-analytics": "^1.0.9",
         "expo-intent-launcher": "~8.0.0",
         "expo-location": "~8.0.0",
-        "extend": "^3.0.2",
         "history": "^4.10.1",
         "intl": "^1.2.5",
         "native-base": "^2.13.8",
