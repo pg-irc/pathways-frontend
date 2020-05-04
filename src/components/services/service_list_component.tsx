@@ -28,6 +28,7 @@ import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link';
+import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -56,7 +57,7 @@ type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterPro
 export const ServiceListComponent = (props: Props): JSX.Element => {
     useEffect(refreshServices(props), [props.manualUserLocation]);
 
-    if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
+    if (isServicesForTopicError(props.topicServicesOrError, props.manualUserLocation)) {
         return renderErrorComponent(props, refreshServices(props));
     }
 
@@ -118,19 +119,31 @@ const ServiceListWrapper = (props: ServiceListWrapperProps): JSX.Element => (
     </View>
 );
 
+const isServicesForTopicError = (topicServicesOrError: SelectorTopicServices, manualUserLocation: UserLocation): boolean => (
+    isSelectorErrorServicesForTopic(topicServicesOrError) || hasNoResultsFromLocationQuery(manualUserLocation.latLong)
+);
+
 const renderErrorComponent = (props: Props, refreshScreen: () => void): JSX.Element => {
-    const errorType = determineErrorType(props.topicServicesOrError);
-    const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
-    Sentry.captureMessage(sentryMessage);
-    return (
-        <ServiceListWrapper {...props}>
-            <ErrorScreenSwitcherComponent
-                refreshScreen={refreshScreen}
-                errorType={errorType}
-            />
-        </ServiceListWrapper>
-    );
+    if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
+        const sentryMessage = getSentryMessageForError(props.topicServicesOrError.errorMessageType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
+        Sentry.captureMessage(sentryMessage);
+        return renderComponentByErrorType(props, refreshScreen, props.topicServicesOrError.errorMessageType);
+    }
+
+    if (hasNoResultsFromLocationQuery(props.manualUserLocation.latLong)) {
+        return renderComponentByErrorType(props, refreshScreen, Errors.InvalidSearchLocation);
+    }
+    return renderComponentByErrorType(props, refreshScreen, Errors.Exception);
 };
+
+const renderComponentByErrorType = (props: Props, refreshScreen: () => void, errorType: Errors): JSX.Element => (
+    <ServiceListWrapper {...props}>
+        <ErrorScreenSwitcherComponent
+            refreshScreen={refreshScreen}
+            errorType={errorType}
+        />
+    </ServiceListWrapper>
+);
 
 const renderLoadingComponent = (props: Props): JSX.Element => (
     <ServiceListWrapper {...props}>
@@ -157,13 +170,6 @@ const renderHeader = (props: Props): JSX.Element => (
         setLatLongForServices={props.setLatLongForServices}
     />
 );
-
-const determineErrorType = (topicServicesOrError: SelectorTopicServices): Errors => {
-    if (isSelectorErrorServicesForTopic(topicServicesOrError)) {
-        return topicServicesOrError.errorMessageType;
-    }
-    return Errors.Exception;
-};
 
 const getServicesIfValid = (topicServicesOrError: SelectorTopicServices): ReadonlyArray<HumanServiceData> => (
     topicServicesOrError.type === constants.VALID_SERVICES_FOR_TOPIC && topicServicesOrError.services
