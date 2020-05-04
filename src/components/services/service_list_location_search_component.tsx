@@ -6,16 +6,15 @@ import { Trans } from '@lingui/react';
 import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { UserLocation } from '../../validation/latlong/types';
-import { SetManualUserLocationAction } from '../../stores/manual_user_location';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
 import { getMyLocationOrLocationInput, LOCALIZED_MY_LOCATION } from '../partial_localization/get_my_location_or_location_input';
+import { SetLatLongForServicesAction } from '../../stores/services/actions';
 
 interface Props {
     readonly manualUserLocation: UserLocation;
-    readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
+    readonly setLatLongForServices: (location: string) => SetLatLongForServicesAction;
 }
 
 export const ServiceListLocationSearchComponent = (props: Props): JSX.Element => {
@@ -42,9 +41,9 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
                     setLocationInputValue={setLocationInputValue}
                     isFetchingLatLng={isFetchingLatLng}
                     setIsFetchingLatLng={setIsFetchingLatLng}
-                    setManualUserLocation={props.setManualUserLocation}
                     manualUserLocation={props.manualUserLocation}
                     setSearchIsCollapsed={setSearchIsCollapsed}
+                    setLatLongForServices={props.setLatLongForServices}
                     i18n={i18n}
                 />
             )
@@ -85,13 +84,13 @@ const CollapsedSearch = (props: CollapsedSearchProps): JSX.Element => {
 
 interface ExpandedSearchProps {
     readonly locationInputValue: string;
-    readonly setLocationInputValue: (s: string) => void;
-    readonly isFetchingLatLng: boolean;
-    readonly setIsFetchingLatLng: (b: boolean) => void;
-    readonly setManualUserLocation: Props['setManualUserLocation'];
     readonly manualUserLocation: Props['manualUserLocation'];
-    readonly setSearchIsCollapsed: (b: boolean) => void;
+    readonly isFetchingLatLng: boolean;
     readonly i18n: I18n;
+    readonly setLocationInputValue: (s: string) => void;
+    readonly setIsFetchingLatLng: (b: boolean) => void;
+    readonly setSearchIsCollapsed: (b: boolean) => void;
+    readonly setLatLongForServices: (location: string) => SetLatLongForServicesAction;
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
@@ -130,8 +129,8 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                         props.locationInputValue,
                         props.i18n,
                         props.setIsFetchingLatLng,
-                        props.setManualUserLocation,
                         props.setSearchIsCollapsed,
+                        props.setLatLongForServices,
                         );
                     }
                 }
@@ -238,19 +237,14 @@ const onSearchPress = async (
     locationInputValue: string,
     i18n: I18n,
     setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
-    setManualUserLocation: Props['setManualUserLocation'],
     setSearchIsCollapsed: (b: boolean) => void,
+    setLatLongForServices: (location: string) => SetLatLongForServicesAction,
 ): Promise<void> => {
     const locationInput = getMyLocationOrLocationInput(locationInputValue, i18n);
     setIsFetchingLatLng(true);
     setSearchIsCollapsed(true);
-    // TO DO Remove second argument
-    const geoCoderLatLong = await fetchLatLongFromLocation(locationInput, true);
+    setLatLongForServices(locationInput);
     setIsFetchingLatLng(false);
-    setManualUserLocation({
-        label: locationInputValue,
-        latLong: geoCoderLatLong,
-    });
 };
 
 const getLocateOnPress = (setLocationInputValue: (s: string) => void, i18n: I18n): () => void => (): void => {

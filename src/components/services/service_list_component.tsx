@@ -8,7 +8,7 @@ import { View, Text } from 'native-base';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { SelectorTopicServices } from '../../selectors/services/types';
 import { Topic } from '../../selectors/topics/types';
-import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
+import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, SetLatLongForServicesAction } from '../../stores/services/actions';
 import { textStyles, colors } from '../../application/styles';
 import { isSelectorErrorServicesForTopic } from '../../selectors/services/is_selector_error_services_for_topic';
 import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
@@ -21,7 +21,6 @@ import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
 import { MessageComponent } from '../partial_localization/message_component';
 import { HidePartialLocalizationMessageAction } from '../../stores/user_profile';
-import { SetManualUserLocationAction } from '../../stores/manual_user_location';
 import { ServiceListLocationSearchComponent } from './service_list_location_search_component';
 import { SearchListSeparator } from '../search/separators';
 import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
@@ -44,8 +43,8 @@ export interface ServiceListActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
-    readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly setLatLongForServices: (location: string) => SetLatLongForServicesAction;
 }
 
 export interface ServicesUpdater {
@@ -153,9 +152,9 @@ const renderHeader = (props: Props): JSX.Element => (
     <ServiceListHeaderComponent
         topicTitle={props.topic.title}
         manualUserLocation={props.manualUserLocation}
-        setManualUserLocation={props.setManualUserLocation}
         history={props.history}
         openHeaderMenu={props.openHeaderMenu}
+        setLatLongForServices={props.setLatLongForServices}
     />
 );
 
@@ -186,8 +185,8 @@ interface ServiceListHeaderComponentProps {
     readonly topicTitle: string;
     readonly manualUserLocation: UserLocation;
     readonly history: History;
-    readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly setLatLongForServices: (location: string) => SetLatLongForServicesAction;
 }
 
 export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => (
@@ -209,7 +208,7 @@ export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProp
             </Text>
             <ServiceListLocationSearchComponent
                 manualUserLocation={props.manualUserLocation}
-                setManualUserLocation={props.setManualUserLocation}
+                setLatLongForServices={props.setLatLongForServices}
             />
         </View>
     </View>

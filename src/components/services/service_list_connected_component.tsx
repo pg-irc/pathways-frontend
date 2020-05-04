@@ -16,7 +16,6 @@ import { selectBookmarkedServicesIds } from '../../selectors/services/select_boo
 import { HumanServiceData } from '../../validation/services/types';
 import { selectShowPartialLocalizationMessage } from '../../selectors/user_profile/select_show_partial_localization_message';
 import { HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
-import { SetManualUserLocationAction, setManualUserLocation } from '../../stores/manual_user_location';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
@@ -31,15 +30,15 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<actions.ServicesAction | SetManualUserLocationAction>): ServiceListActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<actions.ServicesAction>): ServiceListActions => ({
     dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): actions.BuildServicesRequestAction =>
         dispatch(actions.buildServicesRequest(topic.id, manualUserLocation)),
     bookmarkService: (service: HumanServiceData): actions.BookmarkServiceAction => dispatch(actions.bookmarkService(service)),
     unbookmarkService: (service: HumanServiceData): actions.UnbookmarkServiceAction => dispatch(actions.unbookmarkService(service)),
     hidePartialLocalizationMessage: (): HidePartialLocalizationMessageAction => dispatch(hidePartialLocalizationMessage()),
-    setManualUserLocation: (userLocation: UserLocation): SetManualUserLocationAction => dispatch(setManualUserLocation(userLocation)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     openServiceDetail: (service: HumanServiceData): actions.OpenServiceAction => dispatch(actions.openServiceDetail(service)),
+    setLatLongForServices: (location: string): actions.SetLatLongForServicesAction => dispatch(actions.setLatLongForServices(location)),
 });
 
 type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;
