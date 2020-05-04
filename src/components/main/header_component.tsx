@@ -5,22 +5,20 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { applicationStyles } from '../../application/styles';
 
-interface HeaderComponent {
+interface HeaderComponentProps {
     readonly backgroundColor: string;
     readonly leftButton?: JSX.Element;
     readonly rightButtons: ReadonlyArray<JSX.Element>;
     readonly title?: JSX.Element;
 }
 
-export const HeaderComponent = (props: HeaderComponent): JSX.Element => {
-    return (
-        <Header style={[ applicationStyles.header, { backgroundColor: props.backgroundColor }]}>
-            {buildLeftButton(props.leftButton)}
-            {buildTitle(props.title)}
-            {buildRightButtons(props.rightButtons)}
-        </Header>
-    );
-};
+export const HeaderComponent = (props: HeaderComponentProps): JSX.Element => (
+    <Header style={[ applicationStyles.header, { backgroundColor: props.backgroundColor }]}>
+        {buildLeftButton(props.leftButton)}
+        {buildTitle(props.title)}
+        {buildRightButtons(props.rightButtons)}
+    </Header>
+);
 
 const buildLeftButton = (leftButton?: JSX.Element): JSX.Element => {
     if (!leftButton) {
