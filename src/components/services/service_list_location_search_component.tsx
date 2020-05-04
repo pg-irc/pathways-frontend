@@ -10,7 +10,6 @@ import { SetManualUserLocationAction } from '../../stores/manual_user_location';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { useOnlineStatus, OnlineStatus } from '../search/use_online_status';
 import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
 import { getMyLocationOrLocationInput, LOCALIZED_MY_LOCATION } from '../partial_localization/get_my_location_or_location_input';
 
@@ -96,7 +95,6 @@ interface ExpandedSearchProps {
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
-    const onlineStatus = useOnlineStatus();
     const hasMyLocation = props.locationInputValue === MY_LOCATION;
     const LocateButtonOrEmpty = !hasMyLocation ?
         <LocateButton
@@ -130,7 +128,6 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                     onPress={(): void => {
                         onSearchPress(
                         props.locationInputValue,
-                        onlineStatus,
                         props.i18n,
                         props.setIsFetchingLatLng,
                         props.setManualUserLocation,
@@ -239,7 +236,6 @@ const LocateButton = (props: LocateButtonProps): JSX.Element => (
 
 const onSearchPress = async (
     locationInputValue: string,
-    onlineStatus: OnlineStatus,
     i18n: I18n,
     setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
     setManualUserLocation: Props['setManualUserLocation'],
@@ -248,7 +244,8 @@ const onSearchPress = async (
     const locationInput = getMyLocationOrLocationInput(locationInputValue, i18n);
     setIsFetchingLatLng(true);
     setSearchIsCollapsed(true);
-    const geoCoderLatLong = await fetchLatLongFromLocation(locationInput, onlineStatus);
+    // TO DO Remove second argument
+    const geoCoderLatLong = await fetchLatLongFromLocation(locationInput, true);
     setIsFetchingLatLng(false);
     setManualUserLocation({
         label: locationInputValue,

@@ -75,7 +75,8 @@ export const SearchComponent = (props: Props): JSX.Element => {
         let geocoderLatLong = props.searchLatLong;
         try {
             if (props.searchLocation !== location) {
-                geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
+                // TO DO Remove second argument
+                geocoderLatLong = await fetchLatLongFromLocation(location, true);
                 props.saveSearchLatLong(geocoderLatLong);
             }
             const searchResults = await fetchSearchResultsFromQuery(searchTerm, props.searchPage, geocoderLatLong, props.saveNumberOfSearchPages);
