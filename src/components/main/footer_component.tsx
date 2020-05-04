@@ -29,18 +29,16 @@ export interface FooterStyles {
     readonly paddingBottom: number;
 }
 
-const NavigationButton = (props: NavigationButtonProps): JSX.Element => {
-    return (
-        <Button vertical onPress={props.onPress} style={{ flexWrap: 'nowrap' }}>
-            <Icon
-                type='FontAwesome'
-                name={props.icon}
-                active={props.isActive}
-                style={{ fontSize: values.navigationIconSize,  color: props.isActive ? colors.white : colors.teal }}
-            />
-        </Button>
-    );
-};
+const NavigationButton = (props: NavigationButtonProps): JSX.Element => (
+    <Button vertical onPress={props.onPress} style={{ flexWrap: 'nowrap' }}>
+        <Icon
+            type='FontAwesome'
+            name={props.icon}
+            active={props.isActive}
+            style={{ fontSize: values.navigationIconSize,  color: props.isActive ? colors.white : colors.teal }}
+        />
+    </Button>
+);
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
     const  { footerAnimatedHeight, footerAnimatedBottomPadding }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
