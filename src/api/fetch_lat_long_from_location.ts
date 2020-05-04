@@ -1,11 +1,11 @@
 // tslint:disable:no-expression-statement
-import { OnlineStatus } from '../use_online_status';
-import { LatLong } from '../../../validation/latlong/types';
-import { toGeoCoderLatLong } from '../../../validation/latlong';
+import { OnlineStatus } from '../components/search/use_online_status';
+import { LatLong } from '../validation/latlong/types';
+import { toGeoCoderLatLong } from '../validation/latlong';
 import BuildUrl from 'build-url';
-import { getDeviceLocation } from '../../../application/helpers/get_device_location';
-import * as errors from '../../../validation/errors/is_error';
-import { MY_LOCATION } from '../../../application/constants';
+import { getDeviceLocation } from '../application/helpers/get_device_location';
+import * as errors from '../validation/errors/is_error';
+import { MY_LOCATION } from '../application/constants';
 
 export const fetchLatLongFromLocation =
     async (location: string, onlineStatus: OnlineStatus): Promise<LatLong> => {

@@ -11,7 +11,7 @@ import { applicationStyles, colors, textStyles, values } from '../../application
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { useOnlineStatus, OnlineStatus } from '../search/use_online_status';
-import { fetchLatLongFromLocation } from '../search/api/fetch_lat_long_from_location';
+import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
 import { getMyLocationOrLocationInput, LOCALIZED_MY_LOCATION } from '../partial_localization/get_my_location_or_location_input';
 
 interface Props {
