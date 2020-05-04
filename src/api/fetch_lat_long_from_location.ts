@@ -9,13 +9,23 @@ import { MY_LOCATION } from '../application/constants';
 
 export const fetchLatLongFromLocation =
     async (location: string, onlineStatus: OnlineStatus): Promise<LatLong> => {
-        if (location === MY_LOCATION) {
+        if (isMyLocation(location)) {
             return fetchLatLongFromDevice();
-        } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
+        }
+        // TO DO remove online status arg
+        if (locationIsNotEmpty(location) && onlineStatus === OnlineStatus.Online) {
             return fetchLatLongFromAddress(location);
-        } else
-            return undefined;
+        }
+        return undefined;
     };
+
+const isMyLocation = (location: string): boolean => (
+    location === MY_LOCATION
+);
+
+const locationIsNotEmpty = (location: string): boolean => (
+    location !== ''
+);
 
 const fetchLatLongFromDevice = async (): Promise<LatLong> => {
     const deviceLocation = await getDeviceLocation();
