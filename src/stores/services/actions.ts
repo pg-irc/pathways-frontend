@@ -21,6 +21,8 @@ export type OpenServiceAction = Readonly<ReturnType<typeof openServiceDetail>>;
 export type BookmarkServiceAction = Readonly<ReturnType<typeof bookmarkService>>;
 export type UnbookmarkServiceAction = Readonly<ReturnType<typeof unbookmarkService>>;
 
+export type SetLatLongForServicesAction = Readonly<ReturnType<typeof setLatLongForServices>>;
+
 export type ServicesAction =
     BuildServicesRequestAction |
     BuildServicesSuccessAction |
@@ -34,7 +36,8 @@ export type ServicesAction =
     DataPersistence.LoadFailureAction |
     ClearAllUserDataAction |
     HidePartialLocalizationMessageAction |
-    OpenHeaderMenuAction;
+    OpenHeaderMenuAction |
+    SetLatLongForServicesAction;
 
 // tslint:disable-next-line:typedef
 export const buildServicesRequest = (topicId: TopicId, manualUserLocation?: UserLocation) => (
@@ -69,4 +72,9 @@ export const unbookmarkService = (service: HumanServiceData) => (
 // tslint:disable-next-line:typedef
 export const openServiceDetail = (service: HumanServiceData) => (
     helpers.makeAction(constants.OPEN_SERVICE_DETAIL, { service })
+);
+
+// tslint:disable-next-line: typedef
+export const setLatLongForServices = (location: string) => (
+    helpers.makeAction(constants.SET_LAT_LONG_FOR_SERVICES, { location })
 );
