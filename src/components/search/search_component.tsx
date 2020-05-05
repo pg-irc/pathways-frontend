@@ -80,7 +80,6 @@ export const SearchComponent = (props: Props): JSX.Element => {
                 props.searchTerm,
                 props.searchPage + 1,
                 props.searchLatLong,
-                props.saveNumberOfSearchPages,
             );
             props.saveSearchResults([...props.searchResults, ...moreResults]);
         } finally {

@@ -8,10 +8,11 @@ import { isDeviceOnline } from '../../application/helpers/is_device_online';
 import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
 import { selectSearchLocation } from '../../selectors/search/select_search_location';
 import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
-import { fetchSearchResultsFromQuery } from '../../components/search/api/fetch_search_results_from_query';
+import { fetchSearchResultsFromQuery, AlgoliaResponse } from '../../components/search/api/fetch_search_results_from_query';
 import { selectSearchPage } from '../../selectors/search/select_search_page';
 import { searchExecuted } from '../../stores/analytics';
 import { LatLong } from '../../validation/latlong/types';
+import { validateServiceSearchResponse } from '../../validation/search';
 
 export function* watchSearchRequest(): IterableIterator<ForkEffect> {
     yield takeLatest(SEARCH_REQUEST, searchRequest);
@@ -36,8 +37,10 @@ function* searchRequest(action: SearchRequestAction): IterableIterator<Effects> 
             latLong = yield call(fetchLatLongFromLocation, searchLocationInput, isOnline);
             yield put(saveSearchLatLong(latLong));
         }
-        const searchResults = yield call(fetchSearchResultsFromQuery, searchTermInput, savedPageNumber, latLong, saveNumberOfSearchPages);
+        const apiResponse: AlgoliaResponse = yield call(fetchSearchResultsFromQuery, searchTermInput, savedPageNumber, latLong);
+        const searchResults = validateServiceSearchResponse(apiResponse.hits);
         yield put(saveSearchResults(searchResults));
+        yield put(saveNumberOfSearchPages(apiResponse.nbPages));
     } finally {
         yield put(searchExecuted(searchTermInput, searchLocationInput));
     }

@@ -1,6 +1,5 @@
 // tslint:disable: no-expression-statement
 import { ALGOLIA_SEARCH_API_KEY, ALGOLIA_SERVICES_INDEX } from 'react-native-dotenv';
-import { validateServiceSearchResponse } from '../../../validation/search';
 import { LatLong } from '../../../validation/latlong/types';
 import { SearchServiceData } from '../../../validation/search/types';
 import BuildUrl from 'build-url';
@@ -19,7 +18,7 @@ export interface AlgoliaResponse {
 }
 
 export const fetchSearchResultsFromQuery = async (
-    searchTerm: string, searchPage: number, latLong: LatLong, setNumberOfPages: (n: number) => void): Promise<ReadonlyArray<SearchServiceData>> => {
+    searchTerm: string, searchPage: number, latLong: LatLong): Promise<ReadonlyArray<SearchServiceData>> => {
     if (!searchTerm) {
         return [];
     }
@@ -41,9 +40,7 @@ export const fetchSearchResultsFromQuery = async (
             }),
         });
 
-        const responseJSON: AlgoliaResponse = await response.json();
-        setNumberOfPages(responseJSON.nbPages);
-        return validateServiceSearchResponse(responseJSON.hits);
+    return response.json();
     } catch (Error) {
         return [];
     }
