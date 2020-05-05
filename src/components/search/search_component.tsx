@@ -12,9 +12,7 @@ import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import * as actions from '../../stores/search';
-import { SearchExecutedAction } from '../../stores/analytics';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
-import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
 import { useOnlineStatus } from './use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
@@ -50,8 +48,8 @@ export interface SearchComponentActions {
     readonly saveSearchOffset: (index: number) => actions.SaveSearchOffsetAction;
     readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => actions.SaveSearchResultsAction;
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => actions.SetCollapseSearchInputAction;
-    readonly searchExecuted: (searchTerm: string, searchLocation: string) => SearchExecutedAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly searchRequest: (searchTermInput: string, searchLocationInput: string) => actions.SearchRequestAction;
 }
 
 export type StringSetterFunction = Dispatch<SetStateAction<string>>;
@@ -67,23 +65,12 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
     const onSearchRequest = async (searchTerm: string, location: string): Promise<void> => {
-        props.setCollapseSearchInput(true);
-        props.saveSearchTerm(searchTerm);
-        props.saveSearchLocation(location);
+        //TO DO: move loading state to Redux Saga as loading state is not being shown.
         setIsLoading(true);
-        // tslint:disable-next-line: no-let
-        let geocoderLatLong = props.searchLatLong;
         try {
-            if (props.searchLocation !== location) {
-                // TO DO Remove second argument
-                geocoderLatLong = await fetchLatLongFromLocation(location, true);
-                props.saveSearchLatLong(geocoderLatLong);
-            }
-            const searchResults = await fetchSearchResultsFromQuery(searchTerm, props.searchPage, geocoderLatLong, props.saveNumberOfSearchPages);
-            props.saveSearchResults(searchResults);
+           props.searchRequest(searchTerm, location);
         } finally {
             setIsLoading(false);
-            props.searchExecuted(searchTerm, location);
         }
     };
 
