@@ -7,7 +7,7 @@ import { runSaga, ApplicationSaga } from '../sagas';
 import { loadFontsActions } from '../stores/fonts';
 import { loadLocaleRequest } from '../stores/locale/actions';
 import { DataPersistence } from '../stores/persisted_data';
-import { request as requestPushNotificationPost } from '../sagas/post_push_notification_token';
+import { pushNotificationTokenRequest as requestPushNotificationPost } from '../sagas/post_push_notification_token';
 
 import { LocaleInfoManager } from '../locale';
 import arMessages from '../../locale/ar/messages';

@@ -6,7 +6,7 @@ import { SaveLocaleRequestAction, saveLocaleRequest } from '../../stores/locale/
 import { LocaleInfo } from '../../locale';
 import { selectAvailableLocales } from '../../selectors/locale/select_available_locales';
 import { selectLocale } from '../../selectors/locale/select_locale';
-import { PushNotificationPostRequestAction, request } from '../../sagas/post_push_notification_token';
+import { PushNotificationPostRequestAction, pushNotificationTokenRequest } from '../../sagas/post_push_notification_token';
 
 const mapStateToProps = (store: Store): HeaderMenuProps => {
     const locales = selectAvailableLocales(store);
@@ -18,7 +18,7 @@ const mapStateToProps = (store: Store): HeaderMenuProps => {
 
 const mapDispatchToProps = (dispatch: Dispatch<SaveLocaleRequestAction | PushNotificationPostRequestAction>): HeaderMenuActions => ({
     setLocale: (localeCode: string, flipOrientation: boolean): SaveLocaleRequestAction => dispatch(saveLocaleRequest(localeCode, flipOrientation)),
-    updateNotificationToken: (): PushNotificationPostRequestAction => dispatch(request()),
+    updateNotificationToken: (): PushNotificationPostRequestAction => dispatch(pushNotificationTokenRequest()),
 });
 
 export const HeaderMenuConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(HeaderMenuComponent);

@@ -9,22 +9,22 @@ import { PATHWAYS_API_KEY } from 'react-native-dotenv';
 import { selectLocale } from '../selectors/locale/select_locale';
 import { Locale } from '../locale';
 
-export type PushNotificationPostRequestAction = Readonly<ReturnType<typeof request>>;
-export type PushNotificationPostSuccessAction = Readonly<ReturnType<typeof success>>;
-export type PushNotificationPostFailureAction = Readonly<ReturnType<typeof failure>>;
+export type PushNotificationPostRequestAction = Readonly<ReturnType<typeof pushNotificationTokenRequest>>;
+export type PushNotificationPostSuccessAction = Readonly<ReturnType<typeof pushNotificationTokenSuccess>>;
+export type PushNotificationPostFailureAction = Readonly<ReturnType<typeof pushNotificationTokenFailure>>;
 
 // tslint:disable-next-line:typedef
-export const request = () => (
+export const pushNotificationTokenRequest = () => (
     helpers.makeAction(constants.POST_PUSH_NOTIFICATION_TOKEN_REQUEST)
 );
 
 // tslint:disable-next-line:typedef
-const success = () => (
+const pushNotificationTokenSuccess = () => (
     helpers.makeAction(constants.POST_PUSH_NOTIFICATION_TOKEN_SUCCESS)
 );
 
 // tslint:disable-next-line:typedef
-const failure = (error: string) => (
+const pushNotificationTokenFailure = (error: string) => (
     helpers.makeAction(constants.POST_PUSH_NOTIFICATION_TOKEN_FAILURE, { error })
 );
 
@@ -41,19 +41,19 @@ function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction)
         finalStatus = newStatus;
     }
     if (finalStatus.status !== 'granted') {
-        return yield put(failure('Permission not granted for push notifications'));
+        return yield put(pushNotificationTokenFailure('Permission not granted for push notifications'));
     }
     const token: string = yield call(Notifications.getExpoPushTokenAsync);
     if (token === '') {
-        return yield put(failure('Error retrieving push notification token'));
+        return yield put(pushNotificationTokenFailure('Error retrieving push notification token'));
     }
     const locale: Locale = yield select(selectLocale);
     const result: APIResponse = yield call(putPushNotificationToken, token, locale, PATHWAYS_API_KEY);
     if (!result || result.hasError) {
         // TODO log error to sentry
-        return yield put(failure('Error posting push notification token'));
+        return yield put(pushNotificationTokenFailure('Error posting push notification token'));
     }
-    yield put(success());
+    yield put(pushNotificationTokenSuccess());
 }
 
 type SuccessOrFailure = PushNotificationPostSuccessAction | PushNotificationPostFailureAction;
