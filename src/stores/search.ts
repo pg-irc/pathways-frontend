@@ -13,6 +13,7 @@ export type SaveSearchOffsetAction = Readonly<ReturnType<typeof saveSearchOffset
 export type SaveSearchResultsAction = Readonly<ReturnType<typeof saveSearchResults>>;
 export type SetCollapseSearchInputAction = Readonly<ReturnType<typeof setCollapseSearchInput>>;
 export type SearchRequestAction = Readonly<ReturnType<typeof searchRequest>>;
+export type LoadMoreRequestAction = Readonly<ReturnType<typeof loadMoreRequest>>;
 
 // tslint:disable-next-line:typedef
 export const saveSearchTerm = (searchTerm: string) => (
@@ -59,6 +60,11 @@ export const searchRequest = (searchTermInput: string, searchLocationInput: stri
     helpers.makeAction(constants.SEARCH_REQUEST, { searchTermInput, searchLocationInput })
 );
 
+// tslint:disable-next-line: typedef
+export const loadMoreRequest = (searchPage: number, searchResults: ReadonlyArray<SearchServiceData>) => (
+    helpers.makeAction(constants.LOAD_MORE_REQUEST, { searchPage, searchResults })
+);
+
 export type SearchAction =
     SaveSearchTermAction |
     SaveSearchLocationAction |
@@ -69,7 +75,8 @@ export type SearchAction =
     SaveSearchResultsAction |
     SetCollapseSearchInputAction |
     ClearAllUserDataAction |
-    SearchRequestAction;
+    SearchRequestAction |
+    LoadMoreRequestAction;
 
 export interface SearchStore {
     readonly searchTerm: string;
