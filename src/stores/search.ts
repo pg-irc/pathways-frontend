@@ -61,8 +61,8 @@ export const searchRequest = (searchTermInput: string, searchLocationInput: stri
 );
 
 // tslint:disable-next-line: typedef
-export const loadMoreRequest = (searchPage: number, searchResults: ReadonlyArray<SearchServiceData>) => (
-    helpers.makeAction(constants.LOAD_MORE_REQUEST, { searchPage, searchResults })
+export const loadMoreRequest = () => (
+    helpers.makeAction(constants.LOAD_MORE_REQUEST)
 );
 
 export type SearchAction =

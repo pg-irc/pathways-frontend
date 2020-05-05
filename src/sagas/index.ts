@@ -8,8 +8,8 @@ import { watchLoadUserData, watchUserStateChangesToSaveUserData } from './user_d
 import { watchAnalytics } from './analytics/watch_analytics';
 import { watchRequestPostPushNotificationToken } from './post_push_notification_token';
 import { watchSetLatLongForServices } from './set_lat_long_for_services';
-import { watchSearchRequest } from './search';
-import { watchLoadMoreRequest } from './load_more_request';
+import { watchSearchRequest } from './search/search_request';
+import { watchLoadMoreRequest } from './search/load_more_request';
 
 export const sagaMiddleware = createSagaMiddleware();
 
