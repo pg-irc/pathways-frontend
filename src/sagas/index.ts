@@ -8,6 +8,7 @@ import { watchLoadUserData, watchUserStateChangesToSaveUserData } from './user_d
 import { watchAnalytics } from './analytics/watch_analytics';
 import { watchRequestPostPushNotificationToken } from './post_push_notification_token';
 import { watchSetLatLongForServices } from './set_lat_long_for_services';
+import { watchSearchRequest } from './search';
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -32,4 +33,5 @@ export function runSaga(middleware: SagaMiddleware<object>): void {
     middleware.run(watchAnalytics);
     middleware.run(watchRequestPostPushNotificationToken);
     middleware.run(watchSetLatLongForServices);
+    middleware.run(watchSearchRequest);
 }
