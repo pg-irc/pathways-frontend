@@ -31,6 +31,7 @@ export interface SearchComponentProps {
     readonly searchOffset: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
+    readonly isSearchLoading: boolean;
 }
 
 export interface SearchComponentActions {
@@ -55,26 +56,19 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
-    const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
     const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
     const onSearchRequest = async (searchTerm: string, location: string): Promise<void> => {
-        //TO DO: move loading state to Redux Saga as loading state is not being shown.
-        setIsLoading(true);
-        try {
-           props.searchRequest(searchTerm, location);
-        } finally {
-            setIsLoading(false);
-        }
+        props.searchRequest(searchTerm, location);
     };
 
     const onLoadMore = async (): Promise<void> => {
        props.loadMoreRequestAction();
     };
 
-    const searchResultsProps = { ...props, isLoading, onlineStatus, scrollOffset, setScrollOffset, onSearchRequest, onLoadMore };
+    const searchResultsProps = { ...props, onlineStatus, scrollOffset, setScrollOffset, onSearchRequest, onLoadMore };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <Header

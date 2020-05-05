@@ -36,7 +36,7 @@ export interface SearchResultsProps {
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
-    readonly isLoading: boolean;
+    readonly isSearchLoading: boolean;
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
     readonly scrollOffset: number;
@@ -80,7 +80,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
     }, [props.searchOffset]);
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
-            {renderLoadingScreen(props.isLoading)}
+            {renderLoadingScreen(props.isSearchLoading)}
             <FlatList
                 ref={flatListRef}
                 onScroll={(e: any): void => props.setScrollOffset(e.nativeEvent.contentOffset.y)}
@@ -141,7 +141,7 @@ const searchTermIsEmpty = (props: Props): boolean => (
 );
 
 const isSearchErrorType = (props: Props): boolean => {
-    if (props.isLoading) {
+    if (props.isSearchLoading) {
         return false;
     }
     return (

@@ -2,7 +2,7 @@
 import { ForkEffect, takeLatest, put, CallEffect, PutEffect, SelectEffect, call, select } from 'redux-saga/effects';
 import { SEARCH_REQUEST } from '../../application/constants';
 import {
-    SearchRequestAction, setCollapseSearchInput, saveSearchTerm, saveSearchLocation, saveSearchLatLong, saveNumberOfSearchPages, saveSearchResults,
+    SearchRequestAction, setCollapseSearchInput, saveSearchTerm, saveSearchLocation, saveSearchLatLong, saveNumberOfSearchPages, saveSearchResults, setIsSearchLoading,
 } from '../../stores/search';
 import { isDeviceOnline } from '../../application/helpers/is_device_online';
 import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
@@ -27,6 +27,7 @@ function* searchRequest(action: SearchRequestAction): IterableIterator<Effects> 
     yield put(setCollapseSearchInput(true));
     yield put(saveSearchTerm(searchTermInput));
     yield put(saveSearchLocation(searchLocationInput));
+    yield put(setIsSearchLoading(true));
     // tslint:disable-next-line: no-let
     let latLong: LatLong = yield select(selectSearchLatLong);
     const savedLocation: string = yield select(selectSearchLocation);
@@ -43,6 +44,7 @@ function* searchRequest(action: SearchRequestAction): IterableIterator<Effects> 
         yield put(saveNumberOfSearchPages(apiResponse.nbPages));
     } finally {
         yield put(searchExecuted(searchTermInput, searchLocationInput));
+        yield put(setIsSearchLoading(false));
     }
 }
 

@@ -14,6 +14,7 @@ export type SaveSearchResultsAction = Readonly<ReturnType<typeof saveSearchResul
 export type SetCollapseSearchInputAction = Readonly<ReturnType<typeof setCollapseSearchInput>>;
 export type SearchRequestAction = Readonly<ReturnType<typeof searchRequest>>;
 export type LoadMoreRequestAction = Readonly<ReturnType<typeof loadMoreRequest>>;
+export type SetIsSearchLoadingAction = Readonly<ReturnType<typeof setIsSearchLoading>>;
 
 // tslint:disable-next-line:typedef
 export const saveSearchTerm = (searchTerm: string) => (
@@ -65,6 +66,11 @@ export const loadMoreRequest = () => (
     helpers.makeAction(constants.LOAD_MORE_REQUEST)
 );
 
+// tslint:disable-next-line: typedef
+export const setIsSearchLoading = (isLoading: boolean) => (
+    helpers.makeAction(constants.SET_IS_SEARCH_LOADING, { isLoading })
+);
+
 export type SearchAction =
     SaveSearchTermAction |
     SaveSearchLocationAction |
@@ -76,7 +82,8 @@ export type SearchAction =
     SetCollapseSearchInputAction |
     ClearAllUserDataAction |
     SearchRequestAction |
-    LoadMoreRequestAction;
+    LoadMoreRequestAction |
+    SetIsSearchLoadingAction;
 
 export interface SearchStore {
     readonly searchTerm: string;
@@ -87,6 +94,7 @@ export interface SearchStore {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly searchOffset: number;
     readonly collapseSearchInput: boolean;
+    readonly isSearchLoading: boolean;
 }
 
 export const buildDefaultStore = (): SearchStore => ({
@@ -98,6 +106,7 @@ export const buildDefaultStore = (): SearchStore => ({
     searchResults: [],
     searchOffset: 0,
     collapseSearchInput: false,
+    isSearchLoading: false,
 });
 
 export const reducer = (store: SearchStore = buildDefaultStore(), action?: SearchAction): SearchStore => {
@@ -144,6 +153,11 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
             return ({
                 ...store,
                 collapseSearchInput: action.payload.collapseSearchInput,
+            });
+        case constants.SET_IS_SEARCH_LOADING:
+            return ({
+                ...store,
+                isSearchLoading: action.payload.isLoading,
             });
         case constants.CLEAR_ALL_USER_DATA:
             return buildDefaultStore();

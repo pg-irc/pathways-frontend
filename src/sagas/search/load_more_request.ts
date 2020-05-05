@@ -1,7 +1,7 @@
 // tslint:disable: no-expression-statement
 import { ForkEffect, takeLatest, put, CallEffect, PutEffect, SelectEffect, call, select } from 'redux-saga/effects';
 import { LOAD_MORE_REQUEST } from '../../application/constants';
-import { saveSearchResults, saveSearchPage } from '../../stores/search';
+import { saveSearchResults, saveSearchPage, setIsSearchLoading } from '../../stores/search';
 import { selectSearchTerm } from '../../selectors/search/select_search_term';
 import { selectSearchLatLong } from '../../selectors/search/select_search_lat_long';
 import { fetchSearchResultsFromQuery, AlgoliaResponse } from '../../components/search/api/fetch_search_results_from_query';
@@ -17,6 +17,7 @@ export function* watchLoadMoreRequest(): IterableIterator<ForkEffect> {
 type Effects = CallEffect | SelectEffect | PutEffect;
 
 function* loadMoreRequest(): IterableIterator<Effects> {
+    yield put(setIsSearchLoading(true))
     const searchTerm = yield select(selectSearchTerm);
     const searchLatLong = yield select(selectSearchLatLong);
     const searchPage: number = yield select(selectSearchPage);
@@ -28,5 +29,6 @@ function* loadMoreRequest(): IterableIterator<Effects> {
         yield put(saveSearchResults([...searchResults, ...moreResults]));
     } finally {
         yield put(saveSearchPage(nextPage));
+        yield put(setIsSearchLoading(false));
     }
 }

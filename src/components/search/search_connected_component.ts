@@ -16,6 +16,7 @@ import { selectSearchOffset } from '../../selectors/search/select_search_offset'
 import { selectIsInputCollapsed } from '../../selectors/search/select_is_input_collapsed';
 import { selectSearchResults } from '../../selectors/search/select_search_results';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { selectIsSearchLoading } from '../../selectors/search/select_is_search_loading';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
@@ -27,6 +28,7 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     searchResults: selectSearchResults(store),
     searchLatLong: selectSearchLatLong(store),
     collapseSearchInput: selectIsInputCollapsed(store),
+    isSearchLoading: selectIsSearchLoading(store),
 });
 
 type Actions =
