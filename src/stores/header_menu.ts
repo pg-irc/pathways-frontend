@@ -1,7 +1,6 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 import { SaveLocaleRequestAction } from './locale/actions';
-
 export type CloseHeaderMenuAction = Readonly<ReturnType<typeof closeHeaderMenu>>;
 export type OpenHeaderMenuAction = Readonly<ReturnType<typeof openHeaderMenu>>;
 export type CloseAboutModalAction = Readonly<ReturnType<typeof closeAboutModal>>;
