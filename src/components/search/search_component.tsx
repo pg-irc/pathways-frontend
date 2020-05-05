@@ -12,7 +12,6 @@ import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
 import * as actions from '../../stores/search';
-import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
 import { useOnlineStatus } from './use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
@@ -42,14 +41,11 @@ export interface SearchComponentActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly saveSearchTerm: (searchTerm: string) => actions.SaveSearchTermAction;
     readonly saveSearchLocation: (searchLocation: string) => actions.SaveSearchLocationAction;
-    readonly saveSearchLatLong: (searchLatLong: LatLong) => actions.SaveSearchLatLongAction;
-    readonly saveSearchPage: (searchPage: number) => actions.SaveSearchPageAction;
-    readonly saveNumberOfSearchPages: (numberOfSearchPages: number) => actions.SaveNumberOfSearchPagesAction;
     readonly saveSearchOffset: (index: number) => actions.SaveSearchOffsetAction;
-    readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => actions.SaveSearchResultsAction;
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => actions.SetCollapseSearchInputAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly searchRequest: (searchTermInput: string, searchLocationInput: string) => actions.SearchRequestAction;
+    readonly loadMoreRequestAction: () => actions.LoadMoreRequestAction;
 }
 
 export type StringSetterFunction = Dispatch<SetStateAction<string>>;
@@ -75,16 +71,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     };
 
     const onLoadMore = async (): Promise<void> => {
-        try {
-            const moreResults = await fetchSearchResultsFromQuery(
-                props.searchTerm,
-                props.searchPage + 1,
-                props.searchLatLong,
-            );
-            props.saveSearchResults([...props.searchResults, ...moreResults]);
-        } finally {
-            props.saveSearchPage(props.searchPage + 1);
-        }
+       props.loadMoreRequestAction();
     };
 
     const searchResultsProps = { ...props, isLoading, onlineStatus, scrollOffset, setScrollOffset, onSearchRequest, onLoadMore };
