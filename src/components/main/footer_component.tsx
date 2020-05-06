@@ -41,7 +41,7 @@ const NavigationButton = (props: NavigationButtonProps): JSX.Element => (
 );
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
-    const  { footerAnimatedHeight, footerAnimatedBottomPadding }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+    const  { animatedFooterHeight, animatedFooterBottomPadding }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
 
     const [keyboardIsVisible, setKeyboardIsVisible]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
 
@@ -73,7 +73,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     }
 
     return (
-        <AnimatedFooter style={{ height: footerAnimatedHeight, paddingBottom: footerAnimatedBottomPadding }}>
+        <AnimatedFooter style={{ height: animatedFooterHeight, paddingBottom: animatedFooterBottomPadding }}>
             <FooterTab style={{ backgroundColor: colors.lightTeal }}>
                 <NavigationButton
                     icon='home'

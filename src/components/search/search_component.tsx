@@ -154,10 +154,10 @@ const HeaderRight = (props: { readonly onMenuButtonPress: () => void }): JSX.Ele
 );
 
 const SearchComponentHeader = (props: { readonly onMenuButtonPress: () => void }): JSX.Element => {
-    const { headerAnimatedHeight }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+    const { animatedHeaderHeight }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
 
     return (
-        <Animated.View style={{ height: headerAnimatedHeight }}>
+        <Animated.View style={{ height: animatedHeaderHeight }}>
             <Header style={[applicationStyles.header, { backgroundColor: colors.teal }]}>
                 <HeaderLeft />
                 <HeaderRight onMenuButtonPress={props.onMenuButtonPress} />

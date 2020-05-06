@@ -28,9 +28,9 @@ export interface FooterStyles {
 }
 
 export interface ScrollAnimationContext {
-    readonly footerAnimatedHeight: Animated.Node<number>;
-    readonly footerAnimatedBottomPadding: Animated.Node<number>;
-    readonly headerAnimatedHeight: Animated.Node<number>;
+    readonly animatedFooterHeight: Animated.Node<number>;
+    readonly animatedFooterBottomPadding: Animated.Node<number>;
+    readonly animatedHeaderHeight: Animated.Node<number>;
     readonly getAnimatedFlatListScrollHandler: (onScroll: (e: any) => void) => (...args: readonly any[]) => void;
 }
 
@@ -58,15 +58,15 @@ const CLAMPED_SCROLL_LOWER_BOUND = 0;
 const CLAMPED_SCROLL_UPPER_BOUND = Math.max(TOTAL_HEADER_HEIGHT, TOTAL_FOOTER_HEIGHT);
 
 export const createScrollAnimationContext = (): ScrollAnimationContext => {
-    const scrollAnimatedValueRef = useRef(new Animated.Value(0));
+    const animatedScrollValueRef = useRef(new Animated.Value(0));
 
-    const upwardScrollInterpolatedValue = Animated.interpolate(scrollAnimatedValueRef.current, {
+    const upwardScrollInterpolatedValue = Animated.interpolate(animatedScrollValueRef.current, {
         inputRange: [0, 1],
         outputRange: [0, 1],
         extrapolateLeft: Animated.Extrapolate.CLAMP,
     });
 
-    const clampedScrollAnimatedValueRef = useRef(
+    const animatedClampedScrollValueRef = useRef(
         Animated.diffClamp(
             upwardScrollInterpolatedValue,
             CLAMPED_SCROLL_LOWER_BOUND,
@@ -74,19 +74,19 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         ),
     );
 
-    const headerAnimatedHeight = Animated.interpolate(clampedScrollAnimatedValueRef.current, {
+    const animatedHeaderHeight = Animated.interpolate(animatedClampedScrollValueRef.current, {
         inputRange: [0, TOTAL_HEADER_HEIGHT],
         outputRange: [TOTAL_HEADER_HEIGHT, Constants.statusBarHeight],
         extrapolate: Animated.Extrapolate.CLAMP,
     });
 
-    const footerAnimatedHeight = Animated.interpolate(clampedScrollAnimatedValueRef.current, {
+    const animatedFooterHeight = Animated.interpolate(animatedClampedScrollValueRef.current, {
         inputRange: [0, footerHeight],
         outputRange: [footerHeight, 0],
         extrapolate: Animated.Extrapolate.CLAMP,
     });
 
-    const footerAnimatedBottomPadding = Animated.interpolate(clampedScrollAnimatedValueRef.current, {
+    const animatedFooterBottomPadding = Animated.interpolate(animatedClampedScrollValueRef.current, {
         inputRange: [0, footerPaddingBottom],
         outputRange: [footerPaddingBottom, 0],
         extrapolate: Animated.Extrapolate.CLAMP,
@@ -96,7 +96,7 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         const eventArgumentMapping: readonly [ScrollEventMap] = [{
             nativeEvent: {
                 contentOffset: {
-                    y: scrollAnimatedValueRef.current,
+                    y: animatedScrollValueRef.current,
                 },
             },
         }];
@@ -110,9 +110,9 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
     };
 
     return {
-        footerAnimatedHeight,
-        footerAnimatedBottomPadding,
-        headerAnimatedHeight,
+        animatedFooterHeight,
+        animatedFooterBottomPadding,
+        animatedHeaderHeight,
         getAnimatedFlatListScrollHandler,
     };
 };
