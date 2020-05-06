@@ -37,7 +37,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
 
         addListener();
         return removeListener;
-    }, []);
+    }, [setKeyboardIsVisible]);
 
     if (isFooterHidden(props, keyboardIsVisible)) {
         return <EmptyComponent />;
