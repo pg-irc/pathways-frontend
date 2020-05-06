@@ -14,6 +14,7 @@ import { openURL } from '../link/link';
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { BooleanSetterFunction, StringSetterFunction } from './search_component';
+import { toLocationForQuery, MY_LOCATION_MESSAGE_DESCRIPTOR } from '../partial_localization/to_location_for_query';
 
 export interface SearchProps {
     readonly searchTerm: string;
@@ -177,7 +178,7 @@ const ExpandedInput = (props: Props & ExpandedInputProps): JSX.Element => {
                             <ClearInputButton visible={props.searchLocationInput !== ''} onPress={clearLocationInput} />
                         </TouchableOpacity>
                         <View style={{ flexDirection: 'row-reverse', display: 'flex', justifyContent: 'space-between', margin: 4 }}>
-                            {renderSearchButton(props)}
+                            {renderSearchButton(props, i18n)}
                             {renderMyLocationButton(props, i18n)}
                         </View>
                     </View >
@@ -194,21 +195,24 @@ const InputIcon = ({ name }: IconProps): JSX.Element => (
     />
 );
 
-const renderSearchButton = (props: Props & ExpandedInputProps): JSX.Element => (
-    <TouchableOpacity
-        style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
-        disabled={props.searchTermInput.length === 0}
-        onPress={(): void => {
-            props.onSearchRequest(props.searchTermInput, props.searchLocationInput);
-        }}
-    >
-        <Text style={[textStyles.button, { fontSize: 16 }]}>
-            <Trans>
-                Search
-            </Trans>
-        </Text>
-    </TouchableOpacity>
-);
+const renderSearchButton = (props: Props & ExpandedInputProps, i18n: I18n): JSX.Element => {
+    const location = toLocationForQuery(props.searchLocationInput, i18n);
+    return (
+        <TouchableOpacity
+            style={props.searchTermInput.length === 0 ? [applicationStyles.searchButton, applicationStyles.disabled] : applicationStyles.searchButton}
+            disabled={props.searchTermInput.length === 0}
+            onPress={(): void => {
+                props.onSearchRequest(props.searchTermInput, location);
+            }}
+        >
+            <Text style={[textStyles.button, { fontSize: 16 }]}>
+                <Trans>
+                    Search
+                </Trans>
+            </Text>
+        </TouchableOpacity>
+    );
+};
 
 const renderMyLocationButton = (props: ExpandedInputProps, i18n: I18n): JSX.Element => {
     if (!props.showMyLocationButton) {
@@ -238,10 +242,9 @@ const renderMyLocationButton = (props: ExpandedInputProps, i18n: I18n): JSX.Elem
 
 const myLocationOnPress = async (setSearchLocationInput: (location: string) => void, i18n: I18n): Promise<void> => {
     const status = await getPermission();
-    const myLocationInput = t`My Location`;
     switch (status) {
         case Permissions.PermissionStatus.GRANTED:
-            setSearchLocationInput(i18n._(myLocationInput));
+            setSearchLocationInput(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
             break;
         case Permissions.PermissionStatus.DENIED:
             openAppSettings();
