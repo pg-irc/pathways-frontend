@@ -66,7 +66,7 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         extrapolateLeft: Animated.Extrapolate.CLAMP,
     });
 
-    const clampedScrollAnimatedValueRef = useRef<Animated.Node<number>>(
+    const clampedScrollAnimatedValueRef = useRef(
         Animated.diffClamp(
             upwardScrollInterpolatedValue,
             CLAMPED_SCROLL_LOWER_BOUND,
