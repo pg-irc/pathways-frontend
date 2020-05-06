@@ -1,5 +1,6 @@
-import React from 'react';
-import { StyleProp, TextStyle } from 'react-native';
+// tslint:disable: no-expression-statement
+import React, { useState, useEffect, SetStateAction, Dispatch } from 'react';
+import { StyleProp, TextStyle, Keyboard } from 'react-native';
 import { Footer, FooterTab, Button, Icon } from 'native-base';
 import { History, Location } from 'history';
 import { Routes, goToRouteWithoutParameter, pathMatchesRoute, pathMatchesAnyRoute } from '../../application/routing';
@@ -13,7 +14,32 @@ export interface FooterProps {
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
 
-    if (isFooterHidden(props)) {
+    const [keyboardIsVisible, setKeyboardIsVisible]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
+
+    useEffect((): () => void => {
+        const keyboardOpens = (): void => {
+            setKeyboardIsVisible(true);
+        };
+
+        const keyboardCloses = (): void => {
+            setKeyboardIsVisible(false);
+        };
+
+        const addListener = (): void => {
+            Keyboard.addListener('keyboardDidShow', keyboardOpens);
+            Keyboard.addListener('keyboardDidHide', keyboardCloses);
+        };
+
+        const removeListener = (): void => {
+            Keyboard.removeListener('keyboardDidShow', keyboardOpens);
+            Keyboard.removeListener('keyboardDidHide', keyboardCloses);
+        };
+
+        addListener();
+        return removeListener;
+    }, [setKeyboardIsVisible]);
+
+    if (isFooterHidden(props, keyboardIsVisible)) {
         return <EmptyComponent />;
     }
 
@@ -29,12 +55,14 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
     );
 };
 
-const isFooterHidden = (props: FooterProps): boolean => (
-    pathMatchesAnyRoute(
+const isFooterHidden = (props: FooterProps, keyboardIsVisible: boolean): boolean => {
+    if (keyboardIsVisible)
+        return true;
+    return pathMatchesAnyRoute(
         props.location.pathname,
         [Routes.Welcome, Routes.Questionnaire, Routes.Help, Routes.Onboarding],
-    )
-);
+    );
+};
 
 const isOnBookmarksPage = (props: FooterProps): boolean => (
     pathMatchesRoute(props.location.pathname, Routes.Bookmarks)
