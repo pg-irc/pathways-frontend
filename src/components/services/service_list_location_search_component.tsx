@@ -39,18 +39,18 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
         <I18n>
         {
             (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
-            <ExpandedSearch
-                locationInputValue={locationInputValue}
-                setLocationInputValue={setLocationInputValue}
-                isFetchingLatLng={isFetchingLatLng}
-                setIsFetchingLatLng={setIsFetchingLatLng}
-                setManualUserLocation={props.setManualUserLocation}
-                manualUserLocation={props.manualUserLocation}
-                setSearchIsCollapsed={setSearchIsCollapsed}
-                i18n={i18n}
-            />
+                <ExpandedSearch
+                    locationInputValue={locationInputValue}
+                    setLocationInputValue={setLocationInputValue}
+                    isFetchingLatLng={isFetchingLatLng}
+                    setIsFetchingLatLng={setIsFetchingLatLng}
+                    setManualUserLocation={props.setManualUserLocation}
+                    manualUserLocation={props.manualUserLocation}
+                    setSearchIsCollapsed={setSearchIsCollapsed}
+                    i18n={i18n}
+                />
             )
-            }
+        }
         </I18n>
     );
 };
@@ -123,6 +123,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                     locationInputValue={props.locationInputValue}
                     setLocationInputValue={props.setLocationInputValue}
                     autoFocus={!!props.manualUserLocation.label}
+                    i18n={props.i18n}
                 />
             </View>
             <View
@@ -148,6 +149,7 @@ interface SearchInputProps {
     readonly locationInputValue: string;
     readonly autoFocus: boolean;
     readonly setLocationInputValue: (s: string) => void;
+    readonly i18n: I18n;
 }
 
 const SearchInput = (props: SearchInputProps): JSX.Element => {
@@ -161,21 +163,15 @@ const SearchInput = (props: SearchInputProps): JSX.Element => {
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <LocationIcon />
-            <I18n>
-                {
-                    (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
-                        <TextInput
-                            style={applicationStyles.searchInput}
-                            onChangeText={props.setLocationInputValue}
-                            value={props.locationInputValue}
-                            placeholder={i18n._(t`Enter city, address, or postal code`)}
-                            placeholderTextColor={colors.greyishBrown}
-                            selectionColor={colors.black}
-                            autoFocus={props.autoFocus}
-                        />
-                    )
-                }
-            </I18n>
+                <TextInput
+                    style={applicationStyles.searchInput}
+                    onChangeText={props.setLocationInputValue}
+                    value={props.locationInputValue}
+                    placeholder={props.i18n._(t`Enter city, address, or postal code`)}
+                    placeholderTextColor={colors.greyishBrown}
+                    selectionColor={colors.black}
+                    autoFocus={props.autoFocus}
+                />
             {ClearButtonOrEmpty}
         </View>
     );
