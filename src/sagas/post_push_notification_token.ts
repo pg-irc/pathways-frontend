@@ -9,30 +9,30 @@ import { PATHWAYS_API_KEY } from 'react-native-dotenv';
 import { selectLocale } from '../selectors/locale/select_locale';
 import { Locale } from '../locale';
 
-export type PushNotificationPostRequestAction = Readonly<ReturnType<typeof pushNotificationTokenRequest>>;
-export type PushNotificationPostSuccessAction = Readonly<ReturnType<typeof pushNotificationTokenSuccess>>;
-export type PushNotificationPostFailureAction = Readonly<ReturnType<typeof pushNotificationTokenFailure>>;
+export type PushNotificationTokenRequestAction = Readonly<ReturnType<typeof pushNotificationTokenRequest>>;
+export type PushNotificationTokenSuccessAction = Readonly<ReturnType<typeof pushNotificationTokenSuccess>>;
+export type PushNotificationTokenFailureAction = Readonly<ReturnType<typeof pushNotificationTokenFailure>>;
 
 // tslint:disable-next-line:typedef
 export const pushNotificationTokenRequest = () => (
-    helpers.makeAction(constants.POST_PUSH_NOTIFICATION_TOKEN_REQUEST)
+    helpers.makeAction(constants.PUSH_NOTIFICATION_TOKEN_REQUEST)
 );
 
 // tslint:disable-next-line:typedef
 const pushNotificationTokenSuccess = () => (
-    helpers.makeAction(constants.POST_PUSH_NOTIFICATION_TOKEN_SUCCESS)
+    helpers.makeAction(constants.PUSH_NOTIFICATION_TOKEN_SUCCESS)
 );
 
 // tslint:disable-next-line:typedef
 const pushNotificationTokenFailure = (error: string) => (
-    helpers.makeAction(constants.POST_PUSH_NOTIFICATION_TOKEN_FAILURE, { error })
+    helpers.makeAction(constants.PUSH_NOTIFICATION_TOKEN_FAILURE, { error })
 );
 
-export function* watchRequestPostPushNotificationToken(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.POST_PUSH_NOTIFICATION_TOKEN_REQUEST, requestPostPushNotificationToken);
+export function* watchRequestPushNotificationToken(): IterableIterator<ForkEffect> {
+    yield takeLatest(constants.PUSH_NOTIFICATION_TOKEN_REQUEST, requestPushNotificationToken);
 }
 
-function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction): Result {
+function* requestPushNotificationToken(_: PushNotificationTokenRequestAction): Result {
     const existingStatus: Permissions.PermissionResponse = yield call(Permissions.getAsync, Permissions.NOTIFICATIONS);
     // tslint:disable-next-line: no-let
     let finalStatus: Permissions.PermissionResponse = existingStatus;
@@ -56,6 +56,6 @@ function* requestPostPushNotificationToken(_: PushNotificationPostRequestAction)
     yield put(pushNotificationTokenSuccess());
 }
 
-type SuccessOrFailure = PushNotificationPostSuccessAction | PushNotificationPostFailureAction;
+type SuccessOrFailure = PushNotificationTokenSuccessAction | PushNotificationTokenFailureAction;
 
 export type Result = IterableIterator<SelectEffect | CallEffect | PutEffect<SuccessOrFailure>>;
