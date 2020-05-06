@@ -10,6 +10,6 @@ export const toLocationForQuery = (locationInput: string, i18n: I18n): string =>
     return locationInput;
 };
 
-const isLocalizedMyLocation = (locationInput: string, i18n: I18n): boolean => (
+export const isLocalizedMyLocation = (locationInput: string, i18n: I18n): boolean => (
     locationInput === i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR)
 );

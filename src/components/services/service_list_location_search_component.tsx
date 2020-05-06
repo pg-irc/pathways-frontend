@@ -14,6 +14,7 @@ import { MY_LOCATION } from '../../application/constants';
 import { getDeviceLocation, DeviceLocation } from '../../application/helpers/get_device_location';
 import { isLocationFetchTimeoutError, isNoLocationPermissionError } from '../../validation/errors/is_error';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { isLocalizedMyLocation, MY_LOCATION_MESSAGE_DESCRIPTOR } from '../partial_localization/to_location_for_query';
 
 interface Props {
     readonly manualUserLocation: UserLocation;
@@ -113,6 +114,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
         props.locationInputValue,
         props.setManualUserLocation,
         props.setSearchIsCollapsed,
+        props.i18n,
     );
     const onSearchButtonPress = isCachedLocationValid ? collapseSearch : lookupLocationLatLong;
 
@@ -242,9 +244,10 @@ const getSearchOnPress = (
     locationInputValue: string,
     setManualUserLocation: Props['setManualUserLocation'],
     setSearchIsCollapsed: (b: boolean) => void,
+    i18n: I18n,
 ): () => void => (): void => {
     setSearchIsCollapsed(true);
-    if (locationInputValue === MY_LOCATION) {
+    if (locationInputIsMyLocation(locationInputValue, i18n)) {
         fetchLatLng(
             setIsFetchingLatLng,
             fetchLatLngFromDevice,
@@ -261,8 +264,12 @@ const getSearchOnPress = (
     }
 };
 
+const locationInputIsMyLocation = (locationInput: string, i18n: I18n): boolean => (
+    locationInput === MY_LOCATION || isLocalizedMyLocation(locationInput, i18n)
+);
+
 const getLocateOnPress = (setLocationInputValue: (s: string) => void, i18n: I18n): () => void => (): void => {
-    setLocationInputValue(i18n._(t`My Location`));
+    setLocationInputValue(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
 };
 
 const fetchLatLng = async (
