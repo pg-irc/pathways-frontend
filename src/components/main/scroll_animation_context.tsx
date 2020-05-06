@@ -30,6 +30,7 @@ export interface FooterStyles {
 export interface ScrollAnimationContext {
     readonly animatedFooterHeight: Animated.Node<number>;
     readonly animatedFooterBottomPadding: Animated.Node<number>;
+    readonly animatedFooterIconVerticalTranslate: Animated.Node<number>;
     readonly animatedHeaderHeight: Animated.Node<number>;
     readonly getAnimatedFlatListScrollHandler: (onScroll: (e: any) => void) => (...args: readonly any[]) => void;
 }
@@ -52,6 +53,8 @@ const { height: footerHeight, paddingBottom: footerPaddingBottom }: FooterStyles
 const TOTAL_HEADER_HEIGHT: number = HEADER_HEIGHT + Constants.statusBarHeight;
 
 const TOTAL_FOOTER_HEIGHT = footerHeight + footerPaddingBottom;
+
+const FOOTER_ICON_HEIGHT = 30;
 
 const CLAMPED_SCROLL_LOWER_BOUND = 0;
 
@@ -92,6 +95,12 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         extrapolate: Animated.Extrapolate.CLAMP,
     });
 
+    const animatedFooterIconVerticalTranslate =  Animated.interpolate(animatedClampedScrollValueRef.current, {
+        inputRange: [footerPaddingBottom, footerHeight],
+        outputRange: [0, footerHeight - FOOTER_ICON_HEIGHT],
+        extrapolate: Animated.Extrapolate.CLAMP,
+    });
+
     const getAnimatedFlatListScrollHandler = (onScroll: (e: any) => void): (mapping: readonly ScrollEventMap[], config: EventConfig) => void => {
         const eventArgumentMapping: readonly [ScrollEventMap] = [{
             nativeEvent: {
@@ -112,6 +121,7 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
     return {
         animatedFooterHeight,
         animatedFooterBottomPadding,
+        animatedFooterIconVerticalTranslate,
         animatedHeaderHeight,
         getAnimatedFlatListScrollHandler,
     };

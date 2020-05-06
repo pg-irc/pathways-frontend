@@ -13,6 +13,8 @@ import { ScrollAnimationContext, ScrollContext } from '../main/scroll_animation_
 
 const AnimatedFooter = Animated.createAnimatedComponent(Footer);
 
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
+
 export interface FooterProps {
     readonly history: History;
     readonly location: Location;
@@ -29,16 +31,24 @@ export interface FooterStyles {
     readonly paddingBottom: number;
 }
 
-const NavigationButton = (props: NavigationButtonProps): JSX.Element => (
-    <Button vertical onPress={props.onPress} style={{ flexWrap: 'nowrap' }}>
-        <Icon
-            type='FontAwesome'
-            name={props.icon}
-            active={props.isActive}
-            style={{ fontSize: values.navigationIconSize,  color: props.isActive ? colors.white : colors.teal }}
-        />
-    </Button>
-);
+const NavigationButton = (props: NavigationButtonProps): JSX.Element => {
+    const  { animatedFooterIconVerticalTranslate }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+
+    return (
+        <Button vertical onPress={props.onPress} style={{ flexWrap: 'nowrap' }}>
+            <AnimatedIcon
+                type='FontAwesome'
+                name={props.icon}
+                active={props.isActive}
+                style={{
+                    fontSize: values.navigationIconSize,
+                    color: props.isActive ? colors.white : colors.teal,
+                    transform: [{ translateY: animatedFooterIconVerticalTranslate }],
+                }}
+            />
+        </Button>
+    );
+};
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
     const  { animatedFooterHeight, animatedFooterBottomPadding }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
