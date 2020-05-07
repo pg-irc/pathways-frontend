@@ -1,14 +1,15 @@
 // tslint:disable:no-expression-statement
-import { OnlineStatus } from '../components/search/use_online_status';
 import { LatLong } from '../validation/latlong/types';
 import { toGeoCoderLatLong } from '../validation/latlong';
 import BuildUrl from 'build-url';
 import { getDeviceLocation } from '../application/helpers/get_device_location';
 import { isNoLocationPermissionError, isLocationFetchTimeoutError } from '../validation/errors/is_error';
 import { MY_LOCATION } from '../application/constants';
+import { isDeviceOnline } from '../application/helpers/is_device_online';
 
-export const fetchLatLongFromLocation = async (location: string, onlineStatus: OnlineStatus): Promise<LatLong> => {
-    if (!userIsOnline(onlineStatus)) {
+export const fetchLatLongFromLocation = async (location: string): Promise<LatLong> => {
+    const isOnline = await isDeviceOnline();
+    if (!isOnline) {
         return undefined;
     }
     if (isMyLocation(location)) {
@@ -26,10 +27,6 @@ const isMyLocation = (location: string): boolean => (
 
 const locationIsNotEmpty = (location: string): boolean => (
     location !== ''
-);
-
-const userIsOnline = (onlineStatus: OnlineStatus): boolean => (
-    onlineStatus === OnlineStatus.Online
 );
 
 const fetchLatLongFromDevice = async (): Promise<LatLong> => {
