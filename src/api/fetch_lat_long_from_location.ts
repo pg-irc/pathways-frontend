@@ -4,28 +4,40 @@ import { LatLong } from '../validation/latlong/types';
 import { toGeoCoderLatLong } from '../validation/latlong';
 import BuildUrl from 'build-url';
 import { getDeviceLocation } from '../application/helpers/get_device_location';
-import * as errors from '../validation/errors/is_error';
+import { isNoLocationPermissionError, isLocationFetchTimeoutError } from '../validation/errors/is_error';
 import { MY_LOCATION } from '../application/constants';
 
-export const fetchLatLongFromLocation =
-    async (location: string, onlineStatus: OnlineStatus): Promise<LatLong> => {
-        if (location === MY_LOCATION) {
-            return fetchLatLongFromDevice();
-        } else if (location !== '' && onlineStatus === OnlineStatus.Online) {
-            return fetchLatLongFromAddress(location);
-        } else
-            return undefined;
-    };
+export const fetchLatLongFromLocation = async (location: string, onlineStatus: OnlineStatus): Promise<LatLong> => {
+    if (!userIsOnline(onlineStatus)) {
+        return undefined;
+    }
+    if (isMyLocation(location)) {
+        return fetchLatLongFromDevice();
+    }
+    if (locationIsNotEmpty(location)) {
+        return fetchLatLongFromAddress(location);
+    }
+    return undefined;
+};
+
+const isMyLocation = (location: string): boolean => (
+    location === MY_LOCATION
+);
+
+const locationIsNotEmpty = (location: string): boolean => (
+    location !== ''
+);
+
+const userIsOnline = (onlineStatus: OnlineStatus): boolean => (
+    onlineStatus === OnlineStatus.Online
+);
 
 const fetchLatLongFromDevice = async (): Promise<LatLong> => {
     const deviceLocation = await getDeviceLocation();
-    if (errors.isNoLocationPermissionError(deviceLocation)) {
+    if (isNoLocationPermissionError(deviceLocation) || isLocationFetchTimeoutError(deviceLocation)) {
         return { lat: 0, lng: 0 };
-    } else if (errors.isLocationFetchTimeoutError(deviceLocation)) {
-        return { lat: 0, lng: 0 };
-    } else {
-        return { lat: deviceLocation.coords.latitude, lng: deviceLocation.coords.longitude };
     }
+    return { lat: deviceLocation.coords.latitude, lng: deviceLocation.coords.longitude };
 };
 
 const fetchLatLongFromAddress = async (location: string): Promise<LatLong> => {
