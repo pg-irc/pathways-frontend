@@ -102,17 +102,12 @@ const CollapsedInput = (props: CollapsedInputProps): JSX.Element => {
     );
 };
 
-const buildBriefSearchString = (searchInput: string, searchLocationInput: string): string => {
-    if (searchInput === '') {
-        return '';
-    }
+const buildBriefSearchString = (searchInput: string, searchLocationInput: string): string | JSX.Element => {
     if (searchLocationInput === '') {
         return searchInput;
     }
-    if (searchLocationInput === MY_LOCATION) {
-        return searchInput + ' ' + 'near my location';
-    }
-    return searchInput + ' near ' + searchLocationInput;
+    // TO DO Translate String
+    return <Trans>{searchInput} near {searchLocationInput}</Trans>;
 };
 
 export interface ExpandedInputProps {
