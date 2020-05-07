@@ -58,12 +58,8 @@ type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterPro
 export const ServiceListComponent = (props: Props): JSX.Element => {
     useEffect(refreshServices(props), [props.manualUserLocation]);
 
-    if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
+    if (isTopicServicesError(props.topicServicesOrError, props.manualUserLocation)) {
         return renderErrorComponent(props, refreshServices(props));
-    }
-    // TO DO combine this with isSelectorErrorServices above to render error component
-    if (hasNoResultsFromLocationQuery(props.manualUserLocation.latLong)) {
-        return <View>Show no invalid location page</View>;
     }
 
     if (isLoadingServices(props.topicServicesOrError) || isInitialEmptyTopicServices(props.topicServicesOrError)) {
@@ -124,8 +120,12 @@ const ServiceListWrapper = (props: ServiceListWrapperProps): JSX.Element => (
     </View>
 );
 
+const isTopicServicesError = (topicServicesOrError: SelectorTopicServices, userLocation: UserLocation): boolean => (
+    isSelectorErrorServicesForTopic(topicServicesOrError) || hasNoResultsFromLocationQuery(userLocation.latLong)
+);
+
 const renderErrorComponent = (props: Props, refreshScreen: () => void): JSX.Element => {
-    const errorType = determineErrorType(props.topicServicesOrError);
+    const errorType = determineErrorType(props.topicServicesOrError, props.manualUserLocation);
     const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
     Sentry.captureMessage(sentryMessage);
     return (
@@ -164,9 +164,12 @@ const renderHeader = (props: Props): JSX.Element => (
     />
 );
 
-const determineErrorType = (topicServicesOrError: SelectorTopicServices): Errors => {
+const determineErrorType = (topicServicesOrError: SelectorTopicServices, userLocation: UserLocation): Errors => {
     if (isSelectorErrorServicesForTopic(topicServicesOrError)) {
         return topicServicesOrError.errorMessageType;
+    }
+    if (hasNoResultsFromLocationQuery(userLocation.latLong)) {
+        return Errors.InvalidSearchLocation;
     }
     return Errors.Exception;
 };
