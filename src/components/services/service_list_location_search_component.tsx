@@ -11,7 +11,8 @@ import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { MY_LOCATION_MESSAGE_DESCRIPTOR, toLocationForQuery } from '../partial_localization/to_location_for_query';
+import { MY_LOCATION_MESSAGE_DESCRIPTOR, toLocationForQuery, isLocalizedMyLocation } from '../partial_localization/to_location_for_query';
+import { isMyLocation } from '../../api/fetch_lat_long_from_location';
 
 interface Props {
     readonly manualUserLocation: UserLocation;
@@ -95,14 +96,6 @@ interface ExpandedSearchProps {
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
-    const hasMyLocation = props.locationInputValue === MY_LOCATION;
-    const LocateButtonOrEmpty = !hasMyLocation ?
-        <LocateButton
-            onPress={getLocateOnPress(props.setLocationInputValue, props.i18n)}
-            isFetchingLatLng={props.isFetchingLatLng}
-        />
-        :
-        <EmptyComponent />;
     const searchIsDisabled = props.locationInputValue.length === 0 || props.isFetchingLatLng;
     const isCachedLocationValid = props.locationInputValue === props.manualUserLocation.label;
     const collapseSearch = (): void => { props.setSearchIsCollapsed(true); };
@@ -132,11 +125,11 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                     applicationStyles.searchContainerExpanded,
                     {
                         backgroundColor: colors.teal,
-                        justifyContent: hasMyLocation ? 'flex-end' : 'space-between',
+                        justifyContent: hasMyLocation(props.locationInputValue, props.i18n) ? 'flex-end' : 'space-between',
                     },
                 ]}
             >
-                {LocateButtonOrEmpty}
+                {renderLocateButtonOrEmpty(props.locationInputValue, props.isFetchingLatLng, props.i18n, props.setLocationInputValue)}
                 <SearchButton
                     onPress={onSearchButtonPress}
                     isDisabled={searchIsDisabled}
@@ -144,6 +137,31 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
             </View>
         </View>
     );
+};
+
+const renderLocateButtonOrEmpty = (
+    locationInputValue: string,
+    isFetchingLatLng: boolean,
+    i18n: I18n,
+    setLocationInputValue: (s: string) => void,
+): JSX.Element => {
+    if (!hasMyLocation(locationInputValue, i18n)) {
+        return (
+            <LocateButton
+            onPress={getLocateOnPress(setLocationInputValue, i18n)}
+            isFetchingLatLng={isFetchingLatLng}
+            />
+        );
+    }
+    return <EmptyComponent />;
+}
+
+const hasMyLocation = (locationInputValue: string, i18n: I18n): boolean => (
+    isMyLocation(locationInputValue) || isLocalizedMyLocation(locationInputValue, i18n)
+);
+
+const getLocateOnPress = (setLocationInputValue: (s: string) => void, i18n: I18n): () => void => (): void => {
+    setLocationInputValue(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
 };
 
 interface SearchInputProps {
@@ -254,8 +272,4 @@ const getSearchOnPress = async (
         latLong: latLong,
     });
     setIsFetchingLatLng(false);
-};
-
-const getLocateOnPress = (setLocationInputValue: (s: string) => void, i18n: I18n): () => void => (): void => {
-    setLocationInputValue(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
 };

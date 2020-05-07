@@ -102,13 +102,17 @@ const CollapsedInput = (props: CollapsedInputProps): JSX.Element => {
     );
 };
 
-const buildBriefSearchString = (searchInput: string, searchLocationInput: string): string | JSX.Element => {
-    if (searchLocationInput === '') {
-        return searchInput;
+const buildBriefSearchString = (searchTermInput: string, searchLocationInput: string): string | JSX.Element => {
+    if (isSearchLocationEmpty(searchLocationInput)) {
+        return searchTermInput;
     }
     // TO DO Translate String
-    return <Trans>{searchInput} near {searchLocationInput}</Trans>;
+    return <Trans>{searchTermInput} near {searchLocationInput}</Trans>;
 };
+
+const isSearchLocationEmpty = (searchLocationInput: string): boolean => (
+    searchLocationInput === ''
+);
 
 export interface ExpandedInputProps {
     readonly searchTermInput: string;

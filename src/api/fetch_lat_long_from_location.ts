@@ -21,7 +21,7 @@ export const fetchLatLongFromLocation = async (location: string): Promise<LatLon
     return undefined;
 };
 
-const isMyLocation = (location: string): boolean => (
+export const isMyLocation = (location: string): boolean => (
     location === MY_LOCATION
 );
 
