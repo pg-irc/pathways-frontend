@@ -5,7 +5,7 @@ import * as R from 'ramda';
 import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
-import { values, textStyles, colors } from '../../application/styles';
+import { values, textStyles, colors, applicationStyles } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
@@ -116,6 +116,10 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         props.sendFeedback(serviceId);
     };
 
+    const onSubmitPress = (): void => {
+        props.submitFeedback(feedbackInput);
+    };
+
     return (
         <View style={{ flex: 1 }}>
             <ServiceDetailHeader {...props} />
@@ -183,6 +187,10 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         close={props.close}
                         cancelDiscardFeedback={props.cancelDiscardFeedback}
                         resetFeedbackAndUserInput={resetFeedbackAndUserInput}
+                    />
+                    <SubmitFeedbackButton
+                        isVisible={isFeedbackInputEnabled}
+                        onPress={onSubmitPress}
                     />
                 </View>
             </KeyboardAwareScrollView>
@@ -365,3 +373,19 @@ const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
 const getPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber): string => `${phone.type}: ${phone.phone_number}`).join('\n')
 );
+
+const SubmitFeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void }): JSX.Element => {
+    if (!props.isVisible) {
+        return <EmptyComponent />;
+    }
+    return (
+        <TouchableOpacity
+            style={[applicationStyles.tealButton, { paddingVertical: 12, marginHorizontal: 24 }]}
+            onPress={props.onPress}
+        >
+            <Text style={textStyles.tealButton}>
+                <Trans>Submit</Trans>
+            </Text>
+        </TouchableOpacity>
+    );
+};
