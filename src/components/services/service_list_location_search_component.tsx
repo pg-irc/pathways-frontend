@@ -5,16 +5,13 @@ import { Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
-import { UserLocation, LatLong } from '../../validation/latlong/types';
+import { UserLocation } from '../../validation/latlong/types';
 import { SetManualUserLocationAction } from '../../stores/manual_user_location';
-import { buildGeoCoderUrl, getTextIfValidOrThrow } from '../../api/fetch_lat_long_from_location';
-import { toGeoCoderLatLong } from '../../validation/latlong';
+import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { MY_LOCATION } from '../../application/constants';
-import { getDeviceLocation, DeviceLocation } from '../../application/helpers/get_device_location';
-import { isLocationFetchTimeoutError, isNoLocationPermissionError } from '../../validation/errors/is_error';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { isLocalizedMyLocation, MY_LOCATION_MESSAGE_DESCRIPTOR } from '../partial_localization/to_location_for_query';
+import { MY_LOCATION_MESSAGE_DESCRIPTOR, toLocationForQuery } from '../partial_localization/to_location_for_query';
 
 interface Props {
     readonly manualUserLocation: UserLocation;
@@ -109,13 +106,15 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
     const searchIsDisabled = props.locationInputValue.length === 0 || props.isFetchingLatLng;
     const isCachedLocationValid = props.locationInputValue === props.manualUserLocation.label;
     const collapseSearch = (): void => { props.setSearchIsCollapsed(true); };
-    const lookupLocationLatLong = getSearchOnPress(
-        props.setIsFetchingLatLng,
-        props.locationInputValue,
-        props.setManualUserLocation,
-        props.setSearchIsCollapsed,
-        props.i18n,
-    );
+    const lookupLocationLatLong = (): void => {
+            getSearchOnPress(
+            props.setIsFetchingLatLng,
+            props.locationInputValue,
+            props.setManualUserLocation,
+            props.setSearchIsCollapsed,
+            props.i18n,
+        );
+    };
     const onSearchButtonPress = isCachedLocationValid ? collapseSearch : lookupLocationLatLong;
 
     return (
@@ -239,78 +238,24 @@ const LocateButton = (props: LocateButtonProps): JSX.Element => (
     </TouchableOpacity>
 );
 
-const getSearchOnPress = (
+const getSearchOnPress = async (
     setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
     locationInputValue: string,
     setManualUserLocation: Props['setManualUserLocation'],
     setSearchIsCollapsed: (b: boolean) => void,
     i18n: I18n,
-): () => void => (): void => {
+): Promise<void> => {
+    const location = toLocationForQuery(locationInputValue, i18n);
     setSearchIsCollapsed(true);
-    if (locationInputIsMyLocation(locationInputValue, i18n)) {
-        fetchLatLng(
-            setIsFetchingLatLng,
-            fetchLatLngFromDevice,
-            setManualUserLocation,
-            MY_LOCATION,
-        );
-    } else {
-        fetchLatLng(
-            setIsFetchingLatLng,
-            () => fetchLatLngFromServer(locationInputValue),
-            setManualUserLocation,
-            locationInputValue,
-        );
-    }
+    setIsFetchingLatLng(true);
+    const latLong = await fetchLatLongFromLocation(location);
+    setManualUserLocation({
+        label: locationInputValue,
+        latLong: latLong,
+    });
+    setIsFetchingLatLng(false);
 };
-
-const locationInputIsMyLocation = (locationInput: string, i18n: I18n): boolean => (
-    locationInput === MY_LOCATION || isLocalizedMyLocation(locationInput, i18n)
-);
 
 const getLocateOnPress = (setLocationInputValue: (s: string) => void, i18n: I18n): () => void => (): void => {
     setLocationInputValue(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
-};
-
-const fetchLatLng = async (
-    setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
-    fetchFn: () => Promise<LatLong | undefined>,
-    setManualUserLocation: Props['setManualUserLocation'],
-    locationLabel: string,
-): Promise<void> => {
-    setIsFetchingLatLng(true);
-    const latLong = await fetchFn().catch(handleFetchError);
-    setIsFetchingLatLng(false);
-    setManualUserLocation({
-        label: locationLabel,
-        latLong,
-    });
-};
-
-const handleFetchError = (error: string): undefined => {
-    console.log(error);
-    return undefined;
-};
-
-// TODO: These both may be handy elsewhere and could be moved into a helper file.
-const fetchLatLngFromServer = async (locationValue: string): Promise<LatLong | undefined> => (
-    fetch(buildGeoCoderUrl(locationValue))
-        .then(getTextIfValidOrThrow)
-        .then(JSON.parse)
-        .then(toGeoCoderLatLong)
-        .catch((error: string) => {
-            console.log(error);
-            return undefined;
-        })
-);
-
-const fetchLatLngFromDevice = async (): Promise<LatLong | undefined> => {
-    const deviceLocationResponse: DeviceLocation = await getDeviceLocation();
-    if (isNoLocationPermissionError(deviceLocationResponse) || isLocationFetchTimeoutError(deviceLocationResponse)) {
-        return undefined;
-    }
-    return {
-        lat: deviceLocationResponse.coords.latitude,
-        lng: deviceLocationResponse.coords.longitude,
-    };
 };
