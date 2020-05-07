@@ -29,6 +29,7 @@ import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link';
+import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -59,6 +60,10 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 
     if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
         return renderErrorComponent(props, refreshServices(props));
+    }
+    // TO DO combine this with isSelectorErrorServices above to render error component
+    if (hasNoResultsFromLocationQuery(props.manualUserLocation.latLong)) {
+        return <View>Show no invalid location page</View>;
     }
 
     if (isLoadingServices(props.topicServicesOrError) || isInitialEmptyTopicServices(props.topicServicesOrError)) {
