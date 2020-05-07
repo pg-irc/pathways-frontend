@@ -76,7 +76,9 @@ export const SearchComponent = (props: Props): JSX.Element => {
                 geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
                 props.saveSearchLatLong(geocoderLatLong);
             }
-            const searchResults = await fetchSearchResultsFromQuery(searchTerm, props.searchPage, geocoderLatLong, props.saveNumberOfSearchPages);
+            const finalSearchterm = finalizeSearchTerm(searchTerm, location);
+            const searchResults = await fetchSearchResultsFromQuery(
+                finalSearchterm, props.searchPage, geocoderLatLong, props.saveNumberOfSearchPages);
             props.saveSearchResults(searchResults);
         } finally {
             setIsLoading(false);
@@ -85,12 +87,21 @@ export const SearchComponent = (props: Props): JSX.Element => {
     };
 
     const onLoadMore = async (): Promise<void> => {
+        const finalSearchTerm = finalizeSearchTerm(props.searchTerm, props.searchLocation);
         try {
-            const moreResults = await fetchSearchResultsFromQuery(props.searchTerm, props.searchPage + 1, props.searchLatLong, props.saveNumberOfSearchPages);
+            const moreResults = await fetchSearchResultsFromQuery(
+                finalSearchTerm, props.searchPage + 1, props.searchLatLong, props.saveNumberOfSearchPages);
             props.saveSearchResults([...props.searchResults, ...moreResults]);
         } finally {
             props.saveSearchPage(props.searchPage + 1);
         }
+    };
+
+    const finalizeSearchTerm = (searchTerm: string, location: string): string => {
+        if (location.match('.*\\d.*') || location.match('My Location')) {
+            return searchTerm;
+        }
+        return searchTerm + ' ' + location;
     };
 
     // tslint:disable-next-line: max-line-length
@@ -99,7 +110,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <Header style={[applicationStyles.header, { backgroundColor: colors.teal }]}>
                 <HeaderLeft />
-                <HeaderRight onMenuButtonPress={props.openHeaderMenu}/>
+                <HeaderRight onMenuButtonPress={props.openHeaderMenu} />
             </Header>
             <SearchInputComponent
                 searchTerm={props.searchTerm}
