@@ -1,3 +1,4 @@
+// tslint:disable: no-expression-statement
 import React from 'react';
 import * as R from 'ramda';
 import { Text, SectionList, SectionBase, TouchableOpacity, StyleSheet, I18nManager, Image } from 'react-native';
@@ -27,6 +28,7 @@ export interface HeaderMenuProps {
 
 export interface HeaderMenuActions {
     readonly setLocale: (locale: string, flipOrientation: boolean) => void;
+    readonly updateNotificationToken: () => void;
 }
 
 type Props = OwnProps & HeaderMenuProps & HeaderMenuActions;
@@ -34,10 +36,10 @@ type Props = OwnProps & HeaderMenuProps & HeaderMenuActions;
 export const HeaderMenuComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: getViewBackgroundColorForPlatform() }}>
         <Header style={{ backgroundColor: colors.lightTeal, marginTop: getStatusBarHeightForPlatform(), alignItems: 'center', justifyContent: 'flex-start' }}>
-            <Image source={arrivalAdvisorGlyphLogo} style={{ height: 24, width: 24, marginHorizontal: 10 }}/>
+            <Image source={arrivalAdvisorGlyphLogo} style={{ height: 24, width: 24, marginHorizontal: 10 }} />
             <Title style={textStyles.headlineH3StyleWhiteCenter}>Arrival Advisor</Title>
         </Header>
-        <Content style={{ backgroundColor: colors.white}}>
+        <Content style={{ backgroundColor: colors.white }}>
             <LocaleSection {...props} />
             <DividerComponent />
             <AboutSection {...props} />
@@ -74,7 +76,7 @@ const MenuSectionTitle = (props: { readonly title: JSX.Element }): JSX.Element =
 );
 
 const LocaleSection = (props: Props): JSX.Element => {
-    const localeItemBuilder = createLocaleItemBuilder(props.setLocale);
+    const localeItemBuilder = createLocaleItemBuilder(props.setLocale, props.updateNotificationToken);
     const localeSectionData = {
         ...props.currentLocale,
         data: R.map(localeItemBuilder, props.availableLocales),
@@ -92,9 +94,14 @@ const LocaleSection = (props: Props): JSX.Element => {
     );
 };
 
-function createLocaleItemBuilder(onPress: (code: string, flipOrientation: boolean) => void): LocaleItemBuilder {
+function createLocaleItemBuilder(setLocale: (code: string, flipOrientation: boolean) => void, updateToken: () => void): LocaleItemBuilder {
     return (locale: LocaleInfo): LocaleListItem => {
-        return { ...locale, onPress: (): void => onPress(locale.code, I18nManager.isRTL !== isRTL(locale.code)) };
+        return {
+            ...locale, onPress: (): void => {
+                setLocale(locale.code, I18nManager.isRTL !== isRTL(locale.code));
+                updateToken();
+            },
+        };
     };
 }
 
