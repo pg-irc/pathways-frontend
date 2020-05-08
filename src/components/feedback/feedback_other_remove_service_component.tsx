@@ -6,33 +6,22 @@ import {
     Content,
     Footer,
     FooterTab,
-    Header,
-    Icon,
     Item,
     Input,
     Label,
     Text,
-    Title,
 } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
 
-import { colors, textStyles } from '../../application/styles';
+import { colors } from '../../application/styles';
 import { goBack } from '../../application/routing';
-import { CloseButtonComponent } from '../close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
-
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
 import { SubmitAction, DiscardChangesAction, CloseAction, BackAction, CancelDiscardChangesAction } from '../../stores/feedback';
 import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
-import { TouchableOpacity } from 'react-native';
-
-type HeaderComponentProps = {
-    readonly headerLabel: TemplateStringsArray;
-    readonly close: () => void;
-    readonly back: () => void;
-};
+import { FeedbackHeaderComponent } from './feedback_header_component';
 
 type ContentComponentProps = {
     readonly input: string;
@@ -83,24 +72,6 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
         placeholder: t`e.g. Service is permanently closed`,
     },
 };
-
-export const HeaderComponent = ({ headerLabel, close, back }: HeaderComponentProps): JSX.Element => (
-    <Header style={styles.headerContainer}>
-        <TouchableOpacity onPress={back} style={{ paddingLeft: 15 }}>
-            <Icon name='chevron-left' type='FontAwesome' style={styles.headerElement}/>
-        </TouchableOpacity>
-        <Title style={{ paddingLeft: 15}}>
-            <Text style={textStyles.headline6}>
-                <Trans id={headerLabel} />
-            </Text>
-        </Title>
-        <CloseButtonComponent
-            color={colors.greyishBrown}
-            additionalStyle={{ paddingTop: 0 }}
-            onPress={close}
-        />
-    </Header>
-);
 
 const ContentComponent = (props: ContentComponentProps): JSX.Element => {
   return (
@@ -178,7 +149,7 @@ export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveSe
 
     return (
         <Container>
-            <HeaderComponent headerLabel={content.header} back={props.back} close={props.close} />
+            <FeedbackHeaderComponent headerLabel={content.header} back={props.back} close={props.close} />
             <ContentComponent
                 inputLabel={content.label}
                 input={feedback}

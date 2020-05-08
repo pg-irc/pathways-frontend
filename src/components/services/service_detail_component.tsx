@@ -52,7 +52,7 @@ import {
     SendFeedbackAction,
 } from '../../stores/feedback';
 import { isAndroid } from '../../application/helpers/is_android';
-import { HeaderComponent as FeedbackHeaderComponent } from '../feedback/feedback_other_remove_service_component';
+import { FeedbackHeaderComponent } from '../feedback/feedback_header_component';
 
 export interface ServiceDetailProps {
     readonly history: History;
