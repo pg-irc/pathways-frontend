@@ -177,6 +177,7 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         paddingLeft: 24,
         paddingRight: 24,
         justifyContent: 'space-evenly',
+        paddingBottom: 8,
     },
     emailInputStyle: {
         fontSize: 14,
@@ -191,6 +192,8 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         paddingLeft: 0,
         borderBottomWidth: 0.5,
         borderBottomColor: colors.darkerGrey,
+        paddingTop: 8,
+        paddingBottom: 8,
     },
 });
 

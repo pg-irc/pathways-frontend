@@ -1,10 +1,9 @@
 // tslint:disable:no-expression-statement
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
-import { Input } from 'native-base';
 import React, { Dispatch, SetStateAction } from 'react';
 import Modal from 'react-native-modal';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 import { receiveUpdatesStyles as styles } from './styles';
@@ -43,7 +42,7 @@ export const FeedbackReceiveUpdatesModal =
     const buttonLabel = userInformation.email.length ? t`Finish` : t`Finish without email`;
 
     // this is required to see extra employee inputs
-    const minHeight = !userInformation.isEmployee ? 315 : 415;
+    const minHeight = !userInformation.isEmployee ? 315 : 550;
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
@@ -57,7 +56,7 @@ export const FeedbackReceiveUpdatesModal =
                                 <Text style={textStyles.paragraphStyleBrown}>
                                     <Trans>Enter your email if you would like to receive updates about this issue</Trans>
                                 </Text>
-                                <Input
+                                <TextInput
                                     style={styles.emailInputStyle}
                                     onChangeText={onChangeEmail}
                                     placeholder={i18n._(INPUT_PLACEHOLDER)}
@@ -111,7 +110,7 @@ const EmployeeInputFields = (props: { readonly isVisible: boolean, readonly user
             <Text style={[textStyles.headline6, { color: colors.black }]}>
                 <Trans>Name</Trans>
             </Text>
-            <Input
+            <TextInput
                 style={styles.employeeInputStyle}
                 placeholder={props.i18n._(NAME_PLACEHOLDER)}
                 placeholderTextColor={colors.darkerGrey}
@@ -120,7 +119,7 @@ const EmployeeInputFields = (props: { readonly isVisible: boolean, readonly user
             <Text style={[textStyles.headline6, { color: colors.black, marginTop: 14 }]}>
                 <Trans>Organization</Trans>
             </Text>
-            <Input
+            <TextInput
                 style={styles.employeeInputStyle}
                 placeholder={props.i18n._(ORGANIZATION_PLACEHOLDER)}
                 placeholderTextColor={colors.darkerGrey}
@@ -129,7 +128,7 @@ const EmployeeInputFields = (props: { readonly isVisible: boolean, readonly user
              <Text style={[textStyles.headline6, { color: colors.black, marginTop: 14 }]}>
                 <Trans>Job Title</Trans>
             </Text>
-            <Input
+            <TextInput
                 style={styles.employeeInputStyle}
                 placeholder={props.i18n._(JOB_TITLE_PLACEHOLDER)}
                 placeholderTextColor={colors.darkerGrey}
