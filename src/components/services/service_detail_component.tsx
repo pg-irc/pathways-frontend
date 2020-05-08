@@ -2,7 +2,8 @@
 import React, { Dispatch, SetStateAction, useState, useRef, useEffect, MutableRefObject } from 'react';
 import { TouchableOpacity } from 'react-native';
 import * as R from 'ramda';
-import { History } from 'history';
+import { History, Location } from 'history';
+import { t } from '@lingui/macro';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { values, textStyles, colors, applicationStyles } from '../../application/styles';
@@ -51,6 +52,7 @@ import {
     SendFeedbackAction,
 } from '../../stores/feedback';
 import { isAndroid } from '../../application/helpers/is_android';
+import { HeaderComponent as FeedbackHeaderComponent } from '../feedback/feedback_other_remove_service_component';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -122,7 +124,18 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
 
     return (
         <View style={{ flex: 1 }}>
-            <ServiceDetailHeader {...props} />
+            <ServiceDetailHeaderComponent
+                location={props.location}
+                history={props.history}
+                isFeedbackInputEnabled={isFeedbackInputEnabled}
+                service={props.service}
+                bookmarkedServicesIds={props.bookmarkedServicesIds}
+                bookmarkService={props.bookmarkService}
+                unbookmarkService={props.unbookmarkService}
+                openHeaderMenu={props.openHeaderMenu}
+                close={props.close}
+                back={props.back}
+            />
             <KeyboardAwareScrollView
                 enableResetScrollToCoords={false}
                 extraHeight={100}
@@ -222,7 +235,53 @@ const Organization = (props: { readonly history: History, readonly name: string 
     </View>
 );
 
-const ServiceDetailHeader = (props: Props): JSX.Element => {
+interface HeaderProps {
+    readonly location: Location;
+    readonly history: History;
+    readonly isFeedbackInputEnabled: boolean;
+    readonly service: HumanServiceData;
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly close: () => CloseAction;
+    readonly back: () => BackAction;
+}
+
+const feedbackHeaderLabel = t`Change name or other details`;
+
+const ServiceDetailHeaderComponent = (props: HeaderProps): JSX.Element => {
+    if (!props.isFeedbackInputEnabled) {
+        return (
+            <ServiceDetailHeader
+                location={props.location}
+                history={props.history}
+                service={props.service}
+                bookmarkedServicesIds={props.bookmarkedServicesIds}
+                bookmarkService={props.bookmarkService}
+                unbookmarkService={props.unbookmarkService}
+                openHeaderMenu={props.openHeaderMenu}
+            />
+        );
+    }
+    return (
+        <FeedbackHeaderComponent
+            headerLabel={feedbackHeaderLabel}
+            close={props.close}
+            back={props.back}
+        />
+    );
+};
+
+const ServiceDetailHeader = (props: {
+    readonly location: Location;
+    readonly history: History;
+    readonly service: HumanServiceData;
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
+}): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.ServiceDetail);
     const serviceId = params.serviceId;
     const backgroundColor = colors.lightGrey;

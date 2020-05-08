@@ -86,7 +86,7 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
     },
 };
 
-const HeaderComponent = ({ headerLabel, close, back }: HeaderComponentProps): JSX.Element => (
+export const HeaderComponent = ({ headerLabel, close, back }: HeaderComponentProps): JSX.Element => (
     <Header style={styles.headerContainer}>
         <Left style={styles.headerBackButton}>
             <Button onPress={back} transparent>
