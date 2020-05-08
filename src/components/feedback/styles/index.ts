@@ -25,7 +25,6 @@ interface ReceiveUpdatesStyles {
     readonly checkboxContainer: ViewStyle;
     readonly checkBox: ViewStyle;
     readonly checkBoxDescription: ViewStyle;
-    readonly description: TextStyle;
     readonly emailInputStyle: ViewStyle;
     readonly finishButtonContainer: ViewStyle;
     readonly finishButton: ViewStyle;
@@ -116,7 +115,6 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
 const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
     checkboxContainer: {
         alignItems: 'center',
-        flex: 3,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -176,17 +174,10 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
     receiveUpdatesInnerContainer: {
         flex: 1,
         flexDirection: 'column',
-        paddingTop: 24,
         paddingLeft: 24,
         paddingRight: 24,
-        // marginBottom: 24,
+        justifyContent: 'space-evenly',
     },
-
-    description: {
-        paddingTop: 8,
-        paddingBottom: 8,
-    },
-
     emailInputStyle: {
         fontSize: 14,
         paddingLeft: 0,

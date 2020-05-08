@@ -43,26 +43,28 @@ export const FeedbackReceiveUpdatesModal =
     const buttonLabel = userInformation.email.length ? t`Finish` : t`Finish without email`;
 
     // this is required to see extra employee inputs
-    const minHeight = !userInformation.isEmployee ? 315 : 500;
+    const minHeight = !userInformation.isEmployee ? 315 : 415;
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
                 <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
                     <View style={[styles.receiveUpdatesContainer, { minHeight }]}>
                         <View style={styles.receiveUpdatesInnerContainer}>
-                            <Text style={textStyles.headlineH2StyleBlackLeft}>
-                                <Trans>Receiving Updates</Trans>
-                            </Text>
-                            <Text style={[textStyles.paragraphStyleBrown, styles.description]}>
-                                <Trans>Enter your email if you would like to receive updates about this issue</Trans>
-                            </Text>
-                            <Input
-                                style={styles.emailInputStyle}
-                                onChangeText={onChangeEmail}
-                                placeholder={i18n._(INPUT_PLACEHOLDER)}
-                                placeholderTextColor={colors.darkerGrey}
-                                value={userInformation.email}
-                            />
+                            <View>
+                                <Text style={textStyles.headlineH2StyleBlackLeft}>
+                                    <Trans>Receiving Updates</Trans>
+                                </Text>
+                                <Text style={textStyles.paragraphStyleBrown}>
+                                    <Trans>Enter your email if you would like to receive updates about this issue</Trans>
+                                </Text>
+                                <Input
+                                    style={styles.emailInputStyle}
+                                    onChangeText={onChangeEmail}
+                                    placeholder={i18n._(INPUT_PLACEHOLDER)}
+                                    placeholderTextColor={colors.darkerGrey}
+                                    value={userInformation.email}
+                                />
+                            </View>
                             <View style={styles.checkboxContainer}>
                                 <Text style={[textStyles.captionStyleLeft, styles.checkBoxDescription]}>
                                     <Trans>Do you work at this service or organization?</Trans>
@@ -105,7 +107,7 @@ const EmployeeInputFields = (props: { readonly isVisible: boolean, readonly user
         return <EmptyComponent />;
     }
     return (
-        <View style={{ flex: 3 }}>
+        <View>
             <Text style={[textStyles.headline6, { color: colors.black }]}>
                 <Trans>Name</Trans>
             </Text>
