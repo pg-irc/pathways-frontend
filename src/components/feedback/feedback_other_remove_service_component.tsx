@@ -2,7 +2,6 @@
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
 import {
-    Button,
     Container,
     Content,
     Footer,
@@ -12,8 +11,6 @@ import {
     Item,
     Input,
     Label,
-    Left,
-    Right,
     Text,
     Title,
 } from 'native-base';
@@ -29,6 +26,7 @@ import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
 import { SubmitAction, DiscardChangesAction, CloseAction, BackAction, CancelDiscardChangesAction } from '../../stores/feedback';
 import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
+import { TouchableOpacity } from 'react-native';
 
 type HeaderComponentProps = {
     readonly headerLabel: TemplateStringsArray;
@@ -88,23 +86,19 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
 
 export const HeaderComponent = ({ headerLabel, close, back }: HeaderComponentProps): JSX.Element => (
     <Header style={styles.headerContainer}>
-        <Left style={styles.headerBackButton}>
-            <Button onPress={back} transparent>
-                <Icon name='chevron-left' type='FontAwesome' style={styles.headerElement}/>
-            </Button>
-            <Title style={styles.headerLeftTitle}>
-                <Text style={textStyles.headline6}>
-                    <Trans id={headerLabel} />
-                </Text>
-            </Title>
-        </Left>
-        <Right>
-            <CloseButtonComponent
-                color={colors.greyishBrown}
-                additionalStyle={{ paddingTop: 0 }}
-                onPress={close}
-            />
-        </Right>
+        <TouchableOpacity onPress={back} style={{ paddingLeft: 15 }}>
+            <Icon name='chevron-left' type='FontAwesome' style={styles.headerElement}/>
+        </TouchableOpacity>
+        <Title style={{ paddingLeft: 15}}>
+            <Text style={textStyles.headline6}>
+                <Trans id={headerLabel} />
+            </Text>
+        </Title>
+        <CloseButtonComponent
+            color={colors.greyishBrown}
+            additionalStyle={{ paddingTop: 0 }}
+            onPress={close}
+        />
     </Header>
 );
 

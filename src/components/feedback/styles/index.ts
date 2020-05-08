@@ -12,7 +12,6 @@ interface OtherRemoveServiceStyles {
     readonly headerElement: TextStyle;
     readonly headerBackButton: ViewStyle;
     readonly headerContainer: ViewStyle;
-    readonly headerLeftTitle: ViewStyle;
     readonly input: TextStyle;
     readonly inputLabel: ViewStyle;
     readonly submitButton: ViewStyle;
@@ -45,17 +44,14 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
     headerContainer: {
         backgroundColor: 'white',
         marginTop: getStatusBarHeightForPlatform(),
+        alignItems: 'center',
     },
 
     headerBackButton: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
         paddingLeft: Platform.OS === 'android' ? 0 : 7,
-    },
-
-    headerLeftTitle: {
-        paddingLeft: 12,
+        borderWidth: 2,
     },
 
     headerElement: {
