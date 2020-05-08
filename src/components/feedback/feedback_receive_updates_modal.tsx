@@ -9,6 +9,7 @@ import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 import { receiveUpdatesStyles as styles } from './styles';
 import { UserInformation } from '../../stores/feedback/types';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface FeedbackReceiveUpdatesProps {
     readonly isSendingFeedback: boolean;
@@ -20,6 +21,9 @@ interface FeedbackReceiveUpdatesProps {
 }
 
 const INPUT_PLACEHOLDER = t`Enter email`;
+const NAME_PLACEHOLDER = t`Enter your name`;
+const ORGANIZATION_PLACEHOLDER = t`Enter your organization name`;
+const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
 export const FeedbackReceiveUpdatesModal =
 ({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: FeedbackReceiveUpdatesProps): JSX.Element => {
@@ -38,11 +42,13 @@ export const FeedbackReceiveUpdatesModal =
 
     const buttonLabel = userInformation.email.length ? t`Finish` : t`Finish without email`;
 
+    // this is required to see extra employee inputs
+    const minHeight = !userInformation.isEmployee ? 315 : 500;
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
                 <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
-                    <View style={styles.receiveUpdatesContainer}>
+                    <View style={[styles.receiveUpdatesContainer, { minHeight }]}>
                         <View style={styles.receiveUpdatesInnerContainer}>
                             <Text style={textStyles.headlineH2StyleBlackLeft}>
                                 <Trans>Receiving Updates</Trans>
@@ -70,6 +76,11 @@ export const FeedbackReceiveUpdatesModal =
                                     <Text style={textStyles.paragraphStyleBrown}><Trans>Yes</Trans></Text>
                                 </View>
                             </View>
+                            <EmployeeInputFields 
+                                isVisible={userInformation.isEmployee}
+                                userInformation={userInformation}
+                                i18n={i18n}
+                            />
                         </View>
                         <View style={styles.finishButtonContainer}>
                             <TouchableOpacity
@@ -86,5 +97,42 @@ export const FeedbackReceiveUpdatesModal =
                 </Modal>
             )}
         </I18n>
+    );
+};
+
+const EmployeeInputFields = (props: { readonly isVisible: boolean, readonly userInformation: UserInformation, readonly i18n: I18n }): JSX.Element => {
+    if (!props.isVisible) {
+        return <EmptyComponent />;
+    }
+    return (
+        <View style={{ flex: 3 }}>
+            <Text style={[textStyles.headline6, { color: colors.black }]}>
+                <Trans>Name</Trans>
+            </Text>
+            <Input
+                style={styles.employeeInputStyle}
+                placeholder={props.i18n._(NAME_PLACEHOLDER)}
+                placeholderTextColor={colors.darkerGrey}
+                value={props.userInformation.name}
+            />
+            <Text style={[textStyles.headline6, { color: colors.black, marginTop: 14 }]}>
+                <Trans>Organization</Trans>
+            </Text>
+            <Input
+                style={styles.employeeInputStyle}
+                placeholder={props.i18n._(ORGANIZATION_PLACEHOLDER)}
+                placeholderTextColor={colors.darkerGrey}
+                value={props.userInformation.organizationName}
+            />
+             <Text style={[textStyles.headline6, { color: colors.black, marginTop: 14 }]}>
+                <Trans>Job Title</Trans>
+            </Text>
+            <Input
+                style={styles.employeeInputStyle}
+                placeholder={props.i18n._(JOB_TITLE_PLACEHOLDER)}
+                placeholderTextColor={colors.darkerGrey}
+                value={props.userInformation.jobTitle}
+            />
+        </View>
     );
 };

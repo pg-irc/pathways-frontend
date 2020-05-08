@@ -34,6 +34,7 @@ interface ReceiveUpdatesStyles {
     readonly checkBoxIcon: TextStyle;
     readonly receiveUpdatesContainer: ViewStyle;
     readonly receiveUpdatesInnerContainer: ViewStyle;
+    readonly employeeInputStyle: ViewStyle;
 }
 
 const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
@@ -118,8 +119,6 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         flex: 3,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingTop: 24,
-        paddingBottom: 24,
     },
 
     checkBoxDescription: {
@@ -172,14 +171,15 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
     receiveUpdatesContainer: {
         backgroundColor: 'white',
         borderRadius: 15,
-        minHeight: 315,
     },
 
     receiveUpdatesInnerContainer: {
         flex: 1,
+        flexDirection: 'column',
         paddingTop: 24,
         paddingLeft: 24,
         paddingRight: 24,
+        // marginBottom: 24,
     },
 
     description: {
@@ -192,6 +192,12 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         paddingLeft: 0,
         paddingTop: 8,
         paddingBottom: 8,
+        borderBottomWidth: 0.5,
+        borderBottomColor: colors.darkerGrey,
+    },
+    employeeInputStyle: {
+        fontSize: 14,
+        paddingLeft: 0,
         borderBottomWidth: 0.5,
         borderBottomColor: colors.darkerGrey,
     },
