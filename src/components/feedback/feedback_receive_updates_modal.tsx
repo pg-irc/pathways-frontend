@@ -1,4 +1,5 @@
 // tslint:disable:no-expression-statement
+import * as R from 'ramda';
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
 import React, { Dispatch, SetStateAction } from 'react';
@@ -77,10 +78,11 @@ export const FeedbackReceiveUpdatesModal =
                                     <Text style={textStyles.paragraphStyleBrown}><Trans>Yes</Trans></Text>
                                 </View>
                             </View>
-                            <EmployeeInputFields 
+                            <EmployeeInputFields
                                 isVisible={userInformation.isEmployee}
                                 userInformation={userInformation}
                                 i18n={i18n}
+                                setUserInformation={setUserInformation}
                             />
                         </View>
                         <View style={styles.finishButtonContainer}>
@@ -101,7 +103,16 @@ export const FeedbackReceiveUpdatesModal =
     );
 };
 
-const EmployeeInputFields = (props: { readonly isVisible: boolean, readonly userInformation: UserInformation, readonly i18n: I18n }): JSX.Element => {
+const EmployeeInputFields = (props: {
+    readonly isVisible: boolean,
+    readonly userInformation: UserInformation,
+    readonly i18n: I18n,
+    readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
+}): JSX.Element => {
+
+    const onChangeEmployeeInputForField = R.curry((fieldName: keyof UserInformation, fieldValue: string): void => (
+        props.setUserInformation({ ...props.userInformation , [fieldName]: fieldValue })
+    ));
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
@@ -111,6 +122,7 @@ const EmployeeInputFields = (props: { readonly isVisible: boolean, readonly user
                 <Trans>Name</Trans>
             </Text>
             <TextInput
+                onChangeText={onChangeEmployeeInputForField('name')}
                 style={styles.employeeInputStyle}
                 placeholder={props.i18n._(NAME_PLACEHOLDER)}
                 placeholderTextColor={colors.darkerGrey}
@@ -120,6 +132,7 @@ const EmployeeInputFields = (props: { readonly isVisible: boolean, readonly user
                 <Trans>Organization</Trans>
             </Text>
             <TextInput
+                onChangeText={onChangeEmployeeInputForField('organizationName')}
                 style={styles.employeeInputStyle}
                 placeholder={props.i18n._(ORGANIZATION_PLACEHOLDER)}
                 placeholderTextColor={colors.darkerGrey}
@@ -129,6 +142,7 @@ const EmployeeInputFields = (props: { readonly isVisible: boolean, readonly user
                 <Trans>Job Title</Trans>
             </Text>
             <TextInput
+                onChangeText={onChangeEmployeeInputForField('jobTitle')}
                 style={styles.employeeInputStyle}
                 placeholder={props.i18n._(JOB_TITLE_PLACEHOLDER)}
                 placeholderTextColor={colors.darkerGrey}
