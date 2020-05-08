@@ -1,8 +1,8 @@
 // tslint:disable:no-expression-statement
+import React, { Dispatch, SetStateAction } from 'react';
 import * as R from 'ramda';
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
-import React, { Dispatch, SetStateAction } from 'react';
 import Modal from 'react-native-modal';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { colors, textStyles } from '../../application/styles';
@@ -42,7 +42,6 @@ export const FeedbackReceiveUpdatesModal =
 
     const buttonLabel = userInformation.email.length ? t`Finish` : t`Finish without email`;
 
-    // this is required to see extra employee inputs
     const minHeight = !userInformation.isEmployee ? 315 : 550;
     return (
         <I18n>
@@ -58,8 +57,8 @@ export const FeedbackReceiveUpdatesModal =
                                     <Trans>Enter your email if you would like to receive updates about this issue</Trans>
                                 </Text>
                                 <TextInput
-                                    style={styles.emailInputStyle}
                                     onChangeText={onChangeEmail}
+                                    style={styles.emailInputStyle}
                                     placeholder={i18n._(INPUT_PLACEHOLDER)}
                                     placeholderTextColor={colors.darkerGrey}
                                     value={userInformation.email}
@@ -113,6 +112,7 @@ const EmployeeInputFields = (props: {
     const onChangeEmployeeInputForField = R.curry((fieldName: keyof UserInformation, fieldValue: string): void => (
         props.setUserInformation({ ...props.userInformation , [fieldName]: fieldValue })
     ));
+
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
