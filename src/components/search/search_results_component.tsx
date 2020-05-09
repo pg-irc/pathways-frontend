@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
@@ -26,6 +26,10 @@ import { LatLong } from '../../validation/latlong/types';
 import { openURL } from '../link/link';
 import buildUrl from 'build-url';
 import { VERSION } from 'react-native-dotenv';
+import Animated from 'react-native-reanimated';
+import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
+
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export interface SearchResultsProps {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
@@ -67,25 +71,36 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
 };
 
 const renderComponentWithResults = (props: Props): JSX.Element => {
-    const flatListRef = useRef<FlatList<SearchServiceData>>(undefined);
+    const flatListRef = useRef<any>();
+
+    const { getAnimatedFlatListScrollHandler }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+
     useEffect((): void => {
         if (props.searchTerm) {
-            flatListRef.current.scrollToOffset({ animated: false, offset: 0 });
+            flatListRef.current.getNode().scrollToOffset({ animated: false, offset: 0 });
         }
     }, [props.searchTerm, props.searchLocation]);
+
     useEffect((): void => {
         if (props.searchResults.length > 0) {
-            flatListRef.current.scrollToOffset({ animated: false, offset: props.searchOffset });
+            flatListRef.current.getNode().scrollToOffset({ animated: false, offset: props.searchOffset });
         }
     }, [props.searchOffset]);
+
+    const onScroll = (e: any): void => {
+        props.setScrollOffset(e.nativeEvent.contentOffset.y);
+    };
+
+    const onScrollAnimated = getAnimatedFlatListScrollHandler(onScroll);
+
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
             {renderLoadingScreen(props.isLoading)}
-            <FlatList
+            <AnimatedFlatList
                 ref={flatListRef}
-                onScroll={(e: any): void => props.setScrollOffset(e.nativeEvent.contentOffset.y)}
+                onScroll={onScrollAnimated}
                 initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
-                style={{ backgroundColor: colors.lightGrey }}
+                style={{ backgroundColor: colors.lightGrey, flex: 1  }}
                 data={props.searchResults}
                 keyExtractor={keyExtractor}
                 renderItem={renderSearchHit(props)}

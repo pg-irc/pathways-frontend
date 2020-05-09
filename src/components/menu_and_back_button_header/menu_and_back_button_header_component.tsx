@@ -3,7 +3,7 @@ import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History } from 'history';
-import { renderHeader } from '../main/render_header';
+import { HeaderComponent } from '../main/header_component';
 
 export interface MenuAndBackButtonHeaderProps {
     readonly textColor: string;
@@ -20,5 +20,13 @@ export const MenuAndBackButtonHeaderComponent = (props: MenuAndBackButtonHeaderP
             onPress={props.openHeaderMenu}
             textColor={props.textColor}
         />;
-    return renderHeader({ ...props, leftButton, rightButtons: [rightButton] });
+
+    return (
+        <HeaderComponent
+            backgroundColor={props.backgroundColor}
+            leftButton={leftButton}
+            rightButtons={[rightButton]}
+            title={props.title}
+        />
+    );
 };

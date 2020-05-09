@@ -17,7 +17,7 @@ import { BackButtonComponent } from '../header_button/back_button_component';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
 import * as R from 'ramda';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
-import { renderHeader } from '../main/render_header';
+import { HeaderComponent } from '../main/header_component';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 
 export interface TopicDetailsProps {
@@ -72,7 +72,13 @@ const Header = (props: Props): JSX.Element => {
             textColor={colors.black}
         />,
     ];
-    return renderHeader({ backgroundColor, leftButton, rightButtons });
+    return (
+        <HeaderComponent
+            backgroundColor={backgroundColor}
+            leftButton={leftButton}
+            rightButtons={rightButtons}
+        />
+    );
 };
 
 const ListHeaderComponent = (props: Props): JSX.Element => (

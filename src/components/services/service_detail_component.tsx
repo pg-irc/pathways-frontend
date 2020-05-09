@@ -30,7 +30,7 @@ import { BookmarkButtonComponent } from '../bookmark_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
-import { renderHeader } from '../main/render_header';
+import { HeaderComponent } from '../main/header_component';
 import { Id } from '../../stores/services';
 import { ServiceFeedback, FeedbackField, Feedback, FeedbackScreen, FeedbackModal, UserInformation } from '../../stores/feedback/types';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -118,7 +118,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
 
     return (
         <View style={{ flex: 1 }}>
-            <HeaderComponent {...props} />
+            <ServiceDetailHeader {...props} />
             <KeyboardAwareScrollView
                 enableResetScrollToCoords={false}
                 extraHeight={100}
@@ -214,7 +214,7 @@ const Organization = (props: { readonly history: History, readonly name: string 
     </View>
 );
 
-const HeaderComponent = (props: Props): JSX.Element => {
+const ServiceDetailHeader = (props: Props): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.ServiceDetail);
     const serviceId = params.serviceId;
     const backgroundColor = colors.lightGrey;
@@ -231,7 +231,13 @@ const HeaderComponent = (props: Props): JSX.Element => {
             textColor={colors.black}
         />,
     ];
-    return renderHeader({ backgroundColor, leftButton, rightButtons });
+    return (
+        <HeaderComponent
+            backgroundColor={backgroundColor}
+            leftButton={leftButton}
+            rightButtons={rightButtons}
+        />
+    );
 };
 
 interface DescriptionProps {

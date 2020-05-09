@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect, Dispatch, SetStateAction, useState } from 'react';
+import React, { useContext, useEffect, Dispatch, SetStateAction, useState } from 'react';
 import { SearchResultsComponent } from './search_results_component';
 import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { View, Text, Header, Left, Right } from 'native-base';
@@ -21,6 +21,8 @@ import { LatLong } from '../../validation/latlong/types';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { Trans } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import Animated from 'react-native-reanimated';
+import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -108,10 +110,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const searchResultsProps = { ...props, isLoading, onlineStatus, scrollOffset, setScrollOffset, onSearchRequest, onLoadMore };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
-            <Header style={[applicationStyles.header, { backgroundColor: colors.teal }]}>
-                <HeaderLeft />
-                <HeaderRight onMenuButtonPress={props.openHeaderMenu} />
-            </Header>
+            <SearchComponentHeader onMenuButtonPress={props.openHeaderMenu} />
             <SearchInputComponent
                 searchTerm={props.searchTerm}
                 searchLocation={props.searchLocation}
@@ -153,3 +152,16 @@ const HeaderRight = (props: { readonly onMenuButtonPress: () => void }): JSX.Ele
         />
     </Right>
 );
+
+const SearchComponentHeader = (props: { readonly onMenuButtonPress: () => void }): JSX.Element => {
+    const { animatedHeaderHeight }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+
+    return (
+        <Animated.View style={{ height: animatedHeaderHeight }}>
+            <Header style={[applicationStyles.header, { backgroundColor: colors.teal }]}>
+                <HeaderLeft />
+                <HeaderRight onMenuButtonPress={props.onMenuButtonPress} />
+            </Header>
+        </Animated.View>
+    );
+};
