@@ -145,16 +145,17 @@ const renderLocateButtonOrEmpty = (
     i18n: I18n,
     setLocationInputValue: (s: string) => void,
 ): JSX.Element => {
-    if (!hasMyLocation(locationInputValue, i18n)) {
-        return (
-            <LocateButton
-            onPress={getLocateOnPress(setLocationInputValue, i18n)}
-            isFetchingLatLng={isFetchingLatLng}
-            />
-        );
+    if (hasMyLocation(locationInputValue, i18n)) {
+        return <EmptyComponent />;
     }
-    return <EmptyComponent />;
-}
+
+    return (
+        <LocateButton
+        onPress={getLocateOnPress(setLocationInputValue, i18n)}
+        isFetchingLatLng={isFetchingLatLng}
+        />
+    );
+};
 
 const hasMyLocation = (locationInputValue: string, i18n: I18n): boolean => (
     isMyLocation(locationInputValue) || isLocalizedMyLocation(locationInputValue, i18n)
@@ -266,10 +267,13 @@ const getSearchOnPress = async (
     const location = toLocationForQuery(locationInputValue, i18n);
     setSearchIsCollapsed(true);
     setIsFetchingLatLng(true);
-    const latLong = await fetchLatLongFromLocation(location);
-    setManualUserLocation({
-        label: locationInputValue,
-        latLong: latLong,
-    });
-    setIsFetchingLatLng(false);
+    try {
+        const latLong = await fetchLatLongFromLocation(location);
+        setManualUserLocation({
+            label: locationInputValue,
+            latLong: latLong,
+        });
+    } finally {
+        setIsFetchingLatLng(false);
+    }
 };
