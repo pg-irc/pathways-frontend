@@ -12,7 +12,7 @@ interface Props {
     readonly isVisible: boolean;
 }
 
-export const FeedbackDiscardChangesModal = (props: Props): JSX.Element => (
+export const DiscardChangesModal = (props: Props): JSX.Element => (
     <Modal isVisible={props.isVisible} backdropTransitionOutTiming={0}>
         <View style={{ backgroundColor: colors.white, borderRadius: 20, padding: 20 }}>
             <PromptText />

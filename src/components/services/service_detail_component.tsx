@@ -24,7 +24,7 @@ import { getLocationTitleFromAddresses } from '../services/get_location_title_fr
 import { EmailComponent } from '../email/email_component';
 import { FeedbackComponent } from '../feedback/feedback_component';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
-import { FeedbackModalContainer } from '../feedback/feedback_modal_container';
+import { ModalContainer } from '../feedback/modal_container';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
@@ -185,7 +185,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                         suggestAnUpdate={props.suggestAnUpdate}
                     />
-                    <FeedbackModalContainer
+                    <ModalContainer
                         isSendingFeedback={props.isSendingFeedback}
                         finishAndSendFeedback={finishAndSendFeedback}
                         userInformation={userInfoInput}

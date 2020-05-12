@@ -1,10 +1,10 @@
 // tslint:disable:no-expression-statement
 import React, { Dispatch, SetStateAction } from 'react';
 import { t } from '@lingui/macro';
-import { FeedbackReceiveUpdatesModal } from '../feedback/feedback_receive_updates_modal';
-import { FeedbackChooseModeModal } from './feedback_choose_mode_modal';
+import { ReceiveUpdatesModal } from './receive_updates_modal';
+import { ChooseModeModal } from './choose_mode_modal';
 import { UserInformation } from '../../stores/feedback/types';
-import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
+import { DiscardChangesModal } from './discard_changes_modal';
 import { showToast } from '../../application/toast';
 import {
     DiscardChangesAction,
@@ -15,7 +15,7 @@ import {
     CloseAction,
 } from '../../stores/feedback';
 
-interface FeedbackModalContainerProps {
+interface ModalContainerProps {
     readonly isSendingFeedback: boolean;
     readonly showChoooseFeedbackModeModal: boolean;
     readonly showReceiveUpdatesModal: boolean;
@@ -32,7 +32,7 @@ interface FeedbackModalContainerProps {
     readonly resetFeedbackAndUserInput: () => void;
 }
 
-export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.Element => {
+export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
 
     const onReceiveUpdatesModalHide = (i18n: I18n) => () => {
         showToast(i18n._(t`Thank you for your contribution!`));
@@ -46,14 +46,14 @@ export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.
 
     return (
         <>
-            <FeedbackChooseModeModal
+            <ChooseModeModal
                 onClosePress={props.close}
                 onChangeNameOrOtherDetailPress={props.chooseChangeNameOrDetail}
                 onChooseOtherChangesPress={props.chooseOtherChanges}
                 onChooseRemoveServicePress={props.chooseRemoveService}
                 isVisible={props.showChoooseFeedbackModeModal}
             />
-            <FeedbackReceiveUpdatesModal
+            <ReceiveUpdatesModal
                 isSendingFeedback={props.isSendingFeedback}
                 setUserInformation={props.setUserInformation}
                 userInformation={props.userInformation}
@@ -61,7 +61,7 @@ export const FeedbackModalContainer = (props: FeedbackModalContainerProps): JSX.
                 isVisible={props.showReceiveUpdatesModal}
                 onModalHide={onReceiveUpdatesModalHide}
             />
-            <FeedbackDiscardChangesModal
+            <DiscardChangesModal
                 onDiscardPress={onDiscardModalDiscardPress}
                 onKeepEditingPress={props.cancelDiscardFeedback}
                 isVisible={props.showFeedbackDiscardChangesModal}

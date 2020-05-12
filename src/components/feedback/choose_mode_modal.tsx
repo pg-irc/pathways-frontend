@@ -20,7 +20,7 @@ export interface ButtonsComponentProps {
 
 type Props = FeedbackModalProps & ButtonsComponentProps;
 
-export const FeedbackChooseModeModal = (props: Props): JSX.Element => (
+export const ChooseModeModal = (props: Props): JSX.Element => (
     <Modal
         isVisible={props.isVisible}
         onBackdropPress={props.onClosePress}

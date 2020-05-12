@@ -10,7 +10,7 @@ import { receiveUpdatesStyles as styles } from './styles';
 import { UserInformation } from '../../stores/feedback/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 
-interface FeedbackReceiveUpdatesProps {
+interface ReceiveUpdatesProps {
     readonly isSendingFeedback: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
@@ -24,8 +24,8 @@ const NAME_PLACEHOLDER = t`Enter your name`;
 const ORGANIZATION_PLACEHOLDER = t`Enter your organization name`;
 const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
-export const FeedbackReceiveUpdatesModal =
-({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: FeedbackReceiveUpdatesProps): JSX.Element => {
+export const ReceiveUpdatesModal =
+({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: ReceiveUpdatesProps): JSX.Element => {
 
     const onPressIsEmployee = (): void =>
         setUserInformation({

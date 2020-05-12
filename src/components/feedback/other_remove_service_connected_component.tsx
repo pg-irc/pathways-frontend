@@ -16,12 +16,12 @@ import {
     CancelDiscardChangesAction,
 } from '../../stores/feedback';
 import {
-    FeedbackOtherRemoveServiceComponent,
-    FeedbackOtherRemoveServiceState,
-    FeedbackOtherRemoveServiceActions,
-} from './feedback_other_remove_service_component';
+    OtherRemoveServiceComponent,
+    OtherRemoveServiceState,
+    OtherRemoveServiceActions,
+} from './other_remove_service_component';
 
-const mapStateToProps = (store: Store): FeedbackOtherRemoveServiceState => {
+const mapStateToProps = (store: Store): OtherRemoveServiceState => {
     return {
         feedbackScreen: selectFeedbackScreen(store),
         feedbackModal: selectFeedbackModal(store),
@@ -30,7 +30,7 @@ const mapStateToProps = (store: Store): FeedbackOtherRemoveServiceState => {
 
 type Actions = SubmitAction | DiscardChangesAction | CloseAction | BackAction | CancelDiscardChangesAction;
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>): FeedbackOtherRemoveServiceActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<Actions>): OtherRemoveServiceActions => ({
     submitFeedback: (feedback: Feedback): SubmitAction => dispatch(submit(feedback)),
     close: (): CloseAction => dispatch(close()),
     back: (): BackAction => dispatch(back()),
@@ -38,4 +38,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): FeedbackOtherRemoveSer
     cancelDiscardFeedback: (): CancelDiscardChangesAction => dispatch(cancelDiscardChanges()),
 });
 
-export const FeedbackOtherRemoveServiceConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(FeedbackOtherRemoveServiceComponent);
+export const OtherRemoveServiceConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(OtherRemoveServiceComponent);
