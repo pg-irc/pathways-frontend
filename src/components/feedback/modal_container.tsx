@@ -17,9 +17,9 @@ import {
 
 interface ModalContainerProps {
     readonly isSendingFeedback: boolean;
-    readonly showChoooseFeedbackModeModal: boolean;
+    readonly showChooseFeedbackModeModal: boolean;
     readonly showReceiveUpdatesModal: boolean;
-    readonly showFeedbackDiscardChangesModal: boolean;
+    readonly showDiscardChangesModal: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
     readonly finishAndSendFeedback: () => void;
@@ -51,7 +51,7 @@ export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
                 onChangeNameOrOtherDetailPress={props.chooseChangeNameOrDetail}
                 onChooseOtherChangesPress={props.chooseOtherChanges}
                 onChooseRemoveServicePress={props.chooseRemoveService}
-                isVisible={props.showChoooseFeedbackModeModal}
+                isVisible={props.showChooseFeedbackModeModal}
             />
             <ReceiveUpdatesModal
                 isSendingFeedback={props.isSendingFeedback}
@@ -64,7 +64,7 @@ export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
             <DiscardChangesModal
                 onDiscardPress={onDiscardModalDiscardPress}
                 onKeepEditingPress={props.cancelDiscardFeedback}
-                isVisible={props.showFeedbackDiscardChangesModal}
+                isVisible={props.showDiscardChangesModal}
             />
         </>
     );
