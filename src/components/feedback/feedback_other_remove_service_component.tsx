@@ -21,7 +21,7 @@ import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
 import { SubmitAction, DiscardChangesAction, CloseAction, BackAction, CancelDiscardChangesAction } from '../../stores/feedback';
 import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
-import { FeedbackHeaderComponent } from './feedback_header_component';
+import { HeaderComponent } from './header_component';
 
 type ContentComponentProps = {
     readonly input: string;
@@ -149,7 +149,7 @@ export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveSe
 
     return (
         <Container>
-            <FeedbackHeaderComponent headerLabel={content.header} back={props.back} close={props.close} />
+            <HeaderComponent headerLabel={content.header} back={props.back} close={props.close} />
             <ContentComponent
                 inputLabel={content.label}
                 input={feedback}

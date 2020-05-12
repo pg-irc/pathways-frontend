@@ -35,7 +35,7 @@ export const FeedbackReceiveUpdatesModal =
 
     const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
 
-    const minHeight = !userInformation.isEmployee ? 315 : 550;
+    const minHeight = userInformation.isEmployee ? 550 : 315;
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (

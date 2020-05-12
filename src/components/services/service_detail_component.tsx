@@ -52,7 +52,7 @@ import {
     SendFeedbackAction,
 } from '../../stores/feedback';
 import { isAndroid } from '../../application/helpers/is_android';
-import { FeedbackHeaderComponent } from '../feedback/feedback_header_component';
+import { HeaderComponent as FeedbackHeaderComponent} from '../feedback/header_component';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -251,24 +251,24 @@ interface HeaderProps {
 const feedbackHeaderLabel = t`Change name or other details`;
 
 const ServiceDetailHeaderComponent = (props: HeaderProps): JSX.Element => {
-    if (!props.isFeedbackInputEnabled) {
+    if (props.isFeedbackInputEnabled) {
         return (
-            <ServiceDetailHeader
-                location={props.location}
-                history={props.history}
-                service={props.service}
-                bookmarkedServicesIds={props.bookmarkedServicesIds}
-                bookmarkService={props.bookmarkService}
-                unbookmarkService={props.unbookmarkService}
-                openHeaderMenu={props.openHeaderMenu}
+            <FeedbackHeaderComponent
+                headerLabel={feedbackHeaderLabel}
+                close={props.close}
+                back={props.back}
             />
         );
     }
     return (
-        <FeedbackHeaderComponent
-            headerLabel={feedbackHeaderLabel}
-            close={props.close}
-            back={props.back}
+        <ServiceDetailHeader
+            location={props.location}
+            history={props.history}
+            service={props.service}
+            bookmarkedServicesIds={props.bookmarkedServicesIds}
+            bookmarkService={props.bookmarkService}
+            unbookmarkService={props.unbookmarkService}
+            openHeaderMenu={props.openHeaderMenu}
         />
     );
 };
