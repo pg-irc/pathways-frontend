@@ -24,7 +24,6 @@ interface ReceiveUpdatesStyles {
     readonly checkboxContainer: ViewStyle;
     readonly checkBox: ViewStyle;
     readonly checkBoxDescription: ViewStyle;
-    readonly emailInputStyle: ViewStyle;
     readonly finishButtonContainer: ViewStyle;
     readonly finishButtonWithoutEmail: ViewStyle;
     readonly finishButtonWithEmail: ViewStyle;
@@ -188,14 +187,6 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         paddingRight: 24,
         justifyContent: 'space-evenly',
         paddingBottom: 8,
-    },
-    emailInputStyle: {
-        fontSize: 14,
-        paddingLeft: 0,
-        paddingTop: 8,
-        paddingBottom: 8,
-        borderBottomWidth: 0.5,
-        borderBottomColor: colors.darkerGrey,
     },
     employeeInputStyle: {
         fontSize: 14,

@@ -1,6 +1,5 @@
 // tslint:disable:no-expression-statement
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import * as R from 'ramda';
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
 import Modal from 'react-native-modal';
@@ -104,10 +103,6 @@ const EmployeeInputFields = (props: {
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
 }): JSX.Element => {
 
-    const onChangeEmployeeInputForField = R.curry((fieldName: keyof UserInformation, fieldValue: string): void => (
-        props.setUserInformation({ ...props.userInformation , [fieldName]: fieldValue })
-    ));
-
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
@@ -116,32 +111,35 @@ const EmployeeInputFields = (props: {
             <Text style={[textStyles.headline6, { color: colors.black }]}>
                 <Trans>Name</Trans>
             </Text>
-            <TextInput
-                onChangeText={onChangeEmployeeInputForField('name')}
-                style={styles.employeeInputStyle}
-                placeholder={props.i18n._(NAME_PLACEHOLDER)}
-                placeholderTextColor={colors.darkerGrey}
+            <TextInputComponent
+                userInformation={props.userInformation}
+                fieldName={'name'}
+                placeholder={NAME_PLACEHOLDER}
+                i18n={props.i18n}
                 value={props.userInformation.name}
+                setUserInformation={props.setUserInformation}
             />
             <Text style={[textStyles.headline6, { color: colors.black, marginTop: 14 }]}>
                 <Trans>Organization</Trans>
             </Text>
-            <TextInput
-                onChangeText={onChangeEmployeeInputForField('organizationName')}
-                style={styles.employeeInputStyle}
-                placeholder={props.i18n._(ORGANIZATION_PLACEHOLDER)}
-                placeholderTextColor={colors.darkerGrey}
+            <TextInputComponent
+                userInformation={props.userInformation}
+                fieldName={'organizationName'}
+                placeholder={ORGANIZATION_PLACEHOLDER}
+                i18n={props.i18n}
                 value={props.userInformation.organizationName}
+                setUserInformation={props.setUserInformation}
             />
              <Text style={[textStyles.headline6, { color: colors.black, marginTop: 14 }]}>
                 <Trans>Job Title</Trans>
             </Text>
-            <TextInput
-                onChangeText={onChangeEmployeeInputForField('jobTitle')}
-                style={styles.employeeInputStyle}
-                placeholder={props.i18n._(JOB_TITLE_PLACEHOLDER)}
-                placeholderTextColor={colors.darkerGrey}
+            <TextInputComponent
+                userInformation={props.userInformation}
+                fieldName={'jobTitle'}
+                placeholder={JOB_TITLE_PLACEHOLDER}
+                i18n={props.i18n}
                 value={props.userInformation.jobTitle}
+                setUserInformation={props.setUserInformation}
             />
         </View>
     );
