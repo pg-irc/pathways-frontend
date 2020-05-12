@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import * as R from 'ramda';
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
@@ -28,12 +28,6 @@ const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 export const FeedbackReceiveUpdatesModal =
 ({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: FeedbackReceiveUpdatesProps): JSX.Element => {
 
-    const onChangeEmail = (value: string): void =>
-        setUserInformation({
-            ...userInformation,
-            email: value,
-        });
-
     const onPressIsEmployee = (): void =>
         setUserInformation({
             ...userInformation,
@@ -56,12 +50,13 @@ export const FeedbackReceiveUpdatesModal =
                                 <Text style={textStyles.paragraphStyleBrown}>
                                     <Trans>Enter your email if you would like to receive updates about this issue</Trans>
                                 </Text>
-                                <TextInput
-                                    onChangeText={onChangeEmail}
-                                    style={styles.emailInputStyle}
-                                    placeholder={i18n._(INPUT_PLACEHOLDER)}
-                                    placeholderTextColor={colors.darkerGrey}
+                                <TextInputComponent
+                                    userInformation={userInformation}
+                                    fieldName={'email'}
                                     value={userInformation.email}
+                                    placeholder={INPUT_PLACEHOLDER}
+                                    i18n={i18n}
+                                    setUserInformation={setUserInformation}
                                 />
                             </View>
                             <View style={styles.checkboxContainer}>
@@ -149,5 +144,35 @@ const EmployeeInputFields = (props: {
                 value={props.userInformation.jobTitle}
             />
         </View>
+    );
+};
+
+export interface TextInputProps {
+    readonly userInformation: UserInformation;
+    readonly fieldName: keyof UserInformation;
+    readonly placeholder: TemplateStringsArray;
+    readonly value: string;
+    readonly i18n: I18n;
+    readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
+}
+
+const TextInputComponent = (props: TextInputProps): JSX.Element => {
+    const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.teal);
+
+    const onBlur = (): void => setTextcolor(colors.teal);
+
+    const onFocus = (): void => setTextcolor(colors.black);
+
+    const onChangeText = (value: string): void => props.setUserInformation({ ...props.userInformation, [props.fieldName]: value });
+
+    return (
+        <TextInput
+            onChangeText={onChangeText}
+            value={props.value}
+            placeholder={props.i18n._(props.placeholder)}
+            onFocus={onFocus}
+            onBlur={onBlur}
+            style={[styles.employeeInputStyle, { color: textColor }]}
+        />
     );
 };
