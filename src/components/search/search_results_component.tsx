@@ -193,7 +193,7 @@ const hasNoResultsFromSearchTermQuery = (searchResults: ReadonlyArray<SearchServ
     searchResults.length === 0
 );
 
-const hasNoResultsFromLocationQuery = (latLong?: LatLong): boolean => (
+export const hasNoResultsFromLocationQuery = (latLong?: LatLong): boolean => (
     latLong && latLong.lat === 0 && latLong.lng === 0
 );
 

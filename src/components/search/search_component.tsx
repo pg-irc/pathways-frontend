@@ -14,7 +14,7 @@ import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-
 import * as actions from '../../stores/search';
 import { SearchExecutedAction } from '../../stores/analytics';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
-import { fetchLatLongFromLocation } from './api/fetch_lat_long_from_location';
+import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
 import { useOnlineStatus } from './use_online_status';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
@@ -75,7 +75,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
         let geocoderLatLong = props.searchLatLong;
         try {
             if (props.searchLocation !== location) {
-                geocoderLatLong = await fetchLatLongFromLocation(location, onlineStatus);
+                geocoderLatLong = await fetchLatLongFromLocation(location);
                 props.saveSearchLatLong(geocoderLatLong);
             }
             const searchTermWithCity = appendCityToSearchTerm(searchTerm, location);

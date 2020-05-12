@@ -29,6 +29,7 @@ import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link';
+import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -57,7 +58,7 @@ type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterPro
 export const ServiceListComponent = (props: Props): JSX.Element => {
     useEffect(refreshServices(props), [props.manualUserLocation]);
 
-    if (isSelectorErrorServicesForTopic(props.topicServicesOrError)) {
+    if (isTopicServicesError(props.topicServicesOrError, props.manualUserLocation)) {
         return renderErrorComponent(props, refreshServices(props));
     }
 
@@ -119,8 +120,12 @@ const ServiceListWrapper = (props: ServiceListWrapperProps): JSX.Element => (
     </View>
 );
 
+const isTopicServicesError = (topicServicesOrError: SelectorTopicServices, userLocation: UserLocation): boolean => (
+    isSelectorErrorServicesForTopic(topicServicesOrError) || hasNoResultsFromLocationQuery(userLocation.latLong)
+);
+
 const renderErrorComponent = (props: Props, refreshScreen: () => void): JSX.Element => {
-    const errorType = determineErrorType(props.topicServicesOrError);
+    const errorType = determineErrorType(props.topicServicesOrError, props.manualUserLocation);
     const sentryMessage = getSentryMessageForError(errorType, constants.SENTRY_SERVICES_LISTING_ERROR_CONTEXT);
     Sentry.captureMessage(sentryMessage);
     return (
@@ -159,9 +164,12 @@ const renderHeader = (props: Props): JSX.Element => (
     />
 );
 
-const determineErrorType = (topicServicesOrError: SelectorTopicServices): Errors => {
+const determineErrorType = (topicServicesOrError: SelectorTopicServices, userLocation: UserLocation): Errors => {
     if (isSelectorErrorServicesForTopic(topicServicesOrError)) {
         return topicServicesOrError.errorMessageType;
+    }
+    if (hasNoResultsFromLocationQuery(userLocation.latLong)) {
+        return Errors.InvalidSearchLocation;
     }
     return Errors.Exception;
 };

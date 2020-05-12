@@ -5,15 +5,14 @@ import { Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
-import { UserLocation, LatLong } from '../../validation/latlong/types';
+import { UserLocation } from '../../validation/latlong/types';
 import { SetManualUserLocationAction } from '../../stores/manual_user_location';
-import { buildGeoCoderUrl, getTextIfValidOrThrow } from '../search/api/fetch_lat_long_from_location';
-import { toGeoCoderLatLong } from '../../validation/latlong';
+import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
 import { MY_LOCATION } from '../../application/constants';
-import { getDeviceLocation, DeviceLocation } from '../../application/helpers/get_device_location';
-import { isLocationFetchTimeoutError, isNoLocationPermissionError } from '../../validation/errors/is_error';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { MY_LOCATION_MESSAGE_DESCRIPTOR, toLocationForQuery, isLocalizedMyLocation } from '../partial_localization/to_location_for_query';
+import { isMyLocation } from '../../api/fetch_lat_long_from_location';
 
 interface Props {
     readonly manualUserLocation: UserLocation;
@@ -36,15 +35,22 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
     }
 
     return (
-        <ExpandedSearch
-            locationInputValue={locationInputValue}
-            setLocationInputValue={setLocationInputValue}
-            isFetchingLatLng={isFetchingLatLng}
-            setIsFetchingLatLng={setIsFetchingLatLng}
-            setManualUserLocation={props.setManualUserLocation}
-            manualUserLocation={props.manualUserLocation}
-            setSearchIsCollapsed={setSearchIsCollapsed}
-        />
+        <I18n>
+        {
+            (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
+                <ExpandedSearch
+                    locationInputValue={locationInputValue}
+                    setLocationInputValue={setLocationInputValue}
+                    isFetchingLatLng={isFetchingLatLng}
+                    setIsFetchingLatLng={setIsFetchingLatLng}
+                    setManualUserLocation={props.setManualUserLocation}
+                    manualUserLocation={props.manualUserLocation}
+                    setSearchIsCollapsed={setSearchIsCollapsed}
+                    i18n={i18n}
+                />
+            )
+        }
+        </I18n>
     );
 };
 
@@ -86,26 +92,22 @@ interface ExpandedSearchProps {
     readonly setManualUserLocation: Props['setManualUserLocation'];
     readonly manualUserLocation: Props['manualUserLocation'];
     readonly setSearchIsCollapsed: (b: boolean) => void;
+    readonly i18n: I18n;
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
-    const hasMyLocation = props.locationInputValue === MY_LOCATION;
-    const LocateButtonOrEmpty = !hasMyLocation ?
-        <LocateButton
-            onPress={getLocateOnPress(props.setLocationInputValue)}
-            isFetchingLatLng={props.isFetchingLatLng}
-        />
-        :
-        <EmptyComponent />;
     const searchIsDisabled = props.locationInputValue.length === 0 || props.isFetchingLatLng;
     const isCachedLocationValid = props.locationInputValue === props.manualUserLocation.label;
     const collapseSearch = (): void => { props.setSearchIsCollapsed(true); };
-    const lookupLocationLatLong = getSearchOnPress(
-        props.setIsFetchingLatLng,
-        props.locationInputValue,
-        props.setManualUserLocation,
-        props.setSearchIsCollapsed,
-    );
+    const lookupLocationLatLong = (): void => {
+            getSearchOnPress(
+            props.setIsFetchingLatLng,
+            props.locationInputValue,
+            props.setManualUserLocation,
+            props.setSearchIsCollapsed,
+            props.i18n,
+        );
+    };
     const onSearchButtonPress = isCachedLocationValid ? collapseSearch : lookupLocationLatLong;
 
     return (
@@ -115,6 +117,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                     locationInputValue={props.locationInputValue}
                     setLocationInputValue={props.setLocationInputValue}
                     autoFocus={!!props.manualUserLocation.label}
+                    i18n={props.i18n}
                 />
             </View>
             <View
@@ -122,11 +125,11 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                     applicationStyles.searchContainerExpanded,
                     {
                         backgroundColor: colors.teal,
-                        justifyContent: hasMyLocation ? 'flex-end' : 'space-between',
+                        justifyContent: hasMyLocation(props.locationInputValue, props.i18n) ? 'flex-end' : 'space-between',
                     },
                 ]}
             >
-                {LocateButtonOrEmpty}
+                {renderLocateButtonOrEmpty(props.locationInputValue, props.isFetchingLatLng, props.i18n, props.setLocationInputValue)}
                 <SearchButton
                     onPress={onSearchButtonPress}
                     isDisabled={searchIsDisabled}
@@ -136,10 +139,37 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
     );
 };
 
+const renderLocateButtonOrEmpty = (
+    locationInputValue: string,
+    isFetchingLatLng: boolean,
+    i18n: I18n,
+    setLocationInputValue: (s: string) => void,
+): JSX.Element => {
+    if (hasMyLocation(locationInputValue, i18n)) {
+        return <EmptyComponent />;
+    }
+
+    return (
+        <LocateButton
+        onPress={getLocateOnPress(setLocationInputValue, i18n)}
+        isFetchingLatLng={isFetchingLatLng}
+        />
+    );
+};
+
+const hasMyLocation = (locationInputValue: string, i18n: I18n): boolean => (
+    isMyLocation(locationInputValue) || isLocalizedMyLocation(locationInputValue, i18n)
+);
+
+const getLocateOnPress = (setLocationInputValue: (s: string) => void, i18n: I18n): () => void => (): void => {
+    setLocationInputValue(i18n._(MY_LOCATION_MESSAGE_DESCRIPTOR));
+};
+
 interface SearchInputProps {
     readonly locationInputValue: string;
     readonly autoFocus: boolean;
     readonly setLocationInputValue: (s: string) => void;
+    readonly i18n: I18n;
 }
 
 const SearchInput = (props: SearchInputProps): JSX.Element => {
@@ -153,21 +183,15 @@ const SearchInput = (props: SearchInputProps): JSX.Element => {
     return (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <LocationIcon />
-            <I18n>
-                {
-                    (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
-                        <TextInput
-                            style={applicationStyles.searchInput}
-                            onChangeText={props.setLocationInputValue}
-                            value={props.locationInputValue}
-                            placeholder={i18n._(t`Enter city, address, or postal code`)}
-                            placeholderTextColor={colors.greyishBrown}
-                            selectionColor={colors.black}
-                            autoFocus={props.autoFocus}
-                        />
-                    )
-                }
-            </I18n>
+                <TextInput
+                    style={applicationStyles.searchInput}
+                    onChangeText={props.setLocationInputValue}
+                    value={props.locationInputValue}
+                    placeholder={props.i18n._(t`Enter city, address, or postal code`)}
+                    placeholderTextColor={colors.greyishBrown}
+                    selectionColor={colors.black}
+                    autoFocus={props.autoFocus}
+                />
             {ClearButtonOrEmpty}
         </View>
     );
@@ -233,75 +257,23 @@ const LocateButton = (props: LocateButtonProps): JSX.Element => (
     </TouchableOpacity>
 );
 
-const getSearchOnPress = (
+const getSearchOnPress = async (
     setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
     locationInputValue: string,
     setManualUserLocation: Props['setManualUserLocation'],
     setSearchIsCollapsed: (b: boolean) => void,
-): () => void => (): void => {
-    setSearchIsCollapsed(true);
-    if (locationInputValue === MY_LOCATION) {
-        fetchLatLng(
-            setIsFetchingLatLng,
-            fetchLatLngFromDevice,
-            setManualUserLocation,
-            MY_LOCATION,
-        );
-    } else {
-        fetchLatLng(
-            setIsFetchingLatLng,
-            () => fetchLatLngFromServer(locationInputValue),
-            setManualUserLocation,
-            locationInputValue,
-        );
-    }
-};
-
-const getLocateOnPress = (
-    setLocationInputValue: (s: string) => void,
-): () => void => (): void => {
-    setLocationInputValue(MY_LOCATION);
-};
-
-const fetchLatLng = async (
-    setIsFetchingLatLng: (isFetchingLatLng: boolean) => void,
-    fetchFn: () => Promise<LatLong | undefined>,
-    setManualUserLocation: Props['setManualUserLocation'],
-    locationLabel: string,
+    i18n: I18n,
 ): Promise<void> => {
+    const location = toLocationForQuery(locationInputValue, i18n);
+    setSearchIsCollapsed(true);
     setIsFetchingLatLng(true);
-    const latLong = await fetchFn().catch(handleFetchError);
-    setIsFetchingLatLng(false);
-    setManualUserLocation({
-        label: locationLabel,
-        latLong,
-    });
-};
-
-const handleFetchError = (error: string): undefined => {
-    console.log(error);
-    return undefined;
-};
-
-// TODO: These both may be handy elsewhere and could be moved into a helper file.
-const fetchLatLngFromServer = async (locationValue: string): Promise<LatLong | undefined> => (
-    fetch(buildGeoCoderUrl(locationValue))
-        .then(getTextIfValidOrThrow)
-        .then(JSON.parse)
-        .then(toGeoCoderLatLong)
-        .catch((error: string) => {
-            console.log(error);
-            return undefined;
-        })
-);
-
-const fetchLatLngFromDevice = async (): Promise<LatLong | undefined> => {
-    const deviceLocationResponse: DeviceLocation = await getDeviceLocation();
-    if (isNoLocationPermissionError(deviceLocationResponse) || isLocationFetchTimeoutError(deviceLocationResponse)) {
-        return undefined;
+    try {
+        const latLong = await fetchLatLongFromLocation(location);
+        setManualUserLocation({
+            label: locationInputValue,
+            latLong: latLong,
+        });
+    } finally {
+        setIsFetchingLatLng(false);
     }
-    return {
-        lat: deviceLocationResponse.coords.latitude,
-        lng: deviceLocationResponse.coords.longitude,
-    };
 };
