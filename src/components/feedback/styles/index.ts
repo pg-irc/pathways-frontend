@@ -26,9 +26,10 @@ interface ReceiveUpdatesStyles {
     readonly checkBoxDescription: ViewStyle;
     readonly emailInputStyle: ViewStyle;
     readonly finishButtonContainer: ViewStyle;
-    readonly finishButton: ViewStyle;
-    readonly finishButtonSending: ViewStyle;
-    readonly finishText: TextStyle;
+    readonly finishButtonWithoutEmail: ViewStyle;
+    readonly finishButtonWithEmail: ViewStyle;
+    readonly finishTextWithoutEmail: TextStyle;
+    readonly finishTextWithEmail: TextStyle;
     readonly checkBoxIcon: TextStyle;
     readonly receiveUpdatesContainer: ViewStyle;
     readonly receiveUpdatesInnerContainer: ViewStyle;
@@ -141,7 +142,7 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         padding: 16,
     },
 
-    finishButton: {
+    finishButtonWithoutEmail: {
         alignSelf: 'flex-end',
         backgroundColor: 'white',
         borderWidth: 2,
@@ -152,12 +153,25 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         paddingHorizontal: 15,
     },
 
-    finishButtonSending: {
-        opacity: values.disabledOpacity,
+    finishButtonWithEmail: {
+        alignSelf: 'flex-end',
+        backgroundColor: colors.teal,
+        borderWidth: 2,
+        borderColor: colors.teal,
+        borderRadius: values.roundedBorderRadius,
+        color: colors.teal,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
     },
 
-    finishText: {
+    finishTextWithoutEmail: {
         color: colors.teal,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+
+    finishTextWithEmail: {
+        color: colors.white,
         fontSize: 16,
         fontWeight: 'bold',
     },

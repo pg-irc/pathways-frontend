@@ -40,7 +40,7 @@ export const FeedbackReceiveUpdatesModal =
             isEmployee: !userInformation.isEmployee,
         });
 
-    const buttonLabel = userInformation.email.length ? t`Finish` : t`Finish without email`;
+    const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
 
     const minHeight = !userInformation.isEmployee ? 315 : 550;
     return (
@@ -87,10 +87,10 @@ export const FeedbackReceiveUpdatesModal =
                         <View style={styles.finishButtonContainer}>
                             <TouchableOpacity
                                 onPress={onFinishPress}
-                                style={isSendingFeedback ? [styles.finishButton, styles.finishButtonSending] : styles.finishButton}
+                                style={userInformation.email.length ? styles.finishButtonWithEmail : styles.finishButtonWithoutEmail}
                                 disabled={isSendingFeedback}
                             >
-                                <Text style={styles.finishText}>
+                                <Text style={userInformation.email.length ? styles.finishTextWithEmail : styles.finishTextWithoutEmail}>
                                     <Trans id={buttonLabel} />
                                 </Text>
                             </TouchableOpacity>
