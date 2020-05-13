@@ -6,6 +6,7 @@ import { SEND_FEEDBACK } from '../application/constants';
 import { SendFeedbackAction, setError, SetErrorAction, setIsSending, SetIsSendingAction, discardChanges, DiscardChangesAction } from '../stores/feedback';
 import { FeedbackPostData } from '../selectors/feedback/types';
 import { selectFeedbackPostData } from '../selectors/feedback/select_feedback_post_data';
+import * as Sentry from 'sentry-expo';
 
 export function* watchSendFeedback(): IterableIterator<ForkEffect> {
     yield takeLatest(SEND_FEEDBACK, sendFeedback);
@@ -21,6 +22,7 @@ export function* sendFeedback(action: SendFeedbackAction): IterableIterator<Effe
         const response = yield call(sendToAirtable, feedbackJSON);
         yield call(handleResponse, response);
     } catch (error) {
+        Sentry.captureException(error);
         console.warn(error?.message || 'Error saving feedback');
         return yield put(setError(error));
     } finally {
