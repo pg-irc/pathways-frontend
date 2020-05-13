@@ -316,13 +316,21 @@ completeManualConfiguration() {
     echo
     echo " edit $CLIENT_DIRECTORY/.env"
     echo
-    echo "and set the Sentry auth token and dsn. Log into our account on "
+    echo "Set the Sentry auth token and dsn. Log into our account on "
     echo "https://sentry.io to retrieve the auth token from "
-    echo "https://sentry.io/settings/account/api/auth-tokens/ and dsn from"
+    echo "https://sentry.io/settings/account/api/auth-tokens/ and dsn from "
     echo "https://sentry.io/settings/peacegeeks/projects/pathways/keys/"
     echo
-    echo "Also set the ALGOLIA_SEARCH_API_KEY available from"
+    echo "Set the ALGOLIA_SEARCH_API_KEY available from "
     echo "https://www.algolia.com/apps/MMYH1Z0D3O/api-keys/all"
+    echo
+    echo "Set the Airtable API_KEY, BASE_ID and TABLE_ID. "
+    echo "Retrieve the API_KEY from https://airtable.com/account and "
+    echo "the BASE_ID and TABLE_ID from https://airtable.com/api"
+    echo
+    echo "Add the google-services.json file to the root directory of $CLIENT_DIRECTORY. "
+    echo "Retrieve this by going to https://console.firebase.google.com/u/0/ , "
+    echo "selecting ArrivalAdvisor $BUILD and navigating to project settings."
     echo
     echo "Make any other client side configuration changes now."
     echo
