@@ -61,7 +61,7 @@
         "@react-native-community/netinfo": "^5.8.0",
         "build-url": "^2.0.0",
         "cross-fetch": "^3.0.4",
-        "expo": "^37.0.0",
+        "expo": "^37.0.10",
         "expo-analytics": "^1.0.9",
         "expo-intent-launcher": "^8.1.0",
         "expo-location": "^8.1.0",
