@@ -17,13 +17,11 @@ export function* sendFeedback(action: SendFeedbackAction): IterableIterator<Effe
     try {
         yield put(setIsSending(true));
         const feedbackPostData = yield select(selectFeedbackPostData, action.payload.serviceId);
-        console.log(JSON.stringify(feedbackPostData));
         const feedbackJSON = toFeedbackJSON(feedbackPostData);
-        console.log(JSON.stringify(feedbackJSON));
         const response = yield call(sendToAirtable, feedbackJSON);
         yield call(handleResponse, response);
     } catch (error) {
-        console.warn(error.message);
+        console.warn(error?.message || 'Error saving feedback');
         return yield put(setError(error));
     } finally {
         yield put(setIsSending(false));
@@ -69,10 +67,17 @@ const getRequestInit = (feedbackJSON: string): RequestInit => {
 
 const handleResponse = async (response: Response): Promise<void> => {
     if (!response.ok) {
-        console.log('Oh yes we got an error');
         const json = await response.json();
-        console.log(JSON.stringify(json));
-        const message = 'Failed to save feedback to server: ' + json.error.message;
+        const message = buildErrorMessage(json);
         throw new Error(message);
     }
+};
+
+// tslint:disable-next-line: no-any
+const buildErrorMessage = (json: any): string => {
+    const message = json?.error?.message;
+    if (message) {
+        return 'Failed to save feedback to server: ' + message;
+    }
+    return 'Failed to save feedback';
 };
