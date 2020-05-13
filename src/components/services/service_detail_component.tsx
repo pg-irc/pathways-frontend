@@ -2,10 +2,11 @@
 import React, { Dispatch, SetStateAction, useState, useRef, useEffect, MutableRefObject } from 'react';
 import { TouchableOpacity } from 'react-native';
 import * as R from 'ramda';
-import { History } from 'history';
+import { History, Location } from 'history';
+import { t } from '@lingui/macro';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
-import { values, textStyles, colors } from '../../application/styles';
+import { values, textStyles, colors, applicationStyles } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
@@ -23,7 +24,7 @@ import { getLocationTitleFromAddresses } from '../services/get_location_title_fr
 import { EmailComponent } from '../email/email_component';
 import { FeedbackComponent } from '../feedback/feedback_component';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
-import { FeedbackModalContainer } from '../feedback/feedback_modal_container';
+import { ModalContainer } from '../feedback/modal_container';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
@@ -51,6 +52,7 @@ import {
     SendFeedbackAction,
 } from '../../stores/feedback';
 import { isAndroid } from '../../application/helpers/is_android';
+import { HeaderComponent as FeedbackHeaderComponent} from '../feedback/header_component';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -116,9 +118,24 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         props.sendFeedback(serviceId);
     };
 
+    const onSubmitPress = (): void => {
+        props.submitFeedback(feedbackInput);
+    };
+
     return (
         <View style={{ flex: 1 }}>
-            <ServiceDetailHeader {...props} />
+            <ServiceDetailHeaderComponent
+                location={props.location}
+                history={props.history}
+                isFeedbackInputEnabled={isFeedbackInputEnabled}
+                service={props.service}
+                bookmarkedServicesIds={props.bookmarkedServicesIds}
+                bookmarkService={props.bookmarkService}
+                unbookmarkService={props.unbookmarkService}
+                openHeaderMenu={props.openHeaderMenu}
+                close={props.close}
+                back={props.back}
+            />
             <KeyboardAwareScrollView
                 enableResetScrollToCoords={false}
                 extraHeight={100}
@@ -168,21 +185,25 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                         suggestAnUpdate={props.suggestAnUpdate}
                     />
-                    <FeedbackModalContainer
+                    <ModalContainer
                         isSendingFeedback={props.isSendingFeedback}
                         finishAndSendFeedback={finishAndSendFeedback}
                         userInformation={userInfoInput}
                         setUserInformation={setUserInfoInput}
                         discardFeedback={props.discardFeedback}
-                        showChoooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
+                        showChooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
                         showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ReceiveUpdatesModal}
-                        showFeedbackDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
+                        showDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
                         chooseChangeNameOrDetail={props.chooseChangeNameOrDetail}
                         chooseRemoveService={props.chooseRemoveService}
                         chooseOtherChanges={props.chooseOtherChanges}
                         close={props.close}
                         cancelDiscardFeedback={props.cancelDiscardFeedback}
                         resetFeedbackAndUserInput={resetFeedbackAndUserInput}
+                    />
+                    <SubmitFeedbackButton
+                        isVisible={isFeedbackInputEnabled}
+                        onPress={onSubmitPress}
                     />
                 </View>
             </KeyboardAwareScrollView>
@@ -214,7 +235,53 @@ const Organization = (props: { readonly history: History, readonly name: string 
     </View>
 );
 
-const ServiceDetailHeader = (props: Props): JSX.Element => {
+interface HeaderProps {
+    readonly location: Location;
+    readonly history: History;
+    readonly isFeedbackInputEnabled: boolean;
+    readonly service: HumanServiceData;
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly close: () => CloseAction;
+    readonly back: () => BackAction;
+}
+
+const feedbackHeaderLabel = t`Change name or other details`;
+
+const ServiceDetailHeaderComponent = (props: HeaderProps): JSX.Element => {
+    if (props.isFeedbackInputEnabled) {
+        return (
+            <FeedbackHeaderComponent
+                headerLabel={feedbackHeaderLabel}
+                close={props.close}
+                back={props.back}
+            />
+        );
+    }
+    return (
+        <ServiceDetailHeader
+            location={props.location}
+            history={props.history}
+            service={props.service}
+            bookmarkedServicesIds={props.bookmarkedServicesIds}
+            bookmarkService={props.bookmarkService}
+            unbookmarkService={props.unbookmarkService}
+            openHeaderMenu={props.openHeaderMenu}
+        />
+    );
+};
+
+const ServiceDetailHeader = (props: {
+    readonly location: Location;
+    readonly history: History;
+    readonly service: HumanServiceData;
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
+}): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.ServiceDetail);
     const serviceId = params.serviceId;
     const backgroundColor = colors.lightGrey;
@@ -365,3 +432,19 @@ const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
 const getPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber): string => `${phone.type}: ${phone.phone_number}`).join('\n')
 );
+
+const SubmitFeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void }): JSX.Element => {
+    if (!props.isVisible) {
+        return <EmptyComponent />;
+    }
+    return (
+        <TouchableOpacity
+            style={[applicationStyles.tealButton, { paddingVertical: 12, marginHorizontal: 24 }]}
+            onPress={props.onPress}
+        >
+            <Text style={textStyles.tealButton}>
+                <Trans>Submit</Trans>
+            </Text>
+        </TouchableOpacity>
+    );
+};

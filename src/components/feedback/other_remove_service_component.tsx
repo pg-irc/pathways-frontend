@@ -2,39 +2,26 @@
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
 import {
-    Button,
     Container,
     Content,
     Footer,
     FooterTab,
-    Header,
-    Icon,
     Item,
     Input,
     Label,
-    Left,
-    Right,
     Text,
-    Title,
 } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
 
-import { colors, textStyles } from '../../application/styles';
+import { colors } from '../../application/styles';
 import { goBack } from '../../application/routing';
-import { CloseButtonComponent } from '../close_button_component';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
-
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
 import { SubmitAction, DiscardChangesAction, CloseAction, BackAction, CancelDiscardChangesAction } from '../../stores/feedback';
-import { FeedbackDiscardChangesModal } from './feedback_discard_changes_modal';
-
-type HeaderComponentProps = {
-    readonly headerLabel: TemplateStringsArray;
-    readonly close: () => void;
-    readonly back: () => void;
-};
+import { DiscardChangesModal } from './discard_changes_modal';
+import { HeaderComponent } from './header_component';
 
 type ContentComponentProps = {
     readonly input: string;
@@ -58,12 +45,12 @@ interface SuggestionContentMap {
     readonly [key: string]: SuggestionContent;
 }
 
-export interface FeedbackOtherRemoveServiceState {
+export interface OtherRemoveServiceState {
     readonly feedbackScreen: FeedbackScreen;
     readonly feedbackModal: FeedbackModal;
 }
 
-export interface FeedbackOtherRemoveServiceActions {
+export interface OtherRemoveServiceActions {
     readonly submitFeedback: (feedback: Feedback) => SubmitAction;
     readonly discardFeedback: () => DiscardChangesAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
@@ -71,7 +58,7 @@ export interface FeedbackOtherRemoveServiceActions {
     readonly back: () => BackAction;
 }
 
-export type FeedbackOtherRemoveServiceProps = FeedbackOtherRemoveServiceState & FeedbackOtherRemoveServiceActions;
+export type FeedbackOtherRemoveServiceProps = OtherRemoveServiceState & OtherRemoveServiceActions;
 
 const SUGGESTION_CONTENT: SuggestionContentMap = {
     OTHER: {
@@ -85,28 +72,6 @@ const SUGGESTION_CONTENT: SuggestionContentMap = {
         placeholder: t`e.g. Service is permanently closed`,
     },
 };
-
-const HeaderComponent = ({ headerLabel, close, back }: HeaderComponentProps): JSX.Element => (
-    <Header style={styles.headerContainer}>
-        <Left style={styles.headerBackButton}>
-            <Button onPress={back} transparent>
-                <Icon name='chevron-left' type='FontAwesome' style={styles.headerElement}/>
-            </Button>
-            <Title style={styles.headerLeftTitle}>
-                <Text style={textStyles.headline6}>
-                    <Trans id={headerLabel} />
-                </Text>
-            </Title>
-        </Left>
-        <Right>
-            <CloseButtonComponent
-                color={colors.greyishBrown}
-                additionalStyle={{ paddingTop: 0 }}
-                onPress={close}
-            />
-        </Right>
-    </Header>
-);
 
 const ContentComponent = (props: ContentComponentProps): JSX.Element => {
   return (
@@ -162,7 +127,7 @@ const FooterComponent = (props: FooterComponentProps): JSX.Element => {
     );
 };
 
-export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveServiceProps): JSX.Element => {
+export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServiceProps): JSX.Element => {
     const isOtherFeedback = props.feedbackScreen === FeedbackScreen.OtherChangesPage;
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
     const history = useHistory();
@@ -192,7 +157,7 @@ export const FeedbackOtherRemoveServiceComponent = (props: FeedbackOtherRemoveSe
                 placeholder={content.placeholder}
             />
             <FooterComponent disabled={feedback.length === 0} submitFeedback={submitFeedback} />
-            <FeedbackDiscardChangesModal
+            <DiscardChangesModal
                 onDiscardPress={props.discardFeedback}
                 onKeepEditingPress={props.cancelDiscardFeedback}
                 isVisible={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}

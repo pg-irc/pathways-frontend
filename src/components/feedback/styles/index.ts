@@ -12,7 +12,6 @@ interface OtherRemoveServiceStyles {
     readonly headerElement: TextStyle;
     readonly headerBackButton: ViewStyle;
     readonly headerContainer: ViewStyle;
-    readonly headerLeftTitle: ViewStyle;
     readonly input: TextStyle;
     readonly inputLabel: ViewStyle;
     readonly submitButton: ViewStyle;
@@ -25,15 +24,15 @@ interface ReceiveUpdatesStyles {
     readonly checkboxContainer: ViewStyle;
     readonly checkBox: ViewStyle;
     readonly checkBoxDescription: ViewStyle;
-    readonly description: TextStyle;
-    readonly emailInputStyle: ViewStyle;
     readonly finishButtonContainer: ViewStyle;
-    readonly finishButton: ViewStyle;
-    readonly finishButtonSending: ViewStyle;
-    readonly finishText: TextStyle;
+    readonly finishButtonWithoutEmail: ViewStyle;
+    readonly finishButtonWithEmail: ViewStyle;
+    readonly finishTextWithoutEmail: TextStyle;
+    readonly finishTextWithEmail: TextStyle;
     readonly checkBoxIcon: TextStyle;
     readonly receiveUpdatesContainer: ViewStyle;
     readonly receiveUpdatesInnerContainer: ViewStyle;
+    readonly employeeInputStyle: ViewStyle;
 }
 
 const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
@@ -45,17 +44,14 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
     headerContainer: {
         backgroundColor: 'white',
         marginTop: getStatusBarHeightForPlatform(),
+        alignItems: 'center',
     },
 
     headerBackButton: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
         paddingLeft: Platform.OS === 'android' ? 0 : 7,
-    },
-
-    headerLeftTitle: {
-        paddingLeft: 12,
+        borderWidth: 2,
     },
 
     headerElement: {
@@ -115,11 +111,8 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
 const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
     checkboxContainer: {
         alignItems: 'center',
-        flex: 3,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingTop: 24,
-        paddingBottom: 24,
     },
 
     checkBoxDescription: {
@@ -148,7 +141,7 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         padding: 16,
     },
 
-    finishButton: {
+    finishButtonWithoutEmail: {
         alignSelf: 'flex-end',
         backgroundColor: 'white',
         borderWidth: 2,
@@ -159,12 +152,25 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         paddingHorizontal: 15,
     },
 
-    finishButtonSending: {
-        opacity: values.disabledOpacity,
+    finishButtonWithEmail: {
+        alignSelf: 'flex-end',
+        backgroundColor: colors.teal,
+        borderWidth: 2,
+        borderColor: colors.teal,
+        borderRadius: values.roundedBorderRadius,
+        color: colors.teal,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
     },
 
-    finishText: {
+    finishTextWithoutEmail: {
         color: colors.teal,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+
+    finishTextWithEmail: {
+        color: colors.white,
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -172,28 +178,23 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
     receiveUpdatesContainer: {
         backgroundColor: 'white',
         borderRadius: 15,
-        minHeight: 315,
     },
 
     receiveUpdatesInnerContainer: {
         flex: 1,
-        paddingTop: 24,
+        flexDirection: 'column',
         paddingLeft: 24,
         paddingRight: 24,
-    },
-
-    description: {
-        paddingTop: 8,
+        justifyContent: 'space-evenly',
         paddingBottom: 8,
     },
-
-    emailInputStyle: {
+    employeeInputStyle: {
         fontSize: 14,
         paddingLeft: 0,
-        paddingTop: 8,
-        paddingBottom: 8,
         borderBottomWidth: 0.5,
         borderBottomColor: colors.darkerGrey,
+        paddingTop: 8,
+        paddingBottom: 8,
     },
 });
 
