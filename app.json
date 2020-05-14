@@ -18,6 +18,7 @@
     "android": {
       "icon": "./assets/images/phone_icon_android.png",
       "package": "org.peacegeeks.ArrivalAdvisor",
+      "googleServicesFile": "./google-services.json",
       "versionCode": 131000,
       "permissions": [
         "ACCESS_FINE_LOCATION"
