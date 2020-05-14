@@ -7,7 +7,7 @@ import { watchUpdateServicesForTopic } from './services';
 import { watchLoadUserData, watchUserStateChangesToSaveUserData } from './user_data';
 import { watchAnalytics } from './analytics/watch_analytics';
 import { watchRequestPushNotificationToken } from './post_push_notification_token';
-import { watchRequestGetAlters } from './get_alert';
+import { watchRequestGetAlters } from './get_announcements';
 import { watchSendFeedback } from './feedback';
 
 export const sagaMiddleware = createSagaMiddleware();

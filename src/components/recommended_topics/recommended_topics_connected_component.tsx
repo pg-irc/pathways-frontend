@@ -8,6 +8,7 @@ import { Id, BookmarkTopicAction, bookmarkTopic, UnbookmarkTopicAction, unbookma
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { getIdsOfChosenAnswers } from '../../selectors/questionnaire/get_ids_of_chosen_answers';
 import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
+import { selectAnnoucements } from '../../selectors/dynamic/selectAnnouncements';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/analytics';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
 
@@ -15,9 +16,10 @@ const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
     hasChosenAnswers: getIdsOfChosenAnswers(pickAnswers(store)).length > 0,
     bookmarkedTopics: pickBookmarkedTopicIds(store),
     recommendedTopics: selectRecommendedTopics(store),
+    dynamicContent: selectAnnoucements(store),
 });
 
-type Actions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | AnalyticsLinkPressedAction ;
+type Actions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | AnalyticsLinkPressedAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): RecommendedTopicsActions & TaskListActions => ({
     bookmarkTopic: (topicId: Id): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
