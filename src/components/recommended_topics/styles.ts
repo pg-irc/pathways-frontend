@@ -12,8 +12,6 @@ interface CallToActionStyles {
     readonly callToActionRightContent: ViewStyle;
     readonly callToActionTitle: TextStyle;
     readonly callToActionUpperContent: ViewStyle;
-    readonly covidTitleContainer: ViewStyle;
-    readonly covidUpperContent: ViewStyle;
     readonly recommendationBubbleImage: ImageStyle;
     readonly recommendationIcon: TextStyle;
     readonly recommendationRightContent: ViewStyle;
@@ -85,15 +83,6 @@ const callToActionStyles = StyleSheet.create<CallToActionStyles>({
 
     callToActionRightContent: {
         paddingLeft: 5,
-    },
-
-    covidTitleContainer: {
-        flex: 1,
-        marginBottom: 10,
-    },
-
-    covidUpperContent: {
-        marginBottom: 20,
     },
 
     recommendationIcon: {

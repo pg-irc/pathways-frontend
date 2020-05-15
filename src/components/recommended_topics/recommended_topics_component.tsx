@@ -12,7 +12,6 @@ import {
     CallToActionFullSubComponent,
     CallToActionPartialComponent,
     CallToActionPartialSubComponent,
-    CovidComponent,
     AnnouncementComponent,
 } from './call_to_action';
 import { RecommendedIconComponent } from './recommended_icon_component';
@@ -63,10 +62,6 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
                 <Trans>Start settling in B.C.</Trans>
             </Text>
             <AnnouncementComponent announcements={props.announcements} />
-            <CovidComponent
-                analyticsLinkPressed={props.analyticsLinkPressed}
-                currentPathForAnalytics={props.location.pathname}
-            />
             {props.hasChosenAnswers ?
                 <CallToActionPartialComponent {...props} />
                 :
