@@ -2,9 +2,9 @@ import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 
 export interface Announcement {
-    readonly id: number;
+    readonly id: string;
     readonly title: string;
-    readonly message: string;
+    readonly description: string;
 }
 
 export type GetAnnoucementsSuccessAction = Readonly<ReturnType<typeof getAnnoucementsSuccess>>;

@@ -16,7 +16,7 @@ const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
     hasChosenAnswers: getIdsOfChosenAnswers(pickAnswers(store)).length > 0,
     bookmarkedTopics: pickBookmarkedTopicIds(store),
     recommendedTopics: selectRecommendedTopics(store),
-    dynamicContent: selectAnnoucements(store),
+    announcements: selectAnnoucements(store),
 });
 
 type Actions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | AnalyticsLinkPressedAction;

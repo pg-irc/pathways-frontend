@@ -1,9 +1,9 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
 import { History } from 'history';
-import { Image, TouchableOpacity, I18nManager } from 'react-native';
+import { Image, TouchableOpacity, I18nManager, FlatList, ListRenderItemInfo } from 'react-native';
 import { Trans } from '@lingui/react';
-import { View, Text, Button, Icon } from 'native-base';
+import { View, Text, Button, Icon, Title } from 'native-base';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { textStyles, applicationStyles, colors, markdownStyles } from '../../application/styles';
 import { advisor, recommendationBubble } from '../../application/images';
@@ -12,6 +12,8 @@ import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 
 import { callToActionStyles } from './styles';
+import { Announcement } from '../../stores/announcements';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 type Props = { readonly history: History };
 
@@ -20,9 +22,33 @@ type CovidComponentProps = {
     readonly currentPathForAnalytics: string;
 };
 
+type AnnouncementProps = {
+    readonly announcements: ReadonlyArray<Announcement>;
+};
+
 const BCCDC_COVID_LINK = 'http://www.bccdc.ca/health-info/diseases-conditions/covid-19';
 const LINK_CONTEXT_MODEL = 'Alert';
 const LINK_CONTEXT_TITLE = 'covid19';
+
+export const AnnouncementComponent = (props: AnnouncementProps): JSX.Element => {
+    return (
+        <FlatList
+            style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
+            data={props.announcements}
+            keyExtractor={(announcement: Announcement): string => announcement.id}
+            ListEmptyComponent={EmptyComponent}
+            renderItem={({ item }: ListRenderItemInfo<Announcement>): JSX.Element => renderAnnouncement(item)} />
+    );
+};
+
+const renderAnnouncement = (announcement: Announcement): JSX.Element => {
+    return (
+        <View>
+            <Title>{announcement.title}</Title>
+            <Text>{announcement.description}</Text>
+        </View>
+    );
+};
 
 export const CovidComponent = ({
     analyticsLinkPressed,

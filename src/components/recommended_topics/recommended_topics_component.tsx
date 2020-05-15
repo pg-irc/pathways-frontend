@@ -13,6 +13,7 @@ import {
     CallToActionPartialComponent,
     CallToActionPartialSubComponent,
     CovidComponent,
+    AnnouncementComponent,
 } from './call_to_action';
 import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
@@ -27,7 +28,7 @@ export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
     readonly bookmarkedTopics: ReadonlyArray<TaskId>;
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
-    readonly dynamicContent: ReadonlyArray<Announcement>;
+    readonly announcements: ReadonlyArray<Announcement>;
 }
 
 export interface RecommendedTopicsActions {
@@ -61,6 +62,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             >
                 <Trans>Start settling in B.C.</Trans>
             </Text>
+            <AnnouncementComponent announcements={props.announcements} />
             <CovidComponent
                 analyticsLinkPressed={props.analyticsLinkPressed}
                 currentPathForAnalytics={props.location.pathname}
