@@ -21,6 +21,8 @@ Copy example configuration file and modify accordingly (set your own API host, S
 cp .env.example .env
 ```
 
+Retrieve the `google-services.json` file from Arrival Advisor's Firebase project and add it to the root directory.
+
 Compile TypeScript, optionally watch source files for changes and build them automatically
 
 ```
