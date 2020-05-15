@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { Icon } from 'native-base';
 import Markdown, { openUrl } from 'react-native-markdown-renderer';
-import { colors, markdownStyles } from '../../application/styles';
+import { colors, markdownStyles, announcementStyles } from '../../application/styles';
 
 interface Props {
     readonly children: string;
@@ -12,6 +12,15 @@ export const MarkdownComponent = (props: Props): JSX.Element => (
     <Markdown
         rules={markdownRules}
         style={markdownStyles}
+    >
+        {props.children}
+    </Markdown>
+);
+
+export const AnnouncementMarkdownComponent = (props: Props): JSX.Element => (
+    <Markdown
+        rules={markdownRules}
+        style={announcementStyles}
     >
         {props.children}
     </Markdown>

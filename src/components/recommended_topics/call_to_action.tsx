@@ -3,7 +3,7 @@ import React from 'react';
 import { History } from 'history';
 import { Image, TouchableOpacity, I18nManager, FlatList, ListRenderItemInfo } from 'react-native';
 import { Trans } from '@lingui/react';
-import { View, Text, Button, Icon, Title } from 'native-base';
+import { View, Text, Button, Icon } from 'native-base';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { textStyles, applicationStyles, colors, markdownStyles } from '../../application/styles';
 import { advisor, recommendationBubble } from '../../application/images';
@@ -14,6 +14,7 @@ import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { callToActionStyles } from './styles';
 import { Announcement } from '../../stores/announcements';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { AnnouncementMarkdownComponent } from '../../../src/components/markdown/markdown_component';
 
 type Props = { readonly history: History };
 
@@ -32,20 +33,27 @@ const LINK_CONTEXT_TITLE = 'covid19';
 
 export const AnnouncementComponent = (props: AnnouncementProps): JSX.Element => {
     return (
-        <FlatList
-            style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
-            data={props.announcements}
-            keyExtractor={(announcement: Announcement): string => announcement.id}
-            ListEmptyComponent={EmptyComponent}
-            renderItem={({ item }: ListRenderItemInfo<Announcement>): JSX.Element => renderAnnouncement(item)} />
+        <View>
+            <FlatList
+                style={{ paddingTop: 8 }}
+                data={props.announcements}
+                keyExtractor={(announcement: Announcement): string => announcement.id}
+                ListEmptyComponent={EmptyComponent}
+                renderItem={({ item }: ListRenderItemInfo<Announcement>): JSX.Element => renderAnnouncement(item)} />
+        </View>
     );
 };
 
 const renderAnnouncement = (announcement: Announcement): JSX.Element => {
     return (
-        <View>
-            <Title>{announcement.title}</Title>
-            <Text>{announcement.description}</Text>
+        <View style={[
+            applicationStyles.boxShadowBelow,
+            callToActionStyles.callToActionContainer,
+        ]}>
+            <Text style={textStyles.headlineH2StyleBlackLeft}>
+                <Trans>{announcement.title}</Trans>
+            </Text>
+            <AnnouncementMarkdownComponent>{announcement.description}</AnnouncementMarkdownComponent>
         </View>
     );
 };
