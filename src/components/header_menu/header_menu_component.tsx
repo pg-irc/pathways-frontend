@@ -9,7 +9,6 @@ import { Content, View, Icon, Header, Title } from 'native-base';
 import { colors, values, textStyles } from '../../application/styles';
 import { openURL } from '../link/link';
 import { isRTL } from '../../locale/effects';
-import { DividerComponent } from '../content_layout/divider_component';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
@@ -41,7 +40,7 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
         </Header>
         <Content style={{ backgroundColor: colors.white }}>
             <LocaleSection {...props} />
-            <DividerComponent />
+            <Divider />
             <AboutSection {...props} />
         </Content>
     </View>
@@ -204,3 +203,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
 });
+
+const Divider = (): JSX.Element => (
+    <View style={{ height: 1, backgroundColor: colors.grey }}/>
+);
