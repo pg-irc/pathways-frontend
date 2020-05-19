@@ -81,7 +81,7 @@ const LocaleSection = (props: Props): JSX.Element => {
         data: R.map(localeItemBuilder, props.availableLocales),
     };
     return (
-        <View style={{ backgroundColor: colors.white }} padder>
+        <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
             <MenuSectionTitle title={<Trans>SELECT YOUR LANGUAGE</Trans>} />
             <SectionList
                 stickySectionHeadersEnabled={true}
@@ -126,7 +126,7 @@ const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Elemen
 };
 
 const AboutSection = (props: Props): JSX.Element => (
-    <View padder style={{ backgroundColor: colors.white }}>
+    <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10  }}>
         <MenuSectionTitle title={<Trans>ABOUT THE APP</Trans>} />
         <AboutListItems {...props} />
     </View>
