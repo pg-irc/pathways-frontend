@@ -6,7 +6,7 @@ import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { LocaleInfo } from '../../locale/types';
 import { Content, View, Icon, Header, Title } from 'native-base';
-import { colors, values, textStyles } from '../../application/styles';
+import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link';
 import { isRTL } from '../../locale/effects';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
@@ -107,7 +107,7 @@ function createLocaleItemBuilder(setLocale: (code: string, flipOrientation: bool
 const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
     return (
         <TouchableOpacity key={sectionListLocaleItem.item.code} style={styles.localeListItem} onPress={sectionListLocaleItem.item.onPress}>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 31 }]}>{sectionListLocaleItem.item.label}</Text>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 52 }]}>{sectionListLocaleItem.item.label}</Text>
         </TouchableOpacity>
     );
 };
@@ -115,12 +115,14 @@ const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => 
 const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Element => {
     return (
         <View key={section.code} style={styles.localeListItem}>
-            <Icon
-                name='check'
-                type='FontAwesome'
-                style={{ fontSize: values.mediumIconSize, color: colors.teal }}
-            />
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{section.label}</Text>
+            <View style={{ borderWidth: 1, marginLeft: 12, marginRight: 7 }}>
+                <Icon
+                    name='check'
+                    type='FontAwesome'
+                    style={{ fontSize: 20, color: colors.teal }}
+                />
+            </View>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', marginLeft: 10 }]}>{section.label}</Text>
         </View>
     );
 };
