@@ -7,7 +7,7 @@ import { LoadLocaleSuccessAction } from '../stores/locale/actions';
 import { GetAnnoucementsSuccessAction, GetAnnoucementsFailureAction, getAnnoucementsFailure, getAnnoucementsSuccess } from '../stores/announcements';
 
 export function* watchRequestGetAnnouncements(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.LOAD_CURRENT_LOCALE_SUCCESS, requestGetAnnoucements);
+    yield takeLatest([constants.SAVE_LOCALE_SUCCESS, constants.LOAD_CURRENT_LOCALE_SUCCESS], requestGetAnnoucements);
 }
 
 function* requestGetAnnoucements(_: LoadLocaleSuccessAction): Result {
