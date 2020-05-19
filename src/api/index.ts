@@ -103,5 +103,5 @@ export async function getAnnoucements(locale: string): Promise<APIResponse> {
 }
 
 export const createGetAlertUrl = (url: string, locale: string): string => (
-    BuildUrl(url, { path: `v1/alerts/${locale}/` })
+    BuildUrl(url, { path: `v1/content/alerts/${locale}/` })
 );

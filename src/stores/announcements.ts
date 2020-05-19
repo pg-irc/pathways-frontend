@@ -3,8 +3,8 @@ import * as helpers from './helpers/make_action';
 
 export interface Announcement {
     readonly id: string;
-    readonly title: string;
-    readonly description: string;
+    readonly heading: string;
+    readonly content: string;
 }
 
 export type GetAnnoucementsSuccessAction = Readonly<ReturnType<typeof getAnnoucementsSuccess>>;

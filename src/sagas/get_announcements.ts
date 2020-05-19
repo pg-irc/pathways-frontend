@@ -6,7 +6,7 @@ import { loadCurrentLocaleCode } from '../locale';
 import { LoadLocaleSuccessAction } from '../stores/locale/actions';
 import { GetAnnoucementsSuccessAction, GetAnnoucementsFailureAction, getAnnoucementsFailure, getAnnoucementsSuccess } from '../stores/announcements';
 
-export function* watchRequestGetAlters(): IterableIterator<ForkEffect> {
+export function* watchRequestGetAnnouncements(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_CURRENT_LOCALE_SUCCESS, requestGetAnnoucements);
 }
 

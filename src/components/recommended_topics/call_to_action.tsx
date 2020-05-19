@@ -38,9 +38,9 @@ const renderAnnouncement = (announcement: Announcement): JSX.Element => {
             callToActionStyles.callToActionContainer,
         ]}>
             <Text style={textStyles.headlineH2StyleBlackLeft}>
-                <Trans>{announcement.title}</Trans>
+                <Trans>{announcement.heading}</Trans>
             </Text>
-            <AnnouncementMarkdownComponent>{announcement.description}</AnnouncementMarkdownComponent>
+            <AnnouncementMarkdownComponent>{announcement.content}</AnnouncementMarkdownComponent>
         </View>
     );
 };
