@@ -118,7 +118,7 @@ const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Elemen
             <Icon
                 name='check'
                 type='FontAwesome'
-                style={{ fontSize: values.mediumIconSize, marginRight: 7, color: colors.teal }}
+                style={{ fontSize: values.mediumIconSize, color: colors.teal }}
             />
             <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{section.label}</Text>
         </View>
@@ -168,6 +168,7 @@ const AboutIcon = (props: { readonly name: string, readonly fontSize: number, re
                 fontSize: props.fontSize,
                 marginRight: props.marginRight,
                 color: colors.greyishBrown,
+                textAlign: 'center',
             }}
         />
     );
@@ -185,7 +186,9 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
             onPress={props.onPress}
         >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {props.icon}
+                <View style={{ borderWidth: 1, marginLeft: 12 }}>
+                    {props.icon}
+                </View>
                 <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 10 }]}>{props.text}</Text>
             </View>
         </TouchableOpacity>
