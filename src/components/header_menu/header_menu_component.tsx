@@ -138,22 +138,22 @@ const AboutListItems = (props: Props): JSX.Element => {
     return (
         <View>
             <AboutItem
-                icon={<AboutIcon name='mobile' fontSize={35} marginRight={8} />}
+                icon={<AboutIcon name='mobile' fontSize={35} marginRight={8} marginVertical={-6} />}
                 text={<Trans>About Arrival Advisor</Trans>}
                 onPress={props.openAboutModal}
             />
             <AboutItem
-                icon={<AboutIcon name='file' fontSize={20} marginRight={5} />}
+                icon={<AboutIcon name='file' fontSize={20} marginRight={5} marginVertical={0} />}
                 text={<Trans>Disclaimer</Trans>}
                 onPress={props.openDisclaimerModal}
             />
             <AboutItem
-                icon={<AboutIcon name='lock' fontSize={30} marginRight={3} />}
+                icon={<AboutIcon name='lock' fontSize={30} marginRight={3}  marginVertical={-4} />}
                 text={<Trans>Privacy policy</Trans>}
                 onPress={buildOnPressForURL('https://peacegeeks.org/privacy')}
             />
             <AboutItem
-                icon={<AboutIcon name='file' fontSize={20} marginRight={5} />}
+                icon={<AboutIcon name='file' fontSize={20} marginRight={5} marginVertical={0} />}
                 text={<Trans>Terms of Use</Trans>}
                 onPress={buildOnPressForURL('https://arrivaladvisor.ca/terms-of-use/')}
             />
@@ -161,14 +161,15 @@ const AboutListItems = (props: Props): JSX.Element => {
     );
 };
 
-const AboutIcon = (props: { readonly name: string, readonly fontSize: number, readonly marginRight: number }):
-    JSX.Element => (
+const AboutIcon = (props: {
+    readonly name: string, readonly fontSize: number, readonly marginRight: number, readonly marginVertical: number }): JSX.Element => (
         <Icon
             name={props.name}
             type={'FontAwesome'}
             style={{
                 fontSize: props.fontSize,
                 marginRight: props.marginRight,
+                marginVertical: props.marginVertical,
                 color: colors.greyishBrown,
                 textAlign: 'center',
             }}
