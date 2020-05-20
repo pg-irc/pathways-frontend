@@ -20,8 +20,8 @@ import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_com
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
-import { Announcement } from '../../stores/announcements';
 import { recommendedTopicsStyles } from './styles';
+import { Announcement } from '../../validation/announcements/types';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;

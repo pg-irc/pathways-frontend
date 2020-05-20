@@ -8,9 +8,9 @@ import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { textStyles, applicationStyles } from '../../application/styles';
 import { advisor, recommendationBubble } from '../../application/images';
 import { callToActionStyles } from './styles';
-import { Announcement } from '../../stores/announcements';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { AnnouncementMarkdownComponent } from '../../../src/components/markdown/markdown_component';
+import { Announcement } from '../../validation/announcements/types';
 
 type Props = { readonly history: History };
 

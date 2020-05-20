@@ -5,7 +5,7 @@ import { Id as TopicId } from './topics';
 import { ServiceMap } from '../validation/services/types';
 import { SearchServiceData } from '../validation/search/types';
 import { LatLong } from '../validation/latlong/types';
-import { Announcement } from './announcements';
+import { Announcement } from '../validation/announcements/types';
 
 export interface PersistedData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;

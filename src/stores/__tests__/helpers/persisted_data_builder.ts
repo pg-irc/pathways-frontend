@@ -5,7 +5,7 @@ import { ServiceMap } from '../../../validation/services/types';
 import { PersistedData } from '../../persisted_data';
 import { SearchServiceData } from '../../../validation/search/types';
 import { LatLong } from '../../../validation/latlong/types';
-import { Announcement } from '../../announcements';
+import { Announcement } from '../../../validation/announcements/types';
 
 export class PersistedDataBuilder {
     chosenAnswers: AnswerId[] = [];

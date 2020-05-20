@@ -1,17 +1,12 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
-
-export interface Announcement {
-    readonly id: string;
-    readonly heading: string;
-    readonly content: string;
-}
+import { Announcement } from '../validation/announcements/types';
 
 export type GetAnnoucementsSuccessAction = Readonly<ReturnType<typeof getAnnoucementsSuccess>>;
 export type GetAnnoucementsFailureAction = Readonly<ReturnType<typeof getAnnoucementsFailure>>;
 
 // tslint:disable-next-line:typedef
-export const getAnnoucementsSuccess = (announcements: ReadonlyArray<Announcement>) => (
+export const getAnnoucementsSuccess = (announcements: ReadonlyArray<any>) => (
     helpers.makeAction(constants.GET_ANNOUNCEMENTS_SUCCESS, { announcements })
 );
 
