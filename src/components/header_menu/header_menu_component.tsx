@@ -6,10 +6,9 @@ import { History } from 'history';
 import { Trans } from '@lingui/react';
 import { LocaleInfo } from '../../locale/types';
 import { Content, View, Icon, Header, Title } from 'native-base';
-import { colors, values, textStyles } from '../../application/styles';
+import { colors, textStyles } from '../../application/styles';
 import { openURL } from '../link/link';
 import { isRTL } from '../../locale/effects';
-import { DividerComponent } from '../content_layout/divider_component';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
 import { isAndroid } from '../../application/helpers/is_android';
@@ -41,7 +40,7 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
         </Header>
         <Content style={{ backgroundColor: colors.white }}>
             <LocaleSection {...props} />
-            <DividerComponent />
+            <Divider />
             <AboutSection {...props} />
         </Content>
     </View>
@@ -82,7 +81,7 @@ const LocaleSection = (props: Props): JSX.Element => {
         data: R.map(localeItemBuilder, props.availableLocales),
     };
     return (
-        <View style={{ backgroundColor: colors.white }} padder>
+        <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
             <MenuSectionTitle title={<Trans>SELECT YOUR LANGUAGE</Trans>} />
             <SectionList
                 stickySectionHeadersEnabled={true}
@@ -108,7 +107,7 @@ function createLocaleItemBuilder(setLocale: (code: string, flipOrientation: bool
 const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
     return (
         <TouchableOpacity key={sectionListLocaleItem.item.code} style={styles.localeListItem} onPress={sectionListLocaleItem.item.onPress}>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 31 }]}>{sectionListLocaleItem.item.label}</Text>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 50 }]}>{sectionListLocaleItem.item.label}</Text>
         </TouchableOpacity>
     );
 };
@@ -116,18 +115,20 @@ const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => 
 const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Element => {
     return (
         <View key={section.code} style={styles.localeListItem}>
-            <Icon
-                name='check'
-                type='FontAwesome'
-                style={{ fontSize: values.mediumIconSize, marginRight: 7, color: colors.teal }}
-            />
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold' }]}>{section.label}</Text>
+            <View style={{ marginLeft: 12, marginRight: 7 }}>
+                <Icon
+                    name='check'
+                    type='FontAwesome'
+                    style={{ fontSize: 22, color: colors.teal, marginHorizontal: -2, marginVertical: -2 }}
+                />
+            </View>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', marginLeft: 12 }]}>{section.label}</Text>
         </View>
     );
 };
 
 const AboutSection = (props: Props): JSX.Element => (
-    <View padder style={{ backgroundColor: colors.white }}>
+    <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
         <MenuSectionTitle title={<Trans>ABOUT THE APP</Trans>} />
         <AboutListItems {...props} />
     </View>
@@ -137,22 +138,22 @@ const AboutListItems = (props: Props): JSX.Element => {
     return (
         <View>
             <AboutItem
-                icon={<AboutIcon name='mobile' fontSize={35} marginRight={8} />}
+                icon={<AboutIcon name='mobile' fontSize={35} marginRight={8} marginVertical={-6} />}
                 text={<Trans>About Arrival Advisor</Trans>}
                 onPress={props.openAboutModal}
             />
             <AboutItem
-                icon={<AboutIcon name='file' fontSize={20} marginRight={5} />}
+                icon={<AboutIcon name='file' fontSize={20} marginRight={5} marginVertical={0} />}
                 text={<Trans>Disclaimer</Trans>}
                 onPress={props.openDisclaimerModal}
             />
             <AboutItem
-                icon={<AboutIcon name='lock' fontSize={30} marginRight={3} />}
+                icon={<AboutIcon name='lock' fontSize={30} marginRight={3}  marginVertical={-4} />}
                 text={<Trans>Privacy policy</Trans>}
                 onPress={buildOnPressForURL('https://peacegeeks.org/privacy')}
             />
             <AboutItem
-                icon={<AboutIcon name='file' fontSize={20} marginRight={5} />}
+                icon={<AboutIcon name='file' fontSize={20} marginRight={5} marginVertical={0} />}
                 text={<Trans>Terms of Use</Trans>}
                 onPress={buildOnPressForURL('https://arrivaladvisor.ca/terms-of-use/')}
             />
@@ -160,15 +161,17 @@ const AboutListItems = (props: Props): JSX.Element => {
     );
 };
 
-const AboutIcon = (props: { readonly name: string, readonly fontSize: number, readonly marginRight: number }):
-    JSX.Element => (
+const AboutIcon = (props: {
+    readonly name: string, readonly fontSize: number, readonly marginRight: number, readonly marginVertical: number }): JSX.Element => (
         <Icon
             name={props.name}
             type={'FontAwesome'}
             style={{
                 fontSize: props.fontSize,
                 marginRight: props.marginRight,
+                marginVertical: props.marginVertical,
                 color: colors.greyishBrown,
+                textAlign: 'center',
             }}
         />
     );
@@ -186,8 +189,10 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
             onPress={props.onPress}
         >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {props.icon}
-                <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 10 }]}>{props.text}</Text>
+                <View style={{ marginLeft: 12 }}>
+                    {props.icon}
+                </View>
+                <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 15 }]}>{props.text}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -204,3 +209,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
 });
+
+const Divider = (): JSX.Element => (
+    <View style={{ height: 1, backgroundColor: colors.grey }}/>
+);
