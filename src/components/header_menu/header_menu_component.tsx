@@ -115,7 +115,7 @@ const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => 
 const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Element => {
     return (
         <View key={section.code} style={styles.localeListItem}>
-            <View style={{ borderWidth: 1, marginLeft: 12, marginRight: 7 }}>
+            <View style={{ marginLeft: 12, marginRight: 7 }}>
                 <Icon
                     name='check'
                     type='FontAwesome'
@@ -189,7 +189,7 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
             onPress={props.onPress}
         >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={{ borderWidth: 1, marginLeft: 12 }}>
+                <View style={{ marginLeft: 12 }}>
                     {props.icon}
                 </View>
                 <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 15 }]}>{props.text}</Text>
