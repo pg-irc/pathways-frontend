@@ -107,7 +107,7 @@ function createLocaleItemBuilder(setLocale: (code: string, flipOrientation: bool
 const LocaleItem = (sectionListLocaleItem: SectionListItemInfo): JSX.Element => {
     return (
         <TouchableOpacity key={sectionListLocaleItem.item.code} style={styles.localeListItem} onPress={sectionListLocaleItem.item.onPress}>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 52 }]}>{sectionListLocaleItem.item.label}</Text>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 50 }]}>{sectionListLocaleItem.item.label}</Text>
         </TouchableOpacity>
     );
 };
@@ -122,7 +122,7 @@ const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Elemen
                     style={{ fontSize: 22, color: colors.teal, marginHorizontal: -2, marginVertical: -2 }}
                 />
             </View>
-            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', marginLeft: 10 }]}>{section.label}</Text>
+            <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', marginLeft: 12 }]}>{section.label}</Text>
         </View>
     );
 };
