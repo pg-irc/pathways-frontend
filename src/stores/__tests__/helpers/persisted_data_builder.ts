@@ -97,11 +97,6 @@ export class PersistedDataBuilder {
         return this;
     }
 
-    withAnnouncements(announcements: ReadonlyArray<Announcement>): PersistedDataBuilder {
-        this.announcements = announcements;
-        return this;
-    }
-
     build(): PersistedData {
         return {
             chosenAnswers: this.chosenAnswers,
@@ -118,7 +113,6 @@ export class PersistedDataBuilder {
             searchResults: this.searchResults,
             collapseSearchInput: this.collapseSearchInput,
             showPartialLocalizationMessage: this.showPartialLocalizationMessage,
-            announcements: this.announcements,
         };
     }
 

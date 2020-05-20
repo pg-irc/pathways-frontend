@@ -15,7 +15,6 @@ import { selectSearchLatLong } from '../search/select_search_lat_long';
 import { selectSearchPage } from '../search/select_search_page';
 import { selectNumberOfSearchPages } from '../search/select_number_of_search_pages';
 import { selectSearchOffset } from '../search/select_search_offset';
-import { selectAnnoucements } from '../dynamic/selectAnnouncements';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedData => ({
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
@@ -32,5 +31,4 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedDat
     searchResults: selectSearchResults(appStore),
     collapseSearchInput: selectIsInputCollapsed(appStore),
     showPartialLocalizationMessage: selectShowPartialLocalizationMessage(appStore),
-    announcements: selectAnnoucements(appStore),
 });

@@ -4,7 +4,7 @@ import * as constants from '../application/constants';
 import { getAnnoucements, APIResponse } from '../api';
 import { loadCurrentLocaleCode } from '../locale';
 import { LoadLocaleSuccessAction } from '../stores/locale/actions';
-import { GetAnnoucementsSuccessAction, GetAnnoucementsFailureAction, getAnnoucementsFailure, getAnnoucementsSuccess } from '../stores/announcements';
+import { GetAnnoucementsSuccessAction, GetAnnoucementsFailureAction, getAnnoucementsFailure, getAnnoucementsSuccess } from '../stores/content';
 import { validateAnnouncementResponse } from '../validation/announcements';
 import { Announcement } from '../validation/announcements/types';
 import { ValidationResult } from '../validation/validation_result';

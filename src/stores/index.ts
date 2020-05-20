@@ -12,7 +12,7 @@ import * as location from './manual_user_location';
 import * as search from './search';
 import * as headerMenu from './header_menu';
 import * as feedback from './feedback';
-import * as announcements from './announcements';
+import * as content from './content';
 
 export interface Store {
     readonly fonts: fonts.FontsStore;
@@ -28,7 +28,7 @@ export interface Store {
     readonly search: search.SearchStore;
     readonly headerMenu: headerMenu.HeaderMenuStore;
     readonly feedback: feedback.FeedbackStore;
-    readonly announcements: announcements.AnnoucementsStore;
+    readonly content: content.AnnoucementsStore;
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -45,7 +45,7 @@ export const buildDefaultStore = (): Store => ({
     search: search.buildDefaultStore(),
     headerMenu: headerMenu.buildDefaultStore(),
     feedback: feedback.buildDefaultStore(),
-    announcements: announcements.buildDefaultStore(),
+    content: content.buildDefaultStore(),
 });
 
 export const reducer = combineReducers<Store>({
@@ -62,5 +62,5 @@ export const reducer = combineReducers<Store>({
     search: search.reducer,
     headerMenu: headerMenu.reducer,
     feedback: feedback.reducer,
-    announcements: announcements.reducer,
+    content: content.reducer,
 });

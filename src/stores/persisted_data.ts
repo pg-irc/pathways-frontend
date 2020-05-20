@@ -5,7 +5,6 @@ import { Id as TopicId } from './topics';
 import { ServiceMap } from '../validation/services/types';
 import { SearchServiceData } from '../validation/search/types';
 import { LatLong } from '../validation/latlong/types';
-import { Announcement } from '../validation/announcements/types';
 
 export interface PersistedData {
     readonly chosenAnswers: ReadonlyArray<AnswerId>;
@@ -22,7 +21,6 @@ export interface PersistedData {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
     readonly showPartialLocalizationMessage: boolean;
-    readonly announcements: ReadonlyArray<Announcement>;
 }
 
 export namespace DataPersistence {

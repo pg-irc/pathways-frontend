@@ -105,6 +105,5 @@ export const setUserDataDefaultValues = (data: any): PersistedData => (
         searchResults: data.searchResults || [],
         collapseSearchInput: typeof data.collapseSearchInput === 'undefined' ? false : data.collapseSearchInput,
         showPartialLocalizationMessage: typeof data.showPartialLocalizationMessage === 'undefined' ? true : data.showPartialLocalizationMessage,
-        announcements: data.announcements || [],
     }
 );
