@@ -191,7 +191,7 @@ const AboutItem = (props: { readonly icon: JSX.Element, readonly text: JSX.Eleme
                 <View style={{ borderWidth: 1, marginLeft: 12 }}>
                     {props.icon}
                 </View>
-                <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 10 }]}>{props.text}</Text>
+                <Text style={[textStyles.headlineH4StyleBlackLeft, { marginLeft: 15 }]}>{props.text}</Text>
             </View>
         </TouchableOpacity>
     );
