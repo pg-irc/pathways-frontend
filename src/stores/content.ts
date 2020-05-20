@@ -1,35 +1,35 @@
 import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
-import { Announcement } from '../validation/announcements/types';
+import { Alert } from '../validation/content/types';
 
-export type GetAnnoucementsSuccessAction = Readonly<ReturnType<typeof getAnnoucementsSuccess>>;
-export type GetAnnoucementsFailureAction = Readonly<ReturnType<typeof getAnnoucementsFailure>>;
+export type GetAlertsSuccessAction = Readonly<ReturnType<typeof getAlertsSuccess>>;
+export type GetAlertsFailureAction = Readonly<ReturnType<typeof getAlertsFailure>>;
 
 // tslint:disable-next-line:typedef
-export const getAnnoucementsSuccess = (announcements: ReadonlyArray<any>) => (
-    helpers.makeAction(constants.GET_ANNOUNCEMENTS_SUCCESS, { announcements })
+export const getAlertsSuccess = (alerts: ReadonlyArray<any>) => (
+    helpers.makeAction(constants.GET_ALERTS_SUCCESS, { alerts })
 );
 
 // tslint:disable-next-line:typedef
-export const getAnnoucementsFailure = (error: string) => (
-    helpers.makeAction(constants.GET_ANNOUNCEMENTS_FAILURE, { error })
+export const getAlertsFailure = (error: string) => (
+    helpers.makeAction(constants.GET_ALERTS_FAILURE, { error })
 );
 
-export interface AnnoucementsStore {
-    readonly announcements: ReadonlyArray<Announcement>;
+export interface AlertsStore {
+    readonly alerts: ReadonlyArray<Alert>;
 }
 
-export const buildDefaultStore = (): AnnoucementsStore => ({
-    announcements: [],
+export const buildDefaultStore = (): AlertsStore => ({
+    alerts: [],
 });
 
-export const reducer = (store: AnnoucementsStore = buildDefaultStore(), action?: GetAnnoucementsSuccessAction | GetAnnoucementsFailureAction): AnnoucementsStore => {
+export const reducer = (store: AlertsStore = buildDefaultStore(), action?: GetAlertsSuccessAction | GetAlertsFailureAction): AlertsStore => {
     if (!action) {
         return store;
     }
     switch (action.type) {
-        case constants.GET_ANNOUNCEMENTS_SUCCESS:
-            return { ...store, announcements: action.payload.announcements };
+        case constants.GET_ALERTS_SUCCESS:
+            return { ...store, alerts: action.payload.alerts };
         default:
             return store;
     }

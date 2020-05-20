@@ -96,7 +96,7 @@ export const createPushNotificationTokenUrl = (url: string, token: string): stri
     BuildUrl(url, { path: `v1/push_notifications/tokens/${token}/` })
 );
 
-export async function getAnnoucements(locale: string): Promise<APIResponse> {
+export async function getAlerts(locale: string): Promise<APIResponse> {
     const url = createGetAlertUrl(baseUrl, locale);
     const response = await fetch(url);
     return createAPIResponse(response);

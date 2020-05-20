@@ -28,7 +28,7 @@ export interface Store {
     readonly search: search.SearchStore;
     readonly headerMenu: headerMenu.HeaderMenuStore;
     readonly feedback: feedback.FeedbackStore;
-    readonly content: content.AnnoucementsStore;
+    readonly content: content.AlertsStore;
 }
 
 export const buildDefaultStore = (): Store => ({

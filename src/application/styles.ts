@@ -493,7 +493,7 @@ export const markdownStyles = StyleSheet.create({
     },
 });
 
-export const announcementStyles = StyleSheet.create({
+export const alertStyles = StyleSheet.create({
     text: {
         textAlign: 'left',
         color: colors.greyishBrown,

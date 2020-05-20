@@ -5,7 +5,7 @@ import { ServiceMap } from '../../../validation/services/types';
 import { PersistedData } from '../../persisted_data';
 import { SearchServiceData } from '../../../validation/search/types';
 import { LatLong } from '../../../validation/latlong/types';
-import { Announcement } from '../../../validation/announcements/types';
+import { Alert } from '../../../validation/content/types';
 
 export class PersistedDataBuilder {
     chosenAnswers: AnswerId[] = [];
@@ -22,7 +22,7 @@ export class PersistedDataBuilder {
     searchResults: ReadonlyArray<SearchServiceData> = [];
     collapseSearchInput: boolean = false;
     showPartialLocalizationMessage: boolean = true;
-    announcements: ReadonlyArray<Announcement> = [];
+    alerts: ReadonlyArray<Alert> = [];
 
     withChosenAnswer(id: AnswerId): PersistedDataBuilder {
         this.chosenAnswers.push(id);

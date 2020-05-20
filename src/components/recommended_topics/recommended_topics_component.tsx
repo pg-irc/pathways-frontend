@@ -12,7 +12,7 @@ import {
     CallToActionFullSubComponent,
     CallToActionPartialComponent,
     CallToActionPartialSubComponent,
-    AnnouncementComponent,
+    AlertComponent,
 } from './call_to_action';
 import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
@@ -21,13 +21,13 @@ import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 import { recommendedTopicsStyles } from './styles';
-import { Announcement } from '../../validation/announcements/types';
+import { Alert } from '../../validation/content/types';
 
 export interface RecommendedTopicsProps {
     readonly hasChosenAnswers: boolean;
     readonly bookmarkedTopics: ReadonlyArray<TaskId>;
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
-    readonly announcements: ReadonlyArray<Announcement>;
+    readonly alerts: ReadonlyArray<Alert>;
 }
 
 export interface RecommendedTopicsActions {
@@ -61,7 +61,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             >
                 <Trans>Start settling in B.C.</Trans>
             </Text>
-            <AnnouncementComponent announcements={props.announcements} />
+            <AlertComponent alerts={props.alerts} />
             {props.hasChosenAnswers ?
                 <CallToActionPartialComponent {...props} />
                 :

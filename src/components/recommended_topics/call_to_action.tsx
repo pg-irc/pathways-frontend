@@ -9,38 +9,38 @@ import { textStyles, applicationStyles } from '../../application/styles';
 import { advisor, recommendationBubble } from '../../application/images';
 import { callToActionStyles } from './styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { AnnouncementMarkdownComponent } from '../../../src/components/markdown/markdown_component';
-import { Announcement } from '../../validation/announcements/types';
+import { AlertMarkdownComponent } from '../../../src/components/markdown/markdown_component';
+import { Alert } from '../../validation/content/types';
 
 type Props = { readonly history: History };
 
-type AnnouncementProps = {
-    readonly announcements: ReadonlyArray<Announcement>;
+type AlertProps = {
+    readonly alerts: ReadonlyArray<Alert>;
 };
 
-export const AnnouncementComponent = (props: AnnouncementProps): JSX.Element => {
+export const AlertComponent = (props: AlertProps): JSX.Element => {
     return (
         <View>
             <FlatList
                 style={{ paddingTop: 8 }}
-                data={props.announcements}
-                keyExtractor={(announcement: Announcement): string => announcement.id}
+                data={props.alerts}
+                keyExtractor={(alert: Alert): string => alert.id}
                 ListEmptyComponent={EmptyComponent}
-                renderItem={({ item }: ListRenderItemInfo<Announcement>): JSX.Element => renderAnnouncement(item)} />
+                renderItem={({ item }: ListRenderItemInfo<Alert>): JSX.Element => renderAlert(item)} />
         </View>
     );
 };
 
-const renderAnnouncement = (announcement: Announcement): JSX.Element => {
+const renderAlert = (alert: Alert): JSX.Element => {
     return (
         <View style={[
             applicationStyles.boxShadowBelow,
             callToActionStyles.callToActionContainer,
         ]}>
             <Text style={textStyles.headlineH2StyleBlackLeft}>
-                <Trans>{announcement.heading}</Trans>
+                <Trans>{alert.heading}</Trans>
             </Text>
-            <AnnouncementMarkdownComponent>{announcement.content}</AnnouncementMarkdownComponent>
+            <AlertMarkdownComponent>{alert.content}</AlertMarkdownComponent>
         </View>
     );
 };

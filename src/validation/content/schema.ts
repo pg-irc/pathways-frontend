@@ -1,4 +1,4 @@
-export const announcementObject = {
+export const alertObject = {
     'type': 'object',
     'properties': {
         'id': { 'type': 'string' },
@@ -8,7 +8,7 @@ export const announcementObject = {
     'required': ['id', 'heading', 'content'],
 };
 
-export const announcementArray = {
+export const alertArray = {
     'type': 'array',
-    'items': announcementObject,
+    'items': alertObject,
 };
