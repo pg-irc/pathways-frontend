@@ -119,7 +119,7 @@ const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Elemen
                 <Icon
                     name='check'
                     type='FontAwesome'
-                    style={{ fontSize: 20, color: colors.teal }}
+                    style={{ fontSize: 22, color: colors.teal, marginHorizontal: -2, marginVertical: -2 }}
                 />
             </View>
             <Text style={[textStyles.headlineH4StyleBlackLeft, { fontWeight: 'bold', marginLeft: 10 }]}>{section.label}</Text>
@@ -128,7 +128,7 @@ const SelectedLocaleItem = ({ section }: SelectedLocaleListItemInfo): JSX.Elemen
 };
 
 const AboutSection = (props: Props): JSX.Element => (
-    <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10  }}>
+    <View style={{ backgroundColor: colors.white, marginVertical: 12, marginHorizontal: 10 }}>
         <MenuSectionTitle title={<Trans>ABOUT THE APP</Trans>} />
         <AboutListItems {...props} />
     </View>
