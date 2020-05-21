@@ -3,12 +3,21 @@ import Constants from 'expo-constants';
 import { Footer, FooterTab, variables } from 'native-base';
 import React, { useMemo, useRef } from 'react';
 import {
+    Clock,
+    Easing,
     Extrapolate,
     Node,
     Value,
+    clockRunning,
+    cond,
+    block,
     diffClamp,
     event,
     interpolate,
+    set,
+    startClock,
+    stopClock,
+    timing,
 } from 'react-native-reanimated';
 
 const HEADER_HEIGHT = 44;
@@ -61,6 +70,39 @@ const FOOTER_ICON_HEIGHT = 30;
 const CLAMPED_SCROLL_LOWER_BOUND = 0;
 
 const CLAMPED_SCROLL_UPPER_BOUND = Math.max(TOTAL_HEADER_HEIGHT, TOTAL_FOOTER_HEIGHT);
+
+export const runTiming = (clock: Clock, value: Node<number>, dest: number, resetFlag: Value<number>): Node<number> => {
+    const state = {
+        finished: new Value(0),
+        position: new Value(0),
+        time: new Value(0),
+        frameTime: new Value(0),
+    };
+
+    const config = {
+        duration: 100,
+        toValue: new Value(0),
+        easing: Easing.inOut(Easing.ease),
+    };
+
+    return block([
+        cond(
+            clockRunning(clock),
+            0,
+            [
+                set(state.finished, 0),
+                set(state.time, 0),
+                set(state.position, value),
+                set(state.frameTime, 0),
+                set(config.toValue, dest),
+                startClock(clock),
+            ],
+        ),
+        timing(clock, state, config),
+        cond(state.finished, [stopClock(clock), set(resetFlag, 0)]),
+        state.position,
+    ]);
+};
 
 export const createScrollAnimationContext = (): ScrollAnimationContext => {
     const animatedScrollValueRef = useRef(new Value(0));
