@@ -6,7 +6,7 @@ export type GetAlertsSuccessAction = Readonly<ReturnType<typeof getAlertsSuccess
 export type GetAlertsFailureAction = Readonly<ReturnType<typeof getAlertsFailure>>;
 
 // tslint:disable-next-line:typedef
-export const getAlertsSuccess = (alerts: ReadonlyArray<any>) => (
+export const getAlertsSuccess = (alerts: ReadonlyArray<Alert>) => (
     helpers.makeAction(constants.GET_ALERTS_SUCCESS, { alerts })
 );
 
