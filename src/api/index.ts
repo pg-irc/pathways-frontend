@@ -86,7 +86,7 @@ export async function putPushNotificationToken(token: string, locale: Locale, ap
             body: JSON.stringify({
                 'locale': locale.code,
                 'api_key': api_key,
-             }),
+            }),
         },
     );
     return createAPIResponse(response);
@@ -94,4 +94,14 @@ export async function putPushNotificationToken(token: string, locale: Locale, ap
 
 export const createPushNotificationTokenUrl = (url: string, token: string): string => (
     BuildUrl(url, { path: `v1/push_notifications/tokens/${token}/` })
+);
+
+export async function getAlerts(locale: string): Promise<APIResponse> {
+    const url = createGetAlertUrl(baseUrl, locale);
+    const response = await fetch(url);
+    return createAPIResponse(response);
+}
+
+export const createGetAlertUrl = (url: string, locale: string): string => (
+    BuildUrl(url, { path: `v1/content/alerts/${locale}/` })
 );

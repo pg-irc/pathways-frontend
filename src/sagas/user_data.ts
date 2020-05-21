@@ -28,6 +28,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.SET_COLLAPSE_SEARCH_INPUT,
             constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE,
             constants.DISABLE_ANALYTICS,
+            constants.GET_ALERTS_SUCCESS,
         ],
         saveUserData);
 }

@@ -1,73 +1,46 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
 import { History } from 'history';
-import { Image, TouchableOpacity, I18nManager } from 'react-native';
+import { Image, TouchableOpacity, I18nManager, FlatList, ListRenderItemInfo } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text, Button, Icon } from 'native-base';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
-import { textStyles, applicationStyles, colors, markdownStyles } from '../../application/styles';
+import { textStyles, applicationStyles } from '../../application/styles';
 import { advisor, recommendationBubble } from '../../application/images';
-import { openURL, LinkTypes } from '../link/link';
-import { AnalyticsLinkPressedAction } from '../../stores/analytics';
-import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
-
 import { callToActionStyles } from './styles';
+import { EmptyComponent } from '../empty_component/empty_component';
+import { AlertMarkdownComponent } from '../../../src/components/markdown/markdown_component';
+import { Alert } from '../../validation/content/types';
 
 type Props = { readonly history: History };
 
-type CovidComponentProps = {
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
-    readonly currentPathForAnalytics: string;
+type AlertProps = {
+    readonly alerts: ReadonlyArray<Alert>;
 };
 
-const BCCDC_COVID_LINK = 'http://www.bccdc.ca/health-info/diseases-conditions/covid-19';
-const LINK_CONTEXT_MODEL = 'Alert';
-const LINK_CONTEXT_TITLE = 'covid19';
+export const AlertComponent = (props: AlertProps): JSX.Element => {
+    return (
+        <View>
+            <FlatList
+                style={{ paddingTop: 8 }}
+                data={props.alerts}
+                keyExtractor={(alert: Alert): string => alert.id}
+                ListEmptyComponent={EmptyComponent}
+                renderItem={({ item }: ListRenderItemInfo<Alert>): JSX.Element => renderAlert(item)} />
+        </View>
+    );
+};
 
-export const CovidComponent = ({
-    analyticsLinkPressed,
-    currentPathForAnalytics,
-}: CovidComponentProps): JSX.Element => {
-    const onLinkPress = (): void => {
-        openURL(BCCDC_COVID_LINK);
-
-        analyticsLinkPressed(
-            currentPathForAnalytics,
-            buildAnalyticsLinkContext(LINK_CONTEXT_MODEL, LINK_CONTEXT_TITLE),
-            LinkTypes.website,
-            BCCDC_COVID_LINK,
-        );
-    };
-
+const renderAlert = (alert: Alert): JSX.Element => {
     return (
         <View style={[
             applicationStyles.boxShadowBelow,
             callToActionStyles.callToActionContainer,
         ]}>
-            <View style={callToActionStyles.covidTitleContainer}>
-                <Text style={textStyles.headlineH2StyleBlackLeft}>
-                    <Trans>COVID-19 information</Trans>
-                </Text>
-            </View>
-            <Text style={[textStyles.paragraphStyleBrown, callToActionStyles.covidUpperContent]}>
-                <Trans>
-                    Many of our listed services are transitioning to alternate
-                    service delivery methods. Please check service providers'
-                    websites for details.
-                </Trans>
+            <Text style={textStyles.headlineH2StyleBlackLeft}>
+                <Trans>{alert.heading}</Trans>
             </Text>
-            <Text style={textStyles.paragraphStyleBrown}>
-                <Trans>
-                    Questions about COVID-19? Get the latest information from
-                    <Text>{' '}</Text>
-                    <Text style={markdownStyles.link} onPress={onLinkPress}>
-                        BC Centre for Disease Control
-                        <Text style={markdownStyles.link}>{' '}</Text>
-                        <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: colors.teal }} />
-                    </Text>
-                    .
-                </Trans>
-            </Text>
+            <AlertMarkdownComponent>{alert.content}</AlertMarkdownComponent>
         </View>
     );
 };

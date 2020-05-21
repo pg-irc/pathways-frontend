@@ -493,6 +493,16 @@ export const markdownStyles = StyleSheet.create({
     },
 });
 
+export const alertStyles = StyleSheet.create({
+    text: {
+        textAlign: 'left',
+        color: colors.greyishBrown,
+        fontFamily: getNormalFontFamily(),
+        fontSize: 16,
+        lineHeight: 21,
+    },
+});
+
 const emptyOrErrorImageSize = Dimensions.get('screen').width / 3.5;
 
 export const imageStyles = StyleSheet.create({
