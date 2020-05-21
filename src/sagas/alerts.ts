@@ -14,7 +14,7 @@ export function* watchRequestGetAlerts(): IterableIterator<ForkEffect> {
 
 function* requestGetAlerts(action: LoadLocaleSuccessAction | SaveLocaleSuccessAction): Result {
     const result: APIResponse = yield call(getAlerts, action.payload.localeCode);
-    const alerts: ValidationResult<ReadonlyArray<Alert>> = yield call(validateAlertResponse, result.results);
+    const alerts: ValidationResult<Alert> = yield call(validateAlertResponse, result.results);
     if (!result || result.hasError) {
         return yield put(getAlertsFailure('Error getting alerts'));
     }
