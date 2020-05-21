@@ -1,13 +1,14 @@
 // tslint:disable:no-expression-statement
 import { validateAlertResponse } from '..';
+import { aString } from '../../../application/helpers/random_test_values';
 
 describe('Alert response validation', () => {
     describe('with valid data', () => {
         it('returns alert', () => {
             const validAlertResponse: ReadonlyArray<any> = [{
-                'id': '1',
-                'heading': 'dummy heading',
-                'content': 'dummy text',
+                'id': aString(),
+                'heading': aString(),
+                'content': aString(),
             }];
             const validator = validateAlertResponse(validAlertResponse);
             expect(validator.isValid).toBe(true);
@@ -23,9 +24,9 @@ describe('Alert response validation', () => {
     describe('with invalid data', () => {
         it('returns invalid and undefined', () => {
             const invalidAlertResponse: ReadonlyArray<any> = [{
-                // 'id': '1',
-                'heading': 'dummy heading',
-                'content': 'dummy text',
+                // 'id': aString(),
+                'heading': aString(),
+                'content': aString(),
             }];
             const validator = validateAlertResponse(invalidAlertResponse);
             expect(validator.isValid).toBe(false);
@@ -35,14 +36,14 @@ describe('Alert response validation', () => {
         it('returns invalid entries invalidates entire array', () => {
             const invalidAlertResponse: ReadonlyArray<any> = [
                 {
-                    'id': '1',
-                    'heading': 'dummy heading',
-                    'content': 'dummy text',
+                    'id': aString(),
+                    'heading': aString(),
+                    'content': aString(),
                 },
                 {
-                    // 'id': '2',
-                    'heading': 'dummy heading2',
-                    'content': 'dummy text2',
+                    // 'id': aString(),
+                    'heading': aString(),
+                    'content': aString(),
                 }];
             const validator = validateAlertResponse(invalidAlertResponse);
             expect(validator.isValid).toBe(false);
