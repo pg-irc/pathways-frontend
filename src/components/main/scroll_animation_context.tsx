@@ -2,7 +2,14 @@ import Constants from 'expo-constants';
 // @ts-ignore variables is exported by native base but is not defined by the types file
 import { Footer, FooterTab, variables } from 'native-base';
 import React, { useMemo, useRef } from 'react';
-import Animated from 'react-native-reanimated';
+import {
+    Extrapolate,
+    Node,
+    Value,
+    diffClamp,
+    event,
+    interpolate,
+} from 'react-native-reanimated';
 
 const HEADER_HEIGHT = 44;
 
@@ -22,25 +29,25 @@ const getFooterStyles = (): FooterStyles => {
     };
 };
 
-interface ScrollEventMap {
-    readonly nativeEvent: {
-        readonly contentOffset: {
-            readonly y: (y: number) => Animated.Node<number>,
-        },
-    };
-}
-
 export interface FooterStyles {
     readonly height: number;
     readonly paddingBottom: number;
 }
 
 export interface ScrollAnimationContext {
-    readonly animatedFooterHeight: Animated.Node<number>;
-    readonly animatedFooterBottomPadding: Animated.Node<number>;
-    readonly animatedFooterIconVerticalTranslate: Animated.Node<number>;
-    readonly animatedHeaderHeight: Animated.Node<number>;
+    readonly animatedFooterHeight: Node<number>;
+    readonly animatedFooterBottomPadding: Node<number>;
+    readonly animatedFooterIconVerticalTranslate: Node<number>;
+    readonly animatedHeaderHeight: Node<number>;
     readonly onAnimatedScrollHandler: (...args: readonly any[]) => void;
+}
+
+interface ScrollEventMap {
+    readonly nativeEvent: {
+        readonly contentOffset: {
+            readonly y: Value<number>,
+        },
+    };
 }
 
 const { height: footerHeight, paddingBottom: footerPaddingBottom }: FooterStyles = getFooterStyles();
@@ -56,55 +63,51 @@ const CLAMPED_SCROLL_LOWER_BOUND = 0;
 const CLAMPED_SCROLL_UPPER_BOUND = Math.max(TOTAL_HEADER_HEIGHT, TOTAL_FOOTER_HEIGHT);
 
 export const createScrollAnimationContext = (): ScrollAnimationContext => {
-    const animatedScrollValueRef = useRef(new Animated.Value(0));
+    const animatedScrollValueRef = useRef(new Value(0));
 
-    const upwardScrollInterpolatedValue = Animated.interpolate(animatedScrollValueRef.current, {
+    const upwardScrollInterpolatedValue = interpolate(animatedScrollValueRef.current, {
         inputRange: [0, 1],
         outputRange: [0, 1],
-        extrapolateLeft: Animated.Extrapolate.CLAMP,
+        extrapolateLeft: Extrapolate.CLAMP,
     });
 
     const animatedClampedScrollValueRef = useRef(
-        Animated.diffClamp(
+        diffClamp(
             upwardScrollInterpolatedValue,
             CLAMPED_SCROLL_LOWER_BOUND,
             CLAMPED_SCROLL_UPPER_BOUND,
         ),
     );
 
-    const animatedHeaderHeight = Animated.interpolate(animatedClampedScrollValueRef.current, {
+    const animatedHeaderHeight = interpolate(animatedClampedScrollValueRef.current, {
         inputRange: [0, TOTAL_HEADER_HEIGHT],
         outputRange: [TOTAL_HEADER_HEIGHT, Constants.statusBarHeight],
-        extrapolate: Animated.Extrapolate.CLAMP,
+        extrapolate: Extrapolate.CLAMP,
     });
 
-    const animatedFooterHeight = Animated.interpolate(animatedClampedScrollValueRef.current, {
+    const animatedFooterHeight = interpolate(animatedClampedScrollValueRef.current, {
         inputRange: [0, footerHeight],
         outputRange: [footerHeight, 0],
-        extrapolate: Animated.Extrapolate.CLAMP,
+        extrapolate: Extrapolate.CLAMP,
     });
 
-    const animatedFooterBottomPadding = Animated.interpolate(animatedClampedScrollValueRef.current, {
+    const animatedFooterBottomPadding = interpolate(animatedClampedScrollValueRef.current, {
         inputRange: [0, footerPaddingBottom],
         outputRange: [footerPaddingBottom, 0],
-        extrapolate: Animated.Extrapolate.CLAMP,
+        extrapolate: Extrapolate.CLAMP,
     });
 
-    const animatedFooterIconVerticalTranslate =  Animated.interpolate(animatedClampedScrollValueRef.current, {
+    const animatedFooterIconVerticalTranslate = interpolate(animatedClampedScrollValueRef.current, {
         inputRange: [footerPaddingBottom, footerHeight],
         outputRange: [0, footerHeight - FOOTER_ICON_HEIGHT],
-        extrapolate: Animated.Extrapolate.CLAMP,
+        extrapolate: Extrapolate.CLAMP,
     });
 
     const onAnimatedScrollHandler = useMemo((): (...args: readonly any[]) => void => {
         const eventArgumentMapping: readonly [ScrollEventMap] = [{
             nativeEvent: {
                 contentOffset: {
-                    y: (y: number): Animated.Node<number> => (
-                        Animated.block([
-                            Animated.set(animatedScrollValueRef.current, y),
-                        ])
-                    ),
+                    y: animatedScrollValueRef.current,
                 },
             },
         }];
@@ -113,7 +116,7 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
             useNativeDriver: true,
         };
 
-        return Animated.event<ScrollEventMap>(eventArgumentMapping, eventConfig);
+        return event<ScrollEventMap>(eventArgumentMapping, eventConfig);
     }, []);
 
     return {
