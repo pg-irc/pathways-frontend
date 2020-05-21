@@ -13,6 +13,7 @@ import {
     block,
     diffClamp,
     event,
+    eq,
     interpolate,
     set,
     startClock,
@@ -49,6 +50,7 @@ export interface ScrollAnimationContext {
     readonly animatedFooterIconVerticalTranslate: Node<number>;
     readonly animatedHeaderHeight: Node<number>;
     readonly onAnimatedScrollHandler: (...args: readonly any[]) => void;
+    readonly resetSizes: () => void;
 }
 
 interface ScrollEventMap {
@@ -105,7 +107,11 @@ export const runTiming = (clock: Clock, value: Node<number>, dest: number, reset
 };
 
 export const createScrollAnimationContext = (): ScrollAnimationContext => {
-    const animatedScrollValueRef = useRef(new Value(0));
+    const clockRef = useRef(new Clock());
+
+    const resetToggleRef = useRef(new Value<number>(0));
+
+    const animatedScrollValueRef = useRef(new Value<number>(0));
 
     const upwardScrollInterpolatedValue = interpolate(animatedScrollValueRef.current, {
         inputRange: [0, 1],
@@ -113,33 +119,28 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         extrapolateLeft: Extrapolate.CLAMP,
     });
 
-    const animatedClampedScrollValueRef = useRef(
-        diffClamp(
-            upwardScrollInterpolatedValue,
-            CLAMPED_SCROLL_LOWER_BOUND,
-            CLAMPED_SCROLL_UPPER_BOUND,
+    const animatedClampedScrollValue = useRef((
+            diffClamp(
+                upwardScrollInterpolatedValue,
+                CLAMPED_SCROLL_LOWER_BOUND,
+                CLAMPED_SCROLL_UPPER_BOUND,
+            )
         ),
     );
 
-    const animatedHeaderHeight = interpolate(animatedClampedScrollValueRef.current, {
-        inputRange: [0, TOTAL_HEADER_HEIGHT],
-        outputRange: [TOTAL_HEADER_HEIGHT, Constants.statusBarHeight],
-        extrapolate: Extrapolate.CLAMP,
-    });
-
-    const animatedFooterHeight = interpolate(animatedClampedScrollValueRef.current, {
+    const animatedFooterHeight = interpolate(animatedClampedScrollValue.current, {
         inputRange: [0, footerHeight],
         outputRange: [footerHeight, 0],
         extrapolate: Extrapolate.CLAMP,
     });
 
-    const animatedFooterBottomPadding = interpolate(animatedClampedScrollValueRef.current, {
+    const animatedFooterBottomPadding = interpolate(animatedClampedScrollValue.current, {
         inputRange: [0, footerPaddingBottom],
         outputRange: [footerPaddingBottom, 0],
         extrapolate: Extrapolate.CLAMP,
     });
 
-    const animatedFooterIconVerticalTranslate = interpolate(animatedClampedScrollValueRef.current, {
+    const animatedFooterIconVerticalTranslate = interpolate(animatedClampedScrollValue.current, {
         inputRange: [footerPaddingBottom, footerHeight],
         outputRange: [0, footerHeight - FOOTER_ICON_HEIGHT],
         extrapolate: Extrapolate.CLAMP,
@@ -161,12 +162,36 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         return event<ScrollEventMap>(eventArgumentMapping, eventConfig);
     }, []);
 
+    const headerHeight = useRef(new Value(0));
+
+    const resetSizes = (): void => {
+        // tslint:disable:no-expression-statement
+        resetToggleRef.current.setValue(1);
+    };
+
+    const animatedHeaderHeight = useRef(cond(
+            eq(resetToggleRef.current, 1),
+            runTiming(
+                clockRef.current,
+                headerHeight.current,
+                TOTAL_HEADER_HEIGHT,
+                resetToggleRef.current,
+            ),
+            set(headerHeight.current, interpolate(animatedClampedScrollValue.current, {
+                inputRange: [0, TOTAL_HEADER_HEIGHT],
+                outputRange: [TOTAL_HEADER_HEIGHT, Constants.statusBarHeight],
+                extrapolate: Extrapolate.CLAMP,
+            })),
+        ),
+    );
+
     return {
         animatedFooterHeight,
         animatedFooterBottomPadding,
         animatedFooterIconVerticalTranslate,
-        animatedHeaderHeight,
+        animatedHeaderHeight: animatedHeaderHeight.current,
         onAnimatedScrollHandler,
+        resetSizes,
     };
 };
 
