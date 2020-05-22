@@ -38,7 +38,7 @@ const renderAlert = (alert: Alert): JSX.Element => {
             callToActionStyles.callToActionContainer,
         ]}>
             <Text style={textStyles.headlineH2StyleBlackLeft}>
-                <Trans>{alert.heading}</Trans>
+                {alert.heading}
             </Text>
             <AlertMarkdownComponent>{alert.content}</AlertMarkdownComponent>
         </View>
