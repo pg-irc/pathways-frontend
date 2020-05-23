@@ -38,7 +38,7 @@ export interface ScrollAnimationContext {
 interface ScrollEventMap {
     readonly nativeEvent: {
         readonly contentOffset: {
-            readonly y: Animated.Value<number>,
+            readonly y: (y: number) => Animated.Node<number>,
         },
     };
 }
@@ -105,7 +105,12 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         const eventArgumentMapping: readonly [ScrollEventMap] = [{
             nativeEvent: {
                 contentOffset: {
-                    y: animatedScrollValueRef.current,
+                    y: (y: number): Animated.Node<number> => (
+                        Animated.block([
+                            Animated.set(animatedScrollValueRef.current, y),
+                            Animated.call([y], ([offsetY]: readonly number[]): void => onScroll(offsetY)),
+                        ])
+                    ),
                 },
             },
         }];

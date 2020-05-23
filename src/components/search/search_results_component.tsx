@@ -87,11 +87,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         }
     }, [props.searchOffset]);
 
-    const onScroll = (e: any): void => {
-        props.setScrollOffset(e.nativeEvent.contentOffset.y);
-    };
-
-    const onScrollAnimated = getAnimatedFlatListScrollHandler(onScroll);
+    const onScrollAnimated = getAnimatedFlatListScrollHandler(props.setScrollOffset);
 
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
