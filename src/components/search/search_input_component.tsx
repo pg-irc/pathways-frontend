@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { MutableRefObject, useContext, useRef, useState } from 'react';
+import React, { MutableRefObject, useRef, useState } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
@@ -15,7 +15,6 @@ import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { BooleanSetterFunction, StringSetterFunction } from './search_component';
 import { toLocationForQuery, MY_LOCATION_MESSAGE_DESCRIPTOR } from '../partial_localization/to_location_for_query';
-import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
 
 export interface SearchProps {
     readonly searchTerm: string;
@@ -85,11 +84,8 @@ export interface CollapsedInputProps {
 }
 
 const CollapsedInput = (props: CollapsedInputProps): JSX.Element => {
-    const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
-
     const onPress = (): void => {
         props.setCollapseSearchInput(false);
-        scrollAnimationContext.resetSizes();
     };
 
     return (

@@ -2,13 +2,10 @@ import Constants from 'expo-constants';
 // @ts-ignore variables is exported by native base but is not defined by the types file
 import { Footer, FooterTab, variables } from 'native-base';
 import React, { useMemo } from 'react';
-import {
-    Clock,
-    Easing,
+import Animated, {
     Extrapolate,
     Node,
     Value,
-    clockRunning,
     cond,
     block,
     diffClamp,
@@ -16,9 +13,6 @@ import {
     eq,
     interpolate,
     set,
-    startClock,
-    stopClock,
-    timing,
 } from 'react-native-reanimated';
 
 const HEADER_HEIGHT = 44;
@@ -39,24 +33,31 @@ const getFooterStyles = (): FooterStyles => {
     };
 };
 
+enum ScrollAnimationState {
+    START,
+    STOP,
+}
+
 export interface FooterStyles {
     readonly height: number;
     readonly paddingBottom: number;
 }
 
 export interface ScrollAnimationContext {
+    readonly animatedSearchHeaderAndFooter: Node<number>;
     readonly animatedFooterHeight: Node<number>;
     readonly animatedFooterBottomPadding: Node<number>;
     readonly animatedFooterIconVerticalTranslate: Node<number>;
     readonly animatedHeaderHeight: Node<number>;
     readonly onAnimatedScrollHandler: (...args: readonly any[]) => void;
-    readonly resetSizes: () => void;
+    readonly runScrollAnimation: () => void;
+    readonly stopScrollAnimation: () => void;
 }
 
 interface ScrollEventMap {
     readonly nativeEvent: {
         readonly contentOffset: {
-            readonly y: Value<number>,
+            readonly y: (y: number) => Animated.Node<number>,
         },
     };
 }
@@ -73,101 +74,29 @@ const CLAMPED_SCROLL_LOWER_BOUND = 0;
 
 const CLAMPED_SCROLL_UPPER_BOUND = Math.max(TOTAL_HEADER_HEIGHT, TOTAL_FOOTER_HEIGHT);
 
-export const runTiming = (clock: Clock, value: Node<number>, dest: number, resetFlag: Value<number>): Node<number> => {
-    const state = {
-        finished: new Value(0),
-        position: new Value(0),
-        time: new Value(0),
-        frameTime: new Value(0),
-    };
-
-    const config = {
-        duration: 100,
-        toValue: new Value(0),
-        easing: Easing.inOut(Easing.ease),
-    };
-
-    return block([
-        cond(
-            clockRunning(clock),
-            0,
-            [
-                set(state.finished, 0),
-                set(state.time, 0),
-                set(state.position, value),
-                set(state.frameTime, 0),
-                set(config.toValue, dest),
-                startClock(clock),
-            ],
-        ),
-        timing(clock, state, config),
-        cond(state.finished, [stopClock(clock), set(resetFlag, 0)]),
-        state.position,
-    ]);
-};
+function initializeValue<T extends number | boolean | string>(initialValue: T): () => Value<T> {
+    return (): Value<T> => new Value<T>(initialValue);
+}
 
 export const createScrollAnimationContext = (): ScrollAnimationContext => {
-    const clockRef = useMemo((): Clock => new Clock(), []);
-
-    const resetToggleRef = useMemo((): Value<number> => new Value<number>(0), []);
-
-    const animatedScrollValueRef = useMemo((): Value<number> => new Value<number>(0), []);
-
-    const upwardScrollInterpolatedValue = useMemo((): Node<number> => (
-            interpolate(animatedScrollValueRef, {
-                inputRange: [0, 1],
-                outputRange: [0, 1],
-                extrapolateLeft: Extrapolate.CLAMP,
-            })
-        ),
-        [],
-    );
-
-    const animatedClampedScrollValue = useMemo((): Node<number> => (
-            diffClamp(
-                upwardScrollInterpolatedValue,
-                CLAMPED_SCROLL_LOWER_BOUND,
-                CLAMPED_SCROLL_UPPER_BOUND,
-            )
-        ),
-        [],
-    );
-
-    const animatedFooterHeight = useMemo((): Node<number> => (
-            interpolate(animatedClampedScrollValue, {
-                inputRange: [0, footerHeight],
-                outputRange: [footerHeight, 0],
-                extrapolate: Extrapolate.CLAMP,
-            })
-        ),
-        [],
-    );
-
-    const animatedFooterBottomPadding = useMemo((): Node<number> => (
-            interpolate(animatedClampedScrollValue, {
-                inputRange: [0, footerPaddingBottom],
-                outputRange: [footerPaddingBottom, 0],
-                extrapolate: Extrapolate.CLAMP,
-            })
-        ),
-        [],
-    );
-
-    const animatedFooterIconVerticalTranslate = useMemo((): Node<number> => (
-            interpolate(animatedClampedScrollValue, {
-                inputRange: [footerPaddingBottom, footerHeight],
-                outputRange: [0, footerHeight - FOOTER_ICON_HEIGHT],
-                extrapolate: Extrapolate.CLAMP,
-            })
-        ),
-        [],
-    );
+    const scrollAnimationState = useMemo(initializeValue<ScrollAnimationState>(ScrollAnimationState.STOP), []);
+    const animatedScrollValue = useMemo(initializeValue<number>(0), []);
+    const animatedScrollForResetValue = useMemo(initializeValue<number>(0), []);
+    const upwardScrollInterpolatedValue = useMemo(initializeValue<number>(0), []);
+    const animatedHeaderHeight = useMemo(initializeValue<number>(TOTAL_HEADER_HEIGHT), []);
+    const animatedClampedScrollValue = useMemo(initializeValue<number>(0), []);
+    const animatedFooterHeight = useMemo(initializeValue<number>(footerHeight), []);
+    const animatedFooterBottomPadding = useMemo(initializeValue<number>(footerPaddingBottom), []);
+    const animatedFooterIconVerticalTranslate = useMemo(initializeValue<number>(0), []);
 
     const onAnimatedScrollHandler = useMemo((): (...args: readonly any[]) => void => {
         const eventArgumentMapping: readonly [ScrollEventMap] = [{
             nativeEvent: {
                 contentOffset: {
-                    y: animatedScrollValueRef,
+                    y: (y: number): Node<number> => block([
+                        set(animatedScrollValue, y),
+                        set(animatedScrollForResetValue, y),
+                    ]),
                 },
             },
         }];
@@ -179,37 +108,71 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         return event<ScrollEventMap>(eventArgumentMapping, eventConfig);
     }, []);
 
-    const resetSizes = (): void => {
-        // tslint:disable:no-expression-statement
-        resetToggleRef.setValue(1);
-    };
-
-    const animatedHeaderHeight = useMemo((): Node<number> => {
-        const headerHeight = new Value(0);
-
-        return cond(
-            eq(resetToggleRef, 1),
-            runTiming(
-                clockRef,
-                headerHeight,
-                TOTAL_HEADER_HEIGHT,
-                resetToggleRef,
-            ),
-            set(headerHeight, interpolate(animatedClampedScrollValue, {
+    const scrollInterpolations = useMemo((): Node<number> => (
+        block([
+            set(upwardScrollInterpolatedValue, interpolate(animatedScrollValue, {
+                inputRange: [0, 1],
+                outputRange: [0, 1],
+                extrapolateLeft: Extrapolate.CLAMP,
+            })),
+            set(animatedClampedScrollValue, diffClamp(
+                upwardScrollInterpolatedValue,
+                CLAMPED_SCROLL_LOWER_BOUND,
+                CLAMPED_SCROLL_UPPER_BOUND,
+            )),
+            set(animatedHeaderHeight, interpolate(animatedClampedScrollValue, {
                 inputRange: [0, TOTAL_HEADER_HEIGHT],
                 outputRange: [TOTAL_HEADER_HEIGHT, Constants.statusBarHeight],
                 extrapolate: Extrapolate.CLAMP,
             })),
-        );
-    }, []);
+            set(animatedFooterHeight, interpolate(animatedClampedScrollValue, {
+                inputRange: [0, footerHeight],
+                outputRange: [footerHeight, 0],
+                extrapolate: Extrapolate.CLAMP,
+            })),
+            set(animatedFooterBottomPadding, interpolate(animatedClampedScrollValue, {
+                inputRange: [0, footerPaddingBottom],
+                outputRange: [footerPaddingBottom, 0],
+                extrapolate: Extrapolate.CLAMP,
+            })),
+            set(animatedFooterIconVerticalTranslate, interpolate(animatedClampedScrollValue, {
+                inputRange: [footerPaddingBottom, footerHeight],
+                outputRange: [0, footerHeight - FOOTER_ICON_HEIGHT],
+                extrapolate: Extrapolate.CLAMP,
+            })),
+        ])
+    ), []);
+
+    const resetValues = useMemo((): Node<number> => (
+        block([
+            set(animatedHeaderHeight, TOTAL_HEADER_HEIGHT),
+            set(animatedFooterHeight, footerHeight),
+            set(animatedFooterBottomPadding, footerPaddingBottom),
+            set(animatedFooterIconVerticalTranslate, 0),
+        ])
+    ), []);
+
+    const runScrollAnimation = (): void => {
+        // tslint:disable-next-line: no-expression-statement
+        scrollAnimationState.setValue(ScrollAnimationState.START);
+    };
+
+    const stopScrollAnimation = (): void => {
+        // tslint:disable-next-line: no-expression-statement
+        scrollAnimationState.setValue(ScrollAnimationState.STOP);
+    };
+
+    const animatedSearchHeaderAndFooter = useMemo((): Node<number> => cond(eq(scrollAnimationState, 0), scrollInterpolations, resetValues), []);
 
     return {
+        animatedHeaderHeight,
         animatedFooterHeight,
         animatedFooterBottomPadding,
         animatedFooterIconVerticalTranslate,
-        animatedHeaderHeight,
+        animatedSearchHeaderAndFooter,
         onAnimatedScrollHandler,
-        resetSizes,
+        runScrollAnimation,
+        stopScrollAnimation,
     };
 };
 
