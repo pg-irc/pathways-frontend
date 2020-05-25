@@ -28,9 +28,28 @@ export const TabSwitcher = (props: Props): JSX.Element => {
     const renderScene = ({ route }: { readonly route: Route}): JSX.Element => {
         switch (route.key) {
           case 'topics':
-            return <TopicBookmarksComponent {...props} />;
+            return (
+                <TopicBookmarksComponent
+                    bookmarkedTopics={props.bookmarkedTopics}
+                    bookmarkTopic={props.bookmarkTopic}
+                    unbookmarkTopic={props.unbookmarkTopic}
+                    history={props.history}
+                    location={props.location}
+                    match={props.match}
+                />
+            );
           case 'services':
-            return <ServiceBookmarksComponent {...props} />;
+            return (
+                <ServiceBookmarksComponent
+                    bookmarkedServices={props.bookmarkedServices}
+                    bookmarkService={props.bookmarkService}
+                    unbookmarkService={props.unbookmarkService}
+                    openServiceDetail={props.openServiceDetail}
+                    history={props.history}
+                    location={props.location}
+                    match={props.match}
+                />
+            );
           default:
             return <EmptyComponent />;
         }
