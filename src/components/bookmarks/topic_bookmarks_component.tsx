@@ -18,7 +18,6 @@ export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: 
     return (
         <View style={{backgroundColor: colors.lightGrey, paddingTop: 13}}>
             <TaskListComponent
-                {...props}
                 tasks={props.bookmarkedTopics}
                 savedTasksIdList={R.map((topic: TopicListItem) => topic.id, props.bookmarkedTopics)}
                 emptyTaskListContent={
@@ -27,6 +26,9 @@ export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: 
                     />
                 }
                 headerContent={<View />}
+                history={props.history}
+                bookmarkTopic={props.bookmarkTopic}
+                unbookmarkTopic={props.unbookmarkTopic}
             />
         </View>
     );

@@ -27,11 +27,27 @@ type Props = BookmarksProps & ListActions & RouterProps;
 export const BookmarksComponent = (props: Props): JSX.Element => {
     return (
         <View style={{ flex: 1 }}>
-            <HelpAndMenuButtonHeaderComponent {...props} />
+            <HelpAndMenuButtonHeaderComponent
+                openHeaderMenu={props.openHeaderMenu}
+                history={props.history}
+            />
             <TitleComponent />
             <I18n>
                 {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                    <TabSwitcher i18n={i18nRenderProp.i18n} {...props} />
+                    <TabSwitcher
+                        i18n={i18nRenderProp.i18n}
+                        bookmarkedTopics={props.bookmarkedTopics}
+                        bookmarkedServices={props.bookmarkedServices}
+                        bookmarkTopic={props.bookmarkTopic}
+                        unbookmarkTopic={props.unbookmarkTopic}
+                        bookmarkService={props.bookmarkService}
+                        unbookmarkService={props.unbookmarkService}
+                        openServiceDetail={props.openServiceDetail}
+                        openHeaderMenu={props.openHeaderMenu}
+                        history={props.history}
+                        location={props.location}
+                        match={props.match}
+                    />
                 )}
             </I18n>
         </View>
