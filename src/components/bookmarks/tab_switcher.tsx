@@ -3,7 +3,6 @@ import { TopicBookmarksComponent } from './topic_bookmarks_component';
 import { ServiceBookmarksComponent } from './service_bookmarks_component';
 import { TabView, TabBar, SceneRendererProps, NavigationState, Route } from 'react-native-tab-view';
 import { Dimensions } from 'react-native';
-import { ReactI18nRenderProp } from '../../locale/types';
 import { t } from '@lingui/macro';
 import { colors, textStyles } from '../../application/styles';
 import { BookmarksProps } from './bookmarks_component';
@@ -14,13 +13,16 @@ import { EmptyComponent } from '../empty_component/empty_component';
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
 
-type Props = ReactI18nRenderProp & BookmarksProps & ListActions & RouterProps;
+interface TabSwitcherProps {
+    readonly i18n: I18n;
+}
+
+type Props = TabSwitcherProps & BookmarksProps & ListActions & RouterProps;
 
 export const TabSwitcher = (props: Props): JSX.Element => {
-    const _ = props.i18n._.bind(props.i18n);
     const routes: TabRoutes = [
-        { key: 'topics', title: _(t`Topics`) },
-        { key: 'services', title: _(t`Services`) },
+        { key: 'topics', title: props.i18n._(t`Topics`) },
+        { key: 'services', title: props.i18n._(t`Services`) },
     ];
 
     const [index, setIndex]: readonly [number, (n: number) => void] = useState(0);

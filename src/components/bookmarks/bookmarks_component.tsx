@@ -6,7 +6,6 @@ import { HumanServiceData } from '../../validation/services/types';
 import { View, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { colors, textStyles, values } from '../../application/styles';
-import { ReactI18nRenderProp } from '../../locale/types';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 import { ListActions } from './bookmarks_connected_component';
@@ -33,23 +32,24 @@ export const BookmarksComponent = (props: Props): JSX.Element => {
             />
             <TitleComponent />
             <I18n>
-                {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                    <TabSwitcher
-                        i18n={i18nRenderProp.i18n}
-                        bookmarkedTopics={props.bookmarkedTopics}
-                        bookmarkedServices={props.bookmarkedServices}
-                        bookmarkTopic={props.bookmarkTopic}
-                        unbookmarkTopic={props.unbookmarkTopic}
-                        bookmarkService={props.bookmarkService}
-                        unbookmarkService={props.unbookmarkService}
-                        openServiceDetail={props.openServiceDetail}
-                        openHeaderMenu={props.openHeaderMenu}
-                        history={props.history}
-                        location={props.location}
-                        match={props.match}
-                    />
-                )}
-            </I18n>
+            {({i18n}: { readonly i18n: I18n }): JSX.Element => (
+                <TabSwitcher
+                    i18n={i18n}
+                    bookmarkedTopics={props.bookmarkedTopics}
+                    bookmarkedServices={props.bookmarkedServices}
+                    bookmarkTopic={props.bookmarkTopic}
+                    unbookmarkTopic={props.unbookmarkTopic}
+                    bookmarkService={props.bookmarkService}
+                    unbookmarkService={props.unbookmarkService}
+                    openServiceDetail={props.openServiceDetail}
+                    openHeaderMenu={props.openHeaderMenu}
+                    history={props.history}
+                    location={props.location}
+                    match={props.match}
+                />
+            )}
+        </I18n>
+
         </View>
     );
 };
