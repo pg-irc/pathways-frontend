@@ -1,56 +1,68 @@
 import React, { useState } from 'react';
 import { TopicBookmarksComponent } from './topic_bookmarks_component';
 import { ServiceBookmarksComponent } from './service_bookmarks_component';
-import { TabView, SceneMap, TabBar, SceneRendererProps, NavigationState, Route } from 'react-native-tab-view';
+import { TabView, TabBar, SceneRendererProps, NavigationState, Route } from 'react-native-tab-view';
 import { Dimensions } from 'react-native';
-import { ReactI18nRenderProp } from '../../locale/types';
 import { t } from '@lingui/macro';
 import { colors, textStyles } from '../../application/styles';
 import { BookmarksProps } from './bookmarks_component';
-import { View } from 'native-base';
-import { RouterProps } from '../../application/routing';
 import { ListActions } from './bookmarks_connected_component';
+import { EmptyComponent } from '../empty_component/empty_component';
+import { History } from 'history';
 
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
 
-type Props = ReactI18nRenderProp & BookmarksProps & ListActions & RouterProps;
+interface TabSwitcherProps {
+    readonly i18n: I18n;
+    readonly history: History;
+}
+
+type Props = TabSwitcherProps & BookmarksProps & ListActions;
 
 export const TabSwitcher = (props: Props): JSX.Element => {
-    const _ = props.i18n._.bind(props.i18n);
     const routes: TabRoutes = [
-        { key: 'topics', title: _(t`Topics`) },
-        { key: 'services', title: _(t`Services`) },
+        { key: 'topics', title: props.i18n._(t`Topics`) },
+        { key: 'services', title: props.i18n._(t`Services`) },
     ];
 
     const [index, setIndex]: readonly [number, (n: number) => void] = useState(0);
 
-    const TopicsComponent = (): JSX.Element => (
-        <View style={{backgroundColor: colors.white}}>
-            <TopicBookmarksComponent {...props} />
-        </View>
-    );
-
-    const ServicesComponent = (): JSX.Element => (
-        <View style={{backgroundColor: colors.white}}>
-            <ServiceBookmarksComponent {...props} />
-        </View>
-    );
-
-    const render = SceneMap({
-        topics: TopicsComponent,
-        services: ServicesComponent,
-    });
+    const renderScene = ({ route }: { readonly route: Route}): JSX.Element => {
+        switch (route.key) {
+          case 'topics':
+            return (
+                <TopicBookmarksComponent
+                    bookmarkedTopics={props.bookmarkedTopics}
+                    bookmarkTopic={props.bookmarkTopic}
+                    unbookmarkTopic={props.unbookmarkTopic}
+                    history={props.history}
+                />
+            );
+          case 'services':
+            return (
+                <ServiceBookmarksComponent
+                    bookmarkedServices={props.bookmarkedServices}
+                    bookmarkService={props.bookmarkService}
+                    unbookmarkService={props.unbookmarkService}
+                    openServiceDetail={props.openServiceDetail}
+                    history={props.history}
+                />
+            );
+          default:
+            return <EmptyComponent />;
+        }
+      };
 
     return (
         <TabView
-        navigationState={{ index, routes }}
-        renderScene={render}
-        renderTabBar={renderTabBar}
-        onIndexChange={setIndex}
-        style={{backgroundColor: colors.white}}
-        initialLayout={{ width: Dimensions.get('window').width }}
-        sceneContainerStyle={{backgroundColor: colors.lightGrey}}
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            renderTabBar={renderTabBar}
+            onIndexChange={setIndex}
+            style={{backgroundColor: colors.white}}
+            initialLayout={{ width: Dimensions.get('window').width }}
+            sceneContainerStyle={{backgroundColor: colors.lightGrey}}
         />
     );
 };
