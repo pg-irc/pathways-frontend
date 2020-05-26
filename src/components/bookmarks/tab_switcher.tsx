@@ -56,13 +56,13 @@ export const TabSwitcher = (props: Props): JSX.Element => {
 
     return (
         <TabView
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        renderTabBar={renderTabBar}
-        onIndexChange={setIndex}
-        style={{backgroundColor: colors.white}}
-        initialLayout={{ width: Dimensions.get('window').width }}
-        sceneContainerStyle={{backgroundColor: colors.lightGrey}}
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            renderTabBar={renderTabBar}
+            onIndexChange={setIndex}
+            style={{backgroundColor: colors.white}}
+            initialLayout={{ width: Dimensions.get('window').width }}
+            sceneContainerStyle={{backgroundColor: colors.lightGrey}}
         />
     );
 };

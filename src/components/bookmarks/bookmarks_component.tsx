@@ -27,15 +27,14 @@ interface OwnProps {
 
 type Props = BookmarksProps & ListActions & OwnProps;
 
-export const BookmarksComponent = (props: Props): JSX.Element => {
-    return (
-        <View style={{ flex: 1 }}>
-            <HelpAndMenuButtonHeaderComponent
-                openHeaderMenu={props.openHeaderMenu}
-                history={props.history}
-            />
-            <TitleComponent />
-            <I18n>
+export const BookmarksComponent = (props: Props): JSX.Element => (
+    <View style={{ flex: 1 }}>
+        <HelpAndMenuButtonHeaderComponent
+            openHeaderMenu={props.openHeaderMenu}
+            history={props.history}
+        />
+        <TitleComponent />
+        <I18n>
             {({i18n}: { readonly i18n: I18n }): JSX.Element => (
                 <TabSwitcher
                     i18n={i18n}
@@ -51,10 +50,8 @@ export const BookmarksComponent = (props: Props): JSX.Element => {
                 />
             )}
         </I18n>
-
-        </View>
-    );
-};
+    </View>
+);
 
 const TitleComponent = (): JSX.Element => (
     <View padder style={{ backgroundColor: colors.white, paddingHorizontal: values.backgroundTextPadding }}>
