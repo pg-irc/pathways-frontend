@@ -1,6 +1,5 @@
 import React from 'react';
 import { TopicListItem } from '../../selectors/topics/types';
-import { RouterProps } from '../../application/routing';
 import { TabSwitcher } from './tab_switcher';
 import { HumanServiceData } from '../../validation/services/types';
 import { View, Text } from 'native-base';
@@ -10,6 +9,7 @@ import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 import { ListActions } from './bookmarks_connected_component';
 import { OpenServiceAction } from '../../stores/services/actions';
+import { History } from 'history';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -21,7 +21,11 @@ export interface BookmarkActions {
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
 
-type Props = BookmarksProps & ListActions & RouterProps;
+interface OwnProps {
+    readonly history: History;
+}
+
+type Props = BookmarksProps & ListActions & OwnProps;
 
 export const BookmarksComponent = (props: Props): JSX.Element => {
     return (
@@ -44,8 +48,6 @@ export const BookmarksComponent = (props: Props): JSX.Element => {
                     openServiceDetail={props.openServiceDetail}
                     openHeaderMenu={props.openHeaderMenu}
                     history={props.history}
-                    location={props.location}
-                    match={props.match}
                 />
             )}
         </I18n>

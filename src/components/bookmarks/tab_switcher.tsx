@@ -6,18 +6,19 @@ import { Dimensions } from 'react-native';
 import { t } from '@lingui/macro';
 import { colors, textStyles } from '../../application/styles';
 import { BookmarksProps } from './bookmarks_component';
-import { RouterProps } from '../../application/routing';
 import { ListActions } from './bookmarks_connected_component';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { History } from 'history';
 
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
 
 interface TabSwitcherProps {
     readonly i18n: I18n;
+    readonly history: History;
 }
 
-type Props = TabSwitcherProps & BookmarksProps & ListActions & RouterProps;
+type Props = TabSwitcherProps & BookmarksProps & ListActions;
 
 export const TabSwitcher = (props: Props): JSX.Element => {
     const routes: TabRoutes = [
@@ -36,8 +37,6 @@ export const TabSwitcher = (props: Props): JSX.Element => {
                     bookmarkTopic={props.bookmarkTopic}
                     unbookmarkTopic={props.unbookmarkTopic}
                     history={props.history}
-                    location={props.location}
-                    match={props.match}
                 />
             );
           case 'services':
@@ -48,8 +47,6 @@ export const TabSwitcher = (props: Props): JSX.Element => {
                     unbookmarkService={props.unbookmarkService}
                     openServiceDetail={props.openServiceDetail}
                     history={props.history}
-                    location={props.location}
-                    match={props.match}
                 />
             );
           default:
