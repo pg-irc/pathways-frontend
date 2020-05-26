@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, Alert, AlertButton, I18nManager } from 'react-native';
-import { Icon } from 'native-base';
 import Markdown, { openUrl } from 'react-native-markdown-renderer';
-import { colors, markdownStyles, alertStyles } from '../../application/styles';
+import { markdownStyles, alertStyles, textStyles } from '../../application/styles';
 import { ReactI18n, ReactI18nRenderProp } from '../../locale/types';
 import * as R from 'ramda';
 import { I18n } from '@lingui/react';
+import { LinkIcon } from '../link_icon_component';
 
 interface Props {
     readonly children: string;
@@ -54,10 +54,10 @@ const markdownRules = {
         return (
             <I18n>
                 {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                    <Text key={node.key} style={markdownStyles.link} onPress={(): void => linkAlertButton(node, i18nRenderProp.i18n)}>
+                    <Text key={node.key} style={textStyles.link} onPress={(): void => linkAlertButton(node, i18nRenderProp.i18n)}>
                         {children}
                         <Text>{' '}</Text>
-                        <Icon name='external-link' type='FontAwesome' style={{ fontSize: 12, color: colors.teal }} />
+                        <LinkIcon />
                     </Text>)}
             </I18n>
         );

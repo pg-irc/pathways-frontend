@@ -331,6 +331,11 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
+    link: {
+        fontFamily: getNormalFontFamily(),
+        color: colors.teal,
+        textDecorationLine: 'underline',
+    },
 });
 
 export const applicationStyles = StyleSheet.create({
@@ -485,11 +490,6 @@ export const markdownStyles = StyleSheet.create({
                 lineHeight: 40,
             },
         }),
-    },
-    link: {
-        fontFamily: getNormalFontFamily(),
-        color: colors.teal,
-        textDecorationLine: 'underline',
     },
 });
 
