@@ -1,7 +1,7 @@
 import Constants from 'expo-constants';
 // @ts-ignore variables is exported by native base but is not defined by the types file
 import { Footer, FooterTab, variables } from 'native-base';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import Animated from 'react-native-reanimated';
 
 const HEADER_HEIGHT = 44;
@@ -22,6 +22,14 @@ const getFooterStyles = (): FooterStyles => {
     };
 };
 
+interface ScrollEventMap {
+    readonly nativeEvent: {
+        readonly contentOffset: {
+            readonly y: (y: number) => Animated.Node<number>,
+        },
+    };
+}
+
 export interface FooterStyles {
     readonly height: number;
     readonly paddingBottom: number;
@@ -32,20 +40,7 @@ export interface ScrollAnimationContext {
     readonly animatedFooterBottomPadding: Animated.Node<number>;
     readonly animatedFooterIconVerticalTranslate: Animated.Node<number>;
     readonly animatedHeaderHeight: Animated.Node<number>;
-    readonly getAnimatedFlatListScrollHandler: (onScroll: (e: any) => void) => (...args: readonly any[]) => void;
-}
-
-interface ScrollEventMap {
-    readonly nativeEvent: {
-        readonly contentOffset: {
-            readonly y: (y: number) => Animated.Node<number>,
-        },
-    };
-}
-
-interface EventConfig {
-    readonly listener?: Function;
-    readonly useNativeDriver: boolean;
+    readonly onAnimatedScrollHandler: (...args: readonly any[]) => void;
 }
 
 const { height: footerHeight, paddingBottom: footerPaddingBottom }: FooterStyles = getFooterStyles();
@@ -101,14 +96,13 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         extrapolate: Animated.Extrapolate.CLAMP,
     });
 
-    const getAnimatedFlatListScrollHandler = (onScroll: (e: any) => void): (mapping: readonly ScrollEventMap[], config: EventConfig) => void => {
+    const onAnimatedScrollHandler = useMemo((): (...args: readonly any[]) => void => {
         const eventArgumentMapping: readonly [ScrollEventMap] = [{
             nativeEvent: {
                 contentOffset: {
                     y: (y: number): Animated.Node<number> => (
                         Animated.block([
                             Animated.set(animatedScrollValueRef.current, y),
-                            Animated.call([y], ([offsetY]: readonly number[]): void => onScroll(offsetY)),
                         ])
                     ),
                 },
@@ -116,19 +110,18 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         }];
 
         const eventConfig =  {
-            listener: onScroll,
             useNativeDriver: true,
         };
 
         return Animated.event<ScrollEventMap>(eventArgumentMapping, eventConfig);
-    };
+    }, []);
 
     return {
         animatedFooterHeight,
         animatedFooterBottomPadding,
         animatedFooterIconVerticalTranslate,
         animatedHeaderHeight,
-        getAnimatedFlatListScrollHandler,
+        onAnimatedScrollHandler,
     };
 };
 
