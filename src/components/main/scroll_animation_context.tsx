@@ -81,7 +81,6 @@ function initializeValue<T extends number | boolean | string>(initialValue: T): 
 export const createScrollAnimationContext = (): ScrollAnimationContext => {
     const scrollAnimationState = useMemo(initializeValue<ScrollAnimationState>(ScrollAnimationState.STOP), []);
     const animatedScrollValue = useMemo(initializeValue<number>(0), []);
-    const animatedScrollForResetValue = useMemo(initializeValue<number>(0), []);
     const upwardScrollInterpolatedValue = useMemo(initializeValue<number>(0), []);
     const animatedHeaderHeight = useMemo(initializeValue<number>(TOTAL_HEADER_HEIGHT), []);
     const animatedClampedScrollValue = useMemo(initializeValue<number>(0), []);
@@ -95,7 +94,6 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
                 contentOffset: {
                     y: (y: number): Node<number> => block([
                         set(animatedScrollValue, y),
-                        set(animatedScrollForResetValue, y),
                     ]),
                 },
             },
@@ -145,6 +143,9 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
 
     const resetValues = useMemo((): Node<number> => (
         block([
+            set(animatedScrollValue, 0),
+            set(upwardScrollInterpolatedValue, 0),
+            set(animatedClampedScrollValue, 0),
             set(animatedHeaderHeight, TOTAL_HEADER_HEIGHT),
             set(animatedFooterHeight, footerHeight),
             set(animatedFooterBottomPadding, footerPaddingBottom),

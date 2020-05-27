@@ -87,7 +87,6 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
     }, [props.searchOffset]);
 
     const onScrollEnd = (e: any) => {
-        console.log(e.nativeEvent.contentOffset.y)
         props.setScrollOffset(e.nativeEvent.contentOffset.y);
     };
 
