@@ -13,6 +13,7 @@ import * as search from './search';
 import * as headerMenu from './header_menu';
 import * as feedback from './feedback';
 import * as content from './content';
+import * as listOffset from './list_offset';
 
 export interface Store {
     readonly fonts: fonts.FontsStore;
@@ -29,6 +30,7 @@ export interface Store {
     readonly headerMenu: headerMenu.HeaderMenuStore;
     readonly feedback: feedback.FeedbackStore;
     readonly content: content.AlertsStore;
+    readonly listOffset: listOffset.ListOffsetStore;
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -46,6 +48,7 @@ export const buildDefaultStore = (): Store => ({
     headerMenu: headerMenu.buildDefaultStore(),
     feedback: feedback.buildDefaultStore(),
     content: content.buildDefaultStore(),
+    listOffset: listOffset.buildDefaultStore(),
 });
 
 export const reducer = combineReducers<Store>({
@@ -63,4 +66,5 @@ export const reducer = combineReducers<Store>({
     headerMenu: headerMenu.reducer,
     feedback: feedback.reducer,
     content: content.reducer,
+    listOffset: listOffset.reducer,
 });
