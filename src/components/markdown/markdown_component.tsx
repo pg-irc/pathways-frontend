@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text, Alert, AlertButton, I18nManager } from 'react-native';
-import Markdown, { openUrl } from 'react-native-markdown-renderer';
-import { markdownStyles, alertStyles, textStyles } from '../../application/styles';
+import { Linking } from 'react-native';
+import Markdown from 'react-native-markdown-display';
+import { markdownStyles } from '../../application/styles';
 import { ReactI18n, ReactI18nRenderProp } from '../../locale/types';
 import * as R from 'ramda';
 import { I18n } from '@lingui/react';
@@ -20,14 +21,6 @@ export const MarkdownComponent = (props: Props): JSX.Element => (
     </Markdown>
 );
 
-export const AlertMarkdownComponent = (props: Props): JSX.Element => (
-    <Markdown
-        rules={markdownRules}
-        style={alertStyles}
-    >
-        {props.children}
-    </Markdown>
-);
 // tslint:disable-next-line: no-any
 const linkAlertButton = (node: any, i18n: ReactI18n): void => {
     const _ = i18n._.bind(i18n);
@@ -38,9 +31,9 @@ const linkAlertButton = (node: any, i18n: ReactI18n): void => {
     const alwaysOpenOption = 'Always Open';
     // tslint:disable-next-line: readonly-array
     const buttons: AlertButton[] = [
-        { text: _(alwaysOpenOption), onPress: (): void => openUrl(node.attributes.href) },
+        { text: _(alwaysOpenOption), onPress: (): Promise<void> => Linking.openURL(node.attributes.href) },
         { text: _(cancelOption), style: 'cancel' },
-        { text: _(okOption), onPress: (): void => openUrl(node.attributes.href) },
+        { text: _(okOption), onPress: (): Promise<void> => Linking.openURL(node.attributes.href) },
     ];
     // tslint:disable-next-line: no-expression-statement
     Alert.alert(_(heading), _(message),
@@ -54,7 +47,7 @@ const markdownRules = {
         return (
             <I18n>
                 {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                    <Text key={node.key} style={textStyles.link} onPress={(): void => linkAlertButton(node, i18nRenderProp.i18n)}>
+                    <Text key={node.key} onPress={(): void => linkAlertButton(node, i18nRenderProp.i18n)}>
                         {children}
                         <Text>{' '}</Text>
                         <LinkIcon />

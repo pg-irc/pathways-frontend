@@ -9,7 +9,7 @@ import { textStyles, applicationStyles } from '../../application/styles';
 import { advisor, recommendationBubble } from '../../application/images';
 import { callToActionStyles } from './styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { AlertMarkdownComponent } from '../../../src/components/markdown/markdown_component';
+import { MarkdownComponent } from '../../../src/components/markdown/markdown_component';
 import { Alert } from '../../validation/content/types';
 
 type Props = { readonly history: History };
@@ -40,7 +40,7 @@ const renderAlert = (alert: Alert): JSX.Element => {
             <Text style={textStyles.headlineH2StyleBlackLeft}>
                 {alert.heading}
             </Text>
-            <AlertMarkdownComponent>{alert.content}</AlertMarkdownComponent>
+            <MarkdownComponent>{alert.content}</MarkdownComponent>
         </View>
     );
 };
