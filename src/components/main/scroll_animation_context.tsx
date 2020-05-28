@@ -6,12 +6,15 @@ import Animated, {
     Extrapolate,
     Node,
     Value,
-    cond,
+    add,
     block,
+    cond,
     diffClamp,
     event,
     eq,
     interpolate,
+    max,
+    multiply,
     set,
 } from 'react-native-reanimated';
 
@@ -38,6 +41,11 @@ enum ScrollAnimationState {
     STOP,
 }
 
+enum ToggleOffset {
+    ON,
+    OFF,
+}
+
 export interface FooterStyles {
     readonly height: number;
     readonly paddingBottom: number;
@@ -52,6 +60,7 @@ export interface ScrollAnimationContext {
     readonly onAnimatedScrollHandler: (...args: readonly any[]) => void;
     readonly startScrollAnimation: () => void;
     readonly stopScrollAnimation: () => void;
+    readonly resetFromInput: () => void;
 }
 
 interface ScrollEventMap {
@@ -79,6 +88,9 @@ function initializeValue<T extends number | boolean | string>(initialValue: T): 
 }
 
 export const createScrollAnimationContext = (): ScrollAnimationContext => {
+    const showOffsetFlag = useMemo(initializeValue<number>(ToggleOffset.OFF), []);
+    const showOffsetValue = useMemo(initializeValue<number>(0), []);
+
     const scrollAnimationState = useMemo(initializeValue<ScrollAnimationState>(ScrollAnimationState.STOP), []);
     const animatedScrollValue = useMemo(initializeValue<number>(0), []);
     const animatedHeaderHeight = useMemo(initializeValue<number>(TOTAL_HEADER_HEIGHT), []);
@@ -105,35 +117,65 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         return event<ScrollEventMap>(eventArgumentMapping, eventConfig);
     }, []);
 
-    const scrollInterpolations = useMemo((): Node<number> => (
-        block([
-            set(animatedClampedScrollValue, diffClamp(
-                animatedScrollValue,
-                CLAMPED_SCROLL_LOWER_BOUND,
-                CLAMPED_SCROLL_UPPER_BOUND,
-            )),
-            set(animatedHeaderHeight, interpolate(animatedClampedScrollValue, {
-                inputRange: [0, TOTAL_HEADER_HEIGHT],
-                outputRange: [TOTAL_HEADER_HEIGHT, Constants.statusBarHeight],
-                extrapolate: Extrapolate.CLAMP,
-            })),
-            set(animatedFooterHeight, interpolate(animatedClampedScrollValue, {
-                inputRange: [0, footerHeight],
-                outputRange: [footerHeight, 0],
-                extrapolate: Extrapolate.CLAMP,
-            })),
-            set(animatedFooterBottomPadding, interpolate(animatedClampedScrollValue, {
-                inputRange: [0, footerPaddingBottom],
-                outputRange: [footerPaddingBottom, 0],
-                extrapolate: Extrapolate.CLAMP,
-            })),
-            set(animatedFooterIconVerticalTranslate, interpolate(animatedClampedScrollValue, {
-                inputRange: [footerPaddingBottom, footerHeight],
-                outputRange: [0, footerHeight - FOOTER_ICON_HEIGHT],
-                extrapolate: Extrapolate.CLAMP,
-            })),
-        ])
-    ), []);
+    const scrollInterpolations = useMemo((): Node<number> => {
+        const updateShowOffset =
+            set(
+                showOffsetValue,
+                add(
+                    showOffsetValue,
+                    multiply(max(TOTAL_HEADER_HEIGHT, footerHeight + footerPaddingBottom), -1),
+                ),
+            );
+
+        const turnOffShowOffsetFlag = set(showOffsetFlag, ToggleOffset.OFF);
+
+        const updateOffsetIfToggleIsOn = cond(
+            eq(showOffsetFlag, ToggleOffset.ON),
+            block([
+                updateShowOffset,
+                turnOffShowOffsetFlag,
+            ]),
+        );
+
+        const interpolateHeaderHeight = set(animatedHeaderHeight, interpolate(animatedClampedScrollValue, {
+            inputRange: [0, TOTAL_HEADER_HEIGHT],
+            outputRange: [TOTAL_HEADER_HEIGHT, Constants.statusBarHeight],
+            extrapolate: Extrapolate.CLAMP,
+        }));
+
+        const interpolateFooterHeight = set(animatedFooterHeight, interpolate(animatedClampedScrollValue, {
+            inputRange: [0, footerHeight],
+            outputRange: [footerHeight, 0],
+            extrapolate: Extrapolate.CLAMP,
+        }));
+
+        const interpolateFooterPadding = set(animatedFooterBottomPadding, interpolate(animatedClampedScrollValue, {
+            inputRange: [0, footerPaddingBottom],
+            outputRange: [footerPaddingBottom, 0],
+            extrapolate: Extrapolate.CLAMP,
+        }));
+
+        const interpolateFooterIconTranslation = set(animatedFooterIconVerticalTranslate, interpolate(animatedClampedScrollValue, {
+            inputRange: [footerPaddingBottom, footerHeight],
+            outputRange: [0, footerHeight - FOOTER_ICON_HEIGHT],
+            extrapolate: Extrapolate.CLAMP,
+        }));
+
+        const clampScroll = set(animatedClampedScrollValue, diffClamp(
+            add(animatedScrollValue, showOffsetValue),
+            CLAMPED_SCROLL_LOWER_BOUND,
+            CLAMPED_SCROLL_UPPER_BOUND,
+        ));
+
+        return block([
+            updateOffsetIfToggleIsOn,
+            clampScroll,
+            interpolateHeaderHeight,
+            interpolateFooterHeight,
+            interpolateFooterPadding,
+            interpolateFooterIconTranslation,
+        ]);
+    }, []);
 
     const resetValues = useMemo((): Node<number> => (
         block([
@@ -145,6 +187,11 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
             set(animatedFooterIconVerticalTranslate, 0),
         ])
     ), []);
+
+    const resetFromInput = (): void => {
+        // tslint:disable-next-line: no-expression-statement
+        showOffsetFlag.setValue(ToggleOffset.ON);
+    };
 
     const startScrollAnimation = (): void => {
         // tslint:disable-next-line: no-expression-statement
@@ -169,6 +216,7 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         onAnimatedScrollHandler,
         startScrollAnimation,
         stopScrollAnimation,
+        resetFromInput,
     };
 };
 
