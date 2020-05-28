@@ -40,7 +40,11 @@ const renderAlert = (alert: Alert): JSX.Element => {
             <Text style={textStyles.headlineH2StyleBlackLeft}>
                 {alert.heading}
             </Text>
-            <MarkdownComponent>{alert.content}</MarkdownComponent>
+            <MarkdownComponent
+                disableLinkAlerts={false}
+                setDisableLinkAlerts={(b: boolean): void => console.log(b)}>
+                {alert.content}
+            </MarkdownComponent>
         </View>
     );
 };

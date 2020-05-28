@@ -12,7 +12,9 @@ interface Props {
 
 export const MarkdownBodyComponent = (props: Props): JSX.Element => {
     const body = (
-        <MarkdownComponent>
+        <MarkdownComponent
+            disableLinkAlerts={false}
+            setDisableLinkAlerts={(b: boolean): void => console.log(b)}>
             {props.body}
         </MarkdownComponent>
     );
