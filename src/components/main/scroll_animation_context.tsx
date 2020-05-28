@@ -50,7 +50,7 @@ export interface ScrollAnimationContext {
     readonly animatedFooterIconVerticalTranslate: Node<number>;
     readonly animatedHeaderHeight: Node<number>;
     readonly onAnimatedScrollHandler: (...args: readonly any[]) => void;
-    readonly runScrollAnimation: () => void;
+    readonly startScrollAnimation: () => void;
     readonly stopScrollAnimation: () => void;
 }
 
@@ -146,7 +146,7 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         ])
     ), []);
 
-    const runScrollAnimation = (): void => {
+    const startScrollAnimation = (): void => {
         // tslint:disable-next-line: no-expression-statement
         scrollAnimationState.setValue(ScrollAnimationState.START);
     };
@@ -167,7 +167,7 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         animatedFooterIconVerticalTranslate,
         animatedSearchHeaderAndFooter,
         onAnimatedScrollHandler,
-        runScrollAnimation,
+        startScrollAnimation,
         stopScrollAnimation,
     };
 };

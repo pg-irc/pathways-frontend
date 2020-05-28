@@ -68,7 +68,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
     useEffect((): EffectCallback => {
-        scrollAnimationContext.runScrollAnimation();
+        scrollAnimationContext.startScrollAnimation();
 
         return scrollAnimationContext.stopScrollAnimation;
     }, []);
