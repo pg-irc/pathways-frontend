@@ -46,6 +46,11 @@ enum ToggleOffset {
     OFF,
 }
 
+enum InterpolationState {
+    RUN,
+    PAUSE,
+}
+
 export interface FooterStyles {
     readonly height: number;
     readonly paddingBottom: number;
@@ -61,6 +66,8 @@ export interface ScrollAnimationContext {
     readonly startScrollAnimation: () => void;
     readonly stopScrollAnimation: () => void;
     readonly resetFromInput: () => void;
+    readonly runInterpolations: () => void;
+    readonly pauseInterpolations: () => void;
 }
 
 interface ScrollEventMap {
@@ -99,12 +106,14 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
     const animatedFooterBottomPadding = useMemo(initializeValue<number>(footerPaddingBottom), []);
     const animatedFooterIconVerticalTranslate = useMemo(initializeValue<number>(0), []);
 
+    const interpolationToggle = useMemo(initializeValue<number>(InterpolationState.PAUSE), []);
+
     const onAnimatedScrollHandler = useMemo((): (...args: readonly any[]) => void => {
         const eventArgumentMapping: readonly [ScrollEventMap] = [{
             nativeEvent: {
                 contentOffset: {
                     y: (y: number): Node<number> => block([
-                        set(animatedScrollValue, y),
+                        cond(eq(interpolationToggle, InterpolationState.RUN), set(animatedScrollValue, y)),
                     ]),
                 },
             },
@@ -137,6 +146,14 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
             ]),
         );
 
+        const clampScroll = set(animatedClampedScrollValue,
+            diffClamp(
+                add(animatedScrollValue, showOffsetValue),
+                CLAMPED_SCROLL_LOWER_BOUND,
+                CLAMPED_SCROLL_UPPER_BOUND,
+            ),
+        );
+
         const interpolateHeaderHeight = set(animatedHeaderHeight, interpolate(animatedClampedScrollValue, {
             inputRange: [0, TOTAL_HEADER_HEIGHT],
             outputRange: [TOTAL_HEADER_HEIGHT, Constants.statusBarHeight],
@@ -160,12 +177,6 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
             outputRange: [0, footerHeight - FOOTER_ICON_HEIGHT],
             extrapolate: Extrapolate.CLAMP,
         }));
-
-        const clampScroll = set(animatedClampedScrollValue, diffClamp(
-            add(animatedScrollValue, showOffsetValue),
-            CLAMPED_SCROLL_LOWER_BOUND,
-            CLAMPED_SCROLL_UPPER_BOUND,
-        ));
 
         return block([
             updateOffsetIfToggleIsOn,
@@ -203,6 +214,16 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         scrollAnimationState.setValue(ScrollAnimationState.STOP);
     };
 
+    const runInterpolations = (): void => {
+        // tslint:disable-next-line: no-expression-statement
+        interpolationToggle.setValue(InterpolationState.RUN);
+    };
+
+    const pauseInterpolations = (): void => {
+        // tslint:disable-next-line: no-expression-statement
+        interpolationToggle.setValue(InterpolationState.PAUSE);
+    };
+
     const animatedSearchHeaderAndFooter = useMemo((): Node<number> => (
         cond(eq(scrollAnimationState, ScrollAnimationState.START), scrollInterpolations, resetValues)
     ), []);
@@ -214,9 +235,11 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         animatedFooterIconVerticalTranslate,
         animatedSearchHeaderAndFooter,
         onAnimatedScrollHandler,
+        pauseInterpolations,
+        resetFromInput,
+        runInterpolations,
         startScrollAnimation,
         stopScrollAnimation,
-        resetFromInput,
     };
 };
 

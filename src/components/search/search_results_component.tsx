@@ -72,7 +72,11 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
 
 const renderComponentWithResults = (props: Props): JSX.Element => {
     const flatListRef = useRef<any>();
-    const { onAnimatedScrollHandler }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+    const {
+        onAnimatedScrollHandler,
+        runInterpolations,
+        pauseInterpolations,
+    }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
 
     useEffect((): void => {
         if (props.searchTerm) {
@@ -86,7 +90,12 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         }
     }, [props.searchOffset]);
 
-    const onScrollEnd = (e: any) => {
+    const onScrollBeginDrag = (e: any): void => {
+        runInterpolations();
+    };
+
+    const onScrollEndDrag = (e: any): void => {
+        pauseInterpolations();
         props.setScrollOffset(e.nativeEvent.contentOffset.y);
     };
 
@@ -96,8 +105,9 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
             <AnimatedFlatList
                 bounces={false}
                 ref={flatListRef}
+                onScrollBeginDrag={onScrollBeginDrag}
                 onScroll={onAnimatedScrollHandler}
-                onScrollEndDrag={onScrollEnd}
+                onScrollEndDrag={onScrollEndDrag}
                 initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
                 style={{ backgroundColor: colors.lightGrey, flex: 1  }}
                 data={props.searchResults}
