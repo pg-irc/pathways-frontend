@@ -69,11 +69,16 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     if (isValidEmptyTopicServices(props.topicServicesOrError)) {
         return renderEmptyComponent(props, refreshServices(props));
     }
+    return <ValidServiceListComponent {...props} />;
+};
+
+const ValidServiceListComponent = (props: Props): JSX.Element => {
+    const services = getServicesIfValid(props.topicServicesOrError);
     return (
         <ServiceListWrapper {...props}>
             <FlatList
                 style={{ backgroundColor: colors.lightGrey }}
-                data={getServicesIfValid(props.topicServicesOrError)}
+                data={services}
                 keyExtractor={(service: HumanServiceData): string => service.id}
                 renderItem={renderServiceItems(props)}
                 ItemSeparatorComponent={SearchListSeparator}
