@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { useState, MutableRefObject, useRef } from 'react';
+import React, { MutableRefObject, useRef, useState } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
@@ -84,11 +84,14 @@ export interface CollapsedInputProps {
 }
 
 const CollapsedInput = (props: CollapsedInputProps): JSX.Element => {
+    const onPress = (): void => {
+        props.setCollapseSearchInput(false);
+    };
 
     return (
         <View style={{ padding: 4, backgroundColor: colors.teal }}>
             <TouchableOpacity style={applicationStyles.searchContainerCollapsed}
-                onPress={(): void => props.setCollapseSearchInput(false)}>
+                onPress={onPress}>
                 <InputIcon name='search' />
                 <Text numberOfLines={1} style={[textStyles.paragraphStyle, { flex: 1 }]}>
                     {buildBriefSearchString(props.searchTermInput, props.searchLocationInput)}

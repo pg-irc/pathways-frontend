@@ -1,5 +1,7 @@
 // tslint:disable:no-expression-statement
 import React, { useEffect, EffectCallback } from 'react';
+import { StatusBar } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { Container, Drawer, Root } from 'native-base';
 import { MainPageSwitcherComponent } from './main_page_switcher';
 import { FooterComponent, FooterProps } from './footer_component';
@@ -17,7 +19,6 @@ import {
     OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction,
 } from '../../stores/header_menu';
 import { useHardwareBackButtonPress } from './use_hardware_back_button_press';
-import { StatusBar } from 'react-native';
 import { ScrollContext, createScrollAnimationContext } from './scroll_animation_context';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
@@ -89,6 +90,7 @@ export const MainComponent = (props: Props): JSX.Element => {
             >
                 <Container>
                     <ScrollContext.Provider value={scrollAnimationContext}>
+                        <Animated.Code exec={scrollAnimationContext.animatedSearchHeaderAndFooter} />
                         <MainPageSwitcherComponent {...props} />
                         <FooterComponent {...props} />
                         <AppModalsComponent

@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useContext, useEffect, Dispatch, SetStateAction, useState } from 'react';
+import React, { useContext, useEffect, Dispatch, SetStateAction, useState, EffectCallback } from 'react';
 import { SearchResultsComponent } from './search_results_component';
 import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { View, Text, Header, Left, Right } from 'native-base';
@@ -61,10 +61,17 @@ type Props = SearchComponentProps & SearchComponentActions & RouterProps;
 
 export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
+    const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
     const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
+
+    useEffect((): EffectCallback => {
+        scrollAnimationContext.startScrollAnimation();
+
+        return scrollAnimationContext.stopScrollAnimation;
+    }, []);
 
     const onSearchRequest = async (searchTerm: string, location: string): Promise<void> => {
         props.setCollapseSearchInput(true);
