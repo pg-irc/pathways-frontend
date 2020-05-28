@@ -94,6 +94,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
             {renderLoadingScreen(props.isLoading)}
             <AnimatedFlatList
+                bounces={false}
                 ref={flatListRef}
                 onScroll={onAnimatedScrollHandler}
                 onScrollEndDrag={onScrollEnd}

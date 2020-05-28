@@ -81,7 +81,6 @@ function initializeValue<T extends number | boolean | string>(initialValue: T): 
 export const createScrollAnimationContext = (): ScrollAnimationContext => {
     const scrollAnimationState = useMemo(initializeValue<ScrollAnimationState>(ScrollAnimationState.STOP), []);
     const animatedScrollValue = useMemo(initializeValue<number>(0), []);
-    const upwardScrollInterpolatedValue = useMemo(initializeValue<number>(0), []);
     const animatedHeaderHeight = useMemo(initializeValue<number>(TOTAL_HEADER_HEIGHT), []);
     const animatedClampedScrollValue = useMemo(initializeValue<number>(0), []);
     const animatedFooterHeight = useMemo(initializeValue<number>(footerHeight), []);
@@ -108,13 +107,8 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
 
     const scrollInterpolations = useMemo((): Node<number> => (
         block([
-            set(upwardScrollInterpolatedValue, interpolate(animatedScrollValue, {
-                inputRange: [0, 1],
-                outputRange: [0, 1],
-                extrapolateLeft: Extrapolate.CLAMP,
-            })),
             set(animatedClampedScrollValue, diffClamp(
-                upwardScrollInterpolatedValue,
+                animatedScrollValue,
                 CLAMPED_SCROLL_LOWER_BOUND,
                 CLAMPED_SCROLL_UPPER_BOUND,
             )),
@@ -144,7 +138,6 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
     const resetValues = useMemo((): Node<number> => (
         block([
             set(animatedScrollValue, 0),
-            set(upwardScrollInterpolatedValue, 0),
             set(animatedClampedScrollValue, 0),
             set(animatedHeaderHeight, TOTAL_HEADER_HEIGHT),
             set(animatedFooterHeight, footerHeight),
@@ -163,7 +156,9 @@ export const createScrollAnimationContext = (): ScrollAnimationContext => {
         scrollAnimationState.setValue(ScrollAnimationState.STOP);
     };
 
-    const animatedSearchHeaderAndFooter = useMemo((): Node<number> => cond(eq(scrollAnimationState, 0), scrollInterpolations, resetValues), []);
+    const animatedSearchHeaderAndFooter = useMemo((): Node<number> => (
+        cond(eq(scrollAnimationState, ScrollAnimationState.START), scrollInterpolations, resetValues)
+    ), []);
 
     return {
         animatedHeaderHeight,
