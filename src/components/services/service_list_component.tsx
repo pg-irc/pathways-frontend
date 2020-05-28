@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
 import { FlatList } from 'react-native';
@@ -30,6 +30,7 @@ import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
+import { SaveListOffsetAction } from '../../stores/list_offset';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -37,6 +38,7 @@ export interface ServiceListProps {
     readonly manualUserLocation: UserLocation;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
+    readonly listOffset: number;
 }
 
 export interface ServiceListActions {
@@ -47,6 +49,7 @@ export interface ServiceListActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly saveListOffset: (offset: number) => SaveListOffsetAction;
 }
 
 export interface ServicesUpdater {
@@ -73,10 +76,19 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 };
 
 const ValidServiceListComponent = (props: Props): JSX.Element => {
+    const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
+
+    useEffect((): void => {
+        if (services.length > 0) {
+            flatListRef.current.scrollToOffset({ animated: false, offset: props.listOffset });
+        }
+    });
+
     return (
         <ServiceListWrapper {...props}>
             <FlatList
+                ref={flatListRef}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={services}
                 keyExtractor={(service: HumanServiceData): string => service.id}
