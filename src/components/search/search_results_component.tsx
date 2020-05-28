@@ -90,7 +90,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         }
     }, [props.searchOffset]);
 
-    const onScrollBeginDrag = (e: any): void => {
+    const onScrollBeginDrag = (): void => {
         runInterpolations();
     };
 

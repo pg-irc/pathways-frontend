@@ -134,6 +134,8 @@ export interface ExpandedInputProps {
 }
 
 const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
+    const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+
     const searchTermPlaceholder = t`Search for services`;
     const searchLocationPlaceholder = t`Enter city, address, or postal code`;
     const clearTermInput = (): void => {
@@ -145,6 +147,15 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
         props.setSearchLocationInput('');
         props.setShowMyLocationButton(true);
         props.searchLocationInputRef.current.focus();
+    };
+
+    const onSearchTermInputFocus = (): void => {
+        scrollAnimationContext.resetFromInput();
+    };
+
+    const onLocationInputFocus = (): void => {
+        props.setShowMyLocationButton(true);
+        scrollAnimationContext.resetFromInput();
     };
 
     const getOpacity = (input: string): number => input === '' ? .6 : 1;
@@ -162,6 +173,7 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                                     debug(`SearchInputComponent search text changed to '${text}'`);
                                     props.setSearchTermInput(text);
                                 }}
+                                onFocus={onSearchTermInputFocus}
                                 value={props.searchTermInput}
                                 placeholder={i18n._(searchTermPlaceholder)}
                                 placeholderTextColor={colors.greyishBrown}
@@ -178,7 +190,7 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                                     debug(`SearchInputComponent location text changed to '${text}'`);
                                     props.setSearchLocationInput(text);
                                 }}
-                                onFocus={(): void => props.setShowMyLocationButton(true)}
+                                onFocus={onLocationInputFocus}
                                 value={props.searchLocationInput}
                                 placeholder={i18n._(searchLocationPlaceholder)}
                                 placeholderTextColor={colors.greyishBrown}
