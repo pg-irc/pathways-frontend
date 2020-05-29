@@ -20,6 +20,8 @@ import {
 } from '../../stores/user_experience/actions';
 import { useHardwareBackButtonPress } from './use_hardware_back_button_press';
 import { ScrollContext, createScrollAnimationContext } from './scroll_animation_context';
+import { FeedbackScreen } from '../../stores/feedback/types';
+import { BackAction } from '../../stores/feedback';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -31,6 +33,7 @@ export interface MainComponentActions {
     readonly openAboutModal: () => OpenAboutModalAction;
     readonly closeDisclaimerModal: () => CloseDisclaimerModalAction;
     readonly openDisclaimerModal: () => OpenDisclaimerModalAction;
+    readonly backOutOfFeedbackScreen: () => BackAction;
 }
 
 interface MainProps {
@@ -41,6 +44,7 @@ interface MainProps {
     readonly isHeaderMenuVisible: boolean;
     readonly isAboutModalVisible: boolean;
     readonly isDisclaimerModalVisible: boolean;
+    readonly feedbackScreen: FeedbackScreen;
 }
 
 type Props = MainComponentProps & MainComponentActions;
@@ -51,6 +55,8 @@ export const MainComponent = (props: Props): JSX.Element => {
 
         if (props.isHeaderMenuVisible) {
             props.closeHeaderMenu();
+        } else if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
+            props.backOutOfFeedbackScreen();
         } else {
             goBack(props.history);
         }
