@@ -178,7 +178,7 @@ const renderInvalidSearchLocationSuggestions = (): JSX.Element => (
             {bulletPoint} <Trans>City - "Vancouver"</Trans>
         </Text>
         <Text style={textStyles.paragraphStyleBrown}>
-            {bulletPoint} <Trans>Street - "Kingsway"</Trans>
+            {bulletPoint} <Trans>Street - "1356 Kingsway Vancouver"</Trans>
         </Text>
         <Text style={textStyles.paragraphStyleBrown}>
             {bulletPoint} <Trans>Postal Code - "V5Y 1V4" </Trans>
