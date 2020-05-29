@@ -11,7 +11,7 @@ import { Topic } from '../../selectors/topics/types';
 import { BuildServicesRequestAction, BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { textStyles, colors } from '../../application/styles';
 import { isSelectorErrorServicesForTopic } from '../../selectors/services/is_selector_error_services_for_topic';
-import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
+import { ErrorScreenSwitcherComponent } from '../error_screens/error_screen_switcher_component';
 import { Errors } from '../../validation/errors/types';
 import { UserLocation } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';

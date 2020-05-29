@@ -10,7 +10,7 @@ import {
     noMatchingSearchResults,
     invalidSearchLocation,
 } from '../../application/images';
-import { ErrorScreenComponent } from './ErrorScreenComponent';
+import { ErrorScreenComponent } from './error_screen_component';
 import { AppSettingsButtonComponent, SettingsType } from '../app_settings_button_component';
 import { isAndroid } from '../../application/helpers/is_android';
 import { View, Text } from 'native-base';
