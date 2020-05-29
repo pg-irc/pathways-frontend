@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
 import { FlatList } from 'react-native';
@@ -76,23 +76,31 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 };
 
 const ValidServiceListComponent = (props: Props): JSX.Element => {
+    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.listOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
+    const serviceItemsProps = { ...props, scrollOffset };
 
     useEffect((): void => {
         if (services.length > 0) {
             flatListRef.current.scrollToOffset({ animated: false, offset: props.listOffset });
         }
-    });
+    }, [props.listOffset]);
+
+    // tslint:disable-next-line: no-any
+    const onScrollEnd = (e: any) => {
+        setScrollOffset(e.nativeEvent.contentOffset.y);
+    };
 
     return (
         <ServiceListWrapper {...props}>
             <FlatList
                 ref={flatListRef}
+                onScrollEndDrag={onScrollEnd}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={services}
                 keyExtractor={(service: HumanServiceData): string => service.id}
-                renderItem={renderServiceItems(props)}
+                renderItem={renderServiceItems(serviceItemsProps)}
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={<ListHeaderComponent {...props} />}
             />
