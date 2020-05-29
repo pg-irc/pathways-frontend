@@ -263,7 +263,6 @@ const ServiceDetailHeaderComponent = (props: HeaderProps): JSX.Element => {
             <FeedbackHeaderComponent
                 headerLabel={feedbackHeaderLabel}
                 close={props.close}
-                back={props.back}
             />
         );
     }

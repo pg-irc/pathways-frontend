@@ -149,7 +149,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
 
     return (
         <Container>
-            <HeaderComponent headerLabel={content.header} back={props.back} close={props.close} />
+            <HeaderComponent headerLabel={content.header} close={props.close} />
             <ContentComponent
                 inputLabel={content.label}
                 input={feedback}
