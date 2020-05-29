@@ -6,6 +6,7 @@ import { ClearAllUserDataAction } from './questionnaire/actions';
 export type HideOnboardingAction = Readonly<ReturnType<typeof hideOnboarding>>;
 export type DisableAnalyticsAction = Readonly<ReturnType<typeof disableAnalytics>>;
 export type HidePartialLocalizationMessageAction = Readonly<ReturnType<typeof hidePartialLocalizationMessage>>;
+export type HideLinkAlertsAction = Readonly<ReturnType<typeof hideLinkAlerts>>;
 
 // tslint:disable-next-line:typedef
 export const hideOnboarding = () => (
@@ -22,10 +23,16 @@ export const hidePartialLocalizationMessage = () => (
     helpers.makeAction(constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE)
 );
 
+// tslint:disable-next-line: typedef
+export const hideLinkAlerts = () => (
+    helpers.makeAction(constants.HIDE_LINK_ALERTS)
+);
+
 export type UserProfileAction =
     HideOnboardingAction |
     ClearAllUserDataAction |
     DisableAnalyticsAction |
+    HideLinkAlertsAction |
     DataPersistence.LoadSuccessAction |
     HidePartialLocalizationMessageAction;
 
@@ -33,12 +40,14 @@ export interface UserProfileStore {
     readonly showOnboarding: boolean;
     readonly disableAnalytics: boolean;
     readonly showPartialLocalizationMessage: boolean;
+    readonly showLinkAlerts: boolean;
 }
 
 export const buildDefaultStore = (): UserProfileStore => ({
     showOnboarding: false,
     disableAnalytics: false,
     showPartialLocalizationMessage: true,
+    showLinkAlerts: true,
 });
 
 export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: UserProfileAction): UserProfileStore => {
@@ -62,12 +71,18 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
                 ...store,
                 showPartialLocalizationMessage: false,
             });
+        case constants.HIDE_LINK_ALERTS:
+            return ({
+                ...store,
+                showLinkAlerts: false,
+            });
         case constants.LOAD_USER_DATA_SUCCESS:
             return ({
                 ...store,
                 showOnboarding: action.payload.showOnboarding,
                 disableAnalytics: action.payload.disableAnalytics,
                 showPartialLocalizationMessage: action.payload.showPartialLocalizationMessage,
+                showLinkAlerts: action.payload.showLinkAlerts,
             });
         case constants.CLEAR_ALL_USER_DATA:
             return ({
@@ -75,6 +90,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
                 showOnboarding: true,
                 disableAnalytics: false,
                 showPartialLocalizationMessage: true,
+                showLinkAlerts: true,
             });
         default:
             return store;

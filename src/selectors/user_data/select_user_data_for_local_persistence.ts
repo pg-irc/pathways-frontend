@@ -15,6 +15,7 @@ import { selectSearchLatLong } from '../search/select_search_lat_long';
 import { selectSearchPage } from '../search/select_search_page';
 import { selectNumberOfSearchPages } from '../search/select_number_of_search_pages';
 import { selectSearchOffset } from '../search/select_search_offset';
+import { selectShowLinkAlerts } from '../user_profile/select_show_link_alerts';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedData => ({
     chosenAnswers: getIdsOfChosenAnswers(pickAnswers(appStore)),
@@ -22,6 +23,7 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedDat
     showOnboarding: selectShowOnboarding(appStore),
     bookmarkedServices: selectBookmarkedServiceMap(appStore),
     disableAnalytics: selectDisableAnalytics(appStore),
+    showLinkAlerts: selectShowLinkAlerts(appStore),
     searchTerm: selectSearchTerm(appStore),
     searchLocation: selectSearchLocation(appStore),
     searchLatLong: selectSearchLatLong(appStore),

@@ -16,6 +16,8 @@ type Props = { readonly history: History };
 
 type AlertProps = {
     readonly alerts: ReadonlyArray<Alert>;
+    readonly showLinkAlerts: boolean;
+    readonly hideLinkeAlerts: () => void;
 };
 
 export const AlertComponent = (props: AlertProps): JSX.Element => {
@@ -26,12 +28,12 @@ export const AlertComponent = (props: AlertProps): JSX.Element => {
                 data={props.alerts}
                 keyExtractor={(alert: Alert): string => alert.id}
                 ListEmptyComponent={EmptyComponent}
-                renderItem={({ item }: ListRenderItemInfo<Alert>): JSX.Element => renderAlert(item)} />
+                renderItem={({ item }: ListRenderItemInfo<Alert>): JSX.Element => renderAlert(item, props)} />
         </View>
     );
 };
 
-const renderAlert = (alert: Alert): JSX.Element => {
+const renderAlert = (alert: Alert, props: AlertProps): JSX.Element => {
     return (
         <View style={[
             applicationStyles.boxShadowBelow,
@@ -41,8 +43,8 @@ const renderAlert = (alert: Alert): JSX.Element => {
                 {alert.heading}
             </Text>
             <MarkdownComponent
-                disableLinkAlerts={false}
-                setDisableLinkAlerts={(b: boolean): void => console.log(b)}>
+                showLinkAlerts={props.showLinkAlerts}
+                hideLinkeAlerts={props.hideLinkeAlerts}>
                 {alert.content}
             </MarkdownComponent>
         </View>

@@ -96,6 +96,7 @@ export const setUserDataDefaultValues = (data: any): PersistedData => (
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
         bookmarkedServices: data.bookmarkedServices || {},
         disableAnalytics: typeof data.disableAnalytics === 'undefined' ? false : data.disableAnalytics,
+        showLinkAlerts: typeof data.showLinkAlerts === 'undefined' ? true : data.showLinkAlerts,
         searchTerm: data.searchTerm || '',
         searchPage: typeof data.searchPage === 'undefined' ? 0 : data.searchPage,
         numberOfSearchPages: typeof data.numberOfSearchPages === 'undefined' ? 0 : data.numberOfSearchPages,

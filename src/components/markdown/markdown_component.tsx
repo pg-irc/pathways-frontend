@@ -10,8 +10,8 @@ import { LinkIcon } from '../link_icon_component';
 
 interface Props {
     readonly children: string;
-    readonly disableLinkAlerts: boolean;
-    readonly setDisableLinkAlerts: (b: boolean) => void;
+    readonly showLinkAlerts: boolean;
+    readonly hideLinkeAlerts: () => void;
 }
 
 export const MarkdownComponent = (props: Props): JSX.Element => {
@@ -33,7 +33,7 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
             return (
                 <I18n>
                     {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                        <Text key={node.key} onPress={(): void => linkAlertButton(node, i18nRenderProp.i18n, props.setDisableLinkAlerts)}>
+                        <Text key={node.key} onPress={(): void => linkAlertButton(node, i18nRenderProp.i18n, props.hideLinkeAlerts)}>
                             {children}
                             <Text>{' '}</Text>
                             <LinkIcon />
@@ -42,10 +42,10 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
             );
         },
     };
-    if (props.disableLinkAlerts) {
+    if (props.showLinkAlerts) {
         return (
             <Markdown
-                rules={markdownRules}
+                rules={markdownAlertRules}
                 style={markdownStyles}
             >
                 {props.children}
@@ -55,7 +55,7 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
 
     return (
         <Markdown
-            rules={markdownAlertRules}
+            rules={markdownRules}
             style={markdownStyles}
         >
             {props.children}
@@ -64,7 +64,7 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
 };
 
 // tslint:disable-next-line: no-any
-const linkAlertButton = (node: any, i18n: ReactI18n, setDisableLinkAlerts: (b: boolean) => void): void => {
+const linkAlertButton = (node: any, i18n: ReactI18n, hideLinkeAlerts: () => void): void => {
     const _ = i18n._.bind(i18n);
     const heading = 'Opening External Links';
     const message = 'By clicking on the link, you will be redirected to an external browser on your device.';
@@ -76,7 +76,7 @@ const linkAlertButton = (node: any, i18n: ReactI18n, setDisableLinkAlerts: (b: b
         {
             text: _(alwaysOpenOption), onPress: (): Promise<void> => {
                 // tslint:disable-next-line: no-expression-statement
-                setDisableLinkAlerts(true);
+                hideLinkeAlerts();
                 return Linking.openURL(node.attributes.href);
             },
         },

@@ -13,6 +13,7 @@ export class PersistedDataBuilder {
     showOnboarding: boolean = true;
     bookmarkedServices: ServiceMap = {};
     disableAnalytics: boolean = false;
+    showLinkAlerts: boolean = true;
     searchTerm: string = '';
     searchLocation: string = '';
     searchLatLong: LatLong = undefined;
@@ -49,6 +50,11 @@ export class PersistedDataBuilder {
 
     withDisableAnalytics(disableAnalytics: boolean): PersistedDataBuilder {
         this.disableAnalytics = disableAnalytics;
+        return this;
+    }
+
+    withShowLinkAlerts(showLinkAlerts: boolean): PersistedDataBuilder {
+        this.showLinkAlerts = showLinkAlerts;
         return this;
     }
 
@@ -104,6 +110,7 @@ export class PersistedDataBuilder {
             showOnboarding: this.showOnboarding,
             bookmarkedServices: this.bookmarkedServices,
             disableAnalytics: this.disableAnalytics,
+            showLinkAlerts: this.showLinkAlerts,
             searchTerm: this.searchTerm,
             searchLocation: this.searchLocation,
             searchLatLong: this.searchLatLong,
