@@ -208,12 +208,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         cancelDiscardFeedback={props.cancelDiscardFeedback}
                         resetFeedbackAndUserInput={resetFeedbackAndUserInput}
                     />
-                    <SubmitFeedbackButton
-                        isVisible={isFeedbackInputEnabled}
-                        onPress={onSubmitPress}
-                    />
                 </View>
             </KeyboardAwareScrollView>
+            <SubmitFeedbackButton
+                isVisible={isFeedbackInputEnabled}
+                onPress={onSubmitPress}
+            />
         </View>
     );
 };
