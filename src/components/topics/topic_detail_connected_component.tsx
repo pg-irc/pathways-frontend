@@ -16,6 +16,10 @@ import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/a
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
+import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
+import { BuildServicesRequestAction, buildServicesRequest } from '../../stores/services/actions';
+import { UserLocation } from '../../validation/latlong/types';
+import { Topic } from '../../selectors/topics/types';
 
 type OwnProps = {
     readonly history: History;
@@ -28,6 +32,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps =>
     const savedTasksIdList = pickBookmarkedTopicIds(store);
     const taskIsBookmarked = R.contains(topic.id, savedTasksIdList);
     const showLinkAlert = selectShowLinkAlerts(store);
+    const manualUserLocation = selectManualUserLocation(store);
     return {
         topic,
         taskIsBookmarked,
@@ -35,19 +40,21 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps =>
         showLinkAlert,
         history: ownProps.history,
         location: ownProps.location,
+        manualUserLocation,
     };
 };
 
-type DispatchActions =
+type Actions =
     BookmarkTopicAction |
     UnbookmarkTopicAction |
     ExpandDetailAction |
     CollapseDetailAction |
     AnalyticsLinkPressedAction |
     OpenHeaderMenuAction |
-    HideLinkAlertsAction;
+    HideLinkAlertsAction |
+    BuildServicesRequestAction;
 
-const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TopicDetailActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<Actions>): TopicDetailActions => ({
     bookmarkTopic: (topicId: TaskId): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
     unbookmarkTopic: (topicId: TaskId): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
     onExpand: (contentId: string): ExpandDetailAction => dispatch(expandDetail(contentId)),
@@ -56,6 +63,8 @@ const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TopicDetailAct
         dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     hideLinkAlert: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
+    dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): BuildServicesRequestAction =>
+        dispatch(buildServicesRequest(topic.id, manualUserLocation)),
 });
 
 export const TopicDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TopicDetailComponent);

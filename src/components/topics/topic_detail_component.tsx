@@ -20,6 +20,8 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { HeaderComponent } from '../main/header_component';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { HideLinkAlertsAction } from '../../stores/user_profile';
+import { UserLocation } from '../../validation/latlong/types';
+import { BuildServicesRequestAction } from '../../stores/services/actions';
 
 export interface TopicDetailsProps {
     readonly topic: Topic;
@@ -28,6 +30,7 @@ export interface TopicDetailsProps {
     readonly history: History;
     readonly location: Location;
     readonly showLinkAlert: boolean;
+    readonly manualUserLocation: UserLocation;
 }
 
 export interface TopicDetailActions {
@@ -38,6 +41,7 @@ export interface TopicDetailActions {
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly hideLinkAlert: () => HideLinkAlertsAction;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
 }
 
 type Props = TopicDetailsProps & TopicDetailActions;
@@ -114,5 +118,6 @@ const onServicesTextPress = (props: Props): void => {
     const linkValue = 'Find related services near me';
     const currentPath = props.location.pathname;
     props.analyticsLinkPressed(currentPath, analyticsLinkContext, linkType, linkValue);
+    props.dispatchServicesRequest(props.topic, props.manualUserLocation)
     goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
 };

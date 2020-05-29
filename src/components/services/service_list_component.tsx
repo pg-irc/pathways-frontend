@@ -59,8 +59,6 @@ export interface ServicesUpdater {
 type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterProps;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
-    useEffect(refreshServices(props), [props.manualUserLocation]);
-
     if (isTopicServicesError(props.topicServicesOrError, props.manualUserLocation)) {
         return renderErrorComponent(props, refreshServices(props));
     }
