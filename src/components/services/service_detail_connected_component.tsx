@@ -39,6 +39,8 @@ import {
 import { selectIsSendingFeedback } from '../../selectors/feedback/select_is_sending_feedback';
 import { selectFeedback } from '../../selectors/feedback/select_feedback';
 import { selectFeedbackUserInformation } from '../../selectors/feedback/select_feedback_user_information';
+import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
+import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
     return {
@@ -50,6 +52,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProp
         isSendingFeedback: selectIsSendingFeedback(store),
         feedback: selectFeedback(store),
         userInformation: selectFeedbackUserInformation(store),
+        showLinkAlerts: selectShowLinkAlerts(store),
     };
 };
 
@@ -68,11 +71,12 @@ type Actions =
     DiscardChangesAction |
     BackAction |
     CancelDiscardChangesAction |
-    SendFeedbackAction;
+    SendFeedbackAction |
+    HideLinkAlertsAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions => ({
     analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
-    dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
+        dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
     bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
     unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
@@ -87,6 +91,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     back: (): BackAction => dispatch(back()),
     cancelDiscardFeedback: (): CancelDiscardChangesAction => dispatch(cancelDiscardChanges()),
     sendFeedback: (serviceId: string): SendFeedbackAction => dispatch(sendFeedback(serviceId)),
+    hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
 });
 
 export const ServiceDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceDetailComponent);

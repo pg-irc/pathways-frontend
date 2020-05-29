@@ -6,15 +6,17 @@ interface Props {
     readonly body: string;
     readonly shouldBeExpandable: boolean;
     readonly topicId?: string;
+    readonly showLinkAlerts: boolean;
     readonly onExpand?: () => void;
     readonly onCollapse?: () => void;
+    readonly hideLinkAlerts: () => void;
 }
 
 export const MarkdownBodyComponent = (props: Props): JSX.Element => {
     const body = (
         <MarkdownComponent
-            showLinkAlerts={false}
-            hideLinkeAlerts={(): void => console.log('Todo set up markdown body component')}>
+            showLinkAlerts={props.showLinkAlerts}
+            hideLinkAlerts={props.hideLinkAlerts}>
             {props.body}
         </MarkdownComponent>
     );

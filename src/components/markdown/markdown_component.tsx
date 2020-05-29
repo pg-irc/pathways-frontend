@@ -11,7 +11,7 @@ import { LinkIcon } from '../link_icon_component';
 interface Props {
     readonly children: string;
     readonly showLinkAlerts: boolean;
-    readonly hideLinkeAlerts: () => void;
+    readonly hideLinkAlerts: () => void;
 }
 
 export const MarkdownComponent = (props: Props): JSX.Element => {
@@ -33,7 +33,7 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
             return (
                 <I18n>
                     {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                        <Text key={node.key} onPress={(): void => linkAlertButton(node, i18nRenderProp.i18n, props.hideLinkeAlerts)}>
+                        <Text key={node.key} onPress={(): void => linkAlertButton(node, i18nRenderProp.i18n, props.hideLinkAlerts)}>
                             {children}
                             <Text>{' '}</Text>
                             <LinkIcon />
@@ -64,7 +64,7 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
 };
 
 // tslint:disable-next-line: no-any
-const linkAlertButton = (node: any, i18n: ReactI18n, hideLinkeAlerts: () => void): void => {
+const linkAlertButton = (node: any, i18n: ReactI18n, hideLinkAlerts: () => void): void => {
     const _ = i18n._.bind(i18n);
     const heading = 'Opening External Links';
     const message = 'By clicking on the link, you will be redirected to an external browser on your device.';
@@ -76,7 +76,7 @@ const linkAlertButton = (node: any, i18n: ReactI18n, hideLinkeAlerts: () => void
         {
             text: _(alwaysOpenOption), onPress: (): Promise<void> => {
                 // tslint:disable-next-line: no-expression-statement
-                hideLinkeAlerts();
+                hideLinkAlerts();
                 return Linking.openURL(node.attributes.href);
             },
         },

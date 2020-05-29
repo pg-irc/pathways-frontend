@@ -19,6 +19,7 @@ import * as R from 'ramda';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { HeaderComponent } from '../main/header_component';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { HideLinkAlertsAction } from '../../stores/user_profile';
 
 export interface TopicDetailsProps {
     readonly topic: Topic;
@@ -26,6 +27,7 @@ export interface TopicDetailsProps {
     readonly savedTasksIdList: ReadonlyArray<TaskId>;
     readonly history: History;
     readonly location: Location;
+    readonly showLinkAlert: boolean;
 }
 
 export interface TopicDetailActions {
@@ -35,6 +37,7 @@ export interface TopicDetailActions {
     readonly onCollapse?: (contentId: string) => CollapseDetailAction;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly hideLinkAlert: () => HideLinkAlertsAction;
 }
 
 type Props = TopicDetailsProps & TopicDetailActions;
@@ -48,7 +51,7 @@ export const TopicDetailComponent = (props: Props): JSX.Element => (
             bookmarkTopic={props.bookmarkTopic}
             unbookmarkTopic={props.unbookmarkTopic}
             history={props.history}
-            emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>}/>}
+            emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>} />}
             headerContent={<ListHeaderComponent {...props} />}
             headerContentIdentifier={props.topic.id}
         />
@@ -86,8 +89,10 @@ const ListHeaderComponent = (props: Props): JSX.Element => (
         <TaskDetailContentComponent
             topic={props.topic}
             onServicesTextPress={(): void => onServicesTextPress(props)}
+            showLinkAlert={props.showLinkAlert}
             onExpand={(): ExpandDetailAction => props.onExpand(props.topic.id)}
             onCollapse={(): CollapseDetailAction => props.onCollapse(props.topic.id)}
+            hideLinkAlert={props.hideLinkAlert}
         />
         <Text
             style={[

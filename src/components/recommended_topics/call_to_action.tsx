@@ -17,7 +17,7 @@ type Props = { readonly history: History };
 type AlertProps = {
     readonly alerts: ReadonlyArray<Alert>;
     readonly showLinkAlerts: boolean;
-    readonly hideLinkeAlerts: () => void;
+    readonly hideLinkAlerts: () => void;
 };
 
 export const AlertComponent = (props: AlertProps): JSX.Element => {
@@ -44,7 +44,7 @@ const renderAlert = (alert: Alert, props: AlertProps): JSX.Element => {
             </Text>
             <MarkdownComponent
                 showLinkAlerts={props.showLinkAlerts}
-                hideLinkeAlerts={props.hideLinkeAlerts}>
+                hideLinkAlerts={props.hideLinkAlerts}>
                 {alert.content}
             </MarkdownComponent>
         </View>

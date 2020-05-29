@@ -60,9 +60,14 @@ export const OrganizationDetailComponent = (): JSX.Element => {
 const AboutTab = (): JSX.Element => (
     <Content padder>
         <BannerImageComponent imageSource={undefined} />
-        <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>}/>
-        <TitleComponent title={testOrganization.title.toUpperCase()}/>
-        <MarkdownBodyComponent body={testOrganization.description} shouldBeExpandable={true} />
+        <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
+        <TitleComponent title={testOrganization.title.toUpperCase()} />
+        <MarkdownBodyComponent
+            body={testOrganization.description}
+            shouldBeExpandable={true}
+            //TODO When organization detail page is online connect the following 2 states to the store/persisted data
+            showLinkAlerts={true}
+            hideLinkAlerts={console.log} />
         <DividerComponent />
         <AboutContactDetails />
     </Content>

@@ -52,7 +52,7 @@ import {
     SendFeedbackAction,
 } from '../../stores/feedback';
 import { isAndroid } from '../../application/helpers/is_android';
-import { HeaderComponent as FeedbackHeaderComponent} from '../feedback/header_component';
+import { HeaderComponent as FeedbackHeaderComponent } from '../feedback/header_component';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -63,6 +63,7 @@ export interface ServiceDetailProps {
     readonly isSendingFeedback: boolean;
     readonly feedback: Feedback;
     readonly userInformation: UserInformation;
+    readonly showLinkAlerts: boolean;
 }
 
 export interface ServiceDetailActions {
@@ -81,6 +82,7 @@ export interface ServiceDetailActions {
     readonly back: () => BackAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
     readonly sendFeedback: (serviceId: string) => SendFeedbackAction;
+    readonly hideLinkAlerts: () => void;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
@@ -89,8 +91,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const serviceId = props.match.params.serviceId;
     const isFeedbackInputEnabled = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
-    const [feedbackInput, setFeedbackInput]: readonly[ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] = useState(getEmptyServiceFeedback());
-    const [userInfoInput, setUserInfoInput]: readonly[UserInformation, Dispatch<SetStateAction<UserInformation>>] = useState(getEmptyUserInfo());
+    const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] = useState(getEmptyServiceFeedback());
+    const [userInfoInput, setUserInfoInput]: readonly [UserInformation, Dispatch<SetStateAction<UserInformation>>] = useState(getEmptyUserInfo());
 
     useEffect((): void => {
         switch (props.feedbackScreen) {
@@ -168,7 +170,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         label={<Trans>Description</Trans>}
                         body={props.service.description}
                         isEnabled={isFeedbackInputEnabled}
-                        disabledComponent={<Description description={props.service.description} />}
+                        disabledComponent={
+                            <Description
+                                description={props.service.description}
+                                showLinkAlerts={props.showLinkAlerts}
+                                hideLinkAlerts={props.hideLinkAlerts} />
+                        }
                     />
                     <DividerComponent />
                     <ServiceContactDetails
@@ -309,10 +316,16 @@ const ServiceDetailHeader = (props: {
 
 interface DescriptionProps {
     readonly description: string;
+    readonly showLinkAlerts: boolean;
+    readonly hideLinkAlerts: () => void;
 }
 
 const Description = (props: DescriptionProps): JSX.Element => (
-    <MarkdownBodyComponent body={props.description} shouldBeExpandable={true} />
+    <MarkdownBodyComponent
+        body={props.description}
+        shouldBeExpandable={true}
+        showLinkAlerts={props.showLinkAlerts}
+        hideLinkAlerts={props.hideLinkAlerts} />
 );
 
 interface ServiceContactDetailsProps {
@@ -402,26 +415,26 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <ContentVerificationComponent verificationDate={props.service.lastVerifiedDate} />
         </>
     );
- };
+};
 
-const SuggestAnUpdateButton = (props: { readonly isVisible: boolean, readonly suggestAnUpdate: () => void } ): JSX.Element => {
+const SuggestAnUpdateButton = (props: { readonly isVisible: boolean, readonly suggestAnUpdate: () => void }): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
     return (
-        <View style={{flexDirection: 'row-reverse', marginBottom: 20}}>
-        <TouchableOpacity
-            onPress={props.suggestAnUpdate}
-            style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20 , paddingVertical: 10, paddingHorizontal: 16 }}
-        >
-            <View style={{ flexDirection: 'row'}}>
-                <ServiceDetailIconComponent name={'edit'} />
-                <Text style={[textStyles.paragraphBoldBlackLeft, { marginLeft: 5 }]}>
-                    <Trans>Suggest an update</Trans>
-                </Text>
-            </View>
-        </TouchableOpacity>
-    </View>
+        <View style={{ flexDirection: 'row-reverse', marginBottom: 20 }}>
+            <TouchableOpacity
+                onPress={props.suggestAnUpdate}
+                style={{ borderWidth: 1, borderColor: colors.greyBorder, borderRadius: 20, paddingVertical: 10, paddingHorizontal: 16 }}
+            >
+                <View style={{ flexDirection: 'row' }}>
+                    <ServiceDetailIconComponent name={'edit'} />
+                    <Text style={[textStyles.paragraphBoldBlackLeft, { marginLeft: 5 }]}>
+                        <Trans>Suggest an update</Trans>
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        </View>
     );
 };
 

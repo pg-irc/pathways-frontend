@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): RecommendedTopicsActio
     bookmarkTopic: (topicId: Id): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
     unbookmarkTopic: (topicId: Id): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
-    hideLinkeAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
+    hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
     analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
         dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
 });

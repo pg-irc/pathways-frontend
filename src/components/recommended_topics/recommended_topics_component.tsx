@@ -34,7 +34,7 @@ export interface RecommendedTopicsProps {
 export interface RecommendedTopicsActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
-    readonly hideLinkeAlerts: () => void;
+    readonly hideLinkAlerts: () => void;
 }
 
 type Props = RecommendedTopicsProps & RecommendedTopicsActions & TaskListActions & RouterProps;
@@ -66,7 +66,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             <AlertComponent
                 alerts={props.alerts}
                 showLinkAlerts={props.showLinkAlerts}
-                hideLinkeAlerts={props.hideLinkeAlerts} />
+                hideLinkAlerts={props.hideLinkAlerts} />
             {props.hasChosenAnswers ?
                 <CallToActionPartialComponent {...props} />
                 :

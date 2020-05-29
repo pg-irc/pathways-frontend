@@ -15,12 +15,14 @@ import { MarkdownBodyComponent } from '../content_layout/markdown_body_component
 
 export interface TaskDetailContentProps {
     readonly topic: Topic;
+    readonly showLinkAlert: boolean;
 }
 
 export interface TaskDetailContentActions {
     readonly onServicesTextPress: () => void;
     readonly onExpand: () => void;
     readonly onCollapse: () => void;
+    readonly hideLinkAlert: () => void;
 }
 
 type Props = TaskDetailContentProps & TaskDetailContentActions;
@@ -35,8 +37,10 @@ export const TaskDetailContentComponent: React.StatelessComponent<Props> = (prop
             body={props.topic.description}
             shouldBeExpandable={!!props.topic.relatedTopics.length}
             topicId={props.topic.id}
+            showLinkAlerts={props.showLinkAlert}
             onExpand={props.onExpand}
             onCollapse={props.onCollapse}
+            hideLinkAlerts={props.hideLinkAlert}
         />
         <DividerComponent />
         <ServicesButton {...props} />

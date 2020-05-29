@@ -14,6 +14,8 @@ import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_t
 import { Routes, getParametersFromPath } from '../../application/routing';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/analytics';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
+import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
 
 type OwnProps = {
     readonly history: History;
@@ -25,10 +27,12 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps =>
     const topic = selectCurrentTopic(store, matchParams.topicId);
     const savedTasksIdList = pickBookmarkedTopicIds(store);
     const taskIsBookmarked = R.contains(topic.id, savedTasksIdList);
+    const showLinkAlert = selectShowLinkAlerts(store);
     return {
         topic,
         taskIsBookmarked,
         savedTasksIdList,
+        showLinkAlert,
         history: ownProps.history,
         location: ownProps.location,
     };
@@ -40,7 +44,8 @@ type DispatchActions =
     ExpandDetailAction |
     CollapseDetailAction |
     AnalyticsLinkPressedAction |
-    OpenHeaderMenuAction;
+    OpenHeaderMenuAction |
+    HideLinkAlertsAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TopicDetailActions => ({
     bookmarkTopic: (topicId: TaskId): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
@@ -50,6 +55,7 @@ const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TopicDetailAct
     analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
         dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
+    hideLinkAlert: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
 });
 
 export const TopicDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TopicDetailComponent);
