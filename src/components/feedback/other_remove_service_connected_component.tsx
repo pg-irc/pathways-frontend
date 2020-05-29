@@ -9,7 +9,6 @@ import {
     submit,
     discardChanges,
     DiscardChangesAction,
-    back, BackAction,
     CloseAction,
     close,
     cancelDiscardChanges,
@@ -28,12 +27,11 @@ const mapStateToProps = (store: Store): OtherRemoveServiceState => {
     };
 };
 
-type Actions = SubmitAction | DiscardChangesAction | CloseAction | BackAction | CancelDiscardChangesAction;
+type Actions = SubmitAction | DiscardChangesAction | CloseAction | CancelDiscardChangesAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): OtherRemoveServiceActions => ({
     submitFeedback: (feedback: Feedback): SubmitAction => dispatch(submit(feedback)),
     close: (): CloseAction => dispatch(close()),
-    back: (): BackAction => dispatch(back()),
     discardFeedback: (): DiscardChangesAction => dispatch(discardChanges()),
     cancelDiscardFeedback: (): CancelDiscardChangesAction => dispatch(cancelDiscardChanges()),
 });

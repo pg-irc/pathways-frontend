@@ -21,7 +21,7 @@ import {
 import { useHardwareBackButtonPress } from './use_hardware_back_button_press';
 import { ScrollContext, createScrollAnimationContext } from './scroll_animation_context';
 import { FeedbackScreen } from '../../stores/feedback/types';
-import { BackAction } from '../../stores/feedback';
+import { CloseAction } from '../../stores/feedback';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -33,7 +33,7 @@ export interface MainComponentActions {
     readonly openAboutModal: () => OpenAboutModalAction;
     readonly closeDisclaimerModal: () => CloseDisclaimerModalAction;
     readonly openDisclaimerModal: () => OpenDisclaimerModalAction;
-    readonly backOutOfFeedbackScreen: () => BackAction;
+    readonly backOutOfFeedbackScreen: () => CloseAction;
 }
 
 interface MainProps {

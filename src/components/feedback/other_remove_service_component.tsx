@@ -19,7 +19,7 @@ import { goBack } from '../../application/routing';
 import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
-import { SubmitAction, DiscardChangesAction, CloseAction, BackAction, CancelDiscardChangesAction } from '../../stores/feedback';
+import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAction } from '../../stores/feedback';
 import { DiscardChangesModal } from './discard_changes_modal';
 import { HeaderComponent } from './header_component';
 
@@ -55,7 +55,6 @@ export interface OtherRemoveServiceActions {
     readonly discardFeedback: () => DiscardChangesAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
     readonly close: () => CloseAction;
-    readonly back: () => BackAction;
 }
 
 export type FeedbackOtherRemoveServiceProps = OtherRemoveServiceState & OtherRemoveServiceActions;

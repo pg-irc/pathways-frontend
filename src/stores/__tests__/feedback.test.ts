@@ -2,7 +2,7 @@
 import { reducer, suggestAnUpdate,
     chooseChangeNameOrDetails, chooseRemoveService,
     chooseOtherChanges, submit, discardChanges, close,
-    back, finishFeedback, buildDefaultStore, cancelDiscardChanges } from '../feedback';
+    finishFeedback, buildDefaultStore, cancelDiscardChanges } from '../feedback';
 import { aString, aBoolean } from '../../application/helpers/random_test_values';
 import { FeedbackModal, FeedbackField, ServiceFeedback, FeedbackScreen } from '../feedback/types';
 import { FeedbackStoreBuilder } from './helpers/feedback_store_builder';
@@ -128,10 +128,10 @@ describe('feedback reducer', () => {
         expect(newStore.modal).toEqual(FeedbackModal.None);
     });
 
-    test('backing out brings up confirmation modal', () => {
+    test('closing out brings up confirmation modal', () => {
         const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
         const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
-        const action = back();
+        const action = close();
         const newStore = reducer(oldStore, action);
         expect(newStore.screen).toEqual(oldScreen);
         expect(newStore.modal).toEqual(FeedbackModal.ConfirmDiscardChangesModal);

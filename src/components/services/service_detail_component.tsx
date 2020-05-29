@@ -47,7 +47,6 @@ import {
     DiscardChangesAction,
     getEmptyServiceFeedback,
     getEmptyUserInfo,
-    BackAction,
     CancelDiscardChangesAction,
     SendFeedbackAction,
 } from '../../stores/feedback';
@@ -79,7 +78,6 @@ export interface ServiceDetailActions {
     readonly finishFeedback: (userInformation: UserInformation) => FinishAction;
     readonly close: () => CloseAction;
     readonly discardFeedback: () => DiscardChangesAction;
-    readonly back: () => BackAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
     readonly sendFeedback: (serviceId: string) => SendFeedbackAction;
     readonly hideLinkAlerts: () => void;
@@ -136,7 +134,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 unbookmarkService={props.unbookmarkService}
                 openHeaderMenu={props.openHeaderMenu}
                 close={props.close}
-                back={props.back}
             />
             <KeyboardAwareScrollView
                 enableResetScrollToCoords={false}
@@ -252,7 +249,6 @@ interface HeaderProps {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly close: () => CloseAction;
-    readonly back: () => BackAction;
 }
 
 const feedbackHeaderLabel = t`Change name or other details`;
