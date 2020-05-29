@@ -167,11 +167,11 @@ const renderErrorComponent = (props: Props): JSX.Element => {
     if (isOffline(props.onlineStatus)) {
         return renderComponentByErrorType(props, Errors.Offline);
     }
-    if (hasNoResultsFromSearchTermQuery(props.searchResults)) {
-        return renderComponentByErrorType(props, Errors.NoMatchingSearchResults);
-    }
     if (hasNoResultsFromLocationQuery(props.searchLatLong)) {
         return renderComponentByErrorType(props, Errors.InvalidSearchLocation);
+    }
+    if (hasNoResultsFromSearchTermQuery(props.searchResults)) {
+        return renderComponentByErrorType(props, Errors.NoMatchingSearchResults);
     }
     return renderComponentByErrorType(props, Errors.Exception);
 };
