@@ -5,7 +5,7 @@ import { PhoneNumber } from '../../validation/services/types';
 import { CardButtonComponent } from '../card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles } from '../../application/styles';
-import { openURL, LinkTypes } from '../link/link';
+import { openURL, LinkTypes } from '../link/link_component';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import * as R from 'ramda';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';

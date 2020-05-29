@@ -1,12 +1,12 @@
 import React from 'react';
-import { Text, Alert, AlertButton, I18nManager } from 'react-native';
+import { Text } from 'react-native';
 import { Linking } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import { markdownStyles } from '../../application/styles';
-import { ReactI18n, ReactI18nRenderProp } from '../../locale/types';
-import * as R from 'ramda';
+import { ReactI18nRenderProp } from '../../locale/types';
 import { I18n } from '@lingui/react';
-import { LinkIcon } from '../link_icon_component';
+import { LinkIcon } from '../link/link_icon_component';
+import { alertOnLinkClicked } from '../link/link_component';
 
 interface Props {
     readonly children: string;
@@ -33,7 +33,7 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
             return (
                 <I18n>
                     {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                        <Text key={node.key} onPress={(): void => linkAlertButton(node, i18nRenderProp.i18n, props.hideLinkAlerts)}>
+                        <Text key={node.key} onPress={(): void => alertOnLinkClicked(node, i18nRenderProp.i18n, props.hideLinkAlerts)}>
                             {children}
                             <Text>{' '}</Text>
                             <LinkIcon />
@@ -60,31 +60,5 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
         >
             {props.children}
         </Markdown>
-    );
-};
-
-// tslint:disable-next-line: no-any
-const linkAlertButton = (node: any, i18n: ReactI18n, hideLinkAlerts: () => void): void => {
-    const _ = i18n._.bind(i18n);
-    const heading = 'Opening External Links';
-    const message = 'By clicking on the link, you will be redirected to an external browser on your device.';
-    const okOption = 'OK';
-    const cancelOption = 'Cancel';
-    const alwaysOpenOption = 'Always Open';
-    // tslint:disable-next-line: readonly-array
-    const buttons: AlertButton[] = [
-        {
-            text: _(alwaysOpenOption), onPress: (): Promise<void> => {
-                // tslint:disable-next-line: no-expression-statement
-                hideLinkAlerts();
-                return Linking.openURL(node.attributes.href);
-            },
-        },
-        { text: _(cancelOption), style: 'cancel' },
-        { text: _(okOption), onPress: (): Promise<void> => Linking.openURL(node.attributes.href) },
-    ];
-    // tslint:disable-next-line: no-expression-statement
-    Alert.alert(_(heading), _(message),
-        I18nManager.isRTL ? R.reverse(buttons) : buttons,
     );
 };

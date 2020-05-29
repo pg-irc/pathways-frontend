@@ -28,7 +28,7 @@ import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
-import { openURL } from '../link/link';
+import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
 
 export interface ServiceListProps {

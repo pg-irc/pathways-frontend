@@ -10,7 +10,7 @@ import { ClearInputButton } from './clear_input_button';
 import * as IntentLauncher from 'expo-intent-launcher';
 import * as Permissions from 'expo-permissions';
 import { isAndroid } from '../../application/helpers/is_android';
-import { openURL } from '../link/link';
+import { openURL } from '../link/link_component';
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';

@@ -4,9 +4,8 @@ import { Trans } from '@lingui/react';
 import { Content, Text, View } from 'native-base';
 import { ParagraphComponent } from '../paragraph/paragraph_component';
 import { values, colors, textStyles } from '../../application/styles';
-import { Link } from '../link/link';
+import { Link } from '../link/link_component';
 import { CloseButtonComponent } from '../close_button_component';
-import { LinkIcon } from '../link_icon_component';
 
 type Props = {
     readonly isVisible: boolean;
@@ -31,9 +30,9 @@ export const DisclaimerComponent: React.StatelessComponent<Props> = (props: Prop
                     <ParagraphComponent>
                         <Trans>
                             Arrival Advisor contains information from the BC Government’s Newcomer’s Guide, available
-                            at <Link href={welcomeBcUrl} style={textStyles.link} >www.welcomebc.ca</Link><LinkIcon />,
+                            at <Link href={welcomeBcUrl} style={textStyles.link} >www.welcomebc.ca</Link>,
                             and the BC211 database of service providers, available at <Link href={bc211Url}
-                                style={textStyles.link} >www.bc211.ca</Link><LinkIcon />.
+                                style={textStyles.link} >www.bc211.ca</Link>.
                         </Trans>
                     </ParagraphComponent>
                     <ParagraphComponent>

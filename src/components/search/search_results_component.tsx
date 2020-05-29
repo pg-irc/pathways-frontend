@@ -23,7 +23,7 @@ import { Errors } from '../../validation/errors/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { LatLong } from '../../validation/latlong/types';
-import { openURL } from '../link/link';
+import { openURL } from '../link/link_component';
 import buildUrl from 'build-url';
 import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
@@ -109,7 +109,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
                 onScroll={onAnimatedScrollHandler}
                 onScrollEndDrag={onScrollEndDrag}
                 initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
-                style={{ backgroundColor: colors.lightGrey, flex: 1  }}
+                style={{ backgroundColor: colors.lightGrey, flex: 1 }}
                 data={props.searchResults}
                 keyExtractor={keyExtractor}
                 renderItem={renderSearchHit(props)}
