@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { MutableRefObject, useRef, useState } from 'react';
+import React, { MutableRefObject, useContext, useRef, useState } from 'react';
 import { TextInput, TouchableOpacity } from 'react-native';
 import { View, Icon, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
@@ -13,6 +13,7 @@ import { isAndroid } from '../../application/helpers/is_android';
 import { openURL } from '../link/link';
 import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
 import { BooleanSetterFunction, StringSetterFunction } from './search_component';
 import { toLocationForQuery, MY_LOCATION_MESSAGE_DESCRIPTOR } from '../partial_localization/to_location_for_query';
 
@@ -84,7 +85,10 @@ export interface CollapsedInputProps {
 }
 
 const CollapsedInput = (props: CollapsedInputProps): JSX.Element => {
+    const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+
     const onPress = (): void => {
+        scrollAnimationContext.resetFromInput();
         props.setCollapseSearchInput(false);
     };
 
@@ -130,6 +134,8 @@ export interface ExpandedInputProps {
 }
 
 const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
+    const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
+
     const searchTermPlaceholder = t`Search for services`;
     const searchLocationPlaceholder = t`Enter city, address, or postal code`;
     const clearTermInput = (): void => {
@@ -141,6 +147,15 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
         props.setSearchLocationInput('');
         props.setShowMyLocationButton(true);
         props.searchLocationInputRef.current.focus();
+    };
+
+    const onSearchTermInputFocus = (): void => {
+        scrollAnimationContext.resetFromInput();
+    };
+
+    const onLocationInputFocus = (): void => {
+        props.setShowMyLocationButton(true);
+        scrollAnimationContext.resetFromInput();
     };
 
     const getOpacity = (input: string): number => input === '' ? .6 : 1;
@@ -158,6 +173,7 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                                     debug(`SearchInputComponent search text changed to '${text}'`);
                                     props.setSearchTermInput(text);
                                 }}
+                                onFocus={onSearchTermInputFocus}
                                 value={props.searchTermInput}
                                 placeholder={i18n._(searchTermPlaceholder)}
                                 placeholderTextColor={colors.greyishBrown}
@@ -174,7 +190,7 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                                     debug(`SearchInputComponent location text changed to '${text}'`);
                                     props.setSearchLocationInput(text);
                                 }}
-                                onFocus={(): void => props.setShowMyLocationButton(true)}
+                                onFocus={onLocationInputFocus}
                                 value={props.searchLocationInput}
                                 placeholder={i18n._(searchLocationPlaceholder)}
                                 placeholderTextColor={colors.greyishBrown}
