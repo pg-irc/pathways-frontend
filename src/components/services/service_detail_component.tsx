@@ -452,7 +452,11 @@ const SubmitFeedbackButton = (props: { readonly isVisible: boolean, readonly onP
     }
     return (
         <TouchableOpacity
-            style={[applicationStyles.tealButton, { paddingVertical: 12, marginHorizontal: 24 }]}
+            style={[applicationStyles.tealButton, {
+                paddingVertical: 12,
+                marginTop: 12,
+                marginBottom: 12,
+                marginHorizontal: 24 }]}
             onPress={props.onPress}
         >
             <Text style={textStyles.tealButton}>
