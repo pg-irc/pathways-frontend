@@ -54,8 +54,8 @@ const HeaderComponent = (props: { readonly onClosePress: () => void }): JSX.Elem
 const ButtonsComponent = (props: ButtonsComponentProps): JSX.Element => (
     <View style={{ marginHorizontal: 10 }}>
        <OptionButton name={<Trans>Change name or other details</Trans>} onPress={props.onChangeNameOrOtherDetailPress}/>
-       <OptionButton name={<Trans>Remove this service</Trans>} onPress={props.onChooseRemoveServicePress}/>
-       <OptionButton name={<Trans>Other</Trans>} onPress={props.onChooseOtherChangesPress}/>
+       <OptionButton name={<Trans>This service no longer exists</Trans>} onPress={props.onChooseRemoveServicePress}/>
+       <OptionButton name={<Trans>Give other feedback about this service</Trans>} onPress={props.onChooseOtherChangesPress}/>
     </View>
 );
 

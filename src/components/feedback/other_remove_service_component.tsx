@@ -62,13 +62,13 @@ export type FeedbackOtherRemoveServiceProps = OtherRemoveServiceState & OtherRem
 
 const SUGGESTION_CONTENT: SuggestionContentMap = {
     OTHER: {
-        header: t`Other`,
+        header: t`Other feedback about this service.`,
         label: t`Tell us more about this service`,
         placeholder: t`Comment or suggest edits`,
     },
     REMOVE_SERVICE: {
-        header: t`Remove Service`,
-        label: t`What is your reason for removal?`,
+        header: t`This service no longer exists.`,
+        label: t`Provide any additional information (optional)`,
         placeholder: t`e.g. Service is permanently closed`,
     },
 };
