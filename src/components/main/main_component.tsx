@@ -98,7 +98,11 @@ export const MainComponent = (props: Props): JSX.Element => {
                     <ScrollContext.Provider value={scrollAnimationContext}>
                         <Animated.Code exec={scrollAnimationContext.animatedSearchHeaderAndFooter} />
                         <MainPageSwitcherComponent {...props} />
-                        <FooterComponent {...props} />
+                        <FooterComponent
+                            history={props.history}
+                            location={props.location}
+                            feedbackScreen={props.feedbackScreen}
+                        />
                         <AppModalsComponent
                             isAboutModalVisible={props.isAboutModalVisible}
                             isDisclaimerModalVisible={props.isDisclaimerModalVisible}
