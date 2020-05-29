@@ -52,11 +52,7 @@ export interface ServiceListActions {
     readonly saveListOffset: (offset: number) => SaveListOffsetAction;
 }
 
-export interface ServicesUpdater {
-    readonly dispatchServicesRequest: () => BuildServicesRequestAction;
-}
-
-type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterProps;
+type Props = ServiceListProps & ServiceListActions & RouterProps;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
     if (isTopicServicesError(props.topicServicesOrError, props.manualUserLocation)) {
@@ -130,7 +126,7 @@ const ListHeaderComponent = (props: Props): JSX.Element => {
 
 const refreshServices = (props: Props): () => void => (
     (): void => {
-        props.dispatchServicesRequest();
+        props.dispatchServicesRequest(props.topic, props.manualUserLocation);
     }
 );
 
@@ -179,11 +175,12 @@ const renderEmptyComponent = (props: Props, refreshScreen: () => void): JSX.Elem
 
 const renderHeader = (props: Props): JSX.Element => (
     <ServiceListHeaderComponent
-        topicTitle={props.topic.title}
+        topic={props.topic}
         manualUserLocation={props.manualUserLocation}
         setManualUserLocation={props.setManualUserLocation}
         history={props.history}
         openHeaderMenu={props.openHeaderMenu}
+        dispatchServicesRequest={props.dispatchServicesRequest}
     />
 );
 
@@ -214,11 +211,12 @@ const isInitialEmptyTopicServices = (topicServicesOrError: SelectorTopicServices
 );
 
 interface ServiceListHeaderComponentProps {
-    readonly topicTitle: string;
+    readonly topic: Topic;
     readonly manualUserLocation: UserLocation;
     readonly history: History;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;
 }
 
 export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => (
@@ -236,11 +234,13 @@ export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProp
             }}
         >
             <Text style={[textStyles.headlineH2StyleWhiteLeft, { paddingHorizontal: 10, marginBottom: 10 }]}>
-                {props.topicTitle}
+                {props.topic.title}
             </Text>
             <ServiceListLocationSearchComponent
+                topic={props.topic}
                 manualUserLocation={props.manualUserLocation}
                 setManualUserLocation={props.setManualUserLocation}
+                dispatchServicesRequest={props.dispatchServicesRequest}
             />
         </View>
     </View>

@@ -6,9 +6,7 @@ import { selectCurrentTopic } from '../../selectors/topics/select_current_topic'
 import { Topic } from '../../selectors/topics/types';
 import { selectServicesForTopic } from '../../selectors/services/select_services_for_topic';
 import {
-    ServiceListComponent, ServiceListProps,
-    ServiceListActions, ServicesUpdater,
-} from './service_list_component';
+    ServiceListComponent, ServiceListProps, ServiceListActions } from './service_list_component';
 import { RouterProps } from '../../application/routing';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
 import { UserLocation } from '../../validation/latlong/types';
@@ -48,13 +46,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): ServiceListActions => (
     saveListOffset: (offset: number): SaveListOffsetAction => dispatch(saveListOffset(offset)),
 });
 
-type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;
-
-const mergeProps = (stateProps: ServiceListProps, dispatchProps: ServiceListActions, ownProps: RouterProps): ComponentProps => ({
-    ...stateProps, ...dispatchProps, ...ownProps,
-    dispatchServicesRequest: (): actions.BuildServicesRequestAction => {
-        return dispatchProps.dispatchServicesRequest(stateProps.topic, stateProps.manualUserLocation);
-    },
-});
-
-export const ServiceListConnectedComponent = connect(mapStateToProps, mapDispatchToProps, mergeProps)(ServiceListComponent);
+export const ServiceListConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceListComponent);
