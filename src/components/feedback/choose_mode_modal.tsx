@@ -33,7 +33,6 @@ export const ChooseModeModal = (props: Props): JSX.Element => (
            <ButtonsComponent {...props} />
            <DividerComponent />
            <SubtitleComponent />
-           <DividerComponent />
         </View>
     </Modal>
 );
