@@ -14,6 +14,7 @@ import * as headerMenu from './header_menu';
 import * as feedback from './feedback';
 import * as content from './content';
 import * as listOffset from './list_offset';
+import * as bookmarksTab from './bookmarks_tab';
 
 export interface Store {
     readonly fonts: fonts.FontsStore;
@@ -31,6 +32,7 @@ export interface Store {
     readonly feedback: feedback.FeedbackStore;
     readonly content: content.AlertsStore;
     readonly listOffset: listOffset.ListOffsetStore;
+    readonly bookmarksTab: bookmarksTab.BookmarksTabStore;
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -49,6 +51,7 @@ export const buildDefaultStore = (): Store => ({
     feedback: feedback.buildDefaultStore(),
     content: content.buildDefaultStore(),
     listOffset: listOffset.buildDefaultStore(),
+    bookmarksTab: bookmarksTab.buildDefaultStore(),
 });
 
 export const reducer = combineReducers<Store>({
@@ -67,4 +70,5 @@ export const reducer = combineReducers<Store>({
     feedback: feedback.reducer,
     content: content.reducer,
     listOffset: listOffset.reducer,
+    bookmarksTab: bookmarksTab.reducer,
 });
