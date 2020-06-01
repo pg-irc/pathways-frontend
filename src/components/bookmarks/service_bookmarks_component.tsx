@@ -42,6 +42,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
     const onScrollEnd = (e: any) => {
         setScrollOffset(e.nativeEvent.contentOffset.y);
     };
+
     return (
         <FlatList
             ref={flatListRef}

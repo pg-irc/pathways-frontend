@@ -32,20 +32,20 @@ export const TabSwitcher = (props: Props): JSX.Element => {
             return (
                 <TopicBookmarksComponent
                     bookmarkedTopics={props.bookmarkedTopics}
+                    history={props.history}
                     bookmarkTopic={props.bookmarkTopic}
                     unbookmarkTopic={props.unbookmarkTopic}
-                    history={props.history}
                 />
             );
           case 'services':
             return (
                 <ServiceBookmarksComponent
                     bookmarkedServices={props.bookmarkedServices}
+                    history={props.history}
+                    listOffset={props.listOffset}
                     bookmarkService={props.bookmarkService}
                     unbookmarkService={props.unbookmarkService}
                     openServiceDetail={props.openServiceDetail}
-                    history={props.history}
-                    listOffset={props.listOffset}
                     saveListOffset={props.saveListOffset}
                 />
             );
@@ -74,6 +74,7 @@ export const TabSwitcher = (props: Props): JSX.Element => {
 export interface NavigationStateRoute {
     readonly navigationState: NavigationState<Route>;
 }
+
 type TabBarProps = SceneRendererProps & NavigationStateRoute;
 
 const renderTabBar = (tabBarProps: TabBarProps): JSX.Element => (
