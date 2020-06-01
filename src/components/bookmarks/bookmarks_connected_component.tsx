@@ -10,15 +10,18 @@ import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { ServiceBookmarksActions } from './service_bookmarks_component';
+import { selectBookmarksTab } from '../../selectors/bookmarks_tab/select_bookmarks_tab';
+import { SetBookmarksTabAction, setBookmarksTab } from '../../stores/bookmarks_tab';
 
 const mapStateToProps = (store: Store): BookmarksProps => ({
     bookmarkedServices: selectBookmarkedServices(store),
     bookmarkedTopics: selectBookmarkedTopics(store),
+    bookmarksTab: selectBookmarksTab(store),
 });
 
 type ServiceDispatchActions = BookmarkServiceAction | UnbookmarkServiceAction;
 type TopicDispatchActions = BookmarkTopicAction | UnbookmarkTopicAction;
-type Actions = ServiceDispatchActions | TopicDispatchActions | OpenHeaderMenuAction | OpenServiceAction;
+type Actions = ServiceDispatchActions | TopicDispatchActions | OpenHeaderMenuAction | OpenServiceAction | SetBookmarksTabAction;
 
 export type ListActions = TaskListActions & ServiceBookmarksActions & BookmarkActions;
 
@@ -29,6 +32,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ListActions => ({
     unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
     openServiceDetail: (service: HumanServiceData): OpenServiceAction => dispatch(openServiceDetail(service)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
+    setBookmarksTab: (index: number): SetBookmarksTabAction => dispatch(setBookmarksTab(index)),
 });
 
 export const BookmarksConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(BookmarksComponent);

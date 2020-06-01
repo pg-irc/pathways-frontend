@@ -10,15 +10,18 @@ import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header
 import { ListActions } from './bookmarks_connected_component';
 import { OpenServiceAction } from '../../stores/services/actions';
 import { History } from 'history';
+import { BookmarksTabStore, SetBookmarksTabAction } from '../../stores/bookmarks_tab';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
+    readonly bookmarksTab: BookmarksTabStore;
 }
 
 export interface BookmarkActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
+    readonly setBookmarksTab: (index: number) => SetBookmarksTabAction;
 }
 
 interface OwnProps {
@@ -37,16 +40,18 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
         <I18n>
             {({i18n}: { readonly i18n: I18n }): JSX.Element => (
                 <TabSwitcher
+                    bookmarksTab={props.bookmarksTab}
                     i18n={i18n}
                     bookmarkedTopics={props.bookmarkedTopics}
                     bookmarkedServices={props.bookmarkedServices}
+                    history={props.history}
                     bookmarkTopic={props.bookmarkTopic}
                     unbookmarkTopic={props.unbookmarkTopic}
                     bookmarkService={props.bookmarkService}
                     unbookmarkService={props.unbookmarkService}
                     openServiceDetail={props.openServiceDetail}
                     openHeaderMenu={props.openHeaderMenu}
-                    history={props.history}
+                    setBookmarksTab={props.setBookmarksTab}
                 />
             )}
         </I18n>

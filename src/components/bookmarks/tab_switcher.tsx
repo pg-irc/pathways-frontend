@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TopicBookmarksComponent } from './topic_bookmarks_component';
 import { ServiceBookmarksComponent } from './service_bookmarks_component';
 import { TabView, TabBar, SceneRendererProps, NavigationState, Route } from 'react-native-tab-view';
@@ -26,8 +26,6 @@ export const TabSwitcher = (props: Props): JSX.Element => {
         { key: 'services', title: props.i18n._(t`Services`) },
     ];
 
-    const [index, setIndex]: readonly [number, (n: number) => void] = useState(0);
-
     const renderScene = ({ route }: { readonly route: Route}): JSX.Element => {
         switch (route.key) {
           case 'topics':
@@ -53,13 +51,17 @@ export const TabSwitcher = (props: Props): JSX.Element => {
             return <EmptyComponent />;
         }
       };
+    const onIndexChange = (index: number): void => {
+        // tslint:disable-next-line: no-expression-statement
+        props.setBookmarksTab(index);
+    };
 
     return (
         <TabView
-            navigationState={{ index, routes }}
+            navigationState={{ index: props.bookmarksTab, routes }}
             renderScene={renderScene}
             renderTabBar={renderTabBar}
-            onIndexChange={setIndex}
+            onIndexChange={onIndexChange}
             style={{backgroundColor: colors.white}}
             initialLayout={{ width: Dimensions.get('window').width }}
             sceneContainerStyle={{backgroundColor: colors.lightGrey}}
