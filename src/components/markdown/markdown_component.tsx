@@ -31,9 +31,9 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
         // tslint:disable-next-line:no-any
         link: (node: any, children: any): JSX.Element => {
             return (
-                <I18n>
+                <I18n key={node.key}>
                     {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                        <Text key={node.key} onPress={(): void => alertOnLinkClicked(node, i18nRenderProp.i18n, props.hideLinkAlerts)}>
+                        <Text onPress={(): void => alertOnLinkClicked(node, i18nRenderProp.i18n, props.hideLinkAlerts)}>
                             {children}
                             <Text>{' '}</Text>
                             <LinkIcon />
