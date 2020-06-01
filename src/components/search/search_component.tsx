@@ -32,7 +32,6 @@ export interface SearchComponentProps {
     readonly searchLatLong: LatLong;
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
-    readonly searchOffset: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
     readonly listOffset: number;
@@ -49,7 +48,6 @@ export interface SearchComponentActions {
     readonly saveSearchLatLong: (searchLatLong: LatLong) => actions.SaveSearchLatLongAction;
     readonly saveSearchPage: (searchPage: number) => actions.SaveSearchPageAction;
     readonly saveNumberOfSearchPages: (numberOfSearchPages: number) => actions.SaveNumberOfSearchPagesAction;
-    readonly saveSearchOffset: (index: number) => actions.SaveSearchOffsetAction;
     readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => actions.SaveSearchResultsAction;
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => actions.SetCollapseSearchInputAction;
     readonly searchExecuted: (searchTerm: string, searchLocation: string) => SearchExecutedAction;

@@ -14,7 +14,6 @@ import { selectSearchResults } from '../search/select_search_results';
 import { selectSearchLatLong } from '../search/select_search_lat_long';
 import { selectSearchPage } from '../search/select_search_page';
 import { selectNumberOfSearchPages } from '../search/select_number_of_search_pages';
-import { selectSearchOffset } from '../search/select_search_offset';
 import { selectShowLinkAlerts } from '../user_profile/select_show_link_alerts';
 
 export const selectUserDataForLocalPersistence = (appStore: Store): PersistedData => ({
@@ -28,7 +27,6 @@ export const selectUserDataForLocalPersistence = (appStore: Store): PersistedDat
     searchLocation: selectSearchLocation(appStore),
     searchLatLong: selectSearchLatLong(appStore),
     searchPage: selectSearchPage(appStore),
-    searchOffset: selectSearchOffset(appStore),
     numberOfSearchPages: selectNumberOfSearchPages(appStore),
     searchResults: selectSearchResults(appStore),
     collapseSearchInput: selectIsInputCollapsed(appStore),

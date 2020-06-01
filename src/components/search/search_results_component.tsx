@@ -45,7 +45,6 @@ export interface SearchResultsProps {
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
     readonly scrollOffset: number;
-    readonly searchOffset: number;
     readonly onlineStatus: OnlineStatus;
     readonly listOffset: number;
 }
@@ -54,7 +53,6 @@ export interface SearchResultsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly setScrollOffset: (index: number) => void;
-    readonly saveSearchOffset: (index: number) => void;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
     readonly saveListOffset: (offset: number) => SaveListOffsetAction;
