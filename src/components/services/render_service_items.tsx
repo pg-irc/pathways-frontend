@@ -14,9 +14,8 @@ export interface ServiceItemsProps {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
-    // TO DO make below properties mandatory. Doing this to keep commit small
-    readonly scrollOffset?: number;
-    readonly saveListOffset?: (offset: number) => SaveListOffsetAction;
+    readonly scrollOffset: number;
+    readonly saveListOffset: (offset: number) => SaveListOffsetAction;
 }
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
