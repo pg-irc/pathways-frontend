@@ -19,6 +19,8 @@ import { selectSearchResults } from '../../selectors/search/select_search_result
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { selectListOffset } from '../../selectors/list_offset.ts/select_list_offset';
+import { SaveListOffsetAction, saveListOffset } from '../../stores/list_offset';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
@@ -30,6 +32,7 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     searchResults: selectSearchResults(store),
     searchLatLong: selectSearchLatLong(store),
     collapseSearchInput: selectIsInputCollapsed(store),
+    listOffset: selectListOffset(store),
 });
 
 type Actions =
@@ -47,7 +50,8 @@ type Actions =
     searchActions.SaveSearchOffsetAction |
     searchActions.SetCollapseSearchInputAction |
     SearchExecutedAction |
-    OpenHeaderMenuAction;
+    OpenHeaderMenuAction |
+    SaveListOffsetAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
     saveService: (service: HumanServiceData): serviceActions.SaveServiceAction => (
@@ -94,6 +98,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     ),
     openHeaderMenu: (): OpenHeaderMenuAction => (
         dispatch(openHeaderMenu())
+    ),
+    saveListOffset: (offset: number): SaveListOffsetAction => (
+        dispatch(saveListOffset(offset))
     ),
 });
 

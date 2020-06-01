@@ -23,6 +23,7 @@ import { Trans } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
+import { SaveListOffsetAction } from '../../stores/list_offset';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -34,6 +35,7 @@ export interface SearchComponentProps {
     readonly searchOffset: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
+    readonly listOffset: number;
 }
 
 export interface SearchComponentActions {
@@ -52,6 +54,7 @@ export interface SearchComponentActions {
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => actions.SetCollapseSearchInputAction;
     readonly searchExecuted: (searchTerm: string, searchLocation: string) => SearchExecutedAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly saveListOffset: (offset: number) => SaveListOffsetAction;
 }
 
 export type StringSetterFunction = Dispatch<SetStateAction<string>>;
@@ -63,7 +66,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
     const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
-    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
+    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.listOffset);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
