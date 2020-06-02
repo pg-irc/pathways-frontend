@@ -21,7 +21,7 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
             return { ...store, modal: FeedbackModal.ChooseFeedbackModeModal };
         case constants.DISCARD_CHANGES:
             return buildDefaultStore();
-       case constants.FINISH_FEEDBACK:
+        case constants.FINISH_FEEDBACK:
             return {
                 ...store,
                 screen: FeedbackScreen.ServiceDetail,

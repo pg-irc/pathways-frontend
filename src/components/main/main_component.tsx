@@ -55,14 +55,14 @@ export const MainComponent = (props: Props): JSX.Element => {
 
         if (props.isHeaderMenuVisible) {
             props.closeHeaderMenu();
-        } else if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
+        } else if (props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage) {
             props.backOutOfFeedbackScreen();
         } else {
             goBack(props.history);
         }
 
         return shouldNotBubbleUpEvent;
-    });
+    }, [props.feedbackScreen]);
 
     useEffect((): EffectCallback => {
         const unsubscribe = props.history.listen((location: Location, _: Action): RouteChangedAction =>
