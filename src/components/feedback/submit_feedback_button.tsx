@@ -1,3 +1,4 @@
+import React from 'react';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { applicationStyles, textStyles } from '../../application/styles';

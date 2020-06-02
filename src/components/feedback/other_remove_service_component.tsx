@@ -1,38 +1,24 @@
 // tslint:disable:no-expression-statement
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
-import {
-    Container,
-    Content,
-    Footer,
-    FooterTab,
-    Item,
-    Input,
-    Label,
-    Text,
-} from 'native-base';
+import { Container, Content, Item, Input, Label } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
 
 import { colors } from '../../application/styles';
 import { goBack } from '../../application/routing';
-import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_component';
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
 import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAction } from '../../stores/feedback';
 import { DiscardChangesModal } from './discard_changes_modal';
 import { HeaderComponent } from './header_component';
+import { SubmitFeedbackButton } from './submit_feedback_button';
 
 type ContentComponentProps = {
     readonly input: string;
     readonly inputLabel: TemplateStringsArray;
     readonly onInputChange: (value: string) => void;
     readonly placeholder: TemplateStringsArray;
-};
-
-type FooterComponentProps = {
-    readonly disabled: boolean;
-    readonly submitFeedback: () => void;
 };
 
 interface SuggestionContent {
@@ -100,32 +86,6 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
   );
 };
 
-const FooterComponent = (props: FooterComponentProps): JSX.Element => {
-    const submitTextStyle = props.disabled
-        ? styles.submitText
-        : styles.submitTextDisabled;
-
-    const submitButtonStyle = props.disabled
-        ? [styles.submitButton, styles.submitButtonDisabled]
-        : styles.submitButton;
-
-    return (
-        <Footer style={styles.footerContainer}>
-            <FooterTab style={styles.footerTab}>
-                <MultiLineButtonComponent
-                    onPress={props.submitFeedback}
-                    additionalStyles={submitButtonStyle}
-                    disabled={props.disabled}
-                >
-                    <Text style={submitTextStyle}>
-                        <Trans>Submit</Trans>
-                    </Text>
-                </MultiLineButtonComponent>
-            </FooterTab>
-        </Footer>
-    );
-};
-
 export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServiceProps): JSX.Element => {
     const isOtherFeedback = props.feedbackScreen === FeedbackScreen.OtherChangesPage;
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
@@ -155,7 +115,10 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
                 onInputChange={setFeedback}
                 placeholder={content.placeholder}
             />
-            <FooterComponent disabled={feedback.length === 0} submitFeedback={submitFeedback} />
+            <SubmitFeedbackButton
+                onPress={submitFeedback}
+                isVisible={true}
+            />
             <DiscardChangesModal
                 onDiscardPress={props.discardFeedback}
                 onKeepEditingPress={props.cancelDiscardFeedback}
