@@ -64,7 +64,6 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
     const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
-    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
@@ -115,7 +114,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     };
 
     // tslint:disable-next-line: max-line-length
-    const searchResultsProps = { ...props, isLoading, onlineStatus, scrollOffset, setScrollOffset, onSearchRequest, onLoadMore };
+    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchRequest, onLoadMore };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <SearchComponentHeader onMenuButtonPress={props.openHeaderMenu} />

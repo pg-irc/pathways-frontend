@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useContext, useRef, useEffect } from 'react';
+import React, { useContext, useRef, useEffect, useState } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
 import { FlatList, ListRenderItemInfo } from 'react-native';
@@ -44,7 +44,6 @@ export interface SearchResultsProps {
     readonly isLoading: boolean;
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
-    readonly scrollOffset: number;
     readonly onlineStatus: OnlineStatus;
     readonly searchOffset: number;
 }
@@ -52,7 +51,6 @@ export interface SearchResultsProps {
 export interface SearchResultsActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly setScrollOffset: (index: number) => void;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
     readonly saveSearchOffset: (offset: number) => SaveSearchOffsetAction;
@@ -72,6 +70,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
 };
 
 const renderComponentWithResults = (props: Props): JSX.Element => {
+    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
     const flatListRef = useRef<any>();
     const {
         onAnimatedScrollHandler,
@@ -97,9 +96,10 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
 
     const onScrollEndDrag = (e: any): void => {
         pauseInterpolations();
-        props.setScrollOffset(e.nativeEvent.contentOffset.y);
+        setScrollOffset(e.nativeEvent.contentOffset.y);
     };
 
+    const searchHitProps = { ...props, scrollOffset, setScrollOffset };
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
             {renderLoadingScreen(props.isLoading)}
@@ -113,7 +113,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
                 style={{ backgroundColor: colors.lightGrey, flex: 1  }}
                 data={props.searchResults}
                 keyExtractor={keyExtractor}
-                renderItem={renderSearchHit(props)}
+                renderItem={renderSearchHit(searchHitProps)}
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={<ListHeaderComponent />}
                 ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}
@@ -126,7 +126,19 @@ const keyExtractor = (item: SearchServiceData): string => (
     item.service_id
 );
 
-const renderSearchHit = R.curry((props: Props, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
+interface SearchHitProps {
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly scrollOffset: number;
+    readonly history: History;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly setScrollOffset: (offset: number) => void;
+    readonly saveSearchOffset: (offset: number) => SaveSearchOffsetAction;
+    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
+}
+
+const renderSearchHit = R.curry((props: SearchHitProps, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
     const item: SearchServiceData = itemInfo.item;
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
