@@ -38,13 +38,13 @@ export const ChooseModeModal = (props: Props): JSX.Element => (
 );
 
 const HeaderComponent = (props: { readonly onClosePress: () => void }): JSX.Element => (
-    <View style={{ flexDirection: 'row', marginTop: 10, marginHorizontal: 10}}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginHorizontal: 10}}>
         <Text style={textStyles.paragraphStyleBrown}>
             <Trans>Suggest an Update</Trans>
         </Text>
         <CloseButtonComponent
             color={colors.greyishBrown}
-            additionalStyle={{ paddingTop: 0 }}
+            additionalStyle={{ paddingTop: 0, paddingRight: 0,  paddingBottom: 0 }}
             onPress={props.onClosePress}
         />
     </View>
