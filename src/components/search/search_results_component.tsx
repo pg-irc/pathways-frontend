@@ -18,7 +18,7 @@ import { Trans } from '@lingui/react';
 import { MessageComponent } from '../partial_localization/message_component';
 import { EmptyComponent as EmptySearchComponent } from './empty_component';
 import { OnlineStatus } from './use_online_status';
-import { ErrorScreenSwitcherComponent } from '../error_screens/ErrorScreenSwitcherComponent';
+import { ErrorScreenSwitcherComponent } from '../error_screens/error_screen_switcher_component';
 import { Errors } from '../../validation/errors/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
@@ -177,11 +177,11 @@ const renderErrorComponent = (props: Props): JSX.Element => {
     if (isOffline(props.onlineStatus)) {
         return renderComponentByErrorType(props, Errors.Offline);
     }
-    if (hasNoResultsFromSearchTermQuery(props.searchResults)) {
-        return renderComponentByErrorType(props, Errors.NoMatchingSearchResults);
-    }
     if (hasNoResultsFromLocationQuery(props.searchLatLong)) {
         return renderComponentByErrorType(props, Errors.InvalidSearchLocation);
+    }
+    if (hasNoResultsFromSearchTermQuery(props.searchResults)) {
+        return renderComponentByErrorType(props, Errors.NoMatchingSearchResults);
     }
     return renderComponentByErrorType(props, Errors.Exception);
 };
