@@ -30,7 +30,7 @@ import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
-import { SaveListOffsetAction } from '../../stores/list_offset';
+import { SaveTopicServicesOffsetAction } from '../../stores/list_offset';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -38,7 +38,7 @@ export interface ServiceListProps {
     readonly manualUserLocation: UserLocation;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
-    readonly listOffset: number;
+    readonly topicServicesOffset: number;
 }
 
 export interface ServiceListActions {
@@ -49,7 +49,7 @@ export interface ServiceListActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly saveListOffset: (offset: number) => SaveListOffsetAction;
+    readonly saveTopicServicesOffset: (offset: number) => SaveTopicServicesOffsetAction;
 }
 
 type Props = ServiceListProps & ServiceListActions & RouterProps;
@@ -70,21 +70,26 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
 };
 
 const ValidServiceListComponent = (props: Props): JSX.Element => {
-    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.listOffset);
+    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.topicServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
-    const serviceItemsProps = { ...props, scrollOffset };
 
     useEffect((): void => {
         if (services.length > 0) {
-            flatListRef.current.scrollToOffset({ animated: false, offset: props.listOffset });
+            flatListRef.current.scrollToOffset({ animated: false, offset: props.topicServicesOffset });
         }
-    }, [props.listOffset]);
+    }, [props.topicServicesOffset]);
 
     // tslint:disable-next-line: no-any
     const onScrollEnd = (e: any) => {
         setScrollOffset(e.nativeEvent.contentOffset.y);
     };
+
+    const saveListOffset = (): void => {
+        props.saveTopicServicesOffset(scrollOffset);
+    };
+
+    const serviceItemsProps = { ...props, scrollOffset, saveListOffset };
 
     return (
         <ServiceListWrapper {...props}>

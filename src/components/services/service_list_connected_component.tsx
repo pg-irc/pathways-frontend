@@ -16,8 +16,8 @@ import { selectShowPartialLocalizationMessage } from '../../selectors/user_profi
 import { HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
 import { SetManualUserLocationAction, setManualUserLocation } from '../../stores/manual_user_location';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
-import { selectListOffset } from '../../selectors/list_offset.ts/select_list_offset';
-import { SaveListOffsetAction, saveListOffset } from '../../stores/list_offset';
+import { SaveTopicServicesOffsetAction, saveTopicServicesOffset } from '../../stores/list_offset';
+import { selectTopicServicesOffset } from '../../selectors/list_offset.ts/select_topic_services_offset';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
     const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);
@@ -28,11 +28,11 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
         manualUserLocation,
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
         showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
-        listOffset: selectListOffset(store),
+        topicServicesOffset: selectTopicServicesOffset(store),
     };
 };
 
-type Action = actions.ServicesAction | SetManualUserLocationAction | SaveListOffsetAction;
+type Action = actions.ServicesAction | SetManualUserLocationAction | SaveTopicServicesOffsetAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>): ServiceListActions => ({
     dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): actions.BuildServicesRequestAction =>
@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): ServiceListActions => (
     setManualUserLocation: (userLocation: UserLocation): SetManualUserLocationAction => dispatch(setManualUserLocation(userLocation)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     openServiceDetail: (service: HumanServiceData): actions.OpenServiceAction => dispatch(actions.openServiceDetail(service)),
-    saveListOffset: (offset: number): SaveListOffsetAction => dispatch(saveListOffset(offset)),
+    saveTopicServicesOffset: (offset: number): SaveTopicServicesOffsetAction => dispatch(saveTopicServicesOffset(offset)),
 });
 
 export const ServiceListConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceListComponent);
