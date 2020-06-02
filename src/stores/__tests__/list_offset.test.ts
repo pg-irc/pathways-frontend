@@ -1,18 +1,8 @@
 // tslint:disable:no-expression-statement
-import { buildDefaultStore, reducer, saveListOffset, saveSearchOffset, saveTopicServicesOffset, saveBookmarkedServicesOffset } from '../list_offset';
+import { buildDefaultStore, reducer, saveSearchOffset, saveTopicServicesOffset, saveBookmarkedServicesOffset } from '../list_offset';
 import { aNumber } from '../../application/helpers/random_test_values';
 
 describe('the list offset reducer', () => {
-
-    describe('the list offset state', () => {
-
-        it('is set a number value by the save list offset action', () => {
-            const oldStore = buildDefaultStore();
-            const offset = aNumber();
-            const newStore = reducer(oldStore, saveListOffset(offset));
-            expect(newStore.listOffset).toBe(offset);
-        });
-    });
 
     describe('the search offset state', () => {
 
