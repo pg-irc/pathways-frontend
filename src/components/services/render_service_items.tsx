@@ -14,8 +14,7 @@ export interface ServiceItemsProps {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly scrollOffset: number;
-    // TO DO REMOVE optional offset
-    readonly saveListOffset: (offset?: number) => void;
+    readonly saveListOffset: () => void;
 }
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;

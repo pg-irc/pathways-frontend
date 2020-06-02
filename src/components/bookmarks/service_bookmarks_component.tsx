@@ -10,38 +10,43 @@ import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } fro
 import { renderServiceItems } from '../services/render_service_items';
 import { SearchListSeparator } from '../search/separators';
 import { History } from 'history';
-import { SaveListOffsetAction } from '../../stores/list_offset';
+import { SaveBookmarkedServicesOffsetAction } from '../../stores/list_offset';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly history: History;
-    readonly listOffset: number;
+    readonly bookmarkedServicesOffset: number;
 }
 
 export interface ServiceBookmarksActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
-    readonly saveListOffset: (offset: number) => SaveListOffsetAction;
+    readonly saveBookmarkedServicesOffset: (offset: number) => SaveBookmarkedServicesOffsetAction;
 }
 
 type Props = ServiceBookmarksProps & ServiceBookmarksActions;
 
 export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
-    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.listOffset);
+    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.bookmarkedServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
-    const serviceItemsProps = { ...props, scrollOffset };
 
     useEffect((): void => {
         if (props.bookmarkedServices.length > 0) {
-            flatListRef.current.scrollToOffset({ animated: false, offset: props.listOffset });
+            flatListRef.current.scrollToOffset({ animated: false, offset: props.bookmarkedServicesOffset });
         }
-    }, [props.listOffset]);
+    }, [props.bookmarkedServicesOffset]);
 
     // tslint:disable-next-line: no-any
     const onScrollEnd = (e: any) => {
         setScrollOffset(e.nativeEvent.contentOffset.y);
     };
+
+    const saveListOffset = (): void => {
+        props.saveBookmarkedServicesOffset(scrollOffset);
+    };
+
+    const serviceItemsProps = { ...props, scrollOffset, saveListOffset };
 
     return (
         <FlatList
