@@ -28,7 +28,7 @@ import buildUrl from 'build-url';
 import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
-import { SaveListOffsetAction } from '../../stores/list_offset';
+import { SaveSearchOffsetAction } from '../../stores/list_offset';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -46,7 +46,7 @@ export interface SearchResultsProps {
     readonly numberOfSearchPages: number;
     readonly scrollOffset: number;
     readonly onlineStatus: OnlineStatus;
-    readonly listOffset: number;
+    readonly searchOffset: number;
 }
 
 export interface SearchResultsActions {
@@ -55,7 +55,7 @@ export interface SearchResultsActions {
     readonly setScrollOffset: (index: number) => void;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
-    readonly saveListOffset: (offset: number) => SaveListOffsetAction;
+    readonly saveSearchOffset: (offset: number) => SaveSearchOffsetAction;
 }
 
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
@@ -87,9 +87,9 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
 
     useEffect((): void => {
         if (props.searchResults.length > 0) {
-            flatListRef.current.getNode().scrollToOffset({ animated: false, offset: props.listOffset });
+            flatListRef.current.getNode().scrollToOffset({ animated: false, offset: props.searchOffset });
         }
-    }, [props.listOffset]);
+    }, [props.searchOffset]);
 
     const onScrollBeginDrag = (): void => {
         runInterpolations();
@@ -109,7 +109,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
                 onScrollBeginDrag={onScrollBeginDrag}
                 onScroll={onAnimatedScrollHandler}
                 onScrollEndDrag={onScrollEndDrag}
-                initialNumToRender={props.listOffset ? props.searchResults.length : 20}
+                initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
                 style={{ backgroundColor: colors.lightGrey, flex: 1  }}
                 data={props.searchResults}
                 keyExtractor={keyExtractor}
@@ -131,7 +131,7 @@ const renderSearchHit = R.curry((props: Props, itemInfo: ListRenderItemInfo<Sear
     const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
     const onPress = (): void => {
         props.saveService(service);
-        props.saveListOffset(props.scrollOffset);
+        props.saveSearchOffset(props.scrollOffset);
         props.openServiceDetail(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };
