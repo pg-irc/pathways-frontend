@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
 import React, { useRef, useState, useEffect } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
 import { Trans } from '@lingui/react';
 import { colors } from '../../application/styles';
@@ -37,8 +37,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
         }
     }, [props.bookmarkedServicesOffset]);
 
-    // tslint:disable-next-line: no-any
-    const onScrollEnd = (e: any) => {
+    const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
         setScrollOffset(e.nativeEvent.contentOffset.y);
     };
 

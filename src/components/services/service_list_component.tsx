@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
-import { FlatList } from 'react-native';
+import { FlatList, NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { HumanServiceData, Id } from '../../validation/services/types';
@@ -80,8 +80,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
         }
     }, [props.topicServicesOffset]);
 
-    // tslint:disable-next-line: no-any
-    const onScrollEnd = (e: any) => {
+    const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
         setScrollOffset(e.nativeEvent.contentOffset.y);
     };
 

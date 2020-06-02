@@ -2,7 +2,7 @@
 import React, { useContext, useRef, useEffect, useState } from 'react';
 import * as R from 'ramda';
 import { History } from 'history';
-import { FlatList, ListRenderItemInfo } from 'react-native';
+import { FlatList, ListRenderItemInfo, NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
 import { colors, values, textStyles } from '../../application/styles';
 import { SearchServiceData } from '../../validation/search/types';
 import { SearchListSeparator } from './separators';
@@ -35,8 +35,6 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 export interface SearchResultsProps {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly history: History;
-    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
-    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly searchTerm: string;
     readonly searchLocation: string;
@@ -54,6 +52,8 @@ export interface SearchResultsActions {
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
     readonly saveSearchOffset: (offset: number) => SaveSearchOffsetAction;
+    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
 
 type Props = SearchResultsProps & SearchResultsActions & RouterProps;
@@ -71,6 +71,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
 
 const renderComponentWithResults = (props: Props): JSX.Element => {
     const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
+    // tslint:disable-next-line: no-any
     const flatListRef = useRef<any>();
     const {
         onAnimatedScrollHandler,
@@ -94,7 +95,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         runInterpolations();
     };
 
-    const onScrollEndDrag = (e: any): void => {
+    const onScrollEndDrag = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
         pauseInterpolations();
         setScrollOffset(e.nativeEvent.contentOffset.y);
     };
