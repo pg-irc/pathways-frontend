@@ -38,7 +38,7 @@ describe('user profile reducer', () => {
             expect(newStore.showOnboarding).toBe(!onboardingFlag);
         });
 
-        test('is set by clean all user data action', () => {
+        test('is set by clear all user data action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: false,
                 disableAnalytics: aBoolean(),
@@ -94,7 +94,7 @@ describe('user profile reducer', () => {
             expect(newStore.disableAnalytics).toBe(!disableAnalyticsFlag);
         });
 
-        test('is cleared by clean all user data action', () => {
+        test('is cleared by clear all user data action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: true,
@@ -136,7 +136,7 @@ describe('user profile reducer', () => {
             expect(newStore.showPartialLocalizationMessage).toBe(!partialLocalizationMessageFlag);
         });
 
-        test('is cleared by clean all user data action', () => {
+        test('is cleared by clear all user data action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
@@ -150,7 +150,7 @@ describe('user profile reducer', () => {
 
     describe('the linke alert flag', () => {
 
-        test('is cleared by the hide link laerts action', () => {
+        test('is cleared by the hide link alerts action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: true,
                 disableAnalytics: aBoolean(),
@@ -179,7 +179,7 @@ describe('user profile reducer', () => {
             expect(newStore.showLinkAlerts).toBe(!showLinkAlerts);
         });
 
-        test('is set by clean all user data action', () => {
+        test('is set by clear all user data action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),

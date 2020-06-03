@@ -3,7 +3,6 @@ import { Text } from 'react-native';
 import { Linking } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import { markdownStyles } from '../../application/styles';
-import { ReactI18nRenderProp } from '../../locale/types';
 import { I18n } from '@lingui/react';
 import { LinkIcon } from '../link/link_icon_component';
 import { alertOnLinkClicked } from '../link/link_component';
@@ -32,8 +31,8 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
         link: (node: any, children: any): JSX.Element => {
             return (
                 <I18n key={node.key}>
-                    {(i18nRenderProp: ReactI18nRenderProp): JSX.Element => (
-                        <Text onPress={(): void => alertOnLinkClicked(node, i18nRenderProp.i18n, props.hideLinkAlerts)}>
+                    {({ i18n }: { readonly i18n: I18n }): JSX.Element => (
+                        <Text onPress={(): void => alertOnLinkClicked(node, i18n, props.hideLinkAlerts)}>
                             {children}
                             <Text>{' '}</Text>
                             <LinkIcon />
@@ -42,20 +41,16 @@ export const MarkdownComponent = (props: Props): JSX.Element => {
             );
         },
     };
-    if (props.showLinkAlerts) {
-        return (
-            <Markdown
-                rules={markdownAlertRules}
-                style={markdownStyles}
-            >
-                {props.children}
-            </Markdown>
-        );
-    }
+    const getMarkdownRules = (props: Props) => {
+        if (props.showLinkAlerts) {
+            return markdownAlertRules;
+        }
+        return markdownRules;
+    };
 
     return (
         <Markdown
-            rules={markdownRules}
+            rules={getMarkdownRules(props)}
             style={markdownStyles}
         >
             {props.children}

@@ -57,7 +57,7 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
                             Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact.
                             Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source
                             project. You can view it on <Link href={githubUrl} style={textStyles.link} >GitHub</Link> and <Link
-                                href={contactUrl} style={textStyles.link} >contact us</Link>to learn how you can support this project.
+                                href={contactUrl} style={textStyles.link} >contact us</Link> to learn how you can support this project.
                         </Trans>
                     </ParagraphComponent>
                     <ParagraphComponent>

@@ -65,7 +65,7 @@ const AboutTab = (): JSX.Element => (
         <MarkdownBodyComponent
             body={testOrganization.description}
             shouldBeExpandable={true}
-            //TODO When organization detail page is online connect the following 2 states to the store/persisted data
+            //TODO Issue #1080 When organization detail page is online connect the following 2 states to the store/persisted data
             showLinkAlerts={true}
             hideLinkAlerts={console.log} />
         <DividerComponent />
