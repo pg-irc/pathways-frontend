@@ -15,7 +15,6 @@ import { ErrorScreenSwitcherComponent } from '../error_screens/error_screen_swit
 import { Errors } from '../../validation/errors/types';
 import { UserLocation } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
-import { RouterProps } from '../../application/routing';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
@@ -52,7 +51,11 @@ export interface ServiceListActions {
     readonly saveTopicServicesOffset: (offset: number) => SaveTopicServicesOffsetAction;
 }
 
-type Props = ServiceListProps & ServiceListActions & RouterProps;
+interface OwnProps {
+    readonly history: History;
+}
+
+type Props = ServiceListProps & ServiceListActions & OwnProps;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
     if (isTopicServicesError(props.topicServicesOrError, props.manualUserLocation)) {
@@ -66,11 +69,29 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
     if (isValidEmptyTopicServices(props.topicServicesOrError)) {
         return renderEmptyComponent(props, refreshServices(props));
     }
-    return <ValidServiceListComponent {...props} />;
+    return (
+        <ValidServiceListComponent
+            topic={props.topic}
+            topicServicesOrError={props.topicServicesOrError}
+            topicServicesOffset={props.topicServicesOffset}
+            manualUserLocation={props.manualUserLocation}
+            bookmarkedServicesIds={props.bookmarkedServicesIds}
+            showPartialLocalizationMessage={props.showPartialLocalizationMessage}
+            history={props.history}
+            dispatchServicesRequest={props.dispatchServicesRequest}
+            bookmarkService={props.bookmarkService}
+            unbookmarkService={props.unbookmarkService}
+            openServiceDetail={props.openServiceDetail}
+            openHeaderMenu={props.openHeaderMenu}
+            hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
+            setManualUserLocation={props.setManualUserLocation}
+            saveTopicServicesOffset={props.saveTopicServicesOffset}
+        />
+    );
 };
 
 const ValidServiceListComponent = (props: Props): JSX.Element => {
-    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.topicServicesOffset);
+    const [topicServicesOffset, setTopicServicesOffset]: readonly [number, (n: number) => void] = useState(props.topicServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
 
@@ -81,14 +102,8 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
     }, [props.topicServicesOffset, services, flatListRef]);
 
     const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
-        setScrollOffset(e.nativeEvent.contentOffset.y);
+        setTopicServicesOffset(e.nativeEvent.contentOffset.y);
     };
-
-    const saveListOffset = (): void => {
-        props.saveTopicServicesOffset(scrollOffset);
-    };
-
-    const serviceItemsProps = { ...props, scrollOffset, saveListOffset };
 
     return (
         <ServiceListWrapper {...props}>
@@ -98,7 +113,11 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
                 style={{ backgroundColor: colors.lightGrey }}
                 data={services}
                 keyExtractor={(service: HumanServiceData): string => service.id}
-                renderItem={renderServiceItems(serviceItemsProps)}
+                renderItem={renderServiceItems({
+                    ...props,
+                    scrollOffset: topicServicesOffset,
+                    saveListOffset: props.saveTopicServicesOffset,
+                })}
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={<ListHeaderComponent {...props} />}
                 initialNumToRender={props.topicServicesOffset ? services.length : 20}

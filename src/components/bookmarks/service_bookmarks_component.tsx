@@ -28,7 +28,7 @@ export interface ServiceBookmarksActions {
 type Props = ServiceBookmarksProps & ServiceBookmarksActions;
 
 export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
-    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.bookmarkedServicesOffset);
+    const [bookmarkedServicesOffset, setBookmarkedServicesOffset]: readonly [number, (n: number) => void] = useState(props.bookmarkedServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
 
     useEffect((): void => {
@@ -38,14 +38,8 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
     }, [props.bookmarkedServicesOffset, props.bookmarkedServices, flatListRef, ]);
 
     const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
-        setScrollOffset(e.nativeEvent.contentOffset.y);
+        setBookmarkedServicesOffset(e.nativeEvent.contentOffset.y);
     };
-
-    const saveListOffset = (): void => {
-        props.saveBookmarkedServicesOffset(scrollOffset);
-    };
-
-    const serviceItemsProps = { ...props, scrollOffset, saveListOffset };
 
     return (
         <FlatList
@@ -54,7 +48,11 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
             style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
             data={props.bookmarkedServices}
             keyExtractor={(service: HumanServiceData): string => service.id}
-            renderItem={renderServiceItems(serviceItemsProps)}
+            renderItem={renderServiceItems({
+                ...props,
+                scrollOffset: bookmarkedServicesOffset,
+                saveListOffset: props.saveBookmarkedServicesOffset,
+            })}
             ListEmptyComponent={
                 <EmptyBookmarksComponent
                     title={<Trans>No services to show</Trans>}

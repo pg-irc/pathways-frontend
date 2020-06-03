@@ -70,7 +70,7 @@ export const SearchResultsComponent = (props: Props): JSX.Element => {
 };
 
 const renderComponentWithResults = (props: Props): JSX.Element => {
-    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
+    const [searchOffset, setSearchOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
     // tslint:disable-next-line: no-any
     const flatListRef = useRef<any>();
     const {
@@ -97,10 +97,8 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
 
     const onScrollEndDrag = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
         pauseInterpolations();
-        setScrollOffset(e.nativeEvent.contentOffset.y);
+        setSearchOffset(e.nativeEvent.contentOffset.y);
     };
-
-    const searchHitProps = { ...props, scrollOffset, setScrollOffset };
     return (
         <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
             {renderLoadingScreen(props.isLoading)}
@@ -114,7 +112,11 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
                 style={{ backgroundColor: colors.lightGrey, flex: 1  }}
                 data={props.searchResults}
                 keyExtractor={keyExtractor}
-                renderItem={renderSearchHit(searchHitProps)}
+                renderItem={renderSearchHit({
+                    ...props,
+                    scrollOffset: searchOffset,
+                    setScrollOffset: setSearchOffset,
+                })}
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={<ListHeaderComponent />}
                 ListFooterComponent={renderLoadMoreButton(props.searchPage, props.numberOfSearchPages, props.onLoadMore)}

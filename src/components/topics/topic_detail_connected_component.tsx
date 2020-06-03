@@ -32,7 +32,6 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps =>
     const savedTasksIdList = pickBookmarkedTopicIds(store);
     const taskIsBookmarked = R.contains(topic.id, savedTasksIdList);
     const showLinkAlert = selectShowLinkAlerts(store);
-    const manualUserLocation = selectManualUserLocation(store);
     return {
         topic,
         taskIsBookmarked,
@@ -40,7 +39,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps =>
         showLinkAlert,
         history: ownProps.history,
         location: ownProps.location,
-        manualUserLocation,
+        manualUserLocation: selectManualUserLocation(store),
     };
 };
 
