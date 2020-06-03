@@ -11,7 +11,7 @@ import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbook
 import { HumanServiceData } from '../../validation/services/types';
 import { ServiceBookmarksActions } from './service_bookmarks_component';
 import { selectBookmarksTab } from '../../selectors/user_experience/select_bookmarks_tab';
-import { SaveBookmarkedServicesOffsetAction, saveBookmarkedServicesOffset, SetBookmarksTabAction, setBookmarksTab } from '../../stores/user_experience/actions';
+import { SaveBookmarkedServicesOffsetAction, saveBookmarkedServicesOffset, SaveBookmarksTabAction, saveBookmarksTab } from '../../stores/user_experience/actions';
 import { selectBookmarkedServicesOffset } from '../../selectors/user_experience/select_bookmarked_services_offset';
 
 const mapStateToProps = (store: Store): BookmarksProps => ({
@@ -28,7 +28,7 @@ type Actions =
     | TopicDispatchActions
     | OpenHeaderMenuAction
     | OpenServiceAction
-    | SetBookmarksTabAction
+    | SaveBookmarksTabAction
     | SaveBookmarkedServicesOffsetAction;
 
 export type ListActions = TaskListActions & ServiceBookmarksActions & BookmarkActions;
@@ -40,7 +40,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ListActions => ({
     unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
     openServiceDetail: (service: HumanServiceData): OpenServiceAction => dispatch(openServiceDetail(service)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
-    setBookmarksTab: (index: number): SetBookmarksTabAction => dispatch(setBookmarksTab(index)),
+    setBookmarksTab: (index: number): SaveBookmarksTabAction => dispatch(saveBookmarksTab(index)),
     saveBookmarkedServicesOffset: (offset: number): SaveBookmarkedServicesOffsetAction => dispatch(saveBookmarkedServicesOffset(offset)),
 });
 

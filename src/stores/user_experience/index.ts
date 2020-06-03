@@ -62,7 +62,7 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
                 ...store,
                 bookmarkedServicesOffset: action.payload.offset,
             });
-        case constants.SET_BOOKMARKS_TAB:
+        case constants.SAVE_BOOKMARKS_TAB:
             return updateBookmarksTab(store, action.payload.index);
         default:
             return store;

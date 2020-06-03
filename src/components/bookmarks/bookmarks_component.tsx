@@ -11,7 +11,7 @@ import { ListActions } from './bookmarks_connected_component';
 import { OpenServiceAction } from '../../stores/services/actions';
 import { History } from 'history';
 import { BookmarksTab } from '../../stores/user_experience';
-import { SetBookmarksTabAction, SaveBookmarkedServicesOffsetAction } from '../../stores/user_experience/actions';
+import { SaveBookmarksTabAction, SaveBookmarkedServicesOffsetAction } from '../../stores/user_experience/actions';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -23,7 +23,7 @@ export interface BookmarksProps {
 export interface BookmarkActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
-    readonly setBookmarksTab: (index: number) => SetBookmarksTabAction;
+    readonly setBookmarksTab: (index: number) => SaveBookmarksTabAction;
     readonly saveBookmarkedServicesOffset: (offset: number) => SaveBookmarkedServicesOffsetAction;
 }
 
