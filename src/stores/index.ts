@@ -15,6 +15,7 @@ import * as feedback from './feedback';
 import * as content from './content';
 import * as listOffset from './list_offset';
 import * as bookmarksTab from './bookmarks_tab';
+import * as userExperience from './user_experience';
 
 export interface Store {
     readonly fonts: fonts.FontsStore;
@@ -33,6 +34,7 @@ export interface Store {
     readonly content: content.AlertsStore;
     readonly listOffset: listOffset.ListOffsetStore;
     readonly bookmarksTab: bookmarksTab.BookmarksTabStore;
+    readonly userExperience: userExperience.UserExperienceStore;
 }
 
 export const buildDefaultStore = (): Store => ({
@@ -52,6 +54,7 @@ export const buildDefaultStore = (): Store => ({
     content: content.buildDefaultStore(),
     listOffset: listOffset.buildDefaultStore(),
     bookmarksTab: bookmarksTab.buildDefaultStore(),
+    userExperience: userExperience.buildDefaultStore(),
 });
 
 export const reducer = combineReducers<Store>({
@@ -71,4 +74,5 @@ export const reducer = combineReducers<Store>({
     content: content.reducer,
     listOffset: listOffset.reducer,
     bookmarksTab: bookmarksTab.reducer,
+    userExperience: userExperience.reducer,
 });
