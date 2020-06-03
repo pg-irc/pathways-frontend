@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { UserProfileStore, reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage } from '../user_profile';
+import { UserProfileStore, reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage, hideLinkAlerts } from '../user_profile';
 import { aBoolean } from '../../application/helpers/random_test_values';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
@@ -14,6 +14,7 @@ describe('user profile reducer', () => {
                 showOnboarding: true,
                 disableAnalytics: aBoolean(),
                 showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
             };
             const newStore = reducer(oldStore, hideOnboarding());
             expect(newStore.showOnboarding).toBe(false);
@@ -25,6 +26,7 @@ describe('user profile reducer', () => {
                 showOnboarding: onboardingFlag,
                 disableAnalytics: aBoolean(),
                 showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
             };
             const dataFlippingFlag = new PersistedDataBuilder().
                 withShowOnboarding(!onboardingFlag).
@@ -36,11 +38,12 @@ describe('user profile reducer', () => {
             expect(newStore.showOnboarding).toBe(!onboardingFlag);
         });
 
-        test('is set by clean all user data action', () => {
+        test('is set by clear all user data action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: false,
                 disableAnalytics: aBoolean(),
                 showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
             };
             const newStore = reducer(oldStore, clearAllUserData());
 
@@ -55,6 +58,7 @@ describe('user profile reducer', () => {
                 showOnboarding: aBoolean(),
                 disableAnalytics: false,
                 showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
             };
             const newStore = reducer(oldStore, disableAnalytics(true));
             expect(newStore.disableAnalytics).toBe(true);
@@ -65,6 +69,7 @@ describe('user profile reducer', () => {
                 showOnboarding: aBoolean(),
                 disableAnalytics: true,
                 showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
             };
             const newStore = reducer(oldStore, disableAnalytics(false));
             expect(newStore.disableAnalytics).toBe(false);
@@ -77,6 +82,7 @@ describe('user profile reducer', () => {
                 showOnboarding: aBoolean(),
                 disableAnalytics: disableAnalyticsFlag,
                 showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
             };
             const dataFlippingFlag = new PersistedDataBuilder().
                 withDisableAnalytics(!disableAnalyticsFlag).
@@ -88,11 +94,12 @@ describe('user profile reducer', () => {
             expect(newStore.disableAnalytics).toBe(!disableAnalyticsFlag);
         });
 
-        test('is cleared by clean all user data action', () => {
+        test('is cleared by clear all user data action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: true,
                 showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
             };
             const newStore = reducer(oldStore, clearAllUserData());
 
@@ -107,17 +114,19 @@ describe('user profile reducer', () => {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
                 showPartialLocalizationMessage: true,
+                showLinkAlerts: aBoolean(),
             };
             const newStore = reducer(oldStore, hidePartialLocalizationMessage());
             expect(newStore.showPartialLocalizationMessage).toBe(false);
         });
 
-        test('is loaded from persisted data' , () => {
+        test('is loaded from persisted data', () => {
             const partialLocalizationMessageFlag = aBoolean();
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
                 showPartialLocalizationMessage: partialLocalizationMessageFlag,
+                showLinkAlerts: aBoolean(),
             };
             const dataFlippingFlag = new PersistedDataBuilder().
                 withShowPartialLocalizationMessage(!partialLocalizationMessageFlag).
@@ -127,14 +136,59 @@ describe('user profile reducer', () => {
             expect(newStore.showPartialLocalizationMessage).toBe(!partialLocalizationMessageFlag);
         });
 
-        test('is cleared by clean all user data action', () => {
+        test('is cleared by clear all user data action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
                 showPartialLocalizationMessage: false,
+                showLinkAlerts: aBoolean(),
             };
             const newStore = reducer(oldStore, clearAllUserData());
             expect(newStore.showPartialLocalizationMessage).toBe(true);
+        });
+    });
+
+    describe('the linke alert flag', () => {
+
+        test('is cleared by the hide link alerts action', () => {
+            const oldStore: UserProfileStore = {
+                showOnboarding: true,
+                disableAnalytics: aBoolean(),
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
+            };
+            const newStore = reducer(oldStore, hideLinkAlerts());
+            expect(newStore.showLinkAlerts).toBe(false);
+        });
+
+        test('is loaded from persisted data', () => {
+            const showLinkAlerts = aBoolean();
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: aBoolean(),
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: showLinkAlerts,
+            };
+            const dataFlippingFlag = new PersistedDataBuilder().
+                withShowLinkAlerts(!showLinkAlerts).
+                build();
+            const actionFlippingFlag = DataPersistence.loadSuccess(dataFlippingFlag);
+
+            const newStore = reducer(oldStore, actionFlippingFlag);
+
+            expect(newStore.showLinkAlerts).toBe(!showLinkAlerts);
+        });
+
+        test('is set by clear all user data action', () => {
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: aBoolean(),
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: false,
+            };
+            const newStore = reducer(oldStore, clearAllUserData());
+
+            expect(newStore.showLinkAlerts).toBe(true);
         });
     });
 });

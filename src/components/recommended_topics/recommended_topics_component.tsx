@@ -28,11 +28,13 @@ export interface RecommendedTopicsProps {
     readonly bookmarkedTopics: ReadonlyArray<TaskId>;
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
     readonly alerts: ReadonlyArray<Alert>;
+    readonly showLinkAlerts: boolean;
 }
 
 export interface RecommendedTopicsActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly hideLinkAlerts: () => void;
 }
 
 type Props = RecommendedTopicsProps & RecommendedTopicsActions & TaskListActions & RouterProps;
@@ -61,7 +63,10 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
             >
                 <Trans>Start settling in B.C.</Trans>
             </Text>
-            <AlertComponent alerts={props.alerts} />
+            <AlertComponent
+                alerts={props.alerts}
+                showLinkAlerts={props.showLinkAlerts}
+                hideLinkAlerts={props.hideLinkAlerts} />
             {props.hasChosenAnswers ?
                 <CallToActionPartialComponent {...props} />
                 :

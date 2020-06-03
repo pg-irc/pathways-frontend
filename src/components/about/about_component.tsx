@@ -4,7 +4,7 @@ import { Text, Content, View } from 'native-base';
 import { ParagraphComponent } from '../paragraph/paragraph_component';
 import { Trans } from '@lingui/react';
 import { values, textStyles, colors } from '../../application/styles';
-import { Link } from '../link/link';
+import { Link } from '../link/link_component';
 import { VERSION } from 'react-native-dotenv';
 import { CloseButtonComponent } from '../close_button_component';
 
@@ -56,13 +56,13 @@ export const AboutComponent: React.StatelessComponent<Props> = (props: Props): J
                             Vancouver, as well as immigrants and refugees like you. This project is possible thanks to funding by the
                             Province of British Columbia and Google.org Canada in partnership with LEAP | Pecaut Centre for Social Impact.
                             Special thanks also goes to individual donors who make this project possible. Arrival Advisor is an open-source
-                            project. You can view it on <Link href={githubUrl} style={textStyles.paragraphURL} >GitHub</Link> and <Link
-                                href={contactUrl} style={textStyles.paragraphURL} >contact us</Link> to learn how you can support this project.
+                            project. You can view it on <Link href={githubUrl} style={textStyles.link} >GitHub</Link> and <Link
+                                href={contactUrl} style={textStyles.link} >contact us</Link> to learn how you can support this project.
                         </Trans>
                     </ParagraphComponent>
                     <ParagraphComponent>
                         <Trans>Information in this app is provided by the <Link href={welcomeBcUrl}
-                            style={textStyles.paragraphURL} >Newcomers Guide to British Columbia</Link> Copyright
+                            style={textStyles.link} >Newcomers Guide to British Columbia</Link> Copyright
                             2018 Province of British Columbia. All rights reserved.
                         </Trans>
                     </ParagraphComponent>

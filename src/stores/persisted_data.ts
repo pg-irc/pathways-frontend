@@ -12,6 +12,7 @@ export interface PersistedData {
     readonly showOnboarding: boolean;
     readonly bookmarkedServices: ServiceMap;
     readonly disableAnalytics: boolean;
+    readonly showLinkAlerts: boolean;
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;

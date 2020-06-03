@@ -7,7 +7,7 @@ import { Trans } from '@lingui/react';
 import { LocaleInfo } from '../../locale/types';
 import { Content, View, Icon, Header, Title } from 'native-base';
 import { colors, textStyles } from '../../application/styles';
-import { openURL } from '../link/link';
+import { openURL } from '../link/link_component';
 import { isRTL } from '../../locale/effects';
 import { getStatusBarHeightForPlatform } from '../main/get_status_bar_height_for_platform';
 import { arrivalAdvisorGlyphLogo } from '../../application/images';
@@ -148,7 +148,7 @@ const AboutListItems = (props: Props): JSX.Element => {
                 onPress={props.openDisclaimerModal}
             />
             <AboutItem
-                icon={<AboutIcon name='lock' fontSize={30} marginRight={3}  marginVertical={-4} />}
+                icon={<AboutIcon name='lock' fontSize={30} marginRight={3} marginVertical={-4} />}
                 text={<Trans>Privacy policy</Trans>}
                 onPress={buildOnPressForURL('https://peacegeeks.org/privacy')}
             />
@@ -162,7 +162,8 @@ const AboutListItems = (props: Props): JSX.Element => {
 };
 
 const AboutIcon = (props: {
-    readonly name: string, readonly fontSize: number, readonly marginRight: number, readonly marginVertical: number }): JSX.Element => (
+    readonly name: string, readonly fontSize: number, readonly marginRight: number, readonly marginVertical: number
+}): JSX.Element => (
         <Icon
             name={props.name}
             type={'FontAwesome'}
@@ -211,5 +212,5 @@ const styles = StyleSheet.create({
 });
 
 const Divider = (): JSX.Element => (
-    <View style={{ height: 1, backgroundColor: colors.grey }}/>
+    <View style={{ height: 1, backgroundColor: colors.grey }} />
 );

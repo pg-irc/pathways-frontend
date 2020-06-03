@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
 import { CardButtonComponent } from '../card_button_component';
 import { textStyles } from '../../application/styles';
-import { openURL, LinkTypes } from '../link/link';
+import { openURL, LinkTypes } from '../link/link_component';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { isServiceDetailStringEmpty } from '../services/is_service_detail_empty';
@@ -35,7 +35,7 @@ export const EmailComponent = (props: Props): JSX.Element => {
                 rightContent={<ServiceDetailIconComponent name={'envelope'} />}
                 onPress={onPress}
             />
-    </View>
+        </View>
     );
 };
 

@@ -331,6 +331,11 @@ export const textStyles = StyleSheet.create({
         letterSpacing,
         ...getBoldFontStylesForOS(),
     },
+    link: {
+        fontFamily: getNormalFontFamily(),
+        color: colors.teal,
+        textDecorationLine: 'underline',
+    },
 });
 
 export const applicationStyles = StyleSheet.create({
@@ -447,7 +452,7 @@ export const applicationStyles = StyleSheet.create({
 
 // See https://github.com/mientjan/react-native-markdown-renderer/blob/master/src/lib/styles.js for styles to override.
 export const markdownStyles = StyleSheet.create({
-    text: {
+    body: {
         textAlign: 'left',
         color: colors.greyishBrown,
         fontFamily: getNormalFontFamily(),
@@ -487,19 +492,7 @@ export const markdownStyles = StyleSheet.create({
         }),
     },
     link: {
-        fontFamily: getNormalFontFamily(),
-        color: colors.teal,
-        textDecorationLine: 'underline',
-    },
-});
-
-export const alertStyles = StyleSheet.create({
-    text: {
-        textAlign: 'left',
-        color: colors.greyishBrown,
-        fontFamily: getNormalFontFamily(),
-        fontSize: 16,
-        lineHeight: 21,
+        ...textStyles.link,
     },
 });
 

@@ -9,13 +9,15 @@ import { textStyles, applicationStyles } from '../../application/styles';
 import { advisor, recommendationBubble } from '../../application/images';
 import { callToActionStyles } from './styles';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { AlertMarkdownComponent } from '../../../src/components/markdown/markdown_component';
+import { MarkdownComponent } from '../../../src/components/markdown/markdown_component';
 import { Alert } from '../../validation/content/types';
 
 type Props = { readonly history: History };
 
 type AlertProps = {
     readonly alerts: ReadonlyArray<Alert>;
+    readonly showLinkAlerts: boolean;
+    readonly hideLinkAlerts: () => void;
 };
 
 export const AlertComponent = (props: AlertProps): JSX.Element => {
@@ -26,12 +28,12 @@ export const AlertComponent = (props: AlertProps): JSX.Element => {
                 data={props.alerts}
                 keyExtractor={(alert: Alert): string => alert.id}
                 ListEmptyComponent={EmptyComponent}
-                renderItem={({ item }: ListRenderItemInfo<Alert>): JSX.Element => renderAlert(item)} />
+                renderItem={({ item }: ListRenderItemInfo<Alert>): JSX.Element => renderAlert(item, props)} />
         </View>
     );
 };
 
-const renderAlert = (alert: Alert): JSX.Element => {
+const renderAlert = (alert: Alert, props: AlertProps): JSX.Element => {
     return (
         <View style={[
             applicationStyles.boxShadowBelow,
@@ -40,7 +42,11 @@ const renderAlert = (alert: Alert): JSX.Element => {
             <Text style={textStyles.headlineH2StyleBlackLeft}>
                 {alert.heading}
             </Text>
-            <AlertMarkdownComponent>{alert.content}</AlertMarkdownComponent>
+            <MarkdownComponent
+                showLinkAlerts={props.showLinkAlerts}
+                hideLinkAlerts={props.hideLinkAlerts}>
+                {alert.content}
+            </MarkdownComponent>
         </View>
     );
 };
