@@ -101,6 +101,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
                 renderItem={renderServiceItems(serviceItemsProps)}
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={<ListHeaderComponent {...props} />}
+                initialNumToRender={props.topicServicesOffset ? services.length : 20}
             />
         </ServiceListWrapper>
     );

@@ -62,6 +62,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
             }
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={<View />}
+            initialNumToRender={props.saveBookmarkedServicesOffset ? props.bookmarkedServices.length : 20}
         />
     );
 }
