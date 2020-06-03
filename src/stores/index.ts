@@ -10,7 +10,6 @@ import * as notifications from './notifications';
 import * as userProfile from './user_profile';
 import * as location from './manual_user_location';
 import * as search from './search';
-import * as headerMenu from './header_menu';
 import * as feedback from './feedback';
 import * as content from './content';
 import * as userExperience from './user_experience';
@@ -27,7 +26,6 @@ export interface Store {
     readonly userProfile: userProfile.UserProfileStore;
     readonly manualUserLocation: location.ManualUserLocationStore;
     readonly search: search.SearchStore;
-    readonly headerMenu: headerMenu.HeaderMenuStore;
     readonly feedback: feedback.FeedbackStore;
     readonly content: content.AlertsStore;
     readonly userExperience: userExperience.UserExperienceStore;
@@ -45,7 +43,6 @@ export const buildDefaultStore = (): Store => ({
     userProfile: userProfile.buildDefaultStore(),
     manualUserLocation: location.buildDefaultStore(),
     search: search.buildDefaultStore(),
-    headerMenu: headerMenu.buildDefaultStore(),
     feedback: feedback.buildDefaultStore(),
     content: content.buildDefaultStore(),
     userExperience: userExperience.buildDefaultStore(),
@@ -63,7 +60,6 @@ export const reducer = combineReducers<Store>({
     userProfile: userProfile.reducer,
     manualUserLocation: location.reducer,
     search: search.reducer,
-    headerMenu: headerMenu.reducer,
     feedback: feedback.reducer,
     content: content.reducer,
     userExperience: userExperience.reducer,
