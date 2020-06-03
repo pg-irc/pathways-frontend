@@ -5,7 +5,7 @@ import { Container, Content, Item, Input, Label } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
 
-import { colors } from '../../application/styles';
+import { colors, textStyles } from '../../application/styles';
 import { goBack } from '../../application/routing';
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
@@ -65,7 +65,7 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
                 ({ i18n }: I18nProps): JSX.Element => (
                     <Content padder>
                         <Item placeholderLabel={true} stackedLabel>
-                            <Label style={styles.inputLabel}>
+                            <Label style={[textStyles.suggestionText, {paddingBottom: 10}]}>
                                 <Trans id={props.inputLabel} />
                             </Label>
                             <Input
