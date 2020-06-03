@@ -13,8 +13,6 @@ import * as search from './search';
 import * as headerMenu from './header_menu';
 import * as feedback from './feedback';
 import * as content from './content';
-import * as listOffset from './list_offset';
-import * as bookmarksTab from './bookmarks_tab';
 import * as userExperience from './user_experience';
 
 export interface Store {
@@ -32,8 +30,6 @@ export interface Store {
     readonly headerMenu: headerMenu.HeaderMenuStore;
     readonly feedback: feedback.FeedbackStore;
     readonly content: content.AlertsStore;
-    readonly listOffset: listOffset.ListOffsetStore;
-    readonly bookmarksTab: bookmarksTab.BookmarksTabStore;
     readonly userExperience: userExperience.UserExperienceStore;
 }
 
@@ -52,8 +48,6 @@ export const buildDefaultStore = (): Store => ({
     headerMenu: headerMenu.buildDefaultStore(),
     feedback: feedback.buildDefaultStore(),
     content: content.buildDefaultStore(),
-    listOffset: listOffset.buildDefaultStore(),
-    bookmarksTab: bookmarksTab.buildDefaultStore(),
     userExperience: userExperience.buildDefaultStore(),
 });
 
@@ -72,7 +66,5 @@ export const reducer = combineReducers<Store>({
     headerMenu: headerMenu.reducer,
     feedback: feedback.reducer,
     content: content.reducer,
-    listOffset: listOffset.reducer,
-    bookmarksTab: bookmarksTab.reducer,
     userExperience: userExperience.reducer,
 });
