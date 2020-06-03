@@ -89,7 +89,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
         if (props.searchResults.length > 0) {
             flatListRef.current.getNode().scrollToOffset({ animated: false, offset: props.searchOffset });
         }
-    }, [props.searchOffset]);
+    }, [props.searchOffset, flatListRef]);
 
     const onScrollBeginDrag = (): void => {
         runInterpolations();

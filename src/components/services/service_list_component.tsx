@@ -78,7 +78,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
         if (services.length > 0) {
             flatListRef.current.scrollToOffset({ animated: false, offset: props.topicServicesOffset });
         }
-    }, [props.topicServicesOffset]);
+    }, [props.topicServicesOffset, services, flatListRef]);
 
     const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
         setScrollOffset(e.nativeEvent.contentOffset.y);
