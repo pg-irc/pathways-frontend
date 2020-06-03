@@ -6,7 +6,7 @@ import { BookmarksComponent, BookmarksProps, BookmarkActions } from './bookmarks
 import { Id, UnbookmarkTopicAction, unbookmarkTopic, BookmarkTopicAction, bookmarkTopic } from '../../stores/topics';
 import { selectBookmarkedTopics } from '../../selectors/topics/select_bookmarked_topics';
 import { selectBookmarkedServices } from '../../selectors/services/select_bookmarked_services';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { ServiceBookmarksActions } from './service_bookmarks_component';

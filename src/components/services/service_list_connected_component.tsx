@@ -15,7 +15,7 @@ import { HumanServiceData } from '../../validation/services/types';
 import { selectShowPartialLocalizationMessage } from '../../selectors/user_profile/select_show_partial_localization_message';
 import { HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
 import { SetManualUserLocationAction, setManualUserLocation } from '../../stores/manual_user_location';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { SaveTopicServicesOffsetAction, saveTopicServicesOffset } from '../../stores/user_experience/actions';
 import { selectTopicServicesOffset } from '../../selectors/user_experience/select_topic_services_offset';
 

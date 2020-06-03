@@ -12,7 +12,7 @@ import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_com
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { HeaderComponent } from '../main/header_component';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 
 export interface ExploreDetailProps {
     readonly section: ExploreSection;

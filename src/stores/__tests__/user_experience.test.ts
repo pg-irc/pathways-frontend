@@ -1,8 +1,7 @@
 // tslint:disable:no-expression-statement
 import { buildDefaultStore, reducer, BookmarksTab, HeaderMenu } from '../user_experience';
-import { saveSearchOffset, saveTopicServicesOffset, saveBookmarkedServicesOffset, setBookmarksTab, closeHeaderMenu, openHeaderMenu, closeAboutModal, openAboutModal, closeDisclaimerModal } from '../user_experience/actions';
+import { saveSearchOffset, saveTopicServicesOffset, saveBookmarkedServicesOffset, setBookmarksTab, closeHeaderMenu, openHeaderMenu, closeAboutModal, openAboutModal, closeDisclaimerModal, openDisclaimerModal } from '../user_experience/actions';
 import { aNumber, aString, aBoolean } from '../../application/helpers/random_test_values';
-import { openDisclaimerModal } from '../header_menu';
 import { saveLocaleRequest } from '../locale/actions';
 
 describe('the user experience reducer', () => {

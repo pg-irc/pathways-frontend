@@ -1,7 +1,7 @@
 import React from 'react';
 import { colors } from '../../application/styles';
 import { History } from 'history';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpButtonComponent } from '../header_button/help_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { HeaderComponent } from '../main/header_component';

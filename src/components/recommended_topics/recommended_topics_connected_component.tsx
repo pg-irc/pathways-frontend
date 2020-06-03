@@ -11,7 +11,7 @@ import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
 import { selectAlerts } from '../../selectors/content/selectAlerts';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/analytics';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { hideLinkAlerts, HideLinkAlertsAction } from '../../stores/user_profile';
 
 const mapStateToProps = (store: Store): RecommendedTopicsProps => ({

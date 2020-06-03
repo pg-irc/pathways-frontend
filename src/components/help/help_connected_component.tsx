@@ -12,7 +12,7 @@ import {
 } from '../../stores/manual_user_location';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
 import { UserLocation } from '../../validation/latlong/types';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): HelpComponentProps => ({
     history: ownProps.history,

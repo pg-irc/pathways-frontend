@@ -15,10 +15,10 @@ import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
 import { 
     CloseHeaderMenuAction, closeHeaderMenu, OpenHeaderMenuAction, openHeaderMenu, CloseAboutModalAction, closeAboutModal,
     openAboutModal, CloseDisclaimerModalAction, closeDisclaimerModal, OpenAboutModalAction, OpenDisclaimerModalAction, openDisclaimerModal,
-} from '../../stores/header_menu';
-import { selectIsHeaderMenuVisible } from '../../selectors/header_menu/select_is_header_menu_visible';
-import { selectIsAboutModalVisible } from '../../selectors/header_menu/select_is_about_modal_visible';
-import { selectIsDisclaimerModalVisible } from '../../selectors/header_menu/select_is_disclaimer_modal_visible';
+} from '../../stores/user_experience/actions';
+import { selectIsHeaderMenuVisible } from '../../selectors/user_experience/select_is_header_menu_visible';
+import { selectIsAboutModalVisible } from '../../selectors/user_experience/select_is_about_modal_visible';
+import { selectIsDisclaimerModalVisible } from '../../selectors/user_experience/select_is_disclaimer_modal_visible';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 

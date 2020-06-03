@@ -18,7 +18,7 @@ import { BookmarkButtonComponent } from '../bookmark_button_component';
 import * as R from 'ramda';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { HeaderComponent } from '../main/header_component';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HideLinkAlertsAction } from '../../stores/user_profile';
 import { UserLocation } from '../../validation/latlong/types';
 import { BuildServicesRequestAction } from '../../stores/services/actions';

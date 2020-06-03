@@ -5,7 +5,7 @@ import { HumanServiceData } from '../../validation/services/types';
 import { View, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { colors, textStyles, values } from '../../application/styles';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 import { ListActions } from './bookmarks_connected_component';
 import { OpenServiceAction } from '../../stores/services/actions';

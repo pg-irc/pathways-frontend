@@ -24,7 +24,7 @@ import { SetManualUserLocationAction } from '../../stores/manual_user_location';
 import { ServiceListLocationSearchComponent } from './service_list_location_search_component';
 import { SearchListSeparator } from '../search/separators';
 import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link_component';

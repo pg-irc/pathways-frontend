@@ -17,7 +17,7 @@ import { selectIsInputCollapsed } from '../../selectors/search/select_is_input_c
 import { selectSearchResults } from '../../selectors/search/select_search_results';
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { SaveSearchOffsetAction, saveSearchOffset } from '../../stores/user_experience/actions';
 import { selectSearchOffset } from '../../selectors/user_experience/select_search_offset';
 

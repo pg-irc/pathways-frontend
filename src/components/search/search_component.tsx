@@ -20,7 +20,7 @@ import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { Trans } from '@lingui/react';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
 import { SaveSearchOffsetAction } from '../../stores/user_experience/actions';

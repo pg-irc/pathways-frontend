@@ -30,7 +30,7 @@ import { BackButtonComponent } from '../header_button/back_button_component';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HeaderComponent } from '../main/header_component';
 import { Id } from '../../stores/services';
 import { ServiceFeedback, FeedbackField, Feedback, FeedbackScreen, FeedbackModal, UserInformation } from '../../stores/feedback/types';
