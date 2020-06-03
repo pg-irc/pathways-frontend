@@ -6,6 +6,7 @@ import { textStyles } from '../../application/styles';
 import { LinkIcon } from './link_icon_component';
 import { t } from '@lingui/macro';
 import * as R from 'ramda';
+import { isAndroid } from '../../application/helpers/is_android';
 
 interface LinkProps {
     readonly children: string;
@@ -58,8 +59,10 @@ export const alertOnLinkClicked = (node: any, i18n: I18n, hideLinkAlerts: () => 
         { text: i18n._(cancelOption), style: 'cancel' },
         { text: i18n._(okOption), onPress: (): Promise<void> => Linking.openURL(node.attributes.href) },
     ];
+    // buttons are arranged horizontally on Android and vertically on iPhone, so reverse the buttons on Android only
+    const reverseButtons = I18nManager.isRTL && isAndroid();
     // tslint:disable-next-line: no-expression-statement
     Alert.alert(i18n._(heading), i18n._(message),
-        I18nManager.isRTL ? R.reverse(buttons) : buttons,
+        reverseButtons ? R.reverse(buttons) : buttons,
     );
 };
