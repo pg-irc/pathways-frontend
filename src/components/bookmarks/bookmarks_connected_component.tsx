@@ -10,10 +10,9 @@ import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
 import { ServiceBookmarksActions } from './service_bookmarks_component';
-import { selectBookmarksTab } from '../../selectors/bookmarks_tab/select_bookmarks_tab';
-import { SetBookmarksTabAction, setBookmarksTab } from '../../stores/bookmarks_tab';
-import { SaveBookmarkedServicesOffsetAction, saveBookmarkedServicesOffset } from '../../stores/list_offset';
-import { selectBookmarkedServicesOffset } from '../../selectors/list_offset.ts/select_bookmarked_services_offset';
+import { selectBookmarksTab } from '../../selectors/user_experience/select_bookmarks_tab';
+import { SaveBookmarkedServicesOffsetAction, saveBookmarkedServicesOffset, SetBookmarksTabAction, setBookmarksTab } from '../../stores/user_experience/actions';
+import { selectBookmarkedServicesOffset } from '../../selectors/user_experience/select_bookmarked_services_offset';
 
 const mapStateToProps = (store: Store): BookmarksProps => ({
     bookmarkedServices: selectBookmarkedServices(store),

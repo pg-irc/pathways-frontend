@@ -30,7 +30,7 @@ import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
-import { SaveTopicServicesOffsetAction } from '../../stores/list_offset';
+import { SaveTopicServicesOffsetAction } from '../../stores/user_experience/actions';
 
 export interface ServiceListProps {
     readonly topic: Topic;

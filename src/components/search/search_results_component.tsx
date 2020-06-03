@@ -28,7 +28,7 @@ import buildUrl from 'build-url';
 import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
-import { SaveSearchOffsetAction } from '../../stores/list_offset';
+import { SaveSearchOffsetAction } from '../../stores/user_experience/actions';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 

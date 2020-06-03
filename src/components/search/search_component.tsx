@@ -23,7 +23,7 @@ import { Trans } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/header_menu';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
-import { SaveSearchOffsetAction } from '../../stores/list_offset';
+import { SaveSearchOffsetAction } from '../../stores/user_experience/actions';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;

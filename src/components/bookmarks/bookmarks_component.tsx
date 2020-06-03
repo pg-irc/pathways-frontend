@@ -10,13 +10,13 @@ import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header
 import { ListActions } from './bookmarks_connected_component';
 import { OpenServiceAction } from '../../stores/services/actions';
 import { History } from 'history';
-import { BookmarksTabStore, SetBookmarksTabAction } from '../../stores/bookmarks_tab';
-import { SaveBookmarkedServicesOffsetAction } from '../../stores/list_offset';
+import { BookmarksTab } from '../../stores/user_experience';
+import { SetBookmarksTabAction, SaveBookmarkedServicesOffsetAction } from '../../stores/user_experience/actions';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
-    readonly bookmarksTab: BookmarksTabStore;
+    readonly bookmarksTab: BookmarksTab;
     readonly bookmarkedServicesOffset: number;
 }
 

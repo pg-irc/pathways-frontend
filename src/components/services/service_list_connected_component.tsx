@@ -16,8 +16,8 @@ import { selectShowPartialLocalizationMessage } from '../../selectors/user_profi
 import { HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
 import { SetManualUserLocationAction, setManualUserLocation } from '../../stores/manual_user_location';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
-import { SaveTopicServicesOffsetAction, saveTopicServicesOffset } from '../../stores/list_offset';
-import { selectTopicServicesOffset } from '../../selectors/list_offset.ts/select_topic_services_offset';
+import { SaveTopicServicesOffsetAction, saveTopicServicesOffset } from '../../stores/user_experience/actions';
+import { selectTopicServicesOffset } from '../../selectors/user_experience/select_topic_services_offset';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
     const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);

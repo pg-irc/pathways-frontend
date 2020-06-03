@@ -10,7 +10,7 @@ import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } fro
 import { renderServiceItems } from '../services/render_service_items';
 import { SearchListSeparator } from '../search/separators';
 import { History } from 'history';
-import { SaveBookmarkedServicesOffsetAction } from '../../stores/list_offset';
+import { SaveBookmarkedServicesOffsetAction } from '../../stores/user_experience/actions';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;

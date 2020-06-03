@@ -18,8 +18,8 @@ import { selectSearchResults } from '../../selectors/search/select_search_result
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
-import { SaveSearchOffsetAction, saveSearchOffset } from '../../stores/list_offset';
-import { selectSearchOffset } from '../../selectors/list_offset.ts/select_search_offset';
+import { SaveSearchOffsetAction, saveSearchOffset } from '../../stores/user_experience/actions';
+import { selectSearchOffset } from '../../selectors/user_experience/select_search_offset';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
