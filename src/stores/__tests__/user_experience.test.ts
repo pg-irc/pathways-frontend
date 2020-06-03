@@ -1,7 +1,9 @@
 // tslint:disable:no-expression-statement
-import { buildDefaultStore, reducer, BookmarksTab } from '../user_experience';
-import { saveSearchOffset, saveTopicServicesOffset, saveBookmarkedServicesOffset, setBookmarksTab } from '../user_experience/actions';
-import { aNumber } from '../../application/helpers/random_test_values';
+import { buildDefaultStore, reducer, BookmarksTab, HeaderMenu } from '../user_experience';
+import { saveSearchOffset, saveTopicServicesOffset, saveBookmarkedServicesOffset, setBookmarksTab, closeHeaderMenu, openHeaderMenu, closeAboutModal, openAboutModal, closeDisclaimerModal } from '../user_experience/actions';
+import { aNumber, aString, aBoolean } from '../../application/helpers/random_test_values';
+import { openDisclaimerModal } from '../header_menu';
+import { saveLocaleRequest } from '../locale/actions';
 
 describe('the user experience reducer', () => {
 
@@ -47,6 +49,53 @@ describe('the user experience reducer', () => {
             const oldStore = buildDefaultStore();
             const newStore = reducer(oldStore, setBookmarksTab(1));
             expect(newStore.bookmarksTab).toBe(BookmarksTab.Services);
+        });
+    });
+
+    describe('the header menu state', () => {
+
+        it('is set to header menu is closed by the close header menu action', () => {
+            const oldStore = buildDefaultStore();
+            const newStore = reducer(oldStore, closeHeaderMenu());
+            expect(newStore.headerMenu).toBe(HeaderMenu.HeaderMenuIsClosed);
+        });
+
+        it('is set to header menu is open by the open header menu action', () => {
+            const oldStore = buildDefaultStore();
+            const newStore = reducer(oldStore, openHeaderMenu());
+            expect(newStore.headerMenu).toBe(HeaderMenu.HeaderMenuIsOpen);
+        });
+
+        it('is set to header menu is open by the close about modal action', () => {
+            const oldStore = buildDefaultStore();
+            const newStore = reducer(oldStore, closeAboutModal());
+            expect(newStore.headerMenu).toBe(HeaderMenu.HeaderMenuIsOpen);
+        });
+
+        it('is set to about modal is open by the open about modal action', () => {
+            const oldStore = buildDefaultStore();
+            const newStore = reducer(oldStore, openAboutModal());
+            expect(newStore.headerMenu).toBe(HeaderMenu.AboutModalIsOpen);
+        });
+
+        it('is set to header menu is open by the close disclaimer modal action', () => {
+            const oldStore = buildDefaultStore();
+            const newStore = reducer(oldStore, closeDisclaimerModal());
+            expect(newStore.headerMenu).toBe(HeaderMenu.HeaderMenuIsOpen);
+        });
+
+        it ('is set disclaimer modal is open by the open disclaimer modal action', () => {
+            const oldStore = buildDefaultStore();
+            const newStore = reducer(oldStore, openDisclaimerModal());
+            expect(newStore.headerMenu).toBe(HeaderMenu.DisclaimerModalIsOpen);
+        });
+
+        it ('is set to header menu is closed by the save locale requestion action', () => {
+            const oldStore = buildDefaultStore();
+            const localeCode = aString();
+            const flipOrientation = aBoolean();
+            const newStore = reducer(oldStore, saveLocaleRequest(localeCode, flipOrientation));
+            expect(newStore.headerMenu).toBe(HeaderMenu.HeaderMenuIsClosed);
         });
     });
 });
