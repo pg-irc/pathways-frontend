@@ -2,7 +2,6 @@
 import React from 'react';
 import { Linking, Alert, I18nManager, AlertButton } from 'react-native';
 import { Text } from 'native-base';
-import { textStyles } from '../../application/styles';
 import { LinkIcon } from './link_icon_component';
 import { t } from '@lingui/macro';
 import * as R from 'ramda';
@@ -27,8 +26,8 @@ export const openURL = (url: string): void => {
 export const Link = (props: LinkProps): JSX.Element => {
     const onPress = (): void => openURL(props.href);
     return (
-        <Text onPress={onPress} style={[textStyles.paragraphURL, props.style]}>
-            {props.children}
+        <Text onPress={onPress} style={props.style}>
+            {props.children + ' '}
             <LinkIcon />
         </Text>
     );
