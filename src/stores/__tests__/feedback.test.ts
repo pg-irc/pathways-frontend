@@ -2,9 +2,9 @@
 import { reducer, suggestAnUpdate,
     chooseChangeNameOrDetails, chooseRemoveService,
     chooseOtherChanges, submit, discardChanges, close,
-    finishFeedback, buildDefaultStore, cancelDiscardChanges, getEmptyServiceFeedback } from '../feedback';
+    finishFeedback, buildDefaultStore, cancelDiscardChanges, getEmptyServiceFeedback, getEmptyUserInfo } from '../feedback';
 import { aString, aBoolean } from '../../application/helpers/random_test_values';
-import { FeedbackModal, FeedbackField, ServiceFeedback, FeedbackScreen } from '../feedback/types';
+import { FeedbackModal, FeedbackField, ServiceFeedback, FeedbackScreen, UserInformation } from '../feedback/types';
 import { FeedbackStoreBuilder } from './helpers/feedback_store_builder';
 
 describe('feedback reducer', () => {
@@ -33,6 +33,22 @@ describe('feedback reducer', () => {
         } else {
             fail();
         }
+    });
+
+    test('suggest update clears existing user feedback sate', (): void => {
+        const userData: UserInformation =  {
+            email: aString(),
+            name: aString(),
+            organizationName: aString(),
+            jobTitle: aString(),
+            isEmployee: aBoolean(),
+         };
+
+        const oldStore = new FeedbackStoreBuilder().withUserData(userData).build();
+        const action = suggestAnUpdate();
+        const newStore = reducer(oldStore, action);
+
+        expect(newStore.userInformation).toEqual(getEmptyUserInfo());
     });
 
     describe('with chose feedback mode modal', () => {
