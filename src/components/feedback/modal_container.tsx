@@ -6,6 +6,7 @@ import { ChooseModeModal } from './choose_mode_modal';
 import { UserInformation } from '../../stores/feedback/types';
 import { DiscardChangesModal } from './discard_changes_modal';
 import { showToast } from '../../application/toast';
+import { EmptyComponent } from '../empty_component/empty_component';
 import {
     DiscardChangesAction,
     CancelDiscardChangesAction,
@@ -44,28 +45,32 @@ export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
         props.resetFeedbackAndUserInput();
     };
 
-    return (
-        <>
-            <ChooseModeModal
-                onClosePress={props.close}
-                onChangeNameOrOtherDetailPress={props.chooseChangeNameOrDetail}
-                onChooseOtherChangesPress={props.chooseOtherChanges}
-                onChooseRemoveServicePress={props.chooseRemoveService}
-                isVisible={props.showChooseFeedbackModeModal}
-            />
-            <ReceiveUpdatesModal
-                isSendingFeedback={props.isSendingFeedback}
-                setUserInformation={props.setUserInformation}
-                userInformation={props.userInformation}
-                onFinishPress={props.finishAndSendFeedback}
-                isVisible={props.showReceiveUpdatesModal}
-                onModalHide={onReceiveUpdatesModalHide}
-            />
-            <DiscardChangesModal
-                onDiscardPress={onDiscardModalDiscardPress}
-                onKeepEditingPress={props.cancelDiscardFeedback}
-                isVisible={props.showDiscardChangesModal}
-            />
-        </>
-    );
+    if (props.showChooseFeedbackModeModal) {
+        return <ChooseModeModal
+            onClosePress={props.close}
+            onChangeNameOrOtherDetailPress={props.chooseChangeNameOrDetail}
+            onChooseOtherChangesPress={props.chooseOtherChanges}
+            onChooseRemoveServicePress={props.chooseRemoveService}
+        />;
+    }
+
+    if (props.showReceiveUpdatesModal) {
+        return <ReceiveUpdatesModal
+            isSendingFeedback={props.isSendingFeedback}
+            setUserInformation={props.setUserInformation}
+            userInformation={props.userInformation}
+            onFinishPress={props.finishAndSendFeedback}
+            onModalHide={onReceiveUpdatesModalHide}
+        />;
+    }
+
+    if (props.showDiscardChangesModal) {
+        return <DiscardChangesModal
+            onDiscardPress={onDiscardModalDiscardPress}
+            onKeepEditingPress={props.cancelDiscardFeedback}
+            isVisible={true}
+        />;
+    }
+
+    return <EmptyComponent/>;
 };
