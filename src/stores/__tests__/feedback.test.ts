@@ -2,7 +2,7 @@
 import { reducer, suggestAnUpdate,
     chooseChangeNameOrDetails, chooseRemoveService,
     chooseOtherChanges, submit, discardChanges, close,
-    finishFeedback, buildDefaultStore, cancelDiscardChanges } from '../feedback';
+    finishFeedback, buildDefaultStore, cancelDiscardChanges, getEmptyServiceFeedback } from '../feedback';
 import { aString, aBoolean } from '../../application/helpers/random_test_values';
 import { FeedbackModal, FeedbackField, ServiceFeedback, FeedbackScreen } from '../feedback/types';
 import { FeedbackStoreBuilder } from './helpers/feedback_store_builder';
@@ -14,6 +14,25 @@ describe('feedback reducer', () => {
         const newStore = reducer(oldStore, action);
         expect(newStore.screen).toEqual(FeedbackScreen.ServiceDetail);
         expect(newStore.modal).toEqual(FeedbackModal.ChooseFeedbackModeModal);
+    });
+
+    test('suggest update clears existing user feedback sate', (): void => {
+        const feedbackDataAboutDescription = {
+            ...getEmptyServiceFeedback(),
+            description: {
+                value: aString(),
+                shouldSend: true,
+            },
+        };
+        const oldStore = new FeedbackStoreBuilder().withFeedbackData(feedbackDataAboutDescription).build();
+        const action = suggestAnUpdate();
+        const newStore = reducer(oldStore, action);
+
+        if (newStore.feedback.type === 'service_feedback') {
+            expect(newStore.feedback.description).toEqual({value: '', shouldSend: false});
+        } else {
+            fail();
+        }
     });
 
     describe('with chose feedback mode modal', () => {
