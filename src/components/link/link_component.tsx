@@ -2,7 +2,6 @@
 import React from 'react';
 import { Linking, Alert, I18nManager, AlertButton } from 'react-native';
 import { Text } from 'native-base';
-import { textStyles } from '../../application/styles';
 import { LinkIcon } from './link_icon_component';
 import { t } from '@lingui/macro';
 import * as R from 'ramda';
@@ -27,8 +26,8 @@ export const openURL = (url: string): void => {
 export const Link = (props: LinkProps): JSX.Element => {
     const onPress = (): void => openURL(props.href);
     return (
-        <Text onPress={onPress} style={[textStyles.paragraphURL, props.style]}>
-            {props.children}
+        <Text onPress={onPress} style={props.style}>
+            {props.children + ' '}
             <LinkIcon />
         </Text>
     );
@@ -42,15 +41,15 @@ export const LinkTypes = {
 
 // tslint:disable-next-line: no-any
 export const alertOnLinkClicked = (node: any, i18n: I18n, hideLinkAlerts: () => void): void => {
-    const heading = t`Opening External Links`;
-    const message = t`By clicking on the link, you will be redirected to an external browser on your device.`;
+    const heading = t`Opening External Link`;
+    const message = t`This link will open in your device's browser.`;
     const okOption = t`OK`;
     const cancelOption = t`Cancel`;
-    const alwaysOpenOption = t`Always Open`;
+    const dontShowOption = t`Don't show again`;
     // tslint:disable-next-line: readonly-array
     const buttons: AlertButton[] = [
         {
-            text: i18n._(alwaysOpenOption), onPress: (): Promise<void> => {
+            text: i18n._(dontShowOption), onPress: (): Promise<void> => {
                 // tslint:disable-next-line: no-expression-statement
                 hideLinkAlerts();
                 return Linking.openURL(node.attributes.href);
