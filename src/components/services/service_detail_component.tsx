@@ -61,8 +61,6 @@ export interface ServiceDetailProps {
     readonly feedbackScreen: FeedbackScreen;
     readonly feedbackModal: FeedbackModal;
     readonly isSendingFeedback: boolean;
-    readonly feedback: Feedback;
-    readonly userInformation: UserInformation;
     readonly showLinkAlerts: boolean;
 }
 

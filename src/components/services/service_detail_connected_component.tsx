@@ -35,8 +35,6 @@ import {
     sendFeedback,
 } from '../../stores/feedback';
 import { selectIsSendingFeedback } from '../../selectors/feedback/select_is_sending_feedback';
-import { selectFeedback } from '../../selectors/feedback/select_feedback';
-import { selectFeedbackUserInformation } from '../../selectors/feedback/select_feedback_user_information';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
 
@@ -48,8 +46,6 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProp
         feedbackScreen: selectFeedbackScreen(store),
         feedbackModal: selectFeedbackModal(store),
         isSendingFeedback: selectIsSendingFeedback(store),
-        feedback: selectFeedback(store),
-        userInformation: selectFeedbackUserInformation(store),
         showLinkAlerts: selectShowLinkAlerts(store),
     };
 };
