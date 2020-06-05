@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { Dispatch, SetStateAction, useState, useRef, useEffect, MutableRefObject } from 'react';
+import React, { Dispatch, SetStateAction, useState, useRef, MutableRefObject } from 'react';
 import { TouchableOpacity } from 'react-native';
 import * as R from 'ramda';
 import { History, Location } from 'history';
@@ -91,16 +91,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] = useState(getEmptyServiceFeedback());
     const [userInfoInput, setUserInfoInput]: readonly [UserInformation, Dispatch<SetStateAction<UserInformation>>] = useState(getEmptyUserInfo());
 
-    useEffect((): void => {
-        switch (props.feedbackScreen) {
-            case FeedbackScreen.OtherChangesPage:
-            case FeedbackScreen.RemoveServicePage:
-                return goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
-            default:
-                return undefined;
-        }
-    }, [props.feedbackScreen]);
-
     const setFeedbackInputForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField): void => (
         setFeedbackInput({ ...feedbackInput, [fieldName]: fieldValue })
     ));
@@ -112,11 +102,13 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     };
 
     const chooseRemoveService = (): void => {
+        goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
         resetFeedbackAndUserInput();
         props.chooseRemoveService();
     };
 
     const chooseOtherChanges = (): void => {
+        goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
         resetFeedbackAndUserInput();
         props.chooseOtherChanges();
     };
