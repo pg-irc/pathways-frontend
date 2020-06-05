@@ -96,8 +96,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             case FeedbackScreen.OtherChangesPage:
             case FeedbackScreen.RemoveServicePage:
                 return goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
-            case FeedbackScreen.EditableServiceDetailPage:
-                return scrollToTop(scrollViewRef);
             default:
                 return undefined;
         }
@@ -108,6 +106,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     ));
 
     const chooseChangeNameOrDetail = (): void => {
+        scrollToTop(scrollViewRef);
         resetFeedbackAndUserInput();
         props.chooseChangeNameOrDetail();
     };
