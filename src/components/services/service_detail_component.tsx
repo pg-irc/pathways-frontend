@@ -88,8 +88,10 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const serviceId = props.match.params.serviceId;
     const isFeedbackInputEnabled = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
-    const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] = useState(getEmptyServiceFeedback());
-    const [userInfoInput, setUserInfoInput]: readonly [UserInformation, Dispatch<SetStateAction<UserInformation>>] = useState(getEmptyUserInfo());
+    type SetServiceFeedback = Dispatch<SetStateAction<ServiceFeedback>>;
+    type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
+    const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, SetServiceFeedback] = useState(getEmptyServiceFeedback());
+    const [userInfoInput, setUserInfoInput]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
 
     const setFeedbackInputForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField): void => (
         setFeedbackInput({ ...feedbackInput, [fieldName]: fieldValue })
