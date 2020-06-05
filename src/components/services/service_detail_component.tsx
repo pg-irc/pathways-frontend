@@ -107,6 +107,21 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         setFeedbackInput({ ...feedbackInput, [fieldName]: fieldValue })
     ));
 
+    const chooseChangeNameOrDetail = (): void => {
+        resetFeedbackAndUserInput();
+        props.chooseChangeNameOrDetail();
+    };
+
+    const chooseRemoveService = (): void => {
+        resetFeedbackAndUserInput();
+        props.chooseRemoveService();
+    };
+
+    const chooseOtherChanges = (): void => {
+        resetFeedbackAndUserInput();
+        props.chooseOtherChanges();
+    };
+
     const resetFeedbackAndUserInput = (): void => {
         setFeedbackInput(getEmptyServiceFeedback());
         setUserInfoInput(getEmptyUserInfo());
@@ -197,9 +212,11 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         showChooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
                         showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ReceiveUpdatesModal}
                         showDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
-                        chooseChangeNameOrDetail={props.chooseChangeNameOrDetail}
-                        chooseRemoveService={props.chooseRemoveService}
-                        chooseOtherChanges={props.chooseOtherChanges}
+
+                        chooseChangeNameOrDetail={chooseChangeNameOrDetail}
+                        chooseRemoveService={chooseRemoveService}
+                        chooseOtherChanges={chooseOtherChanges}
+
                         close={props.close}
                         cancelDiscardFeedback={props.cancelDiscardFeedback}
                         resetFeedbackAndUserInput={resetFeedbackAndUserInput}

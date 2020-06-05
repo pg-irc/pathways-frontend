@@ -7,14 +7,7 @@ import { UserInformation } from '../../stores/feedback/types';
 import { DiscardChangesModal } from './discard_changes_modal';
 import { showToast } from '../../application/toast';
 import { EmptyComponent } from '../empty_component/empty_component';
-import {
-    DiscardChangesAction,
-    CancelDiscardChangesAction,
-    ChooseChangeNameOrDetailsAction,
-    ChooseRemoveServiceAction,
-    ChooseOtherChangesAction,
-    CloseAction,
-} from '../../stores/feedback';
+import { DiscardChangesAction, CancelDiscardChangesAction, CloseAction } from '../../stores/feedback';
 
 interface ModalContainerProps {
     readonly isSendingFeedback: boolean;
@@ -26,9 +19,9 @@ interface ModalContainerProps {
     readonly finishAndSendFeedback: () => void;
     readonly discardFeedback: () => DiscardChangesAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
-    readonly chooseChangeNameOrDetail: () => ChooseChangeNameOrDetailsAction;
-    readonly chooseRemoveService: () => ChooseRemoveServiceAction;
-    readonly chooseOtherChanges: () => ChooseOtherChangesAction;
+    readonly chooseChangeNameOrDetail: () => void;
+    readonly chooseRemoveService: () => void;
+    readonly chooseOtherChanges: () => void;
     readonly close: () => CloseAction;
     readonly resetFeedbackAndUserInput: () => void;
 }
