@@ -83,13 +83,13 @@ export interface ServiceDetailActions {
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
+type SetServiceFeedback = Dispatch<SetStateAction<ServiceFeedback>>;
+type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const serviceId = props.match.params.serviceId;
     const isFeedbackInputEnabled = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
-    type SetServiceFeedback = Dispatch<SetStateAction<ServiceFeedback>>;
-    type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
     const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, SetServiceFeedback] = useState(getEmptyServiceFeedback());
     const [userInfoInput, setUserInfoInput]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
 
@@ -212,7 +212,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
 
                         close={props.close}
                         cancelDiscardFeedback={props.cancelDiscardFeedback}
-                        resetFeedbackAndUserInput={resetFeedbackAndUserInput}
                     />
                 </View>
             </KeyboardAwareScrollView>

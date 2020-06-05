@@ -23,19 +23,16 @@ interface ModalContainerProps {
     readonly chooseRemoveService: () => void;
     readonly chooseOtherChanges: () => void;
     readonly close: () => CloseAction;
-    readonly resetFeedbackAndUserInput: () => void;
 }
 
 export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
 
     const onReceiveUpdatesModalHide = (i18n: I18n) => () => {
         showToast(i18n._(t`Thank you for your contribution!`));
-        props.resetFeedbackAndUserInput();
     };
 
     const onDiscardModalDiscardPress = (): void => {
         props.discardFeedback();
-        props.resetFeedbackAndUserInput();
     };
 
     if (props.showChooseFeedbackModeModal) {
