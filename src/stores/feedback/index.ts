@@ -24,7 +24,7 @@ export const close = () => helpers.makeAction(constants.CLOSE);
 export const submit = (feedback: Feedback) => (
     helpers.makeAction(constants.SUBMIT, { feedback })
 );
-export const finishFeedback = (userInformation: UserInformation = undefined) => (
+export const finishFeedback = (userInformation: UserInformation) => (
     helpers.makeAction(constants.FINISH_FEEDBACK, { userInformation })
 );
 export const sendFeedback = (serviceId: string) => (

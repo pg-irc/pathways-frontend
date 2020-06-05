@@ -99,23 +99,23 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
 
     const chooseChangeNameOrDetail = (): void => {
         scrollToTop(scrollViewRef);
-        resetFeedbackAndUserInput();
+        resetInputs();
         props.chooseChangeNameOrDetail();
     };
 
     const chooseRemoveService = (): void => {
         goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
-        resetFeedbackAndUserInput();
+        resetInputs();
         props.chooseRemoveService();
     };
 
     const chooseOtherChanges = (): void => {
         goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
-        resetFeedbackAndUserInput();
+        resetInputs();
         props.chooseOtherChanges();
     };
 
-    const resetFeedbackAndUserInput = (): void => {
+    const resetInputs = (): void => {
         setFeedbackInput(getEmptyServiceFeedback());
         setUserInfoInput(getEmptyUserInfo());
     };

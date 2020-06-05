@@ -8,6 +8,12 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 import { FeedbackField } from '../../stores/feedback/types';
+// TODO
+// * remove hook
+// * setter for bool and string on the interface
+// * remove setInput
+// * rename isEnabled to ???
+// * rename body to ???
 
 interface Props {
     readonly inputField: FeedbackField;
