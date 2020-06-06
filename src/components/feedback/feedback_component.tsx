@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import React, { useState, Dispatch, SetStateAction, useEffect  } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import { View, TextInput, Text, TouchableOpacity, TextStyle, StyleProp } from 'react-native';
 import { Trans, I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
@@ -18,6 +18,7 @@ import { FeedbackField } from '../../stores/feedback/types';
 interface Props {
     readonly inputField: FeedbackField;
     readonly setInput: (field: FeedbackField) => void;
+    readonly toggleShouldSend: (field: FeedbackField) => void;
     readonly label: JSX.Element;
     readonly body: string;
     readonly isEnabled: boolean;
@@ -25,13 +26,6 @@ interface Props {
 }
 
 export const FeedbackComponent = (props: Props): JSX.Element => {
-    const [isEditing, setIsEditing]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-    useEffect((): void => {
-        props.setInput({ ...props.inputField, shouldSend: isEditing });
-    }, [isEditing]);
-
-    const onEditingTogglePress = (): void => setIsEditing(!isEditing);
-
     if (!props.isEnabled) {
         return props.disabledComponent;
     }
@@ -43,8 +37,8 @@ export const FeedbackComponent = (props: Props): JSX.Element => {
                 <FieldValue fieldValue={props.body} />
             </View>
             <ToggleInputComponent
-                onPress={onEditingTogglePress}
-                isEditing={isEditing}
+                onPress={(): void => props.toggleShouldSend(props.inputField)}
+                isEditing={props.inputField.shouldSend}
                 setInput={props.setInput}
                 inputField={props.inputField}
             />

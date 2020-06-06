@@ -97,6 +97,11 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         setFeedbackInput({ ...feedbackInput, [fieldName]: fieldValue })
     ));
 
+    const toggleShouldSendForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField): void => {
+        const shouldSend = !fieldValue.shouldSend;
+        return setFeedbackInput({ ...feedbackInput, [fieldName]: { ...fieldValue, shouldSend }});
+    });
+
     const chooseChangeNameOrDetail = (): void => {
         scrollToTop(scrollViewRef);
         resetInputs();
@@ -152,6 +157,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 <View padder>
                     <FeedbackComponent
                         setInput={setFeedbackInputForField('name')}
+                        toggleShouldSend={toggleShouldSendForField('name')}
                         inputField={feedbackInput.name}
                         label={<Trans>Name</Trans>}
                         body={props.service.name}
@@ -161,6 +167,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     <DividerComponent />
                     <FeedbackComponent
                         setInput={setFeedbackInputForField('organization')}
+                        toggleShouldSend={toggleShouldSendForField('organization')}
                         inputField={feedbackInput.organization}
                         label={<Trans>Organization</Trans>}
                         body={props.service.organizationName}
@@ -170,6 +177,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     <DividerComponent />
                     <FeedbackComponent
                         setInput={setFeedbackInputForField('description')}
+                        toggleShouldSend={toggleShouldSendForField('description')}
                         inputField={feedbackInput.description}
                         label={<Trans>Description</Trans>}
                         body={props.service.description}
@@ -187,6 +195,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         currentPathForAnaltyics={props.location.pathname}
                         isFeedbackInputEnabled={isFeedbackInputEnabled}
                         setFeedbackInputForField={setFeedbackInputForField}
+                        toggleShouldSendForField={toggleShouldSendForField}
                         feedback={feedbackInput}
                         analyticsLinkPressed={props.analyticsLinkPressed}
                         currentPathForAnalytics={props.location.pathname}
@@ -337,6 +346,7 @@ interface ServiceContactDetailsProps {
     readonly feedback: ServiceFeedback;
     readonly isFeedbackInputEnabled: boolean;
     readonly setFeedbackInputForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
+    readonly toggleShouldSendForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
 }
@@ -351,6 +361,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
         <>
             <FeedbackComponent
                 setInput={props.setFeedbackInputForField('address')}
+                toggleShouldSend={props.toggleShouldSendForField('address')}
                 inputField={props.feedback.address}
                 label={<Trans>Address</Trans>}
                 body={getAddressesString(physicalAddresses)}
@@ -369,6 +380,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <DividerComponent />
             <FeedbackComponent
                 setInput={props.setFeedbackInputForField('phone')}
+                toggleShouldSend={props.toggleShouldSendForField('phone')}
                 inputField={props.feedback.phone}
                 label={<Trans>Phone numbers</Trans>}
                 body={getPhonesString(props.service.phoneNumbers)}
@@ -385,6 +397,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <DividerComponent />
             <FeedbackComponent
                 setInput={props.setFeedbackInputForField('website')}
+                toggleShouldSend={props.toggleShouldSendForField('website')}
                 inputField={props.feedback.website}
                 label={<Trans>Website</Trans>}
                 body={props.service.website}
@@ -401,6 +414,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             <DividerComponent />
             <FeedbackComponent
                 setInput={props.setFeedbackInputForField('email')}
+                toggleShouldSend={props.toggleShouldSendForField('email')}
                 inputField={props.feedback.email}
                 label={<Trans>Email</Trans>}
                 body={props.service.email}
