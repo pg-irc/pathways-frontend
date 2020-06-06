@@ -18,7 +18,7 @@ describe('feedback reducer', () => {
 
     test('suggest update clears existing user feedback sate', (): void => {
         const feedbackDataAboutDescription = {
-            ...getEmptyServiceFeedback(),
+            ...getEmptyServiceFeedback(false),
             description: {
                 value: aString(),
                 shouldSend: true,
