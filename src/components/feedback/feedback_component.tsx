@@ -17,7 +17,7 @@ import { FeedbackField } from '../../stores/feedback/types';
 
 interface Props {
     readonly inputField: FeedbackField;
-    readonly setInput: (field: FeedbackField) => void;
+    readonly setText: (field: FeedbackField, value: string) => void;
     readonly toggleShouldSend: (field: FeedbackField) => void;
     readonly label: JSX.Element;
     readonly body: string;
@@ -39,7 +39,7 @@ export const FeedbackComponent = (props: Props): JSX.Element => {
             <ToggleInputComponent
                 onPress={(): void => props.toggleShouldSend(props.inputField)}
                 isEditing={props.inputField.shouldSend}
-                setInput={props.setInput}
+                setTextForField={props.setText}
                 inputField={props.inputField}
             />
         </View>
@@ -62,8 +62,8 @@ const FieldValue = (props: { readonly fieldValue: Props['body'] }): JSX.Element 
 interface ToggleInputComponentProps {
     readonly onPress: () => void;
     readonly isEditing: boolean;
-    readonly setInput: Props['setInput'];
-    readonly inputField: Props['inputField'];
+    readonly setTextForField: (field: FeedbackField, value: string) => void;
+    readonly inputField: FeedbackField;
 }
 
 const ToggleInputComponent = (props: ToggleInputComponentProps): JSX.Element => (
@@ -80,7 +80,7 @@ const ToggleInputComponent = (props: ToggleInputComponentProps): JSX.Element => 
             isEditing={props.isEditing}
         />
         <TextInputComponent
-            setInput={props.setInput}
+            setText={props.setTextForField}
             isEditing={props.isEditing}
             inputField={props.inputField}
         />
@@ -108,19 +108,16 @@ const ToggleTextInputComponent = (props: ToggleButtonComponentProps): JSX.Elemen
 );
 
 interface InputComponentProps {
-    readonly setInput: Props['setInput'];
+    readonly setText: (field: FeedbackField, value: string) => void;
     readonly isEditing: boolean;
-    readonly inputField: Props['inputField'];
+    readonly inputField: FeedbackField;
 }
 
 const TextInputComponent = (props: InputComponentProps): JSX.Element => {
     const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.teal);
-
     const onBlur = (): void => setTextcolor(colors.teal);
-
     const onFocus = (): void => setTextcolor(colors.black);
-
-    const onChangeText = (value: string): void => props.setInput({ ...props.inputField, value });
+    const onChangeText = (value: string): void => props.setText(props.inputField, value);
 
     if (!props.isEditing) {
         return <EmptyComponent />;

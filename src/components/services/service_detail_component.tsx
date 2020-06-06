@@ -93,8 +93,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, SetServiceFeedback] = useState(getEmptyServiceFeedback());
     const [userInfoInput, setUserInfoInput]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
 
-    const setFeedbackInputForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField): void => (
-        setFeedbackInput({ ...feedbackInput, [fieldName]: fieldValue })
+    const setTextForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField, value: string): void => (
+        setFeedbackInput({ ...feedbackInput, [fieldName]: { ...fieldValue, value  }})
     ));
 
     const toggleShouldSendForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField): void => {
@@ -156,7 +156,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             >
                 <View padder>
                     <FeedbackComponent
-                        setInput={setFeedbackInputForField('name')}
+                        setText={setTextForField('name')}
                         toggleShouldSend={toggleShouldSendForField('name')}
                         inputField={feedbackInput.name}
                         label={<Trans>Name</Trans>}
@@ -166,7 +166,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     />
                     <DividerComponent />
                     <FeedbackComponent
-                        setInput={setFeedbackInputForField('organization')}
+                        setText={setTextForField('organization')}
                         toggleShouldSend={toggleShouldSendForField('organization')}
                         inputField={feedbackInput.organization}
                         label={<Trans>Organization</Trans>}
@@ -176,7 +176,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     />
                     <DividerComponent />
                     <FeedbackComponent
-                        setInput={setFeedbackInputForField('description')}
+                        setText={setTextForField('description')}
                         toggleShouldSend={toggleShouldSendForField('description')}
                         inputField={feedbackInput.description}
                         label={<Trans>Description</Trans>}
@@ -194,7 +194,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         service={props.service}
                         currentPathForAnaltyics={props.location.pathname}
                         isFeedbackInputEnabled={isFeedbackInputEnabled}
-                        setFeedbackInputForField={setFeedbackInputForField}
+                        setFeedbackInputForField={setTextForField}
                         toggleShouldSendForField={toggleShouldSendForField}
                         feedback={feedbackInput}
                         analyticsLinkPressed={props.analyticsLinkPressed}
@@ -360,7 +360,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
     return (
         <>
             <FeedbackComponent
-                setInput={props.setFeedbackInputForField('address')}
+                setText={props.setFeedbackInputForField('address')}
                 toggleShouldSend={props.toggleShouldSendForField('address')}
                 inputField={props.feedback.address}
                 label={<Trans>Address</Trans>}
@@ -379,7 +379,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <DividerComponent />
             <FeedbackComponent
-                setInput={props.setFeedbackInputForField('phone')}
+                setText={props.setFeedbackInputForField('phone')}
                 toggleShouldSend={props.toggleShouldSendForField('phone')}
                 inputField={props.feedback.phone}
                 label={<Trans>Phone numbers</Trans>}
@@ -396,7 +396,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <DividerComponent />
             <FeedbackComponent
-                setInput={props.setFeedbackInputForField('website')}
+                setText={props.setFeedbackInputForField('website')}
                 toggleShouldSend={props.toggleShouldSendForField('website')}
                 inputField={props.feedback.website}
                 label={<Trans>Website</Trans>}
@@ -413,7 +413,7 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <DividerComponent />
             <FeedbackComponent
-                setInput={props.setFeedbackInputForField('email')}
+                setText={props.setFeedbackInputForField('email')}
                 toggleShouldSend={props.toggleShouldSendForField('email')}
                 inputField={props.feedback.email}
                 label={<Trans>Email</Trans>}
