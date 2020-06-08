@@ -26,7 +26,7 @@
         "ts-jest": "^25.4.0",
         "tslint": "^6.1.1",
         "tslint-immutable": "^6.0.1",
-        "typescript": "^3.8.3"
+        "typescript": "^3.9.5"
     },
     "main": "./node_modules/expo/AppEntry.js",
     "scripts": {
