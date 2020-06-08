@@ -116,7 +116,7 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
                 renderItem={renderServiceItems({
                     ...props,
                     scrollOffset: topicServicesOffset,
-                    saveListOffset: props.saveTopicServicesOffset,
+                    saveScrollOffset: props.saveTopicServicesOffset,
                 })}
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={<ListHeaderComponent {...props} />}

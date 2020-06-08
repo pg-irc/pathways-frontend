@@ -1,6 +1,5 @@
 import { Dispatch } from 'redux';
 import { History, Location } from 'history';
-import * as R from 'ramda';
 import { Store } from '../../stores';
 import { TopicDetailsProps, TopicDetailActions, TopicDetailComponent } from './topic_detail_component';
 import {
@@ -20,6 +19,7 @@ import { selectManualUserLocation } from '../../selectors/services/select_manual
 import { BuildServicesRequestAction, buildServicesRequest } from '../../stores/services/actions';
 import { UserLocation } from '../../validation/latlong/types';
 import { Topic } from '../../selectors/topics/types';
+import { isTopicBookmarked } from '../../selectors/topics/is_topic_bookmarked';
 
 type OwnProps = {
     readonly history: History;
@@ -28,15 +28,11 @@ type OwnProps = {
 
 const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.TopicDetail);
-    const topic = selectCurrentTopic(store, matchParams.topicId);
-    const savedTasksIdList = pickBookmarkedTopicIds(store);
-    const taskIsBookmarked = R.contains(topic.id, savedTasksIdList);
-    const showLinkAlert = selectShowLinkAlerts(store);
     return {
-        topic,
-        taskIsBookmarked,
-        savedTasksIdList,
-        showLinkAlert,
+        topic: selectCurrentTopic(store, matchParams.topicId),
+        taskIsBookmarked: isTopicBookmarked(store, matchParams.topicId),
+        savedTasksIdList: pickBookmarkedTopicIds(store),
+        showLinkAlert: selectShowLinkAlerts(store),
         history: ownProps.history,
         location: ownProps.location,
         manualUserLocation: selectManualUserLocation(store),

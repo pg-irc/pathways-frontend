@@ -51,7 +51,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
             renderItem={renderServiceItems({
                 ...props,
                 scrollOffset: bookmarkedServicesOffset,
-                saveListOffset: props.saveBookmarkedServicesOffset,
+                saveScrollOffset: props.saveBookmarkedServicesOffset,
             })}
             ListEmptyComponent={
                 <EmptyBookmarksComponent

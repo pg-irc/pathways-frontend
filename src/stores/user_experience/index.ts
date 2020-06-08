@@ -34,18 +34,6 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
         return store;
     }
 
-    const isHeaderMenuAction = action.type === constants.OPEN_HEADER_MENU ||
-    action.type === constants.CLOSE_HEADER_MENU ||
-    action.type === constants.CLOSE_ABOUT_MODAL ||
-    action.type === constants.OPEN_ABOUT_MODAL ||
-    action.type === constants.CLOSE_DISCLAIMER_MODAL ||
-    action.type === constants.OPEN_DISCLAIMER_MODAL ||
-    action.type === constants.SAVE_LOCALE_REQUEST;
-
-    if (isHeaderMenuAction) {
-        return headerMenuReducer(store, action);
-    }
-
     switch (action.type) {
         case constants.SAVE_SEARCH_OFFSET:
             return ({
@@ -64,6 +52,14 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
             });
         case constants.SAVE_BOOKMARKS_TAB:
             return updateBookmarksTab(store, action.payload.index);
+        case constants.OPEN_HEADER_MENU:
+        case constants.CLOSE_HEADER_MENU:
+        case constants.CLOSE_ABOUT_MODAL:
+        case constants.OPEN_ABOUT_MODAL:
+        case constants.CLOSE_DISCLAIMER_MODAL:
+        case constants.OPEN_DISCLAIMER_MODAL:
+        case constants.SAVE_LOCALE_REQUEST:
+            return headerMenuReducer(store, action);
         default:
             return store;
     }
