@@ -58,7 +58,7 @@
     },
     "dependencies": {
         "@expo/vector-icons": "^10.0.0",
-        "@react-native-community/netinfo": "^5.8.0",
+        "@react-native-community/netinfo": "^5.9.2",
         "build-url": "^2.0.0",
         "cross-fetch": "^3.0.4",
         "expo": "^37.0.12",
