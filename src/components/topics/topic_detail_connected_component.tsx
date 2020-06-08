@@ -30,8 +30,8 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps =>
     const matchParams = getParametersFromPath(ownProps.location, Routes.TopicDetail);
     return {
         topic: selectCurrentTopic(store, matchParams.topicId),
-        taskIsBookmarked: isTopicBookmarked(store, matchParams.topicId),
-        savedTasksIdList: pickBookmarkedTopicIds(store),
+        topicIsBookmarked: isTopicBookmarked(store, matchParams.topicId),
+        bookmarkedTopicsIdList: pickBookmarkedTopicIds(store),
         showLinkAlert: selectShowLinkAlerts(store),
         history: ownProps.history,
         location: ownProps.location,

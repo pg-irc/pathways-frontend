@@ -25,8 +25,8 @@ import { BuildServicesRequestAction } from '../../stores/services/actions';
 
 export interface TopicDetailsProps {
     readonly topic: Topic;
-    readonly taskIsBookmarked: boolean;
-    readonly savedTasksIdList: ReadonlyArray<TaskId>;
+    readonly topicIsBookmarked: boolean;
+    readonly bookmarkedTopicsIdList: ReadonlyArray<TaskId>;
     readonly history: History;
     readonly location: Location;
     readonly showLinkAlert: boolean;
@@ -51,7 +51,7 @@ export const TopicDetailComponent = (props: Props): JSX.Element => (
         <Header {...props} />
         <TaskListComponent
             tasks={props.topic.relatedTopics}
-            savedTasksIdList={props.savedTasksIdList}
+            bookmarkedTopicsIdList={props.bookmarkedTopicsIdList}
             bookmarkTopic={props.bookmarkTopic}
             unbookmarkTopic={props.unbookmarkTopic}
             history={props.history}
@@ -69,7 +69,7 @@ const Header = (props: Props): JSX.Element => {
     const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
-            isBookmarked={R.contains(topicId, props.savedTasksIdList)}
+            isBookmarked={R.contains(topicId, props.bookmarkedTopicsIdList)}
             bookmark={(): BookmarkTopicAction => props.bookmarkTopic(topicId)}
             unbookmark={(): UnbookmarkTopicAction => props.unbookmarkTopic(topicId)}
             textColor={colors.teal}

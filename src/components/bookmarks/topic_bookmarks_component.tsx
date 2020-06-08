@@ -19,7 +19,7 @@ export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: 
     <View style={{backgroundColor: colors.lightGrey, paddingTop: 13}}>
         <TaskListComponent
             tasks={props.bookmarkedTopics}
-            savedTasksIdList={R.map((topic: TopicListItem) => topic.id, props.bookmarkedTopics)}
+            bookmarkedTopicsIdList={R.map((topic: TopicListItem) => topic.id, props.bookmarkedTopics)}
             emptyTaskListContent={
                 <EmptyBookmarksComponent
                     title={<Trans>No topics to show</Trans>}

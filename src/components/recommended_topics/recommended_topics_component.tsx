@@ -45,7 +45,7 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
         <TaskListComponent
             {...props}
             tasks={buildTopicsListItemsWithHeadings(props.recommendedTopics)}
-            savedTasksIdList={props.bookmarkedTopics}
+            bookmarkedTopicsIdList={props.bookmarkedTopics}
             emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to recommend</Trans>} />}
             headerContent={<TaskListHeaderComponent {...props} />}
         />

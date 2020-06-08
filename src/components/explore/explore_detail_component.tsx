@@ -33,7 +33,7 @@ export const ExploreDetailComponent = (props: Props): JSX.Element => (
         <Header {...props} />
         <TaskListComponent
             tasks={props.topics}
-            savedTasksIdList={props.bookmarkedTopics}
+            bookmarkedTopicsIdList={props.bookmarkedTopics}
             bookmarkTopic={props.bookmarkTopic}
             unbookmarkTopic={props.unbookmarkTopic}
             history={props.history}
