@@ -11,6 +11,7 @@ import { colors, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ScrollAnimationContext, ScrollContext } from '../main/scroll_animation_context';
 import { FeedbackScreen } from '../../stores/feedback/types';
+import { applicationStyles } from '../../application/styles';
 
 const AnimatedFooter = Animated.createAnimatedComponent(Footer);
 
@@ -86,7 +87,7 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
 
     return (
         <AnimatedFooter style={{ height: animatedFooterHeight, paddingBottom: animatedFooterBottomPadding }}>
-            <FooterTab style={{ backgroundColor: colors.lightTeal }}>
+            <FooterTab style={[{ backgroundColor: colors.lightTeal}, applicationStyles.boxShadowAbove ]}>
                 <NavigationButton
                     icon='home'
                     isActive={isOnRecommendedTopicsPage(props)}

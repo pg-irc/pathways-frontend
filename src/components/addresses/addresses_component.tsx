@@ -60,7 +60,7 @@ const buildAddress = R.curry((props: Props, address: Address, index: number): JS
 });
 
 export const renderSingleAddress = (address: Address): JSX.Element => (
-    <View>
+    <View style={{marginHorizontal: 5}}>
         <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Address:</Trans> </Text>
         <Text style={textStyles.paragraphStyle}>{address.address}</Text>
         <Text style={textStyles.paragraphStyle}>

@@ -28,6 +28,7 @@ export const TopicListHeadingComponent: React.StatelessComponent<TopicListHeadin
                 style={{
                     color: getColorForExploreIcon(props.icon),
                     marginTop: 30,
+                    marginBottom: 5,
                 }}
             />
             <Text style={textStyles.headlineH3StyleBlackLeft}>

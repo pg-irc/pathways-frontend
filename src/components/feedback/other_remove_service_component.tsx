@@ -47,12 +47,12 @@ export type FeedbackOtherRemoveServiceProps = OtherRemoveServiceState & OtherRem
 
 const SUGGESTION_CONTENT: SuggestionContentMap = {
     OTHER: {
-        header: t`Other feedback about this service.`,
+        header: t`Other suggestions`,
         label: t`Tell us more about this service`,
         placeholder: t`Comment or suggest edits`,
     },
     REMOVE_SERVICE: {
-        header: t`This service no longer exists.`,
+        header: t`This service no longer exists`,
         label: t`Provide any additional information (optional)`,
         placeholder: t`e.g. Service is permanently closed`,
     },
@@ -65,7 +65,7 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
                 ({ i18n }: I18nProps): JSX.Element => (
                     <Content padder>
                         <Item placeholderLabel={true} stackedLabel>
-                            <Label style={[textStyles.suggestionText, {paddingBottom: 10}]}>
+                            <Label style={[textStyles.suggestionText, {paddingBottom: 10, marginHorizontal: 10 }]}>
                                 <Trans id={props.inputLabel} />
                             </Label>
                             <Input
@@ -74,7 +74,7 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
                                 onChangeText={props.onInputChange}
                                 placeholder={i18n._(props.placeholder)}
                                 placeholderTextColor={colors.darkerGrey}
-                                style={styles.input}
+                                style={[styles.input, { marginHorizontal: 10 }]}
                                 textAlignVertical='top'
                                 value={props.input}
                             />

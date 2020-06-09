@@ -11,8 +11,8 @@ type HeaderProps = {
 };
 
 export const HeaderComponent = ({ headerLabel, close }: HeaderProps): JSX.Element => (
-    <Header style={styles.headerContainer}>
-        <Title style={{ paddingLeft: 15}}>
+    <Header style={[styles.headerContainer, { marginTop: 5 }]}>
+        <Title style={{ paddingLeft: 15 }}>
             <Text style={textStyles.headline6}>
                 <Trans id={headerLabel} />
             </Text>

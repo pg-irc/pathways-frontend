@@ -149,7 +149,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
                 style={{
                     fontSize: values.smallIconSize,
                     color: colors.teal,
-                    paddingHorizontal: 10,
+                    paddingHorizontal: 5,
                 }}
             />
         );

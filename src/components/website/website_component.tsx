@@ -39,7 +39,7 @@ export const WebsiteComponent = (props: Props): JSX.Element => {
 };
 
 const renderWebsite = (website: string): JSX.Element => (
-    <View>
+    <View style={{marginHorizontal: 5}}>
         <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Website:</Trans> </Text>
         <Text style={textStyles.paragraphStyle}>{website}</Text>
     </View>

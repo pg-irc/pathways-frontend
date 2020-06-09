@@ -14,7 +14,7 @@ interface Props {
 
 export const DiscardChangesModal = (props: Props): JSX.Element => (
     <Modal isVisible={props.isVisible} backdropTransitionOutTiming={0}>
-        <View style={{ backgroundColor: colors.white, borderRadius: 20, padding: 20 }}>
+        <View style={{ backgroundColor: colors.white, borderRadius: 15, padding: 20 }}>
             <PromptText />
             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                 <KeepEditingButton onKeepEditingPress={props.onKeepEditingPress} />
@@ -33,7 +33,7 @@ const PromptText = (): JSX.Element => (
 const KeepEditingButton = (props: { readonly onKeepEditingPress: () => void }): JSX.Element => (
     <MultiLineButtonComponent
         onPress={props.onKeepEditingPress}
-        style={[applicationStyles.whiteTealButton, { padding: 8, marginRight: 5 }]}
+        style={[applicationStyles.whiteTealButton, { paddingVertical: 10, paddingHorizontal: 15, marginRight: 5 }]}
     >
         <Text style={textStyles.whiteTealButton}>
             <Trans>Keep editing</Trans>
@@ -44,7 +44,7 @@ const KeepEditingButton = (props: { readonly onKeepEditingPress: () => void }): 
 const DiscardButton = (props: { readonly onDiscardPress: () => void }): JSX.Element => (
     <MultiLineButtonComponent
         onPress={props.onDiscardPress}
-        style={[applicationStyles.tealButton, { padding: 10, marginLeft: 5 }]}
+        style={[applicationStyles.tealButton, { paddingVertical: 12, paddingHorizontal: 17,  marginLeft: 5 }]}
     >
         <Text style={textStyles.tealButton}>
             <Trans>Discard</Trans>

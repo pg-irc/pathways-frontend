@@ -32,7 +32,7 @@ export const FeedbackComponent = (props: Props): JSX.Element => {
 
     return (
         <View style={{ marginVertical: 10 }}>
-            <View style={{ paddingHorizontal: 15, marginBottom: 10 }}>
+            <View style={{ paddingHorizontal: 10, marginBottom: 10 }}>
                 <FieldLabel fieldLabel={props.label} />
                 <FieldValue fieldValue={props.body} />
             </View>
@@ -73,6 +73,7 @@ const ToggleInputComponent = (props: ToggleInputComponentProps): JSX.Element => 
             borderWidth: 1,
             borderRadius: 10,
             padding: 10,
+            marginTop: 5,
         }}
     >
         <ToggleTextInputComponent
@@ -101,7 +102,7 @@ const ToggleTextInputComponent = (props: ToggleButtonComponentProps): JSX.Elemen
             <Icon
                 type={'FontAwesome'}
                 name={getEditingIcon(props.isEditing)}
-                style={{ padding: 5, color: getEditingColor(props.isEditing) }}
+                style={{ padding: 0, color: getEditingColor(props.isEditing) }}
             />
         </View>
     </TouchableOpacity>
@@ -141,6 +142,7 @@ const TextInputComponent = (props: InputComponentProps): JSX.Element => {
                     style={{
                         color: textColor,
                         marginTop: 10,
+                        marginBottom: 5,
                         borderBottomColor: colors.grey,
                         borderBottomWidth: 1,
                         paddingBottom: 5,
@@ -160,7 +162,7 @@ const getEditingTextStyle = (isEditing: boolean): StyleProp<TextStyle> => (
 );
 
 const getEditingColor = (isEditing: boolean): string => (
-    isEditing ? colors.teal : colors.grey
+    isEditing ? colors.teal : colors.darkerGrey
 );
 
 const getEditingIcon = (isEditing: boolean): string => (

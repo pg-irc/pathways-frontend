@@ -38,9 +38,9 @@ export const ChooseModeModal = (props: Props): JSX.Element => (
 );
 
 const HeaderComponent = (props: { readonly onClosePress: () => void }): JSX.Element => (
-    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginHorizontal: 10}}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8, marginHorizontal: 10 }}>
         <Text style={textStyles.paragraphStyleBrown}>
-            <Trans>Suggest an Update</Trans>
+            <Trans>Suggest an update</Trans>
         </Text>
         <CloseButtonComponent
             color={colors.greyishBrown}
@@ -51,15 +51,15 @@ const HeaderComponent = (props: { readonly onClosePress: () => void }): JSX.Elem
 );
 
 const ButtonsComponent = (props: ButtonsComponentProps): JSX.Element => (
-    <View style={{ marginHorizontal: 10 }}>
+    <View style={{ marginHorizontal: 10, marginVertical: -10 }}>
        <OptionButton name={<Trans>Change name or other details</Trans>} onPress={props.onChangeNameOrOtherDetailPress}/>
        <OptionButton name={<Trans>This service no longer exists</Trans>} onPress={props.onChooseRemoveServicePress}/>
-       <OptionButton name={<Trans>Give other feedback about this service</Trans>} onPress={props.onChooseOtherChangesPress}/>
+       <OptionButton name={<Trans>Other suggestions</Trans>} onPress={props.onChooseOtherChangesPress}/>
     </View>
 );
 
 const OptionButton = (props: { readonly name: JSX.Element, readonly onPress: () => void }): JSX.Element => (
-    <TouchableOpacity style={{marginVertical: 10}} onPress={props.onPress}>
+    <TouchableOpacity style={{marginVertical: 20}} onPress={props.onPress}>
         <Text style={textStyles.headlineH3StyleBlackLeft}>
             {props.name}
         </Text>
@@ -67,8 +67,8 @@ const OptionButton = (props: { readonly name: JSX.Element, readonly onPress: () 
 );
 
 const SubtitleComponent = (): JSX.Element => (
-    <View>
-        <Text style={textStyles.paragraphSmallStyleLeft}>
+    <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
+        <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
             <Trans>Your suggestions will be reviewed by our team before making final changes to the service information.</Trans>
         </Text>
     </View>
