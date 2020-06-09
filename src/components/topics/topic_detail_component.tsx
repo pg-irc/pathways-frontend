@@ -18,16 +18,19 @@ import { BookmarkButtonComponent } from '../bookmark_button_component';
 import * as R from 'ramda';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { HeaderComponent } from '../main/header_component';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HideLinkAlertsAction } from '../../stores/user_profile';
+import { UserLocation } from '../../validation/latlong/types';
+import { BuildServicesRequestAction } from '../../stores/services/actions';
 
 export interface TopicDetailsProps {
     readonly topic: Topic;
-    readonly taskIsBookmarked: boolean;
-    readonly savedTasksIdList: ReadonlyArray<TaskId>;
+    readonly topicIsBookmarked: boolean;
+    readonly bookmarkedTopicsIdList: ReadonlyArray<TaskId>;
     readonly history: History;
     readonly location: Location;
     readonly showLinkAlert: boolean;
+    readonly manualUserLocation: UserLocation;
 }
 
 export interface TopicDetailActions {
@@ -38,6 +41,7 @@ export interface TopicDetailActions {
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly hideLinkAlert: () => HideLinkAlertsAction;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
 }
 
 type Props = TopicDetailsProps & TopicDetailActions;
@@ -47,7 +51,7 @@ export const TopicDetailComponent = (props: Props): JSX.Element => (
         <Header {...props} />
         <TaskListComponent
             tasks={props.topic.relatedTopics}
-            savedTasksIdList={props.savedTasksIdList}
+            bookmarkedTopicsIdList={props.bookmarkedTopicsIdList}
             bookmarkTopic={props.bookmarkTopic}
             unbookmarkTopic={props.unbookmarkTopic}
             history={props.history}
@@ -65,7 +69,7 @@ const Header = (props: Props): JSX.Element => {
     const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
-            isBookmarked={R.contains(topicId, props.savedTasksIdList)}
+            isBookmarked={R.contains(topicId, props.bookmarkedTopicsIdList)}
             bookmark={(): BookmarkTopicAction => props.bookmarkTopic(topicId)}
             unbookmark={(): UnbookmarkTopicAction => props.unbookmarkTopic(topicId)}
             textColor={colors.teal}
@@ -114,5 +118,6 @@ const onServicesTextPress = (props: Props): void => {
     const linkValue = 'Find related services near me';
     const currentPath = props.location.pathname;
     props.analyticsLinkPressed(currentPath, analyticsLinkContext, linkType, linkValue);
+    props.dispatchServicesRequest(props.topic, props.manualUserLocation)
     goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
 };

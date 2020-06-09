@@ -7,7 +7,7 @@ import { Trans } from '@lingui/react';
 import { RouterProps, Routes, goToRouteWithParameter } from '../../application/routing';
 import { getColorForExploreIcon } from './get_color_for_explore_icon';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 
 export interface ExploreAllProps {

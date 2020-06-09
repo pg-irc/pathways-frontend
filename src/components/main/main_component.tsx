@@ -17,7 +17,7 @@ import { notificationListener } from './notification';
 import {
     CloseHeaderMenuAction, OpenHeaderMenuAction, CloseAboutModalAction,
     OpenAboutModalAction, CloseDisclaimerModalAction, OpenDisclaimerModalAction,
-} from '../../stores/header_menu';
+} from '../../stores/user_experience/actions';
 import { useHardwareBackButtonPress } from './use_hardware_back_button_press';
 import { ScrollContext, createScrollAnimationContext } from './scroll_animation_context';
 

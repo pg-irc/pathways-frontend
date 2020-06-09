@@ -19,7 +19,6 @@ export class PersistedDataBuilder {
     searchLatLong: LatLong = undefined;
     searchPage: number = 0;
     numberOfSearchPages: number = 0;
-    searchOffset: number = 0;
     searchResults: ReadonlyArray<SearchServiceData> = [];
     collapseSearchInput: boolean = false;
     showPartialLocalizationMessage: boolean = true;
@@ -83,11 +82,6 @@ export class PersistedDataBuilder {
         return this;
     }
 
-    withSearchIndex(searchOffset: number): PersistedDataBuilder {
-        this.searchOffset = searchOffset;
-        return this;
-    }
-
     withSearchResults(searchResults: ReadonlyArray<SearchServiceData>): PersistedDataBuilder {
         this.searchResults = searchResults;
         return this;
@@ -116,7 +110,6 @@ export class PersistedDataBuilder {
             searchLatLong: this.searchLatLong,
             searchPage: this.searchPage,
             numberOfSearchPages: this.numberOfSearchPages,
-            searchOffset: this.searchOffset,
             searchResults: this.searchResults,
             collapseSearchInput: this.collapseSearchInput,
             showPartialLocalizationMessage: this.showPartialLocalizationMessage,

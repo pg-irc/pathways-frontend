@@ -20,9 +20,10 @@ import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { Trans } from '@lingui/react';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
+import { SaveSearchOffsetAction } from '../../stores/user_experience/actions';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -31,9 +32,9 @@ export interface SearchComponentProps {
     readonly searchLatLong: LatLong;
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
-    readonly searchOffset: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
+    readonly searchOffset: number;
 }
 
 export interface SearchComponentActions {
@@ -47,11 +48,11 @@ export interface SearchComponentActions {
     readonly saveSearchLatLong: (searchLatLong: LatLong) => actions.SaveSearchLatLongAction;
     readonly saveSearchPage: (searchPage: number) => actions.SaveSearchPageAction;
     readonly saveNumberOfSearchPages: (numberOfSearchPages: number) => actions.SaveNumberOfSearchPagesAction;
-    readonly saveSearchOffset: (index: number) => actions.SaveSearchOffsetAction;
     readonly saveSearchResults: (searchResults: ReadonlyArray<SearchServiceData>) => actions.SaveSearchResultsAction;
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => actions.SetCollapseSearchInputAction;
     readonly searchExecuted: (searchTerm: string, searchLocation: string) => SearchExecutedAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly saveSearchOffset: (offset: number) => SaveSearchOffsetAction;
 }
 
 export type StringSetterFunction = Dispatch<SetStateAction<string>>;
@@ -63,7 +64,6 @@ export const SearchComponent = (props: Props): JSX.Element => {
     useTraceUpdate('SearchComponent', props);
     const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
-    const [scrollOffset, setScrollOffset]: readonly [number, (n: number) => void] = useState(props.searchOffset);
     const onlineStatus = useOnlineStatus();
     useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
 
@@ -114,7 +114,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     };
 
     // tslint:disable-next-line: max-line-length
-    const searchResultsProps = { ...props, isLoading, onlineStatus, scrollOffset, setScrollOffset, onSearchRequest, onLoadMore };
+    const searchResultsProps = { ...props, isLoading, onlineStatus, onSearchRequest, onLoadMore };
     return (
         <View style={{ backgroundColor: colors.pale, flex: 1 }}>
             <SearchComponentHeader onMenuButtonPress={props.openHeaderMenu} />

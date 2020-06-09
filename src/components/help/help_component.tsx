@@ -14,7 +14,7 @@ import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import * as R from 'ramda';
 import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
 import { UserLocation } from '../../validation/latlong/types';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 
 const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';

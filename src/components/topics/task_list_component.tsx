@@ -16,7 +16,7 @@ const R = require('ramda');
 export interface TaskListProps {
     readonly history: History;
     readonly tasks: ReadonlyArray<ListItem>;
-    readonly savedTasksIdList: ReadonlyArray<Id>;
+    readonly bookmarkedTopicsIdList: ReadonlyArray<Id>;
     readonly emptyTaskListContent: JSX.Element;
     readonly headerContent: JSX.Element;
     readonly headerContentIdentifier?: string;
@@ -122,7 +122,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         return (
             <TaskListItemComponent
                 topic={item}
-                taskIsBookmarked={R.contains(item.id, props.savedTasksIdList)}
+                taskIsBookmarked={R.contains(item.id, props.bookmarkedTopicsIdList)}
                 bookmarkTopic={props.bookmarkTopic}
                 unbookmarkTopic={props.unbookmarkTopic}
                 goToTaskDetail={goToRouteWithParameter(Routes.TopicDetail, item.id, props.history)}

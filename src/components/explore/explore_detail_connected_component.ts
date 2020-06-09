@@ -7,7 +7,7 @@ import { selectTopicForCurrentExploreSection } from '../../selectors/topics/sele
 import { RouterProps } from '../../application/routing';
 import { bookmarkTopic, BookmarkTopicAction, Id, UnbookmarkTopicAction, unbookmarkTopic } from '../../stores/topics';
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProps => ({
     section: selectCurrentExploreSection(store, ownProps),

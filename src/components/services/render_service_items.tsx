@@ -7,12 +7,15 @@ import { ServiceListItemComponent } from './service_list_item_component';
 import { ListRenderItemInfo } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
 import { History } from 'history';
+import { SaveTopicServicesOffsetAction, SaveBookmarkedServicesOffsetAction } from '../../stores/user_experience/actions';
 
 export interface ServiceItemsProps {
     readonly history: History;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
+    readonly scrollOffset: number;
+    readonly saveScrollOffset: (offset: number) => SaveTopicServicesOffsetAction | SaveBookmarkedServicesOffsetAction;
 }
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
@@ -22,6 +25,7 @@ export const renderServiceItems = R.curry((props: ServiceItemsProps, itemInfo: S
     const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
     const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
     const onOpenService = (): void => {
+        props.saveScrollOffset(props.scrollOffset);
         props.openServiceDetail(service);
         goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
     };

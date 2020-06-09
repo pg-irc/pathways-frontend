@@ -1,8 +1,8 @@
 // tslint:disable:no-expression-statement
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
-import { FlatList } from 'react-native';
+import { FlatList, NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { HumanServiceData, Id } from '../../validation/services/types';
@@ -15,7 +15,6 @@ import { ErrorScreenSwitcherComponent } from '../error_screens/error_screen_swit
 import { Errors } from '../../validation/errors/types';
 import { UserLocation } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
-import { RouterProps } from '../../application/routing';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { EmptyServiceListComponent } from './empty_service_list_component';
 import { emptyTopicServicesList } from '../../application/images';
@@ -25,11 +24,12 @@ import { SetManualUserLocationAction } from '../../stores/manual_user_location';
 import { ServiceListLocationSearchComponent } from './service_list_location_search_component';
 import { SearchListSeparator } from '../search/separators';
 import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
-import { OpenHeaderMenuAction } from '../../stores/header_menu';
+import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
+import { SaveTopicServicesOffsetAction } from '../../stores/user_experience/actions';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -37,6 +37,7 @@ export interface ServiceListProps {
     readonly manualUserLocation: UserLocation;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
+    readonly topicServicesOffset: number;
 }
 
 export interface ServiceListActions {
@@ -47,17 +48,16 @@ export interface ServiceListActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly saveTopicServicesOffset: (offset: number) => SaveTopicServicesOffsetAction;
 }
 
-export interface ServicesUpdater {
-    readonly dispatchServicesRequest: () => BuildServicesRequestAction;
+interface OwnProps {
+    readonly history: History;
 }
 
-type Props = ServiceListProps & ServiceListActions & ServicesUpdater & RouterProps;
+type Props = ServiceListProps & ServiceListActions & OwnProps;
 
 export const ServiceListComponent = (props: Props): JSX.Element => {
-    useEffect(refreshServices(props), [props.manualUserLocation]);
-
     if (isTopicServicesError(props.topicServicesOrError, props.manualUserLocation)) {
         return renderErrorComponent(props, refreshServices(props));
     }
@@ -70,14 +70,57 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
         return renderEmptyComponent(props, refreshServices(props));
     }
     return (
+        <ValidServiceListComponent
+            topic={props.topic}
+            topicServicesOrError={props.topicServicesOrError}
+            topicServicesOffset={props.topicServicesOffset}
+            manualUserLocation={props.manualUserLocation}
+            bookmarkedServicesIds={props.bookmarkedServicesIds}
+            showPartialLocalizationMessage={props.showPartialLocalizationMessage}
+            history={props.history}
+            dispatchServicesRequest={props.dispatchServicesRequest}
+            bookmarkService={props.bookmarkService}
+            unbookmarkService={props.unbookmarkService}
+            openServiceDetail={props.openServiceDetail}
+            openHeaderMenu={props.openHeaderMenu}
+            hidePartialLocalizationMessage={props.hidePartialLocalizationMessage}
+            setManualUserLocation={props.setManualUserLocation}
+            saveTopicServicesOffset={props.saveTopicServicesOffset}
+        />
+    );
+};
+
+const ValidServiceListComponent = (props: Props): JSX.Element => {
+    const [topicServicesOffset, setTopicServicesOffset]: readonly [number, (n: number) => void] = useState(props.topicServicesOffset);
+    const flatListRef = useRef<FlatList<HumanServiceData>>();
+    const services = getServicesIfValid(props.topicServicesOrError);
+
+    useEffect((): void => {
+        if (services.length > 0) {
+            flatListRef.current.scrollToOffset({ animated: false, offset: props.topicServicesOffset });
+        }
+    }, [props.topicServicesOffset, services, flatListRef]);
+
+    const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
+        setTopicServicesOffset(e.nativeEvent.contentOffset.y);
+    };
+
+    return (
         <ServiceListWrapper {...props}>
             <FlatList
+                ref={flatListRef}
+                onScrollEndDrag={onScrollEnd}
                 style={{ backgroundColor: colors.lightGrey }}
-                data={getServicesIfValid(props.topicServicesOrError)}
+                data={services}
                 keyExtractor={(service: HumanServiceData): string => service.id}
-                renderItem={renderServiceItems(props)}
+                renderItem={renderServiceItems({
+                    ...props,
+                    scrollOffset: topicServicesOffset,
+                    saveScrollOffset: props.saveTopicServicesOffset,
+                })}
                 ItemSeparatorComponent={SearchListSeparator}
                 ListHeaderComponent={<ListHeaderComponent {...props} />}
+                initialNumToRender={props.topicServicesOffset ? services.length : 20}
             />
         </ServiceListWrapper>
     );
@@ -107,7 +150,7 @@ const ListHeaderComponent = (props: Props): JSX.Element => {
 
 const refreshServices = (props: Props): () => void => (
     (): void => {
-        props.dispatchServicesRequest();
+        props.dispatchServicesRequest(props.topic, props.manualUserLocation);
     }
 );
 
@@ -156,11 +199,12 @@ const renderEmptyComponent = (props: Props, refreshScreen: () => void): JSX.Elem
 
 const renderHeader = (props: Props): JSX.Element => (
     <ServiceListHeaderComponent
-        topicTitle={props.topic.title}
+        topic={props.topic}
         manualUserLocation={props.manualUserLocation}
         setManualUserLocation={props.setManualUserLocation}
         history={props.history}
         openHeaderMenu={props.openHeaderMenu}
+        dispatchServicesRequest={props.dispatchServicesRequest}
     />
 );
 
@@ -191,11 +235,12 @@ const isInitialEmptyTopicServices = (topicServicesOrError: SelectorTopicServices
 );
 
 interface ServiceListHeaderComponentProps {
-    readonly topicTitle: string;
+    readonly topic: Topic;
     readonly manualUserLocation: UserLocation;
     readonly history: History;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;
 }
 
 export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProps): JSX.Element => (
@@ -213,11 +258,13 @@ export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProp
             }}
         >
             <Text style={[textStyles.headlineH2StyleWhiteLeft, { paddingHorizontal: 10, marginBottom: 10 }]}>
-                {props.topicTitle}
+                {props.topic.title}
             </Text>
             <ServiceListLocationSearchComponent
+                topic={props.topic}
                 manualUserLocation={props.manualUserLocation}
                 setManualUserLocation={props.setManualUserLocation}
+                dispatchServicesRequest={props.dispatchServicesRequest}
             />
         </View>
     </View>

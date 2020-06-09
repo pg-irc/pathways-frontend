@@ -8,7 +8,7 @@ import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/a
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { Feedback, UserInformation } from '../../stores/feedback/types';
 import { selectFeedbackScreen } from '../../selectors/feedback/select_feedback_screen';
 import { selectFeedbackModal } from '../../selectors/feedback/select_feedback_modal';

@@ -6,9 +6,7 @@ import { selectCurrentTopic } from '../../selectors/topics/select_current_topic'
 import { Topic } from '../../selectors/topics/types';
 import { selectServicesForTopic } from '../../selectors/services/select_services_for_topic';
 import {
-    ServiceListComponent, ServiceListProps,
-    ServiceListActions, ServicesUpdater,
-} from './service_list_component';
+    ServiceListComponent, ServiceListProps, ServiceListActions } from './service_list_component';
 import { RouterProps } from '../../application/routing';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
 import { UserLocation } from '../../validation/latlong/types';
@@ -17,7 +15,9 @@ import { HumanServiceData } from '../../validation/services/types';
 import { selectShowPartialLocalizationMessage } from '../../selectors/user_profile/select_show_partial_localization_message';
 import { HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
 import { SetManualUserLocationAction, setManualUserLocation } from '../../stores/manual_user_location';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
+import { SaveTopicServicesOffsetAction, saveTopicServicesOffset } from '../../stores/user_experience/actions';
+import { selectTopicServicesOffset } from '../../selectors/user_experience/select_topic_services_offset';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
     const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);
@@ -28,10 +28,13 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
         manualUserLocation,
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
         showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
+        topicServicesOffset: selectTopicServicesOffset(store),
     };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<actions.ServicesAction | SetManualUserLocationAction>): ServiceListActions => ({
+type Action = actions.ServicesAction | SetManualUserLocationAction | SaveTopicServicesOffsetAction;
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>): ServiceListActions => ({
     dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): actions.BuildServicesRequestAction =>
         dispatch(actions.buildServicesRequest(topic.id, manualUserLocation)),
     bookmarkService: (service: HumanServiceData): actions.BookmarkServiceAction => dispatch(actions.bookmarkService(service)),
@@ -40,15 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch<actions.ServicesAction | SetManua
     setManualUserLocation: (userLocation: UserLocation): SetManualUserLocationAction => dispatch(setManualUserLocation(userLocation)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     openServiceDetail: (service: HumanServiceData): actions.OpenServiceAction => dispatch(actions.openServiceDetail(service)),
+    saveTopicServicesOffset: (offset: number): SaveTopicServicesOffsetAction => dispatch(saveTopicServicesOffset(offset)),
 });
 
-type ComponentProps = ServiceListProps & ServiceListActions & ServicesUpdater;
-
-const mergeProps = (stateProps: ServiceListProps, dispatchProps: ServiceListActions, ownProps: RouterProps): ComponentProps => ({
-    ...stateProps, ...dispatchProps, ...ownProps,
-    dispatchServicesRequest: (): actions.BuildServicesRequestAction => {
-        return dispatchProps.dispatchServicesRequest(stateProps.topic, stateProps.manualUserLocation);
-    },
-});
-
-export const ServiceListConnectedComponent = connect(mapStateToProps, mapDispatchToProps, mergeProps)(ServiceListComponent);
+export const ServiceListConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceListComponent);

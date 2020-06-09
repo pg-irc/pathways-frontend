@@ -7,7 +7,7 @@ import { UserLocation } from '../../validation/latlong/types';
 import { DataPersistence } from '../persisted_data';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 import { HidePartialLocalizationMessageAction } from '../user_profile';
-import { OpenHeaderMenuAction } from '../header_menu';
+import { OpenHeaderMenuAction } from '../user_experience/actions';
 
 export type BuildServicesRequestAction = Readonly<ReturnType<typeof buildServicesRequest>>;
 

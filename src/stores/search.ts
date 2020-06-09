@@ -9,7 +9,6 @@ export type SaveSearchLocationAction = Readonly<ReturnType<typeof saveSearchLoca
 export type SaveSearchLatLongAction = Readonly<ReturnType<typeof saveSearchLatLong>>;
 export type SaveSearchPageAction = Readonly<ReturnType<typeof saveSearchPage>>;
 export type SaveNumberOfSearchPagesAction = Readonly<ReturnType<typeof saveNumberOfSearchPages>>;
-export type SaveSearchOffsetAction = Readonly<ReturnType<typeof saveSearchOffset>>;
 export type SaveSearchResultsAction = Readonly<ReturnType<typeof saveSearchResults>>;
 export type SetCollapseSearchInputAction = Readonly<ReturnType<typeof setCollapseSearchInput>>;
 
@@ -38,11 +37,6 @@ export const saveNumberOfSearchPages = (numberOfSearchPages: number) => (
     helpers.makeAction(constants.SAVE_NUMBER_OF_SEARCH_PAGES, { numberOfSearchPages })
 );
 
-// tslint:disable-next-line: typedef
-export const saveSearchOffset = (searchOffset: number) => (
-    helpers.makeAction(constants.SAVE_SEARCH_OFFSET, { searchOffset })
-);
-
 // tslint:disable-next-line:typedef
 export const saveSearchResults = (searchResults: ReadonlyArray<SearchServiceData>) => (
     helpers.makeAction(constants.SAVE_SEARCH_RESULTS, { searchResults })
@@ -59,7 +53,6 @@ export type SearchAction =
     SaveSearchLatLongAction |
     SaveSearchPageAction |
     SaveNumberOfSearchPagesAction |
-    SaveSearchOffsetAction |
     SaveSearchResultsAction |
     SetCollapseSearchInputAction |
     ClearAllUserDataAction;
@@ -71,7 +64,6 @@ export interface SearchStore {
     readonly searchPage: number;
     readonly numberOfSearchPages: number;
     readonly searchResults: ReadonlyArray<SearchServiceData>;
-    readonly searchOffset: number;
     readonly collapseSearchInput: boolean;
 }
 
@@ -82,7 +74,6 @@ export const buildDefaultStore = (): SearchStore => ({
     searchPage: 0,
     numberOfSearchPages: 0,
     searchResults: [],
-    searchOffset: 0,
     collapseSearchInput: false,
 });
 
@@ -120,11 +111,6 @@ export const reducer = (store: SearchStore = buildDefaultStore(), action?: Searc
             return ({
                 ...store,
                 searchResults: action.payload.searchResults,
-            });
-        case constants.SAVE_SEARCH_OFFSET:
-            return ({
-                ...store,
-                searchOffset: action.payload.searchOffset,
             });
         case constants.SET_COLLAPSE_SEARCH_INPUT:
             return ({

@@ -1,6 +1,5 @@
 import { Dispatch } from 'redux';
 import { History, Location } from 'history';
-import * as R from 'ramda';
 import { Store } from '../../stores';
 import { TopicDetailsProps, TopicDetailActions, TopicDetailComponent } from './topic_detail_component';
 import {
@@ -13,9 +12,14 @@ import { selectCurrentTopic } from '../../selectors/topics/select_current_topic'
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { Routes, getParametersFromPath } from '../../application/routing';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/analytics';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/header_menu';
+import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
+import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
+import { BuildServicesRequestAction, buildServicesRequest } from '../../stores/services/actions';
+import { UserLocation } from '../../validation/latlong/types';
+import { Topic } from '../../selectors/topics/types';
+import { isTopicBookmarked } from '../../selectors/topics/is_topic_bookmarked';
 
 type OwnProps = {
     readonly history: History;
@@ -24,30 +28,28 @@ type OwnProps = {
 
 const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps => {
     const matchParams = getParametersFromPath(ownProps.location, Routes.TopicDetail);
-    const topic = selectCurrentTopic(store, matchParams.topicId);
-    const savedTasksIdList = pickBookmarkedTopicIds(store);
-    const taskIsBookmarked = R.contains(topic.id, savedTasksIdList);
-    const showLinkAlert = selectShowLinkAlerts(store);
     return {
-        topic,
-        taskIsBookmarked,
-        savedTasksIdList,
-        showLinkAlert,
+        topic: selectCurrentTopic(store, matchParams.topicId),
+        topicIsBookmarked: isTopicBookmarked(store, matchParams.topicId),
+        bookmarkedTopicsIdList: pickBookmarkedTopicIds(store),
+        showLinkAlert: selectShowLinkAlerts(store),
         history: ownProps.history,
         location: ownProps.location,
+        manualUserLocation: selectManualUserLocation(store),
     };
 };
 
-type DispatchActions =
+type Actions =
     BookmarkTopicAction |
     UnbookmarkTopicAction |
     ExpandDetailAction |
     CollapseDetailAction |
     AnalyticsLinkPressedAction |
     OpenHeaderMenuAction |
-    HideLinkAlertsAction;
+    HideLinkAlertsAction |
+    BuildServicesRequestAction;
 
-const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TopicDetailActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<Actions>): TopicDetailActions => ({
     bookmarkTopic: (topicId: TaskId): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
     unbookmarkTopic: (topicId: TaskId): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
     onExpand: (contentId: string): ExpandDetailAction => dispatch(expandDetail(contentId)),
@@ -56,6 +58,8 @@ const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): TopicDetailAct
         dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     hideLinkAlert: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
+    dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): BuildServicesRequestAction =>
+        dispatch(buildServicesRequest(topic.id, manualUserLocation)),
 });
 
 export const TopicDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TopicDetailComponent);

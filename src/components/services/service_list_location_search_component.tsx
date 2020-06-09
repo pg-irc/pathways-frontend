@@ -13,10 +13,14 @@ import { MY_LOCATION } from '../../application/constants';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { MY_LOCATION_MESSAGE_DESCRIPTOR, toLocationForQuery, isLocalizedMyLocation } from '../partial_localization/to_location_for_query';
 import { isMyLocation } from '../../api/fetch_lat_long_from_location';
+import { Topic } from '../../selectors/topics/types';
+import { BuildServicesRequestAction } from '../../stores/services/actions';
 
 interface Props {
+    readonly topic: Topic;
     readonly manualUserLocation: UserLocation;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;
 }
 
 export const ServiceListLocationSearchComponent = (props: Props): JSX.Element => {
@@ -39,6 +43,8 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
         {
             (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
                 <ExpandedSearch
+                    topic={props.topic}
+                    dispatchServicesRequest={props.dispatchServicesRequest}
                     locationInputValue={locationInputValue}
                     setLocationInputValue={setLocationInputValue}
                     isFetchingLatLng={isFetchingLatLng}
@@ -93,6 +99,8 @@ interface ExpandedSearchProps {
     readonly manualUserLocation: Props['manualUserLocation'];
     readonly setSearchIsCollapsed: (b: boolean) => void;
     readonly i18n: I18n;
+    readonly topic: Topic;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
@@ -106,6 +114,8 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
             props.setManualUserLocation,
             props.setSearchIsCollapsed,
             props.i18n,
+            props.topic,
+            props.dispatchServicesRequest
         );
     };
     const onSearchButtonPress = isCachedLocationValid ? collapseSearch : lookupLocationLatLong;
@@ -263,6 +273,8 @@ const getSearchOnPress = async (
     setManualUserLocation: Props['setManualUserLocation'],
     setSearchIsCollapsed: (b: boolean) => void,
     i18n: I18n,
+    topic: Topic,
+    dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction,
 ): Promise<void> => {
     const location = toLocationForQuery(locationInputValue, i18n);
     setSearchIsCollapsed(true);
@@ -273,6 +285,7 @@ const getSearchOnPress = async (
             label: locationInputValue,
             latLong: latLong,
         });
+        dispatchServicesRequest(topic, { label: locationInputValue, latLong: latLong });
     } finally {
         setIsFetchingLatLng(false);
     }
