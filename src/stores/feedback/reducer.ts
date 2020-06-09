@@ -20,7 +20,7 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
         case constants.SUGGEST_AN_UPDATE:
             return {
                 ...store,
-                feedback: getEmptyServiceFeedback(false),
+                feedback: getEmptyServiceFeedback(),
                 userInformation: getEmptyUserInfo(),
                 modal: FeedbackModal.ChooseFeedbackModeModal,
             };
