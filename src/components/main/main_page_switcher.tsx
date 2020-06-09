@@ -38,7 +38,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
         <Route exact path={routePathDefinition(Routes.Search)} component={SearchConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.OrganizationDetail)} component={OrganizationDetailComponent} />
         <Route exact path={routePathDefinition(Routes.ServiceDetail)} component={ServiceDetailConnectedComponent} />
-        <Route exact path={routePathDefinition(Routes.Feedback)} component={OtherRemoveServiceConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.OtherFeedback)} component={OtherRemoveServiceConnectedComponent} />
         <Redirect to={defaultPath(props)} />
     </Switch>
 );

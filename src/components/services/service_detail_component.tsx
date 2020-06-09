@@ -97,7 +97,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         switch (props.feedbackScreen) {
             case FeedbackScreen.OtherChangesPage:
             case FeedbackScreen.RemoveServicePage:
-                return goToRouteWithParameter(Routes.Feedback, props.match.params.serviceId, props.history)();
+                return goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
             case FeedbackScreen.EditableServiceDetailPage:
                 return scrollToTop(scrollViewRef);
             default:
