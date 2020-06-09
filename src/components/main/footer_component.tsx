@@ -10,6 +10,7 @@ import { Routes, goToRouteWithoutParameter, pathMatchesRoute, pathMatchesAnyRout
 import { colors, values } from '../../application/styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { ScrollAnimationContext, ScrollContext } from '../main/scroll_animation_context';
+import { FeedbackScreen } from '../../stores/feedback/types';
 
 const AnimatedFooter = Animated.createAnimatedComponent(Footer);
 
@@ -18,6 +19,7 @@ const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 export interface FooterProps {
     readonly history: History;
     readonly location: Location;
+    readonly feedbackScreen: FeedbackScreen;
 }
 
 export interface NavigationButtonProps {
@@ -113,9 +115,14 @@ export const FooterComponent: React.StatelessComponent<FooterProps> = (props: Fo
 const isFooterHidden = (props: FooterProps, keyboardIsVisible: boolean): boolean => {
     if (keyboardIsVisible)
         return true;
+
+    const isOnFeedbackScreen = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
+    if (pathMatchesRoute(props.location.pathname, Routes.ServiceDetail) && isOnFeedbackScreen)
+        return true;
+
     return pathMatchesAnyRoute(
         props.location.pathname,
-        [Routes.Welcome, Routes.Questionnaire, Routes.Help, Routes.Onboarding],
+        [Routes.Welcome, Routes.Questionnaire, Routes.Help, Routes.Onboarding, Routes.OtherFeedback],
     );
 };
 

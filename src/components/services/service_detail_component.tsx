@@ -6,7 +6,7 @@ import { History, Location } from 'history';
 import { t } from '@lingui/macro';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
-import { values, textStyles, colors, applicationStyles } from '../../application/styles';
+import { values, textStyles, colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
@@ -47,12 +47,12 @@ import {
     DiscardChangesAction,
     getEmptyServiceFeedback,
     getEmptyUserInfo,
-    BackAction,
     CancelDiscardChangesAction,
     SendFeedbackAction,
 } from '../../stores/feedback';
 import { isAndroid } from '../../application/helpers/is_android';
-import { HeaderComponent as FeedbackHeaderComponent } from '../feedback/header_component';
+import { HeaderComponent as FeedbackHeaderComponent} from '../feedback/header_component';
+import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -79,7 +79,6 @@ export interface ServiceDetailActions {
     readonly finishFeedback: (userInformation: UserInformation) => FinishAction;
     readonly close: () => CloseAction;
     readonly discardFeedback: () => DiscardChangesAction;
-    readonly back: () => BackAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
     readonly sendFeedback: (serviceId: string) => SendFeedbackAction;
     readonly hideLinkAlerts: () => void;
@@ -98,7 +97,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         switch (props.feedbackScreen) {
             case FeedbackScreen.OtherChangesPage:
             case FeedbackScreen.RemoveServicePage:
-                return goToRouteWithParameter(Routes.Feedback, props.match.params.serviceId, props.history)();
+                return goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
             case FeedbackScreen.EditableServiceDetailPage:
                 return scrollToTop(scrollViewRef);
             default:
@@ -136,7 +135,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 unbookmarkService={props.unbookmarkService}
                 openHeaderMenu={props.openHeaderMenu}
                 close={props.close}
-                back={props.back}
             />
             <KeyboardAwareScrollView
                 enableResetScrollToCoords={false}
@@ -208,12 +206,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         cancelDiscardFeedback={props.cancelDiscardFeedback}
                         resetFeedbackAndUserInput={resetFeedbackAndUserInput}
                     />
-                    <SubmitFeedbackButton
-                        isVisible={isFeedbackInputEnabled}
-                        onPress={onSubmitPress}
-                    />
                 </View>
             </KeyboardAwareScrollView>
+            <SubmitFeedbackButton
+                isVisible={isFeedbackInputEnabled}
+                onPress={onSubmitPress}
+            />
         </View>
     );
 };
@@ -252,7 +250,6 @@ interface HeaderProps {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly close: () => CloseAction;
-    readonly back: () => BackAction;
 }
 
 const feedbackHeaderLabel = t`Change name or other details`;
@@ -263,7 +260,6 @@ const ServiceDetailHeaderComponent = (props: HeaderProps): JSX.Element => {
             <FeedbackHeaderComponent
                 headerLabel={feedbackHeaderLabel}
                 close={props.close}
-                back={props.back}
             />
         );
     }
@@ -445,19 +441,3 @@ const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
 const getPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber): string => `${phone.type}: ${phone.phone_number}`).join('\n')
 );
-
-const SubmitFeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void }): JSX.Element => {
-    if (!props.isVisible) {
-        return <EmptyComponent />;
-    }
-    return (
-        <TouchableOpacity
-            style={[applicationStyles.tealButton, { paddingVertical: 12, marginHorizontal: 24 }]}
-            onPress={props.onPress}
-        >
-            <Text style={textStyles.tealButton}>
-                <Trans>Submit</Trans>
-            </Text>
-        </TouchableOpacity>
-    );
-};

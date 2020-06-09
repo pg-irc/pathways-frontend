@@ -20,6 +20,8 @@ import {
 } from '../../stores/user_experience/actions';
 import { useHardwareBackButtonPress } from './use_hardware_back_button_press';
 import { ScrollContext, createScrollAnimationContext } from './scroll_animation_context';
+import { FeedbackScreen } from '../../stores/feedback/types';
+import { CloseAction } from '../../stores/feedback';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -31,6 +33,7 @@ export interface MainComponentActions {
     readonly openAboutModal: () => OpenAboutModalAction;
     readonly closeDisclaimerModal: () => CloseDisclaimerModalAction;
     readonly openDisclaimerModal: () => OpenDisclaimerModalAction;
+    readonly backOutOfFeedbackScreen: () => CloseAction;
 }
 
 interface MainProps {
@@ -41,6 +44,7 @@ interface MainProps {
     readonly isHeaderMenuVisible: boolean;
     readonly isAboutModalVisible: boolean;
     readonly isDisclaimerModalVisible: boolean;
+    readonly feedbackScreen: FeedbackScreen;
 }
 
 type Props = MainComponentProps & MainComponentActions;
@@ -51,12 +55,14 @@ export const MainComponent = (props: Props): JSX.Element => {
 
         if (props.isHeaderMenuVisible) {
             props.closeHeaderMenu();
+        } else if (props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage) {
+            props.backOutOfFeedbackScreen();
         } else {
             goBack(props.history);
         }
 
         return shouldNotBubbleUpEvent;
-    });
+    }, [props.feedbackScreen]);
 
     useEffect((): EffectCallback => {
         const unsubscribe = props.history.listen((location: Location, _: Action): RouteChangedAction =>
@@ -92,7 +98,11 @@ export const MainComponent = (props: Props): JSX.Element => {
                     <ScrollContext.Provider value={scrollAnimationContext}>
                         <Animated.Code exec={scrollAnimationContext.animatedSearchHeaderAndFooter} />
                         <MainPageSwitcherComponent {...props} />
-                        <FooterComponent {...props} />
+                        <FooterComponent
+                            history={props.history}
+                            location={props.location}
+                            feedbackScreen={props.feedbackScreen}
+                        />
                         <AppModalsComponent
                             isAboutModalVisible={props.isAboutModalVisible}
                             isDisclaimerModalVisible={props.isDisclaimerModalVisible}

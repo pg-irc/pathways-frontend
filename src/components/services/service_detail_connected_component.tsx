@@ -29,8 +29,6 @@ import {
     CloseAction,
     DiscardChangesAction,
     discardChanges,
-    BackAction,
-    back,
     CancelDiscardChangesAction,
     cancelDiscardChanges,
     SendFeedbackAction,
@@ -69,7 +67,7 @@ type Actions =
     FinishAction |
     CloseAction |
     DiscardChangesAction |
-    BackAction |
+    CloseAction |
     CancelDiscardChangesAction |
     SendFeedbackAction |
     HideLinkAlertsAction;
@@ -88,7 +86,6 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     finishFeedback: (userInformation: UserInformation): FinishAction => dispatch(finishFeedback(userInformation)),
     close: (): CloseAction => dispatch(close()),
     discardFeedback: (): DiscardChangesAction => dispatch(discardChanges()),
-    back: (): BackAction => dispatch(back()),
     cancelDiscardFeedback: (): CancelDiscardChangesAction => dispatch(cancelDiscardChanges()),
     sendFeedback: (serviceId: string): SendFeedbackAction => dispatch(sendFeedback(serviceId)),
     hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),

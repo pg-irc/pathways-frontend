@@ -13,7 +13,6 @@ interface OtherRemoveServiceStyles {
     readonly headerBackButton: ViewStyle;
     readonly headerContainer: ViewStyle;
     readonly input: TextStyle;
-    readonly inputLabel: ViewStyle;
     readonly submitButton: ViewStyle;
     readonly submitButtonDisabled: ViewStyle;
     readonly submitText: TextStyle;
@@ -67,13 +66,6 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         height: 'auto',
         minHeight: 100,
         padding: 16,
-    },
-
-    inputLabel: {
-        color: colors.black,
-        fontSize: 16,
-        paddingLeft: 5,
-        paddingBottom: 10,
     },
 
     footerContainer: {

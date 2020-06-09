@@ -33,19 +33,18 @@ export const ChooseModeModal = (props: Props): JSX.Element => (
            <ButtonsComponent {...props} />
            <DividerComponent />
            <SubtitleComponent />
-           <DividerComponent />
         </View>
     </Modal>
 );
 
 const HeaderComponent = (props: { readonly onClosePress: () => void }): JSX.Element => (
-    <View style={{ flexDirection: 'row', marginTop: 20, marginHorizontal: 10}}>
+    <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10, marginHorizontal: 10}}>
         <Text style={textStyles.paragraphStyleBrown}>
             <Trans>Suggest an Update</Trans>
         </Text>
         <CloseButtonComponent
             color={colors.greyishBrown}
-            additionalStyle={{ paddingTop: 0 }}
+            additionalStyle={{ paddingTop: 0, paddingRight: 0,  paddingBottom: 0 }}
             onPress={props.onClosePress}
         />
     </View>
@@ -54,8 +53,8 @@ const HeaderComponent = (props: { readonly onClosePress: () => void }): JSX.Elem
 const ButtonsComponent = (props: ButtonsComponentProps): JSX.Element => (
     <View style={{ marginHorizontal: 10 }}>
        <OptionButton name={<Trans>Change name or other details</Trans>} onPress={props.onChangeNameOrOtherDetailPress}/>
-       <OptionButton name={<Trans>Remove this service</Trans>} onPress={props.onChooseRemoveServicePress}/>
-       <OptionButton name={<Trans>Other</Trans>} onPress={props.onChooseOtherChangesPress}/>
+       <OptionButton name={<Trans>This service no longer exists</Trans>} onPress={props.onChooseRemoveServicePress}/>
+       <OptionButton name={<Trans>Give other feedback about this service</Trans>} onPress={props.onChooseOtherChangesPress}/>
     </View>
 );
 

@@ -1,9 +1,9 @@
 
 // tslint:disable: no-expression-statement
-import { EffectCallback, useEffect } from 'react';
+import { EffectCallback, useEffect, DependencyList } from 'react';
 import { BackHandler, NativeEventSubscription } from 'react-native';
 
-export const useHardwareBackButtonPress = (onHardwareBackPress: () => boolean): void => {
+export const useHardwareBackButtonPress = (onHardwareBackPress: () => boolean, dependencies: DependencyList): void => {
     useEffect((): EffectCallback => {
         const addListener = (): NativeEventSubscription => BackHandler.addEventListener('hardwareBackPress', onHardwareBackPress);
         const removeListener = (): void => BackHandler.removeEventListener('hardwareBackPress', onHardwareBackPress);
@@ -11,5 +11,5 @@ export const useHardwareBackButtonPress = (onHardwareBackPress: () => boolean): 
         addListener();
 
         return removeListener;
-    }, []);
+    }, dependencies);
 };

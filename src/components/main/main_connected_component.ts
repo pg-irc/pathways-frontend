@@ -12,13 +12,15 @@ import { selectLocale } from '../../selectors/locale/select_locale';
 import { Locale } from '../../locale';
 import { selectShowOnboarding } from '../../selectors/user_profile/select_show_onboarding';
 import { selectIsLocaleSet } from '../../selectors/locale/select_is_locale_set';
-import { 
+import {
     CloseHeaderMenuAction, closeHeaderMenu, OpenHeaderMenuAction, openHeaderMenu, CloseAboutModalAction, closeAboutModal,
     openAboutModal, CloseDisclaimerModalAction, closeDisclaimerModal, OpenAboutModalAction, OpenDisclaimerModalAction, openDisclaimerModal,
 } from '../../stores/user_experience/actions';
 import { selectIsHeaderMenuVisible } from '../../selectors/user_experience/select_is_header_menu_visible';
 import { selectIsAboutModalVisible } from '../../selectors/user_experience/select_is_about_modal_visible';
 import { selectIsDisclaimerModalVisible } from '../../selectors/user_experience/select_is_disclaimer_modal_visible';
+import { selectFeedbackScreen } from '../../selectors/feedback/select_feedback_screen';
+import { close as backOutOfFeedbackScreen, CloseAction } from '../../stores/feedback';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 
@@ -38,6 +40,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): Props => ({
     isHeaderMenuVisible: selectIsHeaderMenuVisible(store),
     isAboutModalVisible: selectIsAboutModalVisible(store),
     isDisclaimerModalVisible: selectIsDisclaimerModalVisible(store),
+    feedbackScreen: selectFeedbackScreen(store),
 });
 
 type Actions =
@@ -48,7 +51,8 @@ type Actions =
     OpenAboutModalAction |
     CloseDisclaimerModalAction |
     OpenDisclaimerModalAction |
-    RouteChangedAction;
+    RouteChangedAction |
+    CloseAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): MainComponentActions => ({
     sendAnalyticsData: (location: Location, locale: Locale): RouteChangedAction => dispatch(routeChanged(location, locale)),
@@ -58,6 +62,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): MainComponentActions =
     openAboutModal: (): OpenAboutModalAction => dispatch(openAboutModal()),
     closeDisclaimerModal: (): CloseDisclaimerModalAction => dispatch(closeDisclaimerModal()),
     openDisclaimerModal: (): OpenDisclaimerModalAction => dispatch(openDisclaimerModal()),
+    backOutOfFeedbackScreen: (): CloseAction => dispatch(backOutOfFeedbackScreen()),
 });
 
 const componentWithLoader = withLoader<MainComponentProps>(MainComponent);

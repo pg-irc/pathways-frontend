@@ -21,7 +21,7 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
             return { ...store, modal: FeedbackModal.ChooseFeedbackModeModal };
         case constants.DISCARD_CHANGES:
             return buildDefaultStore();
-       case constants.FINISH_FEEDBACK:
+        case constants.FINISH_FEEDBACK:
             return {
                 ...store,
                 screen: FeedbackScreen.ServiceDetail,
@@ -56,8 +56,6 @@ const submitOrDiscardReducer = (store: FeedbackStore, action: ReducerActions): F
             return { ...store, modal: FeedbackModal.ReceiveUpdatesModal, feedback: action.payload.feedback, screen: FeedbackScreen.ServiceDetail };
         case constants.CLOSE:
             return { ...store, modal: FeedbackModal.ConfirmDiscardChangesModal};
-        case constants.BACK:
-            return { ...store, modal:  FeedbackModal.ConfirmDiscardChangesModal};
         case constants.DISCARD_CHANGES:
             return buildDefaultStore();
         case constants.CANCEL_DISCARD_CHANGES:

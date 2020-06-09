@@ -199,7 +199,7 @@ export const textStyles = StyleSheet.create({
         ...getNormalFontStylesForOS(),
     },
     paragraphSmallStyleLeft: {
-        fontSize: 12,
+        fontSize: 15,
         lineHeight: 21,
         textAlign: 'left',
         color: colors.black,
