@@ -4,7 +4,6 @@ import { Trans } from '@lingui/react';
 import { textStyles } from '../application/styles';
 import { isServiceDetailStringEmpty } from './services/is_service_detail_empty';
 import { MissingServiceDetailComponent } from './services/missing_service_detail_component';
-//import { DividerComponent } from './content_layout/divider_component';
 
 interface Props {
     readonly verificationDate: string;
