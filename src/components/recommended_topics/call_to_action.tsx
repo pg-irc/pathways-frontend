@@ -6,7 +6,7 @@ import { Trans } from '@lingui/react';
 import { View, Text, Button, Icon } from 'native-base';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
 import { textStyles, applicationStyles } from '../../application/styles';
-import { advisor, recommendationBubble } from '../../application/images';
+import { advisor, advisor_rtl, recommendationBubble } from '../../application/images';
 import { callToActionStyles } from './styles';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { MarkdownComponent } from '../../../src/components/markdown/markdown_component';
@@ -78,7 +78,7 @@ const FullComponentContent = (): JSX.Element => {
                     </Text>
                 </View>
                 <Image
-                    source={advisor}
+                    source={I18nManager.isRTL ? advisor_rtl : advisor}
                     resizeMode='contain'
                     style={callToActionStyles.advisorImage}
                 />
