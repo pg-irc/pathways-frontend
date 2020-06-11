@@ -40,7 +40,7 @@ export const EmailComponent = (props: Props): JSX.Element => {
 };
 
 const renderEmail = (email: string): JSX.Element => (
-    <View>
+    <View style={{marginHorizontal: 5}}>
         <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Email:</Trans> </Text>
         <Text style={textStyles.paragraphStyle}>{email}</Text>
     </View>

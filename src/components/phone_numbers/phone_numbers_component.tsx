@@ -59,7 +59,7 @@ const renderSinglePhoneNumber = (phoneNumber: PhoneNumber): JSX.Element => {
     );
     const fieldLabel = capitalizeFirstLetter(phoneNumber.type);
     return (
-        <View>
+        <View style={{marginHorizontal: 5}}>
             <Text style={textStyles.paragraphBoldBlackLeft}>{fieldLabel}: </Text>
             <Text style={textStyles.paragraphStyle}>{phoneNumber.phone_number}</Text>
         </View>

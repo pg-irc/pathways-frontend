@@ -410,9 +410,9 @@ export const applicationStyles = StyleSheet.create({
     },
     boxShadowAbove: {
         shadowColor: colors.black,
-        shadowOffset: { width: 0, height: -2 },
-        shadowOpacity: 0.5,
-        shadowRadius: 4,
+        shadowOffset: { width: 0, height: -3 },
+        shadowOpacity: 0.25,
+        shadowRadius: 5,
         elevation: 1,
     },
     thinGreyBorderBelow: {

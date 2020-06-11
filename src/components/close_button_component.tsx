@@ -23,7 +23,7 @@ export const CloseButtonComponent = (props: Props): JSX.Element => (
                 justifyContent: 'center',
                 maxHeight: 55,
                 paddingTop: 30,
-                paddingRight: 15,
+                paddingRight: 5,
                 ...props.additionalStyle,
             }
         }

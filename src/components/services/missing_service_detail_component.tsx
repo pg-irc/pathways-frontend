@@ -8,7 +8,7 @@ interface Props {
 
 export const MissingServiceDetailComponent = (props: Props): JSX.Element => {
     return (
-        <View>
+        <View style={{marginHorizontal: 5}}>
             <Text style={[textStyles.paragraphBoldBlackLeft, { color: colors.darkerGrey }]}>
                 {props.title}
             </Text>

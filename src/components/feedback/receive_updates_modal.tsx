@@ -42,10 +42,10 @@ export const ReceiveUpdatesModal =
                     <View style={[styles.receiveUpdatesContainer, { minHeight }]}>
                         <View style={styles.receiveUpdatesInnerContainer}>
                             <View>
-                                <Text style={textStyles.headlineH2StyleBlackLeft}>
-                                    <Trans>Receiving Updates</Trans>
+                                <Text style={[textStyles.headlineH2StyleBlackLeft, { marginBottom: 15 }]}>
+                                    <Trans>Receiving updates</Trans>
                                 </Text>
-                                <Text style={textStyles.paragraphStyleBrown}>
+                                <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 10 }]}>
                                     <Trans>Enter your email if you would like to receive updates about this issue</Trans>
                                 </Text>
                                 <TextInputComponent
@@ -107,7 +107,7 @@ const EmployeeInputFields = (props: {
     }
     return (
         <View>
-            <Text style={[textStyles.headline6, { color: colors.black }]}>
+            <Text style={[textStyles.headline6, { color: colors.black,  marginBottom: 5 }]}>
                 <Trans>Name</Trans>
             </Text>
             <TextInputComponent
@@ -118,7 +118,7 @@ const EmployeeInputFields = (props: {
                 value={props.userInformation.name}
                 setUserInformation={props.setUserInformation}
             />
-            <Text style={[textStyles.headline6, { color: colors.black, marginTop: 14 }]}>
+            <Text style={[textStyles.headline6, { color: colors.black, marginTop: 20, marginBottom: 5 }]}>
                 <Trans>Organization</Trans>
             </Text>
             <TextInputComponent
@@ -129,7 +129,7 @@ const EmployeeInputFields = (props: {
                 value={props.userInformation.organizationName}
                 setUserInformation={props.setUserInformation}
             />
-             <Text style={[textStyles.headline6, { color: colors.black, marginTop: 14 }]}>
+             <Text style={[textStyles.headline6, { color: colors.black, marginTop: 20,  marginBottom: 5 }]}>
                 <Trans>Job Title</Trans>
             </Text>
             <TextInputComponent
