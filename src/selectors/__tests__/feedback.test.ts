@@ -30,7 +30,7 @@ describe('picking feedback properties to send with: pickSendableFeedback()', () 
 
     it('will pick "service" feedback properties that have shouldSend set to true', () => {
         const feedback = {
-            ...getEmptyServiceFeedback(false),
+            ...getEmptyServiceFeedback(),
             organization: {
                 shouldSend: true, value: aString(),
             },

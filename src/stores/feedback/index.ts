@@ -24,7 +24,7 @@ export const close = () => helpers.makeAction(constants.CLOSE);
 export const submit = (feedback: Feedback) => (
     helpers.makeAction(constants.SUBMIT, { feedback })
 );
-export const finishFeedback = (userInformation: UserInformation = undefined) => (
+export const finishFeedback = (userInformation: UserInformation) => (
     helpers.makeAction(constants.FINISH_FEEDBACK, { userInformation })
 );
 export const sendFeedback = (serviceId: string) => (
@@ -71,8 +71,8 @@ export const getEmptyUserInfo = (): UserInformation => ({
     isEmployee: false,
 });
 
-export const getEmptyServiceFeedback = (shouldSend: boolean = true): ServiceFeedback => {
-    const emptyFeedbackField = { value: '', shouldSend };
+export const getEmptyServiceFeedback = (): ServiceFeedback => {
+    const emptyFeedbackField = { value: '', shouldSend: false };
     return {
         type: 'service_feedback',
         name: emptyFeedbackField,

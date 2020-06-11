@@ -9,7 +9,6 @@ import { CloseButtonComponent } from '../close_button_component';
 
 export interface FeedbackModalProps {
     readonly onClosePress: () => void;
-    readonly isVisible: boolean;
 }
 
 export interface ButtonsComponentProps {
@@ -22,7 +21,7 @@ type Props = FeedbackModalProps & ButtonsComponentProps;
 
 export const ChooseModeModal = (props: Props): JSX.Element => (
     <Modal
-        isVisible={props.isVisible}
+        isVisible={true}
         onBackdropPress={props.onClosePress}
         style={{ justifyContent: 'flex-end', margin: 0 }}
         backdropTransitionOutTiming={0}

@@ -1,4 +1,4 @@
-import { buildDefaultStore, ReducerActions } from '.';
+import { buildDefaultStore, ReducerActions, getEmptyServiceFeedback, getEmptyUserInfo } from '.';
 import * as constants from '../../application/constants';
 import { FeedbackScreen, FeedbackModal, FeedbackStore } from './types';
 
@@ -18,7 +18,12 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
     }
     switch (action.type) {
         case constants.SUGGEST_AN_UPDATE:
-            return { ...store, modal: FeedbackModal.ChooseFeedbackModeModal };
+            return {
+                ...store,
+                feedback: getEmptyServiceFeedback(),
+                userInformation: getEmptyUserInfo(),
+                modal: FeedbackModal.ChooseFeedbackModeModal,
+            };
         case constants.DISCARD_CHANGES:
             return buildDefaultStore();
         case constants.FINISH_FEEDBACK:

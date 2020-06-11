@@ -1,5 +1,5 @@
 // tslint:disable: no-expression-statement
-import React, { Dispatch, SetStateAction, useState, useRef, useEffect, MutableRefObject } from 'react';
+import React, { Dispatch, SetStateAction, useState, useRef, MutableRefObject } from 'react';
 import { TouchableOpacity } from 'react-native';
 import * as R from 'ramda';
 import { History, Location } from 'history';
@@ -61,8 +61,6 @@ export interface ServiceDetailProps {
     readonly feedbackScreen: FeedbackScreen;
     readonly feedbackModal: FeedbackModal;
     readonly isSendingFeedback: boolean;
-    readonly feedback: Feedback;
-    readonly userInformation: UserInformation;
     readonly showLinkAlerts: boolean;
 }
 
@@ -85,31 +83,44 @@ export interface ServiceDetailActions {
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
+type SetServiceFeedback = Dispatch<SetStateAction<ServiceFeedback>>;
+type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const serviceId = props.match.params.serviceId;
     const isFeedbackInputEnabled = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
-    const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, Dispatch<SetStateAction<ServiceFeedback>>] = useState(getEmptyServiceFeedback());
-    const [userInfoInput, setUserInfoInput]: readonly [UserInformation, Dispatch<SetStateAction<UserInformation>>] = useState(getEmptyUserInfo());
+    const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, SetServiceFeedback] = useState(getEmptyServiceFeedback());
+    const [userInfoInput, setUserInfoInput]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
 
-    useEffect((): void => {
-        switch (props.feedbackScreen) {
-            case FeedbackScreen.OtherChangesPage:
-            case FeedbackScreen.RemoveServicePage:
-                return goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
-            case FeedbackScreen.EditableServiceDetailPage:
-                return scrollToTop(scrollViewRef);
-            default:
-                return undefined;
-        }
-    }, [props.feedbackScreen]);
-
-    const setFeedbackInputForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField): void => (
-        setFeedbackInput({ ...feedbackInput, [fieldName]: fieldValue })
+    const setTextForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField, value: string): void => (
+        setFeedbackInput({ ...feedbackInput, [fieldName]: { ...fieldValue, value  }})
     ));
 
-    const resetFeedbackAndUserInput = (): void => {
+    const toggleShouldSendForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField): void => {
+        const shouldSend = !fieldValue.shouldSend;
+        return setFeedbackInput({ ...feedbackInput, [fieldName]: { ...fieldValue, shouldSend }});
+    });
+
+    const chooseChangeNameOrDetail = (): void => {
+        scrollToTop(scrollViewRef);
+        resetInputs();
+        props.chooseChangeNameOrDetail();
+    };
+
+    const chooseRemoveService = (): void => {
+        goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
+        resetInputs();
+        props.chooseRemoveService();
+    };
+
+    const chooseOtherChanges = (): void => {
+        goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
+        resetInputs();
+        props.chooseOtherChanges();
+    };
+
+    const resetInputs = (): void => {
         setFeedbackInput(getEmptyServiceFeedback());
         setUserInfoInput(getEmptyUserInfo());
     };
@@ -145,7 +156,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             >
                 <View padder>
                     <FeedbackComponent
-                        setInput={setFeedbackInputForField('name')}
+                        setText={setTextForField('name')}
+                        toggleShouldSend={toggleShouldSendForField('name')}
                         inputField={feedbackInput.name}
                         label={<Trans>Name</Trans>}
                         body={props.service.name}
@@ -154,7 +166,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     />
                     <DividerComponent />
                     <FeedbackComponent
-                        setInput={setFeedbackInputForField('organization')}
+                        setText={setTextForField('organization')}
+                        toggleShouldSend={toggleShouldSendForField('organization')}
                         inputField={feedbackInput.organization}
                         label={<Trans>Organization</Trans>}
                         body={props.service.organizationName}
@@ -163,7 +176,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     />
                     <DividerComponent />
                     <FeedbackComponent
-                        setInput={setFeedbackInputForField('description')}
+                        setText={setTextForField('description')}
+                        toggleShouldSend={toggleShouldSendForField('description')}
                         inputField={feedbackInput.description}
                         label={<Trans>Description</Trans>}
                         body={props.service.description}
@@ -180,7 +194,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         service={props.service}
                         currentPathForAnaltyics={props.location.pathname}
                         isFeedbackInputEnabled={isFeedbackInputEnabled}
-                        setFeedbackInputForField={setFeedbackInputForField}
+                        setFeedbackInputForField={setTextForField}
+                        toggleShouldSendForField={toggleShouldSendForField}
                         feedback={feedbackInput}
                         analyticsLinkPressed={props.analyticsLinkPressed}
                         currentPathForAnalytics={props.location.pathname}
@@ -199,12 +214,13 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         showChooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
                         showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ReceiveUpdatesModal}
                         showDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
-                        chooseChangeNameOrDetail={props.chooseChangeNameOrDetail}
-                        chooseRemoveService={props.chooseRemoveService}
-                        chooseOtherChanges={props.chooseOtherChanges}
+
+                        chooseChangeNameOrDetail={chooseChangeNameOrDetail}
+                        chooseRemoveService={chooseRemoveService}
+                        chooseOtherChanges={chooseOtherChanges}
+
                         close={props.close}
                         cancelDiscardFeedback={props.cancelDiscardFeedback}
-                        resetFeedbackAndUserInput={resetFeedbackAndUserInput}
                     />
                 </View>
             </KeyboardAwareScrollView>
@@ -330,6 +346,7 @@ interface ServiceContactDetailsProps {
     readonly feedback: ServiceFeedback;
     readonly isFeedbackInputEnabled: boolean;
     readonly setFeedbackInputForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
+    readonly toggleShouldSendForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
 }
@@ -343,7 +360,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
     return (
         <>
             <FeedbackComponent
-                setInput={props.setFeedbackInputForField('address')}
+                setText={props.setFeedbackInputForField('address')}
+                toggleShouldSend={props.toggleShouldSendForField('address')}
                 inputField={props.feedback.address}
                 label={<Trans>Address</Trans>}
                 body={getAddressesString(physicalAddresses)}
@@ -361,7 +379,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <DividerComponent />
             <FeedbackComponent
-                setInput={props.setFeedbackInputForField('phone')}
+                setText={props.setFeedbackInputForField('phone')}
+                toggleShouldSend={props.toggleShouldSendForField('phone')}
                 inputField={props.feedback.phone}
                 label={<Trans>Phone numbers</Trans>}
                 body={getPhonesString(props.service.phoneNumbers)}
@@ -377,7 +396,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <DividerComponent />
             <FeedbackComponent
-                setInput={props.setFeedbackInputForField('website')}
+                setText={props.setFeedbackInputForField('website')}
+                toggleShouldSend={props.toggleShouldSendForField('website')}
                 inputField={props.feedback.website}
                 label={<Trans>Website</Trans>}
                 body={props.service.website}
@@ -393,7 +413,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
             />
             <DividerComponent />
             <FeedbackComponent
-                setInput={props.setFeedbackInputForField('email')}
+                setText={props.setFeedbackInputForField('email')}
+                toggleShouldSend={props.toggleShouldSendForField('email')}
                 inputField={props.feedback.email}
                 label={<Trans>Email</Trans>}
                 body={props.service.email}
