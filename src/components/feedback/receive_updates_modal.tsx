@@ -46,7 +46,7 @@ export const ReceiveUpdatesModal =
                                     <Trans>Receiving updates</Trans>
                                 </Text>
                                 <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 10 }]}>
-                                    <Trans>Enter your email if you would like to receive updates about this issue</Trans>
+                                    <Trans>Enter your email if you would like to be contacted about this issue</Trans>
                                 </Text>
                                 <TextInputComponent
                                     userInformation={userInformation}
