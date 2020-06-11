@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native';
 import { DividerComponent } from '../content_layout/divider_component';
 import { Trans } from '@lingui/react';
 import { CloseButtonComponent } from '../close_button_component';
+import { Link } from '../link/link_component';
 
 export interface FeedbackModalProps {
     readonly onClosePress: () => void;
@@ -68,7 +69,8 @@ const OptionButton = (props: { readonly name: JSX.Element, readonly onPress: () 
 const SubtitleComponent = (): JSX.Element => (
     <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
         <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
-            <Trans>Your suggestions will be reviewed by our team before making final changes to the service information.</Trans>
+            <Trans>Your suggestions will be reviewed by our team before making changes to the service information.</Trans>
+            <Trans><Link href={'https://arrivaladvisor.ca'}>Learn more</Link></Trans>
         </Text>
     </View>
 );
