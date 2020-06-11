@@ -13,6 +13,8 @@ import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAc
 import { DiscardChangesModal } from './discard_changes_modal';
 import { HeaderComponent } from './header_component';
 import { SubmitFeedbackButton } from './submit_feedback_button';
+import { isAndroid } from '../../application/helpers/is_android';
+
 
 type ContentComponentProps = {
     readonly input: string;
@@ -74,7 +76,7 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
                                 onChangeText={props.onInputChange}
                                 placeholder={i18n._(props.placeholder)}
                                 placeholderTextColor={colors.darkerGrey}
-                                style={[styles.input, { marginHorizontal: 10 }]}
+                                style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform() }]}
                                 textAlignVertical='top'
                                 value={props.input}
                             />
@@ -85,6 +87,10 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
         </I18n>
   );
 };
+
+const getMarginHorizontalForPlatform = (): number => (
+    isAndroid() ? 0 : 10
+)
 
 export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServiceProps): JSX.Element => {
     const isOtherFeedback = props.feedbackScreen === FeedbackScreen.OtherChangesPage;
