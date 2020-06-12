@@ -43,7 +43,7 @@ export const ReceiveUpdatesModal =
                         <View style={styles.receiveUpdatesInnerContainer}>
                             <View>
                                 <Text style={[textStyles.headlineH2StyleBlackLeft, { marginBottom: 15 }]}>
-                                    <Trans>Receiving updates</Trans>
+                                    <Trans>Contact information</Trans>
                                 </Text>
                                 <Text style={[textStyles.paragraphStyleBrown, { marginBottom: 10 }]}>
                                     <Trans>Enter your email if you would like to be contacted about this issue</Trans>
