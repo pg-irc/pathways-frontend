@@ -15,6 +15,7 @@ interface ReceiveUpdatesProps {
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
     readonly onFinishPress: () => void;
+    readonly isVisible: boolean;
     readonly onModalHide: (i18n: I18n) => () => void;
 }
 
@@ -24,7 +25,7 @@ const ORGANIZATION_PLACEHOLDER = t`Enter your organization name`;
 const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
 export const ReceiveUpdatesModal =
-({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, onModalHide }: ReceiveUpdatesProps): JSX.Element => {
+({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: ReceiveUpdatesProps): JSX.Element => {
 
     const onPressIsEmployee = (): void =>
         setUserInformation({
@@ -38,7 +39,7 @@ export const ReceiveUpdatesModal =
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
-                <Modal isVisible={true} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
+                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
                     <View style={[styles.receiveUpdatesContainer, { minHeight }]}>
                         <View style={styles.receiveUpdatesInnerContainer}>
                             <View>
