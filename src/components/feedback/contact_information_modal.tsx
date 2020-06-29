@@ -6,11 +6,11 @@ import Modal from 'react-native-modal';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
-import { receiveUpdatesStyles as styles } from './styles';
+import { contactInformationStyles as styles } from './styles';
 import { UserInformation } from '../../stores/feedback/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 
-interface ReceiveUpdatesProps {
+interface ContactInformationProps {
     readonly isSendingFeedback: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
@@ -24,8 +24,8 @@ const NAME_PLACEHOLDER = t`Enter your name`;
 const ORGANIZATION_PLACEHOLDER = t`Enter your organization name`;
 const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
-export const ReceiveUpdatesModal =
-({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: ReceiveUpdatesProps): JSX.Element => {
+export const ContactInformationModal =
+({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: ContactInformationProps): JSX.Element => {
 
     const onPressIsEmployee = (): void =>
         setUserInformation({
@@ -40,8 +40,8 @@ export const ReceiveUpdatesModal =
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
                 <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
-                    <View style={[styles.receiveUpdatesContainer, { minHeight }]}>
-                        <View style={styles.receiveUpdatesInnerContainer}>
+                    <View style={[styles.contactInformationContainer, { minHeight }]}>
+                        <View style={styles.contactInformationInnerContainer}>
                             <View>
                                 <Text style={[textStyles.headlineH2StyleBlackLeft, { marginBottom: 15 }]}>
                                     <Trans>Contact information</Trans>

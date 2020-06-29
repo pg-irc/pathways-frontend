@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import React, { Dispatch, SetStateAction } from 'react';
 import { t } from '@lingui/macro';
-import { ReceiveUpdatesModal } from './receive_updates_modal';
+import { ContactInformationModal } from './contact_information_modal';
 import { ChooseModeModal } from './choose_mode_modal';
 import { UserInformation } from '../../stores/feedback/types';
 import { DiscardChangesModal } from './discard_changes_modal';
@@ -11,7 +11,7 @@ import { DiscardChangesAction, CancelDiscardChangesAction, CloseAction } from '.
 interface ModalContainerProps {
     readonly isSendingFeedback: boolean;
     readonly showChooseFeedbackModeModal: boolean;
-    readonly showReceiveUpdatesModal: boolean;
+    readonly showContactInformationModal: boolean;
     readonly showDiscardChangesModal: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
@@ -26,7 +26,7 @@ interface ModalContainerProps {
 
 export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
 
-    const onReceiveUpdatesModalHide = (i18n: I18n) => () => {
+    const onContactInformationModalHide = (i18n: I18n) => () => {
         showToast(i18n._(t`Thank you for your contribution!`));
     };
 
@@ -43,13 +43,13 @@ export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
                 onChooseRemoveServicePress={props.chooseRemoveService}
                 isVisible={props.showChooseFeedbackModeModal}
             />
-            <ReceiveUpdatesModal
+            <ContactInformationModal
                 isSendingFeedback={props.isSendingFeedback}
                 setUserInformation={props.setUserInformation}
                 userInformation={props.userInformation}
                 onFinishPress={props.finishAndSendFeedback}
-                isVisible={props.showReceiveUpdatesModal}
-                onModalHide={onReceiveUpdatesModalHide}
+                isVisible={props.showContactInformationModal}
+                onModalHide={onContactInformationModalHide}
             />
             <DiscardChangesModal
                 onDiscardPress={onDiscardModalDiscardPress}

@@ -19,7 +19,7 @@ interface OtherRemoveServiceStyles {
     readonly submitTextDisabled: TextStyle;
 }
 
-interface ReceiveUpdatesStyles {
+interface ContactInformationStyles {
     readonly checkboxContainer: ViewStyle;
     readonly checkBox: ViewStyle;
     readonly checkBoxDescription: ViewStyle;
@@ -29,8 +29,8 @@ interface ReceiveUpdatesStyles {
     readonly finishTextWithoutEmail: TextStyle;
     readonly finishTextWithEmail: TextStyle;
     readonly checkBoxIcon: TextStyle;
-    readonly receiveUpdatesContainer: ViewStyle;
-    readonly receiveUpdatesInnerContainer: ViewStyle;
+    readonly contactInformationContainer: ViewStyle;
+    readonly contactInformationInnerContainer: ViewStyle;
     readonly employeeInputStyle: ViewStyle;
 }
 
@@ -100,7 +100,7 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
     },
 });
 
-const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
+const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
     checkboxContainer: {
         alignItems: 'center',
         flexDirection: 'row',
@@ -167,12 +167,12 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         fontWeight: 'bold',
     },
 
-    receiveUpdatesContainer: {
+    contactInformationContainer: {
         backgroundColor: 'white',
         borderRadius: 15,
     },
 
-    receiveUpdatesInnerContainer: {
+    contactInformationInnerContainer: {
         flex: 1,
         flexDirection: 'column',
         paddingLeft: 24,
@@ -190,4 +190,4 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
     },
 });
 
-export { otherRemoveServiceStyles, receiveUpdatesStyles };
+export { otherRemoveServiceStyles, contactInformationStyles };
