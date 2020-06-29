@@ -14,7 +14,6 @@ interface OtherRemoveServiceStyles {
     readonly headerContainer: ViewStyle;
     readonly input: TextStyle;
     readonly submitButton: ViewStyle;
-    readonly submitButtonDisabled: ViewStyle;
     readonly submitText: TextStyle;
     readonly submitTextDisabled: TextStyle;
 }
@@ -83,10 +82,6 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
     submitButton: {
         marginLeft: 30,
         marginRight: 30,
-    },
-
-    submitButtonDisabled: {
-        backgroundColor: colors.fadedGrey,
     },
 
     submitText: {
