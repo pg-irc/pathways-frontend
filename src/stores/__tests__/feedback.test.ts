@@ -2,7 +2,7 @@
 import { reducer, suggestAnUpdate,
     chooseChangeNameOrDetails, chooseRemoveService,
     chooseOtherChanges, submit, discardChanges, close,
-    finishFeedback, buildDefaultStore, cancelDiscardChanges, getEmptyServiceFeedback, getEmptyUserInfo } from '../feedback';
+    finishFeedback, buildDefaultStore, cancelDiscardChanges, getEmptyServiceFeedback, getEmptyUserInfo, closeWithFeedback } from '../feedback';
 import { aString, aBoolean } from '../../application/helpers/random_test_values';
 import { FeedbackModal, FeedbackField, ServiceFeedback, FeedbackScreen, UserInformation } from '../feedback/types';
 import { FeedbackStoreBuilder } from './helpers/feedback_store_builder';
@@ -147,10 +147,18 @@ describe('feedback reducer', () => {
         expect(newStore).toEqual(buildDefaultStore());
     });
 
-    test('closing dialog from a data entry screen brings up confirmation modal', () => {
+    test('closing dialog from an empty data entry screen brings user back to service detail', () => {
         const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
         const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
         const action = close();
+        const newStore = reducer(oldStore, action);
+        expect(newStore.screen).toEqual(FeedbackScreen.ServiceDetail);
+    });
+
+    test('closing dialog from a populated data entry screen brings up confirmation modal', () => {
+        const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
+        const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
+        const action = closeWithFeedback();
         const newStore = reducer(oldStore, action);
         expect(newStore.screen).toEqual(oldScreen);
         expect(newStore.modal).toEqual(FeedbackModal.ConfirmDiscardChangesModal);
@@ -161,15 +169,6 @@ describe('feedback reducer', () => {
         const action = close();
         const newStore = reducer(oldStore, action);
         expect(newStore.modal).toEqual(FeedbackModal.None);
-    });
-
-    test('closing out brings up confirmation modal', () => {
-        const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
-        const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
-        const action = close();
-        const newStore = reducer(oldStore, action);
-        expect(newStore.screen).toEqual(oldScreen);
-        expect(newStore.modal).toEqual(FeedbackModal.ConfirmDiscardChangesModal);
     });
 
     test('cancelling confirmation closes modals', () => {
