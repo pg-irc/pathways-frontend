@@ -8,7 +8,7 @@ import { colors, textStyles } from '../../application/styles';
 import { goBack } from '../../application/routing';
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
-import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAction } from '../../stores/feedback';
+import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAction, CloseWithFeedbackAction } from '../../stores/feedback';
 import { DiscardChangesModal } from './discard_changes_modal';
 import { HeaderComponent } from './header_component';
 import { SubmitFeedbackButton } from './submit_feedback_button';
@@ -41,6 +41,7 @@ export interface OtherRemoveServiceActions {
     readonly discardFeedback: () => DiscardChangesAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
     readonly close: () => CloseAction;
+    readonly closeWithFeedback: () => CloseWithFeedbackAction;
 }
 
 export type FeedbackOtherRemoveServiceProps = OtherRemoveServiceState & OtherRemoveServiceActions;
@@ -119,7 +120,10 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
 
     return (
         <Container>
-            <HeaderComponent headerLabel={content.header} close={props.close} />
+            <HeaderComponent
+                headerLabel={content.header}
+                close={hasNoFeedbackToSend() ? props.close : props.closeWithFeedback}
+            />
             <ContentComponent
                 inputLabel={content.label}
                 input={feedback}

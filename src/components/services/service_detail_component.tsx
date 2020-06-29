@@ -49,6 +49,7 @@ import {
     getEmptyUserInfo,
     CancelDiscardChangesAction,
     SendFeedbackAction,
+    CloseWithFeedbackAction,
 } from '../../stores/feedback';
 import { isAndroid } from '../../application/helpers/is_android';
 import { HeaderComponent as FeedbackHeaderComponent} from '../feedback/header_component';
@@ -76,6 +77,7 @@ export interface ServiceDetailActions {
     readonly submitFeedback: (feedback: Feedback) => SubmitAction;
     readonly finishFeedback: (userInformation: UserInformation) => FinishAction;
     readonly close: () => CloseAction;
+    readonly closeWithFeedback: () => CloseWithFeedbackAction;
     readonly discardFeedback: () => DiscardChangesAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
     readonly sendFeedback: (serviceId: string) => SendFeedbackAction;
@@ -155,7 +157,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 bookmarkService={props.bookmarkService}
                 unbookmarkService={props.unbookmarkService}
                 openHeaderMenu={props.openHeaderMenu}
-                close={props.close}
+                close={hasNoFeedbackToSend() ? props.close : props.closeWithFeedback}
             />
             <KeyboardAwareScrollView
                 enableResetScrollToCoords={false}
@@ -276,7 +278,7 @@ interface HeaderProps {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly close: () => CloseAction;
+    readonly close: () => void;
 }
 
 const feedbackHeaderLabel = t`Change name or other details`;
