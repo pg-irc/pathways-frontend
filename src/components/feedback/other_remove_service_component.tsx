@@ -1,7 +1,8 @@
 // tslint:disable:no-expression-statement
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
-import { Container, Content, Item, Input, Label } from 'native-base';
+import { TextInput, Text } from 'react-native';
+import { Container, Content } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
 import { colors, textStyles } from '../../application/styles';
@@ -64,22 +65,20 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
         <I18n>
             {
                 ({ i18n }: I18nProps): JSX.Element => (
-                    <Content padder>
-                        <Item placeholderLabel={true} stackedLabel>
-                            <Label style={[textStyles.suggestionText, {paddingBottom: 10, marginHorizontal: 10 }]}>
-                                <Trans id={props.inputLabel} />
-                            </Label>
-                            <Input
-                                multiline
-                                numberOfLines={5}
-                                onChangeText={props.onInputChange}
-                                placeholder={i18n._(props.placeholder)}
-                                placeholderTextColor={colors.darkerGrey}
-                                style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform() }]}
-                                textAlignVertical='top'
-                                value={props.input}
-                            />
-                        </Item>
+                    <Content padder style={{ marginTop: 5}}>
+                        <Text style={[textStyles.suggestionText, {paddingBottom: 10, marginHorizontal: 10 }]}>
+                            <Trans id={props.inputLabel} />
+                        </Text>
+                        <TextInput
+                            multiline
+                            numberOfLines={5}
+                            onChangeText={props.onInputChange}
+                            placeholder={i18n._(props.placeholder)}
+                            placeholderTextColor={colors.darkerGrey}
+                            style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform()}]}
+                            textAlignVertical='top'
+                            value={props.input}
+                        />
                     </Content>
                 )
             }
