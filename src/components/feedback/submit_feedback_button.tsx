@@ -6,7 +6,7 @@ import { Text } from 'native-base';
 import { Trans } from '@lingui/react';
 
 export const SubmitFeedbackButton = (props: {
-    readonly isVisible: boolean, readonly disabled?: boolean, readonly onPress: () => void,
+    readonly isVisible: boolean, readonly disabled: boolean, readonly onPress: () => void,
 }): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;

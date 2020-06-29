@@ -4,7 +4,6 @@ import { Trans, I18n } from '@lingui/react';
 import { Container, Content, Item, Input, Label } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
-
 import { colors, textStyles } from '../../application/styles';
 import { goBack } from '../../application/routing';
 import { otherRemoveServiceStyles as styles } from './styles';
@@ -14,7 +13,6 @@ import { DiscardChangesModal } from './discard_changes_modal';
 import { HeaderComponent } from './header_component';
 import { SubmitFeedbackButton } from './submit_feedback_button';
 import { isAndroid } from '../../application/helpers/is_android';
-
 
 type ContentComponentProps = {
     readonly input: string;
@@ -112,6 +110,13 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
         }
     };
 
+    const hasNoFeedbackToSend = (): boolean => {
+        if (!feedback) {
+            return true;
+        }
+        return false;
+    };
+
     return (
         <Container>
             <HeaderComponent headerLabel={content.header} close={props.close} />
@@ -123,6 +128,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
             />
             <SubmitFeedbackButton
                 onPress={submitFeedback}
+                disabled={hasNoFeedbackToSend()}
                 isVisible={true}
             />
             <DiscardChangesModal
