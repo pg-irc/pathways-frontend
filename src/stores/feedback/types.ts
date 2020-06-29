@@ -17,7 +17,7 @@ export enum FeedbackScreen {
 export enum FeedbackModal {
     None,
     ChooseFeedbackModeModal,
-    ReceiveUpdatesModal,
+    ContactInformationModal,
     ConfirmDiscardChangesModal,
 }
 

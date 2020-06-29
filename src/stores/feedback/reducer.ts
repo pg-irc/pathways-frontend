@@ -58,7 +58,9 @@ const chooseModeReducer = (store: FeedbackStore, action: ReducerActions): Feedba
 const submitOrDiscardReducer = (store: FeedbackStore, action: ReducerActions): FeedbackStore => {
     switch (action.type) {
         case constants.SUBMIT:
-            return { ...store, modal: FeedbackModal.ReceiveUpdatesModal, feedback: action.payload.feedback, screen: FeedbackScreen.ServiceDetail };
+            return {
+                ...store, modal: FeedbackModal.ContactInformationModal, feedback: action.payload.feedback, screen: FeedbackScreen.ServiceDetail,
+            };
         case constants.CLOSE:
             return { ...store, modal: FeedbackModal.ConfirmDiscardChangesModal};
         case constants.DISCARD_CHANGES:

@@ -212,7 +212,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         setUserInformation={setUserInfoInput}
                         discardFeedback={props.discardFeedback}
                         showChooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
-                        showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ReceiveUpdatesModal}
+                        showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ContactInformationModal}
                         showDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
 
                         chooseChangeNameOrDetail={chooseChangeNameOrDetail}

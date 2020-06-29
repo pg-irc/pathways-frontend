@@ -130,13 +130,13 @@ describe('feedback reducer', () => {
             }
         });
 
-        test('opens the modal for receiving updates and navigates to service detail', () => {
+        test('opens the modal for contact information and navigates to service detail', () => {
             const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
             const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
             const action = submit(someServiceFeedbackData());
             const newStore = reducer(oldStore, action);
             expect(newStore.screen).toEqual(FeedbackScreen.ServiceDetail);
-            expect(newStore.modal).toEqual(FeedbackModal.ReceiveUpdatesModal);
+            expect(newStore.modal).toEqual(FeedbackModal.ContactInformationModal);
         });
     });
 
@@ -183,7 +183,7 @@ describe('feedback reducer', () => {
 
     describe('finish feedback flow', () => {
         test('returns to service detail page', () => {
-            const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ReceiveUpdatesModal).build();
+            const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ContactInformationModal).build();
             const action = finishFeedback(undefined);
             const newStore = reducer(oldStore, action);
             expect(newStore.screen).toEqual(FeedbackScreen.ServiceDetail);
@@ -197,7 +197,7 @@ describe('feedback reducer', () => {
                 jobTitle: aString(),
                 isEmployee: aBoolean(),
             };
-            const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ReceiveUpdatesModal).build();
+            const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ContactInformationModal).build();
             const action = finishFeedback(userData);
             const newStore = reducer(oldStore, action);
             expect(newStore.userInformation.name).toEqual(userData.name);
