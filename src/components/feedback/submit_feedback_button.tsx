@@ -5,7 +5,9 @@ import { applicationStyles, textStyles } from '../../application/styles';
 import { Text } from 'native-base';
 import { Trans } from '@lingui/react';
 
-export const SubmitFeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void }): JSX.Element => {
+export const SubmitFeedbackButton = (props: {
+    readonly isVisible: boolean, readonly disabled?: boolean, readonly onPress: () => void,
+}): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
@@ -16,6 +18,7 @@ export const SubmitFeedbackButton = (props: { readonly isVisible: boolean, reado
                 marginTop: 12,
                 marginBottom: 12,
                 marginHorizontal: 24 }]}
+            disabled={props.disabled}
             onPress={props.onPress}
         >
             <Text style={textStyles.tealButton}>

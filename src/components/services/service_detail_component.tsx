@@ -134,6 +134,16 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         props.submitFeedback(feedbackInput);
     };
 
+    const hasNoFeedbackToSend = (): boolean => {
+        const sendableFeedback = R.pickBy(isSendableFeedbackField, feedbackInput);
+        if (R.isEmpty(sendableFeedback)) {
+            return true;
+        }
+        return false;
+    };
+
+    const isSendableFeedbackField = (value: FeedbackField): boolean => value.shouldSend === true && value.value.length > 0;
+
     return (
         <View style={{ flex: 1 }}>
             <ServiceDetailHeaderComponent
@@ -226,6 +236,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             </KeyboardAwareScrollView>
             <SubmitFeedbackButton
                 isVisible={isFeedbackInputEnabled}
+                disabled={hasNoFeedbackToSend()}
                 onPress={onSubmitPress}
             />
         </View>
