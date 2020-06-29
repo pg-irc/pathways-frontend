@@ -2,7 +2,7 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { Platform } from 'react-native';
 
-import { colors, values } from '../../../application/styles';
+import { colors, values, getNormalFontFamily } from '../../../application/styles';
 import { getStatusBarHeightForPlatform } from '../../main/get_status_bar_height_for_platform';
 
 interface OtherRemoveServiceStyles {
@@ -65,6 +65,7 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         height: 'auto',
         minHeight: 100,
         padding: 16,
+        fontFamily: getNormalFontFamily(),
     },
 
     footerContainer: {
@@ -154,12 +155,14 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
         color: colors.teal,
         fontSize: 16,
         fontWeight: 'bold',
+        fontFamily: getNormalFontFamily(),
     },
 
     finishTextWithEmail: {
         color: colors.white,
         fontSize: 16,
         fontWeight: 'bold',
+        fontFamily: getNormalFontFamily(),
     },
 
     contactInformationContainer: {
@@ -182,6 +185,7 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
         borderBottomColor: colors.darkerGrey,
         paddingTop: 8,
         paddingBottom: 8,
+        fontFamily: getNormalFontFamily(),
     },
 });
 
