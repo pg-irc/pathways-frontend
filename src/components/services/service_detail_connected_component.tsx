@@ -33,6 +33,8 @@ import {
     cancelDiscardChanges,
     SendFeedbackAction,
     sendFeedback,
+    CloseWithFeedbackAction,
+    closeWithFeedback,
 } from '../../stores/feedback';
 import { selectIsSendingFeedback } from '../../selectors/feedback/select_is_sending_feedback';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
@@ -62,6 +64,7 @@ type Actions =
     SubmitAction |
     FinishAction |
     CloseAction |
+    CloseWithFeedbackAction |
     DiscardChangesAction |
     CloseAction |
     CancelDiscardChangesAction |
@@ -81,6 +84,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     submitFeedback: (feedback: Feedback): SubmitAction => dispatch(submit(feedback)),
     finishFeedback: (userInformation: UserInformation): FinishAction => dispatch(finishFeedback(userInformation)),
     close: (): CloseAction => dispatch(close()),
+    closeWithFeedback: (): CloseWithFeedbackAction => dispatch(closeWithFeedback()),
     discardFeedback: (): DiscardChangesAction => dispatch(discardChanges()),
     cancelDiscardFeedback: (): CancelDiscardChangesAction => dispatch(cancelDiscardChanges()),
     sendFeedback: (serviceId: string): SendFeedbackAction => dispatch(sendFeedback(serviceId)),

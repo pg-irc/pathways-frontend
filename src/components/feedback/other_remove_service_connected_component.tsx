@@ -13,6 +13,8 @@ import {
     close,
     cancelDiscardChanges,
     CancelDiscardChangesAction,
+    CloseWithFeedbackAction,
+    closeWithFeedback,
 } from '../../stores/feedback';
 import {
     OtherRemoveServiceComponent,
@@ -27,11 +29,12 @@ const mapStateToProps = (store: Store): OtherRemoveServiceState => {
     };
 };
 
-type Actions = SubmitAction | DiscardChangesAction | CloseAction | CancelDiscardChangesAction;
+type Actions = SubmitAction | DiscardChangesAction | CloseAction | CloseWithFeedbackAction | CancelDiscardChangesAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): OtherRemoveServiceActions => ({
     submitFeedback: (feedback: Feedback): SubmitAction => dispatch(submit(feedback)),
     close: (): CloseAction => dispatch(close()),
+    closeWithFeedback: (): CloseWithFeedbackAction => dispatch(closeWithFeedback()),
     discardFeedback: (): DiscardChangesAction => dispatch(discardChanges()),
     cancelDiscardFeedback: (): CancelDiscardChangesAction => dispatch(cancelDiscardChanges()),
 });

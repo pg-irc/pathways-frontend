@@ -2,7 +2,7 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { Platform } from 'react-native';
 
-import { colors, values } from '../../../application/styles';
+import { colors, values, getNormalFontFamily } from '../../../application/styles';
 import { getStatusBarHeightForPlatform } from '../../main/get_status_bar_height_for_platform';
 
 interface OtherRemoveServiceStyles {
@@ -14,12 +14,11 @@ interface OtherRemoveServiceStyles {
     readonly headerContainer: ViewStyle;
     readonly input: TextStyle;
     readonly submitButton: ViewStyle;
-    readonly submitButtonDisabled: ViewStyle;
     readonly submitText: TextStyle;
     readonly submitTextDisabled: TextStyle;
 }
 
-interface ReceiveUpdatesStyles {
+interface ContactInformationStyles {
     readonly checkboxContainer: ViewStyle;
     readonly checkBox: ViewStyle;
     readonly checkBoxDescription: ViewStyle;
@@ -29,8 +28,8 @@ interface ReceiveUpdatesStyles {
     readonly finishTextWithoutEmail: TextStyle;
     readonly finishTextWithEmail: TextStyle;
     readonly checkBoxIcon: TextStyle;
-    readonly receiveUpdatesContainer: ViewStyle;
-    readonly receiveUpdatesInnerContainer: ViewStyle;
+    readonly contactInformationContainer: ViewStyle;
+    readonly contactInformationInnerContainer: ViewStyle;
     readonly employeeInputStyle: ViewStyle;
 }
 
@@ -66,6 +65,7 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         height: 'auto',
         minHeight: 100,
         padding: 16,
+        fontFamily: getNormalFontFamily(),
     },
 
     footerContainer: {
@@ -85,10 +85,6 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         marginRight: 30,
     },
 
-    submitButtonDisabled: {
-        backgroundColor: colors.fadedGrey,
-    },
-
     submitText: {
         fontSize: 16,
         color: colors.white,
@@ -100,7 +96,7 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
     },
 });
 
-const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
+const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
     checkboxContainer: {
         alignItems: 'center',
         flexDirection: 'row',
@@ -159,20 +155,22 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         color: colors.teal,
         fontSize: 16,
         fontWeight: 'bold',
+        fontFamily: getNormalFontFamily(),
     },
 
     finishTextWithEmail: {
         color: colors.white,
         fontSize: 16,
         fontWeight: 'bold',
+        fontFamily: getNormalFontFamily(),
     },
 
-    receiveUpdatesContainer: {
+    contactInformationContainer: {
         backgroundColor: 'white',
         borderRadius: 15,
     },
 
-    receiveUpdatesInnerContainer: {
+    contactInformationInnerContainer: {
         flex: 1,
         flexDirection: 'column',
         paddingLeft: 24,
@@ -187,7 +185,8 @@ const receiveUpdatesStyles = StyleSheet.create<ReceiveUpdatesStyles>({
         borderBottomColor: colors.darkerGrey,
         paddingTop: 8,
         paddingBottom: 8,
+        fontFamily: getNormalFontFamily(),
     },
 });
 
-export { otherRemoveServiceStyles, receiveUpdatesStyles };
+export { otherRemoveServiceStyles, contactInformationStyles };

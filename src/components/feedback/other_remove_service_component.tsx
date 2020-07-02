@@ -1,20 +1,19 @@
 // tslint:disable:no-expression-statement
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
-import { Container, Content, Item, Input, Label } from 'native-base';
+import { TextInput, Text } from 'react-native';
+import { Container, Content } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
-
 import { colors, textStyles } from '../../application/styles';
 import { goBack } from '../../application/routing';
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
-import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAction } from '../../stores/feedback';
+import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAction, CloseWithFeedbackAction } from '../../stores/feedback';
 import { DiscardChangesModal } from './discard_changes_modal';
 import { HeaderComponent } from './header_component';
 import { SubmitFeedbackButton } from './submit_feedback_button';
 import { isAndroid } from '../../application/helpers/is_android';
-
 
 type ContentComponentProps = {
     readonly input: string;
@@ -43,6 +42,7 @@ export interface OtherRemoveServiceActions {
     readonly discardFeedback: () => DiscardChangesAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
     readonly close: () => CloseAction;
+    readonly closeWithFeedback: () => CloseWithFeedbackAction;
 }
 
 export type FeedbackOtherRemoveServiceProps = OtherRemoveServiceState & OtherRemoveServiceActions;
@@ -65,22 +65,20 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
         <I18n>
             {
                 ({ i18n }: I18nProps): JSX.Element => (
-                    <Content padder>
-                        <Item placeholderLabel={true} stackedLabel>
-                            <Label style={[textStyles.suggestionText, {paddingBottom: 10, marginHorizontal: 10 }]}>
-                                <Trans id={props.inputLabel} />
-                            </Label>
-                            <Input
-                                multiline
-                                numberOfLines={5}
-                                onChangeText={props.onInputChange}
-                                placeholder={i18n._(props.placeholder)}
-                                placeholderTextColor={colors.darkerGrey}
-                                style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform() }]}
-                                textAlignVertical='top'
-                                value={props.input}
-                            />
-                        </Item>
+                    <Content padder style={{ marginTop: 5}}>
+                        <Text style={[textStyles.suggestionText, {paddingBottom: 10, marginHorizontal: 10 }]}>
+                            <Trans id={props.inputLabel} />
+                        </Text>
+                        <TextInput
+                            multiline
+                            numberOfLines={5}
+                            onChangeText={props.onInputChange}
+                            placeholder={i18n._(props.placeholder)}
+                            placeholderTextColor={colors.darkerGrey}
+                            style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform()}]}
+                            textAlignVertical='top'
+                            value={props.input}
+                        />
                     </Content>
                 )
             }
@@ -114,7 +112,10 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
 
     return (
         <Container>
-            <HeaderComponent headerLabel={content.header} close={props.close} />
+            <HeaderComponent
+                headerLabel={content.header}
+                close={feedback ? props.closeWithFeedback : props.close}
+            />
             <ContentComponent
                 inputLabel={content.label}
                 input={feedback}
@@ -123,6 +124,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
             />
             <SubmitFeedbackButton
                 onPress={submitFeedback}
+                disabled={!feedback}
                 isVisible={true}
             />
             <DiscardChangesModal

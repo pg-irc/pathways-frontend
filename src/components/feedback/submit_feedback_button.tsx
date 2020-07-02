@@ -1,21 +1,27 @@
 import React from 'react';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { applicationStyles, textStyles } from '../../application/styles';
+import { textStyles, colors, values } from '../../application/styles';
 import { Text } from 'native-base';
 import { Trans } from '@lingui/react';
 
-export const SubmitFeedbackButton = (props: { readonly isVisible: boolean, readonly onPress: () => void }): JSX.Element => {
+export const SubmitFeedbackButton = (props: {
+    readonly isVisible: boolean, readonly disabled: boolean, readonly onPress: () => void,
+}): JSX.Element => {
     if (!props.isVisible) {
         return <EmptyComponent />;
     }
     return (
         <TouchableOpacity
-            style={[applicationStyles.tealButton, {
+            style={{
+                backgroundColor: props.disabled ? colors.fadedGrey : colors.teal,
                 paddingVertical: 12,
                 marginTop: 12,
                 marginBottom: 12,
-                marginHorizontal: 24 }]}
+                marginHorizontal: 24,
+                borderRadius: values.roundedBorderRadius,
+            }}
+            disabled={props.disabled}
             onPress={props.onPress}
         >
             <Text style={textStyles.tealButton}>

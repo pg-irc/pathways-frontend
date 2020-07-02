@@ -49,6 +49,7 @@ import {
     getEmptyUserInfo,
     CancelDiscardChangesAction,
     SendFeedbackAction,
+    CloseWithFeedbackAction,
 } from '../../stores/feedback';
 import { isAndroid } from '../../application/helpers/is_android';
 import { HeaderComponent as FeedbackHeaderComponent} from '../feedback/header_component';
@@ -76,6 +77,7 @@ export interface ServiceDetailActions {
     readonly submitFeedback: (feedback: Feedback) => SubmitAction;
     readonly finishFeedback: (userInformation: UserInformation) => FinishAction;
     readonly close: () => CloseAction;
+    readonly closeWithFeedback: () => CloseWithFeedbackAction;
     readonly discardFeedback: () => DiscardChangesAction;
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
     readonly sendFeedback: (serviceId: string) => SendFeedbackAction;
@@ -134,6 +136,13 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         props.submitFeedback(feedbackInput);
     };
 
+    const hasFeedbackToSend = (): boolean => {
+        const sendableFeedback = R.pickBy(isSendableFeedbackField, feedbackInput);
+        return R.not(R.isEmpty(sendableFeedback));
+    };
+
+    const isSendableFeedbackField = (value: FeedbackField): boolean => value.shouldSend === true && value.value.length > 0;
+
     return (
         <View style={{ flex: 1 }}>
             <ServiceDetailHeaderComponent
@@ -145,7 +154,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 bookmarkService={props.bookmarkService}
                 unbookmarkService={props.unbookmarkService}
                 openHeaderMenu={props.openHeaderMenu}
-                close={props.close}
+                close={hasFeedbackToSend() ? props.closeWithFeedback : props.close}
             />
             <KeyboardAwareScrollView
                 enableResetScrollToCoords={false}
@@ -212,7 +221,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         setUserInformation={setUserInfoInput}
                         discardFeedback={props.discardFeedback}
                         showChooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
-                        showReceiveUpdatesModal={props.feedbackModal === FeedbackModal.ReceiveUpdatesModal}
+                        showContactInformationModal={props.feedbackModal === FeedbackModal.ContactInformationModal}
                         showDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
 
                         chooseChangeNameOrDetail={chooseChangeNameOrDetail}
@@ -226,6 +235,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             </KeyboardAwareScrollView>
             <SubmitFeedbackButton
                 isVisible={isFeedbackInputEnabled}
+                disabled={!hasFeedbackToSend()}
                 onPress={onSubmitPress}
             />
         </View>
@@ -265,7 +275,7 @@ interface HeaderProps {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly close: () => CloseAction;
+    readonly close: () => void;
 }
 
 const feedbackHeaderLabel = t`Change name or other details`;

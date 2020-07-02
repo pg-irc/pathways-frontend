@@ -21,6 +21,7 @@ export const chooseOtherChanges = () => helpers.makeAction(constants.CHOOSE_OTHE
 export const discardChanges = () => helpers.makeAction(constants.DISCARD_CHANGES);
 export const cancelDiscardChanges = () => helpers.makeAction(constants.CANCEL_DISCARD_CHANGES);
 export const close = () => helpers.makeAction(constants.CLOSE);
+export const closeWithFeedback = () => helpers.makeAction(constants.CLOSE_WITH_FEEDBACK);
 export const submit = (feedback: Feedback) => (
     helpers.makeAction(constants.SUBMIT, { feedback })
 );
@@ -44,6 +45,7 @@ export type ChooseOtherChangesAction = Readonly<ReturnType<typeof chooseOtherCha
 export type DiscardChangesAction = Readonly<ReturnType<typeof discardChanges>>;
 export type CancelDiscardChangesAction = Readonly<ReturnType<typeof cancelDiscardChanges>>;
 export type CloseAction = Readonly<ReturnType<typeof close>>;
+export type CloseWithFeedbackAction = Readonly<ReturnType<typeof closeWithFeedback>>;
 export type SubmitAction = Readonly<ReturnType<typeof submit>>;
 export type FinishAction = Readonly<ReturnType<typeof finishFeedback>>;
 export type SendFeedbackAction = Readonly<ReturnType<typeof sendFeedback>>;
@@ -57,6 +59,7 @@ export type ReducerActions = SuggestAnUpdateAction |
         DiscardChangesAction |
         CancelDiscardChangesAction |
         CloseAction |
+        CloseWithFeedbackAction |
         SubmitAction |
         FinishAction |
         SendFeedbackAction |
