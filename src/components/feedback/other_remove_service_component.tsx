@@ -110,18 +110,11 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
         }
     };
 
-    const hasNoFeedbackToSend = (): boolean => {
-        if (!feedback) {
-            return true;
-        }
-        return false;
-    };
-
     return (
         <Container>
             <HeaderComponent
                 headerLabel={content.header}
-                close={hasNoFeedbackToSend() ? props.close : props.closeWithFeedback}
+                close={feedback ? props.closeWithFeedback : props.close}
             />
             <ContentComponent
                 inputLabel={content.label}
@@ -131,7 +124,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
             />
             <SubmitFeedbackButton
                 onPress={submitFeedback}
-                disabled={hasNoFeedbackToSend()}
+                disabled={!feedback}
                 isVisible={true}
             />
             <DiscardChangesModal

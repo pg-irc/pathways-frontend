@@ -136,12 +136,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         props.submitFeedback(feedbackInput);
     };
 
-    const hasNoFeedbackToSend = (): boolean => {
+    const hasFeedbackToSend = (): boolean => {
         const sendableFeedback = R.pickBy(isSendableFeedbackField, feedbackInput);
-        if (R.isEmpty(sendableFeedback)) {
-            return true;
-        }
-        return false;
+        return R.not(R.isEmpty(sendableFeedback));
     };
 
     const isSendableFeedbackField = (value: FeedbackField): boolean => value.shouldSend === true && value.value.length > 0;
@@ -157,7 +154,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 bookmarkService={props.bookmarkService}
                 unbookmarkService={props.unbookmarkService}
                 openHeaderMenu={props.openHeaderMenu}
-                close={hasNoFeedbackToSend() ? props.close : props.closeWithFeedback}
+                close={hasFeedbackToSend() ? props.closeWithFeedback : props.close}
             />
             <KeyboardAwareScrollView
                 enableResetScrollToCoords={false}
@@ -238,7 +235,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             </KeyboardAwareScrollView>
             <SubmitFeedbackButton
                 isVisible={isFeedbackInputEnabled}
-                disabled={hasNoFeedbackToSend()}
+                disabled={!hasFeedbackToSend()}
                 onPress={onSubmitPress}
             />
         </View>
