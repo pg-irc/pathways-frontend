@@ -1,10 +1,11 @@
 // tslint:disable:no-expression-statement no-let
 import { reducer, suggestAnUpdate,
-    chooseChangeNameOrDetails, chooseRemoveService,
-    chooseOtherChanges, submit, discardChanges, close,
-    finishFeedback, buildDefaultStore, cancelDiscardChanges, getEmptyServiceFeedback, getEmptyUserInfo, closeWithFeedback } from '../feedback';
+    chooseChangeNameOrDetails, chooseRemoveService, chooseOtherChanges, submit, discardChanges, close,
+    finishFeedback, buildDefaultStore, cancelDiscardChanges, getEmptyServiceFeedback, getEmptyUserInfo,
+    closeWithFeedback, backFromContactInformation,
+} from '../feedback';
 import { aString, aBoolean } from '../../application/helpers/random_test_values';
-import { FeedbackModal, FeedbackField, ServiceFeedback, FeedbackScreen, UserInformation } from '../feedback/types';
+import { FeedbackModal, FeedbackField, ServiceFeedback, FeedbackScreen, UserInformation, OtherFeedback, RemoveServiceFeedback } from '../feedback/types';
 import { FeedbackStoreBuilder } from './helpers/feedback_store_builder';
 
 describe('feedback reducer', () => {
@@ -200,6 +201,83 @@ describe('feedback reducer', () => {
             const action = finishFeedback(userData);
             const newStore = reducer(oldStore, action);
             expect(newStore.userInformation.name).toEqual(userData.name);
+        });
+    });
+
+    describe('the back button flow from the contact information modal', () => {
+
+        test('brings user back to the the editable service detail screen they were previously on', () => {
+            const previousScreen = FeedbackScreen.EditableServiceDetailPage;
+            const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.ServiceDetail).withFeedbackData(someServiceFeedbackData()).build();
+            const action = backFromContactInformation();
+            const newStore = reducer(oldStore, action);
+            expect(newStore.screen).toEqual(previousScreen);
+        });
+
+        test('brings user back to the remove service screen they were previously on', () => {
+            const removeServiceData: RemoveServiceFeedback = {
+                type: 'remove_service',
+                reason: aString(),
+            };
+            const previousScreen = FeedbackScreen.RemoveServicePage;
+            const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.ServiceDetail).withFeedbackData(removeServiceData).build();
+            const action = backFromContactInformation();
+            const newStore = reducer(oldStore, action);
+            expect(newStore.screen).toEqual(previousScreen);
+        });
+
+        test('brings user back to other feedback screen they were previously on', () => {
+            const otherFeedbackData: OtherFeedback = {
+                type: 'other_feedback',
+                value: aString(),
+            };
+            const previousScreen = FeedbackScreen.OtherChangesPage;
+            const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.ServiceDetail).withFeedbackData(otherFeedbackData).build();
+            const action = backFromContactInformation();
+            const newStore = reducer(oldStore, action);
+            expect(newStore.screen).toEqual(previousScreen);
+        });
+
+        test('maintains the user\'s previous service feedback data when they are brought back to the Editable Service screen', () => {
+            const serviceFeedbackData = someServiceFeedbackData();
+            const oldStore = new FeedbackStoreBuilder().withFeedbackData(serviceFeedbackData).build();
+            const action = backFromContactInformation();
+            const newStore = reducer(oldStore, action);
+            if (newStore.feedback.type === 'service_feedback') {
+                expect(newStore.feedback.name).toEqual(serviceFeedbackData.name);
+            } else {
+                fail();
+            }
+        });
+
+        test('maintains the user\'s previous other changes data when they are brought back to the Other Feedback screen', () => {
+            const otherFeedbackData: OtherFeedback = {
+                type: 'other_feedback',
+                value: aString(),
+            };
+            const oldStore = new FeedbackStoreBuilder().withFeedbackData(otherFeedbackData).build();
+            const action = backFromContactInformation();
+            const newStore = reducer(oldStore, action);
+            if (newStore.feedback.type === 'other_feedback') {
+                expect(newStore.feedback.value).toEqual(otherFeedbackData.value);
+            } else {
+                fail();
+            }
+        });
+
+        test('maintains the user\'s previous remove service data when they are brought back to the Other Feedback screen', () => {
+            const removeServiceData: RemoveServiceFeedback = {
+                type: 'remove_service',
+                reason: aString(),
+            };
+            const oldStore = new FeedbackStoreBuilder().withFeedbackData(removeServiceData).build();
+            const action = backFromContactInformation();
+            const newStore = reducer(oldStore, action);
+            if (newStore.feedback.type === 'remove_service') {
+                expect(newStore.feedback.reason).toEqual(removeServiceData.reason);
+            } else {
+                fail();
+            }
         });
     });
 });

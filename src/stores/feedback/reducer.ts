@@ -35,6 +35,8 @@ export const reducer = (store: FeedbackStore = buildDefaultStore(), action?: Red
             return { ...store, isSending: action.payload.isSending };
         case constants.SET_ERROR:
             return { ...store, error: action.payload.error };
+        case constants.BACK_FROM_CONTACT_INFORMATION:
+            return backButtonReducer(store);
         default:
             return store;
     }
@@ -69,6 +71,19 @@ const submitOrDiscardReducer = (store: FeedbackStore, action: ReducerActions): F
             return buildDefaultStore();
         case constants.CANCEL_DISCARD_CHANGES:
             return { ...store, modal: FeedbackModal.None };
+        default:
+            return store;
+    }
+};
+
+const backButtonReducer = (store: FeedbackStore): FeedbackStore => {
+    switch (store.feedback.type) {
+        case 'service_feedback':
+            return { ...store, modal: FeedbackModal.None, screen: FeedbackScreen.EditableServiceDetailPage };
+        case 'remove_service':
+            return { ...store, modal: FeedbackModal.None, screen: FeedbackScreen.RemoveServicePage };
+        case 'other_feedback':
+            return { ...store, modal: FeedbackModal.None, screen: FeedbackScreen.OtherChangesPage };
         default:
             return store;
     }
