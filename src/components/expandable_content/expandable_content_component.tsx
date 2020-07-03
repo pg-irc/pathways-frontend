@@ -67,6 +67,7 @@ export class ExpandableContentComponent extends React.Component<ExpandableConten
             {
                 toValue: 1,
                 duration: 300,
+                useNativeDriver: false,
             },
         ).start();
     }
