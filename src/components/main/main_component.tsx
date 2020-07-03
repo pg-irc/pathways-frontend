@@ -55,7 +55,7 @@ export const MainComponent = (props: Props): JSX.Element => {
 
         if (props.isHeaderMenuVisible) {
             props.closeHeaderMenu();
-        } else if (props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage) {
+        } else if (props.feedbackScreen) {
             props.backOutOfFeedbackScreen();
         } else {
             goBack(props.history);
