@@ -24,7 +24,7 @@ export const ChooseModeModal = (props: Props): JSX.Element => (
     <Modal
         isVisible={props.isVisible}
         onBackdropPress={props.onClosePress}
-        onBackButtonPress={ props.onClosePress}
+        onBackButtonPress={props.onClosePress}
         style={{ justifyContent: 'flex-end', margin: 0 }}
         backdropTransitionOutTiming={0}
     >
