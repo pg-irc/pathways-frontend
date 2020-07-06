@@ -41,12 +41,14 @@ import {
 import { selectIsSendingFeedback } from '../../selectors/feedback/select_is_sending_feedback';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
+import { selectFeedback } from '../../selectors/feedback/select_feedback';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
     return {
         service: selectServiceById(store, ownProps.match.params.serviceId),
         history: ownProps.history,
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
+        feedback: selectFeedback(store),
         feedbackScreen: selectFeedbackScreen(store),
         feedbackModal: selectFeedbackModal(store),
         isSendingFeedback: selectIsSendingFeedback(store),

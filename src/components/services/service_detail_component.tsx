@@ -60,6 +60,7 @@ export interface ServiceDetailProps {
     readonly history: History;
     readonly service: HumanServiceData;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly feedback: Feedback;
     readonly feedbackScreen: FeedbackScreen;
     readonly feedbackModal: FeedbackModal;
     readonly isSendingFeedback: boolean;
@@ -146,6 +147,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const isSendableFeedbackField = (value: FeedbackField): boolean => value.shouldSend === true && value.value.length > 0;
 
     const back = (): void => {
+        if (isRemoveServiceFeedback(props.feedback)) {
+            goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
+        }
+        if (isOtherServiceFeedback(props.feedback)) {
+            goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
+        }
         props.backFromContactInformation();
     };
 
@@ -246,6 +253,10 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         </View>
     );
 };
+
+const isRemoveServiceFeedback = (feedback: Feedback): boolean => feedback.type === 'remove_service';
+
+const isOtherServiceFeedback = (feedback: Feedback): boolean => feedback.type === 'other_feedback';
 
 const scrollToTop = (scrollViewRef: MutableRefObject<KeyboardAwareScrollView>): void => {
     scrollViewRef.current.scrollToPosition(0, 0, false);
