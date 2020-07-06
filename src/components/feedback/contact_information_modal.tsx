@@ -17,6 +17,7 @@ interface ContactInformationProps {
     readonly onFinishPress: () => void;
     readonly isVisible: boolean;
     readonly onModalHide: (i18n: I18n) => () => void;
+    readonly back: () => void;
 }
 
 const INPUT_PLACEHOLDER = t`Enter email`;
@@ -25,7 +26,7 @@ const ORGANIZATION_PLACEHOLDER = t`Enter your organization name`;
 const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
 export const ContactInformationModal =
-({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: ContactInformationProps): JSX.Element => {
+({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide, back }: ContactInformationProps): JSX.Element => {
 
     const onPressIsEmployee = (): void =>
         setUserInformation({
@@ -39,7 +40,7 @@ export const ContactInformationModal =
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
-                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
+                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)} onBackButtonPress={back}>
                     <View style={[styles.contactInformationContainer, { minHeight }]}>
                         <View style={styles.contactInformationInnerContainer}>
                             <View>

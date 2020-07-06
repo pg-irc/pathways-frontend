@@ -35,6 +35,8 @@ import {
     sendFeedback,
     CloseWithFeedbackAction,
     closeWithFeedback,
+    BackFromContactInformationAction,
+    backFromContactInformation,
 } from '../../stores/feedback';
 import { selectIsSendingFeedback } from '../../selectors/feedback/select_is_sending_feedback';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
@@ -69,7 +71,8 @@ type Actions =
     CloseAction |
     CancelDiscardChangesAction |
     SendFeedbackAction |
-    HideLinkAlertsAction;
+    HideLinkAlertsAction |
+    BackFromContactInformationAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions => ({
     analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
@@ -89,6 +92,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     cancelDiscardFeedback: (): CancelDiscardChangesAction => dispatch(cancelDiscardChanges()),
     sendFeedback: (serviceId: string): SendFeedbackAction => dispatch(sendFeedback(serviceId)),
     hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
+    backFromContactInformation: (): BackFromContactInformationAction => dispatch(backFromContactInformation()),
 });
 
 export const ServiceDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceDetailComponent);

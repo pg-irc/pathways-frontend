@@ -50,6 +50,7 @@ import {
     CancelDiscardChangesAction,
     SendFeedbackAction,
     CloseWithFeedbackAction,
+    BackFromContactInformationAction,
 } from '../../stores/feedback';
 import { isAndroid } from '../../application/helpers/is_android';
 import { HeaderComponent as FeedbackHeaderComponent} from '../feedback/header_component';
@@ -82,6 +83,7 @@ export interface ServiceDetailActions {
     readonly cancelDiscardFeedback: () => CancelDiscardChangesAction;
     readonly sendFeedback: (serviceId: string) => SendFeedbackAction;
     readonly hideLinkAlerts: () => void;
+    readonly backFromContactInformation: () => BackFromContactInformationAction;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
@@ -142,6 +144,10 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     };
 
     const isSendableFeedbackField = (value: FeedbackField): boolean => value.shouldSend === true && value.value.length > 0;
+
+    const back = (): void => {
+        props.backFromContactInformation();
+    };
 
     return (
         <View style={{ flex: 1 }}>
@@ -223,13 +229,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         showChooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
                         showContactInformationModal={props.feedbackModal === FeedbackModal.ContactInformationModal}
                         showDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
-
                         chooseChangeNameOrDetail={chooseChangeNameOrDetail}
                         chooseRemoveService={chooseRemoveService}
                         chooseOtherChanges={chooseOtherChanges}
-
                         close={props.close}
                         cancelDiscardFeedback={props.cancelDiscardFeedback}
+                        back={back}
                     />
                 </View>
             </KeyboardAwareScrollView>

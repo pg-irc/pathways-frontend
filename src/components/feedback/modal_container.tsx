@@ -22,6 +22,7 @@ interface ModalContainerProps {
     readonly chooseRemoveService: () => void;
     readonly chooseOtherChanges: () => void;
     readonly close: () => CloseAction;
+    readonly back: () => void;
 }
 
 export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
@@ -50,6 +51,7 @@ export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
                 onFinishPress={props.finishAndSendFeedback}
                 isVisible={props.showContactInformationModal}
                 onModalHide={onContactInformationModalHide}
+                back={props.back}
             />
             <DiscardChangesModal
                 onDiscardPress={onDiscardModalDiscardPress}
