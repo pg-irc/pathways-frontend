@@ -3,7 +3,7 @@
     "version": "1.39.0",
     "private": true,
     "devDependencies": {
-        "@babel/core": "^7.10.2",
+        "@babel/core": "^7.10.4",
         "@lingui/babel-preset-react": "^2.9.1",
         "@lingui/cli": "^2.9.1",
         "@lingui/macro": "^2.9.1",
