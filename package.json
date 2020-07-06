@@ -13,7 +13,7 @@
         "@types/ramda": "0.26.39",
         "@types/react": "~16.9.41",
         "@types/react-native": "~0.62.13",
-        "@types/react-redux": "^7.1.7",
+        "@types/react-redux": "^7.1.9",
         "@types/react-router-native": "^5.1.0",
         "@types/uuid": "^3.4.6",
         "ajv": "^6.12.2",
