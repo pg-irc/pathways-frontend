@@ -14,9 +14,8 @@ interface ContactInformationProps {
     readonly isSendingFeedback: boolean;
     readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
     readonly userInformation: UserInformation;
-    readonly onFinishPress: () => void;
+    readonly onFinishPress: (i18n: I18n) => void;
     readonly isVisible: boolean;
-    readonly onModalHide: (i18n: I18n) => () => void;
     readonly back: () => void;
 }
 
@@ -26,7 +25,7 @@ const ORGANIZATION_PLACEHOLDER = t`Enter your organization name`;
 const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
 export const ContactInformationModal =
-({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide, back }: ContactInformationProps): JSX.Element => {
+({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, back }: ContactInformationProps): JSX.Element => {
 
     const onPressIsEmployee = (): void =>
         setUserInformation({
@@ -40,7 +39,7 @@ export const ContactInformationModal =
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
-                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)} onBackButtonPress={back}>
+                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onBackButtonPress={back}>
                     <View style={[styles.contactInformationContainer, { minHeight }]}>
                         <View style={styles.contactInformationInnerContainer}>
                             <View>
@@ -88,7 +87,7 @@ export const ContactInformationModal =
                                 <Text style={styles.finishTextWithoutEmail}>Back</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={onFinishPress}
+                                onPress={(): void => onFinishPress(i18n)}
                                 style={userInformation.email.length ? styles.finishButtonWithEmail : styles.finishButtonWithoutEmail}
                                 disabled={isSendingFeedback}
                             >

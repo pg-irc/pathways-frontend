@@ -27,7 +27,8 @@ interface ModalContainerProps {
 
 export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
 
-    const onContactInformationModalHide = (i18n: I18n) => () => {
+    const onFinishPress = (i18n: I18n): void => {
+        props.finishAndSendFeedback();
         showToast(i18n._(t`Thank you for your contribution!`));
     };
 
@@ -48,9 +49,8 @@ export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
                 isSendingFeedback={props.isSendingFeedback}
                 setUserInformation={props.setUserInformation}
                 userInformation={props.userInformation}
-                onFinishPress={props.finishAndSendFeedback}
+                onFinishPress={onFinishPress}
                 isVisible={props.showContactInformationModal}
-                onModalHide={onContactInformationModalHide}
                 back={props.back}
             />
             <DiscardChangesModal
