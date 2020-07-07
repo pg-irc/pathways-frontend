@@ -29,7 +29,7 @@ export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
 
     const onFinishPress = (i18n: I18n): void => {
         props.finishAndSendFeedback();
-        showToast(i18n._(t`Thank you for your contribution!`));
+        showToast(i18n._(t`Thank you for your contribution!`), 3000);
     };
 
     const onDiscardModalDiscardPress = (): void => {

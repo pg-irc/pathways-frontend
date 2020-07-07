@@ -51,11 +51,11 @@ const getBookmarkButtonOnPress = (props: Props, i18n: I18n): ButtonOnPress => {
     if (props.isBookmarked) {
         return (): void => {
             props.unbookmark();
-            showToast(i18n._(t`Bookmark removed`));
+            showToast(i18n._(t`Bookmark removed`), 2000);
         };
     }
     return (): void => {
         props.bookmark();
-        showToast(i18n._(t`Bookmark added`));
+        showToast(i18n._(t`Bookmark added`), 2000);
     };
 };
