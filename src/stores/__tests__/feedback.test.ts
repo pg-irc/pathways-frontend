@@ -204,9 +204,9 @@ describe('feedback reducer', () => {
         });
     });
 
-    describe('the back button flow from the contact information modal', () => {
+    describe('the back button on the contact information modal', () => {
 
-        test('brings user back to the the editable service detail screen they were previously on', () => {
+        test('brings users back to the the editable service detail screen they were previously on', () => {
             const previousScreen = FeedbackScreen.EditableServiceDetailPage;
             const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.ServiceDetail).withFeedbackData(someServiceFeedbackData()).build();
             const action = backFromContactInformation();
@@ -214,7 +214,7 @@ describe('feedback reducer', () => {
             expect(newStore.screen).toEqual(previousScreen);
         });
 
-        test('brings user back to the remove service screen they were previously on', () => {
+        test('brings users back to the remove service screen they were previously on', () => {
             const removeServiceData: RemoveServiceFeedback = {
                 type: 'remove_service',
                 reason: aString(),
@@ -226,7 +226,7 @@ describe('feedback reducer', () => {
             expect(newStore.screen).toEqual(previousScreen);
         });
 
-        test('brings user back to other feedback screen they were previously on', () => {
+        test('brings users back to other feedback screen they were previously on', () => {
             const otherFeedbackData: OtherFeedback = {
                 type: 'other_feedback',
                 value: aString(),
@@ -238,7 +238,7 @@ describe('feedback reducer', () => {
             expect(newStore.screen).toEqual(previousScreen);
         });
 
-        test('maintains the user\'s previous service feedback data when they are brought back to the Editable Service screen', () => {
+        test('maintains users\' previous service feedback data when they are brought back to the Editable Service screen', () => {
             const serviceFeedbackData = someServiceFeedbackData();
             const oldStore = new FeedbackStoreBuilder().withFeedbackData(serviceFeedbackData).build();
             const action = backFromContactInformation();
@@ -250,7 +250,7 @@ describe('feedback reducer', () => {
             }
         });
 
-        test('maintains the user\'s previous other changes data when they are brought back to the Other Feedback screen', () => {
+        test('maintains users\' previous other changes data when they are brought back to the Other Feedback screen', () => {
             const otherFeedbackData: OtherFeedback = {
                 type: 'other_feedback',
                 value: aString(),
@@ -265,7 +265,7 @@ describe('feedback reducer', () => {
             }
         });
 
-        test('maintains the user\'s previous remove service data when they are brought back to the Other Feedback screen', () => {
+        test('maintains users\' previous remove service data when they are brought back to the Other Feedback screen', () => {
             const removeServiceData: RemoveServiceFeedback = {
                 type: 'remove_service',
                 reason: aString(),
