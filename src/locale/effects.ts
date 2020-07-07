@@ -1,5 +1,6 @@
 // tslint:disable:no-expression-statement
-import { I18nManager, AsyncStorage } from 'react-native';
+import { I18nManager } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { PREFERENCES_LOCALE_CODE } from '../application/constants';
 import { Updates } from 'expo';
 

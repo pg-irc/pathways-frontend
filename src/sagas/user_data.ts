@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 
 import { call, CallEffect, PutEffect, put, ForkEffect, takeLatest, select, SelectEffect } from 'redux-saga/effects';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { USER_DATA_STORAGE_KEY } from '../application/constants';
 import { DataPersistence, PersistedData } from '../stores/persisted_data';
 import * as constants from '../application/constants';
