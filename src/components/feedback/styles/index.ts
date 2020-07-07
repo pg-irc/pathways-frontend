@@ -139,6 +139,7 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
         color: colors.teal,
         paddingVertical: 10,
         paddingHorizontal: 15,
+        marginLeft: 'auto',
     },
 
     finishButtonWithEmail: {
@@ -150,6 +151,7 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
         color: colors.teal,
         paddingVertical: 10,
         paddingHorizontal: 15,
+        marginLeft: 'auto',
     },
 
     finishTextWithoutEmail: {

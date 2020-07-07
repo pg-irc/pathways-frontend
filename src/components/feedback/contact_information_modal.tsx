@@ -81,6 +81,13 @@ export const ContactInformationModal =
                         </View>
                         <View style={styles.finishButtonContainer}>
                             <TouchableOpacity
+                                onPress={back}
+                                style={{ paddingHorizontal: 8 }}
+                                disabled={isSendingFeedback}
+                            >
+                                <Text style={styles.finishTextWithoutEmail}>Back</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
                                 onPress={onFinishPress}
                                 style={userInformation.email.length ? styles.finishButtonWithEmail : styles.finishButtonWithoutEmail}
                                 disabled={isSendingFeedback}
