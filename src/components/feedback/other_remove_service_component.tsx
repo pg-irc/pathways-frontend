@@ -138,11 +138,15 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
 };
 
 const feedbackInputByType = (feedback: Feedback): string => {
-    if (feedback.type === 'remove_service') {
-        return feedback.reason;
+    if (!feedback) {
+        return '';
     }
-    if (feedback.type === 'other_feedback') {
-        return feedback.value;
+    switch (feedback.type) {
+        case 'remove_service':
+            return feedback.reason;
+        case 'other_feedback':
+            return feedback.value;
+        default:
+            return '';
     }
-    return '';
 };
