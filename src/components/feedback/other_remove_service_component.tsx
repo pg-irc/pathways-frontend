@@ -33,7 +33,7 @@ interface SuggestionContentMap {
 }
 
 export interface OtherRemoveServiceState {
-    readonly feedback: Feedback;
+    readonly feedbackByType: string;
     readonly feedbackScreen: FeedbackScreen;
     readonly feedbackModal: FeedbackModal;
 }
@@ -95,7 +95,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
     const isOtherFeedback = props.feedbackScreen === FeedbackScreen.OtherChangesPage;
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
     const history = useHistory();
-    const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>(feedbackInputByType(props.feedback));
+    const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>(props.feedbackByType);
 
     useEffect((): void => {
         if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
@@ -135,18 +135,4 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
             />
         </Container>
     );
-};
-
-const feedbackInputByType = (feedback: Feedback): string => {
-    if (!feedback) {
-        return '';
-    }
-    switch (feedback.type) {
-        case 'remove_service':
-            return feedback.reason;
-        case 'other_feedback':
-            return feedback.value;
-        default:
-            return '';
-    }
 };

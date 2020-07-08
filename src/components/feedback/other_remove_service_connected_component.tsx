@@ -21,11 +21,11 @@ import {
     OtherRemoveServiceState,
     OtherRemoveServiceActions,
 } from './other_remove_service_component';
-import { selectFeedback } from '../../selectors/feedback/select_feedback';
+import { selectFeedbackByType } from '../../selectors/feedback/select_feedback_by_type';
 
 const mapStateToProps = (store: Store): OtherRemoveServiceState => {
     return {
-        feedback: selectFeedback(store),
+        feedbackByType: selectFeedbackByType(store),
         feedbackScreen: selectFeedbackScreen(store),
         feedbackModal: selectFeedbackModal(store),
     };
