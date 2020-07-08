@@ -146,7 +146,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
 
     const isSendableFeedbackField = (value: FeedbackField): boolean => value.shouldSend === true && value.value.length > 0;
 
-    const back = (): void => {
+    const onBackButtonPress = (): void => {
         if (isOtherRemoveServiceFeedback(props.feedbackType)) {
             goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
         }
@@ -238,7 +238,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         chooseOtherChanges={chooseOtherChanges}
                         close={props.close}
                         cancelDiscardFeedback={props.cancelDiscardFeedback}
-                        back={back}
+                        onBackButtonPress={onBackButtonPress}
                     />
                 </View>
             </KeyboardAwareScrollView>

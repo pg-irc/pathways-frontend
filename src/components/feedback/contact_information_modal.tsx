@@ -16,7 +16,7 @@ interface ContactInformationProps {
     readonly userInformation: UserInformation;
     readonly onFinishPress: (i18n: I18n) => void;
     readonly isVisible: boolean;
-    readonly back: () => void;
+    readonly onBackButtonPress: () => void;
 }
 
 const INPUT_PLACEHOLDER = t`Enter email`;
@@ -25,7 +25,7 @@ const ORGANIZATION_PLACEHOLDER = t`Enter your organization name`;
 const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
 export const ContactInformationModal =
-({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, back }: ContactInformationProps): JSX.Element => {
+({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onBackButtonPress }: ContactInformationProps): JSX.Element => {
 
     const onPressIsEmployee = (): void =>
         setUserInformation({
@@ -39,7 +39,7 @@ export const ContactInformationModal =
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
-                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onBackButtonPress={back}>
+                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onBackButtonPress={onBackButtonPress}>
                     <View style={[styles.contactInformationContainer, { minHeight }]}>
                         <View style={styles.contactInformationInnerContainer}>
                             <View>
@@ -80,7 +80,7 @@ export const ContactInformationModal =
                         </View>
                         <View style={styles.finishButtonContainer}>
                             <TouchableOpacity
-                                onPress={back}
+                                onPress={onBackButtonPress}
                                 style={{ paddingHorizontal: 8 }}
                                 disabled={isSendingFeedback}
                             >
