@@ -61,7 +61,7 @@ const submitOrDiscardReducer = (store: FeedbackStore, action: ReducerActions): F
     switch (action.type) {
         case constants.SUBMIT:
             return {
-                ...store, modal: FeedbackModal.ContactInformationModal, feedback: action.payload.feedback, screen: FeedbackScreen.ServiceDetail,
+                ...store, feedback: action.payload.feedback, screen: FeedbackScreen.ContactInformationPage,
             };
         case constants.CLOSE:
             return { ...store, modal: FeedbackModal.None, screen: FeedbackScreen.ServiceDetail };

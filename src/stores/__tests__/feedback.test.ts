@@ -131,13 +131,12 @@ describe('feedback reducer', () => {
             }
         });
 
-        test('opens the modal for contact information and navigates to service detail', () => {
+        test('navigates the user to the contact information screen', () => {
             const oldScreen = aBoolean() ? FeedbackScreen.EditableServiceDetailPage : FeedbackScreen.OtherChangesPage;
             const oldStore = new FeedbackStoreBuilder().withScreen(oldScreen).build();
             const action = submit(someServiceFeedbackData());
             const newStore = reducer(oldStore, action);
-            expect(newStore.screen).toEqual(FeedbackScreen.ServiceDetail);
-            expect(newStore.modal).toEqual(FeedbackModal.ContactInformationModal);
+            expect(newStore.screen).toEqual(FeedbackScreen.ContactInformationPage);
         });
     });
 
@@ -183,7 +182,7 @@ describe('feedback reducer', () => {
 
     describe('finish feedback flow', () => {
         test('returns to service detail page', () => {
-            const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ContactInformationModal).build();
+            const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.ContactInformationPage).build();
             const action = finishFeedback(undefined);
             const newStore = reducer(oldStore, action);
             expect(newStore.screen).toEqual(FeedbackScreen.ServiceDetail);
@@ -197,14 +196,14 @@ describe('feedback reducer', () => {
                 jobTitle: aString(),
                 isEmployee: aBoolean(),
             };
-            const oldStore = new FeedbackStoreBuilder().withModal(FeedbackModal.ContactInformationModal).build();
+            const oldStore = new FeedbackStoreBuilder().withScreen(FeedbackScreen.ContactInformationPage).build();
             const action = finishFeedback(userData);
             const newStore = reducer(oldStore, action);
             expect(newStore.userInformation.name).toEqual(userData.name);
         });
     });
 
-    describe('the back button on the contact information modal', () => {
+    describe('the back button on the contact information screen', () => {
 
         test('brings users back to the the editable service detail screen they were previously on', () => {
             const previousScreen = FeedbackScreen.EditableServiceDetailPage;

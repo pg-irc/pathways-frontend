@@ -231,7 +231,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         setUserInformation={setUserInfoInput}
                         discardFeedback={props.discardFeedback}
                         showChooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
-                        showContactInformationModal={props.feedbackModal === FeedbackModal.ContactInformationModal}
+                        // TO DO: remove this property in later commit
+                        showContactInformationModal={props.feedbackModal === FeedbackModal.None}
                         showDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
                         chooseChangeNameOrDetail={chooseChangeNameOrDetail}
                         chooseRemoveService={chooseRemoveService}
