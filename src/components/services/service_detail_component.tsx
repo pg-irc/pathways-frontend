@@ -154,6 +154,15 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         props.backFromContactInformation();
     };
 
+    const onClosePress = (): void => {
+        if (!hasFeedbackToSend()) {
+            props.close();
+            goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, props.history)();
+        }
+        props.closeWithFeedback();
+
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <ServiceDetailHeaderComponent
@@ -165,7 +174,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                 bookmarkService={props.bookmarkService}
                 unbookmarkService={props.unbookmarkService}
                 openHeaderMenu={props.openHeaderMenu}
-                close={hasFeedbackToSend() ? props.closeWithFeedback : props.close}
+                close={onClosePress}
             />
             <KeyboardAwareScrollView
                 enableResetScrollToCoords={false}

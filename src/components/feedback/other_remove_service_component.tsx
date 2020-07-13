@@ -117,11 +117,19 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
         goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, history)();
     };
 
+    const onClosePress = (): void => {
+        if (!feedback) {
+            props.close();
+            goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, history)();
+        }
+        props.closeWithFeedback();
+    };
+
     return (
         <Container>
             <HeaderComponent
                 headerLabel={content.header}
-                close={feedback ? props.closeWithFeedback : props.close}
+                close={onClosePress}
             />
             <ContentComponent
                 inputLabel={content.label}
