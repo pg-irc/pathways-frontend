@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { selectIsSendingFeedback } from '../../selectors/feedback/select_is_sending_feedback';
 import { ContactInformationProps, ContactInformationActions, ContactInformationComponent } from './contact_information_component';
 import { BackFromContactInformationAction, backFromContactInformation } from '../../stores/feedback';
+import { selectFeedbackType } from '../../selectors/feedback/select_feedback_type';
 
 const mapStateToProps = (store: Store): ContactInformationProps => {
     return {
+        feedbackType: selectFeedbackType(store),
         isSendingFeedback: selectIsSendingFeedback(store),
     };
 };

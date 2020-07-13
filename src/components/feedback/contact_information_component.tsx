@@ -9,8 +9,12 @@ import { contactInformationStyles as styles } from './styles';
 import { UserInformation } from '../../stores/feedback/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { getEmptyUserInfo, BackFromContactInformationAction } from '../../stores/feedback';
+import { otherRemoveServiceStyles } from './styles';
+import { Header, Title, Button, Icon, Left, Content, Container } from 'native-base';
+import { getIconForBackButton } from '../header_button/back_button_component';
 
 export interface ContactInformationProps {
+    readonly feedbackType: string;
     readonly isSendingFeedback: boolean;
 }
 
@@ -27,7 +31,7 @@ const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
 type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
 
-export const ContactInformationComponent = ({ isSendingFeedback, backFromContactInformation }: Props): JSX.Element => {
+export const ContactInformationComponent = ({ feedbackType, isSendingFeedback, backFromContactInformation }: Props): JSX.Element => {
     const [userInformation, setUserInformation]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
 
     const onPressIsEmployee = (): void =>
@@ -41,8 +45,9 @@ export const ContactInformationComponent = ({ isSendingFeedback, backFromContact
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
-                    <View style={styles.contactInformationContainer}>
-                        <View style={styles.contactInformationInnerContainer}>
+                    <Container style={styles.contactInformationContainer}>
+                        <HeaderComponent feedbackType={feedbackType} onBackButtonPress={backFromContactInformation}/>
+                        <Content style={styles.contactInformationInnerContainer}>
                             <View>
                                 <Text style={[textStyles.headlineH2StyleBlackLeft, { marginBottom: 15 }]}>
                                     <Trans>Contact information</Trans>
@@ -78,15 +83,7 @@ export const ContactInformationComponent = ({ isSendingFeedback, backFromContact
                                 i18n={i18n}
                                 setUserInformation={setUserInformation}
                             />
-                        </View>
-                        <View style={styles.finishButtonContainer}>
-                            <TouchableOpacity
-                                onPress={backFromContactInformation}
-                                style={{ paddingHorizontal: 8 }}
-                                disabled={isSendingFeedback}
-                            >
-                                <Text style={styles.finishTextWithoutEmail}>Back</Text>
-                            </TouchableOpacity>
+                        </Content>
                             <TouchableOpacity
                             // TO DO
                                 onPress={undefined}
@@ -97,11 +94,45 @@ export const ContactInformationComponent = ({ isSendingFeedback, backFromContact
                                     <Trans id={buttonLabel} />
                                 </Text>
                             </TouchableOpacity>
-                        </View>
-                    </View>
+                    </Container>
             )}
         </I18n>
     );
+};
+
+interface HeaderProps {
+    readonly feedbackType: string;
+    readonly onBackButtonPress: () => void;
+}
+
+const HeaderComponent = ({ feedbackType, onBackButtonPress }: HeaderProps): JSX.Element => {
+    return (
+        <Header style={otherRemoveServiceStyles.headerContainer}>
+            <Left style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 15 }}>
+
+                <Button transparent onPress={onBackButtonPress}>
+                    <Icon name={getIconForBackButton()} style={{ color: colors.teal, fontWeight: 'bold' }} />
+                </Button>
+                <Title>
+                    <Text style={textStyles.headline6}>
+                        <Trans id={headerLabelByType(feedbackType)}></Trans>
+                    </Text>
+                </Title>
+            </Left>
+    </Header>
+    );
+}
+
+const headerLabelByType = (feedbackType: string): string => {
+    if (feedbackType === 'service_feedback') {
+        return 'Change name or other details';
+    }
+
+    if (feedbackType === 'remove_service') {
+        return 'This service no longer exists';
+    }
+
+    return 'Other suggestions';
 };
 
 const EmployeeInputFields = (props: {
@@ -115,7 +146,7 @@ const EmployeeInputFields = (props: {
         return <EmptyComponent />;
     }
     return (
-        <View>
+        <View style={{ marginTop: 24 }}>
             <Text style={[textStyles.headline6, { color: colors.black,  marginBottom: 5 }]}>
                 <Trans>Name</Trans>
             </Text>
