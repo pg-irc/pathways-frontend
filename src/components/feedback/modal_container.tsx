@@ -1,11 +1,8 @@
 // tslint:disable:no-expression-statement
 import React, { Dispatch, SetStateAction } from 'react';
-import { t } from '@lingui/macro';
-import { ContactInformationModal } from './contact_information_modal';
 import { ChooseModeModal } from './choose_mode_modal';
 import { UserInformation } from '../../stores/feedback/types';
 import { DiscardChangesModal } from './discard_changes_modal';
-import { showToast } from '../../application/toast';
 import { DiscardChangesAction, CancelDiscardChangesAction, CloseAction } from '../../stores/feedback';
 
 interface ModalContainerProps {
@@ -27,10 +24,11 @@ interface ModalContainerProps {
 
 export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
 
-    const onFinishPress = (i18n: I18n): void => {
-        props.finishAndSendFeedback();
-        showToast(i18n._(t`Thank you for your contribution!`), 3000);
-    };
+    // TO DO: Find proper place for this
+    // const onFinishPress = (i18n: I18n): void => {
+    //     props.finishAndSendFeedback();
+    //     showToast(i18n._(t`Thank you for your contribution!`), 3000);
+    // };
 
     const onDiscardModalDiscardPress = (): void => {
         props.discardFeedback();
@@ -44,14 +42,6 @@ export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
                 onChooseOtherChangesPress={props.chooseOtherChanges}
                 onChooseRemoveServicePress={props.chooseRemoveService}
                 isVisible={props.showChooseFeedbackModeModal}
-            />
-            <ContactInformationModal
-                isSendingFeedback={props.isSendingFeedback}
-                setUserInformation={props.setUserInformation}
-                userInformation={props.userInformation}
-                onFinishPress={onFinishPress}
-                isVisible={props.showContactInformationModal}
-                onBackButtonPress={props.onBackButtonPress}
             />
             <DiscardChangesModal
                 onDiscardPress={onDiscardModalDiscardPress}

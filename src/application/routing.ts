@@ -32,6 +32,7 @@ export enum Routes {
     OrganizationDetail,
     ServiceDetail,
     OtherFeedback,
+    ContactInformation,
 }
 
 export const routePathDefinition = (route: Routes): string => {
@@ -66,6 +67,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/service/:serviceId';
         case Routes.OtherFeedback:
             return '/feedback/:serviceId';
+        case Routes.ContactInformation:
+            return '/contact-information';
     }
 };
 

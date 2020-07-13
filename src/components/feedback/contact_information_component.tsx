@@ -2,30 +2,33 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
-import Modal from 'react-native-modal';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 import { contactInformationStyles as styles } from './styles';
 import { UserInformation } from '../../stores/feedback/types';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { getEmptyUserInfo, BackFromContactInformationAction } from '../../stores/feedback';
 
-interface ContactInformationProps {
+export interface ContactInformationProps {
     readonly isSendingFeedback: boolean;
-    readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
-    readonly userInformation: UserInformation;
-    readonly onFinishPress: (i18n: I18n) => void;
-    readonly isVisible: boolean;
-    readonly onBackButtonPress: () => void;
 }
+
+export interface ContactInformationActions {
+    readonly backFromContactInformation: () => BackFromContactInformationAction;
+}
+
+type Props = ContactInformationProps & ContactInformationActions;
 
 const INPUT_PLACEHOLDER = t`Enter email`;
 const NAME_PLACEHOLDER = t`Enter your name`;
 const ORGANIZATION_PLACEHOLDER = t`Enter your organization name`;
 const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
-export const ContactInformationModal =
-({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onBackButtonPress }: ContactInformationProps): JSX.Element => {
+type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
+
+export const ContactInformationComponent = ({ isSendingFeedback, backFromContactInformation }: Props): JSX.Element => {
+    const [userInformation, setUserInformation]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
 
     const onPressIsEmployee = (): void =>
         setUserInformation({
@@ -35,12 +38,10 @@ export const ContactInformationModal =
 
     const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
 
-    const minHeight = userInformation.isEmployee ? 550 : 315;
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
-                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onBackButtonPress={onBackButtonPress}>
-                    <View style={[styles.contactInformationContainer, { minHeight }]}>
+                    <View style={styles.contactInformationContainer}>
                         <View style={styles.contactInformationInnerContainer}>
                             <View>
                                 <Text style={[textStyles.headlineH2StyleBlackLeft, { marginBottom: 15 }]}>
@@ -80,14 +81,15 @@ export const ContactInformationModal =
                         </View>
                         <View style={styles.finishButtonContainer}>
                             <TouchableOpacity
-                                onPress={onBackButtonPress}
+                                onPress={backFromContactInformation}
                                 style={{ paddingHorizontal: 8 }}
                                 disabled={isSendingFeedback}
                             >
                                 <Text style={styles.finishTextWithoutEmail}>Back</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                onPress={(): void => onFinishPress(i18n)}
+                            // TO DO
+                                onPress={undefined}
                                 style={userInformation.email.length ? styles.finishButtonWithEmail : styles.finishButtonWithoutEmail}
                                 disabled={isSendingFeedback}
                             >
@@ -97,7 +99,6 @@ export const ContactInformationModal =
                             </TouchableOpacity>
                         </View>
                     </View>
-                </Modal>
             )}
         </I18n>
     );
