@@ -8,7 +8,7 @@ import { CheckBox } from './check_box_component';
 import { contactInformationStyles as styles } from './styles';
 import { UserInformation } from '../../stores/feedback/types';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { getEmptyUserInfo, BackFromContactInformationAction } from '../../stores/feedback';
+import { getEmptyUserInfo, BackFromContactInformationAction, FinishAction, SendFeedbackAction } from '../../stores/feedback';
 import { otherRemoveServiceStyles } from './styles';
 import { Header, Title, Button, Icon, Left, Content, Container } from 'native-base';
 import { getIconForBackButton } from '../header_button/back_button_component';
@@ -22,6 +22,8 @@ export interface ContactInformationProps {
 
 export interface ContactInformationActions {
     readonly backFromContactInformation: () => BackFromContactInformationAction;
+    readonly finishFeedback: (userInformation: UserInformation) => FinishAction;
+    readonly sendFeedback: (serviceId: string) => SendFeedbackAction;
 }
 
 type Props = ContactInformationProps & ContactInformationActions & RouterProps;
@@ -33,7 +35,9 @@ const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
 type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
 
-export const ContactInformationComponent = ({ feedbackType, isSendingFeedback, match, backFromContactInformation }: Props): JSX.Element => {
+export const ContactInformationComponent = ({
+    feedbackType, isSendingFeedback, match, backFromContactInformation, finishFeedback, sendFeedback,
+}: Props): JSX.Element => {
     const [userInformation, setUserInformation]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
     const history = useHistory();
 
@@ -50,6 +54,11 @@ export const ContactInformationComponent = ({ feedbackType, isSendingFeedback, m
             goToRouteWithParameter(Routes.ServiceDetail, match.params.serviceId, history)();
         }
         backFromContactInformation();
+    };
+
+    const onFinishPress = (): void => {
+        finishFeedback(userInformation);
+        sendFeedback(match.params.serviceId);
     };
 
     const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
@@ -97,8 +106,7 @@ export const ContactInformationComponent = ({ feedbackType, isSendingFeedback, m
                             />
                         </Content>
                             <TouchableOpacity
-                            // TO DO
-                                onPress={undefined}
+                                onPress={onFinishPress}
                                 style={userInformation.email.length ? styles.finishButtonWithEmail : styles.finishButtonWithoutEmail}
                                 disabled={isSendingFeedback}
                             >
