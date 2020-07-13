@@ -6,7 +6,7 @@ import { Container, Content } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
 import { colors, textStyles } from '../../application/styles';
-import { goBack, goToRouteWithoutParameter, Routes } from '../../application/routing';
+import { goBack, Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
 import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAction, CloseWithFeedbackAction } from '../../stores/feedback';
@@ -46,7 +46,7 @@ export interface OtherRemoveServiceActions {
     readonly closeWithFeedback: () => CloseWithFeedbackAction;
 }
 
-export type FeedbackOtherRemoveServiceProps = OtherRemoveServiceState & OtherRemoveServiceActions;
+export type FeedbackOtherRemoveServiceProps = OtherRemoveServiceState & OtherRemoveServiceActions & RouterProps;
 
 const SUGGESTION_CONTENT: SuggestionContentMap = {
     OTHER: {
@@ -109,7 +109,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
         } else {
             props.submitFeedback({ type: 'remove_service', reason: feedback });
         }
-        goToRouteWithoutParameter(Routes.ContactInformation, history)();
+        goToRouteWithParameter(Routes.ContactInformation, props.match.params.serviceId, history)();
     };
 
     return (

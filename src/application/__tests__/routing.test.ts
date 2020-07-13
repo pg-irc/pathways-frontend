@@ -56,8 +56,8 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.OtherFeedback)).toEqual('/feedback/:serviceId');
     });
 
-    it('For Routes.ContactInformation returns path: "contact-information"', () => {
-        expect(routePathDefinition(Routes.ContactInformation)).toEqual('/contact-information');
+    it('For Routes.ContactInformation returns path: "contact-information/:serviceId"', () => {
+        expect(routePathDefinition(Routes.ContactInformation)).toEqual('/contact-information/:serviceId');
     });
 
 });

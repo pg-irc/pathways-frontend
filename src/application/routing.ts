@@ -68,7 +68,7 @@ export const routePathDefinition = (route: Routes): string => {
         case Routes.OtherFeedback:
             return '/feedback/:serviceId';
         case Routes.ContactInformation:
-            return '/contact-information';
+            return '/contact-information/:serviceId';
     }
 };
 

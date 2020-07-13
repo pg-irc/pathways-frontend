@@ -12,6 +12,8 @@ import { getEmptyUserInfo, BackFromContactInformationAction } from '../../stores
 import { otherRemoveServiceStyles } from './styles';
 import { Header, Title, Button, Icon, Left, Content, Container } from 'native-base';
 import { getIconForBackButton } from '../header_button/back_button_component';
+import { goToRouteWithParameter, Routes, RouterProps } from '../../application/routing';
+import { useHistory } from 'react-router-native';
 
 export interface ContactInformationProps {
     readonly feedbackType: string;
@@ -22,7 +24,7 @@ export interface ContactInformationActions {
     readonly backFromContactInformation: () => BackFromContactInformationAction;
 }
 
-type Props = ContactInformationProps & ContactInformationActions;
+type Props = ContactInformationProps & ContactInformationActions & RouterProps;
 
 const INPUT_PLACEHOLDER = t`Enter email`;
 const NAME_PLACEHOLDER = t`Enter your name`;
@@ -31,8 +33,9 @@ const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
 type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
 
-export const ContactInformationComponent = ({ feedbackType, isSendingFeedback, backFromContactInformation }: Props): JSX.Element => {
+export const ContactInformationComponent = ({ feedbackType, isSendingFeedback, match, backFromContactInformation }: Props): JSX.Element => {
     const [userInformation, setUserInformation]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
+    const history = useHistory();
 
     const onPressIsEmployee = (): void =>
         setUserInformation({
@@ -40,13 +43,22 @@ export const ContactInformationComponent = ({ feedbackType, isSendingFeedback, b
             isEmployee: !userInformation.isEmployee,
         });
 
+    const onBackButtonPress = (): void => {
+        if (isOtherRemoveServiceFeedback(feedbackType)) {
+            goToRouteWithParameter(Routes.OtherFeedback, match.params.serviceId, history)();
+        } else {
+            goToRouteWithParameter(Routes.ServiceDetail, match.params.serviceId, history)();
+        }
+        backFromContactInformation();
+    };
+
     const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
 
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
                     <Container style={styles.contactInformationContainer}>
-                        <HeaderComponent feedbackType={feedbackType} onBackButtonPress={backFromContactInformation}/>
+                        <HeaderComponent feedbackType={feedbackType} onBackButtonPress={onBackButtonPress}/>
                         <Content style={styles.contactInformationInnerContainer}>
                             <View>
                                 <Text style={[textStyles.headlineH2StyleBlackLeft, { marginBottom: 15 }]}>
@@ -99,6 +111,8 @@ export const ContactInformationComponent = ({ feedbackType, isSendingFeedback, b
         </I18n>
     );
 };
+
+const isOtherRemoveServiceFeedback = (feedbackType: string): boolean => feedbackType !== 'service_feedback';
 
 interface HeaderProps {
     readonly feedbackType: string;
