@@ -11,7 +11,7 @@ import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 import { DividerComponent } from '../content_layout/divider_component';
-import { RouterProps, getParametersFromPath, Routes, goToRouteWithParameter } from '../../application/routing';
+import { RouterProps, getParametersFromPath, Routes, goToRouteWithParameter, goToRouteWithoutParameter } from '../../application/routing';
 import { ContentVerificationComponent } from '../content_verification_component';
 import { HumanServiceData, Address, PhoneNumber } from '../../validation/services/types';
 import { AddressesComponent } from '../addresses/addresses_component';
@@ -136,6 +136,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     };
 
     const onSubmitPress = (): void => {
+        goToRouteWithoutParameter(Routes.ContactInformation, props.history)();
         props.submitFeedback(feedbackInput);
     };
 
