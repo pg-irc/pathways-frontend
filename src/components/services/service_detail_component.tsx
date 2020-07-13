@@ -226,6 +226,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         suggestAnUpdate={props.suggestAnUpdate}
                     />
                     <ModalContainer
+                        serviceId={serviceId}
                         isSendingFeedback={props.isSendingFeedback}
                         finishAndSendFeedback={finishAndSendFeedback}
                         userInformation={userInfoInput}

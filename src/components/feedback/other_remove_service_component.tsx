@@ -112,6 +112,11 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
         goToRouteWithParameter(Routes.ContactInformation, props.match.params.serviceId, history)();
     };
 
+    const onDiscardModalDiscardPress = (): void => {
+        props.discardFeedback();
+        goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, history)();
+    };
+
     return (
         <Container>
             <HeaderComponent
@@ -130,7 +135,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
                 isVisible={true}
             />
             <DiscardChangesModal
-                onDiscardPress={props.discardFeedback}
+                onDiscardPress={onDiscardModalDiscardPress}
                 onKeepEditingPress={props.cancelDiscardFeedback}
                 isVisible={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
             />
