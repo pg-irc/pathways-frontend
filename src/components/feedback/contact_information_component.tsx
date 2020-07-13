@@ -41,6 +41,8 @@ export const ContactInformationComponent = ({
     const [userInformation, setUserInformation]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
     const history = useHistory();
 
+    const serviceId = match.params.serviceId;
+
     const onPressIsEmployee = (): void =>
         setUserInformation({
             ...userInformation,
@@ -49,16 +51,16 @@ export const ContactInformationComponent = ({
 
     const onBackButtonPress = (): void => {
         if (isOtherRemoveServiceFeedback(feedbackType)) {
-            goToRouteWithParameter(Routes.OtherFeedback, match.params.serviceId, history)();
+            goToRouteWithParameter(Routes.OtherFeedback, serviceId, history)();
         } else {
-            goToRouteWithParameter(Routes.ServiceDetail, match.params.serviceId, history)();
+            goToRouteWithParameter(Routes.ServiceDetail, serviceId, history)();
         }
         backFromContactInformation();
     };
 
     const onFinishPress = (): void => {
         finishFeedback(userInformation);
-        sendFeedback(match.params.serviceId);
+        sendFeedback(serviceId);
     };
 
     const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
@@ -137,7 +139,7 @@ const HeaderComponent = ({ feedbackType, onBackButtonPress }: HeaderProps): JSX.
                 </Button>
                 <Title>
                     <Text style={textStyles.headline6}>
-                        <Trans id={headerLabelByType(feedbackType)}></Trans>
+                        <Trans id={headerLabelByType(feedbackType)} />
                     </Text>
                 </Title>
             </Left>

@@ -46,7 +46,6 @@ import {
     CloseAction,
     DiscardChangesAction,
     getEmptyServiceFeedback,
-    getEmptyUserInfo,
     CancelDiscardChangesAction,
     SendFeedbackAction,
     CloseWithFeedbackAction,
@@ -89,14 +88,12 @@ export interface ServiceDetailActions {
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
 type SetServiceFeedback = Dispatch<SetStateAction<ServiceFeedback>>;
-type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
 
 export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const serviceId = props.match.params.serviceId;
     const isFeedbackInputEnabled = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
     const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, SetServiceFeedback] = useState(getEmptyServiceFeedback());
-    const [userInfoInput, setUserInfoInput]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
 
     const setTextForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField, value: string): void => (
         setFeedbackInput({ ...feedbackInput, [fieldName]: { ...fieldValue, value  }})
@@ -114,29 +111,23 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     };
 
     const chooseRemoveService = (): void => {
-        goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
+        goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history)();
         resetInputs();
         props.chooseRemoveService();
     };
 
     const chooseOtherChanges = (): void => {
-        goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
+        goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history)();
         resetInputs();
         props.chooseOtherChanges();
     };
 
     const resetInputs = (): void => {
         setFeedbackInput(getEmptyServiceFeedback());
-        setUserInfoInput(getEmptyUserInfo());
-    };
-
-    const finishAndSendFeedback = (): void => {
-        props.finishFeedback(userInfoInput);
-        props.sendFeedback(serviceId);
     };
 
     const onSubmitPress = (): void => {
-        goToRouteWithParameter(Routes.ContactInformation, props.match.params.serviceId, props.history)();
+        goToRouteWithParameter(Routes.ContactInformation, serviceId, props.history)();
         props.submitFeedback(feedbackInput);
     };
 
@@ -149,7 +140,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
 
     const onBackButtonPress = (): void => {
         if (isOtherRemoveServiceFeedback(props.feedbackType)) {
-            goToRouteWithParameter(Routes.OtherFeedback, props.match.params.serviceId, props.history)();
+            goToRouteWithParameter(Routes.OtherFeedback, serviceId, props.history)();
         }
         props.backFromContactInformation();
     };
@@ -157,11 +148,11 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const onClosePress = (): void => {
         if (!hasFeedbackToSend()) {
             props.close();
-            goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, props.history)();
+            goToRouteWithParameter(Routes.ServiceDetail, serviceId, props.history)();
         }
         props.closeWithFeedback();
 
-    }
+    };
 
     return (
         <View style={{ flex: 1 }}>
@@ -236,14 +227,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     />
                     <ModalContainer
                         serviceId={serviceId}
-                        isSendingFeedback={props.isSendingFeedback}
-                        finishAndSendFeedback={finishAndSendFeedback}
-                        userInformation={userInfoInput}
-                        setUserInformation={setUserInfoInput}
                         discardFeedback={props.discardFeedback}
                         showChooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
-                        // TO DO: remove this property in later commit
-                        showContactInformationModal={props.feedbackModal === FeedbackModal.None}
                         showDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
                         chooseChangeNameOrDetail={chooseChangeNameOrDetail}
                         chooseRemoveService={chooseRemoveService}
