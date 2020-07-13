@@ -49,7 +49,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
             setSearchLocationInput('');
         };
         return (
-            <View>
+            <View style = {{paddingTop: 7}}>
                 <CollapsedInput
                     searchTermInput={searchTermInput}
                     searchLocationInput={searchLocationInput}
@@ -61,7 +61,7 @@ export const SearchInputComponent = (props: Props): JSX.Element => {
     }
 
     return (
-        <View>
+        <View style = {{paddingTop: 7}}>
             <ExpandedInput
                 searchTermInput={searchTermInput}
                 searchLocationInput={searchLocationInput}
