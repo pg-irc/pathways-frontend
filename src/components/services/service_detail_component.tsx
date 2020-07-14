@@ -54,7 +54,7 @@ import {
 import { isAndroid } from '../../application/helpers/is_android';
 import { HeaderComponent as FeedbackHeaderComponent} from '../feedback/header_component';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
-import { showToast } from '../../application/toast';
+import { ThankYouMessageOrEmptyComponent } from './thank_you_message_or_empty_component';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -247,23 +247,14 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                     disabled={!hasFeedbackToSend()}
                     onPress={onSubmitPress}
                 />
-                <ThankYouMessageOrEmptyComponent isSendingFeedback={props.isSendingFeedback} i18n={i18n} />
+                <ThankYouMessageOrEmptyComponent
+                    isSendingFeedback={props.isSendingFeedback}
+                    i18n={i18n}
+                />
             </View>
             )}
         </I18n>
     );
-};
-
-interface ThankYouMessageOrEmptyProps {
-    readonly i18n: I18n;
-    readonly isSendingFeedback: boolean;
-}
-
-const ThankYouMessageOrEmptyComponent = ({i18n, isSendingFeedback}: ThankYouMessageOrEmptyProps): JSX.Element => {
-    if (isSendingFeedback) {
-        showToast(i18n._(t`Thank you for your contribution!`), 3000);
-    }
-    return <EmptyComponent />;
 };
 
 const isOtherRemoveServiceFeedback = (feedbackType: string): boolean => feedbackType !== 'service_feedback';
