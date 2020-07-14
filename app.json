@@ -22,7 +22,8 @@
       "versionCode": 139000,
       "permissions": [
         "ACCESS_FINE_LOCATION"
-      ]
+      ],
+      "useNextNotificationsApi": true
     },
     "notification": {
       "icon": "./assets/images/aa_notification_icon.png",

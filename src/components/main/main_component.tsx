@@ -11,7 +11,7 @@ import { Location, Action } from 'history';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { Locale } from '../../locale';
 import { AppModalsComponent } from './app_modals_component';
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import { History } from 'history';
 import { notificationListener } from './notification';
 import {
@@ -72,7 +72,7 @@ export const MainComponent = (props: Props): JSX.Element => {
     }, []);
 
     useEffect((): EffectCallback => {
-        const subscription = Notifications.addListener(notificationListener(props.history));
+        const subscription = Notifications.addNotificationResponseReceivedListener(notificationListener(props.history));
         return (): void => subscription.remove();
     }, []);
 
