@@ -66,8 +66,6 @@ export const ContactInformationComponent = ({
         goToRouteWithParameter(Routes.ServiceDetail, serviceId, history)();
     };
 
-    const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
-
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
@@ -116,15 +114,11 @@ export const ContactInformationComponent = ({
                                 setUserInformation={setUserInformation}
                             />
                         </KeyboardAwareScrollView>
-                            <TouchableOpacity
-                                onPress={onFinishPress}
-                                style={userInformation.email.length ? styles.finishButtonWithEmail : styles.finishButtonWithoutEmail}
-                                disabled={isSendingFeedback}
-                            >
-                                <Text style={userInformation.email.length ? styles.finishTextWithEmail : styles.finishTextWithoutEmail}>
-                                    <Trans id={buttonLabel} />
-                                </Text>
-                            </TouchableOpacity>
+                           <FinishButton
+                                userInformation={userInformation}
+                                isSendingFeedback={isSendingFeedback}
+                                onFinishPress={onFinishPress}
+                           />
                     </View>
             )}
         </I18n>
@@ -241,5 +235,27 @@ const TextInputComponent = (props: TextInputProps): JSX.Element => {
             onBlur={onBlur}
             style={[styles.employeeInputStyle, { color: textColor }]}
         />
+    );
+};
+
+interface FinishProps {
+    readonly userInformation: UserInformation;
+    readonly isSendingFeedback: boolean;
+    readonly onFinishPress: () => void;
+}
+
+const FinishButton = ({ userInformation, isSendingFeedback, onFinishPress }: FinishProps): JSX.Element => {
+    const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
+
+    return (
+        <TouchableOpacity
+            onPress={onFinishPress}
+            style={userInformation.email.length ? styles.finishButtonWithEmail : styles.finishButtonWithoutEmail}
+            disabled={isSendingFeedback}
+        >
+            <Text style={userInformation.email.length ? styles.finishTextWithEmail : styles.finishTextWithoutEmail}>
+                <Trans id={buttonLabel} />
+            </Text>
+        </TouchableOpacity>
     );
 };

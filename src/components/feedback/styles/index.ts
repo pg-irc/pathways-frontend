@@ -1,19 +1,11 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { Platform } from 'react-native';
 import { colors, values, getNormalFontFamily, getBoldFontStylesForOS, getTextAlignForLanguage } from '../../../application/styles';
 import { getStatusBarHeightForPlatform } from '../../main/get_status_bar_height_for_platform';
 
 interface OtherRemoveServiceStyles {
     readonly closeButton: TextStyle;
-    readonly footerContainer: ViewStyle;
-    readonly footerTab: ViewStyle;
-    readonly headerElement: TextStyle;
-    readonly headerBackButton: ViewStyle;
     readonly headerContainer: ViewStyle;
     readonly input: TextStyle;
-    readonly submitButton: ViewStyle;
-    readonly submitText: TextStyle;
-    readonly submitTextDisabled: TextStyle;
 }
 
 interface ContactInformationStyles {
@@ -44,18 +36,6 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         paddingLeft: 0,
     },
 
-    headerBackButton: {
-        flex: 1,
-        flexDirection: 'row',
-        paddingLeft: Platform.OS === 'android' ? 0 : 7,
-        borderWidth: 2,
-    },
-
-    headerElement: {
-        color: colors.teal,
-        fontSize: 18,
-    },
-
     input: {
         borderColor: colors.darkerGrey,
         borderWidth: 0.5,
@@ -66,33 +46,6 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         padding: 16,
         fontFamily: getNormalFontFamily(),
         ...getTextAlignForLanguage(),
-    },
-
-    footerContainer: {
-        alignItems: 'center',
-        backgroundColor: colors.white,
-        borderTopWidth: 0.5,
-        borderTopColor: colors.darkerGrey,
-        justifyContent: 'center',
-    },
-
-    footerTab: {
-        backgroundColor: colors.white,
-    },
-
-    submitButton: {
-        marginLeft: 30,
-        marginRight: 30,
-    },
-
-    submitText: {
-        fontSize: 16,
-        color: colors.white,
-    },
-
-    submitTextDisabled: {
-        fontSize: 16,
-        color: colors.white,
     },
 });
 
