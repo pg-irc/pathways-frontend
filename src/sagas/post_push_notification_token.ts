@@ -3,7 +3,7 @@ import { CallEffect, PutEffect, takeLatest, SelectEffect, ForkEffect, put, call,
 import * as constants from '../application/constants';
 import * as helpers from '../stores/helpers/make_action';
 import * as Permissions from 'expo-permissions';
-import { Notifications } from 'expo';
+import * as Notifications from 'expo-notifications';
 import { putPushNotificationToken, APIResponse } from '../api';
 import { PATHWAYS_API_KEY } from 'react-native-dotenv';
 import { selectLocale } from '../selectors/locale/select_locale';
@@ -43,12 +43,12 @@ function* requestPushNotificationToken(_: PushNotificationTokenRequestAction): R
     if (finalStatus.status !== 'granted') {
         return yield put(pushNotificationTokenFailure('Permission not granted for push notifications'));
     }
-    const token: string = yield call(Notifications.getExpoPushTokenAsync);
+    const token: any = yield call(Notifications.getExpoPushTokenAsync);
     if (token === '') {
         return yield put(pushNotificationTokenFailure('Error retrieving push notification token'));
     }
     const locale: Locale = yield select(selectLocale);
-    const result: APIResponse = yield call(putPushNotificationToken, token, locale, PATHWAYS_API_KEY);
+    const result: APIResponse = yield call(putPushNotificationToken, token["data"], locale, PATHWAYS_API_KEY);
     if (!result || result.hasError) {
         // TODO log error to sentry
         return yield put(pushNotificationTokenFailure('Error posting push notification token'));

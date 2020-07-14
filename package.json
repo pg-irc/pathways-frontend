@@ -55,7 +55,9 @@
             "/lib/",
             "/helpers/"
         ],
-        "setupFiles": ["./jestSetupFile.js"]
+        "setupFiles": [
+            "./jestSetupFile.js"
+        ]
     },
     "dependencies": {
         "@expo/vector-icons": "^10.2.0",
@@ -67,6 +69,7 @@
         "expo-analytics": "^1.0.9",
         "expo-intent-launcher": "~8.2.1",
         "expo-location": "~8.2.1",
+        "expo-notifications": "~0.3.3",
         "history": "^4.10.1",
         "intl": "^1.2.5",
         "native-base": "^2.13.12",
