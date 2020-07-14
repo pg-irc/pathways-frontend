@@ -40,6 +40,8 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         backgroundColor: 'white',
         marginTop: getStatusBarHeightForPlatform(),
         alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingLeft: 0,
     },
 
     headerBackButton: {

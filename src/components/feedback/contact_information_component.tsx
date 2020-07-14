@@ -10,7 +10,7 @@ import { UserInformation } from '../../stores/feedback/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { getEmptyUserInfo, BackFromContactInformationAction, FinishAction, SendFeedbackAction } from '../../stores/feedback';
 import { otherRemoveServiceStyles } from './styles';
-import { Header, Title, Button, Icon, Left, Content, Container } from 'native-base';
+import { Header, Title, Button, Icon, Content, Container } from 'native-base';
 import { getIconForBackButton } from '../header_button/back_button_component';
 import { goToRouteWithParameter, Routes, RouterProps } from '../../application/routing';
 import { useHistory } from 'react-router-native';
@@ -133,8 +133,6 @@ interface HeaderProps {
 const HeaderComponent = ({ feedbackType, onBackButtonPress }: HeaderProps): JSX.Element => {
     return (
         <Header style={otherRemoveServiceStyles.headerContainer}>
-            <Left style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 15 }}>
-
                 <Button transparent onPress={onBackButtonPress}>
                     <Icon name={getIconForBackButton()} style={{ color: colors.teal, fontWeight: 'bold' }} />
                 </Button>
@@ -143,7 +141,6 @@ const HeaderComponent = ({ feedbackType, onBackButtonPress }: HeaderProps): JSX.
                         <Trans id={headerLabelByType(feedbackType)} />
                     </Text>
                 </Title>
-            </Left>
     </Header>
     );
 }
