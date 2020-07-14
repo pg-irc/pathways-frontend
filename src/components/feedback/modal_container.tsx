@@ -22,12 +22,6 @@ interface ModalContainerProps {
 export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
     const history = useHistory();
 
-    // TO DO: Find proper place for this
-    // const onFinishPress = (i18n: I18n): void => {
-    //     props.finishAndSendFeedback();
-    //     showToast(i18n._(t`Thank you for your contribution!`), 3000);
-    // };
-
     const onDiscardModalDiscardPress = (): void => {
         props.discardFeedback();
         goToRouteWithParameter(Routes.ServiceDetail, props.serviceId, history)();

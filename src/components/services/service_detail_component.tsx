@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import * as R from 'ramda';
 import { History, Location } from 'history';
 import { t } from '@lingui/macro';
-import { Trans } from '@lingui/react';
+import { Trans, I18n } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { values, textStyles, colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
@@ -54,6 +54,7 @@ import {
 import { isAndroid } from '../../application/helpers/is_android';
 import { HeaderComponent as FeedbackHeaderComponent} from '../feedback/header_component';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
+import { showToast } from '../../application/toast';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -151,101 +152,118 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
             goToRouteWithParameter(Routes.ServiceDetail, serviceId, props.history)();
         }
         props.closeWithFeedback();
-
     };
 
     return (
-        <View style={{ flex: 1 }}>
-            <ServiceDetailHeaderComponent
-                location={props.location}
-                history={props.history}
-                isFeedbackInputEnabled={isFeedbackInputEnabled}
-                service={props.service}
-                bookmarkedServicesIds={props.bookmarkedServicesIds}
-                bookmarkService={props.bookmarkService}
-                unbookmarkService={props.unbookmarkService}
-                openHeaderMenu={props.openHeaderMenu}
-                close={onClosePress}
-            />
-            <KeyboardAwareScrollView
-                enableResetScrollToCoords={false}
-                extraHeight={100}
-                extraScrollHeight={isAndroid() ? 100 : 0}
-                enableOnAndroid={true}
-                ref={scrollViewRef}
-            >
-                <View padder>
-                    <FeedbackComponent
-                        setText={setTextForField('name')}
-                        toggleShouldSend={toggleShouldSendForField('name')}
-                        inputField={feedbackInput.name}
-                        label={<Trans>Name</Trans>}
-                        body={props.service.name}
-                        isEnabled={isFeedbackInputEnabled}
-                        disabledComponent={<Name name={props.service.name} />}
-                    />
-                    <DividerComponent />
-                    <FeedbackComponent
-                        setText={setTextForField('organization')}
-                        toggleShouldSend={toggleShouldSendForField('organization')}
-                        inputField={feedbackInput.organization}
-                        label={<Trans>Organization</Trans>}
-                        body={props.service.organizationName}
-                        isEnabled={isFeedbackInputEnabled}
-                        disabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
-                    />
-                    <DividerComponent />
-                    <FeedbackComponent
-                        setText={setTextForField('description')}
-                        toggleShouldSend={toggleShouldSendForField('description')}
-                        inputField={feedbackInput.description}
-                        label={<Trans>Description</Trans>}
-                        body={props.service.description}
-                        isEnabled={isFeedbackInputEnabled}
-                        disabledComponent={
-                            <Description
-                                description={props.service.description}
-                                showLinkAlerts={props.showLinkAlerts}
-                                hideLinkAlerts={props.hideLinkAlerts} />
-                        }
-                    />
-                    <DividerComponent />
-                    <ServiceContactDetails
-                        service={props.service}
-                        currentPathForAnaltyics={props.location.pathname}
-                        isFeedbackInputEnabled={isFeedbackInputEnabled}
-                        setFeedbackInputForField={setTextForField}
-                        toggleShouldSendForField={toggleShouldSendForField}
-                        feedback={feedbackInput}
-                        analyticsLinkPressed={props.analyticsLinkPressed}
-                        currentPathForAnalytics={props.location.pathname}
-                    />
-                    <DividerComponent />
-                    <SuggestAnUpdateButton
-                        isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
-                        suggestAnUpdate={props.suggestAnUpdate}
-                    />
-                    <ModalContainer
-                        serviceId={serviceId}
-                        discardFeedback={props.discardFeedback}
-                        showChooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
-                        showDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
-                        chooseChangeNameOrDetail={chooseChangeNameOrDetail}
-                        chooseRemoveService={chooseRemoveService}
-                        chooseOtherChanges={chooseOtherChanges}
-                        close={props.close}
-                        cancelDiscardFeedback={props.cancelDiscardFeedback}
-                        onBackButtonPress={onBackButtonPress}
-                    />
-                </View>
-            </KeyboardAwareScrollView>
-            <SubmitFeedbackButton
-                isVisible={isFeedbackInputEnabled}
-                disabled={!hasFeedbackToSend()}
-                onPress={onSubmitPress}
-            />
-        </View>
+        <I18n>
+            {
+            (({ i18n }: { readonly i18n: I18n }): JSX.Element =>
+            <View style={{ flex: 1 }}>
+                <ServiceDetailHeaderComponent
+                    location={props.location}
+                    history={props.history}
+                    isFeedbackInputEnabled={isFeedbackInputEnabled}
+                    service={props.service}
+                    bookmarkedServicesIds={props.bookmarkedServicesIds}
+                    bookmarkService={props.bookmarkService}
+                    unbookmarkService={props.unbookmarkService}
+                    openHeaderMenu={props.openHeaderMenu}
+                    close={onClosePress}
+                />
+                <KeyboardAwareScrollView
+                    enableResetScrollToCoords={false}
+                    extraHeight={100}
+                    extraScrollHeight={isAndroid() ? 100 : 0}
+                    enableOnAndroid={true}
+                    ref={scrollViewRef}
+                >
+                    <View padder>
+                        <FeedbackComponent
+                            setText={setTextForField('name')}
+                            toggleShouldSend={toggleShouldSendForField('name')}
+                            inputField={feedbackInput.name}
+                            label={<Trans>Name</Trans>}
+                            body={props.service.name}
+                            isEnabled={isFeedbackInputEnabled}
+                            disabledComponent={<Name name={props.service.name} />}
+                        />
+                        <DividerComponent />
+                        <FeedbackComponent
+                            setText={setTextForField('organization')}
+                            toggleShouldSend={toggleShouldSendForField('organization')}
+                            inputField={feedbackInput.organization}
+                            label={<Trans>Organization</Trans>}
+                            body={props.service.organizationName}
+                            isEnabled={isFeedbackInputEnabled}
+                            disabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
+                        />
+                        <DividerComponent />
+                        <FeedbackComponent
+                            setText={setTextForField('description')}
+                            toggleShouldSend={toggleShouldSendForField('description')}
+                            inputField={feedbackInput.description}
+                            label={<Trans>Description</Trans>}
+                            body={props.service.description}
+                            isEnabled={isFeedbackInputEnabled}
+                            disabledComponent={
+                                <Description
+                                    description={props.service.description}
+                                    showLinkAlerts={props.showLinkAlerts}
+                                    hideLinkAlerts={props.hideLinkAlerts} />
+                            }
+                        />
+                        <DividerComponent />
+                        <ServiceContactDetails
+                            service={props.service}
+                            currentPathForAnaltyics={props.location.pathname}
+                            isFeedbackInputEnabled={isFeedbackInputEnabled}
+                            setFeedbackInputForField={setTextForField}
+                            toggleShouldSendForField={toggleShouldSendForField}
+                            feedback={feedbackInput}
+                            analyticsLinkPressed={props.analyticsLinkPressed}
+                            currentPathForAnalytics={props.location.pathname}
+                        />
+                        <DividerComponent />
+                        <SuggestAnUpdateButton
+                            isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
+                            suggestAnUpdate={props.suggestAnUpdate}
+                        />
+                        <ModalContainer
+                            serviceId={serviceId}
+                            discardFeedback={props.discardFeedback}
+                            showChooseFeedbackModeModal={props.feedbackModal === FeedbackModal.ChooseFeedbackModeModal}
+                            showDiscardChangesModal={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
+                            chooseChangeNameOrDetail={chooseChangeNameOrDetail}
+                            chooseRemoveService={chooseRemoveService}
+                            chooseOtherChanges={chooseOtherChanges}
+                            close={props.close}
+                            cancelDiscardFeedback={props.cancelDiscardFeedback}
+                            onBackButtonPress={onBackButtonPress}
+                        />
+                    </View>
+                </KeyboardAwareScrollView>
+                <SubmitFeedbackButton
+                    isVisible={isFeedbackInputEnabled}
+                    disabled={!hasFeedbackToSend()}
+                    onPress={onSubmitPress}
+                />
+                <ThankYouMessageOrEmptyComponent isSendingFeedback={props.isSendingFeedback} i18n={i18n} />
+            </View>
+            )}
+        </I18n>
     );
+};
+
+interface ThankYouMessageOrEmptyProps {
+    readonly i18n: I18n;
+    readonly isSendingFeedback: boolean;
+}
+
+const ThankYouMessageOrEmptyComponent = ({i18n, isSendingFeedback}: ThankYouMessageOrEmptyProps): JSX.Element => {
+    if (isSendingFeedback) {
+        showToast(i18n._(t`Thank you for your contribution!`), 3000);
+    }
+    return <EmptyComponent />;
 };
 
 const isOtherRemoveServiceFeedback = (feedbackType: string): boolean => feedbackType !== 'service_feedback';
