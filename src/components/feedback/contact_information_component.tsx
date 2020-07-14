@@ -61,6 +61,7 @@ export const ContactInformationComponent = ({
     const onFinishPress = (): void => {
         finishFeedback(userInformation);
         sendFeedback(serviceId);
+        goToRouteWithParameter(Routes.ServiceDetail, serviceId, history)();
     };
 
     const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
