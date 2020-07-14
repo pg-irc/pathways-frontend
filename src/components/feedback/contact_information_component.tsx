@@ -10,10 +10,12 @@ import { UserInformation } from '../../stores/feedback/types';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { getEmptyUserInfo, BackFromContactInformationAction, FinishAction, SendFeedbackAction } from '../../stores/feedback';
 import { otherRemoveServiceStyles } from './styles';
-import { Header, Title, Button, Icon, Content, Container } from 'native-base';
+import { Header, Title, Button, Icon } from 'native-base';
 import { getIconForBackButton } from '../header_button/back_button_component';
 import { goToRouteWithParameter, Routes, RouterProps } from '../../application/routing';
 import { useHistory } from 'react-router-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { isAndroid } from '../../application/helpers/is_android';
 
 export interface ContactInformationProps {
     readonly feedbackType: string;
@@ -69,9 +71,15 @@ export const ContactInformationComponent = ({
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
-                    <Container style={styles.contactInformationContainer}>
+                    <View style={styles.contactInformationContainer}>
                         <HeaderComponent feedbackType={feedbackType} onBackButtonPress={onBackButtonPress}/>
-                        <Content style={styles.contactInformationInnerContainer}>
+                        <KeyboardAwareScrollView
+                            style={styles.contactInformationInnerContainer}
+                            enableResetScrollToCoords={false}
+                            extraHeight={50}
+                            extraScrollHeight={isAndroid() ? 50 : 0}
+                            enableOnAndroid={true}
+                        >
                             <View>
                                 <Text style={[textStyles.headlineH2StyleBlackLeft, { marginBottom: 15 }]}>
                                     <Trans>Contact information</Trans>
@@ -107,7 +115,7 @@ export const ContactInformationComponent = ({
                                 i18n={i18n}
                                 setUserInformation={setUserInformation}
                             />
-                        </Content>
+                        </KeyboardAwareScrollView>
                             <TouchableOpacity
                                 onPress={onFinishPress}
                                 style={userInformation.email.length ? styles.finishButtonWithEmail : styles.finishButtonWithoutEmail}
@@ -117,7 +125,7 @@ export const ContactInformationComponent = ({
                                     <Trans id={buttonLabel} />
                                 </Text>
                             </TouchableOpacity>
-                    </Container>
+                    </View>
             )}
         </I18n>
     );
