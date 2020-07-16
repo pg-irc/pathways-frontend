@@ -102,7 +102,7 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
                     marginTop: 15,
                     marginBottom: 20,
                 }}>
-                    <ContactSettlementWorkerButton {...props} />
+                    <FindSettlementAgencyButton {...props} />
                 </View>
             </View>
             <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
@@ -119,15 +119,15 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
     </View>
 );
 
-const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <MultiLineButtonComponent onPress={(): void => onServicesTextPress(props)}>
+const FindSettlementAgencyButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    <MultiLineButtonComponent onPress={(): void => onFindSettlementAgencyPress(props)}>
         <Text style={textStyles.button}>
             <Trans>Find a settlement agency near me</Trans>
         </Text>
     </MultiLineButtonComponent>
 );
 
-const onServicesTextPress = (props: Props): void => {
+const onFindSettlementAgencyPress = (props: Props): void => {
     props.dispatchServicesRequest(props.topic, props.manualUserLocation)
     goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
 };
