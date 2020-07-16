@@ -16,8 +16,8 @@ import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../.
 import { UserLocation } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
-
-const settlementWorkerTaskID = 'contact-workers-at-your-local-settlement-agency';
+import { BuildServicesRequestAction } from '../../stores/services/actions';
+import { Topic } from '../../selectors/topics/types';
 
 interface HelpContact {
     readonly title: JSX.Element;
@@ -61,6 +61,7 @@ const fixture: ReadonlyArray<HelpContact> = [
 ];
 
 export interface HelpComponentProps {
+    readonly topic: Topic;
     readonly history: History;
     readonly manualUserLocation: UserLocation;
 }
@@ -70,6 +71,7 @@ export interface HelpComponentActions {
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly clearManualUserLocation: () => ClearManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation)=> BuildServicesRequestAction;
 }
 
 type Props = HelpComponentProps & HelpComponentActions;
@@ -100,7 +102,7 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
                     marginTop: 15,
                     marginBottom: 20,
                 }}>
-                    <ContactSettlementWorkerButton {...props} />
+                    <FindSettlementAgencyButton {...props} />
                 </View>
             </View>
             <Text style={[textStyles.headlineH5StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
@@ -117,13 +119,18 @@ export const HelpComponent: React.StatelessComponent<Props> = (props: Props): JS
     </View>
 );
 
-const ContactSettlementWorkerButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
-    <MultiLineButtonComponent onPress={goToRouteWithParameter(Routes.Services, settlementWorkerTaskID, props.history)}>
+const FindSettlementAgencyButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
+    <MultiLineButtonComponent onPress={(): void => onFindSettlementAgencyPress(props)}>
         <Text style={textStyles.button}>
             <Trans>Find a settlement agency near me</Trans>
         </Text>
     </MultiLineButtonComponent>
 );
+
+const onFindSettlementAgencyPress = (props: Props): void => {
+    props.dispatchServicesRequest(props.topic, props.manualUserLocation)
+    goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
+};
 
 const ClearAppMemoryButton: React.StatelessComponent<Props> = (props: Props): JSX.Element => {
     const alertToClearAllUserData = (i18n: ReactI18n): void => {
