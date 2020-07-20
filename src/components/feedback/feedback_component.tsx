@@ -42,7 +42,7 @@ export const FeedbackComponent = (props: Props): JSX.Element => {
 };
 
 const FieldLabel = (props: { readonly fieldLabel: Props['label'] }): JSX.Element => (
-    <Text style={[textStyles.headline6, { color: colors.black }]}>
+    <Text style={[textStyles.headline6, { color: colors.black, textAlign: 'left' }]}>
         {props.fieldLabel}
     </Text>
 );
