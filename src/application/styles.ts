@@ -80,7 +80,7 @@ export const getBoldFontStylesForOS = (): object => (
 // For most components setting textAlign to 'left' ensures it's properly
 // swapped over to 'right' when we switch to a RTL language. For others, like the TextInput component,
 // this is not the case so we need to call this to set it explicitly.
-const getTextAlignForLanguage = (): TextStyle => (
+export const getTextAlignForLanguage = (): TextStyle => (
     { textAlign: I18nManager.isRTL ? 'right' : 'left' }
 );
 

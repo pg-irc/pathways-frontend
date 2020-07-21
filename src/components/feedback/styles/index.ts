@@ -2,7 +2,7 @@ import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 import { Platform } from 'react-native';
 
-import { colors, values, getNormalFontFamily } from '../../../application/styles';
+import { colors, values, getNormalFontFamily, getTextAlignForLanguage } from '../../../application/styles';
 import { getStatusBarHeightForPlatform } from '../../main/get_status_bar_height_for_platform';
 
 interface OtherRemoveServiceStyles {
@@ -66,6 +66,7 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         minHeight: 100,
         padding: 16,
         fontFamily: getNormalFontFamily(),
+        ...getTextAlignForLanguage(),
     },
 
     footerContainer: {
