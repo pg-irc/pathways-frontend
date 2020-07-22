@@ -1,11 +1,11 @@
 import { Store } from '../../stores';
 import { selectFeedback } from './select_feedback';
 
-export const selectFeedbackByType = (store: Store): string => {
+export const selectOtherRemoveServiceFeedback = (store: Store): string => {
     const feedback = selectFeedback(store);
 
     if (!feedback) {
-        return undefined;
+        return '';
     }
 
     switch (feedback.type) {
