@@ -12,7 +12,7 @@ import { getEmptyUserInfo, BackFromContactInformationAction, FinishAction, SendF
 import { otherRemoveServiceStyles } from './styles';
 import { Header, Title, Button, Icon } from 'native-base';
 import { getIconForBackButton } from '../header_button/back_button_component';
-import { goToRouteWithParameter, Routes, RouterProps } from '../../application/routing';
+import { goToRouteWithParameter, Routes, RouterProps, goBack } from '../../application/routing';
 import { useHistory } from 'react-router-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { isAndroid } from '../../application/helpers/is_android';
@@ -52,11 +52,7 @@ export const ContactInformationComponent = ({
         });
 
     const onBackButtonPress = (): void => {
-        if (isOtherRemoveServiceFeedback(feedbackType)) {
-            goToRouteWithParameter(Routes.OtherFeedback, serviceId, history)();
-        } else {
-            goToRouteWithParameter(Routes.ServiceDetail, serviceId, history)();
-        }
+        goBack(history);
         backFromContactInformation();
     };
 
@@ -125,8 +121,6 @@ export const ContactInformationComponent = ({
     );
 };
 
-const isOtherRemoveServiceFeedback = (feedbackType: string): boolean => feedbackType !== 'service_feedback';
-
 interface HeaderProps {
     readonly feedbackType: string;
     readonly onBackButtonPress: () => void;
@@ -148,15 +142,14 @@ const HeaderComponent = ({ feedbackType, onBackButtonPress }: HeaderProps): JSX.
 }
 
 const headerLabelByType = (feedbackType: string): string => {
-    if (feedbackType === 'service_feedback') {
-        return 'Change name or other details';
+    switch (feedbackType) {
+        case 'service_feedback':
+            return 'Change name or other details';
+        case 'remove_service':
+            return 'This service no longer exists';
+        default:
+            return 'Other suggestions';
     }
-
-    if (feedbackType === 'remove_service') {
-        return 'This service no longer exists';
-    }
-
-    return 'Other suggestions';
 };
 
 const EmployeeInputFields = (props: {
