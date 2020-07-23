@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import React, { useEffect, EffectCallback } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import Animated from 'react-native-reanimated';
 import { Container, Drawer, Root } from 'native-base';
 import { MainPageSwitcherComponent } from './main_page_switcher';
@@ -90,7 +90,7 @@ export const MainComponent = (props: Props): JSX.Element => {
 
     return (
         <Root>
-            <StatusBar translucent={true} />
+            <StatusBar />
             <Drawer
                 side='right'
                 onClose={props.closeHeaderMenu}
