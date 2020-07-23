@@ -1,28 +1,17 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
-
-import { Platform } from 'react-native';
-
-import { colors, values, getNormalFontFamily, getTextAlignForLanguage } from '../../../application/styles';
+import { colors, values, getNormalFontFamily, getBoldFontStylesForOS, getTextAlignForLanguage } from '../../../application/styles';
 import { getStatusBarHeightForPlatform } from '../../main/get_status_bar_height_for_platform';
 
 interface OtherRemoveServiceStyles {
     readonly closeButton: TextStyle;
-    readonly footerContainer: ViewStyle;
-    readonly footerTab: ViewStyle;
-    readonly headerElement: TextStyle;
-    readonly headerBackButton: ViewStyle;
     readonly headerContainer: ViewStyle;
     readonly input: TextStyle;
-    readonly submitButton: ViewStyle;
-    readonly submitText: TextStyle;
-    readonly submitTextDisabled: TextStyle;
 }
 
 interface ContactInformationStyles {
     readonly checkboxContainer: ViewStyle;
     readonly checkBox: ViewStyle;
     readonly checkBoxDescription: ViewStyle;
-    readonly finishButtonContainer: ViewStyle;
     readonly finishButtonWithoutEmail: ViewStyle;
     readonly finishButtonWithEmail: ViewStyle;
     readonly finishTextWithoutEmail: TextStyle;
@@ -43,18 +32,8 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         backgroundColor: 'white',
         marginTop: getStatusBarHeightForPlatform(),
         alignItems: 'center',
-    },
-
-    headerBackButton: {
-        flex: 1,
-        flexDirection: 'row',
-        paddingLeft: Platform.OS === 'android' ? 0 : 7,
-        borderWidth: 2,
-    },
-
-    headerElement: {
-        color: colors.teal,
-        fontSize: 18,
+        justifyContent: 'flex-start',
+        paddingLeft: 0,
     },
 
     input: {
@@ -68,33 +47,6 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         fontFamily: getNormalFontFamily(),
         ...getTextAlignForLanguage(),
     },
-
-    footerContainer: {
-        alignItems: 'center',
-        backgroundColor: colors.white,
-        borderTopWidth: 0.5,
-        borderTopColor: colors.darkerGrey,
-        justifyContent: 'center',
-    },
-
-    footerTab: {
-        backgroundColor: colors.white,
-    },
-
-    submitButton: {
-        marginLeft: 30,
-        marginRight: 30,
-    },
-
-    submitText: {
-        fontSize: 16,
-        color: colors.white,
-    },
-
-    submitTextDisabled: {
-        fontSize: 16,
-        color: colors.white,
-    },
 });
 
 const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
@@ -102,6 +54,7 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginTop: 24,
     },
 
     checkBoxDescription: {
@@ -121,62 +74,53 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
         paddingRight: 12,
     },
 
-    finishButtonContainer: {
-        alignItems: 'center',
-        borderTopWidth: 0.5,
-        borderTopColor: colors.greyBorder,
-        justifyContent: 'flex-end',
-        flexDirection: 'row',
-        padding: 16,
-    },
-
     finishButtonWithoutEmail: {
-        alignSelf: 'flex-end',
         backgroundColor: 'white',
         borderWidth: 2,
         borderColor: colors.teal,
         borderRadius: values.roundedBorderRadius,
         color: colors.teal,
-        paddingVertical: 10,
+        paddingVertical: 12,
         paddingHorizontal: 15,
+        marginHorizontal: 24,
+        marginBottom: 12,
     },
 
     finishButtonWithEmail: {
-        alignSelf: 'flex-end',
         backgroundColor: colors.teal,
         borderWidth: 2,
         borderColor: colors.teal,
         borderRadius: values.roundedBorderRadius,
         color: colors.teal,
-        paddingVertical: 10,
-        paddingHorizontal: 15,
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        marginHorizontal: 24,
+        marginBottom: 12,
     },
 
     finishTextWithoutEmail: {
+        textAlign: 'center',
         color: colors.teal,
-        fontSize: 16,
-        fontWeight: 'bold',
-        fontFamily: getNormalFontFamily(),
+        fontSize: 18,
+        ...getBoldFontStylesForOS(),
     },
 
     finishTextWithEmail: {
+        textAlign: 'center',
         color: colors.white,
-        fontSize: 16,
-        fontWeight: 'bold',
-        fontFamily: getNormalFontFamily(),
+        fontSize: 18,
+        ...getBoldFontStylesForOS(),
     },
 
     contactInformationContainer: {
-        backgroundColor: 'white',
-        borderRadius: 15,
+        flex: 1,
     },
 
     contactInformationInnerContainer: {
-        flex: 1,
         flexDirection: 'column',
+        paddingTop: 24,
         paddingLeft: 24,
         paddingRight: 24,
-        justifyContent: 'space-evenly',
         paddingBottom: 8,
     },
     employeeInputStyle: {

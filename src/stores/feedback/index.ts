@@ -37,6 +37,7 @@ export const setIsSending = (isSending: boolean) => (
 export const setError = (error: string) => (
     helpers.makeAction(constants.SET_ERROR, { error })
 );
+export const backFromContactInformation = () => helpers.makeAction(constants.BACK_FROM_CONTACT_INFORMATION);
 
 export type SuggestAnUpdateAction = Readonly<ReturnType<typeof suggestAnUpdate>>;
 export type ChooseChangeNameOrDetailsAction = Readonly<ReturnType<typeof chooseChangeNameOrDetails>>;
@@ -51,6 +52,7 @@ export type FinishAction = Readonly<ReturnType<typeof finishFeedback>>;
 export type SendFeedbackAction = Readonly<ReturnType<typeof sendFeedback>>;
 export type SetIsSendingAction = Readonly<ReturnType<typeof setIsSending>>;
 export type SetErrorAction = Readonly<ReturnType<typeof setError>>;
+export type BackFromContactInformationAction = Readonly<ReturnType<typeof backFromContactInformation>>;
 
 export type ReducerActions = SuggestAnUpdateAction |
         ChooseChangeNameOrDetailsAction |
@@ -64,7 +66,8 @@ export type ReducerActions = SuggestAnUpdateAction |
         FinishAction |
         SendFeedbackAction |
         SetIsSendingAction |
-        SetErrorAction;
+        SetErrorAction |
+        BackFromContactInformationAction;
 
 export const getEmptyUserInfo = (): UserInformation => ({
     email: '',

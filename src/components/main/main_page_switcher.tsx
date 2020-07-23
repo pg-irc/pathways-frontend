@@ -16,6 +16,7 @@ import { ServiceDetailConnectedComponent } from '../services/service_detail_conn
 import { OtherRemoveServiceConnectedComponent } from '../feedback/other_remove_service_connected_component';
 import { Routes, routePathDefinition, routePathWithoutParameter } from '../../application/routing';
 import { Locale } from '../../locale';
+import { ContactInformationConnectedComponent } from '../feedback/contact_information_connected_component';
 
 interface Props {
     readonly locale: Locale;
@@ -39,6 +40,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
         <Route exact path={routePathDefinition(Routes.OrganizationDetail)} component={OrganizationDetailComponent} />
         <Route exact path={routePathDefinition(Routes.ServiceDetail)} component={ServiceDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.OtherFeedback)} component={OtherRemoveServiceConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.ContactInformation)} component={ContactInformationConnectedComponent} />
         <Redirect to={defaultPath(props)} />
     </Switch>
 );

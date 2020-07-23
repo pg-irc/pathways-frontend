@@ -6,7 +6,7 @@ import { Container, Content } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
 import { colors, textStyles } from '../../application/styles';
-import { goBack } from '../../application/routing';
+import { goBack, Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
 import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAction, CloseWithFeedbackAction } from '../../stores/feedback';
@@ -33,6 +33,7 @@ interface SuggestionContentMap {
 }
 
 export interface OtherRemoveServiceState {
+    readonly otherRemoveServiceFeedback: string;
     readonly feedbackScreen: FeedbackScreen;
     readonly feedbackModal: FeedbackModal;
 }
@@ -45,7 +46,7 @@ export interface OtherRemoveServiceActions {
     readonly closeWithFeedback: () => CloseWithFeedbackAction;
 }
 
-export type FeedbackOtherRemoveServiceProps = OtherRemoveServiceState & OtherRemoveServiceActions;
+export type FeedbackOtherRemoveServiceProps = OtherRemoveServiceState & OtherRemoveServiceActions & RouterProps;
 
 const SUGGESTION_CONTENT: SuggestionContentMap = {
     OTHER: {
@@ -94,7 +95,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
     const isOtherFeedback = props.feedbackScreen === FeedbackScreen.OtherChangesPage;
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
     const history = useHistory();
-    const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
+    const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>(props.otherRemoveServiceFeedback);
 
     useEffect((): void => {
         if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
@@ -108,13 +109,27 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
         } else {
             props.submitFeedback({ type: 'remove_service', reason: feedback });
         }
+        goToRouteWithParameter(Routes.ContactInformation, props.match.params.serviceId, history)();
+    };
+
+    const onDiscardModalDiscardPress = (): void => {
+        props.discardFeedback();
+        goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, history)();
+    };
+
+    const onClosePress = (): void => {
+        if (!feedback) {
+            props.close();
+            goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, history)();
+        }
+        props.closeWithFeedback();
     };
 
     return (
         <Container>
             <HeaderComponent
                 headerLabel={content.header}
-                close={feedback ? props.closeWithFeedback : props.close}
+                close={onClosePress}
             />
             <ContentComponent
                 inputLabel={content.label}
@@ -128,7 +143,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
                 isVisible={true}
             />
             <DiscardChangesModal
-                onDiscardPress={props.discardFeedback}
+                onDiscardPress={onDiscardModalDiscardPress}
                 onKeepEditingPress={props.cancelDiscardFeedback}
                 isVisible={props.feedbackModal === FeedbackModal.ConfirmDiscardChangesModal}
             />

@@ -12,12 +12,12 @@ export enum FeedbackScreen {
     EditableServiceDetailPage,
     RemoveServicePage,
     OtherChangesPage,
+    ContactInformationPage,
 }
 
 export enum FeedbackModal {
     None,
     ChooseFeedbackModeModal,
-    ContactInformationModal,
     ConfirmDiscardChangesModal,
 }
 

@@ -21,7 +21,7 @@ import {
 import { useHardwareBackButtonPress } from './use_hardware_back_button_press';
 import { ScrollContext, createScrollAnimationContext } from './scroll_animation_context';
 import { FeedbackScreen } from '../../stores/feedback/types';
-import { CloseAction } from '../../stores/feedback';
+import { CloseAction, BackFromContactInformationAction } from '../../stores/feedback';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -34,6 +34,7 @@ export interface MainComponentActions {
     readonly closeDisclaimerModal: () => CloseDisclaimerModalAction;
     readonly openDisclaimerModal: () => OpenDisclaimerModalAction;
     readonly backOutOfFeedbackScreen: () => CloseAction;
+    readonly backFromContactInformation: () => BackFromContactInformationAction;
 }
 
 interface MainProps {
@@ -56,13 +57,22 @@ export const MainComponent = (props: Props): JSX.Element => {
         if (props.isHeaderMenuVisible) {
             props.closeHeaderMenu();
         } else if (props.feedbackScreen) {
-            props.backOutOfFeedbackScreen();
+            backFromFeedbackScreen();
         } else {
             goBack(props.history);
         }
 
         return shouldNotBubbleUpEvent;
     }, [props.feedbackScreen]);
+
+    const backFromFeedbackScreen = (): void => {
+        if (props.feedbackScreen === FeedbackScreen.ContactInformationPage) {
+            goBack(props.history);
+            props.backFromContactInformation();
+        } else {
+            props.backOutOfFeedbackScreen();
+        }
+    };
 
     useEffect((): EffectCallback => {
         const unsubscribe = props.history.listen((location: Location, _: Action): RouteChangedAction =>

@@ -52,6 +52,14 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.ServiceDetail)).toEqual('/service/:serviceId');
     });
 
+    it('For Routes.OtherFeedback returns path: "/feedback/:serviceId"', () => {
+        expect(routePathDefinition(Routes.OtherFeedback)).toEqual('/feedback/:serviceId');
+    });
+
+    it('For Routes.ContactInformation returns path: "contact-information/:serviceId"', () => {
+        expect(routePathDefinition(Routes.ContactInformation)).toEqual('/contact-information/:serviceId');
+    });
+
 });
 
 describe('the routePathWithoutParameter function', () => {

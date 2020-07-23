@@ -123,7 +123,7 @@ const isFooterHidden = (props: FooterProps, keyboardIsVisible: boolean): boolean
 
     return pathMatchesAnyRoute(
         props.location.pathname,
-        [Routes.Welcome, Routes.Questionnaire, Routes.Help, Routes.Onboarding, Routes.OtherFeedback],
+        [Routes.Welcome, Routes.Questionnaire, Routes.Help, Routes.Onboarding, Routes.OtherFeedback, Routes.ContactInformation],
     );
 };
 

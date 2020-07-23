@@ -20,7 +20,7 @@ import { selectIsHeaderMenuVisible } from '../../selectors/user_experience/selec
 import { selectIsAboutModalVisible } from '../../selectors/user_experience/select_is_about_modal_visible';
 import { selectIsDisclaimerModalVisible } from '../../selectors/user_experience/select_is_disclaimer_modal_visible';
 import { selectFeedbackScreen } from '../../selectors/feedback/select_feedback_screen';
-import { close as backOutOfFeedbackScreen, CloseAction } from '../../stores/feedback';
+import { close as backOutOfFeedbackScreen, CloseAction, BackFromContactInformationAction, backFromContactInformation } from '../../stores/feedback';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 
@@ -52,7 +52,8 @@ type Actions =
     CloseDisclaimerModalAction |
     OpenDisclaimerModalAction |
     RouteChangedAction |
-    CloseAction;
+    CloseAction |
+    BackFromContactInformationAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): MainComponentActions => ({
     sendAnalyticsData: (location: Location, locale: Locale): RouteChangedAction => dispatch(routeChanged(location, locale)),
@@ -63,6 +64,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): MainComponentActions =
     closeDisclaimerModal: (): CloseDisclaimerModalAction => dispatch(closeDisclaimerModal()),
     openDisclaimerModal: (): OpenDisclaimerModalAction => dispatch(openDisclaimerModal()),
     backOutOfFeedbackScreen: (): CloseAction => dispatch(backOutOfFeedbackScreen()),
+    backFromContactInformation: (): BackFromContactInformationAction => dispatch(backFromContactInformation()),
 });
 
 const componentWithLoader = withLoader<MainComponentProps>(MainComponent);

@@ -2,30 +2,48 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { t } from '@lingui/macro';
 import { I18n, Trans } from '@lingui/react';
-import Modal from 'react-native-modal';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { colors, textStyles } from '../../application/styles';
 import { CheckBox } from './check_box_component';
 import { contactInformationStyles as styles } from './styles';
 import { UserInformation } from '../../stores/feedback/types';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { getEmptyUserInfo, BackFromContactInformationAction, FinishAction, SendFeedbackAction } from '../../stores/feedback';
+import { otherRemoveServiceStyles } from './styles';
+import { Header, Title, Button, Icon } from 'native-base';
+import { getIconForBackButton } from '../header_button/back_button_component';
+import { goToRouteWithParameter, Routes, RouterProps, goBack } from '../../application/routing';
+import { useHistory } from 'react-router-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { isAndroid } from '../../application/helpers/is_android';
 
-interface ContactInformationProps {
+export interface ContactInformationProps {
+    readonly feedbackType: string;
     readonly isSendingFeedback: boolean;
-    readonly setUserInformation: Dispatch<SetStateAction<UserInformation>>;
-    readonly userInformation: UserInformation;
-    readonly onFinishPress: () => void;
-    readonly isVisible: boolean;
-    readonly onModalHide: (i18n: I18n) => () => void;
 }
+
+export interface ContactInformationActions {
+    readonly backFromContactInformation: () => BackFromContactInformationAction;
+    readonly finishFeedback: (userInformation: UserInformation) => FinishAction;
+    readonly sendFeedback: (serviceId: string) => SendFeedbackAction;
+}
+
+type Props = ContactInformationProps & ContactInformationActions & RouterProps;
 
 const INPUT_PLACEHOLDER = t`Enter email`;
 const NAME_PLACEHOLDER = t`Enter your name`;
 const ORGANIZATION_PLACEHOLDER = t`Enter your organization name`;
 const JOB_TITLE_PLACEHOLDER = t`Enter your job title`;
 
-export const ContactInformationModal =
-({ onFinishPress, isSendingFeedback, userInformation, setUserInformation, isVisible, onModalHide }: ContactInformationProps): JSX.Element => {
+type SetUserInformation = Dispatch<SetStateAction<UserInformation>>;
+
+export const ContactInformationComponent = ({
+    feedbackType, isSendingFeedback, match, backFromContactInformation, finishFeedback, sendFeedback,
+}: Props): JSX.Element => {
+    const [userInformation, setUserInformation]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
+    const history = useHistory();
+
+    const serviceId = match.params.serviceId;
 
     const onPressIsEmployee = (): void =>
         setUserInformation({
@@ -33,15 +51,29 @@ export const ContactInformationModal =
             isEmployee: !userInformation.isEmployee,
         });
 
-    const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
+    const onBackButtonPress = (): void => {
+        goBack(history);
+        backFromContactInformation();
+    };
 
-    const minHeight = userInformation.isEmployee ? 550 : 315;
+    const onFinishPress = (): void => {
+        finishFeedback(userInformation);
+        sendFeedback(serviceId);
+        goToRouteWithParameter(Routes.ServiceDetail, serviceId, history)();
+    };
+
     return (
         <I18n>
             {({ i18n }: I18nProps): JSX.Element => (
-                <Modal isVisible={isVisible} backdropTransitionOutTiming={0} onModalHide={onModalHide(i18n)}>
-                    <View style={[styles.contactInformationContainer, { minHeight }]}>
-                        <View style={styles.contactInformationInnerContainer}>
+                    <View style={styles.contactInformationContainer}>
+                        <HeaderComponent feedbackType={feedbackType} onBackButtonPress={onBackButtonPress}/>
+                        <KeyboardAwareScrollView
+                            style={styles.contactInformationInnerContainer}
+                            enableResetScrollToCoords={false}
+                            extraHeight={50}
+                            extraScrollHeight={isAndroid() ? 50 : 0}
+                            enableOnAndroid={true}
+                        >
                             <View>
                                 <Text style={[textStyles.headlineH2StyleBlackLeft, { marginBottom: 15 }]}>
                                     <Trans>Contact information</Trans>
@@ -77,23 +109,47 @@ export const ContactInformationModal =
                                 i18n={i18n}
                                 setUserInformation={setUserInformation}
                             />
-                        </View>
-                        <View style={styles.finishButtonContainer}>
-                            <TouchableOpacity
-                                onPress={onFinishPress}
-                                style={userInformation.email.length ? styles.finishButtonWithEmail : styles.finishButtonWithoutEmail}
-                                disabled={isSendingFeedback}
-                            >
-                                <Text style={userInformation.email.length ? styles.finishTextWithEmail : styles.finishTextWithoutEmail}>
-                                    <Trans id={buttonLabel} />
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                        </KeyboardAwareScrollView>
+                           <FinishButton
+                                userInformation={userInformation}
+                                isSendingFeedback={isSendingFeedback}
+                                onFinishPress={onFinishPress}
+                           />
                     </View>
-                </Modal>
             )}
         </I18n>
     );
+};
+
+interface HeaderProps {
+    readonly feedbackType: string;
+    readonly onBackButtonPress: () => void;
+}
+
+const HeaderComponent = ({ feedbackType, onBackButtonPress }: HeaderProps): JSX.Element => {
+    return (
+        <Header style={otherRemoveServiceStyles.headerContainer}>
+                <Button transparent onPress={onBackButtonPress}>
+                    <Icon name={getIconForBackButton()} style={{ color: colors.teal, fontWeight: 'bold' }} />
+                </Button>
+                <Title>
+                    <Text style={textStyles.headline6}>
+                        <Trans id={headerLabelByType(feedbackType)} />
+                    </Text>
+                </Title>
+    </Header>
+    );
+}
+
+const headerLabelByType = (feedbackType: string): string => {
+    switch (feedbackType) {
+        case 'service_feedback':
+            return 'Change name or other details';
+        case 'remove_service':
+            return 'This service no longer exists';
+        default:
+            return 'Other suggestions';
+    }
 };
 
 const EmployeeInputFields = (props: {
@@ -107,7 +163,7 @@ const EmployeeInputFields = (props: {
         return <EmptyComponent />;
     }
     return (
-        <View>
+        <View style={{ marginTop: 24 }}>
             <Text style={[textStyles.headline6, { color: colors.black,  marginBottom: 5 }]}>
                 <Trans>Name</Trans>
             </Text>
@@ -172,5 +228,27 @@ const TextInputComponent = (props: TextInputProps): JSX.Element => {
             onBlur={onBlur}
             style={[styles.employeeInputStyle, { color: textColor }]}
         />
+    );
+};
+
+interface FinishProps {
+    readonly userInformation: UserInformation;
+    readonly isSendingFeedback: boolean;
+    readonly onFinishPress: () => void;
+}
+
+const FinishButton = ({ userInformation, isSendingFeedback, onFinishPress }: FinishProps): JSX.Element => {
+    const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
+
+    return (
+        <TouchableOpacity
+            onPress={onFinishPress}
+            style={userInformation.email.length ? styles.finishButtonWithEmail : styles.finishButtonWithoutEmail}
+            disabled={isSendingFeedback}
+        >
+            <Text style={userInformation.email.length ? styles.finishTextWithEmail : styles.finishTextWithoutEmail}>
+                <Trans id={buttonLabel} />
+            </Text>
+        </TouchableOpacity>
     );
 };

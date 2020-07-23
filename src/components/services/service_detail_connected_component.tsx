@@ -35,16 +35,22 @@ import {
     sendFeedback,
     CloseWithFeedbackAction,
     closeWithFeedback,
+    BackFromContactInformationAction,
+    backFromContactInformation,
 } from '../../stores/feedback';
 import { selectIsSendingFeedback } from '../../selectors/feedback/select_is_sending_feedback';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
+import { selectFeedbackType } from '../../selectors/feedback/select_feedback_type';
+import { selectServiceFeedback } from '../../selectors/feedback/select_service_feedback';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
     return {
         service: selectServiceById(store, ownProps.match.params.serviceId),
         history: ownProps.history,
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
+        serviceFeedback: selectServiceFeedback(store),
+        feedbackType: selectFeedbackType(store),
         feedbackScreen: selectFeedbackScreen(store),
         feedbackModal: selectFeedbackModal(store),
         isSendingFeedback: selectIsSendingFeedback(store),
@@ -69,7 +75,8 @@ type Actions =
     CloseAction |
     CancelDiscardChangesAction |
     SendFeedbackAction |
-    HideLinkAlertsAction;
+    HideLinkAlertsAction |
+    BackFromContactInformationAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions => ({
     analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
@@ -89,6 +96,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     cancelDiscardFeedback: (): CancelDiscardChangesAction => dispatch(cancelDiscardChanges()),
     sendFeedback: (serviceId: string): SendFeedbackAction => dispatch(sendFeedback(serviceId)),
     hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
+    backFromContactInformation: (): BackFromContactInformationAction => dispatch(backFromContactInformation()),
 });
 
 export const ServiceDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceDetailComponent);
