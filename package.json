@@ -70,6 +70,7 @@
         "expo-intent-launcher": "~8.2.1",
         "expo-location": "~8.2.1",
         "expo-notifications": "~0.3.3",
+        "expo-status-bar": "^1.0.0",
         "history": "^4.10.1",
         "intl": "^1.2.5",
         "native-base": "^2.13.12",
