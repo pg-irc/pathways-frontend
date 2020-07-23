@@ -6,7 +6,7 @@ import { ServiceFeedback } from '../../stores/feedback/types';
 export const selectServiceFeedback = (store: Store): ServiceFeedback => {
     const feedback = selectFeedback(store);
 
-    if (feedback && feedback.type === 'service_feedback') {
+    if (feedback?.type === 'service_feedback') {
         return feedback;
     }
 
