@@ -32,6 +32,7 @@ export enum Routes {
     OrganizationDetail,
     ServiceDetail,
     OtherFeedback,
+    ExplainFeedback,
     ContactInformation,
 }
 
@@ -67,6 +68,8 @@ export const routePathDefinition = (route: Routes): string => {
             return '/service/:serviceId';
         case Routes.OtherFeedback:
             return '/feedback/:serviceId';
+        case Routes.ExplainFeedback:
+            return '/explainfeedback/:serviceId';
         case Routes.ContactInformation:
             return '/contact-information/:serviceId';
     }

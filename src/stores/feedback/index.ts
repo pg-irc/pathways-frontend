@@ -18,6 +18,7 @@ export const suggestAnUpdate = () => helpers.makeAction(constants.SUGGEST_AN_UPD
 export const chooseChangeNameOrDetails = () => helpers.makeAction(constants.CHOOSE_CHANGE_NAME_AND_DETAILS);
 export const chooseRemoveService = () => helpers.makeAction(constants.CHOOSE_REMOVE_SERVICE);
 export const chooseOtherChanges = () => helpers.makeAction(constants.CHOOSE_OTHER_CHANGES);
+export const chooseExplainFeedback = () => helpers.makeAction(constants.CHOOSE_EXPLAIN_FEEDBACK);
 export const discardChanges = () => helpers.makeAction(constants.DISCARD_CHANGES);
 export const cancelDiscardChanges = () => helpers.makeAction(constants.CANCEL_DISCARD_CHANGES);
 export const close = () => helpers.makeAction(constants.CLOSE);
@@ -43,6 +44,7 @@ export type SuggestAnUpdateAction = Readonly<ReturnType<typeof suggestAnUpdate>>
 export type ChooseChangeNameOrDetailsAction = Readonly<ReturnType<typeof chooseChangeNameOrDetails>>;
 export type ChooseRemoveServiceAction = Readonly<ReturnType<typeof chooseRemoveService>>;
 export type ChooseOtherChangesAction = Readonly<ReturnType<typeof chooseOtherChanges>>;
+export type ChooseExplainFeedbackAction = Readonly<ReturnType<typeof chooseExplainFeedback>>;
 export type DiscardChangesAction = Readonly<ReturnType<typeof discardChanges>>;
 export type CancelDiscardChangesAction = Readonly<ReturnType<typeof cancelDiscardChanges>>;
 export type CloseAction = Readonly<ReturnType<typeof close>>;
@@ -58,6 +60,7 @@ export type ReducerActions = SuggestAnUpdateAction |
         ChooseChangeNameOrDetailsAction |
         ChooseRemoveServiceAction |
         ChooseOtherChangesAction |
+        ChooseExplainFeedbackAction |
         DiscardChangesAction |
         CancelDiscardChangesAction |
         CloseAction |
