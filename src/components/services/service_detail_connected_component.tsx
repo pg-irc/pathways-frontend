@@ -37,6 +37,8 @@ import {
     closeWithFeedback,
     BackFromContactInformationAction,
     backFromContactInformation,
+    ChooseExplainFeedbackAction,
+    chooseExplainFeedback,
 } from '../../stores/feedback';
 import { selectIsSendingFeedback } from '../../selectors/feedback/select_is_sending_feedback';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
@@ -67,6 +69,7 @@ type Actions =
     ChooseChangeNameOrDetailsAction |
     ChooseRemoveServiceAction |
     ChooseOtherChangesAction |
+    ChooseExplainFeedbackAction |
     SubmitAction |
     FinishAction |
     CloseAction |
@@ -88,6 +91,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     chooseChangeNameOrDetail: (): ChooseChangeNameOrDetailsAction => dispatch(chooseChangeNameOrDetails()),
     chooseRemoveService: (): ChooseRemoveServiceAction => dispatch(chooseRemoveService()),
     chooseOtherChanges: (): ChooseOtherChangesAction => dispatch(chooseOtherChanges()),
+    chooseExplainFeedback: (): ChooseExplainFeedbackAction => dispatch(chooseExplainFeedback()),
     submitFeedback: (feedback: Feedback): SubmitAction => dispatch(submit(feedback)),
     finishFeedback: (userInformation: UserInformation): FinishAction => dispatch(finishFeedback(userInformation)),
     close: (): CloseAction => dispatch(close()),

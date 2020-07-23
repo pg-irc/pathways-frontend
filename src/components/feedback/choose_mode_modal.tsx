@@ -16,6 +16,7 @@ export interface ButtonsComponentProps {
     readonly onChangeNameOrOtherDetailPress: () => void;
     readonly onChooseOtherChangesPress: () => void;
     readonly onChooseRemoveServicePress: () => void;
+    readonly onChooseExplainFeedback: () => void;
 }
 
 type Props = FeedbackModalProps & ButtonsComponentProps;
@@ -33,7 +34,7 @@ export const ChooseModeModal = (props: Props): JSX.Element => (
            <DividerComponent />
            <ButtonsComponent {...props} />
            <DividerComponent />
-           <SubtitleComponent />
+           <SubtitleComponent {...props} />
         </View>
     </Modal>
 );
@@ -67,10 +68,17 @@ const OptionButton = (props: { readonly name: JSX.Element, readonly onPress: () 
     </TouchableOpacity>
 );
 
-const SubtitleComponent = (): JSX.Element => (
+const SubtitleComponent = (props: ButtonsComponentProps): JSX.Element => (
     <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
         <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
             <Trans>Your suggestions will be reviewed by our team before making final changes to the service information.</Trans>
         </Text>
+        <TouchableOpacity onPress={props.onChooseExplainFeedback}>
+                <Text>
+                    <Trans>
+                        Learn More
+                    </Trans>
+                </Text>
+            </TouchableOpacity>
     </View>
 );
