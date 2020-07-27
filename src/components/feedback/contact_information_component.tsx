@@ -16,6 +16,7 @@ import { goToRouteWithParameter, Routes, RouterProps, goBack } from '../../appli
 import { useHistory } from 'react-router-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { isAndroid } from '../../application/helpers/is_android';
+import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 
 export interface ContactInformationProps {
     readonly feedbackType: string;
@@ -42,6 +43,7 @@ export const ContactInformationComponent = ({
 }: Props): JSX.Element => {
     const [userInformation, setUserInformation]: readonly [UserInformation, SetUserInformation] = useState(getEmptyUserInfo());
     const history = useHistory();
+    const keyboardIsVisible = useKeyboardIsVisible();
 
     const serviceId = match.params.serviceId;
 
@@ -111,6 +113,7 @@ export const ContactInformationComponent = ({
                             />
                         </KeyboardAwareScrollView>
                            <FinishButton
+                                isVisible={!keyboardIsVisible}
                                 userInformation={userInformation}
                                 isSendingFeedback={isSendingFeedback}
                                 onFinishPress={onFinishPress}
@@ -232,13 +235,17 @@ const TextInputComponent = (props: TextInputProps): JSX.Element => {
 };
 
 interface FinishProps {
+    readonly isVisible: boolean;
     readonly userInformation: UserInformation;
     readonly isSendingFeedback: boolean;
     readonly onFinishPress: () => void;
 }
 
-const FinishButton = ({ userInformation, isSendingFeedback, onFinishPress }: FinishProps): JSX.Element => {
+const FinishButton = ({ isVisible, userInformation, isSendingFeedback, onFinishPress }: FinishProps): JSX.Element => {
     const buttonLabel = userInformation.email.length ? t`Email me updates` : t`Finish without email`;
+    if (!isVisible) {
+        return <EmptyComponent/>;
+    }
 
     return (
         <TouchableOpacity

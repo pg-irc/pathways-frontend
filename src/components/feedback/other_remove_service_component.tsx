@@ -14,6 +14,7 @@ import { DiscardChangesModal } from './discard_changes_modal';
 import { HeaderComponent } from './header_component';
 import { SubmitFeedbackButton } from './submit_feedback_button';
 import { isAndroid } from '../../application/helpers/is_android';
+import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 
 type ContentComponentProps = {
     readonly input: string;
@@ -96,7 +97,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
     const history = useHistory();
     const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>(props.otherRemoveServiceFeedback);
-
+    const keyboardIsVisible = useKeyboardIsVisible();
     useEffect((): void => {
         if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
             goBack(history);
@@ -140,7 +141,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
             <SubmitFeedbackButton
                 onPress={submitFeedback}
                 disabled={!feedback}
-                isVisible={true}
+                isVisible={!keyboardIsVisible}
             />
             <DiscardChangesModal
                 onDiscardPress={onDiscardModalDiscardPress}
