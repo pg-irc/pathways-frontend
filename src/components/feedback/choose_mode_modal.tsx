@@ -72,13 +72,9 @@ const SubtitleComponent = (props: ButtonsComponentProps): JSX.Element => (
     <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
         <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
             <Trans>Your suggestions will be reviewed by our team before making final changes to the service information.</Trans>
+            <Text style={textStyles.link} onPress={props.onChooseExplainFeedback}>
+                <Trans>Learn More</Trans>
+            </Text>
         </Text>
-        <TouchableOpacity onPress={props.onChooseExplainFeedback}>
-                <Text>
-                    <Trans>
-                        Learn More
-                    </Trans>
-                </Text>
-            </TouchableOpacity>
     </View>
 );
