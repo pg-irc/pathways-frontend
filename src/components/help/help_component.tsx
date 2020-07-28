@@ -56,7 +56,7 @@ const fixture: ReadonlyArray<HelpContact> = [
     },
     {
         title: <Trans>Contact Arrival Advisor team</Trans>,
-        url: 'mailto:hello@arrivaladvisor.ca',
+        url: 'mailto:info@arrivaladvisor.ca',
     },
 ];
 
