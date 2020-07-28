@@ -29,13 +29,13 @@ export const ExplainFeedbackComponent = (props: props): JSX.Element => {
                 headerLabel={t`Service listed on Arrival Advisor`}
                 close={onClosePress}
             />
-        <Content style={{ marginTop: 5, paddingLeft: 15, paddingRight: 5 }}>
+        <Content style={{ paddingTop: 15, paddingHorizontal: 15 }}>
             <Text style={textStyles.headlineH2StyleBlackLeft}>
                 <Trans>Where do the services listed on Arrival Advisor come from?</Trans>
             </Text>
             <Text style={[textStyles.paragraphStyle, { marginBottom: 20 }]}>
                 <Trans>
-                The services listed on Arrival Advisor come from bc211, a nonprofit information and referral organization that publishes a searchable online directory of community, government, and social services in British Columbia. bc211’s staff members collect and update this services information.
+                The services listed on Arrival Advisor come from <Link href={'http://www.bc211.ca'} style={textStyles.link} >bc211</Link>, a nonprofit information and referral organization that publishes a searchable online directory of community, government, and social services in British Columbia. bc211’s staff members collect and update this services information.
                 </Trans>
             </Text>
             <Text style={textStyles.headlineH2StyleBlackLeft}>
@@ -51,7 +51,7 @@ export const ExplainFeedbackComponent = (props: props): JSX.Element => {
             </Text>
             <Text style={[textStyles.paragraphStyle, { marginBottom: 20 }]}>
                 <Trans>
-                You can read bc211’s Inclusion Policy here to see what organizations and services are listed. If you believe that your organization or service fits the inclusion criteria, you can email <Link href={'mailto:support@expo.io'} style={textStyles.link}>updates@bc211.ca</Link> so the bc211 team can review your organization or service. Visit <Link href={'http://www.bc211.ca'} style={textStyles.link} >bc211</Link> for more information.
+                You can read <Link href={'http://www.bc211.ca/inclusion-policy/'} style={textStyles.link}>bc211’s Inclusion Policy here</Link> to see what organizations and services are listed. If you believe that your organization or service fits the inclusion criteria, you can email <Link href={'mailto:support@expo.io'} style={textStyles.link}>updates@bc211.ca</Link> so the bc211 team can review your organization or service. Visit <Link href={'http://www.bc211.ca'} style={textStyles.link} >bc211</Link> for more information.
                 </Trans>
             </Text>
         </Content>
