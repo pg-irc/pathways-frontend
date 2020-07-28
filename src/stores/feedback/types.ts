@@ -58,7 +58,6 @@ export interface RemoveServiceFeedback {
 
 export interface ExplainFeedback {
     readonly type: 'explain_feedback';
-    readonly reason: string;
 }
 
 export type Feedback = ServiceFeedback | OtherFeedback | RemoveServiceFeedback | ExplainFeedback;
