@@ -12,6 +12,7 @@ import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
 import { Trans } from '@lingui/react';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
+import { cleanPhoneNumber } from './clean_phone_number';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
@@ -34,7 +35,8 @@ export const PhoneNumbersComponent = (props: Props): JSX.Element => {
 
 const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index: number): JSX.Element => {
     const onPress = (): void => {
-        const linkValue = 'tel: ' + phoneNumber.phone_number;
+        const cleanNumber = cleanPhoneNumber(phoneNumber.phone_number);
+        const linkValue = 'tel: ' + cleanNumber;
         props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.phone, linkValue);
         openURL(linkValue);
     };
