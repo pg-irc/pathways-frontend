@@ -185,8 +185,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                             inputField={feedbackInput.name}
                             label={<Trans>Name</Trans>}
                             body={props.service.name}
-                            isEnabled={isFeedbackInputEnabled}
-                            disabledComponent={<Name name={props.service.name} />}
+                            isFeedbackInputEnabled={isFeedbackInputEnabled}
+                            nonFeedbackComponent={<Name name={props.service.name} />}
                         />
                         <DividerComponent />
                         <FeedbackComponent
@@ -195,8 +195,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                             inputField={feedbackInput.organization}
                             label={<Trans>Organization</Trans>}
                             body={props.service.organizationName}
-                            isEnabled={isFeedbackInputEnabled}
-                            disabledComponent={<Organization name={props.service.organizationName} history={props.history} />}
+                            isFeedbackInputEnabled={isFeedbackInputEnabled}
+                            nonFeedbackComponent={<Organization name={props.service.organizationName} history={props.history} />}
                         />
                         <DividerComponent />
                         <FeedbackComponent
@@ -205,8 +205,8 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                             inputField={feedbackInput.description}
                             label={<Trans>Description</Trans>}
                             body={props.service.description}
-                            isEnabled={isFeedbackInputEnabled}
-                            disabledComponent={
+                            isFeedbackInputEnabled={isFeedbackInputEnabled}
+                            nonFeedbackComponent={
                                 <Description
                                     description={props.service.description}
                                     showLinkAlerts={props.showLinkAlerts}
@@ -393,8 +393,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
                 inputField={props.feedback.address}
                 label={<Trans>Address</Trans>}
                 body={getAddressesString(physicalAddresses)}
-                isEnabled={props.isFeedbackInputEnabled}
-                disabledComponent={
+                isFeedbackInputEnabled={props.isFeedbackInputEnabled}
+                nonFeedbackComponent={
                     <AddressesComponent
                         addresses={physicalAddresses}
                         latLong={props.service.latlong}
@@ -411,9 +411,9 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
                 toggleShouldSend={props.toggleShouldSendForField('phone')}
                 inputField={props.feedback.phone}
                 label={<Trans>Phone numbers</Trans>}
-                body={getPhonesString(props.service.phoneNumbers)}
-                isEnabled={props.isFeedbackInputEnabled}
-                disabledComponent={
+                body={buildPhonesString(props.service.phoneNumbers)}
+                isFeedbackInputEnabled={props.isFeedbackInputEnabled}
+                nonFeedbackComponent={
                     <PhoneNumbersComponent
                         phoneNumbers={props.service.phoneNumbers}
                         linkContextForAnalytics={linkContextForAnalytics}
@@ -429,8 +429,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
                 inputField={props.feedback.website}
                 label={<Trans>Website</Trans>}
                 body={props.service.website}
-                isEnabled={props.isFeedbackInputEnabled}
-                disabledComponent={
+                isFeedbackInputEnabled={props.isFeedbackInputEnabled}
+                nonFeedbackComponent={
                     <WebsiteComponent
                         website={props.service.website}
                         linkContextForAnalytics={linkContextForAnalytics}
@@ -446,8 +446,8 @@ const ServiceContactDetails = (props: ServiceContactDetailsProps): JSX.Element =
                 inputField={props.feedback.email}
                 label={<Trans>Email</Trans>}
                 body={props.service.email}
-                isEnabled={props.isFeedbackInputEnabled}
-                disabledComponent={
+                isFeedbackInputEnabled={props.isFeedbackInputEnabled}
+                nonFeedbackComponent={
                     <EmailComponent
                         email={props.service.email}
                         linkContextForAnalytics={linkContextForAnalytics}
@@ -487,6 +487,6 @@ const getAddressesString = (addresses: ReadonlyArray<Address>): string => (
     addresses.map((address: Address): string => `${address.address}\n${address.city} ${address.stateProvince} ${address.postalCode}`).join('\n')
 );
 
-const getPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
+const buildPhonesString = (phones: ReadonlyArray<PhoneNumber>): string => (
     phones.map((phone: PhoneNumber): string => `${phone.type}: ${phone.phone_number}`).join('\n')
 );
