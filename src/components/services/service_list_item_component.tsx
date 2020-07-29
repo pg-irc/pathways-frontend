@@ -8,6 +8,7 @@ import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses'
 import { History } from 'history';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
+import { buildServiceName } from './build_service_name';
 
 export interface ServiceListItemProps {
     readonly service: HumanServiceData;
@@ -30,7 +31,6 @@ export const ServiceListItemComponent = (props: Props): JSX.Element => {
                  <View style={{ backgroundColor: colors.white, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
                     <View style={{flex: 2, paddingLeft: 15}}>
                     {renderName(serviceName)}
-                    {/* {renderOrganizationName(props.service.organizationName)} */}
                     {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
                     {renderDescription(props.service.description)}
                     </View>
@@ -47,26 +47,9 @@ export const ServiceListItemComponent = (props: Props): JSX.Element => {
         );
     };
 
-const buildServiceName = (organizationName: string, serviceName: string): string => (
-    `${organizationName} - ${serviceName}`
-);
-
 const renderName = (name: string): JSX.Element => (
     <Text style={[textStyles.headlineH3StyleBlackLeft]}>{name}</Text>
 );
-
-// const renderOrganizationName = (name: string): JSX.Element => (
-//     <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
-//         <Text style={textStyles.listItemDetail}>
-//             <Trans>Provided by</Trans>{' '}
-//         </Text>
-//         <TouchableOpacity>
-//             <Text style={[textStyles.listItemDetail, { color: 'teal', fontWeight: 'bold'} ]}>
-//                 {name}
-//             </Text>
-//         </TouchableOpacity>
-//     </View>
-// );
 
 const renderDescription = (description: string): JSX.Element => (
     <Text note numberOfLines={3} style={textStyles.listItemDetail }>
@@ -76,7 +59,7 @@ const renderDescription = (description: string): JSX.Element => (
 
 // tslint:disable-next-line:typedef
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
-    mapWithIndex((address: Address, index: number) =>
+    mapWithIndex((address: Address, index: number): JSX.Element =>
         <View key={index} style={{ marginVertical: 10}}>
             <Text style={textStyles.listItemDetail}>
                 {address.address}, {address.city} {address.stateProvince} {address.postalCode || ''}
