@@ -1,4 +1,4 @@
-export const cleanPhoneNumber = (phoneNumber: string): string => {
+export const extractCallablePhoneNumber = (phoneNumber: string): string => {
     if (phoneNumber === '(none)') {
         return '';
     }
