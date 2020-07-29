@@ -9,7 +9,6 @@ import { openURL, LinkTypes } from '../link/link_component';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import * as R from 'ramda';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
-import { isServiceDetailArrayEmpty } from '../services/is_service_detail_empty';
 import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
 import { Trans } from '@lingui/react';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
@@ -22,7 +21,7 @@ interface Props {
 }
 
 export const PhoneNumbersComponent = (props: Props): JSX.Element => {
-    if (isServiceDetailArrayEmpty(props.phoneNumbers)) {
+    if (R.isEmpty(props.phoneNumbers)) {
         return <MissingServiceDetailComponent title={<Trans>Phone</Trans>} />;
     }
 

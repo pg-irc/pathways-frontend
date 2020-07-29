@@ -10,7 +10,6 @@ import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { LatLong } from '../../validation/latlong/types';
 import { openInMapsApplication } from '../maps_application_popup/open_in_maps_application';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
-import { isServiceDetailArrayEmpty } from '../services/is_service_detail_empty';
 import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 
@@ -24,7 +23,7 @@ interface Props {
 }
 
 export const AddressesComponent = (props: Props): JSX.Element => {
-    if (isServiceDetailArrayEmpty(props.addresses)) {
+    if (R.isEmpty(props.addresses)) {
         return <MissingServiceDetailComponent title={<Trans>Address:</Trans>} />;
     }
     return (
