@@ -70,9 +70,9 @@ const OptionButton = (props: { readonly name: JSX.Element, readonly onPress: () 
 
 const SubtitleComponent = (props: ButtonsComponentProps): JSX.Element => (
     <View style={{ marginHorizontal: 10, marginBottom: 15 }}>
-        <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 14 }]}>
+        <Text style={[textStyles.paragraphSmallStyleLeft, { fontSize: 12 }]}>
             <Trans>Your suggestions will be reviewed by our team before making final changes to the service information.</Trans>
-            <Text style={textStyles.messageLink} onPress={props.onChooseExplainFeedback}>
+            <Text style={[textStyles.messageLink,  { fontSize: 13 }]} onPress={props.onChooseExplainFeedback}>
                 {' '}
                 <Trans>Learn More</Trans>
             </Text>
