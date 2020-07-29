@@ -30,7 +30,6 @@ export const ServiceListItemComponent = (props: Props): JSX.Element => {
                  <View style={{ backgroundColor: colors.white, paddingVertical: 15, flex: 1, flexDirection: 'row'}}>
                     <View style={{flex: 2, paddingLeft: 15}}>
                     {renderName(serviceName)}
-                    {/* {renderOrganizationName(props.service.organizationName)} */}
                     {renderAddresses(filterPhysicalAddresses(props.service.addresses))}
                     {renderDescription(props.service.description)}
                     </View>
@@ -55,19 +54,6 @@ const renderName = (name: string): JSX.Element => (
     <Text style={[textStyles.headlineH3StyleBlackLeft]}>{name}</Text>
 );
 
-// const renderOrganizationName = (name: string): JSX.Element => (
-//     <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
-//         <Text style={textStyles.listItemDetail}>
-//             <Trans>Provided by</Trans>{' '}
-//         </Text>
-//         <TouchableOpacity>
-//             <Text style={[textStyles.listItemDetail, { color: 'teal', fontWeight: 'bold'} ]}>
-//                 {name}
-//             </Text>
-//         </TouchableOpacity>
-//     </View>
-// );
-
 const renderDescription = (description: string): JSX.Element => (
     <Text note numberOfLines={3} style={textStyles.listItemDetail }>
     {description}
@@ -76,7 +62,7 @@ const renderDescription = (description: string): JSX.Element => (
 
 // tslint:disable-next-line:typedef
 const renderAddresses = (physicalAddresses: ReadonlyArray<Address>) => (
-    mapWithIndex((address: Address, index: number) =>
+    mapWithIndex((address: Address, index: number): JSX.Element =>
         <View key={index} style={{ marginVertical: 10}}>
             <Text style={textStyles.listItemDetail}>
                 {address.address}, {address.city} {address.stateProvince} {address.postalCode || ''}
