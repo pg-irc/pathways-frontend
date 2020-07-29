@@ -8,6 +8,7 @@ import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses'
 import { History } from 'history';
 import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
+import { buildServiceName } from './build_service_name';
 
 export interface ServiceListItemProps {
     readonly service: HumanServiceData;
@@ -45,10 +46,6 @@ export const ServiceListItemComponent = (props: Props): JSX.Element => {
             </TouchableOpacity>
         );
     };
-
-const buildServiceName = (organizationName: string, serviceName: string): string => (
-    `${organizationName} - ${serviceName}`
-);
 
 const renderName = (name: string): JSX.Element => (
     <Text style={[textStyles.headlineH3StyleBlackLeft]}>{name}</Text>
