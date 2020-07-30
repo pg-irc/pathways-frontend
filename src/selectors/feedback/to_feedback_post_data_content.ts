@@ -1,11 +1,12 @@
 import { Feedback } from '../../stores/feedback/types';
 import { FeedbackPostDataContent }  from './types';
+import { HumanServiceData } from '../../validation/services/types';
 
-export const toFeedbackPostDataContent = (feedback: Feedback, serviceId: string): FeedbackPostDataContent => {
+export const toFeedbackPostDataContent = (feedback: Feedback, serviceData: HumanServiceData): FeedbackPostDataContent => {
     switch (feedback.type) {
         case 'service_feedback':
             return {
-                bc211Id: serviceId,
+                bc211Id: serviceData.id,
                 name: feedback.name?.value,
                 organization: feedback.organization?.value,
                 description: feedback.description?.value,
@@ -16,17 +17,17 @@ export const toFeedbackPostDataContent = (feedback: Feedback, serviceId: string)
             };
         case 'other_feedback':
             return {
-                bc211Id: serviceId,
+                bc211Id: serviceData.id,
                 other: feedback.value,
             };
         case 'remove_service':
             return {
-                bc211Id: serviceId,
+                bc211Id: serviceData.id,
                 removalReason: feedback.reason,
             };
         default:
             return {
-                bc211Id: serviceId,
+                bc211Id: serviceData.id,
             };
     }
 };
