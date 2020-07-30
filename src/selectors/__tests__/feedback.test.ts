@@ -7,6 +7,7 @@ import { aString } from '../../application/helpers/random_test_values';
 import { Feedback, UserInformation } from '../../stores/feedback/types';
 import { getEmptyServiceFeedback } from '../../stores/feedback';
 import { HumanServiceDataBuilder } from '../../stores/__tests__/helpers/services_helpers';
+import { ServiceFeedbackBuilder } from '../../stores/__tests__/helpers/feedback_builder';
 
 describe('picking feedback properties to send with: pickSendableFeedback()', () => {
 
@@ -88,21 +89,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
     it('builds expected FeedbackPostDataContent object from "service" Feedback', (): void => {
         const serviceId = aString();
         const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
-        const feedbackField = {
-            shouldSend: true,
-            value: aString(),
-        };
-        const feedback: Feedback = {
-            type: 'service_feedback',
-            name: feedbackField,
-            organization: feedbackField,
-            description: feedbackField,
-            address: feedbackField,
-            phone: feedbackField,
-            website: feedbackField,
-            email: feedbackField,
-        };
-
+        const feedback = new ServiceFeedbackBuilder().build();
         expect(buildFeedbackContentToPost(feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
             name: feedback.name.value,
@@ -113,6 +100,13 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
             website: feedback.website.value,
             email: feedback.email.value,
         });
+    });
+
+    it('includes service id in post payload', (): void => {
+        const serviceId = aString();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
+        const feedback = new ServiceFeedbackBuilder().build();
+        expect(buildFeedbackContentToPost(feedback, humanServiceData).bc211Id).toBe(serviceId);
     });
 
     it('builds expected FeedbackPostDataContent object from "other" Feedback', () => {
