@@ -13,14 +13,14 @@ import { HumanServiceData, ServiceStore } from '../../validation/services/types'
 import { Errors } from '../../validation/errors/types';
 import { TopicBuilder } from './helpers/topics_helpers';
 import { aString } from '../../application/helpers/random_test_values';
-import { ServiceBuilder, buildNormalizedServices, ServicesForTopicBuilder, ServicesForTopicErrorBuilder, buildServiceMap } from './helpers/services_helpers';
+import { HumanServiceDataBuilder, buildNormalizedServices, ServicesForTopicBuilder, ServicesForTopicErrorBuilder, buildServiceMap } from './helpers/services_helpers';
 import { isServiceLoading } from '../../validation/services/types';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
 
 describe('services reducer', () => {
-    const aServiceBuilder = new ServiceBuilder();
+    const aServiceBuilder = new HumanServiceDataBuilder();
     const loadedServicesForTopic = new ServicesForTopicBuilder().withServiceIds([aServiceBuilder.id]);
     const loadingServicesForTopic = new ServicesForTopicBuilder().withLoading(true);
     const loadedServicesForTopicError = new ServicesForTopicErrorBuilder();
@@ -79,7 +79,7 @@ describe('services reducer', () => {
 
     describe('when populating services for topic objects from a success response', () => {
         const topic = new TopicBuilder().withId(loadingServicesForTopic.topicId).build();
-        const services: ReadonlyArray<HumanServiceData> = [new ServiceBuilder().build(), new ServiceBuilder().build()];
+        const services: ReadonlyArray<HumanServiceData> = [new HumanServiceDataBuilder().build(), new HumanServiceDataBuilder().build()];
         const action: BuildServicesSuccessAction = {
             type: constants.LOAD_SERVICES_SUCCESS,
             payload: {
@@ -99,9 +99,9 @@ describe('services reducer', () => {
 
         it('maintains the ordering of the services in the topics service vector', () => {
             const servicesWithIds: ReadonlyArray<HumanServiceData> = [
-                new ServiceBuilder().withId('1').build(),
-                new ServiceBuilder().withId('3').build(),
-                new ServiceBuilder().withId('2').build(),
+                new HumanServiceDataBuilder().withId('1').build(),
+                new HumanServiceDataBuilder().withId('3').build(),
+                new HumanServiceDataBuilder().withId('2').build(),
             ];
             const theAction: BuildServicesSuccessAction = {
                 type: constants.LOAD_SERVICES_SUCCESS,
@@ -170,7 +170,7 @@ describe('services reducer', () => {
     describe('when sending a save search service action', () => {
 
         it('updates the store with the new service', () => {
-            const aSearchService = new ServiceBuilder().build();
+            const aSearchService = new HumanServiceDataBuilder().build();
             const action: SaveServiceAction = {
                 type: constants.SAVE_SERVICE,
                 payload: {
@@ -183,10 +183,10 @@ describe('services reducer', () => {
 
         it('overwrites an existing service with the same id', () => {
             const serviceId = aString();
-            const oldService = new ServiceBuilder().withId(serviceId);
+            const oldService = new HumanServiceDataBuilder().withId(serviceId);
             const oldStore = buildNormalizedServices([oldService], []);
 
-            const newService = new ServiceBuilder().withId(serviceId).build();
+            const newService = new HumanServiceDataBuilder().withId(serviceId).build();
             const action: SaveServiceAction = {
                 type: constants.SAVE_SERVICE,
                 payload: {
@@ -201,7 +201,7 @@ describe('services reducer', () => {
 
     describe('when bookmarking a service', () => {
         const store = buildNormalizedServices([], []);
-        const service = new ServiceBuilder().build();
+        const service = new HumanServiceDataBuilder().build();
         const action: BookmarkServiceAction = {
             type: constants.BOOKMARK_SERVICE,
             payload: { service },
@@ -216,7 +216,7 @@ describe('services reducer', () => {
     });
 
     describe('when removing a bookmarked service', () => {
-        const bookmarkedServiceBuilder = new ServiceBuilder().withBookmarked(true);
+        const bookmarkedServiceBuilder = new HumanServiceDataBuilder().withBookmarked(true);
         const store = buildNormalizedServices([bookmarkedServiceBuilder], []);
         const bookmarkedService = bookmarkedServiceBuilder.build();
         const action: UnbookmarkServiceAction = {
@@ -230,7 +230,7 @@ describe('services reducer', () => {
     });
 
     describe('when clear all user data action is dispatched', () => {
-        const serviceBuilder = new ServiceBuilder();
+        const serviceBuilder = new HumanServiceDataBuilder();
         const store = buildNormalizedServices([serviceBuilder], []);
         const action: ClearAllUserDataAction = {
             type: constants.CLEAR_ALL_USER_DATA,
@@ -245,7 +245,7 @@ describe('services reducer', () => {
         let storeState: ServiceStore = undefined;
         const store = buildNormalizedServices([], []);
         const bookmarkedServiceId = aString();
-        const bookmarkedServiceBuilder = new ServiceBuilder().withId(bookmarkedServiceId).withBookmarked(true);
+        const bookmarkedServiceBuilder = new HumanServiceDataBuilder().withId(bookmarkedServiceId).withBookmarked(true);
         const bookmarkedServiceMap = buildServiceMap([bookmarkedServiceBuilder]);
         beforeEach(() => {
             const userDataWithBookmarkedService = new PersistedDataBuilder().

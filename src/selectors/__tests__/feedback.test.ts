@@ -6,7 +6,7 @@ import { FeedbackStoreBuilder } from '../../stores/__tests__/helpers/feedback_st
 import { aString } from '../../application/helpers/random_test_values';
 import { Feedback, UserInformation } from '../../stores/feedback/types';
 import { getEmptyServiceFeedback } from '../../stores/feedback';
-import { ServiceBuilder } from '../../stores/__tests__/helpers/services_helpers';
+import { HumanServiceDataBuilder } from '../../stores/__tests__/helpers/services_helpers';
 
 describe('picking feedback properties to send with: pickSendableFeedback()', () => {
 
@@ -87,7 +87,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
     it('builds expected FeedbackPostDataContent object from "service" Feedback', (): void => {
         const serviceId = aString();
-        const humanServiceData = new ServiceBuilder().withId(serviceId).build();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
         const feedbackField = {
             shouldSend: true,
             value: aString(),
@@ -117,7 +117,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
     it('builds expected FeedbackPostDataContent object from "other" Feedback', () => {
         const serviceId = aString();
-        const humanServiceData = new ServiceBuilder().withId(serviceId).build();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
         const feedback: Feedback = {
             type: 'other_feedback',
             value: aString(),
@@ -131,7 +131,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
     it('builds expected FeedbackPostDataContent object from "remove service" Feedback', () => {
         const serviceId = aString();
-        const humanServiceData = new ServiceBuilder().withId(serviceId).build();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
         const feedback: Feedback = {
             type: 'remove_service',
             reason: aString(),
@@ -145,7 +145,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
     it('sets any missing "service" Feedback fields to undefined', () => {
         const serviceId = aString();
-        const humanServiceData = new ServiceBuilder().withId(serviceId).build();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
         const feedback = {
             type: 'service_feedback',
         };
@@ -163,7 +163,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
     it('sets any missing "other" Feedback fields to undefined', () => {
         const serviceId = aString();
-        const humanServiceData = new ServiceBuilder().withId(serviceId).build();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
         const feedback = {
             type: 'other_feedback',
         };
@@ -175,7 +175,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
     it('sets any missing "remove service" Feedback fields to undefined', () => {
         const serviceId = aString();
-        const humanServiceData = new ServiceBuilder().withId(serviceId).build();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
         const feedback = {
             type: 'remove_service',
         };
