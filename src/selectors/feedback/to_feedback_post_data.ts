@@ -5,19 +5,15 @@ import { toFeedbackPostDataContent } from './to_feedback_post_data_content';
 import { toFeedbackPostDataAuthor } from './to_feedback_post_data_author';
 import { HumanServiceData } from '../../validation/services/types';
 
-export const toFeedbackPostData = (feedback: Feedback,
-                                    userInformation: undefined | UserInformation,
+export const toFeedbackPostData = (feedbackData: Feedback,
+                                    userData: undefined | UserInformation,
                                     serviceData: HumanServiceData): FeedbackPostData => {
-    const feedbackPostContent = toFeedbackPostDataContent(feedback, serviceData);
 
-    if (!userInformation) {
-        return feedbackPostContent;
-    }
-
-    const feedbackPostDataAuthor = toFeedbackPostDataAuthor(userInformation);
+    const feedbackToPost = toFeedbackPostDataContent(feedbackData, serviceData);
+    const authorDataToPost = userData ? toFeedbackPostDataAuthor(userData) : {};
 
     return {
-        ...feedbackPostContent,
-        ...feedbackPostDataAuthor,
+        ...feedbackToPost,
+        ...authorDataToPost,
     };
 };
