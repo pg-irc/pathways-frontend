@@ -8,11 +8,14 @@ describe('clean phone number', () => {
     it('returns phone number without separators unchanged', () => {
         expect(extractCallablePhoneNumber('1234567890')).toBe('1234567890');
     });
-    it('returns 1-800 phone number unchanged', () => {
+    it('returns phone number with area code unchanged', () => {
         expect(extractCallablePhoneNumber('1-345-456-1543')).toBe('1-345-456-1543');
     });
     it('returns just the phone number for number with local', () => {
         expect(extractCallablePhoneNumber('123-456-7890 Local 123')).toBe('123-456-7890');
+    });
+    it('returns the first number when two given separated by space', () => {
+        expect(extractCallablePhoneNumber('123-456-7890 234-567-8909')).toBe('123-456-7890');
     });
     it('returns just the phone number for number with second number in ()', () => {
         expect(extractCallablePhoneNumber('1-800-ADOPT-02 (1-800-236-7802)')).toBe('1-800-ADOPT-02');
