@@ -1,19 +1,19 @@
 import { Feedback } from '../../stores/feedback/types';
 import { FeedbackPostData }  from './types';
 import { UserInformation } from '../../stores/feedback/types';
-import { toFeedbackPostDataContent } from './to_feedback_post_data_content';
-import { toFeedbackPostDataAuthor } from './to_feedback_post_data_author';
+import { buildFeedbackContentToPost } from './build_feedback_content_to_post';
+import { buildFeedbackAuthorDataToPost } from './build_feedback_author_data_to_post';
 import { HumanServiceData } from '../../validation/services/types';
 
-export const toFeedbackPostData = (feedbackData: Feedback,
+export const buildFeedbackToPost = (feedbackData: Feedback,
                                     userData: undefined | UserInformation,
                                     serviceData: HumanServiceData): FeedbackPostData => {
 
-    const feedbackToPost = toFeedbackPostDataContent(feedbackData, serviceData);
-    const authorDataToPost = userData ? toFeedbackPostDataAuthor(userData) : {};
+    const feedbackContentToPost = buildFeedbackContentToPost(feedbackData, serviceData);
+    const authorDataToPost = userData ? buildFeedbackAuthorDataToPost(userData) : {};
 
     return {
-        ...feedbackToPost,
+        ...feedbackContentToPost,
         ...authorDataToPost,
     };
 };

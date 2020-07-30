@@ -1,4 +1,4 @@
-export interface FeedbackPostDataContent {
+export interface FeedbackContentToPost {
     readonly bc211Id: string;
     readonly name?: string;
     readonly organization?: string;
@@ -11,7 +11,7 @@ export interface FeedbackPostDataContent {
     readonly other?: string;
 }
 
-export interface FeedbackPostDataAuthor {
+export interface FeedbackAuthorDataToPost {
     readonly authorIsEmployee?: string;
     readonly authorEmail?: string;
     readonly authorName?: string;
@@ -19,4 +19,4 @@ export interface FeedbackPostDataAuthor {
     readonly authorJobTitle?: string;
 }
 
-export type FeedbackPostData = FeedbackPostDataContent & FeedbackPostDataAuthor;
+export type FeedbackPostData = FeedbackContentToPost & FeedbackAuthorDataToPost;

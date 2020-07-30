@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement
 import { pickSendableFeedback } from '../feedback/pick_sendable_feedback';
-import { toFeedbackPostDataAuthor } from '../feedback/to_feedback_post_data_author';
-import { toFeedbackPostDataContent } from '../feedback/to_feedback_post_data_content';
+import { buildFeedbackAuthorDataToPost } from '../feedback/build_feedback_author_data_to_post';
+import { buildFeedbackContentToPost } from '../feedback/build_feedback_content_to_post';
 import { FeedbackStoreBuilder } from '../../stores/__tests__/helpers/feedback_store_builder';
 import { aString } from '../../application/helpers/random_test_values';
 import { Feedback, UserInformation } from '../../stores/feedback/types';
@@ -54,7 +54,7 @@ describe('converting UserInformation to FeedbackPostDataAuthor with: toFeedbackP
             isEmployee: true,
         };
 
-        expect(toFeedbackPostDataAuthor(userInformation)).toEqual({
+        expect(buildFeedbackAuthorDataToPost(userInformation)).toEqual({
             authorName: userInformation.name,
             authorEmail: userInformation.email,
             authorOrganization: userInformation.organizationName,
@@ -65,14 +65,14 @@ describe('converting UserInformation to FeedbackPostDataAuthor with: toFeedbackP
 
     it('sets is employee field to "false" if missing', () => {
         const userInformation = {};
-        expect(toFeedbackPostDataAuthor(userInformation as UserInformation)).toEqual({
+        expect(buildFeedbackAuthorDataToPost(userInformation as UserInformation)).toEqual({
             authorIsEmployee: 'false',
         });
     });
 
     it('sets other missing author fields to undefined', () => {
         const userInformation = {};
-        expect(toFeedbackPostDataAuthor(userInformation as UserInformation)).toEqual({
+        expect(buildFeedbackAuthorDataToPost(userInformation as UserInformation)).toEqual({
             authorIsEmployee: 'false',
             authorName: undefined,
             authorEmail: undefined,
@@ -103,7 +103,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
             email: feedbackField,
         };
 
-        expect(toFeedbackPostDataContent(feedback, humanServiceData)).toEqual({
+        expect(buildFeedbackContentToPost(feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
             name: feedback.name.value,
             organization: feedback.organization.value,
@@ -123,7 +123,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
             value: aString(),
         };
 
-        expect(toFeedbackPostDataContent(feedback, humanServiceData)).toEqual({
+        expect(buildFeedbackContentToPost(feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
             other: feedback.value,
         });
@@ -137,7 +137,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
             reason: aString(),
         };
 
-        expect(toFeedbackPostDataContent(feedback, humanServiceData)).toEqual({
+        expect(buildFeedbackContentToPost(feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
             removalReason: feedback.reason,
         });
@@ -149,7 +149,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
         const feedback = {
             type: 'service_feedback',
         };
-        expect(toFeedbackPostDataContent(feedback as Feedback, humanServiceData)).toEqual({
+        expect(buildFeedbackContentToPost(feedback as Feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
             name: undefined,
             organization: undefined,
@@ -167,7 +167,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
         const feedback = {
             type: 'other_feedback',
         };
-        expect(toFeedbackPostDataContent(feedback as Feedback, humanServiceData)).toEqual({
+        expect(buildFeedbackContentToPost(feedback as Feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
             other: undefined,
         });
@@ -179,7 +179,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
         const feedback = {
             type: 'remove_service',
         };
-        expect(toFeedbackPostDataContent(feedback as Feedback, humanServiceData)).toEqual({
+        expect(buildFeedbackContentToPost(feedback as Feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
             removalReason: undefined,
         });

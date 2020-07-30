@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { Store } from '../../stores';
 import { FeedbackPostData }  from './types';
-import { toFeedbackPostData } from './to_feedback_post_data';
+import { buildFeedbackToPost } from './build_feedback_to_post';
 import { pickSendableFeedback } from './pick_sendable_feedback';
 import { selectServiceById } from '../services/select_service_by_id';
 
@@ -14,5 +14,5 @@ export const selectFeedbackPostData = (store: Store, serviceId: string): undefin
         return undefined;
     }
 
-    return toFeedbackPostData(feedback, userInformation, serviceInformation);
+    return buildFeedbackToPost(feedback, userInformation, serviceInformation);
 };

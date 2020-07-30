@@ -1,8 +1,8 @@
 import { Feedback } from '../../stores/feedback/types';
-import { FeedbackPostDataContent }  from './types';
+import { FeedbackContentToPost }  from './types';
 import { HumanServiceData } from '../../validation/services/types';
 
-export const toFeedbackPostDataContent = (feedback: Feedback, serviceData: HumanServiceData): FeedbackPostDataContent => {
+export const buildFeedbackContentToPost = (feedback: Feedback, serviceData: HumanServiceData): FeedbackContentToPost => {
     switch (feedback.type) {
         case 'service_feedback':
             return {

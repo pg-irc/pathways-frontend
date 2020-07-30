@@ -1,7 +1,7 @@
 import { UserInformation } from '../../stores/feedback/types';
-import { FeedbackPostDataAuthor }  from './types';
+import { FeedbackAuthorDataToPost }  from './types';
 
-export const toFeedbackPostDataAuthor = (userInformation: UserInformation): FeedbackPostDataAuthor => ({
+export const buildFeedbackAuthorDataToPost = (userInformation: UserInformation): FeedbackAuthorDataToPost => ({
     authorIsEmployee: userInformation.isEmployee === true ? 'true' : 'false',
     authorEmail: userInformation.email,
     authorName: userInformation.name,
