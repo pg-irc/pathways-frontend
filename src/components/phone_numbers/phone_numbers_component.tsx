@@ -34,12 +34,13 @@ export const PhoneNumbersComponent = (props: Props): JSX.Element => {
 };
 
 const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index: number): JSX.Element => {
-    const onPress = (): void => {
+    const callPhoneNumber = (): void => {
         const callableNumber = extractCallablePhoneNumber(phoneNumber.phone_number);
         const linkValue = callableNumber ? 'tel: ' + callableNumber : '';
         props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.phone, linkValue);
         openURL(linkValue);
     };
+    const isFaxNumber = phoneNumber.type.toLowerCase().startsWith('fax');
     const shouldAddDivider = index !== 0;
 
     return (
@@ -48,7 +49,7 @@ const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index:
             <CardButtonComponent
                 leftContent={renderSinglePhoneNumber(phoneNumber)}
                 rightContent={<ServiceDetailIconComponent name={'phone'} />}
-                onPress={onPress}
+                onPress={isFaxNumber ? undefined : callPhoneNumber}
             />
         </View>
     );
