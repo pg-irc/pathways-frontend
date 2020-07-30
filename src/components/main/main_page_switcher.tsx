@@ -14,6 +14,7 @@ import { SearchConnectedComponent } from '../search/search_connected_component';
 import { OrganizationDetailComponent } from '../organizations/organization_detail_component';
 import { ServiceDetailConnectedComponent } from '../services/service_detail_connected_component';
 import { OtherRemoveServiceConnectedComponent } from '../feedback/other_remove_service_connected_component';
+import { ExplainFeedbackConnectedComponent } from '../feedback/explain_feedback_connected_component';
 import { Routes, routePathDefinition, routePathWithoutParameter } from '../../application/routing';
 import { Locale } from '../../locale';
 import { ContactInformationConnectedComponent } from '../feedback/contact_information_connected_component';
@@ -40,6 +41,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
         <Route exact path={routePathDefinition(Routes.OrganizationDetail)} component={OrganizationDetailComponent} />
         <Route exact path={routePathDefinition(Routes.ServiceDetail)} component={ServiceDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.OtherFeedback)} component={OtherRemoveServiceConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.ExplainFeedback)} component={ExplainFeedbackConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.ContactInformation)} component={ContactInformationConnectedComponent} />
         <Redirect to={defaultPath(props)} />
     </Switch>

@@ -15,6 +15,7 @@ interface ModalContainerProps {
     readonly chooseChangeNameOrDetail: () => void;
     readonly chooseRemoveService: () => void;
     readonly chooseOtherChanges: () => void;
+    readonly chooseExplainFeedback: () => void;
     readonly close: () => CloseAction;
     readonly onBackButtonPress: () => void;
 }
@@ -34,6 +35,7 @@ export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
                 onChangeNameOrOtherDetailPress={props.chooseChangeNameOrDetail}
                 onChooseOtherChangesPress={props.chooseOtherChanges}
                 onChooseRemoveServicePress={props.chooseRemoveService}
+                onChooseExplainFeedback={props.chooseExplainFeedback}
                 isVisible={props.showChooseFeedbackModeModal}
             />
             <DiscardChangesModal

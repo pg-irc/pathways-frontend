@@ -12,6 +12,7 @@ export enum FeedbackScreen {
     EditableServiceDetailPage,
     RemoveServicePage,
     OtherChangesPage,
+    ExplainFeedback,
     ContactInformationPage,
 }
 
@@ -55,4 +56,8 @@ export interface RemoveServiceFeedback {
     readonly reason: string;
 }
 
-export type Feedback = ServiceFeedback | OtherFeedback | RemoveServiceFeedback;
+export interface ExplainFeedback {
+    readonly type: 'explain_feedback';
+}
+
+export type Feedback = ServiceFeedback | OtherFeedback | RemoveServiceFeedback | ExplainFeedback;

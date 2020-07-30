@@ -43,6 +43,7 @@ import {
     ChooseChangeNameOrDetailsAction,
     ChooseRemoveServiceAction,
     ChooseOtherChangesAction,
+    ChooseExplainFeedbackAction,
     CloseAction,
     DiscardChangesAction,
     getEmptyServiceFeedback,
@@ -77,6 +78,7 @@ export interface ServiceDetailActions {
     readonly chooseChangeNameOrDetail: () => ChooseChangeNameOrDetailsAction;
     readonly chooseRemoveService: () => ChooseRemoveServiceAction;
     readonly chooseOtherChanges: () => ChooseOtherChangesAction;
+    readonly chooseExplainFeedback: () => ChooseExplainFeedbackAction;
     readonly submitFeedback: (feedback: Feedback) => SubmitAction;
     readonly finishFeedback: (userInformation: UserInformation) => FinishAction;
     readonly close: () => CloseAction;
@@ -123,6 +125,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
         resetInputs();
         props.chooseOtherChanges();
     };
+
+    const chooseExplainFeedback = (): void => {
+        goToRouteWithParameter(Routes.ExplainFeedback, serviceId, props.history)();
+        resetInputs();
+        props.chooseExplainFeedback();
+    }
 
     const resetInputs = (): void => {
         setFeedbackInput(getEmptyServiceFeedback());
@@ -237,6 +245,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                             chooseChangeNameOrDetail={chooseChangeNameOrDetail}
                             chooseRemoveService={chooseRemoveService}
                             chooseOtherChanges={chooseOtherChanges}
+                            chooseExplainFeedback={chooseExplainFeedback}
                             close={props.close}
                             cancelDiscardFeedback={props.cancelDiscardFeedback}
                             onBackButtonPress={onBackButtonPress}

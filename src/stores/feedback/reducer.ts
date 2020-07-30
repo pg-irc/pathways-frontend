@@ -50,6 +50,8 @@ const chooseModeReducer = (store: FeedbackStore, action: ReducerActions): Feedba
             return { ...store, screen: FeedbackScreen.RemoveServicePage, modal: FeedbackModal.None };
         case constants.CHOOSE_OTHER_CHANGES:
             return { ...store, screen: FeedbackScreen.OtherChangesPage, modal: FeedbackModal.None };
+        case constants.CHOOSE_EXPLAIN_FEEDBACK:
+            return { ...store, screen: FeedbackScreen.ExplainFeedback, modal:FeedbackModal.None}
         case constants.CLOSE:
             return {...store, screen: FeedbackScreen.ServiceDetail, modal: FeedbackModal.None };
         default:
@@ -84,6 +86,8 @@ const backButtonReducer = (store: FeedbackStore): FeedbackStore => {
             return { ...store, modal: FeedbackModal.None, screen: FeedbackScreen.RemoveServicePage };
         case 'other_feedback':
             return { ...store, modal: FeedbackModal.None, screen: FeedbackScreen.OtherChangesPage };
+        case 'explain_feedback':
+            return { ...store, modal: FeedbackModal.None, screen: FeedbackScreen.ExplainFeedback };
         default:
             return store;
     }
