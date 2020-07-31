@@ -86,7 +86,7 @@ describe('converting UserInformation to FeedbackPostDataAuthor with: toFeedbackP
 
 describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDataContent()', () => {
 
-    it('builds expected FeedbackPostDataContent object from "service" Feedback', (): void => {
+    it('builds expected FeedbackPostDataContent object from "service" Feedback', () => {
         const humanServiceData = new HumanServiceDataBuilder().build();
         const feedback = new ServiceFeedbackBuilder().build();
         expect(buildFeedbackContentToPost(feedback, humanServiceData)).toEqual({
@@ -103,14 +103,14 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
         });
     });
 
-    it('includes service id in post payload', (): void => {
+    it('includes service id in post payload', () => {
         const serviceId = aString();
         const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
         const feedback = new ServiceFeedbackBuilder().build();
         expect(buildFeedbackContentToPost(feedback, humanServiceData).bc211Id).toBe(serviceId);
     });
 
-    it('includes service name in post payload for "service" feedback', (): void => {
+    it('includes service name in post payload for "service" feedback', () => {
         const serviceName = aString();
         const humanServiceData = new HumanServiceDataBuilder().withName(serviceName).build();
         const feedback = new ServiceFeedbackBuilder().build();
@@ -123,7 +123,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
         expect(buildFeedbackContentToPost(feedback, humanServiceData).bc211OrganizationName).toBe(humanServiceData.organizationName);
     });
 
-    it('includes service name in post payload for "other" feedback', (): void => {
+    it('includes service name in post payload for "other" feedback', () => {
         const serviceName = aString();
         const humanServiceData = new HumanServiceDataBuilder().withName(serviceName).build();
         const feedback: OtherFeedback = { type: 'other_feedback', value: aString()};
@@ -136,7 +136,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
         expect(buildFeedbackContentToPost(feedback, humanServiceData).bc211OrganizationName).toBe(humanServiceData.organizationName);
     });
 
-    it('includes service name in post payload for "remove" feedback', (): void => {
+    it('includes service name in post payload for "remove" feedback', () => {
         const serviceName = aString();
         const humanServiceData = new HumanServiceDataBuilder().withName(serviceName).build();
         const feedback: RemoveServiceFeedback = { type: 'remove_service', reason: aString()};
@@ -164,7 +164,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
         });
     });
 
-    it('builds expected FeedbackPostDataContent object from "remove service" Feedback', (): void => {
+    it('builds expected FeedbackPostDataContent object from "remove service" Feedback', () => {
         const humanServiceData = new HumanServiceDataBuilder().build();
         const feedback: Feedback = {
             type: 'remove_service',
@@ -179,7 +179,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
         });
     });
 
-    it('sets any missing "service" Feedback fields to undefined', (): void => {
+    it('sets any missing "service" Feedback fields to undefined', () => {
         const humanServiceData = new HumanServiceDataBuilder().build();
         const feedback = {
             type: 'service_feedback',
@@ -198,7 +198,7 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
         });
     });
 
-    it('sets any missing "other" Feedback fields to undefined', (): void => {
+    it('sets any missing "other" Feedback fields to undefined', () => {
         const humanServiceData = new HumanServiceDataBuilder().build();
         const feedback = {
             type: 'other_feedback',
