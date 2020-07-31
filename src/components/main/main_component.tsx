@@ -90,7 +90,7 @@ export const MainComponent = (props: Props): JSX.Element => {
 
     return (
         <Root>
-            <StatusBar />
+            <StatusBar style='light'/>
             <Drawer
                 side='right'
                 onClose={props.closeHeaderMenu}
