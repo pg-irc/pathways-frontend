@@ -8,6 +8,7 @@ export const buildFeedbackContentToPost = (feedback: Feedback, serviceData: Huma
             return {
                 bc211Id: serviceData.id,
                 bc211ServiceName: serviceData.name,
+                bc211OrganizationName: serviceData.organizationName,
                 name: feedback.name?.value,
                 organization: feedback.organization?.value,
                 description: feedback.description?.value,
@@ -20,12 +21,14 @@ export const buildFeedbackContentToPost = (feedback: Feedback, serviceData: Huma
             return {
                 bc211Id: serviceData.id,
                 bc211ServiceName: serviceData.name,
+                bc211OrganizationName: serviceData.organizationName,
                 other: feedback.value,
             };
         case 'remove_service':
             return {
                 bc211Id: serviceData.id,
                 bc211ServiceName: serviceData.name,
+                bc211OrganizationName: serviceData.organizationName,
                 removalReason: feedback.reason,
             };
         default:
