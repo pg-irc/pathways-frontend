@@ -1,0 +1,63 @@
+{
+    "background": "./background.png",
+    "color": "#ffffff",
+    "fonts": {
+        "en": "Segoe-UI.ttf",
+        "ko": "NotoSansKR-Regular.otf",
+        "tl": "Segoe-UI.ttf",
+        "fr": "Segoe-UI.ttf",
+        "pa": "Punjabi.ttf",
+        "zh_Hans": "NotoSansSC-Regular.otf",
+        "zh_Hant": "NotoSansTC-Regular.otf",
+        "ar": "Amiri-Regular.ttf"
+    },
+    "font_size": 65,
+    "frame": {
+        "android": "Nexus 6P",
+        "ios 5.5": "iPhone 8",
+        "ios 6.5": "iPhone XR"
+    },
+    "padding": "125x200",
+    "screenshots": [
+        {
+            "key": "WELCOME",
+            "show_complete_frame": true,
+            "has_title": false
+        },
+        {
+            "key": "TRUSTED",
+            "show_complete_frame": false,
+            "title_below_image": true
+        },
+        {
+            "key": "AVAILABLE",
+            "show_complete_frame": false,
+            "title_below_image": false
+        },
+        {
+            "key": "RECOMMENDATIONS",
+            "show_complete_frame": false,
+            "title_below_image": true
+        },
+        {
+            "key": "OPTIONAL",
+            "show_complete_frame": false,
+            "title_below_image": false
+        },
+        {
+            "key": "FIND",
+            "show_complete_frame": false,
+            "title_below_image": true
+        },
+        {
+            "key": "KEEP",
+            "show_complete_frame": false,
+            "title_below_image": false
+        },
+        {
+            "key": "SEARCH",
+            "show_complete_frame": false,
+            "title_below_image": true
+        }
+    ]
+}
