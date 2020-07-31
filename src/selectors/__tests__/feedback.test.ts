@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement disable-next-line typedef
-import { pickSendableFeedback } from '../feedback/pick_sendable_feedback';
+import { buildFeedbackPostPayload } from '../feedback/build_feedback_post_payload';
 import { buildFeedbackAuthorDataToPost } from '../feedback/build_feedback_author_data_to_post';
 import { buildFeedbackContentToPost } from '../feedback/build_feedback_content_to_post';
 import { FeedbackStoreBuilder } from '../../stores/__tests__/helpers/feedback_store_builder';
@@ -17,7 +17,7 @@ describe('picking feedback properties to send with: pickSendableFeedback()', () 
         };
         const sendableProperties = { type: 'service_feedback' };
         const store = new FeedbackStoreBuilder().withFeedbackData(feedback as Feedback).build();
-        expect(pickSendableFeedback(store)).toEqual(sendableProperties);
+        expect(buildFeedbackPostPayload(store)).toEqual(sendableProperties);
     });
 
     it('will pick "other" and "remove" feedback properties that are strings', () => {
@@ -27,7 +27,7 @@ describe('picking feedback properties to send with: pickSendableFeedback()', () 
         };
         const sendableProperties = { type: feedback.type, value: feedback.value };
         const store = new FeedbackStoreBuilder().withFeedbackData(feedback).build();
-        expect(pickSendableFeedback(store)).toEqual(sendableProperties);
+        expect(buildFeedbackPostPayload(store)).toEqual(sendableProperties);
     });
 
     it('will pick "service" feedback properties that have shouldSend set to true', () => {
@@ -39,7 +39,7 @@ describe('picking feedback properties to send with: pickSendableFeedback()', () 
         };
         const sendableProperties = { type: feedback.type, organization: feedback.organization };
         const store = new FeedbackStoreBuilder().withFeedbackData(feedback).build();
-        expect(pickSendableFeedback(store)).toEqual(sendableProperties);
+        expect(buildFeedbackPostPayload(store)).toEqual(sendableProperties);
     });
 
 });

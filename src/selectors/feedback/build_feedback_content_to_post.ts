@@ -3,12 +3,15 @@ import { FeedbackContentToPost }  from './types';
 import { HumanServiceData } from '../../validation/services/types';
 
 export const buildFeedbackContentToPost = (feedback: Feedback, serviceData: HumanServiceData): FeedbackContentToPost => {
+    const serviceIdentification = {
+        bc211Id: serviceData.id,
+        bc211ServiceName: serviceData.name,
+        bc211OrganizationName: serviceData.organizationName,
+    };
     switch (feedback.type) {
         case 'service_feedback':
             return {
-                bc211Id: serviceData.id,
-                bc211ServiceName: serviceData.name,
-                bc211OrganizationName: serviceData.organizationName,
+                ...serviceIdentification,
                 name: feedback.name?.value,
                 organization: feedback.organization?.value,
                 description: feedback.description?.value,
@@ -19,16 +22,12 @@ export const buildFeedbackContentToPost = (feedback: Feedback, serviceData: Huma
             };
         case 'other_feedback':
             return {
-                bc211Id: serviceData.id,
-                bc211ServiceName: serviceData.name,
-                bc211OrganizationName: serviceData.organizationName,
+                ...serviceIdentification,
                 other: feedback.value,
             };
         case 'remove_service':
             return {
-                bc211Id: serviceData.id,
-                bc211ServiceName: serviceData.name,
-                bc211OrganizationName: serviceData.organizationName,
+                ...serviceIdentification,
                 removalReason: feedback.reason,
             };
         default:
