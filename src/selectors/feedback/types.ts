@@ -1,5 +1,6 @@
 export interface FeedbackContentToPost {
     readonly bc211Id: string;
+    readonly bc211ServiceName: string;
     readonly name?: string;
     readonly organization?: string;
     readonly description?: string;

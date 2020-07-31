@@ -7,6 +7,7 @@ export const buildFeedbackContentToPost = (feedback: Feedback, serviceData: Huma
         case 'service_feedback':
             return {
                 bc211Id: serviceData.id,
+                bc211ServiceName: serviceData.name,
                 name: feedback.name?.value,
                 organization: feedback.organization?.value,
                 description: feedback.description?.value,
@@ -18,16 +19,16 @@ export const buildFeedbackContentToPost = (feedback: Feedback, serviceData: Huma
         case 'other_feedback':
             return {
                 bc211Id: serviceData.id,
+                bc211ServiceName: serviceData.name,
                 other: feedback.value,
             };
         case 'remove_service':
             return {
                 bc211Id: serviceData.id,
+                bc211ServiceName: serviceData.name,
                 removalReason: feedback.reason,
             };
         default:
-            return {
-                bc211Id: serviceData.id,
-            };
+            throw new Error('Unknown service feedback type');
     }
 };

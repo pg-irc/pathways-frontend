@@ -4,7 +4,7 @@ import { buildFeedbackAuthorDataToPost } from '../feedback/build_feedback_author
 import { buildFeedbackContentToPost } from '../feedback/build_feedback_content_to_post';
 import { FeedbackStoreBuilder } from '../../stores/__tests__/helpers/feedback_store_builder';
 import { aString } from '../../application/helpers/random_test_values';
-import { Feedback, UserInformation } from '../../stores/feedback/types';
+import { Feedback, UserInformation, OtherFeedback, RemoveServiceFeedback } from '../../stores/feedback/types';
 import { getEmptyServiceFeedback } from '../../stores/feedback';
 import { HumanServiceDataBuilder } from '../../stores/__tests__/helpers/services_helpers';
 import { ServiceFeedbackBuilder } from '../../stores/__tests__/helpers/feedback_builder';
@@ -88,10 +88,12 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
     it('builds expected FeedbackPostDataContent object from "service" Feedback', (): void => {
         const serviceId = aString();
-        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
+        const serviceName = aString();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).withName(serviceName).build();
         const feedback = new ServiceFeedbackBuilder().build();
         expect(buildFeedbackContentToPost(feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
+            bc211ServiceName: serviceName,
             name: feedback.name.value,
             organization: feedback.organization.value,
             description: feedback.description.value,
@@ -109,9 +111,31 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
         expect(buildFeedbackContentToPost(feedback, humanServiceData).bc211Id).toBe(serviceId);
     });
 
+    it('includes service name in post payload for "service" feedback', (): void => {
+        const serviceName = aString();
+        const humanServiceData = new HumanServiceDataBuilder().withName(serviceName).build();
+        const feedback = new ServiceFeedbackBuilder().build();
+        expect(buildFeedbackContentToPost(feedback, humanServiceData).bc211ServiceName).toBe(serviceName);
+    });
+
+    it('includes service name in post payload for "other" feedback', (): void => {
+        const serviceName = aString();
+        const humanServiceData = new HumanServiceDataBuilder().withName(serviceName).build();
+        const feedback: OtherFeedback = { type: 'other_feedback', value: aString()};
+        expect(buildFeedbackContentToPost(feedback, humanServiceData).bc211ServiceName).toBe(serviceName);
+    });
+
+    it('includes service name in post payload for "remove" feedback', (): void => {
+        const serviceName = aString();
+        const humanServiceData = new HumanServiceDataBuilder().withName(serviceName).build();
+        const feedback: RemoveServiceFeedback = { type: 'remove_service', reason: aString()};
+        expect(buildFeedbackContentToPost(feedback, humanServiceData).bc211ServiceName).toBe(serviceName);
+    });
+
     it('builds expected FeedbackPostDataContent object from "other" Feedback', () => {
         const serviceId = aString();
-        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
+        const serviceName = aString();
+        const humanServiceData = new HumanServiceDataBuilder().withName(serviceName).withId(serviceId).build();
         const feedback: Feedback = {
             type: 'other_feedback',
             value: aString(),
@@ -119,13 +143,15 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
         expect(buildFeedbackContentToPost(feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
+            bc211ServiceName: serviceName,
             other: feedback.value,
         });
     });
 
     it('builds expected FeedbackPostDataContent object from "remove service" Feedback', () => {
         const serviceId = aString();
-        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
+        const serviceName = aString();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).withName(serviceName).build();
         const feedback: Feedback = {
             type: 'remove_service',
             reason: aString(),
@@ -133,18 +159,21 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
         expect(buildFeedbackContentToPost(feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
+            bc211ServiceName: serviceName,
             removalReason: feedback.reason,
         });
     });
 
     it('sets any missing "service" Feedback fields to undefined', () => {
         const serviceId = aString();
-        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
+        const serviceName = aString();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).withName(serviceName).build();
         const feedback = {
             type: 'service_feedback',
         };
         expect(buildFeedbackContentToPost(feedback as Feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
+            bc211ServiceName: serviceName,
             name: undefined,
             organization: undefined,
             description: undefined,
@@ -157,24 +186,29 @@ describe('converting Feedback to FeedbackPostDataContent with: toFeedbackPostDat
 
     it('sets any missing "other" Feedback fields to undefined', () => {
         const serviceId = aString();
-        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
+        const serviceName = aString();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).withName(serviceName).build();
         const feedback = {
             type: 'other_feedback',
         };
         expect(buildFeedbackContentToPost(feedback as Feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
+            bc211ServiceName: serviceName,
             other: undefined,
         });
     });
 
     it('sets any missing "remove service" Feedback fields to undefined', () => {
         const serviceId = aString();
-        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).build();
-        const feedback = {
+        const serviceName = aString();
+        const humanServiceData = new HumanServiceDataBuilder().withId(serviceId).withName(serviceName).build();
+        const feedback: Feedback = {
             type: 'remove_service',
+            reason: undefined,
         };
-        expect(buildFeedbackContentToPost(feedback as Feedback, humanServiceData)).toEqual({
+        expect(buildFeedbackContentToPost(feedback, humanServiceData)).toEqual({
             bc211Id: serviceId,
+            bc211ServiceName: serviceName,
             removalReason: undefined,
         });
     });
