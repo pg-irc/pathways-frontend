@@ -165,7 +165,7 @@ const SearchComponentHeader = (props: { readonly onMenuButtonPress: () => void }
 
     return (
         <Animated.View style={{ height: animatedHeaderHeight }}>
-            <Header style={[applicationStyles.header, { backgroundColor: colors.teal }]}>
+            <Header style={[applicationStyles.header, { backgroundColor: colors.teal }]} androidStatusBarColor={colors.teal}>
                 <HeaderLeft />
                 <HeaderRight onMenuButtonPress={props.onMenuButtonPress} />
             </Header>

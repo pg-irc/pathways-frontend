@@ -6,7 +6,6 @@ import { buildStore, startApplication } from './store';
 import { ErrorBoundary } from './helpers/error_boundary';
 import { ConnectedI18nProvider } from '../components/i18n_provider';
 import { buildSaga } from '../sagas';
-
 import { API_URL } from 'react-native-dotenv';
 import { setUrl } from '../api';
 import {YellowBox} from 'react-native';

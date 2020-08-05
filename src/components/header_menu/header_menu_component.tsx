@@ -34,7 +34,15 @@ type Props = OwnProps & HeaderMenuProps & HeaderMenuActions;
 
 export const HeaderMenuComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1, backgroundColor: getViewBackgroundColorForPlatform() }}>
-        <Header style={{ backgroundColor: colors.lightTeal, marginTop: getStatusBarHeightForPlatform(), alignItems: 'center', justifyContent: 'flex-start' }}>
+        <Header
+            style={{
+                backgroundColor: colors.lightTeal,
+                marginTop: getStatusBarHeightForPlatform(),
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+            }}
+            androidStatusBarColor={colors.teal}
+        >
             <Image source={arrivalAdvisorGlyphLogo} style={{ height: 24, width: 24, marginHorizontal: 10 }} />
             <Title style={textStyles.headlineH3StyleWhiteCenter}>Arrival Advisor</Title>
         </Header>

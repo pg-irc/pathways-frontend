@@ -128,7 +128,7 @@ interface HeaderProps {
 
 const HeaderComponent = ({ feedbackType, onBackButtonPress }: HeaderProps): JSX.Element => {
     return (
-        <Header style={otherRemoveServiceStyles.headerContainer}>
+        <Header style={otherRemoveServiceStyles.headerContainer} androidStatusBarColor={colors.teal}>
                 <Button transparent onPress={onBackButtonPress}>
                     <Icon name={getIconForBackButton()} style={{ color: colors.teal, fontWeight: 'bold' }} />
                 </Button>

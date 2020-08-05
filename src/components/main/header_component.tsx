@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Header, Left, Right, Body, Title } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
-import { applicationStyles } from '../../application/styles';
+import { applicationStyles, colors } from '../../application/styles';
 
 interface HeaderComponentProps {
     readonly backgroundColor: string;
@@ -13,7 +13,7 @@ interface HeaderComponentProps {
 }
 
 export const HeaderComponent = (props: HeaderComponentProps): JSX.Element => (
-    <Header style={[ applicationStyles.header, { backgroundColor: props.backgroundColor }]}>
+    <Header style={[ applicationStyles.header, { backgroundColor: props.backgroundColor }]} androidStatusBarColor={colors.teal}>
         {buildLeftButton(props.leftButton)}
         {buildTitle(props.title)}
         {buildRightButtons(props.rightButtons)}
