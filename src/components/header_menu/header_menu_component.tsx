@@ -41,7 +41,7 @@ export const HeaderMenuComponent = (props: Props): JSX.Element => (
                 alignItems: 'center',
                 justifyContent: 'flex-start',
             }}
-            androidStatusBarColor={colors.transparentBlack}
+            androidStatusBarColor={colors.teal}
         >
             <Image source={arrivalAdvisorGlyphLogo} style={{ height: 24, width: 24, marginHorizontal: 10 }} />
             <Title style={textStyles.headlineH3StyleWhiteCenter}>Arrival Advisor</Title>

@@ -29,7 +29,6 @@ export const colors = {
     sunshine: '#f2b134',
     topaz: '#11cac0',
     greyBorder: '#dedede',
-    transparentBlack: '#00000088',
 };
 
 export const values = {

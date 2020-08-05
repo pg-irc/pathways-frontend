@@ -11,7 +11,7 @@ type HeaderProps = {
 };
 
 export const HeaderComponent = ({ headerLabel, close }: HeaderProps): JSX.Element => (
-    <Header style={ styles.headerContainer } androidStatusBarColor={colors.transparentBlack}>
+    <Header style={ styles.headerContainer } androidStatusBarColor={colors.teal}>
         <Text style={[textStyles.headline6, { paddingHorizontal: 15 }]}>
             <Trans id={headerLabel} />
         </Text>

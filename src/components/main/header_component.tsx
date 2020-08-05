@@ -13,7 +13,7 @@ interface HeaderComponentProps {
 }
 
 export const HeaderComponent = (props: HeaderComponentProps): JSX.Element => (
-    <Header style={[ applicationStyles.header, { backgroundColor: props.backgroundColor }]} androidStatusBarColor={colors.transparentBlack}>
+    <Header style={[ applicationStyles.header, { backgroundColor: props.backgroundColor }]} androidStatusBarColor={colors.teal}>
         {buildLeftButton(props.leftButton)}
         {buildTitle(props.title)}
         {buildRightButtons(props.rightButtons)}
