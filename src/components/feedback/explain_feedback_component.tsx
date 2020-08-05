@@ -52,7 +52,7 @@ export const ExplainFeedbackComponent = (props: props): JSX.Element => {
                 </Text>
                 <Text style={[textStyles.paragraphStyle, { marginTop:10, marginBottom: 20 }]}>
                     <Trans>
-                    You can read <Link href={'http://www.bc211.ca/inclusion-policy/'} style={textStyles.link}>bc211’s Inclusion Policy here</Link> to see what organizations and services are listed. If you believe that your organization or service fits the inclusion criteria, you can email <Link href={'mailto:support@expo.io'} style={textStyles.link}>updates@bc211.ca</Link> so the bc211 team can review your organization or service. Visit <Link href={'http://www.bc211.ca'} style={textStyles.link} >http://www.bc211.ca</Link> for more information.
+                    You can read <Link href={'http://www.bc211.ca/inclusion-policy/'} style={textStyles.link}>bc211’s Inclusion Policy here</Link> to see what organizations and services are listed. If you believe that your organization or service fits the inclusion criteria, you can email <Link href={'mailto:updates@bc211.ca'} style={textStyles.link}>updates@bc211.ca</Link> so the bc211 team can review your organization or service. Visit <Link href={'http://www.bc211.ca'} style={textStyles.link} >http://www.bc211.ca</Link> for more information.
                     </Trans>
                 </Text>
             </View>
