@@ -13,6 +13,7 @@ import { MissingServiceDetailComponent } from '../services/missing_service_detai
 import { Trans } from '@lingui/react';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { extractCallablePhoneNumber } from './extract_callable_phone_number';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
@@ -34,12 +35,14 @@ export const PhoneNumbersComponent = (props: Props): JSX.Element => {
 };
 
 const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index: number): JSX.Element => {
-    const onPress = (): void => {
+    const callPhoneNumber = (): void => {
         const callableNumber = extractCallablePhoneNumber(phoneNumber.phone_number);
         const linkValue = callableNumber ? 'tel: ' + callableNumber : '';
         props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.phone, linkValue);
         openURL(linkValue);
     };
+    const isFaxNumber = phoneNumber.type.toLowerCase().startsWith('fax');
+    const phoneIcon = <ServiceDetailIconComponent name={'phone'} />;
     const shouldAddDivider = index !== 0;
 
     return (
@@ -47,8 +50,8 @@ const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index:
             {shouldAddDivider && <DividerComponent />}
             <CardButtonComponent
                 leftContent={renderSinglePhoneNumber(phoneNumber)}
-                rightContent={<ServiceDetailIconComponent name={'phone'} />}
-                onPress={onPress}
+                rightContent={isFaxNumber ? <EmptyComponent/> : phoneIcon}
+                onPress={isFaxNumber ? undefined : callPhoneNumber}
             />
         </View>
     );
