@@ -13,6 +13,7 @@ import { MissingServiceDetailComponent } from '../services/missing_service_detai
 import { Trans } from '@lingui/react';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { extractCallablePhoneNumber } from './extract_callable_phone_number';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
@@ -41,6 +42,7 @@ const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index:
         openURL(linkValue);
     };
     const isFaxNumber = phoneNumber.type.toLowerCase().startsWith('fax');
+    const phoneIcon = isFaxNumber ? <EmptyComponent/> : <ServiceDetailIconComponent name={'phone'} />;
     const shouldAddDivider = index !== 0;
 
     return (
@@ -48,7 +50,7 @@ const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index:
             {shouldAddDivider && <DividerComponent />}
             <CardButtonComponent
                 leftContent={renderSinglePhoneNumber(phoneNumber)}
-                rightContent={<ServiceDetailIconComponent name={'phone'} />}
+                rightContent={phoneIcon}
                 onPress={isFaxNumber ? undefined : callPhoneNumber}
             />
         </View>
