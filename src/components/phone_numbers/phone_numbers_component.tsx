@@ -42,7 +42,7 @@ const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index:
         openURL(linkValue);
     };
     const isFaxNumber = phoneNumber.type.toLowerCase().startsWith('fax');
-    const phoneIcon = isFaxNumber ? <EmptyComponent/> : <ServiceDetailIconComponent name={'phone'} />;
+    const phoneIcon = <ServiceDetailIconComponent name={'phone'} />;
     const shouldAddDivider = index !== 0;
 
     return (
@@ -50,7 +50,7 @@ const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index:
             {shouldAddDivider && <DividerComponent />}
             <CardButtonComponent
                 leftContent={renderSinglePhoneNumber(phoneNumber)}
-                rightContent={phoneIcon}
+                rightContent={isFaxNumber ? <EmptyComponent/> : phoneIcon}
                 onPress={isFaxNumber ? undefined : callPhoneNumber}
             />
         </View>
