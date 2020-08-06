@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { FeedbackField, Feedback, FeedbackStore } from '../../stores/feedback/types';
 
-export const pickSendableFeedback = (store: FeedbackStore): Feedback => {
+export const buildFeedbackPostPayload = (store: FeedbackStore): Feedback => {
     if (store.feedback.type === 'service_feedback') {
         return R.pickBy(
             isTypeOrSendableFeedbackField,

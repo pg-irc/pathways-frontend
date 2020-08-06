@@ -2,7 +2,7 @@
 import { PersistedDataBuilder } from '../../../stores/__tests__/helpers/persisted_data_builder';
 import { validateUserData } from '..';
 import { aString, aBoolean, aNumber } from '../../../application/helpers/random_test_values';
-import { ServiceBuilder, buildServiceMap } from '../../../stores/__tests__/helpers/services_helpers';
+import { HumanServiceDataBuilder, buildServiceMap } from '../../../stores/__tests__/helpers/services_helpers';
 import { buildDefaultStore, Store } from '../../../stores';
 import { selectUserDataForLocalPersistence } from '../../../selectors/user_data/select_user_data_for_local_persistence';
 import { DataPersistence } from '../../../stores/persisted_data';
@@ -105,7 +105,7 @@ describe('user data schema', () => {
         describe('the saved service property', () => {
 
             test('passes with valid data', () => {
-                const aServiceBuilder = new ServiceBuilder();
+                const aServiceBuilder = new HumanServiceDataBuilder();
                 const serviceMap = buildServiceMap([aServiceBuilder]);
                 const validUserData = new PersistedDataBuilder().withBookmarkedServices(serviceMap).build();
                 const validator = validateUserData(validUserData);

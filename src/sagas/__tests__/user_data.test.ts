@@ -3,7 +3,7 @@
 import { PersistedDataBuilder } from '../../stores/__tests__/helpers/persisted_data_builder';
 import { aString } from '../../application/helpers/random_test_values';
 import { serializeUserData, deserializeUserData } from '../user_data';
-import { ServiceBuilder, buildServiceMap } from '../../stores/__tests__/helpers/services_helpers';
+import { HumanServiceDataBuilder, buildServiceMap } from '../../stores/__tests__/helpers/services_helpers';
 
 describe('persisted user_data tests', () => {
 
@@ -23,7 +23,7 @@ describe('persisted user_data tests', () => {
 
     test('bookmarked services should persist between being serialized and deserialized', () => {
         const bookmarkedServiceId = aString();
-        const bookmarkedService = new ServiceBuilder().withId(bookmarkedServiceId).withBookmarked(true);
+        const bookmarkedService = new HumanServiceDataBuilder().withId(bookmarkedServiceId).withBookmarked(true);
         const bookmarkedServiceMap = buildServiceMap([bookmarkedService]);
         const userData = new PersistedDataBuilder().withBookmarkedServices(bookmarkedServiceMap).build();
         const recreatedData = deserializeUserData(serializeUserData(userData));

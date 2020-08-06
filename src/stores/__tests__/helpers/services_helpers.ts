@@ -11,7 +11,7 @@ import {
 import * as constants from '../../../application/constants';
 
 export const buildNormalizedServices = (
-    services: ReadonlyArray<ServiceBuilder>,
+    services: ReadonlyArray<HumanServiceDataBuilder>,
     servicesForTopicOrError: ReadonlyArray<ServicesForTopicBuilder | ServicesForTopicErrorBuilder>,
 ): ServiceStore => ({
     services: buildServiceMap(services),
@@ -26,8 +26,8 @@ export const buildNormalizedServicesFromBuilders = (
     servicesByTopic: buildServicesForTopicMapFromBuilder(servicesForTopic),
 });
 
-export const buildServiceMap = (services: ReadonlyArray<ServiceBuilder>): ServiceMap => {
-    const buildAndMapToId = (map: ServiceMap, builder: ServiceBuilder): ServiceMap => {
+export const buildServiceMap = (services: ReadonlyArray<HumanServiceDataBuilder>): ServiceMap => {
+    const buildAndMapToId = (map: ServiceMap, builder: HumanServiceDataBuilder): ServiceMap => {
         return { ...map, [builder.id]: builder.build() };
     };
     return services.reduce(buildAndMapToId, {});
@@ -102,7 +102,7 @@ export class AddressBuilder {
     }
 }
 
-export class ServiceBuilder {
+export class HumanServiceDataBuilder {
     id: Id = aString();
     latitude: number = aNumber();
     longitude: number = aNumber();
@@ -116,62 +116,62 @@ export class ServiceBuilder {
     bookmarked: boolean = false;
     lastVerifiedDate: string = aDate();
 
-    withId(id: Id): ServiceBuilder {
+    withId(id: Id): HumanServiceDataBuilder {
         this.id = id;
         return this;
     }
 
-    withName(name: string): ServiceBuilder {
+    withName(name: string): HumanServiceDataBuilder {
         this.name = name;
         return this;
     }
 
-    withDescription(description: string): ServiceBuilder {
+    withDescription(description: string): HumanServiceDataBuilder {
         this.description = description;
         return this;
     }
 
-    withPhoneNumbers(phoneNumbers: ReadonlyArray<PhoneNumber>): ServiceBuilder {
+    withPhoneNumbers(phoneNumbers: ReadonlyArray<PhoneNumber>): HumanServiceDataBuilder {
         this.phoneNumbers = phoneNumbers;
         return this;
     }
 
-    withAddresses(addresses: ReadonlyArray<Address>): ServiceBuilder {
+    withAddresses(addresses: ReadonlyArray<Address>): HumanServiceDataBuilder {
         this.addresses = addresses;
         return this;
     }
 
-    withLatitude(latitude: number): ServiceBuilder {
+    withLatitude(latitude: number): HumanServiceDataBuilder {
         this.latitude = latitude;
         return this;
     }
 
-    withLongitude(longitude: number): ServiceBuilder {
+    withLongitude(longitude: number): HumanServiceDataBuilder {
         this.longitude = longitude;
         return this;
     }
 
-    withWebsite(website: string): ServiceBuilder {
+    withWebsite(website: string): HumanServiceDataBuilder {
         this.website = website;
         return this;
     }
 
-    withEmail(email: string): ServiceBuilder {
+    withEmail(email: string): HumanServiceDataBuilder {
         this.email = email;
         return this;
     }
 
-    withOrganizationName(organizationName: string): ServiceBuilder {
+    withOrganizationName(organizationName: string): HumanServiceDataBuilder {
         this.organizationName = organizationName;
         return this;
     }
 
-    withBookmarked(bookmarked: boolean): ServiceBuilder {
+    withBookmarked(bookmarked: boolean): HumanServiceDataBuilder {
         this.bookmarked = bookmarked;
         return this;
     }
 
-    withLastVerifiedDate(lastVerifiedDate: string): ServiceBuilder {
+    withLastVerifiedDate(lastVerifiedDate: string): HumanServiceDataBuilder {
         this.lastVerifiedDate = lastVerifiedDate;
         return this;
     }
