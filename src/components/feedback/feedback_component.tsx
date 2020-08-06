@@ -15,13 +15,13 @@ interface Props {
     readonly toggleShouldSend: (field: FeedbackField) => void;
     readonly label: JSX.Element;
     readonly body: string;
-    readonly isEnabled: boolean;
-    readonly disabledComponent: JSX.Element;
+    readonly isFeedbackInputEnabled: boolean;
+    readonly nonFeedbackComponent: JSX.Element;
 }
 
 export const FeedbackComponent = (props: Props): JSX.Element => {
-    if (!props.isEnabled) {
-        return props.disabledComponent;
+    if (!props.isFeedbackInputEnabled) {
+        return props.nonFeedbackComponent;
     }
 
     return (
