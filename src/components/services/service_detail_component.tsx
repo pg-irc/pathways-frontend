@@ -291,7 +291,9 @@ const Organization = (props: { readonly history: History, readonly name: string 
     <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
         <View>
             <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Provided by</Trans>: </Text>
-            <Text style={textStyles.paragraphStyle}>{props.name}</Text>
+            <TouchableOpacity onPress={goToRouteWithParameter(Routes.OrganizationDetail, '9489851', props.history)}>
+                <Text style={textStyles.URL}>{props.name.toUpperCase()}</Text>
+            </TouchableOpacity>
         </View>
     </View>
 );
