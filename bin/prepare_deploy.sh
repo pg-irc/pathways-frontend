@@ -112,7 +112,7 @@ validateCommandLine () {
         echo "Error: Must specify server version string"
         usage
         fail
-    fi 
+    fi
 
     if [ "$ANDROID_VERSION_CODE" == "" ]
     then
@@ -276,32 +276,19 @@ createClientEnvironment() {
     echo
     echo "Creating client environment"
     echo
-    PRODUCTION_URL="https://pathways-production.herokuapp.com"
-    STAGING_URL="https://fierce-ravine-89308.herokuapp.com"
-
-    echo "VERSION=$VERSION"                                >  "$CLIENT_DIRECTORY/.env"
-    echo "DEBUG_GOOGLE_ANALYTICS=false"                    >> "$CLIENT_DIRECTORY/.env"
-    echo "ALGOLIA_SERVICES_INDEX='dev_phones'"             >> "$CLIENT_DIRECTORY/.env"
-    echo "SENTRY_DEBUG=false"                              >> "$CLIENT_DIRECTORY/.env"
-    echo "SENTRY_ENABLE_IN_DEV=false"                      >> "$CLIENT_DIRECTORY/.env"
-    echo                                                   >> "$CLIENT_DIRECTORY/.env"
-    echo "SENTRY_AUTH_TOKEN='token...'"                    >> "$CLIENT_DIRECTORY/.env"
-    echo "SENTRY_DSN=https://...sentry.io/..."             >> "$CLIENT_DIRECTORY/.env"
-    echo "ALGOLIA_SEARCH_API_KEY='key...'"                 >> "$CLIENT_DIRECTORY/.env"
-    echo "DISABLE_ANALYTICS_STRING='foobar'"               >> "$CLIENT_DIRECTORY/.env"
-    echo "ENABLE_ANALYTICS_STRING='barfoo'"                >> "$CLIENT_DIRECTORY/.env"
 
     if [ "$BUILD" == "staging" ]
     then
-        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-5'" >> "$CLIENT_DIRECTORY/.env"
-        echo "API_URL=$STAGING_URL"                         >> "$CLIENT_DIRECTORY/.env"
+        cp ../deploy/env.staging .env
+        cp ../deploy/google-services-staging.json google-services.json
 
         setStagingValuesInAppJson
 
     elif [ "$BUILD" == "production" ]
     then
-        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'" >> "$CLIENT_DIRECTORY/.env"
-        echo "API_URL=$PRODUCTION_URL"                      >> "$CLIENT_DIRECTORY/.env"
+        cp ../deploy/env.production .env
+        cp ../deploy/google-services-production.json google-services.json
+
     else
         echo "Error: You must specify the build type"
         fail
