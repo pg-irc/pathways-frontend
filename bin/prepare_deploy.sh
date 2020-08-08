@@ -271,14 +271,14 @@ createClientEnvironment() {
     then
         setStagingValuesInAppJson
 
-        cp ../deploy/staging/env .env
-        cp ../deploy/staging/google-services.json .
+        cp ../pathways-deploy/staging/env .env
+        cp ../pathways-deploy/staging/google-services.json .
         setVersionInEnv
 
     elif [ "$BUILD" == "production" ]
     then
-        cp ../deploy/production/env .env
-        cp ../deploy/production/google-services.json .
+        cp ../pathways-deploy/production/env .env
+        cp ../pathways-deploy/production/google-services.json .
         setVersionInEnv
 
     else
