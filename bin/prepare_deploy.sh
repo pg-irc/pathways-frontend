@@ -264,15 +264,15 @@ createClientEnvironment() {
 
     if [ "$BUILD" == "staging" ]
     then
-        cp ../deploy/env.staging .env
-        cp ../deploy/google-services-staging.json google-services.json
+        cp ../deploy/staging/env .env
+        cp ../deploy/staging/google-services.json .
 
         setStagingValuesInAppJson
 
     elif [ "$BUILD" == "production" ]
     then
-        cp ../deploy/env.production .env
-        cp ../deploy/google-services-production.json google-services.json
+        cp ../deploy/production/env .env
+        cp ../deploy/production/google-services.json .
 
     else
         echo "Error: You must specify the build type"
