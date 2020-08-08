@@ -257,6 +257,11 @@ setStagingValuesInAppJson() {
     checkForSuccess "set staging parameters is app.json"
 }
 
+setVersionInEnv() {
+    sed s/VERSION=.*/VERSION=$VERSION/ .env > .env.tmp
+    mv .env.tmp .env
+}
+
 createClientEnvironment() {
     echo
     echo "Creating client environment"
@@ -264,15 +269,17 @@ createClientEnvironment() {
 
     if [ "$BUILD" == "staging" ]
     then
+        setStagingValuesInAppJson
+
         cp ../deploy/staging/env .env
         cp ../deploy/staging/google-services.json .
-
-        setStagingValuesInAppJson
+        setVersionInEnv
 
     elif [ "$BUILD" == "production" ]
     then
         cp ../deploy/production/env .env
         cp ../deploy/production/google-services.json .
+        setVersionInEnv
 
     else
         echo "Error: You must specify the build type"
@@ -280,13 +287,6 @@ createClientEnvironment() {
     fi
 
     checkForSuccess "create client environment"
-}
-
-bumpVersion() {
-    echo
-    echo "Setting version string"
-    echo
-    ./bin/bump_version.py $VERSION
 }
 
 completeManualConfiguration() {
@@ -401,7 +401,6 @@ validateContentFixture
 
 getClientDependencies
 createClientEnvironment
-bumpVersion
 completeManualConfiguration
 buildMessagesPOFiles
 buildLinguiCatalogs
