@@ -13,10 +13,6 @@ while (( "$#" )); do
     then
         SERVER_VERSION=$2
         shift 2
-    elif [ "$1" == "--androidVersionCode" ]
-    then
-        ANDROID_VERSION_CODE=$2
-        shift 2
     elif [ "$1" == "--postgresUser" ]
     then
         POSTGRES_USER=$2
@@ -64,10 +60,6 @@ usage() {
     echo "    --serverVersion"
     echo "                The server version string, must match tag on the server repository."
     echo
-    echo "    --androidVersionCode"
-    echo "                The version code for the android build, should match the client version string as"
-    echo "                verified by the client unit tests."
-    echo
     echo "    --postgresUser"
     echo "                The command './manage.py import_newcomers_guide' requires database access"
     echo "                in order to retrieve related tasks from the database. The related tasks must"
@@ -110,13 +102,6 @@ validateCommandLine () {
     if [ "$SERVER_VERSION" == "" ]
     then
         echo "Error: Must specify server version string"
-        usage
-        fail
-    fi
-
-    if [ "$ANDROID_VERSION_CODE" == "" ]
-    then
-        echo "Error: Must specify android version code"
         usage
         fail
     fi
@@ -297,6 +282,13 @@ createClientEnvironment() {
     checkForSuccess "create client environment"
 }
 
+bumpVersion() {
+    echo
+    echo "Setting version string"
+    echo
+    ./bin/bump_version.py $VERSION
+}
+
 completeManualConfiguration() {
     echo
     echo "Manual steps:"
@@ -409,6 +401,7 @@ validateContentFixture
 
 getClientDependencies
 createClientEnvironment
+bumpVersion
 completeManualConfiguration
 buildMessagesPOFiles
 buildLinguiCatalogs
