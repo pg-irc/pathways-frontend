@@ -74,7 +74,7 @@ export const ContactInformationComponent = ({
                             extraScrollHeight={isAndroid() ? 50 : 0}
                             enableOnAndroid={true}
                         >
-                            <View>
+                            <View style={{ paddingHorizontal: 15 }}>
                                 <Text style={[textStyles.headlineH2StyleBlackLeft, { marginBottom: 15 }]}>
                                     <Trans>Contact information</Trans>
                                 </Text>
@@ -163,7 +163,7 @@ const EmployeeInputFields = (props: {
         return <EmptyComponent />;
     }
     return (
-        <View style={{ marginTop: 24 }}>
+        <View style={{ marginTop: 24, paddingHorizontal: 15 }}>
             <Text style={[textStyles.headlineH3StyleBlackLeft, { marginBottom: 5, lineHeight: 21 }]}>
                 <Trans>Name</Trans>
             </Text>

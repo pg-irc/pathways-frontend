@@ -55,6 +55,7 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 24,
+        paddingHorizontal: 15,
     },
 
     checkBoxDescription: {
@@ -119,8 +120,6 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
     contactInformationInnerContainer: {
         flexDirection: 'column',
         paddingTop: 24,
-        paddingLeft: 24,
-        paddingRight: 24,
         paddingBottom: 8,
     },
     employeeInputStyle: {
