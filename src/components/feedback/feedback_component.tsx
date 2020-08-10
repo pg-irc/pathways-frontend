@@ -5,7 +5,7 @@ import { Trans, I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { Icon } from 'native-base';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { colors, textStyles } from '../../application/styles';
+import { colors, textStyles, getTextAlignForLanguage } from '../../application/styles';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 import { FeedbackField } from '../../stores/feedback/types';
 
@@ -137,6 +137,7 @@ const TextInputComponent = (props: InputComponentProps): JSX.Element => {
                         borderBottomColor: colors.grey,
                         borderBottomWidth: 1,
                         paddingBottom: 5,
+                        ...getTextAlignForLanguage(),
                     }}
                 />
             )

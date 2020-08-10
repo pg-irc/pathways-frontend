@@ -130,6 +130,7 @@ const contactInformationStyles = StyleSheet.create<ContactInformationStyles>({
         paddingTop: 8,
         paddingBottom: 8,
         fontFamily: getNormalFontFamily(),
+        ...getTextAlignForLanguage(),
     },
 });
 
