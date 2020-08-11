@@ -200,13 +200,6 @@ validateClientVersion() {
         echo "Error: client VERSION.txt contains $FILE_VERSION, when $VERSION was expected"
         fail
     fi
-
-    FILE_CODE=$(grep versionCode "$CLIENT_DIRECTORY/app.json")
-    if [ "$FILE_CODE" != "      \"versionCode\": $ANDROID_VERSION_CODE," ]
-    then
-        echo "Error: client app.json contains $FILE_CODE when $ANDROID_VERSION_CODE was expected"
-        fail
-    fi
 }
 
 validateServerVersion() {
@@ -271,14 +264,14 @@ createClientEnvironment() {
     then
         setStagingValuesInAppJson
 
-        cp ../pathways-deploy/staging/env .env
-        cp ../pathways-deploy/staging/google-services.json .
+        cp ../pathways-deploy/staging/env $CLIENT_DIRECTORY/.env
+        cp ../pathways-deploy/staging/google-services.json $CLIENT_DIRECTORY
         setVersionInEnv
 
     elif [ "$BUILD" == "production" ]
     then
-        cp ../pathways-deploy/production/env .env
-        cp ../pathways-deploy/production/google-services.json .
+        cp ../pathways-deploy/production/env $CLIENT_DIRECTORY/.env
+        cp ../pathways-deploy/production/google-services.json $CLIENT_DIRECTORY
         setVersionInEnv
 
     else
