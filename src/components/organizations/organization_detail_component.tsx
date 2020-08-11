@@ -1,8 +1,7 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import { Text, View } from 'react-native';
-import { Tab, Tabs, TabHeading, Content } from 'native-base';
-import { textStyles, colors, values } from '../../application/styles';
+import { Tab, Tabs, TabHeading, Content, Text, View } from 'native-base';
+import { textStyles, colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
@@ -14,6 +13,9 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
 import { RouterProps } from '../../application/routing';
 import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { WebsiteComponent } from '../website/website_component';
+import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
+import { EmailComponent } from '../email/email_component';
 
 export interface OrganizationDetailProps {
     readonly history: History;
@@ -26,15 +28,17 @@ export interface OrganizationDetailActions {
 
 type Props = OrganizationDetailProps & OrganizationDetailActions & RouterProps;
 
+interface OrganizationContactDetailsProps {
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly currentPathForAnalytics: string;
+}
+
 const testOrganization = {
     id: 'mosiac',
     title: 'Mosaic',
     description: 'Assists immigrants, refugees, and newcomers in the course of their settlement and integration into Canadian society. Provides employment services… family services, interpretation and translation, language instruction, legal information, settlement services, and victim and family violence services from multiple sites in Metro Vancouver. Also provides employment services under contract to BC Employment and Assistance (BCEA); see WorkBC listings for details. Office hours are 9 am to 5 pm Monday to Friday. Nonprofit society, registered charity.',
-    addresses: ['Head Office\n5575 Boundary Road Vancouver, BC\nV5R 2P9'],
-    phone: '604-254-9626',
     website: 'http://mosaicbc.org',
     email: 'email@email.com',
-    lastVerified: '2018-07-25',
 };
 
 export const OrganizationDetailComponent = (props: Props): JSX.Element => {
@@ -66,7 +70,10 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
                             </TabHeading>
                         }
                     >
-                        <AboutTab />
+                        <AboutTab
+                            analyticsLinkPressed={props.analyticsLinkPressed}
+                            currentPathForAnalytics={props.location.pathname}
+                        />
                     </Tab>
                     <Tab
                         heading={
@@ -84,29 +91,6 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
         </View>
     );
 };
-
-const AboutTab = (): JSX.Element => (
-    <Content>
-        <MarkdownBodyComponent
-            body={testOrganization.description}
-            shouldBeExpandable={true}
-            //TODO Issue #1080 When organization detail page is online connect the following 2 states to the store/persisted data
-            showLinkAlerts={true}
-            hideLinkAlerts={console.log} />
-        <DividerComponent />
-        <AboutContactDetails />
-    </Content>
-);
-
-const AboutContactDetails = (): JSX.Element => (
-    <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
-        <Text>TODO</Text>
-    </View>
-);
-
-const ServicesTab = (): JSX.Element => (
-    <Text>TODO</Text>
-);
 
 const OrganizationDetailHeader = (props: {
     readonly location: Location;
@@ -129,3 +113,45 @@ const OrganizationDetailHeader = (props: {
         />
     );
 };
+
+const AboutTab = (props: OrganizationContactDetailsProps): JSX.Element => (
+    <Content>
+        <MarkdownBodyComponent
+            body={testOrganization.description}
+            shouldBeExpandable={true}
+            //TODO Issue #1080 When organization detail page is online connect the following 2 states to the store/persisted data
+            showLinkAlerts={true}
+            hideLinkAlerts={console.log} />
+        <DividerComponent />
+        <AboutContactDetails
+            analyticsLinkPressed={props.analyticsLinkPressed}
+            currentPathForAnalytics={props.currentPathForAnalytics}
+        />
+    </Content>
+);
+
+const AboutContactDetails = (props: OrganizationContactDetailsProps): JSX.Element => {
+    const linkContextForAnalytics = buildAnalyticsLinkContext('Organization', testOrganization.title);
+    const currentPathForAnalytics = props.currentPathForAnalytics;
+    return (
+        <View>
+            <WebsiteComponent
+                website={testOrganization.website}
+                linkContextForAnalytics={linkContextForAnalytics}
+                currentPathForAnalytics={currentPathForAnalytics}
+                analyticsLinkPressed={props.analyticsLinkPressed}
+            />
+            <DividerComponent />
+            <EmailComponent
+                email={testOrganization.email}
+                linkContextForAnalytics={linkContextForAnalytics}
+                currentPathForAnalytics={currentPathForAnalytics}
+                analyticsLinkPressed={props.analyticsLinkPressed}
+            />
+        </View>
+    );
+};
+
+const ServicesTab = (): JSX.Element => (
+    <Text>TODO</Text>
+);
