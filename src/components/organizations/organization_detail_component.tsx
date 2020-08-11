@@ -34,12 +34,35 @@ interface OrganizationContactDetailsProps {
 }
 
 const testOrganization = {
-    id: 'mosiac',
-    title: 'Mosaic',
-    description: 'Assists immigrants, refugees, and newcomers in the course of their settlement and integration into Canadian society. Provides employment services… family services, interpretation and translation, language instruction, legal information, settlement services, and victim and family violence services from multiple sites in Metro Vancouver. Also provides employment services under contract to BC Employment and Assistance (BCEA); see WorkBC listings for details. Office hours are 9 am to 5 pm Monday to Friday. Nonprofit society, registered charity.',
-    website: 'http://mosaicbc.org',
-    email: 'email@email.com',
-};
+    "id": "9487864",
+    "name": "Government of British Columbia",
+    "description": "The provincial government is presided over by the Executive Council of British Columbia, which is comprised of the Cabinet Ministers appointed by the Premier. Elected Members of the Legislative Assembly (MLAs) represent provincial ridings across BC. The Legislative Assembly of BC convenes at the Parliament Buildings in Victoria.",
+    "website": "http://www.gov.bc.ca",
+    "email": "servicebc@gov.bc.ca"
+  };
+
+  const testServices = [
+    {
+      "id": "17229179",
+      "name": "Selina Robinson (Hon), MLA (NDP) - Coquitlam-Maillardville Constituency",
+      "organization_id": "9487864",
+      "description": "Member of Legislative Assembly elected to represent the Coquitlam-Maillardville riding in the provincial legislature. Also acts as Minister of Municipal Affairs and Housing. Constituency office hours are 10 am to 4:30 pm Monday to Friday.",
+      "organization_url": "http://www.gov.bc.ca",
+      "organization_email": "servicebc@gov.bc.ca",
+      "organization_name": "Government of British Columbia",
+      "last_verified_date": "2018-07-09"
+    },
+    {
+      "id": "17229270",
+      "name": "Jennifer Rice, MLA (NDP) - North Coast Constituency",
+      "organization_id": "9487864",
+      "description": "Member of Legislative Assembly elected to represent the North Coast riding in the provincial legislature. Acts as the Parliamentary Secretary for Emergency Preparedness. Constituency office hours are 9 am to 12 noon and 1 pm to 4 pm Tuesday to Friday.",
+      "organization_url": "http://www.gov.bc.ca",
+      "organization_email": "servicebc@gov.bc.ca",
+      "organization_name": "Government of British Columbia",
+      "last_verified_date": "2018-07-06"
+    }
+]
 
 export const OrganizationDetailComponent = (props: Props): JSX.Element => {
     // NativeBase's (Buggy) Tabs component notes:
@@ -59,7 +82,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
             />
             <Content padder>
                 <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
-                <TitleComponent title={testOrganization.title.toUpperCase()} />
+                <TitleComponent title={testOrganization.name.toUpperCase()} />
                 <Tabs tabBarUnderlineStyle={{ backgroundColor: colors.teal }}>
                     <Tab
                         heading={
@@ -131,7 +154,7 @@ const AboutTab = (props: OrganizationContactDetailsProps): JSX.Element => (
 );
 
 const AboutContactDetails = (props: OrganizationContactDetailsProps): JSX.Element => {
-    const linkContextForAnalytics = buildAnalyticsLinkContext('Organization', testOrganization.title);
+    const linkContextForAnalytics = buildAnalyticsLinkContext('Organization', testOrganization.name);
     const currentPathForAnalytics = props.currentPathForAnalytics;
     return (
         <View>
