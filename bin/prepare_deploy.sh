@@ -17,10 +17,6 @@ while (( "$#" )); do
     then
         POSTGRES_USER=$2
         shift 2
-    elif [ "$1" == "--workingDirectory" ]
-    then
-        WORKING_DIRECTORY=$2
-        shift 2
     elif [ "$1" == "--bc211path" ]
     then
         BC211PATH=$2
@@ -41,6 +37,7 @@ while (( "$#" )); do
     fi
 done
 
+WORKING_DIRECTORY="../wd-$VERSION"
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
 CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
@@ -67,10 +64,6 @@ usage() {
     echo
     echo "    --bc211path"
     echo "                Path to the XML file containing the BC211 data dump."
-    echo
-    echo "    --workingDirectory"
-    echo "                Path to a directory to be created by the script. WorkingDirectory should not already"
-    echo "                exist, it will be used to clone three git repositories and build the client."
     echo
     echo "    --staging or --production"
     echo "                Pass one of these flags depending on the build. This affects the URL, icon and app name to be set."
