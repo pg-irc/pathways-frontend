@@ -1,5 +1,7 @@
 if [ -d ../pathways-deploy/ ] || [ -d ../*/pathways-deploy/ ]; then
-    echo "../pathways-deploy or ../*/pathways-deploy exists, confirm with 'yes' to continue the build"
+    echo "deploy folders found, these should not be there during regular development work:"
+    ls -d ../pathways-deploy* ../*/pathways-deploy 2> /dev/null
+    echo "confirm with 'yes' to continue the build"
     read answer
     if [ "$answer" = "yes" ]; then
         exit 0
