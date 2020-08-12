@@ -155,6 +155,18 @@ checkOutContentByTag() {
     checkForSuccess "check out tag for content"
 }
 
+checkOutDeploy() {
+    echo
+    echo "Checking out deploy"
+    echo
+    (cd "$WORKING_DIRECTORY" && git clone git@github.com:PeaceGeeksSociety/pathways-deploy.git)
+    checkForSuccess "clone deploy repo"
+
+    (cd $WORKING_DIRECTORY/pathways-deploy && git checkout develop)
+    checkForSuccess "check out branch develop"
+}
+
+
 checkOutClientByTag() {
     echo
     echo "Checking out client tagged with $VERSION"
@@ -375,6 +387,7 @@ createWorkingDirectory
 checkOutServerByTag
 checkOutClientByTag
 checkOutContentByTag
+checkOutDeploy
 
 validateClientVersion
 validateServerVersion
