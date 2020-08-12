@@ -10,6 +10,8 @@ const {
 const path = require('path');
 
 const config = require('./config.json');
+const { platform } = require('os');
+const { dirname } = require('path');
 
 const EXPECTED_DIRECTORIES = ['android', 'ios 5.5', 'ios 6.5'];
 const STRING_EXTENSION = '.strings';
@@ -104,9 +106,10 @@ function getImageFiles(source) {
 }
 
 function main() {
-    const platformDirectories = getDirectories(__dirname);
+    const platformDirectories = getDirectories(__dirname).filter(dir => EXPECTED_DIRECTORIES.includes(dir));
+    console.log(platformDirectories)
 
-    const stringFiles = getStringFiles(__dirname);
+    const stringFiles = getStringFiles(path.join(__dirname, 'strings'));
 
     const missingDirectories = EXPECTED_DIRECTORIES.filter(dir => !platformDirectories.includes(dir));
 
@@ -143,12 +146,13 @@ function main() {
 
             console.log('Processing ' + langFile)
             copyFileSync(
-                path.join(__dirname, langFile),
+                path.join(__dirname, 'strings', langFile),
                 path.join(__dirname, platformDirectory, langDir, 'title.strings'),
             );
         });
 
         if (generate) {
+            console.log('here generate')
             const frameFileConfig = createFrameFileConfig(config, platformDirectory);
 
             console.log('Generating Framefile.json for ' + platformDirectory);
