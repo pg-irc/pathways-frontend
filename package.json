@@ -32,7 +32,7 @@
     "scripts": {
         "postinstall": "bin/postinstall.sh",
         "lint": "tslint src/**/*.ts src/**/*.tsx",
-        "build": "bin/buildFixtures.sh && tsc",
+        "build": "bin/check_for_deploy.sh && bin/buildFixtures.sh && tsc",
         "test": "node ./node_modules/jest/bin/jest.js",
         "cbt": "yarn clean && yarn build && yarn test",
         "bt": "yarn build && yarn test",

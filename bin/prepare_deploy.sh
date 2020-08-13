@@ -13,17 +13,9 @@ while (( "$#" )); do
     then
         SERVER_VERSION=$2
         shift 2
-    elif [ "$1" == "--androidVersionCode" ]
-    then
-        ANDROID_VERSION_CODE=$2
-        shift 2
     elif [ "$1" == "--postgresUser" ]
     then
         POSTGRES_USER=$2
-        shift 2
-    elif [ "$1" == "--workingDirectory" ]
-    then
-        WORKING_DIRECTORY=$2
         shift 2
     elif [ "$1" == "--bc211path" ]
     then
@@ -45,6 +37,7 @@ while (( "$#" )); do
     fi
 done
 
+WORKING_DIRECTORY="../wd-$VERSION"
 SERVER_DIRECTORY="$WORKING_DIRECTORY/pathways-backend"
 CLIENT_DIRECTORY="$WORKING_DIRECTORY/pathways-frontend"
 CONTENT_DIRECTORY="$WORKING_DIRECTORY/content"
@@ -64,10 +57,6 @@ usage() {
     echo "    --serverVersion"
     echo "                The server version string, must match tag on the server repository."
     echo
-    echo "    --androidVersionCode"
-    echo "                The version code for the android build, should match the client version string as"
-    echo "                verified by the client unit tests."
-    echo
     echo "    --postgresUser"
     echo "                The command './manage.py import_newcomers_guide' requires database access"
     echo "                in order to retrieve related tasks from the database. The related tasks must"
@@ -75,10 +64,6 @@ usage() {
     echo
     echo "    --bc211path"
     echo "                Path to the XML file containing the BC211 data dump."
-    echo
-    echo "    --workingDirectory"
-    echo "                Path to a directory to be created by the script. WorkingDirectory should not already"
-    echo "                exist, it will be used to clone three git repositories and build the client."
     echo
     echo "    --staging or --production"
     echo "                Pass one of these flags depending on the build. This affects the URL, icon and app name to be set."
@@ -110,13 +95,6 @@ validateCommandLine () {
     if [ "$SERVER_VERSION" == "" ]
     then
         echo "Error: Must specify server version string"
-        usage
-        fail
-    fi 
-
-    if [ "$ANDROID_VERSION_CODE" == "" ]
-    then
-        echo "Error: Must specify android version code"
         usage
         fail
     fi
@@ -177,6 +155,18 @@ checkOutContentByTag() {
     checkForSuccess "check out tag for content"
 }
 
+checkOutDeploy() {
+    echo
+    echo "Checking out deploy"
+    echo
+    (cd "$WORKING_DIRECTORY" && git clone git@github.com:PeaceGeeksSociety/pathways-deploy.git)
+    checkForSuccess "clone deploy repo"
+
+    (cd $WORKING_DIRECTORY/pathways-deploy && git checkout develop)
+    checkForSuccess "check out branch develop"
+}
+
+
 checkOutClientByTag() {
     echo
     echo "Checking out client tagged with $VERSION"
@@ -213,13 +203,6 @@ validateClientVersion() {
     if [ "$FILE_VERSION" != "$VERSION" ]
     then
         echo "Error: client VERSION.txt contains $FILE_VERSION, when $VERSION was expected"
-        fail
-    fi
-
-    FILE_CODE=$(grep versionCode "$CLIENT_DIRECTORY/app.json")
-    if [ "$FILE_CODE" != "      \"versionCode\": $ANDROID_VERSION_CODE," ]
-    then
-        echo "Error: client app.json contains $FILE_CODE when $ANDROID_VERSION_CODE was expected"
         fail
     fi
 }
@@ -272,36 +255,30 @@ setStagingValuesInAppJson() {
     checkForSuccess "set staging parameters is app.json"
 }
 
+setVersionInEnv() {
+    sed s/VERSION=.*/VERSION=$VERSION/ .env > .env.tmp
+    mv .env.tmp .env
+}
+
 createClientEnvironment() {
     echo
     echo "Creating client environment"
     echo
-    PRODUCTION_URL="https://pathways-production.herokuapp.com"
-    STAGING_URL="https://fierce-ravine-89308.herokuapp.com"
-
-    echo "VERSION=$VERSION"                                >  "$CLIENT_DIRECTORY/.env"
-    echo "DEBUG_GOOGLE_ANALYTICS=false"                    >> "$CLIENT_DIRECTORY/.env"
-    echo "ALGOLIA_SERVICES_INDEX='dev_phones'"             >> "$CLIENT_DIRECTORY/.env"
-    echo "SENTRY_DEBUG=false"                              >> "$CLIENT_DIRECTORY/.env"
-    echo "SENTRY_ENABLE_IN_DEV=false"                      >> "$CLIENT_DIRECTORY/.env"
-    echo                                                   >> "$CLIENT_DIRECTORY/.env"
-    echo "SENTRY_AUTH_TOKEN='token...'"                    >> "$CLIENT_DIRECTORY/.env"
-    echo "SENTRY_DSN=https://...sentry.io/..."             >> "$CLIENT_DIRECTORY/.env"
-    echo "ALGOLIA_SEARCH_API_KEY='key...'"                 >> "$CLIENT_DIRECTORY/.env"
-    echo "DISABLE_ANALYTICS_STRING='foobar'"               >> "$CLIENT_DIRECTORY/.env"
-    echo "ENABLE_ANALYTICS_STRING='barfoo'"                >> "$CLIENT_DIRECTORY/.env"
 
     if [ "$BUILD" == "staging" ]
     then
-        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-5'" >> "$CLIENT_DIRECTORY/.env"
-        echo "API_URL=$STAGING_URL"                         >> "$CLIENT_DIRECTORY/.env"
-
         setStagingValuesInAppJson
+
+        cp ../pathways-deploy/staging/env $CLIENT_DIRECTORY/.env
+        cp ../pathways-deploy/staging/google-services.json $CLIENT_DIRECTORY
+        setVersionInEnv
 
     elif [ "$BUILD" == "production" ]
     then
-        echo "GOOGLE_ANALYTICS_TRACKING_ID='UA-30770107-3'" >> "$CLIENT_DIRECTORY/.env"
-        echo "API_URL=$PRODUCTION_URL"                      >> "$CLIENT_DIRECTORY/.env"
+        cp ../pathways-deploy/production/env $CLIENT_DIRECTORY/.env
+        cp ../pathways-deploy/production/google-services.json $CLIENT_DIRECTORY
+        setVersionInEnv
+
     else
         echo "Error: You must specify the build type"
         fail
@@ -315,22 +292,6 @@ completeManualConfiguration() {
     echo "Manual steps:"
     echo
     echo " edit $CLIENT_DIRECTORY/.env"
-    echo
-    echo "Set the Sentry auth token and dsn. Log into our account on "
-    echo "https://sentry.io to retrieve the auth token from "
-    echo "https://sentry.io/settings/account/api/auth-tokens/ and dsn from "
-    echo "https://sentry.io/settings/peacegeeks/projects/pathways/keys/"
-    echo
-    echo "Set the ALGOLIA_SEARCH_API_KEY available from "
-    echo "https://www.algolia.com/apps/MMYH1Z0D3O/api-keys/all"
-    echo
-    echo "Set the Airtable API_KEY, BASE_ID and TABLE_ID. "
-    echo "Retrieve the API_KEY from https://airtable.com/account and "
-    echo "the BASE_ID and TABLE_ID from https://airtable.com/api"
-    echo
-    echo "Add the google-services.json file to the root directory of $CLIENT_DIRECTORY. "
-    echo "Retrieve this by going to https://console.firebase.google.com/u/0/ , "
-    echo "selecting ArrivalAdvisor $BUILD and navigating to project settings."
     echo
     echo "Make any other client side configuration changes now."
     echo
@@ -426,6 +387,7 @@ createWorkingDirectory
 checkOutServerByTag
 checkOutClientByTag
 checkOutContentByTag
+checkOutDeploy
 
 validateClientVersion
 validateServerVersion

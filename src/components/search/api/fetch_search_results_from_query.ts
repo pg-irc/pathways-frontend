@@ -3,6 +3,7 @@ import { ALGOLIA_SEARCH_API_KEY, ALGOLIA_SERVICES_INDEX } from 'react-native-dot
 import { validateServiceSearchResponse } from '../../../validation/search';
 import { LatLong } from '../../../validation/latlong/types';
 import { SearchServiceData } from '../../../validation/search/types';
+import { ALGOLIA_APPLICATION_ID } from 'react-native-dotenv';
 import BuildUrl from 'build-url';
 
 export interface AlgoliaResponse {
@@ -30,7 +31,7 @@ export const fetchSearchResultsFromQuery = async (
             headers: {
                 'X-Algolia-API-Key': ALGOLIA_SEARCH_API_KEY,
                 'Content-Type': 'application/json',
-                'X-Algolia-Application-Id': 'MMYH1Z0D3O',
+                'X-Algolia-Application-Id': ALGOLIA_APPLICATION_ID,
             },
             body: JSON.stringify({
                 query: searchTerm,
@@ -50,7 +51,7 @@ export const fetchSearchResultsFromQuery = async (
 };
 
 const buildAlgoliaSearchUrl = (): string => (
-    BuildUrl('https://MMYH1Z0D3O-dsn.algolia.net/', {
+    BuildUrl(`https://${ALGOLIA_APPLICATION_ID}-dsn.algolia.net/`, {
         path: `1/indexes/${ALGOLIA_SERVICES_INDEX}/query`,
     })
 );

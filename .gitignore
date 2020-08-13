@@ -12,7 +12,8 @@
 /coverage
 locale/_build
 
-# misc
+# environment
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -27,10 +28,5 @@ yarn-error.log*
 
 # Contains copyright material, do not commit
 src/fixtures/newcomers_guide
-
-# Build-time configuration file
-.env
-
-.vscode/
 
 google-services.json
