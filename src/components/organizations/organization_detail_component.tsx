@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Trans } from '@lingui/react';
 import { Tab, Tabs, TabHeading, Content, Text, View } from 'native-base';
 import { textStyles, colors } from '../../application/styles';
@@ -7,7 +7,7 @@ import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { HeaderComponent } from '../main/header_component';
-import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, SaveOrganizationServicesOffsetAction } from '../../stores/user_experience/actions';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
@@ -16,22 +16,29 @@ import { AnalyticsLinkPressedAction } from '../../stores/analytics';
 import { WebsiteComponent } from '../website/website_component';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { EmailComponent } from '../email/email_component';
+import { FlatList } from 'react-native-gesture-handler';
+import { HumanServiceData } from '../../validation/services/types';
+import { SearchListSeparator } from '../search/separators';
+import { NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
+import { renderServiceItems } from '../services/render_service_items';
+import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
+import { aString, aDate } from '../../application/helpers/random_test_values';
 
 export interface OrganizationDetailProps {
     readonly history: History;
+    readonly organizationServicesOffset: number;
 }
 
 export interface OrganizationDetailActions {
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesOffsetAction;
 }
 
 type Props = OrganizationDetailProps & OrganizationDetailActions & RouterProps;
-
-interface OrganizationContactDetailsProps {
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
-    readonly currentPathForAnalytics: string;
-}
 
 const testOrganization = {
     "id": "9487864",
@@ -41,28 +48,37 @@ const testOrganization = {
     "email": "servicebc@gov.bc.ca"
   };
 
-  const testServices = [
-    {
-      "id": "17229179",
-      "name": "Selina Robinson (Hon), MLA (NDP) - Coquitlam-Maillardville Constituency",
-      "organization_id": "9487864",
-      "description": "Member of Legislative Assembly elected to represent the Coquitlam-Maillardville riding in the provincial legislature. Also acts as Minister of Municipal Affairs and Housing. Constituency office hours are 10 am to 4:30 pm Monday to Friday.",
-      "organization_url": "http://www.gov.bc.ca",
-      "organization_email": "servicebc@gov.bc.ca",
-      "organization_name": "Government of British Columbia",
-      "last_verified_date": "2018-07-09"
-    },
-    {
-      "id": "17229270",
-      "name": "Jennifer Rice, MLA (NDP) - North Coast Constituency",
-      "organization_id": "9487864",
-      "description": "Member of Legislative Assembly elected to represent the North Coast riding in the provincial legislature. Acts as the Parliamentary Secretary for Emergency Preparedness. Constituency office hours are 9 am to 12 noon and 1 pm to 4 pm Tuesday to Friday.",
-      "organization_url": "http://www.gov.bc.ca",
-      "organization_email": "servicebc@gov.bc.ca",
-      "organization_name": "Government of British Columbia",
-      "last_verified_date": "2018-07-06"
-    }
+  const testServices: Array<HumanServiceData> = [
+      {
+        "id": "9506365",
+        "name": "Abbott Gardens",
+        "description": "Provides housing for single adults who are homeless at risk, of low income, or persons with disabilities who can live independently. Potential tenants apply through the BC Housing Registry.",
+        "phoneNumbers": [],
+        "addresses": [],
+        "website": aString(),
+        "email": aString(),
+        "organizationName": '',
+        "bookmarked": false,
+        "lastVerifiedDate": aDate(),
+      },
+      {
+        "id": "49174548",
+        "name": "Aboriginal Coalition to End Homelessness (ACEH)",
+        "description": "An island-wide coalition that creates spaces for the voices of Aboriginal community members and provides a culturally specific approach to Aboriginal (First Nations, Inuit, and Metis) homelessness on the traditional Coast Salish, Nuu-chah-nulth, and Kwakwaka’wakw territories. Focus is on advocating for housing and shelter; governance, policy, and resources; community building; and support services for Aboriginal people experiencing homelessness. Also provides regular activities including Indigenous Women's Circles, cooking classes, land-based learning opportunities, monthly building community events, health and wellness workshops, life-skills workshops and other cultural events for the Indigenous peoples experiencing homelessness. Office hours are 8:30am to 3:30 pm Monday to Friday. Works in collaboration with Greater Victoria Coalition to End Homelessness. Nonprofit society.",
+        "phoneNumbers": [],
+        "addresses": [],
+        "website": aString(),
+        "email": aString(),
+        "organizationName": '',
+        "bookmarked": false,
+        "lastVerifiedDate": aDate(),
+      }
 ]
+
+interface OrganizationContactDetailsProps {
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly currentPathForAnalytics: string;
+}
 
 export const OrganizationDetailComponent = (props: Props): JSX.Element => {
     // NativeBase's (Buggy) Tabs component notes:
@@ -107,7 +123,16 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
                             </TabHeading>
                         }
                     >
-                        <ServicesTab />
+                        <ServicesTab 
+                            history={props.history}
+                            bookmarkService={props.bookmarkService}
+                            unbookmarkService={props.unbookmarkService}
+                            openServiceDetail={props.openServiceDetail}
+                            analyticsLinkPressed={props.analyticsLinkPressed}
+                            currentPathForAnalytics={props.location.pathname}
+                            organizationServicesOffset={props.organizationServicesOffset}
+                            saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
+                        />
                     </Tab>
                 </Tabs>
             </Content>
@@ -175,6 +200,46 @@ const AboutContactDetails = (props: OrganizationContactDetailsProps): JSX.Elemen
     );
 };
 
-const ServicesTab = (): JSX.Element => (
-    <Text>TODO</Text>
-);
+interface OrganizationServicesProps {
+    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly currentPathForAnalytics: string;
+    readonly history: History;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
+    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
+    readonly organizationServicesOffset: number;
+    readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesOffsetAction;
+}
+
+export const ServicesTab = (props: OrganizationServicesProps): JSX.Element => {
+    const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] = useState(props.organizationServicesOffset);
+    const flatListRef = useRef<FlatList<HumanServiceData>>();
+    // const services = getServicesIfValid(props.topicServicesOrError);
+
+    // useEffect((): void => {
+    //     if (testServices.length > 0) {
+    //         flatListRef.current.scrollToOffset({ animated: false, offset: props.organizationServicesOffset });
+    //     }
+    // }, [props.organizationServicesOffset, testServices, flatListRef]);
+
+    const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
+        setOrganizationServicesOffset(e.nativeEvent.contentOffset.y);
+    };
+
+    return (
+        <FlatList
+        ref={flatListRef}
+        onScrollEndDrag={onScrollEnd}
+        style={{ backgroundColor: colors.lightGrey }}
+        data={testServices}
+        keyExtractor={(service: HumanServiceData): string => service.id}
+        renderItem={renderServiceItems({
+            ...props,
+            scrollOffset: organizationServicesOffset,
+            saveScrollOffset: props.saveOrganizationServicesOffset,
+        })}
+        ItemSeparatorComponent={SearchListSeparator}
+        initialNumToRender={props.saveOrganizationServicesOffset ? testServices.length : 20}
+        />
+    );
+}
