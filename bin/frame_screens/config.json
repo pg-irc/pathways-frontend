@@ -2,11 +2,11 @@
     "background": "./background.png",
     "color": "#ffffff",
     "fonts": {
-        "en": "Segoe-UI.ttf",
+        "en": "Avenir-Book.ttf",
         "ko": "NotoSansKR-Regular.otf",
-        "tl": "Segoe-UI.ttf",
-        "fr": "Segoe-UI.ttf",
-        "pa": "Punjabi.ttf",
+        "tl": "Avenir-Book.ttf",
+        "fr": "Avenir-Book.ttf",
+        "pa": "MuktaMahee-Regular.ttf",
         "zh_Hans": "NotoSansSC-Regular.otf",
         "zh_Hant": "NotoSansTC-Regular.otf",
         "ar": "Amiri-Regular.ttf"
