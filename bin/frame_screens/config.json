@@ -13,9 +13,9 @@
     },
     "font_size": 65,
     "frame": {
-        "android": "Nexus 6P",
-        "ios 5.5": "iPhone 8",
-        "ios 6.5": "iPhone XR"
+        "android": "Samsung Galaxy S9",
+        "ios 5.5": "iPhone 6s",
+        "ios 6.5": "iPhone X"
     },
     "padding": "125x200",
     "screenshots": [
