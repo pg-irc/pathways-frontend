@@ -48,11 +48,14 @@ const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index:
     return (
         <View key={phoneNumber.phone_number}>
             {shouldAddDivider && <DividerComponent />}
+            {isFaxNumber ?
+            (NonClickableFaxNumbersComponent(renderSinglePhoneNumber(phoneNumber),<EmptyComponent/> )) :
             <CardButtonComponent
                 leftContent={renderSinglePhoneNumber(phoneNumber)}
-                rightContent={isFaxNumber ? <EmptyComponent/> : phoneIcon}
-                onPress={isFaxNumber ? undefined : callPhoneNumber}
+                rightContent={phoneIcon}
+                onPress={callPhoneNumber}
             />
+        }
         </View>
     );
 });
@@ -67,5 +70,18 @@ const renderSinglePhoneNumber = (phoneNumber: PhoneNumber): JSX.Element => {
             <Text style={textStyles.paragraphBoldBlackLeft}>{fieldLabel}: </Text>
             <Text style={textStyles.paragraphStyle}>{phoneNumber.phone_number}</Text>
         </View>
+    );
+};
+
+const NonClickableFaxNumbersComponent = (leftContent: JSX.Element, rightContent: JSX.Element): JSX.Element => {
+    return (
+            <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', flex: 6 }}>
+                <View style={{ flex: 5.5, alignItems: 'flex-start' }}>
+                    {leftContent}
+                </View>
+                <View style={{ flex: .5, alignItems: 'flex-end', paddingRight: 10 }}>
+                    {rightContent}
+                </View>
+            </View>
     );
 };
