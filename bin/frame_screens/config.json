@@ -25,12 +25,7 @@
             "has_title": false
         },
         {
-            "key": "TRUSTED",
-            "show_complete_frame": false,
-            "title_below_image": true
-        },
-        {
-            "key": "AVAILABLE",
+            "key": "LANGUAGES",
             "show_complete_frame": false,
             "title_below_image": false
         },
@@ -40,7 +35,7 @@
             "title_below_image": true
         },
         {
-            "key": "OPTIONAL",
+            "key": "QUESTIONNAIRE",
             "show_complete_frame": false,
             "title_below_image": false
         },
@@ -50,12 +45,17 @@
             "title_below_image": true
         },
         {
-            "key": "KEEP",
+            "key": "BOOKMARK",
             "show_complete_frame": false,
             "title_below_image": false
         },
         {
             "key": "SEARCH",
+            "show_complete_frame": false,
+            "title_below_image": true
+        },
+        {
+            "key": "FEEDBACK",
             "show_complete_frame": false,
             "title_below_image": true
         }
