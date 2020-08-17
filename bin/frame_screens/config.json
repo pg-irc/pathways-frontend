@@ -17,7 +17,7 @@
         "ios 5.5": "iPhone 6s",
         "ios 6.5": "iPhone X"
     },
-    "padding": "125x200",
+    "padding": "75x150",
     "screenshots": [
         {
             "key": "WELCOME",
