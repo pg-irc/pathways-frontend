@@ -2,19 +2,19 @@
     "background": "./background.png",
     "color": "#ffffff",
     "fonts": {
-        "en": "Avenir-Book.ttf",
-        "ko": "NotoSansKR-Regular.otf",
-        "tl": "Avenir-Book.ttf",
-        "fr": "Avenir-Book.ttf",
-        "pa": "MuktaMahee-Regular.ttf",
-        "zh_Hans": "NotoSansSC-Regular.otf",
-        "zh_Hant": "NotoSansTC-Regular.otf",
-        "ar": "Amiri-Regular.ttf"
+        "en": "Avenir-Black.ttf",
+        "ko": "NotoSansKR-Bold.otf",
+        "tl": "Avenir-Black.ttf",
+        "fr": "Avenir-Black.ttf",
+        "pa": "MuktaMahee-Bold.ttf",
+        "zh_Hans": "NotoSansSC-Bold.otf",
+        "zh_Hant": "NotoSansTC-Bold.otf",
+        "ar": "Avenir-Black.ttf"
     },
     "font_size": 65,
     "frame": {
         "android": "Samsung Galaxy S9",
-        "ios 5.5": "iPhone 6s",
+        "ios 5.5": "iPhone 8 plus",
         "ios 6.5": "iPhone X"
     },
     "padding": "75x150",
