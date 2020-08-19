@@ -14,16 +14,11 @@
     "font_size": 65,
     "frame": {
         "android": "Samsung Galaxy S9",
-        "ios 5.5": "iPhone 8 plus",
+        "ios 5.5": "iPhone 8 Plus",
         "ios 6.5": "iPhone X"
     },
-    "padding": "75x150",
+    "padding": "125x200",
     "screenshots": [
-        {
-            "key": "WELCOME",
-            "show_complete_frame": true,
-            "has_title": false
-        },
         {
             "key": "LANGUAGES",
             "show_complete_frame": false,
@@ -58,6 +53,11 @@
             "key": "FEEDBACK",
             "show_complete_frame": false,
             "title_below_image": true
+        },
+        {
+            "key": "TRUSTED",
+            "show_complete_frame": true,
+            "has_title": true
         }
     ]
 }
