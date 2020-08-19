@@ -13,7 +13,6 @@ import { MissingServiceDetailComponent } from '../services/missing_service_detai
 import { Trans } from '@lingui/react';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { extractCallablePhoneNumber } from './extract_callable_phone_number';
-import { EmptyComponent } from '../empty_component/empty_component';
 
 interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
@@ -82,8 +81,7 @@ const PhoneNumberComponent = (props: PhoneNumberProps): JSX.Element => {
     if (isFaxNumber) {
         return (
             <NonClickableFaxNumbersComponent
-                leftContent={props.leftContent}
-                rightContent={<EmptyComponent />} />
+                leftContent={props.leftContent}/>
         );
     }
 
@@ -101,9 +99,6 @@ const NonClickableFaxNumbersComponent = (props: Partial<CardButtonProps>): JSX.E
         <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', flex: 6 }}>
             <View style={{ flex: 5.5, alignItems: 'flex-start' }}>
                 {props.leftContent}
-            </View>
-            <View style={{ flex: .5, alignItems: 'flex-end', paddingRight: 10 }}>
-                {props.rightContent}
             </View>
         </View>
     );
