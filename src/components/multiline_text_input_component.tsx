@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import * as constants from '../application/constants';
+import { Trans } from '@lingui/react';
 import { TextInput, StyleProp, TextStyle, View, InputAccessoryView, TouchableOpacity, Text, Keyboard } from 'react-native';
 import { colors, getBoldFontStylesForOS } from '../application/styles';
 import { isAndroid } from '../application/helpers/is_android';
@@ -119,7 +120,9 @@ export const MultilineKeyboardDoneButton = ({isVisible}: MultilineKeyboardDoneBu
                 style={{ marginRight: 12, marginVertical: 10 }}
                 onPress={onPress}
             >
-                <Text style={{ color: colors.teal, fontSize: 18, ...getBoldFontStylesForOS() }}>Done</Text>
+                <Text style={{ color: colors.teal, fontSize: 18, ...getBoldFontStylesForOS() }}>
+                    <Trans>Done</Trans>
+                </Text>
             </TouchableOpacity>
         </View>
     );
