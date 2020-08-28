@@ -201,6 +201,7 @@ const SearchInput = (props: SearchInputProps): JSX.Element => {
                     placeholderTextColor={colors.greyishBrown}
                     selectionColor={colors.black}
                     autoFocus={props.autoFocus}
+                    returnKeyType={'done'}
                 />
             {ClearButtonOrEmpty}
         </View>
