@@ -91,11 +91,11 @@ const IOSTextInput = (props: MultilineTextInputProps & TextInputProps): JSX.Elem
     );
 }
 
-interface MultilineKeyboardDoneButton {
+export interface MultilineKeyboardDoneButtonProps {
     readonly isVisible: boolean;
 }
 
-const MultilineKeyboardDoneButton = ({isVisible}: MultilineKeyboardDoneButton): JSX.Element => {
+export const MultilineKeyboardDoneButton = ({isVisible}: MultilineKeyboardDoneButtonProps): JSX.Element => {
     const onPress = (): void => {
         // tslint:disable-next-line: no-expression-statement
         Keyboard.dismiss();
