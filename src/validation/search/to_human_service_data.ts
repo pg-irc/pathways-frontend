@@ -20,6 +20,7 @@ export const toHumanServiceData = (data: SearchServiceData, bookmarkedServicesId
     }],
     website: data.organization.website,
     email: data.organization.email,
+    organizationId: data.organization.id,
     organizationName: data.organization.name,
     bookmarked: R.contains(data.service_id, bookmarkedServicesIds),
     lastVerifiedDate: data.last_verified_date,
