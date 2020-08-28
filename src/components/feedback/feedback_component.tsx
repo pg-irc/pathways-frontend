@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
-import React, { useState, Dispatch, SetStateAction } from 'react';
-import { View, TextInput, Text, TouchableOpacity, TextStyle, StyleProp } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, TextStyle, StyleProp } from 'react-native';
 import { Trans, I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { Icon } from 'native-base';
@@ -8,6 +8,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles, getTextAlignForLanguage } from '../../application/styles';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 import { FeedbackField } from '../../stores/feedback/types';
+import { MultilineTextInputComponent } from '../multiline_text_input_component';
 
 interface Props {
     readonly inputField: FeedbackField;
@@ -109,9 +110,6 @@ interface InputComponentProps {
 }
 
 const TextInputComponent = (props: InputComponentProps): JSX.Element => {
-    const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.teal);
-    const onBlur = (): void => setTextcolor(colors.teal);
-    const onFocus = (): void => setTextcolor(colors.black);
     const onChangeText = (value: string): void => props.setText(props.inputField, value);
 
     if (!props.isEditing) {
@@ -122,23 +120,19 @@ const TextInputComponent = (props: InputComponentProps): JSX.Element => {
         <I18n>
         {
             (({ i18n }: I18nProps): JSX.Element =>
-                <TextInput
-                    multiline={true}
-                    onChangeText={onChangeText}
+                <MultilineTextInputComponent
+                    i18n={i18n}
                     value={props.inputField.value}
-                    textAlignVertical={'top'}
-                    placeholder={i18n._(t`Comment or suggest edits`)}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
+                    numberOfLines={1}
+                    placeholder={t`Comment or suggest edits`}
                     style={{
-                        color: textColor,
                         marginTop: 10,
                         marginBottom: 5,
                         borderBottomColor: colors.grey,
                         borderBottomWidth: 1,
                         paddingBottom: 5,
-                        ...getTextAlignForLanguage(),
-                    }}
+                        ...getTextAlignForLanguage()}}
+                    onChangeText={onChangeText}
                 />
             )
         }

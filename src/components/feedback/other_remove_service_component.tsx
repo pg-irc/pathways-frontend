@@ -1,11 +1,11 @@
 // tslint:disable:no-expression-statement
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
-import { TextInput, Text } from 'react-native';
-import { Container, Content } from 'native-base';
+import { Text } from 'react-native';
+import { Container, View } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
-import { colors, textStyles } from '../../application/styles';
+import { textStyles } from '../../application/styles';
 import { goBack, Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
@@ -15,6 +15,7 @@ import { HeaderComponent } from './header_component';
 import { SubmitFeedbackButton } from './submit_feedback_button';
 import { isAndroid } from '../../application/helpers/is_android';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
+import { MultilineTextInputComponent } from '../multiline_text_input_component';
 
 type ContentComponentProps = {
     readonly input: string;
@@ -67,21 +68,21 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
         <I18n>
             {
                 ({ i18n }: I18nProps): JSX.Element => (
-                    <Content padder style={{ marginTop: 5}}>
-                        <Text style={[textStyles.suggestionText, {paddingBottom: 10, marginHorizontal: 10 }]}>
-                            <Trans id={props.inputLabel} />
-                        </Text>
-                        <TextInput
-                            multiline
-                            numberOfLines={5}
-                            onChangeText={props.onInputChange}
-                            placeholder={i18n._(props.placeholder)}
-                            placeholderTextColor={colors.darkerGrey}
-                            style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform()}]}
-                            textAlignVertical='top'
+                    <View padder style={{ flex: 1, marginTop: 5 }}>
+                        <View>
+                            <Text style={[textStyles.suggestionText, {paddingBottom: 10, marginHorizontal: 10 }]}>
+                                <Trans id={props.inputLabel} />
+                            </Text>
+                        </View>
+                        <MultilineTextInputComponent
+                            i18n={i18n}
                             value={props.input}
+                            numberOfLines={5}
+                            placeholder={props.placeholder}
+                            style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform()}]}
+                            onChangeText={props.onInputChange}
                         />
-                    </Content>
+                    </View>
                 )
             }
         </I18n>
