@@ -7,7 +7,7 @@ import { isAndroid } from '../application/helpers/is_android';
 import { useKeyboardIsVisible } from './use_keyboard_is_visible';
 import { EmptyComponent } from './empty_component/empty_component';
 
-export interface MultilineTextInputProps {
+export interface MultilineTextInputForPlatformProps {
     readonly i18n: I18n;
     readonly value: string;
     readonly numberOfLines: number;
@@ -16,14 +16,14 @@ export interface MultilineTextInputProps {
     readonly onChangeText: (value: string) => void;
 }
 
-export const MultilineTextInputComponent = (props: MultilineTextInputProps): JSX.Element => {
+export const MultilineTextInputForPlatform = (props: MultilineTextInputForPlatformProps): JSX.Element => {
     const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.teal);
     const onBlur = (): void => setTextcolor(colors.teal);
     const onFocus = (): void => setTextcolor(colors.black);
 
     if (isAndroid()) {
         return (
-            <AndroidTextInput
+            <AndroidMultilineTextInput
                 i18n={props.i18n}
                 value={props.value}
                 numberOfLines={props.numberOfLines}
@@ -37,7 +37,7 @@ export const MultilineTextInputComponent = (props: MultilineTextInputProps): JSX
     }
 
     return (
-        <IOSTextInput
+        <IOSMultilineTextInput
             i18n={props.i18n}
             value={props.value}
             numberOfLines={props.numberOfLines}
@@ -55,7 +55,7 @@ interface TextInputProps {
     readonly onFocus: () => void;
 }
 
-const AndroidTextInput = (props: MultilineTextInputProps & TextInputProps): JSX.Element => (
+const AndroidMultilineTextInput = (props: MultilineTextInputForPlatformProps & TextInputProps): JSX.Element => (
     <View style={{ flex: 2 }}>
         <TextInput
             multiline
@@ -70,7 +70,7 @@ const AndroidTextInput = (props: MultilineTextInputProps & TextInputProps): JSX.
     </View>
 );
 
-const IOSTextInput = (props: MultilineTextInputProps & TextInputProps): JSX.Element => {
+const IOSMultilineTextInput = (props: MultilineTextInputForPlatformProps & TextInputProps): JSX.Element => {
     const keyboardIsVisible = useKeyboardIsVisible();
     return (
         <View>

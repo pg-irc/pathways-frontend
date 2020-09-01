@@ -15,7 +15,7 @@ import { HeaderComponent } from './header_component';
 import { SubmitFeedbackButton } from './submit_feedback_button';
 import { isAndroid } from '../../application/helpers/is_android';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
-import { MultilineTextInputComponent, MultilineKeyboardDoneButton, MultilineKeyboardDoneButtonProps } from '../multiline_text_input_component';
+import { MultilineTextInputForPlatform, MultilineKeyboardDoneButton, MultilineKeyboardDoneButtonProps } from '../multiline_text_input_for_platform';
 import { EmptyComponent } from '../empty_component/empty_component';
 
 type ContentComponentProps = {
@@ -75,7 +75,7 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
                                 <Trans id={props.inputLabel} />
                             </Text>
                         </View>
-                        <MultilineTextInputComponent
+                        <MultilineTextInputForPlatform
                             i18n={i18n}
                             value={props.input}
                             numberOfLines={5}

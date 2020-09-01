@@ -8,7 +8,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles, getTextAlignForLanguage } from '../../application/styles';
 import { stripMarkdown } from '../strip_markdown/strip_markdown';
 import { FeedbackField } from '../../stores/feedback/types';
-import { MultilineTextInputComponent } from '../multiline_text_input_component';
+import { MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
 
 interface Props {
     readonly inputField: FeedbackField;
@@ -120,7 +120,7 @@ const TextInputComponent = (props: InputComponentProps): JSX.Element => {
         <I18n>
         {
             (({ i18n }: I18nProps): JSX.Element =>
-                <MultilineTextInputComponent
+                <MultilineTextInputForPlatform
                     i18n={i18n}
                     value={props.inputField.value}
                     numberOfLines={1}
