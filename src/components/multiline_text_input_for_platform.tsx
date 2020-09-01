@@ -7,7 +7,7 @@ import { isAndroid } from '../application/helpers/is_android';
 import { useKeyboardIsVisible } from './use_keyboard_is_visible';
 import { EmptyComponent } from './empty_component/empty_component';
 
-export interface MultilineTextInputForPlatformProps {
+interface Props {
     readonly i18n: I18n;
     readonly value: string;
     readonly numberOfLines: number;
@@ -16,7 +16,7 @@ export interface MultilineTextInputForPlatformProps {
     readonly onChangeText: (value: string) => void;
 }
 
-export const MultilineTextInputForPlatform = (props: MultilineTextInputForPlatformProps): JSX.Element => {
+export const MultilineTextInputForPlatform = (props: Props): JSX.Element => {
     const [textColor, setTextcolor]: readonly [string, Dispatch<SetStateAction<string>>] = useState(colors.teal);
     const onBlur = (): void => setTextcolor(colors.teal);
     const onFocus = (): void => setTextcolor(colors.black);
@@ -49,7 +49,7 @@ interface TextInputProps {
     readonly onFocus: () => void;
 }
 
-const AndroidMultilineTextInput = (props: MultilineTextInputForPlatformProps & TextInputProps): JSX.Element => (
+const AndroidMultilineTextInput = (props: Props & TextInputProps): JSX.Element => (
     <View style={{ flex: 2 }}>
         <TextInput
             multiline
@@ -66,7 +66,7 @@ const AndroidMultilineTextInput = (props: MultilineTextInputForPlatformProps & T
     </View>
 );
 
-const IOSMultilineTextInput = (props: MultilineTextInputForPlatformProps & TextInputProps): JSX.Element => {
+const IOSMultilineTextInput = (props: Props & TextInputProps): JSX.Element => {
     const keyboardIsVisible = useKeyboardIsVisible();
     return (
         <View>
