@@ -16,7 +16,6 @@ import { SubmitFeedbackButton } from './submit_feedback_button';
 import { isAndroid } from '../../application/helpers/is_android';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { MultilineTextInputForPlatform, MultilineKeyboardDoneButton, MultilineKeyboardDoneButtonProps } from '../multiline_text_input_for_platform';
-import { EmptyComponent } from '../empty_component/empty_component';
 
 type ContentComponentProps = {
     readonly input: string;
@@ -140,7 +139,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
                 onInputChange={setFeedback}
                 placeholder={content.placeholder}
             />
-            <AndroidKeyboardDoneButtonComponent isVisible={keyboardIsVisible}/>
+            <AndroidKeyboardDoneButtonComponent isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
                 onPress={submitFeedback}
                 disabled={!feedback}
@@ -155,10 +154,6 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
     );
 };
 
-export const AndroidKeyboardDoneButtonComponent = ({ isVisible }: MultilineKeyboardDoneButtonProps): JSX.Element => {
-    if (isAndroid()) {
-        return <MultilineKeyboardDoneButton isVisible={isVisible} />;
-    }
-
-    return <EmptyComponent />;
-};
+export const AndroidKeyboardDoneButtonComponent = ({ isVisible }: MultilineKeyboardDoneButtonProps): JSX.Element => (
+    <MultilineKeyboardDoneButton isVisible={isVisible} />
+);

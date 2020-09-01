@@ -255,7 +255,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         />
                     </View>
                 </KeyboardAwareScrollView>
-                <AndroidKeyboardDoneButtonComponent isVisible={keyboardIsVisible}/>
+                <AndroidKeyboardDoneButtonComponent isVisible={isAndroid() && keyboardIsVisible}/>
                 <SubmitFeedbackButton
                     isVisible={isFeedbackInputEnabled && !keyboardIsVisible}
                     disabled={!hasFeedbackToSend()}

@@ -21,22 +21,17 @@ export const MultilineTextInputForPlatform = (props: MultilineTextInputForPlatfo
     const onBlur = (): void => setTextcolor(colors.teal);
     const onFocus = (): void => setTextcolor(colors.black);
 
-    if (isAndroid()) {
-        return (
-            <AndroidMultilineTextInput
-                i18n={props.i18n}
-                value={props.value}
-                numberOfLines={props.numberOfLines}
-                placeholder={props.placeholder}
-                style={[props.style, { color: textColor}]}
-                onChangeText={props.onChangeText}
-                onBlur={onBlur}
-                onFocus={onFocus}
-            />
-        );
-    }
-
-    return (
+    return isAndroid() ?
+        <AndroidMultilineTextInput
+            i18n={props.i18n}
+            value={props.value}
+            numberOfLines={props.numberOfLines}
+            placeholder={props.placeholder}
+            style={[props.style, { color: textColor}]}
+            onChangeText={props.onChangeText}
+            onBlur={onBlur}
+            onFocus={onFocus}
+        /> :
         <IOSMultilineTextInput
             i18n={props.i18n}
             value={props.value}
@@ -46,8 +41,7 @@ export const MultilineTextInputForPlatform = (props: MultilineTextInputForPlatfo
             onChangeText={props.onChangeText}
             onBlur={onBlur}
             onFocus={onFocus}
-        />
-    );
+        />;
 };
 
 interface TextInputProps {
@@ -97,11 +91,6 @@ export interface MultilineKeyboardDoneButtonProps {
 }
 
 export const MultilineKeyboardDoneButton = ({isVisible}: MultilineKeyboardDoneButtonProps): JSX.Element => {
-    const onPress = (): void => {
-        // tslint:disable-next-line: no-expression-statement
-        Keyboard.dismiss();
-    };
-
     if (!isVisible) {
         return <EmptyComponent />;
     }
@@ -118,7 +107,7 @@ export const MultilineKeyboardDoneButton = ({isVisible}: MultilineKeyboardDoneBu
         >
             <TouchableOpacity
                 style={{ marginRight: 12, marginVertical: 10 }}
-                onPress={onPress}
+                onPress={Keyboard.dismiss}
             >
                 <Text style={{ color: colors.teal, fontSize: 18, ...getBoldFontStylesForOS() }}>
                     <Trans>Done</Trans>
