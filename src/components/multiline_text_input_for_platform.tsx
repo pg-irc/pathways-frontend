@@ -53,13 +53,15 @@ const AndroidMultilineTextInput = (props: MultilineTextInputForPlatformProps & T
     <View style={{ flex: 2 }}>
         <TextInput
             multiline
-            numberOfLines={5}
+            numberOfLines={props.numberOfLines}
             onChangeText={props.onChangeText}
             placeholder={props.i18n._(props.placeholder)}
             placeholderTextColor={colors.darkerGrey}
             style={props.style}
             textAlignVertical='top'
             value={props.value}
+            onBlur={props.onBlur}
+            onFocus={props.onFocus}
         />
     </View>
 );
@@ -70,7 +72,7 @@ const IOSMultilineTextInput = (props: MultilineTextInputForPlatformProps & TextI
         <View>
             <TextInput
                 multiline
-                numberOfLines={5}
+                numberOfLines={props.numberOfLines}
                 onChangeText={props.onChangeText}
                 placeholder={props.i18n._(props.placeholder)}
                 placeholderTextColor={colors.darkerGrey}
@@ -78,6 +80,8 @@ const IOSMultilineTextInput = (props: MultilineTextInputForPlatformProps & TextI
                 textAlignVertical='top'
                 value={props.value}
                 inputAccessoryViewID={constants.FEEDBACK_INPUT_ID}
+                onBlur={props.onBlur}
+                onFocus={props.onFocus}
             />
             <InputAccessoryView nativeID={constants.FEEDBACK_INPUT_ID}>
                 <MultilineKeyboardDoneButton isVisible={keyboardIsVisible}/>
