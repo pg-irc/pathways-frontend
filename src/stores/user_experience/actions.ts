@@ -20,6 +20,7 @@ SaveSearchOffsetAction |
 SaveTopicServicesOffsetAction |
 SaveBookmarkedServicesOffsetAction |
 SaveBookmarksTabAction |
+SaveOrganizationServicesOffsetAction |
 CloseHeaderMenuAction |
 OpenHeaderMenuAction |
 CloseAboutModalAction |

@@ -52,6 +52,11 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
                 ...store,
                 bookmarkedServicesOffset: action.payload.offset,
             });
+        case constants.SAVE_ORGANIZATION_SERVICES_OFFSET:
+            return ({
+                ...store,
+                organizationServicesOffset: action.payload.offset,
+            });
         case constants.SAVE_BOOKMARKS_TAB:
             return updateBookmarksTab(store, action.payload.index);
         case constants.OPEN_HEADER_MENU:

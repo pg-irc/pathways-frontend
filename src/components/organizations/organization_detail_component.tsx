@@ -77,7 +77,7 @@ const testOrganization = {
       }
 ]
 
-interface OrganizationContactDetailsProps {
+interface AboutOrganizationProps {
     readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
 }
@@ -142,11 +142,13 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
     );
 };
 
-const OrganizationDetailHeader = (props: {
+interface OrganizationDetailHeaderProps {
     readonly location: Location;
     readonly history: History;
-    readonly openHeaderMenu: () => OpenHeaderMenuAction;
-}): JSX.Element => {
+    readonly openHeaderMenu : () => OpenHeaderMenuAction;
+}
+
+const OrganizationDetailHeader = (props: OrganizationDetailHeaderProps): JSX.Element => {
     const backgroundColor = colors.lightGrey;
     const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [
@@ -164,7 +166,7 @@ const OrganizationDetailHeader = (props: {
     );
 };
 
-const AboutTab = (props: OrganizationContactDetailsProps): JSX.Element => (
+const AboutTab = (props: AboutOrganizationProps): JSX.Element => (
     <Content>
         <MarkdownBodyComponent
             body={testOrganization.description}
@@ -180,7 +182,7 @@ const AboutTab = (props: OrganizationContactDetailsProps): JSX.Element => (
     </Content>
 );
 
-const AboutContactDetails = (props: OrganizationContactDetailsProps): JSX.Element => {
+const AboutContactDetails = (props: AboutOrganizationProps): JSX.Element => {
     const linkContextForAnalytics = buildAnalyticsLinkContext('Organization', testOrganization.name);
     const currentPathForAnalytics = props.currentPathForAnalytics;
     return (
@@ -235,13 +237,13 @@ export const ServicesTab = (props: OrganizationServicesProps): JSX.Element => {
         style={{ backgroundColor: colors.lightGrey }}
         data={testServices}
         keyExtractor={(service: HumanServiceData): string => service.id}
-        renderItem={renderServiceItems({
-            ...props,
-            scrollOffset: organizationServicesOffset,
-            saveScrollOffset: props.saveOrganizationServicesOffset,
-        })}
+        renderItem={renderServices(props, organizationServicesOffset, props.saveOrganizationServicesOffset)}
         ItemSeparatorComponent={SearchListSeparator}
         initialNumToRender={props.saveOrganizationServicesOffset ? testServices.length : 20}
         />
     );
+}
+
+const renderServices = (props: OrganizationServicesProps, scrollOffset: number, saveScrollOffset: (offset: number)=> SaveOrganizationServicesOffsetAction) => {
+    return renderServiceItems({...props, scrollOffset, saveScrollOffset})
 }
