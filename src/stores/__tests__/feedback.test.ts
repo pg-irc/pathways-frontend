@@ -283,7 +283,8 @@ describe('feedback reducer', () => {
             const oldStore = new FeedbackStoreBuilder().withFeedbackData(undefined).build();
             const action = backFromContactInformation();
             const newStore = reducer(oldStore, action);
-            expect(newStore).toEqual(oldStore);
+            expect(newStore.modal).toEqual(FeedbackModal.None);
+            expect(newStore.screen).toEqual(FeedbackScreen.EditableServiceDetailPage);
         });
     });
 });
