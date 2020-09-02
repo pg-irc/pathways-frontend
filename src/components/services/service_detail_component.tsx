@@ -56,6 +56,8 @@ import { isAndroid } from '../../application/helpers/is_android';
 import { HeaderComponent as FeedbackHeaderComponent} from '../feedback/header_component';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
 import { ThankYouMessageOrEmptyComponent } from './thank_you_message_or_empty_component';
+import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
+import { MultilineKeyboardDoneButton } from '../multiline_text_input_for_platform';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -98,6 +100,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const isFeedbackInputEnabled = props.feedbackScreen === FeedbackScreen.EditableServiceDetailPage;
     const scrollViewRef = useRef<KeyboardAwareScrollView>(undefined);
     const [feedbackInput, setFeedbackInput]: readonly [ServiceFeedback, SetServiceFeedback] = useState(props.serviceFeedback);
+    const keyboardIsVisible = useKeyboardIsVisible();
 
     const setTextForField = R.curry((fieldName: keyof ServiceFeedback, fieldValue: FeedbackField, value: string): void => (
         setFeedbackInput({ ...feedbackInput, [fieldName]: { ...fieldValue, value  }})
@@ -252,8 +255,9 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                         />
                     </View>
                 </KeyboardAwareScrollView>
+                <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
                 <SubmitFeedbackButton
-                    isVisible={isFeedbackInputEnabled}
+                    isVisible={isFeedbackInputEnabled && !keyboardIsVisible}
                     disabled={!hasFeedbackToSend()}
                     onPress={onSubmitPress}
                 />

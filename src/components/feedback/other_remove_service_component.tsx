@@ -1,11 +1,11 @@
 // tslint:disable:no-expression-statement
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
-import { TextInput, Text } from 'react-native';
-import { Container, Content } from 'native-base';
+import { Text } from 'react-native';
+import { Container, View } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-native';
-import { colors, textStyles } from '../../application/styles';
+import { textStyles } from '../../application/styles';
 import { goBack, Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
@@ -14,6 +14,8 @@ import { DiscardChangesModal } from './discard_changes_modal';
 import { HeaderComponent } from './header_component';
 import { SubmitFeedbackButton } from './submit_feedback_button';
 import { isAndroid } from '../../application/helpers/is_android';
+import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
+import { MultilineTextInputForPlatform, MultilineKeyboardDoneButton } from '../multiline_text_input_for_platform';
 
 type ContentComponentProps = {
     readonly input: string;
@@ -66,21 +68,21 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
         <I18n>
             {
                 ({ i18n }: I18nProps): JSX.Element => (
-                    <Content padder style={{ marginTop: 5}}>
-                        <Text style={[textStyles.suggestionText, {paddingBottom: 10, marginHorizontal: 10 }]}>
-                            <Trans id={props.inputLabel} />
-                        </Text>
-                        <TextInput
-                            multiline
-                            numberOfLines={5}
-                            onChangeText={props.onInputChange}
-                            placeholder={i18n._(props.placeholder)}
-                            placeholderTextColor={colors.darkerGrey}
-                            style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform()}]}
-                            textAlignVertical='top'
+                    <View padder style={{ flex: 1, marginTop: 5 }}>
+                        <View>
+                            <Text style={[textStyles.suggestionText, {paddingBottom: 10, marginHorizontal: 10 }]}>
+                                <Trans id={props.inputLabel} />
+                            </Text>
+                        </View>
+                        <MultilineTextInputForPlatform
+                            i18n={i18n}
                             value={props.input}
+                            numberOfLines={5}
+                            placeholder={props.placeholder}
+                            style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform()}]}
+                            onChangeText={props.onInputChange}
                         />
-                    </Content>
+                    </View>
                 )
             }
         </I18n>
@@ -96,7 +98,7 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
     const history = useHistory();
     const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>(props.otherRemoveServiceFeedback);
-
+    const keyboardIsVisible = useKeyboardIsVisible();
     useEffect((): void => {
         if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
             goBack(history);
@@ -137,10 +139,11 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
                 onInputChange={setFeedback}
                 placeholder={content.placeholder}
             />
+            <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
                 onPress={submitFeedback}
                 disabled={!feedback}
-                isVisible={true}
+                isVisible={!keyboardIsVisible}
             />
             <DiscardChangesModal
                 onDiscardPress={onDiscardModalDiscardPress}

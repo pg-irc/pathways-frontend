@@ -178,6 +178,7 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                                 placeholder={i18n._(searchTermPlaceholder)}
                                 placeholderTextColor={colors.greyishBrown}
                                 selectionColor={colors.black}
+                                returnKeyType={'done'}
                             />
                             <ClearInputButton visible={props.searchTermInput !== ''} onPress={clearTermInput} />
                         </TouchableOpacity>
@@ -195,6 +196,7 @@ const ExpandedInput = (props: ExpandedInputProps): JSX.Element => {
                                 placeholder={i18n._(searchLocationPlaceholder)}
                                 placeholderTextColor={colors.greyishBrown}
                                 selectionColor={colors.black}
+                                returnKeyType={'done'}
                             />
                             <ClearInputButton visible={props.searchLocationInput !== ''} onPress={clearLocationInput} />
                         </TouchableOpacity>

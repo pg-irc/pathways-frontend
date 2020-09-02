@@ -2,8 +2,7 @@
 import { History, Location } from 'history';
 // @ts-ignore variables is exported by native base but is not defined by the types file
 import { Button, Footer, FooterTab, Icon, variables } from 'native-base';
-import React, { useContext, useState, useEffect, SetStateAction, Dispatch } from 'react';
-import { Keyboard } from 'react-native';
+import React, { useContext } from 'react';
 import Animated from 'react-native-reanimated';
 
 import { Routes, goToRouteWithoutParameter, pathMatchesRoute, pathMatchesAnyRoute } from '../../application/routing';
@@ -12,6 +11,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { ScrollAnimationContext, ScrollContext } from '../main/scroll_animation_context';
 import { FeedbackScreen } from '../../stores/feedback/types';
 import { applicationStyles } from '../../application/styles';
+import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 
 const AnimatedFooter = Animated.createAnimatedComponent(Footer);
 
@@ -55,31 +55,7 @@ const NavigationButton = (props: NavigationButtonProps): JSX.Element => {
 
 export const FooterComponent: React.StatelessComponent<FooterProps> = (props: FooterProps): JSX.Element => {
     const  { animatedFooterHeight, animatedFooterBottomPadding }: ScrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
-
-    const [keyboardIsVisible, setKeyboardIsVisible]: readonly [boolean, Dispatch<SetStateAction<boolean>>] = useState(false);
-
-    useEffect((): () => void => {
-        const keyboardOpens = (): void => {
-            setKeyboardIsVisible(true);
-        };
-
-        const keyboardCloses = (): void => {
-            setKeyboardIsVisible(false);
-        };
-
-        const addListener = (): void => {
-            Keyboard.addListener('keyboardDidShow', keyboardOpens);
-            Keyboard.addListener('keyboardDidHide', keyboardCloses);
-        };
-
-        const removeListener = (): void => {
-            Keyboard.removeListener('keyboardDidShow', keyboardOpens);
-            Keyboard.removeListener('keyboardDidHide', keyboardCloses);
-        };
-
-        addListener();
-        return removeListener;
-    }, [setKeyboardIsVisible]);
+    const keyboardIsVisible = useKeyboardIsVisible();
 
     if (isFooterHidden(props, keyboardIsVisible)) {
         return <EmptyComponent />;
