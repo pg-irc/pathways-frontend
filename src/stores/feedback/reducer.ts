@@ -79,7 +79,8 @@ const submitOrDiscardReducer = (store: FeedbackStore, action: ReducerActions): F
 };
 
 const backButtonReducer = (store: FeedbackStore): FeedbackStore => {
-    switch (store.feedback.type) {
+    const feedback_type = store.feedback?.type || 'service_feedback';
+    switch (feedback_type) {
         case 'service_feedback':
             return { ...store, modal: FeedbackModal.None, screen: FeedbackScreen.EditableServiceDetailPage };
         case 'remove_service':

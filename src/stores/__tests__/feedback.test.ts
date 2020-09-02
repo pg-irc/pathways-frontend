@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement no-let
+// tslint:disable:no-expression-statement no-let typedef
 import { reducer, suggestAnUpdate,
     chooseChangeNameOrDetails, chooseRemoveService, chooseOtherChanges, submit, discardChanges, close,
     finishFeedback, buildDefaultStore, cancelDiscardChanges, getEmptyServiceFeedback, getEmptyUserInfo,
@@ -277,6 +277,22 @@ describe('feedback reducer', () => {
             } else {
                 fail();
             }
+        });
+
+        test('does not crash on back from contact event with undefined feedback', () => {
+            const oldStore = new FeedbackStoreBuilder().withFeedbackData(undefined).build();
+            const action = backFromContactInformation();
+            const newStore = reducer(oldStore, action);
+            expect(newStore.modal).toEqual(FeedbackModal.None);
+            expect(newStore.screen).toEqual(FeedbackScreen.EditableServiceDetailPage);
+        });
+
+        test('does not crash on back from contact event with undefined feedback type', () => {
+            const oldStore = new FeedbackStoreBuilder().withFeedbackData({type: undefined, reason: aString()}).build();
+            const action = backFromContactInformation();
+            const newStore = reducer(oldStore, action);
+            expect(newStore.modal).toEqual(FeedbackModal.None);
+            expect(newStore.screen).toEqual(FeedbackScreen.EditableServiceDetailPage);
         });
     });
 });
