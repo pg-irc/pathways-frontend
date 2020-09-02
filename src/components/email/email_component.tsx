@@ -5,7 +5,7 @@ import { Trans } from '@lingui/react';
 import { CardButtonComponent } from '../card_button_component';
 import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link_component';
-import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { isServiceDetailStringEmpty } from '../services/is_service_detail_empty';
 import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
@@ -14,13 +14,19 @@ interface Props {
     readonly email: string;
     readonly linkContextForAnalytics: string;
     readonly currentPathForAnalytics: string;
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
 }
 
 export const EmailComponent = (props: Props): JSX.Element => {
     const onPress = (): void => {
         const linkValue = 'mailto:' + props.email;
-        props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.email, props.email);
+        const analyticsLinkProps: AnalyticsLinkProps = {
+            currentPath: props.currentPathForAnalytics,
+            linkContext: props.linkContextForAnalytics,
+            linkType: LinkTypes.email,
+            linkValue: linkValue
+        }
+        props.analyticsLinkPressed(analyticsLinkProps);
         openURL(linkValue);
     };
 

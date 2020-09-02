@@ -3,6 +3,7 @@ import { Analytics as ExpoAnalytics, ScreenHit, Event } from 'expo-analytics';
 import { GOOGLE_ANALYTICS_TRACKING_ID, DEBUG_GOOGLE_ANALYTICS } from 'react-native-dotenv';
 import { RouteChangedAction } from '../../stores/router_actions';
 import { HumanServiceData } from '../../validation/services/types';
+import { AnalyticsLinkProps } from '../../stores/analytics';
 
 export const sendScreenHit = (action: RouteChangedAction): void => {
     const additionalParameters = createGoogleAnalyticsLanguageParameter(action);
@@ -46,11 +47,11 @@ export const sendCollapseDetail = (contentId: string): void => {
     analyticsHit(event);
 };
 
-export const sendLinkPressedEvent = (currentPath: string, linkContext: string, linkType: string, linkValue: string)
+export const sendLinkPressedEvent = (analyticsLinkProps: AnalyticsLinkProps)
     : void => {
-    const additionalParameters = createGoogleAnalyticsScreenNameParameter(currentPath);
+    const additionalParameters = createGoogleAnalyticsScreenNameParameter(analyticsLinkProps.currentPath);
     const analytics = createAnalytics(additionalParameters);
-    const event = createEvent('Links', `LinkPressed:${linkValue}`, [`${linkContext}:${linkType}`]);
+    const event = createEvent('Links', `LinkPressed:${analyticsLinkProps.linkValue}`, [`${analyticsLinkProps.linkContext}:${analyticsLinkProps.linkType}`]);
     analytics.hit(event);
 };
 

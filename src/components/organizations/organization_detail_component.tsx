@@ -12,7 +12,7 @@ import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
 import { RouterProps } from '../../application/routing';
-import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { WebsiteComponent } from '../website/website_component';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { EmailComponent } from '../email/email_component';
@@ -30,7 +30,7 @@ export interface OrganizationDetailProps {
 }
 
 export interface OrganizationDetailActions {
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
@@ -78,7 +78,7 @@ const testOrganization = {
 ]
 
 interface AboutOrganizationProps {
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
 }
 
@@ -205,7 +205,7 @@ const AboutContactDetails = (props: AboutOrganizationProps): JSX.Element => {
 };
 
 interface OrganizationServicesProps {
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
     readonly history: History;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;

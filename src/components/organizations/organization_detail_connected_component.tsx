@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { RouterProps } from '../../application/routing';
 import { Dispatch } from 'redux';
-import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
 import { OpenHeaderMenuAction, openHeaderMenu, SaveOrganizationServicesOffsetAction, saveOrganizationServicesOffset } from '../../stores/user_experience/actions';
 import { OrganizationDetailComponent, OrganizationDetailActions, OrganizationDetailProps } from './organization_detail_component';
 import { HumanServiceData } from '../../validation/services/types';
@@ -23,8 +23,8 @@ type Actions =
     OpenServiceAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): OrganizationDetailActions => ({
-    analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
-        dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
+    analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps): AnalyticsLinkPressedAction =>
+        dispatch(analyticsLinkPressed(analyticsLinkProps)),
     bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
     unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),

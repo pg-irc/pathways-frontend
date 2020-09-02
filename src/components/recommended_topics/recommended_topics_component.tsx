@@ -17,7 +17,7 @@ import {
 import { RecommendedIconComponent } from './recommended_icon_component';
 import { buildTopicsListItemsWithHeadings } from '../topics/build_topic_list_items_with_headings';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
-import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
 import { recommendedTopicsStyles } from './styles';
@@ -33,7 +33,7 @@ export interface RecommendedTopicsProps {
 
 export interface RecommendedTopicsActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (analyticsLink: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly hideLinkAlerts: () => void;
 }
 

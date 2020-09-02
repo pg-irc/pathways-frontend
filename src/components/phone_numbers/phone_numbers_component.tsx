@@ -6,7 +6,7 @@ import { CardButtonComponent, CardButtonProps } from '../card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link_component';
-import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import * as R from 'ramda';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
@@ -18,7 +18,7 @@ interface Props {
     readonly phoneNumbers: ReadonlyArray<PhoneNumber>;
     readonly linkContextForAnalytics: string;
     readonly currentPathForAnalytics: string;
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
 }
 
 interface PhoneNumberProps {
@@ -44,7 +44,13 @@ const buildPhoneNumber = R.curry((props: Props, phoneNumber: PhoneNumber, index:
     const callPhoneNumber = (): void => {
         const callableNumber = extractCallablePhoneNumber(phoneNumber.phone_number);
         const linkValue = callableNumber ? 'tel: ' + callableNumber : '';
-        props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.phone, linkValue);
+        const analyticsLinkProps: AnalyticsLinkProps ={
+            currentPath: props.currentPathForAnalytics,
+            linkContext: props.linkContextForAnalytics,
+            linkType: LinkTypes.phone,
+            linkValue: linkValue
+        }
+        props.analyticsLinkPressed(analyticsLinkProps);
         openURL(linkValue);
     };
     const phoneIcon = <ServiceDetailIconComponent name={'phone'} />;

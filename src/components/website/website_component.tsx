@@ -5,7 +5,7 @@ import { Trans } from '@lingui/react';
 import { CardButtonComponent } from '../card_button_component';
 import { textStyles } from '../../application/styles';
 import { openURL, LinkTypes } from '../link/link_component';
-import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
 import { isServiceDetailStringEmpty } from '../services/is_service_detail_empty';
 import { MissingServiceDetailComponent } from '../services/missing_service_detail_component';
@@ -14,12 +14,18 @@ interface Props {
     readonly website: string;
     readonly linkContextForAnalytics: string;
     readonly currentPathForAnalytics: string;
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (props: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
 }
 
 export const WebsiteComponent = (props: Props): JSX.Element => {
     const onPress = (): void => {
-        props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, LinkTypes.website, props.website);
+        const analyticsLinkProps: AnalyticsLinkProps = {
+            currentPath: props.currentPathForAnalytics,
+            linkContext: props.linkContextForAnalytics,
+            linkType: LinkTypes.website,
+            linkValue: props.website
+        }
+        props.analyticsLinkPressed(analyticsLinkProps);
         openURL(props.website);
     };
 

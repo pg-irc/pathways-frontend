@@ -6,7 +6,7 @@ import { Address } from '../../validation/services/types';
 import { CardButtonComponent } from '../card_button_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { textStyles } from '../../application/styles';
-import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { LatLong } from '../../validation/latlong/types';
 import { openInMapsApplication } from '../maps_application_popup/open_in_maps_application';
 import { ServiceDetailIconComponent } from '../services/service_detail_icon';
@@ -19,7 +19,7 @@ interface Props {
     readonly linkContextForAnalytics: string;
     readonly currentPathForAnalytics: string;
     readonly locationTitle: string;
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
 }
 
 export const AddressesComponent = (props: Props): JSX.Element => {
@@ -36,10 +36,14 @@ export const AddressesComponent = (props: Props): JSX.Element => {
 const buildAddress = R.curry((props: Props, address: Address, index: number): JSX.Element => {
     const onPress = (): Promise<void | string> => {
         if (props.latLong) {
-            const linkType = 'Button';
-            const linkValue = 'Open in maps';
+            const analyticsLinkProps: AnalyticsLinkProps = {
+                currentPath: props.currentPathForAnalytics,
+                linkContext: props.linkContextForAnalytics,
+                linkType: 'Button',
+                linkValue:'Open in maps'
+            }
              // tslint:disable-next-line: no-expression-statement
-            props.analyticsLinkPressed(props.currentPathForAnalytics, props.linkContextForAnalytics, linkType, linkValue);
+            props.analyticsLinkPressed(analyticsLinkProps);
             return openInMapsApplication(props.locationTitle, props.latLong);
         }
         return undefined;
