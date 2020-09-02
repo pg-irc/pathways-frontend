@@ -1,0 +1,63 @@
+{
+    "background": "./background.png",
+    "color": "#ffffff",
+    "fonts": {
+        "en": "Avenir-Black.ttf",
+        "ko": "NotoSansKR-Bold.otf",
+        "tl": "Avenir-Black.ttf",
+        "fr": "Avenir-Black.ttf",
+        "pa": "MuktaMahee-Bold.ttf",
+        "zh_Hans": "NotoSansSC-Bold.otf",
+        "zh_Hant": "NotoSansTC-Bold.otf",
+        "ar": "Avenir-Black.ttf"
+    },
+    "font_size": 65,
+    "frame": {
+        "android": "Samsung Galaxy S9",
+        "ios 5.5": "iPhone 8 Plus",
+        "ios 6.5": "iPhone X"
+    },
+    "padding": "75x150",
+    "screenshots": [
+        {
+            "key": "LANGUAGES",
+            "show_complete_frame": false,
+            "title_below_image": false
+        },
+        {
+            "key": "RECOMMENDATIONS",
+            "show_complete_frame": false,
+            "title_below_image": true
+        },
+        {
+            "key": "QUESTIONNAIRE",
+            "show_complete_frame": false,
+            "title_below_image": false
+        },
+        {
+            "key": "FIND",
+            "show_complete_frame": false,
+            "title_below_image": true
+        },
+        {
+            "key": "BOOKMARK",
+            "show_complete_frame": false,
+            "title_below_image": false
+        },
+        {
+            "key": "SEARCH",
+            "show_complete_frame": false,
+            "title_below_image": true
+        },
+        {
+            "key": "FEEDBACK",
+            "show_complete_frame": false,
+            "title_below_image": true
+        },
+        {
+            "key": "TRUSTED",
+            "show_complete_frame": true,
+            "has_title": true
+        }
+    ]
+}
