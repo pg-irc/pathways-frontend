@@ -286,5 +286,13 @@ describe('feedback reducer', () => {
             expect(newStore.modal).toEqual(FeedbackModal.None);
             expect(newStore.screen).toEqual(FeedbackScreen.EditableServiceDetailPage);
         });
+
+        test('does not crash on back from contact event with undefined feedback type', () => {
+            const oldStore = new FeedbackStoreBuilder().withFeedbackData({type: undefined, reason: aString()}).build();
+            const action = backFromContactInformation();
+            const newStore = reducer(oldStore, action);
+            expect(newStore.modal).toEqual(FeedbackModal.None);
+            expect(newStore.screen).toEqual(FeedbackScreen.EditableServiceDetailPage);
+        });
     });
 });
