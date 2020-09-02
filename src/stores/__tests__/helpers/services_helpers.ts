@@ -152,6 +152,11 @@ export class HumanServiceDataBuilder {
         return this;
     }
 
+    withOrganizationId(organizationId: string): HumanServiceDataBuilder {
+        this.organizationId = organizationId;
+        return this;
+    }
+
     withWebsite(website: string): HumanServiceDataBuilder {
         this.website = website;
         return this;
