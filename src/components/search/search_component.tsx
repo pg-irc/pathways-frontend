@@ -10,7 +10,7 @@ import { SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, Open
 import { RouterProps } from '../../application/routing';
 import { DisableAnalyticsAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
-import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
+import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING, ENABLE_CUSTOM_LATLONG } from 'react-native-dotenv';
 import * as actions from '../../stores/search';
 import { SearchExecutedAction } from '../../stores/analytics';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
@@ -140,6 +140,15 @@ const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (dis
         } else if (location === ENABLE_ANALYTICS_STRING) {
             disableAnalytics(false);
             alert('Analytics enabled');
+        }
+        else if(location.toLowerCase().includes(ENABLE_CUSTOM_LATLONG)){
+            const re = /[-+]?\d.*\d/;
+            const extractedLatLong = location.match(re)[0].split(',');
+            const customLatLong: LatLong = {
+                lat: Number(extractedLatLong[0]),
+                lng: Number(extractedLatLong[1]),
+            };
+            console.log(customLatLong);
         }
     };
     useEffect(effect, [location]);
