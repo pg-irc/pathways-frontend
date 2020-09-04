@@ -1,6 +1,7 @@
 // tslint:disable:no-expression-statement
-import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter } from '../routing';
+import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack } from '../routing';
 import { aString } from '../helpers/random_test_values';
+import { createMemoryHistory } from 'history';
 
 describe('the routePathDefinition function', () => {
 
@@ -79,6 +80,22 @@ describe('the routePathWithParameter function', () => {
 
     it('Throws when provided route is not a parameterized route', () => {
         expect(() => routePathWithParameter(Routes.Learn, parameter)).toThrow();
+    });
+
+});
+
+describe('the goBack function', () => {
+    const welcomeRoute = routePathDefinition(Routes.Welcome);
+    const learnRoute = routePathDefinition(Routes.Learn);
+    const learnDetailRoute = routePathDefinition(Routes.LearnDetail);
+
+    it('Sends users to the previous path', () => {
+        // tslint:disable-next-line: readonly-array
+        const initialEntries = [welcomeRoute, learnRoute, learnDetailRoute];
+        const initialIndex = initialEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries, initialIndex });
+        goBack(history);
+        expect(history.location.pathname).toBe(learnRoute);
     });
 
 });
