@@ -4,7 +4,6 @@ import { Trans, I18n } from '@lingui/react';
 import { Text } from 'react-native';
 import { Container, View } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
-import { useHistory } from 'react-router-native';
 import { textStyles } from '../../application/styles';
 import { goBack, Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
 import { otherRemoveServiceStyles as styles } from './styles';
@@ -16,6 +15,7 @@ import { SubmitFeedbackButton } from './submit_feedback_button';
 import { isAndroid } from '../../application/helpers/is_android';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { MultilineTextInputForPlatform, MultilineKeyboardDoneButton } from '../multiline_text_input_for_platform';
+import { memoryHistory } from '../../application';
 
 type ContentComponentProps = {
     readonly input: string;
@@ -96,12 +96,11 @@ const getMarginHorizontalForPlatform = (): number => (
 export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServiceProps): JSX.Element => {
     const isOtherFeedback = props.feedbackScreen === FeedbackScreen.OtherChangesPage;
     const content: SuggestionContent = isOtherFeedback ? SUGGESTION_CONTENT.OTHER : SUGGESTION_CONTENT.REMOVE_SERVICE;
-    const history = useHistory();
     const [feedback, setFeedback]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>(props.otherRemoveServiceFeedback);
     const keyboardIsVisible = useKeyboardIsVisible();
     useEffect((): void => {
         if (props.feedbackScreen === FeedbackScreen.ServiceDetail) {
-            goBack(history);
+            goBack(memoryHistory);
         }
     }, [props.feedbackScreen]);
 
@@ -111,18 +110,18 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
         } else {
             props.submitFeedback({ type: 'remove_service', reason: feedback });
         }
-        goToRouteWithParameter(Routes.ContactInformation, props.match.params.serviceId, history)();
+        goToRouteWithParameter(Routes.ContactInformation, props.match.params.serviceId, memoryHistory)();
     };
 
     const onDiscardModalDiscardPress = (): void => {
         props.discardFeedback();
-        goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, history)();
+        goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, memoryHistory)();
     };
 
     const onClosePress = (): void => {
         if (!feedback) {
             props.close();
-            goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, history)();
+            goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, memoryHistory)();
         }
         props.closeWithFeedback();
     };
