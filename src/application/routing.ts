@@ -1,6 +1,6 @@
 import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
-import { History, Location } from 'history';
+import { History, Location, MemoryHistory } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
 import * as R from 'ramda';
@@ -101,7 +101,7 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
     (): void => history.push(routePathWithParameter(route, parameter))
 );
 
-export const goBack = (history: History): void => (
+export const goBack = (history: MemoryHistory): void => (
     history.goBack()
 );
 
