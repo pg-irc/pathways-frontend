@@ -22,7 +22,7 @@ export interface ServiceBookmarksActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
-    readonly saveBookmarkedServicesOffset: (offset: number) => SaveBookmarkedServicesOffsetAction;
+    readonly saveListOffset: (offset: number) => SaveBookmarkedServicesOffsetAction;
 }
 
 type Props = ServiceBookmarksProps & ServiceBookmarksActions;
@@ -51,7 +51,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
             renderItem={renderServiceItems({
                 ...props,
                 scrollOffset: bookmarkedServicesOffset,
-                saveScrollOffset: props.saveBookmarkedServicesOffset,
+                saveScrollOffset: props.saveListOffset,
             })}
             ListEmptyComponent={
                 <EmptyBookmarksComponent
@@ -60,7 +60,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
             }
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={<View />}
-            initialNumToRender={props.saveBookmarkedServicesOffset ? props.bookmarkedServices.length : 20}
+            initialNumToRender={props.saveListOffset ? props.bookmarkedServices.length : 20}
         />
     );
 };

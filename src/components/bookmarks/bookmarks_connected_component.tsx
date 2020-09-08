@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ListActions => ({
     openServiceDetail: (service: HumanServiceData): OpenServiceAction => dispatch(openServiceDetail(service)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     setBookmarksTab: (index: number): SaveBookmarksTabAction => dispatch(saveBookmarksTab(index)),
-    saveBookmarkedServicesOffset: (offset: number): SaveBookmarkedServicesOffsetAction => dispatch(saveBookmarkedServicesOffset(offset)),
+    saveListOffset: (offset: number): SaveBookmarkedServicesOffsetAction => dispatch(saveBookmarkedServicesOffset(offset)),
 });
 
 export const BookmarksConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(BookmarksComponent);

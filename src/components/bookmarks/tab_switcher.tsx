@@ -46,7 +46,7 @@ export const TabSwitcher = (props: Props): JSX.Element => {
                     bookmarkService={props.bookmarkService}
                     unbookmarkService={props.unbookmarkService}
                     openServiceDetail={props.openServiceDetail}
-                    saveBookmarkedServicesOffset={props.saveBookmarkedServicesOffset}
+                    saveListOffset={props.saveListOffset}
                 />
             );
           default:

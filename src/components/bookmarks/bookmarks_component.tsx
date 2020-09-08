@@ -24,7 +24,7 @@ export interface BookmarkActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly setBookmarksTab: (index: number) => SaveBookmarksTabAction;
-    readonly saveBookmarkedServicesOffset: (offset: number) => SaveBookmarkedServicesOffsetAction;
+    readonly saveListOffset: (offset: number) => SaveBookmarkedServicesOffsetAction;
 }
 
 interface OwnProps {
@@ -56,7 +56,7 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
                     openServiceDetail={props.openServiceDetail}
                     openHeaderMenu={props.openHeaderMenu}
                     setBookmarksTab={props.setBookmarksTab}
-                    saveBookmarkedServicesOffset={props.saveBookmarkedServicesOffset}
+                    saveListOffset={props.saveListOffset}
                 />
             )}
         </I18n>
