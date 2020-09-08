@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement
+// tslint:disable:no-expression-statement readonly-array
 import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack } from '../routing';
 import { aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
@@ -88,14 +88,33 @@ describe('the goBack function', () => {
     const welcomeRoute = routePathDefinition(Routes.Welcome);
     const learnRoute = routePathDefinition(Routes.Learn);
     const learnDetailRoute = routePathDefinition(Routes.LearnDetail);
+    const servicesRoute = routePathDefinition(Routes.Services);
+    const serviceDetailRoute = routePathDefinition(Routes.ServiceDetail);
+    const otherFeedbackRoute = routePathDefinition(Routes.OtherFeedback);
+    const contactInformationRoute = routePathDefinition(Routes.ContactInformation);
 
     it('Sends users to the previous path', () => {
-        // tslint:disable-next-line: readonly-array
         const initialEntries = [welcomeRoute, learnRoute, learnDetailRoute];
         const initialIndex = initialEntries.length - 1;
         const history = createMemoryHistory({ initialEntries, initialIndex });
         goBack(history);
         expect(history.location.pathname).toBe(learnRoute);
+    });
+
+    it('Sends users to the path previous to feedback routes when the previous route is Routes.ContactInformation', () => {
+        const initialEntries = [servicesRoute, serviceDetailRoute, otherFeedbackRoute, contactInformationRoute, serviceDetailRoute];
+        const initialIndex = initialEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries, initialIndex });
+        goBack(history);
+        expect(history.location.pathname).toBe(servicesRoute);
+    });
+
+    it('Sends users to the previous feedback route from Routes.ContactInformation', () => {
+        const initialEntries = [servicesRoute, serviceDetailRoute, otherFeedbackRoute, contactInformationRoute];
+        const initialIndex = initialEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries, initialIndex });
+        goBack(history);
+        expect(history.location.pathname).toBe(otherFeedbackRoute);
     });
 
 });
