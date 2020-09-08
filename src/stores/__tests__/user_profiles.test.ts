@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement
-import { UserProfileStore, reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage, hideLinkAlerts } from '../user_profile';
+import { UserProfileStore, reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage, hideLinkAlerts, enableCustomLatLong } from '../user_profile';
 import { aBoolean, aLatLong } from '../../application/helpers/random_test_values';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
@@ -111,6 +111,68 @@ describe('user profile reducer', () => {
             const newStore = reducer(oldStore, clearAllUserData());
 
             expect(newStore.disableAnalytics).toBe(false);
+        });
+    });
+
+    describe('the custom latlong', () => {
+
+        test('is set by the enable custom latlong action', () => {
+            const newLatLong = aLatLong();
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                customLatLong: undefined,
+                disableAnalytics: false,
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
+            };
+            const newStore = reducer(oldStore, enableCustomLatLong(newLatLong));
+            expect(newStore.customLatLong).toBe(newLatLong);
+        });
+
+        test('is replaced by the enable custom latlong action', () => {
+            const newLatLong = aLatLong();
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                customLatLong: aLatLong(),
+                disableAnalytics: true,
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
+            };
+            const newStore = reducer(oldStore, enableCustomLatLong(newLatLong));
+            expect(newStore.customLatLong).toBe(newLatLong);
+
+        });
+
+        test('is loaded from persisted data', () => {
+            const customLatLong = aLatLong();
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: aBoolean(),
+                customLatLong: customLatLong,
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
+            };
+            const dataCustomLatLong = new PersistedDataBuilder().
+                withCustomLatLong(customLatLong).
+                build();
+            const actionCustomizeLatLong = DataPersistence.loadSuccess(dataCustomLatLong);
+
+            const newStore = reducer(oldStore, actionCustomizeLatLong);
+
+            expect(newStore.customLatLong).toBe(customLatLong);
+        });
+
+        test('is cleared by clear all user data action', () => {
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: aBoolean(),
+                customLatLong: aLatLong(),
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
+            };
+            const newStore = reducer(oldStore, clearAllUserData());
+
+            expect(newStore.customLatLong).toBe(undefined);
         });
     });
 
