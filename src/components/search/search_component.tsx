@@ -8,7 +8,7 @@ import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
-import { DisableAnalyticsAction } from '../../stores/user_profile';
+import { DisableAnalyticsAction, EnableCustomLatLongAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
 import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING, ENABLE_CUSTOM_LATLONG } from 'react-native-dotenv';
 import * as actions from '../../stores/search';
@@ -41,6 +41,7 @@ export interface SearchComponentActions {
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly disableAnalytics: (disable: boolean) => DisableAnalyticsAction;
+    readonly enableCustomLatLong: (latlong: LatLong) => EnableCustomLatLongAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly saveSearchTerm: (searchTerm: string) => actions.SaveSearchTermAction;
@@ -65,7 +66,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
     const onlineStatus = useOnlineStatus();
-    useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
+    useEasterEgg(props.searchLocation, props.disableAnalytics, props.enableCustomLatLong);
 
     useEffect((): EffectCallback => {
         scrollAnimationContext.startScrollAnimation();
@@ -132,7 +133,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     );
 };
 
-const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction): void => {
+const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction, enableCustomLatLong: (latlong: LatLong) => EnableCustomLatLongAction): void => {
     const effect = (): void => {
         if (location === DISABLE_ANALYTICS_STRING) {
             disableAnalytics(true);
@@ -148,7 +149,8 @@ const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (dis
                 lat: Number(extractedLatLong[0]),
                 lng: Number(extractedLatLong[1]),
             };
-            console.log(customLatLong);
+            enableCustomLatLong(customLatLong);
+            alert('Custom LatLong enabled')
         }
     };
     useEffect(effect, [location]);

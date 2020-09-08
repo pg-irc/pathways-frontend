@@ -2,9 +2,11 @@ import * as constants from '../application/constants';
 import * as helpers from './helpers/make_action';
 import { DataPersistence } from './persisted_data';
 import { ClearAllUserDataAction } from './questionnaire/actions';
+import { LatLong } from '../validation/latlong/types';
 
 export type HideOnboardingAction = Readonly<ReturnType<typeof hideOnboarding>>;
 export type DisableAnalyticsAction = Readonly<ReturnType<typeof disableAnalytics>>;
+export type EnableCustomLatLongAction = Readonly<ReturnType<typeof enableCustomLatLong>>;
 export type HidePartialLocalizationMessageAction = Readonly<ReturnType<typeof hidePartialLocalizationMessage>>;
 export type HideLinkAlertsAction = Readonly<ReturnType<typeof hideLinkAlerts>>;
 
@@ -16,6 +18,11 @@ export const hideOnboarding = () => (
 // tslint:disable-next-line:typedef
 export const disableAnalytics = (disable: boolean) => (
     helpers.makeAction(constants.DISABLE_ANALYTICS, { disable })
+);
+
+// tslint:disable-next-line:typedef
+export const enableCustomLatLong = (customLatLong: LatLong) => (
+    helpers.makeAction(constants.ENABLE_CUSTOM_LATLONG, { customLatLong })
 );
 
 // tslint:disable-next-line: typedef
@@ -32,6 +39,7 @@ export type UserProfileAction =
     HideOnboardingAction |
     ClearAllUserDataAction |
     DisableAnalyticsAction |
+    EnableCustomLatLongAction |
     HideLinkAlertsAction |
     DataPersistence.LoadSuccessAction |
     HidePartialLocalizationMessageAction;
@@ -39,6 +47,7 @@ export type UserProfileAction =
 export interface UserProfileStore {
     readonly showOnboarding: boolean;
     readonly disableAnalytics: boolean;
+    readonly customLatLong: LatLong;
     readonly showPartialLocalizationMessage: boolean;
     readonly showLinkAlerts: boolean;
 }
@@ -46,6 +55,7 @@ export interface UserProfileStore {
 export const buildDefaultStore = (): UserProfileStore => ({
     showOnboarding: false,
     disableAnalytics: false,
+    customLatLong: undefined,
     showPartialLocalizationMessage: true,
     showLinkAlerts: true,
 });
@@ -65,7 +75,11 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
                 ...store,
                 disableAnalytics: action.payload.disable,
             });
-
+        case constants.ENABLE_CUSTOM_LATLONG:
+            return({
+                ...store,
+                customLatLong: action.payload.customLatLong,
+            })
         case constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE:
             return ({
                 ...store,
@@ -81,6 +95,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
                 ...store,
                 showOnboarding: action.payload.showOnboarding,
                 disableAnalytics: action.payload.disableAnalytics,
+                customLatLong: action.payload.customLatLong,
                 showPartialLocalizationMessage: action.payload.showPartialLocalizationMessage,
                 showLinkAlerts: action.payload.showLinkAlerts,
             });
@@ -89,6 +104,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
                 ...store,
                 showOnboarding: true,
                 disableAnalytics: false,
+                customLatLong: undefined,
                 showPartialLocalizationMessage: true,
                 showLinkAlerts: true,
             });

@@ -27,6 +27,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.SET_COLLAPSE_SEARCH_INPUT,
             constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE,
             constants.DISABLE_ANALYTICS,
+            constants.ENABLE_CUSTOM_LATLONG,
             constants.GET_ALERTS_SUCCESS,
         ],
         saveUserData);
@@ -95,6 +96,7 @@ export const setUserDataDefaultValues = (data: any): PersistedData => (
         showOnboarding: typeof data.showOnboarding === 'undefined' ? true : data.showOnboarding,
         bookmarkedServices: data.bookmarkedServices || {},
         disableAnalytics: typeof data.disableAnalytics === 'undefined' ? false : data.disableAnalytics,
+        customLatLong: data.customLatLong || undefined,
         showLinkAlerts: typeof data.showLinkAlerts === 'undefined' ? true : data.showLinkAlerts,
         searchTerm: data.searchTerm || '',
         searchPage: typeof data.searchPage === 'undefined' ? 0 : data.searchPage,
