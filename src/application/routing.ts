@@ -101,9 +101,24 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
     (): void => history.push(routePathWithParameter(route, parameter))
 );
 
-export const goBack = (history: MemoryHistory): void => (
-    history.goBack()
-);
+export const goBack = (memoryHistory: MemoryHistory): void => {
+    if (previousPathMatchesContactInformationRoute(memoryHistory)) {
+        return goBackToRouteBeforeFeedback(memoryHistory);
+    }
+    return memoryHistory.goBack();
+};
+
+const previousPathMatchesContactInformationRoute = (memoryHistory: MemoryHistory): boolean => {
+    const currentRouteIndex = memoryHistory.entries.length - 1;
+    const previousRouteIndex = currentRouteIndex - 1;
+    const previousPath = memoryHistory.entries[previousRouteIndex].pathname;
+    return pathMatchesRoute(previousPath, Routes.ContactInformation);
+};
+
+const goBackToRouteBeforeFeedback = (memoryHistory: MemoryHistory): void => {
+    const positionOfRouteBeforeFeedbackFromCurrentRoute = -4;
+    return memoryHistory.go(positionOfRouteBeforeFeedbackFromCurrentRoute);
+};
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {
     return !!matchPath(path, { path: routePathDefinition(route), exact: true });
