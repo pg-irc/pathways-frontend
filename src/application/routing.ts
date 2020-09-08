@@ -1,6 +1,6 @@
 import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
-import { History, Location, MemoryHistory } from 'history';
+import { History, Location, MemoryHistory, LocationState } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
 import * as R from 'ramda';
@@ -116,9 +116,14 @@ const previousPathMatchesContactInformationRoute = (memoryHistory: MemoryHistory
 };
 
 const goBackToPathBeforeFeedback = (memoryHistory: MemoryHistory): void => {
-    const positionOfPathBeforeFeedbackFromCurrentPath = -4;
-    return memoryHistory.go(positionOfPathBeforeFeedbackFromCurrentPath);
+    const mostRecentPathEntries = R.reverse(memoryHistory.entries);
+    const pathBeforeFeedback = R.find(pathDoesNotMatchFeedbackRoute, mostRecentPathEntries);
+    return memoryHistory.push(pathBeforeFeedback);
 };
+
+const pathDoesNotMatchFeedbackRoute = (location: Location<LocationState>): boolean => (
+    !pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ServiceDetail, Routes.ContactInformation])
+);
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {
     return !!matchPath(path, { path: routePathDefinition(route), exact: true });
