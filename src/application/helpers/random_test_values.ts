@@ -1,4 +1,5 @@
 import * as uuid from 'uuid';
+import { LatLong } from '../../validation/latlong/types';
 
 export const aNumber = (): number => {
     // limit the range so we can reasonably use the returned
@@ -23,6 +24,13 @@ export const aDate = (): string => {
     const randomDelta = Math.floor(Math.random() * 1e10);
     return new Date(now - randomDelta).toISOString();
 };
+
+export const aLatLong = (): LatLong => {
+    return {
+        lat: aNumber(),
+        lng: aNumber(),
+    }
+}
 
 export function anError(): Error {
     return new Error(aString());

@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import { UserProfileStore, reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage, hideLinkAlerts } from '../user_profile';
-import { aBoolean } from '../../application/helpers/random_test_values';
+import { aBoolean, aLatLong } from '../../application/helpers/random_test_values';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
 import { clearAllUserData } from '../questionnaire/actions';
@@ -12,7 +12,7 @@ describe('user profile reducer', () => {
         test('is cleared by the hide onboarding action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: true,
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 disableAnalytics: aBoolean(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
@@ -26,7 +26,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: onboardingFlag,
                 disableAnalytics: aBoolean(),
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
@@ -44,7 +44,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: false,
                 disableAnalytics: aBoolean(),
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
@@ -59,7 +59,7 @@ describe('user profile reducer', () => {
         test('is set by the disable analytics action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 disableAnalytics: false,
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
@@ -71,7 +71,7 @@ describe('user profile reducer', () => {
         test('is set by the disable analytics action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 disableAnalytics: true,
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
@@ -86,7 +86,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: disableAnalyticsFlag,
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
@@ -104,7 +104,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: true,
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
@@ -120,7 +120,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: true,
                 showLinkAlerts: aBoolean(),
             };
@@ -133,7 +133,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: partialLocalizationMessageFlag,
                 showLinkAlerts: aBoolean(),
             };
@@ -149,7 +149,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: false,
                 showLinkAlerts: aBoolean(),
             };
@@ -164,7 +164,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: true,
                 disableAnalytics: aBoolean(),
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
@@ -177,7 +177,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: showLinkAlerts,
             };
@@ -195,7 +195,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
-                customLatLong: undefined,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: false,
             };
