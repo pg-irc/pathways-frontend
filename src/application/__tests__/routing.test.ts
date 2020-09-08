@@ -85,36 +85,36 @@ describe('the routePathWithParameter function', () => {
 });
 
 describe('the goBack function', () => {
-    const welcomeRoute = routePathDefinition(Routes.Welcome);
-    const learnRoute = routePathDefinition(Routes.Learn);
-    const learnDetailRoute = routePathDefinition(Routes.LearnDetail);
-    const servicesRoute = routePathDefinition(Routes.Services);
-    const serviceDetailRoute = routePathDefinition(Routes.ServiceDetail);
-    const otherFeedbackRoute = routePathDefinition(Routes.OtherFeedback);
-    const contactInformationRoute = routePathDefinition(Routes.ContactInformation);
+    const welcomePath = routePathDefinition(Routes.Welcome);
+    const learnPath = routePathDefinition(Routes.Learn);
+    const learnDetailPath = routePathDefinition(Routes.LearnDetail);
+    const servicesPath = routePathDefinition(Routes.Services);
+    const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
+    const otherFeedbackPath = routePathDefinition(Routes.OtherFeedback);
+    const contactInformationPath = routePathDefinition(Routes.ContactInformation);
 
     it('Sends users to the previous path', () => {
-        const initialEntries = [welcomeRoute, learnRoute, learnDetailRoute];
-        const initialIndex = initialEntries.length - 1;
-        const history = createMemoryHistory({ initialEntries, initialIndex });
+        const initialPathEntries = [welcomePath, learnPath, learnDetailPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
         goBack(history);
-        expect(history.location.pathname).toBe(learnRoute);
+        expect(history.location.pathname).toBe(learnPath);
     });
 
-    it('Sends users to the path previous to feedback routes when the previous route is Routes.ContactInformation', () => {
-        const initialEntries = [servicesRoute, serviceDetailRoute, otherFeedbackRoute, contactInformationRoute, serviceDetailRoute];
-        const initialIndex = initialEntries.length - 1;
-        const history = createMemoryHistory({ initialEntries, initialIndex });
+    it('Sends users to the path they were on before sending feedback when the previous path is "contact-information/:serviceId"', () => {
+        const initialPathEntries = [servicesPath, serviceDetailPath, otherFeedbackPath, contactInformationPath, serviceDetailPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
         goBack(history);
-        expect(history.location.pathname).toBe(servicesRoute);
+        expect(history.location.pathname).toBe(servicesPath);
     });
 
-    it('Sends users to the previous feedback route from Routes.ContactInformation', () => {
-        const initialEntries = [servicesRoute, serviceDetailRoute, otherFeedbackRoute, contactInformationRoute];
-        const initialIndex = initialEntries.length - 1;
-        const history = createMemoryHistory({ initialEntries, initialIndex });
+    it('Sends users to the previous feedback path from "contact-information/:serviceId"', () => {
+        const initialPathEntries = [servicesPath, serviceDetailPath, otherFeedbackPath, contactInformationPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
         goBack(history);
-        expect(history.location.pathname).toBe(otherFeedbackRoute);
+        expect(history.location.pathname).toBe(otherFeedbackPath);
     });
 
 });
