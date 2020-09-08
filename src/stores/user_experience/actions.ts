@@ -2,6 +2,7 @@ import * as constants from '../../application/constants';
 import * as helpers from '../helpers/make_action';
 import { SaveLocaleRequestAction } from '../locale/actions';
 
+export type SaveHomePageAction = Readonly<ReturnType<typeof saveHomePageOffset>>;
 export type SaveSearchOffsetAction = Readonly<ReturnType<typeof saveSearchOffset>>;
 export type SaveTopicServicesOffsetAction = Readonly<ReturnType<typeof saveTopicServicesOffset>>;
 export type SaveBookmarkedServicesOffsetAction = Readonly<ReturnType<typeof saveBookmarkedServicesOffset>>;
@@ -16,6 +17,7 @@ export type CloseDisclaimerModalAction = Readonly<ReturnType<typeof closeDisclai
 export type OpenDisclaimerModalAction = Readonly<ReturnType<typeof openDisclaimerModal>>;
 
 export type UserExperienceAction =
+SaveHomePageAction |
 SaveSearchOffsetAction |
 SaveTopicServicesOffsetAction |
 SaveBookmarkedServicesOffsetAction |
@@ -28,6 +30,11 @@ OpenAboutModalAction |
 CloseDisclaimerModalAction |
 OpenDisclaimerModalAction |
 SaveLocaleRequestAction;
+
+// tslint:disable-next-line:typedef
+export const saveHomePageOffset = (offset: number) => (
+    helpers.makeAction(constants.SAVE_HOMEPAGE_OFFSET, { offset })
+);
 
 // tslint:disable-next-line:typedef
 export const saveSearchOffset = (offset: number) => (

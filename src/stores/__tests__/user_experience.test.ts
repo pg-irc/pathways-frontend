@@ -1,4 +1,4 @@
-// tslint:disable:no-expression-statement
+// tslint:disable:no-expression-statement typedef
 import { buildDefaultStore, reducer, BookmarksTab, HeaderMenu } from '../user_experience';
 import * as Actions from '../user_experience/actions';
 import { aNumber, aString, aBoolean } from '../../application/helpers/random_test_values';
@@ -23,6 +23,16 @@ describe('the user experience reducer', () => {
             const offset = aNumber();
             const newStore = reducer(oldStore, Actions.saveTopicServicesOffset(offset));
             expect(newStore.topicServicesOffset).toBe(offset);
+        });
+    });
+
+    describe('the home page offset', () => {
+
+        it('is set to the offset by the set home page offset action', () => {
+            const oldStore = buildDefaultStore();
+            const offset = aNumber();
+            const newStore = reducer(oldStore, Actions.saveHomePageOffset(offset));
+            expect(newStore.homePageOffset).toBe(offset);
         });
     });
 
