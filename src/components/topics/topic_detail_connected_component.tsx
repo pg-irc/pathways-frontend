@@ -21,6 +21,7 @@ import { UserLocation } from '../../validation/latlong/types';
 import { Topic } from '../../selectors/topics/types';
 import { isTopicBookmarked } from '../../selectors/topics/is_topic_bookmarked';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
+import { SaveTaskListOffsetActions } from './task_list_component';
 
 type OwnProps = {
     readonly history: History;
@@ -37,7 +38,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps =>
         history: ownProps.history,
         location: ownProps.location,
         manualUserLocation: selectManualUserLocation(store),
-        customLatLong: selectCustomLatLong(store)
+        customLatLong: selectCustomLatLong(store),
     };
 };
 
@@ -62,6 +63,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): TopicDetailActions => 
     hideLinkAlert: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
     dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): BuildServicesRequestAction =>
         dispatch(buildServicesRequest(topic.id, manualUserLocation)),
+    saveListOffset: (_: number): SaveTaskListOffsetActions => undefined,
 });
 
 export const TopicDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TopicDetailComponent);

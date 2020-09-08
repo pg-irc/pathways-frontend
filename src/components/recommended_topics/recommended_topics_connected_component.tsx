@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { TaskListActions } from '../topics/task_list_component';
+import { TaskListActions, SaveTaskListOffsetActions } from '../topics/task_list_component';
 import { Store } from '../../stores';
 import { RecommendedTopicsComponent, RecommendedTopicsProps, RecommendedTopicsActions } from './recommended_topics_component';
 import { selectRecommendedTopics } from '../../selectors/topics/select_recommended_topics';
@@ -11,7 +11,7 @@ import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
 import { selectAlerts } from '../../selectors/content/selectAlerts';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, openHeaderMenu, saveHomePageOffset, SaveHomePageAction } from '../../stores/user_experience/actions';
 import { hideLinkAlerts, HideLinkAlertsAction } from '../../stores/user_profile';
 
 const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
@@ -22,7 +22,8 @@ const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
     showLinkAlerts: selectShowLinkAlerts(store),
 });
 
-type Actions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | AnalyticsLinkPressedAction | HideLinkAlertsAction;
+type Actions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | AnalyticsLinkPressedAction | HideLinkAlertsAction
+    | SaveHomePageAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): RecommendedTopicsActions & TaskListActions => ({
     bookmarkTopic: (topicId: Id): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
@@ -31,6 +32,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): RecommendedTopicsActio
     hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
     analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps): AnalyticsLinkPressedAction =>
         dispatch(analyticsLinkPressed(analyticsLinkProps)),
+    saveListOffset: (offset: number): SaveTaskListOffsetActions => dispatch(saveHomePageOffset(offset)),
 });
 
 export const RecommendedTopicsConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(RecommendedTopicsComponent);
