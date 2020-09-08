@@ -103,21 +103,21 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
 
 export const goBack = (memoryHistory: MemoryHistory): void => {
     if (previousPathMatchesContactInformationRoute(memoryHistory)) {
-        return goBackToRouteBeforeFeedback(memoryHistory);
+        return goBackToPathBeforeFeedback(memoryHistory);
     }
     return memoryHistory.goBack();
 };
 
 const previousPathMatchesContactInformationRoute = (memoryHistory: MemoryHistory): boolean => {
-    const currentRouteIndex = memoryHistory.entries.length - 1;
-    const previousRouteIndex = currentRouteIndex - 1;
-    const previousPath = memoryHistory.entries[previousRouteIndex].pathname;
+    const currentPathIndex = memoryHistory.entries.length - 1;
+    const previousPathIndex = currentPathIndex - 1;
+    const previousPath = memoryHistory.entries[previousPathIndex].pathname;
     return pathMatchesRoute(previousPath, Routes.ContactInformation);
 };
 
-const goBackToRouteBeforeFeedback = (memoryHistory: MemoryHistory): void => {
-    const positionOfRouteBeforeFeedbackFromCurrentRoute = -4;
-    return memoryHistory.go(positionOfRouteBeforeFeedbackFromCurrentRoute);
+const goBackToPathBeforeFeedback = (memoryHistory: MemoryHistory): void => {
+    const positionOfPathBeforeFeedbackFromCurrentPath = -4;
+    return memoryHistory.go(positionOfPathBeforeFeedbackFromCurrentPath);
 };
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {
