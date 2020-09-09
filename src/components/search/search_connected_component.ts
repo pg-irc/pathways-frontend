@@ -18,7 +18,7 @@ import { selectSearchResults } from '../../selectors/search/select_search_result
 import { SearchServiceData } from '../../validation/search/types';
 import { LatLong } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
-import { SaveSearchOffsetAction, saveSearchOffset } from '../../stores/user_experience/actions';
+import { SaveSearchResultScrollOffsetAction, saveSearchResultScrollOffset } from '../../stores/user_experience/actions';
 import { selectSearchOffset } from '../../selectors/user_experience/select_search_offset';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 
@@ -51,7 +51,7 @@ type Actions =
     searchActions.SetCollapseSearchInputAction |
     SearchExecutedAction |
     OpenHeaderMenuAction |
-    SaveSearchOffsetAction;
+    SaveSearchResultScrollOffsetAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions => ({
     saveService: (service: HumanServiceData): serviceActions.SaveServiceAction => (
@@ -99,8 +99,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     openHeaderMenu: (): OpenHeaderMenuAction => (
         dispatch(openHeaderMenu())
     ),
-    saveSearchOffset: (offset: number): SaveSearchOffsetAction => (
-        dispatch(saveSearchOffset(offset))
+    saveSearchOffset: (offset: number): SaveSearchResultScrollOffsetAction => (
+        dispatch(saveSearchResultScrollOffset(offset))
     ),
 });
 

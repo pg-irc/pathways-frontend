@@ -10,7 +10,7 @@ import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } fro
 import { renderServiceItems } from '../services/render_service_items';
 import { SearchListSeparator } from '../search/separators';
 import { History } from 'history';
-import { SaveBookmarkedServicesOffsetAction } from '../../stores/user_experience/actions';
+import { SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -22,7 +22,7 @@ export interface ServiceBookmarksActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
-    readonly saveListOffset: (offset: number) => SaveBookmarkedServicesOffsetAction;
+    readonly saveScrollOffset: (offset: number) => SaveBookmarkedServicesScrollOffsetAction;
 }
 
 type Props = ServiceBookmarksProps & ServiceBookmarksActions;
@@ -51,7 +51,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
             renderItem={renderServiceItems({
                 ...props,
                 scrollOffset: bookmarkedServicesOffset,
-                saveScrollOffset: props.saveListOffset,
+                saveScrollOffset: props.saveScrollOffset,
             })}
             ListEmptyComponent={
                 <EmptyBookmarksComponent
@@ -60,7 +60,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
             }
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={<View />}
-            initialNumToRender={props.saveListOffset ? props.bookmarkedServices.length : 20}
+            initialNumToRender={props.saveScrollOffset ? props.bookmarkedServices.length : 20}
         />
     );
 };

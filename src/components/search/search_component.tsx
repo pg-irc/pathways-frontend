@@ -23,7 +23,7 @@ import { Trans } from '@lingui/react';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main/scroll_animation_context';
-import { SaveSearchOffsetAction } from '../../stores/user_experience/actions';
+import { SaveSearchResultScrollOffsetAction } from '../../stores/user_experience/actions';
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -54,7 +54,7 @@ export interface SearchComponentActions {
     readonly setCollapseSearchInput: (collapseSearchInput: boolean) => actions.SetCollapseSearchInputAction;
     readonly searchExecuted: (searchTerm: string, searchLocation: string) => SearchExecutedAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly saveSearchOffset: (offset: number) => SaveSearchOffsetAction;
+    readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
 }
 
 export type StringSetterFunction = Dispatch<SetStateAction<string>>;

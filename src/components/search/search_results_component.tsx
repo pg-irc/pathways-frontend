@@ -28,7 +28,7 @@ import buildUrl from 'build-url';
 import { VERSION } from 'react-native-dotenv';
 import Animated from 'react-native-reanimated';
 import { ScrollContext, ScrollAnimationContext } from '../main//scroll_animation_context';
-import { SaveSearchOffsetAction } from '../../stores/user_experience/actions';
+import { SaveSearchResultScrollOffsetAction } from '../../stores/user_experience/actions';
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -51,7 +51,7 @@ export interface SearchResultsActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly onSearchRequest: (searchTerm: string, location: string) => Promise<void>;
     readonly onLoadMore: () => Promise<void>;
-    readonly saveSearchOffset: (offset: number) => SaveSearchOffsetAction;
+    readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }
@@ -136,7 +136,7 @@ interface SearchHitProps {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly setScrollOffset: (offset: number) => void;
-    readonly saveSearchOffset: (offset: number) => SaveSearchOffsetAction;
+    readonly saveSearchOffset: (offset: number) => SaveSearchResultScrollOffsetAction;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
 }

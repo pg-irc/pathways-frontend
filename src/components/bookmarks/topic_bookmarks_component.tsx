@@ -29,7 +29,7 @@ export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: 
             history={props.history}
             bookmarkTopic={props.bookmarkTopic}
             unbookmarkTopic={props.unbookmarkTopic}
-            saveListOffset={props.saveListOffset}
+            saveScrollOffset={props.saveScrollOffset}
         />
     </View>
 );

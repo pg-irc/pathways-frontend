@@ -35,7 +35,7 @@ export const TabSwitcher = (props: Props): JSX.Element => {
                     history={props.history}
                     bookmarkTopic={props.bookmarkTopic}
                     unbookmarkTopic={props.unbookmarkTopic}
-                    saveListOffset={props.saveListOffset}
+                    saveScrollOffset={props.saveScrollOffset}
                 />
             );
           case 'services':
@@ -47,7 +47,7 @@ export const TabSwitcher = (props: Props): JSX.Element => {
                     bookmarkService={props.bookmarkService}
                     unbookmarkService={props.unbookmarkService}
                     openServiceDetail={props.openServiceDetail}
-                    saveListOffset={props.saveListOffset}
+                    saveScrollOffset={props.saveScrollOffset}
                 />
             );
           default:

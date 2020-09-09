@@ -9,7 +9,8 @@ import { colors } from '../../application/styles';
 import { isTopicListHeading } from './is_topic_list_heading';
 import { ListItem } from './build_topic_list_items_with_headings';
 import { TopicListHeadingComponent } from './topic_list_heading_component';
-import { SaveBookmarkedServicesOffsetAction, SaveHomePageAction, SaveTopicServicesOffsetAction, SaveTopicDetailScrollOffsetAction } from '../../stores/user_experience/actions';
+import { SaveBookmarkedServicesScrollOffsetAction, SaveHomePageScrollOffsetAction,
+        SaveTopicServicesScrollOffsetAction, SaveTopicDetailScrollOffsetAction } from '../../stores/user_experience/actions';
 
 // tslint:disable-next-line:no-var-requires
 const R = require('ramda');
@@ -23,13 +24,13 @@ export interface TaskListProps {
     readonly headerContentIdentifier?: string;
 }
 
-export type SaveTaskListOffsetActions = SaveBookmarkedServicesOffsetAction | SaveHomePageAction | SaveTopicServicesOffsetAction
-    | SaveTopicDetailScrollOffsetAction;
+export type SaveTaskListScrollOffsetActions = SaveBookmarkedServicesScrollOffsetAction | SaveHomePageScrollOffsetAction |
+    SaveTopicServicesScrollOffsetAction | SaveTopicDetailScrollOffsetAction;
 
 export interface TaskListActions {
     readonly bookmarkTopic: (topicId: Id) => BookmarkTopicAction;
     readonly unbookmarkTopic: (topicId: Id) => UnbookmarkTopicAction;
-    readonly saveListOffset: (offset: number) => SaveTaskListOffsetActions;
+    readonly saveScrollOffset: (offset: number) => SaveTaskListScrollOffsetActions;
 }
 
 type Props = TaskListProps & TaskListActions;
