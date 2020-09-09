@@ -36,6 +36,16 @@ describe('the user experience reducer', () => {
         });
     });
 
+    describe('the topic detail page offset', () => {
+
+        it('is set to the offset by the action', () => {
+            const oldStore = buildDefaultStore();
+            const offset = aNumber();
+            const newStore = reducer(oldStore, Actions.saveTopicDetailScrollOffset(offset));
+            expect(newStore.topicDetailScrollOffset).toBe(offset);
+        });
+    });
+
     describe('the bookmarked services offset state', () => {
 
         it('is set to an offset number value by the save bookmarked services offset action', () => {

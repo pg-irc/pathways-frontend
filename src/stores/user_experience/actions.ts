@@ -30,7 +30,8 @@ CloseAboutModalAction |
 OpenAboutModalAction |
 CloseDisclaimerModalAction |
 OpenDisclaimerModalAction |
-SaveLocaleRequestAction;
+SaveLocaleRequestAction |
+SaveTopicDetailScrollOffsetAction;
 
 // tslint:disable-next-line:typedef
 export const saveHomePageOffset = (offset: number) => (

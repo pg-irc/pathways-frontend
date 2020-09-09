@@ -2,6 +2,7 @@ import * as constants from '../../application/constants';
 import { UserExperienceAction } from './actions';
 
 export interface UserExperienceStore {
+    readonly topicDetailScrollOffset: number;
     readonly homePageOffset: number;
     readonly searchOffset: number;
     readonly topicServicesOffset: number;
@@ -28,6 +29,7 @@ export const buildDefaultStore = (): UserExperienceStore => ({
     searchOffset: 0,
     topicServicesOffset: 0,
     organizationServicesOffset: 0,
+    topicDetailScrollOffset: 0,
     bookmarkedServicesOffset: 0,
     bookmarksTab: BookmarksTab.Topics,
     headerMenu: HeaderMenu.HeaderMenuIsClosed,
@@ -47,6 +49,11 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
             return {
                 ...store,
                 searchOffset: action.payload.offset,
+            };
+        case constants.SAVE_TOPIC_DETAIL_OFFSET:
+            return {
+                ...store,
+                topicDetailScrollOffset: action.payload.offset,
             };
         case constants.SAVE_TOPIC_SERVICES_OFFSET:
             return {
