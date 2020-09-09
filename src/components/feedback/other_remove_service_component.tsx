@@ -80,6 +80,7 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
                             numberOfLines={5}
                             placeholder={props.placeholder}
                             style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform()}]}
+                            isFocused={false}
                             onChangeText={props.onInputChange}
                         />
                     </View>

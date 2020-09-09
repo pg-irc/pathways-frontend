@@ -13,6 +13,7 @@ interface Props {
     readonly numberOfLines: number;
     readonly placeholder: TemplateStringsArray;
     readonly style: StyleProp<TextStyle>;
+    readonly isFocused: boolean;
     readonly onChangeText: (value: string) => void;
 }
 
@@ -28,6 +29,7 @@ export const MultilineTextInputForPlatform = (props: Props): JSX.Element => {
             numberOfLines={props.numberOfLines}
             placeholder={props.placeholder}
             style={[props.style, { color: textColor}]}
+            isFocused={props.isFocused}
             onChangeText={props.onChangeText}
             onBlur={onBlur}
             onFocus={onFocus}
@@ -38,6 +40,7 @@ export const MultilineTextInputForPlatform = (props: Props): JSX.Element => {
             numberOfLines={props.numberOfLines}
             placeholder={props.placeholder}
             style={[props.style, { color: textColor}]}
+            isFocused={props.isFocused}
             onChangeText={props.onChangeText}
             onBlur={onBlur}
             onFocus={onFocus}
@@ -53,6 +56,7 @@ const AndroidMultilineTextInput = (props: Props & TextInputProps): JSX.Element =
     <View style={{ flex: 2 }}>
         <TextInput
             multiline
+            autoFocus={props.isFocused}
             numberOfLines={props.numberOfLines}
             onChangeText={props.onChangeText}
             placeholder={props.i18n._(props.placeholder)}
@@ -72,6 +76,7 @@ const IOSMultilineTextInput = (props: Props & TextInputProps): JSX.Element => {
         <View>
             <TextInput
                 multiline
+                autoFocus={props.isFocused}
                 numberOfLines={props.numberOfLines}
                 onChangeText={props.onChangeText}
                 placeholder={props.i18n._(props.placeholder)}
