@@ -116,8 +116,7 @@ const previousPathMatchesContactInformationRoute = (memoryHistory: MemoryHistory
 };
 
 const goBackToPathBeforeFeedback = (memoryHistory: MemoryHistory): void => {
-    const mostRecentPathEntries = R.reverse(memoryHistory.entries);
-    const pathBeforeFeedback = R.find(pathDoesNotMatchFeedbackRoute, mostRecentPathEntries);
+    const pathBeforeFeedback = R.findLast(pathDoesNotMatchFeedbackRoute, memoryHistory.entries);
     return memoryHistory.push(pathBeforeFeedback);
 };
 
