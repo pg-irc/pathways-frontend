@@ -9,11 +9,13 @@ import { bookmarkTopic, BookmarkTopicAction, Id, UnbookmarkTopicAction, unbookma
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { OpenHeaderMenuAction, openHeaderMenu, saveTopicServicesScrollOffset, SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { SaveTaskListScrollOffsetActions } from '../topics/task_list_component';
+import { selectHomePageScrollOffset } from '../../selectors/user_experience/select_home_page_scroll_offset';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProps => ({
     section: selectCurrentExploreSection(store, ownProps),
     topics: selectTopicForCurrentExploreSection(store, ownProps),
     bookmarkedTopics: pickBookmarkedTopicIds(store),
+    scrollOffset: selectHomePageScrollOffset(store),
 });
 
 type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | SaveTopicServicesScrollOffsetAction;

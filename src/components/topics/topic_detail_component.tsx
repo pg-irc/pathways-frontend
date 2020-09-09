@@ -32,6 +32,7 @@ export interface TopicDetailsProps {
     readonly showLinkAlert: boolean;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
+    readonly scrollOffset: number;
 }
 
 export interface TopicDetailActions {

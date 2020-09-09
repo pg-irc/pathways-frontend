@@ -18,6 +18,7 @@ export interface ExploreDetailProps {
     readonly section: ExploreSection;
     readonly topics: ReadonlyArray<TopicListItem>;
     readonly bookmarkedTopics: ReadonlyArray<TaskId>;
+    readonly scrollOffset: number;
 }
 
 export interface ExploreDetailActions {
