@@ -12,7 +12,7 @@ import { selectCurrentTopic } from '../../selectors/topics/select_current_topic'
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { Routes, getParametersFromPath } from '../../application/routing';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, openHeaderMenu, saveTopicDetailScrollOffset, SaveTopicDetailScrollOffsetAction } from '../../stores/user_experience/actions';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
 import { selectManualUserLocation } from '../../selectors/services/select_manual_user_location';
@@ -50,7 +50,8 @@ type Actions =
     AnalyticsLinkPressedAction |
     OpenHeaderMenuAction |
     HideLinkAlertsAction |
-    BuildServicesRequestAction;
+    BuildServicesRequestAction |
+    SaveTopicDetailScrollOffsetAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): TopicDetailActions => ({
     bookmarkTopic: (topicId: TaskId): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
@@ -63,7 +64,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): TopicDetailActions => 
     hideLinkAlert: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
     dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): BuildServicesRequestAction =>
         dispatch(buildServicesRequest(topic.id, manualUserLocation)),
-    saveListOffset: (_: number): SaveTaskListOffsetActions => undefined,
+    saveListOffset: (offset: number): SaveTaskListOffsetActions => dispatch(saveTopicDetailScrollOffset(offset)),
 });
 
 export const TopicDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(TopicDetailComponent);
