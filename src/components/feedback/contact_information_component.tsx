@@ -12,7 +12,7 @@ import { getEmptyUserInfo, BackFromContactInformationAction, FinishAction, SendF
 import { otherRemoveServiceStyles } from './styles';
 import { Header, Title, Button, Icon } from 'native-base';
 import { getIconForBackButton } from '../header_button/back_button_component';
-import { goToRouteWithParameter, Routes, RouterProps, goBack } from '../../application/routing';
+import { RouterProps, goBack, goBackToServiceDetailOnFeedbackSubmit } from '../../application/routing';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { isAndroid } from '../../application/helpers/is_android';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
@@ -60,7 +60,7 @@ export const ContactInformationComponent = ({
     const onFinishPress = (): void => {
         finishFeedback(userInformation);
         sendFeedback(serviceId);
-        goToRouteWithParameter(Routes.ServiceDetail, serviceId, memoryHistory)();
+        goBackToServiceDetailOnFeedbackSubmit(memoryHistory);
     };
 
     return (

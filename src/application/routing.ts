@@ -1,3 +1,4 @@
+// tslint:disable:no-expression-statement
 import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
 import { History, Location, MemoryHistory, LocationState } from 'history';
@@ -93,7 +94,6 @@ export const routePathWithParameter = (route: Routes, parameter: string): string
 
 export const goToRouteWithoutParameter = (route: Routes, history: History): () => void => {
     const path = routePathWithoutParameter(route);
-    // tslint:disable-next-line:no-expression-statement
     return (): void => history.push(path);
 };
 
@@ -105,9 +105,14 @@ export const goBack = (memoryHistory: MemoryHistory): void => (
     memoryHistory.goBack()
 );
 
+export const goBackToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
+    clearFeedbackPathsFromHistory(memoryHistory);
+    const indexOfCurrentPathInHistoryStack = 0;
+    memoryHistory.go(indexOfCurrentPathInHistoryStack);
+};
+
 export const clearFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): void => {
     while (R.findLast(pathMatchesFeedbackRoute, memoryHistory.entries) && R.not(R.isEmpty(memoryHistory.entries))) {
-        // tslint:disable-next-line: no-expression-statement
         memoryHistory.entries.pop();
     }
 };
