@@ -7,11 +7,11 @@ import { Trans, I18n } from '@lingui/react';
 import { colors, textStyles, values } from '../../application/styles';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
-import { ListActions } from './bookmarks_connected_component';
-import { OpenServiceAction } from '../../stores/services/actions';
+import { OpenServiceAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { History } from 'history';
 import { BookmarksTab } from '../../stores/user_experience';
 import { SaveBookmarksTabAction, SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_experience/actions';
+import { BookmarkTopicAction, Id, UnbookmarkTopicAction } from '../../stores/topics';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -21,6 +21,10 @@ export interface BookmarksProps {
 }
 
 export interface BookmarkActions {
+    readonly bookmarkTopic: (topicId: Id) => BookmarkTopicAction;
+    readonly unbookmarkTopic: (topicId: Id) => UnbookmarkTopicAction;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly setBookmarksTab: (index: number) => SaveBookmarksTabAction;
@@ -31,7 +35,7 @@ interface OwnProps {
     readonly history: History;
 }
 
-type Props = BookmarksProps & ListActions & OwnProps;
+type Props = BookmarksProps & BookmarkActions & OwnProps;
 
 export const BookmarksComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1 }}>

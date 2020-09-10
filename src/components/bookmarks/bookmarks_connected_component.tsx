@@ -1,6 +1,5 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { TaskListActions } from '../topics/task_list_component';
 import { Store } from '../../stores';
 import { BookmarksComponent, BookmarksProps, BookmarkActions } from './bookmarks_component';
 import { Id, UnbookmarkTopicAction, unbookmarkTopic, BookmarkTopicAction, bookmarkTopic } from '../../stores/topics';
@@ -9,7 +8,6 @@ import { selectBookmarkedServices } from '../../selectors/services/select_bookma
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { BookmarkServiceAction, UnbookmarkServiceAction, bookmarkService, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
-import { ServiceBookmarksActions } from './service_bookmarks_component';
 import { selectBookmarksTab } from '../../selectors/user_experience/select_bookmarks_tab';
 import { SaveBookmarkedServicesScrollOffsetAction, saveBookmarkedServicesScrollOffset, SaveBookmarksTabAction, saveBookmarksTab } from '../../stores/user_experience/actions';
 import { selectBookmarkedServicesScrollOffset } from '../../selectors/user_experience/select_bookmarked_services_scroll_offset';
@@ -31,9 +29,7 @@ type Actions =
     | SaveBookmarksTabAction
     | SaveBookmarkedServicesScrollOffsetAction;
 
-export type ListActions = TaskListActions & ServiceBookmarksActions & BookmarkActions;
-
-const mapDispatchToProps = (dispatch: Dispatch<Actions>): ListActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<Actions>): BookmarkActions => ({
     bookmarkTopic: (topicId: Id): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
     unbookmarkTopic: (topicId: Id): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
     bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
