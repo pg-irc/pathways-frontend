@@ -16,7 +16,7 @@ const mapStateToProps = (store: Store): BookmarksProps => ({
     bookmarkedServices: selectBookmarkedServices(store),
     bookmarkedTopics: selectBookmarkedTopics(store),
     bookmarksTab: selectBookmarksTab(store),
-    bookmarkedServicesOffset: selectBookmarkedServicesScrollOffset(store),
+    servicesScrollOffset: selectBookmarkedServicesScrollOffset(store),
 });
 
 type ServiceDispatchActions = BookmarkServiceAction | UnbookmarkServiceAction;
@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): BookmarkActions => ({
     openServiceDetail: (service: HumanServiceData): OpenServiceAction => dispatch(openServiceDetail(service)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     setBookmarksTab: (index: number): SaveBookmarksTabAction => dispatch(saveBookmarksTab(index)),
-    saveScrollOffset: (offset: number): SaveBookmarkedServicesScrollOffsetAction => dispatch(saveBookmarkedServicesScrollOffset(offset)),
+    saveServicesScrollOffset: (offset: number): SaveBookmarkedServicesScrollOffsetAction => dispatch(saveBookmarkedServicesScrollOffset(offset)),
 });
 
 export const BookmarksConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(BookmarksComponent);

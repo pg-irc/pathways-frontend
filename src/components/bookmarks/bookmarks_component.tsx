@@ -17,7 +17,7 @@ export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly bookmarksTab: BookmarksTab;
-    readonly bookmarkedServicesOffset: number;
+    readonly servicesScrollOffset: number;
 }
 
 export interface BookmarkActions {
@@ -28,7 +28,7 @@ export interface BookmarkActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly setBookmarksTab: (index: number) => SaveBookmarksTabAction;
-    readonly saveScrollOffset: (offset: number) => SaveBookmarkedServicesScrollOffsetAction;
+    readonly saveServicesScrollOffset: (offset: number) => SaveBookmarkedServicesScrollOffsetAction;
 }
 
 interface OwnProps {
@@ -51,7 +51,7 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
                     i18n={i18n}
                     bookmarkedTopics={props.bookmarkedTopics}
                     bookmarkedServices={props.bookmarkedServices}
-                    bookmarkedServicesOffset={props.bookmarkedServicesOffset}
+                    servicesScrollOffset={props.servicesScrollOffset}
                     history={props.history}
                     bookmarkTopic={props.bookmarkTopic}
                     unbookmarkTopic={props.unbookmarkTopic}
@@ -60,7 +60,7 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
                     openServiceDetail={props.openServiceDetail}
                     openHeaderMenu={props.openHeaderMenu}
                     setBookmarksTab={props.setBookmarksTab}
-                    saveScrollOffset={props.saveScrollOffset}
+                    saveServicesScrollOffset={props.saveServicesScrollOffset}
                 />
             )}
         </I18n>
