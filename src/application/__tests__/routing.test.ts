@@ -1,5 +1,8 @@
 // tslint:disable:no-expression-statement readonly-array
-import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack, clearFeedbackPathsFromHistory } from '../routing';
+import { 
+    Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
+    clearFeedbackPathsFromHistory, clearCurrentPathIfDuplicateOfPreviousPathFromHistory,
+} from '../routing';
 import { aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
 
@@ -131,5 +134,16 @@ describe('the clearFeedbackPathsFromHistory function', () => {
         clearFeedbackPathsFromHistory(history);
         const lastPathIndex = history.entries.length - 1;
         expect(history.entries[lastPathIndex].pathname).toBe(servicesPath);
+    });
+});
+
+describe('the clearCurrentPathIfDuplicateOfPreviousPathFromHistory function', () => {
+    const servicesPath = routePathDefinition(Routes.Services);
+
+    it('Clears the duplicate path from the history stack', () => {
+        const initialPathEntries = [servicesPath, servicesPath];
+        const history = createMemoryHistory({ initialEntries: initialPathEntries });
+        clearCurrentPathIfDuplicateOfPreviousPathFromHistory(history);
+        expect(history.entries.length).toBe(1);
     });
 });

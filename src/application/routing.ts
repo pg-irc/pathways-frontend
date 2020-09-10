@@ -119,6 +119,7 @@ const previousPathMatchesContactInformationRoute = (memoryHistory: MemoryHistory
 const goBackToPathBeforeFeedback = (memoryHistory: MemoryHistory): void => {
     const pathBeforeFeedback = R.findLast(pathDoesNotMatchFeedbackRoute, memoryHistory.entries);
     clearFeedbackPathsFromHistory(memoryHistory);
+    clearCurrentPathIfDuplicateOfPreviousPathFromHistory(memoryHistory);
     return memoryHistory.push(pathBeforeFeedback);
 };
 
@@ -132,6 +133,22 @@ export const clearFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): voi
         }
         memoryHistory.entries.pop();
         lastPathIndex--;
+    }
+};
+
+export const clearCurrentPathIfDuplicateOfPreviousPathFromHistory = (memoryHistory: MemoryHistory): void => {
+    const currentPathIndex = memoryHistory.entries.length - 1;
+    const currentPath = memoryHistory.entries[currentPathIndex].pathname;
+
+    if (currentPathIndex < 1) {
+        return;
+    }
+
+    const previousPathIndex = currentPathIndex - 1;
+    const previousPath = memoryHistory.entries[previousPathIndex].pathname;
+
+    if (currentPath === previousPath) {
+        memoryHistory.entries.pop();
     }
 };
 
