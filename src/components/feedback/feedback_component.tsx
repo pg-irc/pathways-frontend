@@ -132,6 +132,7 @@ const TextInputComponent = (props: InputComponentProps): JSX.Element => {
                         borderBottomWidth: 1,
                         paddingBottom: 5,
                         ...getTextAlignForLanguage()}}
+                    isFocused={props.isEditing}
                     onChangeText={onChangeText}
                 />
             )
