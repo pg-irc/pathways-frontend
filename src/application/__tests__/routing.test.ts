@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement readonly-array
-import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack } from '../routing';
+import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack, clearFeedbackPathsFromHistory } from '../routing';
 import { aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
 
@@ -131,4 +131,22 @@ describe('the goBack function', () => {
         expect(history.location.pathname).toBe(servicesPath);
     });
 
+});
+
+describe('the clearFeedbackPathsFromHistory function', () => {
+    const firstRegularPath = routePathDefinition(Routes.TopicDetail);
+    const secondRegularPath = routePathDefinition(Routes.Services);
+    const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
+    const firstFeedbackPath = routePathDefinition(Routes.OtherFeedback);
+    const secondFeedbackPath = routePathDefinition(Routes.ContactInformation);
+
+    it('Clears all feedback paths from the history stack', () => {
+        const initialPathEntries = [firstRegularPath, secondRegularPath, serviceDetailPath, firstFeedbackPath, secondFeedbackPath];
+        const history = createMemoryHistory({ initialEntries: initialPathEntries });
+        clearFeedbackPathsFromHistory(history);
+        expect(history.entries.length).toBe(3);
+        expect(history.entries[0].pathname).toBe(firstRegularPath);
+        expect(history.entries[1].pathname).toBe(secondRegularPath);
+        expect(history.entries[2].pathname).toBe(serviceDetailPath);
+    });
 });

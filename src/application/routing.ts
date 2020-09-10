@@ -115,10 +115,21 @@ const previousPathMatchesContactInformationRoute = (memoryHistory: MemoryHistory
     return pathMatchesRoute(previousPath, Routes.ContactInformation);
 };
 
+export const clearFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): void => {
+    while (R.findLast(pathMatchesFeedbackRoute, memoryHistory.entries) && R.not(R.isEmpty(memoryHistory.entries))) {
+        // tslint:disable-next-line: no-expression-statement
+        memoryHistory.entries.pop();
+    }
+};
+
 const goBackToPathBeforeFeedback = (memoryHistory: MemoryHistory): void => {
     const pathBeforeFeedback = R.findLast(pathDoesNotMatchFeedbackRoute, memoryHistory.entries);
     return memoryHistory.push(pathBeforeFeedback);
 };
+
+const pathMatchesFeedbackRoute = (location: Location<LocationState>): boolean => (
+    pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ContactInformation])
+);
 
 const pathDoesNotMatchFeedbackRoute = (location: Location<LocationState>): boolean => (
     !pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ServiceDetail, Routes.ContactInformation])
