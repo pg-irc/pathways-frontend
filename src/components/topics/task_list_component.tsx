@@ -22,6 +22,7 @@ export interface TaskListProps {
     readonly emptyTaskListContent: JSX.Element;
     readonly headerContent: JSX.Element;
     readonly headerContentIdentifier?: string;
+    readonly scrollOffset: number;
 }
 
 export type SaveTaskListScrollOffsetActions = SaveBookmarkedServicesScrollOffsetAction | SaveHomePageScrollOffsetAction |

@@ -61,6 +61,7 @@ export const TopicDetailComponent = (props: Props): JSX.Element => (
             emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>} />}
             headerContent={<ListHeaderComponent {...props} />}
             headerContentIdentifier={props.topic.id}
+            scrollOffset={props.scrollOffset}
             saveScrollOffset={props.saveScrollOffset}
         />
     </View>

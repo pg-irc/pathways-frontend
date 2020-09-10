@@ -11,6 +11,7 @@ import { History } from 'history';
 export interface TopicBookmarksProps {
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly history: History;
+    readonly scrollOffset: number;
 }
 
 type Props = TopicBookmarksProps & TaskListActions;
@@ -29,6 +30,7 @@ export const TopicBookmarksComponent: React.StatelessComponent<Props> = (props: 
             history={props.history}
             bookmarkTopic={props.bookmarkTopic}
             unbookmarkTopic={props.unbookmarkTopic}
+            scrollOffset={props.scrollOffset}
             saveScrollOffset={props.saveScrollOffset}
         />
     </View>

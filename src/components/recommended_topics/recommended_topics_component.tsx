@@ -3,7 +3,7 @@ import { Trans } from '@lingui/react';
 import { Id as TaskId } from '../../stores/topics';
 import { View, Text } from 'native-base';
 import { TopicListItem } from '../../selectors/topics/types';
-import { TaskListActions } from '../topics/task_list_component';
+import { TaskListActions, TaskListProps } from '../topics/task_list_component';
 import { TaskListComponent } from '../topics/task_list_component';
 import { RouterProps } from '../../application/routing';
 import { textStyles } from '../../application/styles';
@@ -37,7 +37,7 @@ export interface RecommendedTopicsActions {
     readonly hideLinkAlerts: () => void;
 }
 
-type Props = RecommendedTopicsProps & RecommendedTopicsActions & TaskListActions & RouterProps;
+type Props = RecommendedTopicsProps & RecommendedTopicsActions & TaskListProps & TaskListActions & RouterProps;
 
 export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (props: Props): JSX.Element => (
     <View style={{ flex: 1 }}>
@@ -48,6 +48,8 @@ export const RecommendedTopicsComponent: React.StatelessComponent<Props> = (prop
             bookmarkedTopicsIdList={props.bookmarkedTopics}
             emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to recommend</Trans>} />}
             headerContent={<TaskListHeaderComponent {...props} />}
+            scrollOffset={props.scrollOffset}
+            saveScrollOffset={props.saveScrollOffset}
         />
     </View>
 );
