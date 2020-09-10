@@ -10,7 +10,7 @@ import { isTopicListHeading } from './is_topic_list_heading';
 import { ListItem } from './build_topic_list_items_with_headings';
 import { TopicListHeadingComponent } from './topic_list_heading_component';
 import { SaveBookmarkedServicesScrollOffsetAction, SaveHomePageScrollOffsetAction,
-        SaveTopicServicesScrollOffsetAction, SaveTopicDetailScrollOffsetAction } from '../../stores/user_experience/actions';
+        SaveTopicServicesScrollOffsetAction, SaveTopicDetailScrollOffsetAction, SaveBookmarkedTopicsScrollOffsetAction } from '../../stores/user_experience/actions';
 
 // tslint:disable-next-line:no-var-requires
 const R = require('ramda');
@@ -31,7 +31,7 @@ export type SaveTaskListScrollOffsetActions = SaveBookmarkedServicesScrollOffset
 export interface TaskListActions {
     readonly bookmarkTopic: (topicId: Id) => BookmarkTopicAction;
     readonly unbookmarkTopic: (topicId: Id) => UnbookmarkTopicAction;
-    readonly saveScrollOffset: (offset: number) => SaveTaskListScrollOffsetActions;
+    readonly saveScrollOffset: (offset: number) => SaveTaskListScrollOffsetActions | SaveBookmarkedTopicsScrollOffsetAction;
 }
 
 type Props = TaskListProps & TaskListActions;
