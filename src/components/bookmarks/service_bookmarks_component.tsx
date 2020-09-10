@@ -15,7 +15,7 @@ import { SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_expe
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly history: History;
-    readonly bookmarkedServicesOffset: number;
+    readonly scrollOffset: number;
 }
 
 export interface ServiceBookmarksActions {
@@ -28,14 +28,14 @@ export interface ServiceBookmarksActions {
 type Props = ServiceBookmarksProps & ServiceBookmarksActions;
 
 export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
-    const [bookmarkedServicesOffset, setBookmarkedServicesOffset]: readonly [number, (n: number) => void] = useState(props.bookmarkedServicesOffset);
+    const [bookmarkedServicesOffset, setBookmarkedServicesOffset]: readonly [number, (n: number) => void] = useState(props.scrollOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
 
     useEffect((): void => {
         if (props.bookmarkedServices.length > 0) {
-            flatListRef.current.scrollToOffset({ animated: false, offset: props.bookmarkedServicesOffset });
+            flatListRef.current.scrollToOffset({ animated: false, offset: props.scrollOffset });
         }
-    }, [props.bookmarkedServicesOffset, props.bookmarkedServices, flatListRef]);
+    }, [props.scrollOffset, props.bookmarkedServices, flatListRef]);
 
     const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
         setBookmarkedServicesOffset(e.nativeEvent.contentOffset.y);
