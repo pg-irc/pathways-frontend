@@ -101,14 +101,6 @@ describe('the goBack function', () => {
         expect(history.location.pathname).toBe(learnPath);
     });
 
-    it('Sends users to the path they were on before sending feedback when the previous path is "/contact-information/:serviceId"', () => {
-        const initialPathEntries = [servicesPath, serviceDetailPath, otherFeedbackPath, contactInformationPath, serviceDetailPath];
-        const indexOfLastPath = initialPathEntries.length - 1;
-        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
-        goBack(history);
-        expect(history.location.pathname).toBe(servicesPath);
-    });
-
     it('Sends users to the "/feedback/:serviceId" path from "/contact-information/:serviceId"', () => {
         const initialPathEntries = [servicesPath, serviceDetailPath, otherFeedbackPath, contactInformationPath];
         const indexOfLastPath = initialPathEntries.length - 1;

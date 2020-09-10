@@ -101,19 +101,9 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
     (): void => history.push(routePathWithParameter(route, parameter))
 );
 
-export const goBack = (memoryHistory: MemoryHistory): void => {
-    if (previousPathMatchesContactInformationRoute(memoryHistory)) {
-        return goBackToPathBeforeFeedback(memoryHistory);
-    }
-    return memoryHistory.goBack();
-};
-
-const previousPathMatchesContactInformationRoute = (memoryHistory: MemoryHistory): boolean => {
-    const currentPathIndex = memoryHistory.entries.length - 1;
-    const previousPathIndex = currentPathIndex - 1;
-    const previousPath = memoryHistory.entries[previousPathIndex].pathname;
-    return pathMatchesRoute(previousPath, Routes.ContactInformation);
-};
+export const goBack = (memoryHistory: MemoryHistory): void => (
+    memoryHistory.goBack()
+);
 
 export const clearFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): void => {
     while (R.findLast(pathMatchesFeedbackRoute, memoryHistory.entries) && R.not(R.isEmpty(memoryHistory.entries))) {
@@ -122,17 +112,8 @@ export const clearFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): voi
     }
 };
 
-const goBackToPathBeforeFeedback = (memoryHistory: MemoryHistory): void => {
-    const pathBeforeFeedback = R.findLast(pathDoesNotMatchFeedbackRoute, memoryHistory.entries);
-    return memoryHistory.push(pathBeforeFeedback);
-};
-
 const pathMatchesFeedbackRoute = (location: Location<LocationState>): boolean => (
     pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ContactInformation])
-);
-
-const pathDoesNotMatchFeedbackRoute = (location: Location<LocationState>): boolean => (
-    !pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ServiceDetail, Routes.ContactInformation])
 );
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {
