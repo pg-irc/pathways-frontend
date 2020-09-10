@@ -1,3 +1,4 @@
+// tslint:disable: no-expression-statement
 import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
 import { History, Location, MemoryHistory, LocationState } from 'history';
@@ -117,11 +118,29 @@ const previousPathMatchesContactInformationRoute = (memoryHistory: MemoryHistory
 
 const goBackToPathBeforeFeedback = (memoryHistory: MemoryHistory): void => {
     const pathBeforeFeedback = R.findLast(pathDoesNotMatchFeedbackRoute, memoryHistory.entries);
+    clearFeedbackPathsFromHistory(memoryHistory);
     return memoryHistory.push(pathBeforeFeedback);
+};
+
+export const clearFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): void => {
+    // tslint:disable-next-line: no-let
+    let lastPathIndex = memoryHistory.entries.length - 1;
+
+    while (pathMatchesFeedbackRoute(memoryHistory.entries[lastPathIndex])) {
+        if (lastPathIndex === 0) {
+            break;
+        }
+        memoryHistory.entries.pop();
+        lastPathIndex--;
+    }
 };
 
 const pathDoesNotMatchFeedbackRoute = (location: Location<LocationState>): boolean => (
     !pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ServiceDetail, Routes.ContactInformation])
+);
+
+const pathMatchesFeedbackRoute = (location: Location<LocationState>): boolean => (
+    pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ServiceDetail, Routes.ContactInformation])
 );
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {

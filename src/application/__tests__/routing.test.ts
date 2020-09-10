@@ -1,5 +1,5 @@
 // tslint:disable:no-expression-statement readonly-array
-import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack } from '../routing';
+import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack, clearFeedbackPathsFromHistory } from '../routing';
 import { aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
 
@@ -117,4 +117,19 @@ describe('the goBack function', () => {
         expect(history.location.pathname).toBe(otherFeedbackPath);
     });
 
+});
+
+describe('the clearFeedbackPathsFromHistory function', () => {
+    const servicesPath = routePathDefinition(Routes.Services);
+    const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
+    const otherFeedbackPath = routePathDefinition(Routes.OtherFeedback);
+    const contactInformationPath = routePathDefinition(Routes.ContactInformation);
+
+    it('Clears the feedback paths from the history stack', () => {
+        const initialPathEntries = [servicesPath, serviceDetailPath, otherFeedbackPath, contactInformationPath];
+        const history = createMemoryHistory({ initialEntries: initialPathEntries });
+        clearFeedbackPathsFromHistory(history);
+        const lastPathIndex = history.entries.length - 1;
+        expect(history.entries[lastPathIndex].pathname).toBe(servicesPath);
+    });
 });
