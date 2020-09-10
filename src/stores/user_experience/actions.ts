@@ -7,6 +7,7 @@ export type SaveTopicDetailScrollOffsetAction = Readonly<ReturnType<typeof saveT
 export type SaveOrganizationServicesOffsetAction = Readonly<ReturnType<typeof saveOrganizationServicesOffset>>;
 export type SaveSearchResultScrollOffsetAction = Readonly<ReturnType<typeof saveSearchResultScrollOffset>>;
 export type SaveTopicServicesScrollOffsetAction = Readonly<ReturnType<typeof saveTopicServicesScrollOffset>>;
+export type SaveBookmarkedTopicsScrollOffsetAction = Readonly<ReturnType<typeof saveBookmarkedTopicsScrollOffset>>;
 export type SaveBookmarkedServicesScrollOffsetAction = Readonly<ReturnType<typeof saveBookmarkedServicesScrollOffset>>;
 export type SaveBookmarksTabAction = Readonly<ReturnType<typeof saveBookmarksTab>>;
 
@@ -21,6 +22,7 @@ export type UserExperienceAction =
 SaveHomePageScrollOffsetAction |
 SaveSearchResultScrollOffsetAction |
 SaveTopicServicesScrollOffsetAction |
+SaveBookmarkedTopicsScrollOffsetAction |
 SaveBookmarkedServicesScrollOffsetAction |
 SaveBookmarksTabAction |
 SaveOrganizationServicesOffsetAction |
@@ -51,6 +53,10 @@ export const saveSearchResultScrollOffset = (offset: number) => (
 // tslint:disable-next-line:typedef
 export const saveTopicServicesScrollOffset = (offset: number) => (
     helpers.makeAction(constants.SAVE_TOPIC_SERVICES_SCROLL_OFFSET, { offset })
+);
+// tslint:disable-next-line:typedef
+export const saveBookmarkedTopicsScrollOffset = (offset: number) => (
+    helpers.makeAction(constants.SAVE_BOOKMARKED_TOPICS_SCROLL_OFFSET, { offset })
 );
 
 // tslint:disable-next-line:typedef

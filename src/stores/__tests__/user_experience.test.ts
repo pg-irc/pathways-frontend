@@ -46,13 +46,20 @@ describe('the user experience reducer', () => {
         });
     });
 
-    describe('the bookmarked services offset state', () => {
+    describe('the bookmarked offset state', () => {
 
         it('is set to an offset number value by the save bookmarked services offset action', () => {
             const oldStore = buildDefaultStore();
             const offset = aNumber();
             const newStore = reducer(oldStore, Actions.saveBookmarkedServicesScrollOffset(offset));
             expect(newStore.bookmarkedServicesScrollOffset).toBe(offset);
+        });
+
+        it('is set', () => {
+            const oldStore = buildDefaultStore();
+            const offset = aNumber();
+            const newStore = reducer(oldStore, Actions.saveBookmarkedTopicsScrollOffset(offset));
+            expect(newStore.bookmarkedTopicsScrollOffset).toBe(offset);
         });
     });
 
