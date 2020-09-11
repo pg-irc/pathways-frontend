@@ -281,7 +281,7 @@ const getSearchOnPress = async (
     setSearchIsCollapsed(true);
     setIsFetchingLatLng(true);
     try {
-        const latLong = await fetchLatLongFromLocation(location);
+        const latLong = await fetchLatLongFromLocation(location, undefined);
         setManualUserLocation({
             label: locationInputValue,
             latLong: latLong,

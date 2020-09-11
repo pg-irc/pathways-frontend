@@ -20,6 +20,7 @@ import { LatLong } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { SaveSearchOffsetAction, saveSearchOffset } from '../../stores/user_experience/actions';
 import { selectSearchOffset } from '../../selectors/user_experience/select_search_offset';
+import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
@@ -31,6 +32,7 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     searchLatLong: selectSearchLatLong(store),
     collapseSearchInput: selectIsInputCollapsed(store),
     searchOffset: selectSearchOffset(store),
+    customLatLong: selectCustomLatLong(store),
 });
 
 type Actions =

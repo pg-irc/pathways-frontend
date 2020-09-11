@@ -7,10 +7,13 @@ import { isNoLocationPermissionError, isLocationFetchTimeoutError } from '../val
 import { MY_LOCATION } from '../application/constants';
 import { isDeviceOnline } from '../application/helpers/is_device_online';
 
-export const fetchLatLongFromLocation = async (location: string): Promise<LatLong> => {
+export const fetchLatLongFromLocation = async (location: string, customLatLong: LatLong): Promise<LatLong> => {
     const isOnline = await isDeviceOnline();
     if (!isOnline) {
         return undefined;
+    }
+    if (customLatLong){
+        return customLatLong;
     }
     if (isMyLocation(location)) {
         return fetchLatLongFromDevice();

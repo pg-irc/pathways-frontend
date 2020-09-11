@@ -35,6 +35,7 @@ export interface SearchComponentProps {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
     readonly searchOffset: number;
+    readonly customLatLong: LatLong;
 }
 
 export interface SearchComponentActions {
@@ -83,7 +84,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
         let geocoderLatLong = props.searchLatLong;
         try {
             if (props.searchLocation !== location) {
-                geocoderLatLong = await fetchLatLongFromLocation(location);
+                geocoderLatLong = await fetchLatLongFromLocation(location, props.customLatLong);
                 props.saveSearchLatLong(geocoderLatLong);
             }
             const searchTermWithCity = appendCityToSearchTerm(searchTerm, location);
