@@ -4,23 +4,22 @@ import { t } from '@lingui/macro';
 import { Text  } from 'react-native';
 import { Content, Container, View } from 'native-base';
 import { HeaderComponent } from './header_component';
-import { goToRouteWithParameter, Routes, RouterProps } from '../../application/routing';
-import { useHistory } from 'react-router-native';
+import { RouterProps, goBack } from '../../application/routing';
 import { CloseAction } from '../../stores/feedback';
 import { textStyles } from '../../application/styles';
 import { Trans } from '@lingui/react';
 import { Link } from '../link/link_component';
+import { memoryHistory } from '../../application';
 
 export interface ExplainFeedbackActions {
     readonly close: () => CloseAction;
 }
-type props = ExplainFeedbackActions & RouterProps;
+type Props = ExplainFeedbackActions & RouterProps;
 
-export const ExplainFeedbackComponent = (props: props): JSX.Element => {
-    const history = useHistory();
+export const ExplainFeedbackComponent = (props: Props): JSX.Element => {
     const onClosePress = (): void => {
         props.close();
-        goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, history)();
+        goBack(memoryHistory);
     };
 
     return (

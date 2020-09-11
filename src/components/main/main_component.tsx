@@ -52,7 +52,6 @@ type Props = MainComponentProps & MainComponentActions;
 export const MainComponent = (props: Props): JSX.Element => {
     useHardwareBackButtonPress((): boolean => {
         const shouldNotBubbleUpEvent = true;
-
         if (props.isHeaderMenuVisible) {
             props.closeHeaderMenu();
         } else if (props.feedbackScreen) {
@@ -68,6 +67,9 @@ export const MainComponent = (props: Props): JSX.Element => {
         if (props.feedbackScreen === FeedbackScreen.ContactInformationPage) {
             goBack(memoryHistory);
             props.backFromContactInformation();
+        } else if (props.feedbackScreen === FeedbackScreen.ExplainFeedback) {
+            goBack(memoryHistory);
+            props.backOutOfFeedbackScreen();
         } else {
             props.backOutOfFeedbackScreen();
         }
