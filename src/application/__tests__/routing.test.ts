@@ -1,6 +1,10 @@
-// tslint:disable:no-expression-statement
-import { Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter } from '../routing';
+// tslint:disable:no-expression-statement readonly-array
+import {
+    Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
+    popFeedbackPathsFromHistory, goBackToServiceDetailOnFeedbackSubmit }
+from '../routing';
 import { aString } from '../helpers/random_test_values';
+import { createMemoryHistory } from 'history';
 
 describe('the routePathDefinition function', () => {
 
@@ -81,4 +85,82 @@ describe('the routePathWithParameter function', () => {
         expect(() => routePathWithParameter(Routes.Learn, parameter)).toThrow();
     });
 
+});
+
+describe('the goBack function', () => {
+    const welcomePath = routePathDefinition(Routes.Welcome);
+    const learnPath = routePathDefinition(Routes.Learn);
+    const learnDetailPath = routePathDefinition(Routes.LearnDetail);
+
+    it('Sends users to the previous path', () => {
+        const initialPathEntries = [welcomePath, learnPath, learnDetailPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
+        goBack(history);
+        expect(history.location.pathname).toBe(learnPath);
+    });
+
+});
+
+describe('the popFeedbackPathsFromHistory function', () => {
+    const firstRegularPath = routePathDefinition(Routes.TopicDetail);
+    const secondRegularPath = routePathDefinition(Routes.Services);
+    const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
+    const removeServiceOrOtherFeedbackPath = routePathDefinition(Routes.OtherFeedback);
+    const editableServiceDetailFeedbackPath = routePathDefinition(Routes.ServiceDetail);
+    const contactInformationFeedbackPath = routePathDefinition(Routes.ContactInformation);
+
+    it('pops all feedback paths from the history stack when submitting feedback from the remove Service or other feedback screen', () => {
+        const initialPathEntries = [
+            firstRegularPath, secondRegularPath, serviceDetailPath, removeServiceOrOtherFeedbackPath, contactInformationFeedbackPath,
+        ];
+        const history = createMemoryHistory({ initialEntries: initialPathEntries });
+        popFeedbackPathsFromHistory(history);
+        expect(history.entries.length).toBe(3);
+        expect(history.entries[0].pathname).toBe(firstRegularPath);
+        expect(history.entries[1].pathname).toBe(secondRegularPath);
+        expect(history.entries[2].pathname).toBe(serviceDetailPath);
+    });
+
+    it('pops all feedback paths from the history stack when submitting feedback from the editable service detail screen', () => {
+        const initialPathEntries = [firstRegularPath, secondRegularPath, editableServiceDetailFeedbackPath, contactInformationFeedbackPath];
+        const history = createMemoryHistory({ initialEntries: initialPathEntries });
+        popFeedbackPathsFromHistory(history);
+        expect(history.entries.length).toBe(3);
+        expect(history.entries[0].pathname).toBe(firstRegularPath);
+        expect(history.entries[1].pathname).toBe(secondRegularPath);
+        expect(history.entries[2].pathname).toBe(serviceDetailPath);
+    });
+
+});
+
+describe('the goBackToServiceDetailOnFeedbackSubmit function', () => {
+    const firstRegularPath = routePathDefinition(Routes.TopicDetail);
+    const secondRegularPath = routePathDefinition(Routes.Services);
+    const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
+    const firstFeedbackPath = routePathDefinition(Routes.OtherFeedback);
+    const secondFeedbackPath = routePathDefinition(Routes.ContactInformation);
+
+    it('sends the user back to the service detail page already on the history stack', () => {
+        const initialPathEntries = [firstRegularPath, secondRegularPath, serviceDetailPath, firstFeedbackPath, secondFeedbackPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goBackToServiceDetailOnFeedbackSubmit(history);
+        expect(history.location.pathname).toBe(serviceDetailPath);
+        expect(history.entries.length).toBe(3);
+        expect(history.entries[0].pathname).toBe(firstRegularPath);
+        expect(history.entries[1].pathname).toBe(secondRegularPath);
+        expect(history.entries[2].pathname).toBe(serviceDetailPath);
+    });
+
+    it('does not add a subsequent duplicate service detail path to the history stack', () => {
+        const initialPathEntries = [firstRegularPath, secondRegularPath, serviceDetailPath, firstFeedbackPath, secondFeedbackPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goBackToServiceDetailOnFeedbackSubmit(history);
+        expect(history.entries.length).toBe(3);
+        expect(history.entries[0].pathname).toBe(firstRegularPath);
+        expect(history.entries[1].pathname).toBe(secondRegularPath);
+        expect(history.entries[2].pathname).toBe(serviceDetailPath);
+    });
 });

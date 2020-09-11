@@ -1,6 +1,7 @@
+// tslint:disable:no-expression-statement
 import { matchPath } from 'react-router';
 import { RouteComponentProps } from 'react-router-native';
-import { History, Location } from 'history';
+import { History, Location, MemoryHistory, LocationState } from 'history';
 import { Id as LearnId } from '../stores/explore';
 import { Id as TopicId } from '../stores/topics';
 import * as R from 'ramda';
@@ -93,7 +94,6 @@ export const routePathWithParameter = (route: Routes, parameter: string): string
 
 export const goToRouteWithoutParameter = (route: Routes, history: History): () => void => {
     const path = routePathWithoutParameter(route);
-    // tslint:disable-next-line:no-expression-statement
     return (): void => history.push(path);
 };
 
@@ -101,8 +101,24 @@ export const goToRouteWithParameter = (route: Routes, parameter: string, history
     (): void => history.push(routePathWithParameter(route, parameter))
 );
 
-export const goBack = (history: History): void => (
-    history.goBack()
+export const goBack = (memoryHistory: MemoryHistory): void => (
+    memoryHistory.goBack()
+);
+
+export const goBackToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
+    popFeedbackPathsFromHistory(memoryHistory);
+    const positionOfCurrentPathInHistoryStack = 0;
+    memoryHistory.go(positionOfCurrentPathInHistoryStack);
+};
+
+export const popFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): void => {
+    while (R.findLast(pathMatchesFeedbackRoute, memoryHistory.entries)) {
+        memoryHistory.entries.pop();
+    }
+};
+
+const pathMatchesFeedbackRoute = (location: Location<LocationState>): boolean => (
+    pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ContactInformation])
 );
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {

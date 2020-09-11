@@ -12,7 +12,6 @@ import { RouteChangedAction } from '../../stores/router_actions';
 import { Locale } from '../../locale';
 import { AppModalsComponent } from './app_modals_component';
 import * as Notifications from 'expo-notifications';
-import { History } from 'history';
 import { notificationListener } from './notification';
 import {
     CloseHeaderMenuAction, OpenHeaderMenuAction, CloseAboutModalAction,
@@ -22,6 +21,7 @@ import { useHardwareBackButtonPress } from './use_hardware_back_button_press';
 import { ScrollContext, createScrollAnimationContext } from './scroll_animation_context';
 import { FeedbackScreen } from '../../stores/feedback/types';
 import { CloseAction, BackFromContactInformationAction } from '../../stores/feedback';
+import { memoryHistory } from '../../application';
 
 export type MainComponentProps = MainProps & FooterProps & RouterProps;
 
@@ -38,7 +38,6 @@ export interface MainComponentActions {
 }
 
 interface MainProps {
-    readonly history: History;
     readonly locale: Locale;
     readonly localeIsSet: boolean;
     readonly showOnboarding: boolean;
@@ -53,13 +52,12 @@ type Props = MainComponentProps & MainComponentActions;
 export const MainComponent = (props: Props): JSX.Element => {
     useHardwareBackButtonPress((): boolean => {
         const shouldNotBubbleUpEvent = true;
-
         if (props.isHeaderMenuVisible) {
             props.closeHeaderMenu();
         } else if (props.feedbackScreen) {
             backFromFeedbackScreen();
         } else {
-            goBack(props.history);
+            goBack(memoryHistory);
         }
 
         return shouldNotBubbleUpEvent;
@@ -67,22 +65,25 @@ export const MainComponent = (props: Props): JSX.Element => {
 
     const backFromFeedbackScreen = (): void => {
         if (props.feedbackScreen === FeedbackScreen.ContactInformationPage) {
-            goBack(props.history);
+            goBack(memoryHistory);
             props.backFromContactInformation();
+        } else if (props.feedbackScreen === FeedbackScreen.ExplainFeedback) {
+            goBack(memoryHistory);
+            props.backOutOfFeedbackScreen();
         } else {
             props.backOutOfFeedbackScreen();
         }
     };
 
     useEffect((): EffectCallback => {
-        const unsubscribe = props.history.listen((location: Location, _: Action): RouteChangedAction =>
+        const unsubscribe = memoryHistory.listen((location: Location, _: Action): RouteChangedAction =>
             props.sendAnalyticsData(location, props.locale),
         );
         return unsubscribe;
     }, []);
 
     useEffect((): EffectCallback => {
-        const subscription = Notifications.addNotificationResponseReceivedListener(notificationListener(props.history));
+        const subscription = Notifications.addNotificationResponseReceivedListener(notificationListener(memoryHistory));
         return (): void => subscription.remove();
     }, []);
 
@@ -97,7 +98,7 @@ export const MainComponent = (props: Props): JSX.Element => {
                 open={props.isHeaderMenuVisible}
                 content={
                     <HeaderMenuConnectedComponent
-                        history={props.history}
+                        history={memoryHistory}
                         closeMenu={props.closeHeaderMenu}
                         openAboutModal={props.openAboutModal}
                         openDisclaimerModal={props.openDisclaimerModal}
@@ -109,7 +110,7 @@ export const MainComponent = (props: Props): JSX.Element => {
                         <Animated.Code exec={scrollAnimationContext.animatedSearchHeaderAndFooter} />
                         <MainPageSwitcherComponent {...props} />
                         <FooterComponent
-                            history={props.history}
+                            history={memoryHistory}
                             location={props.location}
                             feedbackScreen={props.feedbackScreen}
                         />

@@ -66,7 +66,7 @@ const Header = (props: Props): JSX.Element => {
     const params = getParametersFromPath(props.location, Routes.TopicDetail);
     const topicId = params.topicId;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
+    const leftButton = <BackButtonComponent textColor={colors.black} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={R.contains(topicId, props.bookmarkedTopicsIdList)}

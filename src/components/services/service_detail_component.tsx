@@ -323,7 +323,6 @@ const ServiceDetailHeaderComponent = (props: HeaderProps): JSX.Element => {
     return (
         <ServiceDetailHeader
             location={props.location}
-            history={props.history}
             service={props.service}
             bookmarkedServicesIds={props.bookmarkedServicesIds}
             bookmarkService={props.bookmarkService}
@@ -335,7 +334,6 @@ const ServiceDetailHeaderComponent = (props: HeaderProps): JSX.Element => {
 
 const ServiceDetailHeader = (props: {
     readonly location: Location;
-    readonly history: History;
     readonly service: HumanServiceData;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
@@ -345,7 +343,7 @@ const ServiceDetailHeader = (props: {
     const params = getParametersFromPath(props.location, Routes.ServiceDetail);
     const serviceId = params.serviceId;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
+    const leftButton = <BackButtonComponent textColor={colors.black} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={R.contains(serviceId, props.bookmarkedServicesIds)}
