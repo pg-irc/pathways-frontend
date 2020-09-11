@@ -132,11 +132,24 @@ describe('the popFeedbackPathsFromHistory function', () => {
     const firstRegularPath = routePathDefinition(Routes.TopicDetail);
     const secondRegularPath = routePathDefinition(Routes.Services);
     const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
-    const firstFeedbackPath = routePathDefinition(Routes.OtherFeedback);
-    const secondFeedbackPath = routePathDefinition(Routes.ContactInformation);
+    const removeServiceOrOtherFeedbackPath = routePathDefinition(Routes.OtherFeedback);
+    const editableServiceDetailFeedbackPath = routePathDefinition(Routes.ServiceDetail);
+    const contactInformationFeedbackPath = routePathDefinition(Routes.ContactInformation);
 
-    it('Clears all feedback paths from the history stack', () => {
-        const initialPathEntries = [firstRegularPath, secondRegularPath, serviceDetailPath, firstFeedbackPath, secondFeedbackPath];
+    it('pops all feedback paths from the history stack when submitting feedback from the remove Service or other feedback screen', () => {
+        const initialPathEntries = [
+            firstRegularPath, secondRegularPath, serviceDetailPath, removeServiceOrOtherFeedbackPath, contactInformationFeedbackPath,
+        ];
+        const history = createMemoryHistory({ initialEntries: initialPathEntries });
+        popFeedbackPathsFromHistory(history);
+        expect(history.entries.length).toBe(3);
+        expect(history.entries[0].pathname).toBe(firstRegularPath);
+        expect(history.entries[1].pathname).toBe(secondRegularPath);
+        expect(history.entries[2].pathname).toBe(serviceDetailPath);
+    });
+
+    it('pops all feedback paths from the history stack when submitting feedback from the editable service detail screen', () => {
+        const initialPathEntries = [firstRegularPath, secondRegularPath, editableServiceDetailFeedbackPath, contactInformationFeedbackPath];
         const history = createMemoryHistory({ initialEntries: initialPathEntries });
         popFeedbackPathsFromHistory(history);
         expect(history.entries.length).toBe(3);
