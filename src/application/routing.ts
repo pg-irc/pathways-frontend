@@ -107,12 +107,12 @@ export const goBack = (memoryHistory: MemoryHistory): void => (
 
 export const goBackToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
     popFeedbackPathsFromHistory(memoryHistory);
-    const indexOfCurrentPathInHistoryStack = 0;
-    memoryHistory.go(indexOfCurrentPathInHistoryStack);
+    const positionOfCurrentPathInHistoryStack = 0;
+    memoryHistory.go(positionOfCurrentPathInHistoryStack);
 };
 
 export const popFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): void => {
-    while (R.findLast(pathMatchesFeedbackRoute, memoryHistory.entries) && R.not(R.isEmpty(memoryHistory.entries))) {
+    while (R.findLast(pathMatchesFeedbackRoute, memoryHistory.entries)) {
         memoryHistory.entries.pop();
     }
 };

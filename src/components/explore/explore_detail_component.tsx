@@ -66,7 +66,7 @@ const TaskListHeaderComponent = (props: Props): JSX.Element => (
 const Header = (props: Props): JSX.Element => {
     const textColor = colors.black;
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} textColor={textColor} />;
+    const leftButton = <BackButtonComponent textColor={textColor} />;
     const rightButton =
         <MenuButtonComponent
             onPress={props.openHeaderMenu}
