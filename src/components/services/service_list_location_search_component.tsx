@@ -5,7 +5,7 @@ import { Icon } from 'native-base';
 import { Trans } from '@lingui/react';
 import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
-import { UserLocation } from '../../validation/latlong/types';
+import { UserLocation, LatLong } from '../../validation/latlong/types';
 import { SetManualUserLocationAction } from '../../stores/manual_user_location';
 import { fetchLatLongFromLocation } from '../../api/fetch_lat_long_from_location';
 import { applicationStyles, colors, textStyles, values } from '../../application/styles';
@@ -19,6 +19,7 @@ import { BuildServicesRequestAction } from '../../stores/services/actions';
 interface Props {
     readonly topic: Topic;
     readonly manualUserLocation: UserLocation;
+    readonly customLatLong: LatLong;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;
 }
@@ -53,6 +54,7 @@ export const ServiceListLocationSearchComponent = (props: Props): JSX.Element =>
                     manualUserLocation={props.manualUserLocation}
                     setSearchIsCollapsed={setSearchIsCollapsed}
                     i18n={i18n}
+                    customLatLong={props.customLatLong}
                 />
             )
         }
@@ -101,6 +103,7 @@ interface ExpandedSearchProps {
     readonly i18n: I18n;
     readonly topic: Topic;
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction;
+    readonly customLatLong: LatLong;
 }
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
@@ -115,7 +118,8 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
             props.setSearchIsCollapsed,
             props.i18n,
             props.topic,
-            props.dispatchServicesRequest
+            props.dispatchServicesRequest,
+            props.customLatLong
         );
     };
     const onSearchButtonPress = isCachedLocationValid ? collapseSearch : lookupLocationLatLong;
@@ -276,12 +280,13 @@ const getSearchOnPress = async (
     i18n: I18n,
     topic: Topic,
     dispatchServicesRequest: (topic: Topic, manualUserLocation: UserLocation) => BuildServicesRequestAction,
+    customLatLong: LatLong
 ): Promise<void> => {
     const location = toLocationForQuery(locationInputValue, i18n);
     setSearchIsCollapsed(true);
     setIsFetchingLatLng(true);
     try {
-        const latLong = await fetchLatLongFromLocation(location, undefined);
+        const latLong = await fetchLatLongFromLocation(location, customLatLong);
         setManualUserLocation({
             label: locationInputValue,
             latLong: latLong,

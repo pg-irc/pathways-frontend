@@ -18,6 +18,7 @@ import { SetManualUserLocationAction, setManualUserLocation } from '../../stores
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { SaveTopicServicesOffsetAction, saveTopicServicesOffset } from '../../stores/user_experience/actions';
 import { selectTopicServicesOffset } from '../../selectors/user_experience/select_topic_services_offset';
+import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
     const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);
@@ -26,6 +27,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
         topic,
         topicServicesOrError: selectServicesForTopic(topic.id, store),
         manualUserLocation,
+        customLatLong: selectCustomLatLong(store),
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
         showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
         topicServicesOffset: selectTopicServicesOffset(store),
