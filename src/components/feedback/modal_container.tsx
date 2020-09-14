@@ -3,8 +3,6 @@ import React from 'react';
 import { ChooseModeModal } from './choose_mode_modal';
 import { DiscardChangesModal } from './discard_changes_modal';
 import { DiscardChangesAction, CancelDiscardChangesAction, CloseAction } from '../../stores/feedback';
-import { goToRouteWithParameter, Routes } from '../../application/routing';
-import { useHistory } from 'react-router-native';
 
 interface ModalContainerProps {
     readonly showChooseFeedbackModeModal: boolean;
@@ -21,11 +19,9 @@ interface ModalContainerProps {
 }
 
 export const ModalContainer = (props: ModalContainerProps): JSX.Element => {
-    const history = useHistory();
 
     const onDiscardModalDiscardPress = (): void => {
         props.discardFeedback();
-        goToRouteWithParameter(Routes.ServiceDetail, props.serviceId, history)();
     };
 
     return (

@@ -161,7 +161,6 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
     const onClosePress = (): void => {
         if (!hasFeedbackToSend()) {
             props.close();
-            goToRouteWithParameter(Routes.ServiceDetail, serviceId, props.history)();
         }
         props.closeWithFeedback();
     };
