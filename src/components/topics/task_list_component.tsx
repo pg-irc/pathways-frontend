@@ -9,8 +9,8 @@ import { colors } from '../../application/styles';
 import { isTopicListHeading } from './is_topic_list_heading';
 import { ListItem } from './build_topic_list_items_with_headings';
 import { TopicListHeadingComponent } from './topic_list_heading_component';
-import { SaveBookmarkedServicesScrollOffsetAction, SaveHomePageScrollOffsetAction,
-        SaveTopicServicesScrollOffsetAction, SaveTopicDetailScrollOffsetAction, SaveBookmarkedTopicsScrollOffsetAction } from '../../stores/user_experience/actions';
+import { SaveHomePageScrollOffsetAction, SaveTopicDetailScrollOffsetAction, SaveBookmarkedTopicsScrollOffsetAction,
+    SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 
 // tslint:disable-next-line:no-var-requires
 const R = require('ramda');
@@ -25,13 +25,16 @@ export interface TaskListProps {
     readonly scrollOffset: number;
 }
 
-export type SaveTaskListScrollOffsetActions = SaveBookmarkedServicesScrollOffsetAction | SaveHomePageScrollOffsetAction |
-    SaveTopicServicesScrollOffsetAction | SaveTopicDetailScrollOffsetAction;
+export type SaveTaskListScrollOffsetActions =
+    SaveBookmarkedTopicsScrollOffsetAction |
+    SaveHomePageScrollOffsetAction |
+    SaveTopicServicesScrollOffsetAction |
+    SaveTopicDetailScrollOffsetAction;
 
 export interface TaskListActions {
     readonly bookmarkTopic: (topicId: Id) => BookmarkTopicAction;
     readonly unbookmarkTopic: (topicId: Id) => UnbookmarkTopicAction;
-    readonly saveScrollOffset: (offset: number) => SaveTaskListScrollOffsetActions | SaveBookmarkedTopicsScrollOffsetAction;
+    readonly saveScrollOffset: (offset: number) => SaveTaskListScrollOffsetActions;
 }
 
 type Props = TaskListProps & TaskListActions;
@@ -51,28 +54,29 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
     constructor(props: Props) {
         super(props);
-        console.log(`constructor with offset ${props.scrollOffset}`);
         this.state = this.initialState(props.scrollOffset);
         this.setFlatListRef = this.setFlatListRef.bind(this);
         this.loadMoreData = this.loadMoreData.bind(this);
     }
 
     componentDidUpdate(previousProps: Props): void {
-        if (previousProps.headerContentIdentifier !== this.props.headerContentIdentifier) {
-            this.flatListRef.scrollToOffset({ animated: false, offset: 0 });
-        } else if (this.flatListRef) {
-            console.log(`initializing scrolling to ${this.state.scrollOffset}`);
-            this.flatListRef.scrollToOffset({ animated: false, offset: this.state.scrollOffset});
-        }
-        if (this.tasksHaveChanged(previousProps)) {
-            const scrollToTopOfThePage = 0;
-            this.setState(this.initialState(scrollToTopOfThePage));
+        const computeScrollOffset = (): number => {
+            if (previousProps.headerContentIdentifier !== this.props.headerContentIdentifier) {
+                return 0;
+            }
+            if (this.tasksHaveChanged(previousProps)) {
+                return 0;
+            }
+            return this.state.scrollOffset;
+        };
+        if (this.flatListRef) {
+            const offset = computeScrollOffset();
+            this.flatListRef.scrollToOffset({ animated: false, offset });
         }
     }
 
     render(): JSX.Element {
         const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
-            console.log(`end drag getting scroll offset ${e.nativeEvent.contentOffset.y}`);
             this.setState({
                 ...this.state,
                 scrollOffset: e.nativeEvent.contentOffset.y,
@@ -138,7 +142,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     private saveScrollOffsetToReduxAndGoToTopicDetail(item: ListItem): void {
-        console.log(`Saving scroll offset to redux: ${this.state.scrollOffset}`);
         this.props.saveScrollOffset(this.state.scrollOffset);
         goToRouteWithParameter(Routes.TopicDetail, item.id, this.props.history)();
     }
