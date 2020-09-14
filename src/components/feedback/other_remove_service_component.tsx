@@ -116,13 +116,13 @@ export const OtherRemoveServiceComponent = (props: FeedbackOtherRemoveServicePro
 
     const onDiscardModalDiscardPress = (): void => {
         props.discardFeedback();
-        goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, memoryHistory)();
+        goBack(memoryHistory);
     };
 
     const onClosePress = (): void => {
         if (!feedback) {
             props.close();
-            goToRouteWithParameter(Routes.ServiceDetail, props.match.params.serviceId, memoryHistory)();
+            goBack(memoryHistory);
         }
         props.closeWithFeedback();
     };
