@@ -49,7 +49,8 @@ function* requestPushNotificationToken(_: PushNotificationTokenRequestAction): R
         return yield put(pushNotificationTokenFailure('Error retrieving push notification token'));
     }
     const locale: Locale = yield select(selectLocale);
-    const result: APIResponse = yield call(putPushNotificationToken, token.data, locale, PATHWAYS_API_KEY);
+    // tslint:disable:no-string-literal
+    const result: APIResponse = yield call(putPushNotificationToken, token['data'], locale, PATHWAYS_API_KEY);
     if (!result || result.hasError) {
         // TODO log error to sentry
         return yield put(pushNotificationTokenFailure('Error posting push notification token'));
