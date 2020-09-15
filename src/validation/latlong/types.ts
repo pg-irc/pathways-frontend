@@ -4,6 +4,6 @@ export interface LatLong {
 }
 
 export interface UserLocation {
-    readonly label: string;
+    readonly humanReadableLocation: string;
     readonly latLong: LatLong;
 }

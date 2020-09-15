@@ -25,9 +25,9 @@ interface Props {
 }
 
 export const ServiceListLocationSearchComponent = (props: Props): JSX.Element => {
-    const [locationInputValue, setLocationInputValue]: readonly [string, (s: string) => void] = useState(props.manualUserLocation.label);
+    const [locationInputValue, setLocationInputValue]: readonly [string, (s: string) => void] = useState(props.manualUserLocation.humanReadableLocation);
     const [isFetchingLatLng, setIsFetchingLatLng]: readonly [boolean, (b: boolean) => void] = useState<boolean>(false);
-    const [searchIsCollapsed, setSearchIsCollapsed]: readonly [boolean, (b: boolean) => void] = useState<boolean>(!!props.manualUserLocation.label);
+    const [searchIsCollapsed, setSearchIsCollapsed]: readonly [boolean, (b: boolean) => void] = useState<boolean>(!!props.manualUserLocation.humanReadableLocation);
 
     if (searchIsCollapsed) {
         return (
@@ -108,7 +108,7 @@ interface ExpandedSearchProps {
 
 const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
     const searchIsDisabled = props.locationInputValue.length === 0 || props.isFetchingLatLng;
-    const isCachedLocationValid = props.locationInputValue === props.manualUserLocation.label;
+    const isCachedLocationValid = props.locationInputValue === props.manualUserLocation.humanReadableLocation;
     const collapseSearch = (): void => { props.setSearchIsCollapsed(true); };
     const lookupLocationLatLong = (): void => {
             getSearchOnPress(
@@ -130,7 +130,7 @@ const ExpandedSearch = (props: ExpandedSearchProps): JSX.Element => {
                 <SearchInput
                     locationInputValue={props.locationInputValue}
                     setLocationInputValue={props.setLocationInputValue}
-                    autoFocus={!!props.manualUserLocation.label}
+                    autoFocus={!!props.manualUserLocation.humanReadableLocation}
                     i18n={props.i18n}
                 />
             </View>
@@ -288,10 +288,10 @@ const getSearchOnPress = async (
     try {
         const latLong = await fetchLatLongFromLocation(location, customLatLong);
         setManualUserLocation({
-            label: locationInputValue,
+            humanReadableLocation: locationInputValue,
             latLong: latLong,
         });
-        dispatchServicesRequest(topic, { label: locationInputValue, latLong: latLong });
+        dispatchServicesRequest(topic, { humanReadableLocation: locationInputValue, latLong: latLong });
     } finally {
         setIsFetchingLatLng(false);
     }
