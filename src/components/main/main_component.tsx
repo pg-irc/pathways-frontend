@@ -61,7 +61,7 @@ export const MainComponent = (props: Props): JSX.Element => {
         }
 
         return shouldNotBubbleUpEvent;
-    }, [props.feedbackScreen]);
+    }, [props.feedbackScreen, props.isHeaderMenuVisible]);
 
     const backFromFeedbackScreen = (): void => {
         if (props.feedbackScreen === FeedbackScreen.ContactInformationPage) {
