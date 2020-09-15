@@ -145,11 +145,11 @@ const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => 
             alert('Analytics enabled');
         }
         else if (location.toLowerCase().includes(ENABLE_CUSTOM_LATLONG)) {
-            const re = /[-+]?\d.*\d/;
-            const extractedLatLong = location.match(re)[0].split(',');
+            const re = / *([+-]?\d*\.\d+) *\, *([+-]?\d*\.\d+)/;
+            const parsedLatLong = location.match(re);
             const customLatLong: LatLong = {
-                lat: Number(extractedLatLong[0]),
-                lng: Number(extractedLatLong[1]),
+                lat: Number(parsedLatLong[1]),
+                lng: Number(parsedLatLong[2]),
             };
             enableCustomLatLong(customLatLong);
             alert('Custom LatLong enabled');
