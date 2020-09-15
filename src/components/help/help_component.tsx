@@ -131,8 +131,7 @@ const FindSettlementAgencyButton: React.StatelessComponent<Props> = (props: Prop
 const onFindSettlementAgencyPress = (props: Props): void => {
     if (props.customLatLong) {
         props.dispatchServicesRequest(props.topic, { humanReadableLocation: '', latLong: props.customLatLong });
-    }
-    else {
+    } else {
         props.dispatchServicesRequest(props.topic, props.manualUserLocation);
     }
     goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();

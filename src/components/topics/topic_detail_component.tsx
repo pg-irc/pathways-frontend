@@ -121,8 +121,7 @@ const onServicesTextPress = (props: Props): void => {
     props.analyticsLinkPressed(currentPath, analyticsLinkContext, linkType, linkValue);
     if (props.customLatLong) {
         props.dispatchServicesRequest(props.topic, { humanReadableLocation: '', latLong: props.customLatLong });
-    }
-    else {
+    } else {
         props.dispatchServicesRequest(props.topic, props.manualUserLocation);
     }
     goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();

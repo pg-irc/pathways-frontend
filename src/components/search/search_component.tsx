@@ -146,13 +146,17 @@ const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => 
         }
         else if (location.toLowerCase().includes(ENABLE_CUSTOM_LATLONG)) {
             const re = / *([+-]?\d*\.\d+) *\, *([+-]?\d*\.\d+)/;
-            const parsedLatLong = location.match(re);
-            const customLatLong: LatLong = {
-                lat: Number(parsedLatLong[1]),
-                lng: Number(parsedLatLong[2]),
-            };
-            enableCustomLatLong(customLatLong);
-            alert('Custom LatLong enabled');
+            try {
+                const parsedLatLong = location.match(re);
+                const customLatLong: LatLong = {
+                    lat: Number(parsedLatLong[1]),
+                    lng: Number(parsedLatLong[2]),
+                };
+                enableCustomLatLong(customLatLong);
+                alert(`Custom LatLong enabled, {lat: ${parsedLatLong[1]}, lng: ${parsedLatLong[2]}}`);
+            } catch (Error) {
+                alert('Custom LatLong disabled, please enter a valid LatLong combination.');
+            }
         }
     };
     useEffect(effect, [location]);
