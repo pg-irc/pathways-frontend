@@ -131,35 +131,35 @@ describe('user profile reducer', () => {
 
         test('is replaced by the enable custom latlong action', () => {
             const newLatLong = aLatLong();
-            const oldStore: UserProfileStore = {
+            const oldStoreWithCustomLatLong: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 customLatLong: aLatLong(),
                 disableAnalytics: true,
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
-            const newStore = reducer(oldStore, enableCustomLatLong(newLatLong));
+            const newStore = reducer(oldStoreWithCustomLatLong, enableCustomLatLong(newLatLong));
             expect(newStore.customLatLong).toBe(newLatLong);
 
         });
 
         test('is loaded from persisted data', () => {
-            const customLatLong = aLatLong();
+            const savedCustomLatLong = aLatLong();
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
-                customLatLong: customLatLong,
+                customLatLong: savedCustomLatLong,
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
             const dataCustomLatLong = new PersistedDataBuilder().
-                withCustomLatLong(customLatLong).
+                withCustomLatLong(savedCustomLatLong).
                 build();
             const actionCustomizeLatLong = DataPersistence.loadSuccess(dataCustomLatLong);
 
             const newStore = reducer(oldStore, actionCustomizeLatLong);
 
-            expect(newStore.customLatLong).toBe(customLatLong);
+            expect(newStore.customLatLong).toBe(savedCustomLatLong);
         });
 
         test('is cleared by clear all user data action', () => {
