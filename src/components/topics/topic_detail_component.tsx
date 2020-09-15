@@ -120,11 +120,7 @@ const onServicesTextPress = (props: Props): void => {
     const currentPath = props.location.pathname;
     props.analyticsLinkPressed(currentPath, analyticsLinkContext, linkType, linkValue);
     if (props.customLatLong) {
-        const newManualUserLocation = {
-            humanReadableLocation: 'custom',
-            latLong: props.customLatLong,
-        }
-        props.dispatchServicesRequest(props.topic, newManualUserLocation);
+        props.dispatchServicesRequest(props.topic, { humanReadableLocation: '', latLong: props.customLatLong });
     }
     else {
         props.dispatchServicesRequest(props.topic, props.manualUserLocation);
