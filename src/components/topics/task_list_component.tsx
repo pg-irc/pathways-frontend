@@ -44,6 +44,7 @@ type State = {
     readonly sectionCount: number;
     readonly data: ReadonlyArray<ListItem>;
     readonly scrollOffset: number;
+    readonly isScrolling: boolean;
 };
 
 type TaskListItemInfo = ListRenderItemInfo<ListItem>;
@@ -60,6 +61,10 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     componentDidUpdate(previousProps: Props): void {
+        if (this.state.isScrolling) {
+            return;
+        }
+
         const computeScrollOffset = (): number => {
             if (previousProps.headerContentIdentifier !== this.props.headerContentIdentifier) {
                 return 0;
@@ -76,12 +81,23 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     render(): JSX.Element {
+
+        const onScrollBegin = (): void => {
+            this.setState({
+                ...this.state,
+                isScrolling: true,
+
+            });
+        };
+
         const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
             this.setState({
                 ...this.state,
+                isScrolling: false,
                 scrollOffset: e.nativeEvent.contentOffset.y,
             });
         };
+
         return (
             <FlatList
                 ref={this.setFlatListRef}
@@ -94,6 +110,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 ListEmptyComponent={this.props.emptyTaskListContent}
                 ListHeaderComponent={this.props.headerContent}
                 initialNumToRender={this.numberOfItemsPerSection}
+                onScrollBeginDrag={onScrollBegin}
                 onScrollEndDrag={onScrollEnd}
             />
         );
@@ -113,6 +130,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             sectionCount: 1,
             data: sections[0],
             scrollOffset,
+            isScrolling: false,
         };
     }
 
