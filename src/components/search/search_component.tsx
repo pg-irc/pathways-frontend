@@ -134,7 +134,8 @@ export const SearchComponent = (props: Props): JSX.Element => {
     );
 };
 
-const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction, enableCustomLatLong: (latlong: LatLong) => EnableCustomLatLongAction): void => {
+const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction, 
+    enableCustomLatLong: (latlong: LatLong) => EnableCustomLatLongAction): void => {
     const effect = (): void => {
         if (location === DISABLE_ANALYTICS_STRING) {
             disableAnalytics(true);
@@ -143,7 +144,7 @@ const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => 
             disableAnalytics(false);
             alert('Analytics enabled');
         }
-        else if(location.toLowerCase().includes(ENABLE_CUSTOM_LATLONG)){
+        else if (location.toLowerCase().includes(ENABLE_CUSTOM_LATLONG)) {
             const re = /[-+]?\d.*\d/;
             const extractedLatLong = location.match(re)[0].split(',');
             const customLatLong: LatLong = {
@@ -151,7 +152,7 @@ const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => 
                 lng: Number(extractedLatLong[1]),
             };
             enableCustomLatLong(customLatLong);
-            alert('Custom LatLong enabled')
+            alert('Custom LatLong enabled');
         }
     };
     useEffect(effect, [location]);

@@ -119,15 +119,15 @@ const onServicesTextPress = (props: Props): void => {
     const linkValue = 'Find related services near me';
     const currentPath = props.location.pathname;
     props.analyticsLinkPressed(currentPath, analyticsLinkContext, linkType, linkValue);
-    if(props.customLatLong){
+    if (props.customLatLong) {
         const newManualUserLocation = {
             label: 'custom',
             latLong: props.customLatLong,
         }
-        props.dispatchServicesRequest(props.topic, newManualUserLocation)
+        props.dispatchServicesRequest(props.topic, newManualUserLocation);
     }
-    else{
-        props.dispatchServicesRequest(props.topic, props.manualUserLocation)
+    else {
+        props.dispatchServicesRequest(props.topic, props.manualUserLocation);
     }
     goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
 };

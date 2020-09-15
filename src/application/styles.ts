@@ -446,7 +446,7 @@ export const applicationStyles = StyleSheet.create({
         paddingLeft: 5,
     },
     headerRight: {
-        alignItems: 'center'
+        alignItems: 'center',
     },
 });
 

@@ -93,7 +93,7 @@ const IOSMultilineTextInput = (props: Props & TextInputProps): JSX.Element => {
             </InputAccessoryView>
         </View>
     );
-}
+};
 
 export interface MultilineKeyboardDoneButtonProps {
     readonly isVisible: boolean;

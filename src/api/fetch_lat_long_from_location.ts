@@ -12,7 +12,7 @@ export const fetchLatLongFromLocation = async (location: string, customLatLong: 
     if (!isOnline) {
         return undefined;
     }
-    if (customLatLong){
+    if (customLatLong) {
         return customLatLong;
     }
     if (isMyLocation(location)) {

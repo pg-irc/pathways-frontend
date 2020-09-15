@@ -79,7 +79,7 @@ export const reducer = (store: UserProfileStore = buildDefaultStore(), action?: 
             return({
                 ...store,
                 customLatLong: action.payload.customLatLong,
-            })
+            });
         case constants.HIDE_PARTIAL_LOCALIZATION_MESSAGE:
             return ({
                 ...store,

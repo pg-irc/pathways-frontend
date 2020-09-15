@@ -89,6 +89,7 @@ export const deserializeUserData = (serializedUserData: string): PersistedData =
     serializedUserData ? setUserDataDefaultValues(JSON.parse(serializedUserData)) : setUserDataDefaultValues({})
 );
 
+// tslint:disable:no-any
 export const setUserDataDefaultValues = (data: any): PersistedData => (
     {
         chosenAnswers: data.chosenAnswers || [],
