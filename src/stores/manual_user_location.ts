@@ -21,7 +21,7 @@ export interface ManualUserLocationStore {
 
 export const buildDefaultStore = (): ManualUserLocationStore => ({
     userLocation: {
-        label: '',
+        humanReadableLocation: '',
         latLong: undefined,
     },
 });

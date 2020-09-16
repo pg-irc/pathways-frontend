@@ -20,6 +20,7 @@ import { BuildServicesRequestAction, buildServicesRequest } from '../../stores/s
 import { UserLocation } from '../../validation/latlong/types';
 import { Topic } from '../../selectors/topics/types';
 import { isTopicBookmarked } from '../../selectors/topics/is_topic_bookmarked';
+import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 
 type OwnProps = {
     readonly history: History;
@@ -36,6 +37,7 @@ const mapStateToProps = (store: Store, ownProps: OwnProps): TopicDetailsProps =>
         history: ownProps.history,
         location: ownProps.location,
         manualUserLocation: selectManualUserLocation(store),
+        customLatLong: selectCustomLatLong(store)
     };
 };
 

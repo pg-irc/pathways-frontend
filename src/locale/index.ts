@@ -67,7 +67,7 @@ export class LocaleInfoManager {
     }
 
     private setLocales(locales: ReadonlyArray<LocaleInfoWithCatalog>): LocaleInfoManager {
-        this.locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog) => ({
+        this.locales = locales.map((localeInfoWithCatalog: LocaleInfoWithCatalog): LocaleInfo => ({
             code: localeInfoWithCatalog.code,
             label: localeInfoWithCatalog.label,
         }));

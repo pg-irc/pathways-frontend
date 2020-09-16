@@ -8,9 +8,9 @@ import { SearchInputComponent } from './search_input_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { SaveServiceAction, BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { RouterProps } from '../../application/routing';
-import { DisableAnalyticsAction } from '../../stores/user_profile';
+import { DisableAnalyticsAction, EnableCustomLatLongAction } from '../../stores/user_profile';
 import { Id } from '../../stores/services';
-import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING } from 'react-native-dotenv';
+import { DISABLE_ANALYTICS_STRING, ENABLE_ANALYTICS_STRING, ENABLE_CUSTOM_LATLONG } from 'react-native-dotenv';
 import * as actions from '../../stores/search';
 import { SearchExecutedAction } from '../../stores/analytics';
 import { fetchSearchResultsFromQuery } from './api/fetch_search_results_from_query';
@@ -35,12 +35,14 @@ export interface SearchComponentProps {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
     readonly searchOffset: number;
+    readonly customLatLong: LatLong;
 }
 
 export interface SearchComponentActions {
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly disableAnalytics: (disable: boolean) => DisableAnalyticsAction;
+    readonly enableCustomLatLong: (latlong: LatLong) => EnableCustomLatLongAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly saveSearchTerm: (searchTerm: string) => actions.SaveSearchTermAction;
@@ -65,7 +67,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
     const scrollAnimationContext = useContext(ScrollContext) as ScrollAnimationContext;
     const [isLoading, setIsLoading]: readonly [boolean, BooleanSetterFunction] = useState(false);
     const onlineStatus = useOnlineStatus();
-    useDisableAnalyticsOnEasterEgg(props.searchLocation, props.disableAnalytics);
+    useEasterEgg(props.searchLocation, props.disableAnalytics, props.enableCustomLatLong);
 
     useEffect((): EffectCallback => {
         scrollAnimationContext.startScrollAnimation();
@@ -82,7 +84,7 @@ export const SearchComponent = (props: Props): JSX.Element => {
         let geocoderLatLong = props.searchLatLong;
         try {
             if (props.searchLocation !== location) {
-                geocoderLatLong = await fetchLatLongFromLocation(location);
+                geocoderLatLong = await fetchLatLongFromLocation(location, props.customLatLong);
                 props.saveSearchLatLong(geocoderLatLong);
             }
             const searchTermWithCity = appendCityToSearchTerm(searchTerm, location);
@@ -132,7 +134,8 @@ export const SearchComponent = (props: Props): JSX.Element => {
     );
 };
 
-const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction): void => {
+const useEasterEgg = (location: string, disableAnalytics: (disable: boolean) => DisableAnalyticsAction, 
+    enableCustomLatLong: (latlong: LatLong) => EnableCustomLatLongAction): void => {
     const effect = (): void => {
         if (location === DISABLE_ANALYTICS_STRING) {
             disableAnalytics(true);
@@ -140,6 +143,20 @@ const useDisableAnalyticsOnEasterEgg = (location: string, disableAnalytics: (dis
         } else if (location === ENABLE_ANALYTICS_STRING) {
             disableAnalytics(false);
             alert('Analytics enabled');
+        }
+        else if (location.toLowerCase().includes(ENABLE_CUSTOM_LATLONG)) {
+            const re = / *([+-]?\d*\.\d+) *\, *([+-]?\d*\.\d+)/;
+            try {
+                const parsedLatLong = location.match(re);
+                const customLatLong: LatLong = {
+                    lat: Number(parsedLatLong[1]),
+                    lng: Number(parsedLatLong[2]),
+                };
+                enableCustomLatLong(customLatLong);
+                alert(`Custom LatLong enabled, {lat: ${parsedLatLong[1]}, lng: ${parsedLatLong[2]}}`);
+            } catch (Error) {
+                alert('Custom LatLong disabled, please enter a valid LatLong combination.');
+            }
         }
     };
     useEffect(effect, [location]);

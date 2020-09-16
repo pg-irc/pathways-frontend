@@ -20,7 +20,7 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { HeaderComponent } from '../main/header_component';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { HideLinkAlertsAction } from '../../stores/user_profile';
-import { UserLocation } from '../../validation/latlong/types';
+import { UserLocation, LatLong } from '../../validation/latlong/types';
 import { BuildServicesRequestAction } from '../../stores/services/actions';
 
 export interface TopicDetailsProps {
@@ -31,6 +31,7 @@ export interface TopicDetailsProps {
     readonly location: Location;
     readonly showLinkAlert: boolean;
     readonly manualUserLocation: UserLocation;
+    readonly customLatLong: LatLong;
 }
 
 export interface TopicDetailActions {
@@ -118,6 +119,10 @@ const onServicesTextPress = (props: Props): void => {
     const linkValue = 'Find related services near me';
     const currentPath = props.location.pathname;
     props.analyticsLinkPressed(currentPath, analyticsLinkContext, linkType, linkValue);
-    props.dispatchServicesRequest(props.topic, props.manualUserLocation)
+    if (props.customLatLong) {
+        props.dispatchServicesRequest(props.topic, { humanReadableLocation: '', latLong: props.customLatLong });
+    } else {
+        props.dispatchServicesRequest(props.topic, props.manualUserLocation);
+    }
     goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
 };

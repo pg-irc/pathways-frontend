@@ -13,7 +13,7 @@ import { MultiLineButtonComponent } from '../mutiline_button/multiline_button_co
 import { ReactI18nRenderProp, ReactI18n } from '../../locale/types';
 import * as R from 'ramda';
 import { SetManualUserLocationAction, ClearManualUserLocationAction } from '../../stores/manual_user_location';
-import { UserLocation } from '../../validation/latlong/types';
+import { UserLocation, LatLong } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
 import { MenuAndBackButtonHeaderComponent } from '../menu_and_back_button_header/menu_and_back_button_header_component';
 import { BuildServicesRequestAction } from '../../stores/services/actions';
@@ -64,6 +64,7 @@ export interface HelpComponentProps {
     readonly topic: Topic;
     readonly history: History;
     readonly manualUserLocation: UserLocation;
+    readonly customLatLong: LatLong;
 }
 
 export interface HelpComponentActions {
@@ -128,7 +129,11 @@ const FindSettlementAgencyButton: React.StatelessComponent<Props> = (props: Prop
 );
 
 const onFindSettlementAgencyPress = (props: Props): void => {
-    props.dispatchServicesRequest(props.topic, props.manualUserLocation)
+    if (props.customLatLong) {
+        props.dispatchServicesRequest(props.topic, { humanReadableLocation: '', latLong: props.customLatLong });
+    } else {
+        props.dispatchServicesRequest(props.topic, props.manualUserLocation);
+    }
     goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
 };
 

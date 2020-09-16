@@ -43,12 +43,14 @@ function* requestPushNotificationToken(_: PushNotificationTokenRequestAction): R
     if (finalStatus.status !== 'granted') {
         return yield put(pushNotificationTokenFailure('Permission not granted for push notifications'));
     }
+    // tslint:disable:no-any
     const token: any = yield call(Notifications.getExpoPushTokenAsync);
     if (token === '') {
         return yield put(pushNotificationTokenFailure('Error retrieving push notification token'));
     }
     const locale: Locale = yield select(selectLocale);
-    const result: APIResponse = yield call(putPushNotificationToken, token["data"], locale, PATHWAYS_API_KEY);
+    // tslint:disable:no-string-literal
+    const result: APIResponse = yield call(putPushNotificationToken, token['data'], locale, PATHWAYS_API_KEY);
     if (!result || result.hasError) {
         // TODO log error to sentry
         return yield put(pushNotificationTokenFailure('Error posting push notification token'));

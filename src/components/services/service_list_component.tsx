@@ -13,7 +13,7 @@ import { textStyles, colors } from '../../application/styles';
 import { isSelectorErrorServicesForTopic } from '../../selectors/services/is_selector_error_services_for_topic';
 import { ErrorScreenSwitcherComponent } from '../error_screens/error_screen_switcher_component';
 import { Errors } from '../../validation/errors/types';
-import { UserLocation } from '../../validation/latlong/types';
+import { UserLocation, LatLong } from '../../validation/latlong/types';
 import { getSentryMessageForError } from '../../validation/errors/sentry_messages';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { EmptyServiceListComponent } from './empty_service_list_component';
@@ -38,6 +38,7 @@ export interface ServiceListProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly showPartialLocalizationMessage: boolean;
     readonly topicServicesOffset: number;
+    readonly customLatLong: LatLong;
 }
 
 export interface ServiceListActions {
@@ -75,6 +76,7 @@ export const ServiceListComponent = (props: Props): JSX.Element => {
             topicServicesOrError={props.topicServicesOrError}
             topicServicesOffset={props.topicServicesOffset}
             manualUserLocation={props.manualUserLocation}
+            customLatLong={props.customLatLong}
             bookmarkedServicesIds={props.bookmarkedServicesIds}
             showPartialLocalizationMessage={props.showPartialLocalizationMessage}
             history={props.history}
@@ -201,6 +203,7 @@ const renderHeader = (props: Props): JSX.Element => (
     <ServiceListHeaderComponent
         topic={props.topic}
         manualUserLocation={props.manualUserLocation}
+        customLatLong={props.customLatLong}
         setManualUserLocation={props.setManualUserLocation}
         history={props.history}
         openHeaderMenu={props.openHeaderMenu}
@@ -237,6 +240,7 @@ const isInitialEmptyTopicServices = (topicServicesOrError: SelectorTopicServices
 interface ServiceListHeaderComponentProps {
     readonly topic: Topic;
     readonly manualUserLocation: UserLocation;
+    readonly customLatLong: LatLong;
     readonly history: History;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
@@ -263,6 +267,7 @@ export const ServiceListHeaderComponent = (props: ServiceListHeaderComponentProp
             <ServiceListLocationSearchComponent
                 topic={props.topic}
                 manualUserLocation={props.manualUserLocation}
+                customLatLong={props.customLatLong}
                 setManualUserLocation={props.setManualUserLocation}
                 dispatchServicesRequest={props.dispatchServicesRequest}
             />

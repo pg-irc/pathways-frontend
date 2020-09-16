@@ -4,7 +4,7 @@ import { Store } from '../../stores';
 import { SearchComponentProps, SearchComponent, SearchComponentActions } from './search_component';
 import * as serviceActions from '../../stores/services/actions';
 import { HumanServiceData } from '../../validation/services/types';
-import { disableAnalytics, DisableAnalyticsAction } from '../../stores/user_profile';
+import { disableAnalytics, DisableAnalyticsAction, EnableCustomLatLongAction, enableCustomLatLong } from '../../stores/user_profile';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import * as searchActions from '../../stores/search';
 import { SearchExecutedAction, searchExecuted } from '../../stores/analytics';
@@ -20,6 +20,7 @@ import { LatLong } from '../../validation/latlong/types';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { SaveSearchOffsetAction, saveSearchOffset } from '../../stores/user_experience/actions';
 import { selectSearchOffset } from '../../selectors/user_experience/select_search_offset';
+import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
@@ -31,12 +32,14 @@ const mapStateToProps = (store: Store): SearchComponentProps => ({
     searchLatLong: selectSearchLatLong(store),
     collapseSearchInput: selectIsInputCollapsed(store),
     searchOffset: selectSearchOffset(store),
+    customLatLong: selectCustomLatLong(store),
 });
 
 type Actions =
     serviceActions.SaveServiceAction |
     serviceActions.OpenServiceAction |
     DisableAnalyticsAction |
+    EnableCustomLatLongAction |
     serviceActions.BookmarkServiceAction |
     serviceActions.UnbookmarkServiceAction |
     searchActions.SaveSearchTermAction |
@@ -59,6 +62,9 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): SearchComponentActions
     ),
     disableAnalytics: (disable: boolean): DisableAnalyticsAction => (
         dispatch(disableAnalytics(disable))
+    ),
+    enableCustomLatLong: (customLatLong: LatLong): EnableCustomLatLongAction => (
+        dispatch(enableCustomLatLong(customLatLong))
     ),
     bookmarkService: (service: HumanServiceData): serviceActions.BookmarkServiceAction => (
         dispatch(serviceActions.bookmarkService(service))

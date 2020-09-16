@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
-import { UserProfileStore, reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage, hideLinkAlerts } from '../user_profile';
-import { aBoolean } from '../../application/helpers/random_test_values';
+import { UserProfileStore, reducer, hideOnboarding, disableAnalytics, hidePartialLocalizationMessage, hideLinkAlerts, enableCustomLatLong } from '../user_profile';
+import { aBoolean, aLatLong } from '../../application/helpers/random_test_values';
 import { PersistedDataBuilder } from './helpers/persisted_data_builder';
 import { DataPersistence } from '../persisted_data';
 import { clearAllUserData } from '../questionnaire/actions';
@@ -12,6 +12,7 @@ describe('user profile reducer', () => {
         test('is cleared by the hide onboarding action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: true,
+                customLatLong: aLatLong(),
                 disableAnalytics: aBoolean(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
@@ -25,6 +26,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: onboardingFlag,
                 disableAnalytics: aBoolean(),
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
@@ -42,6 +44,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: false,
                 disableAnalytics: aBoolean(),
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
@@ -56,6 +59,7 @@ describe('user profile reducer', () => {
         test('is set by the disable analytics action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
+                customLatLong: aLatLong(),
                 disableAnalytics: false,
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
@@ -67,6 +71,7 @@ describe('user profile reducer', () => {
         test('is set by the disable analytics action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
+                customLatLong: aLatLong(),
                 disableAnalytics: true,
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
@@ -81,6 +86,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: disableAnalyticsFlag,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
@@ -98,6 +104,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: true,
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
@@ -107,12 +114,75 @@ describe('user profile reducer', () => {
         });
     });
 
+    describe('the custom latlong', () => {
+
+        test('is set by the enable custom latlong action', () => {
+            const newLatLong = aLatLong();
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                customLatLong: undefined,
+                disableAnalytics: false,
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
+            };
+            const newStore = reducer(oldStore, enableCustomLatLong(newLatLong));
+            expect(newStore.customLatLong).toBe(newLatLong);
+        });
+
+        test('is replaced by the enable custom latlong action', () => {
+            const newLatLong = aLatLong();
+            const oldStoreWithCustomLatLong: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                customLatLong: aLatLong(),
+                disableAnalytics: true,
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
+            };
+            const newStore = reducer(oldStoreWithCustomLatLong, enableCustomLatLong(newLatLong));
+            expect(newStore.customLatLong).toBe(newLatLong);
+
+        });
+
+        test('is loaded from persisted data', () => {
+            const savedCustomLatLong = aLatLong();
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: aBoolean(),
+                customLatLong: savedCustomLatLong,
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
+            };
+            const dataCustomLatLong = new PersistedDataBuilder().
+                withCustomLatLong(savedCustomLatLong).
+                build();
+            const actionCustomizeLatLong = DataPersistence.loadSuccess(dataCustomLatLong);
+
+            const newStore = reducer(oldStore, actionCustomizeLatLong);
+
+            expect(newStore.customLatLong).toBe(savedCustomLatLong);
+        });
+
+        test('is cleared by clear all user data action', () => {
+            const oldStore: UserProfileStore = {
+                showOnboarding: aBoolean(),
+                disableAnalytics: aBoolean(),
+                customLatLong: aLatLong(),
+                showPartialLocalizationMessage: aBoolean(),
+                showLinkAlerts: aBoolean(),
+            };
+            const newStore = reducer(oldStore, clearAllUserData());
+
+            expect(newStore.customLatLong).toBe(undefined);
+        });
+    });
+
     describe('the showPartialLocalizationMessage flag', () => {
 
         test('is cleared by the sewt partial localization message action', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: true,
                 showLinkAlerts: aBoolean(),
             };
@@ -125,6 +195,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: partialLocalizationMessageFlag,
                 showLinkAlerts: aBoolean(),
             };
@@ -140,6 +211,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: false,
                 showLinkAlerts: aBoolean(),
             };
@@ -154,6 +226,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: true,
                 disableAnalytics: aBoolean(),
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: aBoolean(),
             };
@@ -166,6 +239,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: showLinkAlerts,
             };
@@ -183,6 +257,7 @@ describe('user profile reducer', () => {
             const oldStore: UserProfileStore = {
                 showOnboarding: aBoolean(),
                 disableAnalytics: aBoolean(),
+                customLatLong: aLatLong(),
                 showPartialLocalizationMessage: aBoolean(),
                 showLinkAlerts: false,
             };
