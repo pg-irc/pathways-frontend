@@ -8331,10 +8331,10 @@ react-native-map-link@^2.7.17:
     prop-types "^15.7.2"
     react-native-modal "^10.0.0"
 
-react-native-markdown-display@^6.1.5:
-  version "6.1.5"
-  resolved "https://registry.yarnpkg.com/react-native-markdown-display/-/react-native-markdown-display-6.1.5.tgz#cf29bc5778e18c3cd966112eaa2d2ced0c6989f3"
-  integrity sha512-chRQVr3FMgZ8+0trg2B6eKSwEEWpb7P2pO32xH1GjzUOTpbPltya1PS1PtQbt+sIJZr+IE9hMLg5oM+VtRKndA==
+react-native-markdown-display@^6.1.6:
+  version "6.1.6"
+  resolved "https://registry.yarnpkg.com/react-native-markdown-display/-/react-native-markdown-display-6.1.6.tgz#74cbc9e1e2b2169a7ca8d959883e18790ea2b2aa"
+  integrity sha512-B/nHcsJ/lFie/GCmQKU1EJeDNTYRRY/sHMQEC9nzJ5uN8pm5F0KTFfC/UZn/Jb9x8Mi/S0neBw54UL+sygphUg==
   dependencies:
     css-to-react-native "^3.0.0"
     markdown-it "^10.0.0"
