@@ -60,7 +60,7 @@
     ]
   },
   "dependencies": {
-    "@expo/vector-icons": "^10.2.0",
+    "@expo/vector-icons": "^10.2.1",
     "@react-native-community/async-storage": "~1.11.0",
     "@react-native-community/netinfo": "5.9.2",
     "build-url": "^2.0.0",
