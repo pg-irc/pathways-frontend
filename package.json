@@ -68,7 +68,7 @@
     "expo": "^38.0.10",
     "expo-analytics": "^1.0.16",
     "expo-intent-launcher": "~8.2.1",
-    "expo-location": "~8.2.1",
+    "expo-location": "^8.3.0",
     "expo-notifications": "~0.3.3",
     "expo-status-bar": "^1.0.0",
     "history": "^4.10.1",

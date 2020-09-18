@@ -4905,6 +4905,13 @@ expo-linking@~1.0.3:
     qs "^6.5.0"
     url-parse "^1.4.4"
 
+expo-location@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-8.3.0.tgz#79250485f3d15bb50fd37060b3bd5e18c9040ded"
+  integrity sha512-4DuFBP1nqfLyy/vpQ7rmvIGSqf2fvAy+g0gGrU0msRrGXZJzic1ZqINzuyxopZzzbYCK561zcarpRyd/8DpttQ==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-location@~8.2.1:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-8.2.1.tgz#5ea6bfd3d211939117416da151f1384caa15e0db"
