@@ -34,7 +34,7 @@ export const AddressesComponent = (props: Props): JSX.Element => {
 };
 
 const buildAddress = R.curry((props: Props, address: Address, index: number): JSX.Element => {
-    const onPress = (): Promise<void> => {
+    const onPress = (): Promise<void | string> => {
         if (props.latLong) {
             const linkType = 'Button';
             const linkValue = 'Open in maps';
