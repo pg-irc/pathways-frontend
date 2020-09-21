@@ -73,6 +73,7 @@
     "expo-status-bar": "^1.0.0",
     "history": "^4.10.1",
     "intl": "^1.2.5",
+    "jest": "^26.4.2",
     "native-base": "^2.13.12",
     "ramda": "0.26.1",
     "react": "16.11.0",
