@@ -2,7 +2,7 @@
 import { showLocation } from 'react-native-map-link';
 import { LatLong } from '../../validation/latlong/types';
 
-export const openInMapsApplication = (title: string, latLong: LatLong): Promise<void> => (
+export const openInMapsApplication = (title: string, latLong: LatLong): Promise<void | string> => (
     showLocation({
         title: title,
         latitude: latLong.lat,
