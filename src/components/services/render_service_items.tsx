@@ -9,13 +9,15 @@ import { HumanServiceData } from '../../validation/services/types';
 import { History } from 'history';
 import { SaveTopicServicesOffsetAction, SaveBookmarkedServicesOffsetAction, SaveOrganizationServicesOffsetAction } from '../../stores/user_experience/actions';
 
+type SaveOffSetAction = SaveTopicServicesOffsetAction | SaveBookmarkedServicesOffsetAction | SaveOrganizationServicesOffsetAction;
+
 export interface ServiceItemsProps {
     readonly history: History;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly scrollOffset: number;
-    readonly saveScrollOffset: (offset: number) => SaveTopicServicesOffsetAction | SaveBookmarkedServicesOffsetAction | SaveOrganizationServicesOffsetAction;
+    readonly saveScrollOffset: (offset: number) => SaveOffSetAction;
 }
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
