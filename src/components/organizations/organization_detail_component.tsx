@@ -74,8 +74,8 @@ const testOrganization = {
         'organizationName': '',
         'bookmarked': false,
         'lastVerifiedDate': aDate(),
-      }
-]
+      },
+];
 
 interface AboutOrganizationProps {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
@@ -232,6 +232,12 @@ export const ServicesTab = (props: OrganizationServicesProps): JSX.Element => {
         setOrganizationServicesOffset(e.nativeEvent.contentOffset.y);
     };
 
+    const renderItem = renderServiceItems({
+        ...props,
+        scrollOffset: organizationServicesOffset,
+        saveScrollOffset: props.saveOrganizationServicesOffset,
+    });
+
     return (
         <FlatList
         ref={flatListRef}
@@ -239,13 +245,9 @@ export const ServicesTab = (props: OrganizationServicesProps): JSX.Element => {
         style={{ backgroundColor: colors.lightGrey }}
         data={testServices}
         keyExtractor={(service: HumanServiceData): string => service.id}
-        renderItem={renderServices(props, organizationServicesOffset, props.saveOrganizationServicesOffset)}
+        renderItem={renderItem}
         ItemSeparatorComponent={SearchListSeparator}
         initialNumToRender={props.saveOrganizationServicesOffset ? testServices.length : 20}
         />
     );
-};
-
-const renderServices = (props: OrganizationServicesProps, scrollOffset: number, saveScrollOffset: (offset: number)=> SaveOrganizationServicesOffsetAction) => {
-    return renderServiceItems({...props, scrollOffset, saveScrollOffset})
 };
