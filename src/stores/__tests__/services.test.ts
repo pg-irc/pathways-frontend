@@ -180,18 +180,7 @@ describe('services reducer', () => {
             const store = reducer(theStore, action);
             const storeService = store.services[aSearchService.id];
             expect(Object.keys(aSearchService).length).toEqual(12);
-            expect(storeService.latlong).toEqual(aSearchService.latlong);
-            expect(storeService.name).toEqual(aSearchService.name);
-            expect(storeService.description).toEqual(aSearchService.description);
-            expect(storeService.phoneNumbers).toEqual(aSearchService.phoneNumbers);
-            expect(storeService.addresses).toEqual(aSearchService.addresses);
-            expect(storeService.organizationId).toEqual(aSearchService.organizationId);
-            expect(storeService.website).toEqual(aSearchService.website);
-            expect(storeService.email).toEqual(aSearchService.email);
-            expect(storeService.organizationName).toEqual(aSearchService.organizationName);
-            expect(storeService.bookmarked).toEqual(aSearchService.bookmarked);
-            expect(storeService.lastVerifiedDate).toEqual(aSearchService.lastVerifiedDate);
-
+            expect(storeService).toEqual(aSearchService);
         });
 
         it('overwrites an existing service with the same id', () => {
