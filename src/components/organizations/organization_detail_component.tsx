@@ -41,39 +41,39 @@ export interface OrganizationDetailActions {
 type Props = OrganizationDetailProps & OrganizationDetailActions & RouterProps;
 
 const testOrganization = {
-    "id": "9487864",
-    "name": "Government of British Columbia",
-    "description": "The provincial government is presided over by the Executive Council of British Columbia, which is comprised of the Cabinet Ministers appointed by the Premier. Elected Members of the Legislative Assembly (MLAs) represent provincial ridings across BC. The Legislative Assembly of BC convenes at the Parliament Buildings in Victoria.",
-    "website": "http://www.gov.bc.ca",
-    "email": "servicebc@gov.bc.ca"
+    'id': '9487864',
+    'name': 'Government of British Columbia',
+    'description': 'The provincial government is presided over by the Executive Council of British Columbia, which is comprised of the Cabinet Ministers appointed by the Premier. Elected Members of the Legislative Assembly (MLAs) represent provincial ridings across BC. The Legislative Assembly of BC convenes at the Parliament Buildings in Victoria.',
+    'website': 'http://www.gov.bc.ca',
+    'email': 'servicebc@gov.bc.ca'
   };
 
-  const testServices: Array<HumanServiceData> = [
+  const testServices: ReadonlyArray<HumanServiceData> = [
       {
-        "id": "9506365",
-        "name": "Abbott Gardens",
-        "description": "Provides housing for single adults who are homeless at risk, of low income, or persons with disabilities who can live independently. Potential tenants apply through the BC Housing Registry.",
-        "phoneNumbers": [],
-        "addresses": [],
-        "website": aString(),
-        "email": aString(),
-        "organizationId": aString(),
-        "organizationName": '',
-        "bookmarked": false,
-        "lastVerifiedDate": aDate(),
+        'id': '9506365',
+        'name': 'Abbott Gardens',
+        'description': 'Provides housing for single adults who are homeless at risk, of low income, or persons with disabilities who can live independently. Potential tenants apply through the BC Housing Registry.',
+        'phoneNumbers': [],
+        'addresses': [],
+        'website': aString(),
+        'email': aString(),
+        'organizationId': aString(),
+        'organizationName': '',
+        'bookmarked': false,
+        'lastVerifiedDate': aDate(),
       },
       {
-        "id": "49174548",
-        "name": "Aboriginal Coalition to End Homelessness (ACEH)",
-        "description": "An island-wide coalition that creates spaces for the voices of Aboriginal community members and provides a culturally specific approach to Aboriginal (First Nations, Inuit, and Metis) homelessness on the traditional Coast Salish, Nuu-chah-nulth, and Kwakwaka’wakw territories. Focus is on advocating for housing and shelter; governance, policy, and resources; community building; and support services for Aboriginal people experiencing homelessness. Also provides regular activities including Indigenous Women's Circles, cooking classes, land-based learning opportunities, monthly building community events, health and wellness workshops, life-skills workshops and other cultural events for the Indigenous peoples experiencing homelessness. Office hours are 8:30am to 3:30 pm Monday to Friday. Works in collaboration with Greater Victoria Coalition to End Homelessness. Nonprofit society.",
-        "phoneNumbers": [],
-        "addresses": [],
-        "website": aString(),
-        "email": aString(),
-        "organizationId": aString(),
-        "organizationName": '',
-        "bookmarked": false,
-        "lastVerifiedDate": aDate(),
+        'id': '49174548',
+        'name': 'Aboriginal Coalition to End Homelessness (ACEH)',
+        'description': 'An island-wide coalition that creates spaces for the voices of Aboriginal community members and provides a culturally specific approach to Aboriginal (First Nations, Inuit, and Metis) homelessness on the traditional Coast Salish, Nuu-chah-nulth, and Kwakwaka’wakw territories. Focus is on advocating for housing and shelter; governance, policy, and resources; community building; and support services for Aboriginal people experiencing homelessness. Also provides regular activities including Indigenous Women\'s Circles, cooking classes, land-based learning opportunities, monthly building community events, health and wellness workshops, life-skills workshops and other cultural events for the Indigenous peoples experiencing homelessness. Office hours are 8:30am to 3:30 pm Monday to Friday. Works in collaboration with Greater Victoria Coalition to End Homelessness. Nonprofit society.',
+        'phoneNumbers': [],
+        'addresses': [],
+        'website': aString(),
+        'email': aString(),
+        'organizationId': aString(),
+        'organizationName': '',
+        'bookmarked': false,
+        'lastVerifiedDate': aDate(),
       }
 ]
 
@@ -125,7 +125,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
                             </TabHeading>
                         }
                     >
-                        <ServicesTab 
+                        <ServicesTab
                             history={props.history}
                             bookmarkService={props.bookmarkService}
                             unbookmarkService={props.unbookmarkService}
@@ -145,12 +145,12 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
 interface OrganizationDetailHeaderProps {
     readonly location: Location;
     readonly history: History;
-    readonly openHeaderMenu : () => OpenHeaderMenuAction;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
 const OrganizationDetailHeader = (props: OrganizationDetailHeaderProps): JSX.Element => {
     const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent history={props.history} textColor={colors.black} />;
+    const leftButton = <BackButtonComponent textColor={colors.black} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <MenuButtonComponent
             onPress={props.openHeaderMenu}
@@ -171,7 +171,7 @@ const AboutTab = (props: AboutOrganizationProps): JSX.Element => (
         <MarkdownBodyComponent
             body={testOrganization.description}
             shouldBeExpandable={true}
-            //TODO Issue #1080 When organization detail page is online connect the following 2 states to the store/persisted data
+            // TODO Issue #1080 When organization detail page is online connect the following 2 states to the store/persisted data
             showLinkAlerts={true}
             hideLinkAlerts={console.log} />
         <DividerComponent />
@@ -216,7 +216,8 @@ interface OrganizationServicesProps {
 }
 
 export const ServicesTab = (props: OrganizationServicesProps): JSX.Element => {
-    const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] = useState(props.organizationServicesOffset);
+    const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] =
+        useState(props.organizationServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     // const services = getServicesIfValid(props.topicServicesOrError);
 
@@ -227,6 +228,7 @@ export const ServicesTab = (props: OrganizationServicesProps): JSX.Element => {
     // }, [props.organizationServicesOffset, testServices, flatListRef]);
 
     const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
+        // tslint:disable-next-line: no-expression-statement
         setOrganizationServicesOffset(e.nativeEvent.contentOffset.y);
     };
 
@@ -242,8 +244,8 @@ export const ServicesTab = (props: OrganizationServicesProps): JSX.Element => {
         initialNumToRender={props.saveOrganizationServicesOffset ? testServices.length : 20}
         />
     );
-}
+};
 
 const renderServices = (props: OrganizationServicesProps, scrollOffset: number, saveScrollOffset: (offset: number)=> SaveOrganizationServicesOffsetAction) => {
     return renderServiceItems({...props, scrollOffset, saveScrollOffset})
-}
+};
