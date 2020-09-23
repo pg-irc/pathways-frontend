@@ -45,6 +45,7 @@ type State = {
     readonly data: ReadonlyArray<ListItem>;
     readonly scrollOffset: number;
     readonly isScrolling: boolean;
+    readonly isMomentumScrolling: boolean;
 };
 
 type TaskListItemInfo = ListRenderItemInfo<ListItem>;
@@ -60,8 +61,12 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         this.loadMoreData = this.loadMoreData.bind(this);
     }
 
-    componentDidUpdate(previousProps: Props): void {
-        if (this.state.isScrolling) {
+    componentDidUpdate(previousProps: Props, previousState: State): void {
+        if (this.state.isScrolling || this.state.isMomentumScrolling) {
+            return;
+        }
+
+        if (previousState.scrollOffset === this.state.scrollOffset) {
             return;
         }
 
@@ -74,6 +79,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             }
             return this.state.scrollOffset;
         };
+
         if (this.flatListRef) {
             const offset = computeScrollOffset();
             this.flatListRef.scrollToOffset({ animated: false, offset });
@@ -86,7 +92,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             this.setState({
                 ...this.state,
                 isScrolling: true,
-
             });
         };
 
@@ -98,8 +103,24 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             });
         };
 
+        const onMomentumScrollBegin = (): void => {
+            this.setState({
+                ...this.state,
+                isMomentumScrolling: true,
+            });
+        };
+
+        const onMomentumScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
+            this.setState({
+                ...this.state,
+                isMomentumScrolling: false,
+                scrollOffset: e.nativeEvent.contentOffset.y,
+            });
+        };
+
         return (
             <FlatList
+                bounces={false}
                 ref={this.setFlatListRef}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={this.state.data}
@@ -112,6 +133,8 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 initialNumToRender={this.numberOfItemsPerSection}
                 onScrollBeginDrag={onScrollBegin}
                 onScrollEndDrag={onScrollEnd}
+                onMomentumScrollBegin={onMomentumScrollBegin}
+                onMomentumScrollEnd={onMomentumScrollEnd}
             />
         );
     }
@@ -131,6 +154,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             data: sections[0],
             scrollOffset,
             isScrolling: false,
+            isMomentumScrolling: false,
         };
     }
 
