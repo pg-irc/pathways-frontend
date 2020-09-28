@@ -346,8 +346,8 @@ const ServiceDetailHeader = (props: {
     const rightButtons: ReadonlyArray<JSX.Element> = [
         <BookmarkButtonComponent
             isBookmarked={R.contains(serviceId, props.bookmarkedServicesIds)}
-            bookmark={(): BookmarkServiceAction => props.bookmarkService(props.service)}
-            unbookmark={(): UnbookmarkServiceAction => props.unbookmarkService(props.service)}
+            bookmark={(): void => {props.bookmarkService(props.service); }}
+            unbookmark={(): void => {props.unbookmarkService(props.service); }}
             textColor={colors.teal}
         />,
         <MenuButtonComponent

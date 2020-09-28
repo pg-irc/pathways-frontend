@@ -6,7 +6,6 @@ import { TouchableOpacity } from 'react-native';
 import { mapWithIndex } from '../../application/helpers/map_with_index';
 import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses';
 import { History } from 'history';
-import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
 import { buildServiceName } from './build_service_name';
 
@@ -18,8 +17,8 @@ export interface ServiceListItemProps {
 }
 
 export interface ServiceListItemActions {
-    readonly onBookmark: () => BookmarkServiceAction;
-    readonly onUnbookmark: () => UnbookmarkServiceAction;
+    readonly onBookmark: () => void;
+    readonly onUnbookmark: () => void;
 }
 
 type Props = ServiceListItemProps & ServiceListItemActions;
