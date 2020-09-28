@@ -6,14 +6,15 @@ import { t } from '@lingui/macro';
 import { BookmarkTopicAction, UnbookmarkTopicAction } from '../stores/topics';
 import { values } from '../application/styles';
 import { showToast } from '../application/toast';
+import { BookmarkServiceAction, UnbookmarkServiceAction } from '../stores/services/actions';
 
 export interface BookmarkButtonProps {
     readonly isBookmarked: boolean;
     readonly textColor: string;
 }
 
-export type AddBookmarkAction = BookmarkTopicAction | void;
-export type RemoveBookmarkAction = UnbookmarkTopicAction | void;
+export type AddBookmarkAction = BookmarkTopicAction | BookmarkServiceAction;
+export type RemoveBookmarkAction = UnbookmarkTopicAction | UnbookmarkServiceAction;
 
 export interface BookmarkButtonActions {
     readonly bookmark: () => AddBookmarkAction;

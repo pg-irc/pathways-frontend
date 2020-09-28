@@ -22,13 +22,13 @@ export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;
 
 export const renderServiceItems = R.curry((props: ServiceItemsProps, itemInfo: ServiceItemInfo): JSX.Element => {
     const service = itemInfo.item;
-    const onBookmark = (): void => {
-        props.bookmarkService(service);
+    const onBookmark = (): BookmarkServiceAction => {
         props.saveScrollOffset(props.scrollOffset);
+        return props.bookmarkService(service);
     };
-    const onUnbookmark = (): void => {
-        props.unbookmarkService(service);
+    const onUnbookmark = (): UnbookmarkServiceAction => {
         props.saveScrollOffset(props.scrollOffset);
+        return props.unbookmarkService(service);
     };
     const onOpenService = (): void => {
         props.saveScrollOffset(props.scrollOffset);

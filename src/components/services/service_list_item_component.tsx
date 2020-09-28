@@ -8,6 +8,7 @@ import { filterPhysicalAddresses } from '../addresses/filter_physical_addresses'
 import { History } from 'history';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
 import { buildServiceName } from './build_service_name';
+import { BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 
 export interface ServiceListItemProps {
     readonly service: HumanServiceData;
@@ -17,8 +18,8 @@ export interface ServiceListItemProps {
 }
 
 export interface ServiceListItemActions {
-    readonly onBookmark: () => void;
-    readonly onUnbookmark: () => void;
+    readonly onBookmark: () => BookmarkServiceAction;
+    readonly onUnbookmark: () => UnbookmarkServiceAction;
 }
 
 type Props = ServiceListItemProps & ServiceListItemActions;
