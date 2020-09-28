@@ -5,8 +5,8 @@ import { I18n } from '@lingui/react';
 import { t } from '@lingui/macro';
 import { BookmarkTopicAction, UnbookmarkTopicAction } from '../stores/topics';
 import { values } from '../application/styles';
-import { BookmarkServiceAction, UnbookmarkServiceAction } from '../stores/services/actions';
 import { showToast } from '../application/toast';
+import { BookmarkServiceAction, UnbookmarkServiceAction } from '../stores/services/actions';
 
 export interface BookmarkButtonProps {
     readonly isBookmarked: boolean;

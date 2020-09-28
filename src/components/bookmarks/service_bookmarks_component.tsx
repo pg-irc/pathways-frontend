@@ -35,7 +35,7 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
         if (props.bookmarkedServices.length > 0) {
             flatListRef.current.scrollToOffset({ animated: false, offset: props.bookmarkedServicesOffset });
         }
-    }, [props.bookmarkedServicesOffset, props.bookmarkedServices, flatListRef, ]);
+    }, [props.bookmarkedServicesOffset, props.bookmarkedServices, flatListRef ]);
 
     const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
         setBookmarkedServicesOffset(e.nativeEvent.contentOffset.y);
