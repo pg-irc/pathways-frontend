@@ -77,11 +77,6 @@ const testOrganization = {
       },
 ];
 
-interface AboutOrganizationProps {
-    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
-    readonly currentPathForAnalytics: string;
-}
-
 export const OrganizationDetailComponent = (props: Props): JSX.Element => {
     // NativeBase's (Buggy) Tabs component notes:
     //
@@ -111,7 +106,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
                             </TabHeading>
                         }
                     >
-                        <AboutTab
+                        <AboutTabComponent
                             analyticsLinkPressed={props.analyticsLinkPressed}
                             currentPathForAnalytics={props.location.pathname}
                         />
@@ -125,7 +120,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
                             </TabHeading>
                         }
                     >
-                        <ServicesTab
+                        <ServicesTabComponent
                             history={props.history}
                             bookmarkService={props.bookmarkService}
                             unbookmarkService={props.unbookmarkService}
@@ -166,7 +161,12 @@ const OrganizationDetailHeader = (props: OrganizationDetailHeaderProps): JSX.Ele
     );
 };
 
-const AboutTab = (props: AboutOrganizationProps): JSX.Element => (
+interface AboutTabProps {
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
+    readonly currentPathForAnalytics: string;
+}
+
+const AboutTabComponent = (props: AboutTabProps): JSX.Element => (
     <Content>
         <MarkdownBodyComponent
             body={testOrganization.description}
@@ -175,14 +175,19 @@ const AboutTab = (props: AboutOrganizationProps): JSX.Element => (
             showLinkAlerts={true}
             hideLinkAlerts={console.log} />
         <DividerComponent />
-        <AboutContactDetails
+        <OrganizationContactDetailsComponent
             analyticsLinkPressed={props.analyticsLinkPressed}
             currentPathForAnalytics={props.currentPathForAnalytics}
         />
     </Content>
 );
 
-const AboutContactDetails = (props: AboutOrganizationProps): JSX.Element => {
+interface OrganizationContactDetailsProps {
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
+    readonly currentPathForAnalytics: string;
+}
+
+const OrganizationContactDetailsComponent = (props: OrganizationContactDetailsProps): JSX.Element => {
     const linkContextForAnalytics = buildAnalyticsLinkContext('Organization', testOrganization.name);
     const currentPathForAnalytics = props.currentPathForAnalytics;
     return (
@@ -204,7 +209,7 @@ const AboutContactDetails = (props: AboutOrganizationProps): JSX.Element => {
     );
 };
 
-interface OrganizationServicesProps {
+interface ServicesTabProps {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
     readonly history: History;
@@ -215,7 +220,7 @@ interface OrganizationServicesProps {
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesOffsetAction;
 }
 
-export const ServicesTab = (props: OrganizationServicesProps): JSX.Element => {
+export const ServicesTabComponent = (props: ServicesTabProps): JSX.Element => {
     const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] =
         useState(props.organizationServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
