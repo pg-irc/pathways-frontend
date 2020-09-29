@@ -36,6 +36,16 @@ describe('the user experience reducer', () => {
         });
     });
 
+    describe('the organization detail offset state', () => {
+
+        it('is set to an offset number value by the save bookmarked services offset action', () => {
+            const oldStore = buildDefaultStore();
+            const offset = aNumber();
+            const newStore = reducer(oldStore, Actions.saveOrganizationServicesOffset(offset));
+            expect(newStore.organizationServicesOffset).toBe(offset);
+        });
+    });
+
     describe('the bookmarks tab state', () => {
 
         it('is set to topics when save bookmarks topic is set to 0', () => {
