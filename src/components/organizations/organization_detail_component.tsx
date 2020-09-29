@@ -38,6 +38,11 @@ export interface OrganizationDetailActions {
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesOffsetAction;
 }
 
+interface AnalyticsProps {
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
+    readonly currentPathForAnalytics: string;
+}
+
 type Props = OrganizationDetailProps & OrganizationDetailActions & RouterProps;
 
 const testOrganization = {
@@ -161,12 +166,7 @@ const OrganizationDetailHeader = (props: OrganizationDetailHeaderProps): JSX.Ele
     );
 };
 
-interface AboutTabProps {
-    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
-    readonly currentPathForAnalytics: string;
-}
-
-const AboutTabComponent = (props: AboutTabProps): JSX.Element => (
+const AboutTabComponent = (props: AnalyticsProps): JSX.Element => (
     <Content>
         <MarkdownBodyComponent
             body={testOrganization.description}
@@ -182,12 +182,7 @@ const AboutTabComponent = (props: AboutTabProps): JSX.Element => (
     </Content>
 );
 
-interface OrganizationContactDetailsProps {
-    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
-    readonly currentPathForAnalytics: string;
-}
-
-const OrganizationContactDetailsComponent = (props: OrganizationContactDetailsProps): JSX.Element => {
+const OrganizationContactDetailsComponent = (props: AnalyticsProps): JSX.Element => {
     const linkContextForAnalytics = buildAnalyticsLinkContext('Organization', testOrganization.name);
     const currentPathForAnalytics = props.currentPathForAnalytics;
     return (
