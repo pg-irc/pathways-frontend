@@ -4,7 +4,7 @@ import { aString } from '../../../application/helpers/random_test_values';
 
 describe('Organization response validation', () => {
     describe('with valid data', () => {
-        it('returns alert', () => {
+        it('returns valid organizations', () => {
             const validOrganizationResponse: ReadonlyArray<any> = [{
                 id: aString(),
                 name: aString(),
