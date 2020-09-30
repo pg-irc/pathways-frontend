@@ -1,5 +1,5 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
-import React from 'react';
+import React, { createRef, RefObject } from 'react';
 import { FlatList, ListRenderItemInfo, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { History } from 'history';
 import { TaskListItemComponent } from './task_list_item_component';
@@ -51,17 +51,25 @@ type State = {
 type TaskListItemInfo = ListRenderItemInfo<ListItem>;
 
 export class TaskListComponent extends React.PureComponent<Props, State> {
-    private flatListRef: FlatListRef;
+    private readonly flatListRef: RefObject<FlatList>;
     private readonly numberOfItemsPerSection: number = 10;
 
     constructor(props: Props) {
         super(props);
         this.state = this.initialState(props.scrollOffset);
-        this.setFlatListRef = this.setFlatListRef.bind(this);
         this.loadMoreData = this.loadMoreData.bind(this);
         // throttle does not work without binding it here.
         this.onScrollThrottled = throttle(this.onScrollThrottled.bind(this), 1000, { trailing: false });
         this.onScrollEndDrag = this.onScrollEndDrag.bind(this);
+        this.flatListRef = createRef();
+    }
+
+    componentDidMount(): void {
+        if (this.flatListRef) {
+            setTimeout((): void => {
+                this.flatListRef.current.scrollToOffset({ animated: false, offset: this.props.scrollOffset });
+              }, 10);
+        }
     }
 
     componentDidUpdate(previousProps: Props, previousState: State): void {
@@ -85,7 +93,9 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
         if (this.flatListRef) {
             const offset = computeScrollOffset();
-            this.flatListRef.scrollToOffset({ animated: false, offset });
+            setTimeout((): void => {
+                this.flatListRef.current.scrollToOffset({ animated: false, offset });
+              }, 10);
         }
     }
 
@@ -93,7 +103,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         return (
             <FlatList
                 bounces={false}
-                ref={this.setFlatListRef}
+                ref={this.flatListRef}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={this.state.data}
                 renderItem={({ item }: TaskListItemInfo): JSX.Element => this.renderTaskListItem(item, this.props)}
@@ -162,10 +172,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     private tasksForSectionCount(sectionCount: number): ReadonlyArray<ListItem> {
         const sections = R.take(sectionCount, this.state.sections);
         return R.reduce(R.concat, [], sections);
-    }
-
-    private setFlatListRef(component: object): void {
-        this.flatListRef = component as FlatListRef;
     }
 
     private saveScrollOffsetToReduxAndGoToTopicDetail(item: ListItem): void {
