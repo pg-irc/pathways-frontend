@@ -57,18 +57,17 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = this.initialState(props.scrollOffset);
+        this.flatListRef = createRef();
         this.loadMoreData = this.loadMoreData.bind(this);
         // throttle does not work without binding it here.
         this.onScrollThrottled = throttle(this.onScrollThrottled.bind(this), 1000, { trailing: false });
         this.onScrollEndDrag = this.onScrollEndDrag.bind(this);
-        this.flatListRef = createRef();
+        this.scrollToOffsetWithTimeout = this.scrollToOffsetWithTimeout.bind(this);
     }
 
     componentDidMount(): void {
         if (this.flatListRef) {
-            setTimeout((): void => {
-                this.flatListRef.current.scrollToOffset({ animated: false, offset: this.props.scrollOffset });
-              }, 10);
+           this.scrollToOffsetWithTimeout(this.props.scrollOffset);
         }
     }
 
@@ -93,9 +92,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
 
         if (this.flatListRef) {
             const offset = computeScrollOffset();
-            setTimeout((): void => {
-                this.flatListRef.current.scrollToOffset({ animated: false, offset });
-              }, 10);
+            this.scrollToOffsetWithTimeout(offset);
         }
     }
 
@@ -117,6 +114,14 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 onScrollEndDrag={this.onScrollEndDrag}
             />
         );
+    }
+
+    private scrollToOffsetWithTimeout(offset: number): void {
+        // tslint:disable-next-line: max-line-length
+        // https://stackoverflow.com/questions/48061234/how-to-keep-scroll-position-using-flatlist-when-navigating-back-in-react-native?answertab=votes#tab-top
+        setTimeout((): void => {
+            this.flatListRef.current.scrollToOffset({ animated: false, offset });
+        }, 10);
     }
 
     private onScrollThrottled(e: NativeSyntheticEvent<ScrollViewProps>): void {
