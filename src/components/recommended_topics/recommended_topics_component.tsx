@@ -29,6 +29,7 @@ export interface RecommendedTopicsProps {
     readonly recommendedTopics: ReadonlyArray<TopicListItem>;
     readonly alerts: ReadonlyArray<Alert>;
     readonly showLinkAlerts: boolean;
+    readonly scrollOffset: number;
 }
 
 export interface RecommendedTopicsActions {
