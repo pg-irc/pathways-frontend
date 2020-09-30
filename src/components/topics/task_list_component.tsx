@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
-import { FlatList, ListRenderItemInfo } from 'react-native';
+import { FlatList, ListRenderItemInfo, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { History } from 'history';
 import { TaskListItemComponent } from './task_list_item_component';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
@@ -11,6 +11,7 @@ import { ListItem } from './build_topic_list_items_with_headings';
 import { TopicListHeadingComponent } from './topic_list_heading_component';
 import { SaveHomePageScrollOffsetAction, SaveTopicDetailScrollOffsetAction, SaveBookmarkedTopicsScrollOffsetAction,
     SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
+import throttle from 'lodash.throttle';
 
 // tslint:disable-next-line:no-var-requires
 const R = require('ramda');
@@ -58,6 +59,9 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         this.state = this.initialState(props.scrollOffset);
         this.setFlatListRef = this.setFlatListRef.bind(this);
         this.loadMoreData = this.loadMoreData.bind(this);
+        // throttle does not work without binding it here.
+        this.onScrollThrottled = throttle(this.onScrollThrottled.bind(this), 1000, { trailing: false });
+        this.onScrollEndDrag = this.onScrollEndDrag.bind(this);
     }
 
     componentDidUpdate(previousProps: Props, previousState: State): void {
@@ -99,8 +103,26 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 ListEmptyComponent={this.props.emptyTaskListContent}
                 ListHeaderComponent={this.props.headerContent}
                 initialNumToRender={this.numberOfItemsPerSection}
+                onScroll={this.onScrollThrottled}
+                onScrollEndDrag={this.onScrollEndDrag}
             />
         );
+    }
+
+    private onScrollThrottled(e: NativeSyntheticEvent<ScrollViewProps>): void {
+        this.setState({
+            ...this.state,
+            scrollOffset: e.nativeEvent.contentOffset.y,
+            isScrolling: true,
+        });
+        this.props.saveScrollOffset(e.nativeEvent.contentOffset.y);
+    }
+
+    private onScrollEndDrag(): void {
+        this.setState({
+            ...this.state,
+            isScrolling: false,
+        });
     }
 
     private tasksHaveChanged(previousProps: Props): boolean {
