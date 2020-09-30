@@ -178,7 +178,9 @@ describe('services reducer', () => {
                 },
             };
             const store = reducer(theStore, action);
-            expect(store.services[aSearchService.id]).toEqual(aSearchService);
+            const storeService = store.services[aSearchService.id];
+            expect(Object.keys(aSearchService).length).toEqual(12);
+            expect(storeService).toEqual(aSearchService);
         });
 
         it('overwrites an existing service with the same id', () => {

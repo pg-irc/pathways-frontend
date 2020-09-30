@@ -23,7 +23,7 @@ import { buildServiceName } from '../services//build_service_name';
 import { getLocationTitleFromAddresses } from '../services/get_location_title_from_addresses';
 import { EmailComponent } from '../email/email_component';
 import { FeedbackComponent } from '../feedback/feedback_component';
-import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { ModalContainer } from '../feedback/modal_container';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { BackButtonComponent } from '../header_button/back_button_component';
@@ -72,7 +72,7 @@ export interface ServiceDetailProps {
 }
 
 export interface ServiceDetailActions {
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
@@ -291,7 +291,9 @@ const Organization = (props: { readonly history: History, readonly name: string 
     <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
         <View>
             <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Provided by</Trans>: </Text>
-            <Text style={textStyles.paragraphStyle}>{props.name}</Text>
+            <TouchableOpacity onPress={goToRouteWithParameter(Routes.OrganizationDetail, '9489851', props.history)}>
+                <Text style={textStyles.URL}>{props.name.toUpperCase()}</Text>
+            </TouchableOpacity>
         </View>
     </View>
 );
@@ -385,7 +387,7 @@ interface ServiceContactDetailsProps {
     readonly isFeedbackInputEnabled: boolean;
     readonly setFeedbackInputForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
     readonly toggleShouldSendForField: (fieldName: keyof ServiceFeedback) => (field: FeedbackField) => void;
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
 }
 

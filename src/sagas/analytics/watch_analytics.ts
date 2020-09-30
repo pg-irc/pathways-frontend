@@ -79,7 +79,7 @@ async function sendAnalyticsDataAsync(action: WatchedAction): Promise<void> {
             events.sendCollapseDetail(action.payload.contentId);
             break;
         case constants.ANALYTICS_LINK_PRESSED:
-            events.sendLinkPressedEvent(action.payload.currentPath, action.payload.linkContext, action.payload.linkType, action.payload.linkValue);
+            events.sendLinkPressedEvent(action.payload.props);
             break;
         case constants.SEARCH_EXECUTED:
             events.sendSearchExecutedEvent(action.payload.searchTerm, action.payload.searchLocation);

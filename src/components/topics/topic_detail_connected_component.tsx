@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { selectCurrentTopic } from '../../selectors/topics/select_current_topic';
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { Routes, getParametersFromPath } from '../../application/routing';
-import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
@@ -56,8 +56,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): TopicDetailActions => 
     unbookmarkTopic: (topicId: TaskId): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
     onExpand: (contentId: string): ExpandDetailAction => dispatch(expandDetail(contentId)),
     onCollapse: (contentId: string): CollapseDetailAction => dispatch(collapseDeail(contentId)),
-    analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
-        dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
+    analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps): AnalyticsLinkPressedAction =>
+        dispatch(analyticsLinkPressed(analyticsLinkProps)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     hideLinkAlert: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
     dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): BuildServicesRequestAction =>

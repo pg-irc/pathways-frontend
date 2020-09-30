@@ -4,6 +4,7 @@ import { UserExperienceAction } from './actions';
 export interface UserExperienceStore {
     readonly searchOffset: number;
     readonly topicServicesOffset: number;
+    readonly organizationServicesOffset: number;
     readonly bookmarkedServicesOffset: number;
     readonly bookmarksTab: BookmarksTab;
     readonly headerMenu: HeaderMenu;
@@ -24,6 +25,7 @@ export enum HeaderMenu {
 export const buildDefaultStore = (): UserExperienceStore => ({
     searchOffset: 0,
     topicServicesOffset: 0,
+    organizationServicesOffset: 0,
     bookmarkedServicesOffset: 0,
     bookmarksTab: BookmarksTab.Topics,
     headerMenu: HeaderMenu.HeaderMenuIsClosed,
@@ -49,6 +51,11 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
             return ({
                 ...store,
                 bookmarkedServicesOffset: action.payload.offset,
+            });
+        case constants.SAVE_ORGANIZATION_SERVICES_OFFSET:
+            return ({
+                ...store,
+                organizationServicesOffset: action.payload.offset,
             });
         case constants.SAVE_BOOKMARKS_TAB:
             return updateBookmarksTab(store, action.payload.index);

@@ -29,6 +29,7 @@ export interface HumanServiceData {
     readonly addresses: ReadonlyArray<Address>;
     readonly website: string;
     readonly email: string;
+    readonly organizationId: string;
     readonly organizationName: string;
     readonly bookmarked: boolean;
     readonly lastVerifiedDate: string;

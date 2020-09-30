@@ -5,6 +5,7 @@ import { SaveLocaleRequestAction } from '../locale/actions';
 export type SaveSearchOffsetAction = Readonly<ReturnType<typeof saveSearchOffset>>;
 export type SaveTopicServicesOffsetAction = Readonly<ReturnType<typeof saveTopicServicesOffset>>;
 export type SaveBookmarkedServicesOffsetAction = Readonly<ReturnType<typeof saveBookmarkedServicesOffset>>;
+export type SaveOrganizationServicesOffsetAction = Readonly<ReturnType<typeof saveOrganizationServicesOffset>>;
 export type SaveBookmarksTabAction = Readonly<ReturnType<typeof saveBookmarksTab>>;
 
 export type CloseHeaderMenuAction = Readonly<ReturnType<typeof closeHeaderMenu>>;
@@ -19,6 +20,7 @@ SaveSearchOffsetAction |
 SaveTopicServicesOffsetAction |
 SaveBookmarkedServicesOffsetAction |
 SaveBookmarksTabAction |
+SaveOrganizationServicesOffsetAction |
 CloseHeaderMenuAction |
 OpenHeaderMenuAction |
 CloseAboutModalAction |
@@ -40,6 +42,11 @@ export const saveTopicServicesOffset = (offset: number) => (
 // tslint:disable-next-line:typedef
 export const saveBookmarkedServicesOffset = (offset: number) => (
     helpers.makeAction(constants.SAVE_BOOKMARKED_SERVICES_OFFSET, { offset })
+);
+
+// tslint:disable-next-line:typedef
+export const saveOrganizationServicesOffset = (offset: number) => (
+    helpers.makeAction(constants.SAVE_ORGANIZATION_SERVICES_OFFSET, { offset })
 );
 
 // tslint:disable-next-line: typedef

@@ -10,7 +10,7 @@ import { getIdsOfChosenAnswers } from '../../selectors/questionnaire/get_ids_of_
 import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
 import { selectAlerts } from '../../selectors/content/selectAlerts';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
-import { AnalyticsLinkPressedAction, analyticsLinkPressed } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { hideLinkAlerts, HideLinkAlertsAction } from '../../stores/user_profile';
 
@@ -29,8 +29,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): RecommendedTopicsActio
     unbookmarkTopic: (topicId: Id): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
-    analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string): AnalyticsLinkPressedAction =>
-        dispatch(analyticsLinkPressed(currentPath, linkContext, linkType, linkValue)),
+    analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps): AnalyticsLinkPressedAction =>
+        dispatch(analyticsLinkPressed(analyticsLinkProps)),
 });
 
 export const RecommendedTopicsConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(RecommendedTopicsComponent);

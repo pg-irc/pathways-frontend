@@ -25,8 +25,15 @@ export namespace AnalyticsAsync {
 export type AnalyticsLinkPressedAction = Readonly<ReturnType<typeof analyticsLinkPressed>>;
 export type SearchExecutedAction = Readonly<ReturnType<typeof searchExecuted>>;
 
-export const analyticsLinkPressed = (currentPath: string, linkContext: string, linkType: string, linkValue: string) => (
-    helpers.makeAction(constants.ANALYTICS_LINK_PRESSED, { currentPath, linkContext, linkType, linkValue })
+export interface AnalyticsLinkProps {
+    currentPath: string;
+    linkContext: string;
+    linkType: string;
+    linkValue: string;
+}
+
+export const analyticsLinkPressed = (props: AnalyticsLinkProps) => (
+    helpers.makeAction(constants.ANALYTICS_LINK_PRESSED, { props })
 );
 
 export const searchExecuted = (searchTerm: string, searchLocation: string) => (

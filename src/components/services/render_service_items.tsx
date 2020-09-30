@@ -7,7 +7,9 @@ import { ServiceListItemComponent } from './service_list_item_component';
 import { ListRenderItemInfo } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
 import { History } from 'history';
-import { SaveTopicServicesOffsetAction, SaveBookmarkedServicesOffsetAction } from '../../stores/user_experience/actions';
+import { SaveTopicServicesOffsetAction, SaveBookmarkedServicesOffsetAction, SaveOrganizationServicesOffsetAction } from '../../stores/user_experience/actions';
+
+type SaveOffSetAction = SaveTopicServicesOffsetAction | SaveBookmarkedServicesOffsetAction | SaveOrganizationServicesOffsetAction;
 
 export interface ServiceItemsProps {
     readonly history: History;
@@ -15,7 +17,7 @@ export interface ServiceItemsProps {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly scrollOffset: number;
-    readonly saveScrollOffset: (offset: number) => SaveTopicServicesOffsetAction | SaveBookmarkedServicesOffsetAction;
+    readonly saveScrollOffset: (offset: number) => SaveOffSetAction;
 }
 
 export type ServiceItemInfo = ListRenderItemInfo<HumanServiceData>;

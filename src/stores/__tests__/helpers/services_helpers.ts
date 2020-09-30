@@ -112,6 +112,7 @@ export class HumanServiceDataBuilder {
     addresses: ReadonlyArray<Address> = [];
     website: string = aString();
     email: string = aString();
+    organizationId: string = aString();
     organizationName: string = aString();
     bookmarked: boolean = false;
     lastVerifiedDate: string = aDate();
@@ -151,6 +152,11 @@ export class HumanServiceDataBuilder {
         return this;
     }
 
+    withOrganizationId(organizationId: string): HumanServiceDataBuilder {
+        this.organizationId = organizationId;
+        return this;
+    }
+
     withWebsite(website: string): HumanServiceDataBuilder {
         this.website = website;
         return this;
@@ -184,6 +190,7 @@ export class HumanServiceDataBuilder {
             description: this.description,
             phoneNumbers: this.phoneNumbers,
             addresses: this.addresses,
+            organizationId: this.organizationId,
             website: this.website,
             email: this.email,
             organizationName: this.organizationName,

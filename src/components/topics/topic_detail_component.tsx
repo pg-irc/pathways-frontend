@@ -12,7 +12,7 @@ import { TaskDetailContentComponent } from './task_detail_content_component';
 import { TaskListComponent } from './task_list_component';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
-import { AnalyticsLinkPressedAction } from '../../stores/analytics';
+import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { BookmarkButtonComponent } from '../bookmark_button_component';
 import * as R from 'ramda';
@@ -39,7 +39,7 @@ export interface TopicDetailActions {
     readonly unbookmarkTopic: (topicId: TaskId) => UnbookmarkTopicAction;
     readonly onExpand?: (contentId: string) => ExpandDetailAction;
     readonly onCollapse?: (contentId: string) => CollapseDetailAction;
-    readonly analyticsLinkPressed: (currentPath: string, linkContext: string, linkType: string, linkValue: string) => AnalyticsLinkPressedAction;
+    readonly analyticsLinkPressed: (props: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly hideLinkAlert: () => HideLinkAlertsAction;
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
@@ -114,15 +114,17 @@ const ListHeaderComponent = (props: Props): JSX.Element => (
 );
 
 const onServicesTextPress = (props: Props): void => {
-    const analyticsLinkContext = buildAnalyticsLinkContext('Topic', props.topic.title);
-    const linkType = 'Button';
-    const linkValue = 'Find related services near me';
-    const currentPath = props.location.pathname;
-    props.analyticsLinkPressed(currentPath, analyticsLinkContext, linkType, linkValue);
     if (props.customLatLong) {
         props.dispatchServicesRequest(props.topic, { humanReadableLocation: '', latLong: props.customLatLong });
     } else {
         props.dispatchServicesRequest(props.topic, props.manualUserLocation);
     }
+    const analyticsLinkProps: AnalyticsLinkProps = {
+        currentPath: props.location.pathname,
+        linkContext: buildAnalyticsLinkContext('Topic', props.topic.title),
+        linkType: 'Button',
+        linkValue: 'Find related services near me'
+    }
+    props.analyticsLinkPressed(analyticsLinkProps);
     goToRouteWithParameter(Routes.Services, props.topic.id, props.history)();
 };

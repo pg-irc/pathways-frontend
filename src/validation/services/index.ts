@@ -35,6 +35,7 @@ interface ValidatedServiceJSON {
     readonly id: string;
     readonly name: string;
     readonly description: string;
+    readonly organization_id: string;
     readonly organization_url: string;
     readonly organization_email: string;
     readonly organization_name: string;
@@ -63,6 +64,7 @@ const buildHumanService = R.curry((bookmarkedServiceIds: ReadonlyArray<Id>, data
     HumanServiceData => {
         return {
             id: data.service.id,
+            organizationId: data.service.organization_id,
             services_at_location_id: data.id,
             latlong: {
                 lat: data.location.latitude,
