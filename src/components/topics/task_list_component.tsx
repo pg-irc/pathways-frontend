@@ -1,6 +1,6 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
 import React from 'react';
-import { FlatList, ListRenderItemInfo, NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
+import { FlatList, ListRenderItemInfo } from 'react-native';
 import { History } from 'history';
 import { TaskListItemComponent } from './task_list_item_component';
 import { Routes, goToRouteWithParameter } from '../../application/routing';
@@ -45,7 +45,6 @@ type State = {
     readonly data: ReadonlyArray<ListItem>;
     readonly scrollOffset: number;
     readonly isScrolling: boolean;
-    readonly isMomentumScrolling: boolean;
 };
 
 type TaskListItemInfo = ListRenderItemInfo<ListItem>;
@@ -62,7 +61,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     componentDidUpdate(previousProps: Props, previousState: State): void {
-        if (this.state.isScrolling || this.state.isMomentumScrolling) {
+        if (this.state.isScrolling) {
             return;
         }
 
@@ -87,37 +86,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     render(): JSX.Element {
-
-        const onScrollBegin = (): void => {
-            this.setState({
-                ...this.state,
-                isScrolling: true,
-            });
-        };
-
-        const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
-            this.setState({
-                ...this.state,
-                isScrolling: false,
-                scrollOffset: e.nativeEvent.contentOffset.y,
-            });
-        };
-
-        const onMomentumScrollBegin = (): void => {
-            this.setState({
-                ...this.state,
-                isMomentumScrolling: true,
-            });
-        };
-
-        const onMomentumScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
-            this.setState({
-                ...this.state,
-                isMomentumScrolling: false,
-                scrollOffset: e.nativeEvent.contentOffset.y,
-            });
-        };
-
         return (
             <FlatList
                 bounces={false}
@@ -131,10 +99,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 ListEmptyComponent={this.props.emptyTaskListContent}
                 ListHeaderComponent={this.props.headerContent}
                 initialNumToRender={this.numberOfItemsPerSection}
-                onScrollBeginDrag={onScrollBegin}
-                onScrollEndDrag={onScrollEnd}
-                onMomentumScrollBegin={onMomentumScrollBegin}
-                onMomentumScrollEnd={onMomentumScrollEnd}
             />
         );
     }
@@ -154,7 +118,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             data: sections[0],
             scrollOffset,
             isScrolling: false,
-            isMomentumScrolling: false,
         };
     }
 
