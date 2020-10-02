@@ -21,7 +21,8 @@
       "googleServicesFile": "./google-services.json",
       "versionCode": 146020,
       "permissions": [
-        "ACCESS_FINE_LOCATION"
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION"
       ],
       "useNextNotificationsApi": true
     },
