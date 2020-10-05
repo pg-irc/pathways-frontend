@@ -11,6 +11,7 @@
 /lib/**/*map
 /coverage
 locale/_build
+tsconfig.tsbuildinfo
 
 # environment
 .env
