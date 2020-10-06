@@ -54,6 +54,6 @@ const LoadingSpinner = (): JSX.Element => (
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-          <ActivityIndicator size='large' />
+          <ActivityIndicator size='large' color={colors.teal} />
     </View>
 );
