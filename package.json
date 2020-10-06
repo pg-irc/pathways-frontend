@@ -80,7 +80,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.0.tar.gz",
     "react-native-dotenv": "^0.2.0",
     "react-native-gesture-handler": "~1.7.0",
-    "react-native-keyboard-aware-scroll-view": "0.9.1",
+    "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-map-link": "^2.7.17",
     "react-native-markdown-display": "^6.1.6",
     "react-native-markdown-renderer": "^3.2.8",
