@@ -73,6 +73,15 @@ describe('the user experience reducer', () => {
         });
     });
 
+    describe('the explore detail offset state', () => {
+        it('is set to an offset number value by the save explore detail offset action', () => {
+            const oldStore = buildDefaultStore();
+            const offset = aNumber();
+            const newStore = reducer(oldStore, Actions.saveExploreDetailScrollOffset(offset));
+            expect(newStore.exploreDetailScrollOffset).toBe(offset);
+        });
+    });
+
     describe('the bookmarks tab state', () => {
 
         it('is set to topics when save bookmarks topic is set to 0', () => {
