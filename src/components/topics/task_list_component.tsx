@@ -10,7 +10,7 @@ import { isTopicListHeading } from './is_topic_list_heading';
 import { ListItem } from './build_topic_list_items_with_headings';
 import { TopicListHeadingComponent } from './topic_list_heading_component';
 import { SaveHomePageScrollOffsetAction, SaveTopicDetailScrollOffsetAction, SaveBookmarkedTopicsScrollOffsetAction,
-    SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
+    SaveTopicServicesScrollOffsetAction, SaveExploreDetailScrollOffsetAction } from '../../stores/user_experience/actions';
 import throttle from 'lodash.throttle';
 
 // tslint:disable-next-line:no-var-requires
@@ -30,7 +30,8 @@ export type SaveTaskListScrollOffsetActions =
     SaveBookmarkedTopicsScrollOffsetAction |
     SaveHomePageScrollOffsetAction |
     SaveTopicServicesScrollOffsetAction |
-    SaveTopicDetailScrollOffsetAction;
+    SaveTopicDetailScrollOffsetAction |
+    SaveExploreDetailScrollOffsetAction;
 
 export interface TaskListActions {
     readonly bookmarkTopic: (topicId: Id) => BookmarkTopicAction;
