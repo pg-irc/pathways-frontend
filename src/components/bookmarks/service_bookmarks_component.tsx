@@ -1,6 +1,6 @@
 // tslint:disable: no-expression-statement
 import React, { useRef, useState, useEffect } from 'react';
-import { FlatList, NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
+import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
 import { Trans } from '@lingui/react';
 import { colors } from '../../application/styles';
@@ -11,6 +11,7 @@ import { renderServiceItems } from '../services/render_service_items';
 import { SearchListSeparator } from '../search/separators';
 import { History } from 'history';
 import { SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_experience/actions';
+import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 
 export interface ServiceBookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
@@ -37,14 +38,10 @@ export const ServiceBookmarksComponent = (props: Props): JSX.Element => {
         }
     }, [props.scrollOffset, props.bookmarkedServices, flatListRef]);
 
-    const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
-        setBookmarkedServicesOffset(e.nativeEvent.contentOffset.y);
-    };
-
     return (
         <FlatList
             ref={flatListRef}
-            onScrollEndDrag={onScrollEnd}
+            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setBookmarkedServicesOffset)}
             style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
             data={props.bookmarkedServices}
             keyExtractor={(service: HumanServiceData): string => service.id}
