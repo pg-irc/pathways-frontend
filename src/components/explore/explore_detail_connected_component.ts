@@ -9,13 +9,13 @@ import { bookmarkTopic, BookmarkTopicAction, Id, UnbookmarkTopicAction, unbookma
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
 import { OpenHeaderMenuAction, openHeaderMenu, saveExploreDetailScrollOffset, SaveExploreDetailScrollOffsetAction } from '../../stores/user_experience/actions';
 import { SaveTaskListScrollOffsetActions } from '../topics/task_list_component';
-import { selectExploreDetailScrollOffset } from '../../selectors/user_experience/select_explore_detail_scroll_offset';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProps => ({
     section: selectCurrentExploreSection(store, ownProps),
     topics: selectTopicForCurrentExploreSection(store, ownProps),
     bookmarkedTopics: pickBookmarkedTopicIds(store),
-    scrollOffset: selectExploreDetailScrollOffset(store),
+    // To do: Find a way to differentiate between explore sections and determine which offset they have
+    scrollOffset: 0,
 });
 
 type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | SaveExploreDetailScrollOffsetAction;
