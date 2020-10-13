@@ -53,7 +53,7 @@ type TaskListItemInfo = ListRenderItemInfo<ListItem>;
 
 export class TaskListComponent extends React.PureComponent<Props, State> {
     private readonly flatListRef: RefObject<FlatList>;
-    private readonly numberOfItemsPerSection: number = 10;
+    private readonly numberOfItemsPerSection: number = 1000;
 
     constructor(props: Props) {
         super(props);
