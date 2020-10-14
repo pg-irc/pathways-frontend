@@ -42,8 +42,6 @@ export interface TaskListActions {
 type Props = TaskListProps & TaskListActions;
 
 type State = {
-    readonly sections: ReadonlyArray<ReadonlyArray<ListItem>>;
-    readonly sectionCount: number;
     readonly data: ReadonlyArray<ListItem>;
     readonly scrollOffset: number;
     readonly isScrolling: boolean;
@@ -60,7 +58,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         super(props);
         this.state = this.initialState(props.scrollOffset);
         this.flatListRef = createRef();
-        this.loadMoreData = this.loadMoreData.bind(this);
         // throttle does not work without binding it here.
         this.onScrollThrottled = throttle(this.onScrollThrottled.bind(this), this.throttleWaitTime, { trailing: false });
         this.onScrollEndDrag = this.onScrollEndDrag.bind(this);
@@ -107,8 +104,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 data={this.state.data}
                 renderItem={({ item }: TaskListItemInfo): JSX.Element => this.renderTaskListItem(item, this.props)}
                 keyExtractor={(item: ListItem): string => item.id}
-                onEndReached={this.loadMoreData}
-                onEndReachedThreshold={0.5}
                 ListEmptyComponent={this.props.emptyTaskListContent}
                 ListHeaderComponent={this.props.headerContent}
                 initialNumToRender={this.numberOfItemsPerSection}
@@ -150,35 +145,11 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 
     private initialState(scrollOffset: number): State {
-        const sections = this.taskSections();
         return {
-            sections: sections,
-            sectionCount: 1,
-            data: sections[0],
+            data: this.props.tasks,
             scrollOffset,
             isScrolling: false,
         };
-    }
-
-    private taskSections(): ReadonlyArray<ReadonlyArray<ListItem>> {
-        return R.splitEvery(this.numberOfItemsPerSection, this.props.tasks);
-    }
-
-    private loadMoreData(): void {
-        this.setStateForSectionCount(this.state.sectionCount + 1);
-    }
-
-    private setStateForSectionCount(sectionCount: number): void {
-        this.setState({
-            ...this.state,
-            sectionCount,
-            data: this.tasksForSectionCount(sectionCount),
-        });
-    }
-
-    private tasksForSectionCount(sectionCount: number): ReadonlyArray<ListItem> {
-        const sections = R.take(sectionCount, this.state.sections);
-        return R.reduce(R.concat, [], sections);
     }
 
     private saveScrollOffsetToReduxAndGoToTopicDetail(item: ListItem): void {
