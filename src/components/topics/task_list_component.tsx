@@ -54,6 +54,7 @@ type TaskListItemInfo = ListRenderItemInfo<ListItem>;
 export class TaskListComponent extends React.PureComponent<Props, State> {
     private readonly flatListRef: RefObject<FlatList>;
     private readonly numberOfItemsPerSection: number = 1000;
+    private readonly throttleWaitTime: number = 500;
 
     constructor(props: Props) {
         super(props);
@@ -61,7 +62,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         this.flatListRef = createRef();
         this.loadMoreData = this.loadMoreData.bind(this);
         // throttle does not work without binding it here.
-        this.onScrollThrottled = throttle(this.onScrollThrottled.bind(this), 1000, { trailing: false });
+        this.onScrollThrottled = throttle(this.onScrollThrottled.bind(this), this.throttleWaitTime, { trailing: false });
         this.onScrollEndDrag = this.onScrollEndDrag.bind(this);
         this.scrollToOffsetWithTimeout = this.scrollToOffsetWithTimeout.bind(this);
     }
