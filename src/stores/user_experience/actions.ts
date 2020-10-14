@@ -4,7 +4,7 @@ import { SaveLocaleRequestAction } from '../locale/actions';
 
 export type SaveHomePageScrollOffsetAction = Readonly<ReturnType<typeof saveHomePageScrollOffset>>;
 export type SaveTopicDetailScrollOffsetAction = Readonly<ReturnType<typeof saveTopicDetailScrollOffset>>;
-export type SaveOrganizationServicesOffsetAction = Readonly<ReturnType<typeof saveOrganizationServicesOffset>>;
+export type SaveOrganizationServicesScrollOffsetAction = Readonly<ReturnType<typeof saveOrganizationServicesScrollOffset>>;
 export type SaveSearchResultScrollOffsetAction = Readonly<ReturnType<typeof saveSearchResultScrollOffset>>;
 export type SaveTopicServicesScrollOffsetAction = Readonly<ReturnType<typeof saveTopicServicesScrollOffset>>;
 export type SaveBookmarkedTopicsScrollOffsetAction = Readonly<ReturnType<typeof saveBookmarkedTopicsScrollOffset>>;
@@ -26,7 +26,7 @@ SaveTopicServicesScrollOffsetAction |
 SaveBookmarkedTopicsScrollOffsetAction |
 SaveBookmarkedServicesScrollOffsetAction |
 SaveBookmarksTabAction |
-SaveOrganizationServicesOffsetAction |
+SaveOrganizationServicesScrollOffsetAction |
 SaveExploreDetailScrollOffsetAction |
 CloseHeaderMenuAction |
 OpenHeaderMenuAction |
@@ -67,8 +67,8 @@ export const saveBookmarkedServicesScrollOffset = (offset: number) => (
 );
 
 // tslint:disable-next-line:typedef
-export const saveOrganizationServicesOffset = (offset: number) => (
-    helpers.makeAction(constants.SAVE_ORGANIZATION_SERVICES_OFFSET, { offset })
+export const saveOrganizationServicesScrollOffset = (offset: number) => (
+    helpers.makeAction(constants.SAVE_ORGANIZATION_SERVICES_SCROLL_OFFSET, { offset })
 );
 
 // tslint:disable-next-line:typedef

@@ -68,8 +68,8 @@ describe('the user experience reducer', () => {
         it('is set to an offset number value by the save bookmarked services offset action', () => {
             const oldStore = buildDefaultStore();
             const offset = aNumber();
-            const newStore = reducer(oldStore, Actions.saveOrganizationServicesOffset(offset));
-            expect(newStore.organizationServicesOffset).toBe(offset);
+            const newStore = reducer(oldStore, Actions.saveOrganizationServicesScrollOffset(offset));
+            expect(newStore.organizationServicesScrollOffset).toBe(offset);
         });
     });
 

@@ -7,7 +7,7 @@ import { TitleComponent } from '../content_layout/title_component';
 import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
 import { DividerComponent } from '../content_layout/divider_component';
 import { HeaderComponent } from '../main/header_component';
-import { OpenHeaderMenuAction, SaveOrganizationServicesOffsetAction } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, SaveOrganizationServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
@@ -19,10 +19,11 @@ import { EmailComponent } from '../email/email_component';
 import { FlatList } from 'react-native-gesture-handler';
 import { HumanServiceData } from '../../validation/services/types';
 import { SearchListSeparator } from '../search/separators';
-import { NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
+import { NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { renderServiceItems } from '../services/render_service_items';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { aString, aDate } from '../../application/helpers/random_test_values';
+import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 
 export interface OrganizationDetailProps {
     readonly history: History;
@@ -35,7 +36,7 @@ export interface OrganizationDetailActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesOffsetAction;
+    readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
 interface AnalyticsProps {
@@ -212,7 +213,7 @@ interface ServicesTabProps {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly organizationServicesOffset: number;
-    readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesOffsetAction;
+    readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
 export const ServicesTabComponent = (props: ServicesTabProps): JSX.Element => {
@@ -227,11 +228,6 @@ export const ServicesTabComponent = (props: ServicesTabProps): JSX.Element => {
     //     }
     // }, [props.organizationServicesOffset, testServices, flatListRef]);
 
-    const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
-        // tslint:disable-next-line: no-expression-statement
-        setOrganizationServicesOffset(e.nativeEvent.contentOffset.y);
-    };
-
     const renderItem = renderServiceItems({
         ...props,
         scrollOffset: organizationServicesOffset,
@@ -241,7 +237,10 @@ export const ServicesTabComponent = (props: ServicesTabProps): JSX.Element => {
     return (
         <FlatList
         ref={flatListRef}
-        onScrollEndDrag={onScrollEnd}
+        onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => {
+            // tslint:disable-next-line: no-expression-statement
+            setServicesOffsetThrottled(e, setOrganizationServicesOffset);
+        }}
         style={{ backgroundColor: colors.lightGrey }}
         data={testServices}
         keyExtractor={(service: HumanServiceData): string => service.id}

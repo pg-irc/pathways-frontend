@@ -3,7 +3,7 @@ import { UserExperienceAction } from './actions';
 
 export interface UserExperienceStore {
     readonly topicDetailScrollOffset: number;
-    readonly organizationServicesOffset: number;
+    readonly organizationServicesScrollOffset: number;
     readonly homepageScrollOffset: number;
     readonly searchResultScrollOffset: number;
     readonly topicServicesScrollOffset: number;
@@ -27,7 +27,7 @@ export enum HeaderMenu {
 }
 
 export const buildDefaultStore = (): UserExperienceStore => ({
-    organizationServicesOffset: 0,
+    organizationServicesScrollOffset: 0,
     homepageScrollOffset: 0,
     searchResultScrollOffset: 0,
     topicServicesScrollOffset: 0,
@@ -74,10 +74,10 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
                 ...store,
                 bookmarkedServicesScrollOffset: action.payload.offset,
             };
-        case constants.SAVE_ORGANIZATION_SERVICES_OFFSET:
+        case constants.SAVE_ORGANIZATION_SERVICES_SCROLL_OFFSET:
             return ({
                 ...store,
-                organizationServicesOffset: action.payload.offset,
+                organizationServicesScrollOffset: action.payload.offset,
             });
         case constants.SAVE_EXPLORE_DETAIL_SCROLL_OFFSET:
             return ({

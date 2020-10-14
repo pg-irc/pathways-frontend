@@ -18,7 +18,7 @@ import { SetManualUserLocationAction, setManualUserLocation } from '../../stores
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
 import { SaveTopicServicesScrollOffsetAction, saveTopicServicesScrollOffset } from '../../stores/user_experience/actions';
-import { selectTopicServicesScrollOffset } from '../../selectors/user_experience/select_topic_services_scroll_fffset';
+import { selectTopicServicesScrollOffset } from '../../selectors/user_experience/select_topic_services_scroll_offset';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
     const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);
