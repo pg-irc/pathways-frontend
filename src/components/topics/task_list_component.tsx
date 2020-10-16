@@ -92,7 +92,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 ref={this.flatListRef}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={this.state.data}
-                renderItem={({ item }: TaskListItemInfo): JSX.Element => this.renderTaskListItem(item, this.props)}
+                renderItem={({ item }: TaskListItemInfo): JSX.Element => renderTaskListItem(item, this.props, this.state.scrollOffset)}
                 keyExtractor={(item: ListItem): string => item.id}
                 ListEmptyComponent={this.props.emptyTaskListContent}
                 ListHeaderComponent={this.props.headerContent}
@@ -126,26 +126,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             isScrolling: false,
         };
     }
-
-    private saveScrollOffsetToReduxAndGoToTopicDetail(item: ListItem): void {
-        this.props.saveScrollOffset(this.state.scrollOffset);
-        goToRouteWithParameter(Routes.TopicDetail, item.id, this.props.history)();
-    }
-
-    private renderTaskListItem(item: ListItem, props: Props): JSX.Element {
-        if (isTopicListHeading(item)) {
-            return <TopicListHeadingComponent heading={item.heading} icon={item.icon} />;
-        }
-        return (
-            <TaskListItemComponent
-                topic={item}
-                taskIsBookmarked={R.contains(item.id, props.bookmarkedTopicsIdList)}
-                bookmarkTopic={props.bookmarkTopic}
-                unbookmarkTopic={props.unbookmarkTopic}
-                goToTaskDetail={(): void => this.saveScrollOffsetToReduxAndGoToTopicDetail(item)}
-            />
-        );
-    }
 }
 
 const scrollToOffsetWithTimeout = (flatListRef: RefObject<FlatList>, offset: number): void => {
@@ -165,4 +145,24 @@ const tasksHaveChanged = (previousProps: Props, props: Props): boolean => {
     const previousIds = R.pluck('id', previousProps.tasks);
 
     return R.not(R.equals(previousIds, currentIds));
+};
+
+const renderTaskListItem = (item: ListItem, props: Props, scrollOffset: number): JSX.Element => {
+    if (isTopicListHeading(item)) {
+        return <TopicListHeadingComponent heading={item.heading} icon={item.icon} />;
+    }
+    return (
+        <TaskListItemComponent
+            topic={item}
+            taskIsBookmarked={R.contains(item.id, props.bookmarkedTopicsIdList)}
+            bookmarkTopic={props.bookmarkTopic}
+            unbookmarkTopic={props.unbookmarkTopic}
+            goToTaskDetail={(): void => saveScrollOffsetToReduxAndGoToTopicDetail(item, props, scrollOffset)}
+        />
+    );
+};
+
+const saveScrollOffsetToReduxAndGoToTopicDetail = (item: ListItem, props: Props, scrollOffset: number): void => {
+    props.saveScrollOffset(scrollOffset);
+    goToRouteWithParameter(Routes.TopicDetail, item.id, props.history)();
 };
