@@ -14,7 +14,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProp
     section: selectCurrentExploreSection(store, ownProps),
     topics: selectTopicForCurrentExploreSection(store, ownProps),
     bookmarkedTopics: pickBookmarkedTopicIds(store),
-    // To do: Find a way to differentiate between explore sections and determine which offset they have
+    // TODO see https://github.com/pg-irc/pathways-frontend/issues/1296
     scrollOffset: 0,
 });
 

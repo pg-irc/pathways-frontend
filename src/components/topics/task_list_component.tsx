@@ -61,12 +61,11 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         // throttle does not work without binding it here.
         this.onScrollThrottled = throttle(this.onScrollThrottled.bind(this), this.throttleWaitTime, { trailing: false });
         this.onScrollEndDrag = this.onScrollEndDrag.bind(this);
-        this.scrollToOffsetWithTimeout = this.scrollToOffsetWithTimeout.bind(this);
     }
 
     componentDidMount(): void {
         if (this.flatListRef) {
-           this.scrollToOffsetWithTimeout(this.props.scrollOffset);
+           scrollToOffsetWithTimeout(this.flatListRef, this.props.scrollOffset);
         }
     }
 
@@ -79,19 +78,10 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             return;
         }
 
-        const computeScrollOffset = (): number => {
-            if (previousProps.headerContentIdentifier !== this.props.headerContentIdentifier) {
-                return 0;
-            }
-            if (this.tasksHaveChanged(previousProps)) {
-                return 0;
-            }
-            return this.state.scrollOffset;
-        };
-
         if (this.flatListRef) {
-            const offset = computeScrollOffset();
-            this.scrollToOffsetWithTimeout(offset);
+            const contentHasChanged = hasContentChanged(previousProps, this.props);
+            const offset = contentHasChanged ? 0 : this.state.scrollOffset;
+            scrollToOffsetWithTimeout(this.flatListRef, offset);
         }
     }
 
@@ -113,14 +103,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         );
     }
 
-    private scrollToOffsetWithTimeout(offset: number): void {
-        // tslint:disable-next-line: max-line-length
-        // https://stackoverflow.com/questions/48061234/how-to-keep-scroll-position-using-flatlist-when-navigating-back-in-react-native?answertab=votes#tab-top
-        setTimeout((): void => {
-            this.flatListRef.current.scrollToOffset({ animated: false, offset });
-        }, 10);
-    }
-
     private onScrollThrottled(e: NativeSyntheticEvent<ScrollViewProps>): void {
         this.setState({
             ...this.state,
@@ -135,13 +117,6 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
             ...this.state,
             isScrolling: false,
         });
-    }
-
-    private tasksHaveChanged(previousProps: Props): boolean {
-        const currentIds = R.pluck('id', this.props.tasks);
-        const previousIds = R.pluck('id', previousProps.tasks);
-
-        return R.not(R.equals(previousIds, currentIds));
     }
 
     private initialState(scrollOffset: number): State {
@@ -172,3 +147,22 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         );
     }
 }
+
+const scrollToOffsetWithTimeout = (flatListRef: RefObject<FlatList>, offset: number): void => {
+    // tslint:disable-next-line: max-line-length
+    // https://stackoverflow.com/questions/48061234/how-to-keep-scroll-position-using-flatlist-when-navigating-back-in-react-native?answertab=votes#tab-top
+    setTimeout((): void => {
+        flatListRef.current.scrollToOffset({ animated: false, offset });
+    }, 10);
+};
+
+const hasContentChanged = (previousProps: Props, props: Props): boolean => {
+    return previousProps.headerContentIdentifier !== props.headerContentIdentifier || tasksHaveChanged(previousProps, props);
+};
+
+const tasksHaveChanged = (previousProps: Props, props: Props): boolean => {
+    const currentIds = R.pluck('id', props.tasks);
+    const previousIds = R.pluck('id', previousProps.tasks);
+
+    return R.not(R.equals(previousIds, currentIds));
+};
