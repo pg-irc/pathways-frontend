@@ -1,5 +1,5 @@
 // tslint:disable:no-class no-this no-expression-statement readonly-keyword
-import React, { createRef, RefObject } from 'react';
+import React from 'react';
 import { FlatList, ListRenderItemInfo, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { History } from 'history';
 import { TaskListItemComponent } from './task_list_item_component';
@@ -50,14 +50,14 @@ type State = {
 type TaskListItemInfo = ListRenderItemInfo<ListItem>;
 
 export class TaskListComponent extends React.PureComponent<Props, State> {
-    private readonly flatListRef: RefObject<FlatList>;
+    private flatListRef: FlatListRef;
     private readonly numberOfItemsPerSection: number = 1000;
     private readonly throttleWaitTime: number = 300;
 
     constructor(props: Props) {
         super(props);
         this.state = this.initialState(props.scrollOffset);
-        this.flatListRef = createRef();
+        this.setFlatListRef = this.setFlatListRef.bind(this);
         // throttle does not work without binding it here.
         this.onScrollThrottled = throttle(this.onScrollThrottled.bind(this), this.throttleWaitTime, { trailing: false });
         this.onScrollEndDrag = this.onScrollEndDrag.bind(this);
@@ -89,7 +89,7 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
         return (
             <FlatList
                 bounces={false}
-                ref={this.flatListRef}
+                ref={this.setFlatListRef}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={this.state.data}
                 renderItem={({ item }: TaskListItemInfo): JSX.Element => renderTaskListItem(item, this.props, this.state.scrollOffset)}
@@ -101,6 +101,10 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
                 onScrollEndDrag={this.onScrollEndDrag}
             />
         );
+    }
+
+    private setFlatListRef(component: object): void {
+        this.flatListRef = component as FlatListRef;
     }
 
     private onScrollThrottled(e: NativeSyntheticEvent<ScrollViewProps>): void {
@@ -128,11 +132,11 @@ export class TaskListComponent extends React.PureComponent<Props, State> {
     }
 }
 
-const scrollToOffsetWithTimeout = (flatListRef: RefObject<FlatList>, offset: number): void => {
+const scrollToOffsetWithTimeout = (flatListRef: FlatListRef, offset: number): void => {
     // tslint:disable-next-line: max-line-length
     // https://stackoverflow.com/questions/48061234/how-to-keep-scroll-position-using-flatlist-when-navigating-back-in-react-native?answertab=votes#tab-top
     setTimeout((): void => {
-        flatListRef.current.scrollToOffset({ animated: false, offset });
+        flatListRef.scrollToOffset({ animated: false, offset });
     }, 10);
 };
 
