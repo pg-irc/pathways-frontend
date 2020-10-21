@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Trans } from '@lingui/react';
 import { Tab, Tabs, TabHeading, Content, Text, View } from 'native-base';
 import { textStyles, colors } from '../../application/styles';
@@ -26,6 +26,7 @@ import { aString, aDate } from '../../application/helpers/random_test_values';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 export interface OrganizationDetailProps {
     readonly history: History;
@@ -49,14 +50,6 @@ interface AboutTabProps {
 }
 
 type Props = OrganizationDetailProps & OrganizationDetailActions & RouterProps;
-
-const testOrganization = {
-    'id': '9487864',
-    'name': 'Government of British Columbia',
-    'description': 'The provincial government is presided over by the Executive Council of British Columbia, which is comprised of the Cabinet Ministers appointed by the Premier. Elected Members of the Legislative Assembly (MLAs) represent provincial ridings across BC. The Legislative Assembly of BC convenes at the Parliament Buildings in Victoria.',
-    'website': 'http://www.gov.bc.ca',
-    'email': 'servicebc@gov.bc.ca'
-  };
 
   const testServices: ReadonlyArray<HumanServiceData> = [
       {
@@ -96,11 +89,16 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
     //   translation purposes,
     //   see: https://stackoverflow.com/questions/43113859/customise-tabs-of-native-base,
     //   this means we cannot sensibly style active tab text
-    const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData)=> void] = useState(testOrganization);
+    const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData)=> void] = useState(undefined);
     const organizationId = props.match.params.organizationId;
-    if(organization.id != organizationId){
+
+    useEffect(() => {
         getOrganization(organizationId).then((res)=> {
             setOrganization(res.results)});
+    }, []);
+
+    if (!organization){
+        return <EmptyComponent/>
     }
 
     return (
