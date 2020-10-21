@@ -24,6 +24,8 @@ import { renderServiceItems } from '../services/render_service_items';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { aString, aDate } from '../../application/helpers/random_test_values';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
+import { getOrganization } from '../../api';
+import { HumanOrganizationData } from '../../validation/organizations/types';
 
 export interface OrganizationDetailProps {
     readonly history: History;
@@ -39,9 +41,11 @@ export interface OrganizationDetailActions {
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
-interface AnalyticsProps {
+
+interface AboutTabProps {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
+    readonly organization: HumanOrganizationData;
 }
 
 type Props = OrganizationDetailProps & OrganizationDetailActions & RouterProps;
@@ -92,6 +96,13 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
     //   translation purposes,
     //   see: https://stackoverflow.com/questions/43113859/customise-tabs-of-native-base,
     //   this means we cannot sensibly style active tab text
+    const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData)=> void] = useState(testOrganization);
+    const organizationId = props.match.params.organizationId;
+    if(organization.id != organizationId){
+        getOrganization(organizationId).then((res)=> {
+            setOrganization(res.results)});
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <OrganizationDetailHeader
@@ -101,7 +112,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
             />
             <Content padder>
                 <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
-                <TitleComponent title={testOrganization.name.toUpperCase()} />
+                <TitleComponent title={organization.name.toUpperCase()} />
                 <Tabs tabBarUnderlineStyle={{ backgroundColor: colors.teal }}>
                     <Tab
                         heading={
@@ -113,6 +124,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
                         }
                     >
                         <AboutTabComponent
+                            organization={organization}
                             analyticsLinkPressed={props.analyticsLinkPressed}
                             currentPathForAnalytics={props.location.pathname}
                         />
@@ -167,36 +179,37 @@ const OrganizationDetailHeader = (props: OrganizationDetailHeaderProps): JSX.Ele
     );
 };
 
-const AboutTabComponent = (props: AnalyticsProps): JSX.Element => (
+const AboutTabComponent = (props: AboutTabProps ): JSX.Element => (
     <Content>
         <MarkdownBodyComponent
-            body={testOrganization.description}
+            body={props.organization.description}
             shouldBeExpandable={true}
             // TODO Issue #1080 When organization detail page is online connect the following 2 states to the store/persisted data
             showLinkAlerts={true}
             hideLinkAlerts={console.log} />
         <DividerComponent />
         <OrganizationContactDetailsComponent
+            organization={props.organization}
             analyticsLinkPressed={props.analyticsLinkPressed}
             currentPathForAnalytics={props.currentPathForAnalytics}
         />
     </Content>
 );
 
-const OrganizationContactDetailsComponent = (props: AnalyticsProps): JSX.Element => {
-    const linkContextForAnalytics = buildAnalyticsLinkContext('Organization', testOrganization.name);
+const OrganizationContactDetailsComponent = (props: AboutTabProps): JSX.Element => {
+    const linkContextForAnalytics = buildAnalyticsLinkContext('Organization', props.organization.name);
     const currentPathForAnalytics = props.currentPathForAnalytics;
     return (
         <View>
             <WebsiteComponent
-                website={testOrganization.website}
+                website={props.organization.website}
                 linkContextForAnalytics={linkContextForAnalytics}
                 currentPathForAnalytics={currentPathForAnalytics}
                 analyticsLinkPressed={props.analyticsLinkPressed}
             />
             <DividerComponent />
             <EmailComponent
-                email={testOrganization.email}
+                email={props.organization.email}
                 linkContextForAnalytics={linkContextForAnalytics}
                 currentPathForAnalytics={currentPathForAnalytics}
                 analyticsLinkPressed={props.analyticsLinkPressed}

@@ -206,7 +206,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                             label={<Trans>Organization</Trans>}
                             body={props.service.organizationName}
                             isFeedbackInputEnabled={isFeedbackInputEnabled}
-                            nonFeedbackComponent={<Organization name={props.service.organizationName} history={props.history} />}
+                            nonFeedbackComponent={<Organization name={props.service.organizationName} organizationId={props.service.organizationId} history={props.history} />}
                         />
                         <DividerComponent />
                         <FeedbackComponent
@@ -287,11 +287,11 @@ const Name = (props: NameProps): JSX.Element => (
     </>
 );
 
-const Organization = (props: { readonly history: History, readonly name: string }): JSX.Element => (
+const Organization = (props: { readonly history: History, readonly name: string, organizationId: string }): JSX.Element => (
     <View style={{ paddingHorizontal: values.backgroundTextPadding }}>
         <View>
             <Text style={textStyles.paragraphBoldBlackLeft}><Trans>Provided by</Trans>: </Text>
-            <TouchableOpacity onPress={goToRouteWithParameter(Routes.OrganizationDetail, '9489851', props.history)}>
+            <TouchableOpacity onPress={goToRouteWithParameter(Routes.OrganizationDetail, props.organizationId, props.history)}>
                 <Text style={textStyles.URL}>{props.name.toUpperCase()}</Text>
             </TouchableOpacity>
         </View>
