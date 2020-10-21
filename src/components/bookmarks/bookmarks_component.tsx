@@ -5,33 +5,39 @@ import { HumanServiceData } from '../../validation/services/types';
 import { View, Text } from 'native-base';
 import { Trans, I18n } from '@lingui/react';
 import { colors, textStyles, values } from '../../application/styles';
-import { OpenHeaderMenuAction } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, SaveBookmarkedTopicsScrollOffsetAction } from '../../stores/user_experience/actions';
 import { HelpAndMenuButtonHeaderComponent } from '../help_and_menu_button_header/help_and_menu_button_header_component';
-import { ListActions } from './bookmarks_connected_component';
-import { OpenServiceAction } from '../../stores/services/actions';
+import { OpenServiceAction, BookmarkServiceAction, UnbookmarkServiceAction } from '../../stores/services/actions';
 import { History } from 'history';
 import { BookmarksTab } from '../../stores/user_experience';
-import { SaveBookmarksTabAction, SaveBookmarkedServicesOffsetAction } from '../../stores/user_experience/actions';
+import { SaveBookmarksTabAction, SaveBookmarkedServicesScrollOffsetAction } from '../../stores/user_experience/actions';
+import { BookmarkTopicAction, Id, UnbookmarkTopicAction } from '../../stores/topics';
 
 export interface BookmarksProps {
     readonly bookmarkedServices: ReadonlyArray<HumanServiceData>;
     readonly bookmarkedTopics: ReadonlyArray<TopicListItem>;
     readonly bookmarksTab: BookmarksTab;
-    readonly bookmarkedServicesOffset: number;
+    readonly topicsScrollOffset: number;
+    readonly servicesScrollOffset: number;
 }
 
 export interface BookmarkActions {
+    readonly bookmarkTopic: (topicId: Id) => BookmarkTopicAction;
+    readonly unbookmarkTopic: (topicId: Id) => UnbookmarkTopicAction;
+    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
+    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly setBookmarksTab: (index: number) => SaveBookmarksTabAction;
-    readonly saveBookmarkedServicesOffset: (offset: number) => SaveBookmarkedServicesOffsetAction;
+    readonly saveTopicsScrollOffset: (offset: number) => SaveBookmarkedTopicsScrollOffsetAction;
+    readonly saveServicesScrollOffset: (offset: number) => SaveBookmarkedServicesScrollOffsetAction;
 }
 
 interface OwnProps {
     readonly history: History;
 }
 
-type Props = BookmarksProps & ListActions & OwnProps;
+type Props = BookmarksProps & BookmarkActions & OwnProps;
 
 export const BookmarksComponent = (props: Props): JSX.Element => (
     <View style={{ flex: 1 }}>
@@ -47,7 +53,6 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
                     i18n={i18n}
                     bookmarkedTopics={props.bookmarkedTopics}
                     bookmarkedServices={props.bookmarkedServices}
-                    bookmarkedServicesOffset={props.bookmarkedServicesOffset}
                     history={props.history}
                     bookmarkTopic={props.bookmarkTopic}
                     unbookmarkTopic={props.unbookmarkTopic}
@@ -56,7 +61,10 @@ export const BookmarksComponent = (props: Props): JSX.Element => (
                     openServiceDetail={props.openServiceDetail}
                     openHeaderMenu={props.openHeaderMenu}
                     setBookmarksTab={props.setBookmarksTab}
-                    saveBookmarkedServicesOffset={props.saveBookmarkedServicesOffset}
+                    topicsScrollOffset={props.topicsScrollOffset}
+                    saveTopicsScrollOffset={props.saveTopicsScrollOffset}
+                    servicesScrollOffset={props.servicesScrollOffset}
+                    saveServicesScrollOffset={props.saveServicesScrollOffset}
                 />
             )}
         </I18n>

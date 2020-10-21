@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { TaskListActions } from '../topics/task_list_component';
+import { TaskListActions, SaveTaskListScrollOffsetActions } from '../topics/task_list_component';
 import { Store } from '../../stores';
 import { RecommendedTopicsComponent, RecommendedTopicsProps, RecommendedTopicsActions } from './recommended_topics_component';
 import { selectRecommendedTopics } from '../../selectors/topics/select_recommended_topics';
@@ -11,8 +11,9 @@ import { pickAnswers } from '../../selectors/questionnaire/pick_answers';
 import { selectAlerts } from '../../selectors/content/selectAlerts';
 import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_link_alerts';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, openHeaderMenu, saveHomePageScrollOffset, SaveHomePageScrollOffsetAction } from '../../stores/user_experience/actions';
 import { hideLinkAlerts, HideLinkAlertsAction } from '../../stores/user_profile';
+import { selectHomePageScrollOffset } from '../../selectors/user_experience/select_home_page_scroll_offset';
 
 const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
     hasChosenAnswers: getIdsOfChosenAnswers(pickAnswers(store)).length > 0,
@@ -20,9 +21,11 @@ const mapStateToProps = (store: Store): RecommendedTopicsProps => ({
     recommendedTopics: selectRecommendedTopics(store),
     alerts: selectAlerts(store),
     showLinkAlerts: selectShowLinkAlerts(store),
+    scrollOffset: selectHomePageScrollOffset(store),
 });
 
-type Actions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | AnalyticsLinkPressedAction | HideLinkAlertsAction;
+type Actions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | AnalyticsLinkPressedAction | HideLinkAlertsAction
+    | SaveHomePageScrollOffsetAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): RecommendedTopicsActions & TaskListActions => ({
     bookmarkTopic: (topicId: Id): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
@@ -31,6 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): RecommendedTopicsActio
     hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
     analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps): AnalyticsLinkPressedAction =>
         dispatch(analyticsLinkPressed(analyticsLinkProps)),
+    saveScrollOffset: (offset: number): SaveTaskListScrollOffsetActions => dispatch(saveHomePageScrollOffset(offset)),
 });
 
 export const RecommendedTopicsConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(RecommendedTopicsComponent);

@@ -2,10 +2,14 @@ import * as constants from '../../application/constants';
 import { UserExperienceAction } from './actions';
 
 export interface UserExperienceStore {
-    readonly searchOffset: number;
-    readonly topicServicesOffset: number;
-    readonly organizationServicesOffset: number;
-    readonly bookmarkedServicesOffset: number;
+    readonly topicDetailScrollOffset: number;
+    readonly organizationServicesScrollOffset: number;
+    readonly homepageScrollOffset: number;
+    readonly searchResultScrollOffset: number;
+    readonly topicServicesScrollOffset: number;
+    readonly bookmarkedTopicsScrollOffset: number;
+    readonly bookmarkedServicesScrollOffset: number;
+    readonly exploreDetailScrollOffset: number;
     readonly bookmarksTab: BookmarksTab;
     readonly headerMenu: HeaderMenu;
 }
@@ -23,10 +27,14 @@ export enum HeaderMenu {
 }
 
 export const buildDefaultStore = (): UserExperienceStore => ({
-    searchOffset: 0,
-    topicServicesOffset: 0,
-    organizationServicesOffset: 0,
-    bookmarkedServicesOffset: 0,
+    organizationServicesScrollOffset: 0,
+    homepageScrollOffset: 0,
+    searchResultScrollOffset: 0,
+    topicServicesScrollOffset: 0,
+    topicDetailScrollOffset: 0,
+    bookmarkedTopicsScrollOffset: 0,
+    bookmarkedServicesScrollOffset: 0,
+    exploreDetailScrollOffset: 0,
     bookmarksTab: BookmarksTab.Topics,
     headerMenu: HeaderMenu.HeaderMenuIsClosed,
 });
@@ -37,25 +45,44 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
     }
 
     switch (action.type) {
-        case constants.SAVE_SEARCH_OFFSET:
+        case constants.SAVE_HOMEPAGE_SCROLL_OFFSET:
+            return { ...store,
+                homepageScrollOffset: action.payload.offset,
+            };
+        case constants.SAVE_SEARCH_RESULT_SCROLL_OFFSET:
+            return {
+                ...store,
+                searchResultScrollOffset: action.payload.offset,
+            };
+        case constants.SAVE_TOPIC_DETAIL_SCROLL_OFFSET:
+            return {
+                ...store,
+                topicDetailScrollOffset: action.payload.offset,
+            };
+        case constants.SAVE_TOPIC_SERVICES_SCROLL_OFFSET:
+            return {
+                ...store,
+                topicServicesScrollOffset: action.payload.offset,
+            };
+        case constants.SAVE_BOOKMARKED_TOPICS_SCROLL_OFFSET:
+            return {
+                ...store,
+                bookmarkedTopicsScrollOffset: action.payload.offset,
+            };
+        case constants.SAVE_BOOKMARKED_SERVICES_SCROLL_OFFSET:
+            return {
+                ...store,
+                bookmarkedServicesScrollOffset: action.payload.offset,
+            };
+        case constants.SAVE_ORGANIZATION_SERVICES_SCROLL_OFFSET:
             return ({
                 ...store,
-                searchOffset: action.payload.offset,
+                organizationServicesScrollOffset: action.payload.offset,
             });
-        case constants.SAVE_TOPIC_SERVICES_OFFSET:
+        case constants.SAVE_EXPLORE_DETAIL_SCROLL_OFFSET:
             return ({
                 ...store,
-                topicServicesOffset: action.payload.offset,
-            });
-        case constants.SAVE_BOOKMARKED_SERVICES_OFFSET:
-            return ({
-                ...store,
-                bookmarkedServicesOffset: action.payload.offset,
-            });
-        case constants.SAVE_ORGANIZATION_SERVICES_OFFSET:
-            return ({
-                ...store,
-                organizationServicesOffset: action.payload.offset,
+                exploreDetailScrollOffset: action.payload.offset,
             });
         case constants.SAVE_BOOKMARKS_TAB:
             return updateBookmarksTab(store, action.payload.index);

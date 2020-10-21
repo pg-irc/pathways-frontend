@@ -16,9 +16,9 @@ import { selectShowPartialLocalizationMessage } from '../../selectors/user_profi
 import { HidePartialLocalizationMessageAction, hidePartialLocalizationMessage } from '../../stores/user_profile';
 import { SetManualUserLocationAction, setManualUserLocation } from '../../stores/manual_user_location';
 import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
-import { SaveTopicServicesOffsetAction, saveTopicServicesOffset } from '../../stores/user_experience/actions';
-import { selectTopicServicesOffset } from '../../selectors/user_experience/select_topic_services_offset';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
+import { SaveTopicServicesScrollOffsetAction, saveTopicServicesScrollOffset } from '../../stores/user_experience/actions';
+import { selectTopicServicesScrollOffset } from '../../selectors/user_experience/select_topic_services_scroll_offset';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps => {
     const topic: Topic = selectCurrentTopic(store, ownProps.match.params.topicId);
@@ -30,11 +30,11 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceListProps 
         customLatLong: selectCustomLatLong(store),
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
         showPartialLocalizationMessage: selectShowPartialLocalizationMessage(store),
-        topicServicesOffset: selectTopicServicesOffset(store),
+        topicServicesOffset: selectTopicServicesScrollOffset(store),
     };
 };
 
-type Action = actions.ServicesAction | SetManualUserLocationAction | SaveTopicServicesOffsetAction;
+type Action = actions.ServicesAction | SetManualUserLocationAction | SaveTopicServicesScrollOffsetAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>): ServiceListActions => ({
     dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation): actions.BuildServicesRequestAction =>
@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Action>): ServiceListActions => (
     setManualUserLocation: (userLocation: UserLocation): SetManualUserLocationAction => dispatch(setManualUserLocation(userLocation)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     openServiceDetail: (service: HumanServiceData): actions.OpenServiceAction => dispatch(actions.openServiceDetail(service)),
-    saveTopicServicesOffset: (offset: number): SaveTopicServicesOffsetAction => dispatch(saveTopicServicesOffset(offset)),
+    saveTopicServicesOffset: (offset: number): SaveTopicServicesScrollOffsetAction => dispatch(saveTopicServicesScrollOffset(offset)),
 });
 
 export const ServiceListConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceListComponent);

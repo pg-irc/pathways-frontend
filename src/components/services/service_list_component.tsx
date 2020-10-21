@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as Sentry from 'sentry-expo';
 import * as constants from '../../application/constants';
-import { FlatList, NativeSyntheticEvent, ScrollViewProperties } from 'react-native';
+import { FlatList, NativeSyntheticEvent, ScrollViewProps } from 'react-native';
 import { Trans } from '@lingui/react';
 import { View, Text } from 'native-base';
 import { HumanServiceData, Id } from '../../validation/services/types';
@@ -29,7 +29,8 @@ import { History } from 'history';
 import { renderServiceItems } from './render_service_items';
 import { openURL } from '../link/link_component';
 import { hasNoResultsFromLocationQuery } from '../search/search_results_component';
-import { SaveTopicServicesOffsetAction } from '../../stores/user_experience/actions';
+import { SaveTopicServicesScrollOffsetAction } from '../../stores/user_experience/actions';
+import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 
 export interface ServiceListProps {
     readonly topic: Topic;
@@ -49,7 +50,7 @@ export interface ServiceListActions {
     readonly hidePartialLocalizationMessage: () => HidePartialLocalizationMessageAction;
     readonly setManualUserLocation: (userLocation: UserLocation) => SetManualUserLocationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly saveTopicServicesOffset: (offset: number) => SaveTopicServicesOffsetAction;
+    readonly saveTopicServicesOffset: (offset: number) => SaveTopicServicesScrollOffsetAction;
 }
 
 interface OwnProps {
@@ -96,22 +97,17 @@ const ValidServiceListComponent = (props: Props): JSX.Element => {
     const [topicServicesOffset, setTopicServicesOffset]: readonly [number, (n: number) => void] = useState(props.topicServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
     const services = getServicesIfValid(props.topicServicesOrError);
-
     useEffect((): void => {
         if (services.length > 0) {
             flatListRef.current.scrollToOffset({ animated: false, offset: props.topicServicesOffset });
         }
     }, [props.topicServicesOffset, services, flatListRef]);
 
-    const onScrollEnd = (e: NativeSyntheticEvent<ScrollViewProperties>): void => {
-        setTopicServicesOffset(e.nativeEvent.contentOffset.y);
-    };
-
     return (
         <ServiceListWrapper {...props}>
             <FlatList
                 ref={flatListRef}
-                onScrollEndDrag={onScrollEnd}
+                onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setTopicServicesOffset)}
                 style={{ backgroundColor: colors.lightGrey }}
                 data={services}
                 keyExtractor={(service: HumanServiceData): string => service.id}

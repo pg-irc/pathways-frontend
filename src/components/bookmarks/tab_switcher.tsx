@@ -5,8 +5,7 @@ import { TabView, TabBar, SceneRendererProps, NavigationState, Route } from 'rea
 import { Dimensions } from 'react-native';
 import { t } from '@lingui/macro';
 import { colors, textStyles } from '../../application/styles';
-import { BookmarksProps } from './bookmarks_component';
-import { ListActions } from './bookmarks_connected_component';
+import { BookmarksProps, BookmarkActions } from './bookmarks_component';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { History } from 'history';
 
@@ -18,7 +17,7 @@ interface TabSwitcherProps {
     readonly history: History;
 }
 
-type Props = TabSwitcherProps & BookmarksProps & ListActions;
+type Props = TabSwitcherProps & BookmarksProps & BookmarkActions;
 
 export const TabSwitcher = (props: Props): JSX.Element => {
     const routes: TabRoutes = [
@@ -35,6 +34,8 @@ export const TabSwitcher = (props: Props): JSX.Element => {
                     history={props.history}
                     bookmarkTopic={props.bookmarkTopic}
                     unbookmarkTopic={props.unbookmarkTopic}
+                    scrollOffset={props.topicsScrollOffset}
+                    saveScrollOffset={props.saveTopicsScrollOffset}
                 />
             );
           case 'services':
@@ -42,11 +43,11 @@ export const TabSwitcher = (props: Props): JSX.Element => {
                 <ServiceBookmarksComponent
                     bookmarkedServices={props.bookmarkedServices}
                     history={props.history}
-                    bookmarkedServicesOffset={props.bookmarkedServicesOffset}
                     bookmarkService={props.bookmarkService}
                     unbookmarkService={props.unbookmarkService}
                     openServiceDetail={props.openServiceDetail}
-                    saveBookmarkedServicesOffset={props.saveBookmarkedServicesOffset}
+                    scrollOffset={props.servicesScrollOffset}
+                    saveScrollOffset={props.saveServicesScrollOffset}
                 />
             );
           default:

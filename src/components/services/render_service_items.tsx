@@ -7,9 +7,8 @@ import { ServiceListItemComponent } from './service_list_item_component';
 import { ListRenderItemInfo } from 'react-native';
 import { HumanServiceData } from '../../validation/services/types';
 import { History } from 'history';
-import { SaveTopicServicesOffsetAction, SaveBookmarkedServicesOffsetAction, SaveOrganizationServicesOffsetAction } from '../../stores/user_experience/actions';
-
-type SaveOffSetAction = SaveTopicServicesOffsetAction | SaveBookmarkedServicesOffsetAction | SaveOrganizationServicesOffsetAction;
+import { SaveTopicServicesScrollOffsetAction, SaveBookmarkedServicesScrollOffsetAction, SaveOrganizationServicesScrollOffsetAction } from '../../stores/user_experience/actions';
+type SaveOffSetAction = SaveTopicServicesScrollOffsetAction | SaveBookmarkedServicesScrollOffsetAction | SaveOrganizationServicesScrollOffsetAction;
 
 export interface ServiceItemsProps {
     readonly history: History;

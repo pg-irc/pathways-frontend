@@ -7,20 +7,24 @@ import { selectTopicForCurrentExploreSection } from '../../selectors/topics/sele
 import { RouterProps } from '../../application/routing';
 import { bookmarkTopic, BookmarkTopicAction, Id, UnbookmarkTopicAction, unbookmarkTopic } from '../../stores/topics';
 import { pickBookmarkedTopicIds } from '../../selectors/topics/pick_bookmarked_topic_ids';
-import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, openHeaderMenu, saveExploreDetailScrollOffset, SaveExploreDetailScrollOffsetAction } from '../../stores/user_experience/actions';
+import { SaveTaskListScrollOffsetActions } from '../topics/task_list_component';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ExploreDetailProps => ({
     section: selectCurrentExploreSection(store, ownProps),
     topics: selectTopicForCurrentExploreSection(store, ownProps),
     bookmarkedTopics: pickBookmarkedTopicIds(store),
+    // TODO see https://github.com/pg-irc/pathways-frontend/issues/1296
+    scrollOffset: 0,
 });
 
-type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction;
+type DispatchActions = BookmarkTopicAction | UnbookmarkTopicAction | OpenHeaderMenuAction | SaveExploreDetailScrollOffsetAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<DispatchActions>): ExploreDetailActions => ({
     bookmarkTopic: (topicId: Id): BookmarkTopicAction => dispatch(bookmarkTopic(topicId)),
     unbookmarkTopic: (topicId: Id): UnbookmarkTopicAction => dispatch(unbookmarkTopic(topicId)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
+    saveScrollOffset: (offset: number): SaveTaskListScrollOffsetActions => dispatch(saveExploreDetailScrollOffset(offset)),
 });
 
 export const ExploreDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ExploreDetailComponent);

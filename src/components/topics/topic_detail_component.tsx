@@ -9,7 +9,7 @@ import { goToRouteWithParameter, getParametersFromPath } from '../../application
 import { Topic } from '../../selectors/topics/types';
 import { Routes } from '../../application/routing';
 import { TaskDetailContentComponent } from './task_detail_content_component';
-import { TaskListComponent } from './task_list_component';
+import { TaskListComponent, SaveTaskListScrollOffsetActions } from './task_list_component';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { EmptyTopicListComponent } from '../empty_component/empty_topic_list_component';
 import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
@@ -32,6 +32,7 @@ export interface TopicDetailsProps {
     readonly showLinkAlert: boolean;
     readonly manualUserLocation: UserLocation;
     readonly customLatLong: LatLong;
+    readonly scrollOffset: number;
 }
 
 export interface TopicDetailActions {
@@ -43,6 +44,7 @@ export interface TopicDetailActions {
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly hideLinkAlert: () => HideLinkAlertsAction;
     readonly dispatchServicesRequest: (topic: Topic, manualUserLocation?: UserLocation) => BuildServicesRequestAction;
+    readonly saveScrollOffset: (offset: number) => SaveTaskListScrollOffsetActions;
 }
 
 type Props = TopicDetailsProps & TopicDetailActions;
@@ -59,6 +61,8 @@ export const TopicDetailComponent = (props: Props): JSX.Element => (
             emptyTaskListContent={<EmptyTopicListComponent message={<Trans>No topics to show</Trans>} />}
             headerContent={<ListHeaderComponent {...props} />}
             headerContentIdentifier={props.topic.id}
+            scrollOffset={props.scrollOffset}
+            saveScrollOffset={props.saveScrollOffset}
         />
     </View>
 );

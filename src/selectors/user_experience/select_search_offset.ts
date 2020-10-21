@@ -1,5 +1,5 @@
 import { Store } from '../../stores';
 
 export const selectSearchOffset = (appStore: Store): number => (
-    appStore.userExperience.searchOffset
+    appStore.userExperience.searchResultScrollOffset
 );
