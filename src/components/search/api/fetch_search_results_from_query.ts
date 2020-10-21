@@ -50,6 +50,32 @@ export const fetchSearchResultsFromQuery = async (
     }
 };
 
+export const fetchServicesFromOrganization = async (
+    organizationId: string): Promise<ReadonlyArray<SearchServiceData>> => {
+    if (!organizationId) {
+        return [];
+    }
+    const url = buildAlgoliaSearchUrl();
+    try {
+        const response = await fetch(url, {
+            'method': 'POST',
+            headers: {
+                'X-Algolia-API-Key': ALGOLIA_SEARCH_API_KEY,
+                'Content-Type': 'application/json',
+                'X-Algolia-Application-Id': ALGOLIA_APPLICATION_ID,
+            },
+            body: JSON.stringify({
+                query: organizationId,
+            }),
+        });
+
+        const responseJSON: AlgoliaResponse = await response.json();
+        return validateServiceSearchResponse(responseJSON.hits);
+    } catch (Error) {
+        return [];
+    }
+};
+
 const buildAlgoliaSearchUrl = (): string => (
     BuildUrl(`https://${ALGOLIA_APPLICATION_ID}-dsn.algolia.net/`, {
         path: `1/indexes/${ALGOLIA_SERVICES_INDEX}/query`,
