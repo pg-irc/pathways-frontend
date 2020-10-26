@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import * as R from 'ramda';
 import { Trans } from '@lingui/react';
 import { Tab, Tabs, TabHeading, Content, Text, View } from 'native-base';
 import { textStyles, colors } from '../../application/styles';
@@ -11,7 +12,7 @@ import { OpenHeaderMenuAction, SaveOrganizationServicesScrollOffsetAction } from
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
-import { RouterProps } from '../../application/routing';
+import { goToRouteWithParameter, RouterProps, Routes } from '../../application/routing';
 import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { WebsiteComponent } from '../website/website_component';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
@@ -19,14 +20,15 @@ import { EmailComponent } from '../email/email_component';
 import { FlatList } from 'react-native-gesture-handler';
 import { HumanServiceData } from '../../validation/services/types';
 import { SearchListSeparator } from '../search/separators';
-import { NativeSyntheticEvent, ScrollViewProps } from 'react-native';
-import { renderServiceItems } from '../services/render_service_items';
+import { ListRenderItemInfo } from 'react-native';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
-import { aString, aDate } from '../../application/helpers/random_test_values';
-import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { EmptyComponent } from '../empty_component/empty_component';
+import { toHumanServiceData } from '../../validation/search/to_human_service_data';
+import { SearchServiceData } from '../../validation/search/types';
+import { ServiceListItemComponent } from '../services/service_list_item_component';
+import { aString, aNumber } from '../../application/helpers/random_test_values';
 
 export interface OrganizationDetailProps {
     readonly history: History;
@@ -51,33 +53,32 @@ interface AboutTabProps {
 
 type Props = OrganizationDetailProps & OrganizationDetailActions & RouterProps;
 
-  const testServices: ReadonlyArray<HumanServiceData> = [
-      {
-        'id': '9506365',
-        'name': 'Abbott Gardens',
-        'description': 'Provides housing for single adults who are homeless at risk, of low income, or persons with disabilities who can live independently. Potential tenants apply through the BC Housing Registry.',
-        'phoneNumbers': [],
-        'addresses': [],
-        'website': aString(),
-        'email': aString(),
-        'organizationId': aString(),
-        'organizationName': '',
-        'bookmarked': false,
-        'lastVerifiedDate': aDate(),
-      },
-      {
-        'id': '49174548',
-        'name': 'Aboriginal Coalition to End Homelessness (ACEH)',
-        'description': 'An island-wide coalition that creates spaces for the voices of Aboriginal community members and provides a culturally specific approach to Aboriginal (First Nations, Inuit, and Metis) homelessness on the traditional Coast Salish, Nuu-chah-nulth, and Kwakwaka’wakw territories. Focus is on advocating for housing and shelter; governance, policy, and resources; community building; and support services for Aboriginal people experiencing homelessness. Also provides regular activities including Indigenous Women\'s Circles, cooking classes, land-based learning opportunities, monthly building community events, health and wellness workshops, life-skills workshops and other cultural events for the Indigenous peoples experiencing homelessness. Office hours are 8:30am to 3:30 pm Monday to Friday. Works in collaboration with Greater Victoria Coalition to End Homelessness. Nonprofit society.',
-        'phoneNumbers': [],
-        'addresses': [],
-        'website': aString(),
-        'email': aString(),
-        'organizationId': aString(),
-        'organizationName': '',
-        'bookmarked': false,
-        'lastVerifiedDate': aDate(),
-      },
+  const testServices: ReadonlyArray<SearchServiceData> = [
+    {
+        type: 'SearchServiceData',
+        service_name: aString(),
+        service_id: "950365",
+        service_description: aString(),
+        address: {
+            address: aString(),
+            city: aString(),
+            state_province: aString(),
+            postal_code: aString(),
+            country: aString(),
+        },
+        organization: {
+            id: aString(),
+            name: aString(),
+            website: aString(),
+            email: aString(),
+            service_count: aNumber(),
+        },
+        _geoloc: {
+            lat: aNumber(),
+            lng: aNumber(),
+        },
+        email: aString(),
+    },
 ];
 
 export const OrganizationDetailComponent = (props: Props): JSX.Element => {
@@ -89,6 +90,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
     //   translation purposes,
     //   see: https://stackoverflow.com/questions/43113859/customise-tabs-of-native-base,
     //   this means we cannot sensibly style active tab text
+    
     const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData)=> void] = useState(undefined);
     const organizationId = props.match.params.organizationId;
 
@@ -137,6 +139,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
                         }
                     >
                         <ServicesTabComponent
+                            services={testServices}
                             history={props.history}
                             bookmarkService={props.bookmarkService}
                             unbookmarkService={props.unbookmarkService}
@@ -217,6 +220,7 @@ const OrganizationContactDetailsComponent = (props: AboutTabProps): JSX.Element 
 };
 
 interface ServicesTabProps {
+    readonly services: ReadonlyArray<SearchServiceData>;
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
     readonly history: History;
@@ -228,36 +232,40 @@ interface ServicesTabProps {
 }
 
 export const ServicesTabComponent = (props: ServicesTabProps): JSX.Element => {
-    const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] =
-        useState(props.organizationServicesOffset);
-    const flatListRef = useRef<FlatList<HumanServiceData>>();
-    // const services = getServicesIfValid(props.topicServicesOrError);
 
-    // useEffect((): void => {
-    //     if (testServices.length > 0) {
-    //         flatListRef.current.scrollToOffset({ animated: false, offset: props.organizationServicesOffset });
-    //     }
-    // }, [props.organizationServicesOffset, testServices, flatListRef]);
-
-    const renderItem = renderServiceItems({
-        ...props,
-        scrollOffset: organizationServicesOffset,
-        saveScrollOffset: props.saveOrganizationServicesOffset,
+    const renderSearchHit = R.curry((props: ServicesTabProps, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
+        const item: SearchServiceData = itemInfo.item;
+        const service: HumanServiceData = toHumanServiceData(item, []);
+        const onPress = (): void => {
+            props.openServiceDetail(service);
+            goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
+        };
+    
+        const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
+        const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
+        return (
+            <ServiceListItemComponent
+                service={service}
+                history={props.history}
+                onPress={onPress}
+                isBookmarked={service.bookmarked}
+                onBookmark={onBookmark}
+                onUnbookmark={onUnbookmark}
+            />
+        );
     });
 
     return (
-        <FlatList
-        ref={flatListRef}
-        onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => {
-            // tslint:disable-next-line: no-expression-statement
-            setServicesOffsetThrottled(e, setOrganizationServicesOffset);
-        }}
-        style={{ backgroundColor: colors.lightGrey }}
-        data={testServices}
-        keyExtractor={(service: HumanServiceData): string => service.id}
-        renderItem={renderItem}
-        ItemSeparatorComponent={SearchListSeparator}
-        initialNumToRender={props.saveOrganizationServicesOffset ? testServices.length : 20}
-        />
+        <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
+            <FlatList
+                style={{ backgroundColor: colors.lightGrey, flex: 1  }}
+                data={props.services}
+                // keyExtractor={keyExtractor}
+                renderItem={renderSearchHit({
+                    ...props
+                })}
+                ItemSeparatorComponent={SearchListSeparator}
+            />
+        </View>
     );
 };
