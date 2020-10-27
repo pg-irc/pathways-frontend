@@ -28,7 +28,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 import { SearchServiceData } from '../../validation/search/types';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
-import { aString, aNumber } from '../../application/helpers/random_test_values';
+import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
 
 export interface OrganizationDetailProps {
     readonly history: History;
@@ -53,34 +53,6 @@ interface AboutTabProps {
 
 type Props = OrganizationDetailProps & OrganizationDetailActions & RouterProps;
 
-  const testServices: ReadonlyArray<SearchServiceData> = [
-    {
-        type: 'SearchServiceData',
-        service_name: aString(),
-        service_id: "950365",
-        service_description: aString(),
-        address: {
-            address: aString(),
-            city: aString(),
-            state_province: aString(),
-            postal_code: aString(),
-            country: aString(),
-        },
-        organization: {
-            id: aString(),
-            name: aString(),
-            website: aString(),
-            email: aString(),
-            service_count: aNumber(),
-        },
-        _geoloc: {
-            lat: aNumber(),
-            lng: aNumber(),
-        },
-        email: aString(),
-    },
-];
-
 export const OrganizationDetailComponent = (props: Props): JSX.Element => {
     // NativeBase's (Buggy) Tabs component notes:
     //
@@ -90,13 +62,16 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
     //   translation purposes,
     //   see: https://stackoverflow.com/questions/43113859/customise-tabs-of-native-base,
     //   this means we cannot sensibly style active tab text
-    
+
     const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData)=> void] = useState(undefined);
+    const [services, setOrganizationServices]: readonly [ReadonlyArray<SearchServiceData>, (services: ReadonlyArray<SearchServiceData>)=> void] = useState(undefined);
     const organizationId = props.match.params.organizationId;
 
     useEffect(() => {
         getOrganization(organizationId).then((res)=> {
             setOrganization(res.results)});
+        fetchServicesFromOrganization(organizationId).then((res: ReadonlyArray<SearchServiceData>) => {
+            setOrganizationServices(res)});
     }, []);
 
     if (!organization){
@@ -139,7 +114,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
                         }
                     >
                         <ServicesTabComponent
-                            services={testServices}
+                            services={services}
                             history={props.history}
                             bookmarkService={props.bookmarkService}
                             unbookmarkService={props.unbookmarkService}
