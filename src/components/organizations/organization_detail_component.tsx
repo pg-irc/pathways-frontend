@@ -17,10 +17,9 @@ import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/ana
 import { WebsiteComponent } from '../website/website_component';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { EmailComponent } from '../email/email_component';
-import { FlatList } from 'react-native-gesture-handler';
 import { HumanServiceData } from '../../validation/services/types';
 import { SearchListSeparator } from '../search/separators';
-import { ListRenderItemInfo } from 'react-native';
+import { ListRenderItemInfo, FlatList } from 'react-native';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
@@ -235,7 +234,7 @@ export const ServicesTabComponent = (props: ServicesTabProps): JSX.Element => {
             <FlatList
                 style={{ backgroundColor: colors.lightGrey, flex: 1  }}
                 data={props.services}
-                // keyExtractor={keyExtractor}
+                keyExtractor={keyExtractor}
                 renderItem={renderSearchHit({
                     ...props
                 })}
@@ -244,3 +243,7 @@ export const ServicesTabComponent = (props: ServicesTabProps): JSX.Element => {
         </View>
     );
 };
+
+const keyExtractor = (item: SearchServiceData): string => (
+    item.service_id
+);
