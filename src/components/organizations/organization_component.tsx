@@ -19,7 +19,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { SearchServiceData } from '../../validation/search/types';
 import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
 import { OrganizationServiceListComponent } from './organization_service_list_component';
-import { AboutTabComponent } from './about_tab_component';
+import { OrganizationDetailComponent } from './organization_detail_component';
 
 export interface OrganizationProps {
     readonly history: History;
@@ -82,7 +82,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             </TabHeading>
                         }
                     >
-                        <AboutTabComponent
+                        <OrganizationDetailComponent
                             organization={organization}
                             analyticsLinkPressed={props.analyticsLinkPressed}
                             currentPathForAnalytics={props.location.pathname}

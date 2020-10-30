@@ -8,13 +8,13 @@ import { MarkdownBodyComponent } from "../content_layout/markdown_body_component
 import { EmailComponent } from "../email/email_component";
 import { WebsiteComponent } from "../website/website_component";
 
-interface AboutTabProps {
+interface OrganizationDetailProps {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
     readonly organization: HumanOrganizationData;
 }
 
-export const AboutTabComponent = (props: AboutTabProps ): JSX.Element => (
+export const OrganizationDetailComponent = (props: OrganizationDetailProps ): JSX.Element => (
     <Content>
         <MarkdownBodyComponent
             body={props.organization.description}
@@ -31,7 +31,7 @@ export const AboutTabComponent = (props: AboutTabProps ): JSX.Element => (
     </Content>
 );
 
-const OrganizationContactDetailsComponent = (props: AboutTabProps): JSX.Element => {
+const OrganizationContactDetailsComponent = (props: OrganizationDetailProps): JSX.Element => {
     const linkContextForAnalytics = buildAnalyticsLinkContext('Organization', props.organization.name);
     const currentPathForAnalytics = props.currentPathForAnalytics;
     return (
