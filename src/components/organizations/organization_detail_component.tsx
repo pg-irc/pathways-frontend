@@ -4,8 +4,6 @@ import { Tab, Tabs, TabHeading, Content, Text, View } from 'native-base';
 import { textStyles, colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
-import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
-import { DividerComponent } from '../content_layout/divider_component';
 import { HeaderComponent } from '../main/header_component';
 import { OpenHeaderMenuAction, SaveOrganizationServicesScrollOffsetAction } from '../../stores/user_experience/actions';
 import { BackButtonComponent } from '../header_button/back_button_component';
@@ -13,9 +11,6 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
 import { RouterProps } from '../../application/routing';
 import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
-import { WebsiteComponent } from '../website/website_component';
-import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
-import { EmailComponent } from '../email/email_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
@@ -24,6 +19,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 import { SearchServiceData } from '../../validation/search/types';
 import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
 import { OrganizationServiceListComponent } from './organization_service_list_component';
+import { AboutTabComponent } from './about_tab_component';
 
 export interface OrganizationDetailProps {
     readonly history: History;
@@ -37,13 +33,6 @@ export interface OrganizationDetailActions {
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
-}
-
-
-interface AboutTabProps {
-    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
-    readonly currentPathForAnalytics: string;
-    readonly organization: HumanOrganizationData;
 }
 
 type Props = OrganizationDetailProps & OrganizationDetailActions & RouterProps;
@@ -147,45 +136,6 @@ const OrganizationDetailHeader = (props: OrganizationDetailHeaderProps): JSX.Ele
             leftButton={leftButton}
             rightButtons={rightButtons}
         />
-    );
-};
-
-const AboutTabComponent = (props: AboutTabProps ): JSX.Element => (
-    <Content>
-        <MarkdownBodyComponent
-            body={props.organization.description}
-            shouldBeExpandable={true}
-            // TODO Issue #1080 When organization detail page is online connect the following 2 states to the store/persisted data
-            showLinkAlerts={true}
-            hideLinkAlerts={console.log} />
-        <DividerComponent />
-        <OrganizationContactDetailsComponent
-            organization={props.organization}
-            analyticsLinkPressed={props.analyticsLinkPressed}
-            currentPathForAnalytics={props.currentPathForAnalytics}
-        />
-    </Content>
-);
-
-const OrganizationContactDetailsComponent = (props: AboutTabProps): JSX.Element => {
-    const linkContextForAnalytics = buildAnalyticsLinkContext('Organization', props.organization.name);
-    const currentPathForAnalytics = props.currentPathForAnalytics;
-    return (
-        <View>
-            <WebsiteComponent
-                website={props.organization.website}
-                linkContextForAnalytics={linkContextForAnalytics}
-                currentPathForAnalytics={currentPathForAnalytics}
-                analyticsLinkPressed={props.analyticsLinkPressed}
-            />
-            <DividerComponent />
-            <EmailComponent
-                email={props.organization.email}
-                linkContextForAnalytics={linkContextForAnalytics}
-                currentPathForAnalytics={currentPathForAnalytics}
-                analyticsLinkPressed={props.analyticsLinkPressed}
-            />
-        </View>
     );
 };
 
