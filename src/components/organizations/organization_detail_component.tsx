@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import * as R from 'ramda';
 import { Trans } from '@lingui/react';
 import { Tab, Tabs, TabHeading, Content, Text, View } from 'native-base';
 import { textStyles, colors } from '../../application/styles';
@@ -12,22 +11,19 @@ import { OpenHeaderMenuAction, SaveOrganizationServicesScrollOffsetAction } from
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
-import { goToRouteWithParameter, RouterProps, Routes } from '../../application/routing';
+import { RouterProps } from '../../application/routing';
 import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { WebsiteComponent } from '../website/website_component';
 import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
 import { EmailComponent } from '../email/email_component';
 import { HumanServiceData } from '../../validation/services/types';
-import { SearchListSeparator } from '../search/separators';
-import { ListRenderItemInfo, FlatList } from 'react-native';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { EmptyComponent } from '../empty_component/empty_component';
-import { toHumanServiceData } from '../../validation/search/to_human_service_data';
 import { SearchServiceData } from '../../validation/search/types';
-import { ServiceListItemComponent } from '../services/service_list_item_component';
 import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
+import { OrganizationServiceListComponent } from './organization_service_list_component';
 
 export interface OrganizationDetailProps {
     readonly history: History;
@@ -112,7 +108,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
                             </TabHeading>
                         }
                     >
-                        <ServicesTabComponent
+                        <OrganizationServiceListComponent
                             services={services}
                             history={props.history}
                             bookmarkService={props.bookmarkService}
@@ -193,57 +189,3 @@ const OrganizationContactDetailsComponent = (props: AboutTabProps): JSX.Element 
     );
 };
 
-interface ServicesTabProps {
-    readonly services: ReadonlyArray<SearchServiceData>;
-    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
-    readonly currentPathForAnalytics: string;
-    readonly history: History;
-    readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
-    readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
-    readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
-    readonly organizationServicesOffset: number;
-    readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
-}
-
-export const ServicesTabComponent = (props: ServicesTabProps): JSX.Element => {
-
-    const renderSearchHit = R.curry((props: ServicesTabProps, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
-        const item: SearchServiceData = itemInfo.item;
-        const service: HumanServiceData = toHumanServiceData(item, []);
-        const onPress = (): void => {
-            props.openServiceDetail(service);
-            goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
-        };
-    
-        const onBookmark = (): BookmarkServiceAction => props.bookmarkService(service);
-        const onUnbookmark = (): UnbookmarkServiceAction => props.unbookmarkService(service);
-        return (
-            <ServiceListItemComponent
-                service={service}
-                history={props.history}
-                onPress={onPress}
-                isBookmarked={service.bookmarked}
-                onBookmark={onBookmark}
-                onUnbookmark={onUnbookmark}
-            />
-        );
-    });
-
-    return (
-        <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
-            <FlatList
-                style={{ backgroundColor: colors.lightGrey, flex: 1  }}
-                data={props.services}
-                keyExtractor={keyExtractor}
-                renderItem={renderSearchHit({
-                    ...props
-                })}
-                ItemSeparatorComponent={SearchListSeparator}
-            />
-        </View>
-    );
-};
-
-const keyExtractor = (item: SearchServiceData): string => (
-    item.service_id
-);
