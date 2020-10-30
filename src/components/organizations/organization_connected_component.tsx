@@ -3,13 +3,13 @@ import { RouterProps } from '../../application/routing';
 import { Dispatch } from 'redux';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
 import { OpenHeaderMenuAction, openHeaderMenu, SaveOrganizationServicesScrollOffsetAction, saveOrganizationServicesScrollOffset } from '../../stores/user_experience/actions';
-import { OrganizationDetailComponent, OrganizationDetailActions, OrganizationDetailProps } from './organization_detail_component';
+import { OrganizationComponent, OrganizationActions, OrganizationProps } from './organization_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { selectOrganizationServicesOffset } from '../../selectors/user_experience/select_organization_services_offset';
 import { Store } from '../../stores';
 import { BookmarkServiceAction, bookmarkService, UnbookmarkServiceAction, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 
-const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationDetailProps => ({
+const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps => ({
     history: ownProps.history,
     organizationServicesOffset: selectOrganizationServicesOffset(store),
 });
@@ -22,7 +22,7 @@ type Actions =
     UnbookmarkServiceAction |
     OpenServiceAction;
 
-const mapDispatchToProps = (dispatch: Dispatch<Actions>): OrganizationDetailActions => ({
+const mapDispatchToProps = (dispatch: Dispatch<Actions>): OrganizationActions => ({
     analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps): AnalyticsLinkPressedAction =>
         dispatch(analyticsLinkPressed(analyticsLinkProps)),
     bookmarkService: (service: HumanServiceData): BookmarkServiceAction => dispatch(bookmarkService(service)),
@@ -33,4 +33,4 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): OrganizationDetailActi
         dispatch(saveOrganizationServicesScrollOffset(offset)),
 });
 
-export const OrganizationDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(OrganizationDetailComponent);
+export const OrganizationConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(OrganizationComponent);

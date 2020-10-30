@@ -21,12 +21,12 @@ import { fetchServicesFromOrganization } from '../search/api/fetch_search_result
 import { OrganizationServiceListComponent } from './organization_service_list_component';
 import { AboutTabComponent } from './about_tab_component';
 
-export interface OrganizationDetailProps {
+export interface OrganizationProps {
     readonly history: History;
     readonly organizationServicesOffset: number;
 }
 
-export interface OrganizationDetailActions {
+export interface OrganizationActions {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
@@ -35,9 +35,9 @@ export interface OrganizationDetailActions {
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
-type Props = OrganizationDetailProps & OrganizationDetailActions & RouterProps;
+type Props = OrganizationProps & OrganizationActions & RouterProps;
 
-export const OrganizationDetailComponent = (props: Props): JSX.Element => {
+export const OrganizationComponent = (props: Props): JSX.Element => {
     // NativeBase's (Buggy) Tabs component notes:
     //
     // - Breaking out the Tab and TabHeading components from the Tabs component does not work as
@@ -64,7 +64,7 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
 
     return (
         <View style={{ flex: 1 }}>
-            <OrganizationDetailHeader
+            <OrganizationHeader
                 location={props.location}
                 history={props.history}
                 openHeaderMenu={props.openHeaderMenu}
@@ -115,13 +115,13 @@ export const OrganizationDetailComponent = (props: Props): JSX.Element => {
     );
 };
 
-interface OrganizationDetailHeaderProps {
+interface OrganizationHeaderProps {
     readonly location: Location;
     readonly history: History;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
 
-const OrganizationDetailHeader = (props: OrganizationDetailHeaderProps): JSX.Element => {
+const OrganizationHeader = (props: OrganizationHeaderProps): JSX.Element => {
     const backgroundColor = colors.lightGrey;
     const leftButton = <BackButtonComponent textColor={colors.black} />;
     const rightButtons: ReadonlyArray<JSX.Element> = [

@@ -17,7 +17,7 @@ import { ExplainFeedbackConnectedComponent } from '../feedback/explain_feedback_
 import { Routes, routePathDefinition, routePathWithoutParameter } from '../../application/routing';
 import { Locale } from '../../locale';
 import { ContactInformationConnectedComponent } from '../feedback/contact_information_connected_component';
-import { OrganizationDetailConnectedComponent } from '../organizations/organization_detail_connected_component';
+import { OrganizationConnectedComponent } from '../organizations/organization_connected_component';
 
 interface Props {
     readonly locale: Locale;
@@ -38,7 +38,7 @@ export const MainPageSwitcherComponent: React.StatelessComponent<Props> = (props
         <Route exact path={routePathDefinition(Routes.RecommendedTopics)} component={RecommendedTopicsConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Bookmarks)} component={BookmarksConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.Search)} component={SearchConnectedComponent} />
-        <Route exact path={routePathDefinition(Routes.OrganizationDetail)} component={OrganizationDetailConnectedComponent} />
+        <Route exact path={routePathDefinition(Routes.Organization)} component={OrganizationConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.ServiceDetail)} component={ServiceDetailConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.OtherFeedback)} component={OtherRemoveServiceConnectedComponent} />
         <Route exact path={routePathDefinition(Routes.ExplainFeedback)} component={ExplainFeedbackConnectedComponent} />
