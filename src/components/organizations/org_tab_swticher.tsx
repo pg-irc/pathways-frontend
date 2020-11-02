@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { TabView, Route, NavigationState, SceneRendererProps, TabBar } from 'react-native-tab-view';
 import { t } from '@lingui/macro';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -8,6 +8,8 @@ import { OrganizationDetailComponent } from './organization_detail_component';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { OrganizationActions, OrganizationProps } from './organization_component';
 import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
+import { OrganizationServiceListComponent } from './organization_service_list_component';
+import { SearchServiceData } from '../../validation/search/types';
 
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
@@ -15,6 +17,7 @@ export type TabRoutes = Array<Route>;
 interface OrgTabSwitcherProps {
     readonly i18n: I18n;
     readonly organization: HumanOrganizationData;
+    readonly services: ReadonlyArray<SearchServiceData>;
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
 }
@@ -40,7 +43,17 @@ export default function OrgTabSwitcher(props: Props) {
             );
           case 'services':
             return (
-                <Text>Services Tab</Text>
+                <OrganizationServiceListComponent
+                services={props.services}
+                history={props.history}
+                bookmarkService={props.bookmarkService}
+                unbookmarkService={props.unbookmarkService}
+                openServiceDetail={props.openServiceDetail}
+                analyticsLinkPressed={props.analyticsLinkPressed}
+                currentPathForAnalytics={props.currentPathForAnalytics}
+                organizationServicesOffset={props.organizationServicesOffset}
+                saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
+            />
             );
           default:
             return <EmptyComponent />;

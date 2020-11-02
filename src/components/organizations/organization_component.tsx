@@ -81,6 +81,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                         <OrgTabSwitcher
                             i18n={i18n}
                             organization={organization}
+                            services={services}
                             analyticsLinkPressed={analyticsLinkPressed}
                             history={props.history}
                             organizationServicesOffset={props.organizationServicesOffset}
