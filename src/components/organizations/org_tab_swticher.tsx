@@ -4,15 +4,24 @@ import { TabView, Route, NavigationState, SceneRendererProps, TabBar } from 'rea
 import { t } from '@lingui/macro';
 import { EmptyComponent } from '../empty_component/empty_component';
 import { colors, textStyles } from '../../application/styles';
+import { OrganizationDetailComponent } from './organization_detail_component';
+import { HumanOrganizationData } from '../../validation/organizations/types';
+import { OrganizationActions, OrganizationProps } from './organization_component';
+import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
 
 interface OrgTabSwitcherProps {
     readonly i18n: I18n;
+    readonly organization: HumanOrganizationData;
+    readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
+    readonly currentPathForAnalytics: string;
 }
 
-export default function OrgTabSwitcher(props: OrgTabSwitcherProps) {
+type Props = OrgTabSwitcherProps & OrganizationProps & OrganizationActions;
+
+export default function OrgTabSwitcher(props: Props) {
     const [index, setIndex] = React.useState(0);
     const routes: TabRoutes = [
         { key: 'about', title: props.i18n._(t`About`) },
@@ -23,7 +32,11 @@ export default function OrgTabSwitcher(props: OrgTabSwitcherProps) {
         switch (route.key) {
           case 'about':
             return (
-                <Text>About Tab</Text>
+                <OrganizationDetailComponent
+                organization={props.organization}
+                analyticsLinkPressed={props.analyticsLinkPressed}
+                currentPathForAnalytics={props.currentPathForAnalytics}
+            />
             );
           case 'services':
             return (

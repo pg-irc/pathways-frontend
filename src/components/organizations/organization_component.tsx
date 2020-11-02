@@ -10,9 +10,9 @@ import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
 import { RouterProps } from '../../application/routing';
-import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
+import { analyticsLinkPressed, AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { HumanServiceData } from '../../validation/services/types';
-import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -79,7 +79,18 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                         <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
                         <TitleComponent title={organization.name.toUpperCase()} />
                         <OrgTabSwitcher
-                            i18n={i18n} />
+                            i18n={i18n}
+                            organization={organization}
+                            analyticsLinkPressed={analyticsLinkPressed}
+                            history={props.history}
+                            organizationServicesOffset={props.organizationServicesOffset}
+                            saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
+                            bookmarkService={props.bookmarkService}
+                            unbookmarkService={props.unbookmarkService}
+                            openServiceDetail={openServiceDetail}
+                            openHeaderMenu={props.openHeaderMenu}
+                            currentPathForAnalytics={props.location.pathname}
+                             />
                         <Tabs tabBarUnderlineStyle={{ backgroundColor: colors.teal }}>
                             <Tab
                                 heading={
