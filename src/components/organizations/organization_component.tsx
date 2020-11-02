@@ -20,6 +20,8 @@ import { SearchServiceData } from '../../validation/search/types';
 import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
 import { OrganizationServiceListComponent } from './organization_service_list_component';
 import { OrganizationDetailComponent } from './organization_detail_component';
+import { I18n } from '@lingui/react';
+import OrgTabSwitcher from './org_tab_swticher';
 
 export interface OrganizationProps {
     readonly history: History;
@@ -47,71 +49,79 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
     //   see: https://stackoverflow.com/questions/43113859/customise-tabs-of-native-base,
     //   this means we cannot sensibly style active tab text
 
-    const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData)=> void] = useState(undefined);
-    const [services, setOrganizationServices]: readonly [ReadonlyArray<SearchServiceData>, (services: ReadonlyArray<SearchServiceData>)=> void] = useState(undefined);
+    const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData) => void] = useState(undefined);
+    const [services, setOrganizationServices]: readonly [ReadonlyArray<SearchServiceData>, (services: ReadonlyArray<SearchServiceData>) => void] = useState(undefined);
     const organizationId = props.match.params.organizationId;
 
     useEffect(() => {
-        getOrganization(organizationId).then((res)=> {
-            setOrganization(res.results)});
+        getOrganization(organizationId).then((res) => {
+            setOrganization(res.results)
+        });
         fetchServicesFromOrganization(organizationId).then((res: ReadonlyArray<SearchServiceData>) => {
-            setOrganizationServices(res)});
+            setOrganizationServices(res)
+        });
     }, []);
 
-    if (!organization){
-        return <EmptyComponent/>
+    if (!organization) {
+        return <EmptyComponent />
     }
 
     return (
-        <View style={{ flex: 1 }}>
-            <OrganizationHeader
-                location={props.location}
-                history={props.history}
-                openHeaderMenu={props.openHeaderMenu}
-            />
-            <Content padder>
-                <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
-                <TitleComponent title={organization.name.toUpperCase()} />
-                <Tabs tabBarUnderlineStyle={{ backgroundColor: colors.teal }}>
-                    <Tab
-                        heading={
-                            <TabHeading style={{ backgroundColor: colors.white }}>
-                                <Text style={textStyles.paragraphStyle}>
-                                    <Trans>About</Trans>
-                                </Text>
-                            </TabHeading>
-                        }
-                    >
-                        <OrganizationDetailComponent
-                            organization={organization}
-                            analyticsLinkPressed={props.analyticsLinkPressed}
-                            currentPathForAnalytics={props.location.pathname}
-                        />
-                    </Tab>
-                    <Tab
-                        heading={
-                            <TabHeading style={{ backgroundColor: colors.white }}>
-                                <Text style={textStyles.paragraphStyle}>
-                                    <Trans>Services</Trans>
-                                </Text>
-                            </TabHeading>
-                        }
-                    >
-                        <OrganizationServiceListComponent
-                            services={services}
-                            history={props.history}
-                            bookmarkService={props.bookmarkService}
-                            unbookmarkService={props.unbookmarkService}
-                            openServiceDetail={props.openServiceDetail}
-                            analyticsLinkPressed={props.analyticsLinkPressed}
-                            currentPathForAnalytics={props.location.pathname}
-                            organizationServicesOffset={props.organizationServicesOffset}
-                            saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
-                        />
-                    </Tab>
-                </Tabs>
-            </Content>
-        </View>
+        <I18n>
+            {({ i18n }: { readonly i18n: I18n }): JSX.Element => (
+                <View style={{ flex: 1 }}>
+                    <OrganizationHeader
+                        location={props.location}
+                        history={props.history}
+                        openHeaderMenu={props.openHeaderMenu}
+                    />
+                    <Content padder>
+                        <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
+                        <TitleComponent title={organization.name.toUpperCase()} />
+                        <OrgTabSwitcher
+                            i18n={i18n} />
+                        <Tabs tabBarUnderlineStyle={{ backgroundColor: colors.teal }}>
+                            <Tab
+                                heading={
+                                    <TabHeading style={{ backgroundColor: colors.white }}>
+                                        <Text style={textStyles.paragraphStyle}>
+                                            <Trans>About</Trans>
+                                        </Text>
+                                    </TabHeading>
+                                }
+                            >
+                                <OrganizationDetailComponent
+                                    organization={organization}
+                                    analyticsLinkPressed={props.analyticsLinkPressed}
+                                    currentPathForAnalytics={props.location.pathname}
+                                />
+                            </Tab>
+                            <Tab
+                                heading={
+                                    <TabHeading style={{ backgroundColor: colors.white }}>
+                                        <Text style={textStyles.paragraphStyle}>
+                                            <Trans>Services</Trans>
+                                        </Text>
+                                    </TabHeading>
+                                }
+                            >
+                                <OrganizationServiceListComponent
+                                    services={services}
+                                    history={props.history}
+                                    bookmarkService={props.bookmarkService}
+                                    unbookmarkService={props.unbookmarkService}
+                                    openServiceDetail={props.openServiceDetail}
+                                    analyticsLinkPressed={props.analyticsLinkPressed}
+                                    currentPathForAnalytics={props.location.pathname}
+                                    organizationServicesOffset={props.organizationServicesOffset}
+                                    saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
+                                />
+                            </Tab>
+                        </Tabs>
+                    </Content>
+                </View>
+            )}
+        </I18n>
     );
 };
 
