@@ -1,17 +1,11 @@
 import * as React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import { Text, Dimensions } from 'react-native';
+import { TabView, Route } from 'react-native-tab-view';
 import { t } from '@lingui/macro';
+import { EmptyComponent } from '../empty_component/empty_component';
 
-const FirstRoute = () => (
-    <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
-);
-
-const SecondRoute = () => (
-    <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
-);
-
-const initialLayout = { width: Dimensions.get('window').width };
+// tslint:disable-next-line: readonly-array
+export type TabRoutes = Array<Route>;
 
 interface OrgTabSwitcherProps {
     readonly i18n: I18n;
@@ -19,28 +13,32 @@ interface OrgTabSwitcherProps {
 
 export default function OrgTabSwitcher(props: OrgTabSwitcherProps) {
     const [index, setIndex] = React.useState(0);
-    const [routes] = React.useState([
+    const routes: TabRoutes = [
         { key: 'about', title: props.i18n._(t`About`) },
         { key: 'services', title: props.i18n._(t`Services`) },
-    ]);
+    ];
 
-    const renderScene = SceneMap({
-        about: FirstRoute,
-        services: SecondRoute,
-    });
+    const renderScene = ({ route }: { readonly route: Route}): JSX.Element => {
+        switch (route.key) {
+          case 'about':
+            return (
+                <Text>About Tab</Text>
+            );
+          case 'services':
+            return (
+                <Text>Services Tab</Text>
+            );
+          default:
+            return <EmptyComponent />;
+        }
+      };
 
     return (
         <TabView
             navigationState={{ index, routes }}
             renderScene={renderScene}
             onIndexChange={setIndex}
-            initialLayout={initialLayout}
+            initialLayout={{width: Dimensions.get('window').width}}
         />
     );
 }
-
-const styles = StyleSheet.create({
-    scene: {
-        flex: 1,
-    },
-});
