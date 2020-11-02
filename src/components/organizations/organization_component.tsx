@@ -11,7 +11,7 @@ import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
 import { RouterProps } from '../../application/routing';
 import { analyticsLinkPressed, AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
-import { HumanServiceData } from '../../validation/services/types';
+import { HumanServiceData, Id } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
@@ -24,6 +24,7 @@ import OrgTabSwitcher from './org_tab_swticher';
 export interface OrganizationProps {
     readonly history: History;
     readonly organizationServicesOffset: number;
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
 }
 
 export interface OrganizationActions {
@@ -72,6 +73,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             i18n={i18n}
                             organization={organization}
                             services={services}
+                            bookmarkedServicesIds={props.bookmarkedServicesIds}
                             analyticsLinkPressed={analyticsLinkPressed}
                             history={props.history}
                             organizationServicesOffset={props.organizationServicesOffset}

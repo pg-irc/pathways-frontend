@@ -10,7 +10,7 @@ import { BookmarkServiceAction, OpenServiceAction, UnbookmarkServiceAction } fro
 import { SaveOrganizationServicesScrollOffsetAction } from "../../stores/user_experience/actions";
 import { toHumanServiceData } from "../../validation/search/to_human_service_data";
 import { SearchServiceData } from "../../validation/search/types";
-import { HumanServiceData } from "../../validation/services/types";
+import { HumanServiceData, Id } from "../../validation/services/types";
 import { SearchListSeparator } from '../search/separators';
 import { ServiceListItemComponent } from '../services/service_list_item_component';
 
@@ -19,6 +19,7 @@ interface ServicesTabProps {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly currentPathForAnalytics: string;
     readonly history: History;
+    readonly bookmarkedServicesIds: ReadonlyArray<Id>;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
@@ -30,7 +31,7 @@ export const OrganizationServiceListComponent = (props: ServicesTabProps): JSX.E
 
     const renderSearchHit = R.curry((props: ServicesTabProps, itemInfo: ListRenderItemInfo<SearchServiceData>): JSX.Element => {
         const item: SearchServiceData = itemInfo.item;
-        const service: HumanServiceData = toHumanServiceData(item, []);
+        const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
         const onPress = (): void => {
             props.openServiceDetail(service);
             goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();

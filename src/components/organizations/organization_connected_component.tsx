@@ -8,10 +8,12 @@ import { HumanServiceData } from '../../validation/services/types';
 import { selectOrganizationServicesOffset } from '../../selectors/user_experience/select_organization_services_offset';
 import { Store } from '../../stores';
 import { BookmarkServiceAction, bookmarkService, UnbookmarkServiceAction, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
+import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps => ({
     history: ownProps.history,
     organizationServicesOffset: selectOrganizationServicesOffset(store),
+    bookmarkedServicesIds: selectBookmarkedServicesIds(store),
 });
 
 type Actions =

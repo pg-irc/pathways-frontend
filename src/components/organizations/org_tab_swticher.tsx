@@ -46,6 +46,7 @@ export default function OrgTabSwitcher(props: Props) {
                 <OrganizationServiceListComponent
                 services={props.services}
                 history={props.history}
+                bookmarkedServicesIds={props.bookmarkedServicesIds}
                 bookmarkService={props.bookmarkService}
                 unbookmarkService={props.unbookmarkService}
                 openServiceDetail={props.openServiceDetail}
