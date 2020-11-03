@@ -15,11 +15,11 @@ import { HumanServiceData, Id } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
-import { EmptyComponent } from '../empty_component/empty_component';
 import { SearchServiceData } from '../../validation/search/types';
 import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
 import { I18n } from '@lingui/react';
 import OrgTabSwitcher from './org_tab_swticher';
+import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 
 export interface OrganizationProps {
     readonly history: History;
@@ -46,15 +46,19 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
 
     useEffect(() => {
         getOrganization(organizationId).then((res) => {
-            setOrganization(res.results)
+            setOrganization(res.results);
         });
         fetchServicesFromOrganization(organizationId).then((res: ReadonlyArray<SearchServiceData>) => {
-            setOrganizationServices(res)
+            setOrganizationServices(res);
         });
     }, []);
 
     if (!organization) {
-        return <EmptyComponent />
+        return (
+            <View style={{ height: '100%', width: '100%' }}>
+                <LoadingServiceListComponent />
+            </View>
+        )
     }
 
     return (

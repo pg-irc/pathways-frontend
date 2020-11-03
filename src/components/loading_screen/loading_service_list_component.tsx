@@ -15,6 +15,7 @@ export const LoadingServiceListComponent = (props: LoadingServiceListComponentPr
             <LoadingServiceListItemComponent />
             <LoadingServiceListItemComponent />
             <LoadingServiceListItemComponent />
+            <LoadingServiceListItemComponent />
             <LoadingSpinner />
         </Content>
     );
