@@ -6,7 +6,7 @@ import { ListRenderItemInfo, FlatList } from "react-native";
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { colors } from '../../application/styles';
 import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from "../../stores/analytics";
-import { BookmarkServiceAction, OpenServiceAction, UnbookmarkServiceAction } from "../../stores/services/actions";
+import { BookmarkServiceAction, OpenServiceAction, SaveServiceAction, UnbookmarkServiceAction } from "../../stores/services/actions";
 import { SaveOrganizationServicesScrollOffsetAction } from "../../stores/user_experience/actions";
 import { toHumanServiceData } from "../../validation/search/to_human_service_data";
 import { SearchServiceData } from "../../validation/search/types";
@@ -20,6 +20,7 @@ interface ServicesTabProps {
     readonly currentPathForAnalytics: string;
     readonly history: History;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
@@ -33,6 +34,7 @@ export const OrganizationServiceListComponent = (props: ServicesTabProps): JSX.E
         const item: SearchServiceData = itemInfo.item;
         const service: HumanServiceData = toHumanServiceData(item, props.bookmarkedServicesIds);
         const onPress = (): void => {
+            props.saveService(service);
             props.openServiceDetail(service);
             goToRouteWithParameter(Routes.ServiceDetail, service.id, props.history)();
         };

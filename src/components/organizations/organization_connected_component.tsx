@@ -7,7 +7,7 @@ import { OrganizationComponent, OrganizationActions, OrganizationProps } from '.
 import { HumanServiceData } from '../../validation/services/types';
 import { selectOrganizationServicesOffset } from '../../selectors/user_experience/select_organization_services_offset';
 import { Store } from '../../stores';
-import { BookmarkServiceAction, bookmarkService, UnbookmarkServiceAction, unbookmarkService, OpenServiceAction, openServiceDetail } from '../../stores/services/actions';
+import { BookmarkServiceAction, bookmarkService, UnbookmarkServiceAction, unbookmarkService, OpenServiceAction, openServiceDetail, saveService, SaveServiceAction } from '../../stores/services/actions';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps => ({
@@ -19,6 +19,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps
 type Actions =
     AnalyticsLinkPressedAction |
     OpenHeaderMenuAction |
+    SaveServiceAction |
     SaveOrganizationServicesScrollOffsetAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
@@ -33,6 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): OrganizationActions =>
     openServiceDetail: (service: HumanServiceData): OpenServiceAction => dispatch(openServiceDetail(service)),
     saveOrganizationServicesOffset: (offset: number): SaveOrganizationServicesScrollOffsetAction =>
         dispatch(saveOrganizationServicesScrollOffset(offset)),
+    saveService: (service: HumanServiceData): SaveServiceAction => dispatch(saveService(service)),
 });
 
 export const OrganizationConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(OrganizationComponent);

@@ -12,7 +12,7 @@ import { History, Location } from 'history';
 import { RouterProps } from '../../application/routing';
 import { analyticsLinkPressed, AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { HumanServiceData, Id } from '../../validation/services/types';
-import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, SaveServiceAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { SearchServiceData } from '../../validation/search/types';
@@ -29,6 +29,7 @@ export interface OrganizationProps {
 
 export interface OrganizationActions {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
+    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
@@ -82,6 +83,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             history={props.history}
                             organizationServicesOffset={props.organizationServicesOffset}
                             saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
+                            saveService={props.saveService}
                             bookmarkService={props.bookmarkService}
                             unbookmarkService={props.unbookmarkService}
                             openServiceDetail={props.openServiceDetail}
