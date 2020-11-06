@@ -4,6 +4,7 @@ import * as locale from './locale';
 import * as questionnaire from './questionnaire';
 import * as topics from './topics';
 import * as services from './services';
+import * as organizations from './organization';
 import * as explore from './explore';
 import * as taxonomies from './taxonomies';
 import * as notifications from './notifications';
@@ -20,6 +21,7 @@ export interface Store {
     readonly questionnaire: questionnaire.QuestionnaireStore;
     readonly topics: topics.TopicStore;
     readonly services: services.ServiceStore;
+    readonly organizations: organizations.OrganizationStore;
     readonly exploreSections: explore.ExploreStore;
     readonly taxonomies: taxonomies.TaxonomyStore;
     readonly notifications: notifications.NotificationStore;
@@ -37,6 +39,7 @@ export const buildDefaultStore = (): Store => ({
     questionnaire: questionnaire.buildDefaultStore(),
     topics: topics.buildDefaultStore(),
     services: services.buildDefaultStore(),
+    organizations: organizations.buildDefaultStore(),
     exploreSections: explore.buildDefaultStore(),
     taxonomies: taxonomies.buildDefaultStore(),
     notifications: notifications.buildDefaultStore(),
@@ -54,6 +57,7 @@ export const reducer = combineReducers<Store>({
     questionnaire: questionnaire.reducer,
     topics: topics.reducer,
     services: services.reducer,
+    organizations: organizations.reducer,
     exploreSections: explore.reducer,
     taxonomies: taxonomies.reducer,
     notifications: notifications.reducer,
