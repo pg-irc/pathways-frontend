@@ -4,8 +4,7 @@ import { OrganizationAction, SaveOrganizationAction } from './action';
 export { OrganizationStore };
 
 export const buildDefaultStore = (): OrganizationStore => ({
-    organization: undefined,
-    organizationServices: [],
+    organizations: {}
 });
 
 export const reducer = (store: OrganizationStore = buildDefaultStore(), action?: OrganizationAction): OrganizationStore => {
@@ -15,11 +14,6 @@ export const reducer = (store: OrganizationStore = buildDefaultStore(), action?:
     switch (action.type) {
         case constants.SAVE_ORGANIZATION:
             return saveOrganization(store, action);
-        case constants.SAVE_ORGANIZATION_SERVICES:
-            return ({
-                ...store,
-                organizationServices: action.payload.organizationServices,
-            });
         case constants.CLEAR_ALL_USER_DATA:
             return buildDefaultStore();
         default:
@@ -29,8 +23,8 @@ export const reducer = (store: OrganizationStore = buildDefaultStore(), action?:
 
 const saveOrganization = (store: OrganizationStore, action: SaveOrganizationAction): OrganizationStore => ({
     ...store,
-    organization: {
-        ...store.organization,
+    organizations: {
+        ...store.organizations,
         [action.payload.organization.id]: action.payload.organization,
     },
 });
