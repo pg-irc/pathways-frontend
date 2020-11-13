@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Trans } from '@lingui/react';
 import { Content, View } from 'native-base';
 import { colors } from '../../application/styles';
@@ -20,9 +20,11 @@ import { fetchServicesFromOrganization } from '../search/api/fetch_search_result
 import { I18n } from '@lingui/react';
 import OrgTabSwitcher from './org_tab_swticher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
+import { SaveOrganizationAction } from '../../stores/organization/action';
 
 export interface OrganizationProps {
     readonly history: History;
+    readonly organization: HumanOrganizationData;
     readonly organizationServicesOffset: number;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
 }
@@ -30,6 +32,7 @@ export interface OrganizationProps {
 export interface OrganizationActions {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
     readonly saveService: (service: HumanServiceData) => SaveServiceAction;
+    readonly saveOrganization: (organization: HumanOrganizationData) => SaveOrganizationAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
@@ -41,19 +44,34 @@ type Props = OrganizationProps & OrganizationActions & RouterProps;
 
 export const OrganizationComponent = (props: Props): JSX.Element => {
 
-    const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData) => void] = useState(undefined);
+    const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData) => void] = useState(props.organization);
     const [services, setOrganizationServices]: readonly [ReadonlyArray<SearchServiceData>, (services: ReadonlyArray<SearchServiceData>) => void] = useState(undefined);
     const organizationId = props.match.params.organizationId;
 
-    useEffect(() => {
+    const organizationNotInStore = ():boolean =>{
+        if(typeof organization == 'undefined'){
+            return true;
+        }
+        if(organizationId != organization.id){
+            return true;
+        }
+        return false;
+    }
+
+    const getOrgDetails = ():void =>{
         getOrganization(organizationId).then((res) => {
             setOrganization(res.results);
+            props.saveOrganization(res.results);
         });
         fetchServicesFromOrganization(organizationId).then((res: ReadonlyArray<SearchServiceData>) => {
             setOrganizationServices(res);
         });
-    }, []);
-
+    }
+    
+    if (organizationNotInStore()){
+        getOrgDetails();
+    }
+    
     if (!organization) {
         return (
             <View style={{ height: '100%', width: '100%' }}>
@@ -84,6 +102,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             organizationServicesOffset={props.organizationServicesOffset}
                             saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
                             saveService={props.saveService}
+                            saveOrganization={props.saveOrganization}
                             bookmarkService={props.bookmarkService}
                             unbookmarkService={props.unbookmarkService}
                             openServiceDetail={props.openServiceDetail}
