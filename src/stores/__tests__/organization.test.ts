@@ -3,11 +3,14 @@ import * as constants from '../../application/constants';
 import { OrganizationStore, reducer } from '../organization';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 import { buildNormalizedOrganizations, HumanOrganizationDataBuilder } from './helpers/organization_helpers';
-import { SaveOrganizationAction } from '../organization/action';
+import { SaveOrganizationAction, SaveOrganizationServicesAction } from '../organization/action';
+import { SearchServiceData } from '../../validation/search/types';
+import { aString } from '../../application/helpers/random_test_values';
+import { aGeoLocation, anAddress, anOrganization } from '../../validation/search/__tests__/helpers/search_schema';
 
 describe('organizations reducer', () => {
-    const anOrganization = new HumanOrganizationDataBuilder();
-    const theStore: OrganizationStore = buildNormalizedOrganizations([anOrganization]);
+    const anOrganizationData = new HumanOrganizationDataBuilder();
+    const theStore: OrganizationStore = buildNormalizedOrganizations([anOrganizationData], []);
 
     describe('when sending a save search organization action', () => {
 
@@ -24,13 +27,37 @@ describe('organizations reducer', () => {
             expect(Object.keys(newOrganization).length).toEqual(5);
             expect(storeOrganization).toEqual(newOrganization);
         });
-
     });
 
+    describe('when sending a save search organization action', () => {
+
+        it('updates the store with the new organization', () => {
+            const organizationServices: ReadonlyArray<SearchServiceData> = [{
+                type: 'SearchServiceData',
+                service_name: aString(),
+                service_id: aString(),
+                service_description: aString(),
+                address: anAddress(),
+                organization: anOrganization(),
+                _geoloc: aGeoLocation(),
+                email: aString(),
+            }];
+            const action: SaveOrganizationServicesAction = {
+                type: constants.SAVE_ORGANIZATION_SERVICES,
+                payload: {
+                    organizationServices: organizationServices,
+                },
+            };
+            const store = reducer(theStore, action);
+            const storeOrganizationServices = store.organizationServices[0];
+            expect(store.organizationServices.length).toEqual(1);
+            expect(storeOrganizationServices).toEqual(organizationServices[0]);
+        });
+    });
 
     describe('when clear all user data action is dispatched', () => {
         const organizationBuilder = new HumanOrganizationDataBuilder();
-        const store = buildNormalizedOrganizations([organizationBuilder]);
+        const store = buildNormalizedOrganizations([organizationBuilder], []);
         const action: ClearAllUserDataAction = {
             type: constants.CLEAR_ALL_USER_DATA,
         };
