@@ -20,3 +20,14 @@ export const aGeoLocation = (): any => ({
     lat: aNumber(),
     lng: aNumber(),
 });
+
+export const anSearchService = (): any => ({
+    type: 'SearchServiceData',
+    service_name: aString(),
+    service_id: aString(),
+    service_description: aString(),
+    address: anAddress(),
+    organization: anOrganization(),
+    _geoloc: aGeoLocation(),
+    email: aString(),
+});

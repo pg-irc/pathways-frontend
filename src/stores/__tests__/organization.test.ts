@@ -5,16 +5,17 @@ import { ClearAllUserDataAction } from '../questionnaire/actions';
 import { buildNormalizedOrganizations, HumanOrganizationDataBuilder } from './helpers/organization_helpers';
 import { SaveOrganizationAction, SaveOrganizationServicesAction } from '../organization/action';
 import { SearchServiceData } from '../../validation/search/types';
-import { aString } from '../../application/helpers/random_test_values';
-import { aGeoLocation, anAddress, anOrganization } from '../../validation/search/__tests__/helpers/search_schema';
+import { anSearchService } from '../../validation/search/__tests__/helpers/search_schema';
 
 describe('organizations reducer', () => {
-    const anOrganizationData = new HumanOrganizationDataBuilder();
-    const theStore: OrganizationStore = buildNormalizedOrganizations([anOrganizationData], []);
+    const oldOrganizationBuilder = new HumanOrganizationDataBuilder();
+    const oldServices: ReadonlyArray<SearchServiceData> = [anSearchService()];
+    const theStore: OrganizationStore = buildNormalizedOrganizations([oldOrganizationBuilder], oldServices);
+    const newServices: ReadonlyArray<SearchServiceData> = [anSearchService(), anSearchService()];
 
     describe('when sending a save search organization action', () => {
 
-        it('updates the store with the new organization', () => {
+        it('updates the store with the new organization in addition to old Organization', () => {
             const newOrganization = new HumanOrganizationDataBuilder().build();
             const action: SaveOrganizationAction = {
                 type: constants.SAVE_ORGANIZATION,
@@ -23,35 +24,29 @@ describe('organizations reducer', () => {
                 },
             };
             const store = reducer(theStore, action);
-            const storeOrganization = store.organizations[newOrganization.id];
+            const storeNewOrganization = store.organizations[newOrganization.id];
+            const storeOldOrganization = store.organizations[oldOrganizationBuilder.id];
             expect(Object.keys(newOrganization).length).toEqual(5);
-            expect(storeOrganization).toEqual(newOrganization);
+            expect(storeNewOrganization).toEqual(newOrganization);
+            expect(storeOldOrganization).toEqual(oldOrganizationBuilder.build());
         });
     });
 
-    describe('when sending a save search organization action', () => {
+    describe('when sending a save organization services action', () => {
 
-        it('updates the store with the new organization', () => {
-            const organizationServices: ReadonlyArray<SearchServiceData> = [{
-                type: 'SearchServiceData',
-                service_name: aString(),
-                service_id: aString(),
-                service_description: aString(),
-                address: anAddress(),
-                organization: anOrganization(),
-                _geoloc: aGeoLocation(),
-                email: aString(),
-            }];
+        it('updates the store with new services replacing the old ones', () => {
             const action: SaveOrganizationServicesAction = {
                 type: constants.SAVE_ORGANIZATION_SERVICES,
                 payload: {
-                    organizationServices: organizationServices,
+                    organizationServices: newServices,
                 },
             };
             const store = reducer(theStore, action);
-            const storeOrganizationServices = store.organizationServices[0];
-            expect(store.organizationServices.length).toEqual(1);
-            expect(storeOrganizationServices).toEqual(organizationServices[0]);
+            const storeOrganizationServices = store.organizationServices;
+            expect(store.organizationServices.length).toEqual(newServices.length);
+            expect(storeOrganizationServices).toEqual(newServices);
+            expect(store.organizationServices).not.toEqual(oldServices);
+            expect(store.organizationServices.length).not.toEqual(oldServices.length);
         });
     });
 
