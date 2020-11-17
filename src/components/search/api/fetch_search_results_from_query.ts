@@ -5,6 +5,8 @@ import { LatLong } from '../../../validation/latlong/types';
 import { SearchServiceData } from '../../../validation/search/types';
 import { ALGOLIA_APPLICATION_ID } from 'react-native-dotenv';
 import BuildUrl from 'build-url';
+import { toHumanServiceData } from '../../../validation/search/to_human_service_data';
+import { HumanServiceData, Id } from '../../../validation/services/types';
 
 export interface AlgoliaResponse {
     readonly exhaustiveNbHits: boolean;
@@ -51,7 +53,7 @@ export const fetchSearchResultsFromQuery = async (
 };
 
 export const fetchServicesFromOrganization = async (
-    organizationId: string): Promise<ReadonlyArray<SearchServiceData>> => {
+    organizationId: string, bookmarkedServicesIds: ReadonlyArray<Id>): Promise<ReadonlyArray<HumanServiceData>> => {
     if (!organizationId) {
         return [];
     }
@@ -70,7 +72,9 @@ export const fetchServicesFromOrganization = async (
         });
 
         const responseJSON: AlgoliaResponse = await response.json();
-        return validateServiceSearchResponse(responseJSON.hits);
+        const validatedServiceSearchResponse = validateServiceSearchResponse(responseJSON.hits);
+        const humanServices = validatedServiceSearchResponse.map(item => toHumanServiceData(item, bookmarkedServicesIds))
+        return humanServices;
     } catch (Error) {
         return [];
     }

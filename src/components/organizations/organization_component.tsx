@@ -15,7 +15,6 @@ import { HumanServiceData, Id } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, SaveServiceAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
-import { SearchServiceData } from '../../validation/search/types';
 import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
 import { I18n } from '@lingui/react';
 import OrgTabSwitcher from './org_tab_swticher';
@@ -45,33 +44,33 @@ type Props = OrganizationProps & OrganizationActions & RouterProps;
 export const OrganizationComponent = (props: Props): JSX.Element => {
 
     const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData) => void] = useState(props.organization);
-    const [services, setOrganizationServices]: readonly [ReadonlyArray<SearchServiceData>, (services: ReadonlyArray<SearchServiceData>) => void] = useState(undefined);
+    const [services, setOrganizationServices]: readonly [ReadonlyArray<HumanServiceData>, (services: ReadonlyArray<HumanServiceData>) => void] = useState(undefined);
     const organizationId = props.match.params.organizationId;
 
-    const organizationNotInStore = ():boolean =>{
-        if(typeof organization == 'undefined'){
+    const organizationNotInStore = (): boolean => {
+        if (typeof organization == 'undefined') {
             return true;
         }
-        if(organizationId != organization.id){
+        if (organizationId != organization.id) {
             return true;
         }
         return false;
     }
 
-    const getOrgDetails = ():void =>{
+    const getOrgDetails = (): void => {
         getOrganization(organizationId).then((res) => {
             setOrganization(res.results);
             props.saveOrganization(res.results);
         });
-        fetchServicesFromOrganization(organizationId).then((res: ReadonlyArray<SearchServiceData>) => {
+        fetchServicesFromOrganization(organizationId, props.bookmarkedServicesIds).then((res: ReadonlyArray<HumanServiceData>) => {
             setOrganizationServices(res);
         });
     }
-    
-    if (organizationNotInStore()){
+
+    if (organizationNotInStore()) {
         getOrgDetails();
     }
-    
+
     if (!organization) {
         return (
             <View style={{ height: '100%', width: '100%' }}>
@@ -108,7 +107,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             openServiceDetail={props.openServiceDetail}
                             openHeaderMenu={props.openHeaderMenu}
                             currentPathForAnalytics={props.location.pathname}
-                             />
+                        />
                     </Content>
                 </View>
             )}
