@@ -12,6 +12,7 @@ export function buildDefaultStore(): types.ServiceStore {
     return {
         services: {},
         servicesByTopic: {},
+        servicesByOrganization: {},
     };
 }
 
@@ -28,6 +29,8 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServicesFailure(store, action);
         case constants.SAVE_SERVICE:
             return saveService(store, action);
+        case constants.SAVE_ORGANIZATION_SERVICES:
+            return updateOrganizationServices(store, action);
         case constants.BOOKMARK_SERVICE:
             return updateServiceBookmarkInServicesMap(store, action, true);
         case constants.UNBOOKMARK_SERVICE:
@@ -95,6 +98,24 @@ const createServiceMap = (services: ReadonlyArray<types.HumanServiceData>): type
         return { ...serviceMap, [service.id]: service };
     };
     return services.reduce(theReducer, {});
+};
+
+const updateOrganizationServices = (store: types.ServiceStore, action: actions.SaveOrganizationServicesAction): types.ServiceStore => {
+    const newServices = action.payload.services;
+    const organizationId = action.payload.organizationId;
+    const newServicesAsMap = createServiceMap(newServices);
+    const newServiceIds = R.map((service: types.HumanServiceData): string => service.id, newServices);
+    return {
+        ...store,
+        services: {
+            ...store.services,
+            ...newServicesAsMap,
+        },
+        servicesByOrganization: {
+            ...store.servicesByOrganization,
+            [organizationId]: newServiceIds,
+        },
+    };
 };
 
 const saveService = (store: types.ServiceStore, action: actions.SaveServiceAction): types.ServiceStore => ({

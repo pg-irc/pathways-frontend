@@ -15,6 +15,8 @@ export type BuildServicesSuccessAction = Readonly<ReturnType<typeof buildService
 
 export type BuildServicesErrorAction = Readonly<ReturnType<typeof buildServicesError>>;
 
+export type SaveOrganizationServicesAction = Readonly<ReturnType<typeof saveOrganizationServices>>;
+
 export type SaveServiceAction = Readonly<ReturnType<typeof saveService>>;
 export type OpenServiceAction = Readonly<ReturnType<typeof openServiceDetail>>;
 
@@ -25,6 +27,7 @@ export type ServicesAction =
     BuildServicesRequestAction |
     BuildServicesSuccessAction |
     BuildServicesErrorAction |
+    SaveOrganizationServicesAction |
     SaveServiceAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
@@ -49,6 +52,11 @@ export const buildServicesSuccess = (topicId: TopicId, services: ReadonlyArray<H
 // tslint:disable-next-line:typedef
 export const buildServicesError = (topicId: TopicId, errorMessageType: Errors) => (
     helpers.makeAction(constants.LOAD_SERVICES_FAILURE, { topicId, errorMessageType })
+);
+
+// tslint:disable-next-line:typedef
+export const saveOrganizationServices = (organizationId: string, services: ReadonlyArray<HumanServiceData>) => (
+    helpers.makeAction(constants.SAVE_ORGANIZATION_SERVICES, { organizationId, services })
 );
 
 // tslint:disable-next-line:typedef

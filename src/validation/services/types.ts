@@ -59,6 +59,10 @@ export interface ServicesForAllTopics {
     readonly [topicId: string]: ServicesForTopic;
 }
 
+export interface ServicesForOrganization {
+    readonly [organizationId: string]: ReadonlyArray<Id>;
+}
+
 export const isServiceLoading = (services: ServicesForTopic): boolean => (
     services.type === constants.LOADING_SERVICES_FOR_TOPIC
 );
@@ -70,4 +74,5 @@ export interface ServiceMap {
 export interface ServiceStore {
     readonly services: ServiceMap;
     readonly servicesByTopic: ServicesForAllTopics;
+    readonly servicesByOrganization: ServicesForOrganization;
 }
