@@ -3,15 +3,11 @@ import * as constants from '../../application/constants';
 import { OrganizationStore, reducer } from '../organization';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 import { buildNormalizedOrganizations, HumanOrganizationDataBuilder } from './helpers/organization_helpers';
-import { SaveOrganizationAction, SaveOrganizationServicesAction } from '../organization/action';
-import { SearchServiceData } from '../../validation/search/types';
-import { anSearchService } from '../../validation/search/__tests__/helpers/search_schema';
+import { SaveOrganizationAction } from '../organization/action';
 
 describe('organizations reducer', () => {
     const oldOrganizationBuilder = new HumanOrganizationDataBuilder();
-    const oldServices: ReadonlyArray<SearchServiceData> = [anSearchService()];
-    const theStore: OrganizationStore = buildNormalizedOrganizations([oldOrganizationBuilder], oldServices);
-    const newServices: ReadonlyArray<SearchServiceData> = [anSearchService(), anSearchService()];
+    const theStore: OrganizationStore = buildNormalizedOrganizations([oldOrganizationBuilder]);
 
     describe('when sending a save search organization action', () => {
 
@@ -32,27 +28,9 @@ describe('organizations reducer', () => {
         });
     });
 
-    describe('when sending a save organization services action', () => {
-
-        it('updates the store with new services replacing the old ones', () => {
-            const action: SaveOrganizationServicesAction = {
-                type: constants.SAVE_ORGANIZATION_SERVICES,
-                payload: {
-                    organizationServices: newServices,
-                },
-            };
-            const store = reducer(theStore, action);
-            const storeOrganizationServices = store.organizationServices;
-            expect(store.organizationServices.length).toEqual(newServices.length);
-            expect(storeOrganizationServices).toEqual(newServices);
-            expect(store.organizationServices).not.toEqual(oldServices);
-            expect(store.organizationServices.length).not.toEqual(oldServices.length);
-        });
-    });
-
     describe('when clear all user data action is dispatched', () => {
         const organizationBuilder = new HumanOrganizationDataBuilder();
-        const store = buildNormalizedOrganizations([organizationBuilder], []);
+        const store = buildNormalizedOrganizations([organizationBuilder]);
         const action: ClearAllUserDataAction = {
             type: constants.CLEAR_ALL_USER_DATA,
         };

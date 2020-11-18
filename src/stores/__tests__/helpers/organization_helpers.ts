@@ -1,15 +1,12 @@
 // tslint:disable:no-class no-this readonly-keyword no-expression-statement
 import { aString, aNumber } from '../../../application/helpers/random_test_values';
 import { HumanOrganizationData, OrganizationMap, OrganizationStore } from '../../../validation/organizations/types';
-import { SearchServiceData } from '../../../validation/search/types';
 import { Id } from '../../services';
 
 export const buildNormalizedOrganizations = (
     organizations: ReadonlyArray<HumanOrganizationDataBuilder>,
-    organizationServices: ReadonlyArray<SearchServiceData>,
 ): OrganizationStore => ({
     organizations: buildOrganizationMap(organizations),
-    organizationServices: organizationServices,
 });
 
 export const buildOrganizationMap = (organizations: ReadonlyArray<HumanOrganizationDataBuilder>): OrganizationMap => {

@@ -1,4 +1,3 @@
-import { SearchServiceData } from "../search/types";
 import { Id } from "../services/types";
 
 export interface HumanOrganizationData {
@@ -15,5 +14,4 @@ export interface OrganizationMap {
 
 export interface OrganizationStore {
     readonly organizations: OrganizationMap;
-    readonly organizationServices: ReadonlyArray<SearchServiceData>;
 }
