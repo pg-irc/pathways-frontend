@@ -57,6 +57,7 @@ export const buildGeoCoderUrl = (location: string): string => (
     BuildUrl('https://geocoder.ca', {
         queryParams: {
             locate: location,
+            region: 'BC',
             json: '1',
         },
     })
