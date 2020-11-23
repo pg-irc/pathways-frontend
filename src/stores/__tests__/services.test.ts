@@ -8,6 +8,7 @@ import {
     SaveServiceAction,
     BookmarkServiceAction,
     UnbookmarkServiceAction,
+    SaveOrganizationServicesAction,
 } from '../services/actions';
 import { HumanServiceData, ServiceStore } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
@@ -164,6 +165,24 @@ describe('services reducer', () => {
 
         it('does not update existing services', () => {
             expect(store.services).toEqual(theStore.services);
+        });
+    });
+
+    describe('when sending a save organization services action', () => {
+
+        it('updates the store with the new services', () => {
+            const organizationId = aString();
+            const anOrganizationService = new HumanServiceDataBuilder().build();
+            const action: SaveOrganizationServicesAction = {
+                type: constants.SAVE_ORGANIZATION_SERVICES,
+                payload: {
+                    organizationId: organizationId,
+                    services: [anOrganizationService]
+                },
+            };
+            const store = reducer(theStore, action);
+            const storeService = store.services[anOrganizationService.id];
+            expect(storeService).toEqual(anOrganizationService);
         });
     });
 
