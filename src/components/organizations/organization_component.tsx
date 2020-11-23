@@ -12,7 +12,7 @@ import { History, Location } from 'history';
 import { RouterProps } from '../../application/routing';
 import { analyticsLinkPressed, AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { HumanServiceData, Id } from '../../validation/services/types';
-import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, SaveServiceAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, SaveServiceAction, SaveOrganizationServicesAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
@@ -24,6 +24,7 @@ import { SaveOrganizationAction } from '../../stores/organization/action';
 export interface OrganizationProps {
     readonly history: History;
     readonly organization: HumanOrganizationData;
+    readonly servicesForOrganization: ReadonlyArray<HumanServiceData>;
     readonly organizationServicesOffset: number;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
 }
@@ -36,6 +37,7 @@ export interface OrganizationActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly saveServicesForOrganization: (organizationId: string, services: ReadonlyArray<HumanServiceData>) => SaveOrganizationServicesAction;
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
@@ -44,7 +46,7 @@ type Props = OrganizationProps & OrganizationActions & RouterProps;
 export const OrganizationComponent = (props: Props): JSX.Element => {
 
     const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData) => void] = useState(props.organization);
-    const [services, setOrganizationServices]: readonly [ReadonlyArray<HumanServiceData>, (services: ReadonlyArray<HumanServiceData>) => void] = useState(undefined);
+    const [services, setOrganizationServices]: readonly [ReadonlyArray<HumanServiceData>, (services: ReadonlyArray<HumanServiceData>) => void] = useState(props.servicesForOrganization);
     const organizationId = props.match.params.organizationId;
 
     const organizationNotInStore = (): boolean => {
@@ -64,6 +66,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
         });
         fetchServicesFromOrganization(organizationId, props.bookmarkedServicesIds).then((res: ReadonlyArray<HumanServiceData>) => {
             setOrganizationServices(res);
+            props.saveServicesForOrganization(organizationId, res);
         });
     }
 
@@ -94,7 +97,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                         <OrgTabSwitcher
                             i18n={i18n}
                             organization={organization}
-                            services={services}
+                            servicesForOrganization={services}
                             bookmarkedServicesIds={props.bookmarkedServicesIds}
                             analyticsLinkPressed={analyticsLinkPressed}
                             history={props.history}
@@ -106,6 +109,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             unbookmarkService={props.unbookmarkService}
                             openServiceDetail={props.openServiceDetail}
                             openHeaderMenu={props.openHeaderMenu}
+                            saveServicesForOrganization={props.saveServicesForOrganization}
                             currentPathForAnalytics={props.location.pathname}
                         />
                     </Content>
