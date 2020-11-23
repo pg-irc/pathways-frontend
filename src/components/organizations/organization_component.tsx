@@ -12,7 +12,7 @@ import { History, Location } from 'history';
 import { RouterProps } from '../../application/routing';
 import { analyticsLinkPressed, AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { HumanServiceData, Id } from '../../validation/services/types';
-import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, SaveServiceAction, SaveServicesByOrganizationAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, SaveServicesByOrganizationAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
@@ -31,7 +31,6 @@ export interface OrganizationProps {
 
 export interface OrganizationActions {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
-    readonly saveService: (service: HumanServiceData) => SaveServiceAction;
     readonly saveOrganization: (organization: HumanOrganizationData) => SaveOrganizationAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
@@ -103,7 +102,6 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             history={props.history}
                             organizationServicesOffset={props.organizationServicesOffset}
                             saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
-                            saveService={props.saveService}
                             saveOrganization={props.saveOrganization}
                             bookmarkService={props.bookmarkService}
                             unbookmarkService={props.unbookmarkService}
