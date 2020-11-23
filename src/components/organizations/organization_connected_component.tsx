@@ -7,7 +7,7 @@ import { OrganizationComponent, OrganizationActions, OrganizationProps } from '.
 import { HumanServiceData } from '../../validation/services/types';
 import { selectOrganizationServicesOffset } from '../../selectors/user_experience/select_organization_services_offset';
 import { Store } from '../../stores';
-import { BookmarkServiceAction, bookmarkService, UnbookmarkServiceAction, unbookmarkService, OpenServiceAction, openServiceDetail, saveService, SaveServiceAction, SaveOrganizationServicesAction, saveOrganizationServices } from '../../stores/services/actions';
+import { BookmarkServiceAction, bookmarkService, UnbookmarkServiceAction, unbookmarkService, OpenServiceAction, openServiceDetail, saveService, SaveServiceAction, SaveServicesByOrganizationAction, saveServicesByOrganization } from '../../stores/services/actions';
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { saveOrganization, SaveOrganizationAction } from '../../stores/organization/action';
@@ -27,7 +27,7 @@ type Actions =
     OpenHeaderMenuAction |
     SaveServiceAction |
     SaveOrganizationAction |
-    SaveOrganizationServicesAction |
+    SaveServicesByOrganizationAction |
     SaveOrganizationServicesScrollOffsetAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
@@ -44,7 +44,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): OrganizationActions =>
         dispatch(saveOrganizationServicesScrollOffset(offset)),
     saveService: (service: HumanServiceData): SaveServiceAction => dispatch(saveService(service)),
     saveOrganization: (organization: HumanOrganizationData): SaveOrganizationAction => dispatch(saveOrganization(organization)),
-    saveServicesForOrganization: (organizationId: string, services: ReadonlyArray<HumanServiceData>): SaveOrganizationServicesAction => dispatch(saveOrganizationServices(organizationId, services)),
+    saveServicesByOrganization: (organizationId: string, services: ReadonlyArray<HumanServiceData>): SaveServicesByOrganizationAction => dispatch(saveServicesByOrganization(organizationId, services)),
 });
 
 export const OrganizationConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(OrganizationComponent);

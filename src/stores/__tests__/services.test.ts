@@ -8,7 +8,7 @@ import {
     SaveServiceAction,
     BookmarkServiceAction,
     UnbookmarkServiceAction,
-    SaveOrganizationServicesAction,
+    SaveServicesByOrganizationAction,
 } from '../services/actions';
 import { HumanServiceData, ServiceStore } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
@@ -173,8 +173,8 @@ describe('services reducer', () => {
         it('updates the store with the new services', () => {
             const organizationId = aString();
             const anOrganizationService = new HumanServiceDataBuilder().build();
-            const action: SaveOrganizationServicesAction = {
-                type: constants.SAVE_ORGANIZATION_SERVICES,
+            const action: SaveServicesByOrganizationAction = {
+                type: constants.SAVE_SERVICES_BY_ORGANIZATION,
                 payload: {
                     organizationId: organizationId,
                     services: [anOrganizationService]

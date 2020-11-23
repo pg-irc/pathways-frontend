@@ -29,7 +29,7 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServicesFailure(store, action);
         case constants.SAVE_SERVICE:
             return saveService(store, action);
-        case constants.SAVE_ORGANIZATION_SERVICES:
+        case constants.SAVE_SERVICES_BY_ORGANIZATION:
             return updateOrganizationServices(store, action);
         case constants.BOOKMARK_SERVICE:
             return updateServiceBookmarkInServicesMap(store, action, true);
@@ -100,7 +100,7 @@ const createServiceMap = (services: ReadonlyArray<types.HumanServiceData>): type
     return services.reduce(theReducer, {});
 };
 
-const updateOrganizationServices = (store: types.ServiceStore, action: actions.SaveOrganizationServicesAction): types.ServiceStore => {
+const updateOrganizationServices = (store: types.ServiceStore, action: actions.SaveServicesByOrganizationAction): types.ServiceStore => {
     const newServices = action.payload.services;
     const organizationId = action.payload.organizationId;
     const newServicesAsMap = createServiceMap(newServices);

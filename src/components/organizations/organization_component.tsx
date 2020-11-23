@@ -12,7 +12,7 @@ import { History, Location } from 'history';
 import { RouterProps } from '../../application/routing';
 import { analyticsLinkPressed, AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { HumanServiceData, Id } from '../../validation/services/types';
-import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, SaveServiceAction, SaveOrganizationServicesAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, SaveServiceAction, SaveServicesByOrganizationAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
@@ -37,7 +37,7 @@ export interface OrganizationActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly saveServicesForOrganization: (organizationId: string, services: ReadonlyArray<HumanServiceData>) => SaveOrganizationServicesAction;
+    readonly saveServicesByOrganization: (organizationId: string, services: ReadonlyArray<HumanServiceData>) => SaveServicesByOrganizationAction;
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
@@ -66,7 +66,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
         });
         fetchServicesFromOrganization(organizationId, props.bookmarkedServicesIds).then((res: ReadonlyArray<HumanServiceData>) => {
             setOrganizationServices(res);
-            props.saveServicesForOrganization(organizationId, res);
+            props.saveServicesByOrganization(organizationId, res);
         });
     }
 
@@ -109,7 +109,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             unbookmarkService={props.unbookmarkService}
                             openServiceDetail={props.openServiceDetail}
                             openHeaderMenu={props.openHeaderMenu}
-                            saveServicesForOrganization={props.saveServicesForOrganization}
+                            saveServicesByOrganization={props.saveServicesByOrganization}
                             currentPathForAnalytics={props.location.pathname}
                         />
                     </Content>
