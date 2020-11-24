@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Trans } from '@lingui/react';
 import { Content, View } from 'native-base';
 import { colors } from '../../application/styles';
@@ -44,15 +44,13 @@ type Props = OrganizationProps & OrganizationActions & RouterProps;
 
 export const OrganizationComponent = (props: Props): JSX.Element => {
 
-    const [organization, setOrganization]: readonly [HumanOrganizationData, (org: HumanOrganizationData) => void] = useState(props.organization);
-    const [services, setOrganizationServices]: readonly [ReadonlyArray<HumanServiceData>, (services: ReadonlyArray<HumanServiceData>) => void] = useState(props.servicesForOrganization);
     const organizationId = props.match.params.organizationId;
 
     const organizationNotInStore = (): boolean => {
-        if (typeof organization == 'undefined') {
+        if (typeof props.organization == 'undefined') {
             return true;
         }
-        if (organizationId != organization.id) {
+        if (organizationId != props.organization.id) {
             return true;
         }
         return false;
@@ -60,11 +58,9 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
 
     const getOrgDetails = (): void => {
         getOrganization(organizationId).then((res) => {
-            setOrganization(res.results);
             props.saveOrganization(res.results);
         });
         fetchServicesFromOrganization(organizationId, props.bookmarkedServicesIds).then((res: ReadonlyArray<HumanServiceData>) => {
-            setOrganizationServices(res);
             props.saveServicesByOrganization(organizationId, res);
         });
     }
@@ -73,7 +69,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
         getOrgDetails();
     }
 
-    if (!organization) {
+    if (!props.organization) {
         return (
             <View style={{ height: '100%', width: '100%' }}>
                 <LoadingServiceListComponent />
@@ -92,11 +88,11 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                     />
                     <Content padder>
                         <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
-                        <TitleComponent title={organization.name.toUpperCase()} />
+                        <TitleComponent title={props.organization.name.toUpperCase()} />
                         <OrgTabSwitcher
                             i18n={i18n}
-                            organization={organization}
-                            servicesForOrganization={services}
+                            organization={props.organization}
+                            servicesForOrganization={props.servicesForOrganization}
                             bookmarkedServicesIds={props.bookmarkedServicesIds}
                             analyticsLinkPressed={analyticsLinkPressed}
                             history={props.history}
