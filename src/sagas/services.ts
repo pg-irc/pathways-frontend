@@ -13,14 +13,14 @@ import { isDeviceOnline } from '../application/helpers/is_device_online';
 import { AlgoliaResponse, fetchServicesFromOrganization } from '../components/search/api/fetch_search_results_from_query';
 import { validateServiceSearchResponse } from '../validation/search';
 import { toHumanServiceData } from '../validation/search/to_human_service_data';
-import { SaveOrganizationAction } from '../stores/organization/action';
+import { OpenOrganizationAction } from '../stores/organization/action';
 
 export function* watchUpdateServicesForTopic(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateServicesForTopic);
 }
 
 export function* watchUpdateServicesForOrganization(): IterableIterator<ForkEffect> {
-    yield takeLatest(constants.SAVE_ORGANIZATION, updateServicesForOrganization);
+    yield takeLatest(constants.OPEN_ORGANIZATION, updateServicesForOrganization);
 }
 
 export function* updateServicesForTopic(action: actions.BuildServicesRequestAction): UpdateResult {
@@ -58,8 +58,8 @@ export function* updateServicesForTopic(action: actions.BuildServicesRequestActi
     }
 }
 
-export function* updateServicesForOrganization(action: SaveOrganizationAction): UpdateServicesForOrganizationResult {
-    const organizationId = action.payload.organization.id;
+export function* updateServicesForOrganization(action: OpenOrganizationAction): UpdateServicesForOrganizationResult {
+    const organizationId = action.payload.organizationId;
     try {
         const algoliaResponse: AlgoliaResponse = yield call(fetchServicesFromOrganization, organizationId);
 
