@@ -12,10 +12,9 @@ import { History, Location } from 'history';
 import { RouterProps } from '../../application/routing';
 import { analyticsLinkPressed, AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { HumanServiceData, Id } from '../../validation/services/types';
-import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction, SaveServicesByOrganizationAction } from '../../stores/services/actions';
+import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
-import { fetchServicesFromOrganization } from '../search/api/fetch_search_results_from_query';
 import { I18n } from '@lingui/react';
 import OrgTabSwitcher from './org_tab_swticher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
@@ -36,7 +35,6 @@ export interface OrganizationActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly saveServicesByOrganization: (organizationId: string, services: ReadonlyArray<HumanServiceData>) => SaveServicesByOrganizationAction;
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
@@ -59,9 +57,6 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
     const getOrgDetails = (): void => {
         getOrganization(organizationId).then((res) => {
             props.saveOrganization(res.results);
-        });
-        fetchServicesFromOrganization(organizationId, props.bookmarkedServicesIds).then((res: ReadonlyArray<HumanServiceData>) => {
-            props.saveServicesByOrganization(organizationId, res);
         });
     }
 
@@ -103,7 +98,6 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             unbookmarkService={props.unbookmarkService}
                             openServiceDetail={props.openServiceDetail}
                             openHeaderMenu={props.openHeaderMenu}
-                            saveServicesByOrganization={props.saveServicesByOrganization}
                             currentPathForAnalytics={props.location.pathname}
                         />
                     </Content>

@@ -10,7 +10,6 @@ import { OrganizationActions, OrganizationProps } from './organization_component
 import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { OrganizationServiceListComponent } from './organization_service_list_component';
 import { HumanServiceData } from '../../validation/services/types';
-import { SaveServicesByOrganizationAction } from '../../stores/services/actions';
 
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
@@ -20,7 +19,6 @@ interface OrgTabSwitcherProps {
     readonly organization: HumanOrganizationData;
     readonly servicesForOrganization: ReadonlyArray<HumanServiceData>;
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
-    readonly saveServicesByOrganization: (organizationId: string, services: ReadonlyArray<HumanServiceData>) => SaveServicesByOrganizationAction;
     readonly currentPathForAnalytics: string;
 }
 

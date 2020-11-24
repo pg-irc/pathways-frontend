@@ -3,7 +3,7 @@ import createSagaMiddleware, { SagaMiddleware } from 'redux-saga';
 
 import { watchLoadLocale, watchSaveLocale, watchLocaleSuccess } from './locale';
 import { watchLoadFonts } from './fonts';
-import { watchUpdateServicesForTopic } from './services';
+import { watchUpdateServicesForOrganization, watchUpdateServicesForTopic } from './services';
 import { watchLoadUserData, watchUserStateChangesToSaveUserData } from './user_data';
 import { watchAnalytics } from './analytics/watch_analytics';
 import { watchRequestPushNotificationToken } from './post_push_notification_token';
@@ -30,6 +30,7 @@ export function runSaga(middleware: SagaMiddleware<object>): void {
     middleware.run(watchUserStateChangesToSaveUserData);
     middleware.run(watchLoadUserData);
     middleware.run(watchUpdateServicesForTopic);
+    middleware.run(watchUpdateServicesForOrganization);
     middleware.run(watchAnalytics);
     middleware.run(watchRequestPushNotificationToken);
     middleware.run(watchRequestGetAlerts);
