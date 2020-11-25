@@ -30,6 +30,9 @@ const toValidLatLong = (latitude: number, longitude: number): LatLong => {
         throw new Error(`GeoCoder field "longt" is not a number: ${longitude}`);
     }
 
+    // tslint:disable-next-line: no-expression-statement
+    console.log(`Geocoder got ${latitude}, ${longitude}`);
+
     return { lat: latitude, lng: longitude };
 };
 
