@@ -13,7 +13,6 @@ import { RouterProps } from '../../application/routing';
 import { analyticsLinkPressed, AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
-import { getOrganization } from '../../api';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { I18n } from '@lingui/react';
 import OrgTabSwitcher from './org_tab_swticher';
@@ -42,13 +41,7 @@ type Props = OrganizationProps & OrganizationActions & RouterProps;
 
 export const OrganizationComponent = (props: Props): JSX.Element => {
 
-    const organizationId = props.match.params.organizationId;
-
     if (typeof props.organization == 'undefined') {
-        getOrganization(organizationId).then((res) => {
-            props.saveOrganization(res.results);
-        });
-
         return (
             <View style={{ height: '100%', width: '100%' }}>
                 <LoadingServiceListComponent />

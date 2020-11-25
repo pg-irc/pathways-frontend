@@ -9,6 +9,7 @@ import { watchAnalytics } from './analytics/watch_analytics';
 import { watchRequestPushNotificationToken } from './post_push_notification_token';
 import { watchRequestGetAlerts } from './alerts';
 import { watchSendFeedback } from './feedback';
+import { watchUpdateOrganization } from './organization';
 
 export const sagaMiddleware = createSagaMiddleware();
 
@@ -27,6 +28,7 @@ export function runSaga(middleware: SagaMiddleware<object>): void {
     middleware.run(watchLoadLocale);
     middleware.run(watchLocaleSuccess);
     middleware.run(watchSaveLocale);
+    middleware.run(watchUpdateOrganization);
     middleware.run(watchUserStateChangesToSaveUserData);
     middleware.run(watchLoadUserData);
     middleware.run(watchUpdateServicesForTopic);
