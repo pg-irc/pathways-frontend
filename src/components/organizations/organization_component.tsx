@@ -44,27 +44,11 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
 
     const organizationId = props.match.params.organizationId;
 
-    const organizationNotInStore = (): boolean => {
-        if (typeof props.organization == 'undefined') {
-            return true;
-        }
-        if (organizationId != props.organization.id) {
-            return true;
-        }
-        return false;
-    }
-
-    const getOrgDetails = (): void => {
+    if (typeof props.organization == 'undefined') {
         getOrganization(organizationId).then((res) => {
             props.saveOrganization(res.results);
         });
-    }
 
-    if (organizationNotInStore()) {
-        getOrgDetails();
-    }
-
-    if (!props.organization) {
         return (
             <View style={{ height: '100%', width: '100%' }}>
                 <LoadingServiceListComponent />
