@@ -17,7 +17,6 @@ import { HumanOrganizationData } from '../../validation/organizations/types';
 import { I18n } from '@lingui/react';
 import OrgTabSwitcher from './org_tab_swticher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
-import { SaveOrganizationAction } from '../../stores/organization/action';
 
 export interface OrganizationProps {
     readonly history: History;
@@ -29,7 +28,6 @@ export interface OrganizationProps {
 
 export interface OrganizationActions {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;
-    readonly saveOrganization: (organization: HumanOrganizationData) => SaveOrganizationAction;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
@@ -70,7 +68,6 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             history={props.history}
                             organizationServicesOffset={props.organizationServicesOffset}
                             saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
-                            saveOrganization={props.saveOrganization}
                             bookmarkService={props.bookmarkService}
                             unbookmarkService={props.unbookmarkService}
                             openServiceDetail={props.openServiceDetail}
