@@ -24,8 +24,7 @@ interface OrgTabSwitcherProps {
 
 type Props = OrgTabSwitcherProps & OrganizationProps & OrganizationActions;
 
-export default function OrgTabSwitcher(props: Props) {
-    const [index, setIndex] = React.useState(0);
+export default function OrgTabSwitcher(props: Props): JSX.Element {
     const routes: TabRoutes = [
         { key: 'about', title: props.i18n._(t`About`) },
         { key: 'services', title: props.i18n._(t`Services`) },
@@ -62,10 +61,10 @@ export default function OrgTabSwitcher(props: Props) {
 
     return (
         <TabView
-            navigationState={{ index, routes }}
+            navigationState={{ index: props.organizationTab , routes }}
             renderScene={renderScene}
             renderTabBar={renderTabBar}
-            onIndexChange={setIndex}
+            onIndexChange={props.setOrganizationTab}
             initialLayout={{ width: Dimensions.get('window').width }}
         />
     );

@@ -11,10 +11,13 @@ import { BookmarkServiceAction, bookmarkService, UnbookmarkServiceAction, unbook
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import { selectOrganizationById } from '../../selectors/organizations/select_organization_by_id';
 import { selectServicesForOrganization } from '../../selectors/services/select_services_for_organization';
+import { saveOrganizationTab, SaveOrganizationTabAction } from '../../stores/organization/action';
+import { selectOrganizationTab } from '../../selectors/organizations/select_organization_tab';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps => ({
     history: ownProps.history,
     organization: selectOrganizationById(store, ownProps.match.params.organizationId),
+    organizationTab: selectOrganizationTab(store),
     servicesForOrganization: selectServicesForOrganization(ownProps.match.params.organizationId, store),
     organizationServicesOffset: selectOrganizationServicesOffset(store),
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
@@ -23,6 +26,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps
 type Actions =
     AnalyticsLinkPressedAction |
     OpenHeaderMenuAction |
+    SaveOrganizationTabAction |
     SaveOrganizationServicesScrollOffsetAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
@@ -35,6 +39,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): OrganizationActions =>
     unbookmarkService: (service: HumanServiceData): UnbookmarkServiceAction => dispatch(unbookmarkService(service)),
     openHeaderMenu: (): OpenHeaderMenuAction => dispatch(openHeaderMenu()),
     openServiceDetail: (service: HumanServiceData): OpenServiceAction => dispatch(openServiceDetail(service)),
+    setOrganizationTab: (index: number): SaveOrganizationTabAction => dispatch(saveOrganizationTab(index)),
     saveOrganizationServicesOffset: (offset: number): SaveOrganizationServicesScrollOffsetAction =>
         dispatch(saveOrganizationServicesScrollOffset(offset)),
 });

@@ -17,10 +17,12 @@ import { HumanOrganizationData } from '../../validation/organizations/types';
 import { I18n } from '@lingui/react';
 import OrgTabSwitcher from './org_tab_swticher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
+import { SaveOrganizationTabAction } from '../../stores/organization/action';
 
 export interface OrganizationProps {
     readonly history: History;
     readonly organization: HumanOrganizationData;
+    readonly organizationTab: number;
     readonly servicesForOrganization: ReadonlyArray<HumanServiceData>;
     readonly organizationServicesOffset: number;
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
@@ -32,6 +34,7 @@ export interface OrganizationActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
+    readonly setOrganizationTab: (index: number) => SaveOrganizationTabAction;
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
@@ -39,7 +42,7 @@ type Props = OrganizationProps & OrganizationActions & RouterProps;
 
 export const OrganizationComponent = (props: Props): JSX.Element => {
 
-    if (typeof props.organization == 'undefined') {
+    if (typeof props.organization === 'undefined') {
         return (
             <View style={{ height: '100%', width: '100%' }}>
                 <LoadingServiceListComponent />
@@ -62,6 +65,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                         <OrgTabSwitcher
                             i18n={i18n}
                             organization={props.organization}
+                            organizationTab={props.organizationTab}
                             servicesForOrganization={props.servicesForOrganization}
                             bookmarkedServicesIds={props.bookmarkedServicesIds}
                             analyticsLinkPressed={analyticsLinkPressed}
@@ -72,6 +76,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             unbookmarkService={props.unbookmarkService}
                             openServiceDetail={props.openServiceDetail}
                             openHeaderMenu={props.openHeaderMenu}
+                            setOrganizationTab={props.setOrganizationTab}
                             currentPathForAnalytics={props.location.pathname}
                         />
                     </Content>
