@@ -14,7 +14,7 @@ interface OrganizationDetailProps {
     readonly organization: HumanOrganizationData;
 }
 
-export const OrganizationDetailComponent = (props: OrganizationDetailProps ): JSX.Element => (
+export const OrganizationDetailComponent = (props: OrganizationDetailProps): JSX.Element => (
     <Content>
         <MarkdownBodyComponent
             body={props.organization.description}
@@ -52,4 +52,3 @@ const OrganizationContactDetailsComponent = (props: OrganizationDetailProps): JS
         </View>
     );
 };
-
