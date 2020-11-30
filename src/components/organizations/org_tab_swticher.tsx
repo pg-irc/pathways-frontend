@@ -48,8 +48,6 @@ export default function OrgTabSwitcher(props: Props): JSX.Element {
                         bookmarkService={props.bookmarkService}
                         unbookmarkService={props.unbookmarkService}
                         openServiceDetail={props.openServiceDetail}
-                        analyticsLinkPressed={props.analyticsLinkPressed}
-                        currentPathForAnalytics={props.currentPathForAnalytics}
                         organizationServicesOffset={props.organizationServicesOffset}
                         saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
                     />
@@ -61,7 +59,7 @@ export default function OrgTabSwitcher(props: Props): JSX.Element {
 
     return (
         <TabView
-            navigationState={{ index: props.organizationTab , routes }}
+            navigationState={{ index: props.organizationTab, routes }}
             renderScene={renderScene}
             renderTabBar={renderTabBar}
             onIndexChange={props.setOrganizationTab}
