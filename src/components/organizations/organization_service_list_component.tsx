@@ -11,19 +11,23 @@ import { SearchListSeparator } from '../search/separators';
 import { renderServiceItems } from '../services/render_service_items';
 import { setServicesOffsetThrottled } from '../set_services_offset_throttled';
 
-interface ServicesTabProps {
+export interface ServicesTabProps {
     readonly services: ReadonlyArray<HumanServiceData>;
     readonly history: History;
+    readonly organizationServicesOffset: number;
+}
+
+export interface ServiceTabActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
-    readonly organizationServicesOffset: number;
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
-export const OrganizationServiceListComponent = (props: ServicesTabProps): JSX.Element => {
+type Props = ServicesTabProps & ServiceTabActions;
 
-    const [orgServicesOffset, setOrgServicesOffset]: readonly [number, (n: number) => void] = useState(props.organizationServicesOffset);
+export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
+    const [orgServicesOffset, setOrgServiesOffset]: readonly [number, (n: number) => void] = useState(props.organizationServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
 
     useEffect((): void => {
@@ -33,21 +37,19 @@ export const OrganizationServiceListComponent = (props: ServicesTabProps): JSX.E
     }, [props.organizationServicesOffset, props.services, flatListRef]);
 
     return (
-        <View style={{ flexDirection: 'column', backgroundColor: colors.lightGrey, flex: 1 }}>
-            <FlatList
-                ref={flatListRef}
-                onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setOrgServicesOffset)}
-                style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
-                data={props.services}
-                keyExtractor={(service: HumanServiceData): string => service.id}
-                renderItem={renderServiceItems({
-                    ...props,
-                    scrollOffset: orgServicesOffset,
-                    saveScrollOffset: props.saveOrganizationServicesOffset,
-                })}
-                ItemSeparatorComponent={SearchListSeparator}
-                ListHeaderComponent={<View />}
-            />
-        </View>
+        <FlatList
+            ref={flatListRef}
+            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setOrgServiesOffset)}
+            style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
+            data={props.services}
+            keyExtractor={(service: HumanServiceData): string => service.id}
+            renderItem={renderServiceItems({
+                ...props,
+                scrollOffset: orgServicesOffset,
+                saveScrollOffset: props.saveOrganizationServicesOffset,
+            })}
+            ItemSeparatorComponent={SearchListSeparator}
+            ListHeaderComponent={<View />}
+        />
     );
 };

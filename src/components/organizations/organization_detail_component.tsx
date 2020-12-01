@@ -1,12 +1,12 @@
 import React from 'react';
-import { Content, View } from "native-base";
-import { buildAnalyticsLinkContext } from "../../sagas/analytics/events";
-import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from "../../stores/analytics";
-import { HumanOrganizationData } from "../../validation/organizations/types";
-import { DividerComponent } from "../content_layout/divider_component";
-import { MarkdownBodyComponent } from "../content_layout/markdown_body_component";
-import { EmailComponent } from "../email/email_component";
-import { WebsiteComponent } from "../website/website_component";
+import { Content, View } from 'native-base';
+import { buildAnalyticsLinkContext } from '../../sagas/analytics/events';
+import { AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
+import { HumanOrganizationData } from '../../validation/organizations/types';
+import { DividerComponent } from '../content_layout/divider_component';
+import { MarkdownBodyComponent } from '../content_layout/markdown_body_component';
+import { EmailComponent } from '../email/email_component';
+import { WebsiteComponent } from '../website/website_component';
 
 interface OrganizationDetailProps {
     readonly analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps) => AnalyticsLinkPressedAction;

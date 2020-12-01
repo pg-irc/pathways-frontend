@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import { Content, View } from 'native-base';
+import { View } from 'native-base';
 import { colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
@@ -59,7 +59,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                         history={props.history}
                         openHeaderMenu={props.openHeaderMenu}
                     />
-                    <Content padder>
+                    <View padder style={{ flex: 1 }}>
                         <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
                         <TitleComponent title={props.organization.name.toUpperCase()} />
                         <OrgTabSwitcher
@@ -79,7 +79,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             setOrganizationTab={props.setOrganizationTab}
                             currentPathForAnalytics={props.location.pathname}
                         />
-                    </Content>
+                    </View>
                 </View>
             )}
         </I18n>
@@ -109,4 +109,3 @@ const OrganizationHeader = (props: OrganizationHeaderProps): JSX.Element => {
         />
     );
 };
-
