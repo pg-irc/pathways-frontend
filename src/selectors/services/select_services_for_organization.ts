@@ -2,11 +2,11 @@ import { Store } from '../../stores';
 import { Id as OrganizationId } from '../../stores/services';
 import { HumanServiceData, Id } from '../../validation/services/types';
 
-export const selectServicesForOrganization = (organizationId: OrganizationId, store: Store): ReadonlyArray<HumanServiceData> => {
-    const servicesByOrganization = store.services.servicesByOrganization[organizationId];
+export const selectServicesForOrganization = (store: Store, organizationId: OrganizationId): ReadonlyArray<HumanServiceData> => {
+    const servicesForOrganization = store.services.servicesForOrganization[organizationId];
     const serviceMap = store.services.services;
-    if (!servicesByOrganization) {
+    if (!servicesForOrganization) {
         return [];
     }
-    return servicesByOrganization.map((serviceId: Id) => serviceMap[serviceId]);
+    return servicesForOrganization.map((serviceId: Id) => serviceMap[serviceId]);
 };

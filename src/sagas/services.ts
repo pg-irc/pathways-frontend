@@ -10,10 +10,10 @@ import { Errors } from '../validation/errors/types';
 import { HumanServiceData } from '../validation/services/types';
 import { selectBookmarkedServicesIds } from '../selectors/services/select_bookmarked_services_ids';
 import { isDeviceOnline } from '../application/helpers/is_device_online';
-import { AlgoliaResponse, fetchServicesFromOrganization } from '../components/search/api/fetch_search_results_from_query';
+import { AlgoliaResponse, fetchServicesForOrganization } from '../components/search/api/fetch_search_results_from_query';
 import { validateServiceSearchResponse } from '../validation/search';
 import { toHumanServiceData } from '../validation/search/to_human_service_data';
-import { OpenOrganizationAction } from '../stores/organization/action';
+import { OpenOrganizationAction } from '../stores/organization/actions';
 
 export function* watchUpdateServicesForTopic(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateServicesForTopic);
@@ -61,15 +61,15 @@ export function* updateServicesForTopic(action: actions.BuildServicesRequestActi
 export function* updateServicesForOrganization(action: OpenOrganizationAction): UpdateServicesForOrganizationResult {
     const organizationId = action.payload.organizationId;
     try {
-        const algoliaResponse: AlgoliaResponse = yield call(fetchServicesFromOrganization, organizationId);
+        const algoliaResponse: AlgoliaResponse = yield call(fetchServicesForOrganization, organizationId);
 
         const validatedAlgoliaResponse = validateServiceSearchResponse(algoliaResponse.hits);
 
         const bookmarkedServiceIds = yield select(selectBookmarkedServicesIds);
 
-        const services = validatedAlgoliaResponse.map(item => toHumanServiceData(item, bookmarkedServiceIds));;
+        const services = validatedAlgoliaResponse.map(item => toHumanServiceData(item, bookmarkedServiceIds));
 
-        yield put(actions.saveServicesByOrganization(organizationId, services));
+        yield put(actions.saveServicesForOrganization(organizationId, services));
     } catch (error) {
         console.warn(error);
     }
@@ -79,4 +79,5 @@ type SuccessOrFailureResult = actions.BuildServicesSuccessAction | actions.Build
 
 type UpdateResult = IterableIterator<ReadonlyArray<HumanServiceData> | SelectEffect | CallEffect | PutEffect<SuccessOrFailureResult>>;
 
-type UpdateServicesForOrganizationResult = IterableIterator<ReadonlyArray<HumanServiceData> | SelectEffect | CallEffect | PutEffect<actions.SaveServicesByOrganizationAction>>;
+type UpdateServicesForOrganizationResult = IterableIterator<ReadonlyArray<HumanServiceData> | SelectEffect | CallEffect |
+ PutEffect<actions.SaveServicesForOrganizationAction>>;

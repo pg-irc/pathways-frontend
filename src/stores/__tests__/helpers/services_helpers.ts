@@ -16,7 +16,7 @@ export const buildNormalizedServices = (
 ): ServiceStore => ({
     services: buildServiceMap(services),
     servicesByTopic: buildServicesForTopicOrErrorMap(servicesForTopicOrError),
-    servicesByOrganization: {},
+    servicesForOrganization: {},
 });
 
 export const buildNormalizedServicesFromBuilders = (
@@ -25,7 +25,7 @@ export const buildNormalizedServicesFromBuilders = (
 ): ServiceStore => ({
     services: buildServiceMapFromBuilder(services),
     servicesByTopic: buildServicesForTopicMapFromBuilder(servicesForTopic),
-    servicesByOrganization: {},
+    servicesForOrganization: {},
 });
 
 export const buildServiceMap = (services: ReadonlyArray<HumanServiceDataBuilder>): ServiceMap => {

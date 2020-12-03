@@ -1,9 +1,9 @@
-// tslint:disable:no-let no-expression-statement
+// tslint:disable:no-let no-expression-statement typedef
 import * as constants from '../../application/constants';
 import { OrganizationStore, reducer } from '../organization';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 import { buildNormalizedOrganizations, HumanOrganizationDataBuilder } from './helpers/organization_helpers';
-import { SaveOrganizationAction } from '../organization/action';
+import { SaveOrganizationAction } from '../organization/actions';
 
 describe('organizations reducer', () => {
     const oldOrganizationBuilder = new HumanOrganizationDataBuilder();

@@ -21,7 +21,7 @@ export const aGeoLocation = (): any => ({
     lng: aNumber(),
 });
 
-export const anSearchService = (): any => ({
+export const aSearchService = (): any => ({
     type: 'SearchServiceData',
     service_name: aString(),
     service_id: aString(),

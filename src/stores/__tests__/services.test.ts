@@ -1,4 +1,4 @@
-// tslint:disable:no-let no-expression-statement
+// tslint:disable:no-let no-expression-statement typedef
 import * as constants from '../../application/constants';
 import { reducer } from '../services';
 import { isValidServicesForTopic } from '../services/is_valid_services_for_topic';
@@ -8,7 +8,7 @@ import {
     SaveServiceAction,
     BookmarkServiceAction,
     UnbookmarkServiceAction,
-    SaveServicesByOrganizationAction,
+    SaveServicesForOrganizationAction,
 } from '../services/actions';
 import { HumanServiceData, ServiceStore } from '../../validation/services/types';
 import { Errors } from '../../validation/errors/types';
@@ -173,11 +173,11 @@ describe('services reducer', () => {
         it('updates the store with the new services', () => {
             const organizationId = aString();
             const anOrganizationService = new HumanServiceDataBuilder().build();
-            const action: SaveServicesByOrganizationAction = {
+            const action: SaveServicesForOrganizationAction = {
                 type: constants.SAVE_SERVICES_BY_ORGANIZATION,
                 payload: {
                     organizationId: organizationId,
-                    services: [anOrganizationService]
+                    services: [anOrganizationService],
                 },
             };
             const store = reducer(theStore, action);

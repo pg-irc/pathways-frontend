@@ -45,7 +45,7 @@ import { selectShowLinkAlerts } from '../../selectors/user_profile/select_show_l
 import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile';
 import { selectFeedbackType } from '../../selectors/feedback/select_feedback_type';
 import { selectServiceFeedback } from '../../selectors/feedback/select_service_feedback';
-import { openOrganization, OpenOrganizationAction } from '../../stores/organization/action';
+import { openOrganization, OpenOrganizationAction } from '../../stores/organization/actions';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
     return {

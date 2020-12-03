@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Dimensions } from 'react-native';
 import { TabView, Route, NavigationState, SceneRendererProps, TabBar } from 'react-native-tab-view';
 import { t } from '@lingui/macro';
@@ -24,7 +24,7 @@ interface OrgTabSwitcherProps {
 
 type Props = OrgTabSwitcherProps & OrganizationProps & OrganizationActions;
 
-export default function OrgTabSwitcher(props: Props): JSX.Element {
+export const OrgTabSwitcher = (props: Props): JSX.Element => {
     const routes: TabRoutes = [
         { key: 'about', title: props.i18n._(t`About`) },
         { key: 'services', title: props.i18n._(t`Services`) },
@@ -62,7 +62,7 @@ export default function OrgTabSwitcher(props: Props): JSX.Element {
             navigationState={{ index: props.organizationTab, routes }}
             renderScene={renderScene}
             renderTabBar={renderTabBar}
-            onIndexChange={props.setOrganizationTab}
+            onIndexChange={props.saveOrganizationTab}
             initialLayout={{ width: Dimensions.get('window').width }}
         />
     );

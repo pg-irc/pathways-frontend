@@ -1,10 +1,9 @@
 // tslint:disable:no-expression-statement
 import { CallEffect, PutEffect, ForkEffect, takeLatest, call, put, SelectEffect } from 'redux-saga/effects';
 import * as constants from '../application/constants';
-import { OpenOrganizationAction, saveOrganization, SaveOrganizationAction } from '../stores/organization/action';
+import { OpenOrganizationAction, saveOrganization, SaveOrganizationAction } from '../stores/organization/actions';
 import { APIResponse, getOrganization } from '../api';
 import { HumanOrganizationData } from '../validation/organizations/types';
-
 
 export function* watchUpdateOrganization(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.OPEN_ORGANIZATION, updateOrganization);

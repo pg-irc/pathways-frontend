@@ -12,7 +12,7 @@ export function buildDefaultStore(): types.ServiceStore {
     return {
         services: {},
         servicesByTopic: {},
-        servicesByOrganization: {},
+        servicesForOrganization: {},
     };
 }
 
@@ -100,7 +100,7 @@ const createServiceMap = (services: ReadonlyArray<types.HumanServiceData>): type
     return services.reduce(theReducer, {});
 };
 
-const updateOrganizationServices = (store: types.ServiceStore, action: actions.SaveServicesByOrganizationAction): types.ServiceStore => {
+const updateOrganizationServices = (store: types.ServiceStore, action: actions.SaveServicesForOrganizationAction): types.ServiceStore => {
     const newServices = action.payload.services;
     const organizationId = action.payload.organizationId;
     const newServicesAsMap = createServiceMap(newServices);
@@ -111,8 +111,8 @@ const updateOrganizationServices = (store: types.ServiceStore, action: actions.S
             ...store.services,
             ...newServicesAsMap,
         },
-        servicesByOrganization: {
-            ...store.servicesByOrganization,
+        servicesForOrganization: {
+            ...store.servicesForOrganization,
             [organizationId]: newServiceIds,
         },
     };

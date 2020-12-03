@@ -1,6 +1,6 @@
 import * as constants from '../../application/constants';
 import { OrganizationStore } from '../../validation/organizations/types';
-import { OrganizationAction, SaveOrganizationAction } from './action';
+import { OrganizationAction, SaveOrganizationAction } from './actions';
 export { OrganizationStore };
 
 export const buildDefaultStore = (): OrganizationStore => ({
@@ -16,7 +16,7 @@ export const reducer = (store: OrganizationStore = buildDefaultStore(), action?:
         case constants.SAVE_ORGANIZATION:
             return saveOrganization(store, action);
         case constants.SAVE_ORGANIZATION_TAB:
-            return { ...store, organizationTab: action.payload.index }
+            return { ...store, organizationTab: action.payload.index };
         case constants.CLEAR_ALL_USER_DATA:
             return buildDefaultStore();
         default:

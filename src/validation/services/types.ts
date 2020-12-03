@@ -74,5 +74,5 @@ export interface ServiceMap {
 export interface ServiceStore {
     readonly services: ServiceMap;
     readonly servicesByTopic: ServicesForAllTopics;
-    readonly servicesByOrganization: ServicesForOrganization;
+    readonly servicesForOrganization: ServicesForOrganization;
 }

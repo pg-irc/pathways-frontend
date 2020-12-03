@@ -58,7 +58,7 @@ import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
 import { ThankYouMessageOrEmptyComponent } from './thank_you_message_or_empty_component';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { MultilineKeyboardDoneButton } from '../multiline_text_input_for_platform';
-import { OpenOrganizationAction } from '../../stores/organization/action';
+import { OpenOrganizationAction } from '../../stores/organization/actions';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -294,7 +294,9 @@ const Name = (props: NameProps): JSX.Element => (
     </>
 );
 
-const Organization = (props: { readonly history: History, readonly name: string, organizationId: string, openOrganization: (organizationId: string) => void }): JSX.Element => {
+const Organization = (props: {
+    readonly history: History, readonly name: string, readonly organizationId: string, readonly openOrganization: (organizationId: string) => void,
+}): JSX.Element => {
     const onOrganizationPress = (): void => {
         props.openOrganization(props.organizationId);
         goToRouteWithParameter(Routes.Organization, props.organizationId, props.history)();
@@ -307,7 +309,7 @@ const Organization = (props: { readonly history: History, readonly name: string,
                 <Text style={textStyles.URL}>{props.name.toUpperCase()}</Text>
             </TouchableOpacity>
         </View >
-    </View >
+    </View >;
 };
 
 interface HeaderProps {

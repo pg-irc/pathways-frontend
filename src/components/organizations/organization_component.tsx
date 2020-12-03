@@ -15,9 +15,9 @@ import { HumanServiceData, Id } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { I18n } from '@lingui/react';
-import OrgTabSwitcher from './org_tab_swticher';
+import { OrgTabSwitcher } from './org_tab_swticher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
-import { SaveOrganizationTabAction } from '../../stores/organization/action';
+import { SaveOrganizationTabAction } from '../../stores/organization/actions';
 
 export interface OrganizationProps {
     readonly history: History;
@@ -34,7 +34,7 @@ export interface OrganizationActions {
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
-    readonly setOrganizationTab: (index: number) => SaveOrganizationTabAction;
+    readonly saveOrganizationTab: (index: number) => SaveOrganizationTabAction;
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
 }
 
@@ -42,12 +42,12 @@ type Props = OrganizationProps & OrganizationActions & RouterProps;
 
 export const OrganizationComponent = (props: Props): JSX.Element => {
 
-    if (typeof props.organization === 'undefined') {
+    if (!props.organization) {
         return (
             <View style={{ height: '100%', width: '100%' }}>
                 <LoadingServiceListComponent />
             </View>
-        )
+        );
     }
 
     return (
@@ -76,7 +76,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                             unbookmarkService={props.unbookmarkService}
                             openServiceDetail={props.openServiceDetail}
                             openHeaderMenu={props.openHeaderMenu}
-                            setOrganizationTab={props.setOrganizationTab}
+                            saveOrganizationTab={props.saveOrganizationTab}
                             currentPathForAnalytics={props.location.pathname}
                         />
                     </View>

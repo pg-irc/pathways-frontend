@@ -50,7 +50,7 @@ export const fetchSearchResultsFromQuery = async (
     }
 };
 
-export const fetchServicesFromOrganization = async (
+export const fetchServicesForOrganization = async (
     organizationId: string): Promise<AlgoliaResponse> => {
     if (!organizationId) {
         return undefined;
