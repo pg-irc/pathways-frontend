@@ -97,6 +97,21 @@ describe('the user experience reducer', () => {
         });
     });
 
+    describe('the organization tab state', () => {
+
+        it('is set to detail when save organization is set to 0', () => {
+            const oldStore = buildDefaultStore();
+            const newStore = reducer(oldStore, Actions.saveOrganizationTab(0));
+            expect(newStore.organizationTab).toBe(0);
+        });
+
+        it ('is set to services when save organization tab is set to 1', () => {
+            const oldStore = buildDefaultStore();
+            const newStore = reducer(oldStore, Actions.saveOrganizationTab(1));
+            expect(newStore.organizationTab).toBe(1);
+        });
+    });
+
     describe('the header menu state', () => {
 
         it('is set to header menu is closed by the close header menu action', () => {
