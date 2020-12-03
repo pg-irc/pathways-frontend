@@ -5,7 +5,6 @@ export { OrganizationStore };
 
 export const buildDefaultStore = (): OrganizationStore => ({
     organizations: {},
-    organizationTab: 0,
 });
 
 export const reducer = (store: OrganizationStore = buildDefaultStore(), action?: OrganizationAction): OrganizationStore => {
@@ -15,8 +14,6 @@ export const reducer = (store: OrganizationStore = buildDefaultStore(), action?:
     switch (action.type) {
         case constants.SAVE_ORGANIZATION:
             return saveOrganization(store, action);
-        case constants.SAVE_ORGANIZATION_TAB:
-            return { ...store, organizationTab: action.payload.index };
         case constants.CLEAR_ALL_USER_DATA:
             return buildDefaultStore();
         default:

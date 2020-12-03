@@ -5,7 +5,7 @@ import { colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
 import { HeaderComponent } from '../main/header_component';
-import { OpenHeaderMenuAction, SaveOrganizationServicesScrollOffsetAction } from '../../stores/user_experience/actions';
+import { OpenHeaderMenuAction, SaveOrganizationServicesScrollOffsetAction, SaveOrganizationTabAction } from '../../stores/user_experience/actions';
 import { BackButtonComponent } from '../header_button/back_button_component';
 import { MenuButtonComponent } from '../header_button/menu_button_component';
 import { History, Location } from 'history';
@@ -17,7 +17,6 @@ import { HumanOrganizationData } from '../../validation/organizations/types';
 import { I18n } from '@lingui/react';
 import { OrgTabSwitcher } from './org_tab_swticher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
-import { SaveOrganizationTabAction } from '../../stores/organization/actions';
 
 export interface OrganizationProps {
     readonly history: History;

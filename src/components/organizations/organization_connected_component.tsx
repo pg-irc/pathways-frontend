@@ -2,7 +2,10 @@ import { connect } from 'react-redux';
 import { RouterProps } from '../../application/routing';
 import { Dispatch } from 'redux';
 import { AnalyticsLinkPressedAction, analyticsLinkPressed, AnalyticsLinkProps } from '../../stores/analytics';
-import { OpenHeaderMenuAction, openHeaderMenu, SaveOrganizationServicesScrollOffsetAction, saveOrganizationServicesScrollOffset } from '../../stores/user_experience/actions';
+import {
+    OpenHeaderMenuAction, openHeaderMenu, SaveOrganizationServicesScrollOffsetAction, saveOrganizationServicesScrollOffset,
+    SaveOrganizationTabAction, saveOrganizationTab,
+} from '../../stores/user_experience/actions';
 import { OrganizationComponent, OrganizationActions, OrganizationProps } from './organization_component';
 import { HumanServiceData } from '../../validation/services/types';
 import { selectOrganizationServicesOffset } from '../../selectors/user_experience/select_organization_services_offset';
@@ -11,7 +14,6 @@ import { BookmarkServiceAction, bookmarkService, UnbookmarkServiceAction, unbook
 import { selectBookmarkedServicesIds } from '../../selectors/services/select_bookmarked_services_ids';
 import { selectOrganizationById } from '../../selectors/organizations/select_organization_by_id';
 import { selectServicesForOrganization } from '../../selectors/services/select_services_for_organization';
-import { saveOrganizationTab, SaveOrganizationTabAction } from '../../stores/organization/actions';
 import { selectOrganizationTab } from '../../selectors/organizations/select_organization_tab';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps => ({

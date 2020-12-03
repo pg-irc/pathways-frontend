@@ -14,5 +14,4 @@ export interface OrganizationMap {
 
 export interface OrganizationStore {
     readonly organizations: OrganizationMap;
-    readonly organizationTab: number;
 }

@@ -5,7 +5,6 @@ import { ClearAllUserDataAction } from '../questionnaire/actions';
 
 export type SaveOrganizationAction = Readonly<ReturnType<typeof saveOrganization>>;
 export type OpenOrganizationAction = Readonly<ReturnType<typeof openOrganization>>;
-export type SaveOrganizationTabAction = Readonly<ReturnType<typeof saveOrganizationTab>>;
 
 // tslint:disable-next-line:typedef
 export const saveOrganization = (organization: HumanOrganizationData) => (
@@ -17,13 +16,7 @@ export const openOrganization = (organizationId: string) => (
     helpers.makeAction(constants.OPEN_ORGANIZATION, { organizationId })
 );
 
-// tslint:disable-next-line:typedef
-export const saveOrganizationTab = (index: number) => (
-    helpers.makeAction(constants.SAVE_ORGANIZATION_TAB, { index })
-);
-
 export type OrganizationAction =
     SaveOrganizationAction |
     OpenOrganizationAction |
-    SaveOrganizationTabAction |
     ClearAllUserDataAction;
