@@ -170,13 +170,12 @@ describe('services reducer', () => {
 
     describe('when sending a save organization services action', () => {
 
-        it('updates the store with the new services', () => {
-            const organizationId = aString();
+        it('updates the store with the new services for an organization', () => {
             const anOrganizationService = new HumanServiceDataBuilder().build();
             const action: SaveServicesForOrganizationAction = {
                 type: constants.SAVE_SERVICES_BY_ORGANIZATION,
                 payload: {
-                    organizationId: organizationId,
+                    organizationId: aString(),
                     services: [anOrganizationService],
                 },
             };

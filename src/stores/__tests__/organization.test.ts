@@ -22,20 +22,19 @@ describe('organizations reducer', () => {
             const store = reducer(theStore, action);
             const storeNewOrganization = store.organizations[newOrganization.id];
             const storeOldOrganization = store.organizations[oldOrganizationBuilder.id];
-            expect(Object.keys(newOrganization).length).toEqual(5);
             expect(storeNewOrganization).toEqual(newOrganization);
             expect(storeOldOrganization).toEqual(oldOrganizationBuilder.build());
         });
     });
 
     describe('when clear all user data action is dispatched', () => {
-        const organizationBuilder = new HumanOrganizationDataBuilder();
-        const store = buildNormalizedOrganizations([organizationBuilder]);
-        const action: ClearAllUserDataAction = {
-            type: constants.CLEAR_ALL_USER_DATA,
-        };
-        const storeState = reducer(store, action);
         it('removes organizations from organization map', () => {
+            const organizationBuilder = new HumanOrganizationDataBuilder();
+            const store = buildNormalizedOrganizations([organizationBuilder]);
+            const action: ClearAllUserDataAction = {
+                type: constants.CLEAR_ALL_USER_DATA,
+            };
+            const storeState = reducer(store, action);
             expect(storeState.organizations).toEqual({});
         });
     });
