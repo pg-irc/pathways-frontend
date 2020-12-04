@@ -14,7 +14,7 @@ import { HumanServiceData } from '../../validation/services/types';
 // tslint:disable-next-line: readonly-array
 export type TabRoutes = Array<Route>;
 
-interface OrgTabSwitcherProps {
+interface OrganizationTabSwitcherProps {
     readonly i18n: I18n;
     readonly organization: HumanOrganizationData;
     readonly servicesForOrganization: ReadonlyArray<HumanServiceData>;
@@ -22,9 +22,9 @@ interface OrgTabSwitcherProps {
     readonly currentPathForAnalytics: string;
 }
 
-type Props = OrgTabSwitcherProps & OrganizationProps & OrganizationActions;
+type Props = OrganizationTabSwitcherProps & OrganizationProps & OrganizationActions;
 
-export const OrgTabSwitcher = (props: Props): JSX.Element => {
+export const OrganizationTabSwitcher = (props: Props): JSX.Element => {
     const routes: TabRoutes = [
         { key: 'about', title: props.i18n._(t`About`) },
         { key: 'services', title: props.i18n._(t`Services`) },

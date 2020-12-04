@@ -27,7 +27,8 @@ export interface ServiceTabActions {
 type Props = ServicesTabProps & ServiceTabActions;
 
 export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
-    const [orgServicesOffset, setOrgServiesOffset]: readonly [number, (n: number) => void] = useState(props.organizationServicesOffset);
+    const [organizationServicesOffset, setOrganizationServicesOffset]: readonly [number, (n: number) => void] =
+        useState(props.organizationServicesOffset);
     const flatListRef = useRef<FlatList<HumanServiceData>>();
 
     useEffect((): void => {
@@ -39,13 +40,13 @@ export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
     return (
         <FlatList
             ref={flatListRef}
-            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setOrgServiesOffset)}
+            onScroll={(e: NativeSyntheticEvent<ScrollViewProps>): void => setServicesOffsetThrottled(e, setOrganizationServicesOffset)}
             style={{ backgroundColor: colors.lightGrey, paddingTop: 8 }}
             data={props.services}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceItems({
                 ...props,
-                scrollOffset: orgServicesOffset,
+                scrollOffset: organizationServicesOffset,
                 saveScrollOffset: props.saveOrganizationServicesOffset,
             })}
             ItemSeparatorComponent={SearchListSeparator}

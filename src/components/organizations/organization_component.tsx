@@ -15,7 +15,7 @@ import { HumanServiceData, Id } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { I18n } from '@lingui/react';
-import { OrgTabSwitcher } from './org_tab_swticher';
+import { OrganizationTabSwitcher } from './organization_tab_swticher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 
 export interface OrganizationProps {
@@ -61,7 +61,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                     <View padder style={{ flex: 1 }}>
                         <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
                         <TitleComponent title={props.organization.name.toUpperCase()} />
-                        <OrgTabSwitcher
+                        <OrganizationTabSwitcher
                             i18n={i18n}
                             organization={props.organization}
                             organizationTab={props.organizationTab}
