@@ -45,8 +45,11 @@ export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
             data={props.services}
             keyExtractor={(service: HumanServiceData): string => service.id}
             renderItem={renderServiceItems({
-                ...props,
+                history: props.history,
                 scrollOffset: organizationServicesOffset,
+                bookmarkService: props.bookmarkService,
+                unbookmarkService: props.unbookmarkService,
+                openServiceDetail: props.openServiceDetail,
                 saveScrollOffset: props.saveOrganizationServicesOffset,
             })}
             ItemSeparatorComponent={SearchListSeparator}

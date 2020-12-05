@@ -61,7 +61,7 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildS
     const newServices = action.payload.services;
     const topicId = action.payload.topicId;
     const newServicesAsMap = createServiceMap(newServices);
-    const newServiceIds = R.map((service: types.HumanServiceData): string => service.id, newServices);
+    const newServiceIds = extractServiceIds(newServices);
     return {
         ...store,
         services: {
@@ -76,6 +76,10 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildS
             },
         },
     };
+};
+
+const extractServiceIds = (services: ReadonlyArray<types.HumanServiceData>): ReadonlyArray<Id> => {
+    return R.map((service: types.HumanServiceData): string => service.id, services);
 };
 
 const updateServicesFailure = (store: types.ServiceStore, action: actions.BuildServicesErrorAction): types.ServiceStore => {
@@ -104,7 +108,7 @@ const updateOrganizationServices = (store: types.ServiceStore, action: actions.S
     const newServices = action.payload.services;
     const organizationId = action.payload.organizationId;
     const newServicesAsMap = createServiceMap(newServices);
-    const newServiceIds = R.map((service: types.HumanServiceData): string => service.id, newServices);
+    const newServiceIds = extractServiceIds(newServices);
     return {
         ...store,
         services: {
