@@ -14,7 +14,7 @@ import { HumanServiceData, Id } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
 import { HumanOrganizationData } from '../../validation/organizations/types';
 import { I18n } from '@lingui/react';
-import { OrganizationTabSwitcher } from './organization_tab_swticher';
+import { OrganizationTabSwitcher } from './organization_tab_switcher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { View } from 'react-native';
 
