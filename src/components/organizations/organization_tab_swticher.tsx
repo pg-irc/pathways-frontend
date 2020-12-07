@@ -76,9 +76,9 @@ type TabBarProps = SceneRendererProps & NavigationStateRoute;
 const renderTabBar = (tabBarProps: TabBarProps): JSX.Element => (
     <TabBar
         {...tabBarProps}
-        style={{ backgroundColor: colors.white, elevation: 0 }}
+        style={{ backgroundColor: colors.white, width: '55%', elevation: 0, marginHorizontal: 8 }}
         indicatorStyle={{ backgroundColor: colors.teal, height: 4 }}
         getLabelText={({ route }: { readonly route: Route }): string => route.title}
-        labelStyle={textStyles.paragraphStyle}
+        labelStyle={textStyles.headlineH3StyleBlackCenter}
     />
 );
