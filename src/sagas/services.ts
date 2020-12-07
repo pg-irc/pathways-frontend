@@ -14,6 +14,8 @@ import { AlgoliaResponse, fetchServicesForOrganization } from '../components/sea
 import { validateServiceSearchResponse } from '../validation/search';
 import { toHumanServiceData } from '../validation/search/to_human_service_data';
 import { OpenOrganizationAction } from '../stores/organization/actions';
+import { selectServicesForOrganization } from '../selectors/services/select_services_for_organization';
+import { SearchServiceData } from '../validation/search/types';
 
 export function* watchUpdateServicesForTopic(): IterableIterator<ForkEffect> {
     yield takeLatest(constants.LOAD_SERVICES_REQUEST, updateServicesForTopic);
@@ -61,13 +63,18 @@ export function* updateServicesForTopic(action: actions.BuildServicesRequestActi
 export function* updateServicesForOrganization(action: OpenOrganizationAction): UpdateServicesForOrganizationResult {
     const organizationId = action.payload.organizationId;
     try {
+        const existingService: ReadonlyArray<HumanServiceData> = yield select(selectServicesForOrganization, organizationId);
+        if (existingService.length > 0) {
+            return existingService;
+        }
+
         const algoliaResponse: AlgoliaResponse = yield call(fetchServicesForOrganization, organizationId);
 
         const validatedAlgoliaResponse = validateServiceSearchResponse(algoliaResponse.hits);
 
         const bookmarkedServiceIds = yield select(selectBookmarkedServicesIds);
 
-        const services = validatedAlgoliaResponse.map(item => toHumanServiceData(item, bookmarkedServiceIds));
+        const services = validatedAlgoliaResponse.map((item: SearchServiceData): HumanServiceData => toHumanServiceData(item, bookmarkedServiceIds));
 
         yield put(actions.saveServicesForOrganization(organizationId, services));
     } catch (error) {

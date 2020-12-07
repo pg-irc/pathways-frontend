@@ -1,6 +1,5 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
-import { View } from 'native-base';
 import { colors } from '../../application/styles';
 import { DescriptorComponent } from '../content_layout/descriptor_component';
 import { TitleComponent } from '../content_layout/title_component';
@@ -17,6 +16,7 @@ import { HumanOrganizationData } from '../../validation/organizations/types';
 import { I18n } from '@lingui/react';
 import { OrganizationTabSwitcher } from './organization_tab_swticher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
+import { View } from 'react-native';
 
 export interface OrganizationProps {
     readonly history: History;
@@ -58,27 +58,25 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                         history={props.history}
                         openHeaderMenu={props.openHeaderMenu}
                     />
-                    <View padder style={{ flex: 1 }}>
-                        <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
-                        <TitleComponent title={props.organization.name.toUpperCase()} />
-                        <OrganizationTabSwitcher
-                            i18n={i18n}
-                            organization={props.organization}
-                            organizationTab={props.organizationTab}
-                            servicesForOrganization={props.servicesForOrganization}
-                            bookmarkedServicesIds={props.bookmarkedServicesIds}
-                            analyticsLinkPressed={analyticsLinkPressed}
-                            history={props.history}
-                            organizationServicesOffset={props.organizationServicesOffset}
-                            saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
-                            bookmarkService={props.bookmarkService}
-                            unbookmarkService={props.unbookmarkService}
-                            openServiceDetail={props.openServiceDetail}
-                            openHeaderMenu={props.openHeaderMenu}
-                            saveOrganizationTab={props.saveOrganizationTab}
-                            currentPathForAnalytics={props.location.pathname}
-                        />
-                    </View>
+                    <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
+                    <TitleComponent title={props.organization.name.toUpperCase()} />
+                    <OrganizationTabSwitcher
+                        i18n={i18n}
+                        organization={props.organization}
+                        organizationTab={props.organizationTab}
+                        servicesForOrganization={props.servicesForOrganization}
+                        bookmarkedServicesIds={props.bookmarkedServicesIds}
+                        analyticsLinkPressed={analyticsLinkPressed}
+                        history={props.history}
+                        organizationServicesOffset={props.organizationServicesOffset}
+                        saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
+                        bookmarkService={props.bookmarkService}
+                        unbookmarkService={props.unbookmarkService}
+                        openServiceDetail={props.openServiceDetail}
+                        openHeaderMenu={props.openHeaderMenu}
+                        saveOrganizationTab={props.saveOrganizationTab}
+                        currentPathForAnalytics={props.location.pathname}
+                    />
                 </View>
             )}
         </I18n>

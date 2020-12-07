@@ -8,5 +8,5 @@ export const selectServicesForOrganization = (store: Store, organizationId: Orga
     if (!servicesForOrganization) {
         return [];
     }
-    return servicesForOrganization.map((serviceId: Id) => serviceMap[serviceId]);
+    return servicesForOrganization.map((serviceId: Id): HumanServiceData => serviceMap[serviceId]);
 };

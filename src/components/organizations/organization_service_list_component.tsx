@@ -54,6 +54,7 @@ export const OrganizationServiceListComponent = (props: Props): JSX.Element => {
             })}
             ItemSeparatorComponent={SearchListSeparator}
             ListHeaderComponent={<View />}
+            initialNumToRender={props.organizationServicesOffset ? props.services.length : 20}
         />
     );
 };
