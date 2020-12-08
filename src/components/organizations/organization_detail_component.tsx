@@ -15,7 +15,7 @@ interface OrganizationDetailProps {
 }
 
 export const OrganizationDetailComponent = (props: OrganizationDetailProps): JSX.Element => (
-    <Content>
+    <Content padder>
         <MarkdownBodyComponent
             body={props.organization.description}
             shouldBeExpandable={true}

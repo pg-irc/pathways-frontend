@@ -58,8 +58,10 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                         history={props.history}
                         openHeaderMenu={props.openHeaderMenu}
                     />
-                    <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
-                    <TitleComponent title={props.organization.name.toUpperCase()} />
+                    <View style={{ marginLeft: 10 }}>
+                        <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
+                        <TitleComponent title={props.organization.name.toUpperCase()} />
+                    </View>
                     <OrganizationTabSwitcher
                         i18n={i18n}
                         organization={props.organization}
