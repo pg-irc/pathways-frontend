@@ -36,7 +36,7 @@
     "test": "node ./node_modules/jest/bin/jest.js",
     "cbt": "yarn clean && yarn build && yarn test",
     "bt": "yarn build && yarn test",
-    "clean": "rimraf 'lib/**/*.js' 'lib/**/*.js.map' 'locale/_build/**/*.json'",
+    "clean": "rimraf 'lib/**/*.js' 'lib/**/*.js.map' 'locale/_build/**/*.json' 'tsconfig.tsbuildinfo'",
     "extract-strings": "lingui extract",
     "extract-strings-clean": "lingui extract --clean",
     "build-strings": "lingui compile --strict",

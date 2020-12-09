@@ -30,7 +30,7 @@ export enum Routes {
     RecommendedTopics,
     Bookmarks,
     Search,
-    OrganizationDetail,
+    Organization,
     ServiceDetail,
     OtherFeedback,
     ExplainFeedback,
@@ -63,7 +63,7 @@ export const routePathDefinition = (route: Routes): string => {
             return '/bookmarks';
         case Routes.Search:
             return '/search';
-        case Routes.OrganizationDetail:
+        case Routes.Organization:
             return '/organization/:organizationId';
         case Routes.ServiceDetail:
             return '/service/:serviceId';

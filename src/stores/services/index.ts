@@ -12,6 +12,7 @@ export function buildDefaultStore(): types.ServiceStore {
     return {
         services: {},
         servicesByTopic: {},
+        servicesForOrganization: {},
     };
 }
 
@@ -28,6 +29,8 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServicesFailure(store, action);
         case constants.SAVE_SERVICE:
             return saveService(store, action);
+        case constants.SAVE_SERVICES_BY_ORGANIZATION:
+            return updateOrganizationServices(store, action);
         case constants.BOOKMARK_SERVICE:
             return updateServiceBookmarkInServicesMap(store, action, true);
         case constants.UNBOOKMARK_SERVICE:
@@ -58,7 +61,7 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildS
     const newServices = action.payload.services;
     const topicId = action.payload.topicId;
     const newServicesAsMap = createServiceMap(newServices);
-    const newServiceIds = R.map((service: types.HumanServiceData): string => service.id, newServices);
+    const newServiceIds = extractServiceIds(newServices);
     return {
         ...store,
         services: {
@@ -73,6 +76,10 @@ const updateServicesSuccess = (store: types.ServiceStore, action: actions.BuildS
             },
         },
     };
+};
+
+const extractServiceIds = (services: ReadonlyArray<types.HumanServiceData>): ReadonlyArray<Id> => {
+    return R.map((service: types.HumanServiceData): string => service.id, services);
 };
 
 const updateServicesFailure = (store: types.ServiceStore, action: actions.BuildServicesErrorAction): types.ServiceStore => {
@@ -95,6 +102,24 @@ const createServiceMap = (services: ReadonlyArray<types.HumanServiceData>): type
         return { ...serviceMap, [service.id]: service };
     };
     return services.reduce(theReducer, {});
+};
+
+const updateOrganizationServices = (store: types.ServiceStore, action: actions.SaveServicesForOrganizationAction): types.ServiceStore => {
+    const newServices = action.payload.services;
+    const organizationId = action.payload.organizationId;
+    const newServicesAsMap = createServiceMap(newServices);
+    const newServiceIds = extractServiceIds(newServices);
+    return {
+        ...store,
+        services: {
+            ...store.services,
+            ...newServicesAsMap,
+        },
+        servicesForOrganization: {
+            ...store.servicesForOrganization,
+            [organizationId]: newServiceIds,
+        },
+    };
 };
 
 const saveService = (store: types.ServiceStore, action: actions.SaveServiceAction): types.ServiceStore => ({

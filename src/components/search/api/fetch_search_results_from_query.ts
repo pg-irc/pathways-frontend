@@ -25,29 +25,54 @@ export const fetchSearchResultsFromQuery = async (
         return [];
     }
     const url = buildAlgoliaSearchUrl();
-    try {
-        const response = await fetch(url, {
-            'method': 'POST',
-            headers: {
-                'X-Algolia-API-Key': ALGOLIA_SEARCH_API_KEY,
-                'Content-Type': 'application/json',
-                'X-Algolia-Application-Id': ALGOLIA_APPLICATION_ID,
-            },
-            body: JSON.stringify({
-                query: searchTerm,
-                page: searchPage,
-                hitsPerPage: '20',
-                aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
-                aroundPrecision: latLong ? 5000 : '',
-            }),
-        });
+    const algoliaQuery = JSON.stringify({
+        query: searchTerm,
+        page: searchPage,
+        hitsPerPage: '20',
+        aroundLatLng: latLong ? toAlgoliaParameter(latLong) : '',
+        aroundPrecision: latLong ? 5000 : '',
+    });
 
+    try {
+        const response = await fetch(url, buildAlgoliaRequest(algoliaQuery));
         const responseJSON: AlgoliaResponse = await response.json();
         setNumberOfPages(responseJSON.nbPages);
         return validateServiceSearchResponse(responseJSON.hits);
     } catch (Error) {
         return [];
     }
+};
+
+export const fetchServicesForOrganization = async (
+    organizationId: string): Promise<AlgoliaResponse> => {
+    if (!organizationId) {
+        return undefined;
+    }
+    const algoliaQuery = JSON.stringify({
+        query: organizationId,
+    });
+
+    const url = buildAlgoliaSearchUrl();
+    try {
+        const response = await fetch(url, buildAlgoliaRequest(algoliaQuery));
+
+        const responseJSON: AlgoliaResponse = await response.json();
+        return responseJSON;
+    } catch (Error) {
+        return undefined;
+    }
+};
+
+const buildAlgoliaRequest = (algoliaQuery: string): RequestInit => {
+    return {
+        method: 'POST',
+        headers: {
+            'X-Algolia-API-Key': ALGOLIA_SEARCH_API_KEY,
+            'Content-Type': 'application/json',
+            'X-Algolia-Application-Id': ALGOLIA_APPLICATION_ID,
+        },
+        body: algoliaQuery,
+    };
 };
 
 const buildAlgoliaSearchUrl = (): string => (

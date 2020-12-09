@@ -11,6 +11,7 @@ export interface UserExperienceStore {
     readonly bookmarkedServicesScrollOffset: number;
     readonly exploreDetailScrollOffset: number;
     readonly bookmarksTab: BookmarksTab;
+    readonly organizationTab: number;
     readonly headerMenu: HeaderMenu;
 }
 
@@ -36,6 +37,7 @@ export const buildDefaultStore = (): UserExperienceStore => ({
     bookmarkedServicesScrollOffset: 0,
     exploreDetailScrollOffset: 0,
     bookmarksTab: BookmarksTab.Topics,
+    organizationTab: 0,
     headerMenu: HeaderMenu.HeaderMenuIsClosed,
 });
 
@@ -86,6 +88,8 @@ export const reducer = (store: UserExperienceStore = buildDefaultStore(), action
             });
         case constants.SAVE_BOOKMARKS_TAB:
             return updateBookmarksTab(store, action.payload.index);
+        case constants.SAVE_ORGANIZATION_TAB:
+            return { ...store, organizationTab: action.payload.index };
         case constants.OPEN_HEADER_MENU:
         case constants.CLOSE_HEADER_MENU:
         case constants.CLOSE_ABOUT_MODAL:

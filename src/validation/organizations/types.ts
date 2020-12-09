@@ -1,4 +1,4 @@
-import { Id } from "../services/types";
+import { Id } from '../services/types';
 
 export interface HumanOrganizationData {
     readonly id: Id;
@@ -6,4 +6,12 @@ export interface HumanOrganizationData {
     readonly description: string;
     readonly website: string;
     readonly email: string;
+}
+
+export interface OrganizationMap {
+    readonly [organizationId: string]: HumanOrganizationData;
+}
+
+export interface OrganizationStore {
+    readonly organizations: OrganizationMap;
 }

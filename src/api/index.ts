@@ -105,3 +105,13 @@ export async function getAlerts(locale: string): Promise<APIResponse> {
 export const createGetAlertUrl = (url: string, locale: string): string => (
     BuildUrl(url, { path: `v1/content/alerts/${locale}/` })
 );
+
+export async function getOrganization(organizationId: string): Promise<APIResponse> {
+    const url = createGetOrganizationtUrl(baseUrl, organizationId);
+    const response = await fetch(url);
+    return createAPIResponse(response);
+}
+
+export const createGetOrganizationtUrl = (url: string, organizationId: string): string => (
+    BuildUrl(url, { path: `v1/organizations/${organizationId}/` })
+);

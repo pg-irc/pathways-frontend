@@ -12,10 +12,10 @@ type SaveOffSetAction = SaveTopicServicesScrollOffsetAction | SaveBookmarkedServ
 
 export interface ServiceItemsProps {
     readonly history: History;
+    readonly scrollOffset: number;
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
-    readonly scrollOffset: number;
     readonly saveScrollOffset: (offset: number) => SaveOffSetAction;
 }
 
