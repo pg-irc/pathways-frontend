@@ -78,7 +78,7 @@ export interface NavigationStateRoute {
 
 type TabBarProps = SceneRendererProps & NavigationStateRoute;
 
-const renderTabBar = (tabBarProps: TabBarProps): JSX.Element => (
+export const renderTabBar = (tabBarProps: TabBarProps): JSX.Element => (
     <TabBar
         {...tabBarProps}
         style={{ backgroundColor: colors.white, width: '55%', elevation: 0, marginHorizontal: 8, shadowOpacity: 0 }}
