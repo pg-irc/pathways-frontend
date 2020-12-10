@@ -5,7 +5,7 @@ import { Image, TouchableOpacity, I18nManager, FlatList, ListRenderItemInfo } fr
 import { Trans } from '@lingui/react';
 import { View, Text, Button, Icon } from 'native-base';
 import { goToRouteWithoutParameter, Routes } from '../../application/routing';
-import { textStyles, applicationStyles } from '../../application/styles';
+import { textStyles, applicationStyles, values } from '../../application/styles';
 import { advisor, advisor_rtl, recommendationBubble } from '../../application/images';
 import { callToActionStyles } from './styles';
 import { EmptyComponent } from '../empty_component/empty_component';
@@ -39,7 +39,7 @@ const renderAlert = (alert: Alert, props: AlertProps): JSX.Element => {
             applicationStyles.boxShadowBelow,
             callToActionStyles.callToActionContainer,
         ]}>
-            <Text style={textStyles.headlineH2StyleBlackLeft}>
+            <Text style={[textStyles.headlineH2StyleBlackLeft, { paddingHorizontal: values.backgroundTextPadding }]}>
                 {alert.heading}
             </Text>
             <MarkdownComponent
