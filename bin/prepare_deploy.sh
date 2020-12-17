@@ -63,7 +63,7 @@ usage() {
     echo "                already have been computed, see the server side prepare deploy script."
     echo
     echo "    --bc211path"
-    echo "                Path to the XML file containing the BC211 data dump."
+    echo "                Path to the iCarol csv file containing the BC211 data dump."
     echo
     echo "    --staging or --production"
     echo "                Pass one of these flags depending on the build. This affects the URL, icon and app name to be set."
@@ -303,11 +303,11 @@ buildServer() {
     echo "Building server"
     echo
 
-    cp $BC211PATH $SERVER_DIRECTORY/bc211.xml
+    cp $BC211PATH $SERVER_DIRECTORY/icarol_bc211.csv
     (cd "$SERVER_DIRECTORY" &&\
         source .venv/bin/activate &&\
         ./utility/prepare_deploy.sh \
-            --bc211Path                 ./bc211.xml                  \
+            --bc211Path                 ./icarol_bc211.csv                \
             --cityLatLongs              ../content/city_latlong.csv  \
             --newComersGuidePath        ../content/NewcomersGuide/   \
             --recommendationsToAddPath  ../content/taxonomy/         \
