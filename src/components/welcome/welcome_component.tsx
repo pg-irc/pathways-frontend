@@ -65,13 +65,12 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     <Text style={[textStyles.paragraphBoldWhiteLeft, { marginBottom: 10 }]}>
                         <Trans>Select your language</Trans>
                     </Text>
-                    <Item style={{ marginLeft: 0, borderColor: 'transparent', justifyContent: 'center' }}>
+                    <Item style={{ marginLeft: 0, borderColor: 'transparent', justifyContent: 'center', backgroundColor: colors.white }}>
                         <Picker
                             mode='dropdown'
                             iosIcon={<Icon name='ios-arrow-down' />}
                             selectedValue={props.currentLocale.code}
                             onValueChange={handleChange}
-                            style={{ backgroundColor: colors.white }}
                         >
                             {props.availableLocales.map((locale: LocaleInfo) => (
                                 <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
