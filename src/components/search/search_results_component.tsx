@@ -109,7 +109,7 @@ const renderComponentWithResults = (props: Props): JSX.Element => {
                 onScroll={onAnimatedScrollHandler}
                 onScrollEndDrag={onScrollEndDrag}
                 initialNumToRender={props.searchOffset ? props.searchResults.length : 20}
-                style={{ backgroundColor: colors.lightGrey, flex: 1  }}
+                style={{ backgroundColor: colors.lightGrey, flex: 1 }}
                 data={props.searchResults}
                 keyExtractor={keyExtractor}
                 renderItem={renderSearchHit({
@@ -263,6 +263,7 @@ const renderLoadMoreButton = (searchPage: number, numberOfPages: number, onLoadM
                 style={{
                     backgroundColor: colors.teal,
                     borderRadius: values.roundedBorderRadius,
+                    alignSelf: 'center',
                     justifyContent: 'center',
                     marginVertical: 16,
                     marginHorizontal: 24,
