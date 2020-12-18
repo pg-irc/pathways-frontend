@@ -47,7 +47,7 @@ const address = {
     "type": "object",
     "properties": {
         "id": {
-            "type": "integer"
+            "type": "string"
         },
         "address": {
             "type": ["string", "null"]

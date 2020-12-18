@@ -287,7 +287,7 @@ describe('schema for services_at_location endpoint', () => {
                 expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'id\'');
             });
 
-            test('location.addresses item.address.id is of type integer', () => {
+            test('location.addresses item.address.id is of type string', () => {
                 const address = new helpers.AddressJSONBuilder().withId(null).build();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
@@ -295,7 +295,7 @@ describe('schema for services_at_location endpoint', () => {
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address.id should be integer');
+                expect(validator.errors).toBe('data[0].location.addresses[0].address.id should be string');
             });
 
             test('location.addresses item.address.address is required', () => {

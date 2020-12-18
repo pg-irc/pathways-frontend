@@ -22,7 +22,7 @@ describe('Adapting server service object to client service object', () => {
             addresses: [{
                 address_type: aString(),
                 address: {
-                    id: aNumber(),
+                    id: aString(),
                     address: aString(),
                     city: aString(),
                     state_province: aString(),

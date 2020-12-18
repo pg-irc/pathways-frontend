@@ -1,11 +1,11 @@
 // tslint:disable:no-expression-statement no-let no-class readonly-keyword no-this
 
-import { aNumber, aString } from '../../application/helpers/random_test_values';
+import { aString } from '../../application/helpers/random_test_values';
 import { Address } from '../../validation/services/types';
 import { getLocationTitleFromAddresses } from '../services/get_location_title_from_addresses';
 
 class AddressBuilder {
-    id: number = aNumber();
+    id: string = aString();
     type: string = aString();
     address: string = aString();
     city: string = aString();
