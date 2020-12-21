@@ -1,5 +1,5 @@
 // tslint:disable:no-class readonly-keyword no-expression-statement no-this no-let no-any
-import { aString, anInteger, aNumber } from '../../../../application/helpers/random_test_values';
+import { aString, aNumber } from '../../../../application/helpers/random_test_values';
 
 // The following "JSON" types exist purely to allow us to test our schemas with invalid data.
 // The optional and any properties on these types ensure we can create invalid objects.
@@ -80,7 +80,7 @@ export class PhoneNumberJSONBuilder {
 }
 
 export class AddressJSONBuilder {
-    id: any = anInteger();
+    id: any = aString();
     address: any = aString();
     city: any = aString();
     state_province: any = aString();
