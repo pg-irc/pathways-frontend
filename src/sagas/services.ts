@@ -44,14 +44,11 @@ export function* updateServicesForTopic(action: actions.BuildServicesRequestActi
 
         const apiResponse: APIResponse = yield call(searchServices, topicId, deviceLocationResponse);
         if (errors.isBadResponseError(apiResponse)) {
-            console.log('bad server, bad')
             return yield put(actions.buildServicesError(topicId, Errors.BadServerResponse));
         }
 
         const validatedApiResponse = validateServicesAtLocationArray(apiResponse.results);
         if (!validatedApiResponse.isValid) {
-            console.log(validatedApiResponse.errors)
-            console.log(validatedApiResponse.isValid)
             return yield put(actions.buildServicesError(topicId, Errors.InvalidServerData));
         }
 
