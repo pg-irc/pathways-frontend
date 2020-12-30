@@ -7,7 +7,7 @@
     "primaryColor": "#3A818D",
     "splash": {
       "backgroundColor": "#000000",
-      "image": "./assets/images/landing_photo.png"
+      "image": "./assets/images/splash_screen.png"
     },
     "ios": {
       "icon": "./assets/images/phone_icon_ios.png",
