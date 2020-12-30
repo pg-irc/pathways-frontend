@@ -6,7 +6,8 @@
     "orientation": "portrait",
     "primaryColor": "#3A818D",
     "splash": {
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000",
+      "image": "./assets/images/landing_photo.png"
     },
     "ios": {
       "icon": "./assets/images/phone_icon_ios.png",
