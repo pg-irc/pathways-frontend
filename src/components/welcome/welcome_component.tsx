@@ -1,15 +1,16 @@
 // tslint:disable:no-expression-statement readonly-keyword
 import React from 'react';
-import { Dimensions, Image, ImageBackground } from 'react-native';
-import { Text, Form, Item, Picker, Icon, View, Button } from 'native-base';
+import { Dimensions, Image, ImageBackground, View } from 'react-native';
+import { Text, Form, Button } from 'native-base';
 import { Trans } from '@lingui/react';
 import { LocaleInfo, Locale } from '../../locale';
 import { SaveLocaleRequestAction } from '../../stores/locale/actions';
 import { Routes, goToRouteWithoutParameter } from '../../application/routing';
-import { colors, applicationStyles, textStyles } from '../../application/styles';
+import { applicationStyles, colors, textStyles } from '../../application/styles';
 import { arrivalAdvisorLogo, landingPhoto, peacegeeksLogo } from '../../application/images';
 import { History } from 'history';
 import { needsTextDirectionChange } from '../../locale/effects';
+import { Picker } from '@react-native-picker/picker';
 
 export interface WelcomeProps {
     readonly currentLocale: Locale;
@@ -65,18 +66,16 @@ export function WelcomeComponent(props: Props): JSX.Element {
                     <Text style={[textStyles.paragraphBoldWhiteLeft, { marginBottom: 10 }]}>
                         <Trans>Select your language</Trans>
                     </Text>
-                    <Item style={{ marginLeft: 0, borderColor: 'transparent', justifyContent: 'center', backgroundColor: colors.white }}>
-                        <Picker
-                            mode='dropdown'
-                            iosIcon={<Icon name='ios-arrow-down' />}
-                            selectedValue={props.currentLocale.code}
-                            onValueChange={handleChange}
-                        >
-                            {props.availableLocales.map((locale: LocaleInfo) => (
-                                <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
-                            ))}
-                        </Picker>
-                    </Item>
+                    <Picker
+                        mode='dropdown'
+                        selectedValue={props.currentLocale.code}
+                        onValueChange={handleChange}
+                        style={{ marginLeft: 0, borderColor: 'transparent', justifyContent: 'center', backgroundColor: colors.white }}
+                    >
+                        {props.availableLocales.map((locale: LocaleInfo) => (
+                            <Picker.Item key={locale.code} label={locale.label} value={locale.code} />
+                        ))}
+                    </Picker>
                 </Form>
                 <View>
                     <Button
