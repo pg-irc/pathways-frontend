@@ -162,8 +162,8 @@ checkOutDeploy() {
     (cd "$WORKING_DIRECTORY" && git clone git@github.com:PeaceGeeksSociety/pathways-deploy.git)
     checkForSuccess "clone deploy repo"
 
-    (cd $WORKING_DIRECTORY/pathways-deploy && git checkout develop)
-    checkForSuccess "check out branch develop"
+    (cd $WORKING_DIRECTORY/pathways-deploy && git checkout master)
+    checkForSuccess "check out branch master"
 }
 
 
