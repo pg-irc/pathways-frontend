@@ -10,7 +10,7 @@ export const toHumanServiceData = (data: SearchServiceData, bookmarkedServicesId
     description: data.service_description,
     phoneNumbers: data.phone_numbers || [],
     addresses: [{
-        id: 1,
+        id: '1',
         type: 'physical_address',
         address: data.address.address,
         city: data.address.city,

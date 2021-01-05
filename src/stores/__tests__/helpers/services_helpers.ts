@@ -83,7 +83,7 @@ export class PhoneNumberBuilder {
 }
 
 export class AddressBuilder {
-    id: number = aNumber();
+    id: string = aString();
     type: string = aString();
     address: string = aString();
     city: string = aString();

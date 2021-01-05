@@ -10,7 +10,7 @@ export interface PhoneNumber {
 }
 
 export interface Address {
-    readonly id: number;
+    readonly id: string;
     readonly type: string;
     readonly address: string;
     readonly city: string;

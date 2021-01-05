@@ -18,7 +18,7 @@ interface ValidatedPhoneNumberJSON {
 }
 
 interface ValidatedAddressJSON {
-    readonly id: number;
+    readonly id: string;
     readonly address: string;
     readonly city: string;
     readonly state_province: string;
