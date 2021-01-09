@@ -5,6 +5,7 @@ export { OrganizationStore };
 
 export const buildDefaultStore = (): OrganizationStore => ({
     organizations: {},
+    organizationStatus: { type: 'ORGANIZATION:LOADING'},
 });
 
 export const reducer = (store: OrganizationStore = buildDefaultStore(), action?: OrganizationAction): OrganizationStore => {

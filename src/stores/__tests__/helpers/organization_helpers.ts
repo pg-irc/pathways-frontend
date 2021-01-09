@@ -7,6 +7,7 @@ export const buildNormalizedOrganizations = (
     organizations: ReadonlyArray<HumanOrganizationDataBuilder>,
 ): OrganizationStore => ({
     organizations: buildOrganizationMap(organizations),
+    organizationStatus: {type: 'ORGANIZATION:LOADING'},
 });
 
 export const buildOrganizationMap = (organizations: ReadonlyArray<HumanOrganizationDataBuilder>): OrganizationMap => {
