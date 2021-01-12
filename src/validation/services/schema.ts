@@ -53,7 +53,7 @@ const address = {
             "type": ["string", "null"]
         },
         "city": {
-            "type": "string"
+            "type": ["string", "null"]
         },
         "state_province": {
             "type": ["string", "null"]
