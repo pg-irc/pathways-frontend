@@ -12,7 +12,7 @@ import { RouterProps } from '../../application/routing';
 import { analyticsLinkPressed, AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
-import { HumanOrganizationData } from '../../validation/organizations/types';
+import { HumanOrganizationData, StatusForOrganization } from '../../validation/organizations/types';
 import { I18n } from '@lingui/react';
 import { OrganizationTabSwitcher } from './organization_tab_switcher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
@@ -21,6 +21,7 @@ import { View } from 'react-native';
 export interface OrganizationProps {
     readonly history: History;
     readonly organization: HumanOrganizationData;
+    readonly organizationStatus: StatusForOrganization;
     readonly organizationTab: number;
     readonly servicesForOrganization: ReadonlyArray<HumanServiceData>;
     readonly organizationServicesOffset: number;
@@ -65,6 +66,7 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
                     <OrganizationTabSwitcher
                         i18n={i18n}
                         organization={props.organization}
+                        organizationStatus={props.organizationStatus}
                         organizationTab={props.organizationTab}
                         servicesForOrganization={props.servicesForOrganization}
                         bookmarkedServicesIds={props.bookmarkedServicesIds}
