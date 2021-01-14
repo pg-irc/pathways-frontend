@@ -331,15 +331,15 @@ describe('schema for services_at_location endpoint', () => {
                 expect(validator.errors).toBe('data[0].location.addresses[0].address should have required property \'city\'');
             });
 
-            test('location.addresses item.address.city is of type string', () => {
-                const address = new helpers.AddressJSONBuilder().withCity(null).build();
+            test('location.addresses item.address.city is of type string or null', () => {
+                const address = new helpers.AddressJSONBuilder().withCity(aNumber()).build();
                 const addressWithType = new helpers.AddressWithTypeJSONBuilder().withAddress(address).build();
                 const location = new helpers.LocationJSONBuilder().withAddressesWithType([addressWithType]).build();
                 const validator = validateServicesAtLocationArray([
                     new helpers.ServiceAtLocationJSONBuilder().withLocation(location).build(),
                 ]);
                 expect(validator.isValid).toBe(false);
-                expect(validator.errors).toBe('data[0].location.addresses[0].address.city should be string');
+                expect(validator.errors).toBe('data[0].location.addresses[0].address.city should be string,null');
             });
 
             test('location.addresses item.address.state_province is required', () => {
