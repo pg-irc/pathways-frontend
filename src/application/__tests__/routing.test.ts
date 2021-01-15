@@ -64,6 +64,10 @@ describe('the routePathDefinition function', () => {
         expect(routePathDefinition(Routes.ContactInformation)).toEqual('/contact-information/:serviceId');
     });
 
+    it('For Routes.ServiceReview returns path: "/service-review/:serviceId"', () => {
+        expect(routePathDefinition(Routes.ServiceReview)).toEqual('/service-review/:serviceId');
+    });
+
 });
 
 describe('the routePathWithoutParameter function', () => {
