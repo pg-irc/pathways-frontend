@@ -60,8 +60,8 @@ import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { MultilineKeyboardDoneButton } from '../multiline_text_input_for_platform';
 import { OpenOrganizationAction } from '../../stores/organization/actions';
 import { CardButtonComponent } from '../card_button_component';
-import { RatingsComponent } from '../reviews/ratings_component';
 import { ReviewThisServiceRatingsComponent } from '../reviews/review_this_service_ratings_component';
+import { ChooseRatingAction } from '../../stores/reviews/actions';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -73,6 +73,7 @@ export interface ServiceDetailProps {
     readonly feedbackModal: FeedbackModal;
     readonly isSendingFeedback: boolean;
     readonly showLinkAlerts: boolean;
+    readonly rating: number;
 }
 
 export interface ServiceDetailActions {
@@ -95,6 +96,7 @@ export interface ServiceDetailActions {
     readonly hideLinkAlerts: () => void;
     readonly backFromContactInformation: () => BackFromContactInformationAction;
     readonly openOrganization: (organizationId: string) => OpenOrganizationAction;
+    readonly chooseRating: (rating: number) => ChooseRatingAction;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
@@ -249,7 +251,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                                     suggestAnUpdate={props.suggestAnUpdate}
                                 />
-                                <ReviewThisServiceRatingsComponent />
+                                <ReviewThisServiceRatingsComponent rating={props.rating} chooseRating={props.chooseRating}/>
                                 <ModalContainer
                                     serviceId={serviceId}
                                     discardFeedback={props.discardFeedback}

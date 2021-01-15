@@ -46,6 +46,8 @@ import { HideLinkAlertsAction, hideLinkAlerts } from '../../stores/user_profile'
 import { selectFeedbackType } from '../../selectors/feedback/select_feedback_type';
 import { selectServiceFeedback } from '../../selectors/feedback/select_service_feedback';
 import { openOrganization, OpenOrganizationAction } from '../../stores/organization/actions';
+import { selectRating } from '../../selectors/reviews/select_rating';
+import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
     return {
@@ -58,6 +60,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProp
         feedbackModal: selectFeedbackModal(store),
         isSendingFeedback: selectIsSendingFeedback(store),
         showLinkAlerts: selectShowLinkAlerts(store),
+        rating: selectRating(store),
     };
 };
 
@@ -81,7 +84,8 @@ type Actions =
     CancelDiscardChangesAction |
     SendFeedbackAction |
     HideLinkAlertsAction |
-    BackFromContactInformationAction;
+    BackFromContactInformationAction |
+    ChooseRatingAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions => ({
     analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps): AnalyticsLinkPressedAction =>
@@ -104,6 +108,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
     backFromContactInformation: (): BackFromContactInformationAction => dispatch(backFromContactInformation()),
     openOrganization: (organizationId: string): OpenOrganizationAction => dispatch(openOrganization(organizationId)),
+    chooseRating: (rating: number): ChooseRatingAction => dispatch(chooseRating(rating)),
 });
 
 export const ServiceDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceDetailComponent);

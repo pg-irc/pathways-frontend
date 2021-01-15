@@ -3,12 +3,18 @@ import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
 import { textStyles } from '../../application/styles';
 import { RatingsComponent } from './ratings_component';
+import { ChooseRatingAction } from '../../stores/reviews/actions';
 
-export const ReviewThisServiceRatingsComponent = (): JSX.Element => (
+interface Props {
+    readonly rating: number;
+    readonly chooseRating: (rating: number) => ChooseRatingAction;
+}
+
+export const ReviewThisServiceRatingsComponent = (props: Props): JSX.Element => (
     <View>
         <Text style={textStyles.headlineH3StyleBlackCenter}>
                 <Trans>Review this service</Trans>
             </Text>
-        <RatingsComponent />
+        <RatingsComponent {...props}/>
     </View>
 );

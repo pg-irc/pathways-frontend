@@ -1,7 +1,13 @@
 import React from 'react';
 import { AirbnbRating } from 'react-native-ratings';
+import { ChooseRatingAction } from '../../stores/reviews/actions';
 
-export const RatingsComponent = (): JSX.Element => {
+export interface RatingsProps {
+    readonly rating: number;
+    readonly chooseRating: (rating: number) => ChooseRatingAction;
+}
+
+export const RatingsComponent = (props: RatingsProps): JSX.Element => {
     const ratingCompleted = (rating: number): void => {
         // navigate to next screen
         // choose rating action
@@ -10,7 +16,7 @@ export const RatingsComponent = (): JSX.Element => {
     return (
         <AirbnbRating
             count={5}
-            defaultRating={0}
+            defaultRating={props.rating}
             size={30}
             showRating={false}
             onFinishRating={ratingCompleted}
