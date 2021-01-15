@@ -1,6 +1,6 @@
 import React from 'react';
 import { AirbnbRating } from 'react-native-ratings';
-import { ChooseRatingAction } from '../../stores/reviews/actions';
+import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
 
 export interface RatingsProps {
     readonly rating: number;
@@ -8,10 +8,10 @@ export interface RatingsProps {
 }
 
 export const RatingsComponent = (props: RatingsProps): JSX.Element => {
-    const ratingCompleted = (rating: number): void => {
-        // navigate to next screen
-        // choose rating action
-        console.log('Rating is: ' + rating)
+    const onFinishRating = (rating: number): void => {
+        // tslint:disable-next-line: no-expression-statement
+        chooseRating(rating);
+
     };
     return (
         <AirbnbRating
@@ -19,7 +19,7 @@ export const RatingsComponent = (props: RatingsProps): JSX.Element => {
             defaultRating={props.rating}
             size={30}
             showRating={false}
-            onFinishRating={ratingCompleted}
+            onFinishRating={onFinishRating}
         />
     );
 };
