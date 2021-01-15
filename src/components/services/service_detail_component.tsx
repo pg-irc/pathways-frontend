@@ -61,6 +61,7 @@ import { MultilineKeyboardDoneButton } from '../multiline_text_input_for_platfor
 import { OpenOrganizationAction } from '../../stores/organization/actions';
 import { CardButtonComponent } from '../card_button_component';
 import { RatingsComponent } from '../reviews/ratings_component';
+import { ReviewThisServiceRatingsComponent } from '../reviews/review_this_service_ratings_component';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -248,7 +249,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                                     suggestAnUpdate={props.suggestAnUpdate}
                                 />
-                                <RatingsComponent />
+                                <ReviewThisServiceRatingsComponent />
                                 <ModalContainer
                                     serviceId={serviceId}
                                     discardFeedback={props.discardFeedback}
