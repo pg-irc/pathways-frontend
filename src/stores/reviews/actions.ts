@@ -6,6 +6,6 @@ export const chooseRating = (rating: number) => (
     helpers.makeAction(constants.CHOOSE_RATING, { rating })
 );
 
-export type ChooseRationgAction = Readonly<ReturnType<typeof chooseRating>>;
+export type ChooseRatingAction = Readonly<ReturnType<typeof chooseRating>>;
 
-export type ReviewAction = ChooseRationgAction;
+export type ReviewAction = ChooseRatingAction;
