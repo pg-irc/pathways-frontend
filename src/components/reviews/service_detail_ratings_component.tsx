@@ -10,7 +10,7 @@ interface Props {
     readonly chooseRating: (rating: number) => ChooseRatingAction;
 }
 
-export const ReviewThisServiceRatingsComponent = (props: Props): JSX.Element => (
+export const ServiceDetailRatingsComponent = (props: Props): JSX.Element => (
     <View>
         <Text style={textStyles.headlineH3StyleBlackCenter}>
                 <Trans>Review this service</Trans>

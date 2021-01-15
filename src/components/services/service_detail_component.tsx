@@ -60,7 +60,7 @@ import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { MultilineKeyboardDoneButton } from '../multiline_text_input_for_platform';
 import { OpenOrganizationAction } from '../../stores/organization/actions';
 import { CardButtonComponent } from '../card_button_component';
-import { ReviewThisServiceRatingsComponent } from '../reviews/review_this_service_ratings_component';
+import { ServiceDetailRatingsComponent } from '../reviews/service_detail_ratings_component';
 import { ChooseRatingAction } from '../../stores/reviews/actions';
 
 export interface ServiceDetailProps {
@@ -251,7 +251,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                                     suggestAnUpdate={props.suggestAnUpdate}
                                 />
-                                <ReviewThisServiceRatingsComponent rating={props.rating} chooseRating={props.chooseRating}/>
+                                <ServiceDetailRatingsComponent rating={props.rating} chooseRating={props.chooseRating}/>
                                 <ModalContainer
                                     serviceId={serviceId}
                                     discardFeedback={props.discardFeedback}
