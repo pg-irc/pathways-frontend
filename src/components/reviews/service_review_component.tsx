@@ -23,9 +23,11 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     return (
         <View>
         <HeaderComponent/>
-        <ServiceNameComponent name={props.serviceName}/>
-        <RatingQuestionComponent />
-        <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
+        <View style={{ padding: 20 }}>
+            <ServiceNameComponent name={props.serviceName}/>
+            <RatingQuestionComponent />
+            <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
+        </View>
     </View>
     );
 };
@@ -43,11 +45,11 @@ export const HeaderComponent = (): JSX.Element => (
 export const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Element => {
     return (
         <View>
-            <Text style={[textStyles.contentTitle, { paddingHorizontal: values.backgroundTextPadding }]}>
+            <Text style={textStyles.contentTitle}>
                 <Trans>Looks like you used the service,</Trans>
             </Text>
             <TouchableOpacity>
-                <Text style={[textStyles.contentTitle, { paddingHorizontal: values.backgroundTextPadding, color: colors.teal }]}>
+                <Text style={[textStyles.contentTitle, { color: colors.teal }]}>
                     {name}
                 </Text>
             </TouchableOpacity>
@@ -56,7 +58,7 @@ export const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Eleme
 };
 
 export const RatingQuestionComponent = (): JSX.Element => (
-    <View>
+    <View style={{ paddingTop: 20, paddingBottom: 10 }}>
         <Text style={textStyles.paragraphStyle}>
             <Trans>How would you rate this service?</Trans>
         </Text>
