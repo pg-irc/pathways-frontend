@@ -19,6 +19,7 @@ import { LoadingServiceListComponent } from '../loading_screen/loading_service_l
 import { View } from 'react-native';
 import * as constants from '../../application/constants';
 import { ErrorScreenSwitcherComponent } from '../error_screens/error_screen_switcher_component';
+import { Errors } from '../../validation/errors/types';
 
 export interface OrganizationProps {
     readonly history: History;
@@ -43,31 +44,75 @@ export interface OrganizationActions {
 type Props = OrganizationProps & OrganizationActions & RouterProps;
 
 export const OrganizationComponent = (props: Props): JSX.Element => {
+    return (
+        <View style={{ flex: 1 }}>
+            <OrganizationHeader
+                location={props.location}
+                history={props.history}
+                openHeaderMenu={props.openHeaderMenu}
+            />
+            <OrganizationPage
+                {...props} />
+        </View>
+    );
 
-    if (props.organizationStatus.type === constants.LOADING_ORGANIZATION) {
-        return (
-            <View style={{ height: '100%', width: '100%' }}>
-                <LoadingServiceListComponent />
-            </View>
-        );
+};
+
+interface OrganizationHeaderProps {
+    readonly location: Location;
+    readonly history: History;
+    readonly openHeaderMenu: () => OpenHeaderMenuAction;
+}
+
+const OrganizationHeader = (props: OrganizationHeaderProps): JSX.Element => {
+    const backgroundColor = colors.lightGrey;
+    const leftButton = <BackButtonComponent textColor={colors.black} />;
+    const rightButtons: ReadonlyArray<JSX.Element> = [
+        <MenuButtonComponent
+            onPress={props.openHeaderMenu}
+            textColor={colors.black}
+        />,
+    ];
+    return (
+        <HeaderComponent
+            backgroundColor={backgroundColor}
+            leftButton={leftButton}
+            rightButtons={rightButtons}
+        />
+    );
+};
+
+const OrganizationPage = (props: Props): JSX.Element => {
+    switch (props.organizationStatus.type) {
+        case constants.LOADING_ORGANIZATION:
+            return renderLoadingScreen();
+        case constants.ERROR_ORGANIZATION:
+            return renderErrorScreen(props.organizationStatus.errorMessageType);
+        default: {
+            return renderValidOrganizationPage(props);
+        }
     }
+};
 
-    if (props.organizationStatus.type === constants.ERROR_ORGANIZATION) {
-        console.log(props.organizationStatus);
-        return <ErrorScreenSwitcherComponent
-            refreshScreen={(): void => console.log('hello world')}
-            errorType={props.organizationStatus.errorMessageType} />;
-    }
+const renderLoadingScreen = (): JSX.Element => {
+    return (
+        <View style={{ height: '100%', width: '100%' }}>
+            <LoadingServiceListComponent />
+        </View>
+    );
+}
 
+const renderErrorScreen = (errorType: Errors): JSX.Element => {
+    return <ErrorScreenSwitcherComponent
+        refreshScreen={(): void => console.log('Figure out refresh behaviour')}
+        errorType={errorType} />;
+};
+
+const renderValidOrganizationPage = (props: Props): JSX.Element => {
     return (
         <I18n>
             {({ i18n }: { readonly i18n: I18n }): JSX.Element => (
                 <View style={{ flex: 1 }}>
-                    <OrganizationHeader
-                        location={props.location}
-                        history={props.history}
-                        openHeaderMenu={props.openHeaderMenu}
-                    />
                     <View style={{ marginLeft: 10 }}>
                         <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
                         <TitleComponent title={props.organization.name.toUpperCase()} />
@@ -94,28 +139,4 @@ export const OrganizationComponent = (props: Props): JSX.Element => {
             )}
         </I18n>
     );
-};
-
-interface OrganizationHeaderProps {
-    readonly location: Location;
-    readonly history: History;
-    readonly openHeaderMenu: () => OpenHeaderMenuAction;
 }
-
-const OrganizationHeader = (props: OrganizationHeaderProps): JSX.Element => {
-    const backgroundColor = colors.lightGrey;
-    const leftButton = <BackButtonComponent textColor={colors.black} />;
-    const rightButtons: ReadonlyArray<JSX.Element> = [
-        <MenuButtonComponent
-            onPress={props.openHeaderMenu}
-            textColor={colors.black}
-        />,
-    ];
-    return (
-        <HeaderComponent
-            backgroundColor={backgroundColor}
-            leftButton={leftButton}
-            rightButtons={rightButtons}
-        />
-    );
-};
