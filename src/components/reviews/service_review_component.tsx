@@ -24,6 +24,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
         <View>
         <HeaderComponent/>
         <ServiceNameComponent name={props.serviceName}/>
+        <RatingQuestionComponent />
         <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
     </View>
     );
@@ -53,3 +54,11 @@ export const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Eleme
         </View>
     );
 };
+
+export const RatingQuestionComponent = (): JSX.Element => (
+    <View>
+        <Text style={textStyles.paragraphStyle}>
+            <Trans>How would you rate this service?</Trans>
+        </Text>
+    </View>
+);
