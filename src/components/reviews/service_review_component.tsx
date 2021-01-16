@@ -6,6 +6,7 @@ import { colors, textStyles, applicationStyles, values } from '../../application
 import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
+import { useHistory } from 'react-router-native';
 
 export interface ServiceReviewProps {
     readonly serviceId: string;
@@ -32,15 +33,19 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     );
 };
 
-export const HeaderComponent = (): JSX.Element => (
-    <Header style={applicationStyles.headerContainer} androidStatusBarColor={colors.teal}>
-        <CloseButtonComponent
-            color={colors.greyishBrown}
-            additionalStyle={{ paddingTop: 0 }}
-            onPress={(): void => console.log('go back to previous page')}
-        />
-    </Header>
-);
+export const HeaderComponent = (): JSX.Element => {
+    const history = useHistory();
+    return (
+        <Header style={applicationStyles.headerContainer} androidStatusBarColor={colors.teal}>
+            <CloseButtonComponent
+                color={colors.greyishBrown}
+                additionalStyle={{ paddingTop: 0 }}
+                // TODO include discard modal logic
+                onPress={history.goBack}
+            />
+        </Header>
+    );
+};
 
 export const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Element => {
     return (
