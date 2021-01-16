@@ -456,6 +456,13 @@ export const applicationStyles = StyleSheet.create({
     headerRight: {
         alignItems: 'center',
     },
+    headerContainer: {
+        backgroundColor: 'white',
+        marginTop: getStatusBarHeightForPlatform(),
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingLeft: 0,
+    },
 });
 
 // See https://github.com/mientjan/react-native-markdown-renderer/blob/master/src/lib/styles.js for styles to override.
