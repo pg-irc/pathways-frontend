@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Trans } from '@lingui/react';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { CloseButtonComponent } from '../close_button_component';
-import { colors, textStyles, applicationStyles } from '../../application/styles';
+import { colors, textStyles, applicationStyles, values } from '../../application/styles';
 import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
@@ -21,19 +22,15 @@ type Props = ServiceReviewProps & ServiceReviewActions;
 export const ServiceReviewComponent = (props: Props): JSX.Element => {
     return (
         <View>
-        <HeaderComponent name={props.serviceName}/>
+        <HeaderComponent/>
+        <ServiceNameComponent name={props.serviceName}/>
         <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
     </View>
     );
 };
 
-export const HeaderComponent = ({name}: {readonly name: string}): JSX.Element => (
+export const HeaderComponent = (): JSX.Element => (
     <Header style={applicationStyles.headerContainer} androidStatusBarColor={colors.teal}>
-        <View style={{ flex: 4, paddingHorizontal: 15 }}>
-            <Text style={textStyles.headline6}>
-                {name}
-            </Text>
-        </View>
         <CloseButtonComponent
             color={colors.greyishBrown}
             additionalStyle={{ paddingTop: 0 }}
@@ -41,3 +38,18 @@ export const HeaderComponent = ({name}: {readonly name: string}): JSX.Element =>
         />
     </Header>
 );
+
+export const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Element => {
+    return (
+        <View>
+            <Text style={[textStyles.contentTitle, { paddingHorizontal: values.backgroundTextPadding }]}>
+                <Trans>Looks like you used the service,</Trans>
+            </Text>
+            <TouchableOpacity>
+                <Text style={[textStyles.contentTitle, { paddingHorizontal: values.backgroundTextPadding, color: colors.teal }]}>
+                    {name}
+                </Text>
+            </TouchableOpacity>
+        </View>
+    );
+};
