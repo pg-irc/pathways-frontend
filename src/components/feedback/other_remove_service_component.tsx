@@ -90,7 +90,7 @@ const ContentComponent = (props: ContentComponentProps): JSX.Element => {
   );
 };
 
-const getMarginHorizontalForPlatform = (): number => (
+export const getMarginHorizontalForPlatform = (): number => (
     isAndroid() ? 0 : 10
 )
 

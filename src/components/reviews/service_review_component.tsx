@@ -1,5 +1,6 @@
 import React from 'react';
-import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro';
+import { Trans, I18n } from '@lingui/react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { CloseButtonComponent } from '../close_button_component';
 import { colors, textStyles, applicationStyles } from '../../application/styles';
@@ -7,6 +8,9 @@ import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
 import { useHistory } from 'react-router-native';
+import { MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
+import { styles } from 'react-native-markdown-display';
+import { getMarginHorizontalForPlatform } from '../feedback/other_remove_service_component';
 
 export interface ServiceReviewProps {
     readonly serviceId: string;
@@ -73,10 +77,25 @@ const RatingQuestionComponent = (): JSX.Element => (
 
 const CommentComponent = (): JSX.Element => {
     return (
-        <View style={{ paddingTop: 20, paddingBottom: 10 }}>
-        <Text style={textStyles.paragraphStyle}>
-            <Trans>Tell us more about your experience:</Trans>
-        </Text>
-    </View>
+        <I18n>
+            {
+                ({ i18n }: I18nProps): JSX.Element => (
+                    <View style={{ paddingTop: 20, paddingBottom: 10 }}>
+                    <Text style={textStyles.paragraphStyle}>
+                        <Trans>Tell us more about your experience:</Trans>
+                    </Text>
+                    <MultilineTextInputForPlatform
+                        i18n={i18n}
+                        value={''}
+                        numberOfLines={5}
+                        placeholder={t`Comment`}
+                        style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform()}]}
+                        isFocused={false}
+                        onChangeText={() => console.log('onChange')}
+                    />
+                </View>
+                )
+            }
+        </I18n>
     );
 };
