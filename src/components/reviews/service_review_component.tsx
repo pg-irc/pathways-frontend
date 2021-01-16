@@ -28,6 +28,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             <ServiceNameComponent name={props.serviceName}/>
             <RatingQuestionComponent />
             <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
+            <CommentComponent />
         </View>
     </View>
     );
@@ -69,3 +70,13 @@ const RatingQuestionComponent = (): JSX.Element => (
         </Text>
     </View>
 );
+
+const CommentComponent = (): JSX.Element => {
+    return (
+        <View style={{ paddingTop: 20, paddingBottom: 10 }}>
+        <Text style={textStyles.paragraphStyle}>
+            <Trans>Tell us more about your experience:</Trans>
+        </Text>
+    </View>
+    );
+};
