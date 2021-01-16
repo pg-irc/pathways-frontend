@@ -8,7 +8,6 @@ export type SaveOrganizationAction = Readonly<ReturnType<typeof saveOrganization
 export type OpenOrganizationAction = Readonly<ReturnType<typeof openOrganization>>;
 export type OrganizationErrorAction = Readonly<ReturnType<typeof buildOrganizationError>>;
 export type OrganizationLoadingAction = Readonly<ReturnType<typeof buildOrganizationLoading>>;
-export type OrganizationSuccessAction = Readonly<ReturnType<typeof buildOrganizationSuccess>>;
 
 // tslint:disable-next-line:typedef
 export const saveOrganization = (organization: HumanOrganizationData) => (
@@ -26,11 +25,6 @@ export const buildOrganizationError = (organizationId: string, errorMessageType:
 );
 
 // tslint:disable-next-line:typedef
-export const buildOrganizationSuccess = (organizationId: string) => (
-    helpers.makeAction(constants.VALID_ORGANIZATION, { organizationId  })
-);
-
-// tslint:disable-next-line:typedef
 export const buildOrganizationLoading = (organizationId: string) => (
     helpers.makeAction(constants.LOADING_ORGANIZATION, { organizationId })
 );
@@ -40,5 +34,4 @@ export type OrganizationAction =
     OpenOrganizationAction |
     OrganizationErrorAction |
     OrganizationLoadingAction |
-    OrganizationSuccessAction |
     ClearAllUserDataAction;
