@@ -251,6 +251,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isVisible={props.feedbackScreen !== FeedbackScreen.EditableServiceDetailPage}
                                     suggestAnUpdate={props.suggestAnUpdate}
                                 />
+                                <DividerComponent />
                                 <ServiceDetailRatingsComponent serviceId={serviceId} rating={props.rating} chooseRating={props.chooseRating}/>
                                 <ModalContainer
                                     serviceId={serviceId}

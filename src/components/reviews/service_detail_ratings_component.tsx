@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Trans } from '@lingui/react';
-import { textStyles } from '../../application/styles';
+import { textStyles, values } from '../../application/styles';
 import { RatingsComponent } from './ratings_component';
 import { ChooseRatingAction } from '../../stores/reviews/actions';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
@@ -21,9 +21,9 @@ export const ServiceDetailRatingsComponent = (props: Props): JSX.Element => {
         goToRouteWithParameter(Routes.ServiceReview, props.serviceId, history)();
     };
     return (
-        <View>
-            <Text style={textStyles.headlineH3StyleBlackCenter}>
-                    <Trans>Review this service</Trans>
+        <View style={{ paddingVertical: values.backgroundTextPadding}}>
+            <Text style={[textStyles.headlineH3StyleBlackCenter, { paddingBottom: 10 }]}>
+                    <Trans>Rate this service</Trans>
                 </Text>
             <RatingsComponent rating={props.rating} onFinishRating={onFinishRating}/>
         </View>
