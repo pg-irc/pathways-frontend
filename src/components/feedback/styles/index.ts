@@ -5,7 +5,6 @@ import { getStatusBarHeightForPlatform } from '../../main/get_status_bar_height_
 interface OtherRemoveServiceStyles {
     readonly closeButton: TextStyle;
     readonly headerContainer: ViewStyle;
-    readonly input: TextStyle;
 }
 
 interface ContactInformationStyles {
@@ -34,18 +33,6 @@ const otherRemoveServiceStyles = StyleSheet.create<OtherRemoveServiceStyles>({
         alignItems: 'center',
         justifyContent: 'flex-start',
         paddingLeft: 0,
-    },
-
-    input: {
-        borderColor: colors.darkerGrey,
-        borderWidth: 0.5,
-        borderRadius: 8,
-        fontSize: 16,
-        height: 'auto',
-        minHeight: 100,
-        padding: 16,
-        fontFamily: getNormalFontFamily(),
-        ...getTextAlignForLanguage(),
     },
 });
 

@@ -463,6 +463,17 @@ export const applicationStyles = StyleSheet.create({
         justifyContent: 'flex-start',
         paddingLeft: 0,
     },
+    input: {
+        borderColor: colors.darkerGrey,
+        borderWidth: 0.5,
+        borderRadius: 8,
+        fontSize: 16,
+        height: 'auto',
+        minHeight: 100,
+        padding: 16,
+        fontFamily: getNormalFontFamily(),
+        ...getTextAlignForLanguage(),
+    },
 });
 
 // See https://github.com/mientjan/react-native-markdown-renderer/blob/master/src/lib/styles.js for styles to override.

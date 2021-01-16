@@ -9,8 +9,6 @@ import { RatingsComponent } from './ratings_component';
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
 import { useHistory } from 'react-router-native';
 import { MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
-import { styles } from 'react-native-markdown-display';
-import { getMarginHorizontalForPlatform } from '../feedback/other_remove_service_component';
 
 export interface ServiceReviewProps {
     readonly serviceId: string;
@@ -89,7 +87,7 @@ const CommentComponent = (): JSX.Element => {
                         value={''}
                         numberOfLines={5}
                         placeholder={t`Comment`}
-                        style={[styles.input, { marginHorizontal: getMarginHorizontalForPlatform()}]}
+                        style={[applicationStyles.input, { marginHorizontal: 0, marginTop: 10}]}
                         isFocused={false}
                         onChangeText={() => console.log('onChange')}
                     />
