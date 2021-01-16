@@ -26,7 +26,7 @@ type Props = ServiceReviewProps & ServiceReviewActions;
 
 export const ServiceReviewComponent = (props: Props): JSX.Element => {
     return (
-        <View>
+        <View style={{ flex: 1 }}>
         <HeaderComponent/>
         <View style={{ padding: 20 }}>
             <ServiceNameComponent name={props.serviceName}/>
