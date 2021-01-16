@@ -31,8 +31,8 @@ export const buildOrganizationSuccess = (organizationId: string) => (
 );
 
 // tslint:disable-next-line:typedef
-export const buildOrganizationLoading = (organization: HumanOrganizationData) => (
-    helpers.makeAction(constants.LOADING_ORGANIZATION, { organization })
+export const buildOrganizationLoading = (organizationId: string) => (
+    helpers.makeAction(constants.LOADING_ORGANIZATION, { organizationId })
 );
 
 export type OrganizationAction =

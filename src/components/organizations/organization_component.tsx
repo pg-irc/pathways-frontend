@@ -17,6 +17,8 @@ import { I18n } from '@lingui/react';
 import { OrganizationTabSwitcher } from './organization_tab_switcher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
 import { View } from 'react-native';
+import * as constants from '../../application/constants';
+import { ErrorScreenSwitcherComponent } from '../error_screens/error_screen_switcher_component';
 
 export interface OrganizationProps {
     readonly history: History;
@@ -42,12 +44,19 @@ type Props = OrganizationProps & OrganizationActions & RouterProps;
 
 export const OrganizationComponent = (props: Props): JSX.Element => {
 
-    if (!props.organization) {
+    if (props.organizationStatus.type === constants.LOADING_ORGANIZATION) {
         return (
             <View style={{ height: '100%', width: '100%' }}>
                 <LoadingServiceListComponent />
             </View>
         );
+    }
+
+    if (props.organizationStatus.type === constants.ERROR_ORGANIZATION) {
+        console.log(props.organizationStatus);
+        return <ErrorScreenSwitcherComponent
+            refreshScreen={(): void => console.log('hello world')}
+            errorType={props.organizationStatus.errorMessageType} />;
     }
 
     return (

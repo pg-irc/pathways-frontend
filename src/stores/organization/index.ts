@@ -22,14 +22,6 @@ export const reducer = (store: OrganizationStore = buildDefaultStore(), action?:
                     type: constants.LOADING_ORGANIZATION,
                 },
             };
-        case constants.VALID_ORGANIZATION:
-            return {
-                ...store,
-                organizationStatus: {
-                    type: constants.VALID_ORGANIZATION,
-                    organizationId: action.payload.organizationId,
-                },
-            };
         case constants.ERROR_ORGANIZATION:
             return {
                 ...store,
@@ -50,5 +42,9 @@ const saveOrganization = (store: OrganizationStore, action: SaveOrganizationActi
     organizations: {
         ...store.organizations,
         [action.payload.organization.id]: action.payload.organization,
+    },
+    organizationStatus: {
+        type: constants.VALID_ORGANIZATION,
+        organizationId: action.payload.organization.id,
     },
 });
