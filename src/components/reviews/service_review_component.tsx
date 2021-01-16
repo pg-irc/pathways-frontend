@@ -2,7 +2,7 @@ import React from 'react';
 import { Trans } from '@lingui/react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { CloseButtonComponent } from '../close_button_component';
-import { colors, textStyles, applicationStyles, values } from '../../application/styles';
+import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
@@ -33,7 +33,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     );
 };
 
-export const HeaderComponent = (): JSX.Element => {
+const HeaderComponent = (): JSX.Element => {
     const history = useHistory();
     return (
         <Header style={applicationStyles.headerContainer} androidStatusBarColor={colors.teal}>
@@ -47,7 +47,7 @@ export const HeaderComponent = (): JSX.Element => {
     );
 };
 
-export const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Element => {
+const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Element => {
     return (
         <View>
             <Text style={textStyles.contentTitle}>
@@ -62,7 +62,7 @@ export const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Eleme
     );
 };
 
-export const RatingQuestionComponent = (): JSX.Element => (
+const RatingQuestionComponent = (): JSX.Element => (
     <View style={{ paddingTop: 20, paddingBottom: 10 }}>
         <Text style={textStyles.paragraphStyle}>
             <Trans>How would you rate this service?</Trans>
