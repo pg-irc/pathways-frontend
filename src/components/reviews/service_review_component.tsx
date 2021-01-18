@@ -6,7 +6,7 @@ import { CloseButtonComponent } from '../close_button_component';
 import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
-import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
+import { chooseRating, ChooseRatingAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
 import { useHistory } from 'react-router-native';
 import { MultilineKeyboardDoneButton, MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -17,10 +17,13 @@ export interface ServiceReviewProps {
     readonly serviceId: string;
     readonly serviceName: string;
     readonly rating: number;
+    readonly showDiscardChangesModal: boolean;
 }
 
 export interface ServiceReviewActions {
     readonly chooseRating: (rating: number) => ChooseRatingAction;
+    readonly openDiscardChangesModal: () => OpenDiscardChangesModalAction;
+    readonly closeDiscardChangesModal: () => CloseDiscardChangesModalAction;
 }
 
 type Props = ServiceReviewProps & ServiceReviewActions;
