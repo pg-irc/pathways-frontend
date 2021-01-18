@@ -9,6 +9,7 @@ import { RatingsComponent } from './ratings_component';
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
 import { useHistory } from 'react-router-native';
 import { MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export interface ServiceReviewProps {
     readonly serviceId: string;
@@ -27,12 +28,17 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     return (
         <View style={{ flex: 1 }}>
         <HeaderComponent/>
-        <View style={{ padding: 20 }}>
+        <KeyboardAwareScrollView
+            enableResetScrollToCoords={false}
+            extraHeight={100}
+            enableOnAndroid={true}
+            style={{ padding: 20 }}
+        >
             <ServiceNameComponent name={props.serviceName}/>
             <RatingQuestionComponent />
             <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
             <CommentComponent comment={comment} setComment={setComment}/>
-        </View>
+        </KeyboardAwareScrollView>
     </View>
     );
 };
