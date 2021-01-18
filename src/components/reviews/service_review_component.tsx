@@ -55,7 +55,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             extraScrollHeight={100}
             style={{ padding: 20 }}
         >
-            <ServiceNameComponent name={props.serviceName}/>
+            <ServiceNameComponent name={props.serviceName} onPress={history.goBack} />
             <RatingQuestionComponent />
             <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
             <CommentComponent comment={comment} setComment={setComment}/>
@@ -85,20 +85,18 @@ const HeaderComponent = ({openDiscardChangesModal}: {readonly openDiscardChanges
     </Header>
 );
 
-const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Element => {
-    return (
-        <View>
-            <Text style={textStyles.contentTitle}>
-                <Trans>Looks like you used the service,</Trans>
+const ServiceNameComponent = ({name, onPress}: {readonly name: string, readonly onPress: () => void}): JSX.Element => (
+    <View>
+        <Text style={textStyles.contentTitle}>
+            <Trans>Looks like you used the service,</Trans>
+        </Text>
+        <TouchableOpacity onPress={onPress}>
+            <Text style={[textStyles.contentTitle, { color: colors.teal }]}>
+                {name}
             </Text>
-            <TouchableOpacity>
-                <Text style={[textStyles.contentTitle, { color: colors.teal }]}>
-                    {name}
-                </Text>
-            </TouchableOpacity>
-        </View>
-    );
-};
+        </TouchableOpacity>
+    </View>
+);
 
 const RatingQuestionComponent = (): JSX.Element => (
     <View style={{ paddingTop: 20, paddingBottom: 10 }}>
