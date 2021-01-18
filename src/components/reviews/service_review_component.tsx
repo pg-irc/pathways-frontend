@@ -1,3 +1,4 @@
+// tslint:disable: no-expression-statement
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
@@ -12,6 +13,7 @@ import { MultilineKeyboardDoneButton, MultilineTextInputForPlatform } from '../m
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { isAndroid } from '../../application/helpers/is_android';
+import { DiscardChangesModal } from '../feedback/discard_changes_modal';
 
 export interface ServiceReviewProps {
     readonly serviceId: string;
@@ -31,9 +33,14 @@ type Props = ServiceReviewProps & ServiceReviewActions;
 export const ServiceReviewComponent = (props: Props): JSX.Element => {
     const [comment, setComment]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
     const keyboardIsVisible = useKeyboardIsVisible();
+    const history = useHistory();
+    const onDiscardPress = (): void => {
+        props.closeDiscardChangesModal();
+        history.goBack();
+    };
     return (
         <View style={{ flex: 1 }}>
-        <HeaderComponent/>
+        <HeaderComponent openDiscardChangesModal={props.openDiscardChangesModal}/>
         <KeyboardAwareScrollView
             enableResetScrollToCoords={false}
             extraHeight={100}
@@ -47,23 +54,24 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             <CommentComponent comment={comment} setComment={setComment}/>
         </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
+            <DiscardChangesModal
+                isVisible={props.showDiscardChangesModal}
+                onKeepEditingPress={props.closeDiscardChangesModal}
+                onDiscardPress={onDiscardPress}
+            />
     </View>
     );
 };
 
-const HeaderComponent = (): JSX.Element => {
-    const history = useHistory();
-    return (
-        <Header style={applicationStyles.headerContainer} androidStatusBarColor={colors.teal}>
-            <CloseButtonComponent
-                color={colors.greyishBrown}
-                additionalStyle={{ paddingTop: 0 }}
-                // TODO include discard modal logic
-                onPress={history.goBack}
-            />
-        </Header>
-    );
-};
+const HeaderComponent = ({openDiscardChangesModal}: {readonly openDiscardChangesModal: () => OpenDiscardChangesModalAction}): JSX.Element => (
+    <Header style={applicationStyles.headerContainer} androidStatusBarColor={colors.teal}>
+        <CloseButtonComponent
+            color={colors.greyishBrown}
+            additionalStyle={{ paddingTop: 0 }}
+            onPress={openDiscardChangesModal}
+        />
+    </Header>
+);
 
 const ServiceNameComponent = ({name}: {readonly name: string}): JSX.Element => {
     return (
