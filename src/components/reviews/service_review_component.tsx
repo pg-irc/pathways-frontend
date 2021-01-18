@@ -47,19 +47,19 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     };
     return (
         <View style={{ flex: 1 }}>
-        <HeaderComponent openDiscardChangesModal={props.openDiscardChangesModal}/>
-        <KeyboardAwareScrollView
-            enableResetScrollToCoords={false}
-            extraHeight={100}
-            enableOnAndroid={true}
-            extraScrollHeight={100}
-            style={{ padding: 20 }}
-        >
-            <ServiceNameComponent name={props.serviceName} onPress={history.goBack} />
-            <RatingQuestionComponent />
-            <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
-            <CommentComponent comment={comment} setComment={setComment}/>
-        </KeyboardAwareScrollView>
+            <HeaderComponent openDiscardChangesModal={props.openDiscardChangesModal}/>
+            <KeyboardAwareScrollView
+                enableResetScrollToCoords={false}
+                extraHeight={100}
+                enableOnAndroid={true}
+                extraScrollHeight={100}
+                style={{ padding: 20 }}
+            >
+                <ServiceNameComponent name={props.serviceName} onPress={history.goBack} />
+                <RatingQuestionComponent />
+                <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
+                <CommentComponent comment={comment} setComment={setComment}/>
+            </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
             <SubmitFeedbackButton
                 isVisible={!keyboardIsVisible}
@@ -71,7 +71,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                 onKeepEditingPress={props.closeDiscardChangesModal}
                 onDiscardPress={onDiscardPress}
             />
-    </View>
+        </View>
     );
 };
 
@@ -111,15 +111,14 @@ export interface CommentProps {
     readonly setComment: Dispatch<SetStateAction<string>>;
 }
 
-const CommentComponent = (props: CommentProps): JSX.Element => {
-    return (
-        <I18n>
-            {
-                ({ i18n }: I18nProps): JSX.Element => (
-                    <View style={{ paddingTop: 20, flex: 1 }}>
-                        <Text style={textStyles.paragraphStyle}>
-                            <Trans>Tell us more about your experience:</Trans>
-                        </Text>
+const CommentComponent = (props: CommentProps): JSX.Element => (
+    <I18n>
+        {
+            ({ i18n }: I18nProps): JSX.Element => (
+                <View style={{ paddingTop: 20, flex: 1 }}>
+                    <Text style={textStyles.paragraphStyle}>
+                        <Trans>Tell us more about your experience:</Trans>
+                    </Text>
                     <View style={{ marginTop: 20 }}>
                         <MultilineTextInputForPlatform
                             i18n={i18n}
@@ -132,8 +131,7 @@ const CommentComponent = (props: CommentProps): JSX.Element => {
                         />
                     </View>
                 </View>
-                )
-            }
-        </I18n>
-    );
-};
+            )
+        }
+    </I18n>
+);
