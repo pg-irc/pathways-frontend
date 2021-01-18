@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement readonly-array
 import {
     Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
-    popFeedbackPathsFromHistory, goBackToServiceDetailOnFeedbackSubmit }
+    popFeedbackPathsFromHistory, goBackToServiceDetailOnFeedbackSubmit, isServiceReviewScreen }
 from '../routing';
 import { aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
@@ -166,5 +166,26 @@ describe('the goBackToServiceDetailOnFeedbackSubmit function', () => {
         expect(history.entries[0].pathname).toBe(firstRegularPath);
         expect(history.entries[1].pathname).toBe(secondRegularPath);
         expect(history.entries[2].pathname).toBe(serviceDetailPath);
+    });
+});
+
+describe('the is service review screen function', () => {
+    const firstPath = routePathDefinition(Routes.Services);
+    const secondPath = routePathDefinition(Routes.ServiceDetail);
+    const serviceReviewPath = routePathDefinition(Routes.ServiceReview);
+    const wrongPath = routePathDefinition(Routes.ExplainFeedback);
+
+    it('returns true when the most recent path is the service review path', () => {
+        const initialPathEntries = [firstPath, secondPath, serviceReviewPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
+        expect(isServiceReviewScreen(history)).toBe(true);
+    });
+
+    it('returns false when the most recent path is not the service review path', () => {
+        const initialPathEntries = [firstPath, secondPath, wrongPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
+        expect(isServiceReviewScreen(history)).toBe(false);
     });
 });

@@ -147,3 +147,8 @@ export const getParametersFromPath = (location: Location, route: Routes): RouteP
     });
     return match.params;
 };
+
+export const isServiceReviewScreen = (memoryHistory: MemoryHistory): boolean => {
+    const path = memoryHistory.entries[memoryHistory.entries.length - 1].pathname;
+    return pathMatchesRoute(path, Routes.ServiceReview);
+};

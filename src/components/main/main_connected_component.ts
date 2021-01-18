@@ -21,6 +21,7 @@ import { selectIsAboutModalVisible } from '../../selectors/user_experience/selec
 import { selectIsDisclaimerModalVisible } from '../../selectors/user_experience/select_is_disclaimer_modal_visible';
 import { selectFeedbackScreen } from '../../selectors/feedback/select_feedback_screen';
 import { close as backOutOfFeedbackScreen, CloseAction, BackFromContactInformationAction, backFromContactInformation } from '../../stores/feedback';
+import { openDiscardChangesModal, OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
 
 type Props = LoaderProps & MainComponentProps & RouterProps;
 
@@ -53,7 +54,8 @@ type Actions =
     OpenDisclaimerModalAction |
     RouteChangedAction |
     CloseAction |
-    BackFromContactInformationAction;
+    BackFromContactInformationAction |
+    OpenDiscardChangesModalAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): MainComponentActions => ({
     sendAnalyticsData: (location: Location, locale: Locale): RouteChangedAction => dispatch(routeChanged(location, locale)),
@@ -65,6 +67,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): MainComponentActions =
     openDisclaimerModal: (): OpenDisclaimerModalAction => dispatch(openDisclaimerModal()),
     backOutOfFeedbackScreen: (): CloseAction => dispatch(backOutOfFeedbackScreen()),
     backFromContactInformation: (): BackFromContactInformationAction => dispatch(backFromContactInformation()),
+    openDiscardChangesModal: (): OpenDiscardChangesModalAction => dispatch(openDiscardChangesModal()),
 });
 
 const componentWithLoader = withLoader<MainComponentProps>(MainComponent);
