@@ -106,7 +106,7 @@ const CommentComponent = (props: CommentProps): JSX.Element => {
                             numberOfLines={5}
                             placeholder={t`Comment`}
                             style={applicationStyles.input}
-                            isFocused={false}
+                            isFocused={true}
                             onChangeText={props.setComment}
                         />
                     </View>
