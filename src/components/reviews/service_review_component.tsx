@@ -8,8 +8,10 @@ import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
 import { useHistory } from 'react-router-native';
-import { MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
+import { MultilineKeyboardDoneButton, MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
+import { isAndroid } from '../../application/helpers/is_android';
 
 export interface ServiceReviewProps {
     readonly serviceId: string;
@@ -25,6 +27,7 @@ type Props = ServiceReviewProps & ServiceReviewActions;
 
 export const ServiceReviewComponent = (props: Props): JSX.Element => {
     const [comment, setComment]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
+    const keyboardIsVisible = useKeyboardIsVisible();
     return (
         <View style={{ flex: 1 }}>
         <HeaderComponent/>
@@ -32,6 +35,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             enableResetScrollToCoords={false}
             extraHeight={100}
             enableOnAndroid={true}
+            extraScrollHeight={isAndroid() ? 100 : 0}
             style={{ padding: 20 }}
         >
             <ServiceNameComponent name={props.serviceName}/>
@@ -39,6 +43,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
             <CommentComponent comment={comment} setComment={setComment}/>
         </KeyboardAwareScrollView>
+            <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
     </View>
     );
 };
@@ -90,10 +95,10 @@ const CommentComponent = (props: CommentProps): JSX.Element => {
         <I18n>
             {
                 ({ i18n }: I18nProps): JSX.Element => (
-                    <View style={{ paddingTop: 20 }}>
-                    <Text style={textStyles.paragraphStyle}>
-                        <Trans>Tell us more about your experience:</Trans>
-                    </Text>
+                    <View style={{ paddingTop: 20, flex: 1 }}>
+                        <Text style={textStyles.paragraphStyle}>
+                            <Trans>Tell us more about your experience:</Trans>
+                        </Text>
                     <View style={{ marginTop: 20 }}>
                         <MultilineTextInputForPlatform
                             i18n={i18n}
