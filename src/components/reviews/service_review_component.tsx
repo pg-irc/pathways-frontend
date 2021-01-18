@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { t } from '@lingui/macro';
 import { Trans, I18n } from '@lingui/react';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -23,6 +23,7 @@ export interface ServiceReviewActions {
 type Props = ServiceReviewProps & ServiceReviewActions;
 
 export const ServiceReviewComponent = (props: Props): JSX.Element => {
+    const [comment, setComment]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
     return (
         <View style={{ flex: 1 }}>
         <HeaderComponent/>
@@ -30,7 +31,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             <ServiceNameComponent name={props.serviceName}/>
             <RatingQuestionComponent />
             <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
-            <CommentComponent />
+            <CommentComponent comment={comment} setComment={setComment}/>
         </View>
     </View>
     );
@@ -73,7 +74,12 @@ const RatingQuestionComponent = (): JSX.Element => (
     </View>
 );
 
-const CommentComponent = (): JSX.Element => {
+export interface CommentProps {
+    readonly comment: string;
+    readonly setComment: Dispatch<SetStateAction<string>>;
+}
+
+const CommentComponent = (props: CommentProps): JSX.Element => {
     return (
         <I18n>
             {
@@ -84,12 +90,12 @@ const CommentComponent = (): JSX.Element => {
                     </Text>
                     <MultilineTextInputForPlatform
                         i18n={i18n}
-                        value={''}
+                        value={props.comment}
                         numberOfLines={5}
                         placeholder={t`Comment`}
                         style={[applicationStyles.input, { marginHorizontal: 0, marginTop: 10}]}
                         isFocused={false}
-                        onChangeText={() => console.log('onChange')}
+                        onChangeText={props.setComment}
                     />
                 </View>
                 )
