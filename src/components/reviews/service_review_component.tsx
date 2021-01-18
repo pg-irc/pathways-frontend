@@ -14,6 +14,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { isAndroid } from '../../application/helpers/is_android';
 import { DiscardChangesModal } from '../feedback/discard_changes_modal';
+import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
 
 export interface ServiceReviewProps {
     readonly serviceId: string;
@@ -34,9 +35,15 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     const [comment, setComment]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
     const keyboardIsVisible = useKeyboardIsVisible();
     const history = useHistory();
+
     const onDiscardPress = (): void => {
         props.closeDiscardChangesModal();
         history.goBack();
+    };
+
+    const onSubmitButtonPress = (): void => {
+        // TODO https://github.com/pg-irc/pathways-frontend/issues/1345
+        console.log(`send ${props.serviceId} ${props.rating} ${comment} locale`);
     };
     return (
         <View style={{ flex: 1 }}>
@@ -54,6 +61,11 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             <CommentComponent comment={comment} setComment={setComment}/>
         </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>
+            <SubmitFeedbackButton
+                isVisible={!keyboardIsVisible}
+                disabled={false}
+                onPress={onSubmitButtonPress}
+            />
             <DiscardChangesModal
                 isVisible={props.showDiscardChangesModal}
                 onKeepEditingPress={props.closeDiscardChangesModal}
