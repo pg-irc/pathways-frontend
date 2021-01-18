@@ -84,19 +84,21 @@ const CommentComponent = (props: CommentProps): JSX.Element => {
         <I18n>
             {
                 ({ i18n }: I18nProps): JSX.Element => (
-                    <View style={{ paddingTop: 20, paddingBottom: 10 }}>
+                    <View style={{ paddingTop: 20 }}>
                     <Text style={textStyles.paragraphStyle}>
                         <Trans>Tell us more about your experience:</Trans>
                     </Text>
-                    <MultilineTextInputForPlatform
-                        i18n={i18n}
-                        value={props.comment}
-                        numberOfLines={5}
-                        placeholder={t`Comment`}
-                        style={[applicationStyles.input, { marginHorizontal: 0, marginTop: 10}]}
-                        isFocused={false}
-                        onChangeText={props.setComment}
-                    />
+                    <View style={{ marginTop: 20 }}>
+                        <MultilineTextInputForPlatform
+                            i18n={i18n}
+                            value={props.comment}
+                            numberOfLines={5}
+                            placeholder={t`Comment`}
+                            style={applicationStyles.input}
+                            isFocused={false}
+                            onChangeText={props.setComment}
+                        />
+                    </View>
                 </View>
                 )
             }
