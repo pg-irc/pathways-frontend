@@ -1,17 +1,11 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
-import { AirbnbRating } from 'react-native-ratings';
+import { View } from 'react-native';
 export interface RatingsProps {
     readonly rating: number;
     readonly onFinishRating: (rating: number) => void;
 }
 
 export const RatingsComponent = (props: RatingsProps): JSX.Element => (
-    <AirbnbRating
-        count={5}
-        defaultRating={props.rating}
-        size={30}
-        showRating={false}
-        onFinishRating={props.onFinishRating}
-    />
+    <View>Smiley face ratings here {props.rating}</View>
 );
