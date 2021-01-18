@@ -35,7 +35,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             enableResetScrollToCoords={false}
             extraHeight={100}
             enableOnAndroid={true}
-            extraScrollHeight={isAndroid() ? 100 : 0}
+            extraScrollHeight={100}
             style={{ padding: 20 }}
         >
             <ServiceNameComponent name={props.serviceName}/>
