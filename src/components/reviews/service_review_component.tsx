@@ -103,7 +103,7 @@ const ServiceNameComponent = ({name, onPress}: {readonly name: string, readonly 
 const RatingQuestionComponent = (): JSX.Element => (
     <View style={{ paddingTop: 20, paddingBottom: 10 }}>
         <Text style={textStyles.paragraphStyle}>
-            <Trans>How would you rate this service?</Trans>
+            <Trans>How was your experience with this service?</Trans>
         </Text>
     </View>
 );
