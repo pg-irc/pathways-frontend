@@ -94,49 +94,45 @@ const OrganizationPage = (props: Props): JSX.Element => {
     }
 };
 
-const renderLoadingScreen = (): JSX.Element => {
-    return (
-        <View style={{ height: '100%', width: '100%' }}>
-            <LoadingServiceListComponent />
-        </View>
-    );
-}
+const renderLoadingScreen = (): JSX.Element => (
+    <View style={{ height: '100%', width: '100%' }}>
+        <LoadingServiceListComponent />
+    </View>
+);
 
-const renderErrorScreen = (errorType: Errors): JSX.Element => {
-    return <ErrorScreenSwitcherComponent
+const renderErrorScreen = (errorType: Errors): JSX.Element => (
+    <ErrorScreenSwitcherComponent
         refreshScreen={(): void => console.log('Figure out refresh behaviour')}
-        errorType={errorType} />;
-};
+        errorType={errorType} />
+);
 
-const renderValidOrganizationPage = (props: Props): JSX.Element => {
-    return (
-        <I18n>
-            {({ i18n }: { readonly i18n: I18n }): JSX.Element => (
-                <View style={{ flex: 1 }}>
-                    <View style={{ marginLeft: 10 }}>
-                        <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
-                        <TitleComponent title={props.organization.name.toUpperCase()} />
-                    </View>
-                    <OrganizationTabSwitcher
-                        i18n={i18n}
-                        organization={props.organization}
-                        organizationStatus={props.organizationStatus}
-                        organizationTab={props.organizationTab}
-                        servicesForOrganization={props.servicesForOrganization}
-                        bookmarkedServicesIds={props.bookmarkedServicesIds}
-                        analyticsLinkPressed={analyticsLinkPressed}
-                        history={props.history}
-                        organizationServicesOffset={props.organizationServicesOffset}
-                        saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
-                        bookmarkService={props.bookmarkService}
-                        unbookmarkService={props.unbookmarkService}
-                        openServiceDetail={props.openServiceDetail}
-                        openHeaderMenu={props.openHeaderMenu}
-                        saveOrganizationTab={props.saveOrganizationTab}
-                        currentPathForAnalytics={props.location.pathname}
-                    />
+const renderValidOrganizationPage = (props: Props): JSX.Element => (
+    <I18n>
+        {({ i18n }: { readonly i18n: I18n }): JSX.Element => (
+            <View style={{ flex: 1 }}>
+                <View style={{ marginLeft: 10 }}>
+                    <DescriptorComponent descriptor={<Trans>ORGANIZATION</Trans>} />
+                    <TitleComponent title={props.organization.name.toUpperCase()} />
                 </View>
-            )}
-        </I18n>
-    );
-}
+                <OrganizationTabSwitcher
+                    i18n={i18n}
+                    organization={props.organization}
+                    organizationStatus={props.organizationStatus}
+                    organizationTab={props.organizationTab}
+                    servicesForOrganization={props.servicesForOrganization}
+                    bookmarkedServicesIds={props.bookmarkedServicesIds}
+                    analyticsLinkPressed={analyticsLinkPressed}
+                    history={props.history}
+                    organizationServicesOffset={props.organizationServicesOffset}
+                    saveOrganizationServicesOffset={props.saveOrganizationServicesOffset}
+                    bookmarkService={props.bookmarkService}
+                    unbookmarkService={props.unbookmarkService}
+                    openServiceDetail={props.openServiceDetail}
+                    openHeaderMenu={props.openHeaderMenu}
+                    saveOrganizationTab={props.saveOrganizationTab}
+                    currentPathForAnalytics={props.location.pathname}
+                />
+            </View>
+        )}
+    </I18n>
+);

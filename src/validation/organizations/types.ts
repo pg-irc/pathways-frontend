@@ -1,7 +1,8 @@
 import { Errors } from '../errors/types';
+import { Id } from '../services/types';
 
 export interface HumanOrganizationData {
-    readonly id: string;
+    readonly id: Id;
     readonly name: string;
     readonly description: string;
     readonly website: string;
