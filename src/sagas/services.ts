@@ -76,8 +76,9 @@ export function* updateServicesForOrganization(action: OpenOrganizationAction): 
 
         const bookmarkedServiceIds = yield select(selectBookmarkedServicesIds);
 
-        const services = validatedAlgoliaResponse.map((item: SearchServiceData): HumanServiceData => toHumanServiceData(item, bookmarkedServiceIds));
-
+        const reviewedServiceIds = yield select(selectReviewedServicesIds);
+        const services = validatedAlgoliaResponse.map((item: SearchServiceData): HumanServiceData =>
+            toHumanServiceData(item, bookmarkedServiceIds, reviewedServiceIds));
         yield put(actions.saveServicesForOrganization(organizationId, services));
     } catch (error) {
         console.warn(error);

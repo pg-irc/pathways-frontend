@@ -3,7 +3,9 @@ import { HumanServiceData, Id } from '../services/types';
 import { LatLong } from '../latlong/types';
 import * as R from 'ramda';
 
-export const toHumanServiceData = (data: SearchServiceData, bookmarkedServicesIds: ReadonlyArray<Id>): HumanServiceData => ({
+export const toHumanServiceData = (
+    data: SearchServiceData, bookmarkedServicesIds: ReadonlyArray<Id>, reviewedServiceIds: ReadonlyArray<Id>,
+    ): HumanServiceData => ({
     id: data.service_id,
     latlong: validateLatLong(data._geoloc.lat, data._geoloc.lng),
     name: data.service_name,
@@ -22,9 +24,8 @@ export const toHumanServiceData = (data: SearchServiceData, bookmarkedServicesId
     email: data.organization.email,
     organizationId: data.organization.id,
     organizationName: data.organization.name,
-    bookmarked: R.contains(data.service_id, bookmarkedServicesIds),
-    // TODO use reviewedServicesIds
-    reviewed: false,
+    bookmarked: R.includes(data.service_id, bookmarkedServicesIds),
+    reviewed: R.includes(data.service_id, reviewedServiceIds),
     lastVerifiedDate: data.last_verified_date,
 });
 

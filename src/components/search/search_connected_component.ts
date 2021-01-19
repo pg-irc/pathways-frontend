@@ -21,9 +21,11 @@ import { OpenHeaderMenuAction, openHeaderMenu } from '../../stores/user_experien
 import { SaveSearchResultScrollOffsetAction, saveSearchResultScrollOffset } from '../../stores/user_experience/actions';
 import { selectSearchOffset } from '../../selectors/user_experience/select_search_offset';
 import { selectCustomLatLong } from '../../selectors/user_profile/select_custom_latlong';
+import { selectReviewedServicesIds } from '../../selectors/services/select_reviewed_services_ids';
 
 const mapStateToProps = (store: Store): SearchComponentProps => ({
     bookmarkedServicesIds: selectBookmarkedServicesIds(store),
+    reviewedServicesIds: selectReviewedServicesIds(store),
     searchTerm: selectSearchTerm(store),
     searchLocation: selectSearchLocation(store),
     searchPage: selectSearchPage(store),

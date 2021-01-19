@@ -27,6 +27,7 @@ import { SaveSearchResultScrollOffsetAction } from '../../stores/user_experience
 
 export interface SearchComponentProps {
     readonly bookmarkedServicesIds: ReadonlyArray<Id>;
+    readonly reviewedServicesIds: ReadonlyArray<Id>;
     readonly searchTerm: string;
     readonly searchLocation: string;
     readonly searchLatLong: LatLong;
