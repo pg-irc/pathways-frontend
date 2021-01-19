@@ -8,13 +8,14 @@ import { colors, textStyles, applicationStyles } from '../../application/styles'
 import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
 import { ChooseRatingAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
-import { useHistory } from 'react-router-native';
 import { MultilineKeyboardDoneButton, MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
 import { isAndroid } from '../../application/helpers/is_android';
 import { DiscardChangesModal } from '../feedback/discard_changes_modal';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
+import { backToServiceDetailOnServiceReviewDiscard } from '../../application/routing';
+import { memoryHistory } from '../../application';
 
 export interface ServiceReviewProps {
     readonly serviceId: string;
@@ -34,11 +35,10 @@ type Props = ServiceReviewProps & ServiceReviewActions;
 export const ServiceReviewComponent = (props: Props): JSX.Element => {
     const [comment, setComment]: readonly[string, Dispatch<SetStateAction<string>>] = useState<string>('');
     const keyboardIsVisible = useKeyboardIsVisible();
-    const history = useHistory();
 
     const onDiscardPress = (): void => {
         props.closeDiscardChangesModal();
-        history.goBack();
+        backToServiceDetailOnServiceReviewDiscard(memoryHistory);
     };
 
     const onSubmitButtonPress = (): void => {
@@ -55,7 +55,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
                 extraScrollHeight={100}
                 style={{ padding: 20 }}
             >
-                <ServiceNameComponent name={props.serviceName} onPress={history.goBack} />
+                <ServiceNameComponent name={props.serviceName} onPress={memoryHistory.goBack} />
                 <RatingQuestionComponent />
                 <RatingsComponent rating={props.rating} chooseRating={props.chooseRating}/>
                 <CommentComponent comment={comment} setComment={setComment}/>
