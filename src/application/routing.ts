@@ -108,7 +108,7 @@ export const goBack = (memoryHistory: MemoryHistory): void => (
     memoryHistory.goBack()
 );
 
-export const goBackToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
+export const backToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory): void => {
     popFeedbackPathsFromHistory(memoryHistory);
     const positionOfCurrentPathInHistoryStack = 0;
     memoryHistory.go(positionOfCurrentPathInHistoryStack);
@@ -124,7 +124,7 @@ const pathMatchesFeedbackRoute = (location: Location<LocationState>): boolean =>
     pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ContactInformation])
 );
 
-export const goBackToServiceDetailOnDiscard = (memoryHistory: MemoryHistory): void => {
+export const backToServiceDetailOnServiceReviewDiscard = (memoryHistory: MemoryHistory): void => {
     popServiceReviewPathFromHistory(memoryHistory);
     const positionOfCurrentPathInHistoryStack = 0;
     memoryHistory.go(positionOfCurrentPathInHistoryStack);

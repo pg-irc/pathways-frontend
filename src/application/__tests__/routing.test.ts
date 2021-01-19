@@ -1,7 +1,8 @@
 // tslint:disable:no-expression-statement readonly-array
 import {
     Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
-    popFeedbackPathsFromHistory, goBackToServiceDetailOnFeedbackSubmit, isServiceReviewScreen, popServiceReviewPathFromHistory, goBackToServiceDetailOnDiscard }
+    popFeedbackPathsFromHistory, backToServiceDetailOnFeedbackSubmit, isServiceReviewScreen,
+    popServiceReviewPathFromHistory, backToServiceDetailOnServiceReviewDiscard }
 from '../routing';
 import { aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
@@ -138,7 +139,7 @@ describe('the popFeedbackPathsFromHistory function', () => {
 
 });
 
-describe('the goBackToServiceDetailOnFeedbackSubmit function', () => {
+describe('the backToServiceDetailOnFeedbackSubmit function', () => {
     const firstRegularPath = routePathDefinition(Routes.TopicDetail);
     const secondRegularPath = routePathDefinition(Routes.Services);
     const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
@@ -149,7 +150,7 @@ describe('the goBackToServiceDetailOnFeedbackSubmit function', () => {
         const initialPathEntries = [firstRegularPath, secondRegularPath, serviceDetailPath, firstFeedbackPath, secondFeedbackPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
-        goBackToServiceDetailOnFeedbackSubmit(history);
+        backToServiceDetailOnFeedbackSubmit(history);
         expect(history.location.pathname).toBe(serviceDetailPath);
         expect(history.entries.length).toBe(3);
         expect(history.entries[0].pathname).toBe(firstRegularPath);
@@ -161,7 +162,7 @@ describe('the goBackToServiceDetailOnFeedbackSubmit function', () => {
         const initialPathEntries = [firstRegularPath, secondRegularPath, serviceDetailPath, firstFeedbackPath, secondFeedbackPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
-        goBackToServiceDetailOnFeedbackSubmit(history);
+        backToServiceDetailOnFeedbackSubmit(history);
         expect(history.entries.length).toBe(3);
         expect(history.entries[0].pathname).toBe(firstRegularPath);
         expect(history.entries[1].pathname).toBe(secondRegularPath);
@@ -207,7 +208,7 @@ describe('the popServiceReviewPathFromHistory function', () => {
     });
 });
 
-describe('the goBackToServiceDetailOnDiscard function', () => {
+describe('the backToServiceDetailOnServiceReviewDiscard function', () => {
     const firstRegularPath = routePathDefinition(Routes.Services);
     const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
     const serviceReviewPath = routePathDefinition(Routes.ServiceReview);
@@ -216,7 +217,7 @@ describe('the goBackToServiceDetailOnDiscard function', () => {
         const initialPathEntries = [firstRegularPath, serviceDetailPath, serviceReviewPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
-        goBackToServiceDetailOnDiscard(history);
+        backToServiceDetailOnServiceReviewDiscard(history);
         expect(history.location.pathname).toBe(serviceDetailPath);
         expect(history.entries.length).toBe(2);
         expect(history.entries[0].pathname).toBe(firstRegularPath);
@@ -227,7 +228,7 @@ describe('the goBackToServiceDetailOnDiscard function', () => {
         const initialPathEntries = [firstRegularPath, serviceDetailPath, serviceReviewPath];
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
-        goBackToServiceDetailOnDiscard(history);
+        backToServiceDetailOnServiceReviewDiscard(history);
         expect(history.entries.length).toBe(2);
         expect(history.entries[0].pathname).toBe(firstRegularPath);
         expect(history.entries[1].pathname).toBe(serviceDetailPath);
