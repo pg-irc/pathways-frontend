@@ -79,6 +79,8 @@ const buildHumanService = R.curry((bookmarkedServiceIds: ReadonlyArray<Id>, data
             organizationName: data.service.organization_name,
             lastVerifiedDate: data.service.last_verified_date,
             bookmarked: R.contains(data.service.id, bookmarkedServiceIds),
+            // TODO use a reviewedServicesIds array
+            reviewed: false,
         };
 });
 

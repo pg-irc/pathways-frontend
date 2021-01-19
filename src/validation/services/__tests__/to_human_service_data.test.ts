@@ -62,6 +62,7 @@ describe('Adapting server service object to client service object', () => {
             email: serverServiceObject.service.organization_email,
             organizationName: serverServiceObject.service.organization_name,
             bookmarked: false,
+            reviewed: false,
             lastVerifiedDate: serverServiceObject.service.last_verified_date,
         };
 

@@ -23,6 +23,8 @@ export const toHumanServiceData = (data: SearchServiceData, bookmarkedServicesId
     organizationId: data.organization.id,
     organizationName: data.organization.name,
     bookmarked: R.contains(data.service_id, bookmarkedServicesIds),
+    // TODO use reviewedServicesIds
+    reviewed: false,
     lastVerifiedDate: data.last_verified_date,
 });
 

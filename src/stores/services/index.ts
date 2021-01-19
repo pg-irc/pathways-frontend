@@ -4,6 +4,7 @@ import * as actions from './actions';
 import * as types from '../../validation/services/types';
 import { Id, ServiceStore } from '../../validation/services/types';
 import { DataPersistence } from '../persisted_data';
+import { SubmitServiceReviewAction } from '../reviews/actions';
 export { Id, ServiceStore };
 
 export type ServiceBookmarkActions = actions.BookmarkServiceAction | actions.UnbookmarkServiceAction;
@@ -35,6 +36,8 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
             return updateServiceBookmarkInServicesMap(store, action, true);
         case constants.UNBOOKMARK_SERVICE:
             return updateServiceBookmarkInServicesMap(store, action, false);
+        case constants.SUBMIT_SERVICE_REVIEW:
+            return updateServiceReviewInServicesMap(store, action);
         case constants.CLEAR_ALL_USER_DATA:
             return clearServicesData(store);
         case constants.LOAD_USER_DATA_SUCCESS:
@@ -140,6 +143,20 @@ const updateServiceBookmarkInServicesMap = (store: types.ServiceStore, action: S
             [serviceId]: {
                 ...action.payload.service,
                 bookmarked: bookmarkedState,
+            },
+        },
+    };
+};
+
+const updateServiceReviewInServicesMap = (store: types.ServiceStore, action: SubmitServiceReviewAction): types.ServiceStore => {
+    const serviceId = action.payload.serviceId;
+    return {
+        ...store,
+        services: {
+            ...store.services,
+            [serviceId]: {
+                ...store.services[serviceId],
+                reviewed: true,
             },
         },
     };
