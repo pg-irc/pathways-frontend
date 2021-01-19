@@ -12,6 +12,7 @@ import { EmptyComponent } from '../empty_component/empty_component';
 interface Props {
     readonly isVisible: boolean;
     readonly serviceId: string;
+    readonly serviceName: string;
     readonly rating: number;
     readonly chooseRating: (rating: number) => ChooseRatingAction;
 }
@@ -29,8 +30,8 @@ export const ServiceDetailRatingsComponent = (props: Props): JSX.Element => {
 
     return (
         <View style={{ paddingVertical: values.backgroundTextPadding}}>
-            <Text style={[textStyles.headlineH3StyleBlackCenter, { paddingBottom: 10 }]}>
-                    <Trans>Rate this service</Trans>
+            <Text style={[textStyles.headlineH3StyleBlackCenter, { paddingHorizontal: 10 }]}>
+                    <Trans>How was your experience with</Trans> {props.serviceName}?
                 </Text>
             <RatingsComponent rating={props.rating} chooseRating={onFinishRating}/>
         </View>

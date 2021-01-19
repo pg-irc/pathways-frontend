@@ -255,6 +255,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                 <ServiceDetailRatingsComponent
                                     isVisible={!props.isReviewed}
                                     serviceId={serviceId}
+                                    serviceName={props.service.name}
                                     rating={0}
                                     chooseRating={props.chooseRating}
                                 />
