@@ -9,14 +9,25 @@ export interface RatingsProps {
     readonly onFinishRating: (rating: number) => void;
 }
 
+export interface RatingIcon {
+    readonly name: string;
+    readonly value: number;
+}
+
+const iconsList: ReadonlyArray<RatingIcon> = [
+    {name: 'frown', value: 1},
+    {name: 'meh', value: 2},
+    {name: 'smile', value: 3},
+];
+
 export const RatingsComponent = (props: RatingsProps): JSX.Element => (
     <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
-        <RatingsIconsComponent onPress={props.onFinishRating} iconsList={[]}/>
+        <RatingsIconsComponent onPress={props.onFinishRating} iconsList={iconsList}/>
     </View>
 );
 
 interface RatingsIconsProps {
-    readonly iconsList: ReadonlyArray<string>;
+    readonly iconsList: ReadonlyArray<RatingIcon>;
     readonly onPress: (rating: number) => void;
 }
 
@@ -24,8 +35,13 @@ const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => {
     return (
         <React.Fragment>
             {
-                props.iconsList.map((name: string): JSX.Element => {
-                    return <RatingIconComponent key={name} name={name} onPress={props.onPress}/>;
+                props.iconsList.map((icon: RatingIcon): JSX.Element => {
+                    return (
+                        <RatingIconComponent
+                            key={icon.name}
+                            icon={icon}
+                            onPress={props.onPress}/>
+                    );
                 })
             }
         </React.Fragment>
@@ -33,14 +49,14 @@ const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => {
 };
 
 interface RatingIconProps {
-    readonly name: string;
+    readonly icon: RatingIcon;
     readonly onPress: (value: number) => void;
 }
 
 const RatingIconComponent = (props: RatingIconProps): JSX.Element => (
-    <TouchableOpacity style={{ padding: 20 }} onPress={(): void => props.onPress(1)}>
+    <TouchableOpacity style={{ padding: 20 }} onPress={(): void => props.onPress(props.icon.value)}>
         <Icon
-            name={props.name}
+            name={props.icon.name}
             type='FontAwesome5'
             style={{ color: colors.grey, fontSize: 50 }}
         />
