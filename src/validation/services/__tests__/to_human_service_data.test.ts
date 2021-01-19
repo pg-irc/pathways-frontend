@@ -34,7 +34,7 @@ describe('Adapting server service object to client service object', () => {
     };
 
     it('builds expected structure', () => {
-        const clientServiceObject = toServicesFromValidatedData([], [serverServiceObject])[0];
+        const clientServiceObject = toServicesFromValidatedData([], [], [serverServiceObject])[0];
         const expectedClientServiceObject = {
             id: serverServiceObject.service.id,
             services_at_location_id: serverServiceObject.id,
@@ -69,13 +69,23 @@ describe('Adapting server service object to client service object', () => {
         expect(clientServiceObject).toEqual(expectedClientServiceObject);
     });
 
-    it('sets "bookmarked" set to false when no bookmark exists for the service', () => {
-        const clientServiceObject = toServicesFromValidatedData([], [serverServiceObject])[0];
+    it('sets "bookmarked" to false when no bookmark exists for the service', () => {
+        const clientServiceObject = toServicesFromValidatedData([], [], [serverServiceObject])[0];
         expect(clientServiceObject.bookmarked).toBe(false);
     });
 
-    it('sets "bookmarked" set to true when a bookmark exists for the service', () => {
-        const clientServiceObject = toServicesFromValidatedData([serverServiceObject.service.id], [serverServiceObject])[0];
+    it('sets "bookmarked" to true when a bookmark exists for the service', () => {
+        const clientServiceObject = toServicesFromValidatedData([serverServiceObject.service.id], [], [serverServiceObject])[0];
         expect(clientServiceObject.bookmarked).toBe(true);
+    });
+
+    it ('sets "reviewed" to false when a service is not reviewed', () => {
+        const clientServiceObject = toServicesFromValidatedData([], [], [serverServiceObject])[0];
+        expect(clientServiceObject.reviewed).toBe(false);
+    });
+
+    it('sets "reviewed" to true when a service has been reviewed', () => {
+        const clientServiceObject = toServicesFromValidatedData([], [serverServiceObject.service.id], [serverServiceObject])[0];
+        expect(clientServiceObject.reviewed).toBe(true);
     });
 });
