@@ -83,8 +83,7 @@ const buildHumanService = R.curry(
             organizationName: data.service.organization_name,
             lastVerifiedDate: data.service.last_verified_date,
             bookmarked: R.contains(data.service.id, bookmarkedServiceIds),
-            // TODO use a reviewedServicesIds array
-            reviewed: R.contains(data.service.id, reviewedServiceIds)
+            reviewed: R.contains(data.service.id, reviewedServiceIds),
         };
 });
 
