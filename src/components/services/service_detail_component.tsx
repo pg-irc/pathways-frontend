@@ -73,6 +73,7 @@ export interface ServiceDetailProps {
     readonly feedbackModal: FeedbackModal;
     readonly isSendingFeedback: boolean;
     readonly showLinkAlerts: boolean;
+    readonly isReviewed: boolean;
 }
 
 export interface ServiceDetailActions {
@@ -251,7 +252,12 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     suggestAnUpdate={props.suggestAnUpdate}
                                 />
                                 <DividerComponent />
-                                <ServiceDetailRatingsComponent serviceId={serviceId} rating={0} chooseRating={props.chooseRating}/>
+                                <ServiceDetailRatingsComponent
+                                    isVisible={!props.isReviewed}
+                                    serviceId={serviceId}
+                                    rating={0}
+                                    chooseRating={props.chooseRating}
+                                />
                                 <ModalContainer
                                     serviceId={serviceId}
                                     discardFeedback={props.discardFeedback}

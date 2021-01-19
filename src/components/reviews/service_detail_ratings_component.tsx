@@ -7,8 +7,10 @@ import { RatingsComponent } from './ratings_component';
 import { ChooseRatingAction } from '../../stores/reviews/actions';
 import { goToRouteWithParameter, Routes } from '../../application/routing';
 import { useHistory } from 'react-router-native';
+import { EmptyComponent } from '../empty_component/empty_component';
 
 interface Props {
+    readonly isVisible: boolean;
     readonly serviceId: string;
     readonly rating: number;
     readonly chooseRating: (rating: number) => ChooseRatingAction;
@@ -20,6 +22,11 @@ export const ServiceDetailRatingsComponent = (props: Props): JSX.Element => {
         goToRouteWithParameter(Routes.ServiceReview, props.serviceId, history)();
         return props.chooseRating(rating);
     };
+
+    if (!props.isVisible) {
+        return <EmptyComponent />;
+    }
+
     return (
         <View style={{ paddingVertical: values.backgroundTextPadding}}>
             <Text style={[textStyles.headlineH3StyleBlackCenter, { paddingBottom: 10 }]}>

@@ -1,3 +1,4 @@
+import * as R from 'ramda';
 import { connect } from 'react-redux';
 import { Store } from '../../stores';
 import { selectServiceById } from '../../selectors/services/select_service_by_id';
@@ -47,10 +48,13 @@ import { selectFeedbackType } from '../../selectors/feedback/select_feedback_typ
 import { selectServiceFeedback } from '../../selectors/feedback/select_service_feedback';
 import { openOrganization, OpenOrganizationAction } from '../../stores/organization/actions';
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
+import { selectReviewedServicesIds } from '../../selectors/services/select_reviewed_services_ids';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
+    const serviceId = ownProps.match.params.serviceId;
+    const reviewedServicesIds = selectReviewedServicesIds(store);
     return {
-        service: selectServiceById(store, ownProps.match.params.serviceId),
+        service: selectServiceById(store, serviceId),
         history: ownProps.history,
         bookmarkedServicesIds: selectBookmarkedServicesIds(store),
         serviceFeedback: selectServiceFeedback(store),
@@ -59,6 +63,7 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProp
         feedbackModal: selectFeedbackModal(store),
         isSendingFeedback: selectIsSendingFeedback(store),
         showLinkAlerts: selectShowLinkAlerts(store),
+        isReviewed: R.includes(serviceId, reviewedServicesIds),
     };
 };
 
