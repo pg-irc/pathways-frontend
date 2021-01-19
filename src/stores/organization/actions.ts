@@ -6,8 +6,8 @@ import { Errors } from '../../validation/errors/types';
 
 export type SaveOrganizationAction = Readonly<ReturnType<typeof saveOrganization>>;
 export type OpenOrganizationAction = Readonly<ReturnType<typeof openOrganization>>;
-export type OrganizationErrorAction = Readonly<ReturnType<typeof buildOrganizationError>>;
-export type OrganizationLoadingAction = Readonly<ReturnType<typeof buildOrganizationLoading>>;
+export type ErrorOrganizationAction = Readonly<ReturnType<typeof errorOrganization>>;
+export type LoadingOrganizationAction = Readonly<ReturnType<typeof loadingOrganization>>;
 
 // tslint:disable-next-line:typedef
 export const saveOrganization = (organization: HumanOrganizationData) => (
@@ -20,18 +20,18 @@ export const openOrganization = (organizationId: string) => (
 );
 
 // tslint:disable-next-line:typedef
-export const buildOrganizationError = (organizationId: string, errorMessageType: Errors) => (
+export const errorOrganization = (organizationId: string, errorMessageType: Errors) => (
     helpers.makeAction(constants.ERROR_ORGANIZATION, { organizationId, errorMessageType })
 );
 
 // tslint:disable-next-line:typedef
-export const buildOrganizationLoading = (organizationId: string) => (
+export const loadingOrganization = (organizationId: string) => (
     helpers.makeAction(constants.LOADING_ORGANIZATION, { organizationId })
 );
 
 export type OrganizationAction =
     SaveOrganizationAction |
     OpenOrganizationAction |
-    OrganizationErrorAction |
-    OrganizationLoadingAction |
+    ErrorOrganizationAction |
+    LoadingOrganizationAction |
     ClearAllUserDataAction;

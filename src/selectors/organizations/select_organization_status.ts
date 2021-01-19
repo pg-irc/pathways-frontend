@@ -1,6 +1,6 @@
 import { Store } from '../../stores';
-import { StatusForOrganization } from '../../validation/organizations/types';
+import { OrganizationStatus } from '../../validation/organizations/types';
 
-export const selectOrganizationStatus = (appStore: Store): StatusForOrganization => (
+export const selectOrganizationStatus = (appStore: Store): OrganizationStatus => (
     appStore.organizations.organizationStatus
 );

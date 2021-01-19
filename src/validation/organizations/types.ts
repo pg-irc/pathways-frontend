@@ -22,7 +22,7 @@ export interface ErrorForOrganization {
     readonly errorMessageType: Errors;
 }
 
-export type StatusForOrganization = LoadingOrganization | ErrorForOrganization | ValidOrganization;
+export type OrganizationStatus = LoadingOrganization | ErrorForOrganization | ValidOrganization;
 
 export interface OrganizationMap {
     readonly [organizationId: string]: HumanOrganizationData;
@@ -30,5 +30,5 @@ export interface OrganizationMap {
 
 export interface OrganizationStore {
     readonly organizations: OrganizationMap;
-    readonly organizationStatus: StatusForOrganization;
+    readonly organizationStatus: OrganizationStatus;
 }

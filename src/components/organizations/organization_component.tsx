@@ -12,7 +12,7 @@ import { RouterProps } from '../../application/routing';
 import { analyticsLinkPressed, AnalyticsLinkPressedAction, AnalyticsLinkProps } from '../../stores/analytics';
 import { HumanServiceData, Id } from '../../validation/services/types';
 import { BookmarkServiceAction, UnbookmarkServiceAction, OpenServiceAction } from '../../stores/services/actions';
-import { HumanOrganizationData, StatusForOrganization } from '../../validation/organizations/types';
+import { HumanOrganizationData, OrganizationStatus } from '../../validation/organizations/types';
 import { I18n } from '@lingui/react';
 import { OrganizationTabSwitcher } from './organization_tab_switcher';
 import { LoadingServiceListComponent } from '../loading_screen/loading_service_list_component';
@@ -24,7 +24,7 @@ import { Errors } from '../../validation/errors/types';
 export interface OrganizationProps {
     readonly history: History;
     readonly organization: HumanOrganizationData;
-    readonly organizationStatus: StatusForOrganization;
+    readonly organizationStatus: OrganizationStatus;
     readonly organizationTab: number;
     readonly servicesForOrganization: ReadonlyArray<HumanServiceData>;
     readonly organizationServicesOffset: number;
