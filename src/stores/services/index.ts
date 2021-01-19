@@ -175,6 +175,7 @@ const loadServicesFromUserData = (store: types.ServiceStore, action: DataPersist
         services: {
             ...store.services,
             ...action.payload.bookmarkedServices,
+            ...action.payload.reviewedServices,
         },
     };
 };
