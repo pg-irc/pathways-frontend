@@ -30,6 +30,7 @@ export function* watchUserStateChangesToSaveUserData(): IterableIterator<ForkEff
             constants.DISABLE_ANALYTICS,
             constants.ENABLE_CUSTOM_LATLONG,
             constants.GET_ALERTS_SUCCESS,
+            constants.SUBMIT_SERVICE_REVIEW,
         ],
         saveUserData);
 }
