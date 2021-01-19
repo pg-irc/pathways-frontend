@@ -23,11 +23,12 @@ const iconsList: ReadonlyArray<RatingIcon> = [
 
 export const RatingsComponent = (props: RatingsProps): JSX.Element => (
     <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
-        <RatingsIconsComponent chooseRating={props.chooseRating} iconsList={iconsList}/>
+        <RatingsIconsComponent rating={props.rating} chooseRating={props.chooseRating} iconsList={iconsList}/>
     </View>
 );
 
 interface RatingsIconsProps {
+    readonly rating: number;
     readonly iconsList: ReadonlyArray<RatingIcon>;
     readonly chooseRating: (rating: number) => void;
 }
@@ -40,6 +41,7 @@ const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => {
                     return (
                         <RatingIconComponent
                             key={icon.name}
+                            isChosen={icon.value === props.rating}
                             icon={icon}
                             onPress={(): void => props.chooseRating(icon.value)}/>
                     );
@@ -50,6 +52,7 @@ const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => {
 };
 
 interface RatingIconProps {
+    readonly isChosen: boolean;
     readonly icon: RatingIcon;
     readonly onPress: () => void;
 }
@@ -59,7 +62,7 @@ const RatingIconComponent = (props: RatingIconProps): JSX.Element => (
         <Icon
             name={props.icon.name}
             type='FontAwesome5'
-            style={{ color: colors.grey, fontSize: 50 }}
+            style={{ color: props.isChosen ? colors.teal : colors.grey, fontSize: 50 }}
         />
     </TouchableOpacity>
 );
