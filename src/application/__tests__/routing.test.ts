@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement readonly-array
 import {
     Routes, routePathDefinition, routePathWithoutParameter, routePathWithParameter, goBack,
-    popFeedbackPathsFromHistory, goBackToServiceDetailOnFeedbackSubmit, isServiceReviewScreen }
+    popFeedbackPathsFromHistory, goBackToServiceDetailOnFeedbackSubmit, isServiceReviewScreen, popServiceReviewPathFromHistory, goBackToServiceDetailOnDiscard }
 from '../routing';
 import { aString } from '../helpers/random_test_values';
 import { createMemoryHistory } from 'history';
@@ -187,5 +187,49 @@ describe('the is service review screen function', () => {
         const indexOfLastPath = initialPathEntries.length - 1;
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath });
         expect(isServiceReviewScreen(history)).toBe(false);
+    });
+});
+
+describe('the popServiceReviewPathFromHistory function', () => {
+    const firstRegularPath = routePathDefinition(Routes.Services);
+    const secondRegularPath = routePathDefinition(Routes.ServiceDetail);
+    const serviceReviewPath = routePathDefinition(Routes.ServiceReview);
+
+    it('pops the service review path from the history stack on clicking the discard button', () => {
+        const initialPathEntries = [
+            firstRegularPath, secondRegularPath, serviceReviewPath,
+        ];
+        const history = createMemoryHistory({ initialEntries: initialPathEntries });
+        popServiceReviewPathFromHistory(history);
+        expect(history.entries.length).toBe(2);
+        expect(history.entries[0].pathname).toBe(firstRegularPath);
+        expect(history.entries[1].pathname).toBe(secondRegularPath);
+    });
+});
+
+describe('the goBackToServiceDetailOnDiscard function', () => {
+    const firstRegularPath = routePathDefinition(Routes.Services);
+    const serviceDetailPath = routePathDefinition(Routes.ServiceDetail);
+    const serviceReviewPath = routePathDefinition(Routes.ServiceReview);
+
+    it('sends the user back to the service detail page already on the history stack', () => {
+        const initialPathEntries = [firstRegularPath, serviceDetailPath, serviceReviewPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goBackToServiceDetailOnDiscard(history);
+        expect(history.location.pathname).toBe(serviceDetailPath);
+        expect(history.entries.length).toBe(2);
+        expect(history.entries[0].pathname).toBe(firstRegularPath);
+        expect(history.entries[1].pathname).toBe(serviceDetailPath);
+    });
+
+    it('does not add a subsequent duplicate service detail path to the history stack', () => {
+        const initialPathEntries = [firstRegularPath, serviceDetailPath, serviceReviewPath];
+        const indexOfLastPath = initialPathEntries.length - 1;
+        const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
+        goBackToServiceDetailOnDiscard(history);
+        expect(history.entries.length).toBe(2);
+        expect(history.entries[0].pathname).toBe(firstRegularPath);
+        expect(history.entries[1].pathname).toBe(serviceDetailPath);
     });
 });

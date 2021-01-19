@@ -124,6 +124,22 @@ const pathMatchesFeedbackRoute = (location: Location<LocationState>): boolean =>
     pathMatchesAnyRoute(location.pathname, [Routes.OtherFeedback, Routes.ContactInformation])
 );
 
+export const goBackToServiceDetailOnDiscard = (memoryHistory: MemoryHistory): void => {
+    popServiceReviewPathFromHistory(memoryHistory);
+    const positionOfCurrentPathInHistoryStack = 0;
+    memoryHistory.go(positionOfCurrentPathInHistoryStack);
+};
+
+export const popServiceReviewPathFromHistory = (memoryHistory: MemoryHistory): void => {
+    while (R.findLast(pathMatchesServiceReviewRoute, memoryHistory.entries)) {
+        memoryHistory.entries.pop();
+    }
+};
+
+const pathMatchesServiceReviewRoute = (location: Location<LocationState>): boolean => (
+    pathMatchesAnyRoute(location.pathname, [Routes.ServiceReview])
+);
+
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {
     return !!matchPath(path, { path: routePathDefinition(route), exact: true });
 };
