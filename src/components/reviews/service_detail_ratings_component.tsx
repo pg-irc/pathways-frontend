@@ -16,16 +16,16 @@ interface Props {
 
 export const ServiceDetailRatingsComponent = (props: Props): JSX.Element => {
     const history = useHistory();
-    const onFinishRating = (rating: number): void => {
-        props.chooseRating(rating);
+    const onFinishRating = (rating: number): ChooseRatingAction => {
         goToRouteWithParameter(Routes.ServiceReview, props.serviceId, history)();
+        return props.chooseRating(rating);
     };
     return (
         <View style={{ paddingVertical: values.backgroundTextPadding}}>
             <Text style={[textStyles.headlineH3StyleBlackCenter, { paddingBottom: 10 }]}>
                     <Trans>Rate this service</Trans>
                 </Text>
-            <RatingsComponent rating={props.rating} onFinishRating={onFinishRating}/>
+            <RatingsComponent rating={props.rating} chooseRating={onFinishRating}/>
         </View>
     );
 };

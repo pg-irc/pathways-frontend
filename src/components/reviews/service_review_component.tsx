@@ -57,7 +57,7 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
             >
                 <ServiceNameComponent name={props.serviceName} onPress={history.goBack} />
                 <RatingQuestionComponent />
-                <RatingsComponent rating={props.rating} onFinishRating={chooseRating}/>
+                <RatingsComponent rating={props.rating} chooseRating={props.chooseRating}/>
                 <CommentComponent comment={comment} setComment={setComment}/>
             </KeyboardAwareScrollView>
             <MultilineKeyboardDoneButton isVisible={isAndroid() && keyboardIsVisible}/>

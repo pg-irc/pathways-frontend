@@ -3,10 +3,11 @@ import React from 'react';
 import { Icon, View } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { colors } from '../../application/styles';
+import { ChooseRatingAction } from '../../stores/reviews/actions';
 
 export interface RatingsProps {
     readonly rating: number;
-    readonly onFinishRating: (rating: number) => void;
+    readonly chooseRating: (rating: number) => ChooseRatingAction;
 }
 
 export interface RatingIcon {
@@ -22,13 +23,13 @@ const iconsList: ReadonlyArray<RatingIcon> = [
 
 export const RatingsComponent = (props: RatingsProps): JSX.Element => (
     <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
-        <RatingsIconsComponent onPress={props.onFinishRating} iconsList={iconsList}/>
+        <RatingsIconsComponent chooseRating={props.chooseRating} iconsList={iconsList}/>
     </View>
 );
 
 interface RatingsIconsProps {
     readonly iconsList: ReadonlyArray<RatingIcon>;
-    readonly onPress: (rating: number) => void;
+    readonly chooseRating: (rating: number) => void;
 }
 
 const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => {
@@ -40,7 +41,7 @@ const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => {
                         <RatingIconComponent
                             key={icon.name}
                             icon={icon}
-                            onPress={props.onPress}/>
+                            onPress={(): void => props.chooseRating(icon.value)}/>
                     );
                 })
             }
@@ -50,11 +51,11 @@ const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => {
 
 interface RatingIconProps {
     readonly icon: RatingIcon;
-    readonly onPress: (value: number) => void;
+    readonly onPress: () => void;
 }
 
 const RatingIconComponent = (props: RatingIconProps): JSX.Element => (
-    <TouchableOpacity style={{ padding: 20 }} onPress={(): void => props.onPress(props.icon.value)}>
+    <TouchableOpacity style={{ padding: 20 }} onPress={props.onPress}>
         <Icon
             name={props.icon.name}
             type='FontAwesome5'
