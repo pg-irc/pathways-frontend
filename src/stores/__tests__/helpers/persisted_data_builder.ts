@@ -24,6 +24,7 @@ export class PersistedDataBuilder {
     collapseSearchInput: boolean = false;
     showPartialLocalizationMessage: boolean = true;
     alerts: ReadonlyArray<Alert> = [];
+    reviewedServices: ServiceMap = {};
 
     withChosenAnswer(id: AnswerId): PersistedDataBuilder {
         this.chosenAnswers.push(id);
@@ -103,6 +104,14 @@ export class PersistedDataBuilder {
         return this;
     }
 
+    withReviewedServices(services: ServiceMap): PersistedDataBuilder {
+        this.reviewedServices = {
+            ...this.reviewedServices,
+            ...services,
+        };
+        return this;
+    }
+
     build(): PersistedData {
         return {
             chosenAnswers: this.chosenAnswers,
@@ -120,6 +129,7 @@ export class PersistedDataBuilder {
             searchResults: this.searchResults,
             collapseSearchInput: this.collapseSearchInput,
             showPartialLocalizationMessage: this.showPartialLocalizationMessage,
+            reviewedServices: this.reviewedServices,
         };
     }
 

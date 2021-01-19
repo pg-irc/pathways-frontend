@@ -22,6 +22,7 @@ export interface PersistedData {
     readonly searchResults: ReadonlyArray<SearchServiceData>;
     readonly collapseSearchInput: boolean;
     readonly showPartialLocalizationMessage: boolean;
+    readonly reviewedServices: ServiceMap;
 }
 
 export namespace DataPersistence {
