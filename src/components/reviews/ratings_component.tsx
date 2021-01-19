@@ -32,7 +32,7 @@ const iconsList: ReadonlyArray<RatingIcon> = [
 ];
 
 export const RatingsComponent = (props: RatingsProps): JSX.Element => (
-    <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center'}}>
+    <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
         <RatingsIconsComponent rating={props.rating} chooseRating={props.chooseRating} iconsList={iconsList}/>
     </View>
 );

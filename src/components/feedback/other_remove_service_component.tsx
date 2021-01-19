@@ -6,7 +6,6 @@ import { Container, View } from 'native-base';
 import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import { textStyles, applicationStyles } from '../../application/styles';
 import { goBack, Routes, RouterProps, goToRouteWithParameter } from '../../application/routing';
-import { otherRemoveServiceStyles as styles } from './styles';
 import { Feedback, FeedbackScreen, FeedbackModal } from '../../stores/feedback/types';
 import { SubmitAction, DiscardChangesAction, CloseAction, CancelDiscardChangesAction, CloseWithFeedbackAction } from '../../stores/feedback';
 import { DiscardChangesModal } from './discard_changes_modal';
