@@ -15,7 +15,7 @@ export function* watchUOpenOrganization(): IterableIterator<ForkEffect> {
 
 export function* openOrganization(action: OpenOrganizationAction): UpdateResult {
     const organizationId = action.payload.organizationId;
-    yield put(loadingOrganization(organizationId));
+    yield put(loadingOrganization());
     try {
         const existingOrganization: HumanOrganizationData = yield select(selectOrganizationById, organizationId);
         if (existingOrganization) {

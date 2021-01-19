@@ -11,7 +11,6 @@ export interface HumanOrganizationData {
 
 export interface ValidOrganization {
     readonly type: 'ORGANIZATION:VALID';
-    readonly organizationId: string;
 }
 
 export interface LoadingOrganization {
