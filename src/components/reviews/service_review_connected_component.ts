@@ -6,8 +6,9 @@ import { selectShowDiscardChangesModal } from '../../selectors/reviews/select_sh
 import { selectServiceNameById } from '../../selectors/services/select_service_name_by_id';
 import { Store } from '../../stores';
 import { chooseRating, ChooseRatingAction, closeDiscardChangesModal,
-    CloseDiscardChangesModalAction, openDiscardChangesModal, OpenDiscardChangesModalAction,
+    CloseDiscardChangesModalAction, openDiscardChangesModal, OpenDiscardChangesModalAction, submitServiceReview, SubmitServiceReviewAction,
 } from '../../stores/reviews/actions';
+import { Id } from '../../stores/services';
 import { ServiceReviewActions, ServiceReviewComponent, ServiceReviewProps } from './service_review_component';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceReviewProps => {
@@ -22,7 +23,8 @@ const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceReviewProp
 
 type Actions = ChooseRatingAction |
     OpenDiscardChangesModalAction |
-    CloseDiscardChangesModalAction;
+    CloseDiscardChangesModalAction |
+    SubmitServiceReviewAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceReviewActions => ({
     chooseRating: (rating: number): ChooseRatingAction =>
@@ -31,6 +33,8 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceReviewActions =
         dispatch(openDiscardChangesModal()),
     closeDiscardChangesModal: (): CloseDiscardChangesModalAction =>
         dispatch(closeDiscardChangesModal()),
+    submitServiceReview: (serviceId: Id): SubmitServiceReviewAction =>
+        dispatch(submitServiceReview(serviceId)),
 });
 
 export const ServiceReviewConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceReviewComponent);

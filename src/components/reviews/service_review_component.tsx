@@ -7,7 +7,7 @@ import { CloseButtonComponent } from '../close_button_component';
 import { colors, textStyles, applicationStyles } from '../../application/styles';
 import { Header } from 'native-base';
 import { RatingsComponent } from './ratings_component';
-import { ChooseRatingAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction } from '../../stores/reviews/actions';
+import { ChooseRatingAction, CloseDiscardChangesModalAction, OpenDiscardChangesModalAction, SubmitServiceReviewAction } from '../../stores/reviews/actions';
 import { MultilineKeyboardDoneButton, MultilineTextInputForPlatform } from '../multiline_text_input_for_platform';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useKeyboardIsVisible } from '../use_keyboard_is_visible';
@@ -16,9 +16,10 @@ import { DiscardChangesModal } from '../feedback/discard_changes_modal';
 import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
 import { backToServiceDetailOnServiceReviewDiscard } from '../../application/routing';
 import { memoryHistory } from '../../application';
+import { Id } from '../../stores/services';
 
 export interface ServiceReviewProps {
-    readonly serviceId: string;
+    readonly serviceId: Id;
     readonly serviceName: string;
     readonly rating: number;
     readonly showDiscardChangesModal: boolean;
@@ -28,6 +29,7 @@ export interface ServiceReviewActions {
     readonly chooseRating: (rating: number) => ChooseRatingAction;
     readonly openDiscardChangesModal: () => OpenDiscardChangesModalAction;
     readonly closeDiscardChangesModal: () => CloseDiscardChangesModalAction;
+    readonly submitServiceReview: (serviceId: Id) => SubmitServiceReviewAction;
 }
 
 type Props = ServiceReviewProps & ServiceReviewActions;
@@ -42,8 +44,8 @@ export const ServiceReviewComponent = (props: Props): JSX.Element => {
     };
 
     const onSubmitButtonPress = (): void => {
-        // TODO https://github.com/pg-irc/pathways-frontend/issues/1345
-        console.log(`send ${props.serviceId} ${props.rating} ${comment} locale`);
+        // TODO wire up airtable https://github.com/pg-irc/pathways-frontend/issues/1345
+        props.submitServiceReview(props.serviceId);
     };
     return (
         <View style={{ flex: 1 }}>

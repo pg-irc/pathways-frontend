@@ -37,6 +37,8 @@ export function reducer(store: types.ServiceStore = buildDefaultStore(), action?
         case constants.UNBOOKMARK_SERVICE:
             return updateServiceBookmarkInServicesMap(store, action, false);
         case constants.SUBMIT_SERVICE_REVIEW:
+            console.log('action')
+            console.log(store.services)
             return updateServiceReviewInServicesMap(store, action);
         case constants.CLEAR_ALL_USER_DATA:
             return clearServicesData(store);
