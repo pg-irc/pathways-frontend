@@ -1,5 +1,6 @@
 // tslint:disable: no-expression-statement
 import React from 'react';
+import * as R from 'ramda';
 import { Icon, View } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { colors } from '../../application/styles';
@@ -45,7 +46,7 @@ interface RatingsIconsProps {
 const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => (
     <>
         {
-            props.iconsList.map((icon: RatingIcon): JSX.Element => {
+            R.map((icon: RatingIcon): JSX.Element => {
                 return (
                     <RatingIconComponent
                         key={icon.name}
@@ -54,10 +55,10 @@ const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => (
                         onPress={(): void => props.chooseRating(icon.value)}
                     />
                 );
-            })
-        }
+            }, props.iconsList)}
     </>
 );
+
 interface RatingIconProps {
     readonly isChosen: boolean;
     readonly icon: RatingIcon;
