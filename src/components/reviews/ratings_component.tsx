@@ -16,9 +16,18 @@ export interface RatingIcon {
 }
 
 const iconsList: ReadonlyArray<RatingIcon> = [
-    {name: 'frown', value: 1},
-    {name: 'meh', value: 2},
-    {name: 'smile', value: 3},
+    {
+        name: 'frown',
+        value: 1,
+    },
+    {
+        name: 'meh',
+        value: 2,
+    },
+    {
+        name: 'smile',
+        value: 3,
+    },
 ];
 
 export const RatingsComponent = (props: RatingsProps): JSX.Element => (
@@ -33,24 +42,22 @@ interface RatingsIconsProps {
     readonly chooseRating: (rating: number) => void;
 }
 
-const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => {
-    return (
-        <React.Fragment>
-            {
-                props.iconsList.map((icon: RatingIcon): JSX.Element => {
-                    return (
-                        <RatingIconComponent
-                            key={icon.name}
-                            isChosen={icon.value === props.rating}
-                            icon={icon}
-                            onPress={(): void => props.chooseRating(icon.value)}/>
-                    );
-                })
-            }
-        </React.Fragment>
-    );
-};
-
+const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => (
+    <>
+        {
+            props.iconsList.map((icon: RatingIcon): JSX.Element => {
+                return (
+                    <RatingIconComponent
+                        key={icon.name}
+                        isChosen={icon.value === props.rating}
+                        icon={icon}
+                        onPress={(): void => props.chooseRating(icon.value)}
+                    />
+                );
+            })
+        }
+    </>
+);
 interface RatingIconProps {
     readonly isChosen: boolean;
     readonly icon: RatingIcon;
