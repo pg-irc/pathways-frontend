@@ -137,7 +137,7 @@ export const popServiceReviewPathFromHistory = (memoryHistory: MemoryHistory): v
 };
 
 const pathMatchesServiceReviewRoute = (location: Location<LocationState>): boolean => (
-    pathMatchesAnyRoute(location.pathname, [Routes.ServiceReview])
+    pathMatchesRoute(location.pathname, Routes.ServiceReview)
 );
 
 export const pathMatchesRoute = (path: string, route: Routes): boolean => {
@@ -165,6 +165,8 @@ export const getParametersFromPath = (location: Location, route: Routes): RouteP
 };
 
 export const isServiceReviewScreen = (memoryHistory: MemoryHistory): boolean => {
-    const path = memoryHistory.entries[memoryHistory.entries.length - 1].pathname;
-    return pathMatchesRoute(path, Routes.ServiceReview);
+    if (!memoryHistory) {
+        return false;
+    }
+    return pathMatchesRoute(R.last(memoryHistory.entries).pathname, Routes.ServiceReview);
 };

@@ -160,10 +160,6 @@ describe('the backToServiceDetailOnFeedbackSubmit function', () => {
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
         backToServiceDetailOnFeedbackSubmit(history);
         expect(history.location.pathname).toBe(serviceDetailPath);
-        expect(history.entries.length).toBe(3);
-        expect(history.entries[0].pathname).toBe(firstRegularPath);
-        expect(history.entries[1].pathname).toBe(secondRegularPath);
-        expect(history.entries[2].pathname).toBe(serviceDetailPath);
     });
 
     it('does not add a subsequent duplicate service detail path to the history stack', () => {
@@ -221,7 +217,6 @@ describe('the popServiceReviewPathFromHistory function', () => {
         const history = createMemoryHistory({ initialEntries: initialPathEntries });
         popServiceReviewPathFromHistory(history);
         expect(history.entries.length).toBe(2);
-        expect(history.entries[0].pathname).toBe(firstRegularPath);
         expect(history.entries[1].pathname).toBe(secondRegularPath);
     });
 });
@@ -237,9 +232,6 @@ describe('the backToServiceDetailOnServiceReviewDiscard function', () => {
         const history = createMemoryHistory({ initialEntries: initialPathEntries, initialIndex: indexOfLastPath});
         backToServiceDetailOnServiceReviewDiscard(history);
         expect(history.location.pathname).toBe(serviceDetailPath);
-        expect(history.entries.length).toBe(2);
-        expect(history.entries[0].pathname).toBe(firstRegularPath);
-        expect(history.entries[1].pathname).toBe(serviceDetailPath);
     });
 
     it('does not add a subsequent duplicate service detail path to the history stack', () => {
