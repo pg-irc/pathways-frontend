@@ -1,6 +1,6 @@
 import * as constants from '../../application/constants';
 import { OrganizationStore } from '../../validation/organizations/types';
-import { OrganizationAction, SaveOrganizationAction } from './actions';
+import { OrganizationAction, OrganizationSuccessAction } from './actions';
 export { OrganizationStore };
 
 export const buildDefaultStore = (): OrganizationStore => ({
@@ -37,7 +37,7 @@ export const reducer = (store: OrganizationStore = buildDefaultStore(), action?:
     }
 };
 
-const saveOrganization = (store: OrganizationStore, action: SaveOrganizationAction): OrganizationStore => ({
+const saveOrganization = (store: OrganizationStore, action: OrganizationSuccessAction): OrganizationStore => ({
     ...store,
     organizations: {
         ...store.organizations,

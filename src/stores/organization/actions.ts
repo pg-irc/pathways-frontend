@@ -5,32 +5,32 @@ import { ClearAllUserDataAction } from '../questionnaire/actions';
 import { Errors } from '../../validation/errors/types';
 
 export type OpenOrganizationAction = Readonly<ReturnType<typeof openOrganization>>;
-export type LoadingOrganizationAction = Readonly<ReturnType<typeof loadingOrganization>>;
-export type SaveOrganizationAction = Readonly<ReturnType<typeof saveOrganization>>;
-export type ErrorOrganizationAction = Readonly<ReturnType<typeof errorOrganization>>;
+export type OrganizationRequestAction = Readonly<ReturnType<typeof buildOrganizationRequest>>;
+export type OrganizationSuccessAction = Readonly<ReturnType<typeof buildOrganizationSuccess>>;
+export type OrganizationFailureAction = Readonly<ReturnType<typeof buildOrganizationFailure>>;
 
 // tslint:disable-next-line:typedef
 export const openOrganization = (organizationId: string) => (
     helpers.makeAction(constants.OPEN_ORGANIZATION, { organizationId })
 );
 // tslint:disable-next-line:typedef
-export const loadingOrganization = () => (
+export const buildOrganizationRequest = () => (
     helpers.makeAction(constants.LOAD_ORGANIZATION_REQUEST)
 );
 
 // tslint:disable-next-line:typedef
-export const saveOrganization = (organization: HumanOrganizationData) => (
+export const buildOrganizationSuccess = (organization: HumanOrganizationData) => (
     helpers.makeAction(constants.LOAD_ORGANIZATION_SUCCESS, { organization })
 );
 
 // tslint:disable-next-line:typedef
-export const errorOrganization = (organizationId: string, errorMessageType: Errors) => (
+export const buildOrganizationFailure = (organizationId: string, errorMessageType: Errors) => (
     helpers.makeAction(constants.LOAD_ORGANIZATION_FAILURE, { organizationId, errorMessageType })
 );
 
 export type OrganizationAction =
-    SaveOrganizationAction |
     OpenOrganizationAction |
-    ErrorOrganizationAction |
-    LoadingOrganizationAction |
+    OrganizationRequestAction |
+    OrganizationSuccessAction |
+    OrganizationFailureAction |
     ClearAllUserDataAction;

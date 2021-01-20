@@ -3,7 +3,7 @@ import * as constants from '../../application/constants';
 import { OrganizationStore, reducer } from '../organization';
 import { ClearAllUserDataAction } from '../questionnaire/actions';
 import { buildNormalizedOrganizations, HumanOrganizationDataBuilder } from './helpers/organization_helpers';
-import { ErrorOrganizationAction, LoadingOrganizationAction, SaveOrganizationAction } from '../organization/actions';
+import { OrganizationFailureAction, OrganizationRequestAction, OrganizationSuccessAction } from '../organization/actions';
 import { Errors } from '../../validation/errors/types';
 
 describe('organizations reducer', () => {
@@ -18,18 +18,18 @@ describe('organizations reducer', () => {
 
     describe('when load organization request is called', () => {
         it('set the organizationStatus to loading', () => {
-            const action: LoadingOrganizationAction = {
+            const action: OrganizationRequestAction = {
                 type: constants.LOAD_ORGANIZATION_REQUEST,
             };
             const store = reducer(theStore, action);
-            expect(store.organizationStatus).toEqual({type: constants.LOADING_ORGANIZATION});
+            expect(store.organizationStatus).toEqual({ type: constants.LOADING_ORGANIZATION });
         });
     });
 
     describe('when load organization is successful', () => {
         it('set the organization status to success and add the organization into store', () => {
             const newOrganization = new HumanOrganizationDataBuilder().build();
-            const action: SaveOrganizationAction = {
+            const action: OrganizationSuccessAction = {
                 type: constants.LOAD_ORGANIZATION_SUCCESS,
                 payload: {
                     organization: newOrganization,
@@ -38,14 +38,14 @@ describe('organizations reducer', () => {
             const store = reducer(theStore, action);
             const storeNewOrganization = store.organizations[newOrganization.id];
             expect(storeNewOrganization).toEqual(newOrganization);
-            expect(store.organizationStatus).toEqual({type: constants.VALID_ORGANIZATION});
+            expect(store.organizationStatus).toEqual({ type: constants.VALID_ORGANIZATION });
         });
     });
 
     describe('when load organization ends in error', () => {
         it('set the organization status to error, set errorMessageType to the error', () => {
             const newOrganization = new HumanOrganizationDataBuilder().build();
-            const action: ErrorOrganizationAction = {
+            const action: OrganizationFailureAction = {
                 type: constants.LOAD_ORGANIZATION_FAILURE,
                 payload: {
                     organizationId: newOrganization.id,
@@ -53,7 +53,7 @@ describe('organizations reducer', () => {
                 },
             };
             const store = reducer(theStore, action);
-            expect(store.organizationStatus).toEqual({type: constants.ERROR_ORGANIZATION, errorMessageType: Errors.Offline});
+            expect(store.organizationStatus).toEqual({ type: constants.ERROR_ORGANIZATION, errorMessageType: Errors.Offline });
         });
     });
 
