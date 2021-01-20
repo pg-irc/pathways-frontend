@@ -10,19 +10,24 @@ describe('organizations reducer', () => {
     const oldOrganizationBuilder = new HumanOrganizationDataBuilder();
     const theStore: OrganizationStore = buildNormalizedOrganizations([oldOrganizationBuilder]);
 
+    it('returns a unmodified store when the action is missing', () => {
+        expect(reducer(theStore)).toBe(theStore);
+        const storeOldOrganization = theStore.organizations[oldOrganizationBuilder.id];
+        expect(storeOldOrganization).toEqual(oldOrganizationBuilder.build());
+    });
+
     describe('when load organization request is called', () => {
         it('set the organizationStatus to loading', () => {
             const action: LoadingOrganizationAction = {
                 type: constants.LOAD_ORGANIZATION_REQUEST,
             };
             const store = reducer(theStore, action);
-            expect(store.organizationStatus.type).toEqual(constants.LOADING_ORGANIZATION);
+            expect(store.organizationStatus).toEqual({type: constants.LOADING_ORGANIZATION});
         });
-
     });
 
     describe('when load organization is successful', () => {
-        it('updates the store with the new organization in addition to old Organization', () => {
+        it('set the organization status to success and add the organization into store', () => {
             const newOrganization = new HumanOrganizationDataBuilder().build();
             const action: SaveOrganizationAction = {
                 type: constants.LOAD_ORGANIZATION_SUCCESS,
@@ -32,15 +37,13 @@ describe('organizations reducer', () => {
             };
             const store = reducer(theStore, action);
             const storeNewOrganization = store.organizations[newOrganization.id];
-            const storeOldOrganization = store.organizations[oldOrganizationBuilder.id];
             expect(storeNewOrganization).toEqual(newOrganization);
-            expect(storeOldOrganization).toEqual(oldOrganizationBuilder.build());
-            expect(store.organizationStatus.type).toEqual(constants.VALID_ORGANIZATION);
+            expect(store.organizationStatus).toEqual({type: constants.VALID_ORGANIZATION});
         });
     });
 
     describe('when load organization ends in error', () => {
-        it('updates the store with the new organization in addition to old Organization', () => {
+        it('set the organization status to error, set errorMessageType to the error', () => {
             const newOrganization = new HumanOrganizationDataBuilder().build();
             const action: ErrorOrganizationAction = {
                 type: constants.LOAD_ORGANIZATION_FAILURE,
@@ -50,7 +53,7 @@ describe('organizations reducer', () => {
                 },
             };
             const store = reducer(theStore, action);
-            expect(store.organizationStatus.type).toEqual(constants.ERROR_ORGANIZATION);
+            expect(store.organizationStatus).toEqual({type: constants.ERROR_ORGANIZATION, errorMessageType: Errors.Offline});
         });
     });
 
