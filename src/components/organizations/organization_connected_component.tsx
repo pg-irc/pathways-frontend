@@ -15,10 +15,13 @@ import { selectBookmarkedServicesIds } from '../../selectors/services/select_boo
 import { selectOrganizationById } from '../../selectors/organizations/select_organization_by_id';
 import { selectServicesForOrganization } from '../../selectors/services/select_services_for_organization';
 import { selectOrganizationTab } from '../../selectors/organizations/select_organization_tab';
+import { selectOrganizationStatus } from '../../selectors/organizations/select_organization_status';
+import { openOrganization, OpenOrganizationAction } from '../../stores/organization/actions';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): OrganizationProps => ({
     history: ownProps.history,
     organization: selectOrganizationById(store, ownProps.match.params.organizationId),
+    organizationStatus: selectOrganizationStatus(store),
     organizationTab: selectOrganizationTab(store),
     servicesForOrganization: selectServicesForOrganization(store, ownProps.match.params.organizationId),
     organizationServicesOffset: selectOrganizationServicesOffset(store),
@@ -32,7 +35,8 @@ type Actions =
     SaveOrganizationServicesScrollOffsetAction |
     BookmarkServiceAction |
     UnbookmarkServiceAction |
-    OpenServiceAction;
+    OpenServiceAction |
+    OpenOrganizationAction;
 
 const mapDispatchToProps = (dispatch: Dispatch<Actions>): OrganizationActions => ({
     analyticsLinkPressed: (analyticsLinkProps: AnalyticsLinkProps): AnalyticsLinkPressedAction =>
@@ -44,6 +48,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): OrganizationActions =>
     saveOrganizationTab: (index: number): SaveOrganizationTabAction => dispatch(saveOrganizationTab(index)),
     saveOrganizationServicesOffset: (offset: number): SaveOrganizationServicesScrollOffsetAction =>
         dispatch(saveOrganizationServicesScrollOffset(offset)),
+    openOrganization: (organizationId: string): OpenOrganizationAction => dispatch(openOrganization(organizationId)),
 });
 
 export const OrganizationConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(OrganizationComponent);
