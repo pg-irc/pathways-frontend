@@ -20,6 +20,7 @@ import { View } from 'react-native';
 import * as constants from '../../application/constants';
 import { ErrorScreenSwitcherComponent } from '../error_screens/error_screen_switcher_component';
 import { Errors } from '../../validation/errors/types';
+import { OpenOrganizationAction } from '../../stores/organization/actions';
 
 export interface OrganizationProps {
     readonly history: History;
@@ -36,6 +37,7 @@ export interface OrganizationActions {
     readonly bookmarkService: (service: HumanServiceData) => BookmarkServiceAction;
     readonly unbookmarkService: (service: HumanServiceData) => UnbookmarkServiceAction;
     readonly openServiceDetail: (service: HumanServiceData) => OpenServiceAction;
+    readonly openOrganization: (organizationId: string) => OpenOrganizationAction;
     readonly openHeaderMenu: () => OpenHeaderMenuAction;
     readonly saveOrganizationTab: (index: number) => SaveOrganizationTabAction;
     readonly saveOrganizationServicesOffset: (offset: number) => SaveOrganizationServicesScrollOffsetAction;
@@ -87,7 +89,7 @@ const OrganizationPage = (props: Props): JSX.Element => {
         case constants.LOADING_ORGANIZATION:
             return renderLoadingScreen();
         case constants.ERROR_ORGANIZATION:
-            return renderErrorScreen(props.organizationStatus.errorMessageType);
+            return renderErrorScreen(props.organizationStatus.errorMessageType, props.openOrganization, props.match.params.organizationId);
         default: {
             return renderValidOrganizationPage(props);
         }
@@ -100,9 +102,9 @@ const renderLoadingScreen = (): JSX.Element => (
     </View>
 );
 
-const renderErrorScreen = (errorType: Errors): JSX.Element => (
+const renderErrorScreen = (errorType: Errors, refreshScreen: (organizationId: string) => void, organizationId: string): JSX.Element => (
     <ErrorScreenSwitcherComponent
-        refreshScreen={(): void => console.log('Figure out refresh behaviour')}
+        refreshScreen={(): void => refreshScreen(organizationId)}
         errorType={errorType} />
 );
 
@@ -128,6 +130,7 @@ const renderValidOrganizationPage = (props: Props): JSX.Element => (
                     bookmarkService={props.bookmarkService}
                     unbookmarkService={props.unbookmarkService}
                     openServiceDetail={props.openServiceDetail}
+                    openOrganization={props.openOrganization}
                     openHeaderMenu={props.openHeaderMenu}
                     saveOrganizationTab={props.saveOrganizationTab}
                     currentPathForAnalytics={props.location.pathname}
