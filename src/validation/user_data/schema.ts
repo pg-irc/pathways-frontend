@@ -131,6 +131,13 @@ const serviceMap = {
     }
 };
 
+const reviewedServicesIdsArray = {
+    "type": "array",
+    "items": {
+        "type": "string"
+    }
+};
+
 export const userData = {
     "type": "object",
     "properties": {
@@ -158,6 +165,6 @@ export const userData = {
         "collapseSearchInput": {
             "type": "boolean"
         },
-        "reviewedServices": serviceMap,
+        "reviewedServices": reviewedServicesIdsArray,
     }
 };
