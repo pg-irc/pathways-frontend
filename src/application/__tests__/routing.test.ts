@@ -115,6 +115,14 @@ describe('the popFeedbackPathsFromHistory function', () => {
     const editableServiceDetailFeedbackPath = routePathDefinition(Routes.ServiceDetail);
     const contactInformationFeedbackPath = routePathDefinition(Routes.ContactInformation);
 
+    it ('pops all feedback paths from the history stack until the last element in the array is a regular path', () => {
+        const initialPathEntries = [firstRegularPath, editableServiceDetailFeedbackPath, secondRegularPath, contactInformationFeedbackPath];
+        const history = createMemoryHistory({ initialEntries: initialPathEntries });
+        popFeedbackPathsFromHistory(history);
+        expect(history.entries.length).toBe(3);
+        expect(history.entries[2].pathname).toBe(secondRegularPath);
+    });
+
     it('pops all feedback paths from the history stack when submitting feedback from the remove Service or other feedback screen', () => {
         const initialPathEntries = [
             firstRegularPath, secondRegularPath, serviceDetailPath, removeServiceOrOtherFeedbackPath, contactInformationFeedbackPath,
@@ -195,6 +203,16 @@ describe('the popServiceReviewPathFromHistory function', () => {
     const firstRegularPath = routePathDefinition(Routes.Services);
     const secondRegularPath = routePathDefinition(Routes.ServiceDetail);
     const serviceReviewPath = routePathDefinition(Routes.ServiceReview);
+
+    it ('pops service review paths until the last element of the array is a regular path', () => {
+        const initialPathEntries = [
+            firstRegularPath, serviceReviewPath, secondRegularPath, serviceReviewPath,
+        ];
+        const history = createMemoryHistory({ initialEntries: initialPathEntries });
+        popServiceReviewPathFromHistory(history);
+        expect(history.entries.length).toBe(3);
+        expect(history.entries[2].pathname).toBe(secondRegularPath);
+    });
 
     it('pops the service review path from the history stack on clicking the discard button', () => {
         const initialPathEntries = [

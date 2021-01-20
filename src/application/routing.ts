@@ -115,7 +115,7 @@ export const backToServiceDetailOnFeedbackSubmit = (memoryHistory: MemoryHistory
 };
 
 export const popFeedbackPathsFromHistory = (memoryHistory: MemoryHistory): void => {
-    while (R.findLast(pathMatchesFeedbackRoute, memoryHistory.entries)) {
+    while (pathMatchesFeedbackRoute(R.last(memoryHistory.entries))) {
         memoryHistory.entries.pop();
     }
 };
@@ -131,7 +131,7 @@ export const backToServiceDetailOnServiceReviewDiscard = (memoryHistory: MemoryH
 };
 
 export const popServiceReviewPathFromHistory = (memoryHistory: MemoryHistory): void => {
-    while (R.findLast(pathMatchesServiceReviewRoute, memoryHistory.entries)) {
+    while (pathMatchesServiceReviewRoute(R.last(memoryHistory.entries))) {
         memoryHistory.entries.pop();
     }
 };
