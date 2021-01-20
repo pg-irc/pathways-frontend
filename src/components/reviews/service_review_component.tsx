@@ -17,16 +17,17 @@ import { SubmitFeedbackButton } from '../feedback/submit_feedback_button';
 import { backToServiceDetailOnServiceReviewDiscard } from '../../application/routing';
 import { memoryHistory } from '../../application';
 import { Id } from '../../stores/services';
+import { Rating } from '../../stores/reviews';
 
 export interface ServiceReviewProps {
     readonly serviceId: Id;
     readonly serviceName: string;
-    readonly rating: number;
+    readonly rating: Rating;
     readonly showDiscardChangesModal: boolean;
 }
 
 export interface ServiceReviewActions {
-    readonly chooseRating: (rating: number) => ChooseRatingAction;
+    readonly chooseRating: (rating: Rating) => ChooseRatingAction;
     readonly openDiscardChangesModal: () => OpenDiscardChangesModalAction;
     readonly closeDiscardChangesModal: () => CloseDiscardChangesModalAction;
     readonly submitServiceReview: (serviceId: Id) => SubmitServiceReviewAction;

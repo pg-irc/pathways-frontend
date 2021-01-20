@@ -1,8 +1,9 @@
 import * as helpers from '../helpers/make_action';
 import * as constants from '../../application/constants';
+import { Rating } from '.';
 
 // tslint:disable-next-line: typedef
-export const chooseRating = (rating: number) => (
+export const chooseRating = (rating: Rating) => (
     helpers.makeAction(constants.CHOOSE_RATING, { rating })
 );
 

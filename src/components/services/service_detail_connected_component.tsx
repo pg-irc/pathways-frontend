@@ -49,6 +49,7 @@ import { selectServiceFeedback } from '../../selectors/feedback/select_service_f
 import { openOrganization, OpenOrganizationAction } from '../../stores/organization/actions';
 import { chooseRating, ChooseRatingAction } from '../../stores/reviews/actions';
 import { selectReviewedServicesIds } from '../../selectors/services/select_reviewed_services_ids';
+import { Rating } from '../../stores/reviews';
 
 const mapStateToProps = (store: Store, ownProps: RouterProps): ServiceDetailProps => {
     const serviceId = ownProps.match.params.serviceId;
@@ -111,7 +112,7 @@ const mapDispatchToProps = (dispatch: Dispatch<Actions>): ServiceDetailActions =
     hideLinkAlerts: (): HideLinkAlertsAction => dispatch(hideLinkAlerts()),
     backFromContactInformation: (): BackFromContactInformationAction => dispatch(backFromContactInformation()),
     openOrganization: (organizationId: string): OpenOrganizationAction => dispatch(openOrganization(organizationId)),
-    chooseRating: (rating: number): ChooseRatingAction => dispatch(chooseRating(rating)),
+    chooseRating: (rating: Rating): ChooseRatingAction => dispatch(chooseRating(rating)),
 });
 
 export const ServiceDetailConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(ServiceDetailComponent);

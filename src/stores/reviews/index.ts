@@ -1,13 +1,20 @@
 import * as constants from '../../application/constants';
 import { ReviewAction } from './actions';
 
+export enum Rating {
+    Zero,
+    One,
+    Two,
+    Three,
+}
+
 export interface ReviewsStore {
-    readonly rating: number;
+    readonly rating: Rating;
     readonly showDiscardChangesModal: boolean;
 }
 
 export const buildDefaultStore = (): ReviewsStore => ({
-    rating: 0,
+    rating: Rating.Zero,
     showDiscardChangesModal: false,
 });
 

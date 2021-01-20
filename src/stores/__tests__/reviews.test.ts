@@ -1,16 +1,15 @@
 // tslint:disable: no-expression-statement typedef
-import { buildDefaultStore, reducer } from '../reviews';
+import { buildDefaultStore, Rating, reducer } from '../reviews';
 import { chooseRating, closeDiscardChangesModal, openDiscardChangesModal } from '../reviews/actions';
 
 describe('the reviews reducer', () => {
 
     describe('the rating state', () => {
 
-        it('is set to a number value by the choose rating action', () => {
+        it('is set to a number accepted within the rating enum by the choose rating action', () => {
             const oldStore = buildDefaultStore();
-            const rating = 5 * Math.random();
-            const newStore = reducer(oldStore, chooseRating(rating));
-            expect(newStore.rating).toBe(rating);
+            const newStore = reducer(oldStore, chooseRating(Rating.Three));
+            expect(newStore.rating).toBe(Rating.Three);
         });
     });
 

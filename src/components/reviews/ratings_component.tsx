@@ -5,29 +5,30 @@ import { Icon, View } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { colors } from '../../application/styles';
 import { ChooseRatingAction } from '../../stores/reviews/actions';
+import { Rating } from '../../stores/reviews';
 
 export interface RatingsProps {
-    readonly rating: number;
+    readonly rating: Rating;
     readonly chooseRating: (rating: number) => ChooseRatingAction;
 }
 
 export interface RatingIcon {
     readonly name: string;
-    readonly value: number;
+    readonly value: Rating;
 }
 
 const iconsList: ReadonlyArray<RatingIcon> = [
     {
         name: 'frown',
-        value: 1,
+        value: Rating.One,
     },
     {
         name: 'meh',
-        value: 2,
+        value: Rating.Two,
     },
     {
         name: 'smile',
-        value: 3,
+        value: Rating.Three,
     },
 ];
 
@@ -38,9 +39,9 @@ export const RatingsComponent = (props: RatingsProps): JSX.Element => (
 );
 
 interface RatingsIconsProps {
-    readonly rating: number;
+    readonly rating: Rating;
     readonly iconsList: ReadonlyArray<RatingIcon>;
-    readonly chooseRating: (rating: number) => void;
+    readonly chooseRating: (rating: Rating) => void;
 }
 
 const RatingsIconsComponent = (props: RatingsIconsProps): JSX.Element => (

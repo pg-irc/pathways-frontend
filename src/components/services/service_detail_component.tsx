@@ -62,6 +62,7 @@ import { OpenOrganizationAction } from '../../stores/organization/actions';
 import { CardButtonComponent } from '../card_button_component';
 import { ServiceDetailRatingsComponent } from '../reviews/service_detail_ratings_component';
 import { ChooseRatingAction } from '../../stores/reviews/actions';
+import { Rating } from '../../stores/reviews';
 
 export interface ServiceDetailProps {
     readonly history: History;
@@ -96,7 +97,7 @@ export interface ServiceDetailActions {
     readonly hideLinkAlerts: () => void;
     readonly backFromContactInformation: () => BackFromContactInformationAction;
     readonly openOrganization: (organizationId: string) => OpenOrganizationAction;
-    readonly chooseRating: (rating: number) => ChooseRatingAction;
+    readonly chooseRating: (rating: Rating) => ChooseRatingAction;
 }
 
 type Props = ServiceDetailProps & ServiceDetailActions & RouterProps;
@@ -256,7 +257,7 @@ export const ServiceDetailComponent = (props: Props): JSX.Element => {
                                     isVisible={!props.isReviewed}
                                     serviceId={serviceId}
                                     serviceName={props.service.name}
-                                    rating={0}
+                                    rating={Rating.Zero}
                                     chooseRating={props.chooseRating}
                                 />
                                 <ModalContainer
